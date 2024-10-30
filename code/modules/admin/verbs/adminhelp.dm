@@ -577,17 +577,17 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/list/activemins = adm["present"]
 	. = activemins.len
 	if(. <= 0)
-		var/final = ""
+		var/ultimate = ""
 		var/list/afkmins = adm["afk"]
 		var/list/stealthmins = adm["stealth"]
 		var/list/powerlessmins = adm["noflags"]
 		var/list/allmins = adm["total"]
 		if(!afkmins.len && !stealthmins.len && !powerlessmins.len)
-			final = "[msg] - No admins online"
+			ultimate = "[msg] - No admins online"
 		else
-			final = "[msg] - All admins stealthed\[[english_list(stealthmins)]\], AFK\[[english_list(afkmins)]\], or lacks +BAN\[[english_list(powerlessmins)]\]! Total: [allmins.len] "
-		send2adminchat(source,final)
-		send2otherserver(source,final)
+			ultimate = "[msg] - All admins stealthed\[[english_list(stealthmins)]\], AFK\[[english_list(afkmins)]\], or lacks +BAN\[[english_list(powerlessmins)]\]! Total: [allmins.len] "
+		send2adminchat(source,ultimate)
+		send2otherserver(source,ultimate)
 
 /**
  * Sends a message to a set of cross-communications-enabled servers using world topic calls

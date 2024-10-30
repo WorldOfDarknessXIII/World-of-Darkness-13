@@ -2,7 +2,7 @@
 /// If it finds a node that is unreachable, it throws an error.
 /datum/unit_test/heretic_knowledge/Run()
 	///List of all knowledge excluding the unreachable base types.
-	var/list/blacklist = list(/datum/eldritch_knowledge/spell,/datum/eldritch_knowledge/curse,/datum/eldritch_knowledge/final,/datum/eldritch_knowledge/summon)
+	var/list/blacklist = list(/datum/eldritch_knowledge/spell,/datum/eldritch_knowledge/curse,/datum/eldritch_knowledge/ultimate,/datum/eldritch_knowledge/summon)
 	var/list/all_possible_knowledge = subtypesof(/datum/eldritch_knowledge) - blacklist
 
 	var/list/list_to_check = GLOB.heretic_start_knowledge.Copy()

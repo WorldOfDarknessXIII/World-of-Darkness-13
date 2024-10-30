@@ -115,10 +115,10 @@
 				target_type += "/glass"
 		else if(paintjob != "none")
 			target_type += "/[paintjob]"
-		var/final = target_type
-		target_type = text2path(final)
+		var/ultimate = target_type
+		target_type = text2path(ultimate)
 		if(!target_type)
-			to_chat(usr, "Didn't work, contact Sayu with this: [final]")
+			to_chat(usr, "Didn't work, contact Sayu with this: [ultimate]")
 			usr << browse(null,"window=airlockmaker")
 			return
 

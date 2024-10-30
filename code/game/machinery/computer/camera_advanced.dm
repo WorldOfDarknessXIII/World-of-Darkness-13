@@ -293,11 +293,11 @@
 
 	playsound(origin, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
 	var/camera = input("Choose which camera you want to view", "Cameras") as null|anything in T
-	var/obj/machinery/camera/final = T[camera]
+	var/obj/machinery/camera/ultimate = T[camera]
 	playsound(src, "terminal_type", 25, FALSE)
-	if(final)
+	if(ultimate)
 		playsound(origin, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
-		remote_eye.setLoc(get_turf(final))
+		remote_eye.setLoc(get_turf(ultimate))
 		C.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
 		C.clear_fullscreen("flash", 3) //Shorter flash than normal since it's an ~~advanced~~ console!
 	else

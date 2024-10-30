@@ -35,7 +35,7 @@
 	if(!CONFIG_GET(flag/emojis))
 		return
 	var/static/list/emojis = icon_states(icon('icons/emoji.dmi'))
-	var/final = "" //only tags are added to this
+	var/ultimate = "" //only tags are added to this
 	var/pos = 1
 	var/search = 0
 	while(1)
@@ -46,8 +46,8 @@
 			if(search)
 				var/word = lowertext(copytext(text, pos + length(text[pos]), search))
 				if(word in emojis)
-					final += lowertext(copytext(text, pos, search + length(text[search])))
+					ultimate += lowertext(copytext(text, pos, search + length(text[search])))
 				pos = search + length(text[search])
 				continue
 		break
-	return final
+	return ultimate

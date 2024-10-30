@@ -2,7 +2,7 @@
 	name = "Blacksmith's Tale"
 	desc = "Opens up the Path of Rust to you. Allows you to transmute a kitchen knife, or its derivatives, with any trash item into a Rusty Blade."
 	gain_text = "'Let me tell you a story', said the Blacksmith, as he gazed deep into his rusty blade."
-	banned_knowledge = list(/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/final/ash_final,/datum/eldritch_knowledge/final/flesh_final,/datum/eldritch_knowledge/final/void_final,/datum/eldritch_knowledge/base_void)
+	banned_knowledge = list(/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/ultimate/ash_final,/datum/eldritch_knowledge/ultimate/flesh_final,/datum/eldritch_knowledge/ultimate/void_final,/datum/eldritch_knowledge/base_void)
 	next_knowledge = list(/datum/eldritch_knowledge/rust_fist)
 	required_atoms = list(/obj/item/kitchen/knife,/obj/item/trash)
 	result_atoms = list(/obj/item/melee/sickly_blade/rust)
@@ -108,7 +108,7 @@
 	gain_text = "Messengers of Hope, fear the Rustbringer!"
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/cone/staggered/entropic_plume
-	next_knowledge = list(/datum/eldritch_knowledge/final/rust_final,/datum/eldritch_knowledge/spell/cleave,/datum/eldritch_knowledge/summon/rusty)
+	next_knowledge = list(/datum/eldritch_knowledge/ultimate/rust_final,/datum/eldritch_knowledge/spell/cleave,/datum/eldritch_knowledge/summon/rusty)
 	route = PATH_RUST
 
 /datum/eldritch_knowledge/armor
@@ -129,7 +129,7 @@
 	required_atoms = list(/obj/structure/reagent_dispensers/watertank,/obj/item/shard)
 	result_atoms = list(/obj/item/reagent_containers/glass/beaker/eldritch)
 
-/datum/eldritch_knowledge/final/rust_final
+/datum/eldritch_knowledge/ultimate/rust_final
 	name = "Rustbringer's Oath"
 	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual rust will now automatically spread from the rune. Your healing on rust is also tripled, while you become more resillient overall."
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark for the Rustbringer has come! Rusted Hills, CALL MY NAME!"
@@ -137,7 +137,7 @@
 	required_atoms = list(/mob/living/carbon/human)
 	route = PATH_RUST
 
-/datum/eldritch_knowledge/final/rust_final/on_finished_recipe(mob/living/user, list/atoms, loc)
+/datum/eldritch_knowledge/ultimate/rust_final/on_finished_recipe(mob/living/user, list/atoms, loc)
 	var/mob/living/carbon/human/H = user
 	H.physiology.brute_mod *= 0.5
 	H.physiology.burn_mod *= 0.5
@@ -147,7 +147,7 @@
 	return ..()
 
 
-/datum/eldritch_knowledge/final/rust_final/on_life(mob/user)
+/datum/eldritch_knowledge/ultimate/rust_final/on_life(mob/user)
 	. = ..()
 	var/turf/user_loc_turf = get_turf(user)
 	if(!istype(user_loc_turf, /turf/open/floor/plating/rust) || !isliving(user) || !finished)

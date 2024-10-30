@@ -26,7 +26,7 @@
 	var/list/avail = SSmapping.unused_turfs["[zlevel]"]
 	var/turf/BL
 	var/turf/TR
-	var/list/turf/final = list()
+	var/list/turf/ultimate = list()
 	var/passing = FALSE
 	for(var/i in avail)
 		CHECK_TICK
@@ -38,11 +38,11 @@
 		TR = locate(BL.x + width - 1, BL.y + height - 1, BL.z)
 		if(!(TR.flags_1 & UNUSED_RESERVATION_TURF_1))
 			continue
-		final = block(BL, TR)
-		if(!final)
+		ultimate = block(BL, TR)
+		if(!ultimate)
 			continue
 		passing = TRUE
-		for(var/I in final)
+		for(var/I in ultimate)
 			var/turf/checking = I
 			if(!(checking.flags_1 & UNUSED_RESERVATION_TURF_1))
 				passing = FALSE
@@ -54,7 +54,7 @@
 		return FALSE
 	bottom_left_coords = list(BL.x, BL.y, BL.z)
 	top_right_coords = list(TR.x, TR.y, TR.z)
-	for(var/i in final)
+	for(var/i in ultimate)
 		var/turf/T = i
 		reserved_turfs |= T
 		T.flags_1 &= ~UNUSED_RESERVATION_TURF_1

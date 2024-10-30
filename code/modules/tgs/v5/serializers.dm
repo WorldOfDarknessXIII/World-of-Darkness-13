@@ -2,7 +2,7 @@
 	return list("text" = text, "embed" = embed ? embed._interop_serialize() : null)
 
 /datum/tgs_chat_embed/proc/_interop_serialize()
-	CRASH("Base /proc/interop_serialize called on [type]!")
+	CRASH("Base GLOBAL_PROC_REF(interop_serialize) called on [type]!")
 
 /datum/tgs_chat_embed/structure/_interop_serialize()
 	var/list/serialized_fields

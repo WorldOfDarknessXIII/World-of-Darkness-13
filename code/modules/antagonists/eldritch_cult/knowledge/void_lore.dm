@@ -2,7 +2,7 @@
 	name = "Glimmer of Winter"
 	desc = "Opens up the path of void to you. Allows you to transmute a knife in a sub-zero temperature into a void blade."
 	gain_text = "I feel a shimmer in the air, atmosphere around me gets colder. I feel my body realizing the emptiness of existance. Something's watching me"
-	banned_knowledge = list(/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/final/ash_final,/datum/eldritch_knowledge/final/flesh_final,/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/final/rust_final)
+	banned_knowledge = list(/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/ultimate/ash_final,/datum/eldritch_knowledge/ultimate/flesh_final,/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/ultimate/rust_final)
 	next_knowledge = list(/datum/eldritch_knowledge/void_grasp)
 	required_atoms = list(/obj/item/kitchen/knife)
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
@@ -145,10 +145,10 @@
 	desc = "You gain an ability that let's you pull people around you closer to you."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/void_pull
-	next_knowledge = list(/datum/eldritch_knowledge/final/void_final,/datum/eldritch_knowledge/spell/blood_siphon,/datum/eldritch_knowledge/summon/rusty)
+	next_knowledge = list(/datum/eldritch_knowledge/ultimate/void_final,/datum/eldritch_knowledge/spell/blood_siphon,/datum/eldritch_knowledge/summon/rusty)
 	route = PATH_VOID
 
-/datum/eldritch_knowledge/final/void_final
+/datum/eldritch_knowledge/ultimate/void_final
 	name = "Waltz at the End of Time"
 	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual you will automatically silence people around you and will summon a snow storm around you."
 	gain_text = "The world falls into darkness. I stand in an empty plane, small flakes of ice fall from the sky. Aristocrat stand before me, he motions to me. We will play a waltz to the whispers of dying reality, as the world is destroyed before our eyes."
@@ -160,7 +160,7 @@
 	///Reference to the ongoing voidstrom that surrounds the heretic
 	var/datum/weather/void_storm/storm
 
-/datum/eldritch_knowledge/final/void_final/on_finished_recipe(mob/living/user, list/atoms, loc)
+/datum/eldritch_knowledge/ultimate/void_final/on_finished_recipe(mob/living/user, list/atoms, loc)
 	var/mob/living/carbon/human/H = user
 	H.physiology.brute_mod *= 0.5
 	H.physiology.burn_mod *= 0.5
@@ -171,14 +171,14 @@
 	sound_loop = new(list(user),TRUE,TRUE)
 	return ..()
 
-/datum/eldritch_knowledge/final/void_final/on_death()
+/datum/eldritch_knowledge/ultimate/void_final/on_death()
 	if(sound_loop)
 		sound_loop.stop()
 	if(storm)
 		storm.end()
 		QDEL_NULL(storm)
 
-/datum/eldritch_knowledge/final/void_final/on_life(mob/user)
+/datum/eldritch_knowledge/ultimate/void_final/on_life(mob/user)
 	. = ..()
 	if(!finished)
 		return

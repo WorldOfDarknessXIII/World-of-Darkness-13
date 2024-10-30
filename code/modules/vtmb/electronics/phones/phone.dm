@@ -53,7 +53,7 @@
 
 /obj/item/vamp/phone/Initialize()
 	..()
-	RegisterSignal(src, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
+	RegisterSignal(src, COMSIG_MOVABLE_HEAR, PROC_REF(handle_hearing))
 	if(!number || number == "")
 		number = create_unique_phone_number(exchange_num)
 		GLOB.phone_numbers_list += number
@@ -357,7 +357,7 @@
 	if(!talking && online)
 		playsound(src, 'code/modules/wod13/sounds/phone.ogg', 10, FALSE)
 		playsound(online, online.call_sound, 25, FALSE)
-		addtimer(CALLBACK(src, .proc/Recall, online, usar), 20)
+		addtimer(CALLBACK(src, PROC_REF(Recall), online, usar), 20)
 //	usar << browse(null, "window=phone")
 //	OpenMenu(usar)
 /*

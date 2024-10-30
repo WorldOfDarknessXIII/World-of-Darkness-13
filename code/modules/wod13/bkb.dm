@@ -29,7 +29,7 @@
 	playsound(src, 'code/modules/wod13/bkb.ogg', 25, TRUE)
 	last_activation_time = world.time
 	active = TRUE
-	addtimer(CALLBACK(src, .proc/remove_immunity, user), bkb_timer SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(remove_immunity), user), bkb_timer SECONDS)
 	user.spell_immunity = TRUE
 	if(bkb_timer > 3)
 		bkb_timer--

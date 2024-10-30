@@ -177,9 +177,9 @@
 		qdel(src)
 		return
 
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/check_owner_in_range)
-	RegisterSignal(slap_item, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), .proc/dropped_slap)
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_owner_in_range))
+	RegisterSignal(slap_item, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(dropped_slap))
+	RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(check_fake_out))
 
 /datum/status_effect/high_fiving/Destroy()
 	QDEL_NULL(slap_item)
@@ -195,7 +195,7 @@
 	if(!G)
 		return
 	LAZYADD(possible_takers, possible_candidate)
-	RegisterSignal(possible_candidate, COMSIG_MOVABLE_MOVED, .proc/check_taker_in_range)
+	RegisterSignal(possible_candidate, COMSIG_MOVABLE_MOVED, PROC_REF(check_taker_in_range))
 	G.setup(possible_candidate, owner, slap_item)
 
 /// Remove the alert and signals for the specified carbon mob
@@ -251,7 +251,7 @@
 /datum/status_effect/high_fiving/proc/too_slow_p1(mob/living/carbon/rube)
 	owner.visible_message("<span class='notice'>[rube] rushes in to high-five [owner], but-</span>", "<span class='nicegreen'>[rube] falls for your trick just as planned, lunging for a high-five that no longer exists! Classic!</span>", ignored_mobs=rube)
 	to_chat(rube, "<span class='nicegreen'>You go in for [owner]'s high-five, but-</span>")
-	addtimer(CALLBACK(src, .proc/too_slow_p2, rube), 0.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(too_slow_p2), rube), 0.5 SECONDS)
 
 /// Part two of the ultimate prank
 /datum/status_effect/high_fiving/proc/too_slow_p2(mob/living/carbon/rube)

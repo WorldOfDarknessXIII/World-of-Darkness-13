@@ -42,7 +42,7 @@ nobiliumsuppression = INFINITY
 					reaction_key = req_gas
 		reaction.major_gas = reaction_key
 		. += reaction
-	sortTim(., /proc/cmp_gas_reaction)
+	sortTim(., GLOBAL_PROC_REF(cmp_gas_reaction))
 
 /proc/cmp_gas_reaction(datum/gas_reaction/a, datum/gas_reaction/b) // compares lists of reactions by the maximum priority contained within the list
 	return b.priority - a.priority
@@ -170,13 +170,13 @@ nobiliumsuppression = INFINITY
 
 		energy_released += (FIRE_HYDROGEN_ENERGY_WEAK * burned_fuel)
 		cached_results["fire"] += burned_fuel
-		
+
 	else
 		burned_fuel = cached_gases[/datum/gas/tritium][MOLES]
 
 		cached_gases[/datum/gas/tritium][MOLES] -= burned_fuel / TRITIUM_BURN_TRIT_FACTOR
 		cached_gases[/datum/gas/oxygen][MOLES] -= burned_fuel
-		
+
 		ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
 		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel / TRITIUM_BURN_TRIT_FACTOR
 

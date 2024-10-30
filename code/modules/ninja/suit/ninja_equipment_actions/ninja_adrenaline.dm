@@ -31,7 +31,7 @@
 	a_boost = FALSE
 	to_chat(ninja, "<span class='notice'>You have used the adrenaline boost.</span>")
 	s_coold = 6
-	addtimer(CALLBACK(src, .proc/ninjaboost_after), 70)
+	addtimer(CALLBACK(src, PROC_REF(ninjaboost_after)), 70)
 
 /**
  * Proc called to inject the ninja with radium.

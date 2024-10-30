@@ -373,7 +373,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 /proc/recursive_list_print(list/output = list(), list/input, datum/callback/datum_handler, datum/callback/atom_handler)
 	output += "\[ "
 	for(var/i in 1 to input.len)
-		var/final = i == input.len
+		var/ultimate = i == input.len
 		var/key = input[i]
 
 		//print the key
@@ -401,7 +401,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 			else
 				output += " = [value]"
 
-		if(!final)
+		if(!ultimate)
 			output += " , "
 
 	output += " \]"
@@ -494,7 +494,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 					options |= SDQL2_OPTION_SEQUENTIAL
 
 /datum/sdql2_query/proc/ARun()
-	INVOKE_ASYNC(src, .proc/Run)
+	INVOKE_ASYNC(src, PROC_REF(Run))
 
 /datum/sdql2_query/proc/Run()
 	if(SDQL2_IS_RUNNING)
@@ -735,10 +735,10 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 				text_list += " <font color='gray'>at</font> [T] [ADMIN_COORDJMP(T)]"
 				a = T.loc
 			else
-				var/turf/final = get_turf(T)		//Recursive, hopefully?
-				if(istype(final))
-					text_list += " <font color='gray'>at</font> [final] [ADMIN_COORDJMP(final)]"
-					a = final.loc
+				var/turf/ultimate = get_turf(T)		//Recursive, hopefully?
+				if(istype(ultimate))
+					text_list += " <font color='gray'>at</font> [ultimate] [ADMIN_COORDJMP(ultimate)]"
+					a = ultimate.loc
 				else
 					text_list += " <font color='gray'>at</font> nonexistent location"
 			if(a)
