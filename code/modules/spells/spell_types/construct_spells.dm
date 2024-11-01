@@ -114,6 +114,19 @@
 	action_background_icon_state = "bg_demon"
 
 
+/obj/effect/proc_holder/spell/targeted/forcewall/salubri
+	name = "Shepherd's Wall"
+	desc = " The third eye opens and flares a bright white, illuminating a barely-visible ward around the Unicorn and his charge. No foe may breach this sacred shield. The Salubri himself must stand among those he defends as he generates this barrier; he cannot guard them from afar."
+	school = "transmutation"
+	charge_max = 400
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	wall_type = /obj/effect/forcefield/cult
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
+	action_icon_state = "cultforcewall"
+	action_background_icon_state = "bg_demon"
+
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift
 	name = "Phase Shift"
