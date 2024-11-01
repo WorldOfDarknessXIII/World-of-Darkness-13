@@ -2334,6 +2334,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("flavor_text")
 					var/new_flavor = input(user, "Choose your character's flavor text:", "Character Preference")  as text|null
 					if(new_flavor)
+						var/pattern = "<img src="
+						var/pos = findtext(new_flavor, pattern)
+						if(pos)
+							to_chat(src, "Embedding images is not allowed.")
+							return
 						if(length(new_flavor) > 3 * 512)
 							to_chat(user, "Too long...")
 						else
