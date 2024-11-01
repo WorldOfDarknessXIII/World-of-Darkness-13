@@ -28,16 +28,16 @@
 			if(DICE_FAILURE)
 				enter_frenzymod()
 				if(iskindred(src))
-					addtimer(CALLBACK(src, .proc/exit_frenzymod), 100*H.clane.frenzymod)
+					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 100*H.clane.frenzymod)
 				else
-					addtimer(CALLBACK(src, .proc/exit_frenzymod), 100)
+					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 100)
 				frenzy_hardness = 1
 			if(DICE_CRIT_FAILURE)
 				enter_frenzymod()
 				if(iskindred(src))
-					addtimer(CALLBACK(src, .proc/exit_frenzymod), 200*H.clane.frenzymod)
+					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 200*H.clane.frenzymod)
 				else
-					addtimer(CALLBACK(src, .proc/exit_frenzymod), 200)
+					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 200)
 				frenzy_hardness = 1
 			if(DICE_CRIT_WIN)
 				frenzy_hardness = max(1, frenzy_hardness-1)
@@ -161,7 +161,7 @@
 	if(isturf(loc))
 		frenzy_target = get_frenzy_targets()
 		if(frenzy_target)
-			var/datum/cb = CALLBACK(src,.proc/frenzystep)
+			var/datum/cb = CALLBACK(src, PROC_REF(frenzystep))
 			var/reqsteps = SSfrenzypool.wait/total_multiplicative_slowdown()
 			for(var/i in 1 to reqsteps)
 				addtimer(cb, (i - 1)*total_multiplicative_slowdown())

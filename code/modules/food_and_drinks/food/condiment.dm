@@ -25,7 +25,7 @@
 
 /obj/item/reagent_containers/food/condiment/update_icon_state()
 	. = ..()
-	if (reagents.reagent_list.len)
+	if (!reagents || reagents.reagent_list.len)
 		if (icon_preempty)
 			icon_state = icon_preempty
 			icon_preempty = null
@@ -239,8 +239,8 @@
 
 /obj/item/reagent_containers/food/condiment/pack/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_add, TRUE)
-	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, .proc/on_reagent_del, TRUE)
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_add), TRUE)
+	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_del), TRUE)
 
 /obj/item/reagent_containers/food/condiment/pack/update_icon()
 	return

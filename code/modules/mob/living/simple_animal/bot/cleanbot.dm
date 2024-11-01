@@ -18,7 +18,7 @@
 	pass_flags = PASSMOB | PASSFLAPS
 	path_image_color = "#993299"
 
-	//var/blood = 1
+	var/bloody = 1
 	var/trash = 0
 	var/pests = 0
 	var/drawn = 0
@@ -265,7 +265,7 @@
 
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
-			path = get_path_to(src, target.loc, /turf/proc/Distance_cardinal, 0, 30, id=access_card)
+			path = get_path_to(src, target.loc, TYPE_PROC_REF(/turf, Distance_cardinal), 0, 30, id=access_card)
 			if(!bot_move(target))
 				add_to_ignore(target)
 				target = null
@@ -293,10 +293,10 @@
 		/obj/effect/decal/remains
 		)
 
-	//if(blood)
-		//target_types += /obj/effect/decal/cleanable/xenoblood
-		//target_types += /obj/effect/decal/cleanable/blood
-		//target_types += /obj/effect/decal/cleanable/trail_holder
+	if(bloody)
+		target_types += /obj/effect/decal/cleanable/xenoblood
+		target_types += /obj/effect/decal/cleanable/blood
+		target_types += /obj/effect/decal/cleanable/trail_holder
 
 	if(pests)
 		target_types += /mob/living/simple_animal/hostile/cockroach
@@ -396,7 +396,7 @@ Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel panel is [open ? "opened" : "closed"]"})
 	if(!locked || issilicon(user)|| isAdminGhostAI(user))
-		//dat += "<BR>Clean Blood: <A href='?src=[REF(src)];operation=blood'>[blood ? "Yes" : "No"]</A>"
+		dat += "<BR>Clean Blood: <A href='?src=[REF(src)];operation=blood'>[bloody ? "Yes" : "No"]</A>"
 		dat += "<BR>Clean Trash: <A href='?src=[REF(src)];operation=trash'>[trash ? "Yes" : "No"]</A>"
 		dat += "<BR>Clean Graffiti: <A href='?src=[REF(src)];operation=drawn'>[drawn ? "Yes" : "No"]</A>"
 		dat += "<BR>Exterminate Pests: <A href='?src=[REF(src)];operation=pests'>[pests ? "Yes" : "No"]</A>"
@@ -408,8 +408,8 @@ Maintenance panel panel is [open ? "opened" : "closed"]"})
 		return 1
 	if(href_list["operation"])
 		switch(href_list["operation"])
-			//if("blood")
-				//blood = !blood
+			if("blood")
+				bloody = !bloody
 			if("pests")
 				pests = !pests
 			if("trash")

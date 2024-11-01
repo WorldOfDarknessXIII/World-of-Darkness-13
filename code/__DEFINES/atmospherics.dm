@@ -79,9 +79,9 @@
 #define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION	(T20C+400)
 
 //Excited Group Cleanup helper defines
-#define EX_CLEANUP_BREAKDOWN 1
-#define EX_CLEANUP_DISMANTLE 2
-#define EX_CLEANUP_TURFS 3
+//#define EX_CLEANUP_BREAKDOWN 1
+//#define EX_CLEANUP_DISMANTLE 2
+//#define EX_CLEANUP_TURFS 3
 
 //HEAT TRANSFER COEFFICIENTS
 //Must be between 0 and 1. Values closer to 1 equalize temperature faster

@@ -115,7 +115,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if (picked && is_station_level(picked.z))
 			GLOB.teleportlocs[AR.name] = AR
 
-	sortTim(GLOB.teleportlocs, /proc/cmp_text_asc)
+	sortTim(GLOB.teleportlocs, GLOBAL_PROC_REF(cmp_text_asc))
 
 /**
  * Called when an area loads
@@ -327,7 +327,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 				if(D.operating)
 					D.nextstate = opening ? FIREDOOR_OPEN : FIREDOOR_CLOSED
 				else if(!(D.density ^ opening))
-					INVOKE_ASYNC(D, (opening ? /obj/machinery/door/firedoor.proc/open : /obj/machinery/door/firedoor.proc/close))
+					INVOKE_ASYNC(D, (opening ? TYPE_PROC_REF(/obj/machinery/door/firedoor, open) : TYPE_PROC_REF(/obj/machinery/door/firedoor, close)))
 
 /**
  * Generate a firealarm alert for this area
@@ -428,7 +428,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		var/mob/living/silicon/SILICON = i
 		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
 			//Cancel silicon alert after 1 minute
-			addtimer(CALLBACK(SILICON, /mob/living/silicon.proc/cancelAlarm,"Burglar",src,trigger), 600)
+			addtimer(CALLBACK(SILICON, TYPE_PROC_REF(/mob/living/silicon, cancelAlarm),"Burglar",src,trigger), 600)
 
 /**
  * Trigger the fire alarm visual affects in an area
@@ -478,21 +478,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			if(F)
 				qdel(F)
 
-/*/area/proc/fog_setup()
-	for(var/turf/open/O in src)
-		var/obj/effect/realistic_fog/F = new(O)
-		GLOB.fog_suka += F
-
-/area/proc/rain_setup()
-	for(var/turf/open/O in src)
-		var/obj/effect/new_rain/R = new(O)
-		GLOB.rain_suka += R
-
-/area/proc/snow_setup()
-	for(var/turf/open/O in src)
-		var/obj/effect/new_snow/S = new(O)
-		GLOB.snow_suka += S
-*/
 /area/proc/set_fire_alarm_effect()
 	fire = TRUE
 	if(!triggered_firealarms) //If there aren't any fires/breaches
@@ -654,7 +639,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(!L.client.played)
 			SEND_SOUND(L, sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))
 			L.client.played = TRUE
-			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
+			addtimer(CALLBACK(L.client, TYPE_PROC_REF(/client, ResetAmbiencePlayed)), 600)
 
 ///Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.
 /area/proc/update_beauty()

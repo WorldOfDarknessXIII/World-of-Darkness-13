@@ -73,12 +73,12 @@
     keybind_signal = COMSIG_KB_MOB_JUMP_DOWN
 
 /datum/keybinding/mob/jump/down(client/user)
-    . = ..()
-    if(.)
-        return
-    var/mob/M = user.mob
-    M.jump(M.loc) // Call the jump function when MMB is pressed
-    return TRUE
+	. = ..()
+	if(.)
+		return
+	var/mob/M = user.mob
+	M.jump(M.loc) // Call the jump function when MMB is pressed
+	return TRUE
 
 /datum/keybinding/mob/activate_inhand
 	hotkey_keys = list("Z", "Southeast") // Southeast = PAGEDOWN

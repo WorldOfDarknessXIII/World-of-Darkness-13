@@ -334,6 +334,7 @@
 ////////////////////Excited Group Cleanup///////////////////////
 
 ///For dealing with reforming excited groups, this prevents clog in process_cell
+/*
 /turf/open/proc/cleanup_group(fire_count, breakdown, dismantle)
 	current_cycle = fire_count + 0.5 //It works, I know it's dumb but it works
 
@@ -367,7 +368,7 @@
 		our_excited_group.breakdown_cooldown = breakdown //Update with the old data
 		our_excited_group.dismantle_cooldown = dismantle
 	flags_1 &= ~EXCITED_CLEANUP_1
-
+*/
 //////////////////////////SPACEWIND/////////////////////////////
 
 /turf/open/proc/consider_pressure_difference(turf/T, difference)
@@ -521,16 +522,16 @@
 	garbage_collect()
 
 //Breaks down the excited group, this doesn't sleep the turfs mind, just removes them from the group
-/datum/excited_group/proc/garbage_collect(will_cleanup = FALSE)
+/datum/excited_group/proc/garbage_collect()
 	if(display_id) //If we ever did make those changes
 		hide_turfs()
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		T.excited_group = null
-		if(will_cleanup)
-			T.flags_1 |= EXCITED_CLEANUP_1
-	if(will_cleanup)
-		SSair.add_to_cleanup(src)
+//		if(will_cleanup)
+//			T.flags_1 |= EXCITED_CLEANUP_1
+//	if(will_cleanup)
+//		SSair.add_to_cleanup(src)
 	turf_list.Cut()
 	SSair.excited_groups -= src
 	if(SSair.currentpart == SSAIR_EXCITEDGROUPS)

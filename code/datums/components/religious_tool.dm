@@ -27,8 +27,8 @@
 		catalyst_type = override_catalyst_type
 
 /datum/component/religious_tool/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY,.proc/AttemptActions)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(AttemptActions))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/religious_tool/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE))
@@ -58,14 +58,14 @@
 		if(!(operation_flags & RELIGION_TOOL_SECTSELECT))
 			return
 		//At this point you're intentionally trying to select a sect.
-		INVOKE_ASYNC(src, .proc/select_sect, user)
+		INVOKE_ASYNC(src, PROC_REF(select_sect), user)
 		return COMPONENT_NO_AFTERATTACK
 
 	/**********Rite Invocation**********/
 	else if(istype(the_item, catalyst_type))
 		if(!(operation_flags & RELIGION_TOOL_INVOKE))
 			return
-		INVOKE_ASYNC(src, .proc/perform_rite, user)
+		INVOKE_ASYNC(src, PROC_REF(perform_rite), user)
 		return (force_catalyst_afterattack ? NONE : COMPONENT_NO_AFTERATTACK)
 
 	/**********Sacrificing**********/

@@ -23,7 +23,7 @@
 		qdel(src)
 		return
 	if(!friend.client && friend_initialized)
-		addtimer(CALLBACK(src, .proc/reroll_friend), 600)
+		addtimer(CALLBACK(src, PROC_REF(reroll_friend)), 600)
 
 /datum/brain_trauma/special/imaginary_friend/on_death()
 	..()
@@ -69,7 +69,7 @@
 	var/icon/human_image
 	var/image/current_image
 	var/hidden = FALSE
-	//var/move_delay = 0
+	var/friend_move_delay = 0
 	var/mob/living/carbon/owner
 	var/datum/brain_trauma/special/imaginary_friend/trauma
 
@@ -94,7 +94,7 @@
 	trauma = _trauma
 	owner = trauma.owner
 
-	INVOKE_ASYNC(src, .proc/setup_friend)
+	INVOKE_ASYNC(src, PROC_REF(setup_friend))
 
 	join = new
 	join.Grant(src)
@@ -175,22 +175,22 @@
 	if(owner.client)
 		var/mutable_appearance/MA = mutable_appearance('icons/mob/talk.dmi', src, "default[say_test(message)]", FLY_LAYER)
 		MA.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-		INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, MA, list(owner.client), 30)
+		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay), MA, list(owner.client), 30)
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(M, owner)
 		to_chat(M, "[link] [dead_rendered]")
 
-/*mob/camera/imaginary_friend/Move(NewLoc, Dir = 0)
-//	if(world.time < move_delay)
-//return FALSE
+/mob/camera/imaginary_friend/Move(NewLoc, Dir = 0)
+	if(world.time < friend_move_delay)
+		return FALSE
 	if(get_dist(src, owner) > 9)
 		recall()
-		move_delay = world.time + 10
+		friend_move_delay = world.time + 10
 		return FALSE
 	forceMove(NewLoc)
-	move_delay = world.time + 1
-*/
+	friend_move_delay = world.time + 1
+
 /mob/camera/imaginary_friend/forceMove(atom/destination)
 	dir = get_dir(get_turf(src), destination)
 	loc = destination

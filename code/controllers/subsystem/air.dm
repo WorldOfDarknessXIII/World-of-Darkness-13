@@ -147,18 +147,18 @@ SUBSYSTEM_DEF(air)
 			return
 		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(cached_cost))
 		resumed = FALSE
-		currentpart = SSAIR_EXCITEDCLEANUP
+//		currentpart = SSAIR_EXCITEDCLEANUP
 
-	if(currentpart == SSAIR_EXCITEDCLEANUP)
-		timer = TICK_USAGE_REAL
-		if(!resumed)
-			cached_cost = 0
-		process_excited_cleanup(resumed)
-		cached_cost += TICK_USAGE_REAL - timer
-		if(state != SS_RUNNING)
-			return
-		cost_ex_cleanup = MC_AVERAGE(cost_ex_cleanup, TICK_DELTA_TO_MS(cached_cost))
-		resumed = FALSE
+//	if(currentpart == SSAIR_EXCITEDCLEANUP)
+//		timer = TICK_USAGE_REAL
+//		if(!resumed)
+//			cached_cost = 0
+//		process_excited_cleanup(resumed)
+//		cached_cost += TICK_USAGE_REAL - timer
+//		if(state != SS_RUNNING)
+//			return
+//		cost_ex_cleanup = MC_AVERAGE(cost_ex_cleanup, TICK_DELTA_TO_MS(cached_cost))
+//		resumed = FALSE
 		currentpart = SSAIR_EXCITEDGROUPS
 
 	if(currentpart == SSAIR_EXCITEDGROUPS)
@@ -309,7 +309,7 @@ SUBSYSTEM_DEF(air)
 			T.process_cell(fire_count)
 		if (MC_TICK_CHECK)
 			return
-
+/*
 /datum/controller/subsystem/air/proc/process_excited_cleanup(resumed = FALSE)
 	//cache for sanic speed
 	var/fire_count = times_fired
@@ -333,7 +333,7 @@ SUBSYSTEM_DEF(air)
 			if (MC_TICK_CHECK)
 				return
 		currentrun.len-- //If we process all the turfs in a packet, del it.
-
+*/
 /datum/controller/subsystem/air/proc/process_excited_groups(resumed = FALSE)
 	if (!resumed)
 		src.currentrun = excited_groups.Copy()
@@ -364,7 +364,7 @@ SUBSYSTEM_DEF(air)
 		if(T.excited_group)
 			//If this fires during active turfs it'll cause a slight removal of active turfs, as they breakdown if they have no excited group
 			//The group also expands by a tile per rebuild on each edge, suffering
-			T.excited_group.garbage_collect(will_cleanup = TRUE) //Poke everybody in the group and reform
+			T.excited_group.garbage_collect() //Poke everybody in the group and reform
 
 ///Puts an active turf to sleep so it doesn't process. Do this without cleaning up its excited group.
 /datum/controller/subsystem/air/proc/sleep_active_turf(turf/open/T)
@@ -402,9 +402,9 @@ SUBSYSTEM_DEF(air)
 	else
 		T.requires_activation = TRUE
 
-/datum/controller/subsystem/air/proc/add_to_cleanup(datum/excited_group/ex_grp)
+//datum/controller/subsystem/air/proc/add_to_cleanup(datum/excited_group/ex_grp)
 	//Store the cooldowns. If we're already doing cleanup, DO NOT add to the currently processing list, infinite loop man bad.
-	cleanup_ex_groups += list(list(ex_grp.breakdown_cooldown, ex_grp.dismantle_cooldown, ex_grp.turf_list.Copy()))
+//	cleanup_ex_groups += list(list(ex_grp.breakdown_cooldown, ex_grp.dismantle_cooldown, ex_grp.turf_list.Copy()))
 
 /datum/controller/subsystem/air/StartLoadingMap()
 	LAZYINITLIST(queued_for_activation)

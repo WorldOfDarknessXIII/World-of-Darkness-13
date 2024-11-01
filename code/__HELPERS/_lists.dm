@@ -311,20 +311,20 @@
 
 //for sorting clients or mobs by ckey
 /proc/sortKey(list/L, order=1)
-	return sortTim(L, order >= 0 ? /proc/cmp_ckey_asc : /proc/cmp_ckey_dsc)
+	return sortTim(L, order >= 0 ? GLOBAL_PROC_REF(cmp_ckey_asc) : GLOBAL_PROC_REF(cmp_ckey_dsc))
 
 //Specifically for record datums in a list.
 /proc/sortRecord(list/L, field = "name", order = 1)
 	GLOB.cmp_field = field
-	return sortTim(L, order >= 0 ? /proc/cmp_records_asc : /proc/cmp_records_dsc)
+	return sortTim(L, order >= 0 ? GLOBAL_PROC_REF(cmp_records_asc) : GLOBAL_PROC_REF(cmp_records_dsc))
 
 //any value in a list
-/proc/sortList(list/L, cmp=/proc/cmp_text_asc)
+/proc/sortList(list/L, cmp= GLOBAL_PROC_REF(cmp_text_asc))
 	return sortTim(L.Copy(), cmp)
 
 //uses sortList() but uses the var's name specifically. This should probably be using mergeAtom() instead
 /proc/sortNames(list/L, order=1)
-	return sortTim(L.Copy(), order >= 0 ? /proc/cmp_name_asc : /proc/cmp_name_dsc)
+	return sortTim(L.Copy(), order >= 0 ? GLOBAL_PROC_REF(cmp_name_asc) : GLOBAL_PROC_REF(cmp_name_dsc))
 
 
 //Converts a bitfield to a list of numbers (or words if a wordlist is provided)
@@ -556,3 +556,48 @@
 			return FALSE
 
 	return TRUE
+
+/proc/move_element(list/inserted_list, from_index, to_index)
+	if(from_index == to_index || from_index + 1 == to_index) //no need to move
+		return
+	if(from_index > to_index)
+		++from_index //since a null will be inserted before from_index, the index needs to be nudged right by one
+
+	inserted_list.Insert(to_index, null)
+	inserted_list.Swap(from_index, to_index)
+	inserted_list.Cut(from_index, from_index + 1)
+
+/proc/move_range(list/inserted_list, from_index, to_index, len = 1)
+	var/distance = abs(to_index - from_index)
+	if(len >= distance) //there are more elements to be moved than the distance to be moved. Therefore the same result can be achieved (with fewer operations) by moving elements between where we are and where we are going. The result being, our range we are moving is shifted left or right by dist elements
+		if(from_index <= to_index)
+			return //no need to move
+		from_index += len //we want to shift left instead of right
+
+		for(var/i in 1 to distance)
+			inserted_list.Insert(from_index, null)
+			inserted_list.Swap(from_index, to_index)
+			inserted_list.Cut(to_index, to_index + 1)
+	else
+		if(from_index > to_index)
+			from_index += len
+
+		for(var/i in 1 to len)
+			inserted_list.Insert(to_index, null)
+			inserted_list.Swap(from_index, to_index)
+			inserted_list.Cut(from_index, from_index + 1)
+
+/proc/reverse_range(list/inserted_list, start = 1, end = 0)
+	if(inserted_list.len)
+		start = start % inserted_list.len
+		end = end % (inserted_list.len + 1)
+		if(start <= 0)
+			start += inserted_list.len
+		if(end <= 0)
+			end += inserted_list.len + 1
+
+		--end
+		while(start < end)
+			inserted_list.Swap(start++, end--)
+
+	return inserted_list

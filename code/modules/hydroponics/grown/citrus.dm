@@ -118,7 +118,7 @@
 		C.throw_mode_on()
 	icon_state = "firelemon_active"
 	playsound(loc, 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
-	addtimer(CALLBACK(src, .proc/detonate), rand(10, 60))
+	addtimer(CALLBACK(src, PROC_REF(detonate)), rand(10, 60))
 
 /obj/item/food/grown/firelemon/burn()
 	detonate()

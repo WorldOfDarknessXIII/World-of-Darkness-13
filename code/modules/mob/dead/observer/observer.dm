@@ -147,7 +147,7 @@ var/list/CMNoir = list(0.3,0.3,0.3,0,\
 	real_name = name
 
 //	if(!fun_verbs)
-//		remove_verb(src, /mob/dead/observer/verb/boo)
+//		remove_verb(src, TYPE_VERB_REF(/mob/dead/observer, boo))
 	remove_verb(src, /mob/dead/observer/verb/possess)
 
 	add_to_dead_mob_list()
@@ -173,7 +173,7 @@ var/list/CMNoir = list(0.3,0.3,0.3,0,\
 	var/old_color = color
 	color = "#960000"
 	animate(src, color = old_color, time = 10, flags = ANIMATION_PARALLEL)
-	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 10)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 10)
 
 /mob/dead/observer/Destroy()
 	if(data_huds_on)
@@ -694,7 +694,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	return TRUE
 
 //this is a mob verb instead of atom for performance reasons
-//see /mob/verb/examinate() in mob.dm for more info
+//see TYPE_VERB_REF(/mob, examinate)() in mob.dm for more info
 //overridden here and in /mob/living for different point span classes and sanity checks
 /mob/dead/observer/pointed(atom/A as mob|obj|turf in view(client.view, src))
 	if(!..())

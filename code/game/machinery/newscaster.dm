@@ -854,7 +854,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 75, TRUE)
 		alert = TRUE
 		update_icon()
-		addtimer(CALLBACK(src,.proc/remove_alert),alert_delay,TIMER_UNIQUE|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(remove_alert)),alert_delay,TIMER_UNIQUE|TIMER_OVERRIDE)
 
 	else if(!channel && update_alert)
 		say("Attention! Wanted issue distributed!")
@@ -884,10 +884,11 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 	return(TOXLOSS)
 
-///obj/item/newspaper/examine(mob/user)
-//	. = ..()
-//	to_chat(user, "<B>Weather Forecast:</B>")
-//	SScityweather.get_forecast(user)
+/*
+/obj/item/newspaper/examine(mob/user)
+	. = ..()
+	to_chat(user, "<B>Weather Forecast:</B>")
+*/
 
 /*
 /obj/item/newspaper/attack_self(mob/user)

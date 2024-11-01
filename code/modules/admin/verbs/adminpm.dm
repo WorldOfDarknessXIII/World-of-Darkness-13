@@ -226,7 +226,8 @@
 				admin_ticket_log(src, interaction_message)
 				if(recipient != src)	//reeee
 					admin_ticket_log(recipient, interaction_message)
-				SSblackbox.LogAhelp(current_ticket.id, "Reply", msg, recipient.ckey, src.ckey)
+				if(current_ticket != null) //TODO: sometimes it's null, FIXME
+					SSblackbox.LogAhelp(current_ticket.id, "Reply", msg, recipient.ckey, src.ckey)
 			else		//recipient is an admin but sender is not
 				var/replymsg = "Reply PM from-<b>[key_name(src, recipient, 1)]</b>: <span class='linkify'>[keywordparsedmsg]</span>"
 				admin_ticket_log(src, "<font color='red'>[replymsg]</font>")
@@ -279,7 +280,7 @@
 
 				//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
 				if(CONFIG_GET(flag/popup_admin_pm))
-					INVOKE_ASYNC(src, .proc/popup_admin_pm, recipient, msg)
+					INVOKE_ASYNC(src, PROC_REF(popup_admin_pm), recipient, msg)
 
 			else		//neither are admins
 				if(!current_ticket)

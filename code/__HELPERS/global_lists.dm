@@ -43,22 +43,22 @@ GLOBAL_LIST_EMPTY(auspices_list)
 	for(var/spath in subtypesof(/datum/species))
 		var/datum/species/S = new spath()
 		GLOB.species_list[S.id] = spath
-	sortList(GLOB.species_list, /proc/cmp_typepaths_asc)
+	sortList(GLOB.species_list, GLOBAL_PROC_REF(cmp_typepaths_asc))
 
 	for(var/spath in subtypesof(/datum/vampireclane))
 		var/datum/vampireclane/S = new spath()
 		GLOB.clanes_list[S.name] = spath
-	sortList(GLOB.clanes_list, /proc/cmp_typepaths_asc)
+	sortList(GLOB.clanes_list, GLOBAL_PROC_REF(cmp_typepaths_asc))
 
 	for(var/spath in subtypesof(/datum/auspice))
 		var/datum/auspice/S = new spath()
 		GLOB.auspices_list[S.name] = spath
-	sortList(GLOB.auspices_list, /proc/cmp_typepaths_asc)
+	sortList(GLOB.auspices_list, GLOBAL_PROC_REF(cmp_typepaths_asc))
 
 	//Surgeries
 	for(var/path in subtypesof(/datum/surgery))
 		GLOB.surgeries_list += new path()
-	sortList(GLOB.surgeries_list, /proc/cmp_typepaths_asc)
+	sortList(GLOB.surgeries_list, GLOBAL_PROC_REF(cmp_typepaths_asc))
 
 	// Keybindings
 	init_keybindings()
@@ -71,7 +71,7 @@ GLOBAL_LIST_EMPTY(auspices_list)
 /proc/init_crafting_recipes(list/crafting_recipes)
 	for(var/path in subtypesof(/datum/crafting_recipe))
 		var/datum/crafting_recipe/recipe = new path()
-		recipe.reqs = sortList(recipe.reqs, /proc/cmp_crafting_req_priority)
+		recipe.reqs = sortList(recipe.reqs, GLOBAL_PROC_REF(cmp_crafting_req_priority))
 		crafting_recipes += recipe
 	return crafting_recipes
 

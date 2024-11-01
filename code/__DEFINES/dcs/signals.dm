@@ -387,7 +387,7 @@
 #define COMSIG_MOB_APPLY_DAMGE	"mob_apply_damage"
 ///from base of /mob/throw_item(): (atom/target)
 #define COMSIG_MOB_THROW "mob_throw"
-///from base of /mob/verb/examinate(): (atom/target)
+///from base of TYPE_VERB_REF(/mob, examinate)(): (atom/target)
 #define COMSIG_MOB_EXAMINATE "mob_examinate"
 ///from /mob/living/handle_eye_contact(): (mob/living/other_mob)
 #define COMSIG_MOB_EYECONTACT "mob_eyecontact"

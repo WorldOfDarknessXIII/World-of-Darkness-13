@@ -47,9 +47,8 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
   // Basic checks to detect whether this page runs in BYOND
   var isByond = tridentVersion !== null
     && location.hostname === '127.0.0.1'
-    && location.search !== '?external';
-    //As of BYOND 515 the path doesn't seem to include tmp dir anymore if you're trying to open tgui in external browser and looking why it doesn't work
     //&& location.pathname.indexOf('/tmp') === 0
+    && location.search !== '?external';
 
   // Version constants
   Byond.IS_BYOND = isByond;
@@ -195,7 +194,7 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
     var len = styleSheets.length;
     for (var i = 0; i < len; i++) {
       var styleSheet = styleSheets[i];
-      if (styleSheet.href === undefined)
+      if(styleSheet.href === undefined)
         continue;
       if (styleSheet.href.indexOf(url) !== -1) {
         return styleSheet.rules.length > 0;
@@ -546,7 +545,7 @@ o8o        `8    "888"  `Y8bood8P'  8""88888P'
 A fatal exception has occurred at 002B:C562F1B7 in TGUI.
 The current application will be terminated.
 Send the copy of the following stack trace to an authorized
-Nanotrasen incident handler at https://github.com/WorldOfDarknessXIII/World-of-Darkness-13.
+Nanotrasen incident handler at https://github.com/tgstation/tgstation.
 Thank you for your cooperation.
 </marquee>
 <div id="FatalError__stack" class="FatalError__stack"></div>

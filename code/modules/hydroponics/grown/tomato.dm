@@ -133,7 +133,7 @@
 		return
 	to_chat(user, "<span class='notice'>You begin to awaken the Killer Tomato...</span>")
 	awakening = TRUE
-	addtimer(CALLBACK(src, .proc/awaken), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(awaken)), 3 SECONDS)
 	log_game("[key_name(user)] awakened a killer tomato at [AREACOORD(user)].")
 
 /obj/item/food/grown/tomato/killer/proc/awaken()

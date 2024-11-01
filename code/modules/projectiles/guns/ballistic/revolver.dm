@@ -51,7 +51,7 @@
 		playsound(usr, "revolver_spin", 30, FALSE)
 		usr.visible_message("<span class='notice'>[usr] spins [src]'s chamber.</span>", "<span class='notice'>You spin [src]'s chamber.</span>")
 	else
-		verbs -= /obj/item/gun/ballistic/revolver/verb/spin
+		verbs -= TYPE_VERB_REF(/obj/item/gun/ballistic/revolver, spin)
 
 /obj/item/gun/ballistic/revolver/proc/do_spin()
 	var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine

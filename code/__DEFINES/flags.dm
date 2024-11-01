@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Blocks ruins spawning on the turf
 #define NO_RUINS_1					(1<<10)
 /// Should this tile be cleaned up and reinserted into an excited group?
-#define EXCITED_CLEANUP_1 (1 << 13)
+//#define EXCITED_CLEANUP_1 (1 << 13)
 
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
