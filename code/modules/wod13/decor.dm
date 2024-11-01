@@ -515,6 +515,14 @@
 	name = "speed limit sign"
 	icon_state = "speed50"
 
+/obj/structure/roadsign/speedlimit40
+	name = "speed limit sign"
+	icon_state = "speed40"
+
+/obj/structure/roadsign/speedlimit25
+	name = "speed limit sign"
+	icon_state = "speed25"
+
 /obj/structure/roadsign/warningtrafficlight
 	name = "traffic light warning sign"
 	icon_state = "warningtrafficlight"

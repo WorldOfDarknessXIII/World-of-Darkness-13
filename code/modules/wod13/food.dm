@@ -12,7 +12,7 @@
 
 /obj/item/food/vampire/burger
 	name = "burger"
-	desc = "The cornerstone of every nutritious breakfast."
+	desc = "The cornerstone of every american trucker's breakfast."
 	icon_state = "burger"
 	bite_consumption = 3
 	tastes = list("bun" = 2, "beef patty" = 4)
@@ -35,7 +35,7 @@
 	icon_state = "donut[rand(1, 3)]"
 
 /obj/item/food/vampire/pizza
-	name = "pizza slice"
+	name = "square pizza slice"
 	desc = "A nutritious slice of pizza."
 	icon_state = "pizza"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
@@ -44,7 +44,7 @@
 
 /obj/item/food/vampire/taco
 	name = "taco"
-	desc = "A traditional taco with meat, cheese, and lettuce."
+	desc = "A traditional cornshell taco with meat, cheese, and lettuce."
 	icon_state = "taco"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("taco" = 4, "meat" = 2, "cheese" = 2, "lettuce" = 1)
@@ -85,14 +85,14 @@
 	return ..()
 
 /obj/item/trash/vampirenugget
-	name = "chicken nugget bone"
+	name = "chicken wing bone"
 	icon_state = "nugget0"
 	icon = 'code/modules/wod13/items.dmi'
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 
 /obj/item/food/vampire/nugget
-	name = "chicken nugget"
-	desc = "Big calories for a big man."
+	name = "chicken wing"
+	desc = "Big Wing for a big man."
 	icon_state = "nugget1"
 	trash_type = /obj/item/trash/vampirenugget
 	bite_consumption = 3
@@ -102,14 +102,14 @@
 	eat_time = 15
 
 /obj/item/trash/vampirecrisps
-	name = "crisps wrapper"
+	name = "chips wrapper"
 	icon_state = "crisps0"
 	icon = 'code/modules/wod13/items.dmi'
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 
 /obj/item/food/vampire/crisps
-	name = "crisps"
-	desc = "\"Days\" crisps... Crispy!"
+	name = "chips"
+	desc = "\"Days\" chips... Crispy!"
 	icon_state = "crisps2"
 	trash_type = /obj/item/trash/vampirecrisps
 	bite_consumption = 1
@@ -182,7 +182,7 @@
 	custom_price = PAYCHECK_EASY
 
 /obj/item/reagent_containers/food/drinks/bottle/vampirecola
-	name = "cola bottle"
+	name = "two liter cola bottle"
 	desc = "Coca cola espuma..."
 	icon_state = "cola1"
 	icon = 'code/modules/wod13/items.dmi'
@@ -230,7 +230,7 @@
 	fill_icon_thresholds = null
 
 /obj/machinery/mineral/equipment_vendor/fastfood
-	name = "order menu"
+	name = "Clerk Catalogue"
 	desc = "Order some fastfood here."
 	icon = 'code/modules/wod13/props.dmi'
 	icon_state = "menu"
@@ -245,10 +245,10 @@
 		points = 0
 
 /obj/machinery/mineral/equipment_vendor/fastfood/bacotell
-	prize_list = list(new /datum/data/mining_equipment("pizza",	/obj/item/food/vampire/pizza,	15),
+	prize_list = list(new /datum/data/mining_equipment("square pizza",	/obj/item/food/vampire/pizza,	15),
 		new /datum/data/mining_equipment("taco",	/obj/item/food/vampire/taco,	10),
 		new /datum/data/mining_equipment("burger",	/obj/item/food/vampire/burger,	20),
-		new /datum/data/mining_equipment("cola bottle",	/obj/item/reagent_containers/food/drinks/bottle/vampirecola,	10),
+		new /datum/data/mining_equipment("two liter cola bottle",	/obj/item/reagent_containers/food/drinks/bottle/vampirecola,	10),
 		new /datum/data/mining_equipment("cola can",	/obj/item/reagent_containers/food/drinks/soda_cans/vampirecola,	5)
 	)
 
@@ -260,72 +260,89 @@
 	)
 
 /obj/machinery/mineral/equipment_vendor/fastfood/gummaguts
-	prize_list = list(new /datum/data/mining_equipment("chicken nugget",	/obj/item/food/vampire/nugget,	5),
+	prize_list = list(new /datum/data/mining_equipment("chicken wing",	/obj/item/food/vampire/nugget,	5),
 		new /datum/data/mining_equipment("burger",	/obj/item/food/vampire/burger,	15),
-		new /datum/data/mining_equipment("pizza",	/obj/item/food/vampire/pizza,	10),
-		new /datum/data/mining_equipment("cola bottle",	/obj/item/reagent_containers/food/drinks/bottle/vampirecola,	10),
+		new /datum/data/mining_equipment("square pizza",	/obj/item/food/vampire/pizza,	10),
+		new /datum/data/mining_equipment("two liter cola bottle",	/obj/item/reagent_containers/food/drinks/bottle/vampirecola,	10),
 		new /datum/data/mining_equipment("cola can",	/obj/item/reagent_containers/food/drinks/soda_cans/vampirecola,	5)
 	)
 
 /obj/machinery/mineral/equipment_vendor/fastfood/products
+	desc = "Purchase junkfood and crap."
 	prize_list = list(new /datum/data/mining_equipment("chocolate bar",	/obj/item/food/vampire/bar,	3),
-		new /datum/data/mining_equipment("crisps",	/obj/item/food/vampire/crisps,	5),
+		new /datum/data/mining_equipment("chips",	/obj/item/food/vampire/crisps,	5),
 		new /datum/data/mining_equipment("water bottle",	/obj/item/reagent_containers/food/drinks/bottle/vampirewater,	5),
 		new /datum/data/mining_equipment("soda can",	/obj/item/reagent_containers/food/drinks/soda_cans/vampiresoda,	3),
-		new /datum/data/mining_equipment("cola bottle",	/obj/item/reagent_containers/food/drinks/bottle/vampirecola,	7),
+		new /datum/data/mining_equipment("two liter cola bottle",	/obj/item/reagent_containers/food/drinks/bottle/vampirecola,	7),
 		new /datum/data/mining_equipment("cola can",	/obj/item/reagent_containers/food/drinks/soda_cans/vampirecola,	5),
 		new /datum/data/mining_equipment("milk",	/obj/item/reagent_containers/food/condiment/vampiremilk,	5),
 		new /datum/data/mining_equipment("beer bottle",	/obj/item/reagent_containers/food/drinks/beer/vampire,	10)
 	)
 
 /obj/machinery/mineral/equipment_vendor/fastfood/clothing
-	prize_list = list(new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/larry,	15),
-		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/bandit,	15),
-		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/biker,	15),
-		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/mechanic,	20),
-		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/sport,	20),
-		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/office,	20),
-		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/emo,	20),
-		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/black,	20),
-		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/red,	20),
-		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/gothic,	20),
-		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/sexy,	25),
-		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/pimp,	25),
-		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/rich,	25),
-		new /datum/data/mining_equipment("clothes",	/obj/item/clothing/under/vampire/business,	25),
-		new /datum/data/mining_equipment("shoes",	/obj/item/clothing/shoes/vampire,	10),
-		new /datum/data/mining_equipment("shoes",	/obj/item/clothing/shoes/vampire/brown,	10),
-		new /datum/data/mining_equipment("shoes",	/obj/item/clothing/shoes/vampire/white,	10),
-		new /datum/data/mining_equipment("shoes",	/obj/item/clothing/shoes/vampire/jackboots,	10),
-		new /datum/data/mining_equipment("shoes",	/obj/item/clothing/shoes/vampire/jackboots/work,	10),
-		new /datum/data/mining_equipment("shoes",	/obj/item/clothing/shoes/vampire/sneakers,	10),
-		new /datum/data/mining_equipment("shoes",	/obj/item/clothing/shoes/vampire/sneakers/red,	10),
-		new /datum/data/mining_equipment("shoes",	/obj/item/clothing/shoes/vampire/heels,	10),
-		new /datum/data/mining_equipment("shoes",	/obj/item/clothing/shoes/vampire/heels/red,	10),
-		new /datum/data/mining_equipment("suit",	/obj/item/clothing/suit/vampire/coat,	15),
-		new /datum/data/mining_equipment("suit",	/obj/item/clothing/suit/vampire/coat/alt,	15),
-		new /datum/data/mining_equipment("suit",	/obj/item/clothing/suit/vampire/jacket,	15),
-		new /datum/data/mining_equipment("suit",	/obj/item/clothing/suit/vampire/trench,	15),
-		new /datum/data/mining_equipment("suit",	/obj/item/clothing/suit/vampire/trench/alt,	15),
-		new /datum/data/mining_equipment("suit",	/obj/item/clothing/suit/vampire/labcoat,	15),
-		new /datum/data/mining_equipment("glasses",	/obj/item/clothing/glasses/vampire/yellow,	20),
-		new /datum/data/mining_equipment("glasses",	/obj/item/clothing/glasses/vampire/sun,	20),
-		new /datum/data/mining_equipment("glasses",	/obj/item/clothing/glasses/vampire/perception,	20),
-		new /datum/data/mining_equipment("gloves", /obj/item/clothing/gloves/vampire/leather,	25),
-		new /datum/data/mining_equipment("gloves", /obj/item/clothing/gloves/vampire/cleaning,	15),
-		new /datum/data/mining_equipment("gloves", /obj/item/clothing/gloves/vampire/latex,	5),
-		new /datum/data/mining_equipment("gloves", /obj/item/clothing/gloves/vampire/work,	45),
-		new /datum/data/mining_equipment("hat",	/obj/item/clothing/head/vampire/bandana,	10),
-		new /datum/data/mining_equipment("hat",	/obj/item/clothing/head/vampire/bandana/red,	10),
-		new /datum/data/mining_equipment("hat",	/obj/item/clothing/head/vampire/bandana/black,	10),
-		new /datum/data/mining_equipment("hat",	/obj/item/clothing/head/vampire/beanie,	10),
-		new /datum/data/mining_equipment("hat",	/obj/item/clothing/head/vampire/beanie/black,	10),
-		new /datum/data/mining_equipment("hat",	/obj/item/clothing/head/vampire/beanie/homeless,	10),
-		new /datum/data/mining_equipment("neck",	/obj/item/clothing/neck/vampire/scarf,	10),
-		new /datum/data/mining_equipment("neck",	/obj/item/clothing/neck/vampire/scarf/red,	10),
-		new /datum/data/mining_equipment("neck",	/obj/item/clothing/neck/vampire/scarf/blue,	10),
-		new /datum/data/mining_equipment("neck",	/obj/item/clothing/neck/vampire/scarf/green,	10),
-		new /datum/data/mining_equipment("neck",	/obj/item/clothing/neck/vampire/scarf/white,	10)
+	desc = "Purchase all the finest outfits.. Or don't wagie.."
+	prize_list = list(new /datum/data/mining_equipment("yellow sleeveless shirt",	/obj/item/clothing/under/vampire/larry,	15),
+		new /datum/data/mining_equipment("white sleeveless shirt",	/obj/item/clothing/under/vampire/bandit,	15),
+		new /datum/data/mining_equipment("biker outfit",	/obj/item/clothing/under/vampire/biker,	15),
+		new /datum/data/mining_equipment("mechanic outfit",	/obj/item/clothing/under/vampire/mechanic,	20),
+		new /datum/data/mining_equipment("sport clothes",	/obj/item/clothing/under/vampire/sport,	20),
+		new /datum/data/mining_equipment("white buisness suit",	/obj/item/clothing/under/vampire/office,	20),
+		new /datum/data/mining_equipment("punk outfit",	/obj/item/clothing/under/vampire/emo,	20),
+		new /datum/data/mining_equipment("black grunge outfit",	/obj/item/clothing/under/vampire/black,	20),
+		new /datum/data/mining_equipment("red hipster outfit",	/obj/item/clothing/under/vampire/red,	20),
+		new /datum/data/mining_equipment("gothic clothes",	/obj/item/clothing/under/vampire/gothic,	20),
+		new /datum/data/mining_equipment("purple and black outfit",	/obj/item/clothing/under/vampire/sexy,	25),
+		new /datum/data/mining_equipment("cargo jacket",	/obj/item/clothing/under/vampire/pimp,	25),
+		new /datum/data/mining_equipment("black overcoat",	/obj/item/clothing/under/vampire/rich,	25),
+		new /datum/data/mining_equipment("black dress",	/obj/item/clothing/under/vampire/business,	25),
+		new /datum/data/mining_equipment("black shoes",	/obj/item/clothing/shoes/vampire,	10),
+		new /datum/data/mining_equipment("brown shoes",	/obj/item/clothing/shoes/vampire/brown,	10),
+		new /datum/data/mining_equipment("white shoes",	/obj/item/clothing/shoes/vampire/white,	10),
+		new /datum/data/mining_equipment("black boots",	/obj/item/clothing/shoes/vampire/jackboots,	10),
+		new /datum/data/mining_equipment("work boots",	/obj/item/clothing/shoes/vampire/jackboots/work,	10),
+		new /datum/data/mining_equipment("sneakers",	/obj/item/clothing/shoes/vampire/sneakers,	10),
+		new /datum/data/mining_equipment("red sneakers",	/obj/item/clothing/shoes/vampire/sneakers/red,	10),
+		new /datum/data/mining_equipment("high heels",	/obj/item/clothing/shoes/vampire/heels,	10),
+		new /datum/data/mining_equipment("red high heels",	/obj/item/clothing/shoes/vampire/heels/red,	10),
+		new /datum/data/mining_equipment("brown coat",	/obj/item/clothing/suit/vampire/coat,	15),
+		new /datum/data/mining_equipment("green coat",	/obj/item/clothing/suit/vampire/coat/alt,	15),
+		new /datum/data/mining_equipment("jacket",	/obj/item/clothing/suit/vampire/jacket,	15),
+		new /datum/data/mining_equipment("black trenchcoat",	/obj/item/clothing/suit/vampire/trench,	15),
+		new /datum/data/mining_equipment("brown trenchcoat",	/obj/item/clothing/suit/vampire/trench/alt,	15),
+		new /datum/data/mining_equipment("labcoat",	/obj/item/clothing/suit/vampire/labcoat,	15),
+		new /datum/data/mining_equipment("yellow aviators",	/obj/item/clothing/glasses/vampire/yellow,	20),
+		new /datum/data/mining_equipment("red aviators",	/obj/item/clothing/glasses/vampire/red,	20),
+		new /datum/data/mining_equipment("sunglasses",	/obj/item/clothing/glasses/vampire/sun,	20),
+		new /datum/data/mining_equipment("prescription glasses",	/obj/item/clothing/glasses/vampire/perception,	20),
+		new /datum/data/mining_equipment("leather gloves", /obj/item/clothing/gloves/vampire/leather,	25),
+		new /datum/data/mining_equipment("rubber gloves", /obj/item/clothing/gloves/vampire/cleaning,	15),
+		new /datum/data/mining_equipment("latex gloves", /obj/item/clothing/gloves/vampire/latex,	5),
+		new /datum/data/mining_equipment("black work gloves", /obj/item/clothing/gloves/vampire/work,	45),
+		new /datum/data/mining_equipment("bandana",	/obj/item/clothing/head/vampire/bandana,	10),
+		new /datum/data/mining_equipment("red bandana",	/obj/item/clothing/head/vampire/bandana/red,	10),
+		new /datum/data/mining_equipment("black bandana",	/obj/item/clothing/head/vampire/bandana/black,	10),
+		new /datum/data/mining_equipment("beanie",	/obj/item/clothing/head/vampire/beanie,	10),
+		new /datum/data/mining_equipment("black beanie",	/obj/item/clothing/head/vampire/beanie/black,	10),
+		new /datum/data/mining_equipment("rough beanie",	/obj/item/clothing/head/vampire/beanie/homeless,	10),
+		new /datum/data/mining_equipment("scarf",	/obj/item/clothing/neck/vampire/scarf,	10),
+		new /datum/data/mining_equipment("red scarf",	/obj/item/clothing/neck/vampire/scarf/red,	10),
+		new /datum/data/mining_equipment("blue scarf",	/obj/item/clothing/neck/vampire/scarf/blue,	10),
+		new /datum/data/mining_equipment("green scarf",	/obj/item/clothing/neck/vampire/scarf/green,	10),
+		new /datum/data/mining_equipment("white scarf",	/obj/item/clothing/neck/vampire/scarf/white,	10)
+	)
+
+/obj/machinery/mineral/equipment_vendor/fastfood/costumes
+	desc = "Purchase a mask for that ugly mug."
+	prize_list = list(new /datum/data/mining_equipment("bear mask",	 /obj/item/clothing/mask/animal/rat/bear,	13),
+		new /datum/data/mining_equipment("rat mask",	/obj/item/clothing/mask/animal/rat,	10),
+		new /datum/data/mining_equipment("bee mask",	/obj/item/clothing/mask/animal/rat/bee,	12),
+		new /datum/data/mining_equipment("fox mask",	/obj/item/clothing/mask/animal/rat/fox,	10),
+		new /datum/data/mining_equipment("bat mask",	/obj/item/clothing/mask/animal/rat/bat,	15),
+		new /datum/data/mining_equipment("raven mask",	/obj/item/clothing/mask/animal/rat/raven,	20),
+		new /datum/data/mining_equipment("jackal mask",	 /obj/item/clothing/mask/animal/rat/jackal,	20),
+		new /datum/data/mining_equipment("medical mask",	/obj/item/clothing/mask/surgical,	10),
+		new /datum/data/mining_equipment("mummy mask",	/obj/item/clothing/mask/mummy,	15),
+		new /datum/data/mining_equipment("scarecrow mask",	/obj/item/clothing/mask/scarecrow,	10)
 	)
 
 /obj/food_cart
@@ -342,6 +359,7 @@
 	icon_state = "vat[rand(1, 3)]"
 
 /obj/machinery/mineral/equipment_vendor/fastfood/america
+	desc = "Boom! Booom!! BOOOOOOM!!!!"
 	prize_list = list(new /datum/data/mining_equipment("revolver",	/obj/item/gun/ballistic/vampire/revolver,	200),
 		new /datum/data/mining_equipment("Colt M1911",	/obj/item/gun/ballistic/automatic/vampire/m1911,	250),
 		new /datum/data/mining_equipment("Glock19",	/obj/item/gun/ballistic/automatic/vampire/glock19,	500),
@@ -350,7 +368,7 @@
 		new /datum/data/mining_equipment("HK MP5",	/obj/item/gun/ballistic/automatic/vampire/mp5,	1100),
 		new /datum/data/mining_equipment("AR-15 rifle",		/obj/item/gun/ballistic/automatic/vampire/ar15,	2000),
 		new /datum/data/mining_equipment("Thompson submachine gun",		/obj/item/gun/ballistic/automatic/vampire/thompson,	1500),
-		new /datum/data/mining_equipment("AK74",		/obj/item/gun/ballistic/automatic/vampire/ak74,	1800),
+		new /datum/data/mining_equipment("AK-74",		/obj/item/gun/ballistic/automatic/vampire/ak74,	1800),
 		new /datum/data/mining_equipment("sniper rifle",		/obj/item/gun/ballistic/automatic/vampire/sniper,	2000),
 		new /datum/data/mining_equipment("AUG carbine",		/obj/item/gun/ballistic/automatic/vampire/aug,	3000),
 		new /datum/data/mining_equipment("fishing rod",		/obj/item/fishing_rod,	200),
