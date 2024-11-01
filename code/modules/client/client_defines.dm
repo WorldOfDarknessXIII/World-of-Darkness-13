@@ -141,6 +141,9 @@
 	/// Messages currently seen by this client
 	var/list/seen_messages
 
+	//Hide top bars
+	var/fullscreen = FALSE
+
 	/// datum wrapper for client view
 	var/datum/view_data/view_size
 
