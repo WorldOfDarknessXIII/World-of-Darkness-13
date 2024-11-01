@@ -23,7 +23,7 @@
 	second.adjustToxLoss(round((first.getToxLoss()/100)*percentage)-second.getToxLoss())
 	second.adjustCloneLoss(round((first.getCloneLoss()/100)*percentage)-second.getCloneLoss())
 
-/obj/werewolf_holder/transformation/proc/trans_gender(mob/living/carbon/trans, form)
+/obj/werewolf_holder/transformation/proc/trans_gender(mob/living/carbon/trans, form, forced = FALSE)
 	if(!given_quirks)
 		given_quirks = TRUE/*
 		if(HAS_TRAIT(trans, TRAIT_ACROBATIC))
@@ -38,10 +38,10 @@
 			var/datum/action/dance/NE = new()
 			NE.Grant(crinos_form)
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
-	if(trans.auspice.rage == 0 && form != trans.auspice.base_breed)
+	if((trans.auspice.rage == 0) && (form != trans.auspice.base_breed) && (!forced))
 		to_chat(trans, "Not enough rage to transform into anything but [trans.auspice.base_breed].")
 		return
-	if(trans.in_frenzy)
+	if(trans.in_frenzy && !forced)
 		to_chat(trans, "You can't transform while in frenzy.")
 		return
 	trans.inspired = FALSE

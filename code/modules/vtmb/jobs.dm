@@ -907,8 +907,9 @@
 /obj/item/card/id/police/AltClick(mob/user)
 	return
 
-/obj/item/card/id/hunter
-	var/last_detonated = 0
+/obj/item/card/id/hunter/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/faith_focus)
 
 /obj/item/card/id/hunter/attack_self(mob/user)
 	. = ..()
@@ -921,7 +922,7 @@
 	last_detonated = world.time
 	do_sparks(rand(5, 9), FALSE, user)
 	playsound(user.loc, 'code/modules/wod13/sounds/cross.ogg', 100, FALSE, 8, 0.9)
-	for(var/mob/living/M in get_hearers_in_view(4, user.loc))
+	for(var/mob/living/M in get_hearers_in_view(7, user.loc))
 		bang(get_turf(M), M, user)
 
 /obj/item/card/id/hunter/proc/bang(turf/T, mob/living/M, var/mob/living/user)
@@ -934,7 +935,7 @@
 		for(var/obj/item/card/id/hunter/HUNT in H.contents)
 			if(HUNT)
 				if(H.mind)
-					if(H.mind.holy_role == HOLY_ROLE_PRIEST)
+					if(H.mind.holy_role >= HOLY_ROLE_PRIEST)
 						return
 		if(iskindred(H))
 			if(H.clane)
@@ -1119,6 +1120,7 @@
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	worn_icon = 'code/modules/wod13/worn.dmi'
 	worn_icon_state = "id11"
+	var/last_detonated = 0
 
 /obj/item/card/id/primogen
 	name = "mysterious primogen badge"
@@ -1274,6 +1276,7 @@
 		if(A.vampiric)
 			qdel(A)
 	H.thaumaturgy_knowledge = FALSE
+	H.mind.holy_role = HOLY_ROLE_PRIEST //Gives all hunters the basic level of True Faith to use their cross with
 	QDEL_NULL(H.clane)
 	var/obj/item/organ/eyes/NV = new()
 	NV.Insert(H, TRUE, FALSE)
@@ -1287,7 +1290,7 @@
 	var/obj/effect/landmark/start/D = pick(landmarkslist)
 	H.forceMove(D.loc)
 
-	var/list/loadouts = list("Fire Fighter", "EOD Suit", "Holy Presence")
+	var/list/loadouts = list("Fire Fighter", "EOD Suit", "True Faith")
 	spawn()
 		var/loadout_type = input(H, "Choose the Lord's gift for you:", "Loadout") as anything in loadouts
 		switch(loadout_type)
@@ -1301,11 +1304,15 @@
 				H.equip_to_slot_or_del(new /obj/item/clothing/head/vampire/eod(H), ITEM_SLOT_HEAD)
 				H.put_in_r_hand(new /obj/item/gun/ballistic/shotgun/vampire(H))
 				H.put_in_l_hand(new /obj/item/ammo_box/vampire/c12g(H))
-			if("Holy Presence")
+			if("True Faith")
+				//You've only got your cross and your faith.
+				/*
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/vest/army(H), ITEM_SLOT_OCLOTHING)
 				H.put_in_r_hand(new /obj/item/melee/vampirearms/chainsaw(H))
+				*/
 				H.resistant_to_disciplines = TRUE
-				to_chat(H, "<b>You are no longer vulnerable to vampire blood powers...</b>")
+				H.mind.holy_role = HOLY_ROLE_HIGHPRIEST
+				to_chat(H, "<b>Your ardent Faith protects you from unholy powers...</b>")
 
 /obj/effect/landmark/start/hunter
 	name = "Hunter"

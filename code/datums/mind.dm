@@ -51,7 +51,8 @@
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/damnation_type = 0
-	var/holy_role = NONE //is this person a chaplain or admin role allowed to use bibles, Any rank besides 'NONE' allows for this.
+	///The user's access to True Faith. HOLY_ROLE_PRIEST gives True Faith 1, HOLY_ROLE_HIGHPRIEST gives True Faith 2.
+	var/holy_role = NONE
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 	var/datum/language_holder/language_holder

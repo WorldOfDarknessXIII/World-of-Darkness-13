@@ -448,6 +448,7 @@
 #include "code\datums\components\edit_complainer.dm"
 #include "code\datums\components\embedded.dm"
 #include "code\datums\components\explodable.dm"
+#include "code\datums\components\faith_focus.dm"
 #include "code\datums\components\footstep.dm"
 #include "code\datums\components\forensics.dm"
 #include "code\datums\components\gps.dm"
