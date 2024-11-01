@@ -3375,6 +3375,7 @@
 #include "code\modules\vtmb\vampire_clane\salubri.dm"
 #include "code\modules\vtmb\vampire_clane\toreador.dm"
 #include "code\modules\vtmb\vampire_clane\tremere.dm"
+#include "code\modules\vtmb\vampire_clane\true_brujah.dm"
 #include "code\modules\vtmb\vampire_clane\tzimisce.dm"
 #include "code\modules\vtmb\vampire_clane\ventrue.dm"
 #include "code\modules\vtmb\werewolf\auspice.dm"
