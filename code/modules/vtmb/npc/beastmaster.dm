@@ -81,19 +81,19 @@ SUBSYSTEM_DEF(beastmastering)
 //	move_to_delay = 3
 //	rapid = 3
 //	ranged = 1
-	maxHealth = 100
-	health = 100
+	maxHealth = 50
+	health = 50
 	harm_intent_damage = 5
-	melee_damage_lower = 50
-	melee_damage_upper = 50
+	melee_damage_lower = 25
+	melee_damage_upper = 25
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	attack_sound = 'code/modules/wod13/sounds/dog.ogg'
 	a_intent = INTENT_HARM
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-	bloodpool = 3
-	maxbloodpool = 3
+	bloodpool = 1
+	maxbloodpool = 1
 //	retreat_distance = 3
 //	minimum_distance = 5
 //	casingtype = /obj/item/ammo_casing/vampire/c556mm

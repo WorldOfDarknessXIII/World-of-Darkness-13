@@ -156,7 +156,7 @@
 		return
 	if(isliving(target))
 		var/mob/living/L = target
-		L.adjustCloneLoss(30)
+		L.apply_damage(30, CLONE)
 
 /obj/item/melee/vampirearms/knife/gangrel/lasombra
 	name = "shadow tentacle"
