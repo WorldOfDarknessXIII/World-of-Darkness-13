@@ -118,4 +118,6 @@
 
 	bloodquality = 2
 
+	var/soul_state = SOUL_PRESENT
+
 	var/atom/movable/screen/disciplines/toggled

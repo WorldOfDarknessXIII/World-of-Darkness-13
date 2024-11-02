@@ -2851,7 +2851,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					toggles ^= SOUND_ENDOFROUND
 
 				if("ghost_ears")
-					chat_toggles ^= CHAT_GHOSTEARS
+					if(istype(user.client.mob, /mob/dead/observer))
+						var/mob/dead/observer/obs = user.client.mob
+						if(obs.auspex_ghosted)
+							return
+						else
+							chat_toggles ^= CHAT_GHOSTEARS
+					else
+						chat_toggles ^= CHAT_GHOSTEARS
 
 				if("ghost_sight")
 					chat_toggles ^= CHAT_GHOSTSIGHT

@@ -522,7 +522,8 @@ GLOBAL_LIST_EMPTY(species_list)
 			var/rendered_message = message
 
 			var/mob/dead/observer/O = M
-
+			if(O.auspex_ghosted)
+				return
 			if(follow_target)
 				var/F
 				if(turf_target)

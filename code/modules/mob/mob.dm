@@ -714,11 +714,17 @@
 //			return
 
 	if(respawntimeofdeath+12000 > world.time)
-		var/timetoresp = round(((respawntimeofdeath+12000)-world.time)/10)
-		to_chat(usr, "<span class='notice'>You need to wait [timetoresp] seconds before respawn</span>")
-		if(check_rights_for(usr.client, R_ADMIN))
-			if(alert(usr, "Do you want to respawn faster than usual player? (only admins can)", "Respawn", "Yes", "No") != "Yes")
+		if(istype(usr.client.mob, /mob/dead/observer))
+			var/mob/dead/observer/obs = usr.client.mob
+			if(obs.auspex_ghosted)
+				to_chat(usr, "<span class='notice'>You cannot respawn while using auspex!</span>")
 				return
+			else
+				var/timetoresp = round(((respawntimeofdeath+12000)-world.time)/10)
+				to_chat(usr, "<span class='notice'>You need to wait [timetoresp] seconds before respawn</span>")
+				if(check_rights_for(usr.client, R_ADMIN))
+					if(alert(usr, "Do you want to respawn faster than usual player? (only admins can)", "Respawn", "Yes", "No") != "Yes")
+						return
 		else
 			return
 

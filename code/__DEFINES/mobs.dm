@@ -419,3 +419,7 @@
 #define AI_EMOTION_DORFY "Dorfy"
 #define AI_EMOTION_BLUE_GLOW "Blue Glow"
 #define AI_EMOTION_RED_GLOW "Red Glow"
+
+#define SOUL_PRESENT 1
+#define SOUL_ABSENT 2
+#define SOUL_PROJECTING 3
