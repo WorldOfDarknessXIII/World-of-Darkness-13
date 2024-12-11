@@ -133,7 +133,7 @@
 	display_order = JOB_DISPLAY_ORDER_SHERIFF
 	bounty_types = CIV_JOB_SEC
 
-	minimal_generation = 12	//Uncomment when players get exp enough
+	minimal_generation = 10	//Uncomment when players get exp enough
 	minimal_masquerade = 5
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("True Brujah", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry")
@@ -216,7 +216,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_CLERK
 
-//	minimal_generation = 12	//Uncomment when players get exp enough
+	minimal_generation = 11	//Uncomment when players get exp enough
 	minimal_masquerade = 5
 
 	my_contact_is_important = TRUE
@@ -253,11 +253,11 @@
 /datum/job/vamp/agent
 	title = "Scourge"
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
-	department_head = list("Prince")
+	department_head = list("Sheriff")
 	faction = "Vampire"
-	total_positions = 7
-	spawn_positions = 7
-	supervisors = "the prince"
+	total_positions = 5
+	spawn_positions = 5
+	supervisors = "the sheriff"
 	selection_color = "#bd3327"
 	minimal_player_age = 7
 	exp_requirements = 300
@@ -272,6 +272,9 @@
 
 	mind_traits = list(TRAIT_DONUT_LOVER)
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
+
+	minimal_generation = 11
+	minimal_masquerade = 4
 
 	display_order = JOB_DISPLAY_ORDER_AGENT
 	bounty_types = CIV_JOB_SEC
@@ -472,7 +475,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_REGENT
 	v_duty = "Lead the Chantry. You serve as both the Regent and Tremere Primogen. You report to the Tremere Lord of this region first, Prince second."
-	minimal_masquerade = 4
+	minimal_masquerade = 5
 	minimal_generation = 7
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Tremere")
@@ -525,7 +528,7 @@
 	display_order = JOB_DISPLAY_ORDER_ARCHIVIST
 
 	v_duty = "Keep a census of events and provide information to neonates. Listen to the Regent Carefully. Study blood magic and protect the chantry."
-	minimal_masquerade = 3
+	minimal_masquerade = 4
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Tremere", "Gargoyle")
 	experience_addition = 15
@@ -575,7 +578,7 @@
 	display_order = JOB_DISPLAY_ORDER_BARKEEPER
 	bounty_types = CIV_JOB_DRINK
 
-//	minimal_generation = 11	//Uncomment when players get exp enough
+	minimal_generation = 11	//Uncomment when players get exp enough
 
 	my_contact_is_important = TRUE
 	known_contacts = list(
@@ -584,7 +587,7 @@
 	)
 
 	v_duty = "You lead the Anarchs in the City. A Camarilla faction that values freedom and individuality. While not a fan of the traditions, you still respect the Masquerade."
-	minimal_masquerade = 3
+	minimal_masquerade = 4
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Ventrue", "Lasombra", "Gargoyle")
 	experience_addition = 20
@@ -618,8 +621,8 @@
 	title = "Bouncer"
 	department_head = list("Baron")
 	faction = "Vampire"
-	total_positions = 7
-	spawn_positions = 7
+	total_positions = 6
+	spawn_positions = 6
 	supervisors = "the Baron"
 	selection_color = "#434343"
 
@@ -638,7 +641,8 @@
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle")
 
 	v_duty = "You work with the baron - whether because of your own ideals or friendship, or other reasons. That doesn't mean you will let someone disregard the one tradition you do agree with - the Masquerade."
-	minimal_masquerade = 2
+	minimal_generation = 12
+	minimal_masquerade = 3
 	experience_addition = 15
 
 /datum/outfit/job/bouncer
@@ -684,7 +688,7 @@
 	display_order = JOB_DISPLAY_ORDER_DEALER
 	bounty_types = CIV_JOB_RANDOM
 
-//	minimal_generation = 12	//Uncomment when players get exp enough
+	minimal_generation = 12	//Uncomment when players get exp enough
 
 	my_contact_is_important = TRUE
 	known_contacts = list("Baron", "Prince", "Sheriff")
