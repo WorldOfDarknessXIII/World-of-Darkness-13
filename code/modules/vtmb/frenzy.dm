@@ -269,6 +269,14 @@
 				if(prob(5))
 					to_chat(H, "<span class='warning'>You are missing your home soil...</span>")
 					H.bloodpool = max(0, H.bloodpool-1)
+	if(H.clane?.name == "Kiasyd")
+		var/datum/vampireclane/kiasyd/kiasyd = H.clane
+		for(var/obj/item/I in H.contents)
+			if(I?.is_iron)
+				if (COOLDOWN_FINISHED(kiasyd, cold_iron_frenzy))
+					COOLDOWN_START(kiasyd, cold_iron_frenzy, 10 SECONDS)
+					H.rollfrenzy()
+					to_chat(H, "<span class='warning'>[I] is <b>COLD IRON</b>!")
 
 /*
 	if(!H in GLOB.masquerade_breakers_list)
@@ -279,7 +287,7 @@
 			GLOB.masquerade_breakers_list -= H
 */
 
-	if(H.key && H.stat <= 3)
+	if(H.key && (H.stat <= HARD_CRIT))
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
 		if(P)
 			if(P.humanity != H.humanity)

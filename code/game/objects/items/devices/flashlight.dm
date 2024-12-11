@@ -18,6 +18,7 @@
 	light_range = 4
 	light_power = 1
 	light_on = FALSE
+	is_iron = TRUE
 	var/on = FALSE
 
 

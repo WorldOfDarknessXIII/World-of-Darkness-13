@@ -216,7 +216,8 @@
 			to_chat(usr, "<span class='warning'>You can't reach that! Something is covering it.</span>")
 			return
 
-	if(href_list["pockets"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY)) //TODO: Make it match (or intergrate it into) strippanel so you get 'item cannot fit here' warnings if mob_can_equip fails
+	var/mob/living/L = usr
+	if(href_list["pockets"] && (usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) || (L.enhanced_strip && (get_dist(usr, src) <= 3)))) //TODO: Make it match (or intergrate it into) strippanel so you get 'item cannot fit here' warnings if mob_can_equip fails
 		if(isnpc(src))
 			var/mob/living/carbon/human/npc/N = src
 			if(N.fights_anyway)
@@ -243,7 +244,8 @@
 			delay_denominator = 4
 		else
 			return
-
+		if(L.enhanced_strip)
+			delay_denominator = POCKET_STRIP_DELAY	//so it's instant 1 tick
 		if(do_mob(usr, src, POCKET_STRIP_DELAY/delay_denominator)) //placing an item into the pocket is 4 times faster
 			if(pocket_item)
 				if(pocket_item == (pocket_id == ITEM_SLOT_RPOCKET ? r_store : l_store)) //item still in the pocket we search
@@ -281,7 +283,7 @@
 		if(!ishuman(usr))
 			return
 		var/mob/living/carbon/human/H = usr
-		if(H.stat > 2)
+		if(H.stat > UNCONSCIOUS)
 			return
 		if(usr == src)
 			return

@@ -35,6 +35,7 @@
 	desc = "Stores some precious organs..."
 	icon = 'code/modules/wod13/icons.dmi'
 	icon_state = "urn"
+	is_magic = TRUE
 	var/mob/living/own
 
 /obj/item/urn/attackby(obj/item/I, mob/living/user, params)

@@ -87,6 +87,7 @@
 	resistance_flags = FIRE_PROOF
 	masquerade_violating = FALSE
 	cost = 250
+	is_iron = TRUE
 
 /obj/item/melee/vampirearms/baseball
 	name = "baseball bat"
@@ -132,6 +133,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FIRE_PROOF
+	is_iron = TRUE
 
 /obj/item/melee/vampirearms/knife
 	name = "knife"
@@ -151,6 +153,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FIRE_PROOF
+	is_iron = TRUE
 
 /obj/item/melee/vampirearms/knife/gangrel
 	name = "claws"
@@ -267,6 +270,7 @@
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5
 	resistance_flags = FIRE_PROOF
+	is_iron = TRUE
 	var/on = FALSE
 	var/wielded = FALSE
 
@@ -355,6 +359,7 @@
 	armor = list(MELEE = 25, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	resistance_flags = FIRE_PROOF
 	masquerade_violating = FALSE
+	is_iron = TRUE
 
 /obj/item/melee/vampirearms/shovel/attack(mob/living/target, mob/living/user)
 	. = ..()
