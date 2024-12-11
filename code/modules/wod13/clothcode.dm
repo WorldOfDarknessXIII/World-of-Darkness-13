@@ -511,7 +511,7 @@
 
 /obj/item/clothing/suit/vampire/vest
 	name = "bulletproof vest"
-	desc = "Police equipment. Provides good protection."
+	desc = "Durable, lightweight vest designed to protect against most threats efficiently."
 	icon_state = "vest"
 	armor = list(MELEE = 55, BULLET = 55, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 0, RAD = 0, FIRE = 45, ACID = 10, WOUND = 25)
 
@@ -521,9 +521,27 @@
 	icon_state = "medieval"
 	armor = list(MELEE = 55, BULLET = 55, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 0, RAD = 0, FIRE = 45, ACID = 10, WOUND = 25)
 
+//Police + Army 
+/obj/item/clothing/suit/vampire/vest/police
+	name = "police duty vest"
+	icon_state = "pdvest"
+	desc = "Lightweight, bulletproof vest with SFPD markings, tailored for active duty."
+
+/obj/item/clothing/suit/vampire/vest/police/sergeant
+	name = "police duty vest"
+	icon_state = "sgtvest"
+	desc = "Lightweight, bulletproof vest with SFPD markings, tailored for active duty. This one has sergeant insignia on it."
+
+// They got an Army vest post-PD update. I am just giving them the same, instead coded into their equipment instead of mapped.
+/obj/item/clothing/suit/vampire/vest/police/chief
+	name = "police chief duty vest"
+	icon_state = "chiefvest"
+	desc = "Composite bulletproof vest with SFPD markings, tailored for improved protection. This one has captain insignia on it."
+	armor = list(MELEE = 70, BULLET = 70, LASER = 10, ENERGY = 10, BOMB = 60, BIO = 0, RAD = 0, FIRE = 50, ACID = 10, WOUND = 30)
+
 /obj/item/clothing/suit/vampire/vest/army
 	desc = "Army equipment. Provides great protection against blunt force."
-	icon_state = "vest"
+	icon_state = "army"
 	w_class = WEIGHT_CLASS_BULKY
 	armor = list(MELEE = 70, BULLET = 70, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 0, RAD = 0, FIRE = 45, ACID = 10, WOUND = 25)
 //	clothing_traits = list(TRAIT_UNMASQUERADE)
@@ -755,6 +773,18 @@
 	resistance_flags = NONE
 	armor = list(MELEE = 30, BULLET = 15, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 30)
 
+/obj/item/clothing/gloves/vampire/investigator
+	name = "investigator gloves"
+	desc = "Standard issue FBI workgloves tailored for investigators. Made out of latex outer lining and padded for acid and fire protection."
+	icon_state = "work"
+	permeability_coefficient = 0.5
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	resistance_flags = NONE
+	armor = list(MELEE = 30, BULLET = 20, LASER = 5, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 70, ACID = 70)
+
 /obj/item/clothing/gloves/vampire/cleaning
 	name = "cleaning gloves"
 	desc = "Provides acid protection."
@@ -861,5 +891,19 @@
 	new /obj/item/ammo_box/vampire/c9mm/moonclip(src)
 	new /obj/item/ammo_box/vampire/c9mm/moonclip(src)
 	new /obj/item/gun/ballistic/vampire/revolver/snub(src)
+
+/obj/item/storage/belt/holster/detective/vampire/officer
+
+/obj/item/storage/belt/holster/detective/vampire/officer/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/vampire/glock19(src)
+	new /obj/item/ammo_box/magazine/glock9mm(src)
+	new /obj/item/ammo_box/magazine/glock9mm(src)
+
+/obj/item/storage/belt/holster/detective/vampire/fbi
+
+/obj/item/storage/belt/holster/detective/vampire/fbi/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/vampire/glock21(src)
+	new /obj/item/ammo_box/magazine/glock45acp(src)
+	new /obj/item/ammo_box/magazine/glock45acp(src)
 
 

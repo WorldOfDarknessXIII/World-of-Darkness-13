@@ -135,20 +135,6 @@
 	max_ammo = 7
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 
-/obj/item/ammo_box/magazine/m50
-	name = "handgun magazine (.50)"
-	icon = 'code/modules/wod13/ammo.dmi'
-	lefthand_file = 'code/modules/wod13/righthand.dmi'
-	righthand_file = 'code/modules/wod13/lefthand.dmi'
-	worn_icon = 'code/modules/wod13/worn.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
-	icon_state = "deagle"
-	ammo_type = /obj/item/ammo_casing/vampire/c50
-	caliber = CALIBER_50
-	max_ammo = 7
-	multiple_sprites = AMMO_BOX_FULL_EMPTY
-
-
 /obj/item/gun/ballistic/automatic/vampire/deagle
 	name = "\improper Desert Eagle"
 	desc = "A powerful .44 handgun."
@@ -174,6 +160,19 @@
 	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
 	fire_sound_volume = 75
 	cost = 75
+
+/obj/item/ammo_box/magazine/m50
+	name = "handgun magazine (.50)"
+	icon = 'code/modules/wod13/ammo.dmi'
+	lefthand_file = 'code/modules/wod13/righthand.dmi'
+	righthand_file = 'code/modules/wod13/lefthand.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon_state = "deagle"
+	ammo_type = /obj/item/ammo_casing/vampire/c50
+	caliber = CALIBER_50
+	max_ammo = 7
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
 
 /obj/item/gun/ballistic/automatic/vampire/deagle/c50
 	name = "\improper McLusky .50 caliber "
@@ -260,6 +259,44 @@
 	fire_sound_volume = 100
 	cost = 70
 
+/obj/item/ammo_box/magazine/glock45acp
+	name = "automatic pistol magazine (.45 ACP)"
+	icon = 'code/modules/wod13/ammo.dmi'
+//	lefthand_file = 'code/modules/wod13/righthand.dmi'
+//	righthand_file = 'code/modules/wod13/lefthand.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon_state = "glock21"
+	ammo_type = /obj/item/ammo_casing/vampire/c9mm
+	caliber = CALIBER_45
+	max_ammo = 12
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+
+/obj/item/gun/ballistic/automatic/vampire/glock21
+	name = "\improper Glock 21"
+	desc = "Very fast 45 ACP handgun."
+	icon_state = "glock19"
+	inhand_icon_state = "glock19"
+	worn_icon_state = "glock19"
+	w_class = WEIGHT_CLASS_SMALL
+	mag_type = /obj/item/ammo_box/magazine/glock45acp
+	burst_size = 3
+	fire_delay = 1
+	actions_types = list()
+	bolt_type = BOLT_TYPE_LOCKING
+	fire_sound = 'code/modules/wod13/sounds/glock.ogg'
+	dry_fire_sound = 'sound/weapons/gun/pistol/dry_fire.ogg'
+	load_sound = 'sound/weapons/gun/pistol/mag_insert.ogg'
+	load_empty_sound = 'sound/weapons/gun/pistol/mag_insert.ogg'
+	eject_sound = 'sound/weapons/gun/pistol/mag_release.ogg'
+	eject_empty_sound = 'sound/weapons/gun/pistol/mag_release.ogg'
+	vary_fire_sound = FALSE
+	rack_sound = 'sound/weapons/gun/pistol/rack_small.ogg'
+	lock_back_sound = 'sound/weapons/gun/pistol/lock_small.ogg'
+	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
+	fire_sound_volume = 100
+	cost = 150
+
 /obj/item/ammo_box/magazine/vamp9mm
 	name = "uzi magazine (9mm)"
 	icon = 'code/modules/wod13/ammo.dmi'
@@ -313,7 +350,7 @@
 	mag_type = /obj/item/ammo_box/magazine/vamp9mp5
 	burst_size = 4
 	spread = 4
-	bolt_type = BOLT_TYPE_OPEN
+	bolt_type = BOLT_TYPE_LOCKING
 	show_bolt_icon = FALSE
 	mag_display = TRUE
 	rack_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
@@ -345,7 +382,7 @@
 	burst_size = 2
 	fire_delay = 2
 	spread = 4
-	bolt_type = BOLT_TYPE_OPEN
+	bolt_type = BOLT_TYPE_LOCKING
 	show_bolt_icon = FALSE
 	mag_display = TRUE
 	fire_sound = 'code/modules/wod13/sounds/rifle.ogg'
@@ -378,7 +415,7 @@
 	burst_size = 3
 	fire_delay = 3
 	spread = 8
-	bolt_type = BOLT_TYPE_OPEN
+	bolt_type = BOLT_TYPE_LOCKING
 	show_bolt_icon = FALSE
 	mag_display = TRUE
 	fire_sound = 'code/modules/wod13/sounds/ak.ogg'
@@ -410,7 +447,7 @@
 	burst_size = 3
 	fire_delay = 2
 	spread = 3
-	bolt_type = BOLT_TYPE_OPEN
+	bolt_type = BOLT_TYPE_LOCKING
 	show_bolt_icon = FALSE
 	mag_display = TRUE
 	fire_sound = 'code/modules/wod13/sounds/rifle.ogg'

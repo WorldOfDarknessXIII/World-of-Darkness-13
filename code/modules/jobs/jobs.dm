@@ -1,7 +1,9 @@
 GLOBAL_LIST_INIT(leader_positions, list(
 	"Prince",
 	"Baron",
-	"Chantry Regent"))
+	"Chantry Regent",
+	"Police Chief"
+	))
 
 GLOBAL_LIST_INIT(command_positions, list(
 	"Prince",
@@ -31,7 +33,9 @@ GLOBAL_LIST_INIT(supply_positions, list(
 GLOBAL_LIST_INIT(citizen_positions, list(
 	"Citizen",
 	"Taxi Driver",
+	"Police Sergeant",
 	"Police Officer",
+	"Police Chief",
 	"Federal Investigator",
 	"Priest"
 ))
