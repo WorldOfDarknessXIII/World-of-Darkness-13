@@ -107,6 +107,17 @@
 			drunked_of |= "[H.dna.real_name]"
 			if(!iskindred(mob))
 				H.blood_volume = max(H.blood_volume-50, 150)
+			if(iscathayan(src))
+				if(mob.yang_chi > 0 || mob.yin_chi > 0)
+					if(mob.yang_chi > mob.yin_chi)
+						mob.yang_chi = mob.yang_chi-1
+						yang_chi = min(yang_chi+1, max_yang_chi)
+					else
+						mob.yin_chi = mob.yin_chi-1
+						yin_chi = min(yin_chi+1, max_yin_chi)
+					update_chi_hud()
+				else
+					to_chat(src, "<span class='warning'>The <b>BLOOD</b> feels tasteless...</span>")
 			if(H.reagents)
 				if(length(H.reagents.reagent_list))
 					if(prob(50))
@@ -134,7 +145,7 @@
 		if(mob.bloodpool <= 0)
 			if(ishuman(mob))
 				var/mob/living/carbon/human/K = mob
-				if(iskindred(mob))
+				if(iskindred(mob) && !iscathayan(src))
 					var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
 					var/datum/preferences/P2 = GLOB.preferences_datums[ckey(mob.key)]
 					AdjustHumanity(-1, 0)

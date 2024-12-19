@@ -91,6 +91,12 @@
 		rage_icon.hud = src
 		infodisplay += rage_icon
 
+	if(iscathayan(owner))
+		chi_icon = new /atom/movable/screen/chi_pool()
+		chi_icon.screen_loc = ui_chi_pool
+		chi_icon.hud = src
+		static_inventory += chi_icon
+
 	using = new/atom/movable/screen/language_menu
 	using.icon = 'code/modules/wod13/UI/buttons_wide.dmi'
 	using.hud = src

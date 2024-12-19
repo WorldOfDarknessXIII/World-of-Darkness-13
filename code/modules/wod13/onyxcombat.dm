@@ -30,6 +30,15 @@
 		dir = SOUTH
 		spawn(10)
 			dust(1, 1)
+	if(iscathayan(src))
+		if(in_frenzy)
+			exit_frenzymod()
+		playsound(src, 'code/modules/wod13/sounds/vicissitude.ogg', 80, TRUE)
+		SEND_SOUND(src, sound('code/modules/wod13/sounds/final_death.ogg', 0, 0, 50))
+		lying_fix()
+		dir = SOUTH
+		spawn(10)
+			dust(1, 1)
 
 /mob/living/carbon/human/toggle_move_intent(mob/living/user)
 	if(blocking && m_intent == MOVE_INTENT_WALK)
@@ -279,7 +288,6 @@
 						else if(!PB.IsSleeping())
 							to_chat(BD, "<span class='warning'>You can't drink from aware targets!</span>")
 							return
-
 						special_clan = TRUE
 						PB.emote("moan")
 					if(BD.clane.name == "Giovanni")
@@ -289,11 +297,18 @@
 						PB.emote("groan")
 				PB.add_bite_animation()
 			if(isliving(BD.pulling))
-				if (!iskindred(BD))
+				if(!iskindred(BD) && !iscathayan(BD))
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>Eww, that is <b>GROSS</b>.</span>")
 					return
 				var/mob/living/LV = BD.pulling
+				if(iscathayan(BD))
+					if(LV.bloodpool <= 0)
+						SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
+						to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
+						return
+					BD.drinksomeblood(LV)
+					return
 				if(LV.bloodpool <= 0 && !iskindred(BD.pulling))
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
