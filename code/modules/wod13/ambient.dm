@@ -1,6 +1,9 @@
 /area
 	var/fire_controled = FALSE
 	var/fire_controling = FALSE
+	//Chi stuff
+	var/yang_chi = 1
+	var/yin_chi = 1
 
 /area/vtm
 	name = "San Francisco"
@@ -50,6 +53,8 @@
 	zone_type = "elysium"
 	zone_owner = "Giovanni"
 	fire_controled = TRUE
+	yang_chi = 0
+	yin_chi = 2
 
 /area/vtm/interior/techshop
 	name = "Nightwolf Techshop"
@@ -88,6 +93,8 @@
 	icon_state = "mansion"
 	upper = FALSE
 	zone_type = "battle"
+	yang_chi = 0
+	yin_chi = 2
 
 /area/vtm/financialdistrict
 	name = "Financial District"
@@ -206,6 +213,8 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	fire_controled = TRUE
+	yang_chi = 2
+	yin_chi = 0
 
 /area/vtm/supply
 	name = "Supply"
@@ -245,12 +254,16 @@
 	music = /datum/vampiremusic/hollywood
 	upper = TRUE
 	zone_type = "battle"
+	yang_chi = 0
+	yin_chi = 2
 
 /area/vtm/graveyard/interior
 	name = "Graveyard Interior"
 	icon_state = "interior"
 	upper = FALSE
 	zone_type = "battle"
+	yang_chi = 0
+	yin_chi = 2
 
 /area/vtm/park
 	name = "Park"
@@ -258,6 +271,8 @@
 	ambience_index = AMBIENCE_NATURE
 	music = /datum/vampiremusic/downtown
 	upper = TRUE
+	yang_chi = 2
+	yin_chi = 0
 
 /area/vtm/theatre
 	name = "Theatre"
@@ -268,6 +283,8 @@
 	zone_type = "elysium"
 	zone_owner = "Chantry"
 	fire_controled = TRUE
+	yang_chi = 0
+	yin_chi = 2
 
 /area/vtm/sewer
 	name = "Sewer"
@@ -276,6 +293,8 @@
 	music = /datum/vampiremusic/sewer
 	upper = FALSE
 	zone_type = "battle"
+	yang_chi = 0
+	yin_chi = 2
 
 /area/vtm/sewer/nosferatu_town
 	name = "Underground Town"
@@ -284,6 +303,8 @@
 	music = /datum/vampiremusic/nosferatu
 	zone_type = "elysium"
 	zone_owner = "Nosferatu"
+	yang_chi = 0
+	yin_chi = 2
 
 /area/vtm/elevator
 	name = "Elevator"
@@ -300,6 +321,8 @@
 	upper = TRUE
 	zone_type = "battle"
 	music = /datum/vampiremusic/forest
+	yang_chi = 2
+	yin_chi = 0
 
 /area/vtm/interior/glasswalker
 	name = "Glasswalker's Lab"
@@ -316,6 +339,8 @@
 	zone_type = "battle"
 	music = /datum/vampiremusic/forest
 	fire_controled = FALSE
+	yang_chi = 0
+	yin_chi = 2
 
 /area/vtm/interior/penumbra
 	name = "Penumbra"

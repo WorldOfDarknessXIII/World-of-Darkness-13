@@ -256,6 +256,8 @@
 		if(last_rage_from_attack == 0 || last_rage_from_attack+50 < world.time)
 			last_rage_from_attack = world.time
 			adjust_rage(1, src, TRUE)
+	if(iscathayan(src))
+		dharma?.Po_combat = TRUE
 
 /mob/living/carbon/proc/disarm(mob/living/carbon/target)
 	target.do_werewolf_rage_from_attack()

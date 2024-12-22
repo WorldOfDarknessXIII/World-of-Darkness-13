@@ -226,6 +226,11 @@
 	bloodpower.Grant(C)
 	add_verb(C, /mob/living/carbon/human/verb/teach_discipline)
 
+	C.yang_chi = 0
+	C.max_yang_chi = 0
+	C.yin_chi = 6
+	C.max_yin_chi = 6
+
 	//vampires go to -200 damage before dying
 	for (var/obj/item/bodypart/bodypart in C.bodyparts)
 		bodypart.max_damage *= 1.5

@@ -1,24 +1,153 @@
 /datum/dharma
 	var/name = "Path of Sniffing Good"
+	var/desc = "Be cool, stay cool, play cool"
 	var/level = 1
+	//Lists for Tennets of the path to call on
 	var/list/tennets = list("sniff")
 	var/list/tennets_done = list("sniff" = 0)
+	//Lists for actions which decrease the dharma
 	var/list/fails = list("inhale")
 	var/list/fails_done = list("inhale" = 0)
 
+	//I dunno where to stuff these so they go in dharma
+	//What type of P'o
 	var/Po = "Monkey"
+	var/Hun = 1
+	var/atom/Po_Focus
+	//Is P'o doing it's thing or defending the host
+	var/Po_combat = FALSE
+	//Which Chi is used to animate last
 	var/animated = "None"
-	var/mob/living/breathing_on
-	var/atom/last_breath_on_loc
+	var/initial_skin_color = "asian1"
+	var/initial_social = 1
 
-/mob/living
-	var/yang_chi = 0
-	var/max_yang_chi = 0
-	var/yin_chi = 0
-	var/max_yin_chi = 0
+/datum/dharma/proc/on_gain(var/mob/living/carbon/human/mob)
+	mob.dharma = src
+	initial_skin_color = mob.skin_tone
+	initial_social = mob.social
+	var/current_animate = rand(1, 10)
+	if(current_animate == 1)
+		animated = "Yang"
+		mob.yang_chi = max(0, mob.yang_chi-1)
+		mob.dna?.species.brutemod = 1
+		mob.dna?.species.burnmod = 0.5
+	else
+		animated = "Yin"
+		mob.yin_chi = max(0, mob.yin_chi-1)
+		mob.skin_tone = get_vamp_skin_color(mob.skin_tone)
+		mob.social = 0
+		mob.dna?.species.brutemod = initial(mob.dna?.species.brutemod)
+		mob.dna?.species.burnmod = initial(mob.dna?.species.burnmod)
 
-/mob/living/carbon/human
-	var/datum/dharma/dharma
+/proc/update_dharma(var/mob/living/carbon/human/H, var/dot)
+//	if(H.dharma)
+	return
+
+/proc/emit_po_call(var/atom/source, var/po_type)
+	if(po_type)
+		for(var/mob/living/carbon/human/H in range(6, source))
+			if(H)
+				if(iscathayan(H))
+					if(H.dharma?.Po == po_type)
+						H.dharma?.roll_po(source, H)
+
+/datum/dharma/proc/roll_po(var/atom/Source, var/mob/living/carbon/human/owner)
+	Po_Focus = Source
+	owner.demon_chi = min(owner.demon_chi+1, owner.max_demon_chi)
+	to_chat(owner, "<span class='warning'>Some <b>DEMON</b> Chi energy fills you...</span>")
+
+/mob/living/carbon/human/frenzystep()
+	if(iscathayan(src))
+		if(!dharma?.Po_combat)
+			switch(dharma?.Po)
+				if("Rebel")
+					if(frenzy_target)
+						if(get_dist(frenzy_target, src) <= 1)
+							if(isliving(frenzy_target))
+								var/mob/living/L = frenzy_target
+							if(L.stat != DEAD)
+								a_intent = INTENT_HARM
+								if(last_rage_hit+5 < world.time)
+									last_rage_hit = world.time
+									UnarmedAttack(L)
+						else
+							step_to(src,frenzy_target,0)
+							face_atom(frenzy_target)
+				if("Legalist")
+					if(Po_Focus)
+						if(prob(5))
+							say(pick("Kneel to me!", "Obey my orders!", "I command you!"))
+							point_at(Po_Focus)
+						if(get_dist(Po_Focus, src) <= 1)
+							if(isliving(Po_Focus))
+								var/mob/living/L = Po_Focus
+							if(L.stat != DEAD)
+								a_intent = INTENT_GRAB
+								dropItemToGround(get_active_held_item())
+								if(last_rage_hit+5 < world.time)
+									last_rage_hit = world.time
+									UnarmedAttack(L)
+						else
+							step_to(src,Po_Focus,0)
+							face_atom(Po_Focus)
+				if("Monkey")
+					if(Po_Focus)
+						if(get_dist(Po_Focus, src) <= 1)
+							a_intent = INTENT_HELP
+							if(!istype(get_active_held_item(), /obj/item/toy))
+								dropItemToGround(get_active_held_item())
+							else
+								var/obj/item/toy/T = get_active_held_item()
+								T.attack_self(src)
+								if(prob(5))
+									emote(pick("laugh", "giggle", "chuckle", "smile"))
+								return
+							if(last_rage_hit+50 < world.time)
+								last_rage_hit = world.time
+								if(istype(Po_Focus, /obj/machinery/computer/slot_machine))
+									var/obj/machinery/computer/slot_machine/slot = Po_Focus
+									for(var/obj/item/stack/dollar/D in src)
+										if(D)
+											slot.attackby(D, src)
+									slot.spin(src)
+								else
+									UnarmedAttack(Po_Focus)
+						else
+							step_to(src,Po_Focus,0)
+							face_atom(Po_Focus)
+				if("Demon")
+					if(Po_Focus)
+						if(get_dist(Po_Focus, src) <= 1)
+							a_intent = INTENT_GRAB
+							dropItemToGround(get_active_held_item())
+							if(last_rage_hit+5 < world.time)
+								last_rage_hit = world.time
+								UnarmedAttack(L)
+								if(hud_used.drinkblood_icon)
+									hud_used.drinkblood_icon.bite()
+						else
+							step_to(src,Po_Focus,0)
+							face_atom(Po_Focus)
+				if("Fool")
+					if(prob(5))
+						emote(pick("cry", "scream", "groan"))
+						point_at(Po_Focus)
+					resist_fire()
+		else
+			if(frenzy_target)
+				if(get_dist(frenzy_target, src) <= 1)
+					if(isliving(frenzy_target))
+						var/mob/living/L = frenzy_target
+						if(L.stat != DEAD)
+							a_intent = INTENT_HARM
+							if(last_rage_hit+5 < world.time)
+								last_rage_hit = world.time
+								UnarmedAttack(L)
+				else
+					step_to(src,frenzy_target,0)
+					face_atom(frenzy_target)
+	else
+		. = ..()
 
 /datum/species/kuei_jin
 	name = "Kuei-Jin"
@@ -52,19 +181,15 @@
 		return
 	if(iscathayan(src))
 		if(hud_used.chi_icon)
-			hud_used.chi_icon.overlays -= hud_used.chi_icon.yin
-			hud_used.chi_icon.overlays -= hud_used.chi_icon.yang
-			hud_used.chi_icon.overlays -= hud_used.chi_icon.yin_imbalance
-			hud_used.chi_icon.overlays -= hud_used.chi_icon.yang_imbalance
-			hud_used.chi_icon.yin.icon_state = "[round((yin_chi/max_yin_chi)*12)]"
-			hud_used.chi_icon.yang.icon_state = "[round((yang_chi/max_yang_chi)*12)]"
-			hud_used.chi_icon.add_overlay(hud_used.chi_icon.yin)
-			hud_used.chi_icon.add_overlay(hud_used.chi_icon.yang)
+			hud_used.yin_chi_icon.icon_state = "yin-[round((yin_chi/max_yin_chi)*12)]"
+			hud_used.yang_chi_icon.icon_state = "yang-[round((yang_chi/max_yang_chi)*12)]"
+			hud_used.demon_chi_icon.icon_state = "demon-[round((demon_chi/max_demon_chi)*12)]"
 			if(yin_chi > yang_chi+2)
-				hud_used.chi_icon.add_overlay(hud_used.chi_icon.yin_imbalance)
-			if(yang_chi > yin_chi+2)
-				hud_used.chi_icon.add_overlay(hud_used.chi_icon.yang_imbalance)
-
+				hud_used.imbalance_chi_icon.icon_state = "yin_imbalance"
+			else if(yang_chi > yin_chi+2)
+				hud_used.imbalance_chi_icon.icon_state = "yang_imbalance"
+			else
+				hud_used.imbalance_chi_icon.icon_state = "base"
 
 /atom/movable/screen/chi_pool
 	name = "Chi Pool"
@@ -72,19 +197,40 @@
 	icon_state = "base"
 	layer = HUD_LAYER
 	plane = HUD_PLANE
-	var/image/yin
-	var/image/yang
-	var/image/yin_imbalance
-	var/image/yang_imbalance
 	var/image/upper_layer
+
+/atom/movable/screen/yang_chi
+	name = "Yang Chi"
+	icon = 'code/modules/wod13/UI/chi.dmi'
+	icon_state = "yang-0"
+	layer = HUD_LAYER
+	plane = HUD_PLANE
+
+/atom/movable/screen/yin_chi
+	name = "Yin Chi"
+	icon = 'code/modules/wod13/UI/chi.dmi'
+	icon_state = "yin-0"
+	layer = HUD_LAYER
+	plane = HUD_PLANE
+
+/atom/movable/screen/imbalance_chi
+	name = "Chi Imbalance"
+	icon = 'code/modules/wod13/UI/chi.dmi'
+	icon_state = "base"
+	layer = HUD_LAYER-1
+	plane = HUD_PLANE
+
+/atom/movable/screen/demon_chi
+	name = "Demon Chi"
+	icon = 'code/modules/wod13/UI/chi.dmi'
+	icon_state = "base"
+	layer = HUD_LAYER
+	plane = HUD_PLANE
 
 /atom/movable/screen/chi_pool/Initialize()
 	. = ..()
-	yin = image(icon = 'code/modules/wod13/UI/chi.dmi', icon_state = "yin-0")
-	yang = image(icon = 'code/modules/wod13/UI/chi.dmi', icon_state = "yang-0")
-	yin_imbalance = image(icon = 'code/modules/wod13/UI/chi.dmi', icon_state = "yin_imbalance", layer = HUD_LAYER-1)
-	yang_imbalance = image(icon = 'code/modules/wod13/UI/chi.dmi', icon_state = "yang_imbalance", layer = HUD_LAYER-1)
 	upper_layer = image(icon = 'code/modules/wod13/UI/chi.dmi', icon_state = "add", layer = HUD_LAYER+1)
+	add_overlay(upper_layer)
 
 /atom/movable/screen/chi_pool/Click()
 	var/mob/living/C = usr
@@ -156,6 +302,8 @@
 
 		dat += "[dharma]<BR>"
 
+		dat += "The <b>[host.dharma?.animated]</b> Chi Energy helps me to stay alive..."
+
 		dat += "<b>Physique</b>: [host.physique]<BR>"
 		dat += "<b>Dexterity</b>: [host.dexterity]<BR>"
 		dat += "<b>Social</b>: [host.social]<BR>"
@@ -207,12 +355,27 @@
 	var/datum/action/kueijininfo/infor = new()
 	infor.host = C
 	infor.Grant(C)
+	var/datum/action/breathe_chi/breathec = new()
+	breathec.Grant(C)
+	var/datum/action/reanimate_yang/YG = new()
+	YG.Grant(C)
+	var/datum/action/reanimate_yin/YN = new()
+	YN.Grant(C)
 
 /datum/species/kuei_jin/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
 	for(var/datum/action/kueijininfo/VI in C.actions)
 		if(VI)
 			VI.Remove(C)
+	for(var/datum/action/breathe_chi/QI in C.actions)
+		if(QI)
+			QI.Remove(C)
+	for(var/datum/action/reanimate_yang/YG in C.actions)
+		if(YG)
+			YG.Remove(C)
+	for(var/datum/action/reanimate_yin/YN in C.actions)
+		if(YN)
+			YN.Remove(C)
 	for(var/datum/action/chi_discipline/A in C.actions)
 		if(A)
 			A.Remove(C)
@@ -264,40 +427,20 @@
 	H.max_yang_chi = 3+H.dharma?.level
 	H.max_yin_chi = 3+H.dharma?.level
 	H.update_chi_hud()
-
-	if(H.dharma?.breathing_on)
-		if((get_dist(H, H.dharma?.breathing_on) > 3) || H.z != H.dharma?.breathing_on.z || !isturf(H.loc) || !isturf(H.dharma?.breathing_on.loc))
-			H.dharma?.breathing_on = null
-			H.dharma?.last_breath_on_loc = null
-			if(breathing_overlay)
-				QDEL_NULL(breathing_overlay)
-		if(H.dharma?.breathing_on.loc != H.dharma?.last_breath_on_loc)
-			H.dharma?.breathing_on = null
-			H.dharma?.last_breath_on_loc = null
-			if(breathing_overlay)
-				QDEL_NULL(breathing_overlay)
-		else
-			if(breathing_overlay)
-				QDEL_NULL(breathing_overlay)
-			breathing_overlay = new (get_turf(H))
-			var/matrix/M = matrix()
-			M.Turn(get_angle_raw(H.x, H.y, 0, 0, H.dharma?.breathing_on.x, H.dharma?.breathing_on.y, 0, 0))
-			M.Scale(1, (1/32)*get_dist_in_pixels(H.x*32, H.y*32, H.dharma?.breathing_on.x*32, H.dharma?.breathing_on.y*32))
-			breathing_overlay.transform = M
-
-			if(H.dharma?.breathing_on.yang_chi > 0 || H.dharma?.breathing_on.yin_chi > 0)
-				if(H.dharma?.breathing_on.yang_chi > H.dharma?.breathing_on.yin_chi)
-					H.dharma?.breathing_on.yang_chi = H.dharma?.breathing_on.yang_chi-1
-					H.yang_chi = min(H.yang_chi+1, H.max_yang_chi)
-				else
-					H.dharma?.breathing_on.yin_chi = H.dharma?.breathing_on.yin_chi-1
-					H.yin_chi = min(H.yin_chi+1, H.max_yin_chi)
-				H.update_chi_hud()
-			else
-				H.dharma?.breathing_on = null
-				H.dharma?.last_breath_on_loc = null
-				if(breathing_overlay)
-					QDEL_NULL(breathing_overlay)
+	if(!H.in_frenzy)
+		H.dharma?.Po_combat = FALSE
+	if(H.demon_chi == H.max_demon_chi)
+		H.rollfrenzy()
+	if(H.dharma?.Po == "Monkey")
+		for(var/obj/structure/pole/pole in viewers(6, H))
+			if(pole)
+				emit_po_call(pole, "Monkey")
+		for(var/obj/item/toy/toy in viewers(6, H))
+			if(toy)
+				emit_po_call(toy, "Monkey")
+		for(var/obj/machinery/computer/slot_machine/slot in viewers(6, H))
+			if(toy)
+				emit_po_call(slot, "Monkey")
 
 /datum/action/breathe_chi
 	name = "Inhale Chi"
@@ -313,7 +456,7 @@
 		var/mob/living/carbon/human/BD = usr
 		var/list/victims_list = list()
 		for(var/mob/living/L in range(3, owner))
-			if(L)
+			if(L != owner)
 				victims_list |= L
 		if(!length(victims_list))
 			to_chat(owner, "<span class='warning'>There's no one with <b>Chi</b> around...</span>")
@@ -325,13 +468,91 @@
 					to_chat(owner, "<span class='warning'>It doesn't have <b>Chi</b> to feed on...</span>")
 					return
 				else
-					BD.dharma?.breathing_on = victim
-					BD.dharma?.last_breath_on_loc = victim.loc
+					var/atom/chi_particle = new (get_turf(victim))
+					chi_particle.density = FALSE
+					chi_particle.icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+					chi_particle.icon_state = "drain"
+					var/matrix/M = matrix()
+					M.Scale(1, get_dist_in_pixels(owner.x*32, owner.y*32, victim.x*32, victim.y*32)/32)
+					M.Turn(get_angle_raw(victim.x, victim.y, 0, 0, owner.x, owner.y, 0, 0))
+					chi_particle.transform = M
+					var/sucking_chi = TRUE
+					if(isanimal(victim))
+						var/mob/living/simple_animal/S = victim
+						if(S.mob_biotypes & MOB_UNDEAD)
+							to_chat(owner, "<span class='warning'>This creature doesn't breathe cause it's <b>DEAD</b>!</span>")
+							sucking_chi = FALSE
+					if(victim.stat >= DEAD)
+						to_chat(owner, "<span class='warning'>This creature doesn't breathe cause it's <b>DEAD</b>!</span>")
+						sucking_chi = FALSE
+					if(iskindred(victim))
+						to_chat(owner, "<span class='warning'>This creature doesn't breathe cause it's <b>DEAD</b>!</span>")
+						sucking_chi = FALSE
+					if(sucking_chi)
+						if(victim.yang_chi)
+							victim.yang_chi = max(0, victim.yang_chi-1)
+							owner.yang_chi = min(owner.yang_chi+1, owner.max_yang_chi)
+							to_chat(owner, "<span class='engradio'>Some <b>Yang</b> Chi energy enters you...</span>")
+							owner.update_chi_hud()
+						else
+							to_chat(owner, "<span class='warning'>This creature doesn't have enough <b>Yang</b> Chi!</span>")
+					spawn(3 SECONDS)
+						qdel(chi_particle)
+
 		button.color = "#970000"
 		animate(button, color = "#ffffff", time = 20, loop = 1)
 
-/mob/living
-	var/datum/action/chi_discipline/chi_ranged
+/datum/action/reanimate_yin
+	name = "Yin Reanimate"
+	desc = "Reanimate your body with Yin Chi energy."
+	button_icon_state = "yin"
+	button_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	background_icon_state = "discipline"
+	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+
+/datum/action/reanimate_yin/Trigger()
+	if(istype(owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/BD = usr
+		BD.dharma?.animated = "Yin"
+		BD.skin_tone = get_vamp_skin_color(BD.skin_tone)
+		BD.social = 0
+		BD.dna?.species.brutemod = initial(BD.mob.dna?.species.brutemod)
+		BD.dna?.species.burnmod = initial(BD.mob.dna?.species.burnmod)
+		if(BD.yin_chi)
+			BD.adjustBruteLoss(-25, TRUE)
+			BD.adjustFireLoss(-10, TRUE)
+		else
+			BD.adjustBruteLoss(20, TRUE)
+		BD.yin_chi = max(0, BD.yin_chi-1)
+		button.color = "#970000"
+		animate(button, color = "#ffffff", time = 20, loop = 1)
+
+/datum/action/reanimate_yang
+	name = "Yang Reanimate"
+	desc = "Reanimate your body with Yang Chi energy."
+	button_icon_state = "yang"
+	button_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	background_icon_state = "discipline"
+	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+
+/datum/action/reanimate_yang/Trigger()
+	if(istype(owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/BD = usr
+		BD.dharma?.animated = "Yang"
+		BD.skin_tone = BD.dharma?.initial_skin_color
+		BD.social = BD.dharma?.initial_social
+		BD.dna?.species.brutemod = 1
+		BD.dna?.species.burnmod = 0.5
+		if(BD.yang_chi)
+			BD.adjustBruteLoss(-10, TRUE)
+			BD.adjustFireLoss(-25, TRUE)
+		else
+			BD.adjustBruteLoss(10, TRUE)
+		BD.yang_chi = max(0, BD.yang_chi-1)
+		button.color = "#970000"
+		animate(button, color = "#ffffff", time = 20, loop = 1)
 
 /datum/action/chi_discipline
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
@@ -414,10 +635,10 @@
 //					return
 
 /atom/movable/screen/movable/action_button/Click(location,control,params)
-	if(istype(linked_action, /datum/action/discipline))
+	if(istype(linked_action, /datum/action/chi_discipline))
 		var/list/modifiers = params2list(params)
 		if(LAZYACCESS(modifiers, "right"))
-			var/datum/action/discipline/D = linked_action
+			var/datum/action/chi_discipline/D = linked_action
 			D.switch_level()
 			return
 	. = ..()

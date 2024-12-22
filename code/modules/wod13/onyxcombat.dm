@@ -21,6 +21,10 @@
 	GLOB.masquerade_breakers_list -= src
 	GLOB.sabbatites -= src
 
+	//So upon death the corpse is filled with yin chi
+	yin_chi = min(max_yin_chi, yin_chi+yang_chi)
+	yang_chi = 0
+
 	if(iskindred(src))
 		if(in_frenzy)
 			exit_frenzymod()
@@ -245,6 +249,10 @@
 	plane = HUD_PLANE
 
 /atom/movable/screen/drinkblood/Click()
+	bite()
+	. = ..()
+
+/atom/movable/screen/drinkblood/proc/bite()
 //	SEND_SOUND(usr, sound('code/modules/wod13/sounds/highlight.ogg', 0, 0, 50))
 	if(ishuman(usr))
 		var/mob/living/carbon/human/BD = usr
@@ -261,31 +269,27 @@
 		if(BD.grab_state > GRAB_PASSIVE)
 			if(ishuman(BD.pulling))
 				var/mob/living/carbon/human/PB = BD.pulling
-				if(isghoul(usr))
+				if(isghoul(BD))
 					if(!iskindred(PB))
 						SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 						to_chat(BD, "<span class='warning'>Eww, that is <b>GROSS</b>.</span>")
 						return
-				if(!isghoul(usr) && !iskindred(usr))
+				if(!isghoul(BD) && !iskindred(BD) && !iscathayan(BD))
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>Eww, that is <b>GROSS</b>.</span>")
 					return
-				if(PB.stat == DEAD && !HAS_TRAIT(BD, TRAIT_GULLET))
+				if(PB.stat == DEAD && !HAS_TRAIT(BD, TRAIT_GULLET) && !iscathayan(BD))
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
 					return
-				if(PB.bloodpool <= 0 && !iskindred(BD.pulling))
+				if(PB.bloodpool <= 0 && (!iskindred(BD.pulling) || !iskindred(BD)))
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
 				if(BD.clane)
 					var/special_clan = FALSE
 					if(BD.clane.name == "Salubri")
-						if(PB.client)
-							if(alert(PB, "Do you consent to being fed on by [BD.name]?", "Consent To Feeding", "Yes", "No") != "Yes")
-								to_chat(BD, "<span class='warning'>You cannot feed on people who do not consent.</span>")
-								return
-						else if(!PB.IsSleeping())
+						if(!PB.IsSleeping())
 							to_chat(BD, "<span class='warning'>You can't drink from aware targets!</span>")
 							return
 						special_clan = TRUE
@@ -302,18 +306,11 @@
 					to_chat(BD, "<span class='warning'>Eww, that is <b>GROSS</b>.</span>")
 					return
 				var/mob/living/LV = BD.pulling
-				if(iscathayan(BD))
-					if(LV.bloodpool <= 0)
-						SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
-						to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
-						return
-					BD.drinksomeblood(LV)
-					return
-				if(LV.bloodpool <= 0 && !iskindred(BD.pulling))
+				if(LV.bloodpool <= 0 && (!iskindred(BD.pulling) || !iskindred(BD)))
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
-				if(LV.stat == DEAD && !HAS_TRAIT(BD, TRAIT_GULLET))
+				if(LV.stat == DEAD && !HAS_TRAIT(BD, TRAIT_GULLET) && !iscathayan(BD))
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
 					return
@@ -333,7 +330,6 @@
 							to_chat(BD, "<span class='warning'>There is no <b>HEART</b> in this creature.</span>")
 							return
 					BD.drinksomeblood(LV)
-	..()
 
 /atom/movable/screen/bloodheal
 	name = "Bloodheal"

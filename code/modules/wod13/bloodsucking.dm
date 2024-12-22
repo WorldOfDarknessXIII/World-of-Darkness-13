@@ -47,7 +47,7 @@
 
 	if(mob.bloodpool <= 1 && mob.maxbloodpool > 1)
 		to_chat(src, "<span class='warning'>You feel small amount of <b>BLOOD</b> in your victim.</span>")
-		if(iskindred(mob))
+		if(iskindred(mob) && iskindred(src))
 			if(!mob.client)
 				to_chat(src, "<span class='warning'>You need [mob]'s attention to do that...</span>")
 				return
@@ -112,9 +112,11 @@
 					if(mob.yang_chi > mob.yin_chi)
 						mob.yang_chi = mob.yang_chi-1
 						yang_chi = min(yang_chi+1, max_yang_chi)
+						to_chat(src, "<span class='engradio'>Some <b>Yang</b> Chi energy enters you...</span>")
 					else
 						mob.yin_chi = mob.yin_chi-1
 						yin_chi = min(yin_chi+1, max_yin_chi)
+						to_chat(src, "<span class='medradio'>Some <b>Yin</b> Chi energy enters you...</span>")
 					update_chi_hud()
 				else
 					to_chat(src, "<span class='warning'>The <b>BLOOD</b> feels tasteless...</span>")
@@ -145,7 +147,7 @@
 		if(mob.bloodpool <= 0)
 			if(ishuman(mob))
 				var/mob/living/carbon/human/K = mob
-				if(iskindred(mob) && !iscathayan(src))
+				if(iskindred(mob) && iskindred(src))
 					var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
 					var/datum/preferences/P2 = GLOB.preferences_datums[ckey(mob.key)]
 					AdjustHumanity(-1, 0)

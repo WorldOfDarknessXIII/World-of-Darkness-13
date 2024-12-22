@@ -220,6 +220,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/clane_accessory
 
+	var/dharma_type = /datum/dharma
+	var/dharma_level = 1
+	var/Po = 3
+	var/Hun = 3
+	var/Yang = 3
+	var/Yin = 3
+	var/list/chi_discipline_types = list()
+	var/list/chi_discipline_levels = list()
+
 /datum/preferences/proc/add_experience(amount)
 	true_experience = clamp(true_experience + amount, 0, 1000)
 
@@ -2848,6 +2857,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.maxbloodpool = 10+((13-generation)*3)
 		character.bloodpool = rand(2, character.maxbloodpool)
 		character.generation = generation
+		character.yin_chi = 6+(13-generation)
+		character.max_yin_chi = 6+(13-generation)
 		character.clane.enlightenment = enlightenment
 //		if(generation < 13)
 //			character.maxHealth = initial(character.maxHealth)+50*(13-generation)
@@ -2857,10 +2868,36 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.clane = null
 		character.generation = 13
 		character.bloodpool = character.maxbloodpool
+		if(pref_species.name == "Kuei-Jin")
+			character.yang_chi = 3
+			character.max_yang_chi = 3
+			character.yin_chi = 3
+			character.max_yin_chi = 3
+		else
+			character.yang_chi = 4
+			character.max_yang_chi = 4
+			character.yin_chi = 2
+			character.max_yin_chi = 2
 
 	if(pref_species.name == "Werewolf")
 		character.maxHealth = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*(character.physique + character.additional_physique)))
 		character.health = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*(character.physique + character.additional_physique )))
+		switch(tribe)
+			if("Wendigo")
+				character.yin_chi = 1
+				character.max_yin_chi = 1
+				character.yang_chi = 5+(auspice_level*2)
+				character.max_yang_chi = 5+(auspice_level*2)
+			if("Glasswalkers")
+				character.yin_chi = 1+auspice_level
+				character.max_yin_chi = 1+auspice_level
+				character.yang_chi = 5+auspice_level
+				character.max_yang_chi = 5+auspice_level
+			if("Black Spiral Dancers")
+				character.yin_chi = 1+auspice_level*2
+				character.max_yin_chi = 1+auspice_level*2
+				character.yang_chi = 5
+				character.max_yang_chi = 5
 	else
 		character.maxHealth = round((initial(character.maxHealth)-initial(character.maxHealth)/4)+(initial(character.maxHealth)/4)*((character.physique+character.additional_physique )+13-generation))
 		character.health = round((initial(character.health)-initial(character.health)/4)+(initial(character.health)/4)*((character.physique+character.additional_physique )+13-generation))
