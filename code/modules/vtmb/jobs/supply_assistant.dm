@@ -18,7 +18,7 @@
 	display_order = JOB_DISPLAY_ORDER_SUPPLY
 	bounty_types = CIV_JOB_RANDOM
 	allowed_species = list("Vampire", "Ghoul", "Human")
-	known_contacts = list("Baron", "Prince", "Sheriff")
+	known_contacts = list("Dealer")
 	allowed_bloodlines = list("True Brujah", "Daughters of Cacophony", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Lasombra", "Gargoyle", "Kiasyd")
 
 	v_duty = "You work for the Dealer, or are a part of their coterie. They pay well and the job is easy. Don't disappoint them."
@@ -33,7 +33,7 @@
 	id = /obj/item/card/id/supplytech
 	uniform = /obj/item/clothing/under/vampire/supply
 	gloves = /obj/item/clothing/gloves/vampire/work
-	l_pocket = /obj/item/vamp/phone/anarch
+	l_pocket = /obj/item/vamp/phone/supply_tech
 	r_pocket = /obj/item/vamp/keys/supply
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	backpack_contents = list(/obj/item/passport=1, /obj/item/phone_book=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)

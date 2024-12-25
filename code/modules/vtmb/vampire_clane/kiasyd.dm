@@ -12,6 +12,7 @@
 	male_clothes = /obj/item/clothing/under/vampire/archivist
 	female_clothes = /obj/item/clothing/under/vampire/archivist
 	whitelisted = TRUE
+	violating_appearance = TRUE
 	current_accessory = "none"
 	accessories = list("fae_ears", "none")
 	accessories_layers = list("fae_ears" = UNICORN_LAYER, "none" = UNICORN_LAYER)

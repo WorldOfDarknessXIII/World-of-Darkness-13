@@ -24,7 +24,7 @@
 //	minimal_generation = 12	//Uncomment when players get exp enough
 
 	my_contact_is_important = TRUE
-	known_contacts = list("Baron", "Prince", "Sheriff")
+	known_contacts = list("Prince","Seneschal", "Sheriff", "Baron")
 	allowed_bloodlines = list("True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Ministry", "Kiasyd")
 
 	v_duty = "You provide supplies to other kindred. The warehouse is yours, and it's your business who you'll deal with."

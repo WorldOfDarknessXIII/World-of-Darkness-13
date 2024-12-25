@@ -39,7 +39,7 @@
 	allowed_bloodlines = list("True Brujah", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Lasombra")
 
 	my_contact_is_important = TRUE
-	known_contacts = list("Prince")
+	known_contacts = list("Prince","Seneschal","Dealer")
 
 	v_duty = "Protect the Prince and the Masquerade. You are their sword."
 	experience_addition = 20

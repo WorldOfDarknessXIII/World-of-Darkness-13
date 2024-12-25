@@ -59,6 +59,11 @@
 		holder.icon_state = "aura"
 		if(isgarou(src) || iswerewolf(src))
 			holder.icon_state = "aura_bright"
+		var/ghoul = FALSE
+		if(isghoul(src))
+			//Pale spots in the aura, had to be done manually since holder.color will show only a type of color
+			holder.icon_state = "aura_ghoul"
+			ghoul = TRUE
 
 		if(isnpc(src))
 			var/mob/living/carbon/human/npc/N = src
@@ -66,7 +71,8 @@
 				holder.color = "#ff0000"
 			else
 				holder.color = "#0000ff"
-		else
+		else if(!ghoul)
+		//Ghoul got a mix of two different colors on the dmi, so it can't recieve any holder.color 
 			if(a_intent == INTENT_HARM)
 				holder.color = "#ff0000"
 			else

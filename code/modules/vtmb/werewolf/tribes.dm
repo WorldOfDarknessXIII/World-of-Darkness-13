@@ -2,7 +2,8 @@
 	name = "Stoic Pose"
 	desc = "With this gift garou sends theirself into cryo-state, ignoring all incoming damage but also covering themself in a block of ice."
 	button_icon_state = "stoic_pose"
-//	rage_req = 1
+	rage_req = 2
+	gnosis_req = 1
 
 /datum/action/gift/stoic_pose/Trigger()
 	. = ..()
@@ -11,23 +12,23 @@
 		var/mob/living/carbon/C = owner
 		if(isgarou(C))
 			var/obj/were_ice/W = new (get_turf(owner))
-			C.Stun(200)
+			C.Stun(12 SECONDS)
 			C.forceMove(W)
-			spawn(200)
+			spawn(12 SECONDS)
 				C.forceMove(get_turf(W))
 				qdel(W)
 		if(iscrinos(C))
 			var/obj/were_ice/crinos/W = new (get_turf(owner))
-			C.Stun(200)
+			C.Stun(12 SECONDS)
 			C.forceMove(W)
-			spawn(200)
+			spawn(12 SECONDS)
 				C.forceMove(get_turf(W))
 				qdel(W)
 		if(islupus(C))
 			var/obj/were_ice/lupus/W = new (get_turf(owner))
-			C.Stun(200)
+			C.Stun(12 SECONDS)
 			C.forceMove(W)
-			spawn(200)
+			spawn(12 SECONDS)
 				C.forceMove(get_turf(W))
 				qdel(W)
 
@@ -35,7 +36,8 @@
 	name = "Freezing Wind"
 	desc = "Garou of Wendigo Tribe can create a stream of cold, freezing wind, and strike her foes with it."
 	button_icon_state = "freezing_wind"
-	gnosis_req = 1
+	rage_req = 1
+	//gnosis_req = 1
 
 /datum/action/gift/freezing_wind/Trigger()
 	. = ..()
@@ -54,7 +56,8 @@
 	name = "Bloody Feast"
 	desc = "By eating a grabbed corpse, garou can redeem their lost health and heal the injuries."
 	button_icon_state = "bloody_feast"
-	rage_req = 1
+	rage_req = 2
+	gnosis_req = 1
 
 /datum/action/gift/bloody_feast/Trigger()
 	. = ..()
@@ -88,6 +91,7 @@
 	name = "Venom Claws"
 	desc = "While this ability is active, strikes with claws poison foes of garou."
 	button_icon_state = "venom_claws"
+	rage_req = 1
 
 /datum/action/gift/venom_claws/Trigger()
 	. = ..()
@@ -95,19 +99,23 @@
 		if(ishuman(owner))
 			playsound(get_turf(owner), 'code/modules/wod13/sounds/venom_claws.ogg', 75, FALSE)
 			var/mob/living/carbon/human/H = owner
-			H.tox_damage_plus = 25
+			H.melee_damage_lower = initial(H.melee_damage_lower)+15
+			H.melee_damage_upper = initial(H.melee_damage_upper)+15
+			H.tox_damage_plus = 15
 			to_chat(owner, "<span class='notice'>You feel your claws filling with pure venom...</span>")
-			spawn(150)
+			spawn(12 SECONDS)
 				H.tox_damage_plus = 0
+				H.melee_damage_lower = initial(H.melee_damage_lower)
+				H.melee_damage_upper = initial(H.melee_damage_upper)
 				to_chat(owner, "<span class='warning'>Your claws are not poison anymore...</span>")
 		else
 			playsound(get_turf(owner), 'code/modules/wod13/sounds/venom_claws.ogg', 75, FALSE)
 			var/mob/living/carbon/H = owner
-			H.melee_damage_lower = initial(H.melee_damage_lower)+20
-			H.melee_damage_upper = initial(H.melee_damage_upper)+20
-			H.tox_damage_plus = 25
+			H.melee_damage_lower = initial(H.melee_damage_lower)+10
+			H.melee_damage_upper = initial(H.melee_damage_upper)+10
+			H.tox_damage_plus = 10
 			to_chat(owner, "<span class='notice'>You feel your claws filling with pure venom...</span>")
-			spawn(150)
+			spawn(12 SECONDS)
 				H.tox_damage_plus = 0
 				H.melee_damage_lower = initial(H.melee_damage_lower)
 				H.melee_damage_upper = initial(H.melee_damage_upper)
@@ -117,6 +125,8 @@
 	name = "Burning Scars"
 	desc = "Garou creates an aura of very hot air, which burns everyone around."
 	button_icon_state = "burning_scars"
+	rage_req = 2
+	gnosis_req = 1
 
 /datum/action/gift/burning_scars/Trigger()
 	. = ..()
@@ -135,6 +145,7 @@
 	name = "Smooth Move"
 	desc = "Garou jumps forward, avoiding every damage for a moment."
 	button_icon_state = "smooth_move"
+	//rage_req = 1   somewhat useless gift with MMB pounce
 
 /datum/action/gift/smooth_move/Trigger()
 	. = ..()
@@ -153,6 +164,8 @@
 	name = "Digital Feelings"
 	desc = "Every technology creates an electrical strike, which hits garou's enemies."
 	button_icon_state = "digital_feelings"
+	rage_req = 2
+	gnosis_req = 1
 
 /datum/action/gift/digital_feelings/Trigger()
 	. = ..()
@@ -169,6 +182,8 @@
 	name = "Elemental Improvement"
 	desc = "Garou flesh replaces itself with prothesis, making it less vulnerable to brute damage, but more for burn damage."
 	button_icon_state = "elemental_improvement"
+	rage_req = 2
+	gnosis_req = 1
 
 /datum/action/gift/elemental_improvement/Trigger()
 	. = ..()
@@ -177,10 +192,10 @@
 		if(ishuman(owner))
 			playsound(get_turf(owner), 'code/modules/wod13/sounds/electro_cast.ogg', 75, FALSE)
 			var/mob/living/carbon/human/H = owner
-			H.physiology.armor.melee = 99
-			H.physiology.armor.bullet = 99
+			H.physiology.armor.melee = 25
+			H.physiology.armor.bullet = 45
 			to_chat(owner, "<span class='notice'>You feel your skin replaced with the machine...</span>")
-			spawn(100)
+			spawn(20 SECONDS)
 				H.physiology.armor.melee = initial(H.physiology.armor.melee)
 				H.physiology.armor.bullet = initial(H.physiology.armor.bullet)
 				to_chat(owner, "<span class='warning'>Your skin is natural again...</span>")
@@ -188,9 +203,9 @@
 		else
 			playsound(get_turf(owner), 'code/modules/wod13/sounds/electro_cast.ogg', 75, FALSE)
 			var/mob/living/carbon/werewolf/H = owner
-			H.werewolf_armor = 99
+			H.werewolf_armor = 45
 			to_chat(owner, "<span class='notice'>You feel your skin replaced with the machine...</span>")
-			spawn(100)
+			spawn(20 SECONDS)
 				H.werewolf_armor = initial(H.werewolf_armor)
 				to_chat(owner, "<span class='warning'>Your skin is natural again...</span>")
 				owner.color = "#FFFFFF"

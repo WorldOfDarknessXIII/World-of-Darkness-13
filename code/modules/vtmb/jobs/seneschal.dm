@@ -43,7 +43,7 @@
 	minimal_masquerade = 5
 
 	my_contact_is_important = TRUE
-	known_contacts = list("Prince")
+	known_contacts = list("Prince","Sheriff","Tremere Regent","Dealer","Primogens")
 
 	v_duty = "You are the right hand man or woman of the most powerful vampire in the city. The Camarilla trusts you to run the city, even in their stead."
 	duty = "You are the right hand man or woman of the most powerful vampire in the city. The Camarilla trusts you to run the city, even in their stead."
