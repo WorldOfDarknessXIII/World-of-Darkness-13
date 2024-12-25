@@ -454,7 +454,7 @@
 
 //** SPOOOOKY ROBES FROM THE CAPPADOCIAN UPDATE **//
 /obj/item/clothing/suit/hooded/robes
-	name = "white robes"
+	name = "white robe"
 	desc = "Some angelic-looking robes."
 	icon_state = "robes"
 	icon = 'code/modules/wod13/clothing.dmi'
@@ -480,7 +480,7 @@
 	body_worn = TRUE
 
 /obj/item/clothing/suit/hooded/robes/black
-	name = "black robes"
+	name = "black robe"
 	desc = "Some creepy-looking robes."
 	icon_state = "robes_black"
 	inhand_icon_state = "robes_black"
@@ -492,7 +492,7 @@
 	icon_state = "robes_black_hood"
 
 /obj/item/clothing/suit/hooded/robes/grey
-	name = "grey robes"
+	name = "grey robe"
 	desc = "Some somber-looking robes."
 	icon_state = "robes_grey"
 	inhand_icon_state = "robes_grey"
@@ -504,7 +504,7 @@
 	icon_state = "robes_grey_hood"
 
 /obj/item/clothing/suit/hooded/robes/darkred
-	name = "dark red robes"
+	name = "dark red robe"
 	desc = "Some zealous-looking robes."
 	icon_state = "robes_darkred"
 	inhand_icon_state = "robes_darkred"
@@ -516,7 +516,7 @@
 	icon_state = "robes_darkred_hood"
 
 /obj/item/clothing/suit/hooded/robes/yellow
-	name = "yellow robes"
+	name = "yellow robe"
 	desc = "Some happy-looking robes."
 	icon_state = "robes_yellow"
 	inhand_icon_state = "robes_yellow"
@@ -528,7 +528,7 @@
 	icon_state = "robes_yellow_hood"
 
 /obj/item/clothing/suit/hooded/robes/green
-	name = "green robes"
+	name = "green robe"
 	desc = "Some earthy-looking robes."
 	icon_state = "robes_green"
 	inhand_icon_state = "robes_green"
@@ -540,7 +540,7 @@
 	icon_state = "robes_green_hood"
 
 /obj/item/clothing/suit/hooded/robes/red
-	name = "red robes"
+	name = "red robe"
 	desc = "Some furious-looking robes."
 	icon_state = "robes_red"
 	inhand_icon_state = "robes_red"
@@ -552,7 +552,7 @@
 	icon_state = "robes_red_hood"
 
 /obj/item/clothing/suit/hooded/robes/purple
-	name = "purple robes"
+	name = "purple robe"
 	desc = "Some elegant-looking robes."
 	icon_state = "robes_purple"
 	inhand_icon_state = "robes_purple"
