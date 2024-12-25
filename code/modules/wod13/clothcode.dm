@@ -461,6 +461,7 @@
 	worn_icon = 'code/modules/wod13/worn.dmi'
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	inhand_icon_state = "robes"
+	flags_inv = HIDEJUMPSUIT
 	body_parts_covered = CHEST | GROIN | LEGS | ARMS
 	cold_protection = CHEST | GROIN | LEGS | ARMS
 	hoodtype = /obj/item/clothing/head/hooded/robes_hood

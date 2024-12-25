@@ -27,3 +27,15 @@
 
 	..()
 
+/datum/vampireclane/cappadocian/post_gain(mob/living/carbon/human/H)
+	. = ..()
+
+	if ((alt_sprite == "rotten1") || (alt_sprite == "rotten2"))
+		return
+
+	var/obj/item/clothing/suit/hooded/robes/darkred/new_robe = new(H.loc)
+	H.equip_to_appropriate_slot(new_robe, FALSE)
+
+	var/obj/item/clothing/mask/vampire/venetian_mask/fancy/new_mask = new(H.loc)
+	H.equip_to_appropriate_slot(new_mask, FALSE)
+
