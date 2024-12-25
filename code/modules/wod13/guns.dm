@@ -600,6 +600,7 @@
 	masquerade_violating = TRUE
 
 /obj/item/molotov/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	call_dharma("grief", throwingdatum.thrower)
 	for(var/turf/open/floor/F in range(2, hit_atom))
 		if(F)
 			new /obj/effect/decal/cleanable/gasoline(F)
@@ -661,6 +662,7 @@
 		if(target_turf)
 			var/turflist = getline(user, target_turf)
 			log_combat(user, target, "flamethrowered", src)
+			call_dharma("grief", user)
 			for(var/turf/open/floor/F in turflist)
 				if(F)
 					if(F != user.loc)

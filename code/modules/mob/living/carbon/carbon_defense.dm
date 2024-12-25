@@ -69,7 +69,7 @@
 
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
 	if(I.force)
-		do_werewolf_rage_from_attack()
+		do_werewolf_rage_from_attack(user)
 	var/obj/item/bodypart/affecting
 	if(user == src)
 		affecting = get_bodypart(check_zone(user.zone_selected)) //we're self-mutilating! yay!
@@ -146,7 +146,7 @@
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)
 
 	if(user.a_intent == INTENT_HARM)
-		do_werewolf_rage_from_attack()
+		do_werewolf_rage_from_attack(user)
 
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		. = TRUE
@@ -251,16 +251,25 @@
  * or another carbon.
 */
 
-/mob/living/carbon/proc/do_werewolf_rage_from_attack()
+/mob/living/carbon/proc/do_werewolf_rage_from_attack(var/mob/living/target)
 	if(isgarou(src) || iswerewolf(src))
 		if(last_rage_from_attack == 0 || last_rage_from_attack+50 < world.time)
 			last_rage_from_attack = world.time
 			adjust_rage(1, src, TRUE)
 	if(iscathayan(src))
-		dharma?.Po_combat = TRUE
+		if(in_frenzy)
+			if(!dharma?.Po_combat)
+				dharma?.Po_combat = TRUE
+				call_dharma("letpo", src)
+		if(dharma?.Po == "Rebel")
+			emit_po_call(src, "Rebel")
+		if(target)
+			if("judgement" in dharma?.tennets)
+				if(target.lastattacker != src)
+					dharma?.deserving |= target.real_name
 
 /mob/living/carbon/proc/disarm(mob/living/carbon/target)
-	target.do_werewolf_rage_from_attack()
+	target.do_werewolf_rage_from_attack(src)
 	if(zone_selected == BODY_ZONE_PRECISE_MOUTH)
 		var/target_on_help_and_unarmed = target.a_intent == INTENT_HELP && !target.get_active_held_item()
 		if(target_on_help_and_unarmed || HAS_TRAIT(target, TRAIT_RESTRAINED))
@@ -452,6 +461,13 @@
 	if(M == src && check_self_for_injuries())
 		return
 
+	if(ishuman(M))
+		var/mob/living/carbon/human/human = M
+		if(human.Myself.Lover.owner == src)
+			call_dharma("meet", M)
+		if(human.Myself.Friend.owner == src)
+			call_dharma("meet", M)
+
 	if(body_position == LYING_DOWN)
 		if(buckled)
 			to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!</span>")
@@ -460,6 +476,8 @@
 						null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
 		to_chat(M, "<span class='notice'>You shake [src] trying to pick [p_them()] up!</span>")
 		to_chat(src, "<span class='notice'>[M] shakes you to get you up!</span>")
+		if(dharma?.name == M.dharma?.name)
+			call_dharma("protect", M)
 
 	else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD) //Headpats!
 		SEND_SIGNAL(src, COMSIG_CARBON_HEADPAT, M)
@@ -686,7 +704,7 @@
 			. += (limb.brute_dam * limb.body_damage_coeff) + (limb.burn_dam * limb.body_damage_coeff)
 
 /mob/living/carbon/grabbedby(mob/living/carbon/user, supress_message = FALSE)
-	do_werewolf_rage_from_attack()
+	do_werewolf_rage_from_attack(user)
 	if(user != src)
 		return ..()
 

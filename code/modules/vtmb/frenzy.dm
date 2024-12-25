@@ -54,10 +54,12 @@
 	SEND_SOUND(src, sound('code/modules/wod13/sounds/frenzy.ogg', 0, 0, 50))
 	in_frenzy = TRUE
 	add_client_colour(/datum/client_colour/glass_colour/red)
+	demon_chi = 0
 	GLOB.frenzy_list += src
 
 /mob/living/carbon/proc/exit_frenzymod()
 	in_frenzy = FALSE
+	dharma?.Po_combat = FALSE
 	remove_client_colour(/datum/client_colour/glass_colour/red)
 	GLOB.frenzy_list -= src
 

@@ -221,13 +221,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/clane_accessory
 
 	var/dharma_type = /datum/dharma
-	var/dharma_level = 1
-	var/Po = 3
-	var/Hun = 3
-	var/Yang = 3
-	var/Yin = 3
-	var/list/chi_discipline_types = list()
-	var/list/chi_discipline_levels = list()
+	var/dharma_level = 2
+	var/po_type = "Rebel"
+	var/po = 3
+	var/hun = 3
+	var/yang = 3
+	var/yin = 3
+	var/list/chi_types = list()
+	var/list/chi_levels = list()
 
 /datum/preferences/proc/add_experience(amount)
 	true_experience = clamp(true_experience + amount, 0, 1000)
@@ -446,6 +447,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<br>"
 				if(!slotlocked)
 					dat += "<a href='?_src_=prefs;preference=pathof;task=input'>Switch Path</a><BR>"
+			if(pref_species.name == "Kuei-Jin")
+				var/datum/dharma/D = new dharma_type()
+				dat += "<b>Dharma:</b> [D.name] [dharma_level]/6 <a href='?_src_=prefs;preference=dharmatype;task=input'>Switch</a><BR>"
+				dat += "[D.desc]<BR><BR>"
+				dat += "<b>P'o Personality</b>: [po_type] <a href='?_src_=prefs;preference=potype;task=input'>Switch</a><BR>"
+				dat += "<b>Awareness:</b> [masquerade]/5<BR>"
+				dat += "<b>Yin/Yang</b>: [yin]/[yang] <a href='?_src_=prefs;preference=chibalance;task=input'>Adjust</a><BR>"
+				dat += "<b>Hun/P'o</b>: [hun]/[po] <a href='?_src_=prefs;preference=demonbalance;task=input'>Adjust</a><BR>"
 			if(pref_species.name == "Werewolf")
 				dat += "<b>Veil:</b> [masquerade]/5<BR>"
 			if(pref_species.name == "Vampire" || pref_species.name == "Ghoul")
@@ -2187,6 +2196,53 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						true_experience = true_experience-(3*(14-generation))
 				*/
 
+
+				if("dharmatype")
+					if(slotlocked)
+						return
+					if (alert("Are you sure you want to change Dharma? This will reset path-specific stats.", "Confirmation", "Yes", "No") != "Yes")
+						return
+					var/list/dharmas = list()
+					for(var/i in subtypesof(/datum/dharma))
+						var/datum/dharma/D = i
+						dharmas += initial(D.name)
+					var/result = input(user, "Select Dharma", "Dharma") as null|anything in dharmas
+					if(result)
+						for(var/i in subtypesof(/datum/dharma))
+							var/datum/dharma/D = i
+							if(initial(D.name) == result)
+								dharma_type = i
+								dharma_level = initial(dharma_level)
+								hun = initial(hun)
+								po = initial(po)
+								yin = initial(yin)
+								yang = initial(yang)
+
+
+				if("potype")
+					if(slotlocked)
+						return
+					var/list/pos = list("Rebel", "Legalist", "Demon", "Monkey", "Fool")
+					var/result = input(user, "Select P'o", "P'o") as null|anything in pos
+					if(result)
+						po_type = result
+
+				if("chibalance")
+					var/max_limit = dharma_level*2
+					var/sett = input(user, "Enter the maximum of Yin your character has:", "Yin/Yang") as num|null
+					if(sett)
+						sett = max(1, min(sett, max_limit-1))
+						yin = sett
+						yang = max_limit-sett
+
+				if("demonbalance")
+					var/max_limit = dharma_level*2
+					var/sett = input(user, "Enter the maximum of Hun your character has:", "Hun/P'o") as num|null
+					if(sett)
+						sett = max(1, min(sett, max_limit-1))
+						hun = sett
+						po = max_limit-sett
+
 				if("generation")
 					if((clane?.name == "Caitiff") || (true_experience < 20))
 						return
@@ -2869,10 +2925,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.generation = 13
 		character.bloodpool = character.maxbloodpool
 		if(pref_species.name == "Kuei-Jin")
-			character.yang_chi = 3
-			character.max_yang_chi = 3
-			character.yin_chi = 3
-			character.max_yin_chi = 3
+			character.yang_chi = yang
+			character.max_yang_chi = yang
+			character.yin_chi = yin
+			character.max_yin_chi = yin
+			character.max_demon_chi = po
+			character.dharma = new dharma_type()
+			character.dharma.Po = po_type
+			character.dharma.Hun = hun
 		else
 			character.yang_chi = 4
 			character.max_yang_chi = 4

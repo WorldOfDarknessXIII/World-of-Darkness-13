@@ -72,6 +72,7 @@ SUBSYSTEM_DEF(city_time)
 								if(H.total_cleaned > 25)
 									P.add_experience(1)
 									H.total_cleaned = 0
+									call_dharma("cleangrow", H)
 								if(H.mind)
 									if(H.mind.assigned_role == "Graveyard Keeper")
 										if(SSgraveyard.total_good > SSgraveyard.total_bad)

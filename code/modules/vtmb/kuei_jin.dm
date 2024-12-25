@@ -7,7 +7,6 @@
 	var/list/tennets_done = list("sniff" = 0)
 	//Lists for actions which decrease the dharma
 	var/list/fails = list("inhale")
-	var/list/fails_done = list("inhale" = 0)
 
 	//I dunno where to stuff these so they go in dharma
 	//What type of P'o
@@ -20,6 +19,38 @@
 	var/animated = "None"
 	var/initial_skin_color = "asian1"
 	var/initial_social = 1
+	//For better kill code, if a person deserves death or not
+	var/list/deserving = list()
+	var/list/judgement = list()
+	var/last_dharma_update = 0
+
+/datum/dharma/devil_tiger
+	name = "Devil Tiger (P'o)"
+	desc = "This path encourages to explore your inner Demon Nature, but to never let it take full control of you. You may find enlightment in grief, torturing and exploring your body's darkest desires, but doing the opposite or letting your Po to take control of you will bring you back."
+	tennets = list("grief", "torture", "desire")
+	tennets_done = list("grief" = 0, "torture" = 0, "desire" = 0)
+	fails = list("extinguish", "savelife", "letpo")
+
+/datum/dharma/song_of_the_shadow
+	name = "Song of the Shadow (Yin)"
+	desc = "This path desires to explore the dark part of Circle, Yin. Learning the darkest knowledge, respecting dead and protecting your kind is your way to enlight. But if you fail you might find yourself falling from it."
+	tennets = list("respect", "learn", "protect")
+	tennets_done = list("respect" = 0, "learn" = 0, "protect" = 0)
+	fails = list("letdie", "disrespect")
+
+/datum/dharma/resplendent_crane
+	name = "Resplendent Crane (Hun)"
+	desc = "This path respects the justice and staying to your Mortal Nature, Hun. Preventing the grief of things and providing the justified judgement will bring you up, but if you fail to your desires - it's your fall."
+	tennets = list("judgement", "extinguish")
+	tennets_done = list("judgement" = 0, "extinguish" = 0)
+	fails = list("killfirst", "steal", "desire")
+
+/datum/dharma/thrashing_dragon
+	name = "Thrashing Dragon (Yang)"
+	desc = "This path encourages to live with the light part of Circle, Yang. Live, love and laugh, save lives, meet your friends and lovers, clean the nature and grow it like a garden. However, killing, griefing and stealing leads you to the opposite."
+	tennets = list("savelife", "meet", "cleangrow")
+	tennets_done = list("savelife" = 0, "meet" = 0, "cleangrow" = 0)
+	fails = list("kill", "grief", "steal")
 
 /datum/dharma/proc/on_gain(var/mob/living/carbon/human/mob)
 	mob.dharma = src
@@ -39,9 +70,72 @@
 		mob.dna?.species.brutemod = initial(mob.dna?.species.brutemod)
 		mob.dna?.species.burnmod = initial(mob.dna?.species.burnmod)
 
-/proc/update_dharma(var/mob/living/carbon/human/H, var/dot)
-//	if(H.dharma)
-	return
+/datum/dharma/proc/align_virtues(var/mob/living/owner)
+	if(level <= 0)
+		return
+	var/total_chi = owner.max_yin_chi+owner.max_yang_chi
+	var/total_virtues = Hun+owner.max_demon_chi
+	if(total_chi > level*2)
+		if(owner.max_yang_chi == 1)
+			owner.max_yin_chi = max(1, owner.max_yin_chi-2)
+		else if(owner.max_yin_chi == 1)
+			owner.max_yang_chi = max(1, owner.max_yang_chi-2)
+		else
+			owner.max_yang_chi = max(1, owner.max_yang_chi-1)
+			owner.max_yin_chi = max(1, owner.max_yin_chi-1)
+		owner.yang_chi = min(owner.yang_chi, owner.max_yang_chi)
+		owner.yin_chi = min(owner.yin_chi, owner.max_yin_chi)
+	if(total_chi < level*2)
+		owner.max_yang_chi = min(owner.dharma?.level*2-1, owner.max_yang_chi+1)
+		owner.max_yin_chi = min(owner.dharma?.level*2-1, owner.max_yin_chi+1)
+
+	if(total_virtues > level*2)
+		if(owner.max_demon_chi == 1)
+			Hun = max(1, Hun-2)
+		else if(Hun == 1)
+			owner.max_demon_chi = max(1, owner.max_demon_chi-2)
+		else
+			owner.max_demon_chi = max(1, owner.max_demon_chi-1)
+			Hun = max(1, Hun-1)
+		owner.demon_chi = min(owner.demon_chi, owner.max_demon_chi)
+	if(total_virtues < level*2)
+		owner.max_demon_chi = min(owner.dharma?.level*2-1, owner.max_demon_chi+1)
+		Hun = min(owner.dharma?.level*2-1, Hun+1)
+
+/proc/update_dharma(var/mob/living/carbon/human/H, var/dot)		//PLEASE USE ONLY 1 DOT PER CHANGE OR ELSE IT MAY BREAK
+	if(dot < 0)
+		if(H.dharma)
+			if(H.dharma.last_dharma_update + 15 SECONDS > world.time)
+				return
+		if(H.dharma?.level > 0)
+			H.dharma?.level = max(0, H.dharma?.level+dot)
+			H.dharma?.align_virtues(H)
+	if(dot > 0)
+		if(H.dharma?.level < 6)
+			H.dharma?.level = min(6, H.dharma?.level+dot)
+			H.dharma?.align_virtues(H)
+
+/proc/call_dharma(var/mod, var/mob/living/carbon/human/cathayan)
+	if(cathayan)
+		if(cathayan.dharma)
+			for(var/i in cathayan.dharma.tennets)
+				if(i == mod)
+					if(cathayan.dharma.tennets_done[i] == 0)
+						cathayan.dharma.tennets_done[i] = 1
+						to_chat(cathayan, "<span class='help'>You find this action helping you on your path.</span>")
+			for(var/i in cathayan.dharma.fails)
+				if(i == mod)
+					to_chat(cathayan, "<span class='warning'>This action is against your path philosophy.</span>")
+					update_dharma(cathayan, -1)
+			var/tennets_needed = length(cathayan.dharma.tennets)
+			var/tennets_done = 0
+			for(var/i in cathayan.dharma.tennets)
+				if(cathayan.dharma.tennets_done[i] == 1)
+					tennets_done = tennets_done+1
+			if(tennets_done >= tennets_needed)
+				for(var/i in cathayan.dharma.tennets)
+					cathayan.dharma.tennets_done[i] = 0
+				update_dharma(cathayan, 1)
 
 /proc/emit_po_call(var/atom/source, var/po_type)
 	if(po_type)
@@ -166,7 +260,8 @@
 	dust_anim = "dust-k"
 	whitelisted = TRUE
 	selectable = TRUE
-	var/atom/breathing_overlay/breathing_overlay
+	var/turf/fool_turf
+	var/fool_fails = 0
 
 /atom/breathing_overlay
 	icon = 'code/modules/wod13/UI/kuei_jin.dmi'
@@ -422,23 +517,61 @@
 												SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
 												to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
 
-	H.max_yang_chi = 3+H.dharma?.level
-	H.max_yin_chi = 3+H.dharma?.level
+	if(H.key && (H.stat <= HARD_CRIT) && H.dharma)
+		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
+		if(P)
+			if(H.dharma.level < 1)
+				H.enter_frenzymod()
+				to_chat(H, "<span class='userdanger'>You have lost control of the P'o within you, and it has taken your body. Stay closer to your Dharma next time.</span>")
+				H.ghostize(FALSE)
+				P.reason_of_death = "Lost control to the P'o ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
+				return
+			if(P.hun != H.dharma.Hun)
+				P.hun = H.dharma.Hun
+				P.save_preferences()
+				P.save_character()
+			if(P.po != H.max_demon_chi)
+				P.po = H.max_demon_chi
+				P.save_preferences()
+				P.save_character()
+			if(P.yin != H.max_yin_chi)
+				P.yin = H.max_yin_chi
+				P.save_preferences()
+				P.save_character()
+			if(P.yang != H.max_yang_chi)
+				P.yang = H.max_yang_chi
+				P.save_preferences()
+				P.save_character()
+			if(P.masquerade != H.masquerade)
+				P.masquerade = H.masquerade
+				P.save_preferences()
+				P.save_character()
+
 	H.update_chi_hud()
 	if(!H.in_frenzy)
 		H.dharma?.Po_combat = FALSE
-	if(H.demon_chi == H.max_demon_chi)
+	if(H.demon_chi == H.max_demon_chi && H.max_demon_chi != 0 && !H.in_frenzy)
 		H.rollfrenzy()
 	if(H.dharma?.Po == "Monkey")
 		for(var/obj/structure/pole/pole in viewers(6, H))
 			if(pole)
-				emit_po_call(pole, "Monkey")
+				H.dharma?.roll_po(pole, H)
 		for(var/obj/item/toy/toy in viewers(6, H))
 			if(toy)
-				emit_po_call(toy, "Monkey")
+				H.dharma?.roll_po(toy, H)
 		for(var/obj/machinery/computer/slot_machine/slot in viewers(6, H))
 			if(slot)
-				emit_po_call(slot, "Monkey")
+				H.dharma?.roll_po(slot, H)
+
+	if(H.dharma?.Po == "Fool")
+		if(fool_turf != get_turf(H))
+			fool_fails = 0
+			fool_turf = get_turf(H)
+		else
+			if(H.client)
+				fool_fails = fool_fails+1
+				if(fool_fails >= 20)
+					H.dharma?.roll_po(H, H)
 
 /datum/action/breathe_chi
 	name = "Inhale Chi"
