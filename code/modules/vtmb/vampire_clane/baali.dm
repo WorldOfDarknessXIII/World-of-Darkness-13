@@ -7,8 +7,8 @@
 		/datum/discipline/presence = 2,
 		/datum/discipline/daimonion = 3
 	)
-	male_clothes = "/obj/item/clothing/under/vampire/baali"
-	female_clothes = "/obj/item/clothing/under/vampire/baali/female"
+	male_clothes = /obj/item/clothing/under/vampire/baali
+	female_clothes = /obj/item/clothing/under/vampire/baali/female
 	enlightenment = TRUE
 	whitelisted = TRUE
 	clan_keys = /obj/item/vamp/keys/baali

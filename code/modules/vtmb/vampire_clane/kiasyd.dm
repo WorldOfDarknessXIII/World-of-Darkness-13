@@ -9,8 +9,8 @@
 	)
 	alt_sprite = "kiasyd"
 	no_facial = TRUE
-	male_clothes = "/obj/item/clothing/under/vampire/archivist"
-	female_clothes = "/obj/item/clothing/under/vampire/archivist"
+	male_clothes = /obj/item/clothing/under/vampire/archivist
+	female_clothes = /obj/item/clothing/under/vampire/archivist
 	whitelisted = TRUE
 	current_accessory = "none"
 	accessories = list("fae_ears", "none")

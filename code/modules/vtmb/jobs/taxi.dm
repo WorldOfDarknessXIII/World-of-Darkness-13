@@ -46,11 +46,11 @@
 		if(H.gender == MALE)
 			shoes = /obj/item/clothing/shoes/vampire
 			if(H.clane.male_clothes)
-				uniform = text2path(H.clane.male_clothes)
+				uniform = H.clane.male_clothes
 		else
 			shoes = /obj/item/clothing/shoes/vampire/heels
 			if(H.clane.female_clothes)
-				uniform = text2path(H.clane.female_clothes)
+				uniform = H.clane.female_clothes
 	else
 		if(H.gender == MALE)
 			shoes = /obj/item/clothing/shoes/vampire

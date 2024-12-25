@@ -11,12 +11,12 @@
 		shoes = /obj/item/clothing/shoes/vampire
 		if(H.clane)
 			if(H.clane.male_clothes)
-				uniform = text2path(H.clane.male_clothes)
+				uniform = H.clane.male_clothes
 	else
 		shoes = /obj/item/clothing/shoes/vampire/heels
 		if(H.clane)
 			if(H.clane.female_clothes)
-				uniform = text2path(H.clane.female_clothes)
+				uniform = H.clane.female_clothes
 
 /datum/outfit/job/caitiff/post_equip(mob/living/carbon/human/H)
 	..()
