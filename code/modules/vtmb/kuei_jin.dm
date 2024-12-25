@@ -65,34 +65,34 @@
 						if(get_dist(frenzy_target, src) <= 1)
 							if(isliving(frenzy_target))
 								var/mob/living/L = frenzy_target
-							if(L.stat != DEAD)
-								a_intent = INTENT_HARM
-								if(last_rage_hit+5 < world.time)
-									last_rage_hit = world.time
-									UnarmedAttack(L)
+								if(L.stat != DEAD)
+									a_intent = INTENT_HARM
+									if(last_rage_hit+5 < world.time)
+										last_rage_hit = world.time
+										UnarmedAttack(L)
 						else
 							step_to(src,frenzy_target,0)
 							face_atom(frenzy_target)
 				if("Legalist")
-					if(Po_Focus)
+					if(dharma?.Po_Focus)
 						if(prob(5))
 							say(pick("Kneel to me!", "Obey my orders!", "I command you!"))
-							point_at(Po_Focus)
-						if(get_dist(Po_Focus, src) <= 1)
-							if(isliving(Po_Focus))
-								var/mob/living/L = Po_Focus
-							if(L.stat != DEAD)
-								a_intent = INTENT_GRAB
-								dropItemToGround(get_active_held_item())
-								if(last_rage_hit+5 < world.time)
-									last_rage_hit = world.time
-									UnarmedAttack(L)
+							point_at(dharma?.Po_Focus)
+						if(get_dist(dharma?.Po_Focus, src) <= 1)
+							if(isliving(dharma?.Po_Focus))
+								var/mob/living/L = dharma?.Po_Focus
+								if(L.stat != DEAD)
+									a_intent = INTENT_GRAB
+									dropItemToGround(get_active_held_item())
+									if(last_rage_hit+5 < world.time)
+										last_rage_hit = world.time
+										UnarmedAttack(L)
 						else
-							step_to(src,Po_Focus,0)
-							face_atom(Po_Focus)
+							step_to(src,dharma?.Po_Focus,0)
+							face_atom(dharma?.Po_Focus)
 				if("Monkey")
-					if(Po_Focus)
-						if(get_dist(Po_Focus, src) <= 1)
+					if(dharma?.Po_Focus)
+						if(get_dist(dharma?.Po_Focus, src) <= 1)
 							a_intent = INTENT_HELP
 							if(!istype(get_active_held_item(), /obj/item/toy))
 								dropItemToGround(get_active_held_item())
@@ -104,34 +104,32 @@
 								return
 							if(last_rage_hit+50 < world.time)
 								last_rage_hit = world.time
-								if(istype(Po_Focus, /obj/machinery/computer/slot_machine))
-									var/obj/machinery/computer/slot_machine/slot = Po_Focus
+								if(istype(dharma?.Po_Focus, /obj/machinery/computer/slot_machine))
+									var/obj/machinery/computer/slot_machine/slot = dharma?.Po_Focus
 									for(var/obj/item/stack/dollar/D in src)
 										if(D)
 											slot.attackby(D, src)
 									slot.spin(src)
-								else
-									UnarmedAttack(Po_Focus)
 						else
-							step_to(src,Po_Focus,0)
-							face_atom(Po_Focus)
+							step_to(src,dharma?.Po_Focus,0)
+							face_atom(dharma?.Po_Focus)
 				if("Demon")
-					if(Po_Focus)
-						if(get_dist(Po_Focus, src) <= 1)
+					if(dharma?.Po_Focus)
+						if(get_dist(dharma?.Po_Focus, src) <= 1)
 							a_intent = INTENT_GRAB
 							dropItemToGround(get_active_held_item())
 							if(last_rage_hit+5 < world.time)
 								last_rage_hit = world.time
-								UnarmedAttack(L)
+								UnarmedAttack(dharma?.Po_Focus)
 								if(hud_used.drinkblood_icon)
 									hud_used.drinkblood_icon.bite()
 						else
-							step_to(src,Po_Focus,0)
-							face_atom(Po_Focus)
+							step_to(src,dharma?.Po_Focus,0)
+							face_atom(dharma?.Po_Focus)
 				if("Fool")
 					if(prob(5))
 						emote(pick("cry", "scream", "groan"))
-						point_at(Po_Focus)
+						point_at(dharma?.Po_Focus)
 					resist_fire()
 		else
 			if(frenzy_target)
@@ -234,7 +232,7 @@
 
 /atom/movable/screen/chi_pool/Click()
 	var/mob/living/C = usr
-	to_chat(usr, "Yin Chi: [C.yin_chi]/[C.max_yin_chi], Yang Chi: [C.yang_chi]/[C.max_yang_chi]")
+	to_chat(usr, "Yin Chi: [C.yin_chi]/[C.max_yin_chi], Yang Chi: [C.yang_chi]/[C.max_yang_chi], Demon Chi: [C.demon_chi]/[C.max_demon_chi]")
 
 /datum/action/kueijininfo
 	name = "About Me"
@@ -439,7 +437,7 @@
 			if(toy)
 				emit_po_call(toy, "Monkey")
 		for(var/obj/machinery/computer/slot_machine/slot in viewers(6, H))
-			if(toy)
+			if(slot)
 				emit_po_call(slot, "Monkey")
 
 /datum/action/breathe_chi
@@ -491,9 +489,9 @@
 					if(sucking_chi)
 						if(victim.yang_chi)
 							victim.yang_chi = max(0, victim.yang_chi-1)
-							owner.yang_chi = min(owner.yang_chi+1, owner.max_yang_chi)
-							to_chat(owner, "<span class='engradio'>Some <b>Yang</b> Chi energy enters you...</span>")
-							owner.update_chi_hud()
+							BD.yang_chi = min(BD.yang_chi+1, BD.max_yang_chi)
+							to_chat(BD, "<span class='engradio'>Some <b>Yang</b> Chi energy enters you...</span>")
+							BD.update_chi_hud()
 						else
 							to_chat(owner, "<span class='warning'>This creature doesn't have enough <b>Yang</b> Chi!</span>")
 					spawn(3 SECONDS)
@@ -517,8 +515,8 @@
 		BD.dharma?.animated = "Yin"
 		BD.skin_tone = get_vamp_skin_color(BD.skin_tone)
 		BD.social = 0
-		BD.dna?.species.brutemod = initial(BD.mob.dna?.species.brutemod)
-		BD.dna?.species.burnmod = initial(BD.mob.dna?.species.burnmod)
+		BD.dna?.species.brutemod = initial(BD.dna?.species.brutemod)
+		BD.dna?.species.burnmod = initial(BD.dna?.species.burnmod)
 		if(BD.yin_chi)
 			BD.adjustBruteLoss(-25, TRUE)
 			BD.adjustFireLoss(-10, TRUE)
