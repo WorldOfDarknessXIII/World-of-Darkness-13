@@ -423,11 +423,20 @@
 		new /datum/data/mining_equipment("blue scarf",	/obj/item/clothing/neck/vampire/scarf/blue,	10),
 		new /datum/data/mining_equipment("green scarf",	/obj/item/clothing/neck/vampire/scarf/green,	10),
 		new /datum/data/mining_equipment("white scarf",	/obj/item/clothing/neck/vampire/scarf/white,	10),
+		new /datum/data/mining_equipment("white robes",	/obj/item/clothing/suit/hooded/robes,	40),
+		new /datum/data/mining_equipment("black robes",	/obj/item/clothing/suit/hooded/robes/black,	40),
+		new /datum/data/mining_equipment("grey robes",	/obj/item/clothing/suit/hooded/robes/grey,	40),
+		new /datum/data/mining_equipment("dark red robes",	/obj/item/clothing/suit/hooded/robes/darkred,	40),
+		new /datum/data/mining_equipment("yellow robes",	/obj/item/clothing/suit/hooded/robes/yellow,	40),
+		new /datum/data/mining_equipment("green robes",	/obj/item/clothing/suit/hooded/robes/green,	40),
+		new /datum/data/mining_equipment("red robes",	/obj/item/clothing/suit/hooded/robes/red,	40),
+		new /datum/data/mining_equipment("purple robes",	/obj/item/clothing/suit/hooded/robes/purple,	40)
 	)
 
 /obj/machinery/mineral/equipment_vendor/fastfood/costumes
 	desc = "Purchase a mask for that ugly mug."
-	prize_list = list(new /datum/data/mining_equipment("bear mask",	 /obj/item/clothing/mask/animal/rat/bear,	13),
+	prize_list = list(
+		new /datum/data/mining_equipment("bear mask",	 /obj/item/clothing/mask/animal/rat/bear,	13),
 		new /datum/data/mining_equipment("rat mask",	/obj/item/clothing/mask/animal/rat,	10),
 		new /datum/data/mining_equipment("bee mask",	/obj/item/clothing/mask/animal/rat/bee,	12),
 		new /datum/data/mining_equipment("fox mask",	/obj/item/clothing/mask/animal/rat/fox,	10),
@@ -440,7 +449,11 @@
 		new /datum/data/mining_equipment("respirator",	/obj/item/clothing/mask/vampire,	35),
 		new /datum/data/mining_equipment("black and gold luchador mask",	/obj/item/clothing/mask/luchador,	10),
 		new /datum/data/mining_equipment("green luchador mask",	/obj/item/clothing/mask/luchador/tecnicos,	10),
-		new /datum/data/mining_equipment("red and blue luchador mask",	/obj/item/clothing/mask/luchador/rudos,	10)
+		new /datum/data/mining_equipment("red and blue luchador mask",	/obj/item/clothing/mask/luchador/rudos,	10),
+		new /datum/data/mining_equipment("Venetian mask",	/obj/item/clothing/mask/vampire/venetian_mask,	30),
+		new /datum/data/mining_equipment("fancy Venetian mask",	/obj/item/clothing/mask/vampire/venetian_mask/fancy,	200),
+		new /datum/data/mining_equipment("jester mask",	/obj/item/clothing/mask/vampire/venetian_mask/jester,	50),
+		new /datum/data/mining_equipment("bloody mask",	/obj/item/clothing/mask/vampire/venetian_mask/scary,	30)
 	)
 
 /obj/food_cart
