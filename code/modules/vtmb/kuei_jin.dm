@@ -107,13 +107,18 @@
 		if(H.dharma)
 			if(H.dharma.last_dharma_update + 15 SECONDS > world.time)
 				return
+			H.dharma.last_dharma_update = world.time
 		if(H.dharma?.level > 0)
 			H.dharma?.level = max(0, H.dharma?.level+dot)
 			H.dharma?.align_virtues(H)
+		SEND_SOUND(src, sound('code/modules/wod13/sounds/dharma_decrease.ogg', 0, 0, 75))
+		to_chat(src, "<span class='userdanger'><b>DHARMA FALLS!</b></span>")
 	if(dot > 0)
 		if(H.dharma?.level < 6)
 			H.dharma?.level = min(6, H.dharma?.level+dot)
 			H.dharma?.align_virtues(H)
+		SEND_SOUND(src, sound('code/modules/wod13/sounds/dharma_increase.ogg', 0, 0, 75))
+		to_chat(src, "<span class='userdanger'><b>DHARMA RISES!</b></span>")
 
 /proc/call_dharma(var/mod, var/mob/living/carbon/human/cathayan)
 	if(cathayan)
@@ -395,7 +400,10 @@
 
 		dat += "[dharma]<BR>"
 
-		dat += "The <b>[host.dharma?.animated]</b> Chi Energy helps me to stay alive..."
+		dat += "The <b>[host.dharma?.animated]</b> Chi Energy helps me to stay alive...<BR>"
+		dat += "My P'o is [host.dharma?.Po]<BR>"
+		dat += "<b>Yin/Yang</b>[host.max_yin_chi]/[host.max_yang_chi]<BR>"
+		dat += "<b>Hun/P'o</b>[host.dharma?.Hun]/[host.max_demon_chi]<BR>"
 
 		dat += "<b>Physique</b>: [host.physique]<BR>"
 		dat += "<b>Dexterity</b>: [host.dexterity]<BR>"
@@ -454,6 +462,8 @@
 	YG.Grant(C)
 	var/datum/action/reanimate_yin/YN = new()
 	YN.Grant(C)
+	var/datum/action/rebalance/R = new()
+	R.Grant(C)
 
 /datum/species/kuei_jin/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
@@ -469,6 +479,9 @@
 	for(var/datum/action/reanimate_yin/YN in C.actions)
 		if(YN)
 			YN.Remove(C)
+	for(var/datum/action/rebalance/R in C.actions)
+		if(R)
+			R.Remove(C)
 	for(var/datum/action/chi_discipline/A in C.actions)
 		if(A)
 			A.Remove(C)
@@ -581,10 +594,14 @@
 	background_icon_state = "discipline"
 	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	var/last_use = 0
 
 /datum/action/breathe_chi/Trigger()
+	if(last_use + 10 SECONDS > world.time)
+		return
 	if(istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/BD = usr
+		last_use = world.time
 		var/list/victims_list = list()
 		for(var/mob/living/L in range(3, owner))
 			if(L != owner)
@@ -633,6 +650,33 @@
 		button.color = "#970000"
 		animate(button, color = "#ffffff", time = 20, loop = 1)
 
+/datum/action/area_chi
+	name = "Area Chi"
+	desc = "Get chi from an area by injecting the tides."
+	button_icon_state = "area"
+	button_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	background_icon_state = "discipline"
+	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	var/last_use = 0
+
+/datum/action/area_chi/Trigger()
+	if(last_use + 30 SECONDS > world.time)
+		return
+	if(istype(owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/BD = usr
+		var/area/A = get_area(BD)
+		last_use = world.time
+		if(A.yang_chi)
+			BD.yang_chi = min(BD.yang_chi+A.yang_chi, BD.max_yang_chi)
+			to_chat(BD, "<span class='engradio'>Some <b>Yang</b> Chi energy enters you...</span>")
+		if(A.yin_chi)
+			BD.yin_chi = min(BD.yin_chi+A.yin_chi, BD.max_yin_chi)
+			to_chat(BD, "<span class='medradio'>Some <b>Yin</b> Chi energy enters you...</span>")
+
+		button.color = "#970000"
+		animate(button, color = "#ffffff", time = 20, loop = 1)
+
 /datum/action/reanimate_yin
 	name = "Yin Reanimate"
 	desc = "Reanimate your body with Yin Chi energy."
@@ -644,7 +688,9 @@
 
 /datum/action/reanimate_yin/Trigger()
 	if(istype(owner, /mob/living/carbon/human))
+		SEND_SOUND(usr, sound('code/modules/wod13/sounds/chi_use.ogg', 0, 0, 75))
 		var/mob/living/carbon/human/BD = usr
+		BD.visible_message("<span class='warning'>Some of [BD]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
 		BD.dharma?.animated = "Yin"
 		BD.skin_tone = get_vamp_skin_color(BD.skin_tone)
 		BD.social = 0
@@ -670,7 +716,9 @@
 
 /datum/action/reanimate_yang/Trigger()
 	if(istype(owner, /mob/living/carbon/human))
+		SEND_SOUND(usr, sound('code/modules/wod13/sounds/chi_use.ogg', 0, 0, 75))
 		var/mob/living/carbon/human/BD = usr
+		BD.visible_message("<span class='warning'>Some of [BD]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
 		BD.dharma?.animated = "Yang"
 		BD.skin_tone = BD.dharma?.initial_skin_color
 		BD.social = BD.dharma?.initial_social
@@ -682,6 +730,35 @@
 		else
 			BD.adjustBruteLoss(10, TRUE)
 		BD.yang_chi = max(0, BD.yang_chi-1)
+		button.color = "#970000"
+		animate(button, color = "#ffffff", time = 20, loop = 1)
+
+/datum/action/rebalance
+	name = "Rebalance"
+	desc = "Rebalance Dharma virtues."
+	button_icon_state = "assign"
+	button_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	background_icon_state = "discipline"
+	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+
+/datum/action/rebalance/Trigger()
+	if(istype(owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/BD = usr
+		var/max_limit = BD.dharma?.level*2
+		var/sett = input(BD, "Enter the maximum of Yin your character has:", "Yin/Yang") as num|null
+		if(sett)
+			sett = max(1, min(sett, max_limit-1))
+			BD.max_yin_chi = sett
+			BD.max_yang_chi = max_limit-sett
+			BD.yin_chi = min(BD.yin_chi, BD.max_yin_chi)
+			BD.yang_chi = min(BD.yang_chi, BD.max_yang_chi)
+			var/sett2 = input(BD, "Enter the maximum of Hun your character has:", "Hun/P'o") as num|null
+			if(sett2)
+				sett2 = max(1, min(sett2, max_limit-1))
+				BD.dharma?.Hun = sett2
+				BD.max_demon_chi = max_limit-sett2
+				BD.demon_chi = min(BD.demon_chi, BD.max_demon_chi)
 		button.color = "#970000"
 		animate(button, color = "#ffffff", time = 20, loop = 1)
 

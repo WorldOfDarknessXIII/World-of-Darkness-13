@@ -1446,3 +1446,13 @@
 	icon = 'code/modules/wod13/werewolf.dmi'
 	icon_state = "ice"
 	pixel_w = -8
+
+/obj/structure/bury_pit
+	name = "bury pit"
+	desc = "You can bury someone here."
+	icon = 'code/modules/wod13/props.dmi'
+	icon_state = "pit0"
+	plane = GAME_PLANE
+	layer = ABOVE_OPEN_TURF_LAYER
+	anchored = TRUE
+	density = FALSE

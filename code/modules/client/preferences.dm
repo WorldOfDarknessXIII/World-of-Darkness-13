@@ -223,10 +223,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/dharma_type = /datum/dharma
 	var/dharma_level = 2
 	var/po_type = "Rebel"
-	var/po = 3
-	var/hun = 3
-	var/yang = 3
-	var/yin = 3
+	var/po = 2
+	var/hun = 2
+	var/yang = 2
+	var/yin = 2
 	var/list/chi_types = list()
 	var/list/chi_levels = list()
 
@@ -2933,6 +2933,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			character.dharma = new dharma_type()
 			character.dharma.Po = po_type
 			character.dharma.Hun = hun
+			character.dharma.on_gain(character)
 		else
 			character.yang_chi = 4
 			character.max_yang_chi = 4
