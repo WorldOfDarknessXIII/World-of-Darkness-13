@@ -9,8 +9,8 @@
 	)
 	alt_sprite = "kiasyd"
 	no_facial = TRUE
-	male_clothes = "/obj/item/clothing/under/vampire/archivist"
-	female_clothes = "/obj/item/clothing/under/vampire/archivist"
+	male_clothes = /obj/item/clothing/under/vampire/archivist
+	female_clothes = /obj/item/clothing/under/vampire/archivist
 	whitelisted = TRUE
 	violating_appearance = TRUE
 	current_accessory = "none"
@@ -35,6 +35,13 @@
 	if(H.base_body_mod == "f")
 		H.base_body_mod = ""
 	H.update_body()
+
+/datum/vampireclane/kiasyd/post_gain(mob/living/carbon/human/H)
+	. = ..()
+
+	//give them sunglasses to hide their freakish eyes
+	var/obj/item/clothing/glasses/vampire/sun/new_glasses = new(H.loc)
+	H.equip_to_appropriate_slot(new_glasses, TRUE)
 
 /datum/discipline/mytherceria
 	name = "Mytherceria"

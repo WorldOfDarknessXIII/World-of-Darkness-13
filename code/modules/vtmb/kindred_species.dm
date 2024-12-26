@@ -561,6 +561,26 @@
 /datum/species/kindred/check_roundstart_eligible()
 	return TRUE
 
+/datum/species/kindred/handle_body(mob/living/carbon/human/H)
+	if (!H.clane)
+		return ..()
+
+	//deflate people if they're super rotten
+	if ((H.clane.alt_sprite == "rotten4") && (H.base_body_mod == "f"))
+		H.base_body_mod = ""
+
+	if(H.clane.alt_sprite)
+		H.dna.species.limbs_id = "[H.base_body_mod][H.clane.alt_sprite]"
+
+	if (H.clane.no_hair)
+		H.hairstyle = "Bald"
+
+	if (H.clane.no_facial)
+		H.facial_hairstyle = "Shaved"
+
+	..()
+
+
 /**
  * Signal handler for lose_organ to near-instantly kill Kindred whose hearts have been removed.
  *

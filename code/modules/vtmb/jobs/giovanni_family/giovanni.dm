@@ -22,7 +22,7 @@
 	minimal_masquerade = 0
 	experience_addition = 10
 	allowed_species = list("Vampire")
-	allowed_bloodlines = list("Giovanni")
+	allowed_bloodlines = list("Giovanni", "Cappadocian")
 
 AddTimelock(/datum/job/vamp/giovanni_family/giovannielder, list(
 	JOB_GIOVANNI_ROLES = 10 HOURS,
@@ -74,7 +74,7 @@ AddTimelock(/datum/job/vamp/giovanni_family/giovannielder, list(
 	minimal_masquerade = 0
 	experience_addition = 10
 	allowed_species = list("Vampire")
-	allowed_bloodlines = list("Giovanni")
+	allowed_bloodlines = list("Giovanni", "Cappadocian")
 
 AddTimelock(/datum/job/vamp/giovanni_family/giovanni, list(
 	JOB_LIVING_ROLES = 2 HOURS,

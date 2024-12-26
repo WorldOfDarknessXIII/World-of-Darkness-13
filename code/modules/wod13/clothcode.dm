@@ -431,11 +431,12 @@
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	icon_state = "heisenberg"
 	inhand_icon_state = "heisenberg"
-	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
+	body_parts_covered = CHEST | GROIN | ARMS
+	cold_protection = CHEST | GROIN | ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	armor = list(MELEE = 0, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 50, BIO = 0, RAD = 0, FIRE = 50, ACID = 100, WOUND = 10)
 	hoodtype = /obj/item/clothing/head/hooded/heisenberg_hood
+	body_worn = TRUE
 
 /obj/item/clothing/head/hooded/heisenberg_hood
 	name = "chemical hood"
@@ -447,8 +448,120 @@
 	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	flags_inv = HIDEHAIR|HIDEEARS
+	flags_inv = HIDEHAIR | HIDEEARS
 	armor = list(MELEE = 0, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 50, BIO = 0, RAD = 0, FIRE = 50, ACID = 100, WOUND = 10)
+	body_worn = TRUE
+
+//** SPOOOOKY ROBES FROM THE CAPPADOCIAN UPDATE **//
+/obj/item/clothing/suit/hooded/robes
+	name = "white robe"
+	desc = "Some angelic-looking robes."
+	icon_state = "robes"
+	icon = 'code/modules/wod13/clothing.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	inhand_icon_state = "robes"
+	flags_inv = HIDEJUMPSUIT
+	body_parts_covered = CHEST | GROIN | LEGS | ARMS
+	cold_protection = CHEST | GROIN | LEGS | ARMS
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood
+	body_worn = TRUE
+
+/obj/item/clothing/head/hooded/robes_hood
+	name = "white hood"
+	desc = "The hood of some angelic-looking robes."
+	icon_state = "robes_hood"
+	icon = 'code/modules/wod13/clothing.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	body_parts_covered = HEAD
+	cold_protection = HEAD
+	flags_inv = HIDEHAIR | HIDEEARS
+	body_worn = TRUE
+
+/obj/item/clothing/suit/hooded/robes/black
+	name = "black robe"
+	desc = "Some creepy-looking robes."
+	icon_state = "robes_black"
+	inhand_icon_state = "robes_black"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/black
+
+/obj/item/clothing/head/hooded/robes_hood/black
+	name = "black hood"
+	desc = "The hood of some creepy-looking robes."
+	icon_state = "robes_black_hood"
+
+/obj/item/clothing/suit/hooded/robes/grey
+	name = "grey robe"
+	desc = "Some somber-looking robes."
+	icon_state = "robes_grey"
+	inhand_icon_state = "robes_grey"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/grey
+
+/obj/item/clothing/head/hooded/robes_hood/grey
+	name = "grey hood"
+	desc = "The hood of some somber-looking robes."
+	icon_state = "robes_grey_hood"
+
+/obj/item/clothing/suit/hooded/robes/darkred
+	name = "dark red robe"
+	desc = "Some zealous-looking robes."
+	icon_state = "robes_darkred"
+	inhand_icon_state = "robes_darkred"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/darkred
+
+/obj/item/clothing/head/hooded/robes_hood/darkred
+	name = "dark red hood"
+	desc = "The hood of some zealous-looking robes."
+	icon_state = "robes_darkred_hood"
+
+/obj/item/clothing/suit/hooded/robes/yellow
+	name = "yellow robe"
+	desc = "Some happy-looking robes."
+	icon_state = "robes_yellow"
+	inhand_icon_state = "robes_yellow"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/yellow
+
+/obj/item/clothing/head/hooded/robes_hood/yellow
+	name = "yellow hood"
+	desc = "The hood of some happy-looking robes."
+	icon_state = "robes_yellow_hood"
+
+/obj/item/clothing/suit/hooded/robes/green
+	name = "green robe"
+	desc = "Some earthy-looking robes."
+	icon_state = "robes_green"
+	inhand_icon_state = "robes_green"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/green
+
+/obj/item/clothing/head/hooded/robes_hood/green
+	name = "green hood"
+	desc = "The hood of some earthy-looking robes."
+	icon_state = "robes_green_hood"
+
+/obj/item/clothing/suit/hooded/robes/red
+	name = "red robe"
+	desc = "Some furious-looking robes."
+	icon_state = "robes_red"
+	inhand_icon_state = "robes_red"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/red
+
+/obj/item/clothing/head/hooded/robes_hood/red
+	name = "red hood"
+	desc = "The hood of some furious-looking robes."
+	icon_state = "robes_red_hood"
+
+/obj/item/clothing/suit/hooded/robes/purple
+	name = "purple robe"
+	desc = "Some elegant-looking robes."
+	icon_state = "robes_purple"
+	inhand_icon_state = "robes_purple"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/purple
+
+/obj/item/clothing/head/hooded/robes_hood/purple
+	name = "purple hood"
+	desc = "The hood of some elegant-looking robes."
+	icon_state = "robes_purple_hood"
 
 /obj/item/clothing/suit/vampire/coat
 	name = "coat"
@@ -1025,6 +1138,36 @@
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/clothing/mask/vampire/venetian_mask
+	name = "Venetian mask"
+	desc = "You could wear this to a real masquerade."
+	icon_state = "venetian_mask"
+	inhand_icon_state = "venetian_mask"
+	flags_inv = HIDEFACE | HIDEFACIALHAIR | HIDESNOUT
+	flags_cover = MASKCOVERSMOUTH
+	visor_flags_inv = HIDEFACE | HIDEFACIALHAIR | HIDESNOUT
+
+/obj/item/clothing/mask/vampire/venetian_mask/fancy
+	name = "fancy Venetian mask"
+	desc = "Weird rich people definitely wear this kind of stuff."
+	icon_state = "venetian_mask_fancy"
+	inhand_icon_state = "venetian_mask_fancy"
+
+/obj/item/clothing/mask/vampire/venetian_mask/jester
+	name = "jester mask"
+	desc = "They will all be amused, every last one of them."
+	icon_state = "venetian_mask_jester"
+	inhand_icon_state = "venetian_mask_jester"
+
+/obj/item/clothing/mask/vampire/venetian_mask/scary
+	name = "bloody mask"
+	desc = "With this, you'll look ready to butcher someone."
+	icon_state = "venetian_mask_scary"
+	inhand_icon_state = "venetian_mask_scary"
+	flags_inv = HIDEFACE
+	flags_cover = NONE
+	visor_flags_inv = HIDEFACE
 
 /obj/item/storage/belt/holster/detective/vampire
 	name = "holster"

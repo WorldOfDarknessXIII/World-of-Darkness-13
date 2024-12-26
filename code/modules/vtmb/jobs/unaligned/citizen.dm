@@ -23,7 +23,7 @@
 	v_duty = "Follow the traditions of the Camarilla. Obey the Prince and their authority. The city belongs to him. Aligning yourself with your clan members would be of benefit."
 	duty = "Obey the authorities... Or don't. You are up late tonight for one reason or another."
 	minimal_masquerade = 0
-	allowed_bloodlines = list("True Brujah", "Daughters of Cacophony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff", "Old Clan Tzimisce", "Kiasyd")
+	allowed_bloodlines = list("True Brujah", "Daughters of Cacophony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff", "Old Clan Tzimisce", "Kiasyd", "Cappadocian")
 
 /datum/outfit/job/citizen
 	name = "Citizen"
@@ -37,11 +37,11 @@
 		if(H.gender == MALE)
 			shoes = /obj/item/clothing/shoes/vampire
 			if(H.clane.male_clothes)
-				uniform = text2path(H.clane.male_clothes)
+				uniform = H.clane.male_clothes
 		else
 			shoes = /obj/item/clothing/shoes/vampire/heels
 			if(H.clane.female_clothes)
-				uniform = text2path(H.clane.female_clothes)
+				uniform = H.clane.female_clothes
 	else
 		uniform = /obj/item/clothing/under/vampire/emo
 		if(H.gender == MALE)

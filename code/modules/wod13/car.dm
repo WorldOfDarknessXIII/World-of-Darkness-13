@@ -202,20 +202,17 @@ SUBSYSTEM_DEF(carpool)
 				repairing = TRUE
 				if(do_mob(user, src, 20 SECONDS))
 					var/roll = rand(1, 20) + (user.lockpicking+user.dexterity) - 8
+					//(<= 1, break lockpick) (2-9, trigger car alarm), (>= 10, unlock car)
 					if (roll <= 1)
 						to_chat(user, "<span class='warning'>Your lockpick broke!</span>")
 						qdel(K)
 						repairing = FALSE
-					if (roll >= 10)
+						return
+					else if (roll >= 10)
 						locked = FALSE
 						repairing = FALSE
 						to_chat(user, "<span class='notice'>You've managed to open [src]'s lock.</span>")
 						playsound(src, 'code/modules/wod13/sounds/open.ogg', 50, TRUE)
-					if(initial(access) == "none")
-						if(ishuman(user))
-							var/mob/living/carbon/human/H = user
-							H.AdjustHumanity(-1, 6)
-						return
 					else
 						to_chat(user, "<span class='warning'>You've failed to open [src]'s lock.</span>")
 						playsound(src, 'code/modules/wod13/sounds/signal.ogg', 50, FALSE)
@@ -223,6 +220,11 @@ SUBSYSTEM_DEF(carpool)
 							if(P)
 								P.Aggro(user)
 						repairing = FALSE
+						return //Don't penalize vampire humanity if they failed.
+					if(initial(access) == "none") //Stealing a car with no keys assigned to it is basically robbing a random person and not an organization
+						if(ishuman(user))
+							var/mob/living/carbon/human/H = user
+							H.AdjustHumanity(-1, 6)
 						return
 				else
 					to_chat(user, "<span class='warning'>You've failed to open [src]'s lock.</span>")
