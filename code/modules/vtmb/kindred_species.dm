@@ -513,6 +513,26 @@
 			for (var/i in 1 to client.prefs.discipline_types.len)
 				var/type_to_create = client.prefs.discipline_types[i]
 				var/datum/discipline/discipline = new type_to_create
+
+				//prevent Disciplines from being used if not whitelisted for them
+				if (discipline.clane_restricted && !clane.clane_disciplines.Find(type_to_create))
+					var/can_access_discipline = FALSE
+					for (var/clan_type in subtypesof(/datum/vampireclane))
+						var/datum/vampireclane/clan = new clan_type
+						//cancel checking this Clan if not whitelisted
+						if (clan.whitelisted)
+							if (!SSwhitelists.is_whitelisted(ckey, clan.name))
+								continue
+						//set the flag to true and break the loop if found
+						if (clane.clane_disciplines.Find(type_to_create))
+							can_access_discipline = TRUE
+							qdel(clan)
+							break
+						qdel(clan)
+					if (!can_access_discipline)
+						qdel(discipline)
+						continue
+
 				discipline.level = client.prefs.discipline_levels[i]
 				adding_disciplines += discipline
 		else if (disciplines.len) //initialise given disciplines
