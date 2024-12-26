@@ -6,9 +6,9 @@
 //	no_hair = TRUE
 //	no_facial = TRUE	//FUCK WRONG RULEBOOK
 	clane_disciplines = list(
-		/datum/discipline/auspex = 1,
-		/datum/discipline/animalism = 2,
-		/datum/discipline/vicissitude = 3
+		/datum/discipline/auspex,
+		/datum/discipline/animalism,
+		/datum/discipline/vicissitude
 	)
 	violating_appearance = FALSE
 	male_clothes = /obj/item/clothing/under/vampire/sport

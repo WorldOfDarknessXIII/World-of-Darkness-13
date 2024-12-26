@@ -666,7 +666,10 @@
 				//set the flag to true and break the loop if found
 				if (clane.clane_disciplines.Find(teaching_discipline))
 					can_access_discipline = TRUE
+					qdel(clan)
 					break
+
+				qdel(clan)
 
 			if (!can_access_discipline)
 				to_chat(teacher, "<span class='warning'>Your student is not whitelisted for any Clans with this Discipline, so they cannot learn it.</span>")
