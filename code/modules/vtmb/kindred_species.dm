@@ -663,6 +663,7 @@
 					if (!SSwhitelists.is_whitelisted(student.ckey, clan.name))
 						continue
 
+				//set the flag to true and break the loop if found
 				if (clane.clane_disciplines.Find(teaching_discipline))
 					can_access_discipline = TRUE
 					break
