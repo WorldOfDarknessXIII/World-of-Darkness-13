@@ -652,6 +652,27 @@
 		var/datum/discipline/teacher_discipline = teacher_species.get_discipline(teaching_discipline)
 		var/datum/discipline/giving_discipline = new teaching_discipline
 
+		//if a Discipline is clan-restricted, it must be checked if the student has access to at least one Clan with that Discipline
+		if (giving_discipline.clane_restricted)
+			var/can_access_discipline = FALSE
+			for (var/clan_type in subtypesof(/datum/vampireclane))
+				var/datum/vampireclane/clan = new clan_type
+
+				//cancel checking this Clan if not whitelisted
+				if (clan.whitelisted)
+					if (!SSwhitelists.is_whitelisted(student.ckey, clan.name))
+						continue
+
+				if (clane.clane_disciplines.Find(teaching_discipline))
+					can_access_discipline = TRUE
+					break
+
+			if (!can_access_discipline)
+				to_chat(teacher, "<span class='warning'>Your student is not whitelisted for any Clans with this Discipline, so they cannot learn it.</span>")
+				qdel(giving_discipline)
+				return
+
+		//ensure the teacher's mastered it, also prevents them from teaching with free starting experience
 		if (teacher_discipline.level < 5)
 			to_chat(teacher, "<span class='warning'>You do not know this Discipline well enough to teach it. You need to master it to the 5th rank.</span>")
 			qdel(giving_discipline)
