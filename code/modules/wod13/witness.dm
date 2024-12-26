@@ -69,15 +69,17 @@
 
 		if(isnpc(src))
 			var/mob/living/carbon/human/npc/N = src
-			if(N.danger_source && !isghoul(N))
-				holder.color = "#ff0000"
-			else if(!isghoul(N))
-				holder.color = "#0000ff"
-			else if (isghoul(N))
-				holder.overlays = null 
+			var/ghoul_npc = FALSE
+			if(isghoul(N))
+				holder.overlays = null
 				holder.color = null
 				holder.icon_state = "aura_ghoul"
-				
+				ghoul_npc = TRUE
+			if(!ghoul_npc)
+				if(N.danger_source && !isghoul(N))
+					holder.color = "#ff0000"
+				else 
+					holder.color = "#0000ff"
 		else if(!ghoul)
 		//Ghoul got a mix of two different colors on the dmi, so it can't recieve any holder.color 
 			if(a_intent == INTENT_HARM)
