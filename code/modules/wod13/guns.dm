@@ -669,5 +669,4 @@
 							oil = max(0, oil-10)
 							if(oil == 0)
 								icon_state = "flamethrower1"
-							if(get_dist(F, user) == 1)
-								new /obj/effect/fire(F)
+						new /obj/effect/fire(F)

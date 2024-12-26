@@ -37,6 +37,9 @@
 
 	var/list/spotted_bodies = list()
 
+/datum/movespeed_modifier/npc
+	multiplicative_slowdown = 2
+
 /datum/socialrole
 	//For randomizing
 	var/list/s_tones = list("albino",

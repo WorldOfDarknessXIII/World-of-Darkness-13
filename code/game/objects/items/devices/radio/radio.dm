@@ -395,6 +395,17 @@
 	. = ..()
 	set_frequency(FREQ_MEDICAL)
 
+/obj/item/radio/military
+	name = "military radio"
+	subspace_transmission = FALSE
+	subspace_switchable = FALSE
+	syndie = TRUE
+	keyslot = new /obj/item/encryptionkey/syndicate
+
+/obj/item/radio/military/Initialize()
+	. = ..()
+	set_frequency(FREQ_SYNDICATE)
+
 ///////////////////////////////
 //////////Borg Radios//////////
 ///////////////////////////////
@@ -420,7 +431,7 @@
 
 /obj/item/radio/borg/syndicate/Initialize()
 	. = ..()
-	set_frequency(FREQ_SYNDICATE)
+	set_frequency(FREQ_CTF_RED)
 
 /obj/item/radio/borg/attackby(obj/item/W, mob/user, params)
 

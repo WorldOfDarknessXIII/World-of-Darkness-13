@@ -156,6 +156,11 @@
 	var/chosen_name = input(user, "Write the hunted or forgiven character name:", "Blood Hunt")  as text|null
 	if(chosen_name)
 		chosen_name = sanitize_name(chosen_name)
+		var/reason = input(user, "Write the reason of the Blood Hunt:", "Blood Hunt Reason")  as text|null
+		if(reason)
+			reason = sanitize(reason)
+		else
+			reason = "No reason provided"
 		var/name_in_list = FALSE
 		for(var/mob/living/carbon/human/H in GLOB.player_list)
 			if(H)
@@ -171,7 +176,7 @@
 						to_chat(world, "<b>The Blood Hunt after <span class='green'>[H.true_real_name]</span> is over!</b>")
 						SEND_SOUND(world, sound('code/modules/wod13/sounds/announce.ogg'))
 					else
-						SSbloodhunt.announce_hunted(H)
+						SSbloodhunt.announce_hunted(H, reason)
 						to_chat(user, "<span class='warning'>You add [chosen_name] to the Hunted list.</span>")
 					name_in_list = TRUE
 		if(!name_in_list)

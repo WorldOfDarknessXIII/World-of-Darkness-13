@@ -11,7 +11,12 @@
 /datum/admins/proc/one_click_antag()
 
 	var/dat = {"
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=traitors'>Make Traitors</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];makeAntag=nationalguard'>Make National Guard Team (Requires Ghosts)</a><br>
+		"}
+
+/*	THESE WERE THE OPTIONS IN one_click_antag() previously. I kept them here only just in case...
+
+	<a href='?src=[REF(src)];[HrefToken()];makeAntag=traitors'>Make Traitors</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=changelings'>Make Changelings</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=revs'>Make Revs</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=cult'>Make Cult</a><br>
@@ -21,8 +26,8 @@
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=centcom'>Make CentCom Response Team (Requires Ghosts)</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=abductors'>Make Abductor Team (Requires Ghosts)</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=revenant'>Make Revenant (Requires Ghost)</a><br>
-		"}
 
+		*/
 	var/datum/browser/popup = new(usr, "oneclickantag", "Quick-Create Antagonist", 400, 400)
 	popup.set_content(dat)
 	popup.open()
@@ -174,7 +179,45 @@
 
 	return FALSE
 
+/datum/admins/proc/makeNationalGuard()
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for a squad of National Guard soldiers?", ROLE_NATIONAL_GUARD, null)
+	var/list/mob/dead/observer/chosen = list()
+	var/mob/dead/observer/theghost = null
 
+	if(candidates.len)
+		var/numagents = 8
+		var/agentcount = 0
+
+		for(var/i = 0, i<numagents,i++)
+			shuffle_inplace(candidates) //More shuffles means more randoms
+			for(var/mob/j in candidates)
+				if(!j || !j.client)
+					candidates.Remove(j)
+					continue
+
+				theghost = j
+				candidates.Remove(theghost)
+				chosen += theghost
+				agentcount++
+				break
+		//Making sure we have atleast 3 National Guard agents, because less than that is kinda bad
+		if(agentcount < 1)
+			return FALSE
+
+		//Let's find the spawn locations
+		var/leader_chosen = FALSE
+		var/datum/team/national_guard/national_guard_team
+		for(var/mob/c in chosen)
+			var/mob/living/carbon/human/new_character=makeBody(c)
+			if(!leader_chosen)
+				leader_chosen = TRUE
+				var/datum/antagonist/national_guard/A = new_character.mind.add_antag_datum(/datum/antagonist/national_guard/sergeant)
+				national_guard_team = A.national_guard_team
+			else
+				new_character.mind.add_antag_datum(/datum/antagonist/national_guard,national_guard_team)
+		return TRUE
+	else
+		return FALSE
 
 /datum/admins/proc/makeNukeTeam()
 	var/datum/game_mode/nuclear/temp = new

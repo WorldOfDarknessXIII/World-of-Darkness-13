@@ -379,12 +379,12 @@
 
 /proc/reopen_roundstart_suicide_roles()
 	var/list/valid_positions = list()
-	valid_positions += GLOB.engineering_positions
-	valid_positions += GLOB.medical_positions
+	valid_positions += GLOB.ss13
+	valid_positions += GLOB.ss13
 	valid_positions += GLOB.anarch_positions
-	valid_positions += GLOB.supply_positions
+	valid_positions += GLOB.ss13
 	valid_positions += GLOB.neutral_positions
-	valid_positions += GLOB.security_positions
+	valid_positions += GLOB.ss13
 	if(CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_positions))
 		valid_positions += GLOB.command_positions //add any remaining command positions
 	else

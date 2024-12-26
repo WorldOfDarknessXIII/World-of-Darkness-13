@@ -59,7 +59,7 @@ SUBSYSTEM_DEF(masquerade)
 		for(var/mob/living/carbon/human/H in GLOB.player_list)
 			if(H)
 				if(iskindred(H))
-					if(!H.warrant)
+					if(!H.warrant && !H.ignores_warrant)
 						H.last_nonraid = world.time
 						H.warrant = TRUE
 						SEND_SOUND(H, sound('code/modules/wod13/sounds/humanity_loss.ogg', 0, 0, 75))

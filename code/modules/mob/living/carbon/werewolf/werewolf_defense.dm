@@ -20,8 +20,6 @@
 			grabbedby(M)
 		if ("harm")
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-			if(M.tox_damage_plus)
-				adjustToxLoss(M.tox_damage_plus)
 			return TRUE
 		if("disarm")
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
@@ -88,7 +86,7 @@
 									"<span class='userdanger'>[M] punches you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, M)
 					to_chat(M, "<span class='danger'>You punch [src]!</span>")
 					if ((stat != DEAD) && (damage > 9 || prob(5)))//Regular humans have a very small chance of knocking an alien down.
-						Unconscious(40)
+						Unconscious(3 SECONDS)
 						visible_message("<span class='danger'>[M] knocks [src] down!</span>", \
 										"<span class='userdanger'>[M] knocks you down!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, M)
 						to_chat(M, "<span class='danger'>You knock [src] down!</span>")
@@ -104,7 +102,7 @@
 			if ("disarm")
 				if (body_position == STANDING_UP)
 					if (prob(5))
-						Unconscious(40)
+						Unconscious(3 SECONDS)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 						log_combat(M, src, "pushed")
 						visible_message("<span class='danger'>[M] pushes [src] down!</span>", \

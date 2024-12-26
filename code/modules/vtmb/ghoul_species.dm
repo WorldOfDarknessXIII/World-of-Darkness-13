@@ -298,7 +298,7 @@
 									H.last_loot_check = world.time
 									H.last_nonraid = world.time
 									H.killed_count = H.killed_count+1
-									if(!H.warrant)
+									if(!H.warrant && !H.ignores_warrant)
 										if(H.killed_count >= 5)
 											H.warrant = TRUE
 											SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
@@ -317,7 +317,7 @@
 										H.last_loot_check = world.time
 										H.last_nonraid = world.time
 										H.killed_count = H.killed_count+1
-										if(!H.warrant)
+										if(!H.warrant && !H.ignores_warrant)
 											if(H.killed_count >= 5)
 												H.warrant = TRUE
 												SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
@@ -363,7 +363,7 @@
 									H.last_loot_check = world.time
 									H.last_nonraid = world.time
 									H.killed_count = H.killed_count+1
-									if(!H.warrant)
+									if(!H.warrant && !H.ignores_warrant)
 										if(H.killed_count >= 5)
 											H.warrant = TRUE
 											SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
@@ -382,7 +382,7 @@
 										H.last_loot_check = world.time
 										H.last_nonraid = world.time
 										H.killed_count = H.killed_count+1
-										if(!H.warrant)
+										if(!H.warrant && !H.ignores_warrant)
 											if(H.killed_count >= 5)
 												H.warrant = TRUE
 												SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
@@ -413,7 +413,7 @@
 									H.last_loot_check = world.time
 									H.last_nonraid = world.time
 									H.killed_count = H.killed_count+1
-									if(!H.warrant)
+									if(!H.warrant && !H.ignores_warrant)
 										if(H.killed_count >= 5)
 											H.warrant = TRUE
 											SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
@@ -432,7 +432,7 @@
 										H.last_loot_check = world.time
 										H.last_nonraid = world.time
 										H.killed_count = H.killed_count+1
-										if(!H.warrant)
+										if(!H.warrant && !H.ignores_warrant)
 											if(H.killed_count >= 5)
 												H.warrant = TRUE
 												SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))

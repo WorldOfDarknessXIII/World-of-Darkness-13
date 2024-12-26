@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/real_name						//our character's name
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
-	var/total_age = 0
+	var/total_age = 30
 	var/underwear = "Nude"				//underwear type
 	var/underwear_color = "000"			//underwear color
 	var/undershirt = "Nude"				//undershirt type
@@ -1725,6 +1725,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_age = input(user, "Choose your character's biological age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
 					if(new_age)
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
+						if (age > total_age)
+							total_age = age
+						update_preview_icon()
 
 				if("total_age")
 					if(slotlocked)
@@ -1733,6 +1736,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_age = input(user, "Choose your character's actual age:\n([age]-[age+1000])", "Character Preference") as num|null
 					if(new_age)
 						total_age = max(min(round(text2num(new_age)), age+1000), age)
+						if (total_age < age)
+							age = total_age
+						update_preview_icon()
 
 				if("hair")
 					if(slotlocked)
@@ -2877,6 +2883,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.flavor_text = sanitize_text(flavor_text)
 	character.gender = gender
 	character.age = age
+	character.chronological_age = total_age
 	if(gender == MALE || gender == FEMALE)
 		character.body_type = gender
 	else
@@ -2900,12 +2907,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.facial_hair_color = facial_hair_color
 
 	if(pref_species.name == "Vampire")
-		if(clane.alt_sprite)
+		if(clane.alt_sprite && !clane.alt_sprite_greyscale)
 			character.skin_tone = "albino"
 		else
 			character.skin_tone = get_vamp_skin_color(skin_tone)
 	else
 		character.skin_tone = skin_tone
+
 	character.hairstyle = hairstyle
 	if(character.age < 16)
 		facial_hairstyle = "Shaved"

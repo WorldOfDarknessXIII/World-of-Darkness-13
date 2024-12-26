@@ -102,6 +102,11 @@
 	desc = "Some historical clothes."
 	icon_state = "nazi"
 
+/obj/item/clothing/under/vampire/military_fatigues
+	name = "Military fatigues"
+	desc = "Some military clothes."
+	icon_state = "milfatigues"
+
 /obj/item/clothing/under/vampire/nazi/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ADMIN_TRAIT)
@@ -456,11 +461,12 @@
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	icon_state = "heisenberg"
 	inhand_icon_state = "heisenberg"
-	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
+	body_parts_covered = CHEST | GROIN | ARMS
+	cold_protection = CHEST | GROIN | ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	armor = list(MELEE = 0, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 50, BIO = 0, RAD = 0, FIRE = 50, ACID = 100, WOUND = 10)
 	hoodtype = /obj/item/clothing/head/hooded/heisenberg_hood
+	body_worn = TRUE
 
 /obj/item/clothing/head/hooded/heisenberg_hood
 	name = "chemical hood"
@@ -472,8 +478,120 @@
 	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	flags_inv = HIDEHAIR|HIDEEARS
+	flags_inv = HIDEHAIR | HIDEEARS
 	armor = list(MELEE = 0, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 50, BIO = 0, RAD = 0, FIRE = 50, ACID = 100, WOUND = 10)
+	body_worn = TRUE
+
+//** SPOOOOKY ROBES FROM THE CAPPADOCIAN UPDATE **//
+/obj/item/clothing/suit/hooded/robes
+	name = "white robe"
+	desc = "Some angelic-looking robes."
+	icon_state = "robes"
+	icon = 'code/modules/wod13/clothing.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	inhand_icon_state = "robes"
+	flags_inv = HIDEJUMPSUIT
+	body_parts_covered = CHEST | GROIN | LEGS | ARMS
+	cold_protection = CHEST | GROIN | LEGS | ARMS
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood
+	body_worn = TRUE
+
+/obj/item/clothing/head/hooded/robes_hood
+	name = "white hood"
+	desc = "The hood of some angelic-looking robes."
+	icon_state = "robes_hood"
+	icon = 'code/modules/wod13/clothing.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	body_parts_covered = HEAD
+	cold_protection = HEAD
+	flags_inv = HIDEHAIR | HIDEEARS
+	body_worn = TRUE
+
+/obj/item/clothing/suit/hooded/robes/black
+	name = "black robe"
+	desc = "Some creepy-looking robes."
+	icon_state = "robes_black"
+	inhand_icon_state = "robes_black"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/black
+
+/obj/item/clothing/head/hooded/robes_hood/black
+	name = "black hood"
+	desc = "The hood of some creepy-looking robes."
+	icon_state = "robes_black_hood"
+
+/obj/item/clothing/suit/hooded/robes/grey
+	name = "grey robe"
+	desc = "Some somber-looking robes."
+	icon_state = "robes_grey"
+	inhand_icon_state = "robes_grey"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/grey
+
+/obj/item/clothing/head/hooded/robes_hood/grey
+	name = "grey hood"
+	desc = "The hood of some somber-looking robes."
+	icon_state = "robes_grey_hood"
+
+/obj/item/clothing/suit/hooded/robes/darkred
+	name = "dark red robe"
+	desc = "Some zealous-looking robes."
+	icon_state = "robes_darkred"
+	inhand_icon_state = "robes_darkred"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/darkred
+
+/obj/item/clothing/head/hooded/robes_hood/darkred
+	name = "dark red hood"
+	desc = "The hood of some zealous-looking robes."
+	icon_state = "robes_darkred_hood"
+
+/obj/item/clothing/suit/hooded/robes/yellow
+	name = "yellow robe"
+	desc = "Some happy-looking robes."
+	icon_state = "robes_yellow"
+	inhand_icon_state = "robes_yellow"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/yellow
+
+/obj/item/clothing/head/hooded/robes_hood/yellow
+	name = "yellow hood"
+	desc = "The hood of some happy-looking robes."
+	icon_state = "robes_yellow_hood"
+
+/obj/item/clothing/suit/hooded/robes/green
+	name = "green robe"
+	desc = "Some earthy-looking robes."
+	icon_state = "robes_green"
+	inhand_icon_state = "robes_green"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/green
+
+/obj/item/clothing/head/hooded/robes_hood/green
+	name = "green hood"
+	desc = "The hood of some earthy-looking robes."
+	icon_state = "robes_green_hood"
+
+/obj/item/clothing/suit/hooded/robes/red
+	name = "red robe"
+	desc = "Some furious-looking robes."
+	icon_state = "robes_red"
+	inhand_icon_state = "robes_red"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/red
+
+/obj/item/clothing/head/hooded/robes_hood/red
+	name = "red hood"
+	desc = "The hood of some furious-looking robes."
+	icon_state = "robes_red_hood"
+
+/obj/item/clothing/suit/hooded/robes/purple
+	name = "purple robe"
+	desc = "Some elegant-looking robes."
+	icon_state = "robes_purple"
+	inhand_icon_state = "robes_purple"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/purple
+
+/obj/item/clothing/head/hooded/robes_hood/purple
+	name = "purple hood"
+	desc = "The hood of some elegant-looking robes."
+	icon_state = "robes_purple_hood"
 
 /obj/item/clothing/suit/vampire/coat
 	name = "coat"
@@ -490,6 +608,12 @@
 
 /obj/item/clothing/suit/vampire/coat/winter/alt
 	icon_state = "winter2"
+
+/obj/item/clothing/suit/vampire/slickbackcoat
+   name = "opulent coat"
+   desc = "Lavish, luxurious, and deeply purple. Slickback Clothing Co. It exudes immense energy."
+   icon_state = "slickbackcoat"
+   armor = list(MELEE = 5, BULLET = 5, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 5)
 
 /obj/item/clothing/suit/vampire/jacket
 	name = "leather jacket"
@@ -591,6 +715,20 @@
 	armor = list(MELEE = 90, BULLET = 90, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 0, RAD = 0, FIRE = 70, ACID = 90, WOUND = 50)
 //	clothing_traits = list(TRAIT_UNMASQUERADE)
 	masquerade_violating = TRUE
+
+/obj/item/clothing/suit/vampire/bogatyr
+	name = "Bogatyr armor"
+	desc = "A regal set of armor made of unknown materials."
+	icon_state = "bogatyr_armor"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	flags_inv = HIDEJUMPSUIT
+	clothing_flags = THICKMATERIAL
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	slowdown = 1
+	w_class = WEIGHT_CLASS_BULKY
+	armor = list(MELEE = 75, BULLET = 75, LASER = 15, ENERGY = 15, BOMB = 20, BIO = 0, RAD = 0, FIRE = 55, ACID = 70, WOUND = 35)
+//	clothing_traits = list(TRAIT_UNMASQUERADE)
 
 /obj/item/clothing/suit/vampire/labcoat
 	name = "labcoat"
@@ -708,6 +846,16 @@
 /obj/item/clothing/head/vampire/bandana/black
 	icon_state = "bandana_black"
 
+/obj/item/clothing/head/vampire/baseballcap
+    name = "baseball cap"
+    desc = "A soft hat with a rounded crown and a stiff bill projecting in front. Giants baseball, there's nothing like it!"
+    icon_state = "baseballcap"
+
+/obj/item/clothing/head/vampire/ushanka
+    name = "ushanka"
+    desc = "A heavy fur cap with ear-covering flaps."
+    icon_state = "ushanka"
+
 /obj/item/clothing/head/vampire/beanie
 	name = "beanie"
 	desc = "A stylish beanie."
@@ -741,13 +889,13 @@
 	name = "french admiral hat"
 	desc = "Dans mon esprit tout divague, je me perds dans tes yeux... Je me noie dans la vague de ton regard amoureux..."
 	icon_state = "french"
-	armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 0)
 
 /obj/item/clothing/head/vampire/nazi
 	name = "german bad guy hat"
 	desc = "\"Du wirst immer ein Schwein sein!\""
 	icon_state = "ss"
-	armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 0)
 
 /obj/item/clothing/head/vampire/nazi/Initialize()
 	. = ..()
@@ -757,7 +905,7 @@
 	name = "top hat"
 	desc = "Want some tea? Provides some kind of protection."
 	icon_state = "top"
-	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 0)
 
 /obj/item/clothing/head/vampire/skull
 	name = "skull helmet"
@@ -799,13 +947,19 @@
 /obj/item/clothing/head/vampire/army
 	name = "army helmet"
 	desc = "Looks dangerous. Provides great protection against blunt force."
-	icon_state = "helmet"
+	icon_state = "viet"
 	flags_inv = HIDEEARS|HIDEHAIR
 	dynamic_hair_suffix = ""
 	dynamic_fhair_suffix = ""
 	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 40, BIO = 0, RAD = 0, FIRE = 20, ACID = 40, WOUND = 25)
 //	clothing_traits = list(TRAIT_UNMASQUERADE)
 	masquerade_violating = TRUE
+
+/obj/item/clothing/head/vampire/hardhat
+    name = "construction helmet"
+    desc = "A thermoplastic hard helmet used to protect the head from injury."
+    icon_state = "hardhat"
+    armor = list(MELEE = 20, BULLET = 5, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 5, ACID = 0, WOUND = 15)
 
 /obj/item/clothing/head/vampire/eod
 	name = "EOD helmet"
@@ -822,6 +976,19 @@
 //	clothing_traits = list(TRAIT_UNMASQUERADE)
 	masquerade_violating = TRUE
 
+/obj/item/clothing/head/vampire/bogatyr
+	name = "Bogatyr helmet"
+	desc = "A regal helmet made of unknown materials."
+	icon_state = "bogatyr_helmet"
+	armor = list(MELEE = 55, BULLET = 50, LASER = 60, ENERGY = 60, BOMB = 20, BIO = 0, RAD = 0, FIRE = 40, ACID = 70, WOUND = 30)
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR
+	dynamic_hair_suffix = ""
+	dynamic_fhair_suffix = ""
+	visor_flags_inv = HIDEFACE|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	w_class = WEIGHT_CLASS_BULKY
+//	clothing_traits = list(TRAIT_UNMASQUERADE)
 
 /obj/item/clothing/head/vampire/bahari_mask
 	name = "Dark mother's mask"
@@ -1016,6 +1183,36 @@
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/clothing/mask/vampire/venetian_mask
+	name = "Venetian mask"
+	desc = "You could wear this to a real masquerade."
+	icon_state = "venetian_mask"
+	inhand_icon_state = "venetian_mask"
+	flags_inv = HIDEFACE | HIDEFACIALHAIR | HIDESNOUT
+	flags_cover = MASKCOVERSMOUTH
+	visor_flags_inv = HIDEFACE | HIDEFACIALHAIR | HIDESNOUT
+
+/obj/item/clothing/mask/vampire/venetian_mask/fancy
+	name = "fancy Venetian mask"
+	desc = "Weird rich people definitely wear this kind of stuff."
+	icon_state = "venetian_mask_fancy"
+	inhand_icon_state = "venetian_mask_fancy"
+
+/obj/item/clothing/mask/vampire/venetian_mask/jester
+	name = "jester mask"
+	desc = "They will all be amused, every last one of them."
+	icon_state = "venetian_mask_jester"
+	inhand_icon_state = "venetian_mask_jester"
+
+/obj/item/clothing/mask/vampire/venetian_mask/scary
+	name = "bloody mask"
+	desc = "With this, you'll look ready to butcher someone."
+	icon_state = "venetian_mask_scary"
+	inhand_icon_state = "venetian_mask_scary"
+	flags_inv = HIDEFACE
+	flags_cover = NONE
+	visor_flags_inv = HIDEFACE
 
 /obj/item/storage/belt/holster/detective/vampire
 	name = "holster"
