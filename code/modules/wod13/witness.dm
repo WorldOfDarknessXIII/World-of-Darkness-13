@@ -76,7 +76,7 @@
 				holder.icon_state = "aura_ghoul"
 				ghoul_npc = TRUE
 			if(!ghoul_npc)
-				if(N.danger_source && !isghoul(N))
+				if(N.danger_source)
 					holder.color = "#ff0000"
 				else 
 					holder.color = "#0000ff"
