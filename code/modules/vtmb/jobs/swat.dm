@@ -11,7 +11,8 @@
 	id = /obj/item/card/id/police
 	backpack_contents = list(
 		/obj/item/ammo_box/magazine/vamp556 = 3,
-		/obj/item/radio/cop = 1
+		/obj/item/radio/cop = 1,
+		/obj/item/vamp/keys/hack=2
 		)
 
 /datum/antagonist/swat/proc/equip_swat()
@@ -24,6 +25,8 @@
 		qdel(H.clane)
 	H.set_species(/datum/species/human)
 	H.generation = 13
+	H.lockpicking = 5
+	H.physique = 4
 	H.ignores_warrant = TRUE
 	H.maxHealth = round((initial(H.maxHealth)-initial(H.maxHealth)/4)+(initial(H.maxHealth)/4)*(H.physique+13-H.generation))
 	H.health = round((initial(H.health)-initial(H.health)/4)+(initial(H.health)/4)*(H.physique+13-H.generation))
