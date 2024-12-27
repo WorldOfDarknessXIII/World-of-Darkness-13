@@ -22,7 +22,7 @@
 	duty = "Drive people in the city."
 	minimal_masquerade = 0
 	experience_addition = 10
-	allowed_bloodlines = list("Daughters of Cacaphony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff", "Kiasyd")
+	allowed_bloodlines = list("Daughters of Cacaphony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff", "Kiasyd", "Cappadocian")
 
 /datum/job/vamp/taxi/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
 	..()
@@ -46,11 +46,11 @@
 		if(H.gender == MALE)
 			shoes = /obj/item/clothing/shoes/vampire
 			if(H.clane.male_clothes)
-				uniform = text2path(H.clane.male_clothes)
+				uniform = H.clane.male_clothes
 		else
 			shoes = /obj/item/clothing/shoes/vampire/heels
 			if(H.clane.female_clothes)
-				uniform = text2path(H.clane.female_clothes)
+				uniform = H.clane.female_clothes
 	else
 		if(H.gender == MALE)
 			shoes = /obj/item/clothing/shoes/vampire

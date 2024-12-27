@@ -14,7 +14,10 @@ And it also helps for the character set panel
 	var/list/allowed_jobs = list()
 	var/list/denied_jobs = list()
 	var/clane_curse //There should be a reference here.
+	///The Clan's unique body sprite
 	var/alt_sprite
+	///If the Clan's unique body sprites need to account for skintone
+	var/alt_sprite_greyscale = FALSE
 	var/no_hair
 	var/no_facial
 	var/humanitymod = 1
@@ -39,7 +42,8 @@ And it also helps for the character set panel
 			H.overlays_standing[accessories_layers[current_accessory]] = acc_overlay
 			H.apply_overlay(accessories_layers[current_accessory])
 	if(alt_sprite)
-		H.skin_tone = "albino"
+		if (!alt_sprite_greyscale)
+			H.skin_tone = "albino"
 		H.dna.species.limbs_id = alt_sprite
 		H.update_body_parts()
 		H.update_body()
@@ -118,3 +122,49 @@ And it also helps for the character set panel
 				H.forceMove(LM.loc)
 	if(clan_keys)
 		H.put_in_r_hand(new clan_keys(H))
+
+/**
+ * Rots the vampire's body along four stages of decay.
+ *
+ * Vampire bodies are either pre-decayed if they're Cappadocians,
+ * or they decay on death to what their body should naturally
+ * be according to their chronological age. Stage 1 is
+ * fairly normal looking with discoloured skin, stage 2 is
+ * somewhat decayed-looking, stage 3 is very decayed, and stage
+ * 4 is a long-dead completely decayed corpse. This has no effect
+ * on Clans that already have alt_sprites unless they're being
+ * rotted to stage 3 and above.
+ *
+ * Arguments
+ * * rot_stage - how much to rot the vampire, on a scale from 1 to 4.
+ */
+/datum/vampireclane/proc/rot_body(rot_stage)
+	if (alt_sprite)
+		if (!findtext(alt_sprite, "rotten") && (rot_stage <= 2))
+			return
+
+	switch (rot_stage)
+		if (1)
+			alt_sprite = "rotten1"
+			alt_sprite_greyscale = TRUE
+			violating_appearance = FALSE
+			no_hair = FALSE
+			no_facial = FALSE
+		if (2)
+			alt_sprite = "rotten2"
+			alt_sprite_greyscale = TRUE
+			violating_appearance = FALSE
+			no_hair = FALSE
+			no_facial = TRUE
+		if (3)
+			alt_sprite = "rotten3"
+			alt_sprite_greyscale = FALSE
+			violating_appearance = TRUE
+			no_hair = TRUE
+			no_facial = TRUE
+		if (4)
+			alt_sprite = "rotten4"
+			alt_sprite_greyscale = FALSE
+			violating_appearance = TRUE
+			no_hair = TRUE
+			no_facial = TRUE

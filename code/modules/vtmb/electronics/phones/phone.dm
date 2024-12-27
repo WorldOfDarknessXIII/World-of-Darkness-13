@@ -818,6 +818,8 @@
 	contacts += BARKEEPER
 	var/datum/phonecontact/tremere/REGENT = new()
 	contacts += REGENT
+	var/datum/phonecontact/dealer/DEALER = new()
+	contacts += DEALER
 	var/datum/phonecontact/malkavian/M = new()
 	contacts += M
 	var/datum/phonecontact/nosferatu/N = new()
@@ -838,6 +840,10 @@
 	GLOB.sheriffname = owner
 	var/datum/phonecontact/prince/PRINCE = new()
 	contacts += PRINCE
+	var/datum/phonecontact/clerk/CLERK = new()
+	contacts += CLERK
+	var/datum/phonecontact/dealer/DEALER = new()
+	contacts += DEALER
 
 /obj/item/vamp/phone/clerk
 	exchange_num = 267
@@ -852,6 +858,8 @@
 	contacts += SHERIFF
 	var/datum/phonecontact/tremere/REGENT = new()
 	contacts += REGENT
+	var/datum/phonecontact/dealer/DEALER = new()
+	contacts += DEALER
 	var/datum/phonecontact/malkavian/M = new()
 	contacts += M
 	var/datum/phonecontact/nosferatu/N = new()
@@ -882,8 +890,19 @@
 	..()
 	GLOB.dealernumber = number
 	GLOB.dealername = owner
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+	var/datum/phonecontact/sheriff/SHERIFF = new()
+	contacts += SHERIFF
+	var/datum/phonecontact/clerk/CLERK = new()
+	contacts += CLERK
 	var/datum/phonecontact/barkeeper/BARKEEPER = new()
 	contacts += BARKEEPER
+
+/obj/item/vamp/phone/supply_tech/Initialize()
+	..()
+	var/datum/phonecontact/dealer/DEALER = new()
+	contacts += DEALER
 
 /obj/item/vamp/phone/camarilla
 	exchange_num = 267
@@ -1006,5 +1025,10 @@
 	contacts += V
 	var/datum/phonecontact/brujah/B = new()
 	contacts += B
+
+/obj/item/vamp/phone/archivist/Initialize()
+	..()
+	var/datum/phonecontact/tremere/REGENT = new()
+	contacts += REGENT
 
 

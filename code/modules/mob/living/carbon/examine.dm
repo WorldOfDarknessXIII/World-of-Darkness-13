@@ -29,7 +29,7 @@
 		appears_dead = TRUE
 		if(getorgan(/obj/item/organ/brain))
 			. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive, with no signs of life.</span>"
-		else if(get_bodypart(BODY_ZONE_HEAD))
+		else if(get_bodypart(BODY_ZONE_HEAD) && surgeries.len)
 			. += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>"
 
 	var/list/msg = list("<span class='warning'>")

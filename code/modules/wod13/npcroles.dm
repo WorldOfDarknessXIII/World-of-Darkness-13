@@ -868,9 +868,10 @@
 	maxHealth = 20
 	health = 20
 	harm_intent_damage = 10
-	melee_damage_lower = 10
+	melee_damage_lower = 5
 	melee_damage_upper = 10
 	speed = 0
+	dodging = TRUE
 
 /mob/living/simple_animal/hostile/beastmaster/rat/Initialize()
 	. = ..()
@@ -885,14 +886,16 @@
 	name = "bat"
 	desc = "It's a bat."
 	is_flying_animal = TRUE
-	speed = -1
+	maxHealth = 10
+	health = 10
+	speed = -0.8
 
 /mob/living/simple_animal/hostile/beastmaster/rat/flying/UnarmedAttack(atom/A)
 	. = ..()
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
 		if(H.bloodpool)
-			if(prob(25))
+			if(prob(10))
 				H.bloodpool = max(0, H.bloodpool-1)
 				beastmaster.bloodpool = min(beastmaster.maxbloodpool, beastmaster.bloodpool+1)
 

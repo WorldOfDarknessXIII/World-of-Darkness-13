@@ -1019,6 +1019,10 @@
 	name = "Pyotr"
 	icon_state = "hair_pyotr"
 
+/datum/sprite_accessory/hair/tau
+	name = "Tau"
+	icon_state = "hair_tau"
+
 /datum/sprite_accessory/hair/quiff
 	name = "Quiff"
 	icon_state = "hair_quiff"

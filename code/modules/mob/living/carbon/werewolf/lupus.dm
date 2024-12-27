@@ -13,8 +13,9 @@
 //	var/move_delay_add = -1.5 // movement delay to add    also didn't work
 	melee_damage_lower = 15
 	melee_damage_upper = 35
-	health = 160
-	maxHealth = 160
+	health = 150
+	maxHealth = 150
+	werewolf_armor = 10
 //	bodyparts = list(
 //		/obj/item/bodypart/chest,
 //		/obj/item/bodypart/head,
@@ -26,7 +27,7 @@
 	var/hispo = FALSE
 
 /datum/movespeed_modifier/lupusform
-	multiplicative_slowdown = -0.85
+	multiplicative_slowdown = -0.80
 
 /mob/living/carbon/werewolf/lupus/update_icons()
 	cut_overlays()

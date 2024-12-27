@@ -206,11 +206,23 @@
 		else
 			H.remove_status_effect(STATUS_EFFECT_FEAR)
 
-	var/skipface = (H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE)) || (H.head && (H.head.flags_inv & HIDEFACE))
-	if(H.clane)
-		if(!skipface && H.clane.violating_appearance)
-			if(H.CheckEyewitness(H, H, 7, FALSE))
-				H.AdjustMasquerade(-1)
+	//masquerade violations due to unnatural appearances
+	if(H.is_face_visible() && H.clane?.violating_appearance)
+		switch(H.clane.alt_sprite)
+			if ("kiasyd")
+				//masquerade breach if eyes are uncovered, short range
+				if (!H.is_eyes_covered())
+					if (H.CheckEyewitness(H, H, 3, FALSE))
+						H.AdjustMasquerade(-1)
+			if ("rotten3")
+				//slightly less range than if fully decomposed
+				if (H.CheckEyewitness(H, H, 5, FALSE))
+					H.AdjustMasquerade(-1)
+			else
+				//gargoyles, nosferatu, skeletons, that kind of thing
+				if (H.CheckEyewitness(H, H, 7, FALSE))
+					H.AdjustMasquerade(-1)
+
 	if(HAS_TRAIT(H, TRAIT_UNMASQUERADE))
 		if(H.CheckEyewitness(H, H, 7, FALSE))
 			H.AdjustMasquerade(-1)
