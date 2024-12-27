@@ -3412,6 +3412,7 @@
 #include "code\modules\vtmb\vampire_clane\banu_haqim.dm"
 #include "code\modules\vtmb\vampire_clane\bruja.dm"
 #include "code\modules\vtmb\vampire_clane\caitiff.dm"
+#include "code\modules\vtmb\vampire_clane\cappadocian.dm"
 #include "code\modules\vtmb\vampire_clane\clane.dm"
 #include "code\modules\vtmb\vampire_clane\doc.dm"
 #include "code\modules\vtmb\vampire_clane\gangrel.dm"
