@@ -411,6 +411,7 @@
 						BLOODBONDED.set_species(/datum/species/kindred)
 						BLOODBONDED.clane = null
 						if(H.generation < 13)
+							BLOODBONDED.generation = 13
 							BLOODBONDED.skin_tone = get_vamp_skin_color(BLOODBONDED.skin_tone)
 							BLOODBONDED.update_body()
 							if (H.clane.whitelisted)
