@@ -793,7 +793,7 @@
 	caster.dna.species.punchdamagehigh += mod
 	caster.dna.species.meleemod += armah
 	caster.dna.species.attack_sound = 'code/modules/wod13/sounds/heavypunch.ogg'
-	tackler = caster.AddComponent(/datum/component/tackler, stamina_cost=0, base_knockdown = 1 SECONDS, range = 2+level_casting, speed = 1, skill_mod = 0, min_distance = 0)
+	tackler = caster.AddComponent(/datum/component/tackler, stamina_cost=0, range = 2+level_casting, speed = 1, skill_mod = 0, min_distance = 0)
 	caster.potential = level_casting
 	spawn(delay+caster.discipline_time_plus)
 		if(caster)
