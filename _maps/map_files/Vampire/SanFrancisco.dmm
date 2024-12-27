@@ -4777,7 +4777,7 @@
 "dwn" = (/obj/machinery/hydroponics/soil,/turf/open/floor/plating/vampgrass,/area/vtm/forest)
 "dwq" = (/obj/structure/table/wood,/obj/effect/decal/wallpaper/low,/obj/effect/turf_decal/siding/wood{dir = 8},/obj/item/storage/fancy/cigarettes/cigars/cohiba{pixel_y = 10},/obj/item/storage/box/matches{pixel_y = 10},/turf/closed/wall/vampwall/painted/low,/area/vtm/interior/police)
 "dws" = (/obj/structure/reagent_dispensers/water_cooler,/turf/open/floor/plating/vampplating,/area/vtm/cabinet)
-"dwv" = (/obj/machinery/button/door{id = "police"; name = "Parking Shutters Control"; req_access = ACCESS_WEAPONS},/turf/closed/wall/vampwall/painted,/area/vtm/interior/police)
+"dwv" = (/obj/machinery/button/door{id = "armouryacces"; name = "Parking Shutters Control"; req_access_txt = "3"},/turf/closed/wall/vampwall/painted,/area/vtm/interior/police)
 "dwx" = (/turf/open/floor/plating/vampdirt,/area/space)
 "dwD" = (/obj/structure/vampipe{icon_state = "piping32"},/obj/item/reagent_containers/food/drinks/beer/vampire{list_reagents = list(/datum/reagent/consumable/ethanol/beer=0)},/turf/open/floor/plating/vampcanal,/area/vtm/sewer)
 "dwR" = (/obj/structure/vampdoor/church,/turf/open/floor/plating/parquetry/old,/area/vtm/church)
