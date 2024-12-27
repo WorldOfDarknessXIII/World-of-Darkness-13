@@ -101,7 +101,7 @@
 
 /obj/item/vtm_artifact/saulocept/get_powers()
 	..()
-	owner.experience_plus = 10
+	owner.experience_plus = 5
 
 /obj/item/vtm_artifact/saulocept/remove_powers()
 	..()

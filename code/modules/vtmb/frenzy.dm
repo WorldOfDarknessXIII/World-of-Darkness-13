@@ -82,8 +82,8 @@
 	for(var/obj/effect/fire/F in GLOB.fires_list)
 		if(F)
 			if(get_dist(src, F) < 7 && F.z == src.z)
-				if(get_dist(src, F) < 6)
-					fear = F
+//				if(get_dist(src, F) < 6)
+//					fear = F
 				if(get_dist(src, F) < 5)
 					fear = F
 				if(get_dist(src, F) < 4)
@@ -100,8 +100,11 @@
 
 	if(iskindred(src))
 		if(fear)
-			step_away(src,fear,99)
-			if(prob(25))
+			if(src.has_status_effect(STATUS_EFFECT_FEAR))
+				step_away(src,GLOB.fires_list)	//none of these alternatives work, kindred will have fear but not step away
+				emote("scream")
+			else if(prob(25))
+				step_away(src,fear)
 				emote("scream")
 		else
 			var/mob/living/carbon/human/H = src
@@ -114,7 +117,7 @@
 							L.emote("scream")
 							var/mob/living/carbon/human/BT = L
 							BT.add_bite_animation()
-						if(CheckEyewitness(L, src, 7, FALSE))
+						if(CheckEyewitness(L, src, 5, FALSE))
 							H.AdjustMasquerade(-1)
 						playsound(src, 'code/modules/wod13/sounds/drinkblood1.ogg', 50, TRUE)
 						L.visible_message("<span class='warning'><b>[src] bites [L]'s neck!</b></span>", "<span class='warning'><b>[src] bites your neck!</b></span>")
@@ -188,6 +191,12 @@
 			if(F)
 				if(get_dist(F, H) < 8 && F.z == H.z)
 					fearstack += F.stage
+				if(get_dist(src, F) < 3)
+					fearstack += 1
+				if(get_dist(src, F) < 2)
+					fearstack += 2
+				if(get_dist(src, F) < 1)
+					fearstack += 5
 		for(var/mob/living/carbon/human/U in viewers(7, H))
 			if(U.on_fire)
 				fearstack += 1
@@ -197,14 +206,15 @@
 		if(fearstack)
 			if(prob(fearstack*5))
 				H.do_jitter_animation(10)
-				if(fearstack > 20)
-					if(prob(fearstack))
-						if(!H.in_frenzy)
-							H.rollfrenzy()
-			if(!H.has_status_effect(STATUS_EFFECT_FEAR))
-				H.apply_status_effect(STATUS_EFFECT_FEAR)
-		else
-			H.remove_status_effect(STATUS_EFFECT_FEAR)
+				if(fearstack*10 > 40)
+					if(!H.has_status_effect(STATUS_EFFECT_FEAR))
+						H.apply_status_effect(STATUS_EFFECT_FEAR)
+						if(prob(5+fearstack))
+							if(!H.in_frenzy)
+								to_chat(src, "The <span class='danger'><b>BEAST</b></span> desperately seeks any means to escape the flames. Rolling..")
+								H.rollfrenzy()
+					else
+						H.remove_status_effect(STATUS_EFFECT_FEAR)
 
 	var/skipface = (H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE)) || (H.head && (H.head.flags_inv & HIDEFACE))
 	if(H.clane)
@@ -337,20 +347,24 @@
 			if(H.bloodpool > 1 || H.in_frenzy)
 				H.last_frenzy_check = world.time
 
-//	var/list/blood_fr = list()
-//	for(var/obj/effect/decal/cleanable/blood/B in range(7, src))
-//		if(B.bloodiness)
-//			blood_fr += B
+	var/list/blood_fr = list()
+	for(var/obj/effect/decal/cleanable/blood/B in range(2, src))
+		if(B.bloodiness)
+			blood_fr += B
 	if(!H.antifrenzy && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
 		if(H.bloodpool <= 1 && !H.in_frenzy)
-			if((H.last_frenzy_check + 40 SECONDS) <= world.time)
+			if((H.last_frenzy_check + 60 SECONDS) <= world.time)
 				H.last_frenzy_check = world.time
 				H.rollfrenzy()
 				if(H.clane)
 					if(H.clane.enlightenment)
 						if(!H.CheckFrenzyMove())
 							H.AdjustHumanity(1, 10)
-//	if(length(blood_fr) >= 10 && !H.in_frenzy)
-//		if(H.last_frenzy_check+400 <= world.time)
-//			H.last_frenzy_check = world.time
-//			H.rollfrenzy()
+	if(length(blood_fr) >= 10 && !H.in_frenzy)
+		if(H.clane)
+			if(H.clane.enlightenment)
+				return
+		if(H.last_frenzy_check+ 20 SECONDS <= world.time)
+			H.last_frenzy_check = world.time
+			H.rollfrenzy()
+
