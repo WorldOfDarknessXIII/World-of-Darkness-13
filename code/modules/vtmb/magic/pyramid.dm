@@ -19,10 +19,19 @@
 	. = ..()
 	for(var/obj/ritualrune/R in rituals)
 		if(R)
-			if(R.sacrifice)
-				var/obj/item/I = new R.sacrifice(src)
-				to_chat(user, "[R.thaumlevel] [R.name] - [R.desc] Requirements: [I].")
-				qdel(I)
+			if(R.sacrifices.len > 0)
+				var/list/required_items = list()
+				for(var/item_type in R.sacrifices)
+					var/obj/item/I = new item_type(src)
+					required_items += I.name
+					qdel(I)
+				var/required_list
+				if(required_items.len == 1)
+					required_list = required_items[1]
+				else
+					for(var/item_name in required_items)
+						required_list += (required_list == "" ? item_name : ", [item_name]")
+				to_chat(user, "[R.thaumlevel] [R.name] - [R.desc] Requirements: [required_list].")
 			else
 				to_chat(user, "[R.thaumlevel] [R.name] - [R.desc]")
 
@@ -38,7 +47,7 @@
 	var/activated = FALSE
 	var/mob/living/last_activator
 	var/thaumlevel = 1
-	var/sacrifice
+	var/list/sacrifices = list()
 
 /obj/ritualrune/proc/complete()
 	return
@@ -51,12 +60,21 @@
 			L.Immobilize(30)
 			last_activator = user
 			activator_bonus = L.thaum_damage_plus
-			if(sacrifice)
+			if(sacrifices.len > 0)
+				var/list/found_items = list()
 				for(var/obj/item/I in get_turf(src))
-					if(I)
-						if(istype(I, sacrifice))
+					for(var/item_type in sacrifices)
+						if(istype(I, item_type))
+							found_items += I
+							break
+
+				if(found_items.len == sacrifices.len)
+					for(var/obj/item/I in found_items)
+						if(I)
 							qdel(I)
-							complete()
+					complete()
+				else
+					to_chat(user, "You lack the necessary sacrifices to complete the ritual. Found [found_items.len], required [sacrifices.len].")
 			else
 				complete()
 
@@ -212,7 +230,7 @@
 	icon_state = "rune5"
 	word = "TE-ME'LL"
 	thaumlevel = 3
-	sacrifice = /obj/item/drinkable_bloodpack
+	sacrifices = list(/obj/item/drinkable_bloodpack)
 
 /mob/living/simple_animal/hostile/ghost/tremere
 	maxHealth = 1
@@ -243,7 +261,7 @@
 	icon_state = "rune6"
 	word = "POR'TALE"
 	thaumlevel = 5
-	sacrifice = /obj/item/drinkable_bloodpack/vitae
+	sacrifices = list(/obj/item/drinkable_bloodpack/vitae)
 
 /obj/ritualrune/teleport/complete()
 	if(!activated)
@@ -316,7 +334,7 @@
 	icon_state = "rune7"
 	word = "CUS-RE'S"
 	thaumlevel = 5
-	sacrifice = /obj/item/organ/heart
+	sacrifices = list(/obj/item/organ/heart)
 
 /obj/ritualrune/curse/complete()
 	if(!activated)
@@ -402,7 +420,7 @@
 	icon_state = "rune7"
 	word = "Splinter, shatter, break the wooden doom."
 	thaumlevel = 1
-	sacrifice = /obj/item/vampire_stake
+	sacrifices = list(/obj/item/vampire_stake)
 
 /obj/ritualrune/deflection_stake/complete()
 	for(var/mob/living/carbon/human/H in loc)
