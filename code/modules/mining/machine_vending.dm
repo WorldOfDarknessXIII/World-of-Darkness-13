@@ -212,6 +212,7 @@
 		else
 			to_chat(user, "<span class='alert'>You've hit your requisitions limit, come back soon.</span>")
 	if(istype(I, /obj/item/stack/dollar))
+		to_chat(user, "<span class='alert'>You can only use a police badge here.</span>")
 		return
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/mining_voucher/voucher, mob/redeemer)
