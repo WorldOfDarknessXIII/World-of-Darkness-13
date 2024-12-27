@@ -207,7 +207,7 @@
 /obj/machinery/mineral/equipment_vendor/fastfood/police/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id/police))
 		if(world.time - last_card_use_time >= 2 MINUTES)
-			points = points+6
+			points = points+15
 			last_card_use_time = world.time
 		else
 			to_chat(user, "<span class='alert'>You've hit your requisitions limit, come back soon.</span>")

@@ -575,11 +575,18 @@
 	dispenses_dollars = FALSE
 	prize_list = list(
 		new /datum/data/mining_equipment("handcuffs", /obj/item/restraints/handcuffs, 1),
-		new /datum/data/mining_equipment("camera", /obj/item/camera, 1),
-		new /datum/data/mining_equipment("tape recorder", /obj/item/taperecorder, 1),
+		new /datum/data/mining_equipment("camera", /obj/item/camera, 2),
+		new /datum/data/mining_equipment("tape recorder", /obj/item/taperecorder, 2),
 		new /datum/data/mining_equipment("white crayon", /obj/item/toy/crayon/white, 1),
 		new /datum/data/mining_equipment("evidence box", /obj/item/storage/box/evidence, 1),
-		new /datum/data/mining_equipment("body bags", /obj/item/storage/box/bodybags, 1)
+		new /datum/data/mining_equipment("body bags", /obj/item/storage/box/bodybags, 1),
+		new /datum/data/mining_equipment("police vest", /obj/item/clothing/suit/vampire/vest/police, 1),
+		new /datum/data/mining_equipment("police radio", /obj/item/radio/cop, 2),
+		new /datum/data/mining_equipment("police uniform", /obj/item/clothing/under/vampire/police, 1),
+		new /datum/data/mining_equipment("police hat", /obj/item/clothing/head/vampire/police, 1),
+		new /datum/data/mining_equipment("flashlight", /obj/item/flashlight, 1),
+		new /datum/data/mining_equipment("magnifier", /obj/item/detective_scanner, 4)
+
 	)
 
 /obj/machinery/mineral/equipment_vendor/fastfood/smoking
