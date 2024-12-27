@@ -171,15 +171,6 @@ Dancer
 	lose_text = "<span class='notice'>You don't feel extra <b>HUNGRY</b> anymore.</span>"
 	allowed_species = list("Vampire", "Ghoul")
 
-/datum/quirk/stake_resistant
-	name = "Stake Resistant"
-	desc = "For a single strike, you will ignore a stake."
-	mob_trait = TRAIT_STAKE_RESISTANT
-	value = 3
-	gain_text = "<span class='notice'>You feel like you can resist stakes.</span>"
-	lose_text = "<span class='warning'>You don't feel like you can resist stakes anymore.</span>"
-	allowed_species = list("Vampire")
-
 //Removed after changes to death consequences.
 /*
 /datum/quirk/phoenix
