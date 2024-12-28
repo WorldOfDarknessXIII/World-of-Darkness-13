@@ -5,7 +5,7 @@
 	silent = FALSE
 	losebreath = 0
 
-	if(!gibbed)
+	if(!gibbed && !HAS_TRAIT(src, TRAIT_DEATHCOMA))
 		INVOKE_ASYNC(src, PROC_REF(emote), "deathgasp")
 	if(reagents != null)
 		reagents.end_metabolization(src)
@@ -20,7 +20,7 @@
 	addtimer(CALLBACK(src, PROC_REF(gib), null, null, TRUE, TRUE), 25)
 	var/matrix/M = matrix()
 	M.Scale(1.8, 1.2)
-	animate(src, time = 40, transform = M, easing = SINE_EASING)
+	animate(src, time = 4 SECONDS, transform = M, easing = SINE_EASING)
 
 /mob/living/carbon/gib(no_brain, no_organs, no_bodyparts, safe_gib = FALSE)
 	if(safe_gib) // If you want to keep all the mob's items and not have them deleted

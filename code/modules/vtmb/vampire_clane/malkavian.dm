@@ -7,8 +7,8 @@
 		/datum/discipline/dementation = 2,
 		/datum/discipline/obfuscate = 3
 	)
-	male_clothes = "/obj/item/clothing/under/vampire/malkavian"
-	female_clothes = "/obj/item/clothing/under/vampire/malkavian/female"
+	male_clothes = /obj/item/clothing/under/vampire/malkavian
+	female_clothes = /obj/item/clothing/under/vampire/malkavian/female
 	clan_keys = /obj/item/vamp/keys/malkav
 
 /datum/vampireclane/malkavian/post_gain(mob/living/carbon/human/H)

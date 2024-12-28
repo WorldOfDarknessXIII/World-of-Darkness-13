@@ -1141,6 +1141,7 @@
 	if(isliving(L))
 		if(L.movement_type & FLYING)
 			return
+		L.apply_damage(10, CLONE)
 		L.apply_damage(30, TOX)
 		to_chat(L, "<span class='warning'>Your flesh burns!</span>")
 

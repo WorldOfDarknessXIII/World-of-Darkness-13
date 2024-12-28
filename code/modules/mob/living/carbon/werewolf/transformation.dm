@@ -52,6 +52,7 @@
 			H.remove_overlay(PROTEAN_LAYER)
 			G.punchdamagelow = G.punchdamagelow-15
 			G.punchdamagehigh = G.punchdamagehigh-15
+			H.physique = initial(H.physique)
 			H.physiology.armor.melee = H.physiology.armor.melee-15
 			H.physiology.armor.bullet = H.physiology.armor.bullet-15
 			var/matrix/M = matrix()
@@ -146,6 +147,7 @@
 					crinos_form.nutrition = trans.nutrition
 					crinos_form.mind = trans.mind
 					crinos_form.update_blood_hud()
+					crinos_form.physique = crinos_form.physique+3
 					transfer_damage(trans, crinos_form)
 					crinos_form.add_movespeed_modifier(/datum/movespeed_modifier/crinosform)
 					trans.forceMove(src)

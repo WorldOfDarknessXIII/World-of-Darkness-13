@@ -7,8 +7,8 @@
 		/datum/discipline/melpominee = 2,
 		/datum/discipline/presence = 3
 	)
-	male_clothes = "/obj/item/clothing/under/vampire/sexy"
-	female_clothes = "/obj/item/clothing/under/vampire/toreador/female"
+	male_clothes = /obj/item/clothing/under/vampire/sexy
+	female_clothes = /obj/item/clothing/under/vampire/toreador/female
 	enlightenment = FALSE
 	whitelisted = TRUE
 	clan_keys = /obj/item/vamp/keys/daughters

@@ -14,8 +14,8 @@
 	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
-	display_order = JOB_DISPLAY_ORDER_POLICE
-	exp_type_department = EXP_TYPE_INDEPENDENT
+	display_order = JOB_DISPLAY_ORDER_TRIAD_GANGSTER
+	exp_type_department = EXP_TYPE_GANG
 
 	allowed_species = list("Human", "Werewolf")
 	minimal_generation = 13

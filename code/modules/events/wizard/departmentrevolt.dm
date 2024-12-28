@@ -59,22 +59,22 @@
 			jobs_to_revolt = list("Assistant")
 			nation_name = pick("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Grigio", "Ass", "Assi")
 		if("Medical")
-			jobs_to_revolt = GLOB.medical_positions
+			jobs_to_revolt = GLOB.ss13
 			nation_name = pick("Mede", "Healtha", "Recova", "Chemi", "Viro", "Psych")
 		if("Engineering")
-			jobs_to_revolt = GLOB.engineering_positions
+			jobs_to_revolt = GLOB.ss13
 			nation_name = pick("Atomo", "Engino", "Power", "Teleco")
 		if("Science")
 			jobs_to_revolt = GLOB.anarch_positions
 			nation_name = pick("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno", "Nani", "Cyto")
 		if("Supply")
-			jobs_to_revolt = GLOB.supply_positions
+			jobs_to_revolt = GLOB.ss13
 			nation_name = pick("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
 		if("Service") //the few, the proud, the technically aligned
 			jobs_to_revolt = GLOB.neutral_positions.Copy() - list("Assistant", "Prisoner")
 			nation_name = pick("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
 		if("Security")
-			jobs_to_revolt = GLOB.security_positions
+			jobs_to_revolt = GLOB.ss13
 			nation_name = pick("Securi", "Beepski", "Shitcuri", "Red", "Stunba", "Flashbango", "Flasha", "Stanfordi")
 
 	nation_name += pick("stan", "topia", "land", "nia", "ca", "tova", "dor", "ador", "tia", "sia", "ano", "tica", "tide", "cis", "marea", "co", "taoide", "slavia", "stotzka")

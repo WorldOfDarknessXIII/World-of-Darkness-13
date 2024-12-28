@@ -7,8 +7,8 @@
 		/datum/discipline/obfuscate = 2,
 		/datum/discipline/quietus = 3
 	)
-	male_clothes = "/obj/item/clothing/under/vampire/bandit"
-	female_clothes = "/obj/item/clothing/under/vampire/bandit"
+	male_clothes = /obj/item/clothing/under/vampire/bandit
+	female_clothes = /obj/item/clothing/under/vampire/bandit
 	whitelisted = TRUE
 
 /*

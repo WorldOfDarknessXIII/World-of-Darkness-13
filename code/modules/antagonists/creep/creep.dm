@@ -161,15 +161,15 @@
 	var/chosen_department
 	var/their_chosen_department
 	//note that command and sillycone are gone because borgs can't be obsessions and the heads have their respective department. Sorry cap, your place is more with centcom or something
-	if(oldmind.assigned_role in GLOB.security_positions)
+	if(oldmind.assigned_role in GLOB.ss13)
 		chosen_department = "security"
-	if(oldmind.assigned_role in GLOB.engineering_positions)
+	if(oldmind.assigned_role in GLOB.ss13)
 		chosen_department = "engineering"
-	if(oldmind.assigned_role in GLOB.medical_positions)
+	if(oldmind.assigned_role in GLOB.ss13)
 		chosen_department = "medical"
 	if(oldmind.assigned_role in GLOB.anarch_positions)
 		chosen_department = "science"
-	if(oldmind.assigned_role in GLOB.supply_positions)
+	if(oldmind.assigned_role in GLOB.ss13)
 		chosen_department = "supply"
 	if(oldmind.assigned_role in GLOB.neutral_positions)
 		chosen_department = "service"
@@ -180,15 +180,15 @@
 			continue //the jealousy target has to have a job, and not be the obsession or obsessed.
 		all_coworkers += H.mind
 		//this won't be called often thankfully.
-		if(H.mind.assigned_role in GLOB.security_positions)
+		if(H.mind.assigned_role in GLOB.ss13)
 			their_chosen_department = "security"
-		if(H.mind.assigned_role in GLOB.engineering_positions)
+		if(H.mind.assigned_role in GLOB.ss13)
 			their_chosen_department = "engineering"
-		if(H.mind.assigned_role in GLOB.medical_positions)
+		if(H.mind.assigned_role in GLOB.ss13)
 			their_chosen_department = "medical"
 		if(H.mind.assigned_role in GLOB.anarch_positions)
 			their_chosen_department = "science"
-		if(H.mind.assigned_role in GLOB.supply_positions)
+		if(H.mind.assigned_role in GLOB.ss13)
 			their_chosen_department = "supply"
 		if(H.mind.assigned_role in GLOB.neutral_positions)
 			their_chosen_department = "service"
