@@ -316,16 +316,15 @@
 	if(!client || !hud_used)
 		return
 	if(iscathayan(src))
-		if(hud_used.chi_icon)
-			hud_used.yin_chi_icon.icon_state = "yin-[round((yin_chi/max_yin_chi)*12)]"
-			hud_used.yang_chi_icon.icon_state = "yang-[round((yang_chi/max_yang_chi)*12)]"
-			hud_used.demon_chi_icon.icon_state = "demon-[round((demon_chi/max_demon_chi)*12)]"
-			if(yin_chi > yang_chi+2)
-				hud_used.imbalance_chi_icon.icon_state = "yin_imbalance"
-			else if(yang_chi > yin_chi+2)
-				hud_used.imbalance_chi_icon.icon_state = "yang_imbalance"
-			else
-				hud_used.imbalance_chi_icon.icon_state = "base"
+		hud_used.yin_chi_icon.icon_state = "yin-[round((yin_chi/max_yin_chi)*12)]"
+		hud_used.yang_chi_icon.icon_state = "yang-[round((yang_chi/max_yang_chi)*12)]"
+		hud_used.demon_chi_icon.icon_state = "demon-[round((demon_chi/max_demon_chi)*12)]"
+		if(yin_chi > yang_chi+2)
+			hud_used.imbalance_chi_icon.icon_state = "yin_imbalance"
+		else if(yang_chi > yin_chi+2)
+			hud_used.imbalance_chi_icon.icon_state = "yang_imbalance"
+		else
+			hud_used.imbalance_chi_icon.icon_state = "base"
 
 /atom/movable/screen/chi_pool
 	name = "Chi Pool"

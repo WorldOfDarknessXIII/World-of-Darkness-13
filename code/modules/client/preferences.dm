@@ -2991,6 +2991,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				character.mind.dharma.Po = po_type
 				character.mind.dharma.Hun = hun
 				character.mind.dharma.on_gain(character)
+				character.mind.dharma.initial_skin_color = skin_tone
 		else
 			character.yang_chi = 4
 			character.max_yang_chi = 4
