@@ -1995,7 +1995,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						auspice = Auspic
 
 				if("clane_acc")
-					if(slotlocked || !(pref_species.id == "kindred"))
+					if(pref_species.id != "kindred")	//Due to a lot of people being locked to furries
 						return
 
 					if(!length(clane.accessories))

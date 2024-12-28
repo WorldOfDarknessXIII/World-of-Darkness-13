@@ -15,6 +15,7 @@
 	haircuts = list(
 		"Bald",
 		"Pyotr",
+		"Tau",
 		"Balding Hair",
 		"Boddicker",
 		"Feather",

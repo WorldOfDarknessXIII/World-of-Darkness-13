@@ -345,6 +345,21 @@
 	icon_state = "malkav_hat"
 	armor = list(MELEE = 25, BULLET = 25, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
 
+/obj/item/clothing/under/vampire/fancy_gray
+	name = "Fancy gray suit"
+	desc = "A suit for a real business."
+	icon_state = "fancy_gray"
+
+/obj/item/clothing/under/vampire/fancy_red
+	name = "Fancy red suit"
+	desc = "A suit for a real business."
+	icon_state = "fancy_red"
+
+/obj/item/clothing/under/vampire/leatherpants
+	name = "Leather pants"
+	desc = "A suit for a TRULY REAL business."
+	icon_state = "leather_pants"
+
 //SHOES
 
 //SHOES
@@ -400,6 +415,21 @@
 
 /obj/item/clothing/shoes/vampire/heels/red
 	icon_state = "heels_red"
+
+/obj/item/clothing/shoes/vampire/businessscaly
+	name = "scaly shoes"
+	desc = "Shoes with scales."
+	icon_state = "scales_shoes"
+
+/obj/item/clothing/shoes/vampire/businessblack
+	name = "black shoes"
+	desc = "Classic black shoes."
+	icon_state = "business_shoes"
+
+/obj/item/clothing/shoes/vampire/businesstip
+	name = "metal tip shoes"
+	desc = "Shoes with a metal tip."
+	icon_state = "metal_shoes"
 
 //SUITS
 
@@ -705,6 +735,21 @@
 	desc = "For medicine and research purposes."
 	icon_state = "labcoat"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 90, WOUND = 10)
+
+/obj/item/clothing/suit/vampire/fancy_gray
+	name = "fancy gray jacket"
+	desc = "Gray-colored jacket"
+	icon_state = "fancy_gray_jacket"
+
+/obj/item/clothing/suit/vampire/fancy_red
+	name = "fancy red jacket"
+	desc = "Red-colored jacket"
+	icon_state = "fancy_red_jacket"
+
+/obj/item/clothing/suit/vampire/majima_jacket
+	name = "too much fancy jacket"
+	desc = "Woahhh, check it out! Two macho men havin' a tussle in the nude!? This is a world of shit I didn't know even existed..."
+	icon_state = "majima_jacket"
 
 /obj/item/clothing/suit/vampire/bahari
 	name = "Dark mother's suit"
