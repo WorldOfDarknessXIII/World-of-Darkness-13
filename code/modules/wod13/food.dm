@@ -510,7 +510,7 @@
 		new /datum/data/mining_equipment("knife",	/obj/item/melee/vampirearms/knife,	100),
 		new /datum/data/mining_equipment("baseball bat",	/obj/item/melee/vampirearms/baseball,	200),
 		new /datum/data/mining_equipment("katana",	/obj/item/melee/vampirearms/katana,	1500),
-		new /datum/data/mining/equipment("machete",	obj/item/melee/vampirearms/machete,	450),
+		new /datum/data/mining/equipment("machete",	/obj/item/melee/vampirearms/machete,	450),
 		new /datum/data/mining_equipment("donut",	/obj/item/food/vampire/donut,	10)
 	)
 
