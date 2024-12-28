@@ -70,6 +70,15 @@
 		mob.dna?.species.brutemod = initial(mob.dna?.species.brutemod)
 		mob.dna?.species.burnmod = initial(mob.dna?.species.burnmod)
 
+	if(level >= 3)
+		if(!locate(/datum/action/breathe_chi) in mob.actions)
+			var/datum/action/breathe_chi/breathec = new()
+			breathec.Grant(mob)
+	if(level >= 6)
+		if(!locate(/datum/action/area_chi) in mob.actions)
+			var/datum/action/area_chi/areac = new()
+			areac.Grant(mob)
+
 /datum/dharma/proc/align_virtues(var/mob/living/owner)
 	if(level <= 0)
 		return
@@ -119,6 +128,23 @@
 			H.dharma?.align_virtues(H)
 		SEND_SOUND(src, sound('code/modules/wod13/sounds/dharma_increase.ogg', 0, 0, 75))
 		to_chat(src, "<span class='userdanger'><b>DHARMA RISES!</b></span>")
+
+	if(H.dharma?.level < 3)
+		for(var/datum/action/breathe_chi/QI in mob.actions)
+			if(QI)
+				QI.Remove(mob)
+	else
+		if(!locate(/datum/action/breathe_chi) in mob.actions)
+			var/datum/action/breathe_chi/breathec = new()
+			breathec.Grant(mob)
+	if(H.dharma?.level < 6)
+		for(var/datum/action/area_chi/AI in mob.actions)
+			if(AI)
+				AI.Remove(mob)
+	else
+		if(!locate(/datum/action/area_chi) in mob.actions)
+			var/datum/action/area_chi/areac = new()
+			areac.Grant(mob)
 
 /proc/call_dharma(var/mod, var/mob/living/carbon/human/cathayan)
 	if(cathayan)
@@ -456,8 +482,6 @@
 	var/datum/action/kueijininfo/infor = new()
 	infor.host = C
 	infor.Grant(C)
-	var/datum/action/breathe_chi/breathec = new()
-	breathec.Grant(C)
 	var/datum/action/reanimate_yang/YG = new()
 	YG.Grant(C)
 	var/datum/action/reanimate_yin/YN = new()
@@ -473,6 +497,9 @@
 	for(var/datum/action/breathe_chi/QI in C.actions)
 		if(QI)
 			QI.Remove(C)
+	for(var/datum/action/area_chi/AI in C.actions)
+		if(AI)
+			AI.Remove(C)
 	for(var/datum/action/reanimate_yang/YG in C.actions)
 		if(YG)
 			YG.Remove(C)
@@ -602,50 +629,60 @@
 	if(istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/BD = usr
 		last_use = world.time
-		var/list/victims_list = list()
-		for(var/mob/living/L in range(3, owner))
-			if(L != owner)
-				victims_list |= L
-		if(!length(victims_list))
-			to_chat(owner, "<span class='warning'>There's no one with <b>Chi</b> around...</span>")
-			return
+		if(isliving(BD.pulling) && BD.grab_state > GRAB_PASSIVE)
+			var/mob/living/L = BD.pulling
+			if(!L.yin_chi)
+				to_chat(owner, "<span class='warning'>It doesn't have <b>Yin Chi</b> to feed on, try some distance...</span>")
+				return
+			L.yin_chi = max(0, L.yin_chi-1)
+			BD.yin_chi = min(BD.yin_chi+1, BD.max_yin_chi)
+			to_chat(BD, "<span class='engradio'>Some <b>Yang</b> Chi energy enters you...</span>")
+			BD.update_chi_hud()
 		else
-			var/mob/living/victim = input(owner, "Choose breathe to inhale.", "Breathe Chi") as null|anything in victims_list
-			if(victim)
-				if(!victim.yin_chi && !victim.yang_chi)
-					to_chat(owner, "<span class='warning'>It doesn't have <b>Chi</b> to feed on...</span>")
-					return
-				else
-					var/atom/chi_particle = new (get_turf(victim))
-					chi_particle.density = FALSE
-					chi_particle.icon = 'code/modules/wod13/UI/kuei_jin.dmi'
-					chi_particle.icon_state = "drain"
-					var/matrix/M = matrix()
-					M.Scale(1, get_dist_in_pixels(owner.x*32, owner.y*32, victim.x*32, victim.y*32)/32)
-					M.Turn(get_angle_raw(victim.x, victim.y, 0, 0, owner.x, owner.y, 0, 0))
-					chi_particle.transform = M
-					var/sucking_chi = TRUE
-					if(isanimal(victim))
-						var/mob/living/simple_animal/S = victim
-						if(S.mob_biotypes & MOB_UNDEAD)
+			var/list/victims_list = list()
+			for(var/mob/living/L in range(3, owner))
+				if(L != owner)
+					victims_list |= L
+			if(!length(victims_list))
+				to_chat(owner, "<span class='warning'>There's no one with <b>Chi</b> around...</span>")
+				return
+			else
+				var/mob/living/victim = input(owner, "Choose breathe to inhale.", "Breathe Chi") as null|anything in victims_list
+				if(victim)
+					if(!victim.yang_chi)
+						to_chat(owner, "<span class='warning'>It doesn't have <b>Yang Chi</b> to feed on, try getting closer...</span>")
+						return
+					else
+						var/atom/chi_particle = new (get_turf(victim))
+						chi_particle.density = FALSE
+						chi_particle.icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+						chi_particle.icon_state = "drain"
+						var/matrix/M = matrix()
+						M.Scale(1, get_dist_in_pixels(owner.x*32, owner.y*32, victim.x*32, victim.y*32)/32)
+						M.Turn(get_angle_raw(victim.x, victim.y, 0, 0, owner.x, owner.y, 0, 0))
+						chi_particle.transform = M
+						var/sucking_chi = TRUE
+						if(isanimal(victim))
+							var/mob/living/simple_animal/S = victim
+							if(S.mob_biotypes & MOB_UNDEAD)
+								to_chat(owner, "<span class='warning'>This creature doesn't breathe cause it's <b>DEAD</b>!</span>")
+								sucking_chi = FALSE
+						if(victim.stat >= DEAD)
 							to_chat(owner, "<span class='warning'>This creature doesn't breathe cause it's <b>DEAD</b>!</span>")
 							sucking_chi = FALSE
-					if(victim.stat >= DEAD)
-						to_chat(owner, "<span class='warning'>This creature doesn't breathe cause it's <b>DEAD</b>!</span>")
-						sucking_chi = FALSE
-					if(iskindred(victim))
-						to_chat(owner, "<span class='warning'>This creature doesn't breathe cause it's <b>DEAD</b>!</span>")
-						sucking_chi = FALSE
-					if(sucking_chi)
-						if(victim.yang_chi)
-							victim.yang_chi = max(0, victim.yang_chi-1)
-							BD.yang_chi = min(BD.yang_chi+1, BD.max_yang_chi)
-							to_chat(BD, "<span class='engradio'>Some <b>Yang</b> Chi energy enters you...</span>")
-							BD.update_chi_hud()
-						else
-							to_chat(owner, "<span class='warning'>This creature doesn't have enough <b>Yang</b> Chi!</span>")
-					spawn(3 SECONDS)
-						qdel(chi_particle)
+						if(iskindred(victim))
+							to_chat(owner, "<span class='warning'>This creature doesn't breathe cause it's <b>DEAD</b>!</span>")
+							sucking_chi = FALSE
+						if(sucking_chi)
+							if(victim.yang_chi)
+								victim.yang_chi = max(0, victim.yang_chi-1)
+								BD.yang_chi = min(BD.yang_chi+1, BD.max_yang_chi)
+								to_chat(BD, "<span class='engradio'>Some <b>Yang</b> Chi energy enters you...</span>")
+								BD.update_chi_hud()
+							else
+								to_chat(owner, "<span class='warning'>This creature doesn't have enough <b>Yang</b> Chi!</span>")
+						spawn(3 SECONDS)
+							qdel(chi_particle)
 
 		button.color = "#970000"
 		animate(button, color = "#ffffff", time = 20, loop = 1)
