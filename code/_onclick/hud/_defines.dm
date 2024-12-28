@@ -87,7 +87,7 @@
 #define ui_werewolf_rage "EAST-2:20,CENTER-1:16"
 
 #define ui_chi_pool "WEST,CENTER-5:16"
-#define ui_chi_demon "WEST,CENTER-5"
+#define ui_chi_demon "WEST,CENTER-6:16"
 
 #define ui_healthdoll "EAST-1:28,CENTER-3:13"
 #define ui_health "WEST-2:16,SOUTH+1:16"

@@ -545,7 +545,7 @@
 				adding_disciplines += discipline
 
 		for (var/datum/chi_discipline/discipline in adding_disciplines)
-			give_discipline(discipline)
+			give_chi_discipline(discipline)
 
 /**
  * Creates an action button and applies post_gain effects of the given Discipline.

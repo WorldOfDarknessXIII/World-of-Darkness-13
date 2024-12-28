@@ -606,7 +606,7 @@
 			H.rollfrenzy()
 
 		if(H.mind.dharma.Po == "Monkey")
-			if(last_po_call + 5 SECONDS <= world.time)
+			if(H.mind.dharma.last_po_call + 5 SECONDS <= world.time)
 				for(var/obj/structure/pole/pole in view(5, H))
 					if(pole)
 						H.mind.dharma.roll_po(pole, H)
@@ -629,7 +629,7 @@
 						fool_fails = 0
 
 		if(H.mind.dharma.Po == "Demon")
-			if(last_po_call + 5 SECONDS <= world.time)
+			if(H.mind.dharma.last_po_call + 5 SECONDS <= world.time)
 				for(var/mob/living/carbon/human/hum in viewers(5, H))
 					if(hum != H)
 						if(hum.stat > CONSCIOUS && hum.stat < DEAD)
