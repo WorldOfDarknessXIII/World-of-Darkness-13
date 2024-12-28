@@ -606,15 +606,16 @@
 			H.rollfrenzy()
 
 		if(H.mind.dharma.Po == "Monkey")
-			for(var/obj/structure/pole/pole in view(5, H))
-				if(pole)
-					H.mind.dharma.roll_po(pole, H)
-			for(var/obj/item/toy/toy in view(5, H))
-				if(toy)
-					H.mind.dharma.roll_po(toy, H)
-			for(var/obj/machinery/computer/slot_machine/slot in view(5, H))
-				if(slot)
-					H.mind.dharma.roll_po(slot, H)
+			if(last_po_call + 5 SECONDS <= world.time)
+				for(var/obj/structure/pole/pole in view(5, H))
+					if(pole)
+						H.mind.dharma.roll_po(pole, H)
+				for(var/obj/item/toy/toy in view(5, H))
+					if(toy)
+						H.mind.dharma.roll_po(toy, H)
+				for(var/obj/machinery/computer/slot_machine/slot in view(5, H))
+					if(slot)
+						H.mind.dharma.roll_po(slot, H)
 
 		if(H.mind.dharma.Po == "Fool")
 			if(fool_turf != get_turf(H))
@@ -628,10 +629,11 @@
 						fool_fails = 0
 
 		if(H.mind.dharma.Po == "Demon")
-			for(var/mob/living/carbon/human/hum in viewers(5, H))
-				if(hum != H)
-					if(hum.stat > CONSCIOUS && hum.stat < DEAD)
-						H.mind.dharma.roll_po(hum, H)
+			if(last_po_call + 5 SECONDS <= world.time)
+				for(var/mob/living/carbon/human/hum in viewers(5, H))
+					if(hum != H)
+						if(hum.stat > CONSCIOUS && hum.stat < DEAD)
+							H.mind.dharma.roll_po(hum, H)
 
 /datum/action/breathe_chi
 	name = "Inhale Chi"
@@ -978,7 +980,7 @@
 	else
 		to_chat(caster, "<span class='notice'>You activate [name].</span>")
 	if(ranged)
-		if(isnpc(target) && !fearless)
+		if(isnpc(target))
 			var/mob/living/carbon/human/npc/NPC = target
 			NPC.Aggro(caster, TRUE)
 	if(activate_sound)
@@ -997,9 +999,6 @@
 
 	log_attack("[key_name(caster)] casted level [src.level_casting] of the Discipline [src.name][target == caster ? "." : " on [key_name(target)]"]")
 
-/datum/chi_discipline/proc/post_gain(var/mob/living/carbon/human/owner)
-	return
-
 /datum/chi_discipline/blood_shintai
 	name = "Blood Shintai"
 	desc = "Manipulate the liquid flow inside."
@@ -1008,13 +1007,12 @@
 
 /datum/chi_discipline/blood_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-	switch(level_casting)
-		if(1)
-		if(2)
-		if(3)
-		if(4)
-		if(5)
-		if(6)
+//	switch(level_casting)
+//		if(1)
+//		if(2)
+//		if(3)
+//		if(4)
+//		if(5)
 
 /datum/chi_discipline/jade_shintai
 	name = "Jade Shintai"
@@ -1024,13 +1022,12 @@
 
 /datum/chi_discipline/jade_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-	switch(level_casting)
-		if(1)
-		if(2)
-		if(3)
-		if(4)
-		if(5)
-		if(6)
+//	switch(level_casting)
+//		if(1)
+//		if(2)
+//		if(3)
+//		if(4)
+//		if(5)
 
 /datum/chi_discipline/bone_shintai
 	name = "Bone Shintai"
@@ -1040,13 +1037,12 @@
 
 /datum/chi_discipline/bone_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-	switch(level_casting)
-		if(1)
-		if(2)
-		if(3)
-		if(4)
-		if(5)
-		if(6)
+//	switch(level_casting)
+//		if(1)
+//		if(2)
+//		if(3)
+//		if(4)
+//		if(5)
 
 /datum/chi_discipline/ghost_flame_shintai
 	name = "Ghost Flame Shintai"
@@ -1056,13 +1052,14 @@
 
 /datum/chi_discipline/ghost_flame_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-	switch(level_casting)
-		if(1)
-		if(2)
-		if(3)
-		if(4)
-		if(5)
-		if(6)
+//	switch(level_casting)
+//		if(1)
+//		if(2)
+//		if(3)
+//		if(4)
+//			caster.drop_all_held_items()
+//			caster.put_in_r_hand(new /obj/item/melee/vampirearms/katana/fire(caster))
+//		if(5)
 
 /datum/chi_discipline/flesh_shintai
 	name = "Flesh Shintai"
@@ -1072,13 +1069,12 @@
 
 /datum/chi_discipline/flesh_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-	switch(level_casting)
-		if(1)
-		if(2)
-		if(3)
-		if(4)
-		if(5)
-		if(6)
+//	switch(level_casting)
+//		if(1)
+//		if(2)
+//		if(3)
+//		if(4)
+//		if(5)
 
 /datum/chi_discipline/black_wind
 	name = "Black Wind"
@@ -1088,13 +1084,12 @@
 
 /datum/chi_discipline/black_wind/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-	switch(level_casting)
-		if(1)
-		if(2)
-		if(3)
-		if(4)
-		if(5)
-		if(6)
+//	switch(level_casting)
+//		if(1)
+//		if(2)
+//		if(3)
+//		if(4)
+//		if(5)
 
 /datum/chi_discipline/demon_shintai
 	name = "Demon Shintai"
@@ -1104,13 +1099,12 @@
 
 /datum/chi_discipline/demon_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-	switch(level_casting)
-		if(1)
-		if(2)
-		if(3)
-		if(4)
-		if(5)
-		if(6)
+//	switch(level_casting)
+//		if(1)
+//		if(2)
+//		if(3)
+//		if(4)
+//		if(5)
 
 /datum/chi_discipline/hellweaving
 	name = "Hellweaving"
@@ -1120,13 +1114,12 @@
 
 /datum/chi_discipline/hellweaving/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-	switch(level_casting)
-		if(1)
-		if(2)
-		if(3)
-		if(4)
-		if(5)
-		if(6)
+//	switch(level_casting)
+//		if(1)
+//		if(2)
+//		if(3)
+//		if(4)
+//		if(5)
 
 /datum/chi_discipline/iron_mountain
 	name = "Iron Mountain"
@@ -1136,13 +1129,12 @@
 
 /datum/chi_discipline/iron_mountain/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-	switch(level_casting)
-		if(1)
-		if(2)
-		if(3)
-		if(4)
-		if(5)
-		if(6)
+//	switch(level_casting)
+//		if(1)
+//		if(2)
+//		if(3)
+//		if(4)
+//		if(5)
 
 /datum/chi_discipline/kiai
 	name = "Kiai"
@@ -1152,10 +1144,9 @@
 
 /datum/chi_discipline/kiai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-	switch(level_casting)
-		if(1)
-		if(2)
-		if(3)
-		if(4)
-		if(5)
-		if(6)
+//	switch(level_casting)
+//		if(1)
+//		if(2)
+//		if(3)
+//		if(4)
+//		if(5)
