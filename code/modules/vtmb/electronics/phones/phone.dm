@@ -69,7 +69,7 @@
 			var/mob/living/carbon/human/H = loc
 			if(H.Myself)
 				H.Myself.phone_number = number
-				owner = H.true_real_name
+				owner = H.real_name
 
 /obj/item/vamp/phone/Destroy()
 	GLOB.phone_numbers_list -= number
