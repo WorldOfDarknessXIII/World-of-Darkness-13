@@ -23,6 +23,7 @@
 	var/list/deserving = list()
 	var/list/judgement = list()
 	var/last_dharma_update = 0
+	var/last_po_call = 0
 
 /datum/dharma/devil_tiger
 	name = "Devil Tiger (P'o)"
@@ -178,13 +179,16 @@
 
 /proc/emit_po_call(var/atom/source, var/po_type)
 	if(po_type)
-		for(var/mob/living/carbon/human/H in range(6, source))
+		for(var/mob/living/carbon/human/H in viewers(6, source))
 			if(H)
 				if(iscathayan(H))
 					if(H.mind.dharma?.Po == po_type)
 						H.mind.dharma?.roll_po(source, H)
 
 /datum/dharma/proc/roll_po(var/atom/Source, var/mob/living/carbon/human/owner)
+	if(last_po_call + 5 SECONDS > world.time)
+		return
+	last_po_call = world.time
 	Po_Focus = Source
 	owner.demon_chi = min(owner.demon_chi+1, owner.max_demon_chi)
 	to_chat(owner, "<span class='warning'>Some <b>DEMON</b> Chi energy fills you...</span>")
@@ -925,6 +929,7 @@
 	var/ranged = FALSE
 	///Duration of the Discipline.
 	var/delay = 5
+	var/next_fire_after
 	///Whether this Discipline causes a Masquerade breach when used in front of mortals.
 	var/violates_masquerade = FALSE
 	///What rank, or how many dots the caster has in this Discipline.
@@ -932,6 +937,7 @@
 	///The sound that plays when any power of this Discipline is activated.
 	var/activate_sound = 'code/modules/wod13/sounds/chi_use.ogg'
 
+	var/dead_restricted
 	///What rank of this Discipline is currently being casted.
 	var/level_casting = 1
 
@@ -941,42 +947,215 @@
 /datum/chi_discipline/proc/check_activated(var/mob/living/target, var/mob/living/carbon/human/caster)
 	if(caster.stat >= HARD_CRIT || caster.IsSleeping() || caster.IsUnconscious() || caster.IsParalyzed() || caster.IsStun() || HAS_TRAIT(caster, TRAIT_RESTRAINED) || !isturf(caster.loc))
 		return FALSE
+	if(world.time < next_fire_after)
+		to_chat(caster, "<span class='warning'>It's too soon to use this discipline again!</span>")
+		return FALSE
 	if(caster.yin_chi < cost_yin)
+		SEND_SOUND(caster, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
+		to_chat(caster, "<span class='warning'>You don't have enough <b>Yin Chi</b> to use this discipline.</span>")
 		return FALSE
 	if(caster.yang_chi < cost_yang)
+		SEND_SOUND(caster, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
+		to_chat(caster, "<span class='warning'>You don't have enough <b>Yang Chi</b> to use this discipline.</span>")
 		return FALSE
 	if(caster.demon_chi < cost_demon)
+		SEND_SOUND(caster, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
+		to_chat(caster, "<span class='warning'>You don't have enough <b>Demon Chi</b> to use this discipline.</span>")
 		return FALSE
+	if(HAS_TRAIT(caster, TRAIT_PACIFISM))
+		return FALSE
+	if(target.stat == DEAD && dead_restricted)
+		return FALSE
+	if(target.resistant_to_disciplines || target.spell_immunity)
+		to_chat(caster, "<span class='danger'>[target] resists your powers!</span>")
+		return FALSE
+	caster.yin_chi = max(0, caster.yin_chi-cost_yin)
+	caster.yang_chi = max(0, caster.yang_chi-cost_yang)
+	caster.demon_chi = max(0, caster.demon_chi-cost_demon)
+	caster.update_chi_hud()
+	if(ranged)
+		to_chat(caster, "<span class='notice'>You activate [name] on [target].</span>")
+	else
+		to_chat(caster, "<span class='notice'>You activate [name].</span>")
+	if(ranged)
+		if(isnpc(target) && !fearless)
+			var/mob/living/carbon/human/npc/NPC = target
+			NPC.Aggro(caster, TRUE)
+	if(activate_sound)
+		caster.playsound_local(caster, activate_sound, 50, FALSE)
+	if(violates_masquerade)
+		if(caster.CheckEyewitness(target, caster, 7, TRUE))
+			caster.AdjustMasquerade(-1)
+	return TRUE
 
 /datum/chi_discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	if(!target)
 		return
 	if(!caster)
 		return
+	next_fire_after = world.time+delay
+
+	log_attack("[key_name(caster)] casted level [src.level_casting] of the Discipline [src.name][target == caster ? "." : " on [key_name(target)]"]")
+
+/datum/chi_discipline/proc/post_gain(var/mob/living/carbon/human/owner)
+	return
 
 /datum/chi_discipline/blood_shintai
 	name = "Blood Shintai"
+	desc = "Manipulate the liquid flow inside."
 	icon_state = "blood"
+	ranged = FALSE
+
+/datum/chi_discipline/blood_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	..()
+	switch(level_casting)
+		if(1)
+		if(2)
+		if(3)
+		if(4)
+		if(5)
+		if(6)
+
 /datum/chi_discipline/jade_shintai
 	name = "Jade Shintai"
+	desc = "Manipulate own weight and capabilities."
 	icon_state = "jade"
+	ranged = FALSE
+
+/datum/chi_discipline/jade_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	..()
+	switch(level_casting)
+		if(1)
+		if(2)
+		if(3)
+		if(4)
+		if(5)
+		if(6)
+
 /datum/chi_discipline/bone_shintai
 	name = "Bone Shintai"
+	desc = "Manipulate the matter static around."
 	icon_state = "bone"
+	ranged = FALSE
+
+/datum/chi_discipline/bone_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	..()
+	switch(level_casting)
+		if(1)
+		if(2)
+		if(3)
+		if(4)
+		if(5)
+		if(6)
+
 /datum/chi_discipline/ghost_flame_shintai
 	name = "Ghost Flame Shintai"
+	desc = "Manipulate fire and temperature."
 	icon_state = "ghostflame"
+	ranged = FALSE
+
+/datum/chi_discipline/ghost_flame_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	..()
+	switch(level_casting)
+		if(1)
+		if(2)
+		if(3)
+		if(4)
+		if(5)
+		if(6)
+
 /datum/chi_discipline/flesh_shintai
 	name = "Flesh Shintai"
+	desc = "Manipulate own flesh and flexibility."
 	icon_state = "flesh"
+	ranged = FALSE
 
-/datum/chi_discipline/demon/black_wind
+/datum/chi_discipline/flesh_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	..()
+	switch(level_casting)
+		if(1)
+		if(2)
+		if(3)
+		if(4)
+		if(5)
+		if(6)
+
+/datum/chi_discipline/black_wind
 	name = "Black Wind"
-/datum/chi_discipline/demon/demon_shintai
+	desc = "Gain control over speed of reaction."
+	icon_state = "blackwind"
+	ranged = FALSE
+
+/datum/chi_discipline/black_wind/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	..()
+	switch(level_casting)
+		if(1)
+		if(2)
+		if(3)
+		if(4)
+		if(5)
+		if(6)
+
+/datum/chi_discipline/demon_shintai
 	name = "Demon Shintai"
-/datum/chi_discipline/demon/hellweaving
+	desc = "Transform into the P'o."
+	icon_state = "demon"
+	ranged = FALSE
+
+/datum/chi_discipline/demon_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	..()
+	switch(level_casting)
+		if(1)
+		if(2)
+		if(3)
+		if(4)
+		if(5)
+		if(6)
+
+/datum/chi_discipline/hellweaving
 	name = "Hellweaving"
-/datum/chi_discipline/demon/iron_mountain
+	desc = "Translate the view of Hell to someone."
+	icon_state = "hellweaving"
+	ranged = TRUE
+
+/datum/chi_discipline/hellweaving/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	..()
+	switch(level_casting)
+		if(1)
+		if(2)
+		if(3)
+		if(4)
+		if(5)
+		if(6)
+
+/datum/chi_discipline/iron_mountain
 	name = "Iron Mountain"
-/datum/chi_discipline/demon/kiai
+	desc = "Gain the stoicism and endurability of your P'o."
+	icon_state = "ironmountain"
+	ranged = FALSE
+
+/datum/chi_discipline/iron_mountain/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	..()
+	switch(level_casting)
+		if(1)
+		if(2)
+		if(3)
+		if(4)
+		if(5)
+		if(6)
+
+/datum/chi_discipline/kiai
 	name = "Kiai"
+	desc = "Manipulate reality by voice."
+	icon_state = "kiai"
+	ranged = TRUE
+
+/datum/chi_discipline/kiai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	..()
+	switch(level_casting)
+		if(1)
+		if(2)
+		if(3)
+		if(4)
+		if(5)
+		if(6)

@@ -5,6 +5,14 @@
 //			var/obj/effect/dummy/chameleon/C = loc
 //			C.say("[message]")
 //			return
+		if(say_mod(message) == verb_yell)
+			for(var/mob/living/carbon/human/hum in hearers(5, src))
+				if(hum != src)
+					if(iscathayan(hum))
+						if(hum.mind)
+							if(hum.mind.dharma)
+								if(hum.mind.dharma.Po == "Legalist")
+									hum.mind.dharma.roll_po(src, hum)
 		if(length(GLOB.auspex_list))
 			for(var/mob/living/carbon/human/H in GLOB.auspex_list)
 				if(H)
