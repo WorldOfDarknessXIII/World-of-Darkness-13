@@ -587,31 +587,39 @@
 				P.save_preferences()
 				P.save_character()
 
-	H.update_chi_hud()
-	if(!H.in_frenzy)
-		H.dharma?.Po_combat = FALSE
-	if(H.demon_chi == H.max_demon_chi && H.max_demon_chi != 0 && !H.in_frenzy)
-		H.rollfrenzy()
-	if(H.dharma?.Po == "Monkey")
-		for(var/obj/structure/pole/pole in viewers(6, H))
-			if(pole)
-				H.dharma?.roll_po(pole, H)
-		for(var/obj/item/toy/toy in viewers(6, H))
-			if(toy)
-				H.dharma?.roll_po(toy, H)
-		for(var/obj/machinery/computer/slot_machine/slot in viewers(6, H))
-			if(slot)
-				H.dharma?.roll_po(slot, H)
+		H.update_chi_hud()
+		if(!H.in_frenzy)
+			H.dharma.Po_combat = FALSE
+		if(H.demon_chi == H.max_demon_chi && H.max_demon_chi != 0 && !H.in_frenzy)
+			H.rollfrenzy()
 
-	if(H.dharma?.Po == "Fool")
-		if(fool_turf != get_turf(H))
-			fool_fails = 0
-			fool_turf = get_turf(H)
-		else
-			if(H.client)
-				fool_fails = fool_fails+1
-				if(fool_fails >= 20)
-					H.dharma?.roll_po(H, H)
+		if(H.dharma.Po == "Monkey")
+			for(var/obj/structure/pole/pole in viewers(6, H))
+				if(pole)
+					H.dharma.roll_po(pole, H)
+			for(var/obj/item/toy/toy in viewers(6, H))
+				if(toy)
+					H.dharma.roll_po(toy, H)
+			for(var/obj/machinery/computer/slot_machine/slot in viewers(6, H))
+				if(slot)
+					H.dharma.roll_po(slot, H)
+
+		if(H.dharma.Po == "Fool")
+			if(fool_turf != get_turf(H))
+				fool_fails = 0
+				fool_turf = get_turf(H)
+			else
+				if(H.client)
+					fool_fails = fool_fails+1
+					if(fool_fails >= 10)
+						H.dharma.roll_po(H, H)
+						fool_fails = 0
+
+		if(H.dharma.Po == "Demon")
+			for(var/mob/living/carbon/human/hum in viewers(5, H))
+				if(hum != H)
+					if(hum.stat > CONSCIOUS && hum.stat < DEAD)
+						H.dharma.roll_po(hum, H)
 
 /datum/action/breathe_chi
 	name = "Inhale Chi"
