@@ -2365,7 +2365,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						SetQuirks(user)
 						var/newtype = GLOB.species_list[result]
 						pref_species = new newtype()
-						if(pref_species.id == "ghoul" || pref_species.id == "human")
+						if(pref_species.id == "ghoul" || pref_species.id == "human" || pref_species.id == "kuei-jin")
 							discipline_types = list()
 							discipline_levels = list()
 						if(pref_species.id == "kindred")
@@ -2986,10 +2986,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			character.yin_chi = yin
 			character.max_yin_chi = yin
 			character.max_demon_chi = po
-			character.mind.dharma = new dharma_type()
-			character.mind.dharma.Po = po_type
-			character.mind.dharma.Hun = hun
-			character.mind.dharma.on_gain(character)
+			if(character.mind)
+				character.mind.dharma = new dharma_type()
+				character.mind.dharma.Po = po_type
+				character.mind.dharma.Hun = hun
+				character.mind.dharma.on_gain(character)
 		else
 			character.yang_chi = 4
 			character.max_yang_chi = 4
