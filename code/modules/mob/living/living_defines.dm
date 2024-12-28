@@ -289,5 +289,4 @@
 	var/max_yin_chi = 1
 	var/demon_chi = 0
 	var/max_demon_chi = 0
-	var/datum/dharma/dharma
 	var/datum/action/chi_discipline/chi_ranged

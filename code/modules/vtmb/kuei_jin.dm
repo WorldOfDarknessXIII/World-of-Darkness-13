@@ -53,7 +53,7 @@
 	fails = list("kill", "grief", "steal")
 
 /datum/dharma/proc/on_gain(var/mob/living/carbon/human/mob)
-	mob.dharma = src
+	mob.mind.dharma = src
 	initial_skin_color = mob.skin_tone
 	initial_social = mob.social
 	var/current_animate = rand(1, 10)
@@ -95,8 +95,8 @@
 		owner.yang_chi = min(owner.yang_chi, owner.max_yang_chi)
 		owner.yin_chi = min(owner.yin_chi, owner.max_yin_chi)
 	if(total_chi < level*2)
-		owner.max_yang_chi = min(owner.dharma?.level*2-1, owner.max_yang_chi+1)
-		owner.max_yin_chi = min(owner.dharma?.level*2-1, owner.max_yin_chi+1)
+		owner.max_yang_chi = min(owner.mind.dharma?.level*2-1, owner.max_yang_chi+1)
+		owner.max_yin_chi = min(owner.mind.dharma?.level*2-1, owner.max_yin_chi+1)
 
 	if(total_virtues > level*2)
 		if(owner.max_demon_chi == 1)
@@ -108,28 +108,28 @@
 			Hun = max(1, Hun-1)
 		owner.demon_chi = min(owner.demon_chi, owner.max_demon_chi)
 	if(total_virtues < level*2)
-		owner.max_demon_chi = min(owner.dharma?.level*2-1, owner.max_demon_chi+1)
-		Hun = min(owner.dharma?.level*2-1, Hun+1)
+		owner.max_demon_chi = min(owner.mind.dharma?.level*2-1, owner.max_demon_chi+1)
+		Hun = min(owner.mind.dharma?.level*2-1, Hun+1)
 
 /proc/update_dharma(var/mob/living/carbon/human/H, var/dot)		//PLEASE USE ONLY 1 DOT PER CHANGE OR ELSE IT MAY BREAK
 	if(dot < 0)
-		if(H.dharma)
-			if(H.dharma.last_dharma_update + 15 SECONDS > world.time)
+		if(H.mind.dharma)
+			if(H.mind.dharma.last_dharma_update + 15 SECONDS > world.time)
 				return
-			H.dharma.last_dharma_update = world.time
-		if(H.dharma?.level > 0)
-			H.dharma?.level = max(0, H.dharma?.level+dot)
-			H.dharma?.align_virtues(H)
+			H.mind.dharma.last_dharma_update = world.time
+		if(H.mind.dharma?.level > 0)
+			H.mind.dharma?.level = max(0, H.mind.dharma?.level+dot)
+			H.mind.dharma?.align_virtues(H)
 		SEND_SOUND(H, sound('code/modules/wod13/sounds/dharma_decrease.ogg', 0, 0, 75))
 		to_chat(H, "<span class='userdanger'><b>DHARMA FALLS!</b></span>")
 	if(dot > 0)
-		if(H.dharma?.level < 6)
-			H.dharma?.level = min(6, H.dharma?.level+dot)
-			H.dharma?.align_virtues(H)
+		if(H.mind.dharma?.level < 6)
+			H.mind.dharma?.level = min(6, H.mind.dharma?.level+dot)
+			H.mind.dharma?.align_virtues(H)
 		SEND_SOUND(H, sound('code/modules/wod13/sounds/dharma_increase.ogg', 0, 0, 75))
 		to_chat(H, "<span class='userdanger'><b>DHARMA RISES!</b></span>")
 
-	if(H.dharma?.level < 3)
+	if(H.mind.dharma?.level < 3)
 		for(var/datum/action/breathe_chi/QI in H.actions)
 			if(QI)
 				QI.Remove(H)
@@ -137,7 +137,7 @@
 		if(!locate(/datum/action/breathe_chi) in H.actions)
 			var/datum/action/breathe_chi/breathec = new()
 			breathec.Grant(H)
-	if(H.dharma?.level < 6)
+	if(H.mind.dharma?.level < 6)
 		for(var/datum/action/area_chi/AI in H.actions)
 			if(AI)
 				AI.Remove(H)
@@ -146,26 +146,34 @@
 			var/datum/action/area_chi/areac = new()
 			areac.Grant(H)
 
+/datum/dharma/proc/get_done_tennets()
+	var/total = 0
+	for(var/i in tennets)
+		if(tennets_done[i])
+			if(tennets_done[i] > 0)
+				total = total+1
+	return total
+
 /proc/call_dharma(var/mod, var/mob/living/carbon/human/cathayan)
 	if(cathayan)
-		if(cathayan.dharma)
-			for(var/i in cathayan.dharma.tennets)
+		if(cathayan.mind.dharma)
+			for(var/i in cathayan.mind.dharma.tennets)
 				if(i == mod)
-					if(cathayan.dharma.tennets_done[i] == 0)
-						cathayan.dharma.tennets_done[i] = 1
-						to_chat(cathayan, "<span class='help'>You find this action helping you on your path.</span>")
-			for(var/i in cathayan.dharma.fails)
+					if(cathayan.mind.dharma.tennets_done[i] == 0)
+						cathayan.mind.dharma.tennets_done[i] = 1
+						to_chat(cathayan, "<span class='help'>You find this action helping you on your path ([cathayan.mind.dharma.get_done_tennets()]/[length(cathayan.mind.dharma.tennets)]).</span>")
+			for(var/i in cathayan.mind.dharma.fails)
 				if(i == mod)
-					to_chat(cathayan, "<span class='warning'>This action is against your path philosophy.</span>")
+					to_chat(cathayan, "<span class='userdanger'>This action is against your path's philosophy.</span>")
 					update_dharma(cathayan, -1)
-			var/tennets_needed = length(cathayan.dharma.tennets)
+			var/tennets_needed = length(cathayan.mind.dharma.tennets)
 			var/tennets_done = 0
-			for(var/i in cathayan.dharma.tennets)
-				if(cathayan.dharma.tennets_done[i] == 1)
+			for(var/i in cathayan.mind.dharma.tennets)
+				if(cathayan.mind.dharma.tennets_done[i] == 1)
 					tennets_done = tennets_done+1
 			if(tennets_done >= tennets_needed)
-				for(var/i in cathayan.dharma.tennets)
-					cathayan.dharma.tennets_done[i] = 0
+				for(var/i in cathayan.mind.dharma.tennets)
+					cathayan.mind.dharma.tennets_done[i] = 0
 				update_dharma(cathayan, 1)
 
 /proc/emit_po_call(var/atom/source, var/po_type)
@@ -173,8 +181,8 @@
 		for(var/mob/living/carbon/human/H in range(6, source))
 			if(H)
 				if(iscathayan(H))
-					if(H.dharma?.Po == po_type)
-						H.dharma?.roll_po(source, H)
+					if(H.mind.dharma?.Po == po_type)
+						H.mind.dharma?.roll_po(source, H)
 
 /datum/dharma/proc/roll_po(var/atom/Source, var/mob/living/carbon/human/owner)
 	Po_Focus = Source
@@ -414,7 +422,7 @@
 //				masquerade_level = "'m danger to the Masquerade and my own kind."
 //		dat += "Camarilla thinks I[masquerade_level]<BR>"
 		var/dharma = "I'm mindless carrion-eater!"
-		switch(host.dharma?.level)
+		switch(host.mind.dharma?.level)
 			if(1)
 				dharma = "I have not proved my worthiness to exist as Kuei-jin..."
 			if(2 to 3)
@@ -426,10 +434,10 @@
 
 		dat += "[dharma]<BR>"
 
-		dat += "The <b>[host.dharma?.animated]</b> Chi Energy helps me to stay alive...<BR>"
-		dat += "My P'o is [host.dharma?.Po]<BR>"
+		dat += "The <b>[host.mind.dharma?.animated]</b> Chi Energy helps me to stay alive...<BR>"
+		dat += "My P'o is [host.mind.dharma?.Po]<BR>"
 		dat += "<b>Yin/Yang</b>[host.max_yin_chi]/[host.max_yang_chi]<BR>"
-		dat += "<b>Hun/P'o</b>[host.dharma?.Hun]/[host.max_demon_chi]<BR>"
+		dat += "<b>Hun/P'o</b>[host.mind.dharma?.Hun]/[host.max_demon_chi]<BR>"
 
 		dat += "<b>Physique</b>: [host.physique]<BR>"
 		dat += "<b>Dexterity</b>: [host.dexterity]<BR>"
@@ -557,17 +565,17 @@
 												SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
 												to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
 
-	if(H.key && (H.stat <= HARD_CRIT) && H.dharma)
+	if(H.key && (H.stat <= HARD_CRIT) && H.mind.dharma)
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
 		if(P)
-			if(H.dharma.level < 1)
+			if(H.mind.dharma.level < 1)
 				H.enter_frenzymod()
 				to_chat(H, "<span class='userdanger'>You have lost control of the P'o within you, and it has taken your body. Stay closer to your Dharma next time.</span>")
 				H.ghostize(FALSE)
 				P.reason_of_death = "Lost control to the P'o ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 				return
-			if(P.hun != H.dharma.Hun)
-				P.hun = H.dharma.Hun
+			if(P.hun != H.mind.dharma.Hun)
+				P.hun = H.mind.dharma.Hun
 				P.save_preferences()
 				P.save_character()
 			if(P.po != H.max_demon_chi)
@@ -589,22 +597,22 @@
 
 		H.update_chi_hud()
 		if(!H.in_frenzy)
-			H.dharma.Po_combat = FALSE
+			H.mind.dharma.Po_combat = FALSE
 		if(H.demon_chi == H.max_demon_chi && H.max_demon_chi != 0 && !H.in_frenzy)
 			H.rollfrenzy()
 
-		if(H.dharma.Po == "Monkey")
-			for(var/obj/structure/pole/pole in viewers(6, H))
+		if(H.mind.dharma.Po == "Monkey")
+			for(var/obj/structure/pole/pole in view(5, H))
 				if(pole)
-					H.dharma.roll_po(pole, H)
-			for(var/obj/item/toy/toy in viewers(6, H))
+					H.mind.dharma.roll_po(pole, H)
+			for(var/obj/item/toy/toy in view(5, H))
 				if(toy)
-					H.dharma.roll_po(toy, H)
-			for(var/obj/machinery/computer/slot_machine/slot in viewers(6, H))
+					H.mind.dharma.roll_po(toy, H)
+			for(var/obj/machinery/computer/slot_machine/slot in view(5, H))
 				if(slot)
-					H.dharma.roll_po(slot, H)
+					H.mind.dharma.roll_po(slot, H)
 
-		if(H.dharma.Po == "Fool")
+		if(H.mind.dharma.Po == "Fool")
 			if(fool_turf != get_turf(H))
 				fool_fails = 0
 				fool_turf = get_turf(H)
@@ -612,14 +620,14 @@
 				if(H.client)
 					fool_fails = fool_fails+1
 					if(fool_fails >= 10)
-						H.dharma.roll_po(H, H)
+						H.mind.dharma.roll_po(H, H)
 						fool_fails = 0
 
-		if(H.dharma.Po == "Demon")
+		if(H.mind.dharma.Po == "Demon")
 			for(var/mob/living/carbon/human/hum in viewers(5, H))
 				if(hum != H)
 					if(hum.stat > CONSCIOUS && hum.stat < DEAD)
-						H.dharma.roll_po(hum, H)
+						H.mind.dharma.roll_po(hum, H)
 
 /datum/action/breathe_chi
 	name = "Inhale Chi"
@@ -736,11 +744,12 @@
 		SEND_SOUND(usr, sound('code/modules/wod13/sounds/chi_use.ogg', 0, 0, 75))
 		var/mob/living/carbon/human/BD = usr
 		BD.visible_message("<span class='warning'>Some of [BD]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
-		BD.dharma?.animated = "Yin"
+		BD.mind.dharma?.animated = "Yin"
 		BD.skin_tone = get_vamp_skin_color(BD.skin_tone)
 		BD.social = 0
 		BD.dna?.species.brutemod = initial(BD.dna?.species.brutemod)
 		BD.dna?.species.burnmod = initial(BD.dna?.species.burnmod)
+		BD.update_body()
 		if(BD.yin_chi)
 			BD.adjustBruteLoss(-25, TRUE)
 			BD.adjustFireLoss(-10, TRUE)
@@ -764,11 +773,12 @@
 		SEND_SOUND(usr, sound('code/modules/wod13/sounds/chi_use.ogg', 0, 0, 75))
 		var/mob/living/carbon/human/BD = usr
 		BD.visible_message("<span class='warning'>Some of [BD]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
-		BD.dharma?.animated = "Yang"
-		BD.skin_tone = BD.dharma?.initial_skin_color
-		BD.social = BD.dharma?.initial_social
+		BD.mind.dharma?.animated = "Yang"
+		BD.skin_tone = BD.mind.dharma?.initial_skin_color
+		BD.social = BD.mind.dharma?.initial_social
 		BD.dna?.species.brutemod = 1
 		BD.dna?.species.burnmod = 0.5
+		BD.update_body()
 		if(BD.yang_chi)
 			BD.adjustBruteLoss(-10, TRUE)
 			BD.adjustFireLoss(-25, TRUE)
@@ -790,7 +800,7 @@
 /datum/action/rebalance/Trigger()
 	if(istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/BD = usr
-		var/max_limit = BD.dharma?.level*2
+		var/max_limit = BD.mind.dharma?.level*2
 		var/sett = input(BD, "Enter the maximum of Yin your character has:", "Yin/Yang") as num|null
 		if(sett)
 			sett = max(1, min(sett, max_limit-1))
@@ -801,7 +811,7 @@
 			var/sett2 = input(BD, "Enter the maximum of Hun your character has:", "Hun/P'o") as num|null
 			if(sett2)
 				sett2 = max(1, min(sett2, max_limit-1))
-				BD.dharma?.Hun = sett2
+				BD.mind.dharma?.Hun = sett2
 				BD.max_demon_chi = max_limit-sett2
 				BD.demon_chi = min(BD.demon_chi, BD.max_demon_chi)
 		button.color = "#970000"
@@ -898,45 +908,40 @@
 
 /datum/chi_discipline
 	///Name of this Discipline.
-	var/name = "Vampiric Discipline"
+	var/name = "Chi Discipline"
 	///Text description of this Discipline.
 	var/desc = "Discipline with powers such as..."
 	///Icon for this Discipline as in disciplines.dmi
 	var/icon_state
-	///Cost in blood points of activating this Discipline.
-	var/cost = 2
-	///Whether this Discipline is ranged.
-	var/ranged = FALSE
-	///The range from which this Discipline can be used on a target.
-	var/range_sh = 8
+	///Cost in yin points of activating this Discipline.
+	var/cost_yin = 1
+	///Cost in yang points of activating this Discipline.
+	var/cost_yang = 1
+	///Cost in demon points of activating this Discipline.
+	var/cost_demon = 1
 	///Duration of the Discipline.
 	var/delay = 5
 	///Whether this Discipline causes a Masquerade breach when used in front of mortals.
 	var/violates_masquerade = FALSE
 	///What rank, or how many dots the caster has in this Discipline.
 	var/level = 1
-	var/leveled = TRUE
 	///The sound that plays when any power of this Discipline is activated.
-	var/activate_sound = 'code/modules/wod13/sounds/bloodhealing.ogg'
-	///Whether this Discipline's cooldowns are multipled by the level it's being casted at.
-	var/leveldelay = FALSE
-	///Whether this Discipline aggroes NPC targets.
-	var/fearless = FALSE
+	var/activate_sound = 'code/modules/wod13/sounds/chi_use.ogg'
 
 	///What rank of this Discipline is currently being casted.
 	var/level_casting = 1
-	///Whether this Discipline is exclusive to one Clan.
-	var/clane_restricted = FALSE
-	///Whether this Discipline is restricted from affecting dead people.
-	var/dead_restricted = TRUE
-
-	var/next_fire_after = 0
 
 /datum/chi_discipline/proc/post_gain(var/mob/living/carbon/human/H)
 	return
 
 /datum/chi_discipline/proc/check_activated(var/mob/living/target, var/mob/living/carbon/human/caster)
 	if(caster.stat >= HARD_CRIT || caster.IsSleeping() || caster.IsUnconscious() || caster.IsParalyzed() || caster.IsStun() || HAS_TRAIT(caster, TRAIT_RESTRAINED) || !isturf(caster.loc))
+		return FALSE
+	if(caster.yin_chi < cost_yin)
+		return FALSE
+	if(caster.yang_chi < cost_yang)
+		return FALSE
+	if(caster.demon_chi < cost_demon)
 		return FALSE
 
 /datum/chi_discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)

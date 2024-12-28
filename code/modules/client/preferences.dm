@@ -2936,10 +2936,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			character.yin_chi = yin
 			character.max_yin_chi = yin
 			character.max_demon_chi = po
-			character.dharma = new dharma_type()
-			character.dharma.Po = po_type
-			character.dharma.Hun = hun
-			character.dharma.on_gain(character)
+			character.mind.dharma = new dharma_type()
+			character.mind.dharma.Po = po_type
+			character.mind.dharma.Hun = hun
+			character.mind.dharma.on_gain(character)
 		else
 			character.yang_chi = 4
 			character.max_yang_chi = 4

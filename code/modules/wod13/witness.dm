@@ -72,14 +72,14 @@
 			else
 				holder.color = "#0000ff"
 		else if(!ghoul)
-		//Ghoul got a mix of two different colors on the dmi, so it can't recieve any holder.color 
+		//Ghoul got a mix of two different colors on the dmi, so it can't recieve any holder.color
 			if(a_intent == INTENT_HARM)
 				holder.color = "#ff0000"
 			else
 				holder.color = "#0000ff"
 		if(iscathayan(src))
 			var/mob/living/carbon/human/H = src
-			if(H.dharma?.animated != "Yang")
+			if(H.mind.dharma?.animated != "Yang")
 				holder.color = "#ffffff"
 		if(mind)
 			if(mind.holy_role == HOLY_ROLE_PRIEST)

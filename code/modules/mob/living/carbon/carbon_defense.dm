@@ -476,7 +476,7 @@
 						null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
 		to_chat(M, "<span class='notice'>You shake [src] trying to pick [p_them()] up!</span>")
 		to_chat(src, "<span class='notice'>[M] shakes you to get you up!</span>")
-		if(dharma?.name == M.dharma?.name)
+		if(dharma?.name == M.mind.dharma?.name)
 			call_dharma("protect", M)
 
 	else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD) //Headpats!
