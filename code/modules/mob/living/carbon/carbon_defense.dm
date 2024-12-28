@@ -258,15 +258,15 @@
 			adjust_rage(1, src, TRUE)
 	if(iscathayan(src))
 		if(in_frenzy)
-			if(!dharma?.Po_combat)
-				dharma?.Po_combat = TRUE
+			if(!mind?.dharma?.Po_combat)
+				mind?.dharma?.Po_combat = TRUE
 				call_dharma("letpo", src)
-		if(dharma?.Po == "Rebel")
+		if(mind?.dharma?.Po == "Rebel")
 			emit_po_call(src, "Rebel")
 		if(target)
-			if("judgement" in dharma?.tennets)
+			if("judgement" in mind?.dharma?.tennets)
 				if(target.lastattacker != src)
-					dharma?.deserving |= target.real_name
+					mind?.dharma?.deserving |= target.real_name
 
 /mob/living/carbon/proc/disarm(mob/living/carbon/target)
 	target.do_werewolf_rage_from_attack(src)
@@ -476,7 +476,7 @@
 						null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
 		to_chat(M, "<span class='notice'>You shake [src] trying to pick [p_them()] up!</span>")
 		to_chat(src, "<span class='notice'>[M] shakes you to get you up!</span>")
-		if(dharma?.name == M.mind.dharma?.name)
+		if(mind?.dharma?.name == M.mind?.dharma?.name)
 			call_dharma("protect", M)
 
 	else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD) //Headpats!

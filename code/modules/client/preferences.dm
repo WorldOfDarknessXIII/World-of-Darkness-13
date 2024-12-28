@@ -656,6 +656,30 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if (possible_new_disciplines.len && (true_experience >= 10))
 					dat += "<a href='?_src_=prefs;preference=newghouldiscipline;task=input'>Learn a new Discipline (10)</a><BR>"
 
+			if (pref_species.name == "Kuei-Jin")
+				dat += "<h2>[make_font_cool("DISCIPLINES")]</h2><BR>"
+				for (var/i in 1 to discipline_types.len)
+					var/discipline_type = discipline_types[i]
+					var/datum/chi_discipline/discipline = new discipline_type
+					var/discipline_level = discipline_levels[i]
+
+					var/cost
+					if (discipline_level <= 0)
+						cost = 10
+					else
+						cost = discipline_level * 8
+
+					dat += "<b>[discipline.name]</b>: [discipline_level > 0 ? "•" : "o"][discipline_level > 1 ? "•" : "o"][discipline_level > 2 ? "•" : "o"][discipline_level > 3 ? "•" : "o"][discipline_level > 4 ? "•" : "o"]([discipline_level])"
+					if((true_experience >= cost) && (discipline_level != 5))
+						dat += "<a href='?_src_=prefs;preference=discipline;task=input;upgradechidiscipline=[i]'>Learn ([cost])</a><BR>"
+					else
+						dat += "<BR>"
+					dat += "-[discipline.desc]<BR>"
+					qdel(discipline)
+				var/list/possible_new_disciplines = subtypesof(/datum/chi_discipline) - discipline_types
+				if (possible_new_disciplines.len && (true_experience >= 10))
+					dat += "<a href='?_src_=prefs;preference=newchidiscipline;task=input'>Learn a new Discipline (10)</a><BR>"
+
 			if(true_experience >= 3 && slotlocked)
 				dat += "<a href='?_src_=prefs;preference=change_appearance;task=input'>Change Appearance (3)</a><BR>"
 			if(clane)
@@ -1939,6 +1963,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						discipline_levels += 1
 						true_experience -= 10
 
+				if("newchidiscipline")
+					if((true_experience < 10) || !(pref_species.id == "kuei-jin"))
+						return
+
+					var/list/possible_new_disciplines = subtypesof(/datum/chi_discipline) - discipline_types
+					var/new_discipline = input(user, "Select your new Discipline", "Discipline Selection") as null|anything in possible_new_disciplines
+					if(new_discipline)
+						discipline_types += new_discipline
+						discipline_levels += 1
+						true_experience -= 10
+
 				if("werewolf_color")
 					if(slotlocked || !(pref_species.id == "garou"))
 						return
@@ -2164,22 +2199,37 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						blood = archetip.start_blood
 
 				if("discipline")
-					var/i = text2num(href_list["upgradediscipline"])
+					if(pref_species.id == "kindred")
+						var/i = text2num(href_list["upgradediscipline"])
 
-					var/discipline_level = discipline_levels[i]
-					var/cost = discipline_level * 7
-					if (discipline_level <= 0)
-						cost = 10
-					else if (clane.name == "Caitiff")
-						cost = discipline_level * 6
-					else if (clane.clane_disciplines.Find(discipline_types[i]))
-						cost = discipline_level * 5
+						var/discipline_level = discipline_levels[i]
+						var/cost = discipline_level * 7
+						if (discipline_level <= 0)
+							cost = 10
+						else if (clane.name == "Caitiff")
+							cost = discipline_level * 6
+						else if (clane.clane_disciplines.Find(discipline_types[i]))
+							cost = discipline_level * 5
 
-					if ((true_experience < cost) || (discipline_level >= 5) || !(pref_species.id == "kindred"))
-						return
+						if ((true_experience < cost) || (discipline_level >= 5))
+							return
 
-					true_experience -= cost
-					discipline_levels[i] = min(5, max(1, discipline_levels[i] + 1))
+						true_experience -= cost
+						discipline_levels[i] = min(5, max(1, discipline_levels[i] + 1))
+
+					if(pref_species.id == "kuei-jin")
+						var/a = text2num(href_list["upgradechidiscipline"])
+
+						var/discipline_level = discipline_levels[a]
+						var/cost = discipline_level * 8
+						if (discipline_level <= 0)
+							cost = 10
+
+						if ((true_experience < cost) || (discipline_level >= 5))
+							return
+
+						true_experience -= cost
+						discipline_levels[a] = min(5, max(1, discipline_levels[a] + 1))
 
 				if("path")
 					var/cost = max(2, humanity * 2)

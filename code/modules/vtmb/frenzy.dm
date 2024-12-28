@@ -27,7 +27,7 @@
 		SEND_SOUND(src, sound('code/modules/wod13/sounds/bloodneed.ogg', 0, 0, 50))
 		var/check
 		if(iscathayan(src))
-			check = vampireroll(max(1, dharma?.Hun), frenzy_hardness, src)
+			check = vampireroll(max(1, mind?.dharma?.Hun), frenzy_hardness, src)
 		else
 			check = vampireroll(max(1, round(humanity/2)), min(frenzy_chance_boost, frenzy_hardness), src)
 		switch(check)
@@ -59,7 +59,7 @@
 
 /mob/living/carbon/proc/exit_frenzymod()
 	in_frenzy = FALSE
-	dharma?.Po_combat = FALSE
+	mind?.dharma?.Po_combat = FALSE
 	remove_client_colour(/datum/client_colour/glass_colour/red)
 	GLOB.frenzy_list -= src
 

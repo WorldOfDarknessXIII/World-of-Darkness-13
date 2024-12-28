@@ -426,7 +426,7 @@
 
 			if(iscathayan(src))
 				weaver_taint++
-				if(dharma?.animated != "Yang")
+				if(mind?.dharma?.animated != "Yang")
 					wyrm_taint++
 			if (iskindred(src)) //vampires are static, and may be Wyrm-tainted depending on behaviour
 				var/mob/living/carbon/human/vampire = src

@@ -191,8 +191,8 @@
 
 /mob/living/carbon/human/frenzystep()
 	if(iscathayan(src))
-		if(!dharma?.Po_combat)
-			switch(dharma?.Po)
+		if(!mind?.dharma?.Po_combat)
+			switch(mind?.dharma?.Po)
 				if("Rebel")
 					if(frenzy_target)
 						if(get_dist(frenzy_target, src) <= 1)
@@ -207,13 +207,13 @@
 							step_to(src,frenzy_target,0)
 							face_atom(frenzy_target)
 				if("Legalist")
-					if(dharma?.Po_Focus)
+					if(mind?.dharma?.Po_Focus)
 						if(prob(5))
 							say(pick("Kneel to me!", "Obey my orders!", "I command you!"))
-							point_at(dharma?.Po_Focus)
-						if(get_dist(dharma?.Po_Focus, src) <= 1)
-							if(isliving(dharma?.Po_Focus))
-								var/mob/living/L = dharma?.Po_Focus
+							point_at(mind?.dharma?.Po_Focus)
+						if(get_dist(mind?.dharma?.Po_Focus, src) <= 1)
+							if(isliving(mind?.dharma?.Po_Focus))
+								var/mob/living/L = mind?.dharma?.Po_Focus
 								if(L.stat != DEAD)
 									a_intent = INTENT_GRAB
 									dropItemToGround(get_active_held_item())
@@ -221,11 +221,11 @@
 										last_rage_hit = world.time
 										UnarmedAttack(L)
 						else
-							step_to(src,dharma?.Po_Focus,0)
-							face_atom(dharma?.Po_Focus)
+							step_to(src,mind?.dharma?.Po_Focus,0)
+							face_atom(mind?.dharma?.Po_Focus)
 				if("Monkey")
-					if(dharma?.Po_Focus)
-						if(get_dist(dharma?.Po_Focus, src) <= 1)
+					if(mind?.dharma?.Po_Focus)
+						if(get_dist(mind?.dharma?.Po_Focus, src) <= 1)
 							a_intent = INTENT_HELP
 							if(!istype(get_active_held_item(), /obj/item/toy))
 								dropItemToGround(get_active_held_item())
@@ -237,32 +237,32 @@
 								return
 							if(last_rage_hit+50 < world.time)
 								last_rage_hit = world.time
-								if(istype(dharma?.Po_Focus, /obj/machinery/computer/slot_machine))
-									var/obj/machinery/computer/slot_machine/slot = dharma?.Po_Focus
+								if(istype(mind?.dharma?.Po_Focus, /obj/machinery/computer/slot_machine))
+									var/obj/machinery/computer/slot_machine/slot = mind?.dharma?.Po_Focus
 									for(var/obj/item/stack/dollar/D in src)
 										if(D)
 											slot.attackby(D, src)
 									slot.spin(src)
 						else
-							step_to(src,dharma?.Po_Focus,0)
-							face_atom(dharma?.Po_Focus)
+							step_to(src,mind?.dharma?.Po_Focus,0)
+							face_atom(mind?.dharma?.Po_Focus)
 				if("Demon")
-					if(dharma?.Po_Focus)
-						if(get_dist(dharma?.Po_Focus, src) <= 1)
+					if(mind?.dharma?.Po_Focus)
+						if(get_dist(mind?.dharma?.Po_Focus, src) <= 1)
 							a_intent = INTENT_GRAB
 							dropItemToGround(get_active_held_item())
 							if(last_rage_hit+5 < world.time)
 								last_rage_hit = world.time
-								UnarmedAttack(dharma?.Po_Focus)
+								UnarmedAttack(mind?.dharma?.Po_Focus)
 								if(hud_used.drinkblood_icon)
 									hud_used.drinkblood_icon.bite()
 						else
-							step_to(src,dharma?.Po_Focus,0)
-							face_atom(dharma?.Po_Focus)
+							step_to(src,mind?.dharma?.Po_Focus,0)
+							face_atom(mind?.dharma?.Po_Focus)
 				if("Fool")
 					if(prob(5))
 						emote(pick("cry", "scream", "groan"))
-						point_at(dharma?.Po_Focus)
+						point_at(mind?.dharma?.Po_Focus)
 					resist_fire()
 		else
 			if(frenzy_target)
@@ -738,6 +738,7 @@
 	background_icon_state = "discipline"
 	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	vampiric = TRUE
 
 /datum/action/reanimate_yin/Trigger()
 	if(istype(owner, /mob/living/carbon/human))
@@ -767,6 +768,7 @@
 	background_icon_state = "discipline"
 	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	vampiric = TRUE
 
 /datum/action/reanimate_yang/Trigger()
 	if(istype(owner, /mob/living/carbon/human))
@@ -824,6 +826,7 @@
 
 	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi' //This is the file for the ACTION icon
 	button_icon_state = "discipline" //And this is the state for the action icon
+	vampiric = TRUE
 	var/level_icon_state = "1" //And this is the state for the action icon
 	var/datum/chi_discipline/discipline
 	var/active_check = FALSE
@@ -859,8 +862,7 @@
 			current_button.desc = discipline.desc
 			current_button.add_overlay(mutable_appearance(icon_icon, "[discipline.icon_state]"))
 			current_button.button_icon_state = "[discipline.icon_state]"
-			if(discipline.leveled)
-				current_button.add_overlay(mutable_appearance(icon_icon, "[discipline.level_casting]"))
+			current_button.add_overlay(mutable_appearance(icon_icon, "[discipline.level_casting]"))
 		else
 			current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
 			current_button.button_icon_state = button_icon_state
@@ -919,6 +921,8 @@
 	var/cost_yang = 1
 	///Cost in demon points of activating this Discipline.
 	var/cost_demon = 1
+	//Is ranged?
+	var/ranged = FALSE
 	///Duration of the Discipline.
 	var/delay = 5
 	///Whether this Discipline causes a Masquerade breach when used in front of mortals.
@@ -949,3 +953,30 @@
 		return
 	if(!caster)
 		return
+
+/datum/chi_discipline/blood_shintai
+	name = "Blood Shintai"
+	icon_state = "blood"
+/datum/chi_discipline/jade_shintai
+	name = "Jade Shintai"
+	icon_state = "jade"
+/datum/chi_discipline/bone_shintai
+	name = "Bone Shintai"
+	icon_state = "bone"
+/datum/chi_discipline/ghost_flame_shintai
+	name = "Ghost Flame Shintai"
+	icon_state = "ghostflame"
+/datum/chi_discipline/flesh_shintai
+	name = "Flesh Shintai"
+	icon_state = "flesh"
+
+/datum/chi_discipline/demon/black_wind
+	name = "Black Wind"
+/datum/chi_discipline/demon/demon_shintai
+	name = "Demon Shintai"
+/datum/chi_discipline/demon/hellweaving
+	name = "Hellweaving"
+/datum/chi_discipline/demon/iron_mountain
+	name = "Iron Mountain"
+/datum/chi_discipline/demon/kiai
+	name = "Kiai"
