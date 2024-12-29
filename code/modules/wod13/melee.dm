@@ -657,7 +657,7 @@
 	throwforce = 40
 	throw_speed = 2
 	throw_range = 3
-	masquerade_violating = TRUE
+	masquerade_violating = FALSE
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("shoves", "bashes")
 	attack_verb_simple = list("shove", "bash")
