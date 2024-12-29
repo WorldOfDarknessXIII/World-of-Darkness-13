@@ -325,8 +325,7 @@ Key procs
 
 /datum/language_holder/golem/runic
 	understood_languages = list(/datum/language/english = list(LANGUAGE_ATOM),
-								/datum/language/hebrew = list(LANGUAGE_ATOM),
-								/datum/language/narsie = list(LANGUAGE_ATOM))
+								/datum/language/hebrew = list(LANGUAGE_ATOM),)
 	spoken_languages = list(/datum/language/english = list(LANGUAGE_ATOM))
 
 /datum/language_holder/fly

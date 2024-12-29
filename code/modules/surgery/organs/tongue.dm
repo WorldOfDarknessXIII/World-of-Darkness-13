@@ -29,7 +29,8 @@
 		/datum/language/arabic,
 		/datum/language/german,
 		/datum/language/hebrew,
-		/datum/language/japanese
+		/datum/language/japanese,
+		/datum/language/cantonese
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)
@@ -113,7 +114,8 @@
 		/datum/language/arabic,
 		/datum/language/german,
 		/datum/language/hebrew,
-		/datum/language/japanese
+		/datum/language/japanese,
+		/datum/language/cantonese
 	))
 
 /obj/item/organ/tongue/fly/handle_speech(datum/source, list/speech_args)
@@ -252,7 +254,8 @@
 		/datum/language/arabic,
 		/datum/language/german,
 		/datum/language/hebrew,
-		/datum/language/japanese
+		/datum/language/japanese,
+		/datum/language/cantonese
 	))
 
 /obj/item/organ/tongue/bone/Initialize()
@@ -330,7 +333,8 @@
 		/datum/language/arabic,
 		/datum/language/german,
 		/datum/language/hebrew,
-		/datum/language/japanese
+		/datum/language/japanese,
+		/datum/language/cantonese
 	))
 
 /obj/item/organ/tongue/ethereal/Initialize(mapload)
