@@ -50,7 +50,7 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 			if(mind?.dharma?.name == U.mind?.dharma?.name)
 				call_dharma("letdie", U)
 
-			if(real_name in U.mind?.dharma?.judgement && U.real_name == lastattacker)
+			if(real_name in U.mind?.dharma?.judgement)
 				call_dharma("judgement", U)
 			if(!real_name in U.mind?.dharma?.deserving && U.real_name == lastattacker)
 				call_dharma("killfirst", U)
