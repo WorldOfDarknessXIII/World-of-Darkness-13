@@ -258,6 +258,7 @@
 	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
 	fire_sound_volume = 100
 	cost = 70
+	is_iron = FALSE
 
 /obj/item/ammo_box/magazine/glock45acp
 	name = "automatic pistol magazine (.45 ACP)"
@@ -296,6 +297,7 @@
 	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
 	fire_sound_volume = 100
 	cost = 150
+	is_iron = FALSE
 
 /obj/item/ammo_box/magazine/vamp9mm
 	name = "uzi magazine (9mm)"
