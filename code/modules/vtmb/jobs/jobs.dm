@@ -385,7 +385,7 @@
 	
 	var/objective = rand(1,max_objective)
 
-	switch(objectve)
+	switch(objective)
 		if(1)
 			var/datum/objective/artefact/artefact_objective = new
 			artefact_objective.owner = owner
