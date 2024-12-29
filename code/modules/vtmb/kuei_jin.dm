@@ -1083,12 +1083,47 @@
 
 /datum/chi_discipline/black_wind/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-//	switch(level_casting)
-//		if(1)
-//		if(2)
-//		if(3)
-//		if(4)
-//		if(5)
+	switch(level_casting)
+		if(1)
+			caster.add_movespeed_modifier(/datum/movespeed_modifier/celerity)
+			caster.celerity_visual = TRUE
+			spawn((delay*level_casting)+caster.discipline_time_plus)
+				if(caster)
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/celerity_deactivate.ogg', 50, FALSE)
+					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity)
+					caster.celerity_visual = FALSE
+		if(2)
+			caster.add_movespeed_modifier(/datum/movespeed_modifier/celerity2)
+			caster.celerity_visual = TRUE
+			spawn((delay*level_casting)+caster.discipline_time_plus)
+				if(caster)
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/celerity_deactivate.ogg', 50, FALSE)
+					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity2)
+					caster.celerity_visual = FALSE
+		if(3)
+			caster.add_movespeed_modifier(/datum/movespeed_modifier/celerity3)
+			caster.celerity_visual = TRUE
+			spawn((delay*level_casting)+caster.discipline_time_plus)
+				if(caster)
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/celerity_deactivate.ogg', 50, FALSE)
+					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity3)
+					caster.celerity_visual = FALSE
+		if(4)
+			caster.add_movespeed_modifier(/datum/movespeed_modifier/celerity4)
+			caster.celerity_visual = TRUE
+			spawn((delay*level_casting)+caster.discipline_time_plus)
+				if(caster)
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/celerity_deactivate.ogg', 50, FALSE)
+					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity4)
+					caster.celerity_visual = FALSE
+		if(5)
+			caster.add_movespeed_modifier(/datum/movespeed_modifier/celerity5)
+			caster.celerity_visual = TRUE
+			spawn((delay*level_casting)+caster.discipline_time_plus)
+				if(caster)
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/celerity_deactivate.ogg', 50, FALSE)
+					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity5)
+					caster.celerity_visual = FALSE
 
 /datum/chi_discipline/demon_shintai
 	name = "Demon Shintai"
@@ -1128,12 +1163,19 @@
 
 /datum/chi_discipline/iron_mountain/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-//	switch(level_casting)
-//		if(1)
-//		if(2)
-//		if(3)
-//		if(4)
-//		if(5)
+	var/mod = min(3, level_casting)
+	var/armah = 15*mod
+	caster.remove_overlay(FORTITUDE_LAYER)
+	var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "mountain", -FORTITUDE_LAYER)
+	caster.overlays_standing[FORTITUDE_LAYER] = fortitude_overlay
+	caster.apply_overlay(FORTITUDE_LAYER)
+	caster.physiology.armor.melee += armah
+	caster.physiology.armor.bullet += armah
+	spawn(delay+caster.discipline_time_plus)
+		if(caster)
+			caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/fortitude_deactivate.ogg', 50, FALSE)
+			caster.physiology.armor.melee -= armah
+			caster.physiology.armor.bullet -= armah
 
 /datum/chi_discipline/kiai
 	name = "Kiai"
