@@ -19,13 +19,8 @@
 	var/static/list/languages_possible_base = typecacheof(list(
 		/datum/language/english,
 		/datum/language/espanol,
-		/datum/language/chinese,
-		/datum/language/codespeak,
-		/datum/language/monkey,
-		/datum/language/narsie,
+		/datum/language/mandarin,
 		/datum/language/beachbum,
-		/datum/language/aphasia,
-		/datum/language/piratespeak,
 		/datum/language/russian,
 		/datum/language/italian,
 		/datum/language/latin,
@@ -33,7 +28,6 @@
 		/datum/language/french,
 		/datum/language/arabic,
 		/datum/language/german,
-		/datum/language/shadowtongue,
 		/datum/language/hebrew,
 		/datum/language/japanese
 	))
@@ -108,22 +102,18 @@
 	modifies_speech = TRUE
 	var/static/list/languages_possible_fly = typecacheof(list(
 		/datum/language/english,
-		/datum/language/chinese,
-		/datum/language/codespeak,
-		/datum/language/monkey,
-		/datum/language/narsie,
+		/datum/language/espanol,
+		/datum/language/mandarin,
 		/datum/language/beachbum,
-		/datum/language/aphasia,
-		/datum/language/piratespeak,
 		/datum/language/russian,
-		/datum/language/german,
 		/datum/language/italian,
-		/datum/language/german,
 		/datum/language/latin,
-		/datum/language/shadowtongue,
 		/datum/language/hebrew,
-		/datum/language/japanese,
-		/datum/language/buzzwords
+		/datum/language/french,
+		/datum/language/arabic,
+		/datum/language/german,
+		/datum/language/hebrew,
+		/datum/language/japanese
 	))
 
 /obj/item/organ/tongue/fly/handle_speech(datum/source, list/speech_args)
@@ -227,10 +217,8 @@
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
 	modifies_speech = TRUE // not really, they just hiss
 	var/static/list/languages_possible_alien = typecacheof(list(
-		/datum/language/xenocommon,
 		/datum/language/english,
-		/datum/language/chinese,
-		/datum/language/monkey))
+		/datum/language/mandarin))
 
 /obj/item/organ/tongue/alien/Initialize(mapload)
 	. = ..()
@@ -253,21 +241,18 @@
 	var/list/phomeme_types = list("sans", "papyrus")
 	var/static/list/languages_possible_skeleton = typecacheof(list(
 		/datum/language/english,
-		/datum/language/chinese,
-		/datum/language/codespeak,
-		/datum/language/monkey,
-		/datum/language/narsie,
+		/datum/language/espanol,
+		/datum/language/mandarin,
 		/datum/language/beachbum,
-		/datum/language/aphasia,
-		/datum/language/piratespeak,
 		/datum/language/russian,
-		/datum/language/german,
 		/datum/language/italian,
 		/datum/language/latin,
-		/datum/language/shadowtongue,
 		/datum/language/hebrew,
-		/datum/language/japanese,
-		/datum/language/calcic
+		/datum/language/french,
+		/datum/language/arabic,
+		/datum/language/german,
+		/datum/language/hebrew,
+		/datum/language/japanese
 	))
 
 /obj/item/organ/tongue/bone/Initialize()
@@ -334,21 +319,18 @@
 	sense_of_taste = FALSE
 	var/static/list/languages_possible_ethereal = typecacheof(list(
 		/datum/language/english,
-		/datum/language/chinese,
-		/datum/language/codespeak,
-		/datum/language/monkey,
-		/datum/language/narsie,
+		/datum/language/espanol,
+		/datum/language/mandarin,
 		/datum/language/beachbum,
-		/datum/language/german,
-		/datum/language/latin,
-		/datum/language/aphasia,
-		/datum/language/piratespeak,
 		/datum/language/russian,
 		/datum/language/italian,
-		/datum/language/shadowtongue,
+		/datum/language/latin,
 		/datum/language/hebrew,
-		/datum/language/japanese,
-		/datum/language/voltaic
+		/datum/language/french,
+		/datum/language/arabic,
+		/datum/language/german,
+		/datum/language/hebrew,
+		/datum/language/japanese
 	))
 
 /obj/item/organ/tongue/ethereal/Initialize(mapload)
