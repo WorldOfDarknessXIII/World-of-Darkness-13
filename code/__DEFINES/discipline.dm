@@ -1,22 +1,24 @@
 //normal duration defines
-///Duration of one "turn", which is 5 seconds according to u
+///Duration of one "turn", which is 5 seconds according to us
 #define DURATION_TURN 50
 ///Duration of one turn + a tick to execute after limiters like blood per turn
-#define DURATION_TURN_PLUS 51
+#define DURATION_TURN_PLUS (DURATION_TURN + 1)
 ///Duration of one "scene" as defined in tabletop: 5 minutes
 #define DURATION_SCENE 3000
 
-//targeting bitflags, NONE or 0 if targeting self
+//targeting bitflags, NONE or 0 if targeting self exclusively
+///Allows for self to also be selected in ranged targeting, SET TO 0 IF NOT TARGETED OR RANGED
+#define TARGET_SELF (1<<0)
 ///Targets anything of type /obj and its children
-#define TARGET_OBJ (1<<0)
+#define TARGET_OBJ (1<<1)
 ///Targets anything of type /turf and its children
-#define TARGET_TURF (1<<1)
+#define TARGET_TURF (1<<2)
 ///Targets anything of type /mob/living and its children if it is not dead
-#define TARGET_LIVING (1<<2)
+#define TARGET_LIVING (1<<3)
 ///Targets anything of type /mob/dead and its children, ie targets ghosts
-#define TARGET_GHOST (1<<3)
+#define TARGET_GHOST (1<<4)
 ///Targets anything of type /mob/living and its children, dead or not
-#define TARGET_MOB (1<<4)
+#define TARGET_MOB (1<<5)
 
 //bitflags to check for certain conditions determining ability to actually cast a discipline
 //flags overlap, like DISC_CHECK_CAPABLE covers DISC_CHECK_CONSCIOUS and DISC_CHECK_TORPOR

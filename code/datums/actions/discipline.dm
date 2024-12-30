@@ -111,9 +111,6 @@
 /datum/action/discipline/proc/handle_click(mob/source, atom/target)
 	SIGNAL_HANDLER
 
-	//prevents using Disciplines that target others on yourself
-	if (source == target)
-		return
 	//ensure we actually need a target
 	if (!targeting)
 		end_targeting()
