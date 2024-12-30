@@ -426,3 +426,8 @@
 
 /mob/living/proc/blood_points_per_units(units)
 	return (units / blood_per_point)
+
+/mob/living/proc/transfer_blood_points(mob/living/to_mob, amount)
+	var/points_to_transfer = clamp(amount, 0, bloodpool)
+	adjust_blood_points(-points_to_transfer)
+	to_mob.adjust_blood_points(points_to_transfer)
