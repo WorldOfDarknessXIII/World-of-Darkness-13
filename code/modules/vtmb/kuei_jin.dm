@@ -1056,7 +1056,7 @@
 		for(var/obj/item/I in C.held_items)
 			C.accident(I)
 
-		var/olddir = C.dir
+//		var/olddir = C.dir
 		C.moving_diagonally = 0 //If this was part of diagonal move slipping will stop it.
 		C.Knockdown(20)
 
@@ -1218,8 +1218,8 @@
 					caster.dna.species.ToggleFlight(caster)
 		if(5)
 			caster.remove_overlay(POTENCE_LAYER)
-			var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "[character.base_body_mod]rock", -FORTITUDE_LAYER)
-			caster.overlays_standing[POTENCE_LAYERR] = fortitude_overlay
+			var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "[caster.base_body_mod]rock", -POTENCE_LAYER)
+			caster.overlays_standing[POTENCE_LAYER] = fortitude_overlay
 			caster.apply_overlay(POTENCE_LAYER)
 			caster.physiology.armor.melee += 50
 			caster.physiology.armor.bullet += 50
