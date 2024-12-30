@@ -834,6 +834,7 @@
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
 	body_worn = TRUE
 	cost = 10
+	var/voice_unknown = FALSE
 
 /obj/item/clothing/head/vampire/bandana
 	name = "bandana"
@@ -999,6 +1000,7 @@
 	dynamic_hair_suffix = ""
 	dynamic_fhair_suffix = ""
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
+	voice_unknown = TRUE
 
 /obj/item/clothing/head/vampire/straw_hat
 	name = "straw hat"
@@ -1022,7 +1024,9 @@
 	name = "Noddist mask"
 	desc = "Shine black the sun! Shine blood the moon! Gehenna is coming soon."
 	icon_state = "noddist_mask"
+	flags_inv = HIDEFACE
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
+	voice_unknown = TRUE
 
 /obj/item/clothing/head/vampire/kalimavkion
 	name = "Kalimavkion"
@@ -1165,6 +1169,7 @@
 	flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 	body_worn = TRUE
+	var/voice_unknown = TRUE
 
 /obj/item/clothing/mask/vampire/balaclava
 	name = "balaclava"
