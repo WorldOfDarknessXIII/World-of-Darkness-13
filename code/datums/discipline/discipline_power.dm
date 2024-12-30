@@ -1,55 +1,59 @@
 /datum/discipline_power
-	///Name of the Discipline power
+	/// Name of the Discipline power
 	var/name = "Discipline power name"
-	///Description of the Discipline power
+	/// Description of the Discipline power
 	var/desc = "Discipline power description"
 
-	///What rank of the Discipline this Discipline power belongs to.
+	/// What rank of the Discipline this Discipline power belongs to.
 	var/level = 1
-	///Bitflags determining the requirements to cast this power
+	/// Bitflags determining the requirements to cast this power
 	var/check_flags = DISC_CHECK_CONSCIOUS | DISC_CHECK_CAPABLE
-	///How many blood points this power costs to activate
+	/// How many blood points this power costs to activate
 	var/vitae_cost = 1
-	///Bitflags determining what types of entities this power is allowed to target. NONE if self-targeting.
+	/// Bitflags determining what types of entities this power is allowed to target. NONE if self-targeting.
 	var/target_type = NONE
-	///How many tiles away this power can be used from.
+	/// How many tiles away this power can be used from.
 	var/range = 0
 
-	///Sound file that plays to the user when this power is activated.
+	/// Sound file that plays to the user when this power is activated.
 	var/activate_sound
-	///Sound file that plays to the user when this power is deactivated.
+	/// Sound file that plays to the user when this power is deactivated.
 	var/deactivate_sound
-	///Sound file that plays to all nearby players when this power is activated.
+	/// Sound file that plays to all nearby players when this power is activated.
 	var/effect_sound
-	///If this power will upset NPCs when used on them.
+	/// If this power will upset NPCs when used on them.
 	var/aggravating = FALSE
-	///If this power is an aggressive action and logged as such.
+	/// If this power is an aggressive action and logged as such.
 	var/hostile = FALSE
-	///If use of this power creates a visible Masquerade breach.
+	/// If use of this power creates a visible Masquerade breach.
 	var/violates_masquerade = FALSE
 
-	///If this Discipline doesn't automatically expire, but rather periodically drains blood.
+	/// If this Discipline doesn't automatically expire, but rather periodically drains blood.
 	var/toggled = FALSE
-	///If this power can be turned on and off.
+	/// If this power can be turned on and off.
 	var/cancelable = FALSE
-	///If this power is maintained by the caster, or simply casted and then not used again.
+	/// If this power is maintained by the caster, or simply casted and then not used again.
 	var/fire_and_forget = FALSE
-	///Amount of time it takes until this Discipline deactivates itself. 0 if instantaneous.
+	/// If this power uses its own duration rather than the default handling
+	var/duration_override = FALSE
+	/// Amount of time it takes until this Discipline deactivates itself. 0 if instantaneous.
 	var/duration_length = 0
-	///Timer tracking the duration of the power. Not used if fire_and_forget is TRUE.
+	/// Timer tracking the duration of the power. Not used if fire_and_forget is TRUE.
 	COOLDOWN_DECLARE(duration)
-	///Amount of time it takes until this Discipline can be used again after activation.
+	/// If this power uses its own cooldown rather than the default handling
+	var/cooldown_override = FALSE
+	/// Amount of time it takes until this Discipline can be used again after activation.
 	var/cooldown_length = 0
-	///Timer tracking the cooldown of the power.
+	/// Timer tracking the cooldown of the power.
 	COOLDOWN_DECLARE(cooldown)
-	///List of Discipline power types that cannot be activated alongside this power and share a cooldown with it.
+	/// List of Discipline power types that cannot be activated alongside this power and share a cooldown with it.
 	var/list/grouped_powers = list()
 
-	///If this Discipline is currently in use.
+	/// If this Discipline is currently in use.
 	var/active = FALSE
-	///The Discipline that this power is part of.
+	/// The Discipline that this power is part of.
 	var/datum/discipline/discipline
-	///The player using this Discipline power.
+	/// The player using this Discipline power.
 	var/mob/living/carbon/human/owner
 
 /datum/discipline_power/New(datum/discipline/discipline)
@@ -231,11 +235,11 @@
 		active = TRUE
 
 	//start the cooldown if there is one, instead triggers on deactivate() if toggled
-	if (cooldown_length && !cancelable)
+	if (cooldown_length && !cancelable && !cooldown_override)
 		COOLDOWN_START(src, cooldown, cooldown_length)
 
 	//handle Discipline power duration, start duration timer if it can't have multiple effects running at once
-	if (duration_length)
+	if (duration_length && !duration_override)
 		if (!fire_and_forget)
 			COOLDOWN_START(src, duration, duration_length)
 		if (toggled)
@@ -288,6 +292,8 @@
 	return FALSE
 
 /datum/discipline_power/proc/can_deactivate_untargeted()
+	SHOULD_CALL_PARENT(TRUE)
+
 	if (target_type == NONE)
 		if (!owner)
 			return FALSE
@@ -295,6 +301,8 @@
 	return TRUE
 
 /datum/discipline_power/proc/can_deactivate(atom/target)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if (!can_deactivate_untargeted())
 		return FALSE
 
