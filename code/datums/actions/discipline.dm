@@ -49,7 +49,7 @@
 			power.try_deactivate()
 		else
 			to_chat(owner, "<span class='warning'>[power] is already active!</span>")
-	else if (. == TRUE) //activate if possible
+	else //activate
 		if (power.target_type == NONE) //self activation
 			power.try_activate()
 		else if (power.range > 0) //ranged targeted activation
@@ -124,6 +124,8 @@
 	if (!owner?.client)
 		return
 	if (targeting)
+		return
+	if (!discipline.can_activate_untargeted(TRUE))
 		return
 	var/client/client = owner.client
 

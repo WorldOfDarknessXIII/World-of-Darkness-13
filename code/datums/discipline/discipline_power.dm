@@ -190,10 +190,14 @@
 	if (get_dist(owner, target) > range)
 		return FALSE
 
-	//check target type
-	if ((target_type & TARGET_SELF) && (target == owner))
-		return TRUE
+	//handling for if a ranged Discipline is being used on its caster
+	if (target == owner)
+		if (target_type & TARGET_SELF)
+			return TRUE
+		else
+			return FALSE
 
+	//check target type
 	if (((target_type & TARGET_MOB) || (target_type & TARGET_LIVING)) && istype(target, /mob/living))
 		//make sure our LIVING target isn't DEAD
 		var/mob/living/living = target
@@ -282,7 +286,7 @@
 	else
 		owner.adjust_blood_points(-vitae_cost)
 
-	to_chat(owner, "<span class='warning'>You activate [name][target ? "on [target]!" : "."]")
+	to_chat(owner, "<span class='warning'>You cast [name] [target ? "on [target]!" : "."]")
 	//TODO: rewrite this to be sane
 	log_attack("[key_name(owner)] casted [name], level [discipline.level_casting] of the Discipline [discipline.name][!target_type ? "." : " on [key_name(discipline.owner)]"]")
 
