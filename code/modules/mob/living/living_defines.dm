@@ -290,3 +290,11 @@
 	var/demon_chi = 0
 	var/max_demon_chi = 0
 	var/datum/action/chi_discipline/chi_ranged
+
+	//TO ovverride jump distance
+	var/jade_shintai_override = 0
+	//For freezing/burning aura
+	var/freezing_aura = FALSE
+	var/burning_aura = FALSE
+	//Flesh shintai dodge
+	var/flesh_shintai_dodge = FALSE

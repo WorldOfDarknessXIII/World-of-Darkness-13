@@ -1003,62 +1003,472 @@
 	desc = "Manipulate the liquid flow inside."
 	icon_state = "blood"
 	ranged = FALSE
+	delay = 10 SECONDS
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/bloodcrawler/kuei_jin/BC
+
+/datum/movespeed_modifier/blood_fat
+	multiplicative_slowdown = 1
+
+/datum/movespeed_modifier/necroing
+	multiplicative_slowdown = 2
+
+/datum/movespeed_modifier/wall_passing
+	multiplicative_slowdown = 5
+
+/datum/movespeed_modifier/blood_slim
+	multiplicative_slowdown = -0.5
+
+/obj/item/reagent_containers/spray/pepper/kuei_jin
+	alpha = 0
+	stream_mode = 1
+	stream_range = 5
+	amount_per_transfer_from_this = 10
+	list_reagents = list(/datum/reagent/consumable/condensedcapsaicin = 30, /datum/reagent/blood = 20)
+
+/mob/living/simple_animal/hostile/bloodcrawler/kuei_jin
+	name = "blood splatter"
+	desc = "Just a moving blood splatter on the floor..."
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "floor1"
+	icon_living = "floor1"
+	speed = 5
+	maxHealth = 100
+	health = 100
+	melee_damage_lower = 1
+	melee_damage_upper = 1
+	a_intent = INTENT_HELP
+	attack_verb_continuous = "splashes"
+	attack_verb_simple = "splash"
+
+/mob/living/simple_animal/hostile/bloodcrawler/kuei_jin/Initialize()
+	. = ..()
+	icon_state = "floor[rand(1, 7)]"
+	icon_living = "floor[rand(1, 7)]"
+
+/mob/living/simple_animal/hostile/bloodcrawler/kuei_jin/Crossed(atom/movable/O)
+	. = ..()
+	if(ishuman(O))
+		var/mob/living/carbon/C = O
+		to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
+		playsound(C.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
+
+		SEND_SIGNAL(C, COMSIG_ON_CARBON_SLIP)
+		for(var/obj/item/I in C.held_items)
+			C.accident(I)
+
+		var/olddir = C.dir
+		C.moving_diagonally = 0 //If this was part of diagonal move slipping will stop it.
+		C.Knockdown(20)
+
+/obj/effect/proc_holder/spell/targeted/shapeshift/bloodcrawler/kuei_jin
+	shapeshift_type = /mob/living/simple_animal/hostile/bloodcrawler/kuei_jin
+
+/obj/item/gun/magic/blood_shintai
+	name = "blood spit"
+	desc = "Spit blood on your targets."
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "leaper"
+	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL | NOBLUDGEON
+	flags_1 = NONE
+	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = NONE
+	ammo_type = /obj/item/ammo_casing/magic/blood_shintai
+	fire_sound = 'sound/effects/splat.ogg'
+	force = 0
+	max_charges = 1
+	fire_delay = 1
+	throwforce = 0 //Just to be on the safe side
+	throw_range = 0
+	throw_speed = 0
+	item_flags = DROPDEL
+
+/obj/item/ammo_casing/magic/blood_shintai
+	name = "blood spit"
+	desc = "A spit."
+	projectile_type = /obj/projectile/blood_wave
+	caliber = CALIBER_TENTACLE
+	firing_effect_type = null
+	item_flags = DROPDEL
+
+/obj/item/gun/magic/blood_shintai/process_fire()
+	. = ..()
+	if(charges == 0)
+		qdel(src)
+
+/obj/projectile/blood_wave
+	name = "blood wave"
+	icon_state = "leaper"
+	speed = 20
+	animate_movement = SLIDE_STEPS
+	ricochets_max = 5
+	ricochet_chance = 100
+	ricochet_decay_chance =1
+	ricochet_decay_damage = 1
+
+	damage = 75
+	damage_type = BRUTE
+	armour_penetration = 50
+	range = 50
+	stun = 20
+	eyeblur = 20
+	dismemberment = 20
+
+	impact_effect_type = /obj/effect/temp_visual/impact_effect
+
+	hit_stunned_targets = TRUE
 
 /datum/chi_discipline/blood_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-//	switch(level_casting)
-//		if(1)
-//		if(2)
-//		if(3)
-//		if(4)
-//		if(5)
+	switch(level_casting)
+		if(1)
+			var/result = alert(caster, "How do you manage your shape?",,"Shrink","Inflate")
+			if(result == "Inflate")
+				var/matrix/M = matrix()
+				M.Scale(1.2, 1)
+				var/matrix/initial = caster.transform
+				animate(caster, transform = M, 1 SECONDS)
+				caster.physiology.armor.melee += 20
+				caster.physiology.armor.bullet += 20
+				caster.add_movespeed_modifier(/datum/movespeed_modifier/blood_fat)
+				spawn(delay+caster.discipline_time_plus)
+					if(caster)
+						animate(caster, transform = initial, 1 SECONDS)
+						caster.physiology.armor.melee -= 20
+						caster.physiology.armor.bullet -= 20
+						caster.remove_movespeed_modifier(/datum/movespeed_modifier/blood_fat)
+			else if(result == "Shrink")
+				var/matrix/M = matrix()
+				M.Scale(0.8, 1)
+				var/matrix/initial = caster.transform
+				animate(caster, transform = M, 1 SECONDS)
+				caster.add_movespeed_modifier(/datum/movespeed_modifier/blood_slim)
+				spawn(delay+caster.discipline_time_plus)
+					if(caster)
+						animate(caster, transform = initial, 1 SECONDS)
+						caster.remove_movespeed_modifier(/datum/movespeed_modifier/blood_slim)
+		if(2)
+			playsound(get_turf(caster), 'code/modules/wod13/sounds/spit.ogg', 50, FALSE)
+			spawn(1 SECONDS)
+				var/obj/item/reagent_containers/spray/pepper/kuei_jin/K = new (get_turf(caster))
+				K.spray(get_step(get_step(get_step(get_turf(caster), caster.dir), caster.dir), caster.dir), caster)
+				qdel(K)
+		if(3)
+			if(!BC)
+				BC = new (caster)
+			BC.Shapeshift(H)
+			spawn(delay+caster.discipline_time_plus)
+				if(BC)
+					var/mob/living/simple_animal/hostile/bloodcrawler/BD = BC.myshape
+					if(BD.collected_blood > 1)
+						H.adjustBruteLoss(-5*round(BD.collected_blood/2), TRUE)
+						H.adjustFireLoss(-5*round(BD.collected_blood/2), TRUE)
+					BC.Restore(BC.myshape)
+					caster.Stun(15)
+					caster.do_jitter_animation(30)
+		if(4)
+			caster.drop_all_held_items()
+			caster.put_in_active_hand(new /obj/item/gun/magic/blood_shintai(caster))
+		if(5)
+			var/obj/item/melee/vampirearms/katana/blood/F = new (caster)
+			caster.drop_all_held_items()
+			caster.put_in_active_hand(F)
+			spawn(delay+caster.discipline_time_plus)
+				if(F)
+					qdel(F)
 
 /datum/chi_discipline/jade_shintai
 	name = "Jade Shintai"
 	desc = "Manipulate own weight and capabilities."
 	icon_state = "jade"
 	ranged = FALSE
+	delay = 12 SECONDS
+
+/obj/item/melee/powerfist/stone
+	item_flags = DROPDEL
 
 /datum/chi_discipline/jade_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-//	switch(level_casting)
-//		if(1)
-//		if(2)
-//		if(3)
-//		if(4)
-//		if(5)
+	switch(level_casting)
+		if(1)
+			var/obj/structure/bury_pit/B = new (get_turf(caster))
+			B.icon_state = "pit0"
+			caster.forceMove(B)
+		if(2)
+			caster.pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+			caster.jade_shintai_override = 7
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.pass_flags = initial(caster.pass_flags)
+					caster.jade_shintai_override = 0
+		if(3)
+			caster.gargoyle_pass = TRUE
+			caster.alpha = 128
+			caster.obfuscate_level = 3
+			caster.add_movespeed_modifier(/datum/movespeed_modifier/wall_passing)
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.obfuscate_level = 0
+					caster.alpha = 255
+					caster.gargoyle_pass = FALSE
+					caster.remove_movespeed_modifier(/datum/movespeed_modifier/wall_passing)
+		if(4)
+			caster.dna.species.ToggleFlight(caster)
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.dna.species.ToggleFlight(caster)
+		if(5)
+			caster.remove_overlay(POTENCE_LAYER)
+			var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "[character.base_body_mod]rock", -FORTITUDE_LAYER)
+			caster.overlays_standing[POTENCE_LAYERR] = fortitude_overlay
+			caster.apply_overlay(POTENCE_LAYER)
+			caster.physiology.armor.melee += 50
+			caster.physiology.armor.bullet += 50
+			caster.drop_all_held_items()
+			var/obj/item/melee/powerfist/stone/S1 = new (caster)
+			var/obj/item/melee/powerfist/stone/S2 = new (caster)
+			caster.put_in_r_hand(S1)
+			caster.put_in_l_hand(S2)
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.physiology.armor.melee -= 50
+					caster.physiology.armor.bullet -= 50
+					caster.remove_overlay(POTENCE_LAYER)
+					if(S1)
+						qdel(S1)
+					if(S2)
+						qdel(S2)
 
 /datum/chi_discipline/bone_shintai
 	name = "Bone Shintai"
 	desc = "Manipulate the matter static around."
 	icon_state = "bone"
 	ranged = FALSE
+	delay = 12 SECONDS
+
+/obj/effect/particle_effect/smoke/bad/green/bone_shintai
+	name = "green dangerous smoke"
+
+/datum/effect_system/smoke_spread/bad/green/bone_shintai
+	effect_type = /obj/effect/particle_effect/smoke/bad/green/bone_shintai
+
+/obj/effect/particle_effect/smoke/bad/green/bone_shintai/smoke_mob(mob/living/carbon/M)
+	. = ..()
+	if(.)
+		M.adjustBruteLoss(15, TRUE)
+		M.emote("cough")
+		return TRUE
+
+/obj/item/melee/vampirearms/knife/bone_shintai
+	name = "claws"
+	icon_state = "claws"
+	w_class = WEIGHT_CLASS_BULKY
+	force = 35
+	armour_penetration = 100	//It's magical damage
+	block_chance = 20
+	item_flags = DROPDEL
+	masquerade_violating = TRUE
+	is_iron = FALSE
 
 /datum/chi_discipline/bone_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-//	switch(level_casting)
-//		if(1)
-//		if(2)
-//		if(3)
-//		if(4)
-//		if(5)
+	switch(level_casting)
+		if(1)
+			ADD_TRAIT(caster, TRAIT_NOSOFTCRIT, MAGIC_TRAIT)
+			ADD_TRAIT(caster, TRAIT_NOHARDCRIT, MAGIC_TRAIT)
+			caster.physiology.armor.melee += 10
+			caster.physiology.armor.bullet += 10
+			caster.add_movespeed_modifier(/datum/movespeed_modifier/necroing)
+			var/initial_limbs_id = caster.dna.species.limbs_id
+			caster.dna.species.limbs_id = "rotten1"
+			caster.update_body()
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					REMOVE_TRAIT(caster, TRAIT_NOSOFTCRIT, MAGIC_TRAIT)
+					REMOVE_TRAIT(caster, TRAIT_NOHARDCRIT, MAGIC_TRAIT)
+					caster.physiology.armor.melee -= 10
+					caster.physiology.armor.bullet -= 10
+					caster.remove_movespeed_modifier(/datum/movespeed_modifier/necroing)
+					caster.dna.species.limbs_id = initial_limbs_id
+					caster.update_body()
+		if(2)
+			var/initial_limbs_id = caster.dna.species.limbs_id
+			var/initial_hair = caster.hairstyle
+			var/initial_facial = caster.facial_hairstyle
+			caster.dna.species.limbs_id = "nothing"
+			caster.hairstyle = "Bald"
+			caster.facial_hairstyle = "Shaved"
+			caster.update_body()
+			caster.freezing_aura = TRUE
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.dna.species.limbs_id = initial_limbs_id
+					caster.hairstyle = initial_hair
+					caster.facial_hairstyle = initial_facial
+					caster.update_body()
+					caster.freezing_aura = FALSE
+		if(3)
+			var/obj/item/melee/vampirearms/knife/bone_shintai/S1 = new (caster)
+			var/obj/item/melee/vampirearms/knife/bone_shintai/S2 = new (caster)
+			caster.put_in_r_hand(S1)
+			caster.put_in_l_hand(S2)
+			spawn(delay+caster.discipline_time_plus)
+				if(S1)
+					qdel(S1)
+				if(S2)
+					qdel(S2)
+		if(4)
+			playsound(get_turf(caster), 'sound/effects/smoke.ogg', 50, TRUE, -3)
+			var/datum/effect_system/smoke_spread/bad/green/bone_shintai/smoke = new
+			smoke.set_up(4, caster)
+			smoke.start()
+			qdel(smoke)
+		if(5)
+			ADD_TRAIT(caster, TRAIT_NOSOFTCRIT, MAGIC_TRAIT)
+			ADD_TRAIT(caster, TRAIT_NOHARDCRIT, MAGIC_TRAIT)
+			caster.physiology.armor.melee += 25
+			caster.physiology.armor.bullet += 25
+			var/initial_limbs_id = caster.dna.species.limbs_id
+			caster.dna.species.limbs_id = "rotten1"
+			caster.update_body()
+			caster.set_light(1.4,0.7,"#34D352")
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					REMOVE_TRAIT(caster, TRAIT_NOSOFTCRIT, MAGIC_TRAIT)
+					REMOVE_TRAIT(caster, TRAIT_NOHARDCRIT, MAGIC_TRAIT)
+					caster.physiology.armor.melee -= 25
+					caster.physiology.armor.bullet -= 25
+					caster.dna.species.limbs_id = initial_limbs_id
+					caster.update_body()
+					caster.set_light(0)
 
 /datum/chi_discipline/ghost_flame_shintai
 	name = "Ghost Flame Shintai"
 	desc = "Manipulate fire and temperature."
 	icon_state = "ghostflame"
 	ranged = FALSE
+	delay = 12 SECONDS
+
+/mob/living/simple_animal/hostile/beastmaster/fireball
+	name = "fireball"
+	desc = "FIREBALL!!"
+	icon = 'code/modules/wod13/mobs.dmi'
+	icon_state = "fireball"
+	icon_living = "fireball"
+	del_on_death = TRUE
+	attack_verb_continuous = "burns"
+	attack_verb_simple = "burn"
+	attack_sound = 'sound/effects/extinguish.ogg'
+	speak_chance = 0
+	turns_per_move = 3
+	see_in_dark = 6
+	ventcrawler = VENTCRAWLER_ALWAYS
+	pass_flags = PASSTABLE
+	mob_size = MOB_SIZE_SMALL
+	mob_biotypes = MOB_UNDEAD
+	minbodytemp = 200
+	maxbodytemp = 400
+	unsuitable_atmos_damage = 1
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
+	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
+	footstep_type = FOOTSTEP_MOB_BAREFOOT
+	bloodpool = 0
+	maxbloodpool = 0
+	maxHealth = 30
+	health = 30
+	harm_intent_damage = 10
+	melee_damage_lower = 15
+	melee_damage_upper = 30
+	melee_damage_type = BURN
+	speed = 2
+	dodging = TRUE
+
+/obj/item/gun/magic/ghostflame_shintai
+	name = "fire spit"
+	desc = "Spit fire on your targets."
+	icon = 'code/modules/wod13/mobs.dmi'
+	icon_state = "fireball"
+	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL | NOBLUDGEON
+	flags_1 = NONE
+	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = NONE
+	ammo_type = /obj/item/ammo_casing/magic/ghostflame_shintai
+	fire_sound = 'sound/effects/splat.ogg'
+	force = 0
+	max_charges = 1
+	fire_delay = 1
+	throwforce = 0 //Just to be on the safe side
+	throw_range = 0
+	throw_speed = 0
+	item_flags = DROPDEL
+
+/obj/item/ammo_casing/magic/ghostflame_shintai
+	name = "fire spit"
+	desc = "A spit."
+	projectile_type = /obj/projectile/magic/aoe/fireball/firebreath
+	caliber = CALIBER_TENTACLE
+	firing_effect_type = null
+	item_flags = DROPDEL
+
+/obj/item/gun/magic/ghostflame_shintai/process_fire()
+	. = ..()
+	if(charges == 0)
+		qdel(src)
 
 /datum/chi_discipline/ghost_flame_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-//	switch(level_casting)
-//		if(1)
-//		if(2)
-//		if(3)
-//		if(4)
-//			caster.drop_all_held_items()
-//			caster.put_in_r_hand(new /obj/item/melee/vampirearms/katana/fire(caster))
-//		if(5)
+	var/limit = min(2, level) + caster.social + caster.more_companions - 1
+	if(length(caster.beastmaster) >= limit)
+		var/mob/living/simple_animal/hostile/beastmaster/B = pick(caster.beastmaster)
+		B.death()
+	switch(level_casting)
+		if(1)
+			caster.set_light(1.4,0.7,"#ff8c00")
+			caster.burning_aura = TRUE
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.burning_aura = FALSE
+					caster.set_light(0)
+		if(2)
+			if(!length(caster.beastmaster))
+				var/datum/action/beastmaster_stay/E1 = new()
+				E1.Grant(caster)
+				var/datum/action/beastmaster_deaggro/E2 = new()
+				E2.Grant(caster)
+			var/mob/living/simple_animal/hostile/beastmaster/fireball/C = new(get_turf(caster))
+			C.my_creator = caster
+			caster.beastmaster |= C
+			C.beastmaster = caster
+		if(3)
+			caster.drop_all_held_items()
+			caster.put_in_active_hand(new /obj/item/gun/magic/ghostflame_shintai(caster))
+		if(4)
+			caster.drop_all_held_items()
+			var/obj/item/melee/vampirearms/katana/fire/F = new (caster)
+			caster.put_in_active_hand(F)
+			spawn(delay+caster.discipline_time_plus)
+				if(F)
+					qdel(F)
+		if(5)
+			caster.dna.species.burnmod = 0
+			caster.dna.species.heatmod = 0
+			ADD_TRAIT(caster, TRAIT_PERMANENTLY_ONFIRE, MAGIC_TRAIT)
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					REMOVE_TRAIT(caster, TRAIT_PERMANENTLY_ONFIRE, MAGIC_TRAIT)
+					if(caster.mind.dharma)
+						switch(caster.mind.dharma.animated)
+							if("Yang")
+								caster.dna.species.burnmod = 0.5
+							if("Yin")
+								caster.dna.species.burnmod = initial(caster.dna.species.burnmod)
+					else
+						caster.dna.species.burnmod = initial(caster.dna.species.burnmod)
+					caster.dna.species.heatmod = initial(caster.dna.species.heatmod)
 
 /datum/chi_discipline/flesh_shintai
 	name = "Flesh Shintai"
@@ -1066,20 +1476,36 @@
 	icon_state = "flesh"
 	ranged = FALSE
 
+/obj/item/chameleon/temp
+	name = "Appearance Projector"
+	item_flags = DROPDEL
+
+//obj/item/chameleon/temp/Initialize()
+//	. = ..()
+//	ADD_TRAIT(src, TRAIT_NODROP, STICKY_NODROP)
+
 /datum/chi_discipline/flesh_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-//	switch(level_casting)
+	switch(level_casting)
 //		if(1)
 //		if(2)
-//		if(3)
+		if(3)
+			caster.flesh_shintai_dodge = TRUE
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.flesh_shintai_dodge = FALSE
 //		if(4)
-//		if(5)
+		if(5)
+			caster.drop_all_held_items()
+			caster.put_in_active_hand(new /obj/item/chameleon/temp(caster))
 
 /datum/chi_discipline/black_wind
 	name = "Black Wind"
 	desc = "Gain control over speed of reaction."
 	icon_state = "blackwind"
 	ranged = FALSE
+	activate_sound = 'code/modules/wod13/sounds/celerity_activate.ogg'
+	delay = 12 SECONDS
 
 /datum/chi_discipline/black_wind/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
@@ -1087,7 +1513,7 @@
 		if(1)
 			caster.add_movespeed_modifier(/datum/movespeed_modifier/celerity)
 			caster.celerity_visual = TRUE
-			spawn((delay*level_casting)+caster.discipline_time_plus)
+			spawn((delay)+caster.discipline_time_plus)
 				if(caster)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/celerity_deactivate.ogg', 50, FALSE)
 					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity)
@@ -1095,7 +1521,7 @@
 		if(2)
 			caster.add_movespeed_modifier(/datum/movespeed_modifier/celerity2)
 			caster.celerity_visual = TRUE
-			spawn((delay*level_casting)+caster.discipline_time_plus)
+			spawn((delay)+caster.discipline_time_plus)
 				if(caster)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/celerity_deactivate.ogg', 50, FALSE)
 					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity2)
@@ -1103,7 +1529,7 @@
 		if(3)
 			caster.add_movespeed_modifier(/datum/movespeed_modifier/celerity3)
 			caster.celerity_visual = TRUE
-			spawn((delay*level_casting)+caster.discipline_time_plus)
+			spawn((delay)+caster.discipline_time_plus)
 				if(caster)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/celerity_deactivate.ogg', 50, FALSE)
 					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity3)
@@ -1111,7 +1537,7 @@
 		if(4)
 			caster.add_movespeed_modifier(/datum/movespeed_modifier/celerity4)
 			caster.celerity_visual = TRUE
-			spawn((delay*level_casting)+caster.discipline_time_plus)
+			spawn((delay)+caster.discipline_time_plus)
 				if(caster)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/celerity_deactivate.ogg', 50, FALSE)
 					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity4)
@@ -1119,7 +1545,7 @@
 		if(5)
 			caster.add_movespeed_modifier(/datum/movespeed_modifier/celerity5)
 			caster.celerity_visual = TRUE
-			spawn((delay*level_casting)+caster.discipline_time_plus)
+			spawn((delay)+caster.discipline_time_plus)
 				if(caster)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/celerity_deactivate.ogg', 50, FALSE)
 					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity5)
@@ -1146,24 +1572,75 @@
 	icon_state = "hellweaving"
 	ranged = TRUE
 
+/atom/movable/screen/fullscreen/yomi_world
+	icon = 'icons/hud/fullscreen.dmi'
+	icon_state = "hall"
+	layer = CURSE_LAYER
+	plane = FULLSCREEN_PLANE
+
+/atom/movable/screen/fullscreen/yomi_world/Initialize()
+	. = ..()
+	dir = pick(NORTH, EAST, WEST, SOUTH, SOUTHEAST, SOUTHWEST, NORTHEAST, NORTHWEST)
+
+/obj/effect/particle_effect/smoke/bad/yomi
+	name = "dark red smoke"
+	color = "#6f0000"
+	opaque = FALSE
+
+/datum/effect_system/smoke_spread/bad/yomi
+	effect_type = /obj/effect/particle_effect/smoke/bad/yomi
+
+/obj/effect/particle_effect/smoke/bad/yomi/smoke_mob(mob/living/carbon/M)
+	. = ..()
+	if(.)
+		M.adjustFireLoss(15, TRUE)
+		M.emote("cough")
+		return TRUE
+
+/datum/movespeed_modifier/yomi_flashback
+	multiplicative_slowdown = 6
+
 /datum/chi_discipline/hellweaving/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-//	switch(level_casting)
-//		if(1)
-//		if(2)
-//		if(3)
-//		if(4)
+	switch(level_casting)
+		if(1)
+			target.overlay_fullscreen("yomi", /atom/movable/screen/fullscreen/yomi_world)
+			target.clear_fullscreen("yomi", 5)
+		if(2)
+			playsound(get_turf(target), 'code/modules/wod13/sounds/portal.ogg', 50, TRUE, -3)
+			var/datum/effect_system/smoke_spread/bad/yomi/smoke = new
+			smoke.set_up(2, target)
+			smoke.start()
+		if(3)
+			target.add_movespeed_modifier(/datum/movespeed_modifier/yomi_flashback)
+			target.emote("cry")
+			spawn(30)
+				if(target)
+					target.remove_movespeed_modifier(/datum/movespeed_modifier/yomi_flashback)
+		if(4)
+			target.overlay_fullscreen("yomi", /atom/movable/screen/fullscreen/yomi_world)
+			target.clear_fullscreen("yomi", 5)
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				var/datum/cb = CALLBACK(H,/mob/living/carbon/human/proc/attack_myself_command)
+				for(var/i in 1 to 20)
+					addtimer(cb, (i - 1)*15)
+				target.emote("scream")
+				target.do_jitter_animation(30)
 //		if(5)
+
 
 /datum/chi_discipline/iron_mountain
 	name = "Iron Mountain"
 	desc = "Gain the stoicism and endurability of your P'o."
 	icon_state = "ironmountain"
 	ranged = FALSE
+	activate_sound = 'code/modules/wod13/sounds/fortitude_activate.ogg'
+	delay = 12 SECONDS
 
 /datum/chi_discipline/iron_mountain/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-	var/mod = min(3, level_casting)
+	var/mod = level_casting
 	var/armah = 15*mod
 	caster.remove_overlay(FORTITUDE_LAYER)
 	var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "mountain", -FORTITUDE_LAYER)
@@ -1176,6 +1653,7 @@
 			caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/fortitude_deactivate.ogg', 50, FALSE)
 			caster.physiology.armor.melee -= armah
 			caster.physiology.armor.bullet -= armah
+			caster.remove_overlay(FORTITUDE_LAYER)
 
 /datum/chi_discipline/kiai
 	name = "Kiai"

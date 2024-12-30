@@ -107,6 +107,24 @@
 		var/mob/living/L = target
 		L.apply_damage(45, BURN)
 
+/obj/item/melee/vampirearms/katana/blood
+	name = "bloody katana"
+	color = "#bb0000"
+	force = 0
+	block_chance = 0
+	armour_penetration = 0
+	pixel_w = -8
+	cost = 0
+	item_flags = DROPDEL
+	is_iron = FALSE
+
+/obj/item/melee/vampirearms/katana/blood/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity)
+		return
+	if(isliving(target))
+		var/mob/living/L = target
+		L.apply_damage(20, CLONE)
+
 /obj/item/melee/vampirearms/rapier
 	name = "rapier"
 	desc = "A thin, elegant sword, the rapier is a weapon of the duelist, designed for thrusting."
