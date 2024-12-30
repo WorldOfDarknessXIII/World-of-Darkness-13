@@ -30,6 +30,10 @@
 			var/area/A = get_area(location)
 			say("Murder at [A.name], [location.x]:[location.y]...")
 
+
+/obj/item/police_radio/proc/dispatcher_talk(said)
+	say(said)
+
 /obj/item/police_radio/Initialize()
 	. = ..()
 	GLOB.police_radios += src

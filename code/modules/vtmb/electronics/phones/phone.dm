@@ -798,6 +798,30 @@
 	closed_state = "redphone"
 	folded_state = "redphone"
 
+/obj/item/vamp/phone/emergency
+	desc = "The 911 dispatch phone"
+	icon = 'code/modules/wod13/onfloor.dmi'
+	icon_state = "redphone"
+	anchored = TRUE
+	number = "911"
+	can_fold = 0
+	open_state = "redphone"
+	closed_state = "redphone"
+	folded_state = "redphone"
+
+/obj/item/vamp/phone/emergency/Initialize()
+	. = ..()
+	GLOB.phone_numbers_list += number
+	GLOB.phones_list += src
+
+/obj/item/vamp/phone/emergency/handle_hearing(datum/source, list/hearing_args)
+	. = ..()
+	if(hearing_args[HEARING_SPEAKER] && online)
+		if(isliving(hearing_args[HEARING_SPEAKER]) || istype(hearing_args[HEARING_SPEAKER], /obj/phonevoice))
+			var/message = hearing_args[HEARING_RAW_MESSAGE]
+			for(var/obj/item/police_radio/R in GLOB.police_radios)
+				R.dispatcher_talk(message)
+
 /obj/item/vamp/phone/clean/Initialize()
 	. = ..()
 	GLOB.phone_numbers_list += number

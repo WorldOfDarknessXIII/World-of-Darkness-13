@@ -146,6 +146,12 @@
 		"police"
 	)
 
+/obj/item/vamp/keys/dispatch
+	name = "Dispatcher keys"
+	accesslocks = list(
+		"dispatch"
+	)
+
 /obj/item/vamp/keys/police/secure
 	name = "Sergeant Police keys"
 	accesslocks = list(
@@ -156,6 +162,7 @@
 /obj/item/vamp/keys/police/secure/chief
 	name = "Chief of Police keys"
 	accesslocks = list(
+		"dispatch",
 		"police",
 		"police_secure",
 		"police_chief"
@@ -611,6 +618,13 @@
 	lock_id = "npc"
 	burnable = TRUE
 	lockpick_difficulty = 4
+
+/obj/structure/vampdoor/dispatch
+	icon_state = "cam-1"
+	baseicon = "cam"
+	locked = TRUE
+	lock_id = "dispatch"
+	lockpick_difficulty = 5
 
 /obj/structure/vampdoor/police
 	icon_state = "cam-1"
