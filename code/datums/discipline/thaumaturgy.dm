@@ -33,6 +33,7 @@
 	violates_masquerade = TRUE
 
 	cooldown_length = 5 SECONDS
+	fire_and_forget = TRUE
 
 //A TASTE FOR BLOOD
 /obj/effect/projectile/tracer/thaumaturgy

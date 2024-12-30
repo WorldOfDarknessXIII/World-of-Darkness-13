@@ -18,7 +18,7 @@
 	activate_sound = 'code/modules/wod13/sounds/presence_activate.ogg'
 	deactivate_sound = 'code/modules/wod13/sounds/presence_deactivate.ogg'
 
-	multi_activation = TRUE
+	fire_and_forget = TRUE
 	cooldown_length = 15 SECONDS
 	duration_length = 5 SECONDS
 

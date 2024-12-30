@@ -16,7 +16,7 @@
 
 	activate_sound = 'code/modules/wod13/sounds/dominate.ogg'
 
-	multi_activation = TRUE
+	fire_and_forget = TRUE
 	cooldown_length = 15 SECONDS
 	duration_length = 3 SECONDS
 
