@@ -4,17 +4,19 @@
 	/// Description of the Discipline power
 	var/desc = "Discipline power description"
 
+	/* BASIC INFORMATION */
 	/// What rank of the Discipline this Discipline power belongs to.
 	var/level = 1
 	/// Bitflags determining the requirements to cast this power
 	var/check_flags = DISC_CHECK_CONSCIOUS | DISC_CHECK_CAPABLE
 	/// How many blood points this power costs to activate
 	var/vitae_cost = 1
-	/// Bitflags determining what types of entities this power is allowed to target. NONE if self-targeting.
+	/// Bitflags determining what types of entities this power is allowed to target. NONE if self-targeting only.
 	var/target_type = NONE
 	/// How many tiles away this power can be used from.
 	var/range = 0
 
+	/* EXTRA BEHAVIOUR ON ACTIVATION AND DEACTIVATION */
 	/// Sound file that plays to the user when this power is activated.
 	var/activate_sound
 	/// Sound file that plays to the user when this power is deactivated.
@@ -28,6 +30,7 @@
 	/// If use of this power creates a visible Masquerade breach.
 	var/violates_masquerade = FALSE
 
+	/* HOW AND WHEN IT'S ACTIVATED AND DEACTIVATED */
 	/// If this Discipline doesn't automatically expire, but rather periodically drains blood.
 	var/toggled = FALSE
 	/// If this power can be turned on and off.
@@ -38,17 +41,18 @@
 	var/duration_override = FALSE
 	/// Amount of time it takes until this Discipline deactivates itself. 0 if instantaneous.
 	var/duration_length = 0
-	/// Timer tracking the duration of the power. Not used if fire_and_forget is TRUE.
-	COOLDOWN_DECLARE(duration)
 	/// If this power uses its own cooldown rather than the default handling
 	var/cooldown_override = FALSE
 	/// Amount of time it takes until this Discipline can be used again after activation.
 	var/cooldown_length = 0
-	/// Timer tracking the cooldown of the power.
-	COOLDOWN_DECLARE(cooldown)
 	/// List of Discipline power types that cannot be activated alongside this power and share a cooldown with it.
 	var/list/grouped_powers = list()
 
+	/* NOT MEANT TO BE OVERRIDDEN */
+	/// Timer tracking the duration of the power. Not used if fire_and_forget is TRUE.
+	COOLDOWN_DECLARE(duration)
+	/// Timer tracking the cooldown of the power.
+	COOLDOWN_DECLARE(cooldown)
 	/// If this Discipline is currently in use.
 	var/active = FALSE
 	/// The Discipline that this power is part of.
