@@ -551,7 +551,8 @@
 		new /datum/data/mining_equipment("potassium iodide pill bottle", /obj/item/storage/pill_bottle/potassiodide, 100),
 		new /datum/data/mining_equipment("bruise pack", /obj/item/stack/medical/bruise_pack, 100),
 		new /datum/data/mining_equipment("burn ointment", /obj/item/stack/medical/ointment, 100),
-		new /datum/data/mining_equipment("latex gloves", /obj/item/clothing/gloves/vampire/latex, 150)
+		new /datum/data/mining_equipment("latex gloves", /obj/item/clothing/gloves/vampire/latex, 150),
+		new /datum/data/mining_equipment("box of syringes", /obj/item/storage/box/syringes, 300)
 	)
 
 /obj/machinery/mineral/equipment_vendor/fastfood/hospital // we should probably swap from a vendor system and work on a sort of gameplay loop - tzula

@@ -261,7 +261,7 @@
 	icon_state = "rune6"
 	word = "POR'TALE"
 	thaumlevel = 5
-	sacrifices = list(/obj/item/drinkable_bloodpack/vitae)
+	sacrifices = list(/obj/item/drinkable_bloodpack)
 
 /obj/ritualrune/teleport/complete()
 	if(!activated)
@@ -431,3 +431,86 @@
 		playsound(loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
 		color = rgb(255,0,0)
 		activated = TRUE
+
+/obj/ritualrune/bloodwalk
+	name = "Blood Walk"
+	desc = "Trace the subject's lineage from a blood syringe."
+	icon_state = "rune7"
+	word = "Reveal thine bloodline for my eyes."
+	thaumlevel = 2
+
+/obj/ritualrune/bloodwalk/attack_hand(mob/user)
+	for(var/obj/item/reagent_containers/syringe/S in loc)
+		if(S)
+			for(var/datum/reagent/blood/B in S.reagents.reagent_list)
+				if(B)
+					if(B.type == /datum/reagent/blood)
+						var/blood_data = B.data
+						if(blood_data)
+							var/generation = blood_data["generation"]
+							var/clan = blood_data["clan"]
+
+							var/message = generate_message(generation, clan)
+							to_chat(user, "[message]")
+						else
+							to_chat(user, "The blood speaks not-it is empty of power!")
+					else
+						to_chat(user, "This reagent is lifeless, unworthy of the ritual!")
+		playsound(loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
+		color = rgb(255,0,0)
+		activated = TRUE
+		qdel(src)
+
+/obj/ritualrune/bloodwalk/proc/generate_message(generation, clan)
+	var/message = ""
+
+	if(generation == 4)
+		message += "The blood is incredibly ancient and powerful! It must be from an ancient Methuselah! "
+	else if(generation == 5)
+		message += "The blood is incredibly ancient and powerful! It must be from a Methuselah! "
+	else if(generation == 6)
+		message += "The blood is incredibly ancient and powerful! It must be from an Elder! "
+	else if(generation == 7 || generation == 8 || generation == 9)
+		message += "The blood is powerful. It must come from an Ancilla or Elder! "
+	else if(generation == 10 || generation == 11)
+		message += "The blood is of middling strength. It must come from someone young. "
+	else if(generation >=12)
+		message += "The blood is of waning strength. It must come from a neonate. "
+
+	if(clan == "Toreador" || clan == "Daughters of Cacophony")
+		message += "The blood is sweet and rich. The owner must, too, be beautiful."
+	else if(clan == "Ventrue")
+		message += "The blood has kingly power in it, descending from Mithras or Hardestadt."
+	else if(clan == "Lasombra")
+		message += "Cold and dark, this blood has a mystical connection to the Abyss."
+	else if(clan == "Tzimisce")
+		message += "The vitae is mutable and twisted. Is there any doubt to the cursed line it belongs to?"
+	else if(clan == "Gangrel")
+		message += "The blood emits a primal and feral aura. The same is likely of the owner."
+	else if(clan == "Malkavian")
+		message += "You can sense chaos and madness within this blood. It's owner must be maddened too."
+	else if(clan == "Brujah")
+		message += "The blood is filled with passion and anger. So must be the owner of the blood."
+	else if(clan == "Nosferatu")
+		message += "The blood is foul and disgusting. Same must apply to the owner."
+	else if(clan == "Tremere")
+		message += "The blood is filled with the power of magic. The owner must be a thaumaturge."
+	else if(clan == "Baali")
+		message += "Tainted and corrupt. Vile and filthy. You see your reflection in the blood, but something else stares back."
+	else if(clan == "Assamite")
+		message += "Potent... Deadly... And cursed. You know well the curse laid by Tremere on the assassins."
+	else if(clan == "True Brujah")
+		message += "The blood is cold and static... It's hard to feel any emotion within it."
+	else if(clan == "Salubri")
+		message += "The cursed blood of the Salubri! The owner of this blood must be slain."
+	else if(clan == "Giovanni" || clan == "Cappadocian")
+		message += "The blood is very cold and filled with death. The owner must be a necromancer."
+	else if(clan == "Kiasyd")
+		message += "The blood is filled with traces of fae magic."
+	else if(clan == "Gargoyle")
+		message += "The blood of our stone servants."
+	else if(clan == "Ministry")
+		message += "Seduction and allure are in the blood. Ah, one of the snakes."
+	else
+		message += "The blood's origin is hard to trace. Perhaps it is one of the clanless?"
+	return message

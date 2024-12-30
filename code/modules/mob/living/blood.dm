@@ -251,6 +251,12 @@
 		blood_data["donor"] = src
 		blood_data["viruses"] = list()
 
+		blood_data["generation"] = src.generation
+		if(istype(src, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = src
+			if(H.clane)
+				blood_data["clan"] = H.clane.name
+
 		for(var/thing in diseases)
 			var/datum/disease/D = thing
 			blood_data["viruses"] += D.Copy()
