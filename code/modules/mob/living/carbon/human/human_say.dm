@@ -25,6 +25,30 @@
 			return ("Unknown")
 		else
 			return real_name
+	//Wod13 Masks
+	if(istype(wear_mask, /obj/item/clothing/mask/vampire))
+		var/obj/item/clothing/mask/vampire/V = wear_mask
+		if(V.voice_unknown)
+			return ("Unknown")
+		else
+			return real_name
+
+	if(istype(wear_mask, /obj/item/clothing/mask/animal))
+		var/obj/item/clothing/mask/animal/V = wear_mask
+		if(V.voice_unknown)
+			return ("Unknown")
+		else
+			return real_name
+
+	//Wod13 Head types, some are masks.
+	if(istype(head, /obj/item/clothing/head/vampire))
+		var/obj/item/clothing/mask/animal/V = head
+		if(V.voice_unknown)
+			return ("Unknown")
+		else
+			return real_name
+
+
 	if(mind)
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling?.mimicing )
