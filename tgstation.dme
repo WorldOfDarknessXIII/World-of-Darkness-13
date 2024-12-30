@@ -2192,7 +2192,6 @@
 #include "code\modules\language\enochian.dm"
 #include "code\modules\language\espanol.dm"
 #include "code\modules\language\french.dm"
-#include "code\modules\language\greek.dm"
 #include "code\modules\language\hebrew.dm"
 #include "code\modules\language\italian.dm"
 #include "code\modules\language\japanese.dm"
