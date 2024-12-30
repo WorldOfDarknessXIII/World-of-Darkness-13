@@ -47,46 +47,40 @@
 	var/image/holder = hud_list[GLAND_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	if(iskindred(src))
-		if(antifrenzy)
-			holder.icon = 'icons/effects/32x64.dmi'
-		holder.color = "#ffffff"
-		if(diablerist)
-			holder.icon_state = "diablerie_aura"
+	holder.icon_state = "aura"
+
+	if (client)
+		if(a_intent == INTENT_HARM)
+			holder.color = "#ff0000"
 		else
-			holder.icon_state = "aura"
-	else
+			holder.color = "#0000ff"
+	else if (isnpc(src))
+		var/mob/living/carbon/human/npc/N = src
+		if (N.danger_source)
+			holder.color = "#ff0000"
+		else
+			holder.color = "#0000ff"
+
+	if (iskindred(src))
+		//pale aura for vampires
+		holder.color = "#ffffff"
+		//only Baali can get antifrenzy through selling their soul, so this gives them the unholy halo (MAKE THIS BETTER)
+		if (antifrenzy)
+			holder.icon = 'icons/effects/32x64.dmi'
+		//black aura for diablerists
+		if (diablerist)
+			holder.icon_state = "diablerie_aura"
+
+	if (isgarou(src) || iswerewolf(src))
+		//garou have bright auras due to their spiritual potence
+		holder.icon_state = "aura_bright"
+
+	if (isghoul(src))
+		//Pale spots in the aura, had to be done manually since holder.color will show only a type of color
+		holder.overlays = null
+		holder.color = null
+		holder.icon_state = "aura_ghoul"
+
+	if(mind?.holy_role >= HOLY_ROLE_PRIEST)
+		holder.color = "#ffe12f"
 		holder.icon_state = "aura"
-		if(isgarou(src) || iswerewolf(src))
-			holder.icon_state = "aura_bright"
-		var/ghoul = FALSE
-		if(isghoul(src))
-			//Pale spots in the aura, had to be done manually since holder.color will show only a type of color
-			holder.overlays = null 
-			holder.color = null
-			holder.icon_state = "aura_ghoul"
-			ghoul = TRUE
-
-		if(isnpc(src))
-			var/mob/living/carbon/human/npc/N = src
-			var/ghoul_npc = FALSE
-			if(isghoul(N))
-				holder.overlays = null
-				holder.color = null
-				holder.icon_state = "aura_ghoul"
-				ghoul_npc = TRUE
-			if(!ghoul_npc)
-				if(N.danger_source)
-					holder.color = "#ff0000"
-				else 
-					holder.color = "#0000ff"
-		else if(!ghoul)
-		//Ghoul got a mix of two different colors on the dmi, so it can't recieve any holder.color 
-			if(a_intent == INTENT_HARM)
-				holder.color = "#ff0000"
-			else
-				holder.color = "#0000ff"
-
-		if(mind)
-			if(mind.holy_role == HOLY_ROLE_PRIEST)
-				holder.color = "#ffe12f"
