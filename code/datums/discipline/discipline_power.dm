@@ -51,7 +51,7 @@
 	/* NOT MEANT TO BE OVERRIDDEN */
 	/// Timer tracking the duration of the power. Not used if fire_and_forget is TRUE.
 	COOLDOWN_DECLARE(duration)
-	/// Timer tracking the cooldown of the power.
+	/// Timer tracking the cooldown of the power. Starts after deactivation if cancellable or toggled, after activation otherwise.
 	COOLDOWN_DECLARE(cooldown)
 	/// If this Discipline is currently in use.
 	var/active = FALSE
