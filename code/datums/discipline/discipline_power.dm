@@ -32,11 +32,11 @@
 	var/toggled = FALSE
 	///If this power can be turned on and off.
 	var/cancelable = FALSE
-	///If this power can have multiple effects active at once, or only one.
-	var/multi_activation = FALSE
+	///If this power is maintained by the caster, or simply casted and then not used again.
+	var/fire_and_forget = FALSE
 	///Amount of time it takes until this Discipline deactivates itself. 0 if instantaneous.
 	var/duration_length = 0
-	///Timer tracking the duration of the power. Not used if multi_activation is TRUE.
+	///Timer tracking the duration of the power. Not used if fire_and_forget is TRUE.
 	COOLDOWN_DECLARE(duration)
 	///Amount of time it takes until this Discipline can be used again after activation.
 	var/cooldown_length = 0
@@ -183,6 +183,9 @@
 		return FALSE
 
 	//check target type
+	if ((target_type & TARGET_SELF) && (target == owner))
+		return TRUE
+
 	if (((target_type & TARGET_MOB) || (target_type & TARGET_LIVING)) && istype(target, /mob/living))
 		//make sure our LIVING target isn't DEAD
 		var/mob/living/living = target
@@ -224,7 +227,7 @@
 		return FALSE
 
 	//make it active if it can only have one active instance at a time
-	if (!multi_activation && (duration_length != 0))
+	if (!fire_and_forget && (duration_length != 0))
 		active = TRUE
 
 	//start the cooldown if there is one, instead triggers on deactivate() if toggled
@@ -233,7 +236,7 @@
 
 	//handle Discipline power duration, start duration timer if it can't have multiple effects running at once
 	if (duration_length)
-		if (!multi_activation)
+		if (!fire_and_forget)
 			COOLDOWN_START(src, duration, duration_length)
 		if (toggled)
 			addtimer(CALLBACK(src, PROC_REF(refresh), target), duration_length)
@@ -304,7 +307,7 @@
 /datum/discipline_power/proc/deactivate(atom/target)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if (!multi_activation && (duration_length != 0))
+	if (!fire_and_forget && (duration_length != 0))
 		active = FALSE
 
 	if (duration_length)
@@ -339,7 +342,7 @@
 				to_chat(owner, "<span class='warning'>You can't spend enough blood to keep [name] active!")
 
 		if (repeat)
-			if (!multi_activation)
+			if (!fire_and_forget)
 				COOLDOWN_START(src, duration, duration_length)
 			addtimer(CALLBACK(src, PROC_REF(refresh), target), duration_length)
 			to_chat(owner, "<span class='warning'>[name] consumes your blood to stay active.</span>")
