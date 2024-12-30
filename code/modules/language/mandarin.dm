@@ -12,5 +12,5 @@
 					"sān", "yǐ", "lǎo", "cóng", "dòng", "liǎng", "cháng", "wan","kuei", "guǐ","jin", "huáng", "sān", "cān", "shēn", "cēn","nǎo","péng",
 					"xiū","liào","zhù","jí", "lù", "xiàng"
 					)
-	icon_state = "chinese" // Keeping the same icon for Mandarin and Cantonese for the time being, due to a) a lack of replacement icon and b) general societal lack of knowledge on the difference when you do not -know- the languages (yes its a statement)
+	icon_state = "chinese"
 	default_priority = 90
