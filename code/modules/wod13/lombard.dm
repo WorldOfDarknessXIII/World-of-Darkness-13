@@ -17,7 +17,7 @@
 			return
 	if(W.cost > 0)
 		if(W.illegal == illegal)
-			for(var/i in 1 to (W.cost/5)*(user.get_total_social() * 0.1))
+			for(var/i in 1 to (W.cost / 5) * (user.social + (user.additional_social * 0.1)))
 				new /obj/item/stack/dollar(loc)
 			playsound(loc, 'code/modules/wod13/sounds/sell.ogg', 50, TRUE)
 			if(istype(W, /obj/item/organ))
