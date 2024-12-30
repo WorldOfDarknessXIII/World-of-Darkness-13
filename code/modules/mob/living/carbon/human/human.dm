@@ -1161,9 +1161,11 @@
 	if(body_position != STANDING_UP)
 		return
 	if(above_turf && istype(above_turf, /turf/open/openspace))
+		var/total_dexterity = get_total_dexterity()
+		var/total_athletics = get_total_athletics()
 		to_chat(src, "<span class='notice'>You start climbing up...</span>")
 
-		var/result = do_after(src, 50 - (dexterity + athletics * 5), 0)
+		var/result = do_after(src, 50 - (total_dexterity + total_athletics * 5), 0)
 		if(!result)
 			to_chat(src, "<span class='warning'>You were interrupted and failed to climb up.</span>")
 			return
@@ -1179,16 +1181,17 @@
 			// Reset pixel offsets
 			return
 
+		//(< 5, slip and take damage), (5-14, fail to climb), (>= 15, climb up successfully)
 		var/roll = rand(1, 20)
 		// var/physique = physique
-		if(roll + dexterity + (athletics * 2) >= 15)
+		if((roll + total_dexterity + (total_athletics * 2)) >= 15)
 			loc = above_turf
 			var/turf/forward_turf = get_step(loc, dir)
 			if(forward_turf && !forward_turf.density)
 				forceMove(forward_turf)
 				to_chat(src, "<span class='notice'>You climb up successfully.</span>")
 				// Reset pixel offsets after climbing up
-		if(roll + dexterity + (athletics * 2) < 5)
+		else if((roll + total_dexterity + (total_athletics * 2)) < 5)
 			ZImpactDamage(loc, 1)
 			to_chat(src, "<span class='warning'>You slip while climbing!</span>")
 			// Reset pixel offsets if failed

@@ -423,8 +423,9 @@
 			for(var/mob/living/carbon/human/npc/police/P in oviewers(7, src))
 				if(P)
 					P.Aggro(user)
-			if(do_mob(user, src, (lockpick_timer-user.lockpicking*2) SECONDS))
-				var/roll = rand(1, 20) + (user.lockpicking*2+user.dexterity) - lockpick_difficulty
+			var/total_lockpicking = user.get_total_lockpicking()
+			if(do_mob(user, src, (lockpick_timer - total_lockpicking * 2) SECONDS))
+				var/roll = rand(1, 20) + (total_lockpicking * 2 + user.get_total_dexterity()) - lockpick_difficulty
 				if(roll <=1)
 					to_chat(user, "<span class='warning'>Your lockpick broke!</span>")
 					qdel(W)

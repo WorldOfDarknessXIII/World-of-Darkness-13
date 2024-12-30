@@ -185,9 +185,12 @@
 	var/blood = 1
 
 	var/additional_physique = 0
+	var/additional_dexterity = 0
 	var/additional_mentality = 0
 	var/additional_social = 0
 	var/additional_blood = 0
+	var/additional_lockpicking = 0
+	var/additional_athletics = 0
 	var/more_companions = 0
 	var/melee_professional = FALSE
 

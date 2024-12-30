@@ -19,10 +19,19 @@
 	. = ..()
 	for(var/obj/ritualrune/R in rituals)
 		if(R)
-			if(R.sacrifice)
-				var/obj/item/I = new R.sacrifice(src)
-				to_chat(user, "[R.thaumlevel] [R.name] - [R.desc] Requirements: [I].")
-				qdel(I)
+			if(R.sacrifices.len > 0)
+				var/list/required_items = list()
+				for(var/item_type in R.sacrifices)
+					var/obj/item/I = new item_type(src)
+					required_items += I.name
+					qdel(I)
+				var/required_list
+				if(required_items.len == 1)
+					required_list = required_items[1]
+				else
+					for(var/item_name in required_items)
+						required_list += (required_list == "" ? item_name : ", [item_name]")
+				to_chat(user, "[R.thaumlevel] [R.name] - [R.desc] Requirements: [required_list].")
 			else
 				to_chat(user, "[R.thaumlevel] [R.name] - [R.desc]")
 
@@ -38,7 +47,7 @@
 	var/activated = FALSE
 	var/mob/living/last_activator
 	var/thaumlevel = 1
-	var/sacrifice
+	var/list/sacrifices = list()
 
 /obj/ritualrune/proc/complete()
 	return
@@ -51,12 +60,21 @@
 			L.Immobilize(30)
 			last_activator = user
 			activator_bonus = L.thaum_damage_plus
-			if(sacrifice)
+			if(sacrifices.len > 0)
+				var/list/found_items = list()
 				for(var/obj/item/I in get_turf(src))
-					if(I)
-						if(istype(I, sacrifice))
+					for(var/item_type in sacrifices)
+						if(istype(I, item_type))
+							found_items += I
+							break
+
+				if(found_items.len == sacrifices.len)
+					for(var/obj/item/I in found_items)
+						if(I)
 							qdel(I)
-							complete()
+					complete()
+				else
+					to_chat(user, "You lack the necessary sacrifices to complete the ritual. Found [found_items.len], required [sacrifices.len].")
 			else
 				complete()
 
@@ -212,7 +230,7 @@
 	icon_state = "rune5"
 	word = "TE-ME'LL"
 	thaumlevel = 3
-	sacrifice = /obj/item/drinkable_bloodpack
+	sacrifices = list(/obj/item/drinkable_bloodpack)
 
 /mob/living/simple_animal/hostile/ghost/tremere
 	maxHealth = 1
@@ -243,7 +261,7 @@
 	icon_state = "rune6"
 	word = "POR'TALE"
 	thaumlevel = 5
-	sacrifice = /obj/item/drinkable_bloodpack
+	sacrifices = list(/obj/item/drinkable_bloodpack)
 
 /obj/ritualrune/teleport/complete()
 	if(!activated)
@@ -253,29 +271,62 @@
 
 /obj/ritualrune/teleport/attack_hand(mob/user)
 	..()
-	var/x_dir = 1
-	var/y_dir = 1
 	if(activated)
-		var/x = input(user, "Choose x direction:\n(1-255)", "Teleportation Rune") as num|null
-		if(x)
-			x_dir = max(min(round(text2num(x)), 255),1)
-			var/y = input(user, "Choose y direction:\n(1-255)", "Teleportation Rune") as num|null
-			if(y)
-				y_dir = max(min(round(text2num(y)), 255),1)
-				var/atom/movable/AM = new(user.loc)
-				AM.x = x_dir
-				AM.y = y_dir
-				if(istype(get_area(AM), /area/vtm))
-					var/area/vtm/V = get_area(AM)
-					if(V.name != "San Francisco")
-						playsound(loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
-						user.forceMove(get_turf(AM))
-						qdel(AM)
-						qdel(src)
-						return
+		var/direction = input(user, "Choose direction:", "Teleportation Rune") in list("North", "East", "South", "West")
+		if(direction)
+			var/x_dir = user.x
+			var/y_dir = user.y
+			var/step = 1
+			var/min_distance = 10
+			var/max_distance = 20
+			var/valid_destination = FALSE
+			var/turf/destination = null
+
+			if(get_dist(src, user) > 1)
+				to_chat(user, "<span class='warning'>You moved away from the rune!</span>")
+				return
+
+			// Move at least min_distance tiles in the chosen direction
+			while(step <= min_distance)
+				switch(direction)
+					if("North")
+						y_dir += 1
+					if("East")
+						x_dir += 1
+					if("South")
+						y_dir -= 1
+					if("West")
+						x_dir -= 1
+				step += 1
+
+			// Continue moving until a valid destination is found or max_distance is reached
+			while(step <= max_distance && !valid_destination)
+				switch(direction)
+					if("North")
+						y_dir += 1
+					if("East")
+						x_dir += 1
+					if("South")
+						y_dir -= 1
+					if("West")
+						x_dir -= 1
+
+				if(x_dir < 20 || x_dir > 230 || y_dir < 20 || y_dir > 230)
+					to_chat(user, "<span class='warning'>You can't teleport outside the city!</span>")
+					return
+
+				destination = locate(x_dir, y_dir, user.z)
+				if(destination && !istype(destination, /turf/open/space/basic) && !istype(destination, /turf/closed/wall/vampwall))
+					valid_destination = TRUE
 				else
-					to_chat(user, "<span class='warning'>There is no available teleportation place by this coordinates!</span>")
-					qdel(AM)
+					step += 1
+
+			if(valid_destination)
+				playsound(loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
+				user.forceMove(destination)
+				qdel(src)
+			else
+				to_chat(user, "<span class='warning'>The spell fails as no destination is found!</span>")
 
 /obj/ritualrune/curse
 	name = "Curse Rune"
@@ -283,7 +334,7 @@
 	icon_state = "rune7"
 	word = "CUS-RE'S"
 	thaumlevel = 5
-	sacrifice = /obj/item/organ/heart
+	sacrifices = list(/obj/item/organ/heart)
 
 /obj/ritualrune/curse/complete()
 	if(!activated)
@@ -296,15 +347,15 @@
 	var/cursed
 	if(activated)
 		var/namem = input(user, "Choose target name:", "Curse Rune") as text|null
+		qdel(src)
 		if(namem)
 			cursed = namem
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
 				if(H.real_name == cursed)
-					H.adjustFireLoss(20)
+					H.adjustFireLoss(35)
 					playsound(H.loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
 					to_chat(H, "<span class='warning'>You feel someone repeating your name from the shadows...</span>")
 					H.Stun(10)
-					qdel(src)
 					return
 			to_chat(user, "<span class='warning'>There is no such names in the city!</span>")
 
@@ -360,3 +411,106 @@
 				H.adjustBruteLoss(25)
 				H.emote("scream")
 				return
+
+//Deflection of the Wooden Doom ritual
+//Protects you from being staked for a single hit. Is it useful? Marginally. But it is a level 1 rite.
+/obj/ritualrune/deflection_stake
+	name = "Deflection of the Wooden Doom"
+	desc = "Shield your heart and splinter the enemy stake. Requires a stake."
+	icon_state = "rune7"
+	word = "Splinter, shatter, break the wooden doom."
+	thaumlevel = 1
+	sacrifices = list(/obj/item/vampire_stake)
+
+/obj/ritualrune/deflection_stake/complete()
+	for(var/mob/living/carbon/human/H in loc)
+		if(H)
+			if(!HAS_TRAIT(H, TRAIT_STAKE_RESISTANT))
+				ADD_TRAIT(H, TRAIT_STAKE_RESISTANT, MAGIC_TRAIT)
+				qdel(src)
+		playsound(loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
+		color = rgb(255,0,0)
+		activated = TRUE
+
+/obj/ritualrune/bloodwalk
+	name = "Blood Walk"
+	desc = "Trace the subject's lineage from a blood syringe."
+	icon_state = "rune7"
+	word = "Reveal thine bloodline for my eyes."
+	thaumlevel = 2
+
+/obj/ritualrune/bloodwalk/attack_hand(mob/user)
+	for(var/obj/item/reagent_containers/syringe/S in loc)
+		if(S)
+			for(var/datum/reagent/blood/B in S.reagents.reagent_list)
+				if(B)
+					if(B.type == /datum/reagent/blood)
+						var/blood_data = B.data
+						if(blood_data)
+							var/generation = blood_data["generation"]
+							var/clan = blood_data["clan"]
+
+							var/message = generate_message(generation, clan)
+							to_chat(user, "[message]")
+						else
+							to_chat(user, "The blood speaks not-it is empty of power!")
+					else
+						to_chat(user, "This reagent is lifeless, unworthy of the ritual!")
+		playsound(loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
+		color = rgb(255,0,0)
+		activated = TRUE
+		qdel(src)
+
+/obj/ritualrune/bloodwalk/proc/generate_message(generation, clan)
+	var/message = ""
+
+	if(generation == 4)
+		message += "The blood is incredibly ancient and powerful! It must be from an ancient Methuselah! "
+	else if(generation == 5)
+		message += "The blood is incredibly ancient and powerful! It must be from a Methuselah! "
+	else if(generation == 6)
+		message += "The blood is incredibly ancient and powerful! It must be from an Elder! "
+	else if(generation == 7 || generation == 8 || generation == 9)
+		message += "The blood is powerful. It must come from an Ancilla or Elder! "
+	else if(generation == 10 || generation == 11)
+		message += "The blood is of middling strength. It must come from someone young. "
+	else if(generation >=12)
+		message += "The blood is of waning strength. It must come from a neonate. "
+
+	if(clan == "Toreador" || clan == "Daughters of Cacophony")
+		message += "The blood is sweet and rich. The owner must, too, be beautiful."
+	else if(clan == "Ventrue")
+		message += "The blood has kingly power in it, descending from Mithras or Hardestadt."
+	else if(clan == "Lasombra")
+		message += "Cold and dark, this blood has a mystical connection to the Abyss."
+	else if(clan == "Tzimisce")
+		message += "The vitae is mutable and twisted. Is there any doubt to the cursed line it belongs to?"
+	else if(clan == "Gangrel")
+		message += "The blood emits a primal and feral aura. The same is likely of the owner."
+	else if(clan == "Malkavian")
+		message += "You can sense chaos and madness within this blood. It's owner must be maddened too."
+	else if(clan == "Brujah")
+		message += "The blood is filled with passion and anger. So must be the owner of the blood."
+	else if(clan == "Nosferatu")
+		message += "The blood is foul and disgusting. Same must apply to the owner."
+	else if(clan == "Tremere")
+		message += "The blood is filled with the power of magic. The owner must be a thaumaturge."
+	else if(clan == "Baali")
+		message += "Tainted and corrupt. Vile and filthy. You see your reflection in the blood, but something else stares back."
+	else if(clan == "Assamite")
+		message += "Potent... Deadly... And cursed. You know well the curse laid by Tremere on the assassins."
+	else if(clan == "True Brujah")
+		message += "The blood is cold and static... It's hard to feel any emotion within it."
+	else if(clan == "Salubri")
+		message += "The cursed blood of the Salubri! The owner of this blood must be slain."
+	else if(clan == "Giovanni" || clan == "Cappadocian")
+		message += "The blood is very cold and filled with death. The owner must be a necromancer."
+	else if(clan == "Kiasyd")
+		message += "The blood is filled with traces of fae magic."
+	else if(clan == "Gargoyle")
+		message += "The blood of our stone servants."
+	else if(clan == "Ministry")
+		message += "Seduction and allure are in the blood. Ah, one of the snakes."
+	else
+		message += "The blood's origin is hard to trace. Perhaps it is one of the clanless?"
+	return message

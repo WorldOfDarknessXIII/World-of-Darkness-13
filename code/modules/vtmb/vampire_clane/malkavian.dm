@@ -12,6 +12,7 @@
 	clan_keys = /obj/item/vamp/keys/malkav
 
 /datum/vampireclane/malkavian/post_gain(mob/living/carbon/human/H)
+	..()
 	var/datum/action/cooldown/malk_hivemind/GH = new()
 	GH.Grant(H)
 	GLOB.malkavian_list += H

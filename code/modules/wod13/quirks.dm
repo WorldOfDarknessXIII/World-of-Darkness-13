@@ -521,13 +521,22 @@ Dancer
 	H.grant_language(/datum/language/espanol)
 
 /datum/quirk/chinese
-	name = "Chinese"
-	desc = "You know the Chinese language."
+	name = "Mandarin"
+	desc = "You know Mandarin."
 	value = 1
 
 /datum/quirk/chinese/add()
 	var/mob/living/carbon/H = quirk_holder
-	H.grant_language(/datum/language/chinese)
+	H.grant_language(/datum/language/mandarin)
+
+/datum/quirk/cantonese
+	name = "Cantonese"
+	desc = "You know Cantonese."
+	value = 1
+
+/datum/quirk/cantonese/add()
+	var/mob/living/carbon/H = quirk_holder
+	H.grant_language(/datum/language/cantonese)
 
 /datum/quirk/russian
 	name = "Russian"

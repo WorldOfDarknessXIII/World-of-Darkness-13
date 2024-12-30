@@ -115,7 +115,7 @@ And it also helps for the character set panel
 							need_lover = FALSE
 
 /datum/vampireclane/proc/post_gain(var/mob/living/carbon/human/H)
-	if(violating_appearance)
+	if(violating_appearance && H.roundstart_vampire)
 		if(length(GLOB.masquerade_latejoin))
 			var/obj/effect/landmark/latejoin_masquerade/LM = pick(GLOB.masquerade_latejoin)
 			if(LM)

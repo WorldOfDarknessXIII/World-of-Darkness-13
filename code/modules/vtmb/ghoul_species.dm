@@ -95,13 +95,13 @@
 //			if(1)
 //				humanity = "I'm slowly falling into madness..."
 //		dat += "[humanity]<BR>"
-		dat += "<b>Physique</b>: [host.physique]<BR>"
-		dat += "<b>Dexterity</b>: [host.dexterity]<BR>"
-		dat += "<b>Social</b>: [host.social]<BR>"
-		dat += "<b>Mentality</b>: [host.mentality]<BR>"
-		dat += "<b>Lockpicking</b>: [host.lockpicking]<BR>"
-		dat += "<b>Athletics</b>: [host.athletics]<BR>"
-		dat += "<b>Cruelty</b>: [host.blood]<BR>"
+		dat += "<b>Physique</b>: [host.physique] + [host.additional_physique]<BR>"
+		dat += "<b>Dexterity</b>: [host.dexterity] + [host.additional_dexterity]<BR>"
+		dat += "<b>Social</b>: [host.social] + [host.additional_social]<BR>"
+		dat += "<b>Mentality</b>: [host.mentality] + [host.additional_mentality]<BR>"
+		dat += "<b>Cruelty</b>: [host.blood] + [host.additional_blood]<BR>"
+		dat += "<b>Lockpicking</b>: [host.lockpicking] + [host.additional_lockpicking]<BR>"
+		dat += "<b>Athletics</b>: [host.athletics] + [host.additional_athletics]<BR>"
 		if(host.Myself)
 			if(host.Myself.Friend)
 				if(host.Myself.Friend.owner)

@@ -1,28 +1,32 @@
-/datum/outfit/job/national_guard
-	name = "National Guard Soldier"
-	uniform = /obj/item/clothing/under/vampire/military_fatigues
+/datum/outfit/job/swat
+	name = "Swat Officer"
+	uniform = /obj/item/clothing/under/vampire/police
 	mask = /obj/item/clothing/mask/vampire/balaclava
 	r_pocket = /obj/item/flashlight
-	l_pocket = /obj/item/ammo_box/magazine/vampaug
+	l_pocket = /obj/item/ammo_box/magazine/vamp556
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
-	belt = /obj/item/gun/ballistic/automatic/vampire/aug
-	suit = /obj/item/clothing/suit/vampire/vest/army
-	head = /obj/item/clothing/head/vampire/army
+	belt = /obj/item/gun/ballistic/automatic/vampire/ar15
+	suit = /obj/item/clothing/suit/vampire/vest/police
+	head = /obj/item/clothing/head/vampire/helmet
+	id = /obj/item/card/id/police
 	backpack_contents = list(
-		/obj/item/ammo_box/magazine/vampaug = 3,
-		/obj/item/radio/military = 1
+		/obj/item/ammo_box/magazine/vamp556 = 3,
+		/obj/item/radio/cop = 1,
+		/obj/item/vamp/keys/hack=2
 		)
 
-/datum/antagonist/national_guard/proc/equip_national_guard()
+/datum/antagonist/swat/proc/equip_swat()
 	var/mob/living/carbon/human/H = owner.current
 	if(!ishuman(owner.current))
 		return
-	H.equipOutfit(national_guard_outfit)
+	H.equipOutfit(swat_outfit)
 	if(H.clane)
 		H.remove_overlay(H.clane.accessories_layers[H.clane.current_accessory])
 		qdel(H.clane)
 	H.set_species(/datum/species/human)
 	H.generation = 13
+	H.lockpicking = 5
+	H.physique = 4
 	H.ignores_warrant = TRUE
 	H.maxHealth = round((initial(H.maxHealth)-initial(H.maxHealth)/4)+(initial(H.maxHealth)/4)*(H.physique+13-H.generation))
 	H.health = round((initial(H.health)-initial(H.health)/4)+(initial(H.health)/4)*(H.physique+13-H.generation))
@@ -48,79 +52,54 @@
 	var/obj/effect/landmark/start/D = pick(landmarkslist)
 	H.forceMove(D.loc)
 
-/datum/antagonist/national_guard/proc/offer_loadout()
-	var/list/loadouts = list(
-		"Flamethrower",
-		"EOD",
-		"Medic",
-		"Sniper",
-		"Ammo Carrier"
-	)
-	var/loadout_type = input(owner.current, "Choose your loadout:", "Loadout Selection") in loadouts
-	switch(loadout_type)
-		if("Flamethrower")
-			owner.current.put_in_r_hand(new /obj/item/vampire_flamethrower(owner.current))
-			owner.current.put_in_l_hand(new /obj/item/gas_can/full(owner.current))
-		if("EOD")
-			owner.current.put_in_r_hand(new /obj/item/clothing/suit/vampire/eod(owner.current))
-			owner.current.put_in_l_hand(new /obj/item/clothing/head/vampire/eod(owner.current))
-		if("Medic")
-			owner.current.put_in_r_hand(new /obj/item/storage/firstaid/tactical(owner.current))
-		if("Sniper")
-			owner.current.put_in_r_hand(new /obj/item/gun/ballistic/automatic/vampire/sniper(owner.current))
-			owner.current.put_in_l_hand(new /obj/item/ammo_box/vampire/c556(owner.current))
-		if("Ammo Carrier")
-			owner.current.put_in_r_hand(new /obj/item/ammo_box/vampire/c556/incendiary(owner.current))
-			owner.current.put_in_l_hand(new /obj/item/ammo_box/vampire/c556/incendiary(owner.current))
-
-/obj/effect/landmark/start/national_guard
-	name = "National Guard"
+/obj/effect/landmark/start/swat
+	name = "Swat Officer"
 	delete_after_roundstart = FALSE
 
-/datum/antagonist/national_guard
-	name = "National Guard"
-	roundend_category = "national guard"
-	antagpanel_category = "National Guard"
-	job_rank = ROLE_NATIONAL_GUARD
+/datum/antagonist/swat
+	name = "Swat Officer"
+	roundend_category = "Swat"
+	antagpanel_category = "Swat"
+	job_rank = ROLE_SWAT
 	antag_hud_type = ANTAG_HUD_OPS
 	antag_hud_name = "synd"
 	antag_moodlet = /datum/mood_event/focused
 	show_to_ghosts = TRUE
 	var/always_new_team = FALSE
-	var/datum/team/national_guard/national_guard_team
-	var/national_guard_outfit = /datum/outfit/job/national_guard
+	var/datum/team/swat/swat_team
+	var/swat_outfit = /datum/outfit/job/swat
 	var/custom_objective
 
-/datum/antagonist/national_guard/sergeant
-	name = "National Guard Sergeant"
+/datum/antagonist/swat/team_leader
+	name = "Swat Team Leader"
 	always_new_team = TRUE
 	var/title
 
-/datum/antagonist/national_guard/on_gain()
+/datum/antagonist/swat/on_gain()
 	randomize_appearance()
 	forge_objectives()
 	add_antag_hud(ANTAG_HUD_OPS, "synd", owner.current)
 	owner.special_role = src
-	equip_national_guard()
+	equip_swat()
 	give_alias()
-	offer_loadout()
 	return ..()
 
-/datum/antagonist/national_guard/on_removal()
+/datum/antagonist/swat/on_removal()
 	..()
-	to_chat(owner.current,"<span class='userdanger'>You are no longer in the National Guard!</span>")
+	to_chat(owner.current,"<span class='userdanger'>You are no longer in the Special Weapons and Tactics squad!</span>")
 	owner.special_role = null
 
-/datum/antagonist/national_guard/greet()
-	to_chat(owner.current, "<span class='alertsyndie'>You're in the national guard.</span>")
-	to_chat(owner, "<span class='notice'>You are a [national_guard_team ? national_guard_team.national_guard_name : "national guard"] soldier!</span>")
+/datum/antagonist/swat/greet()
+	to_chat(owner.current, "<span class='alertsyndie'>You're in the Special Weapons and Tactics squad.</span>")
+	to_chat(owner, "<span class='notice'>You are a [swat_team ? swat_team.swat_name : "swat"] officer!</span>")
+	spawn(3 SECONDS)
 	owner.announce_objectives()
 
 
-/datum/antagonist/national_guard/proc/give_alias()
+/datum/antagonist/swat/proc/give_alias()
 	var/my_name = "Tyler"
-	var/list/military_ranks = list("Private", "Private First Class", "Specialist", "Corporal")
-	var/selected_rank = pick(military_ranks)
+	var/list/swat_ranks = list("Private", "Private First Class", "Lance Corporal", "Corporal")
+	var/selected_rank = pick(swat_ranks)
 	if(owner.current.gender == MALE)
 		my_name = pick(GLOB.first_names_male)
 	else
@@ -128,40 +107,42 @@
 	var/my_surname = pick(GLOB.last_names)
 	owner.current.fully_replace_character_name(null,"[selected_rank] [my_name] [my_surname]")
 
-/datum/antagonist/national_guard/proc/forge_objectives()
-	if(national_guard_team)
-		objectives |= national_guard_team.objectives
+/datum/antagonist/swat/proc/forge_objectives()
+	spawn(2 SECONDS)
+	if(swat_team)
+		objectives |= swat_team.objectives
 
-/datum/antagonist/national_guard/sergeant/give_alias()
+/datum/antagonist/swat/leader/give_alias()
 	var/my_name = "Tyler"
 	if(owner.current.gender == MALE)
 		my_name = pick(GLOB.first_names_male)
 	else
 		my_name = pick(GLOB.first_names_female)
 	var/my_surname = pick(GLOB.last_names)
-	owner.current.fully_replace_character_name(null,"Sergeant [my_name] [my_surname]")
+	owner.current.fully_replace_character_name(null,"Squad Leader [my_name] [my_surname]")
 
-/datum/team/national_guard/antag_listing_name()
-	if(national_guard_name)
-		return "[national_guard_name] Soldiers"
+/datum/team/swat/antag_listing_name()
+	if(swat_name)
+		return "[swat_name] Officers"
 	else
-		return "Soldiers"
+		return "Officers"
 
 
-/datum/antagonist/national_guard/sergeant/greet()
-	to_chat(owner, "<B>You are the leading sergeant for this mission. You are responsible for guiding your team's operation.</B>")
-	to_chat(owner, "<B>If you feel you are not up to this task, give your command to another soldier.</B>")
+/datum/antagonist/swat/leader/greet()
+	to_chat(owner, "<B>You are the SWAT Officer in charge of this mission. You are responsible for guiding your team's operation.</B>")
+	to_chat(owner, "<B>If you feel you are not up to this task, give your command to another officer.</B>")
+	spawn(3 SECONDS)
 	owner.announce_objectives()
-	addtimer(CALLBACK(src, PROC_REF(national_guardteam_name_assign)), 1)
+	addtimer(CALLBACK(src, PROC_REF(swatteam_name_assign)), 1)
 
-/datum/antagonist/national_guard/sergeant/proc/national_guardteam_name_assign()
-	if(!national_guard_team)
+/datum/antagonist/swat/leader/proc/swatteam_name_assign()
+	if(!swat_team)
 		return
-	national_guard_team.rename_team(ask_name())
+	swat_team.rename_team(ask_name())
 
-/datum/antagonist/national_guard/sergeant/proc/ask_name()
+/datum/antagonist/swat/leader/proc/ask_name()
 	var/randomname = pick(GLOB.last_names)
-	var/newname = stripped_input(owner.current,"You are the sergeant. Please choose a name for your team.", "Name change",randomname)
+	var/newname = stripped_input(owner.current,"You are the squa leader. Please choose a name for your team.", "Name change",randomname)
 	if (!newname)
 		newname = randomname
 	else
@@ -169,27 +150,27 @@
 		if(!newname)
 			newname = randomname
 
-/datum/antagonist/national_guard/create_team(datum/team/national_guard/new_team)
+/datum/antagonist/swat/create_team(datum/team/swat/new_team)
 	if(!new_team)
 		if(!always_new_team)
-			for(var/datum/antagonist/national_guard/N in GLOB.antagonists)
+			for(var/datum/antagonist/swat/N in GLOB.antagonists)
 				if(!N.owner)
 					stack_trace("Antagonist datum without owner in GLOB.antagonists: [N]")
 					continue
-		national_guard_team = new /datum/team/national_guard
-		national_guard_team.update_objectives()
+		swat_team = new /datum/team/swat
+		swat_team.update_objectives()
 		return
-	if(!istype(national_guard_team))
+	if(!istype(swat_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
-	national_guard_team = new_team
+	swat_team = new_team
 
-/datum/antagonist/national_guard/admin_add(datum/mind/new_owner,mob/admin)
-	new_owner.assigned_role = ROLE_NATIONAL_GUARD
+/datum/antagonist/swat/admin_add(datum/mind/new_owner,mob/admin)
+	new_owner.assigned_role = ROLE_SWAT
 	new_owner.add_antag_datum(src)
-	message_admins("[key_name_admin(admin)] has national guard'd [key_name_admin(new_owner)].")
-	log_admin("[key_name(admin)] has national guard'd [key_name(new_owner)].")
+	message_admins("[key_name_admin(admin)] has swat'd [key_name_admin(new_owner)].")
+	log_admin("[key_name(admin)] has swat'd [key_name(new_owner)].")
 
-/datum/random_gen/national_guard
+/datum/random_gen/swat
 	var/hair_colors = list("040404",	//Black
 										"120b05",	//Dark Brown
 										"342414",	//Brown
@@ -284,8 +265,8 @@
 										"Shoulder-length Hair",
 										"Volaju")
 
-/datum/antagonist/national_guard/proc/randomize_appearance()
-	var/datum/random_gen/national_guard/h_gen = new
+/datum/antagonist/swat/proc/randomize_appearance()
+	var/datum/random_gen/swat/h_gen = new
 	var/mob/living/carbon/human/H = owner.current
 	H.gender = pick(MALE, FEMALE)
 	H.body_type = H.gender
@@ -321,34 +302,34 @@
 	H.update_hair()
 	H.update_body_parts()
 
-/datum/team/national_guard/proc/rename_team(new_name)
-	national_guard_name = new_name
-	name = "[national_guard_name] Team"
+/datum/team/swat/proc/rename_team(new_name)
+	swat_name = new_name
+	name = "[swat_name] Team"
 
-/datum/team/national_guard
-	var/national_guard_name
-	var/core_objective = /datum/objective/national_guard
-	member_name = "National Guard Operative"
+/datum/team/swat
+	var/swat_name
+	var/core_objective = /datum/objective/swat
+	member_name = "Swat Officer"
 	var/memorized_code
 	var/list/team_discounts
 	var/obj/item/nuclear_challenge/war_button
 
-/datum/team/national_guard/New()
+/datum/team/swat/New()
 	..()
-	national_guard_name = national_guard_name()
+	swat_name = swat_name()
 
-/datum/team/national_guard/proc/update_objectives()
+/datum/team/swat/proc/update_objectives()
 	if(core_objective)
 		var/datum/objective/O = new core_objective
 		O.team = src
 		objectives += O
 
 
-/datum/team/national_guard/roundend_report()
+/datum/team/swat/roundend_report()
 	var/list/parts = list()
-	parts += "<span class='header'>[national_guard_name] Operatives:</span>"
+	parts += "<span class='header'>[swat_name] Operatives:</span>"
 
-	var/text = "<br><span class='header'>The national guard were:</span>"
+	var/text = "<br><span class='header'>The SWAT were:</span>"
 	text += printplayerlist(members)
 	parts += text
 
@@ -359,38 +340,38 @@
 
 //////////////////////////////////////////////
 //                                          //
-//       NATIONAL GUARD SQUAD (MIDROUND)    //
+//       		SWAT (MIDROUND)			    //
 //                                          //
 //////////////////////////////////////////////
 
-/datum/dynamic_ruleset/midround/from_ghosts/national_guard
-	name = "National Guard Squad"
-	antag_flag = ROLE_NATIONAL_GUARD
-	antag_datum = /datum/antagonist/national_guard
+/datum/dynamic_ruleset/midround/from_ghosts/swat
+	name = "Swat Officer"
+	antag_flag = ROLE_SWAT
+	antag_datum = /datum/antagonist/swat
 	required_candidates = 1
 	weight = 5
 	cost = 35
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
-	var/datum/team/national_guard/national_guard_team
+	var/datum/team/swat/swat_team
 	flags = HIGHLANDER_RULESET
 
-/datum/dynamic_ruleset/midround/from_ghosts/national_guard/acceptable(population=0, threat=0)
+/datum/dynamic_ruleset/midround/from_ghosts/swat/acceptable(population=0, threat=0)
 	indice_pop = min(operative_cap.len, round(living_players.len/5)+1)
 	required_candidates = max(5, operative_cap[indice_pop])
 	return ..()
 
-/datum/dynamic_ruleset/midround/from_ghosts/national_guard/ready(forced = FALSE)
+/datum/dynamic_ruleset/midround/from_ghosts/swat/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
 		return FALSE
 	return ..()
 
-/datum/dynamic_ruleset/midround/from_ghosts/national_guard/finish_setup(mob/new_character, index)
-	new_character.mind.special_role = "National Guard"
-	new_character.mind.assigned_role = "National Guard"
+/datum/dynamic_ruleset/midround/from_ghosts/swat/finish_setup(mob/new_character, index)
+	new_character.mind.special_role = "Swat Officer"
+	new_character.mind.assigned_role = "Swat Officer"
 	if (index == 1) // Our first guy is the leader
-		var/datum/antagonist/national_guard/sergeant/new_role = new
-		national_guard_team = new_role.national_guard_team
+		var/datum/antagonist/swat/leader/new_role = new
+		swat_team = new_role.swat_team
 		new_character.mind.add_antag_datum(new_role)
 	else
 		return ..()
