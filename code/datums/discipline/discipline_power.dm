@@ -37,11 +37,11 @@
 	var/cancelable = FALSE
 	/// If this power is maintained by the caster, or simply casted and then not used again.
 	var/fire_and_forget = FALSE
-	/// If this power uses its own duration rather than the default handling
+	/// If this power uses its own duration handling rather than the default handling
 	var/duration_override = FALSE
 	/// Amount of time it takes until this Discipline deactivates itself. 0 if instantaneous.
 	var/duration_length = 0
-	/// If this power uses its own cooldown rather than the default handling
+	/// If this power uses its own cooldown handling rather than the default handling
 	var/cooldown_override = FALSE
 	/// Amount of time it takes until this Discipline can be used again after activation.
 	var/cooldown_length = 0
