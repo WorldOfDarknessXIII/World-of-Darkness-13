@@ -50,6 +50,7 @@ GLOBAL_LIST_INIT(services_positions, list(
     "Street Janitor",
     "Doctor",
     "Taxi Driver"
+    "Millenium Tower Security"
 ))
 
 
@@ -71,7 +72,6 @@ GLOBAL_LIST_INIT(warehouse_positions, list(
     "Dealer",
     "Supply Technician"
 ))
-
 
 GLOBAL_LIST_INIT(tremere_positions, list(
 	"Chantry Regent",

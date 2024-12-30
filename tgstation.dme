@@ -3378,6 +3378,7 @@
 #include "code\modules\vtmb\jobs\bogatyr.dm"
 #include "code\modules\vtmb\jobs\bouncer.dm"
 #include "code\modules\vtmb\jobs\caitiff.dm"
+#include "code\modules\vtmb\jobs\chunk.dm"
 #include "code\modules\vtmb\jobs\citizen.dm"
 #include "code\modules\vtmb\jobs\dealer.dm"
 #include "code\modules\vtmb\jobs\doctor.dm"

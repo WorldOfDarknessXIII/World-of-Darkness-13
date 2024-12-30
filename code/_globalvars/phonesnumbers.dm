@@ -11,6 +11,8 @@ GLOBAL_VAR_INIT(toreadornumber, "")
 GLOBAL_VAR_INIT(ventruenumber, "")
 GLOBAL_VAR_INIT(brujahnumber, "")
 GLOBAL_VAR_INIT(tremerenumber, "")
+GLOBAL_VAR_INIT(officenumber, "")
+GLOBAL_VAR_INIT(receptionnumber, "")
 
 // Important Names for contacts
 
@@ -25,3 +27,5 @@ GLOBAL_VAR_INIT(toreadorname, "")
 GLOBAL_VAR_INIT(ventruename, "")
 GLOBAL_VAR_INIT(brujahname, "")
 GLOBAL_VAR_INIT(tremerename, "")
+GLOBAL_VAR_INIT(officename, "")
+GLOBAL_VAR_INIT(receptionname, "")
