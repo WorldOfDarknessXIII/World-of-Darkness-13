@@ -99,6 +99,7 @@
 	cost = 0
 	item_flags = DROPDEL
 	is_iron = FALSE
+	masquerade_violating = TRUE
 
 /obj/item/melee/vampirearms/katana/fire/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!proximity)
@@ -117,6 +118,7 @@
 	cost = 0
 	item_flags = DROPDEL
 	is_iron = FALSE
+	masquerade_violating = TRUE
 
 /obj/item/melee/vampirearms/katana/blood/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!proximity)

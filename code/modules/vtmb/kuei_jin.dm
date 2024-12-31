@@ -1267,11 +1267,13 @@
 			var/obj/item/melee/powerfist/stone/S2 = new (caster)
 			caster.put_in_r_hand(S1)
 			caster.put_in_l_hand(S2)
+			ADD_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					caster.physiology.armor.melee -= 50
 					caster.physiology.armor.bullet -= 50
 					caster.remove_overlay(POTENCE_LAYER)
+					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 					if(S1)
 						qdel(S1)
 					if(S2)
@@ -1321,6 +1323,7 @@
 			var/initial_limbs_id = caster.dna.species.limbs_id
 			caster.dna.species.limbs_id = "rotten1"
 			caster.update_body()
+			ADD_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					REMOVE_TRAIT(caster, TRAIT_NOSOFTCRIT, MAGIC_TRAIT)
@@ -1330,6 +1333,7 @@
 					caster.remove_movespeed_modifier(/datum/movespeed_modifier/necroing)
 					caster.dna.species.limbs_id = initial_limbs_id
 					caster.update_body()
+					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 		if(2)
 			var/initial_limbs_id = caster.dna.species.limbs_id
 			var/initial_hair = caster.hairstyle
@@ -1371,6 +1375,7 @@
 			caster.dna.species.limbs_id = "rotten1"
 			caster.update_body()
 			caster.set_light(1.4,0.7,"#34D352")
+			ADD_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					REMOVE_TRAIT(caster, TRAIT_NOSOFTCRIT, MAGIC_TRAIT)
@@ -1380,6 +1385,7 @@
 					caster.dna.species.limbs_id = initial_limbs_id
 					caster.update_body()
 					caster.set_light(0)
+					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 
 /datum/chi_discipline/ghost_flame_shintai
 	name = "Ghost Flame Shintai"
@@ -1662,6 +1668,7 @@
 			caster.dna.species.attack_sound = 'code/modules/wod13/sounds/heavypunch.ogg'
 			tackler = caster.AddComponent(/datum/component/tackler, stamina_cost=0, base_knockdown = 1 SECONDS, range = 2+level_casting, speed = 1, skill_mod = 0, min_distance = 0)
 			caster.potential = 4
+			ADD_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					caster.remove_overlay(PROTEAN_LAYER)
@@ -1671,6 +1678,7 @@
 					caster.dna.species.meleemod -= 1
 					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
 					qdel(tackler)
+					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 		if(3)
 			caster.flesh_shintai_dodge = TRUE
 			to_chat(caster, "<span class='notice'>You feel really dodgy...</span>")
@@ -1804,11 +1812,13 @@
 			caster.apply_overlay(UNICORN_LAYER)
 			caster.physiology.armor.melee += mod
 			caster.physiology.armor.bullet += mod
+			ADD_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 			spawn((delay)+caster.discipline_time_plus)
 				if(caster)
 					caster.physiology.armor.melee -= mod
 					caster.physiology.armor.bullet -= mod
 					caster.remove_overlay(UNICORN_LAYER)
+					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 		if("Tentacles")
 			var/mod = level_casting
 			caster.remove_overlay(UNICORN_LAYER)
@@ -1817,6 +1827,7 @@
 			caster.apply_overlay(UNICORN_LAYER)
 			ADD_TRAIT(caster, TRAIT_SHOCKIMMUNE, SPECIES_TRAIT)
 			ADD_TRAIT(caster, TRAIT_PASSTABLE, SPECIES_TRAIT)
+			ADD_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 			if(mod > 1)
 				caster.add_movespeed_modifier(/datum/movespeed_modifier/tentacles1)
 				ADD_TRAIT(caster, TRAIT_PUSHIMMUNE, SPECIES_TRAIT)
@@ -1833,6 +1844,7 @@
 					caster.remove_overlay(UNICORN_LAYER)
 					REMOVE_TRAIT(caster, TRAIT_SHOCKIMMUNE, SPECIES_TRAIT)
 					REMOVE_TRAIT(caster, TRAIT_PASSTABLE, SPECIES_TRAIT)
+					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 					if(mod > 1)
 						caster.remove_movespeed_modifier(/datum/movespeed_modifier/tentacles1)
 						REMOVE_TRAIT(caster, TRAIT_PUSHIMMUNE, SPECIES_TRAIT)
@@ -1850,6 +1862,7 @@
 			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "demon", -UNICORN_LAYER)
 			caster.overlays_standing[UNICORN_LAYER] = potence_overlay
 			caster.apply_overlay(UNICORN_LAYER)
+			ADD_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 			switch(mod)
 				if(1)
 					caster.add_movespeed_modifier(/datum/movespeed_modifier/demonform1)
@@ -1864,6 +1877,7 @@
 			spawn((delay)+caster.discipline_time_plus)
 				if(caster)
 					caster.remove_overlay(UNICORN_LAYER)
+					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 					switch(mod)
 						if(1)
 							caster.remove_movespeed_modifier(/datum/movespeed_modifier/demonform1)
@@ -1885,22 +1899,26 @@
 			caster.dna.species.punchdamagelow += mod
 			caster.dna.species.punchdamagehigh += mod
 			caster.dna.species.meleemod += meleemod
+			ADD_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 			spawn((delay)+caster.discipline_time_plus)
 				if(caster)
 					caster.remove_overlay(UNICORN_LAYER)
 					caster.dna.species.punchdamagelow -= mod
 					caster.dna.species.punchdamagehigh -= mod
 					caster.dna.species.meleemod -= meleemod
+					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 		if("Foul")
 			caster.remove_overlay(UNICORN_LAYER)
 			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "foul", -UNICORN_LAYER)
 			caster.overlays_standing[UNICORN_LAYER] = potence_overlay
 			caster.apply_overlay(UNICORN_LAYER)
 			caster.foul_aura = level_casting*5
+			ADD_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 			spawn((delay)+caster.discipline_time_plus)
 				if(caster)
 					caster.remove_overlay(UNICORN_LAYER)
 					caster.foul_aura = 0
+					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 
 /datum/chi_discipline/hellweaving
 	name = "Hellweaving"
@@ -2060,13 +2078,13 @@
 		if(4)
 			if(prob(25))
 				target.resist_fire()
-			new /datum/hallucination/oh_yeah(target, TRUE)
+			new /datum/hallucination/fire(target, TRUE)
 		if(5)
 			if(prob(25))
 				target.resist_fire()
-			new /datum/hallucination/oh_yeah(target, TRUE)
+			new /datum/hallucination/fire(target, TRUE)
 			for(var/mob/living/L in viewers(5, target))
 				if(L != caster && L != target)
 					if(prob(20))
 						L.resist_fire()
-					new /datum/hallucination/oh_yeah(L, TRUE)
+					new /datum/hallucination/fire(L, TRUE)
