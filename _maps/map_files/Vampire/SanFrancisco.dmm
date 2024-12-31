@@ -1144,7 +1144,7 @@
 "awt" = (/obj/machinery/light/small{dir = 8; pixel_x = 16},/obj/machinery/washing_machine,/turf/open/floor/plating/toilet,/area/vtm/interior)
 "awv" = (/obj/structure/flora/ausbushes/sparsegrass,/obj/effect/landmark/npcwall,/turf/open/floor/plating/vampgrass,/area/vtm/northbeach)
 "aww" = (/obj/effect/decal/bordur{dir = 8},/obj/structure/lamppost/sidewalk,/obj/effect/landmark/npcwall,/turf/open/floor/plating/sidewalk,/area/vtm/northbeach)
-"awx" = (/obj/structure/chair/sofa/corp/left{dir = 4},/obj/effect/landmark/start/bouncer,/obj/effect/decal/graffiti,/turf/open/floor/plating/rough,/area/vtm/anarch)
+"awx" = (/obj/structure/chair/sofa/corp/left{dir = 4},/obj/effect/landmark/start/bruiser,/obj/effect/decal/graffiti,/turf/open/floor/plating/rough,/area/vtm/anarch)
 "awy" = (/obj/structure/table/wood,/turf/open/floor/plating/rough,/area/vtm/anarch)
 "awz" = (/obj/structure/table/wood,/obj/structure/sign/poster/random{pixel_y = 32},/turf/open/floor/plating/rough,/area/vtm/anarch)
 "awA" = (/obj/structure/chair/sofa/corp/right{dir = 8},/obj/machinery/light{pixel_y = 32},/turf/open/floor/plating/rough,/area/vtm/anarch)
@@ -1353,7 +1353,7 @@
 "aAF" = (/obj/machinery/light{dir = 4},/turf/open/floor/plating/rough,/area/vtm/anarch)
 "aAG" = (/obj/structure/chair/stool/bar,/mob/living/carbon/human/npc/walkby/club,/turf/open/floor/carpet/red,/area/vtm/anarch)
 "aAH" = (/obj/structure/chair/stool/bar,/turf/open/floor/carpet/red,/area/vtm/anarch)
-"aAI" = (/obj/structure/chair/stool/bar,/obj/effect/landmark/start/bouncer,/turf/open/floor/carpet/red,/area/vtm/anarch)
+"aAI" = (/obj/structure/chair/stool/bar,/obj/effect/landmark/start/bruiser,/turf/open/floor/carpet/red,/area/vtm/anarch)
 "aAJ" = (/obj/structure/foodrack{dir = 4},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
 "aAK" = (/obj/structure/chair/wood,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/shop)
 "aAL" = (/obj/machinery/light/small{pixel_y = 32},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/shop)
@@ -1365,7 +1365,7 @@
 "aAT" = (/obj/effect/decal/wallpaper/paper/rich/low,/turf/closed/wall/vampwall/rich/low/window/reinforced,/area/vtm/cabinet)
 "aAU" = (/obj/structure/table/wood,/obj/item/reagent_containers/glass/rag,/turf/open/floor/carpet/red,/area/vtm/anarch)
 "aAW" = (/obj/structure/table/wood,/obj/item/newspaper,/turf/open/floor/carpet/red,/area/vtm/anarch)
-"aAX" = (/obj/structure/chair/plastic{dir = 4},/obj/effect/landmark/start/bouncer,/turf/open/floor/plating/concrete,/area/vtm/anarch)
+"aAX" = (/obj/structure/chair/plastic{dir = 4},/obj/effect/landmark/start/bruiser,/turf/open/floor/plating/concrete,/area/vtm/anarch)
 "aAY" = (/obj/structure/table/wood,/obj/item/bong,/turf/open/floor/carpet/red,/area/vtm/anarch)
 "aAZ" = (/obj/effect/decal/graffiti,/obj/item/melee/vampirearms/knife,/obj/structure/table,/turf/open/floor/plating/parquetry/old,/area/vtm/anarch)
 "aBa" = (/obj/structure/table,/turf/open/floor/plating/parquetry/old,/area/vtm/anarch)
@@ -1578,7 +1578,7 @@
 "aFi" = (/obj/structure/rack,/obj/item/clothing/shoes/vampire/white,/turf/open/floor/plating/concrete,/area/vtm/anarch)
 "aFj" = (/obj/structure/rack,/obj/item/clothing/glasses/vampire/yellow,/turf/open/floor/plating/concrete,/area/vtm/anarch)
 "aFk" = (/obj/machinery/light{dir = 1},/turf/open/floor/plating/parquetry/old,/area/vtm/anarch)
-"aFl" = (/obj/structure/chair/plastic,/obj/effect/landmark/start/bouncer,/turf/open/floor/plating/rough,/area/vtm/anarch)
+"aFl" = (/obj/structure/chair/plastic,/obj/effect/landmark/start/bruiser,/turf/open/floor/plating/rough,/area/vtm/anarch)
 "aFm" = (/obj/machinery/light{dir = 1},/turf/open/floor/plating/bacotell,/area/vtm/interior/shop)
 "aFn" = (/obj/machinery/light{dir = 1},/obj/structure/chair/wood{dir = 4},/turf/open/floor/plating/bacotell,/area/vtm/interior/shop)
 "aFo" = (/obj/machinery/light{dir = 1},/obj/structure/table/wood,/turf/open/floor/plating/bacotell,/area/vtm/interior/shop)
@@ -4020,7 +4020,7 @@
 "bCT" = (/obj/structure/fluff/hedge,/turf/open/floor/plating/sidewalk/poor,/area/vtm)
 "bCU" = (/obj/structure/fluff/hedge,/obj/structure/railing{dir = 4},/turf/open/floor/plating/sidewalk/poor,/area/vtm)
 "bCV" = (/obj/structure/vampdoor/anarch{dir = 8; lockpick_difficulty = 13},/obj/effect/decal/cardboard,/turf/open/floor/plating/concrete,/area/vtm/anarch)
-"bCW" = (/obj/structure/chair/plastic,/obj/effect/landmark/start/bouncer,/turf/open/floor/plating/sidewalk/poor,/area/vtm)
+"bCW" = (/obj/structure/chair/plastic,/obj/effect/landmark/start/bruiser,/turf/open/floor/plating/sidewalk/poor,/area/vtm)
 "bCX" = (/obj/effect/decal/wallpaper/grey,/turf/closed/wall/vampwall/junk/alt,/area/vtm/interior)
 "bCY" = (/obj/manholedown,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "bCZ" = (/obj/structure/vampdoor/npc,/obj/effect/turf_decal/siding/white{dir = 1},/turf/open/floor/plating/sidewalk/poor,/area/vtm/interior)
@@ -4743,7 +4743,7 @@
 "dnU" = (/obj/structure/vampfence{dir = 8},/turf/open/floor/plating/sidewalk,/area/vtm/fishermanswharf)
 "doi" = (/obj/structure/gargoyle{dir = 8; pixel_x = 10; pixel_y = -7},/turf/open/openspace,/area/vtm)
 "dot" = (/obj/structure/railing{dir = 10},/turf/open/floor/plating/vampplating/mono,/area/vtm/clinic)
-"dpf" = (/obj/structure/chair/plastic{dir = 8; pixel_y = 4},/obj/effect/landmark/start/bouncer,/turf/open/floor/plating/concrete,/area/vtm/anarch)
+"dpf" = (/obj/structure/chair/plastic{dir = 8; pixel_y = 4},/obj/effect/landmark/start/bruiser,/turf/open/floor/plating/concrete,/area/vtm/anarch)
 "dpo" = (/obj/structure/table/reinforced,/turf/open/floor/plating/sidewalk/poor,/area/vtm/interior)
 "dpw" = (/obj/effect/decal/bordur{dir = 1},/turf/open/floor/plating/sidewalk/old,/area/vtm/park)
 "dpM" = (/obj/effect/decal/bordur{dir = 8},/obj/effect/decal/trash,/turf/open/floor/plating/sidewalk,/area/vtm/pacificheights)
@@ -5048,7 +5048,7 @@
 "eFf" = (/obj/structure/fluff/hedge,/obj/effect/turf_decal/siding/white{dir = 6},/turf/open/floor/plating/granite/black,/area/vtm/cabinet)
 "eFh" = (/obj/structure/bed,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "eFz" = (/obj/effect/turf_decal/siding/white,/obj/structure/vampdoor/simple,/turf/open/floor/plating/parquetry,/area/vtm/interior)
-"eFA" = (/obj/structure/chair/sofa/left{dir = 8},/obj/effect/landmark/start/bouncer,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
+"eFA" = (/obj/structure/chair/sofa/left{dir = 8},/obj/effect/landmark/start/bruiser,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "eFI" = (/obj/structure/closet/crate/large,/obj/item/bodybag,/obj/item/bodybag,/turf/open/floor/plating/rough,/area/vtm/interior/mansion)
 "eFR" = (/obj/structure/vampdoor{dir = 4},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plating/bacotell,/area/vtm/interior)
 "eGc" = (/obj/structure/chair/sofa/corp/corner{dir = 1},/turf/open/floor/plating/vampcarpet,/area/vtm/interior/bianchiBank)
@@ -6598,7 +6598,7 @@
 "lbx" = (/obj/structure/railing{dir = 4},/obj/item/reagent_containers/glass/bucket/wooden,/turf/open/floor/plating/vampwood,/area/vtm/forest)
 "lbL" = (/obj/effect/decal/bordur{dir = 4},/obj/effect/landmark/npcactivity,/turf/open/floor/plating/sidewalk/poor,/area/vtm/ghetto)
 "lbU" = (/turf/open/floor/plasteel/stairs/medium,/area/vtm/interior/bianchiBank)
-"ldp" = (/obj/structure/chair/comfy/brown{dir = 8},/turf/open/floor/carpet/red,/area/vtm/anarch)
+"ldp" = (/obj/structure/chair/comfy/brown{dir = 8},/obj/effect/landmark/start/emissary,/turf/open/floor/carpet/red,/area/vtm/anarch)
 "ldx" = (/obj/effect/landmark/npcability,/turf/open/floor/plating/sidewalk/poor,/area/vtm/pacificheights)
 "ldM" = (/obj/weapon_showcase,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "ldW" = (/obj/structure/chair/plastic{dir = 4},/turf/open/floor/plating/vampplating/stone,/area/vtm/interior/bianchiBank)
@@ -8113,7 +8113,7 @@
 "rsg" = (/obj/structure/flora/ausbushes/sparsegrass,/obj/item/flashlight/seclite,/turf/open/floor/plating/vampgrass,/area/vtm)
 "rsl" = (/obj/structure/table/wood,/turf/open/floor/plating/parquetry,/area/vtm/interior/giovanni)
 "rsB" = (/obj/structure/vampdoor/camarilla{dir = 4; lockpick_difficulty = 10},/turf/open/floor/plating/vampplating/mono,/area/vtm/prince)
-"rsC" = (/obj/structure/chair/plastic{dir = 1},/obj/effect/landmark/start/bouncer,/turf/open/floor/plating/rough,/area/vtm/anarch)
+"rsC" = (/obj/structure/chair/plastic{dir = 1},/obj/effect/landmark/start/bruiser,/turf/open/floor/plating/rough,/area/vtm/anarch)
 "rsU" = (/obj/item/stack/package_wrap/small,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/mansion)
 "rts" = (/obj/effect/decal/trash,/obj/structure/closet/cardboard,/turf/open/floor/plating/sidewalk/poor,/area/vtm/fishermanswharf)
 "rtx" = (/obj/structure/closet/crate/bin,/obj/structure/trashbag,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
@@ -8790,7 +8790,7 @@
 "uiG" = (/obj/effect/decal/trash,/obj/structure/bed/roller,/obj/structure/closet/body_bag,/turf/open/floor/plating/vampcanal,/area/vtm/interior/glasswalker)
 "ujb" = (/obj/effect/turf_decal/siding/white{dir = 9},/turf/open/floor/plating/granite/black,/area/vtm/interior)
 "ujo" = (/obj/structure/railing{dir = 8; layer = 4},/turf/open/openspace,/area/vtm/interior/bianchiBank)
-"ujz" = (/obj/structure/chair/plastic{dir = 4},/obj/effect/landmark/start/bouncer,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
+"ujz" = (/obj/structure/chair/plastic{dir = 4},/obj/effect/landmark/start/bruiser,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "ujO" = (/obj/machinery/vamp/atm{dir = 8; pixel_x = 10},/turf/open/floor/plating/sidewalk,/area/vtm/fishermanswharf)
 "ukr" = (/obj/structure/fluff/broken_flooring,/turf/open/floor/plating/vampgrass,/area/vtm/pacificheights)
 "ukV" = (/obj/structure/filingcabinet/security{pixel_x = 12; pixel_y = 3},/turf/open/floor/carpet/black,/area/vtm/interior/bianchiBank)
@@ -8936,7 +8936,7 @@
 "uLa" = (/obj/structure/table/wood,/obj/item/clothing/head/vampire/malkav,/obj/item/clothing/mask/vampire/venetian_mask/jester,/turf/open/floor/carpet/lone,/area/vtm/interior)
 "uLy" = (/obj/structure/closet/crate/bin,/turf/open/floor/plating/parquetry/old,/area/vtm/graveyard/interior)
 "uLF" = (/obj/structure/closet/cardboard,/obj/machinery/light{pixel_y = 32},/turf/open/floor/plating/vampplating/mono,/area/vtm/interior)
-"uLI" = (/obj/structure/chair/plastic{dir = 4},/obj/effect/landmark/start/bouncer,/turf/open/floor/plating/parquetry/old,/area/vtm/anarch)
+"uLI" = (/obj/structure/chair/plastic{dir = 4},/obj/effect/landmark/start/bruiser,/turf/open/floor/plating/parquetry/old,/area/vtm/anarch)
 "uLZ" = (/obj/structure/table,/obj/item/dice/d6,/turf/open/floor/plating/parquetry,/area/vtm/jazzclub)
 "uMh" = (/obj/structure/vampdoor/supply{dir = 4},/turf/open/floor/plating/vampdirt,/area/vtm/interior)
 "uMs" = (/obj/structure/toilet{dir = 8; pixel_y = 11},/obj/effect/decal/litter,/turf/open/floor/plating/toilet,/area/vtm/sewer)
@@ -9045,6 +9045,7 @@
 "vit" = (/obj/structure/chair/sofa/corp/corner{dir = 8},/mob/living/carbon/human/npc/incel,/turf/open/floor/carpet,/area/vtm/interior)
 "viH" = (/turf/closed/wall/vampwall/city/low/window,/area/vtm/interior/laundromat)
 "viM" = (/obj/structure/bricks,/turf/open/floor/plating/sidewalk,/area/vtm/sewer)
+"viO" = (/obj/effect/decal/trash,/obj/effect/landmark/start/sweeper,/turf/open/floor/plating/sidewalk,/area/vtm/fishermanswharf)
 "vjL" = (/obj/structure/chair{dir = 1},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plating/bacotell,/area/vtm/interior)
 "vjT" = (/obj/structure/table/wood,/obj/machinery/light/small/red{dir = 4; pixel_x = -16},/obj/item/clothing/mask/vampire/venetian_mask/scary,/turf/open/floor/plating/rough/cave,/area/vtm/interior/giovanni)
 "vjZ" = (/obj/effect/turf_decal/siding/white,/obj/effect/decal/wallpaper/paper/rich,/turf/closed/wall/vampwall/rich,/area/vtm/interior/giovanni)
@@ -9164,7 +9165,7 @@
 "vIU" = (/obj/effect/turf_decal/siding/white{dir = 10},/obj/structure/window/reinforced/indestructable{alpha = 0; dir = 8},/obj/structure/window/reinforced/indestructable{alpha = 0},/obj/structure/window/reinforced/indestructable{alpha = 0; dir = 4},/obj/structure/window/reinforced/indestructable{alpha = 0; dir = 1},/turf/open/floor/plating/rough,/area/vtm/financialdistrict)
 "vJc" = (/obj/structure/weedshit,/obj/effect/decal/graffiti,/turf/open/floor/plating/sidewalk/poor,/area/vtm/interior)
 "vJA" = (/obj/structure/vampfence{dir = 4},/turf/open/floor/plating/sidewalk,/area/vtm/chinatown)
-"vJB" = (/obj/effect/landmark/start/bouncer,/turf/open/floor/plating/concrete,/area/vtm/anarch)
+"vJB" = (/obj/effect/landmark/start/bruiser,/turf/open/floor/plating/concrete,/area/vtm/anarch)
 "vJI" = (/obj/structure/table,/obj/item/storage/firstaid/medical,/obj/item/storage/firstaid/medical,/obj/item/storage/firstaid/medical,/turf/open/floor/plating/vampplating/mono,/area/vtm/clinic)
 "vJN" = (/obj/item/pushbroom,/obj/item/mop,/obj/structure/janitorialcart,/obj/structure/sink{pixel_y = 16},/turf/open/floor/plating/concrete,/area/vtm/interior/techshop)
 "vKd" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/vamptree/pine,/turf/open/floor/plating/vampgrass,/area/vtm/pacificheights)
@@ -9630,6 +9631,7 @@
 "xCh" = (/obj/structure/vamprocks{pixel_x = -9},/turf/open/floor/plating/vampdirt,/area/vtm/forest)
 "xCy" = (/obj/effect/turf_decal/siding/wood{dir = 5},/obj/structure/railing{dir = 4; layer = 4},/obj/machinery/light/prince{pixel_x = 15},/turf/open/floor/plating/vampcarpet,/area/vtm/pacificheights)
 "xCz" = (/obj/structure/closet/cabinet,/obj/item/ammo_box/vampire/c45acp,/obj/item/gun/ballistic/automatic/vampire/m1911,/obj/item/ammo_box/magazine/vamp45acp,/turf/open/floor/plating/vampplating/stone,/area/vtm/interior/bianchiBank)
+"xCE" = (/obj/structure/railing{dir = 4},/obj/effect/landmark/start/sweeper,/turf/open/floor/plating/sidewalk/poor,/area/vtm)
 "xCF" = (/obj/structure/bed/maint,/turf/open/floor/plating/rough/cave,/area/vtm/interior)
 "xCZ" = (/obj/structure/railing{pixel_y = -1},/obj/structure/chair/wood{dir = 8},/turf/open/floor/plating/sidewalk/poor,/area/vtm/financialdistrict)
 "xDi" = (/obj/structure/railing{dir = 8; layer = 4; pixel_y = -4},/obj/structure/railing{dir = 1; layer = 4; pixel_y = 10},/obj/structure/vampstatue,/turf/open/floor/bronze,/area/vtm/interior/giovanni)
@@ -10134,7 +10136,7 @@ aiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwai
 aiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwapgwvhakHakHjHYakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHalWakJalvalvakJalvakJaxZavGayaayaaupaeraybawyaNJaxaaxaawbawbawbawbawbaTtawbaydawbawbawbawbaerawJawJaxgapwapxapxapxapxapxapyapxapxapxapxapxapxapxapxapxapxapxapzaoSathayeatoatoatoayAathanzanzanNanzaxSaxTaxTaxTaxTathathathaygathathathaxTaxTaxTaxTathkctawSawSavNawSawSavNawSawSaxCathajGajGakwaiIaiIaiJaiIaiIalgajKajKbHDbHDkXlkXlbHDbHDkXlkXlbHDbHDajKajKatLapfavDatLalOalOatLajDajDajDajDajDatLamGaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIamlajUajUajUajUajUajYajUajUakDajUajYajWaizaiDaiDaiDaiDaiDaiDaiDaiDaiD
 aiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwapgaphakHrNzakHakHnBwavZayiakHakHakHakHakHakHakHakHakHakHakHakHaltakHakJalvakJakJakKakKakJaxJavGayjaykaupaeraybawyaNJaylaxaaycaxaaymaypaypaypaUkaesaesayqaesaeEaerayraysaytapwapMapMapxapxapMapMayuayvapMapMapxapxapxapxapxapxapxapzaoSathaxUatobCNaxRayfathanzanzanzanzaxSaywaxTaxTaxTayxaxTaxTaxTaxTayyayzaxTaxTaxTaxTathavtaxzaxAathkPrawTathaxWawSnIEathajGajGakwaiIaiIaiJaiIaiIalgajKajKajKajKayBajKajKajLajKajMayCajNajKajKatLatLatLatLatLatLatLajDajDajDajDajDatLamGaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIaiIamlajUamCamDamDamDamDamDamCajUajUajUajWaizaiDaiDaiDaiDaiDaiDaiDaiDaiD
 aiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwapgaphakHakHakHakHvrVxsShjyfWRakHakHakHakHakHakHakHakHakHakHakHakHakHaluakJalualwakJakKakJakJayDavGayEayEaupaerbCDbCDbCDaVZaxaaxaaxaaxaaxaaxaaxabCjaesaesayGayHayIayJaoSaoSayKapwapxaqGapxapxapxayLayMayLapxaqGapxapxapxapxapxapxapxapzaoSathathathathathathathayNayNayNayNayOaxTaxTaxTaxTaxTaxTaxTaxTaxTaxTaxTaxTaxTaxTaxTathathathathathavjavjathathathathathajGajGakwaiIaiIaiJaiIaiIalgajKajKajKajKajKajKajKajKajKajKajLajKajKajKajKajKajKajKayQajLatLajDajDajDajDajDatLarCanbanbanbancanbanbanbanbanbanbanbanbanbanbanbanbanbanbanbanbanbanbanbanbanbanbanbanbanbanbanbanbanbwXtaneaiIaiIaiIasNasLxVIanbanbanbanbanbanbanbanbanbaoQajUamCajDamjavEawUajDamCajUajUajUajUaizaiDaiDaiDaiDaiDaiDaiDaiDaiD
-aiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwapgaphakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHaltakJakKakKakJakJalvakJaluakJawvayRaupaupaupayJaySaXqayTbbCaxabjUaxaaxaaxabCabCDbkeaesaesayGayVayIayJayWayXaqUapwapMapMapxapxapMayYayZapxapMapMapxapxapxapxapxapxapxapzbkGazbajGajGajGamRazcazdazeaxTbLXaxjaxjaxjaxjaxjgNbaxTbLXaxjaxjaxjaxjaxjgNbaxTaxTaxTaxTaxTaxTaxTazeanBazcajGjyoajGajGajGanxbIpakwamAaiIaiJaiIaiIalganmajKajKajKajKaaBablablablablaaBajKajKajKajKajLajKajKajKajKatLaoPajDajDajDapIaztazvazvazvazvajUajUajUajUajUajUajUajUajUazgajUajUajUajUajUajUajUajUaxFajUajUajUajUajUajUazvazvazvazvazvvRYatdasaasaasaarTfYNvRYajUajUakEajUakEajUajUajUajYajUajUamCajDajDajDajDajDamCajUajUajUajUaizaiDaiDaiDaiDaiDaiDaiDaiDaiD
+aiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwapgaphakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHaltakJakKakKakJakJalvakJaluakJawvayRaupaupaupayJaySaXqayTbbCaxabjUaxaaxaaxabCabCDbkeaesaesayGayVayIayJayWviOaqUapwapMapMapxapxapMayYayZapxapMapMapxapxapxapxapxapxapxapzbkGazbajGajGajGamRazcazdazeaxTbLXaxjaxjaxjaxjaxjgNbaxTbLXaxjaxjaxjaxjaxjgNbaxTaxTaxTaxTaxTaxTaxTazeanBazcajGjyoajGajGajGanxbIpakwamAaiIaiJaiIaiIalganmajKajKajKajKaaBablablablablaaBajKajKajKajKajLajKajKajKajKatLaoPajDajDajDapIaztazvazvazvazvajUajUajUajUajUajUajUajUajUazgajUajUajUajUajUajUajUajUaxFajUajUajUajUajUajUazvazvazvazvazvvRYatdasaasaasaarTfYNvRYajUajUakEajUakEajUajUajUajYajUajUamCajDajDajDajDajDamCajUajUajUajUaizaiDaiDaiDaiDaiDaiDaiDaiDaiD
 aiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwakGakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHalWakJakJakJakKakJakJakJalvakJalvawvawwaupaupaupayJveIazhbkfbbCbylaxaaxaaxaaxabCjbCqbCqbCqaesaesaesazkaercdWayKaoSapwapxapyapxapxapxapxapxapxapxarXapxapxapxapxapxapxapxaqHapkazmanjanjanjanjanjarZaxjaxjmQWaqXaqXkTYaqXaqXxqlaxjmQWvtPaqXkTYaqXaqXxqlaxjaxjaxjaxjaxjaxjaxjaxjaqYanjanjanjanjanjanjanjanjaznatKaiIaiJaiIaiIalgajKajKajKazoajKaaBalRanLalPalOaaBaaCaaCaaBablablaaBajKajKajKatLajDajDajDajDamraztazFazGdaHazvajUajUajUajUajUajUajUajUajUajUajUajUajUajUapeajUajUajUajUajUajUajUajUajUajUazviVIlajuWMazvfYNamGaiIanfaiIamlanHfYNajUajUajUajUajUajUajUajUajUajUajUamCajDajDajDajDajDamCajUajUajUajYaizaiDaiDaiDaiDaiDaiDaiDaiDaiD
 aiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwapgaphakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakIakKakJalvalwakJakJakJakKakJakJakJaxJavGaupaupaupaeraAsaAsazYbbCaxaaxaaxaaxabylbCjuurwFduuraesaesaesaesazraoSasraoSapwapMapMapxapxapMapMapxapxapMapMapxapxapxapxapxapxapxapxapxaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaiIaiIaiJaiIaiIalgajKajKajKajKajKaaBajDajDajDanhaaBazsamtaaCalOalOaaBajKajKamXatLajDajDajDajDamqaztvpVvpVvpVazvazuazuazuazuazuazuazuazuazuazvazuazuazuazvazvazvazvazvazvazvazvazvazvazvazvazvxsWlajlajazvajUamGaiIanfaiIamlajUaloamCanYanYamCamDamDamDatlamDamDamDamCaoPajDajDajDanhamCajUajUajWajUaizaiDaiDaiDaiDaiDaiDaiDaiDaiD
 aiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwaiwakGakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHakHaltakHalvakJakJalvakJakKakJaluakKalwakJakJayDavGaupaupaupayJaAsaAsazYbbCaxaaxaazxaxaaxabCjaesbCtaesaesaesaesaesaeraoSuuzapiapwapxapxapxapxapxapxapxapxapxapxapxapxapxapxapxapxapxapxapxaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXazCaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaqXaiIaiIaiJaiIaiIalgajKajKajKazoajKaaBajDapRajDamoaaBapfajOlxUajDajDaaBajKapdajKatLamnajDazDalOalOaztvndwjgvgUazvazHazIazJazKazLaIKggAazOazPazuazPazQazRazvaAEazTazUazvazVazTazUazvazSazTazUazvdzdlajuWMazvajUamGaiIanfaiIamlajUajUamCazWajSanYamnajDatOajDangamoalOamCalOamsajDajDamnamCajUajUajUajWaizaiDaiDaiDaiDaiDaiDaiDaiDaiD
@@ -10402,7 +10404,7 @@ aiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAai
 aiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAbxBaiDbClbCFaiDaerqqmawGqqmoDYgSGbTxaeraesaesaesaesxPhaeriLyaiDbBrbBsaiDbBrbBsbFmwNqaiAaiAbxBaiDaiDaiDaiDaiDbFmaiAaiAaiAaiAaiAaogaoyaoyaoyaoyaoyaogaiAaiAbxBaiDaiDaiDaiDaiDbFmaiAaiAbxBaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDbFmaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAcESbBGdiOazvaANaANuqmaANaANaANhyVaANaANkuwaANuhlumEttSaANxunbZhpujltcghrhrZnzMazvazvazvelegubjwpazvbBpoPIaiAaiAaiAaiAaiAaiAaiAaiAbxBaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDbFmaiAaiAaiAaiAaizaiDaiDaiDaiDaiDaiDaiDaiDaiD
 aiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAbxBaiDbCnbCnaiDaeraxbaxbaxbaxbaxbquhhmyaesaAsaAsaAsnEtaerfKIaiDaiDaiDaiDaiDaiDbFmaiAaiAaiAbxBbBAaiDbBAaiDbBAbFmaiAaiAaiAaiAaiAaogaogaogbBSaogaogaogaiAaiAbxBaiDaiDaiDaiDaiDbFmaiAaiAbxBaiDbBrbBsaiDbBrbBsaiDbBrbBsaiDbBrbBsaiDbBtaiDaiDbBAaiDbBAbFmaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaHVazvaBiaANaANaANaANaANaANaANaBiazvjFAgQVaANgQVklbazvwHAwgJgHFaANaANaANaANaANaANaANaANaBiazvbBpoPIaiAaiAaiAaiAaiAaiAaiAaiAaHVbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpoPIaiAaiAaiAaiAaizaiDaiDaiDaiDaiDaiDaiDaiDaiD
 aiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAbxBaiDaiDaiDaiDaeraxbaxbaxbaxbaxbquhaerckJaAsaAsaAsnPKaerhKjaiDbBrbBsaiDbBrbBsbFmaiAaiAaiAbBLicaicaicaicaicaeIcaiAaiAaiAaiAbAqaiDaiDaiDaiDaiDaiDbFmaiAaiAbBLicaicaicaicaicafxkaiAaiAbxBaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDbFmaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAbAvbAvbAvbAvbAvbAvbAvbAvbAvbAvbAvbAvbAvbAvaiAcESazvaDlaDlaDlazveTYazvaDlaDlaDlpWIazvazvuIwazvazvpWIbGgeaVpWIpWIpWIpWIpWIpWIazurOnazurVlazupWIbBHaiAaiAaiAaiAaiAaiAaiAaiAaHVbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpoPIaiAaiAaiAaiAaizaiDaiDaiDaiDaiDaiDaiDaiDaiD
-aiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAbxBbBtaiDaiDaiDaerccBdNuccBdNuccBuhLaerxPhsyUdnpeBZnIFaercQJybNaiDaiDaiDaiDaiDbFmaiAaiAaiAaHVbBpbBpbBpbBpbBpoPIvItvItvItvItbxBbBtaiDaiDaiDaiDbBAbFmaiAaiAaHVbBpbBpbBpbBpbBpoPIaiAaiAbxBaiDbBrbBsaiDbBrbBsaiDbBrbBsaiDbBrbBsaiDaiDaiDaiDaiDaiDaiDbFmaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAbAvfFwxFjfFwxRJrhRrhRrhRrhRmsffFwxFjfFwbAvaiAaiAaiAaiAaiAaiAwgtbKyqEosIXbKymknazvwUKtGafcUuHnlvEazvlajlajcyzuQLuglfPdccxazvaANaANdgTpacaBgazvbFmaiAaiAaiAaiAaiAaiAaiAaiAaHVbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpoPIaiAaiAaiAaiAaizaiDaiDaiDaiDaiDaiDaiDaiDaiD
+aiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAbxBbBtaiDaiDaiDaerccBdNuccBdNuccBuhLaerxPhsyUdnpeBZnIFaercQJybNaiDaiDaiDaiDaiDxCEaiAaiAaiAaHVbBpbBpbBpbBpbBpoPIvItvItvItvItbxBbBtaiDaiDaiDaiDbBAbFmaiAaiAaHVbBpbBpbBpbBpbBpoPIaiAaiAbxBaiDbBrbBsaiDbBrbBsaiDbBrbBsaiDbBrbBsaiDaiDaiDaiDaiDaiDaiDbFmaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAbAvfFwxFjfFwxRJrhRrhRrhRrhRmsffFwxFjfFwbAvaiAaiAaiAaiAaiAaiAwgtbKyqEosIXbKymknazvwUKtGafcUuHnlvEazvlajlajcyzuQLuglfPdccxazvaANaANdgTpacaBgazvbFmaiAaiAaiAaiAaiAaiAaiAaiAaHVbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpoPIaiAaiAaiAaiAaizaiDaiDaiDaiDaiDaiDaiDaiDaiD
 aiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAbBnbyrbyrwGsuvwaDnaDnaDnaDnaDnaDnaDnaDnaeraeraeraeraeraerfKIaiDbBrbBsaiDbBrbBsbFmaiAaiAaiAaHVbBpbBpbBpbBpbBpoPIaiAaiAaiAaiAbxBaiDaiDaiDaiDaiDaiDbFmaiAaiAaHVbBpbBpbBpbBpbBpoPIaiAaiAbBnbyrbyraiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaiDaogaogaogbBTaogaogaogaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAkrZfFwmTRfFwxQSxQSxQSxQSxQSxQSfFwlOKfFwbAvaiAaiAaiAaiAaiAaiAhzubKybKybKyjExbKybYNfcUfcUfcUfcUfcUazvnIkouObsbuQLuQLuQLuQLazvaANkbEbuZnmmaANazvbFmaiAaiAaiAaiAaiAaiAaiAaiAcESbBGbBGbBGbBGbBGbBGbBGbBGbBGbBGbBGbBGbBGbBGbBGbBGbBHaiAaiAaiAaiAaizaiDaiDaiDaiDaiDaiDaiDaiDaiD
 aiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAobjamndtPxJjvkgapWpEjajDsPzdtJwGsbCBfbPlBfeIcaiDbBAaiDaiDaiDaiDaiDaiDbFmaiAaiAaiAaHVbBpbBpbBpbBpbBpoPIaiAaiAaiAaiAbxBbBtaiDaiDaiDaiDbBAbFmaiAaiAaHVbBpbBpbBpbBpbBpoPIaiAaiAaiAaiAaiAbBzicaicaicaicaicaicaicaicaicaicaaogexsaoCaoybBbaoyaogaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAkrZfFwfFwfFwxQSxQSxQSxQSxQSxQSfFwfFwfFwbAvaiAaiAaiAaiAaiAaiAvQbiAlwiQbKyoCynvJtPufcUudDfcUfcUfcUazvwzYlajmxSiJwbBBfWLbsDazvaANaANmThaANczWazvbFmaiAaiAaiAaiAaiAaiAaiAaiAbxBaiDaiDaiDaiDaiDbFmaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaizaiDaiDaiDaiDaiDaiDaiDaiDaiD
 aiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAobjajDrmidCklNmajDwGsuemajDajDwGsbBpbBpqaioPIaiDaiDaiDbBrbBsaiDbBrbBsbFmaiAaiAaiAdFnbBGbBGbBGbBGbBGigqaiAaiAaiAaiAbxBaiDaiDaiDaiDaiDaiDbFmaiAaiAaHVbBpbBpbBpbBpbBpoPIaiAaiAaiAaiAaiAaHVbBpbBpbBpbBpbBpbBpbBpbBpbBpbBpaogexsaoyaoyaoybBUaogaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAkrZxQSxQSxQSxQSxQSxQSxQSxQSxQSxQSxQSxQSbAvaiAaiAaiAaiAaiAaiAvQbhDChyGuOZwxfnvJazvwmydpRfcUybRtBvazvpHLbysazvazvazvazvazvazvaBiaANaANaANjgMazvbFmaiAaiAaiAaiAaiAaiAaiAaiAbxBaiDaiDaiDaiDaiDbFmaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaiAaizaiDaiDaiDaiDaiDaiDaiDaiDaiD

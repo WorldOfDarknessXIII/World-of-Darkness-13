@@ -22,7 +22,7 @@
 	known_contacts = list("Baron")
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian")
 
-	v_duty = "You are a diplomat of the anarchs. Make deals, keep the peace, all through words, not violence. But the latter may come to pass if the former fails."
+	v_duty = "You are a diplomat for the anarchs. Make deals, keep the peace, all through words, not violence. But the latter may come to pass if the former fails."
 	minimal_masquerade = 2
 	experience_addition = 15
 
