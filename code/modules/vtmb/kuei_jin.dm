@@ -1521,6 +1521,7 @@
 	icon_state = "flesh"
 	ranged = FALSE
 	cost_yin = 1
+	delay = 12 SECONDS
 	var/datum/component/tackler
 
 /obj/item/chameleon/temp
@@ -1698,6 +1699,7 @@
 	ranged = FALSE
 	activate_sound = 'code/modules/wod13/sounds/celerity_activate.ogg'
 	delay = 12 SECONDS
+	cost_demon = 1
 
 /datum/chi_discipline/black_wind/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
@@ -1748,6 +1750,8 @@
 	desc = "Transform into the P'o."
 	icon_state = "demon"
 	ranged = FALSE
+	delay = 12 SECONDS
+	cost_demon = 1
 	var/current_form = "Samurai"
 
 /datum/action/choose_demon_form
@@ -1773,20 +1777,139 @@
 		button.color = "#970000"
 		animate(button, color = "#ffffff", time = 20, loop = 1)
 
+/datum/movespeed_modifier/tentacles1
+	multiplicative_slowdown = -0.5
+/datum/movespeed_modifier/tentacles2
+	multiplicative_slowdown = -1
+
+/datum/movespeed_modifier/demonform1
+	multiplicative_slowdown = -0.5
+/datum/movespeed_modifier/demonform2
+	multiplicative_slowdown = -1
+/datum/movespeed_modifier/demonform3
+	multiplicative_slowdown = -2
+/datum/movespeed_modifier/demonform4
+	multiplicative_slowdown = -3
+/datum/movespeed_modifier/demonform5
+	multiplicative_slowdown = -5
+
 /datum/chi_discipline/demon_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-//	switch(current_form)
-//		if("Samurai")
-//		if("Tentacles")
-//		if("Demon")
-//		if("Giant")
-//		if("Foul")
+		UNICORN_LAYER
+	switch(current_form)
+		if("Samurai")
+			var/mod = 10*level_casting
+			caster.remove_overlay(UNICORN_LAYER)
+			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "samurai", -UNICORN_LAYER)
+			caster.overlays_standing[UNICORN_LAYER] = potence_overlay
+			caster.apply_overlay(UNICORN_LAYER)
+			caster.physiology.armor.melee += mod
+			caster.physiology.armor.bullet += mod
+			spawn((delay)+caster.discipline_time_plus)
+				if(caster)
+					caster.physiology.armor.melee -= mod
+					caster.physiology.armor.bullet -= mod
+					caster.remove_overlay(UNICORN_LAYER)
+		if("Tentacles")
+			var/mod = level_casting
+			caster.remove_overlay(UNICORN_LAYER)
+			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "tentacles", -UNICORN_LAYER)
+			caster.overlays_standing[UNICORN_LAYER] = potence_overlay
+			caster.apply_overlay(UNICORN_LAYER)
+			ADD_TRAIT(caster, TRAIT_SHOCKIMMUNE, SPECIES_TRAIT)
+			ADD_TRAIT(caster, TRAIT_PASSTABLE, SPECIES_TRAIT)
+			if(mod > 1)
+				caster.add_movespeed_modifier(/datum/movespeed_modifier/tentacles1)
+				ADD_TRAIT(caster, TRAIT_PUSHIMMUNE, SPECIES_TRAIT)
+				ADD_TRAIT(caster, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
+			if(mod > 2)
+				ADD_TRAIT(caster, TRAIT_IGNOREDAMAGESLOWDOWN, SPECIES_TRAIT)
+				ADD_TRAIT(caster, TRAIT_SLEEPIMMUNE, SPECIES_TRAIT)
+			if(mod > 3)
+				caster.add_movespeed_modifier(/datum/movespeed_modifier/tentacles2)
+			if(mod > 4)
+				ADD_TRAIT(caster, TRAIT_STUNIMMUNE, SPECIES_TRAIT)
+			spawn((delay)+caster.discipline_time_plus)
+				if(caster)
+					caster.remove_overlay(UNICORN_LAYER)
+					REMOVE_TRAIT(caster, TRAIT_SHOCKIMMUNE, SPECIES_TRAIT)
+					REMOVE_TRAIT(caster, TRAIT_PASSTABLE, SPECIES_TRAIT)
+					if(mod > 1)
+						caster.remove_movespeed_modifier(/datum/movespeed_modifier/tentacles1)
+						REMOVE_TRAIT(caster, TRAIT_PUSHIMMUNE, SPECIES_TRAIT)
+						REMOVE_TRAIT(caster, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
+					if(mod > 2)
+						REMOVE_TRAIT(caster, TRAIT_IGNOREDAMAGESLOWDOWN, SPECIES_TRAIT)
+						REMOVE_TRAIT(caster, TRAIT_SLEEPIMMUNE, SPECIES_TRAIT)
+					if(mod > 3)
+						caster.remove_movespeed_modifier(/datum/movespeed_modifier/tentacles2)
+					if(mod > 4)
+						REMOVE_TRAIT(caster, TRAIT_STUNIMMUNE, SPECIES_TRAIT)
+		if("Demon")
+			var/mod = level_casting
+			caster.remove_overlay(UNICORN_LAYER)
+			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "demon", -UNICORN_LAYER)
+			caster.overlays_standing[UNICORN_LAYER] = potence_overlay
+			caster.apply_overlay(UNICORN_LAYER)
+			switch(mod)
+				if(1)
+					caster.add_movespeed_modifier(/datum/movespeed_modifier/demonform1)
+				if(2)
+					caster.add_movespeed_modifier(/datum/movespeed_modifier/demonform2)
+				if(3)
+					caster.add_movespeed_modifier(/datum/movespeed_modifier/demonform3)
+				if(4)
+					caster.add_movespeed_modifier(/datum/movespeed_modifier/demonform4)
+				if(5)
+					caster.add_movespeed_modifier(/datum/movespeed_modifier/demonform5)
+			spawn((delay)+caster.discipline_time_plus)
+				if(caster)
+					caster.remove_overlay(UNICORN_LAYER)
+					switch(mod)
+						if(1)
+							caster.remove_movespeed_modifier(/datum/movespeed_modifier/demonform1)
+						if(2)
+							caster.remove_movespeed_modifier(/datum/movespeed_modifier/demonform2)
+						if(3)
+							caster.remove_movespeed_modifier(/datum/movespeed_modifier/demonform3)
+						if(4)
+							caster.remove_movespeed_modifier(/datum/movespeed_modifier/demonform4)
+						if(5)
+							caster.remove_movespeed_modifier(/datum/movespeed_modifier/demonform5)
+		if("Giant")
+			var/mod = level_casting*10
+			var/meleemod = level_casting*0.5
+			caster.remove_overlay(UNICORN_LAYER)
+			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "demon", -UNICORN_LAYER)
+			caster.overlays_standing[UNICORN_LAYER] = potence_overlay
+			caster.apply_overlay(UNICORN_LAYER)
+			caster.dna.species.punchdamagelow += mod
+			caster.dna.species.punchdamagehigh += mod
+			caster.dna.species.meleemod += meleemod
+			spawn((delay)+caster.discipline_time_plus)
+				if(caster)
+					caster.remove_overlay(UNICORN_LAYER)
+					caster.dna.species.punchdamagelow -= mod
+					caster.dna.species.punchdamagehigh -= mod
+					caster.dna.species.meleemod -= meleemod
+		if("Foul")
+			caster.remove_overlay(UNICORN_LAYER)
+			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "foul", -UNICORN_LAYER)
+			caster.overlays_standing[UNICORN_LAYER] = potence_overlay
+			caster.apply_overlay(UNICORN_LAYER)
+			caster.foul_aura = level_casting*5
+			spawn((delay)+caster.discipline_time_plus)
+				if(caster)
+					caster.remove_overlay(UNICORN_LAYER)
+					caster.foul_aura = 0
 
 /datum/chi_discipline/hellweaving
 	name = "Hellweaving"
 	desc = "Translate the view of Hell to someone."
 	icon_state = "hellweaving"
 	ranged = TRUE
+	delay = 12 SECONDS
+	cost_demon = 1
 
 /atom/movable/screen/fullscreen/yomi_world
 	icon = 'icons/hud/fullscreen.dmi'
@@ -1818,6 +1941,11 @@
 
 /datum/chi_discipline/hellweaving/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
+	var/mypower = caster.social + caster.additional_social
+	var/theirpower = target.mentality + target.additional_mentality
+	if(theirpower >= mypower)
+		to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to flashback!</span>")
+		return
 	switch(level_casting)
 		if(1)
 			target.overlay_fullscreen("yomi", /atom/movable/screen/fullscreen/yomi_world)
@@ -1828,6 +1956,8 @@
 			smoke.set_up(2, target)
 			smoke.start()
 		if(3)
+			target.overlay_fullscreen("yomi", /atom/movable/screen/fullscreen/yomi_world)
+			target.clear_fullscreen("yomi", 5)
 			target.add_movespeed_modifier(/datum/movespeed_modifier/yomi_flashback)
 			target.emote("cry")
 			spawn(30)
@@ -1843,7 +1973,12 @@
 					addtimer(cb, (i - 1)*15)
 				target.emote("scream")
 				target.do_jitter_animation(30)
-//		if(5)
+		if(5)
+			target.emote(pick("cry", "scream", "groan"))
+			target.point_at(caster)
+			target.resist_fire()
+			target.overlay_fullscreen("yomi", /atom/movable/screen/fullscreen/yomi_world)
+			target.clear_fullscreen("yomi", 5)
 
 
 /datum/chi_discipline/iron_mountain
@@ -1853,6 +1988,7 @@
 	ranged = FALSE
 	activate_sound = 'code/modules/wod13/sounds/fortitude_activate.ogg'
 	delay = 12 SECONDS
+	cost_demon = 1
 
 /datum/chi_discipline/iron_mountain/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
@@ -1876,12 +2012,62 @@
 	desc = "Manipulate reality by voice."
 	icon_state = "kiai"
 	ranged = TRUE
+	delay = 12 SECONDS
+	cost_demon = 1
+
+/mob/living/carbon/human/proc/combat_to_caster()
+	walk(src, 0)
+	if(!CheckFrenzyMove())
+		set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
+		step_to(src,caster,0)
+		face_atom(caster)
+		a_intent = HARM
+		drop_all_held_items()
+		UnarmedAttack(caster)
 
 /datum/chi_discipline/kiai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-//	switch(level_casting)
-//		if(1)
-//		if(2)
-//		if(3)
-//		if(4)
-//		if(5)
+	var/sound_gender = 'code/modules/wod13/sounds/kiai_male.ogg'
+	switch(caster.gender)
+		if(MALE)
+			sound_gender = 'code/modules/wod13/sounds/kiai_male.ogg'
+		if(FEMALE)
+			sound_gender = 'code/modules/wod13/sounds/kiai_female.ogg'
+	caster.emote("scream")
+	playsound(caster.loc, sound_gender, 100, FALSE)
+	var/mypower = caster.social + caster.additional_social
+	var/theirpower = target.mentality + target.additional_mentality
+	if(theirpower >= mypower)
+		to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to affect!</span>")
+		return
+	switch(level_casting)
+		if(1)
+			target.emote(pick("shiver", "pale"))
+			target.Stun(2 SECONDS)
+		if(2)
+			target.emote("stare")
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				var/datum/cb = CALLBACK(H,/mob/living/carbon/human/proc/combat_to_caster)
+				for(var/i in 1 to 20)
+					addtimer(cb, (i - 1)*15)
+		if(3)
+			target.emote("scream")
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				var/datum/cb = CALLBACK(H,/mob/living/carbon/human/proc/step_away_caster)
+				for(var/i in 1 to 20)
+					addtimer(cb, (i - 1)*15)
+		if(4)
+			if(prob(25))
+				target.resist_fire()
+			new /datum/hallucination/oh_yeah(target, TRUE)
+		if(5)
+			if(prob(25))
+				target.resist_fire()
+			new /datum/hallucination/oh_yeah(target, TRUE)
+			for(var/mob/living/L in viewers(5, target))
+				if(L != caster && L != target)
+					if(prob(20))
+						L.resist_fire()
+					new /datum/hallucination/oh_yeah(L, TRUE)

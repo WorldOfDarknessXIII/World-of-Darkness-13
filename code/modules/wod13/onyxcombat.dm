@@ -722,6 +722,14 @@
 			last_nonraid = world.time
 			killed_count = max(0, killed_count-1)
 
+	if(foul_aura)
+		for(var/mob/living/carbon/C in viewers(3, src))
+			if(C != src)
+				if(prob(foul_aura/5))
+					C.Unconscious(5)
+				if(prob(20))
+					C.adjust_blurriness(foul_aura)
+
 	if(freezing_aura)
 		for(var/mob/living/carbon/C in viewers(3, src))
 			if(C != src)

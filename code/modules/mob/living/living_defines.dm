@@ -294,8 +294,9 @@
 
 	//TO ovverride jump distance
 	var/jade_shintai_override = 0
-	//For freezing/burning aura
+	//For freezing/burning/blurry aura
 	var/freezing_aura = FALSE
 	var/burning_aura = FALSE
+	var/foul_aura = 0
 	//Flesh shintai dodge
 	var/flesh_shintai_dodge = FALSE
