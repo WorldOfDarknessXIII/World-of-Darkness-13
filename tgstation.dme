@@ -561,6 +561,7 @@
 #include "code\datums\discipline\obfuscate.dm"
 #include "code\datums\discipline\potence.dm"
 #include "code\datums\discipline\protean.dm"
+#include "code\datums\discipline\serpentis.dm"
 #include "code\datums\discipline\thaumaturgy.dm"
 #include "code\datums\diseases\_disease.dm"
 #include "code\datums\diseases\_MobProcs.dm"

@@ -11,6 +11,8 @@
 	var/check_flags = DISC_CHECK_CONSCIOUS | DISC_CHECK_CAPABLE
 	/// How many blood points this power costs to activate
 	var/vitae_cost = 1
+	/// If this power can spend more blood per turn than is normally allowed
+	var/bypass_spending_limits = FALSE
 	/// Bitflags determining what types of entities this power is allowed to target. NONE if self-targeting only.
 	var/target_type = NONE
 	/// How many tiles away this power can be used from.
@@ -169,7 +171,7 @@
 	if (ishuman(owner))
 		var/mob/living/carbon/human/human = owner
 		var/datum/species/kindred/species = human.dna.species
-		if (!species.can_spend_blood(owner, vitae_cost))
+		if (!species.can_spend_blood(owner, bypass_spending_limits ? 1 : vitae_cost))
 			if (alert)
 				to_chat(owner, "<span class='warning'>You cannot spend blood fast enough to cast [name] now!</span>")
 			return FALSE

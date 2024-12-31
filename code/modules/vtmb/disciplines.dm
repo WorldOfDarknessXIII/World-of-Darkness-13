@@ -214,59 +214,6 @@
 		else
 			ClickOn(src)
 
-/datum/discipline/serpentis
-	name = "Serpentis"
-	desc = "Act like a cobra, get the powers to stun targets with your gaze and your tongue, praise the mummy traditions and spread them to your childe. Violates Masquerade."
-	icon_state = "serpentis"
-	/*
-	cost = 1
-	ranged = TRUE
-	delay = 5
-//	range_sh = 2
-	violates_masquerade = TRUE
-	clan_restricted = TRUE
-	dead_restricted = FALSE
-	*/
-
-/datum/discipline/serpentis/activate(mob/living/target, mob/living/carbon/human/owner)
-	. = ..()
-	if(level_casting == 1)
-		var/antidir = NORTH
-		switch(owner.dir)
-			if(NORTH)
-				antidir = SOUTH
-			if(SOUTH)
-				antidir = NORTH
-			if(WEST)
-				antidir = EAST
-			if(EAST)
-				antidir = WEST
-		if(target.dir == antidir)
-			target.Immobilize(1 SECONDS)
-			target.visible_message("<span class='warning'><b>[owner] hypnotizes [target] with his eyes!</b></span>", "<span class='warning'><b>[owner] hypnotizes you like a cobra!</b></span>")
-			owner.playsound_local(target.loc, 'code/modules/wod13/sounds/serpentis.ogg', 50, TRUE)
-			if(ishuman(target))
-				var/mob/living/carbon/human/H = target
-				H.remove_overlay(MUTATIONS_LAYER)
-				var/mutable_appearance/serpentis_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "serpentis", -MUTATIONS_LAYER)
-				H.overlays_standing[MUTATIONS_LAYER] = serpentis_overlay
-				H.apply_overlay(MUTATIONS_LAYER)
-				spawn(0.5 SECONDS)
-					H.remove_overlay(MUTATIONS_LAYER)
-	if(level_casting >= 2)
-//		var/turf/start = get_turf(owner)
-//		var/obj/projectile/tentacle/H = new(start)
-//		H.hitsound = 'code/modules/wod13/sounds/tongue.ogg'
-		var/bloodpoints_to_suck = max(0, min(target.bloodpool, level_casting-1))
-		if(bloodpoints_to_suck)
-			owner.adjust_blood_points(bloodpoints_to_suck)
-			target.adjust_blood_points(-bloodpoints_to_suck)
-		var/obj/item/ammo_casing/magic/tentacle/casing = new (owner.loc)
-		playsound(owner.loc, 'code/modules/wod13/sounds/tongue.ogg', 100, TRUE)
-		casing.fire_casing(target, owner, null, null, null, ran_zone(), 0,  owner)
-		owner.playsound_local(target.loc, 'code/modules/wod13/sounds/serpentis.ogg', 50, TRUE)
-		qdel(casing)
-
 /datum/discipline/vicissitude
 	name = "Vicissitude"
 	desc = "It is widely known as Tzimisce art of flesh and bone shaping. Violates Masquerade."
