@@ -2026,6 +2026,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(result == "Caitiff")
 							generation = 13
 							while (clane.clane_disciplines.len < 3)
+								if(ishuman(user))
+									break
 								var/list/possible_new_disciplines = subtypesof(/datum/discipline) - clane.clane_disciplines
 								for (var/discipline_type in possible_new_disciplines)
 									var/datum/discipline/discipline = new discipline_type
