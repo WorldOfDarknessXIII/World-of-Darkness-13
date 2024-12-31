@@ -2020,7 +2020,7 @@
 		set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
 		step_to(src,caster,0)
 		face_atom(caster)
-		a_intent = HARM
+		a_intent = INTENT_HARM
 		drop_all_held_items()
 		UnarmedAttack(caster)
 
