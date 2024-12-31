@@ -35,7 +35,7 @@
 	var/toggled = FALSE
 	/// If this power can be turned on and off.
 	var/cancelable = FALSE
-	/// If this power is maintained by the caster, or simply casted and then not used again.
+	/// If this power's duration is maintained by the caster, or simply casted on something else and then not used again.
 	var/fire_and_forget = FALSE
 	/// Amount of time it takes until this Discipline deactivates itself. 0 if instantaneous.
 	var/duration_length = 0
@@ -170,6 +170,8 @@
 		var/mob/living/carbon/human/human = owner
 		var/datum/species/kindred/species = human.dna.species
 		if (!species.can_spend_blood(owner, vitae_cost))
+			if (alert)
+				to_chat(owner, "<span class='warning'>You cannot spend blood fast enough to cast [name] now!</span>")
 			return FALSE
 
 	//nothing found, it can be casted
@@ -286,7 +288,7 @@
 	else
 		owner.adjust_blood_points(-vitae_cost)
 
-	to_chat(owner, "<span class='warning'>You cast [name] [target ? "on [target]!" : "."]")
+	to_chat(owner, "<span class='warning'>You cast [name][target ? " on [target]!" : "."]")
 	//TODO: rewrite this to be sane
 	log_attack("[key_name(owner)] casted [name], level [discipline.level_casting] of the Discipline [discipline.name][!target_type ? "." : " on [key_name(discipline.owner)]"]")
 
