@@ -1795,7 +1795,6 @@
 
 /datum/chi_discipline/demon_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-		UNICORN_LAYER
 	switch(current_form)
 		if("Samurai")
 			var/mod = 10*level_casting
