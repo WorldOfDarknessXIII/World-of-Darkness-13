@@ -112,10 +112,12 @@
 					if(mob.yang_chi > mob.yin_chi)
 						mob.yang_chi = mob.yang_chi-1
 						yang_chi = min(yang_chi+1, max_yang_chi)
+						mob.last_chi_restore = world.time
 						to_chat(src, "<span class='engradio'>Some <b>Yang</b> Chi energy enters you...</span>")
 					else
 						mob.yin_chi = mob.yin_chi-1
 						yin_chi = min(yin_chi+1, max_yin_chi)
+						mob.last_chi_restore = world.time
 						to_chat(src, "<span class='medradio'>Some <b>Yin</b> Chi energy enters you...</span>")
 					update_chi_hud()
 				else

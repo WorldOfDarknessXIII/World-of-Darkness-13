@@ -284,6 +284,41 @@
 	else
 		. = ..()
 
+/mob/living/Life()
+	. = ..()
+
+	if(!iscathayan(src))
+		if((yang_chi == 0 && max_yang_chi != 0) && (yang_chi == 0 && max_yang_chi != 0))
+			to_chat(src, "<span clas='warning'>Your vital energies seem to disappear...</span>")
+			adjustCloneLoss(5, TRUE)
+		else if(yang_chi == 0 && max_yang_chi != 0)
+			if(max_yin_chi != 0)
+				to_chat(src, "<span clas='warning'>You lack dynamic part of life...</span>")
+				adjust_bodytemperature(-15)
+				adjustFireLoss(5, TRUE)
+			else
+				to_chat(src, "<span clas='warning'>Your vital energies seem to disappear...</span>")
+				adjustCloneLoss(5, TRUE)
+		else if(yin_chi == 0 && max_yin_chi != 0)
+			if(max_yang_chi != 0)
+				to_chat(src, "<span clas='warning'>You lack static part of life...</span>")
+				adjust_bodytemperature(15)
+				adjustFireLoss(5, TRUE)
+			else
+				to_chat(src, "<span clas='warning'>Your vital energies seem to disappear...</span>")
+				adjustCloneLoss(5, TRUE)
+
+	if(yang_chi < max_yang_chi)
+		if(last_chi_restore + 30 SECONDS <= world.time)
+			last_chi_restore = world.time
+			yang_chi = min(yang_chi+1, max_yang_chi)
+	else if(yin_chi < max_yin_chi)
+		if(last_chi_restore + 30 SECONDS <= world.time)
+			last_chi_restore = world.time
+			yin_chi = min(yin_chi+1, max_yin_chi)
+	else
+		last_chi_restore = world.time
+
 /datum/species/kuei_jin
 	name = "Kuei-Jin"
 	id = "kuei-jin"
@@ -657,7 +692,8 @@
 				return
 			L.yin_chi = max(0, L.yin_chi-1)
 			BD.yin_chi = min(BD.yin_chi+1, BD.max_yin_chi)
-			to_chat(BD, "<span class='engradio'>Some <b>Yang</b> Chi energy enters you...</span>")
+			L.last_chi_restore = world.time
+			to_chat(BD, "<span class='medradio'>Some <b>Yin</b> Chi energy enters you...</span>")
 			BD.update_chi_hud()
 		else
 			var/list/victims_list = list()
@@ -698,6 +734,7 @@
 							if(victim.yang_chi)
 								victim.yang_chi = max(0, victim.yang_chi-1)
 								BD.yang_chi = min(BD.yang_chi+1, BD.max_yang_chi)
+								victim.last_chi_restore = world.time
 								to_chat(BD, "<span class='engradio'>Some <b>Yang</b> Chi energy enters you...</span>")
 								BD.update_chi_hud()
 							else
@@ -921,11 +958,11 @@
 	///Icon for this Discipline as in disciplines.dmi
 	var/icon_state
 	///Cost in yin points of activating this Discipline.
-	var/cost_yin = 1
+	var/cost_yin = 0
 	///Cost in yang points of activating this Discipline.
-	var/cost_yang = 1
+	var/cost_yang = 0
 	///Cost in demon points of activating this Discipline.
-	var/cost_demon = 1
+	var/cost_demon = 0
 	//Is ranged?
 	var/ranged = FALSE
 	///Duration of the Discipline.
@@ -1004,6 +1041,7 @@
 	icon_state = "blood"
 	ranged = FALSE
 	delay = 10 SECONDS
+	cost_yin = 1
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/bloodcrawler/kuei_jin/BC
 
 /datum/movespeed_modifier/blood_fat
@@ -1182,6 +1220,7 @@
 	icon_state = "jade"
 	ranged = FALSE
 	delay = 12 SECONDS
+	cost_yang = 1
 
 /obj/item/melee/powerfist/stone
 	item_flags = DROPDEL
@@ -1244,6 +1283,7 @@
 	icon_state = "bone"
 	ranged = FALSE
 	delay = 12 SECONDS
+	cost_yin = 1
 
 /obj/effect/particle_effect/smoke/bad/green/bone_shintai
 	name = "green dangerous smoke"
@@ -1347,6 +1387,7 @@
 	icon_state = "ghostflame"
 	ranged = FALSE
 	delay = 12 SECONDS
+	cost_yang = 1
 
 /mob/living/simple_animal/hostile/beastmaster/fireball
 	name = "fireball"
@@ -1380,6 +1421,10 @@
 	maxbloodpool = 0
 	maxHealth = 30
 	health = 30
+	yang_chi = 1
+	max_yang_chi = 1
+	yin_chi = 0
+	max_yin_chi = 0
 	harm_intent_damage = 10
 	melee_damage_lower = 15
 	melee_damage_upper = 30
@@ -1475,6 +1520,8 @@
 	desc = "Manipulate own flesh and flexibility."
 	icon_state = "flesh"
 	ranged = FALSE
+	cost_yin = 1
+	var/datum/component/tackler
 
 /obj/item/chameleon/temp
 	name = "Appearance Projector"
@@ -1484,17 +1531,162 @@
 //	. = ..()
 //	ADD_TRAIT(src, TRAIT_NODROP, STICKY_NODROP)
 
+//Meat Hook
+/obj/item/gun/magic/hook/flesh_shintai
+	name = "obviously long arm"
+	ammo_type = /obj/item/ammo_casing/magic/hook/flesh_shintai
+	icon_state = "hook_hand"
+	icon = 'code/modules/wod13/weapons.dmi'
+	inhand_icon_state = "hook_hand"
+	lefthand_file = 'code/modules/wod13/lefthand.dmi'
+	righthand_file = 'code/modules/wod13/righthand.dmi'
+	fire_sound = 'code/modules/wod13/sounds/vicissitude.ogg'
+	max_charges = 1
+	item_flags = DROPDEL | NOBLUDGEON
+	force = 18
+
+/obj/item/ammo_casing/magic/hook/flesh_shintai
+	name = "hand"
+	desc = "A hand."
+	projectile_type = /obj/projectile/flesh_shintai
+	caliber = CALIBER_HOOK
+	icon_state = "hook"
+
+/obj/projectile/flesh_shintai
+	name = "hand"
+	icon_state = "hand"
+	icon = 'code/modules/wod13/icons.dmi'
+	pass_flags = PASSTABLE
+	damage = 0
+	stamina = 20
+	hitsound = 'sound/effects/splat.ogg'
+	var/chain
+	var/knockdown_time = (0.5 SECONDS)
+
+/obj/projectile/flesh_shintai/fire(setAngle)
+	if(firer)
+		chain = firer.Beam(src, icon_state = "arm")
+		if(iscathayan(firer))
+			var/mob/living/carbon/human/H = firer
+			if(H.CheckEyewitness(H, H, 7, FALSE))
+				H.AdjustMasquerade(-1)
+	..()
+
+/obj/projectile/flesh_shintai/on_hit(atom/target)
+	. = ..()
+	if(ismovable(target))
+		var/atom/movable/A = target
+		if(A.anchored)
+			return
+		A.visible_message("<span class='danger'>[A] is snagged by [firer]'s hand!</span>")
+		new /datum/forced_movement(A, get_turf(firer), 5, TRUE)
+		if (isliving(target))
+			var/mob/living/fresh_meat = target
+			fresh_meat.Knockdown(knockdown_time)
+			return
+		//TODO: keep the chain beamed to A
+		//TODO: needs a callback to delete the chain
+
+/obj/projectile/flesh_shintai/Destroy()
+	qdel(chain)
+	return ..()
+
+/obj/structure/flesh_grip
+	name = "flesh grip"
+	desc = "A huge flesh meat structure."
+	icon = 'code/modules/wod13/icons.dmi'
+	icon_state = "flesh_grip"
+	can_buckle = TRUE
+	anchored = TRUE
+	density = TRUE
+	max_buckled_mobs = 1
+	buckle_lying = 0
+	buckle_prevents_pull = TRUE
+	layer = ABOVE_MOB_LAYER
+
+/obj/structure/flesh_grip/user_unbuckle_mob(mob/living/buckled_mob, mob/living/carbon/human/user)
+	if(buckled_mob)
+		var/mob/living/M = buckled_mob
+		if(M != user)
+			M.visible_message("<span class='notice'>[user] tries to pull [M] free of [src]!</span>",\
+				"<span class='notice'>[user] is trying to pull you off [src], opening up fresh wounds!</span>",\
+				"<span class='hear'>You hear a squishy wet noise.</span>")
+			if(!do_after(user, 300, target = src))
+				if(M?.buckled)
+					M.visible_message("<span class='notice'>[user] fails to free [M]!</span>",\
+					"<span class='notice'>[user] fails to pull you off of [src].</span>")
+				return
+
+		else
+			M.visible_message("<span class='warning'>[M] struggles to break free from [src]!</span>",\
+			"<span class='notice'>You struggle to break free from [src], exacerbating your wounds! (Stay still for two minutes.)</span>",\
+			"<span class='hear'>You hear a wet squishing noise..</span>")
+			M.adjustBruteLoss(30)
+			if(!do_after(M, 1200, target = src))
+				if(M?.buckled)
+					to_chat(M, "<span class='warning'>You fail to free yourself!</span>")
+				return
+		if(!M.buckled)
+			return
+		release_mob(M)
+
+/obj/structure/flesh_grip/proc/release_mob(mob/living/M)
+	var/matrix/m180 = matrix(M.transform)
+	m180.Turn(180)
+	animate(M, transform = m180, time = 3)
+	M.pixel_y = M.base_pixel_y + PIXEL_Y_OFFSET_LYING
+	M.adjustBruteLoss(30)
+	src.visible_message(text("<span class='danger'>[M] falls free of [src]!</span>"))
+	unbuckle_mob(M,force=1)
+	M.emote("scream")
+	M.AdjustParalyzed(20)
+
 /datum/chi_discipline/flesh_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
 	switch(level_casting)
-//		if(1)
-//		if(2)
+		if(1)
+			var/obj/item/gun/magic/hook/flesh_shintai/F = new (caster)
+			caster.drop_all_held_items()
+			caster.put_in_active_hand(F)
+			spawn(delay+caster.discipline_time_plus)
+				qdel(F)
+		if(2)
+			caster.remove_overlay(PROTEAN_LAYER)
+			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "flesh_arms", -PROTEAN_LAYER)
+			caster.overlays_standing[PROTEAN_LAYER] = potence_overlay
+			caster.apply_overlay(PROTEAN_LAYER)
+			caster.dna.species.punchdamagelow += 20
+			caster.dna.species.punchdamagehigh += 20
+			caster.dna.species.meleemod += 1
+			caster.dna.species.attack_sound = 'code/modules/wod13/sounds/heavypunch.ogg'
+			tackler = caster.AddComponent(/datum/component/tackler, stamina_cost=0, base_knockdown = 1 SECONDS, range = 2+level_casting, speed = 1, skill_mod = 0, min_distance = 0)
+			caster.potential = 4
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.remove_overlay(PROTEAN_LAYER)
+					caster.potential = 0
+					caster.dna.species.punchdamagelow -= 20
+					caster.dna.species.punchdamagehigh -= 20
+					caster.dna.species.meleemod -= 1
+					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
+					qdel(tackler)
 		if(3)
 			caster.flesh_shintai_dodge = TRUE
+			to_chat(caster, "<span class='notice'>You feel really dodgy...</span>")
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					caster.flesh_shintai_dodge = FALSE
-//		if(4)
+					to_chat(caster, "<span class='warning'>You feel usual in dodge again...</span>")
+		if(4)
+			var/obj/structure/flesh_grip/F = new (get_turf(caster))
+			if(caster.pulling)
+				if(isliving(caster.pulling))
+					F.buckle_mob(caster.pulling, TRUE, FALSE)
+			else
+				for(var/mob/living/L in range(2, caster))
+					if(L != caster)
+						if(L.stat != DEAD)
+							F.buckle_mob(L, TRUE, FALSE)
 		if(5)
 			caster.drop_all_held_items()
 			caster.put_in_active_hand(new /obj/item/chameleon/temp(caster))
@@ -1556,15 +1748,39 @@
 	desc = "Transform into the P'o."
 	icon_state = "demon"
 	ranged = FALSE
+	var/current_form = "Samurai"
+
+/datum/action/choose_demon_form
+	name = "Choose Demon Form"
+	desc = "Choose your form of a Demon."
+	button_icon_state = "demon_form"
+	button_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	background_icon_state = "discipline"
+	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+
+/datum/action/choose_demon_form/Trigger()
+	if(istype(owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/BD = usr
+		var/sett = input(BD, "Choose your Demon Form", "Demon Form") as null|anything in list("Samurai", "Tentacles", "Demon", "Giant", "Foul")
+		if(sett)
+			to_chat(BD, "Your new form is [sett].")
+			for(var/datum/action/chi_discipline/C in BD.actions)
+				if(C)
+					if(istype(C.discipline, /datum/chi_discipline/demon_shintai))
+						var/datum/chi_discipline/demon_shintai/D = C.discipline
+						D.current_form = sett
+		button.color = "#970000"
+		animate(button, color = "#ffffff", time = 20, loop = 1)
 
 /datum/chi_discipline/demon_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-//	switch(level_casting)
-//		if(1)
-//		if(2)
-//		if(3)
-//		if(4)
-//		if(5)
+//	switch(current_form)
+//		if("Samurai")
+//		if("Tentacles")
+//		if("Demon")
+//		if("Giant")
+//		if("Foul")
 
 /datum/chi_discipline/hellweaving
 	name = "Hellweaving"
