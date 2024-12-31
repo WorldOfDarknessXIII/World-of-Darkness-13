@@ -2026,6 +2026,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(result == "Caitiff")
 							generation = 13
 							while (clane.clane_disciplines.len < 3)
+								if(ishuman(user))
+									break
 								var/list/possible_new_disciplines = subtypesof(/datum/discipline) - clane.clane_disciplines
 								for (var/discipline_type in possible_new_disciplines)
 									var/datum/discipline/discipline = new discipline_type
@@ -2832,7 +2834,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.additional_physique = A.archetype_additional_physique
 	character.additional_dexterity = A.archetype_additional_dexterity
 	character.additional_social = A.archetype_additional_social
-	character.additional_mentality = A.archetype_additional_social
+	character.additional_mentality = A.archetype_additional_mentality
 	character.additional_blood = A.archetype_additional_blood
 	character.additional_lockpicking = A.archetype_additional_lockpicking
 	character.additional_athletics = A.archetype_additional_athletics

@@ -12,8 +12,7 @@
 	var/destination_x
 	var/destination_y
 
-	//We don't use space tiles in WoD13 so we don't need gas tiles for every space turf
-	//var/static/datum/gas_mixture/immutable/space/space_gas = new
+	var/static/datum/gas_mixture/immutable/space/space_gas = new
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
 	light_power = 0.25
@@ -33,7 +32,7 @@
 /turf/open/space/Initialize()
 	SHOULD_CALL_PARENT(FALSE)
 	icon_state = SPACE_ICON_STATE
-	//air = space_gas
+	air = space_gas
 	vis_contents.Cut() //removes inherited overlays
 	visibilityChanged()
 

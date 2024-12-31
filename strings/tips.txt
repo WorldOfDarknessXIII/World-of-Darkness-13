@@ -32,7 +32,7 @@ As a Doctor, your objectives are to heal Kine for proper feeding. You can also s
 As a Graveyard Keeper, your objectives are to protect City from a Shadowlands Masquerade breach. There is no more room in Hell, so walking dead are rising up. Kill 'em all...
 As a Stripper, you are free to do with the Strip Club as you wish. It is your domain - unless the Prince changes his mind.
 As a Baron, you lead the individualistic kindred of the city. You are still part of the Camarilla and are subject to it's laws. San Francisco is not an Anarch domain.
-As a Bouncer, you hang out with the Baron and support him in his rebellious troublemaking.
+As a Bruiser, you hang out with the Baron and support him in his rebellious troublemaking.
 As a Dealer, you hold a powerful domain. You can make deals with whomever you want - but boons are always worth more than money.
 As a Supply Technician, you work for the dealer - who has graciously accepted you into his coterie.
 As a Chantry Regent, your objectives are to lead the Tremere of San Francisco and keep the Chantry secure, as well as hunt down any who would steal your clan's secrets.
