@@ -42,7 +42,7 @@
 
 	//Wod13 Head types, some are masks.
 	if(istype(head, /obj/item/clothing/head/vampire))
-		var/obj/item/clothing/mask/animal/V = head
+		var/obj/item/clothing/head/vampire/V = head
 		if(V.voice_unknown)
 			return ("Unknown")
 		else
