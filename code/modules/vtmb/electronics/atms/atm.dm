@@ -66,6 +66,10 @@ var/mob/living/carbon/human/H
 	icon_state = "card2"
 	inhand_icon_state = "card2"
 
+/obj/item/vamp/creditcard/seneschal
+	icon_state = "card2"
+	inhand_icon_state = "card2"
+
 /obj/item/vamp/creditcard/elder
 	icon_state = "card3"
 	inhand_icon_state = "card3"
@@ -83,13 +87,15 @@ var/mob/living/carbon/human/H
 	if(user)
 		owner = user.ckey
 	if(istype(src, /obj/item/vamp/creditcard/prince))
-		account.balance = rand(5000, 10000)
+		account.balance = rand(10000, 15000)
 	else if(istype(src, /obj/item/vamp/creditcard/elder))
 		account.balance = rand(3000, 7000)
 	else if(istype(src, /obj/item/vamp/creditcard/rich))
 		account.balance = rand(1000, 4000)
 	else if(istype(src, /obj/item/vamp/creditcard/giovanniboss))
 		account.balance = rand(8000, 15000)
+	else if(istype(src, /obj/item/vamp/creditcard/seneschal))
+		account.balance = rand(4000, 8000)
 	else
 		account.balance = rand(100, 1000)
 
