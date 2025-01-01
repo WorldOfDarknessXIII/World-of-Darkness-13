@@ -567,13 +567,18 @@
 	if(target.IsParalyzed() || target.IsKnockdown() || target.IsStun())
 		return
 	if(!target.IsParalyzed() && iskindred(target) && !target.stakeimmune)
-		visible_message("<span class='warning'>[user] aims [src] straight to the [target]'s heart!</span>", "<span class='warning'>You aim [src] straight to the [target]'s heart!</span>")
-		if(do_after(user, 20, target))
-			user.do_attack_animation(target)
-			visible_message("<span class='warning'>[user] pierces [target]'s torso!</span>", "<span class='warning'>You pierce [target]'s torso!</span>")
-			target.Paralyze(1200)
-			target.Sleeping(1200)
+		if(HAS_TRAIT(target, TRAIT_STAKE_RESISTANT))
+			visible_message("<span class='warning'>[user]'s stake splinters as it touches [target]'s heart!</span>", "<span class='warning'>Your stake splinters as it touches [target]'s heart!</span>")
+			REMOVE_TRAIT(target, TRAIT_STAKE_RESISTANT, MAGIC_TRAIT)
 			qdel(src)
+		else
+			visible_message("<span class='warning'>[user] aims [src] straight to the [target]'s heart!</span>", "<span class='warning'>You aim [src] straight to the [target]'s heart!</span>")
+			if(do_after(user, 20, target))
+				user.do_attack_animation(target)
+				visible_message("<span class='warning'>[user] pierces [target]'s torso!</span>", "<span class='warning'>You pierce [target]'s torso!</span>")
+				target.Paralyze(1200)
+				target.Sleeping(1200)
+				qdel(src)
 
 /obj/item/melee/vampirearms/shovel
 	icon = 'code/modules/wod13/weapons.dmi'
@@ -694,7 +699,7 @@
 	throwforce = 40
 	throw_speed = 2
 	throw_range = 3
-	masquerade_violating = TRUE
+	masquerade_violating = FALSE
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("shoves", "bashes")
 	attack_verb_simple = list("shove", "bash")

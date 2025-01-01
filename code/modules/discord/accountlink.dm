@@ -1,5 +1,5 @@
 // IF you have linked your account, this will trigger a verify of the user
-/*/client/verb/verify_in_discord()
+/client/verb/verify_in_discord()
 	set category = "OOC"
 	set name = "Verify Discord Account"
 	set desc = "Verify your discord account with your BYOND account"
@@ -34,6 +34,3 @@
 	var/datum/browser/window = new/datum/browser(usr, "discordverification", "Discord verification")
 	window.set_content("<span>[message]</span>")
 	window.open()
-
-
-*/

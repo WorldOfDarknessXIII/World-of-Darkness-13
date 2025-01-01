@@ -27,7 +27,7 @@
 
 /datum/outfit/job/triad_soldier/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.grant_language(/datum/language/chinese)
+	H.grant_language(/datum/language/cantonese)
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/suit/female
 		shoes = /obj/item/clothing/shoes/vampire/heels

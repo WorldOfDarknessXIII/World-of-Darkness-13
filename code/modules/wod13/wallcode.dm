@@ -54,6 +54,13 @@
 			return
 		if(istype(mover) && (mover.pass_flags & PASSTABLE))
 			return TRUE
+		if(istype(mover.loc, /turf/closed/wall/vampwall)) //Because "low" type walls aren't standardized and are subtypes of different wall types
+			var/turf/closed/wall/vampwall/vw = mover.loc
+			if(vw.low)
+				return TRUE
+		//Roughly the same elevation
+		if(locate(/obj/structure/table) in get_turf(mover))
+			return TRUE
 
 /turf/closed/wall/vampwall/attackby(obj/item/W, mob/user, params)
 	return
@@ -126,6 +133,7 @@
 	icon = 'code/modules/wod13/lowwalls.dmi'
 	opacity = FALSE
 	low = TRUE
+	blocks_air = FALSE //Let the windows block the air transfer
 
 /turf/closed/wall/vampwall/low/window
 	icon_state = "wall-window"
@@ -141,6 +149,7 @@
 	icon = 'code/modules/wod13/lowwalls.dmi'
 	opacity = FALSE
 	low = TRUE
+	blocks_air = FALSE
 
 /turf/closed/wall/vampwall/rich/low/window
 	icon_state = "rich-window"
@@ -160,6 +169,7 @@
 	icon = 'code/modules/wod13/lowwalls.dmi'
 	opacity = FALSE
 	low = TRUE
+	blocks_air = FALSE
 
 /turf/closed/wall/vampwall/junk/low/window
 	icon_state = "junk-window"
@@ -173,6 +183,7 @@
 	icon = 'code/modules/wod13/lowwalls.dmi'
 	opacity = FALSE
 	low = TRUE
+	blocks_air = FALSE
 
 /turf/closed/wall/vampwall/junk/alt/low/window
 	icon_state = "junkalt-window"
@@ -188,6 +199,7 @@
 	icon = 'code/modules/wod13/lowwalls.dmi'
 	opacity = FALSE
 	low = TRUE
+	blocks_air = FALSE
 
 /turf/closed/wall/vampwall/market/low/window
 	icon_state = "market-window"
@@ -207,6 +219,7 @@
 	icon = 'code/modules/wod13/lowwalls.dmi'
 	opacity = FALSE
 	low = TRUE
+	blocks_air = FALSE
 
 /turf/closed/wall/vampwall/old/low/window
 	icon_state = "old-window"
@@ -226,6 +239,7 @@
 	icon = 'code/modules/wod13/lowwalls.dmi'
 	opacity = FALSE
 	low = TRUE
+	blocks_air = FALSE
 
 /turf/closed/wall/vampwall/painted/low/window
 	icon_state = "painted-window"
@@ -245,6 +259,7 @@
 	icon = 'code/modules/wod13/lowwalls.dmi'
 	opacity = FALSE
 	low = TRUE
+	blocks_air = FALSE
 
 /turf/closed/wall/vampwall/rich/old/low/window
 	icon_state = "theater-window"
@@ -264,6 +279,7 @@
 	icon = 'code/modules/wod13/lowwalls.dmi'
 	opacity = FALSE
 	low = TRUE
+	blocks_air = FALSE
 
 /turf/closed/wall/vampwall/brick/low/window
 	icon_state = "brick-window"
@@ -285,6 +301,7 @@
 	icon = 'code/modules/wod13/lowwalls.dmi'
 	opacity = FALSE
 	low = TRUE
+	blocks_air = FALSE
 
 /turf/closed/wall/vampwall/city/low/window
 	icon_state = "city-window"
@@ -325,6 +342,7 @@
 	icon = 'code/modules/wod13/lowwalls.dmi'
 	opacity = FALSE
 	low = TRUE
+	blocks_air = FALSE
 
 /turf/closed/wall/vampwall/bar/low/window
 	icon_state = "bar-window"
@@ -340,6 +358,7 @@
 	icon = 'code/modules/wod13/lowwalls.dmi'
 	opacity = FALSE
 	low = TRUE
+	blocks_air = FALSE
 
 /turf/closed/wall/vampwall/wood/low/window
 	icon_state = "wood-window"
@@ -570,6 +589,10 @@
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
 				heavyfootstep = FOOTSTEP_SNOW
+
+//Airless version of this because they are used as a z-level 4 roof on a z-level 3 building, and since they aren't meant to be reached...
+/turf/open/floor/plating/roofwalk/no_air
+	blocks_air = 1
 
 /obj/effect/decal/bordur
 	name = "sidewalk"
@@ -1173,7 +1196,7 @@
 
 /turf/open/floor/plating/shit
 	gender = PLURAL
-	name = "shit"
+	name = "sewage"
 	icon = 'code/modules/wod13/tiles.dmi'
 	icon_state = "shit"
 	flags_1 = NONE

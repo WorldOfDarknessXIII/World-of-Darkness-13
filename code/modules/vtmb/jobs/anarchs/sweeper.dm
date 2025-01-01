@@ -1,14 +1,14 @@
 
-/datum/job/vamp/bouncer
-	title = "Bouncer"
+/datum/job/vamp/sweeper
+	title = "Sweeper"
 	department_head = list("Baron")
 	faction = "Vampire"
-	total_positions = 7
-	spawn_positions = 7
+	total_positions = 3
+	spawn_positions = 3
 	supervisors = "the Baron"
 	selection_color = "#434343"
 
-	outfit = /datum/outfit/job/bouncer
+	outfit = /datum/outfit/job/sweeper
 
 	access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
 	minimal_access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
@@ -18,17 +18,17 @@
 	mind_traits = list(TRAIT_DONUT_LOVER)
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_BOUNCER
+	display_order = JOB_DISPLAY_ORDER_SWEEPER
 	known_contacts = list("Baron")
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian")
 
-	v_duty = "You work with the baron - whether because of your own ideals or friendship, or other reasons. That doesn't mean you will let someone disregard the one tradition you do agree with - the Masquerade."
+	v_duty = "You are the observer of the anarchs. You watch out for any new kindred, suspicious individuals, and any new rumors near the anarch turf, and then report it to your anarchs."
 	minimal_masquerade = 2
 	experience_addition = 15
 
-/datum/outfit/job/bouncer
-	name = "Bouncer"
-	jobtype = /datum/job/vamp/bouncer
+/datum/outfit/job/sweeper
+	name = "Sweeper"
+	jobtype = /datum/job/vamp/sweeper
 
 	id = /obj/item/card/id/anarch
 	uniform = /obj/item/clothing/under/vampire/bouncer
@@ -36,13 +36,12 @@
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	r_pocket = /obj/item/vamp/keys/anarch
 	l_pocket = /obj/item/vamp/phone/anarch
-	r_hand = /obj/item/melee/vampirearms/baseball
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/vampire_stake=3, /obj/item/flashlight=1, /obj/item/vamp/keys/hack=1, /obj/item/vamp/creditcard=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/keys/hack=1, /obj/item/vamp/creditcard=1, /obj/item/binoculars = 1)
 
-/datum/outfit/job/bouncer/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/sweeper/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.vampire_faction = "Anarch"
 
-/obj/effect/landmark/start/bouncer
-	name = "Bouncer"
+/obj/effect/landmark/start/sweeper
+	name = "Sweeper"
 	icon_state = "Bouncer"
