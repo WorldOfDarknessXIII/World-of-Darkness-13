@@ -46,21 +46,19 @@
 	rider.log_message("started riding [living_parent]", LOG_ATTACK, color="pink")
 
 // this applies to humans and most creatures, but is replaced again for cyborgs
-/datum/component/riding/creature/ride_check(mob/living/rider)
+/datum/component/riding/creature/ride_check(mob/living/rider, consequences = TRUE)
+	. = TRUE
 	var/mob/living/living_parent = parent
 
-	var/kick_us_off
-	if(living_parent.body_position != STANDING_UP) // if we move while on the ground, the rider falls off
-		kick_us_off = TRUE
+//	if(living_parent.body_position != STANDING_UP) // if we move while on the ground, the rider falls off
 	// for piggybacks and (redundant?) borg riding, check if the rider is stunned/restrained
-	else if((ride_check_flags & RIDER_NEEDS_ARMS) && (HAS_TRAIT(rider, TRAIT_RESTRAINED) || rider.incapacitated(TRUE, TRUE)))
-		kick_us_off = TRUE
+//	else if((ride_check_flags & RIDER_NEEDS_ARMS) && (HAS_TRAIT(rider, TRAIT_RESTRAINED) || rider.incapacitated(TRUE, TRUE)))
 	// for fireman carries, check if the ridden is stunned/restrained
-	else if((ride_check_flags & CARRIER_NEEDS_ARM) && (HAS_TRAIT(living_parent, TRAIT_RESTRAINED) || living_parent.incapacitated(TRUE, TRUE)))
-		kick_us_off = TRUE
+//	else if((ride_check_flags & CARRIER_NEEDS_ARM) && (HAS_TRAIT(living_parent, TRAIT_RESTRAINED) || living_parent.incapacitated(TRUE, TRUE)))
+//		kick_us_off = TRUE
 
-	if(!kick_us_off)
-		return TRUE
+	if(. || !consequences)
+		return
 
 	rider.visible_message("<span class='warning'>[rider] falls off of [living_parent]!</span>", \
 					"<span class='warning'>You fall off of [living_parent]!</span>")
@@ -160,6 +158,19 @@
 	RegisterSignal(parent, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(on_host_unarmed_melee))
 	RegisterSignal(parent, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(check_carrier_fall_over))
 
+/datum/component/riding/creature/riding_can_z_move(atom/movable/movable_parent, direction, turf/start, turf/destination, z_move_flags, mob/living/rider)
+	if(!(z_move_flags & ZMOVE_CAN_FLY_CHECKS))
+		return COMPONENT_RIDDEN_ALLOW_Z_MOVE
+	if(!can_be_driven)
+		if(z_move_flags & ZMOVE_FEEDBACK)
+			to_chat(rider, "<span class='notice'>[movable_parent] cannot be driven around. Unbuckle from [movable_parent.p_them()] first.<span>")
+		return COMPONENT_RIDDEN_STOP_Z_MOVE
+	if(!ride_check(rider, FALSE))
+		if(z_move_flags & ZMOVE_FEEDBACK)
+			to_chat(rider, "<span class='warning'>You're unable to ride [movable_parent] right now!</span>")
+		return COMPONENT_RIDDEN_STOP_Z_MOVE
+	return COMPONENT_RIDDEN_ALLOW_Z_MOVE
+
 /datum/component/riding/creature/human/log_riding(mob/living/living_parent, mob/living/rider)
 	if(!istype(living_parent) || !istype(rider))
 		return
@@ -239,12 +250,12 @@
 /datum/component/riding/creature/cyborg
 	can_be_driven = FALSE
 
-/datum/component/riding/creature/cyborg/ride_check(mob/living/user)
+/datum/component/riding/creature/cyborg/ride_check(mob/living/user, consequences = TRUE)
 	var/mob/living/silicon/robot/robot_parent = parent
 	if(!iscarbon(user))
-		return
-	var/mob/living/carbon/carbonuser = user
-	if(!carbonuser.usable_hands)
+		return TRUE
+	. = user.usable_hands
+	if(!. && consequences)
 		Unbuckle(user)
 		to_chat(user, "<span class='warning'>You can't grab onto [robot_parent] with no hands!</span>")
 
