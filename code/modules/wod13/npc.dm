@@ -41,19 +41,6 @@
 	multiplicative_slowdown = 2
 
 /datum/socialrole
-	//For randomizing
-	var/list/s_tones = list("albino",
-													"caucasian1",
-													"caucasian2",
-													"caucasian3",
-													"latino",
-													"mediterranean",
-													"asian1",
-													"asian2",
-													"arab",
-													"indian",
-													"african1",
-													"african2")
 	var/min_age = 18
 	var/max_age = 85
 	var/preferedgender
@@ -279,7 +266,7 @@
 		else
 			s_names = GLOB.last_names
 		age = rand(socialrole.min_age, socialrole.max_age)
-		skin_tone = pick(socialrole.s_tones)
+		skin_tone = pick(GLOB.skin_tones)
 		if(age >= 55)
 			hair_color = "a2a2a2"
 			facial_hair_color = hair_color

@@ -274,12 +274,10 @@
 			msg += "[t_He] look[p_s()] extremely disgusted.\n"
 
 	var/apparent_blood_volume = bloodpool
-	if(skin_tone == "albino")
-		apparent_blood_volume -= 3
 	if((apparent_blood_volume >= round(maxbloodpool * 0.5)) && (apparent_blood_volume < maxbloodpool))
-		msg += "[t_He] [t_has] pale skin.\n"
+		msg += "[t_He] [t_has] less blood than the norm.\n"
 	else if((apparent_blood_volume >= 1) && (apparent_blood_volume < round(maxbloodpool/2)))
-		msg += "[t_He] look[p_s()] like pale death.\n"
+		msg += "[t_He] [t_has] little blood in them.\n"
 	else if(bloodpool <= 0)
 		msg += "<span class='deadsay'><b>[t_He] resemble[p_s()] a crushed, empty juice pouch.</b></span>\n"
 

@@ -245,30 +245,3 @@
 			else
 				to_chat(rollviewer, "<span class='boldnotice'>Phenomenal</span>")
 				return DICE_WIN
-
-/proc/get_vamp_skin_color(var/value = "albino")
-	switch(value)
-		if("caucasian1")
-			return "vamp1"
-		if("caucasian2")
-			return "vamp2"
-		if("caucasian3")
-			return "vamp3"
-		if("latino")
-			return "vamp4"
-		if("mediterranean")
-			return "vamp5"
-		if("asian1")
-			return "vamp6"
-		if("asian2")
-			return "vamp7"
-		if("arab")
-			return "vamp8"
-		if("indian")
-			return "vamp9"
-		if("african1")
-			return "vamp10"
-		if("african2")
-			return "vamp11"
-		else
-			return value

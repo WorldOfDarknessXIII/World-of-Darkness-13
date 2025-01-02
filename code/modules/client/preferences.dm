@@ -78,7 +78,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/hair_color = "000"				//Hair color
 	var/facial_hairstyle = "Shaved"	//Face hair type
 	var/facial_hair_color = "000"		//Facial hair color
-	var/skin_tone = "caucasian1"		//Skin color
+	var/skin_tone = LATINO		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF", "ethcolor" = "9c3030", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "moth_antennae" = "Plain", "moth_markings" = "None")
@@ -680,8 +680,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += APPEARANCE_CATEGORY_COLUMN
 
 				dat += "<h3>[make_font_cool("SKIN")]</h3>"
+				dat += "<span style='border: 1px solid #161616; background-color: #[skin_tone];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=s_tone;task=input'>Change</a>"
 
-				dat += "<a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a>"
 //				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SKIN_TONE]'>[(randomise[RANDOM_SKIN_TONE]) ? "Lock" : "Unlock"]</A>"
 				dat += "<br>"
 
@@ -2351,10 +2351,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("s_tone")
 					if(slotlocked)
 						return
-
-					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in GLOB.skin_tones
+					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference","#"+skin_tone) as color|null
 					if(new_s_tone)
-						skin_tone = new_s_tone
+						skin_tone = sanitize_hexcolor(new_s_tone)
 
 				if("ooccolor")
 					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference",ooccolor) as color|null
@@ -2903,9 +2902,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	if(pref_species.name == "Vampire")
 		if(clane.alt_sprite && !clane.alt_sprite_greyscale)
-			character.skin_tone = "albino"
-		else
-			character.skin_tone = get_vamp_skin_color(skin_tone)
+			character.skin_tone = ALBINO
 	else
 		character.skin_tone = skin_tone
 

@@ -21,7 +21,7 @@
 /datum/species/vamp_mannequin/on_species_gain(mob/living/carbon/human/C)
 	. = ..()
 	C.status_flags |= GODMODE
-	C.skin_tone = "albino"
+	C.skin_tone = ALBINO
 	C.dna.species.limbs_id = "mannequin"
 	C.update_body_parts()
 	C.update_body()

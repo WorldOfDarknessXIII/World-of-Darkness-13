@@ -125,7 +125,7 @@
 			if("Skin armor")
 				H.additional_armor = TRUE
 				H.unique_body_sprite = "tziarmor"
-				H.skin_tone = "albino"
+				H.skin_tone = ALBINO
 				H.hairstyle = "Bald"
 				H.base_body_mod = ""
 				H.physiology.armor.melee = H.physiology.armor.melee+20
@@ -148,7 +148,7 @@
 				H.change_number_of_hands(limbs+2)
 				H.remove_overlay(PROTEAN_LAYER)
 				var/mutable_appearance/hands2_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "2hands", -PROTEAN_LAYER)
-				hands2_overlay.color = "#[skintone2hex(H.skin_tone)]"
+				hands2_overlay.color = "#[H.skin_tone]"
 				H.overlays_standing[PROTEAN_LAYER] = hands2_overlay
 				H.apply_overlay(PROTEAN_LAYER)
 			if("Leather wings")
@@ -184,7 +184,7 @@
 		if(additional_hands)
 			H.remove_overlay(PROTEAN_LAYER)
 			var/mutable_appearance/hands2_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "2hands", -PROTEAN_LAYER)
-			hands2_overlay.color = "#[skintone2hex(H.skin_tone)]"
+			hands2_overlay.color = "#[H.skin_tone]"
 			H.overlays_standing[PROTEAN_LAYER] = hands2_overlay
 			H.apply_overlay(PROTEAN_LAYER)
 		if(additional_wings)

@@ -586,7 +586,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	facial_hair_color			= sanitize_hexcolor(facial_hair_color, 3, 0)
 	underwear_color			= sanitize_hexcolor(underwear_color, 3, 0)
 	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
-	skin_tone		= sanitize_inlist(skin_tone, GLOB.skin_tones)
+
+	//convert old skin colors
+	skin_tone		= sanitize_hexcolor(convert_old_skintone(skin_tone), 3, 0)
 	backpack			= sanitize_inlist(backpack, GLOB.backpacklist, initial(backpack))
 	jumpsuit_style	= sanitize_inlist(jumpsuit_style, GLOB.jumpsuitlist, initial(jumpsuit_style))
 	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
@@ -649,6 +651,60 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		reset_character()
 
 	return TRUE
+
+/proc/convert_old_skintone(skin_tone)
+	. = 0
+	switch(skin_tone)
+		if("caucasian1")
+			. = CAUCASIAN_1
+		if("caucasian2")
+			. = CAUCASIAN_2
+		if("caucasian3")
+			. = CAUCASIAN_3
+		if("latino")
+			. = LATINO
+		if("mediterranean")
+			. = MEDITERRANEAN
+		if("asian1")
+			. = ASIAN_1
+		if("asian2")
+			. = ASIAN_2
+		if("arab")
+			. = ARAB
+		if("indian")
+			. = INDIAN
+		if("african1")
+			. = AFRICAN_1
+		if("african2")
+			. = AFRICAN_2
+		if("albino")
+			. = ALBINO
+		if("orange")
+			. = ORANGE
+		if("vamp1")
+			. = VAMP_1
+		if("vamp2")
+			. = VAMP_2
+		if("vamp3")
+			. = VAMP_3
+		if("vamp4")
+			. = VAMP_4
+		if("vamp5")
+			. = VAMP_5
+		if("vamp6")
+			. = VAMP_6
+		if("vamp7")
+			. = VAMP_7
+		if("vamp8")
+			. = VAMP_8
+		if("vamp9")
+			. = VAMP_9
+		if("vamp10")
+			. = VAMP_10
+		if("vamp11")
+			. = VAMP_11
+		else
+			. = skin_tone
 
 /datum/preferences/proc/save_character()
 	if(!path)
