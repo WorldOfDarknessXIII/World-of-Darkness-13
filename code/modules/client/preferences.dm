@@ -2392,7 +2392,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/s_tone_choice = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tone_presets
 					var/new_s_tone_preset = skin_tone_presets[s_tone_choice]
 					if(new_s_tone_preset)
-						skin_tone = sanitize_hexcolor(new_s_tone)
+						skin_tone = sanitize_hexcolor(new_s_tone_preset)
 
 				if("ooccolor")
 					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference",ooccolor) as color|null
