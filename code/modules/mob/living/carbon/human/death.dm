@@ -52,7 +52,7 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 
 			if(real_name in U.mind?.dharma?.judgement)
 				call_dharma("judgement", U)
-			if(!real_name in U.mind?.dharma?.deserving && U.real_name == lastattacker)
+			if(!(real_name in U.mind?.dharma?.deserving) && U.real_name == lastattacker)
 				call_dharma("killfirst", U)
 	if(client)
 		animate(client, color = CMNoir, time = 10) // [ChillRaccoon] - make life/death transition looks more beauty
