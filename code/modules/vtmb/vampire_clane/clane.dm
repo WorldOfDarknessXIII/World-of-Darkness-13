@@ -43,7 +43,7 @@ And it also helps for the character set panel
 			H.apply_overlay(accessories_layers[current_accessory])
 	if(alt_sprite)
 		if (!alt_sprite_greyscale)
-			H.skin_tone = "albino"
+			H.skin_tone = ALBINO
 		H.dna.species.limbs_id = alt_sprite
 		H.update_body_parts()
 		H.update_body()

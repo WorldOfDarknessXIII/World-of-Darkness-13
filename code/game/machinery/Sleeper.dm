@@ -296,12 +296,12 @@
 	controls_inside = TRUE
 	possible_chems = list(
 		list(/datum/reagent/consumable/ethanol/beer, /datum/reagent/consumable/laughter),
-		list(/datum/reagent/spraytan,/datum/reagent/barbers_aid),
+		list(/datum/reagent/barbers_aid),
 		list(/datum/reagent/colorful_reagent,/datum/reagent/hair_dye),
 		list(/datum/reagent/drug/space_drugs,/datum/reagent/baldium)
 	)//Exclusively uses non-lethal, "fun" chems. At an obvious downside.
 	var/spray_chems = list(
-		/datum/reagent/spraytan, /datum/reagent/hair_dye, /datum/reagent/baldium, /datum/reagent/barbers_aid
+		/datum/reagent/hair_dye, /datum/reagent/baldium, /datum/reagent/barbers_aid
 	)//Chemicals that need to have a touch or vapor reaction to be applied, not the standard chamber reaction.
 	enter_message = "<span class='notice'><b>You're surrounded by some funky music inside the chamber. You zone out as you feel waves of krunk vibe within you.</b></span>"
 

@@ -855,7 +855,7 @@
 
 
 	if(should_draw_greyscale)
-		var/draw_color = mutation_color || species_color || (skin_tone && skintone2hex(skin_tone))
+		var/draw_color = mutation_color || species_color || skin_tone
 		if(draw_color)
 			limb.color = "#[draw_color]"
 			if(aux_zone)

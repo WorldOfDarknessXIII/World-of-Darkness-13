@@ -1,15 +1,5 @@
 
 /datum/socialrole/bandit
-	s_tones = list("caucasian3",
-								"latino",
-								"mediterranean",
-								"asian1",
-								"asian2",
-								"arab",
-								"indian",
-								"african1",
-								"african2")
-
 	min_age = 18
 	max_age = 45
 	preferedgender = MALE
@@ -133,13 +123,6 @@
 	)
 
 /datum/socialrole/usualmale
-	s_tones = list(
-		"albino",
-		"caucasian1",
-		"caucasian2",
-		"caucasian3"
-	)
-
 	min_age = 18
 	max_age = 85
 	preferedgender = MALE
@@ -269,11 +252,6 @@
 	)
 
 /datum/socialrole/usualfemale
-	s_tones = list("albino",
-								"caucasian1",
-								"caucasian2",
-								"caucasian3")
-
 	min_age = 18
 	max_age = 85
 	preferedgender = FEMALE
@@ -398,13 +376,6 @@
 	)
 
 /datum/socialrole/poormale
-	s_tones = list(
-		"albino",
-		"caucasian1",
-		"caucasian2",
-		"caucasian3"
-	)
-
 	min_age = 45
 	max_age = 85
 	preferedgender = MALE
@@ -496,10 +467,6 @@
 											"Dick!")
 
 /datum/socialrole/poorfemale
-	s_tones = list("albino",
-								"caucasian1",
-								"caucasian2",
-								"caucasian3")
 
 	min_age = 45
 	max_age = 85
@@ -599,8 +566,6 @@
 											"Dick!")
 
 /datum/socialrole/richmale
-	s_tones = list("albino")
-
 	min_age = 18
 	max_age = 85
 	preferedgender = MALE
@@ -670,8 +635,6 @@
 											"Someone, call the cops!")
 
 /datum/socialrole/richfemale
-	s_tones = list("albino")
-
 	min_age = 18
 	max_age = 85
 	preferedgender = FEMALE
@@ -900,11 +863,6 @@
 				beastmaster.bloodpool = min(beastmaster.maxbloodpool, beastmaster.bloodpool+1)
 
 /datum/socialrole/shop
-	s_tones = list("albino",
-								"caucasian1",
-								"caucasian2",
-								"caucasian3")
-
 	min_age = 18
 	max_age = 45
 	preferedgender = MALE
@@ -1032,11 +990,6 @@
 	AssignSocialRole(/datum/socialrole/shop/gummaguts)
 
 /datum/socialrole/police
-	s_tones = list("albino",
-								"caucasian1",
-								"caucasian2",
-								"caucasian3")
-
 	min_age = 18
 	max_age = 45
 	preferedgender = MALE
@@ -1143,13 +1096,6 @@
 						Aggro(H, FALSE)
 
 /datum/socialrole/guard
-	s_tones = list(
-		"albino",
-		"caucasian1",
-		"caucasian2",
-		"caucasian3"
-	)
-
 	min_age = 18
 	max_age = 85
 	preferedgender = MALE
@@ -1274,11 +1220,6 @@
 	staying = TRUE
 
 /datum/socialrole/stripfemale
-	s_tones = list("albino",
-								"caucasian1",
-								"caucasian2",
-								"caucasian3")
-
 	min_age = 18
 	max_age = 30
 	preferedgender = FEMALE
@@ -1286,18 +1227,18 @@
 	surnames = null
 
 	hair_colors = list("040404",	//Black
-										"120b05",	//Dark Brown
-										"342414",	//Brown
-										"554433",	//Light Brown
-										"695c3b",	//Dark Blond
-										"ad924e",	//Blond
-										"dac07f",	//Light Blond
-										"802400",	//Ginger
-										"a5380e",	//Ginger alt
-										"ffeace",	//Albino
-										"650b0b",	//Punk Red
-										"14350e",	//Punk Green
-										"080918")	//Punk Blue
+									"120b05",	//Dark Brown
+									"342414",	//Brown
+									"554433",	//Light Brown
+									"695c3b",	//Dark Blond
+									"ad924e",	//Blond
+									"dac07f",	//Light Blond
+									"802400",	//Ginger
+									"a5380e",	//Ginger alt
+									"ffeace",	//Albino
+									"650b0b",	//Punk Red
+									"14350e",	//Punk Green
+									"080918")	//Punk Blue
 	female_hair = list("Ahoge",
 										"Long Bedhead",
 										"Beehive",

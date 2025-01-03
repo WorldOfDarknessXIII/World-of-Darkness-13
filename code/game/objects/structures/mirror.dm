@@ -216,7 +216,7 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 			H.set_species(newrace, icon_update=0)
 
 			if(H.dna.species.use_skintones)
-				var/new_s_tone = input(user, "Choose your skin tone:", "Race change")  as null|anything in GLOB.skin_tones
+				var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference","#"+H.skin_tone) as color|null
 				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
 
