@@ -302,5 +302,6 @@
 	var/burning_aura = FALSE
 	var/foul_aura = 0
 	var/storm_aura = FALSE
+	var/wind_aura = FALSE
 	//Flesh shintai dodge
 	var/flesh_shintai_dodge = FALSE

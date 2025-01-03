@@ -754,6 +754,11 @@
 					L.Stun(5)
 					L.electrocute_act(50, src, siemens_coeff = 1, flags = NONE)
 					playsound(get_turf(L), 'code/modules/wod13/sounds/lightning.ogg', 100, FALSE)
+	if(wind_aura)
+		for(var/mob/living/L in viewers(2, src))
+			if(L != src)
+				if(prob(20))
+					step_away(L, src)
 	..()
 
 /mob/living/Initialize()

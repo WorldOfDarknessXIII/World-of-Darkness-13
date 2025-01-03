@@ -2511,7 +2511,16 @@
 	..()
 	switch(level_casting)
 		if(1)
-
+			caster.remove_overlay(FORTITUDE_LAYER)
+			var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "tornado", -FORTITUDE_LAYER)
+			fortitude_overlay.alpha = 128
+			caster.overlays_standing[FORTITUDE_LAYER] = fortitude_overlay
+			caster.apply_overlay(FORTITUDE_LAYER)
+			caster.wind_aura = TRUE
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.remove_overlay(FORTITUDE_LAYER)
+					caster.wind_aura = FALSE
 		if(2)
 			caster.drop_all_held_items()
 			caster.put_in_active_hand(new /obj/item/melee/touch_attack/storm_shintai(caster))
@@ -2520,9 +2529,15 @@
 			caster.put_in_active_hand(new /obj/item/gun/magic/hook/storm_shintai(caster))
 		if(4)
 			caster.dna.species.ToggleFlight(caster)
+			caster.remove_overlay(FORTITUDE_LAYER)
+			var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "tornado", -FORTITUDE_LAYER)
+			fortitude_overlay.pixel_y = -16
+			caster.overlays_standing[FORTITUDE_LAYER] = fortitude_overlay
+			caster.apply_overlay(FORTITUDE_LAYER)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					caster.dna.species.ToggleFlight(caster)
+					caster.remove_overlay(FORTITUDE_LAYER)
 		if(5)
 			caster.storm_aura = TRUE
 			caster.remove_overlay(FORTITUDE_LAYER)
