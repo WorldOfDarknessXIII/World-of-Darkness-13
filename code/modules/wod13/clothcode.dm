@@ -1175,6 +1175,24 @@
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/clothing/mask/vampire/tragedy
+	name = "tragedy"
+	desc = "The Greek Tragedy mask."
+	icon_state = "tragedy"
+	inhand_icon_state = "tragedy"
+	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/clothing/mask/vampire/comedy
+	name = "comedy"
+	desc = "The Greek Comedy mask."
+	icon_state = "comedy"
+	inhand_icon_state = "comedy"
+	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	w_class = WEIGHT_CLASS_SMALL
+
 /obj/item/clothing/mask/vampire/shemagh
 	name = "shemagh"
 	desc = "Covers your face pretty well."
