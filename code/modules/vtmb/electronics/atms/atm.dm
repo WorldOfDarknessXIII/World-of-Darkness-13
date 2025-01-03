@@ -14,6 +14,7 @@
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	var/logged_in = FALSE
+	var/entered_code
 
 	var/atm_balance = 0
 	var/obj/item/vamp/creditcard/current_card = null
@@ -37,7 +38,7 @@ var/mob/living/carbon/human/H
 	..()
 	if(!code || code == "")
 		code = create_bank_code()
-		var/random_id = rand(100000, 999999)
+		var/random_id = rand(1, 9999)
 		bank_id = random_id
 		GLOB.bank_account_list += src
 
@@ -95,7 +96,7 @@ var/mob/living/carbon/human/H
 
 /obj/machinery/vamp/atm/Initialize()
 	..()
-
+/*
 /obj/machinery/vamp/atm/attackby(obj/item/W, mob/user)
 	var/obj/item/vamp/creditcard/card = null
 	var/obj/item/stack/dollar/cash = null
@@ -151,6 +152,51 @@ var/mob/living/carbon/human/H
 					to_chat(user, "<span class='notice'>Transaction cancelled.</span>")
 		else
 			to_chat(user, "<span class='notice'>Invalid code.</span>")
+
+*/
+
+/obj/machinery/vamp/atm/attackby(obj/item/P, mob/user, params)
+	if(istype(P, /obj/item/vamp/creditcard))
+		if(current_card)
+			to_chat(user, "<span class='notice'>Card already inserted into ATM.</span>")
+			return
+		current_card = P
+		to_chat(user, "<span class='notice'>Card inserted into ATM.</span>")
+		return
+
+/obj/machinery/vamp/atm/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Atm", "Atm")
+		ui.open()
+
+/obj/machinery/vamp/atm/ui_data(mob/user)
+	var/list/data = list()
+	data["logged_in"] = logged_in ? TRUE : FALSE
+	data["card"] = current_card ? TRUE : FALSE
+	data["entered_code"] = entered_code
+	data["balance"] = current_card.account.balance
+	data["account_owner"] = current_card.account.account_owner
+	data["bank_id"] = current_card.account.bank_id
+	data["code"] = current_card.account.code
+
+	return data
+
+/obj/machinery/vamp/atm/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	.=..()
+	if(.)
+		return
+	switch(action)
+		if("login")
+			if(params["code"] == current_card.account.code)
+				logged_in = TRUE
+				return TRUE
+			else
+				return TRUE
+		if("logout")
+			logged_in = FALSE
+			entered_code = ""
+			return TRUE
 
 /*
 /obj/machinery/vamp/atm/attack_hand(mob/user)
