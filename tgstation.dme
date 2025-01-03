@@ -3355,6 +3355,7 @@
 #include "code\modules\vtmb\electronics\phones\phone_contact.dm"
 #include "code\modules\vtmb\electronics\phones\phone_history.dm"
 #include "code\modules\vtmb\electronics\phones\phone_voice.dm"
+#include "code\modules\vtmb\electronics\phones\phone_police.dm"
 #include "code\modules\vtmb\gamemodes\bloodhunt.dm"
 #include "code\modules\vtmb\gamemodes\masquerade.dm"
 #include "code\modules\vtmb\gamemodes\sarcophagus.dm"

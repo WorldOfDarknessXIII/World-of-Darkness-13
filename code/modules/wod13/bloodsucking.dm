@@ -207,8 +207,27 @@
 						killed_count = killed_count+1
 						if(killed_count >= 5)
 //							GLOB.fuckers |= src
+							warrant = TRUE
+							var/reason = ("Multiple Suspicious Activity and Murder of multiple people")
 							SEND_SOUND(src, sound('code/modules/wod13/sounds/humanity_loss.ogg', 0, 0, 75))
 							to_chat(src, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
+
+							var/list/jobs = list("Police Officer", "Police Chief", "Police Sergeant","Federal Investigator","SWAT","National Guard")
+							
+							GLOB.SWAT_names += true_real_name
+							GLOB.SWAT_reasons += reason
+
+							GLOB.SWAT_names_history += true_real_name
+							GLOB.SWAT_reasons_history += reason
+							GLOB.SWAT_who_why_history += ("Added By the Automatic SWAT System, with the reason: [reason]")
+
+							for(var/obj/DEVICE in GLOB.police_devices_list)
+								if(istype(DEVICE, /obj/item/vamp/device/police))
+									var/mob/living/carbon/human/L = DEVICE.FindUltimateOwner()
+									if(L && L.job in jobs)
+										if(L != usr)
+											to_chat(L, "<span class='notice'>[true_real_name] has been added to the SWAT list, by the Automatic SWAT System with the reason: [reason].</span>")
+
 					SEND_SOUND(src, sound('code/modules/wod13/sounds/feed_failed.ogg', 0, 0, 75))
 					to_chat(src, "<span class='warning'>This sad sacrifice for your own pleasure affects something deep in your mind.</span>")
 					AdjustMasquerade(-1)

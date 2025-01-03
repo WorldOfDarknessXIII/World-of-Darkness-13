@@ -701,6 +701,33 @@
 					SEND_SOUND(src, sound('code/modules/wod13/sounds/humanity_gain.ogg', 0, 0, 75))
 					killed_count = 0
 					warrant = FALSE
+
+				
+					var/list/jobs = list("Police Officer", "Police Chief", "Police Sergeant","Federal Investigator","SWAT","National Guard")
+
+					var/reason = ("The SWAT could not find the target anymore")
+
+					var/index = GLOB.SWAT_names.Find(true_real_name)
+
+					var/criminal_name_i = GLOB.SWAT_names[index]
+					var/reason_i = (index <= GLOB.SWAT_reasons.len ? GLOB.SWAT_reasons[index] : "No reason provided")
+
+
+					GLOB.SWAT_names -= criminal_name_i
+					GLOB.SWAT_reasons -= reason_i
+
+					GLOB.SWAT_names_history += true_real_name
+					GLOB.SWAT_reasons_history += reason
+					GLOB.SWAT_who_why_history += ("Removed By the Automatic SWAT System, with the reason: [reason]")
+
+
+
+					for(var/obj/DEVICE in GLOB.police_devices_list)
+						if(istype(DEVICE, /obj/item/vamp/device/police))
+							var/mob/living/carbon/human/L = DEVICE.FindUltimateOwner()
+							if(L && L.job in jobs)
+								if(L != usr)
+									to_chat(L, "<span class='notice'>[true_real_name] has been removed from the SWAT list, by the Automatic SWAT System with the reason: [reason].</span>")
 			else
 				warrant = FALSE
 		else

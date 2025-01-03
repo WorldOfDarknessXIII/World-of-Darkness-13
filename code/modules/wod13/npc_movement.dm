@@ -48,8 +48,29 @@
 						if(HS.my_creator.killed_count >= 5)
 //							GLOB.fuckers |= HS.my_creator
 							HS.my_creator.warrant = TRUE
+							var/reason = ("Multiple Suspicious Activity and Murder of multiple people")
 							SEND_SOUND(HS.my_creator, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
 							to_chat(HS.my_creator, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
+
+							var/list/jobs = list("Police Officer", "Police Chief", "Police Sergeant","Federal Investigator","SWAT","National Guard")
+
+							GLOB.SWAT_names += HS.my_creator.true_real_name
+							GLOB.SWAT_reasons += reason
+
+							GLOB.SWAT_names_history += HS.my_creator.true_real_name
+							GLOB.SWAT_reasons_history += reason
+							GLOB.SWAT_who_why_history += ("Added By the Automatic SWAT System, with the reason: [reason]")
+
+
+
+							for(var/obj/DEVICE in GLOB.police_devices_list)
+								if(istype(DEVICE, /obj/item/vamp/device/police))
+									var/mob/living/carbon/human/L = DEVICE.FindUltimateOwner()
+									if(L && L.job in jobs)
+										if(L != usr)
+											to_chat(L, "<span class='notice'>[HS.my_creator.true_real_name] has been added to the SWAT list, by the Automatic SWAT System with the reason: [reason].</span>")
+
+
 						else
 							SEND_SOUND(HS.my_creator, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
 							to_chat(HS.my_creator, "<span class='userdanger'><b>SUSPICIOUS ACTION (murder)</b></span>")
@@ -63,8 +84,25 @@
 						if(HM.killed_count >= 5)
 //							GLOB.fuckers |= HM
 							HM.warrant = TRUE
+							var/reason = ("Multiple Suspicious Activity and Murder of multiple people")
 							SEND_SOUND(HM, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
 							to_chat(HM, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
+
+							var/list/jobs = list("Police Officer", "Police Chief", "Police Sergeant","Federal Investigator","SWAT","National Guard")
+							
+							GLOB.SWAT_names += HM.true_real_name
+							GLOB.SWAT_reasons += reason
+
+							GLOB.SWAT_names_history += HM.true_real_name
+							GLOB.SWAT_reasons_history += reason
+							GLOB.SWAT_who_why_history += ("Added By the Automatic SWAT System, with the reason: [reason]")
+
+							for(var/obj/DEVICE in GLOB.police_devices_list)
+								if(istype(DEVICE, /obj/item/vamp/device/police))
+									var/mob/living/carbon/human/L = DEVICE.FindUltimateOwner()
+									if(L && L.job in jobs)
+										if(L != usr)
+											to_chat(L, "<span class='notice'>[HM.true_real_name] has been added to the SWAT list, by the Automatic SWAT System with the reason: [reason].</span>")
 						else
 							SEND_SOUND(HM, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
 							to_chat(HM, "<span class='userdanger'><b>SUSPICIOUS ACTION (murder)</b></span>")

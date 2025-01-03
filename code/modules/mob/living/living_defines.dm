@@ -270,6 +270,8 @@
 	var/warrant = FALSE
 	var/ignores_warrant = FALSE
 
+	var/APB = FALSE
+
 	var/obj/overlay/gnosis
 
 	var/isdwarfy = FALSE

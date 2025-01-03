@@ -12,7 +12,8 @@
 	backpack_contents = list(
 		/obj/item/ammo_box/magazine/vamp556 = 3,
 		/obj/item/radio/cop = 1,
-		/obj/item/vamp/keys/hack=2
+		/obj/item/vamp/keys/hack=2,
+		/obj/item/vamp/device/police/admin_spawn/swat=1
 		)
 
 /datum/antagonist/swat/proc/equip_swat()
@@ -76,6 +77,8 @@
 	var/title
 
 /datum/antagonist/swat/on_gain()
+	owner.special_role = src
+	owner.current.job = "SWAT"
 	randomize_appearance()
 	forge_objectives()
 	add_antag_hud(ANTAG_HUD_OPS, "synd", owner.current)

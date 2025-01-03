@@ -10,7 +10,8 @@
 	head = /obj/item/clothing/head/vampire/army
 	backpack_contents = list(
 		/obj/item/ammo_box/magazine/vampaug = 3,
-		/obj/item/radio/military = 1
+		/obj/item/radio/military = 1,
+		/obj/item/vamp/device/police/admin_spawn/national_guard = 1
 		)
 
 /datum/antagonist/national_guard/proc/equip_national_guard()
@@ -97,6 +98,8 @@
 	var/title
 
 /datum/antagonist/national_guard/on_gain()
+	owner.special_role = src
+	owner.current.job = "National Guard"
 	randomize_appearance()
 	forge_objectives()
 	add_antag_hud(ANTAG_HUD_OPS, "synd", owner.current)

@@ -70,6 +70,37 @@
 				C.visible_message("<span class='notice'>[user] handcuffs [C].</span>", \
 									"<span class='userdanger'>[user] handcuffs you.</span>")
 				SSblackbox.record_feedback("tally", "handcuffs", 1, type)
+				
+			if(C.APB)
+				var/mob/living/carbon/human/P = user
+				var/list/jobs = list("Police Officer", "Police Chief", "Police Sergeant","Federal Investigator","SWAT","National Guard")
+				if(P.job in jobs)
+					C.APB = FALSE
+					to_chat(C, "<b>YOU ARE OUT OF THE APB LIST!!</b>")
+					SEND_SOUND(C, sound('code/modules/wod13/sounds/humanity_gain.ogg', 0, 0, 75))
+
+					var/reason_to_remove = ("Cuffed by [P.true_real_name], a member of the police force or National Security")
+
+					var/index = GLOB.APB_names.Find(C.true_real_name)
+
+					var/criminal_name_i = GLOB.APB_names[index]
+					var/reason_i = (index <= GLOB.APB_reasons.len ? GLOB.APB_reasons[index] : "No reason provided")
+
+					GLOB.APB_names -= criminal_name_i
+					GLOB.APB_reasons -= reason_i
+
+					GLOB.APB_names_history += C.true_real_name
+					GLOB.APB_reasons_history += reason_to_remove
+					GLOB.APB_who_why_history += ("Removed By the automatic APB System, with the reason: [reason_to_remove]")
+
+
+					for(var/obj/DEVICE in GLOB.police_devices_list)
+						if(istype(DEVICE, /obj/item/vamp/device/police))
+							var/mob/living/carbon/human/L = DEVICE.FindUltimateOwner()
+							if(L && L.job in jobs)
+								if(L != usr)
+									to_chat(L, "<span class='notice'>[C.true_real_name] has been removed from the APB list by the Automatic APB System with the reason: [reason_to_remove].</span>")
+
 
 				log_combat(user, C, "handcuffed")
 			else
