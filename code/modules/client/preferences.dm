@@ -78,7 +78,37 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/hair_color = "000"				//Hair color
 	var/facial_hairstyle = "Shaved"	//Face hair type
 	var/facial_hair_color = "000"		//Facial hair color
+
 	var/skin_tone = LATINO		//Skin color
+	var/list/skin_tone_presets = list(
+				"Alabaster" = ALBINO,
+				"Caucasian 1" = CAUCASIAN_1,
+				"Caucasian 2" = CAUCASIAN_2,
+				"Caucasian 3" = CAUCASIAN_3,
+				"Latino" = LATINO,
+				"Mediterranean" = MEDITERRANEAN,
+				"Asian 1" = ASIAN_1,
+				"Asian 2" = ASIAN_2,
+				"Arabian" = ARAB,
+				"Hindi" = INDIAN,
+				"African 1" = AFRICAN_1,
+				"African 2" = AFRICAN_2,
+				"Orange" = ORANGE,
+				"Vampiric 1" = VAMP_1,
+				"Vampiric 2" = VAMP_2,
+				"Vampiric 3" = VAMP_3,
+				"Vampiric 4" = VAMP_4,
+				"Vampiric 5" = VAMP_5,
+				"Vampiric 6" = VAMP_6,
+				"Vampiric 7" = VAMP_7,
+				"Vampiric 8" = VAMP_8,
+				"Vampiric 9" = VAMP_9,
+				"Vampiric 10" = VAMP_10,
+				"Vampiric 11" = VAMP_11)
+
+
+
+
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF", "ethcolor" = "9c3030", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "moth_antennae" = "Plain", "moth_markings" = "None")
@@ -681,6 +711,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "<h3>[make_font_cool("SKIN")]</h3>"
 				dat += "<span style='border: 1px solid #161616; background-color: #[skin_tone];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=s_tone;task=input'>Change</a>"
+				dat += "&nbsp;<a href='?_src_=prefs;preference=s_tone_preset;task=input'>Use Preset</a>"
 
 //				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SKIN_TONE]'>[(randomise[RANDOM_SKIN_TONE]) ? "Lock" : "Unlock"]</A>"
 				dat += "<br>"
@@ -2353,6 +2384,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						return
 					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference","#"+skin_tone) as color|null
 					if(new_s_tone)
+						skin_tone = sanitize_hexcolor(new_s_tone)
+
+				if("s_tone_preset")
+					if(slotlocked)
+						return
+					var/s_tone_choice = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tone_presets
+					var/new_s_tone_preset = skin_tone_presets[s_tone_choice]
+					if(new_s_tone_preset)
 						skin_tone = sanitize_hexcolor(new_s_tone)
 
 				if("ooccolor")
