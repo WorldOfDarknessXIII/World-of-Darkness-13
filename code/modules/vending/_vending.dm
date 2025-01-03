@@ -648,7 +648,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	to_chat(user, "<span class='notice'>You insert [I] into [src]'s input compartment.</span>")
 	loaded_items++
 
-/obj/machinery/vending/unbuckle_mob(mob/living/buckled_mob, force=FALSE)
+/obj/machinery/vending/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	if(!force)
 		return
 	. = ..()
