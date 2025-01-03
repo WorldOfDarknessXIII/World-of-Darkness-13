@@ -68,7 +68,7 @@
 		lying_fix()
 		dir = SOUTH
 		spawn(10)
-			dust(1, 1)
+			dust(TRUE, TRUE)
 
 
 /mob/living/carbon/human/toggle_move_intent(mob/living/user)

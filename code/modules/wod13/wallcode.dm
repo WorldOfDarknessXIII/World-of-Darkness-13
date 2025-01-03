@@ -686,33 +686,39 @@
 	if(istype(I, /obj/item/melee/vampirearms/shovel))
 		var/obj/structure/bury_pit/P = locate() in src
 		if(P)
-			user.visible_message("<span class='warning'>[user] starts to dig [src]</span>", "<span class='warning'>You start to dig [src].</span>")
-			if(do_mob(user, src, 10 SECONDS))
-				if(P.icon_state == "pit0")
-					var/dead_amongst = FALSE
-					for(var/mob/living/L in src)
-						L.forceMove(P)
-						if(L.stat == DEAD)
-							dead_amongst = TRUE
-					P.icon_state = "pit1"
-					user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
-					if(dead_amongst)
-						call_dharma("respect", user)
+			if(!P.burying)
+				P.burying = TRUE
+				user.visible_message("<span class='warning'>[user] starts to dig [src]</span>", "<span class='warning'>You start to dig [src].</span>")
+				if(do_mob(user, src, 10 SECONDS))
+					P.burying = FALSE
+					if(P.icon_state == "pit0")
+						var/dead_amongst = FALSE
+						for(var/mob/living/L in src)
+							L.forceMove(P)
+							if(L.stat == DEAD)
+								dead_amongst = TRUE
+						P.icon_state = "pit1"
+						user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
+						if(dead_amongst)
+							call_dharma("respect", user)
+					else
+						var/dead_amongst = FALSE
+						for(var/mob/living/L in P)
+							L.forceMove(src)
+							if(L.stat == DEAD)
+								dead_amongst = TRUE
+						P.icon_state = "pit0"
+						user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
+						if(dead_amongst)
+							call_dharma("disrespect", user)
 				else
-					var/dead_amongst = FALSE
-					for(var/mob/living/L in P)
-						L.forceMove(src)
-						if(L.stat == DEAD)
-							dead_amongst = TRUE
-					P.icon_state = "pit0"
-					user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
-					if(dead_amongst)
-						call_dharma("disrespect", user)
+					P.burying = FALSE
 		else
 			user.visible_message("<span class='warning'>[user] starts to dig [src]</span>", "<span class='warning'>You start to dig [src].</span>")
 			if(do_mob(user, src, 10 SECONDS))
-				user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
-				new /obj/structure/bury_pit(src)
+				if(!locate(/obj/structure/bury_pit) in src)
+					user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
+					new /obj/structure/bury_pit(src)
 
 
 /turf/open/floor/plating/vampgrass/Initialize()
@@ -759,33 +765,39 @@
 	if(istype(I, /obj/item/melee/vampirearms/shovel))
 		var/obj/structure/bury_pit/P = locate() in src
 		if(P)
-			user.visible_message("<span class='warning'>[user] starts to dig [src]</span>", "<span class='warning'>You start to dig [src].</span>")
-			if(do_mob(user, src, 10 SECONDS))
-				if(P.icon_state == "pit0")
-					var/dead_amongst = FALSE
-					for(var/mob/living/L in src)
-						L.forceMove(P)
-						if(L.stat == DEAD)
-							dead_amongst = TRUE
-					P.icon_state = "pit1"
-					user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
-					if(dead_amongst)
-						call_dharma("respect", user)
+			if(!P.burying)
+				P.burying = TRUE
+				user.visible_message("<span class='warning'>[user] starts to dig [src]</span>", "<span class='warning'>You start to dig [src].</span>")
+				if(do_mob(user, src, 10 SECONDS))
+					P.burying = FALSE
+					if(P.icon_state == "pit0")
+						var/dead_amongst = FALSE
+						for(var/mob/living/L in src)
+							L.forceMove(P)
+							if(L.stat == DEAD)
+								dead_amongst = TRUE
+						P.icon_state = "pit1"
+						user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
+						if(dead_amongst)
+							call_dharma("respect", user)
+					else
+						var/dead_amongst = FALSE
+						for(var/mob/living/L in P)
+							L.forceMove(src)
+							if(L.stat == DEAD)
+								dead_amongst = TRUE
+						P.icon_state = "pit0"
+						user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
+						if(dead_amongst)
+							call_dharma("disrespect", user)
 				else
-					var/dead_amongst = FALSE
-					for(var/mob/living/L in P)
-						L.forceMove(src)
-						if(L.stat == DEAD)
-							dead_amongst = TRUE
-					P.icon_state = "pit0"
-					user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
-					if(dead_amongst)
-						call_dharma("disrespect", user)
+					P.burying = FALSE
 		else
 			user.visible_message("<span class='warning'>[user] starts to dig [src]</span>", "<span class='warning'>You start to dig [src].</span>")
 			if(do_mob(user, src, 10 SECONDS))
-				user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
-				new /obj/structure/bury_pit(src)
+				if(!locate(/obj/structure/bury_pit) in src)
+					user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
+					new /obj/structure/bury_pit(src)
 
 /turf/open/floor/plating/vampdirt/Initialize()
 	. = ..()
@@ -1081,33 +1093,39 @@
 	if(istype(I, /obj/item/melee/vampirearms/shovel))
 		var/obj/structure/bury_pit/P = locate() in src
 		if(P)
-			user.visible_message("<span class='warning'>[user] starts to dig [src]</span>", "<span class='warning'>You start to dig [src].</span>")
-			if(do_mob(user, src, 10 SECONDS))
-				if(P.icon_state == "pit0")
-					var/dead_amongst = FALSE
-					for(var/mob/living/L in src)
-						L.forceMove(P)
-						if(L.stat == DEAD)
-							dead_amongst = TRUE
-					P.icon_state = "pit1"
-					user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
-					if(dead_amongst)
-						call_dharma("respect", user)
+			if(!P.burying)
+				P.burying = TRUE
+				user.visible_message("<span class='warning'>[user] starts to dig [src]</span>", "<span class='warning'>You start to dig [src].</span>")
+				if(do_mob(user, src, 10 SECONDS))
+					P.burying = FALSE
+					if(P.icon_state == "pit0")
+						var/dead_amongst = FALSE
+						for(var/mob/living/L in src)
+							L.forceMove(P)
+							if(L.stat == DEAD)
+								dead_amongst = TRUE
+						P.icon_state = "pit1"
+						user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
+						if(dead_amongst)
+							call_dharma("respect", user)
+					else
+						var/dead_amongst = FALSE
+						for(var/mob/living/L in P)
+							L.forceMove(src)
+							if(L.stat == DEAD)
+								dead_amongst = TRUE
+						P.icon_state = "pit0"
+						user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
+						if(dead_amongst)
+							call_dharma("disrespect", user)
 				else
-					var/dead_amongst = FALSE
-					for(var/mob/living/L in P)
-						L.forceMove(src)
-						if(L.stat == DEAD)
-							dead_amongst = TRUE
-					P.icon_state = "pit0"
-					user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
-					if(dead_amongst)
-						call_dharma("disrespect", user)
+					P.burying = FALSE
 		else
 			user.visible_message("<span class='warning'>[user] starts to dig [src]</span>", "<span class='warning'>You start to dig [src].</span>")
 			if(do_mob(user, src, 10 SECONDS))
-				user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
-				new /obj/structure/bury_pit(src)
+				if(!locate(/obj/structure/bury_pit) in src)
+					user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
+					new /obj/structure/bury_pit(src)
 
 /turf/open/floor/plating/vampbeach/Initialize()
 	..()
@@ -1131,7 +1149,14 @@
 	barefootstep = FOOTSTEP_WATER
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	density = TRUE
+	density = FALSE
+
+/turf/open/floor/plating/vampocean/Enter(atom/movable/mover, atom/oldloc)
+	if(isliving(mover))
+		var/mob/living/L = mover
+		if(!L.jade_shintai_override)
+			return FALSE
+	. = ..()
 
 /turf/open/floor/plating/vampocean/Initialize()
 	..()

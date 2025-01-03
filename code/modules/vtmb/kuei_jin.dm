@@ -53,6 +53,23 @@
 	tennets_done = list("savelife" = 0, "meet" = 0, "cleangrow" = 0)
 	fails = list("kill", "grief", "steal")
 
+/mob/living/carbon/human/proc/check_kuei_jin_alive()
+	if(iscathayan)
+		if(mind.dharma)
+			if(mind.dharma.animated == "Yang")
+				if(yin_chi < yang_chi+2)
+					return TRUE
+				else
+					return FALSE
+			else
+				if(yang_chi > yin_chi+2)
+					return TRUE
+				else
+					return FALSE
+		else
+			return FALSE
+	return TRUE
+
 /datum/dharma/proc/on_gain(var/mob/living/carbon/human/mob)
 	mob.mind.dharma = src
 	initial_skin_color = mob.skin_tone
@@ -678,6 +695,7 @@
 					if(hum != H)
 						if(hum.stat > CONSCIOUS && hum.stat < DEAD)
 							H.mind.dharma.roll_po(hum, H)
+	H.nutrition = NUTRITION_LEVEL_START_MAX
 
 /datum/action/breathe_chi
 	name = "Inhale Chi"
@@ -827,11 +845,11 @@
 		if(brain)
 			brain.applyOrganDamage(-100)
 		if(BD.yin_chi)
-			BD.heal_overall_damage(15*min(4, BD.mind?.dharma?.level), 10*min(4, BD.mind?.dharma?.level), 20*min(4, BD.mind?.dharma?.level))
-			BD.adjustBruteLoss(-20*min(4, BD.mind?.dharma?.level), TRUE)
-			BD.adjustFireLoss(-10*min(4, BD.mind?.dharma?.level), TRUE)
-			BD.adjustOxyLoss(-20*min(4, BD.mind?.dharma?.level), TRUE)
-			BD.adjustToxLoss(-20*min(4, BD.mind?.dharma?.level), TRUE)
+			BD.heal_overall_damage(15*min(4, BD.mind.dharma.level), 10*min(4, BD.mind.dharma.level), 20*min(4, BD.mind.dharma.level))
+			BD.adjustBruteLoss(-20*min(4, BD.mind.dharma.level), TRUE)
+			BD.adjustFireLoss(-10*min(4, BD.mind.dharma.level), TRUE)
+			BD.adjustOxyLoss(-20*min(4, BD.mind.dharma.level), TRUE)
+			BD.adjustToxLoss(-20*min(4, BD.mind.dharma.level), TRUE)
 			BD.adjustCloneLoss(-5, TRUE)
 			BD.blood_volume = min(BD.blood_volume + 56, 560)
 		else
@@ -885,11 +903,11 @@
 		if(brain)
 			brain.applyOrganDamage(-100)
 		if(BD.yang_chi)
-			BD.heal_overall_damage(15*min(4, BD.mind?.dharma?.level), 10*min(4, BD.mind?.dharma?.level), 20*min(4, BD.mind?.dharma?.level))
-			BD.adjustBruteLoss(-10*min(4, BD.mind?.dharma?.level), TRUE)
-			BD.adjustFireLoss(-20*min(4, BD.mind?.dharma?.level), TRUE)
-			BD.adjustOxyLoss(-20*min(4, BD.mind?.dharma?.level), TRUE)
-			BD.adjustToxLoss(-20*min(4, BD.mind?.dharma?.level), TRUE)
+			BD.heal_overall_damage(15*min(4, BD.mind.dharma.level), 10*min(4, BD.mind.dharma.level), 20*min(4, BD.mind.dharma.level))
+			BD.adjustBruteLoss(-10*min(4, BD.mind.dharma.level), TRUE)
+			BD.adjustFireLoss(-20*min(4, BD.mind.dharma.level), TRUE)
+			BD.adjustOxyLoss(-20*min(4, BD.mind.dharma.level), TRUE)
+			BD.adjustToxLoss(-20*min(4, BD.mind.dharma.level), TRUE)
 			BD.adjustCloneLoss(-5, TRUE)
 			BD.blood_volume = min(BD.blood_volume + 56, 560)
 		else
@@ -910,7 +928,7 @@
 /datum/action/rebalance/Trigger()
 	if(istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/BD = usr
-		var/max_limit = BD.mind.dharma?.level*2
+		var/max_limit = BD.mind.dharma.level*2
 		var/sett = input(BD, "Enter the maximum of Yin your character has:", "Yin/Yang") as num|null
 		if(sett)
 			sett = max(1, min(sett, max_limit-1))
@@ -921,7 +939,7 @@
 			var/sett2 = input(BD, "Enter the maximum of Hun your character has:", "Hun/P'o") as num|null
 			if(sett2)
 				sett2 = max(1, min(sett2, max_limit-1))
-				BD.mind.dharma?.Hun = sett2
+				BD.mind.dharma.Hun = sett2
 				BD.max_demon_chi = max_limit-sett2
 				BD.demon_chi = min(BD.demon_chi, BD.max_demon_chi)
 		button.color = "#970000"
@@ -1289,7 +1307,19 @@
 	cost_yang = 1
 
 /obj/item/melee/powerfist/stone
+	name = "stone-fist"
+	desc = "A stone gauntlet to punch someone."
 	item_flags = DROPDEL
+
+/obj/item/tank/internals/oxygen/stone_shintai
+	item_flags = DROPDEL
+	alpha = 0
+
+/obj/item/melee/powerfist/stone/Initialize()
+	tank = new /obj/item/tank/internals/oxygen/stone_shintai()
+
+/obj/item/melee/powerfist/stone/updateTank(obj/item/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
+	return FALSE
 
 /datum/chi_discipline/jade_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
@@ -1300,7 +1330,7 @@
 			caster.forceMove(B)
 		if(2)
 			caster.pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-			caster.jade_shintai_override = 7
+			caster.jade_shintai_override = 11
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					caster.pass_flags = initial(caster.pass_flags)
@@ -1362,7 +1392,7 @@
 /obj/effect/particle_effect/smoke/bad/green/bone_shintai/smoke_mob(mob/living/carbon/M)
 	. = ..()
 	if(.)
-		M.adjustBruteLoss(15, TRUE)
+		M.adjustToxLoss(15, TRUE)
 		M.emote("cough")
 		return TRUE
 
@@ -1383,8 +1413,8 @@
 		if(1)
 			ADD_TRAIT(caster, TRAIT_NOSOFTCRIT, MAGIC_TRAIT)
 			ADD_TRAIT(caster, TRAIT_NOHARDCRIT, MAGIC_TRAIT)
-			caster.physiology.armor.melee += 10
-			caster.physiology.armor.bullet += 10
+			caster.physiology.armor.melee += 25
+			caster.physiology.armor.bullet += 25
 			caster.add_movespeed_modifier(/datum/movespeed_modifier/necroing)
 			var/initial_limbs_id = caster.dna.species.limbs_id
 			caster.dna.species.limbs_id = "rotten1"
@@ -1394,24 +1424,23 @@
 				if(caster)
 					REMOVE_TRAIT(caster, TRAIT_NOSOFTCRIT, MAGIC_TRAIT)
 					REMOVE_TRAIT(caster, TRAIT_NOHARDCRIT, MAGIC_TRAIT)
-					caster.physiology.armor.melee -= 10
-					caster.physiology.armor.bullet -= 10
+					caster.physiology.armor.melee -= 25
+					caster.physiology.armor.bullet -= 25
 					caster.remove_movespeed_modifier(/datum/movespeed_modifier/necroing)
 					caster.dna.species.limbs_id = initial_limbs_id
 					caster.update_body()
 					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 		if(2)
-			var/initial_limbs_id = caster.dna.species.limbs_id
 			var/initial_hair = caster.hairstyle
 			var/initial_facial = caster.facial_hairstyle
-			caster.dna.species.limbs_id = "nothing"
+			caster.unique_body_sprite = "nothing"
 			caster.hairstyle = "Bald"
 			caster.facial_hairstyle = "Shaved"
 			caster.update_body()
 			caster.freezing_aura = TRUE
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
-					caster.dna.species.limbs_id = initial_limbs_id
+					caster.unique_body_sprite = null
 					caster.hairstyle = initial_hair
 					caster.facial_hairstyle = initial_facial
 					caster.update_body()
@@ -1437,10 +1466,9 @@
 			ADD_TRAIT(caster, TRAIT_NOHARDCRIT, MAGIC_TRAIT)
 			caster.physiology.armor.melee += 25
 			caster.physiology.armor.bullet += 25
-			var/initial_limbs_id = caster.dna.species.limbs_id
-			caster.dna.species.limbs_id = "rotten1"
+			caster.unique_body_sprite = "rotten1"
 			caster.update_body()
-			caster.set_light(1.4,0.7,"#34D352")
+			caster.set_light(1.4,5,"#34D352")
 			ADD_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
@@ -1448,7 +1476,7 @@
 					REMOVE_TRAIT(caster, TRAIT_NOHARDCRIT, MAGIC_TRAIT)
 					caster.physiology.armor.melee -= 25
 					caster.physiology.armor.bullet -= 25
-					caster.dna.species.limbs_id = initial_limbs_id
+					caster.unique_body_sprite = null
 					caster.update_body()
 					caster.set_light(0)
 					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
@@ -1544,10 +1572,12 @@
 		B.death()
 	switch(level_casting)
 		if(1)
-			caster.set_light(1.4,0.7,"#ff8c00")
+			target.overlay_fullscreen("ghostflame", /atom/movable/screen/fullscreen/see_through_darkness)
+			caster.set_light(1.4,5,"#ff8c00")
 			caster.burning_aura = TRUE
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
+					target.clear_fullscreen("ghostflame", 5)
 					caster.burning_aura = FALSE
 					caster.set_light(0)
 		if(2)
@@ -1572,11 +1602,15 @@
 					qdel(F)
 		if(5)
 			caster.dna.species.burnmod = 0
-			caster.dna.species.heatmod = 0
 			ADD_TRAIT(caster, TRAIT_PERMANENTLY_ONFIRE, MAGIC_TRAIT)
+			ADD_TRAIT(caster, TRAIT_RESISTHEAT, MAGIC_TRAIT)
+			caster.set_fire_stacks(7)
+			caster.IgniteMob()
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					REMOVE_TRAIT(caster, TRAIT_PERMANENTLY_ONFIRE, MAGIC_TRAIT)
+					REMOVE_TRAIT(caster, TRAIT_RESISTHEAT, MAGIC_TRAIT)
+					caster.extinguish_mob()
 					if(caster.mind.dharma)
 						switch(caster.mind.dharma.animated)
 							if("Yang")
@@ -1585,7 +1619,6 @@
 								caster.dna.species.burnmod = initial(caster.dna.species.burnmod)
 					else
 						caster.dna.species.burnmod = initial(caster.dna.species.burnmod)
-					caster.dna.species.heatmod = initial(caster.dna.species.heatmod)
 
 /datum/chi_discipline/flesh_shintai
 	name = "Flesh Shintai"
@@ -1652,9 +1685,10 @@
 		if(A.anchored)
 			return
 		A.visible_message("<span class='danger'>[A] is snagged by [firer]'s hand!</span>")
-		new /datum/forced_movement(A, get_turf(firer), 5, TRUE)
+		A.forceMove(get_turf(get_step_towards(firer, A)))
 		if (isliving(target))
 			var/mob/living/fresh_meat = target
+			fresh_meat.grabbedby(firer, supress_message = FALSE)
 			fresh_meat.Knockdown(knockdown_time)
 			return
 		//TODO: keep the chain beamed to A
@@ -1747,11 +1781,11 @@
 					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 		if(3)
 			caster.flesh_shintai_dodge = TRUE
-			to_chat(caster, "<span class='notice'>You feel really dodgy...</span>")
+			to_chat(caster, "<span class='notice'>Your muscles relax and start moving unintentionally. You feel perfect at projectile evasion skills...</span>")
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					caster.flesh_shintai_dodge = FALSE
-					to_chat(caster, "<span class='warning'>You feel usual in dodge again...</span>")
+					to_chat(caster, "<span class='warning'>Your muscles feel natural again..</span>")
 		if(4)
 			var/obj/structure/flesh_grip/F = new (get_turf(caster))
 			if(caster.pulling)
@@ -2015,8 +2049,8 @@
 /obj/effect/particle_effect/smoke/bad/yomi/smoke_mob(mob/living/carbon/M)
 	. = ..()
 	if(.)
-		M.adjustFireLoss(15, TRUE)
-		M.emote("cough")
+		M.adjustCloneLoss(10, TRUE)
+		M.emote(pick("scream", "groan", "cry"))
 		return TRUE
 
 /datum/movespeed_modifier/yomi_flashback
@@ -2077,10 +2111,10 @@
 	..()
 	var/mod = level_casting
 	var/armah = 15*mod
-	caster.remove_overlay(FORTITUDE_LAYER)
-	var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "mountain", -FORTITUDE_LAYER)
-	caster.overlays_standing[FORTITUDE_LAYER] = fortitude_overlay
-	caster.apply_overlay(FORTITUDE_LAYER)
+//	caster.remove_overlay(FORTITUDE_LAYER)
+//	var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "mountain", -FORTITUDE_LAYER)
+//	caster.overlays_standing[FORTITUDE_LAYER] = fortitude_overlay
+//	caster.apply_overlay(FORTITUDE_LAYER)
 	caster.physiology.armor.melee += armah
 	caster.physiology.armor.bullet += armah
 	spawn(delay+caster.discipline_time_plus)
@@ -2088,7 +2122,7 @@
 			caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/fortitude_deactivate.ogg', 50, FALSE)
 			caster.physiology.armor.melee -= armah
 			caster.physiology.armor.bullet -= armah
-			caster.remove_overlay(FORTITUDE_LAYER)
+//			caster.remove_overlay(FORTITUDE_LAYER)
 
 /datum/chi_discipline/kiai
 	name = "Kiai"
@@ -2154,3 +2188,12 @@
 					if(prob(20))
 						L.resist_fire()
 					new /datum/hallucination/fire(L, TRUE)
+
+/datum/chi_discipline/beast_shintai
+	name = "Beast Shintai"
+	desc = "Use the chi energy flow to control animals or become one."
+	icon_state = "ironmountain"
+	ranged = FALSE
+	activate_sound = 'code/modules/wod13/sounds/fortitude_activate.ogg'
+	delay = 12 SECONDS
+	cost_demon = 1
