@@ -454,7 +454,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(pref_species.name == "Kuei-Jin")
 				var/datum/dharma/D = new dharma_type()
 				dat += "<b>Dharma:</b> [D.name] [dharma_level]/6 <a href='?_src_=prefs;preference=dharmatype;task=input'>Switch</a><BR>"
-				dat += "[D.desc]<BR><BR>"
+				dat += "[D.desc]<BR>"
+				if(true_experience >= 20 && (dharma_level < 6))
+					dat += " <a href='?_src_=prefs;preference=dharmarise;task=input'>Learn (20)</a><BR>"
 				dat += "<b>P'o Personality</b>: [po_type] <a href='?_src_=prefs;preference=potype;task=input'>Switch</a><BR>"
 				dat += "<b>Awareness:</b> [masquerade]/5<BR>"
 				dat += "<b>Yin/Yang</b>: [yin]/[yang] <a href='?_src_=prefs;preference=chibalance;task=input'>Adjust</a><BR>"
@@ -2226,6 +2228,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						return
 
 					enlightenment = !enlightenment
+
+				if("dharmarise")
+					if ((true_experience < 20) || (dharma_level >= 6) || !(pref_species.id == "kuei-jin"))
+						return
+
+					true_experience -= 20
+					dharma_level = min(max(1, dharma_level + 1), 6)
 
 				/*
 				if("torpor_restore")
