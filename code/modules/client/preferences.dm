@@ -710,8 +710,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += APPEARANCE_CATEGORY_COLUMN
 
 				dat += "<h3>[make_font_cool("SKIN")]</h3>"
-				dat += "<span style='border: 1px solid #161616; background-color: #[skin_tone];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=s_tone;task=input'>Change</a>"
-				dat += "&nbsp;<a href='?_src_=prefs;preference=s_tone_preset;task=input'>Use Preset</a>"
+				dat += "<span style='border: 1px solid #161616; background-color: #[skin_tone];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=s_tone_preset;task=input'>Use Preset</a>"
 
 //				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SKIN_TONE]'>[(randomise[RANDOM_SKIN_TONE]) ? "Lock" : "Unlock"]</A>"
 				dat += "<br>"
@@ -2378,13 +2377,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_moth_markings = input(user, "Choose your character's markings:", "Character Preference") as null|anything in GLOB.moth_markings_list
 					if(new_moth_markings)
 						features["moth_markings"] = new_moth_markings
-
-				if("s_tone")
-					if(slotlocked)
-						return
-					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference","#"+skin_tone) as color|null
-					if(new_s_tone)
-						skin_tone = sanitize_hexcolor(new_s_tone)
 
 				if("s_tone_preset")
 					if(slotlocked)
