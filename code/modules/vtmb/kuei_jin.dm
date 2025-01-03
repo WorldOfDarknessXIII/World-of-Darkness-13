@@ -54,7 +54,7 @@
 	fails = list("kill", "grief", "steal")
 
 /mob/living/carbon/human/proc/check_kuei_jin_alive()
-	if(iscathayan)
+	if(iscathayan(src))
 		if(mind.dharma)
 			if(mind.dharma.animated == "Yang")
 				if(yin_chi < yang_chi+2)
@@ -2350,7 +2350,6 @@
 /mob/living/simple_animal/hostile/smokecrawler/hidden
 	alpha = 10
 	speed = 5
-	obfuscate_level = 3
 
 /datum/chi_discipline/smoke_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
