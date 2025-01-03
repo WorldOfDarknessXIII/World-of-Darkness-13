@@ -428,7 +428,8 @@
 				weaver_taint++
 				if(!check_kuei_jin_alive())
 					wyrm_taint++
-					
+
+			if (iskindred(src))
 				var/mob/living/carbon/human/vampire = src
 				weaver_taint++
 
