@@ -2217,7 +2217,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 					var/list/choose_species = list()
 					for (var/key in GLOB.selectable_races)
-						var/datum/species/selecting_species = new key
+						var/newtype = GLOB.species_list[key]
+						var/datum/species/selecting_species = new newtype
 						if (!selecting_species.selectable)
 							qdel(selecting_species)
 							continue
