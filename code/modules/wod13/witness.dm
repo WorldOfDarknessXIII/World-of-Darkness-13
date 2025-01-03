@@ -77,10 +77,12 @@
 				holder.color = "#ff0000"
 			else
 				holder.color = "#0000ff"
+
 		if(iscathayan(src))
 			var/mob/living/carbon/human/H = src
 			if(!H.check_kuei_jin_alive())
 				holder.color = "#ffffff"
+
 		if(mind)
 			if(mind.holy_role == HOLY_ROLE_PRIEST)
 				holder.color = "#ffe12f"
