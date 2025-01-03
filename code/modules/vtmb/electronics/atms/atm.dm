@@ -1,6 +1,6 @@
 /proc/create_bank_code()
 	var/bank_code = ""
-	for(var/i = 1 to 10)
+	for(var/i = 1 to 4)
 		bank_code += "[rand(0, 9)]"
 	return bank_code
 

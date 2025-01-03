@@ -65,8 +65,14 @@
 				for(var/obj/item/I in get_turf(src))
 					for(var/item_type in sacrifices)
 						if(istype(I, item_type))
-							found_items += I
-							break
+							if(istype(I, /obj/item/drinkable_bloodpack))
+								var/obj/item/drinkable_bloodpack/bloodpack = I
+								if(!bloodpack.empty)
+									found_items += I
+									break
+							else
+								found_items += I
+								break
 
 				if(found_items.len == sacrifices.len)
 					for(var/obj/item/I in found_items)
@@ -272,6 +278,9 @@
 /obj/ritualrune/teleport/attack_hand(mob/user)
 	..()
 	if(activated)
+		if(last_activator != user)
+			to_chat(user, "<span class='warning'>You are not the one who activated this rune!</span>")
+			return
 		var/direction = input(user, "Choose direction:", "Teleportation Rune") in list("North", "East", "South", "West")
 		if(direction)
 			var/x_dir = user.x
