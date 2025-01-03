@@ -586,10 +586,8 @@
 
 	if(iscathayan(A))
 		var/mob/living/carbon/human/hum = A
-		if(hum.mind)
-			if(hum.mind.dharma)
-				if(hum.mind.dharma.Po == "Legalist")
-					hum.mind.dharma.roll_po(src, hum)
+		if(hum.mind?.dharma?.Po == "Legalist")
+			hum.mind.dharma.roll_po(src, hum)
 
 	return TRUE
 
