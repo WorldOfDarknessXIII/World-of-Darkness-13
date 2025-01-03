@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
-	var/max_save_slots = 10
+	var/max_save_slots = 20
 
 	//non-preference stuff
 	var/muted = 0
@@ -2025,8 +2025,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						discipline_levels = list()
 						if(result == "Caitiff")
 							generation = 13
-							while (clane.clane_disciplines.len < 3)
-								if(ishuman(user))
+							for (var/i = clane.clane_disciplines.len; i < 3; i++)
+								if (slotlocked)
 									break
 								var/list/possible_new_disciplines = subtypesof(/datum/discipline) - clane.clane_disciplines
 								for (var/discipline_type in possible_new_disciplines)

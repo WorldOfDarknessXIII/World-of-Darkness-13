@@ -275,8 +275,6 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 									var/datum/antagonist/A = H.mind.special_role
 									if(A.check_completed())
 										P.add_experience(3)
-							if(H.experience_plus == 10)
-								P.add_experience(10)
 							P.save_preferences()
 							P.save_character()
 	var/old_runlevel = current_runlevel
