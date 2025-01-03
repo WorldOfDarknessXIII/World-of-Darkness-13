@@ -97,7 +97,7 @@
 			var/datum/action/area_chi/areac = new()
 			areac.Grant(mob)
 
-	mob.maxHealth = initial(mob.maxHealth)-(initial(mob.maxHealth)/4)+(initial(mob.maxHealth)/4)*((mob.physique+mob.additional_physique)+6-mob.mind?.dharma?.level)
+	mob.maxHealth += (initial(mob.maxHealth)/4)*level
 	mob.health = mob.maxHealth
 
 /datum/dharma/proc/align_virtues(var/mob/living/owner)
@@ -167,12 +167,10 @@
 			var/datum/action/area_chi/areac = new()
 			areac.Grant(H)
 
-	if(H.health == H.maxHealth)
-		H.maxHealth = initial(H.maxHealth)-(initial(H.maxHealth)/4)+(initial(H.maxHealth)/4)*((H.physique+H.additional_physique)+6-H.mind?.dharma?.level)
-		H.health = H.maxHealth
-	else
-		H.maxHealth =initial(H.maxHealth)-(initial(H.maxHealth)/4)+(initial(H.maxHealth)/4)*((H.physique+H.additional_physique)+6-H.mind?.dharma?.level)
-		H.health = min(H.health, H.maxHealth)
+	if(dot > 0)
+		H.maxHealth += (initial(H.maxHealth)/4)
+	if(dot < 0)
+		H.maxHealth -= (initial(H.maxHealth)/4)
 
 /datum/dharma/proc/get_done_tennets()
 	var/total = 0
@@ -190,10 +188,10 @@
 					if(cathayan.mind.dharma.tennets_done[i] == 0)
 						cathayan.mind.dharma.tennets_done[i] = 1
 						to_chat(cathayan, "<span class='help'>You find this action helping you on your path ([cathayan.mind.dharma.get_done_tennets()]/[length(cathayan.mind.dharma.tennets)]).</span>")
-			for(var/i in cathayan.mind.dharma.fails)
-				if(i == mod)
-					to_chat(cathayan, "<span class='userdanger'>This action is against your path's philosophy.</span>")
-					update_dharma(cathayan, -1)
+//			for(var/i in cathayan.mind.dharma.fails)
+//				if(i == mod)
+//					to_chat(cathayan, "<span class='userdanger'>This action is against your path's philosophy.</span>")
+//					update_dharma(cathayan, -1)							//I was asked to remove dharma sins. Gonna be here if someone decides to get them back
 			var/tennets_needed = length(cathayan.mind.dharma.tennets)
 			var/tennets_done = 0
 			for(var/i in cathayan.mind.dharma.tennets)
@@ -1172,7 +1170,7 @@
 	if(ishuman(O))
 		var/mob/living/carbon/C = O
 		to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
-		playsound(C.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
+		playsound(C.loc, 'sound/misc/slip.ogg', 50, TRUE)
 
 		SEND_SIGNAL(C, COMSIG_ON_CARBON_SLIP)
 		for(var/obj/item/I in C.held_items)
@@ -1456,7 +1454,7 @@
 				if(S2)
 					qdel(S2)
 		if(4)
-			playsound(get_turf(caster), 'sound/effects/smoke.ogg', 50, TRUE, -3)
+			playsound(get_turf(caster), 'sound/effects/smoke.ogg', 50, TRUE)
 			var/datum/effect_system/smoke_spread/bad/green/bone_shintai/smoke = new
 			smoke.set_up(4, caster)
 			smoke.start()
@@ -1862,6 +1860,10 @@
 	cost_demon = 1
 	var/current_form = "Samurai"
 
+/datum/chi_discipline/demon_shintai/post_gain(var/mob/living/carbon/human/H)
+	var/datum/action/choose_demon_form/C = new()
+	C.Grant(H)
+
 /datum/action/choose_demon_form
 	name = "Choose Demon Form"
 	desc = "Choose your form of a Demon."
@@ -2068,7 +2070,7 @@
 			target.overlay_fullscreen("yomi", /atom/movable/screen/fullscreen/yomi_world)
 			target.clear_fullscreen("yomi", 5)
 		if(2)
-			playsound(get_turf(target), 'code/modules/wod13/sounds/portal.ogg', 50, TRUE, -3)
+			playsound(get_turf(target), 'code/modules/wod13/sounds/portal.ogg', 100, TRUE)
 			var/datum/effect_system/smoke_spread/bad/yomi/smoke = new
 			smoke.set_up(2, target)
 			smoke.start()
@@ -2192,8 +2194,297 @@
 /datum/chi_discipline/beast_shintai
 	name = "Beast Shintai"
 	desc = "Use the chi energy flow to control animals or become one."
-	icon_state = "ironmountain"
+	icon_state = "beast"
 	ranged = FALSE
-	activate_sound = 'code/modules/wod13/sounds/fortitude_activate.ogg'
 	delay = 12 SECONDS
-	cost_demon = 1
+	cost_yang = 1
+	activate_sound = 'code/modules/wod13/sounds/wolves.ogg'
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/animalism/AN
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/werewolf_like/WL
+
+/obj/effect/proc_holder/spell/targeted/shapeshift/werewolf_like
+	name = "Crinos Form"
+	desc = "Take on the shape a Crinos."
+	charge_max = 50
+	cooldown_min = 50
+	revert_on_death = TRUE
+	die_with_shapeshifted_form = FALSE
+	shapeshift_type = /mob/living/simple_animal/hostile/crinos_beast
+
+/mob/living/simple_animal/hostile/crinos_beast
+	name = "Wolf-like Beast"
+	desc = "The peak of abominations damage. Unbelievably deadly..."
+	icon = 'code/modules/wod13/32x48.dmi'
+	icon_state = "beast_crinos"
+	icon_living = "beast_crinos"
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	speak_chance = 0
+	speed = 1
+	maxHealth = 575
+	health = 575
+	butcher_results = list(/obj/item/stack/human_flesh = 10)
+	harm_intent_damage = 5
+	melee_damage_lower = 35
+	melee_damage_upper = 70
+	attack_verb_continuous = "slashes"
+	attack_verb_simple = "slash"
+	attack_sound = 'sound/weapons/slash.ogg'
+	a_intent = INTENT_HARM
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	bloodpool = 10
+	maxbloodpool = 10
+	dodging = TRUE
+
+/datum/chi_discipline/beast_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	..()
+	if(!AN)
+		AN = new(caster)
+	if(!WL)
+		WL = new(caster)
+	var/limit = min(2, level) + caster.social + caster.more_companions - 1
+	if(length(caster.beastmaster) >= limit)
+		var/mob/living/simple_animal/hostile/beastmaster/B = pick(caster.beastmaster)
+		B.death()
+	switch(level_casting)
+		if(1)
+			if(!length(caster.beastmaster))
+				var/datum/action/beastmaster_stay/E1 = new()
+				E1.Grant(caster)
+				var/datum/action/beastmaster_deaggro/E2 = new()
+				E2.Grant(caster)
+			var/mob/living/simple_animal/hostile/beastmaster/rat/R = new(get_turf(caster))
+			R.my_creator = caster
+			caster.beastmaster |= R
+			R.beastmaster = caster
+		if(2)
+			if(!length(caster.beastmaster))
+				var/datum/action/beastmaster_stay/E1 = new()
+				E1.Grant(caster)
+				var/datum/action/beastmaster_deaggro/E2 = new()
+				E2.Grant(caster)
+			var/mob/living/simple_animal/hostile/beastmaster/cat/C = new(get_turf(caster))
+			C.my_creator = caster
+			caster.beastmaster |= C
+			C.beastmaster = caster
+		if(3)
+			if(!length(caster.beastmaster))
+				var/datum/action/beastmaster_stay/E1 = new()
+				E1.Grant(caster)
+				var/datum/action/beastmaster_deaggro/E2 = new()
+				E2.Grant(caster)
+			var/mob/living/simple_animal/hostile/beastmaster/D = new(get_turf(caster))
+			D.my_creator = caster
+			caster.beastmaster |= D
+			D.beastmaster = caster
+		if(4)
+			AN.Shapeshift(caster)
+			spawn(60 SECONDS + caster.discipline_time_plus)
+				if(caster && caster.stat != DEAD)
+					AN.Restore(AN.myshape)
+					caster.Stun(1.5 SECONDS)
+
+		if(5)
+			WL.Shapeshift(caster)
+			spawn(30 SECONDS + caster.discipline_time_plus)
+				if(caster && caster.stat != DEAD)
+					WL.Restore(WL.myshape)
+					caster.Stun(1.5 SECONDS)
+
+/datum/chi_discipline/smoke_shintai
+	name = "Smoke Shintai"
+	desc = "Use the chi energy flow to control fumes and smokes."
+	icon_state = "smoke"
+	ranged = FALSE
+	delay = 12 SECONDS
+	cost_yang = 1
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/smoke_form/SF
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/hidden_smoke_form/HS
+
+/obj/effect/proc_holder/spell/targeted/shapeshift/smoke_form
+	name = "Smoke Form"
+	desc = "Take on the shape a Smoke."
+	charge_max = 50
+	cooldown_min = 50
+	revert_on_death = TRUE
+	die_with_shapeshifted_form = FALSE
+	shapeshift_type = /mob/living/simple_animal/hostile/smokecrawler
+
+/obj/effect/proc_holder/spell/targeted/shapeshift/hidden_smoke_form
+	name = "Smoke Form"
+	desc = "Take on the shape a Smoke."
+	charge_max = 50
+	cooldown_min = 50
+	revert_on_death = TRUE
+	die_with_shapeshifted_form = FALSE
+	shapeshift_type = /mob/living/simple_animal/hostile/smokecrawler/hidden
+
+/mob/living/simple_animal/hostile/smokecrawler
+	name = "Smoke Form"
+	desc = "Levitating fumes."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "smoke"
+	icon_living = "smoke"
+	mob_biotypes = MOB_ORGANIC
+	density = FALSE
+	ventcrawler = VENTCRAWLER_ALWAYS
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	mob_size = MOB_SIZE_TINY
+	speak_chance = 0
+	speed = 3
+	maxHealth = 100
+	health = 100
+	butcher_results = list(/obj/item/stack/human_flesh = 1)
+	harm_intent_damage = 5
+	melee_damage_lower = 1
+	melee_damage_upper = 1
+	attack_verb_continuous = "slashes"
+	attack_verb_simple = "slash"
+	attack_sound = 'sound/weapons/slash.ogg'
+	a_intent = INTENT_HARM
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	bloodpool = 0
+	maxbloodpool = 0
+
+/mob/living/simple_animal/hostile/smokecrawler/hidden
+	alpha = 10
+	speed = 5
+	obfuscate_level = 3
+
+/datum/chi_discipline/smoke_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	..()
+	if(!SF)
+		SF = new(caster)
+	if(!HS)
+		HS = new(caster)
+	switch(level_casting)
+		if(1)
+			var/datum/effect_system/smoke_spread/bad/smoke = new
+			smoke.set_up(4, caster)
+			smoke.start()
+			playsound(get_turf(caster), 'sound/effects/smoke.ogg', 50, TRUE)
+		if(2)
+			var/list/available_turfs = list()
+			for(var/turf/open/O in view(7, caster))
+				if(O)
+					available_turfs += O
+			if(length(available_turfs))
+				var/turf/to_move = pick(available_turfs)
+				var/atom/visual1 = new (get_turf(caster))
+				visual1.density = FALSE
+				visual1.layer = ABOVE_ALL_MOB_LAYER
+				visual1.icon = 'code/modules/wod13/icons.dmi'
+				visual1.icon_state = "puff"
+				playsound(get_turf(caster), 'sound/effects/smoke.ogg', 50, TRUE)
+				caster.forceMove(to_move)
+				var/atom/visual2 = new (to_move)
+				visual2.density = FALSE
+				visual2.layer = ABOVE_ALL_MOB_LAYER
+				visual2.icon = 'code/modules/wod13/icons.dmi'
+				visual2.icon_state = "puff"
+				spawn(2 SECONDS)
+					qdel(visual1)
+					qdel(visual2)
+		if(3)
+			var/atom/visual1 = new (get_step(caster, caster.dir))
+			visual1.density = TRUE
+			visual1.layer = ABOVE_ALL_MOB_LAYER
+			visual1.icon = 'icons/effects/effects.dmi'
+			visual1.icon_state = "smoke"
+			var/atom/visual2 = new (get_step(get_step(caster, caster.dir), turn(caster.dir, 90)))
+			visual2.density = TRUE
+			visual2.layer = ABOVE_ALL_MOB_LAYER
+			visual2.icon = 'icons/effects/effects.dmi'
+			visual2.icon_state = "smoke"
+			var/atom/visual3 = new (get_step(get_step(caster, caster.dir), turn(caster.dir, -90)))
+			visual3.density = TRUE
+			visual3.layer = ABOVE_ALL_MOB_LAYER
+			visual3.icon = 'icons/effects/effects.dmi'
+			visual3.icon_state = "smoke"
+			playsound(get_turf(caster), 'sound/effects/smoke.ogg', 50, TRUE)
+			spawn(delay+caster.discipline_time_plus)
+				qdel(visual1)
+				qdel(visual2)
+				qdel(visual3)
+		if(4)
+			SF.Shapeshift(caster)
+			playsound(get_turf(caster), 'sound/effects/smoke.ogg', 50, TRUE)
+			spawn(delay+caster.discipline_time_plus)
+				if(caster && caster.stat != DEAD)
+					SF.Restore(SF.myshape)
+					caster.Stun(1.5 SECONDS)
+		if(5)
+			HS.Shapeshift(caster)
+			playsound(get_turf(caster), 'sound/effects/smoke.ogg', 50, TRUE)
+			spawn(30 SECONDS + caster.discipline_time_plus)
+				if(caster && caster.stat != DEAD)
+					HS.Restore(HS.myshape)
+					caster.Stun(1.5 SECONDS)
+
+/datum/chi_discipline/storm_shintai
+	name = "Storm Shintai"
+	desc = "Use the chi energy flow to control lightnings and weather."
+	icon_state = "storm"
+	ranged = FALSE
+	delay = 12 SECONDS
+	cost_yang = 1
+
+/obj/item/melee/touch_attack/storm_shintai
+	name = "Storm touch"
+	desc = "ELECTROCUTE YOURSELF!"
+	on_use_sound = 'code/modules/wod13/sounds/lightning.ogg'
+	icon_state = "zapper"
+	inhand_icon_state = "zapper"
+
+/obj/item/melee/touch_attack/storm_shintai/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity || target == user || !isliving(target) || !iscarbon(user)) //getting hard after touching yourself would also be bad
+		return
+	if(!(user.mobility_flags & MOBILITY_USE))
+		to_chat(user, "<span class='warning'>You can't reach out!</span>")
+		return
+	var/mob/living/M = target
+	if(M.anti_magic_check())
+		to_chat(user, "<span class='warning'>The spell can't seem to affect [M]!</span>")
+		to_chat(M, "<span class='warning'>You feel your flesh turn to stone for a moment, then revert back!</span>")
+		..()
+		return
+	M.electrocute_act(50, src, siemens_coeff = 1, flags = NONE)
+	return ..()
+
+/datum/chi_discipline/storm_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	..()
+	switch(level_casting)
+		if(1)
+
+		if(2)
+			caster.drop_all_held_items()
+			caster.put_in_active_hand(new /obj/item/melee/touch_attack/storm_shintai(caster))
+		if(3)
+			var/atom/visual1 = new (get_step(caster, caster.dir))
+			visual1.density = TRUE
+			visual1.layer = ABOVE_ALL_MOB_LAYER
+			visual1.icon = 'icons/effects/effects.dmi'
+			visual1.icon_state = "smoke"
+			var/atom/visual2 = new (get_step(get_step(caster, caster.dir), turn(caster.dir, 90)))
+			visual2.density = TRUE
+			visual2.layer = ABOVE_ALL_MOB_LAYER
+			visual2.icon = 'icons/effects/effects.dmi'
+			visual2.icon_state = "smoke"
+			var/atom/visual3 = new (get_step(get_step(caster, caster.dir), turn(caster.dir, -90)))
+			visual3.density = TRUE
+			visual3.layer = ABOVE_ALL_MOB_LAYER
+			visual3.icon = 'icons/effects/effects.dmi'
+			visual3.icon_state = "smoke"
+			spawn(delay+caster.discipline_time_plus)
+				qdel(visual1)
+				qdel(visual2)
+				qdel(visual3)
+		if(4)
+
+		if(5)
+			caster.storm_aura = TRUE
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.storm_aura = FALSE
+
