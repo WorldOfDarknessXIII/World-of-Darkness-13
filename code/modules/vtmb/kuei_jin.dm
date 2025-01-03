@@ -2451,6 +2451,62 @@
 	M.electrocute_act(50, src, siemens_coeff = 1, flags = NONE)
 	return ..()
 
+/obj/item/gun/magic/hook/storm_shintai
+	name = "electric hand"
+	ammo_type = /obj/item/ammo_casing/magic/hook/storm_shintai
+	icon_state = "zapper"
+	inhand_icon_state = "zapper"
+	lefthand_file = 'code/modules/wod13/lefthand.dmi'
+	righthand_file = 'code/modules/wod13/righthand.dmi'
+	fire_sound = 'code/modules/wod13/sounds/lightning.ogg'
+	max_charges = 1
+	item_flags = DROPDEL | NOBLUDGEON
+	force = 18
+
+/obj/item/ammo_casing/magic/hook/storm_shintai
+	name = "lightning"
+	desc = "Electricity."
+	projectile_type = /obj/projectile/storm_shintai
+	caliber = CALIBER_HOOK
+	icon_state = "hook"
+
+/obj/projectile/storm_shintai
+	name = "lightning"
+	icon_state = "spell"
+	pass_flags = PASSTABLE
+	damage = 0
+	stamina = 20
+	hitsound = 'code/modules/wod13/sounds/lightning.ogg'
+	var/chain
+	var/knockdown_time = (0.5 SECONDS)
+
+/obj/projectile/storm_shintai/fire(setAngle)
+	if(firer)
+		chain = firer.Beam(src, icon_state="lightning[rand(1,12)]")
+		if(iscathayan(firer))
+			var/mob/living/carbon/human/H = firer
+			if(H.CheckEyewitness(H, H, 7, FALSE))
+				H.AdjustMasquerade(-1)
+	..()
+
+/obj/projectile/storm_shintai/on_hit(atom/target)
+	. = ..()
+	if(ismovable(target))
+		var/atom/movable/A = target
+		if(A.anchored)
+			return
+		A.visible_message("<span class='danger'>[A] is snagged by lightning!</span>")
+		playsound(get_turf(target), 'code/modules/wod13/sounds/lightning.ogg', 100, FALSE)
+		if (isliving(target))
+			var/mob/living/L = target
+			L.Stun(5)
+			L.electrocute_act(50, src, siemens_coeff = 1, flags = NONE)
+			return
+
+/obj/projectile/storm_shintai/Destroy()
+	qdel(chain)
+	return ..()
+
 /datum/chi_discipline/storm_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
 	switch(level_casting)
@@ -2460,30 +2516,22 @@
 			caster.drop_all_held_items()
 			caster.put_in_active_hand(new /obj/item/melee/touch_attack/storm_shintai(caster))
 		if(3)
-			var/atom/visual1 = new (get_step(caster, caster.dir))
-			visual1.density = TRUE
-			visual1.layer = ABOVE_ALL_MOB_LAYER
-			visual1.icon = 'icons/effects/effects.dmi'
-			visual1.icon_state = "smoke"
-			var/atom/visual2 = new (get_step(get_step(caster, caster.dir), turn(caster.dir, 90)))
-			visual2.density = TRUE
-			visual2.layer = ABOVE_ALL_MOB_LAYER
-			visual2.icon = 'icons/effects/effects.dmi'
-			visual2.icon_state = "smoke"
-			var/atom/visual3 = new (get_step(get_step(caster, caster.dir), turn(caster.dir, -90)))
-			visual3.density = TRUE
-			visual3.layer = ABOVE_ALL_MOB_LAYER
-			visual3.icon = 'icons/effects/effects.dmi'
-			visual3.icon_state = "smoke"
-			spawn(delay+caster.discipline_time_plus)
-				qdel(visual1)
-				qdel(visual2)
-				qdel(visual3)
+			caster.drop_all_held_items()
+			caster.put_in_active_hand(new /obj/item/gun/magic/hook/storm_shintai(caster))
 		if(4)
-
+			caster.dna.species.ToggleFlight(caster)
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.dna.species.ToggleFlight(caster)
 		if(5)
 			caster.storm_aura = TRUE
+			caster.remove_overlay(FORTITUDE_LAYER)
+			var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "puff_const", -FORTITUDE_LAYER)
+			fortitude_overlay.alpha = 128
+			caster.overlays_standing[FORTITUDE_LAYER] = fortitude_overlay
+			caster.apply_overlay(FORTITUDE_LAYER)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					caster.storm_aura = FALSE
+					caster.remove_overlay(FORTITUDE_LAYER)
 
