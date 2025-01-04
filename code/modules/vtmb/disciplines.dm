@@ -1678,7 +1678,7 @@
 			H.fire(direct_target = target)
 		if(4)
 			var/limit = 1
-			if(length(caster.beastmaster) >= 1)
+			if(length(caster.beastmaster) >= limit)
 				var/mob/living/simple_animal/hostile/beastmaster/B = pick(caster.beastmaster)
 				qdel(B)
 			var/mob/living/simple_animal/hostile/beastmaster/thebeast/F = new(get_turf(caster))
