@@ -332,7 +332,7 @@
 				var/datum/action/beastmaster_deaggro/E2 = new()
 				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/rat/R = new(get_turf(caster))
-			R.my_creator = caster
+//			R.my_creator = caster
 			caster.beastmaster |= R
 			R.beastmaster = caster
 		if(2)
@@ -342,7 +342,7 @@
 				var/datum/action/beastmaster_deaggro/E2 = new()
 				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/cat/C = new(get_turf(caster))
-			C.my_creator = caster
+//			C.my_creator = caster
 			caster.beastmaster |= C
 			C.beastmaster = caster
 		if(3)
@@ -352,7 +352,7 @@
 				var/datum/action/beastmaster_deaggro/E2 = new()
 				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/D = new(get_turf(caster))
-			D.my_creator = caster
+//			D.my_creator = caster
 			caster.beastmaster |= D
 			D.beastmaster = caster
 		if(4)
@@ -362,7 +362,7 @@
 				var/datum/action/beastmaster_deaggro/E2 = new()
 				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/rat/flying/F = new(get_turf(caster))
-			F.my_creator = caster
+//			F.my_creator = caster
 			caster.beastmaster |= F
 			F.beastmaster = caster
 		if(5)
