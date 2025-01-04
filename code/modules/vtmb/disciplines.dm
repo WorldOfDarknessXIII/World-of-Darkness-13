@@ -1667,7 +1667,7 @@
 		if(2)
 			to_chat(target, "<span class='warning'>Your mind is enveloped by your greatest fear!</span>")
 			var/mob/living/carbon/human/H = target
-			if(!H.in_frenzy) // If target is a kindred, it will cause them to frenzy from 3 to 4,5 seconds
+			if(!H.in_frenzy) // Cause target to frenzy no matter the race, up to 4,5 seconds
 				H.enter_frenzymod()
 				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon, exit_frenzymod)), rand(30, 45))
 		if(3)
@@ -1685,6 +1685,7 @@
 			F.my_creator = caster
 			caster.beastmaster |= F
 			F.beastmaster = caster
+			F.add_beastmaster_enemies(target)
 
 /mob/living/simple_animal/hostile/beastmaster/thebeast
 	name = "Beast"
