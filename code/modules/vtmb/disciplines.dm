@@ -1700,7 +1700,7 @@
 	attack_verb_simple = "tear"
 	attack_sound = 'code/modules/wod13/sounds/rat.ogg'
 	speak_chance = 0
-	turns_per_move = 5
+	turns_per_move = 1
 	see_in_dark = 7
 	density = FALSE
 	anchored = FALSE
@@ -1710,9 +1710,9 @@
 	del_on_death = 1
 	maxHealth = 250
 	health = 250
-	harm_intent_damage = 25
-	melee_damage_lower = 25
-	melee_damage_upper = 25
+	harm_intent_damage = 50
+	melee_damage_lower = 50
+	melee_damage_upper = 50
 	melee_damage_type = STAMINA
 	speed = 0
 
