@@ -1659,6 +1659,32 @@
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
 
+/datum/discipline/daimonion/proc/freak_out()
+	if(owner.stat == DEAD)
+		return
+		to_chat(owner, "<span class='userdanger'>Your mind is absorbed with terrifying visions of your worst fear...</span>")
+	var/reaction = rand(1,4)
+	switch(reaction)
+		if(1)
+			to_chat(owner, "<span class='warning'>You are paralyzed with fear!</span>")
+			owner.Stun(70)
+			owner.Jitter(8)
+		if(2)
+			owner.emote("scream")
+			owner.Jitter(5)
+			owner.say("A-Aagh!!!", forced = "phobia")
+			if(reason)
+				owner.pointed(reason)
+		if(3)
+			to_chat(owner, "<span class='warning'>You shut your eyes in terror!</span>")
+			owner.Jitter(5)
+			owner.blind_eyes(10)
+		if(4)
+			owner.dizziness += 10
+			owner.add_confusion(10)
+			owner.Jitter(10)
+			owner.stuttering += 10
+
 /datum/discipline/daimonion/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
 	switch(level_casting)
@@ -1666,6 +1692,7 @@
 
 		if(2)
 
+			target.freak_out()
 		if(3)
 			var/turf/start = get_turf(caster)
 			var/obj/projectile/magic/aoe/fireball/baali/H = new(start)
