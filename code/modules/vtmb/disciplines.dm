@@ -1669,10 +1669,16 @@
 
 		if(3)
 
-		if(4)
+		if(4 to 5)
+			caster.drop_all_held_items()
+			BAT.Shapeshift(caster)
+			spawn(delay+caster.discipline_time_plus)
+				if(caster && caster.stat != DEAD)
+					BAT.Restore(BAT.myshape)
+					caster.Stun(15)
+					caster.do_jitter_animation(30)
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
 
-		if(5)
-			return
 
 /datum/discipline/valeren
 	name = "Valeren"

@@ -683,6 +683,15 @@
 /obj/projectile/magic/aoe/fireball/baali
 	color = "#2dff00"
 
+/obj/projectile/magic/aoe/fireball/baali/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/living/M = target
+		M.adjustCloneLoss(25) // Deals aggravated damage on hit
+		if(iskindred(target))
+			M.handle_automated_frenzy() // If target is a kindred, force them to frenzy
+	var/obj/effect/fire/R = new(get_turf(target))
+
 //still magic related, but a different path
 
 /obj/projectile/temp/chill
