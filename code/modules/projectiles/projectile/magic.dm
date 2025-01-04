@@ -682,6 +682,8 @@
 
 /obj/projectile/magic/aoe/fireball/baali
 	color = "#2dff00"
+	damage = 0
+	nodamage = true
 
 /obj/projectile/magic/aoe/fireball/baali/on_hit(target)
 	. = ..()
