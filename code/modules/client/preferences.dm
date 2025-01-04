@@ -2931,9 +2931,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
 
-	if(pref_species.name == "Vampire")
-		if(clane.alt_sprite && !clane.alt_sprite_greyscale)
-			character.skin_tone = ALBINO
+	if(pref_species.name == "Vampire" && clane.alt_sprite && !clane.alt_sprite_greyscale)
+		character.skin_tone = ALBINO
 	else
 		character.skin_tone = skin_tone
 
