@@ -1984,6 +1984,9 @@
 	return dexterity + additional_dexterity
 
 /mob/living/proc/get_total_social()
+	if(iscathayan(src))
+		if(mind?.dharma?.animated == "Yin")
+			return 0
 	return social + additional_social
 
 /mob/living/proc/get_total_mentality()

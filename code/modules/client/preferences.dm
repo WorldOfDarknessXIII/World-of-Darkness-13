@@ -2259,6 +2259,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dharma_level = min(max(1, dharma_level + 1), 6)
 					hun = hun+1
 					po = po+1
+					yin = yin+1
+					yang = yang+1
 
 				/*
 				if("torpor_restore")
@@ -3040,8 +3042,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				character.yang_chi = 5
 				character.max_yang_chi = 5
 	else
-		character.maxHealth = round((initial(character.maxHealth)-initial(character.maxHealth)/4)+(initial(character.maxHealth)/4)*((character.physique+character.additional_physique )+13-generation))
-		character.health = round((initial(character.health)-initial(character.health)/4)+(initial(character.health)/4)*((character.physique+character.additional_physique )+13-generation))
+		var/dharma_bonus = 0
+		if(pref_species.name == "Kuei-Jin")
+			dharma_bonus = dharma_level
+		character.maxHealth = round((initial(character.maxHealth)-initial(character.maxHealth)/4)+(initial(character.maxHealth)/4)*((character.physique+character.additional_physique )+13-generation+dharma_bonus))
+		character.health = round((initial(character.health)-initial(character.health)/4)+(initial(character.health)/4)*((character.physique+character.additional_physique )+13-generation+dharma_bonus))
 	if(pref_species.name == "Vampire")
 		character.humanity = humanity
 	character.masquerade = masquerade

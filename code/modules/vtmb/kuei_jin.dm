@@ -18,7 +18,6 @@
 	//Which Chi is used to animate last
 	var/animated = "None"
 	var/initial_skin_color = "asian1"
-	var/initial_social = 1
 	//For better kill code, if a person deserves death or not
 	var/list/deserving = list()
 	var/list/judgement = list()
@@ -73,7 +72,6 @@
 /datum/dharma/proc/on_gain(var/mob/living/carbon/human/mob)
 	mob.mind.dharma = src
 	initial_skin_color = mob.skin_tone
-	initial_social = mob.social
 	var/current_animate = rand(1, 10)
 	if(current_animate == 1)
 		animated = "Yang"
@@ -694,6 +692,9 @@
 						if(hum.stat > CONSCIOUS && hum.stat < DEAD)
 							H.mind.dharma.roll_po(hum, H)
 	H.nutrition = NUTRITION_LEVEL_START_MAX
+	if((H.last_bloodpool_restore + 60 SECONDS) <= world.time)
+		H.last_bloodpool_restore = world.time
+		H.bloodpool = min(H.maxbloodpool, H.bloodpool+1)
 
 /datum/action/breathe_chi
 	name = "Inhale Chi"
@@ -815,7 +816,6 @@
 		BD.visible_message("<span class='warning'>Some of [BD]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
 		BD.mind.dharma?.animated = "Yin"
 		BD.skin_tone = get_vamp_skin_color(BD.skin_tone)
-		BD.social = 0
 		BD.dna?.species.brutemod = initial(BD.dna?.species.brutemod)
 		BD.dna?.species.burnmod = initial(BD.dna?.species.burnmod)
 		BD.update_body()
@@ -845,7 +845,7 @@
 		if(BD.yin_chi)
 			BD.heal_overall_damage(15*min(4, BD.mind.dharma.level), 10*min(4, BD.mind.dharma.level), 20*min(4, BD.mind.dharma.level))
 			BD.adjustBruteLoss(-20*min(4, BD.mind.dharma.level), TRUE)
-			BD.adjustFireLoss(-10*min(4, BD.mind.dharma.level), TRUE)
+			BD.adjustFireLoss(-20*min(4, BD.mind.dharma.level), TRUE)
 			BD.adjustOxyLoss(-20*min(4, BD.mind.dharma.level), TRUE)
 			BD.adjustToxLoss(-20*min(4, BD.mind.dharma.level), TRUE)
 			BD.adjustCloneLoss(-5, TRUE)
@@ -873,7 +873,6 @@
 		BD.visible_message("<span class='warning'>Some of [BD]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
 		BD.mind.dharma?.animated = "Yang"
 		BD.skin_tone = BD.mind.dharma?.initial_skin_color
-		BD.social = BD.mind.dharma?.initial_social
 		BD.dna?.species.brutemod = 1
 		BD.dna?.species.burnmod = 0.5
 		BD.update_body()
@@ -902,7 +901,7 @@
 			brain.applyOrganDamage(-100)
 		if(BD.yang_chi)
 			BD.heal_overall_damage(15*min(4, BD.mind.dharma.level), 10*min(4, BD.mind.dharma.level), 20*min(4, BD.mind.dharma.level))
-			BD.adjustBruteLoss(-10*min(4, BD.mind.dharma.level), TRUE)
+			BD.adjustBruteLoss(-20*min(4, BD.mind.dharma.level), TRUE)
 			BD.adjustFireLoss(-20*min(4, BD.mind.dharma.level), TRUE)
 			BD.adjustOxyLoss(-20*min(4, BD.mind.dharma.level), TRUE)
 			BD.adjustToxLoss(-20*min(4, BD.mind.dharma.level), TRUE)
@@ -927,14 +926,14 @@
 	if(istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/BD = usr
 		var/max_limit = BD.mind.dharma.level*2
-		var/sett = input(BD, "Enter the maximum of Yin your character has:", "Yin/Yang") as num|null
+		var/sett = input(BD, "Enter the maximum of Yin your character has (from 1 to [max_limit-1]):", "Yin/Yang") as num|null
 		if(sett)
 			sett = max(1, min(sett, max_limit-1))
 			BD.max_yin_chi = sett
 			BD.max_yang_chi = max_limit-sett
 			BD.yin_chi = min(BD.yin_chi, BD.max_yin_chi)
 			BD.yang_chi = min(BD.yang_chi, BD.max_yang_chi)
-			var/sett2 = input(BD, "Enter the maximum of Hun your character has:", "Hun/P'o") as num|null
+			var/sett2 = input(BD, "Enter the maximum of Hun your character has (from 1 to [max_limit-1]):", "Hun/P'o") as num|null
 			if(sett2)
 				sett2 = max(1, min(sett2, max_limit-1))
 				BD.mind.dharma.Hun = sett2
@@ -1899,8 +1898,6 @@
 
 /datum/movespeed_modifier/tentacles1
 	multiplicative_slowdown = -0.5
-/datum/movespeed_modifier/tentacles2
-	multiplicative_slowdown = -1
 
 /datum/movespeed_modifier/demonform1
 	multiplicative_slowdown = -0.5
@@ -1948,8 +1945,6 @@
 			if(mod > 2)
 				ADD_TRAIT(caster, TRAIT_IGNOREDAMAGESLOWDOWN, SPECIES_TRAIT)
 				ADD_TRAIT(caster, TRAIT_SLEEPIMMUNE, SPECIES_TRAIT)
-			if(mod > 3)
-				caster.add_movespeed_modifier(/datum/movespeed_modifier/tentacles2)
 			if(mod > 4)
 				ADD_TRAIT(caster, TRAIT_STUNIMMUNE, SPECIES_TRAIT)
 			spawn((delay)+caster.discipline_time_plus)
@@ -1965,8 +1960,6 @@
 					if(mod > 2)
 						REMOVE_TRAIT(caster, TRAIT_IGNOREDAMAGESLOWDOWN, SPECIES_TRAIT)
 						REMOVE_TRAIT(caster, TRAIT_SLEEPIMMUNE, SPECIES_TRAIT)
-					if(mod > 3)
-						caster.remove_movespeed_modifier(/datum/movespeed_modifier/tentacles2)
 					if(mod > 4)
 						REMOVE_TRAIT(caster, TRAIT_STUNIMMUNE, SPECIES_TRAIT)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/demonshintai_deactivate.ogg', 50, FALSE)
@@ -2607,6 +2600,7 @@
 			caster.athletics = caster.athletics+2
 			caster.lockpicking = caster.lockpicking+2
 			ADD_TRAIT(caster, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
+			caster.do_jitter_animation(10)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-5
@@ -3040,7 +3034,7 @@
 /datum/chi_discipline/yang_prana
 	name = "Yang Prana"
 	desc = "Allows to tap into and manipulate Kuei-Jin internal Yang energy"
-	icon_state = "yin_prana"
+	icon_state = "yang_prana"
 	ranged = FALSE
 	delay = 12 SECONDS
 	cost_yang = 2
