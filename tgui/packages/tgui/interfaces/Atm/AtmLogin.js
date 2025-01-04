@@ -8,12 +8,13 @@ export const AtmLogin = (props, context) => {
   const [entered_code, setEnteredCode] = useLocalState(context, "login_code", "");
 
   const {
-    balance,
     account_owner,
-    bank_id,
     code
-
   } = data;
+
+  const handleLogin = () => {
+    act('login', { code: entered_code });
+  };
   return (
     <Window resizable>
       <Window.Content scrollable>
@@ -26,11 +27,12 @@ export const AtmLogin = (props, context) => {
                 placeholder="Enter code here"
                 />
             </LabeledList.Item>
-              {account_owner}
+            <LabeledList.Item>
               <Button
                 content="Log In"
-                onClick={() => act("login", { code: entered_code})}
+                onClick={handleLogin}
                 />
+            </LabeledList.Item>
           </LabeledList>
         </Section>
       </Window.Content>
