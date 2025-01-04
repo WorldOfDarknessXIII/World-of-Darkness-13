@@ -17,7 +17,7 @@
 	paycheck_department = ACCOUNT_CAR
 	display_order = JOB_DISPLAY_ORDER_SUPPLY
 	bounty_types = CIV_JOB_RANDOM
-	allowed_species = list("Vampire", "Ghoul", "Human")
+	allowed_species = list("Vampire", "Ghoul", "Human", "Kuei-Jin")
 	known_contacts = list("Dealer")
 	allowed_bloodlines = list("True Brujah", "Daughters of Cacophony", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian")
 
