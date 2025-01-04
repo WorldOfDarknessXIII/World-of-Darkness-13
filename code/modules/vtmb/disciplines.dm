@@ -1677,15 +1677,8 @@
 			H.preparePixelProjectile(target, start)
 			H.fire(direct_target = target)
 		if(4)
-			var/limit = 1
-			if(length(caster.beastmaster) >= limit)
-				var/mob/living/simple_animal/hostile/beastmaster/B = pick(caster.beastmaster)
-				qdel(B)
-			var/mob/living/simple_animal/hostile/beastmaster/thebeast/F = new(get_turf(caster))
-			F.my_creator = caster
-			caster.beastmaster |= F
-			F.beastmaster = caster
-			F.add_beastmaster_enemies(target)
+			target.hallucination += 5000
+			new /datum/hallucination/baali(target, TRUE)
 
 /mob/living/simple_animal/hostile/beastmaster/thebeast
 	name = "Beast"

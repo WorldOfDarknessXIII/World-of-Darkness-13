@@ -325,6 +325,64 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	image_state = "eva"
 //	px = -32
 
+/datum/hallucination/baali
+	var/obj/effect/hallucination/simple/bubblegum/bubblegum
+	var/turf/landing
+	var/next_action = 0
+
+/datum/hallucination/baali/New(mob/living/carbon/C, forced = TRUE)
+	set waitfor = FALSE
+	. = ..()
+	var/turf/closed/wall/wall
+	for(var/turf/closed/wall/W in range(7,target))
+		wall = W
+		break
+	if(!wall)
+		return INITIALIZE_HINT_QDEL
+	feedback_details += "Source: [wall.x],[wall.y],[wall.z]"
+	landing = get_turf(target)
+	var/turf/landing_image_turf = get_step(landing, SOUTHWEST) //the icon is 3x3
+	if(target.client)
+		target.playsound_local(wall,'sound/effects/meteorimpact.ogg', 150, 1)
+		bubblegum = new(wall, target)
+		addtimer(CALLBACK(src, PROC_REF(start_processing)), 10)
+
+/datum/hallucination/baali/proc/start_processing()
+	if (isnull(target))
+		qdel(src)
+		return
+	START_PROCESSING(SSfastprocess, src)
+
+/datum/hallucination/baali/process(delta_time)
+	next_action -= delta_time
+
+	if (next_action > 0)
+		return
+
+	if (get_turf(bubblegum) != landing && target?.stat != DEAD)
+		if(!landing || (get_turf(bubblegum)).loc.z != landing.loc.z)
+			qdel(src)
+			return
+		bubblegum.forceMove(get_step_towards(bubblegum, landing))
+		bubblegum.setDir(get_dir(bubblegum, landing))
+		target.playsound_local(get_turf(bubblegum), 'sound/effects/meteorimpact.ogg', 150, 1)
+		shake_camera(target, 2, 1)
+		if(bubblegum.Adjacent(target))
+			target.Paralyze(80)
+			target.adjustStaminaLoss(40)
+			step_away(target, bubblegum)
+			shake_camera(target, 4, 3)
+			target.visible_message("<span class='warning'>[target] jumps backwards, falling on the ground!</span>","<span class='userdanger'>[bubblegum] slams into you!</span>")
+		next_action = 0.2
+	else
+		STOP_PROCESSING(SSfastprocess, src)
+		QDEL_IN(src, 3 SECONDS)
+
+/datum/hallucination/baali/Destroy()
+	QDEL_NULL(bubblegum)
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
 /datum/hallucination/oh_yeah
 	var/obj/effect/hallucination/simple/bubblegum/bubblegum
 	var/image/fakebroken
