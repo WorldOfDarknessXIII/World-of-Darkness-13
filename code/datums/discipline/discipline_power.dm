@@ -43,7 +43,7 @@
 	var/duration_length = 0
 	/// Amount of time it takes until this Discipline can be used again after activation.
 	var/cooldown_length = 0
-	/// If this power uses its own duration handling rather than the default handling
+	/// If this power uses its own duration/deactivation handling rather than the default handling
 	var/duration_override = FALSE
 	/// If this power uses its own cooldown handling rather than the default handling
 	var/cooldown_override = FALSE
@@ -192,6 +192,8 @@
 
 	//check if distance is in range
 	if (get_dist(owner, target) > range)
+		if (alert)
+			to_chat(owner, "<span class='warning'>[target] is out of range!</span>")
 		return FALSE
 
 	//handling for if a ranged Discipline is being used on its caster
@@ -199,6 +201,8 @@
 		if (target_type & TARGET_SELF)
 			return TRUE
 		else
+			if (alert)
+				to_chat(owner, "<span class='warning'>You can't use this power on yourself!</span>")
 			return FALSE
 
 	//check target type
@@ -263,9 +267,9 @@
 	if (activate_sound)
 		owner.playsound_local(owner, activate_sound, 50, FALSE)
 
-	//play the Discipline power's effect sound around the user if there is one
+	//play the Discipline power's effect sound on the user or target if there is one
 	if (effect_sound)
-		playsound(owner, effect_sound, 50, FALSE)
+		playsound(target ? target : owner, effect_sound, 50, FALSE)
 
 	//make NPCs aggro if the power is aggravating, and do so as an attack if the power is hostile
 	if (aggravating && isnpc(target))

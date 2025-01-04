@@ -425,6 +425,8 @@
 	adjust_blood_volume(volume - blood_volume)
 
 /mob/living/proc/blood_points_per_units(units)
+	blood_per_point = initial(blood_volume) / maxbloodpool
+
 	return (units / blood_per_point)
 
 /mob/living/proc/transfer_blood_points(mob/living/to_mob, amount)
