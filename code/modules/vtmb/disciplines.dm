@@ -1659,37 +1659,29 @@
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
 
-/mob/living/proc/freak_out(mob/living/target)
-	if(target.stat == DEAD)
-		return
-	to_chat(target, "<span class='userdanger'>Your mind is absorbed with terrifying visions of your worst fear...</span>")
-	var/reaction = rand(1,4)
-	switch(reaction)
-		if(1)
-			to_chat(target, "<span class='warning'>You are paralyzed with fear!</span>")
-			target.Stun(70)
-			target.Jitter(8)
-		if(2)
-			target.emote("scream")
-			target.Jitter(5)
-			target.say("A-Aagh!!!", forced = "phobia")
-		if(3)
-			to_chat(target, "<span class='warning'>You shut your eyes in terror!</span>")
-			target.Jitter(5)
-			target.blind_eyes(10)
-		if(4)
-			target.dizziness += 10
-			target.add_confusion(10)
-			target.Jitter(10)
-			target.stuttering += 10
-
 /datum/discipline/daimonion/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
 	switch(level_casting)
 		if(1)
 
 		if(2)
-			target.freak_out()
+			switch(rand(1,3))
+				to_chat(target, "<span class='warning'>Visions of your greatest fear absorb your mind!</span>")
+				if(1)
+					target.Stun(3)
+					target.Jitter(3)
+				if(2)
+					var/datum/cb = CALLBACK(H,/mob/living/carbon/human/proc/step_away_caster)
+						for(var/i in 1 to 30)
+							addtimer(cb, (i - 1)*H.total_multiplicative_slowdown())
+					target.emote("scream")
+					target.Jitter(3)
+				if(3)
+					target.SetSleeping(25)
+					target.Jitter(50)
+					target.stuttering += 50
+					target.dizziness += 50
+
 		if(3)
 			var/turf/start = get_turf(caster)
 			var/obj/projectile/magic/aoe/fireball/baali/H = new(start)
