@@ -1665,25 +1665,13 @@
 		if(1)
 
 		if(2)
-			switch(rand(1,3))
-				if(1)
-					to_chat(target, "<span class='warning'>Visions of your greatest fear absorb your mind!</span>")
-					target.Stun(3)
-					target.Jitter(3)
-				if(2)
-					to_chat(target, "<span class='warning'>Visions of your greatest fear absorb your mind!</span>")
-					var/datum/cb = CALLBACK(H,/mob/living/carbon/human/proc/step_away_caster)
-					for(var/i in 1 to 30)
-						addtimer(cb, (i - 1)*H.total_multiplicative_slowdown())
-					target.emote("scream")
-					target.Jitter(3)
-				if(3)
-					to_chat(target, "<span class='warning'>Visions of your greatest fear absorb your mind!</span>")
-					target.SetSleeping(25)
-					target.Jitter(50)
-					target.stuttering += 50
-					target.dizziness += 50
-
+			to_chat(target, "<span class='warning'>Visions of your greatest fear absorb your mind!</span>")
+			target.emote("scream")
+			target.Stun(25, TRUE)
+			target.Jitter(75)
+			target.stuttering += 75
+			target.dizziness += 75
+			target.say("A-Agh!!!", forced = "phobia")
 		if(3)
 			var/turf/start = get_turf(caster)
 			var/obj/projectile/magic/aoe/fireball/baali/H = new(start)
