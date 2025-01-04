@@ -1668,7 +1668,11 @@
 		if(2)
 
 		if(3)
-
+			var/turf/start = get_turf(caster)
+			var/obj/projectile/magic/aoe/fireball/baali/H = new(start)
+			H.firer = caster
+			H.preparePixelProjectile(target, start)
+			H.fire(direct_target = target)
 		if(4 to 5)
 			caster.drop_all_held_items()
 			spawn(delay+caster.discipline_time_plus)
