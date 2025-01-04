@@ -1658,51 +1658,21 @@
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/BAT
 
 /datum/discipline/daimonion/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
 	var/mod = min(4, level_casting)
 	switch(mod)
 		if(1)
-			/*
-			caster.physiology.burn_mod *= 1/100
-			caster.color = "#884200"
-			spawn(delay+caster.discipline_time_plus)
-				if(caster)
-					caster.color = initial(caster.color)
-					caster.physiology.burn_mod *= 100
-					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
-					*/
+
 		if(2)
-			/*
-			caster.dna.species.GiveSpeciesFlight(caster)
-			spawn(delay+caster.discipline_time_plus)
-				if(caster)
-					caster.dna.species.RemoveSpeciesFlight(caster)
-					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
-					*/
+
 		if(3)
-			/*
-			caster.drop_all_held_items()
-			caster.put_in_r_hand(new /obj/item/melee/vampirearms/knife/gangrel(caster))
-			caster.put_in_l_hand(new /obj/item/melee/vampirearms/knife/gangrel(caster))
-			spawn(delay+caster.discipline_time_plus)
-				if(caster)
-					for(var/obj/item/melee/vampirearms/knife/gangrel/G in caster)
-						if(G)
-							qdel(G)
-					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
-					*/
-		if(4 to 5)
-			caster.drop_all_held_items()
-			BAT.Shapeshift(caster)
-			spawn(delay+caster.discipline_time_plus)
-				if(caster && caster.stat != DEAD)
-					BAT.Restore(BAT.myshape)
-					caster.Stun(15)
-					caster.do_jitter_animation(30)
-					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
+
+		if(4)
+
+		if(5)
+			return
 
 /datum/discipline/valeren
 	name = "Valeren"
