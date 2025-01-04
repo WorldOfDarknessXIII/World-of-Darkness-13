@@ -1680,35 +1680,6 @@
 			target.hallucination += 5000
 			new /datum/hallucination/baali(target, TRUE)
 
-/mob/living/simple_animal/hostile/beastmaster/thebeast
-	name = "Beast"
-	desc = "Manifestation of the Beast."
-	icon = 'code/modules/wod13/icons.dmi'
-	icon_state = "rat"
-	icon_living = "rat"
-	icon_dead = "rat_dead"
-	emote_hear = list("roars.")
-	emote_see = list("stares.")
-	attack_verb_continuous = "tears"
-	attack_verb_simple = "tear"
-	attack_sound = 'code/modules/wod13/sounds/rat.ogg'
-	speak_chance = 0
-	turns_per_move = 1
-	see_in_dark = 7
-	density = FALSE
-	anchored = FALSE
-	bloodquality = BLOOD_QUALITY_LOW
-	bloodpool = 0
-	maxbloodpool = 0
-	del_on_death = 1
-	maxHealth = 250
-	health = 250
-	harm_intent_damage = 50
-	melee_damage_lower = 50
-	melee_damage_upper = 50
-	melee_damage_type = STAMINA
-	speed = 0
-
 /datum/discipline/valeren
 	name = "Valeren"
 	desc = "Use your third eye in healing or protecting needs."

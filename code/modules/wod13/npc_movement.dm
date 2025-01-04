@@ -39,7 +39,6 @@
 	if(last_attacker && !key && !hostile)
 		if(get_dist(src, last_attacker) < 10)
 			if(istype(last_attacker, /mob/living/simple_animal/hostile))
-				if(!istype(last_attacker, /mob/living/simple_animal/hostile/beastmaster/thebeast))
 				var/mob/living/simple_animal/hostile/HS = last_attacker
 				if(HS.my_creator)
 					HS.my_creator.AdjustHumanity(-1, 0)
