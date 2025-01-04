@@ -1654,7 +1654,7 @@
 	icon_state = "daimonion"
 	cost = 1
 	ranged = TRUE
-	delay = 80
+	delay = 100
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
@@ -1667,23 +1667,53 @@
 		if(2)
 			to_chat(target, "<span class='warning'>Your mind is enveloped by your greatest fear!</span>")
 			var/mob/living/carbon/human/H = target
-			if(!H.in_frenzy) // If target is a kindred, it will cause them to frenzy for 3 to 5 seconds
+			if(!H.in_frenzy) // If target is a kindred, it will cause them to frenzy from 3 to 4,5 seconds
 				H.enter_frenzymod()
-				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon, exit_frenzymod)), rand(35, 50))
+				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon, exit_frenzymod)), rand(30, 45))
 		if(3)
 			var/turf/start = get_turf(caster)
 			var/obj/projectile/magic/aoe/fireball/baali/H = new(start)
 			H.firer = caster
 			H.preparePixelProjectile(target, start)
 			H.fire(direct_target = target)
-		if(4 to 5)
-			caster.drop_all_held_items()
-			spawn(delay+caster.discipline_time_plus)
-				if(caster && caster.stat != DEAD)
-					caster.Stun(15)
-					caster.do_jitter_animation(30)
-					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
+		if(4)
+			var/limit = 1
+			if(length(caster.beastmaster) >= 1)
+				var/mob/living/simple_animal/hostile/beastmaster/B = pick(caster.beastmaster)
+				qdel(B)
+			var/mob/living/simple_animal/hostile/beastmaster/thebeast/F = new(get_turf(caster))
+			F.my_creator = caster
+			caster.beastmaster |= F
+			F.beastmaster = caster
 
+/mob/living/simple_animal/hostile/beastmaster/thebeast
+	name = "Beast"
+	desc = "Manifestation of the Beast."
+	icon = 'code/modules/wod13/icons.dmi'
+	icon_state = "rat"
+	icon_living = "rat"
+	icon_dead = "rat_dead"
+	emote_hear = list("roars.")
+	emote_see = list("stares.")
+	attack_verb_continuous = "tears"
+	attack_verb_simple = "tear"
+	attack_sound = 'code/modules/wod13/sounds/rat.ogg'
+	speak_chance = 0
+	turns_per_move = 5
+	see_in_dark = 7
+	density = FALSE
+	anchored = FALSE
+	bloodquality = BLOOD_QUALITY_LOW
+	bloodpool = 0
+	maxbloodpool = 0
+	del_on_death = 1
+	maxHealth = 250
+	health = 250
+	harm_intent_damage = 25
+	melee_damage_lower = 25
+	melee_damage_upper = 25
+	melee_damage_type = STAMINA
+	speed = 0
 
 /datum/discipline/valeren
 	name = "Valeren"
