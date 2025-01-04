@@ -434,10 +434,10 @@
 				objectives += money_objective
 				money_objective.update_explanation_text()
 		if(4)
-			var/list/available_factions = list("Camarilla", "Anarch", "Sabbat")
+			var/list/available_factions = list("Camarilla", "Anarchs", "Sabbat")
 			if(ishuman(owner))
 				var/mob/living/carbon/human/H = owner
-				if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarch" || H.vampire_faction == "Sabbat")
+				if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarchs" || H.vampire_faction == "Sabbat")
 					available_factions -= H.vampire_faction
 			var/datum/objective/become_member/member_objective = new
 			member_objective.owner = owner
