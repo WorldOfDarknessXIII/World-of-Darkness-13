@@ -54,28 +54,22 @@
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 
 	//faction, job, etc
-	if(iskindred(user) && is_face_visible())
+	if(iskindred(user) && iskindred(src) && is_face_visible())
 		var/mob/living/carbon/human/vampire = user
-		var/info = info_known
 		var/same_clan = vampire.clane == clane
 		var/same_faction = vampire.vampire_faction == vampire_faction
-		switch(info)
+		switch(info_known)
 			if(INFO_KNOWN_PUBLIC)
-				if(vampire_faction)
-					. += "<span class='info' style='font-weight: bold; color: purple;'>I know [p_them()] as a [job] in the [vampire_faction] and of the [clane] clan.</span>"
-				else
-					. += "<span class='info' style='font-weight: bold; color: purple;'>I know [p_them()] as a [job] of the [clane] clan.</span>"
+				. += "<b>You know [p_them()] as a [job][vampire_faction ? " in the [vampire_faction]" : ""] of the [clane] bloodline.</b>"
 			if(INFO_KNOWN_CLAN_ONLY)
-				if(same_clan && vampire_faction)
-					. += "<span class='info' style='font-weight: bold; color: purple;'>I know [p_them()] as a [job] in the [vampire_faction], we are clanmates.</span>"
-				else if(same_clan && !vampire_faction)
-					. += "<span class='info' style='font-weight: bold; color: purple;'>I know [p_them()] as a [job], we are of the same clan.</span>"
+				if(same_clan)
+					. += "<b>You know [p_them()] as a [job][vampire_faction ? " in the [vampire_faction]" : ""]. You are of the same bloodline.</b>"
 			if(INFO_KNOWN_FACTION)
 				if(same_faction && vampire_faction)
-					. += "<span class='info' style='font-weight: bold; color: purple;'>I know [p_them()] as a [job], belonging to the [clane] clan, we are of the same faction.</span>"
+					. += "<b>You know [p_them()] as a [job], belonging to the [clane] bloodline. You are both of the [vampire_faction].</b>"
 			else
 				if(same_faction && vampire_faction)
-					. += "<span class='info' style='font-weight: bold; color: purple;'>I've always known [p_them()] as the [job].</span>"
+					. += "<b>You know [p_them()] as a [job]. You are both of the [vampire_faction].</b>"
 
 	//uniform
 	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING) && !(w_uniform.item_flags & EXAMINE_SKIP))

@@ -1,6 +1,0 @@
-GLOBAL_LIST_INIT(info_known_options, list(
-					INFO_KNOWN_UNKNOWN,
-					INFO_KNOWN_CLAN_ONLY,
-					INFO_KNOWN_FACTION,
-					INFO_KNOWN_PUBLIC
-				))

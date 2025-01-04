@@ -1750,10 +1750,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						update_preview_icon()
 
 				if("info_choose")
-					var/new_info_known = input(user, "Choose who knows your character:", "Fame")  as null|anything in GLOB.info_known_options
+					var/new_info_known = input(user, "Choose who knows your character:", "Fame")  as null|anything in list(INFO_KNOWN_UNKNOWN,INFO_KNOWN_CLAN_ONLY,INFO_KNOWN_FACTION,INFO_KNOWN_PUBLIC)
 					if(new_info_known)
 						info_known = new_info_known
-						return
 
 				if("hair")
 					if(slotlocked)
