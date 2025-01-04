@@ -2257,6 +2257,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 					true_experience -= 20
 					dharma_level = min(max(1, dharma_level + 1), 6)
+					hun = hun+1
+					po = po+1
 
 				/*
 				if("torpor_restore")

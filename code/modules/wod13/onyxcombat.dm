@@ -130,6 +130,7 @@
 		playsound(src, 'sound/weapons/tap.ogg', 70, TRUE)
 		emote("flip")
 		visible_message("<span class='danger'>[src] dodges the attack!</span>", "<span class='danger'>You dodge the attack!</span>")
+		return
 	if(blocking)
 		if(istype(W, /obj/item/melee))
 			var/obj/item/melee/WEP = W
@@ -176,6 +177,7 @@
 		user.do_attack_animation(src)
 		emote("flip")
 		visible_message("<span class='danger'>[src] dodges the punch!</span>", "<span class='danger'>You dodge the punch!</span>")
+		return
 	if(user.a_intent == INTENT_HARM && blocking)
 		playsound(src, 'sound/weapons/tap.ogg', 70, TRUE)
 		apply_damage(10, STAMINA)

@@ -97,7 +97,7 @@
 			var/datum/action/area_chi/areac = new()
 			areac.Grant(mob)
 
-	mob.maxHealth += (initial(mob.maxHealth)/4)*level
+	mob.maxHealth = mob.maxHealth+(initial(mob.maxHealth)/4)*level
 	mob.health = mob.maxHealth
 
 /datum/dharma/proc/align_virtues(var/mob/living/owner)
@@ -168,9 +168,9 @@
 			areac.Grant(H)
 
 	if(dot > 0)
-		H.maxHealth += (initial(H.maxHealth)/4)
+		H.maxHealth = H.maxHealth+(initial(H.maxHealth)/4)
 	if(dot < 0)
-		H.maxHealth -= (initial(H.maxHealth)/4)
+		H.maxHealth = H.maxHealth-(initial(H.maxHealth)/4)
 
 /datum/dharma/proc/get_done_tennets()
 	var/total = 0
@@ -1141,11 +1141,10 @@
 	multiplicative_slowdown = -0.5
 
 /obj/item/reagent_containers/spray/pepper/kuei_jin
-	alpha = 0
 	stream_mode = 1
 	stream_range = 5
 	amount_per_transfer_from_this = 10
-	list_reagents = list(/datum/reagent/consumable/condensedcapsaicin = 30, /datum/reagent/blood = 20)
+	list_reagents = list(/datum/reagent/consumable/condensedcapsaicin = 50, /datum/reagent/blood = 20)
 
 /mob/living/simple_animal/hostile/bloodcrawler/kuei_jin
 	name = "blood splatter"
@@ -1277,7 +1276,9 @@
 		if(3)
 			if(!BC)
 				BC = new (caster)
-			BC.Shapeshift(H)
+			BC.Shapeshift(caster)
+			var/mob/living/simple_animal/hostile/host = BC.myshape
+			host.my_creator = null
 			spawn(delay+caster.discipline_time_plus)
 				if(BC)
 					var/mob/living/simple_animal/hostile/bloodcrawler/BD = BC.myshape
@@ -1750,6 +1751,7 @@
 	unbuckle_mob(M,force=1)
 	M.emote("scream")
 	M.AdjustParalyzed(20)
+	qdel(src)
 
 /datum/chi_discipline/flesh_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
@@ -1808,7 +1810,7 @@
 	desc = "Gain control over speed of reaction."
 	icon_state = "blackwind"
 	ranged = FALSE
-	activate_sound = 'code/modules/wod13/sounds/celerity_activate.ogg'
+	activate_sound = 'code/modules/wod13/sounds/blackwind_activate.ogg'
 	delay = 12 SECONDS
 	cost_demon = 1
 	discipline_type = "Demon"
@@ -1821,7 +1823,7 @@
 			caster.celerity_visual = TRUE
 			spawn((delay)+caster.discipline_time_plus)
 				if(caster)
-					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/celerity_deactivate.ogg', 50, FALSE)
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/blackwind_deactivate.ogg', 50, FALSE)
 					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity)
 					caster.celerity_visual = FALSE
 		if(2)
@@ -1829,7 +1831,7 @@
 			caster.celerity_visual = TRUE
 			spawn((delay)+caster.discipline_time_plus)
 				if(caster)
-					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/celerity_deactivate.ogg', 50, FALSE)
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/blackwind_deactivate.ogg', 50, FALSE)
 					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity2)
 					caster.celerity_visual = FALSE
 		if(3)
@@ -1837,7 +1839,7 @@
 			caster.celerity_visual = TRUE
 			spawn((delay)+caster.discipline_time_plus)
 				if(caster)
-					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/celerity_deactivate.ogg', 50, FALSE)
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/blackwind_deactivate.ogg', 50, FALSE)
 					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity3)
 					caster.celerity_visual = FALSE
 		if(4)
@@ -1845,7 +1847,7 @@
 			caster.celerity_visual = TRUE
 			spawn((delay)+caster.discipline_time_plus)
 				if(caster)
-					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/celerity_deactivate.ogg', 50, FALSE)
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/blackwind_deactivate.ogg', 50, FALSE)
 					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity4)
 					caster.celerity_visual = FALSE
 		if(5)
@@ -1853,7 +1855,7 @@
 			caster.celerity_visual = TRUE
 			spawn((delay)+caster.discipline_time_plus)
 				if(caster)
-					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/celerity_deactivate.ogg', 50, FALSE)
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/blackwind_deactivate.ogg', 50, FALSE)
 					caster.remove_movespeed_modifier(/datum/movespeed_modifier/celerity5)
 					caster.celerity_visual = FALSE
 
@@ -1865,6 +1867,7 @@
 	delay = 12 SECONDS
 	cost_demon = 1
 	discipline_type = "Demon"
+	activate_sound = 'code/modules/wod13/sounds/demonshintai_activate.ogg'
 	var/current_form = "Samurai"
 
 /datum/chi_discipline/demon_shintai/post_gain(var/mob/living/carbon/human/H)
@@ -1928,6 +1931,7 @@
 					caster.physiology.armor.bullet -= mod
 					caster.remove_overlay(UNICORN_LAYER)
 					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/demonshintai_deactivate.ogg', 50, FALSE)
 		if("Tentacles")
 			var/mod = level_casting
 			caster.remove_overlay(UNICORN_LAYER)
@@ -1965,6 +1969,7 @@
 						caster.remove_movespeed_modifier(/datum/movespeed_modifier/tentacles2)
 					if(mod > 4)
 						REMOVE_TRAIT(caster, TRAIT_STUNIMMUNE, SPECIES_TRAIT)
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/demonshintai_deactivate.ogg', 50, FALSE)
 		if("Demon")
 			var/mod = level_casting
 			caster.remove_overlay(UNICORN_LAYER)
@@ -1998,11 +2003,12 @@
 							caster.remove_movespeed_modifier(/datum/movespeed_modifier/demonform4)
 						if(5)
 							caster.remove_movespeed_modifier(/datum/movespeed_modifier/demonform5)
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/demonshintai_deactivate.ogg', 50, FALSE)
 		if("Giant")
 			var/mod = level_casting*10
 			var/meleemod = level_casting*0.5
 			caster.remove_overlay(UNICORN_LAYER)
-			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "demon", -UNICORN_LAYER)
+			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "giant", -UNICORN_LAYER)
 			caster.overlays_standing[UNICORN_LAYER] = potence_overlay
 			caster.apply_overlay(UNICORN_LAYER)
 			caster.dna.species.punchdamagelow += mod
@@ -2016,6 +2022,7 @@
 					caster.dna.species.punchdamagehigh -= mod
 					caster.dna.species.meleemod -= meleemod
 					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/demonshintai_deactivate.ogg', 50, FALSE)
 		if("Foul")
 			caster.remove_overlay(UNICORN_LAYER)
 			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "foul", -UNICORN_LAYER)
@@ -2028,6 +2035,7 @@
 					caster.remove_overlay(UNICORN_LAYER)
 					caster.foul_aura = 0
 					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/demonshintai_deactivate.ogg', 50, FALSE)
 
 /datum/chi_discipline/hellweaving
 	name = "Hellweaving"
@@ -2036,6 +2044,7 @@
 	ranged = TRUE
 	delay = 12 SECONDS
 	cost_demon = 1
+	activate_sound = 'code/modules/wod13/sounds/hellweaving_activate.ogg'
 	discipline_type = "Demon"
 
 /atom/movable/screen/fullscreen/yomi_world
@@ -2113,7 +2122,7 @@
 	desc = "Gain the stoicism and endurability of your P'o."
 	icon_state = "ironmountain"
 	ranged = FALSE
-	activate_sound = 'code/modules/wod13/sounds/fortitude_activate.ogg'
+	activate_sound = 'code/modules/wod13/sounds/ironmountain_activate.ogg'
 	delay = 12 SECONDS
 	cost_demon = 1
 	discipline_type = "Demon"
@@ -2130,7 +2139,7 @@
 	caster.physiology.armor.bullet += armah
 	spawn(delay+caster.discipline_time_plus)
 		if(caster)
-			caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/fortitude_deactivate.ogg', 50, FALSE)
+			caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/ironmountain_deactivate.ogg', 50, FALSE)
 			caster.physiology.armor.melee -= armah
 			caster.physiology.armor.bullet -= armah
 //			caster.remove_overlay(FORTITUDE_LAYER)
@@ -2142,6 +2151,7 @@
 	ranged = TRUE
 	delay = 12 SECONDS
 	cost_demon = 1
+	activate_sound = 'code/modules/wod13/sounds/kiai_activate.ogg'
 	discipline_type = "Demon"
 
 /mob/living/carbon/human/proc/combat_to_caster()
@@ -2261,7 +2271,7 @@
 				var/datum/action/beastmaster_deaggro/E2 = new()
 				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/rat/R = new(get_turf(caster))
-			R.my_creator = caster
+//			R.my_creator = caster
 			caster.beastmaster |= R
 			R.beastmaster = caster
 		if(2)
@@ -2271,7 +2281,7 @@
 				var/datum/action/beastmaster_deaggro/E2 = new()
 				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/cat/C = new(get_turf(caster))
-			C.my_creator = caster
+//			C.my_creator = caster
 			caster.beastmaster |= C
 			C.beastmaster = caster
 		if(3)
@@ -2281,7 +2291,7 @@
 				var/datum/action/beastmaster_deaggro/E2 = new()
 				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/D = new(get_turf(caster))
-			D.my_creator = caster
+//			D.my_creator = caster
 			caster.beastmaster |= D
 			D.beastmaster = caster
 		if(4)
@@ -2291,7 +2301,7 @@
 				var/datum/action/beastmaster_deaggro/E2 = new()
 				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/rat/flying/F = new(get_turf(caster))
-			F.my_creator = caster
+//			F.my_creator = caster
 			caster.beastmaster |= F
 			F.beastmaster = caster
 		if(5)
@@ -2380,15 +2390,17 @@
 					available_turfs += O
 			if(length(available_turfs))
 				var/turf/to_move = pick(available_turfs)
-				var/atom/visual1 = new (get_turf(caster))
+				var/atom/movable/visual1 = new (get_turf(caster))
 				visual1.density = FALSE
+				visual1.anchored = TRUE
 				visual1.layer = ABOVE_ALL_MOB_LAYER
 				visual1.icon = 'code/modules/wod13/icons.dmi'
 				visual1.icon_state = "puff"
 				playsound(get_turf(caster), 'sound/effects/smoke.ogg', 50, TRUE)
 				caster.forceMove(to_move)
-				var/atom/visual2 = new (to_move)
+				var/atom/movable/visual2 = new (to_move)
 				visual2.density = FALSE
+				visual1.anchored = TRUE
 				visual2.layer = ABOVE_ALL_MOB_LAYER
 				visual2.icon = 'code/modules/wod13/icons.dmi'
 				visual2.icon_state = "puff"
@@ -2396,18 +2408,21 @@
 					qdel(visual1)
 					qdel(visual2)
 		if(3)
-			var/atom/visual1 = new (get_step(caster, caster.dir))
+			var/atom/movable/visual1 = new (get_step(caster, caster.dir))
 			visual1.density = TRUE
+			visual1.anchored = TRUE
 			visual1.layer = ABOVE_ALL_MOB_LAYER
 			visual1.icon = 'icons/effects/effects.dmi'
 			visual1.icon_state = "smoke"
-			var/atom/visual2 = new (get_step(get_step(caster, caster.dir), turn(caster.dir, 90)))
+			var/atom/movable/visual2 = new (get_step(get_step(caster, caster.dir), turn(caster.dir, 90)))
 			visual2.density = TRUE
+			visual2.anchored = TRUE
 			visual2.layer = ABOVE_ALL_MOB_LAYER
 			visual2.icon = 'icons/effects/effects.dmi'
 			visual2.icon_state = "smoke"
-			var/atom/visual3 = new (get_step(get_step(caster, caster.dir), turn(caster.dir, -90)))
+			var/atom/movable/visual3 = new (get_step(get_step(caster, caster.dir), turn(caster.dir, -90)))
 			visual3.density = TRUE
+			visual3.anchored = TRUE
 			visual3.layer = ABOVE_ALL_MOB_LAYER
 			visual3.icon = 'icons/effects/effects.dmi'
 			visual3.icon_state = "smoke"
@@ -2418,6 +2433,8 @@
 				qdel(visual3)
 		if(4)
 			SF.Shapeshift(caster)
+			var/mob/living/simple_animal/hostile/host = SF.myshape
+			host.my_creator = null
 			playsound(get_turf(caster), 'sound/effects/smoke.ogg', 50, TRUE)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster && caster.stat != DEAD)
@@ -2425,6 +2442,8 @@
 					caster.Stun(1.5 SECONDS)
 		if(5)
 			HS.Shapeshift(caster)
+			var/mob/living/simple_animal/hostile/host = HS.myshape
+			host.my_creator = null
 			playsound(get_turf(caster), 'sound/effects/smoke.ogg', 50, TRUE)
 			spawn(30 SECONDS + caster.discipline_time_plus)
 				if(caster && caster.stat != DEAD)
@@ -2442,6 +2461,7 @@
 /obj/item/melee/touch_attack/storm_shintai
 	name = "Storm touch"
 	desc = "ELECTROCUTE YOURSELF!"
+	catchphrase = null
 	on_use_sound = 'code/modules/wod13/sounds/lightning.ogg'
 	icon_state = "zapper"
 	inhand_icon_state = "zapper"
@@ -2466,6 +2486,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/hook/storm_shintai
 	icon_state = "zapper"
 	inhand_icon_state = "zapper"
+	icon = 'icons/obj/items_and_weapons.dmi'
 	lefthand_file = 'code/modules/wod13/lefthand.dmi'
 	righthand_file = 'code/modules/wod13/righthand.dmi'
 	fire_sound = 'code/modules/wod13/sounds/lightning.ogg'
@@ -2479,6 +2500,11 @@
 	projectile_type = /obj/projectile/storm_shintai
 	caliber = CALIBER_HOOK
 	icon_state = "hook"
+
+/obj/item/gun/magic/hook/storm_shintai/process_fire()
+	. = ..()
+	if(charges == 0)
+		qdel(src)
 
 /obj/projectile/storm_shintai
 	name = "lightning"
@@ -2647,7 +2673,7 @@
 					C.dir = H.dir
 					var/matrix/ntransform = matrix(H.transform)
 					ntransform.Scale(2, 2)
-					animate(H., transform = ntransform, alpha = 0, time = 1 SECONDS)
+					animate(C, transform = ntransform, alpha = 0, time = 1 SECONDS)
 					spawn(delay+caster.discipline_time_plus)
 						qdel(C)
 						if(H)
@@ -2763,30 +2789,36 @@
 				if(L != caster)
 					ADD_TRAIT(L, TRAIT_PACIFISM, MAGIC_TRAIT)
 					L.add_movespeed_modifier(/datum/movespeed_modifier/pacifisting)
+					L.emote("stare")
 					spawn(delay+caster.discipline_time_plus)
-						REMOVE_TRAIT(L, TRAIT_PACIFISM, MAGIC_TRAIT)
-						L.remove_movespeed_modifier(/datum/movespeed_modifier/pacifisting)
+						if(L)
+							REMOVE_TRAIT(L, TRAIT_PACIFISM, MAGIC_TRAIT)
+							L.remove_movespeed_modifier(/datum/movespeed_modifier/pacifisting)
 		if(5)
-			var/atom/visual1 = new (get_step(caster, caster.dir))
+			var/atom/movable/visual1 = new (get_step(caster, caster.dir))
 			visual1.density = TRUE
+			visual1.anchored = TRUE
 			visual1.layer = ABOVE_ALL_MOB_LAYER
 			visual1.icon = 'icons/effects/effects.dmi'
 			visual1.icon_state = "static_base"
 			visual1.alpha = 128
-			var/atom/visual2 = new (get_step(caster, turn(caster.dir, 90)))
+			var/atom/movable/visual2 = new (get_step(caster, turn(caster.dir, 90)))
 			visual2.density = TRUE
+			visual2.anchored = TRUE
 			visual2.layer = ABOVE_ALL_MOB_LAYER
 			visual2.icon = 'icons/effects/effects.dmi'
 			visual2.icon_state = "static_base"
 			visual2.alpha = 128
-			var/atom/visual3 = new (get_step(caster, turn(caster.dir, -90)))
+			var/atom/movable/visual3 = new (get_step(caster, turn(caster.dir, -90)))
 			visual3.density = TRUE
+			visual3.anchored = TRUE
 			visual3.layer = ABOVE_ALL_MOB_LAYER
 			visual3.icon = 'icons/effects/effects.dmi'
 			visual3.icon_state = "static_base"
 			visual3.alpha = 128
-			var/atom/visual4 = new (get_step(caster, turn(caster.dir, 180)))
+			var/atom/movable/visual4 = new (get_step(caster, turn(caster.dir, 180)))
 			visual4.density = TRUE
+			visual4.anchored = TRUE
 			visual4.layer = ABOVE_ALL_MOB_LAYER
 			visual4.icon = 'icons/effects/effects.dmi'
 			visual4.icon_state = "static_base"
@@ -2807,6 +2839,7 @@
 	cost_yang = 1
 	cost_yin = 1
 	discipline_type = "Chi"
+	var/prev_z
 
 /obj/effect/anomaly/grav_kuei
 	name = "gravitational anomaly"
@@ -2869,16 +2902,17 @@
 					caster.client?.prefs.chat_toggles &= ~CHAT_DEAD
 					caster.see_invisible = initial(caster.see_invisible)
 		if(2)
-			var/atom/chosen_portal
-			for(var/obj/umbra_portal/U in GLOB.umbra_portals)
+			var/chosen_z
+			for(var/area/vtm/interior/penumbra/U in world)
 				if(U)
-					var/area/A = get_area(U)
-					var/area/B = get_area(caster)
-					if(A.name == "Penumbra" && B.name != "Penumbra"|| A.name != "Penumbra" && B.name == "Penumbra")
-						chosen_portal = U
-						return
+					chosen_z = U.z
+			if(caster.z != chosen_z)
+				prev_z = caster.z
+			else
+				chosen_z = prev_z
 			if(do_mob(caster, caster, delay))
-				caster.forceMove(get_step(chosen_portal.loc, caster.dir))
+				caster.z = chosen_z
+				playsound(get_turf(caster), 'code/modules/wod13/sounds/portal.ogg', 100, TRUE)
 		if(3)
 			caster.insane_luck = TRUE
 			to_chat(caster, "<b>You feel insanely lucky!</b>")
@@ -2887,55 +2921,28 @@
 					caster.insane_luck = FALSE
 					to_chat(caster, "<span class='warning'>You are not lucky again...</span>")
 		if(4)
-			var/direction = input(caster, "Choose direction:", "Teleportation") in list("North", "East", "South", "West")
-			if(direction)
-				var/x_dir = caster.x
-				var/y_dir = caster.y
-				var/step = 1
-				var/min_distance = 10
-				var/max_distance = 20
-				var/valid_destination = FALSE
-				var/turf/destination = null
+			var/A
+			A = input(caster, "Area to jump to", "BOOYEA", A) as null|anything in GLOB.teleportlocs
+			if(A)
+				var/area/thearea = GLOB.teleportlocs[A]
 
-				// Move at least min_distance tiles in the chosen direction
-				while(step <= min_distance)
-					switch(direction)
-						if("North")
-							y_dir += 1
-						if("East")
-							x_dir += 1
-						if("South")
-							y_dir -= 1
-						if("West")
-							x_dir -= 1
-					step += 1
+				var/datum/effect_system/smoke_spread/smoke = new
+				smoke.set_up(2, caster.loc)
+				smoke.attach(caster)
+				smoke.start()
+				var/list/L = list()
+				for(var/turf/T in get_area_turfs(thearea.type))
+					if(!T.is_blocked_turf())
+						L += T
 
-				// Continue moving until a valid destination is found or max_distance is reached
-				while(step <= max_distance && !valid_destination)
-					switch(direction)
-						if("North")
-							y_dir += 1
-						if("East")
-							x_dir += 1
-						if("South")
-							y_dir -= 1
-						if("West")
-							x_dir -= 1
-
-				if(x_dir < 20 || x_dir > 230 || y_dir < 20 || y_dir > 230)
-					to_chat(caster, "<span class='warning'>You can't teleport outside the city!</span>")
+				if(!L.len)
+					to_chat(caster, "<span class='warning'>The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.</span>")
 					return
 
-				destination = locate(x_dir, y_dir, caster.z)
-				if(destination && !istype(destination, /turf/open/space/basic) && !istype(destination, /turf/closed/wall/vampwall))
-					valid_destination = TRUE
+				if(do_teleport(caster, pick(L), forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
+					smoke.start()
 				else
-					step += 1
-
-				if(valid_destination)
-					caster.forceMove(destination)
-				else
-					to_chat(caster, "<span class='warning'>The spell fails as no destination is found!</span>")
+					to_chat(caster, "<span class='warning'>The spell matrix was disrupted by something near the destination.</span>")
 		if(5)
 			var/obj/effect/anomaly/grav_kuei/G = new (get_turf(caster))
 			G.owner = caster
@@ -3102,4 +3109,4 @@
 					caster.flesh_shintai_dodge = FALSE
 					to_chat(caster, "<span class='warning'>Your muscles feel natural again..</span>")
 		if(5)
-			E.cast(caster, caster)
+			E.cast(list(caster), caster)
