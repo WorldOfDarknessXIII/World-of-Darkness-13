@@ -1677,7 +1677,7 @@
 			H.preparePixelProjectile(target, start)
 			H.fire(direct_target = target)
 		if(4)
-			caster.hallucination += 5000
+			caster.hallucination += 50
 			new /datum/hallucination/baali(caster, TRUE)
 
 /datum/discipline/valeren
