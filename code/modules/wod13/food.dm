@@ -481,7 +481,10 @@
 		new /datum/data/mining_equipment("Venetian mask",	/obj/item/clothing/mask/vampire/venetian_mask,	30),
 		new /datum/data/mining_equipment("fancy Venetian mask",	/obj/item/clothing/mask/vampire/venetian_mask/fancy,	200),
 		new /datum/data/mining_equipment("jester mask",	/obj/item/clothing/mask/vampire/venetian_mask/jester,	50),
-		new /datum/data/mining_equipment("bloody mask",	/obj/item/clothing/mask/vampire/venetian_mask/scary,	30)
+		new /datum/data/mining_equipment("bloody mask",	/obj/item/clothing/mask/vampire/venetian_mask/scary,	30),
+		new /datum/data/mining_equipment("comedy mask", /obj/item/clothing/mask/vampire/comedy,	25),
+		new /datum/data/mining_equipment("tragedy mask", /obj/item/clothing/mask/vampire/tragedy,	25)
+
 	)
 
 /obj/food_cart
