@@ -194,6 +194,8 @@
 	var/more_companions = 0
 	var/melee_professional = FALSE
 
+	var/info_known = INFO_KNOWN_UNKNOWN
+
 	var/last_message
 	var/total_erp = 0
 
