@@ -1125,6 +1125,7 @@
 	ranged = FALSE
 	delay = 10 SECONDS
 	cost_yin = 1
+	activate_sound = 'code/modules/wod13/sounds/fortitude_activate.ogg'
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/bloodcrawler/kuei_jin/BC
 
 /datum/movespeed_modifier/blood_fat
@@ -1305,6 +1306,7 @@
 	ranged = FALSE
 	delay = 12 SECONDS
 	cost_yang = 1
+	activate_sound = 'code/modules/wod13/sounds/potence_activate.ogg'
 
 /obj/item/melee/powerfist/stone
 	name = "stone-fist"
@@ -1385,6 +1387,7 @@
 	ranged = FALSE
 	delay = 12 SECONDS
 	cost_yin = 1
+	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 
 /obj/effect/particle_effect/smoke/bad/green/bone_shintai
 	name = "green dangerous smoke"
@@ -1491,6 +1494,7 @@
 	ranged = FALSE
 	delay = 12 SECONDS
 	cost_yang = 1
+	activate_sound = 'code/modules/wod13/sounds/necromancy.ogg'
 
 /mob/living/simple_animal/hostile/beastmaster/fireball
 	name = "fireball"
@@ -1630,6 +1634,7 @@
 	ranged = FALSE
 	cost_yin = 1
 	delay = 12 SECONDS
+	activate_sound = 'code/modules/wod13/sounds/vicissitude.ogg'
 	var/datum/component/tackler
 
 /obj/item/chameleon/temp
@@ -2311,6 +2316,7 @@
 	ranged = FALSE
 	delay = 12 SECONDS
 	cost_yang = 1
+	activate_sound = 'code/modules/wod13/sounds/presence_activate.ogg'
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/smoke_form/SF
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/hidden_smoke_form/HS
 
@@ -2450,6 +2456,7 @@
 	ranged = FALSE
 	delay = 12 SECONDS
 	cost_yang = 1
+	activate_sound = 'code/modules/wod13/sounds/dominate.ogg'
 
 /obj/item/melee/touch_attack/storm_shintai
 	name = "Storm touch"
@@ -2588,6 +2595,7 @@
 	cost_yang = 1
 	cost_yin = 1
 	discipline_type = "Chi"
+	activate_sound = 'code/modules/wod13/sounds/equilibrium.ogg'
 
 /datum/chi_discipline/equilibrium/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
@@ -2705,6 +2713,7 @@
 	cost_yang = 1
 	cost_yin = 1
 	discipline_type = "Chi"
+	activate_sound = 'code/modules/wod13/sounds/feng_shui.ogg'
 
 /datum/movespeed_modifier/pacifisting
 	multiplicative_slowdown = 3
@@ -2833,6 +2842,7 @@
 	cost_yang = 1
 	cost_yin = 1
 	discipline_type = "Chi"
+	activate_sound = 'code/modules/wod13/sounds/tapestry.ogg'
 	var/prev_z
 
 /obj/effect/anomaly/grav_kuei
@@ -2951,6 +2961,7 @@
 	delay = 12 SECONDS
 	cost_yin = 2
 	discipline_type = "Chi"
+	activate_sound = 'code/modules/wod13/sounds/yin_prana.ogg'
 
 /obj/item/melee/touch_attack/yin_touch
 	name = "\improper shadow touch"
@@ -3039,6 +3050,7 @@
 	delay = 12 SECONDS
 	cost_yang = 2
 	discipline_type = "Chi"
+	activate_sound = 'code/modules/wod13/sounds/yang_prana.ogg'
 	var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/E
 
 /datum/chi_discipline/yang_prana/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
