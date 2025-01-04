@@ -1659,31 +1659,29 @@
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
 
-/datum/discipline/daimonion/proc/freak_out()
-	if(owner.stat == DEAD)
+/mob/living/proc/freak_out(mob/living/target)
+	if(target.stat == DEAD)
 		return
-		to_chat(owner, "<span class='userdanger'>Your mind is absorbed with terrifying visions of your worst fear...</span>")
+	to_chat(target, "<span class='userdanger'>Your mind is absorbed with terrifying visions of your worst fear...</span>")
 	var/reaction = rand(1,4)
 	switch(reaction)
 		if(1)
-			to_chat(owner, "<span class='warning'>You are paralyzed with fear!</span>")
-			owner.Stun(70)
-			owner.Jitter(8)
+			to_chat(target, "<span class='warning'>You are paralyzed with fear!</span>")
+			target.Stun(70)
+			target.Jitter(8)
 		if(2)
-			owner.emote("scream")
-			owner.Jitter(5)
-			owner.say("A-Aagh!!!", forced = "phobia")
-			if(reason)
-				owner.pointed(reason)
+			target.emote("scream")
+			target.Jitter(5)
+			target.say("A-Aagh!!!", forced = "phobia")
 		if(3)
-			to_chat(owner, "<span class='warning'>You shut your eyes in terror!</span>")
-			owner.Jitter(5)
-			owner.blind_eyes(10)
+			to_chat(target, "<span class='warning'>You shut your eyes in terror!</span>")
+			target.Jitter(5)
+			target.blind_eyes(10)
 		if(4)
-			owner.dizziness += 10
-			owner.add_confusion(10)
-			owner.Jitter(10)
-			owner.stuttering += 10
+			target.dizziness += 10
+			target.add_confusion(10)
+			target.Jitter(10)
+			target.stuttering += 10
 
 /datum/discipline/daimonion/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
@@ -1691,7 +1689,6 @@
 		if(1)
 
 		if(2)
-
 			target.freak_out()
 		if(3)
 			var/turf/start = get_turf(caster)
