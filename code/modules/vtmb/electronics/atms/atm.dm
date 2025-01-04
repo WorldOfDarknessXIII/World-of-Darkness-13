@@ -31,7 +31,7 @@
 
 
 
-/datum/bank_account
+/datum/vtm_bank_account
 	var/account_owner = ""
 	var/bank_id = 0
 	var/balance = 0
@@ -39,12 +39,13 @@
 	var/list/credit_cards = list()
 
 var/mob/living/carbon/human/H
-/datum/bank_account/New()
+/datum/vtm_bank_account/New()
 	..()
 	if(!code || code == "")
 		code = create_bank_code()
 		var/random_id = rand(1, 999999)
 		bank_id = random_id
+		GLOB.bank_account_list += src
 
 /obj/item/vamp/creditcard
 	name = "\improper credit card"
@@ -62,7 +63,7 @@ var/mob/living/carbon/human/H
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 
 	var/owner = ""
-	var/datum/bank_account/account
+	var/datum/vtm_bank_account/account
 	var/code
 	var/balance = 0
 	var/has_checked = FALSE
@@ -84,7 +85,7 @@ var/mob/living/carbon/human/H
 /obj/item/vamp/creditcard/New(mob/user)
 	..()
 	if(!account || code == "")
-		account = new /datum/bank_account()
+		account = new /datum/vtm_bank_account()
 	if(user)
 		owner = user.ckey
 	if(istype(src, /obj/item/vamp/creditcard/prince))
@@ -188,11 +189,18 @@ var/mob/living/carbon/human/H
 	var/list/data = list()
 	var/list/accounts = list()
 
-	for(var/datum/bank_account/account in GLOB.bank_account_list)
-		if(account.account_owner)
-			accounts += list("account_owner" = account.account_owner)
+	for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
+		if(account && account.account_owner)
+			accounts += list(
+				list("account_owner" = account.account_owner
+				)
+			)
 		else
-			accounts += list("account_owner" = "Unnamed Account")
+			accounts += list(
+				list(
+					"account_owner" = "Unnamed Account"
+				)
+			)
 
 	data["logged_in"] = logged_in
 	data["card"] = current_card ? TRUE : FALSE
@@ -230,7 +238,9 @@ var/mob/living/carbon/human/H
 			return TRUE
 		if("withdraw")
 			var/amount = text2num(params["withdraw_amount"])
-			if(current_card.account.balance < amount)
+			if(amount != round(amount))
+				to_chat(usr, "<span class='notice'>Withdraw amount must be a round number.")
+			else if(current_card.account.balance < amount)
 				to_chat(usr, "<span class='notice'>Insufficient funds.</span>")
 			else
 				while(amount > 0)
@@ -253,8 +263,8 @@ var/mob/living/carbon/human/H
 				to_chat(usr, "<span class='notice'>Invalid target account ID.</span>")
 				return FALSE
 
-			var/datum/bank_account/target_account = null
-			for(var/datum/bank_account/account in GLOB.bank_account_list)
+			var/datum/vtm_bank_account/target_account = null
+			for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
 				if(account.account_owner == target_account_id)
 					target_account = account
 					break
