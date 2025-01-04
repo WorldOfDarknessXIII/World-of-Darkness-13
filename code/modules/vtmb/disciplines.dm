@@ -1653,16 +1653,15 @@
 	desc = "Get a help from the Hell creatures, resist THE FIRE, transform into an imp. Violates Masquerade."
 	icon_state = "daimonion"
 	cost = 1
-	ranged = FALSE
-	delay = 150
+	ranged = TRUE
+	delay = 80
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
 
 /datum/discipline/daimonion/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
-	var/mod = min(4, level_casting)
-	switch(mod)
+	switch(level_casting)
 		if(1)
 
 		if(2)
