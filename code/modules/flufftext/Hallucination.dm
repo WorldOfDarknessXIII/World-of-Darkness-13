@@ -341,7 +341,6 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		return INITIALIZE_HINT_QDEL
 	feedback_details += "Source: [wall.x],[wall.y],[wall.z]"
 	landing = get_turf(target)
-	var/turf/landing_image_turf = get_step(landing, SOUTHWEST) //the icon is 3x3
 	if(target.client)
 		target.playsound_local(wall,'sound/effects/meteorimpact.ogg', 150, 1)
 		bubblegum = new(wall, target)
