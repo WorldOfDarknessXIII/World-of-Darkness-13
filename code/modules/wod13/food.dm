@@ -598,6 +598,7 @@
 		new /datum/data/mining_equipment("tape recorder", /obj/item/taperecorder, 2),
 		new /datum/data/mining_equipment("white crayon", /obj/item/toy/crayon/white, 1),
 		new /datum/data/mining_equipment("evidence box", /obj/item/storage/box/evidence, 1),
+		new /datum/data/mining_equipment("crime scene tape", /obj/item/barrier_tape/police, 1),
 		new /datum/data/mining_equipment("body bags", /obj/item/storage/box/bodybags, 1),
 		new /datum/data/mining_equipment("police vest", /obj/item/clothing/suit/vampire/vest/police, 1),
 		new /datum/data/mining_equipment("police radio", /obj/item/radio/cop, 2),
