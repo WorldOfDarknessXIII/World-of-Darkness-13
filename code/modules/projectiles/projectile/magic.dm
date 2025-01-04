@@ -689,14 +689,13 @@
 	. = ..()
 	if(ismob(target))
 		var/mob/living/M = target
-		M.adjustCloneLoss(15) // Deals aggravated damage on hit
-		M.adjustFireLoss(15)
+		M.adjustCloneLoss(25) // Deals aggravated damage on hit
 		if(iskindred(M))
 			var/mob/living/carbon/human/H = M
 			if(!H.in_frenzy) // If target is a kindred, it will cause them to frenzy for 3 to 5 seconds
 				H.enter_frenzymod()
 				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon, exit_frenzymod)), rand(30, 50))
-	var/obj/effect/fire/baali/R = new(get_turf(target)) // Creates fire object on the hit if successfully landed
+	var/obj/effect/fire/R = new(get_turf(target)) // Creates fire object on the hit if successfully landed
 	R.color = color
 
 //still magic related, but a different path
