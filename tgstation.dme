@@ -3346,6 +3346,7 @@
 #include "code\modules\vtmb\kindred_species.dm"
 #include "code\modules\vtmb\reflection.dm"
 #include "code\modules\vtmb\werewolf_species.dm"
+#include "code\modules\vtmb\electronics\p25.dm"
 #include "code\modules\vtmb\electronics\atms\atm.dm"
 #include "code\modules\vtmb\electronics\computers\app.dm"
 #include "code\modules\vtmb\electronics\computers\app_types.dm"
