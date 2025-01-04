@@ -106,6 +106,13 @@ var/mob/living/carbon/human/H
 	var/obj/item/vamp/creditcard/card = null
 	var/obj/item/stack/dollar/cash = null
 
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.insane_luck)
+			if(prob(5))
+				playsound(loc, 'code/modules/wod13/sounds/jackpot.ogg', 50, TRUE)
+				new /obj/item/stack/dollar(loc,1000)
+
 	if(istype(W, /obj/item/vamp/creditcard))
 		card = W
 	else if(istype(W, /obj/item/stack/dollar))

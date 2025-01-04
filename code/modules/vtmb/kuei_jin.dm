@@ -1306,6 +1306,8 @@
 
 /obj/item/melee/powerfist/stone
 	name = "stone-fist"
+	icon = 'code/modules/wod13/items.dmi'
+	icon_state = "stonefist"
 	desc = "A stone gauntlet to punch someone."
 	item_flags = DROPDEL
 
@@ -2284,7 +2286,6 @@
 				if(caster && caster.stat != DEAD)
 					AN.Restore(AN.myshape)
 					caster.Stun(1.5 SECONDS)
-
 		if(5)
 			WL.Shapeshift(caster)
 			spawn(30 SECONDS + caster.discipline_time_plus)
@@ -2551,3 +2552,541 @@
 					caster.storm_aura = FALSE
 					caster.remove_overlay(FORTITUDE_LAYER)
 
+/datum/chi_discipline/equilibrium
+	name = "Equilibrium"
+	desc = "Equilibrium can be used to create grotesque Chi imbalances in individuals who displease the user."
+	icon_state = "equilibrium"
+	ranged = FALSE
+	delay = 12 SECONDS
+	cost_yang = 1
+	cost_yin = 1
+
+/datum/chi_discipline/equilibrium/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	..()
+	switch(level_casting)
+		if(1)
+			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh+5
+			caster.physiology.armor.melee = caster.physiology.armor.melee+15
+			caster.physiology.armor.bullet = caster.physiology.armor.bullet+15
+			caster.dexterity = caster.dexterity+2
+			caster.athletics = caster.athletics+2
+			caster.lockpicking = caster.lockpicking+2
+			ADD_TRAIT(caster, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-5
+					caster.physiology.armor.melee = caster.physiology.armor.melee-15
+					caster.physiology.armor.bullet = caster.physiology.armor.bullet-15
+					caster.dexterity = caster.dexterity-2
+					caster.athletics = caster.athletics-2
+					caster.lockpicking = caster.lockpicking-2
+					REMOVE_TRAIT(caster, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
+		if(2)
+			caster.yin_chi += 1
+			caster.yang_chi += 1		//Redeeming for the shift
+			var/next = input(caster, "Where do you want to shift your Yang Chi?", "Chi Shift") as null|anything in list("Yin Pool", "Demon Pool", "Nowhere")
+			if(next == "Yin Pool")
+				var/init_yin = caster.yin_chi
+				var/actually_shifted = min(min(caster.max_yin_chi, caster.yin_chi+caster.yang_chi)-init_yin, caster.yang_chi)
+				caster.yang_chi -= actually_shifted
+				caster.yin_chi += actually_shifted
+				to_chat(caster, "<span class='warning'>You put your Yang into your Yin.</span>")
+			if(next == "Demon Pool")
+				var/init_demon = caster.demon_chi
+				var/actually_shifted = min(min(caster.max_demon_chi, caster.demon_chi+caster.yang_chi)-init_demon, caster.yang_chi)
+				caster.yang_chi -= actually_shifted
+				caster.demon_chi += actually_shifted
+				to_chat(caster, "<span class='warning'>You put your Yang into your Demon.</span>")
+			var/next2 = input(caster, "Where do you want to shift your Yin Chi?", "Chi Shift") as null|anything in list("Yang Pool", "Demon Pool", "Nowhere")
+			if(next2 == "Yang Pool")
+				var/init_yang = caster.yang_chi
+				var/actually_shifted = min(min(caster.max_yang_chi, caster.yang_chi+caster.yin_chi)-init_yang, caster.yin_chi)
+				caster.yin_chi -= actually_shifted
+				caster.yang_chi += actually_shifted
+				to_chat(caster, "<span class='warning'>You put your Yin into your Yang.</span>")
+			if(next2 == "Demon Pool")
+				var/init_demon = caster.demon_chi
+				var/actually_shifted = min(min(caster.max_demon_chi, caster.demon_chi+caster.yin_chi)-init_demon, caster.yin_chi)
+				caster.yin_chi -= actually_shifted
+				caster.demon_chi += actually_shifted
+				to_chat(caster, "<span class='warning'>You put your Yin into your Demon.</span>")
+			var/next3 = input(caster, "Where do you want to shift your Demon Chi?", "Chi Shift") as null|anything in list("Yin Pool", "Yang Pool", "Nowhere")
+			if(next3 == "Yin Pool")
+				var/init_yin = caster.yin_chi
+				var/actually_shifted = min(min(caster.max_yin_chi, caster.yin_chi+caster.demon_chi)-init_yin, caster.demon_chi)
+				caster.demon_chi -= actually_shifted
+				caster.yin_chi += actually_shifted
+				to_chat(caster, "<span class='warning'>You put your Demon into your Yin.</span>")
+			if(next3 == "Yang Pool")
+				var/init_yang = caster.yang_chi
+				var/actually_shifted = min(min(caster.max_yang_chi, caster.yang_chi+caster.demon_chi)-init_yang, caster.demon_chi)
+				caster.demon_chi -= actually_shifted
+				caster.yang_chi += actually_shifted
+				to_chat(caster, "<span class='warning'>You put your Demon into your Yang.</span>")
+		if(3)
+			for(var/mob/living/carbon/human/H in viewers(5, caster))
+				if(H != caster)
+					H.dna.species.punchdamagehigh = H.dna.species.punchdamagehigh+5
+					H.physiology.armor.melee = H.physiology.armor.melee+15
+					H.physiology.armor.bullet = H.physiology.armor.bullet+15
+					H.dexterity = H.dexterity+2
+					H.athletics = H.athletics+2
+					H.lockpicking = H.lockpicking+2
+					ADD_TRAIT(H, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
+					var/obj/effect/celerity/C = new(get_turf(H))
+					C.appearance = H.appearance
+					C.dir = H.dir
+					var/matrix/ntransform = matrix(H.transform)
+					ntransform.Scale(2, 2)
+					animate(H., transform = ntransform, alpha = 0, time = 1 SECONDS)
+					spawn(delay+caster.discipline_time_plus)
+						qdel(C)
+						if(H)
+							H.dna.species.punchdamagehigh = H.dna.species.punchdamagehigh-5
+							H.physiology.armor.melee = H.physiology.armor.melee-15
+							H.physiology.armor.bullet = H.physiology.armor.bullet-15
+							H.dexterity = H.dexterity-2
+							H.athletics = H.athletics-2
+							H.lockpicking = H.lockpicking-2
+							REMOVE_TRAIT(H, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
+		if(4)
+			for(var/mob/living/H in viewers(5, caster))
+				if(H != caster)
+					H.AdjustKnockdown(2 SECONDS, TRUE)
+					H.emote("scream")
+					playsound(get_turf(H), 'code/modules/wod13/sounds/vicissitude.ogg', 75, FALSE)
+					step_away(H, caster)
+		if(5)
+			caster.yin_chi += 1
+			caster.yang_chi += 1
+			var/area/A = get_area(caster)
+			if(A.yang_chi)
+				caster.yang_chi = min(caster.yang_chi+A.yang_chi+1, caster.max_yang_chi)
+				to_chat(caster, "<span class='engradio'>Some <b>Yang</b> Chi energy enters you...</span>")
+			if(A.yin_chi)
+				caster.yin_chi = min(caster.yin_chi+A.yin_chi+1, caster.max_yin_chi)
+				to_chat(caster, "<span class='medradio'>Some <b>Yin</b> Chi energy enters you...</span>")
+
+/datum/chi_discipline/feng_shui
+	name = "Feng Shui"
+	desc = "By manipulating special talismans, the fang shih can direct energies to control and corrupt."
+	icon_state = "fengshui"
+	ranged = FALSE
+	delay = 12 SECONDS
+	cost_yang = 1
+	cost_yin = 1
+
+/datum/movespeed_modifier/pacifisting
+	multiplicative_slowdown = 3
+
+/datum/chi_discipline/feng_shui/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	..()
+	switch(level_casting)
+		if(1)
+			var/sound/auspexbeat = sound('code/modules/wod13/sounds/auspex.ogg', repeat = TRUE)
+			caster.playsound_local(caster, auspexbeat, 75, 0, channel = CHANNEL_DISCIPLINES, use_reverb = FALSE)
+			var/loh = FALSE
+			if(!HAS_TRAIT(caster, TRAIT_NIGHT_VISION))
+				ADD_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
+				loh = TRUE
+			caster.update_sight()
+			caster.add_client_colour(/datum/client_colour/glass_colour/lightblue)
+			var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]
+			abductor_hud.add_hud_to(caster)
+			caster.auspex_examine = TRUE
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.auspex_examine = FALSE
+					caster.see_invisible = initial(caster.see_invisible)
+					abductor_hud.remove_hud_from(caster)
+					caster.stop_sound_channel(CHANNEL_DISCIPLINES)
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/auspex_deactivate.ogg', 50, FALSE)
+					if(loh)
+						REMOVE_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
+					caster.remove_client_colour(/datum/client_colour/glass_colour/lightblue)
+					caster.update_sight()
+		if(2)
+			var/sound/auspexbeat = sound('code/modules/wod13/sounds/auspex.ogg', repeat = TRUE)
+			caster.playsound_local(caster, auspexbeat, 75, 0, channel = CHANNEL_DISCIPLINES, use_reverb = FALSE)
+			ADD_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
+			var/loh = FALSE
+			if(!HAS_TRAIT(caster, TRAIT_NIGHT_VISION))
+				ADD_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
+				loh = TRUE
+			caster.update_sight()
+			var/datum/atom_hud/health_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+			health_hud.add_hud_to(caster)
+			caster.auspex_examine = TRUE
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.auspex_examine = FALSE
+					caster.see_invisible = initial(caster.see_invisible)
+					health_hud.remove_hud_from(caster)
+					caster.stop_sound_channel(CHANNEL_DISCIPLINES)
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/auspex_deactivate.ogg', 50, FALSE)
+					REMOVE_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
+					if(loh)
+						REMOVE_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
+					caster.update_sight()
+		if(3)
+			if(caster.lastattacked)
+				if(isliving(caster.lastattacked))
+					var/mob/living/L = caster.lastattacked
+					to_chat(L, "<span class='warning'>You feel bigger hunger than usual.</span>")
+					if(iskindred(L))
+						L.bloodpool = max(0, L.bloodpool-3)
+					else if(iscathayan(L))
+						L.yang_chi = max(0, L.yang_chi-2)
+						L.yin_chi = max(0, L.yin_chi-2)
+					else
+						L.adjust_nutrition(-100)
+					playsound(get_turf(L), 'code/modules/wod13/sounds/hunger.ogg', 100, FALSE)
+					to_chat(caster, "You send your curse on [L], the last creature you attacked.")
+				else
+					to_chat(caster, "You don't seem to have last attacked soul earlier...")
+					return
+			else
+				to_chat(caster, "You don't seem to have last attacked soul earlier...")
+				return
+		if(4)
+			for(var/mob/living/L in viewers(5, caster))
+				if(L != caster)
+					ADD_TRAIT(L, TRAIT_PACIFISM, MAGIC_TRAIT)
+					L.add_movespeed_modifier(/datum/movespeed_modifier/pacifisting)
+					spawn(delay+caster.discipline_time_plus)
+						REMOVE_TRAIT(L, TRAIT_PACIFISM, MAGIC_TRAIT)
+						L.remove_movespeed_modifier(/datum/movespeed_modifier/pacifisting)
+		if(5)
+			var/atom/visual1 = new (get_step(caster, caster.dir))
+			visual1.density = TRUE
+			visual1.layer = ABOVE_ALL_MOB_LAYER
+			visual1.icon = 'icons/effects/effects.dmi'
+			visual1.icon_state = "static_base"
+			visual1.alpha = 128
+			var/atom/visual2 = new (get_step(caster, turn(caster.dir, 90)))
+			visual2.density = TRUE
+			visual2.layer = ABOVE_ALL_MOB_LAYER
+			visual2.icon = 'icons/effects/effects.dmi'
+			visual2.icon_state = "static_base"
+			visual2.alpha = 128
+			var/atom/visual3 = new (get_step(caster, turn(caster.dir, -90)))
+			visual3.density = TRUE
+			visual3.layer = ABOVE_ALL_MOB_LAYER
+			visual3.icon = 'icons/effects/effects.dmi'
+			visual3.icon_state = "static_base"
+			visual3.alpha = 128
+			var/atom/visual4 = new (get_step(caster, turn(caster.dir, 180)))
+			visual4.density = TRUE
+			visual4.layer = ABOVE_ALL_MOB_LAYER
+			visual4.icon = 'icons/effects/effects.dmi'
+			visual4.icon_state = "static_base"
+			visual4.alpha = 128
+			playsound(get_turf(caster), 'sound/effects/smoke.ogg', 50, TRUE)
+			spawn(delay+caster.discipline_time_plus)
+				qdel(visual1)
+				qdel(visual2)
+				qdel(visual3)
+				qdel(visual4)
+
+/datum/chi_discipline/tapestry
+	name = "Tapestry"
+	desc = "Kuei-jin can manipulate the dragon lines that flow beneath the Middle Kingdom."
+	icon_state = "tapestry"
+	ranged = FALSE
+	delay = 12 SECONDS
+	cost_yang = 1
+	cost_yin = 1
+
+/obj/effect/anomaly/grav_kuei
+	name = "gravitational anomaly"
+	icon_state = "shield2"
+	density = FALSE
+	var/boing = 0
+	aSignal = /obj/item/assembly/signaler/anomaly/grav
+	var/mob/owner
+
+/obj/effect/anomaly/grav_kuei/anomalyEffect()
+	..()
+	boing = 1
+	for(var/obj/O in orange(4, src))
+		if(!O.anchored)
+			step_towards(O,src)
+	for(var/mob/living/M in range(0, src))
+		if(M != owner)
+			gravShock(M)
+	for(var/mob/living/M in orange(4, src))
+		if(!M.mob_negates_gravity() && M != owner)
+			step_towards(M,src)
+	for(var/obj/O in range(0,src))
+		if(!O.anchored)
+			if(isturf(O.loc))
+				var/turf/T = O.loc
+				if(T.intact && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
+					continue
+			var/mob/living/target = locate() in view(4,src)
+			if(target && !target.stat && target != owner)
+				O.throw_at(target, 5, 10)
+
+/obj/effect/anomaly/grav_kuei/Crossed(atom/movable/AM)
+	. = ..()
+	gravShock(AM)
+
+/obj/effect/anomaly/grav_kuei/Bump(atom/A)
+	gravShock(A)
+
+/obj/effect/anomaly/grav_kuei/Bumped(atom/movable/AM)
+	gravShock(AM)
+
+/obj/effect/anomaly/grav_kuei/proc/gravShock(mob/living/A)
+	if(boing && isliving(A) && !A.stat)
+		A.Paralyze(40)
+		var/atom/target = get_edge_target_turf(A, get_dir(src, get_step_away(A, src)))
+		A.throw_at(target, 5, 1)
+		boing = 0
+
+/datum/chi_discipline/tapestry/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	..()
+	switch(level_casting)
+		if(1)
+			caster.client.prefs.chat_toggles ^= CHAT_DEAD
+			caster.see_invisible = SEE_INVISIBLE_OBSERVER
+			for(var/mob/dead/observer/G in GLOB.player_list)
+				if(G.key)
+					to_chat(G, "<span class='ghostalert'>[FOLLOW_LINK(G, caster)][caster] is calling you!</span>")
+			spawn(30 SECONDS)
+				if(caster)
+					caster.client?.prefs.chat_toggles &= ~CHAT_DEAD
+					caster.see_invisible = initial(caster.see_invisible)
+		if(2)
+			var/atom/chosen_portal
+			for(var/obj/umbra_portal/U in GLOB.umbra_portals)
+				if(U)
+					var/area/A = get_area(U)
+					var/area/B = get_area(caster)
+					if(A.name == "Penumbra" && B.name != "Penumbra"|| A.name != "Penumbra" && B.name == "Penumbra")
+						chosen_portal = U
+						return
+			if(do_mob(caster, caster, delay))
+				caster.forceMove(get_step(chosen_portal.loc, caster.dir))
+		if(3)
+			caster.insane_luck = TRUE
+			to_chat(caster, "<b>You feel insanely lucky!</b>")
+			spawn(30 SECONDS)
+				if(caster)
+					caster.insane_luck = FALSE
+					to_chat(caster, "<span class='warning'>You are not lucky again...</span>")
+		if(4)
+			var/direction = input(caster, "Choose direction:", "Teleportation") in list("North", "East", "South", "West")
+			if(direction)
+				var/x_dir = caster.x
+				var/y_dir = caster.y
+				var/step = 1
+				var/min_distance = 10
+				var/max_distance = 20
+				var/valid_destination = FALSE
+				var/turf/destination = null
+
+				// Move at least min_distance tiles in the chosen direction
+				while(step <= min_distance)
+					switch(direction)
+						if("North")
+							y_dir += 1
+						if("East")
+							x_dir += 1
+						if("South")
+							y_dir -= 1
+						if("West")
+							x_dir -= 1
+					step += 1
+
+				// Continue moving until a valid destination is found or max_distance is reached
+				while(step <= max_distance && !valid_destination)
+					switch(direction)
+						if("North")
+							y_dir += 1
+						if("East")
+							x_dir += 1
+						if("South")
+							y_dir -= 1
+						if("West")
+							x_dir -= 1
+
+				if(x_dir < 20 || x_dir > 230 || y_dir < 20 || y_dir > 230)
+					to_chat(caster, "<span class='warning'>You can't teleport outside the city!</span>")
+					return
+
+				destination = locate(x_dir, y_dir, caster.z)
+				if(destination && !istype(destination, /turf/open/space/basic) && !istype(destination, /turf/closed/wall/vampwall))
+					valid_destination = TRUE
+				else
+					step += 1
+
+				if(valid_destination)
+					caster.forceMove(destination)
+				else
+					to_chat(caster, "<span class='warning'>The spell fails as no destination is found!</span>")
+		if(5)
+			var/obj/effect/anomaly/grav_kuei/G = new (get_turf(caster))
+			G.owner = caster
+			spawn(30 SECONDS)
+				qdel(G)
+
+/datum/chi_discipline/yin_prana
+	name = "Yin Prana"
+	desc = "Allows to tap into and manipulate Kuei-Jin internal Yin energy"
+	icon_state = "yin_prana"
+	ranged = FALSE
+	delay = 12 SECONDS
+	cost_yin = 2
+
+/obj/item/melee/touch_attack/yin_touch
+	name = "\improper shadow touch"
+	desc = "This is kind of like when you rub your feet on a shag rug so you can zap your friends, only a lot less safe."
+	icon = 'code/modules/wod13/weapons.dmi'
+	catchphrase = null
+	on_use_sound = 'sound/magic/disintegrate.ogg'
+	icon_state = "quietus"
+	color = "#343434"
+	inhand_icon_state = "mansus"
+
+/obj/item/melee/touch_attack/yin_touch/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity)
+		return
+	if(istype(target, /obj/structure/vampdoor))
+		var/obj/structure/vampdoor/V = target
+		playsound(get_turf(target), 'code/modules/wod13/sounds/get_bent.ogg', 100, FALSE)
+		var/obj/item/shield/door/D = new(get_turf(target))
+		D.icon_state = V.baseicon
+		var/atom/throw_target = get_edge_target_turf(target, user.dir)
+		D.throw_at(throw_target, rand(2, 4), 4, src)
+		qdel(target)
+	if(isliving(target))
+		var/mob/living/L = target
+		L.adjustCloneLoss(20)
+		L.AdjustKnockdown(2 SECONDS)
+	return ..()
+
+/datum/chi_discipline/yin_prana/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	..()
+	switch(level_casting)
+		if(1)
+			animate(caster, alpha = 10, time = 1 SECONDS)
+			caster.obfuscate_level = 3
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.obfuscate_level = 0
+					if(caster.alpha != 255)
+						caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/obfuscate_deactivate.ogg', 50, FALSE)
+						caster.alpha = 255
+		if(2)
+			var/atom/movable/AM = new(target)
+			AM.set_light(5, -7)
+			spawn(delay+caster.discipline_time_plus)
+				AM.set_light(0)
+		if(3)
+			for(var/mob/living/L in viewers(5, caster))
+				if(L != caster)
+					L.AdjustKnockdown(2 SECONDS)
+					L.adjustStaminaLoss(50, TRUE)
+			var/matrix/M = matrix()
+			M.Scale(2, 2)
+			var/obj/effect/celerity/C1 = new(get_turf(caster))
+			var/obj/effect/celerity/C2 = new(get_turf(caster))
+			var/obj/effect/celerity/C3 = new(get_turf(caster))
+			C1.appearance = caster.appearance
+			C1.dir = caster.dir
+			C1.color = "#000000"
+			C2.appearance = caster.appearance
+			C2.dir = caster.dir
+			C2.color = "#000000"
+			C3.appearance = caster.appearance
+			C3.dir = caster.dir
+			C3.color = "#000000"
+			animate(C1, pixel_x = pick(-16, 0, 16), pixel_y = pick(-16, 0, 16), alpha = 0, transform = M, time = 2 SECONDS)
+			animate(C2, pixel_x = pick(-16, 0, 16), pixel_y = pick(-16, 0, 16), alpha = 0, transform = M, time = 2 SECONDS)
+			animate(C3, pixel_x = pick(-16, 0, 16), pixel_y = pick(-16, 0, 16), alpha = 0, transform = M, time = 2 SECONDS)
+		if(4)
+			caster.drop_all_held_items()
+			caster.put_in_active_hand(new /obj/item/melee/touch_attack/yin_touch(caster))
+		if(5)
+			for(var/mob/living/L in viewers(7, caster))
+				if(L != caster)
+					new /datum/hallucination/dangerflash(L, TRUE)
+					new /datum/hallucination/dangerflash(L, TRUE)
+					new /datum/hallucination/dangerflash(L, TRUE)
+					new /datum/hallucination/dangerflash(L, TRUE)
+					new /datum/hallucination/dangerflash(L, TRUE)
+			do_sparks(5, FALSE, caster)
+
+/datum/chi_discipline/yang_prana
+	name = "Yang Prana"
+	desc = "Allows to tap into and manipulate Kuei-Jin internal Yang energy"
+	icon_state = "yin_prana"
+	ranged = FALSE
+	delay = 12 SECONDS
+	cost_yang = 2
+	var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/E
+
+/datum/chi_discipline/yang_prana/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	..()
+	if(!E)
+		E = new(caster)
+	switch(level_casting)
+		if(1)
+			var/new_say = input(caster, "What are you trying to say?", "Say") as null|text
+			new_say = sanitize_text(new_say)
+			if(new_say)
+				caster.say(new_say)
+				var/list/list_of_victims = list()
+				for(var/mob/living/carbon/human/L in viewers(7, caster))
+					if(L != caster)
+						list_of_victims |= L
+				for(var/mob/living/carbon/human/H in list_of_victims)
+					if(H)
+						H.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_MAGIC)
+						H.gain_trauma(new /datum/brain_trauma/hypnosis(new_say), TRAUMA_RESILIENCE_MAGIC)
+				spawn(30 SECONDS)
+					for(var/mob/living/carbon/human/H in list_of_victims)
+						if(H)
+							H.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_MAGIC)
+		if(2)
+			caster.remove_overlay(HALO_LAYER)
+			var/mutable_appearance/fortitude_overlay = mutable_appearance('icons/effects/96x96.dmi', "boh_tear", -HALO_LAYER)
+			fortitude_overlay.pixel_x = -32
+			fortitude_overlay.pixel_y = -32
+			fortitude_overlay.alpha = 128
+			caster.overlays_standing[HALO_LAYER] = fortitude_overlay
+			caster.apply_overlay(HALO_LAYER)
+			caster.set_light(2, 5, "#ffffff")
+			caster.yang_mantle = TRUE
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.remove_overlay(HALO_LAYER)
+					caster.set_light(0)
+					caster.yang_mantle = FALSE
+		if(3)
+			caster.yang_dodge = TRUE
+			to_chat(caster, "<span class='notice'>Your muscles relax and start moving unintentionally. You feel perfect at close range evasion skills...</span>")
+			var/i = rand(1, 2)
+			if(i == 1)
+				dancefirst(caster)
+			else
+				dancesecond(caster)
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.yang_dodge = FALSE
+					to_chat(caster, "<span class='warning'>Your muscles feel natural again..</span>")
+		if(4)
+			caster.flesh_shintai_dodge = TRUE
+			to_chat(caster, "<span class='notice'>Your muscles relax and start moving unintentionally. You feel perfect at projectile evasion skills...</span>")
+			var/i = rand(1, 2)
+			if(i == 1)
+				dancefirst(caster)
+			else
+				dancesecond(caster)
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.flesh_shintai_dodge = FALSE
+					to_chat(caster, "<span class='warning'>Your muscles feel natural again..</span>")
+		if(5)
+			E.cast(caster, caster)

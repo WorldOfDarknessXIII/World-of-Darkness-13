@@ -303,5 +303,8 @@
 	var/foul_aura = 0
 	var/storm_aura = FALSE
 	var/wind_aura = FALSE
+	var/yang_mantle = FALSE
+	var/yang_dodge = FALSE
+	var/insane_luck = FALSE
 	//Flesh shintai dodge
 	var/flesh_shintai_dodge = FALSE
