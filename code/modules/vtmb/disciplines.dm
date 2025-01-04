@@ -1663,11 +1663,9 @@
 /datum/discipline/daimonion/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
 	var/mod = min(4, level_casting)
-//	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
-	if(!BAT)
-		BAT = new(caster)
 	switch(mod)
 		if(1)
+			/*
 			caster.physiology.burn_mod *= 1/100
 			caster.color = "#884200"
 			spawn(delay+caster.discipline_time_plus)
@@ -1675,13 +1673,17 @@
 					caster.color = initial(caster.color)
 					caster.physiology.burn_mod *= 100
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
+					*/
 		if(2)
+			/*
 			caster.dna.species.GiveSpeciesFlight(caster)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					caster.dna.species.RemoveSpeciesFlight(caster)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
+					*/
 		if(3)
+			/*
 			caster.drop_all_held_items()
 			caster.put_in_r_hand(new /obj/item/melee/vampirearms/knife/gangrel(caster))
 			caster.put_in_l_hand(new /obj/item/melee/vampirearms/knife/gangrel(caster))
@@ -1691,7 +1693,9 @@
 						if(G)
 							qdel(G)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
+					*/
 		if(4 to 5)
+			/*
 			caster.drop_all_held_items()
 			BAT.Shapeshift(caster)
 			spawn(delay+caster.discipline_time_plus)
@@ -1700,6 +1704,7 @@
 					caster.Stun(15)
 					caster.do_jitter_animation(30)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
+					*/
 
 /datum/discipline/valeren
 	name = "Valeren"
