@@ -441,10 +441,11 @@
 
 							//Gives the Childe the Sire's first three Disciplines
 
-							for (var/type_path in BLOODBONDED.clane.clane_disciplines)
-								var/datum/discipline/discipline_instance = new type_path
-								discipline_instance.level = 1
-								BLOODBONDED.give_discipline(discipline_instance)
+							var/list/disciplines_to_give = list()
+							for (var/i in 1 to min(3, H.client.prefs.discipline_types.len))
+								disciplines_to_give += H.client.prefs.discipline_types[i]
+							BLOODBONDED.create_disciplines(FALSE, disciplines_to_give)
+
 							BLOODBONDED.maxbloodpool = 10+((13-min(13, BLOODBONDED.generation))*3)
 							BLOODBONDED.clane.enlightenment = H.clane.enlightenment
 						else
