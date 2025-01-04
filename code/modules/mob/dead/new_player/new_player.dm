@@ -537,6 +537,7 @@
 		if(ishuman(new_character))
 			var/mob/living/carbon/human/H = new_character
 			if(H.client)
+				H.true_real_name = H.client.prefs.real_name
 				if(H.age < 16)
 					H.add_quirk(/datum/quirk/freerunning)
 					H.add_quirk(/datum/quirk/light_step)
