@@ -424,7 +424,12 @@
 			var/weaver_taint = NONE
 			var/wyld_taint = NONE
 
-			if (iskindred(src)) //vampires are static, and may be Wyrm-tainted depending on behaviour
+			if(iscathayan(src))
+				weaver_taint++
+				if(!check_kuei_jin_alive())
+					wyrm_taint++
+
+			if (iskindred(src))
 				var/mob/living/carbon/human/vampire = src
 				weaver_taint++
 

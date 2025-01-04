@@ -136,6 +136,13 @@
 	// Make it so the extinguisher doesn't spray yourself when you click your inventory items
 	if (target.loc == user)
 		return
+	var/dharma_decrease = FALSE
+	for(var/obj/effect/fire/F in range(3, target))
+		if(F)
+			dharma_decrease = TRUE
+	if(dharma_decrease)
+		call_dharma("extinguish", user)
+		call_dharma("cleangrow", user)
 	//TODO; Add support for reagents in water.
 
 	if(refilling)

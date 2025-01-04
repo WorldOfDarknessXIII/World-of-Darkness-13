@@ -284,3 +284,27 @@
 	var/gargoyle_pass = FALSE
 	///If this mob can strip people from range with a delay of 0.1 seconds. Currently only activated by Mytherceria 2.
 	var/enhanced_strip = FALSE
+
+	//Kuei Jin stuff
+	var/yang_chi = 2
+	var/max_yang_chi = 2
+	var/yin_chi = 1
+	var/max_yin_chi = 1
+	var/demon_chi = 0
+	var/max_demon_chi = 0
+	var/last_chi_restore = 0
+	var/datum/action/chi_discipline/chi_ranged
+
+	//TO ovverride jump distance
+	var/jade_shintai_override = 0
+	//For freezing/burning/blurry/storm aura
+	var/freezing_aura = FALSE
+	var/burning_aura = FALSE
+	var/foul_aura = 0
+	var/storm_aura = FALSE
+	var/wind_aura = FALSE
+	var/yang_mantle = FALSE
+	var/yang_dodge = FALSE
+	var/insane_luck = FALSE
+	//Flesh shintai dodge
+	var/flesh_shintai_dodge = FALSE

@@ -459,7 +459,11 @@
 		C.name = name
 		C.appearance = appearance
 		C.dir = dir
-		animate(C, pixel_x = rand(-16, 16), pixel_y = rand(-16, 16), alpha = 0, time = 5)
+		if(iscathayan(src))
+			C.color = "#40ffb4"		////WE GIVE IT SANDEVISTAN LOOK YEEEHAAAAW
+			animate(C, pixel_x = rand(-16, 16), pixel_y = rand(-16, 16), color = "#00196e", time = 5)
+		else
+			animate(C, pixel_x = rand(-16, 16), pixel_y = rand(-16, 16), alpha = 0, time = 5)
 		if(CheckEyewitness(src, src, 7, FALSE))
 			AdjustMasquerade(-1)
 
@@ -1347,7 +1351,7 @@
 			if(istype(target, /mob/living/carbon/human/npc))
 				var/mob/living/carbon/human/npc/NPC = target
 				NPC.last_attacker = null
-			if(!iskindred(target) || !isgarou(target))
+			if(!iskindred(target) && !isgarou(target) && !iscathayan(target))	//Who tf wrote this with || lmao
 				if(H.stat != DEAD)
 					H.death()
 				switch(level_casting)

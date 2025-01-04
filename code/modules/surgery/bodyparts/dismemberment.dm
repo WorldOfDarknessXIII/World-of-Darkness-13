@@ -13,6 +13,17 @@
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE
 
+	if(C.stat != DEAD)
+		for(var/mob/living/carbon/human/H in viewers(7, C))
+			if(iscathayan(H) && H != C)
+				if(H.real_name == C.lastattacker)
+					call_dharma("torture", H)
+	else
+		for(var/mob/living/carbon/human/H in viewers(7, C))
+			if(iscathayan(H) && H != C)
+				if(H.real_name == C.lastattacker)
+					call_dharma("disrespect", H)
+
 	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
 	affecting.receive_damage(clamp(brute_dam/2 * affecting.body_damage_coeff, 15, 50), clamp(burn_dam/2 * affecting.body_damage_coeff, 0, 50), wound_bonus=CANT_WOUND) //Damage the chest based on limb's existing damage
 	if(!silent)

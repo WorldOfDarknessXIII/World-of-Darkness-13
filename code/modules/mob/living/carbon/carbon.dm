@@ -228,6 +228,9 @@
 	if(adjusted_jump_range <1)
 		adjusted_jump_range = 1
 
+	if(jade_shintai_override)
+		adjusted_jump_range = jade_shintai_override
+
 	var/distance = get_dist(loc, target)
 	var/turf/adjusted_target = target
 	if(distance > adjusted_jump_range)

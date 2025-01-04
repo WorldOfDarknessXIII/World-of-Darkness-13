@@ -220,6 +220,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/clane_accessory
 
+	var/dharma_type = /datum/dharma
+	var/dharma_level = 2
+	var/po_type = "Rebel"
+	var/po = 2
+	var/hun = 2
+	var/yang = 2
+	var/yin = 2
+	var/list/chi_types = list()
+	var/list/chi_levels = list()
+
 /datum/preferences/proc/add_experience(amount)
 	true_experience = clamp(true_experience + amount, 0, 1000)
 
@@ -441,6 +451,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<br>"
 				if(!slotlocked)
 					dat += "<a href='?_src_=prefs;preference=pathof;task=input'>Switch Path</a><BR>"
+			if(pref_species.name == "Kuei-Jin")
+				var/datum/dharma/D = new dharma_type()
+				dat += "<b>Dharma:</b> [D.name] [dharma_level]/6 <a href='?_src_=prefs;preference=dharmatype;task=input'>Switch</a><BR>"
+				dat += "[D.desc]<BR>"
+				if(true_experience >= 20 && (dharma_level < 6))
+					dat += " <a href='?_src_=prefs;preference=dharmarise;task=input'>Learn (20)</a><BR>"
+				dat += "<b>P'o Personality</b>: [po_type] <a href='?_src_=prefs;preference=potype;task=input'>Switch</a><BR>"
+				dat += "<b>Awareness:</b> [masquerade]/5<BR>"
+				dat += "<b>Yin/Yang</b>: [yin]/[yang] <a href='?_src_=prefs;preference=chibalance;task=input'>Adjust</a><BR>"
+				dat += "<b>Hun/P'o</b>: [hun]/[po] <a href='?_src_=prefs;preference=demonbalance;task=input'>Adjust</a><BR>"
 			if(pref_species.name == "Werewolf")
 				dat += "<b>Veil:</b> [masquerade]/5<BR>"
 			if(pref_species.name == "Vampire" || pref_species.name == "Ghoul")
@@ -623,6 +643,30 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				var/list/possible_new_disciplines = subtypesof(/datum/discipline) - discipline_types
 				if (possible_new_disciplines.len && (true_experience >= 10))
 					dat += "<a href='?_src_=prefs;preference=newghouldiscipline;task=input'>Learn a new Discipline (10)</a><BR>"
+
+			if (pref_species.name == "Kuei-Jin")
+				dat += "<h2>[make_font_cool("DISCIPLINES")]</h2><BR>"
+				for (var/i in 1 to discipline_types.len)
+					var/discipline_type = discipline_types[i]
+					var/datum/chi_discipline/discipline = new discipline_type
+					var/discipline_level = discipline_levels[i]
+
+					var/cost
+					if (discipline_level <= 0)
+						cost = 10
+					else
+						cost = discipline_level * 6
+
+					dat += "<b>[discipline.name]</b> ([discipline.discipline_type]): [discipline_level > 0 ? "•" : "o"][discipline_level > 1 ? "•" : "o"][discipline_level > 2 ? "•" : "o"][discipline_level > 3 ? "•" : "o"][discipline_level > 4 ? "•" : "o"]([discipline_level])"
+					if((true_experience >= cost) && (discipline_level != 5))
+						dat += "<a href='?_src_=prefs;preference=discipline;task=input;upgradechidiscipline=[i]'>Learn ([cost])</a><BR>"
+					else
+						dat += "<BR>"
+					dat += "-[discipline.desc]. Yin:[discipline.cost_yin], Yang:[discipline.cost_yang], Demon:[discipline.cost_demon]<BR>"
+					qdel(discipline)
+				var/list/possible_new_disciplines = subtypesof(/datum/chi_discipline) - discipline_types
+				if (possible_new_disciplines.len && (true_experience >= 10))
+					dat += "<a href='?_src_=prefs;preference=newchidiscipline;task=input'>Learn a new Discipline (10)</a><BR>"
 
 			if(true_experience >= 3 && slotlocked)
 				dat += "<a href='?_src_=prefs;preference=change_appearance;task=input'>Change Appearance (3)</a><BR>"
@@ -1924,6 +1968,41 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						discipline_levels += 1
 						true_experience -= 10
 
+				if("newchidiscipline")
+					if((true_experience < 10) || !(pref_species.id == "kuei-jin"))
+						return
+
+					var/list/possible_new_disciplines = subtypesof(/datum/chi_discipline) - discipline_types
+					var/has_chi_one = FALSE
+					var/has_demon_one = FALSE
+					var/how_much_usual = 0
+					for(var/i in discipline_types)
+						if(i)
+							var/datum/chi_discipline/C = i
+							if(initial(C.discipline_type) == "Shintai")
+								how_much_usual += 1
+							if(initial(C.discipline_type) == "Demon")
+								has_demon_one = TRUE
+							if(initial(C.discipline_type) == "Chi")
+								has_chi_one = TRUE
+					for(var/i in possible_new_disciplines)
+						if(i)
+							var/datum/chi_discipline/C = i
+							if(initial(C.discipline_type) == "Shintai")
+								if(how_much_usual >= 3)
+									possible_new_disciplines -= i
+							if(initial(C.discipline_type) == "Demon")
+								if(has_demon_one)
+									possible_new_disciplines -= i
+							if(initial(C.discipline_type) == "Chi")
+								if(has_chi_one)
+									possible_new_disciplines -= i
+					var/new_discipline = input(user, "Select your new Discipline", "Discipline Selection") as null|anything in possible_new_disciplines
+					if(new_discipline)
+						discipline_types += new_discipline
+						discipline_levels += 1
+						true_experience -= 10
+
 				if("werewolf_color")
 					if(slotlocked || !(pref_species.id == "garou"))
 						return
@@ -2126,22 +2205,37 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						athletics = archetip.start_athletics
 
 				if("discipline")
-					var/i = text2num(href_list["upgradediscipline"])
+					if(pref_species.id == "kindred")
+						var/i = text2num(href_list["upgradediscipline"])
 
-					var/discipline_level = discipline_levels[i]
-					var/cost = discipline_level * 7
-					if (discipline_level <= 0)
-						cost = 10
-					else if (clane.name == "Caitiff")
-						cost = discipline_level * 6
-					else if (clane.clane_disciplines.Find(discipline_types[i]))
-						cost = discipline_level * 5
+						var/discipline_level = discipline_levels[i]
+						var/cost = discipline_level * 7
+						if (discipline_level <= 0)
+							cost = 10
+						else if (clane.name == "Caitiff")
+							cost = discipline_level * 6
+						else if (clane.clane_disciplines.Find(discipline_types[i]))
+							cost = discipline_level * 5
 
-					if ((true_experience < cost) || (discipline_level >= 5) || !(pref_species.id == "kindred"))
-						return
+						if ((true_experience < cost) || (discipline_level >= 5))
+							return
 
-					true_experience -= cost
-					discipline_levels[i] = min(5, max(1, discipline_levels[i] + 1))
+						true_experience -= cost
+						discipline_levels[i] = min(5, max(1, discipline_levels[i] + 1))
+
+					if(pref_species.id == "kuei-jin")
+						var/a = text2num(href_list["upgradechidiscipline"])
+
+						var/discipline_level = discipline_levels[a]
+						var/cost = discipline_level * 6
+						if (discipline_level <= 0)
+							cost = 10
+
+						if ((true_experience < cost) || (discipline_level >= 5))
+							return
+
+						true_experience -= cost
+						discipline_levels[a] = min(5, max(1, discipline_levels[a] + 1))
 
 				if("path")
 					var/cost = max(2, humanity * 2)
@@ -2157,12 +2251,66 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 					enlightenment = !enlightenment
 
+				if("dharmarise")
+					if ((true_experience < 20) || (dharma_level >= 6) || !(pref_species.id == "kuei-jin"))
+						return
+
+					true_experience -= 20
+					dharma_level = min(max(1, dharma_level + 1), 6)
+
 				/*
 				if("torpor_restore")
 					if(torpor_count != 0 && true_experience >= 3*(14-generation))
 						torpor_count = 0
 						true_experience = true_experience-(3*(14-generation))
 				*/
+
+
+				if("dharmatype")
+					if(slotlocked)
+						return
+					if (alert("Are you sure you want to change Dharma? This will reset path-specific stats.", "Confirmation", "Yes", "No") != "Yes")
+						return
+					var/list/dharmas = list()
+					for(var/i in subtypesof(/datum/dharma))
+						var/datum/dharma/D = i
+						dharmas += initial(D.name)
+					var/result = input(user, "Select Dharma", "Dharma") as null|anything in dharmas
+					if(result)
+						for(var/i in subtypesof(/datum/dharma))
+							var/datum/dharma/D = i
+							if(initial(D.name) == result)
+								dharma_type = i
+								dharma_level = initial(dharma_level)
+								hun = initial(hun)
+								po = initial(po)
+								yin = initial(yin)
+								yang = initial(yang)
+
+
+				if("potype")
+					if(slotlocked)
+						return
+					var/list/pos = list("Rebel", "Legalist", "Demon", "Monkey", "Fool")
+					var/result = input(user, "Select P'o", "P'o") as null|anything in pos
+					if(result)
+						po_type = result
+
+				if("chibalance")
+					var/max_limit = dharma_level*2
+					var/sett = input(user, "Enter the maximum of Yin your character has:", "Yin/Yang") as num|null
+					if(sett)
+						sett = max(1, min(sett, max_limit-1))
+						yin = sett
+						yang = max_limit-sett
+
+				if("demonbalance")
+					var/max_limit = dharma_level*2
+					var/sett = input(user, "Enter the maximum of Hun your character has:", "Hun/P'o") as num|null
+					if(sett)
+						sett = max(1, min(sett, max_limit-1))
+						hun = sett
+						po = max_limit-sett
 
 				if("generation")
 					if((clane?.name == "Caitiff") || (true_experience < 20))
@@ -2230,7 +2378,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						SetQuirks(user)
 						var/newtype = GLOB.species_list[result]
 						pref_species = new newtype()
-						if(pref_species.id == "ghoul" || pref_species.id == "human")
+						if(pref_species.id == "ghoul" || pref_species.id == "human" || pref_species.id == "kuei-jin")
 							discipline_types = list()
 							discipline_levels = list()
 						if(pref_species.id == "kindred")
@@ -2847,6 +2995,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.maxbloodpool = 10+((13-generation)*3)
 		character.bloodpool = rand(2, character.maxbloodpool)
 		character.generation = generation
+		character.yin_chi = 6+(13-generation)
+		character.max_yin_chi = 6+(13-generation)
 		character.clane.enlightenment = enlightenment
 //		if(generation < 13)
 //			character.maxHealth = initial(character.maxHealth)+50*(13-generation)
@@ -2856,10 +3006,37 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.clane = null
 		character.generation = 13
 		character.bloodpool = character.maxbloodpool
+		if(pref_species.name == "Kuei-Jin")
+			character.yang_chi = yang
+			character.max_yang_chi = yang
+			character.yin_chi = yin
+			character.max_yin_chi = yin
+			character.max_demon_chi = po
+		else
+			character.yang_chi = 4
+			character.max_yang_chi = 4
+			character.yin_chi = 2
+			character.max_yin_chi = 2
 
 	if(pref_species.name == "Werewolf")
 		character.maxHealth = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*(character.physique + character.additional_physique)))
 		character.health = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*(character.physique + character.additional_physique )))
+		switch(tribe)
+			if("Wendigo")
+				character.yin_chi = 1
+				character.max_yin_chi = 1
+				character.yang_chi = 5+(auspice_level*2)
+				character.max_yang_chi = 5+(auspice_level*2)
+			if("Glasswalkers")
+				character.yin_chi = 1+auspice_level
+				character.max_yin_chi = 1+auspice_level
+				character.yang_chi = 5+auspice_level
+				character.max_yang_chi = 5+auspice_level
+			if("Black Spiral Dancers")
+				character.yin_chi = 1+auspice_level*2
+				character.max_yin_chi = 1+auspice_level*2
+				character.yang_chi = 5
+				character.max_yang_chi = 5
 	else
 		character.maxHealth = round((initial(character.maxHealth)-initial(character.maxHealth)/4)+(initial(character.maxHealth)/4)*((character.physique+character.additional_physique )+13-generation))
 		character.health = round((initial(character.health)-initial(character.health)/4)+(initial(character.health)/4)*((character.physique+character.additional_physique )+13-generation))
