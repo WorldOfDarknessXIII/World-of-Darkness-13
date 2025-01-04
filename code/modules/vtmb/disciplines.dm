@@ -1670,7 +1670,6 @@
 			if(!H.in_frenzy) // If target is a kindred, it will cause them to frenzy for 3 to 5 seconds
 				H.enter_frenzymod()
 				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon, exit_frenzymod)), rand(35, 50))
-			else()
 		if(3)
 			var/turf/start = get_turf(caster)
 			var/obj/projectile/magic/aoe/fireball/baali/H = new(start)
