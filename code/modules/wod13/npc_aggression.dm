@@ -1,5 +1,5 @@
 /mob/living/carbon/human/npc/proc/Aggro(var/mob/M, var/attacked = FALSE)
-	if(attacked && danger_source != M)
+	if(attacked && danger_source != M && danger_source != /mob/living/simple_animal/hostile/beastmaster/thebeast)
 		walk(src,0)
 	if(M == src)
 		return
