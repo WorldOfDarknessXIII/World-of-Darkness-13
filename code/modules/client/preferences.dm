@@ -655,14 +655,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if (discipline_level <= 0)
 						cost = 10
 					else
-						cost = discipline_level * 8
+						cost = discipline_level * 6
 
-					dat += "<b>[discipline.name]</b>: [discipline_level > 0 ? "•" : "o"][discipline_level > 1 ? "•" : "o"][discipline_level > 2 ? "•" : "o"][discipline_level > 3 ? "•" : "o"][discipline_level > 4 ? "•" : "o"]([discipline_level])"
+					dat += "<b>[discipline.name]</b> ([discipline.discipline_type]): [discipline_level > 0 ? "•" : "o"][discipline_level > 1 ? "•" : "o"][discipline_level > 2 ? "•" : "o"][discipline_level > 3 ? "•" : "o"][discipline_level > 4 ? "•" : "o"]([discipline_level])"
 					if((true_experience >= cost) && (discipline_level != 5))
 						dat += "<a href='?_src_=prefs;preference=discipline;task=input;upgradechidiscipline=[i]'>Learn ([cost])</a><BR>"
 					else
 						dat += "<BR>"
-					dat += "-[discipline.desc]<BR>"
+					dat += "-[discipline.desc]. Yin:[discipline.cost_yin], Yang:[discipline.cost_yang], Demon:[discipline.cost_demon]<BR>"
 					qdel(discipline)
 				var/list/possible_new_disciplines = subtypesof(/datum/chi_discipline) - discipline_types
 				if (possible_new_disciplines.len && (true_experience >= 10))
@@ -1973,6 +1973,30 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						return
 
 					var/list/possible_new_disciplines = subtypesof(/datum/chi_discipline) - discipline_types
+					var/has_chi_one = FALSE
+					var/has_demon_one = FALSE
+					var/how_much_usual = 0
+					for(var/i in discipline_types)
+						if(i)
+							var/datum/chi_discipline/C = i
+							if(initial(C.discipline_type) == "Shintai")
+								how_much_usual += 1
+							if(initial(C.discipline_type) == "Demon")
+								has_demon_one = TRUE
+							if(initial(C.discipline_type) == "Chi")
+								has_chi_one = TRUE
+					for(var/i in possible_new_disciplines)
+						if(i)
+							var/datum/chi_discipline/C = i
+							if(initial(C.discipline_type) == "Shintai")
+								if(how_much_usual >= 3)
+									possible_new_disciplines -= i
+							if(initial(C.discipline_type) == "Demon")
+								if(has_demon_one)
+									possible_new_disciplines -= i
+							if(initial(C.discipline_type) == "Chi")
+								if(has_chi_one)
+									possible_new_disciplines -= i
 					var/new_discipline = input(user, "Select your new Discipline", "Discipline Selection") as null|anything in possible_new_disciplines
 					if(new_discipline)
 						discipline_types += new_discipline
@@ -2203,7 +2227,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/a = text2num(href_list["upgradechidiscipline"])
 
 						var/discipline_level = discipline_levels[a]
-						var/cost = discipline_level * 8
+						var/cost = discipline_level * 6
 						if (discipline_level <= 0)
 							cost = 10
 

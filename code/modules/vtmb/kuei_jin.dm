@@ -1061,6 +1061,8 @@
 	///What rank of this Discipline is currently being casted.
 	var/level_casting = 1
 
+	var/discipline_type = "Shintai"		//Either "Shintai", "Chi" or "Demon" arts
+
 /datum/chi_discipline/proc/post_gain(var/mob/living/carbon/human/H)
 	return
 
@@ -1809,6 +1811,7 @@
 	activate_sound = 'code/modules/wod13/sounds/celerity_activate.ogg'
 	delay = 12 SECONDS
 	cost_demon = 1
+	discipline_type = "Demon"
 
 /datum/chi_discipline/black_wind/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
@@ -1861,6 +1864,7 @@
 	ranged = FALSE
 	delay = 12 SECONDS
 	cost_demon = 1
+	discipline_type = "Demon"
 	var/current_form = "Samurai"
 
 /datum/chi_discipline/demon_shintai/post_gain(var/mob/living/carbon/human/H)
@@ -2032,6 +2036,7 @@
 	ranged = TRUE
 	delay = 12 SECONDS
 	cost_demon = 1
+	discipline_type = "Demon"
 
 /atom/movable/screen/fullscreen/yomi_world
 	icon = 'icons/hud/fullscreen.dmi'
@@ -2111,6 +2116,7 @@
 	activate_sound = 'code/modules/wod13/sounds/fortitude_activate.ogg'
 	delay = 12 SECONDS
 	cost_demon = 1
+	discipline_type = "Demon"
 
 /datum/chi_discipline/iron_mountain/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
@@ -2136,6 +2142,7 @@
 	ranged = TRUE
 	delay = 12 SECONDS
 	cost_demon = 1
+	discipline_type = "Demon"
 
 /mob/living/carbon/human/proc/combat_to_caster()
 	walk(src, 0)
@@ -2202,7 +2209,6 @@
 	delay = 12 SECONDS
 	cost_yang = 1
 	activate_sound = 'code/modules/wod13/sounds/wolves.ogg'
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/animalism/AN
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/werewolf_like/WL
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/werewolf_like
@@ -2241,8 +2247,6 @@
 
 /datum/chi_discipline/beast_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-	if(!AN)
-		AN = new(caster)
 	if(!WL)
 		WL = new(caster)
 	var/limit = min(2, level) + caster.social + caster.more_companions - 1
@@ -2281,11 +2285,15 @@
 			caster.beastmaster |= D
 			D.beastmaster = caster
 		if(4)
-			AN.Shapeshift(caster)
-			spawn(60 SECONDS + caster.discipline_time_plus)
-				if(caster && caster.stat != DEAD)
-					AN.Restore(AN.myshape)
-					caster.Stun(1.5 SECONDS)
+			if(!length(caster.beastmaster))
+				var/datum/action/beastmaster_stay/E1 = new()
+				E1.Grant(caster)
+				var/datum/action/beastmaster_deaggro/E2 = new()
+				E2.Grant(caster)
+			var/mob/living/simple_animal/hostile/beastmaster/rat/flying/F = new(get_turf(caster))
+			F.my_creator = caster
+			caster.beastmaster |= F
+			F.beastmaster = caster
 		if(5)
 			WL.Shapeshift(caster)
 			spawn(30 SECONDS + caster.discipline_time_plus)
@@ -2560,6 +2568,7 @@
 	delay = 12 SECONDS
 	cost_yang = 1
 	cost_yin = 1
+	discipline_type = "Chi"
 
 /datum/chi_discipline/equilibrium/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
@@ -2675,6 +2684,7 @@
 	delay = 12 SECONDS
 	cost_yang = 1
 	cost_yin = 1
+	discipline_type = "Chi"
 
 /datum/movespeed_modifier/pacifisting
 	multiplicative_slowdown = 3
@@ -2796,6 +2806,7 @@
 	delay = 12 SECONDS
 	cost_yang = 1
 	cost_yin = 1
+	discipline_type = "Chi"
 
 /obj/effect/anomaly/grav_kuei
 	name = "gravitational anomaly"
@@ -2938,6 +2949,7 @@
 	ranged = FALSE
 	delay = 12 SECONDS
 	cost_yin = 2
+	discipline_type = "Chi"
 
 /obj/item/melee/touch_attack/yin_touch
 	name = "\improper shadow touch"
@@ -3025,6 +3037,7 @@
 	ranged = FALSE
 	delay = 12 SECONDS
 	cost_yang = 2
+	discipline_type = "Chi"
 	var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/E
 
 /datum/chi_discipline/yang_prana/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
