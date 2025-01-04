@@ -212,21 +212,32 @@ SUBSYSTEM_DEF(die_in_a_fire)
 		qdel(src)
 
 /obj/effect/fire/baali/hellfire_crossed(atom/movable/AM, oldloc)
-	. = ..()
 	if(isliving(AM))
 		var/mob/living/L = AM
 		L.fire_stacks += 5
 		L.IgniteMob()
 
 /obj/effect/fire/baali/destroy_hellfire()
-	. = ..()
 	set_light(0)
 	GLOB.fires_list -= src
 
 /obj/effect/fire/baali/initialize_hellfire()
-	. = ..()
 	set_light(3, 2, "#2dff00")
 	GLOB.fires_list += src
+
+/obj/effect/fire/baali/proc/change_stage(var/stag)
+	switch(stag)
+		if(0)
+			qdel(src)
+		if(1)
+			stage = 1
+			icon = 'code/modules/wod13/icons.dmi'
+		if(2)
+			stage = 2
+			icon = 'code/modules/wod13/32x48.dmi'
+		if(3)
+			stage = 3
+			icon = 'code/modules/wod13/64x64.dmi'
 
 /obj/effect/fire/proc/change_stage(var/stag)
 	switch(stag)
