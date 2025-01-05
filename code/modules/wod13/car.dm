@@ -630,6 +630,7 @@ SUBSYSTEM_DEF(carpool)
 	access = "none"
 	baggage_limit = 100
 	baggage_max = WEIGHT_CLASS_BULKY
+	component_type = /datum/component/storage/concrete/vtm/car/track
 
 /obj/vampire_car/track/Initialize()
 	if(access == "none")

@@ -361,7 +361,7 @@
 			cursed = namem
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
 				if(H.real_name == cursed)
-					H.adjustFireLoss(35)
+					H.adjustCloneLoss(25)
 					playsound(H.loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
 					to_chat(H, "<span class='warning'>You feel someone repeating your name from the shadows...</span>")
 					H.Stun(10)

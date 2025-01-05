@@ -32,6 +32,7 @@
 	name = "Doctor"
 	jobtype = /datum/job/vamp/vdoctor
 
+	ears = /obj/item/p25radio
 	id = /obj/item/card/id/clinic
 	uniform = /obj/item/clothing/under/vampire/nurse
 	shoes = /obj/item/clothing/shoes/vampire/white
