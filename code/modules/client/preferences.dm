@@ -223,7 +223,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/clane_accessory
 
 	var/dharma_type = /datum/dharma
-	var/dharma_level = 2
+	var/dharma_level = 1
 	var/po_type = "Rebel"
 	var/po = 2
 	var/hun = 2
@@ -250,6 +250,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	info_known = INFO_KNOWN_UNKNOWN
 	masquerade = initial(masquerade)
 	generation = initial(generation)
+	dharma_level = initial(dharma_level)
 	archetype = pick(subtypesof(/datum/archetype))
 	var/datum/archetype/A = new archetype()
 	physique = A.start_physique
@@ -668,6 +669,30 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "-[discipline.desc]. Yin:[discipline.cost_yin], Yang:[discipline.cost_yang], Demon:[discipline.cost_demon]<BR>"
 					qdel(discipline)
 				var/list/possible_new_disciplines = subtypesof(/datum/chi_discipline) - discipline_types
+				var/has_chi_one = FALSE
+				var/has_demon_one = FALSE
+				var/how_much_usual = 0
+				for(var/i in discipline_types)
+					if(i)
+						var/datum/chi_discipline/C = i
+						if(initial(C.discipline_type) == "Shintai")
+							how_much_usual += 1
+						if(initial(C.discipline_type) == "Demon")
+							has_demon_one = TRUE
+						if(initial(C.discipline_type) == "Chi")
+							has_chi_one = TRUE
+				for(var/i in possible_new_disciplines)
+					if(i)
+						var/datum/chi_discipline/C = i
+						if(initial(C.discipline_type) == "Shintai")
+							if(how_much_usual >= 3)
+								possible_new_disciplines -= i
+						if(initial(C.discipline_type) == "Demon")
+							if(has_demon_one)
+								possible_new_disciplines -= i
+						if(initial(C.discipline_type) == "Chi")
+							if(has_chi_one)
+								possible_new_disciplines -= i
 				if (possible_new_disciplines.len && (true_experience >= 10))
 					dat += "<a href='?_src_=prefs;preference=newchidiscipline;task=input'>Learn a new Discipline (10)</a><BR>"
 
