@@ -146,6 +146,7 @@
 	data["beaconName"] = beacon ? beacon.name : "No Beacon Found"
 	data["printMsg"] = cooldown > 0 ? "Print Beacon for [BEACON_COST] credits ([cooldown])" : "Print Beacon for [BEACON_COST] credits"//buttontext for printing beacons
 	data["supplies"] = list()
+	data["total_order_cost"] = total_order_cost()
 	data["order_queue"] = json_encode(serialized_order_queue)
 	message = "Sales are near-instantaneous - please choose carefully."
 	if(SSshuttle.supplyBlocked)
@@ -213,41 +214,26 @@
 			if(istype(beacon) && usingBeacon)
 				LZ = get_turf(beacon)
 				beacon.update_status(SP_LAUNCH)
-			else if(!usingBeacon)
-				landingzone = GLOB.areas_by_type[/area/vtm/supply]
-				if(!landingzone)
-					WARNING("[src] couldnt find a Quartermaster/Storage (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
-					landingzone = get_area(src)
-				for(var/turf/open/floor/T in landingzone.contents)
-					if(T.is_blocked_turf())
-						continue
-					LAZYADD(empty_turfs, T)
-					CHECK_TICK
-				if(empty_turfs?.len)
-					LZ = pick(empty_turfs)
-			var/obj/cargotrain/train = new(get_nearest_free_turf(LZ))
-			train.starter = usr
-			train.glide_size = (32 / 3) * world.tick_lag
-			walk_to(train, LZ, 1, 3)
-			playsound(train, 'code/modules/wod13/sounds/train_arrive.ogg', 50, FALSE)
-
-			var/obj/structure/closet/crate/crate = new(get_turf(train))
-			crate.name = "Supply Crate"
-
-			for(var/datum/supply_pack/vampire/pack in order_queue)
-				for(var/item_path in pack.contains)
-					var/obj/item/item_instance = new item_path
-					item_instance.forceMove(crate)
-
-			playsound(train, 'code/modules/wod13/sounds/train_depart.ogg', 50, FALSE)
-			var/trackLength = get_dist(get_nearest_free_turf(LZ), LZ)*5
-			spawn(trackLength)
-				walk_to(train, get_nearest_free_turf(LZ), 1, 3)
+				TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 5 SECONDS)
+				var/obj/cargotrain/train = new(get_nearest_free_turf(LZ))
+				train.starter = usr
+				train.glide_size = (32 / 3) * world.tick_lag
+				walk_to(train, LZ, 1, 3)
+				playsound(train, 'code/modules/wod13/sounds/train_arrive.ogg', 50, FALSE)
+				var/trackLength = get_dist(get_nearest_free_turf(LZ), LZ)*5
 				spawn(trackLength)
-					qdel(train)
-			to_chat(usr, "Order finalized and sent.")
-			order_queue = list()
-			return TRUE
+					var/obj/structure/closet/crate/crate = new(get_turf(train))
+					crate.name = "Supply Crate"
+					for(var/datum/supply_pack/vampire/pack in order_queue)
+						for(var/item_path in pack.contains)
+							var/obj/item/item_instance = new item_path
+							item_instance.forceMove(crate)
+					playsound(train, 'code/modules/wod13/sounds/train_depart.ogg', 50, FALSE)
+					walk_to(train, get_nearest_free_turf(LZ), 1, 3)
+					spawn(trackLength)
+						qdel(train)
+					order_queue = list()
+				return
 
 /obj/machinery/computer/cargo/express/proc/total_order_cost()
 	var/total = 0

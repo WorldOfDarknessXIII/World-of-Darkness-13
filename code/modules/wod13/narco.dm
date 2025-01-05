@@ -401,6 +401,26 @@ SUBSYSTEM_DEF(smokeweedeveryday)
 	var/added_iod = 0		//gonna be 2 iod pills or coffee+vodka
 	var/added_gas = FALSE	//fill it up boi
 
+/obj/structure/methlab/movable
+	name = "movable chemical lab"
+	desc = "Not an RV, but it moves..."
+	anchored = FALSE
+
+/obj/structure/methlab/movable/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Alt-click to secure the [src] to the ground.</span>"
+
+/obj/structure/methlab/AltClick(mob/user)
+	if(do_after(user, 15))
+		if(anchored)
+			to_chat(user, "<span class='notice'>You unsecure the [src] from the ground.</span>")
+			anchored = FALSE
+			return
+		else
+			to_chat(user, "<span class='notice'>You secure the [src] to the ground.</span>")
+			anchored = TRUE
+			return
+
 /obj/structure/methlab/attackby(obj/item/used_item, mob/user, params)
 	if(istype(used_item, /obj/item/reagent_containers/pill/ephedrine))
 		if(added_ephed != 3)
