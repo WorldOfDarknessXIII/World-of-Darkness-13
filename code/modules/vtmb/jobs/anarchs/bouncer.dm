@@ -1,6 +1,5 @@
-
 /datum/job/vamp/bruiser
-	title = "Anarch Member"
+	title = "Anarch"
 	department_head = list("Baron")
 	faction = "Vampire"
 	total_positions = 7
@@ -18,7 +17,7 @@
 	mind_traits = list(TRAIT_DONUT_LOVER)
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_BRUISER
+	display_order = JOB_DISPLAY_ORDER_ANARCH
 	known_contacts = list("Baron")
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Tremere", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian", "Ministry")
 
@@ -27,7 +26,7 @@
 	experience_addition = 15
 
 /datum/outfit/job/bruiser
-	name = "Anarch Member"
+	name = "Anarch"
 	jobtype = /datum/job/vamp/bruiser
 
 	id = /obj/item/card/id/anarch

@@ -3,8 +3,8 @@
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list("Prince")
 	faction = "Vampire"
-	total_positions = 5
-	spawn_positions = 5
+	total_positions = 7
+	spawn_positions = 7
 	supervisors = "the traditions"
 	selection_color = "#bd3327"
 	minimal_player_age = 7
@@ -21,7 +21,7 @@
 	mind_traits = list(TRAIT_DONUT_LOVER)
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_AGENT
+	display_order = JOB_DISPLAY_ORDER_HOUND
 	bounty_types = CIV_JOB_SEC
 	known_contacts = list("Prince")
 
