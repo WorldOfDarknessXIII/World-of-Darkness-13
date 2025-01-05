@@ -1658,6 +1658,30 @@
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
+	var/genrequired
+	var/activated
+
+/datum/discipline/daimonion/curses/proc/lying_weakness(target)
+	name = "No Lying Tongue"
+	genrequired = 11
+
+/datum/discipline/daimonion/curses/proc/physical_weakness(target)
+	name = "Baby Weakness"
+	genrequired = 10
+
+
+/datum/discipline/daimonion/curses/proc/mental_weakness(target)
+	name = "Reap Mentality"
+	genrequired = 9
+
+/datum/discipline/daimonion/curses/proc/offspring_weakness(target)
+	name = "Sterile Vitae"
+	genrequired = 8
+
+/datum/discipline/daimonion/curses/proc/success_weakness(target)
+	name = "The Mark Of Doom"
+	genrequired = 7
+
 
 /datum/discipline/daimonion/proc/baali_get_clan_weakness(target, caster)
 	var/mob/living/carbon/human/H = target
@@ -1709,7 +1733,7 @@
 	switch(level_casting)
 		if(1)
 			if(target.get_total_social() <= 3)
-				to_chat(caster, "Victim is not social and influencing.")
+				to_chat(caster, "Victim is not social or influencing.")
 			if(target.get_total_mentality() <= 3)
 				to_chat(caster, "Victim lacks appropiate willpower.")
 			if(target.get_total_physique() <= 3)
@@ -1729,7 +1753,7 @@
 				else
 					to_chat(caster, "Victim is addicted to vampiric vitae, but is independent and free.")
 			if(!iskindred(target) && !isghoul(target) && !isgarou(target))
-				to_chat(caster, "Victim is a feeble worm with no strengths and visible weaknesses.")
+				to_chat(caster, "Victim is a feeble worm with no strengths or visible weaknesses.")
 
 		if(2)
 			to_chat(target, "<span class='warning'>Your mind is enveloped by your greatest fear!</span>")
@@ -1743,8 +1767,23 @@
 			H.firer = caster
 			H.preparePixelProjectile(target, start)
 			H.fire(direct_target = target)
-		if(4)
-			to_chat(target, "...")
+		if(5)
+			var/cursed
+			var/namem = input(caster, "Choose target name:", "Curse someone") as text|null
+			qdel(src)
+			if(namem)
+				cursed = namem
+				for(var/mob/living/carbon/human/H in GLOB.player_list)
+					if(H.real_name == cursed)
+						var/list/curses = list()
+						for(var/i in subtypesof(/datum/discipline/daimonion/curses))
+							var/datum/discipline/daimonion/curses/C = new i(caster)
+							if(caster.generation <= C.genrequired)
+								curses += i
+							qdel(C)
+							var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in i
+					return
+			to_chat(caster, "<span class='warning'>There is no such names in the city!</span>")
 
 /datum/discipline/valeren
 	name = "Valeren"
