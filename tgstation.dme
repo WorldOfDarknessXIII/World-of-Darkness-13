@@ -3394,8 +3394,6 @@
 #include "code\modules\vtmb\jobs\anarchs\sweeper.dm"
 #include "code\modules\vtmb\magic\mysticism.dm"
 #include "code\modules\vtmb\magic\pyramid.dm"
-#include "code\modules\vtmb\magic\baali\rituals.dm"
-#include "code\modules\vtmb\magic\baali\rune.dm"
 #include "code\modules\vtmb\npc\beastmaster.dm"
 #include "code\modules\vtmb\npc\defines.dm"
 #include "code\modules\vtmb\vampire_clane\baali.dm"
