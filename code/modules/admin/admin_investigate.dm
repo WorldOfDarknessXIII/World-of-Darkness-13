@@ -40,3 +40,5 @@
 		to_chat(src, "<span class='danger'>No [selected] logfile was found.</span>", confidential = TRUE)
 		return
 	src << browse(F,"window=investigate[selected];size=800x300")
+
+//hello world.
