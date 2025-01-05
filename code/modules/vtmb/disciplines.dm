@@ -1659,13 +1659,13 @@
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
 
-/datum/discipline/daimonion/proc/get_clan_weakness(var/mob/living/carbon/target)
+/mob/living/carbon/human/baali_get_clan_weakness(mob/living/carbon/human/target)
 	var/message = ""
-	if(target.iskindred())
+	if(iskindred(target))
 		if(target.clane)
 			if(target.clane == "Toreador")
 				message += "The blood is sweet and rich. The owner must, too, be beautiful."
-			elseif(target.clane == "Daughters of Cacophony")
+			else if(target.clane == "Daughters of Cacophony")
 				message += ""
 			else if(target.clane == "Ventrue")
 				message += "The blood has kingly power in it, descending from Mithras or Hardestadt."
@@ -1715,21 +1715,22 @@
 				to_chat(caster, "Victim lacks appropiate willpower...")
 			if(target.get_total_physique() <= 3)
 				to_chat(caster, "Victim's body is weak and feeble.")
-			if(target.isgarou())
+			if(isgarou(target))
 				to_chat(caster, "Victim's natural banishment is silver...")
-			if(target.iskindred())
-				target.get_clan_weakness()
+			if(iskindred(target))
+				var/mob/living/carbon/human/target = target
+				target.baali_get_clan_weakness()
 				if(target.generation <= 11)
 					to_chat(caster, "Victim doesn't seem to have much vitae concentrated, looks like a weak one... Despite that, you can clearly see their fear for fire.")
 				else
-					to_chat(caster, "Victim has a lot of vitae, it seems that's an old one... Despite that, you can clearly see their fear for fire."))
-			if(target.isghoul())
-				var/mob/living/carbon/human/target = owner
-				if(owner.mind.enslaved_to)
-					to_chat(caster, "Victim is addicted to vampiric vitae and its true master is [owner.mind.enslaved_to]")
+					to_chat(caster, "Victim has a lot of vitae, it seems that's an old one... Despite that, you can clearly see their fear for fire.")
+			if(isghoul(target))
+				var/mob/living/carbon/human/target = target
+				if(target.mind.enslaved_to)
+					to_chat(caster, "Victim is addicted to vampiric vitae and its true master is [target.mind.enslaved_to]")
 				else
 					to_chat(caster, "Victim is addicted to vampiric vitae, but is independent and free.")
-			if(target.ishuman())
+			if(ishuman(target))
 				to_chat(caster, "Victim is a feeble worm with no strengths and visible weaknesses.")
 
 		if(2)
