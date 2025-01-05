@@ -338,16 +338,17 @@
 				to_chat(src, "<span clas='warning'>Your vital energies seem to disappear...</span>")
 				adjustCloneLoss(5, TRUE)
 
-	if(yang_chi < max_yang_chi)
-		if(last_chi_restore + 30 SECONDS <= world.time)
+	if(!iscathayan(src))
+		if(yang_chi < max_yang_chi)
+			if(last_chi_restore + 30 SECONDS <= world.time)
+				last_chi_restore = world.time
+				yang_chi = min(yang_chi+1, max_yang_chi)
+		else if(yin_chi < max_yin_chi)
+			if(last_chi_restore + 30 SECONDS <= world.time)
+				last_chi_restore = world.time
+				yin_chi = min(yin_chi+1, max_yin_chi)
+		else
 			last_chi_restore = world.time
-			yang_chi = min(yang_chi+1, max_yang_chi)
-	else if(yin_chi < max_yin_chi)
-		if(last_chi_restore + 30 SECONDS <= world.time)
-			last_chi_restore = world.time
-			yin_chi = min(yin_chi+1, max_yin_chi)
-	else
-		last_chi_restore = world.time
 
 /datum/species/kuei_jin
 	name = "Kuei-Jin"
@@ -2867,13 +2868,30 @@
 	activate_sound = 'code/modules/wod13/sounds/tapestry.ogg'
 	var/prev_z
 
+/atom/movable/penumbra_ghost
+	var/last_move = 0
+
+/atom/movable/penumbra_ghost/relaymove(mob/living/user, direction)
+	if(last_move+5 <= world.time)
+		last_move = world.time
+		dir = direction
+		Move(get_step(src, direction), direction)
+
 /obj/effect/anomaly/grav_kuei
 	name = "gravitational anomaly"
 	icon_state = "shield2"
 	density = FALSE
 	var/boing = 0
 	aSignal = /obj/item/assembly/signaler/anomaly/grav
+	drops_core = FALSE
 	var/mob/owner
+
+/obj/effect/anomaly/grav_kuei/process(delta_time)
+	anomalyEffect()		//so it's kinda more faster?
+	if(death_time < world.time)
+		if(loc)
+			detonate()
+		qdel(src)
 
 /obj/effect/anomaly/grav_kuei/anomalyEffect()
 	..()
@@ -2929,15 +2947,40 @@
 					caster.see_invisible = initial(caster.see_invisible)
 		if(2)
 			var/chosen_z
+			var/umbra_z
+			var/atom/movable/penumbra_ghost/GH
+			if(istype(caster.loc, /atom/movable/penumbra_ghost))
+				GH = caster.loc
 			for(var/area/vtm/interior/penumbra/U in world)
 				if(U)
 					chosen_z = U.z
+					umbra_z = U.z
 			if(caster.z != chosen_z)
 				prev_z = caster.z
 			else
 				chosen_z = prev_z
+				var/turf/mine = get_turf(caster)
+				var/turf/to_wall = locate(mine.x, mine.y, chosen_z)
+				var/area/A = get_area(to_wall)
+				if(A)
+					if(A.wall_rating > 1)
+						to_chat(caster, "<span class='warning'><b>GAUNTLET</b> rating there is too high! You can't cross <b>PENUMBRA</b> like this...</span>")
+						caster.yin_chi += 1
+						caster.yang_chi += 1
+						return
 			if(do_mob(caster, caster, delay))
-				caster.z = chosen_z
+				if(chosen_z != umbra_z)
+					var/atom/myloc = caster.loc
+					caster.forceMove(locate(myloc.x, myloc.y, chosen_z))
+					if(GH)
+						qdel(GH)
+				else
+					caster.z = chosen_z
+					GH = new (get_turf(caster))
+					GH.appearance = caster.appearance
+					GH.name = caster.name
+					GH.alpha = 128
+					caster.forceMove(GH)
 				playsound(get_turf(caster), 'code/modules/wod13/sounds/portal.ogg', 100, TRUE)
 		if(3)
 			caster.insane_luck = TRUE

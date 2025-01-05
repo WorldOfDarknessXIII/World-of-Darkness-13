@@ -1,9 +1,13 @@
+#define HIGH_WALL_RATING 2
+#define LOW_WALL_RATING 1
+
 /area
 	var/fire_controled = FALSE
 	var/fire_controling = FALSE
 	//Chi stuff
 	var/yang_chi = 1
 	var/yin_chi = 1
+	var/wall_rating = HIGH_WALL_RATING
 
 /area/vtm
 	name = "San Francisco"
@@ -50,6 +54,7 @@
 	icon_state = "shop"
 	upper = FALSE
 	fire_controled = TRUE
+	wall_rating = LOW_WALL_RATING
 
 /area/vtm/interior/giovanni
 	name = "Giovanni Mansion"
@@ -60,6 +65,7 @@
 	fire_controled = TRUE
 	yang_chi = 0
 	yin_chi = 2
+	wall_rating = LOW_WALL_RATING
 
 /area/vtm/interior/techshop
 	name = "Nightwolf Techshop"
@@ -100,6 +106,7 @@
 	zone_type = "battle"
 	yang_chi = 0
 	yin_chi = 2
+	wall_rating = LOW_WALL_RATING
 
 /area/vtm/financialdistrict
 	name = "Financial District"
@@ -251,6 +258,7 @@
 	music = /datum/vampiremusic/church
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
+	wall_rating = LOW_WALL_RATING
 
 /area/vtm/graveyard
 	name = "Graveyard"
@@ -261,6 +269,7 @@
 	zone_type = "battle"
 	yang_chi = 0
 	yin_chi = 2
+	wall_rating = LOW_WALL_RATING
 
 /area/vtm/graveyard/interior
 	name = "Graveyard Interior"
@@ -336,6 +345,7 @@
 	zone_type = "battle"
 	music = /datum/vampiremusic/forest
 	fire_controled = TRUE
+	wall_rating = LOW_WALL_RATING
 
 /area/vtm/interior/wyrm_corrupted
 	name = "Corrupted by Wyrm"
@@ -346,6 +356,7 @@
 	fire_controled = FALSE
 	yang_chi = 0
 	yin_chi = 2
+	wall_rating = LOW_WALL_RATING
 
 /area/vtm/interior/penumbra
 	name = "Penumbra"
@@ -355,6 +366,7 @@
 	zone_type = "battle"
 	music = /datum/vampiremusic/penumbra
 	fire_controled = FALSE
+	wall_rating = LOW_WALL_RATING
 
 /area/vtm/interior/backrooms
 	name = "Backrooms"
@@ -363,6 +375,7 @@
 	upper = FALSE
 	zone_type = "battle"
 	fire_controled = FALSE
+	wall_rating = LOW_WALL_RATING
 
 //MUSIC
 
@@ -496,3 +509,6 @@
 					wait_for_music = 1740
 					client << sound('code/modules/wod13/sounds/daughters.ogg', 0, 0, CHANNEL_LOBBYMUSIC, 5)
 					last_vampire_ambience = world.time
+
+#undef HIGH_WALL_RATING
+#undef LOW_WALL_RATING
