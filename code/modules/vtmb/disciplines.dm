@@ -1696,9 +1696,8 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 	else
 		return FALSE
 
-/datum/curse/daimonion/lying_weakness/activate(mob/living/target)
+/datum/curse/daimonion/lying_weakness/activate(mob/living/carbon/human/target)
 	. = ..()
-	var/mob/living/carbon/human/target = target
 	target.gain_trauma(/datum/brain_trauma/mild/mind_echo, TRAUMA_RESILIENCE_ABSOLUTE)
 	to_chat(target, "<span class='danger'>You feel like a great curse was placed on you!</span>")
 
@@ -1752,7 +1751,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 	step_towards(src, target)
 	spawn(duration)
 	if(C)
-	C.images.Remove(/obj/effect/daimonion_monster)
+		C.images.Remove(/obj/effect/daimonion_monster)
 
 
 /datum/daimonion/proc/baali_get_clan_weakness(target, caster)
