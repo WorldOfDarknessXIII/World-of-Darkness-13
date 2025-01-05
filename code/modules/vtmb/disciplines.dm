@@ -1664,13 +1664,6 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 /datum/curse
 	var/name
 
-/datum/curse/proc/activate(mob/living/target)
-    return
-
-/datum/curse/proc/deactivate(mob/living/target)
-	return
-
-
 /datum/curse/daimonion
 	var/genrequired
 
