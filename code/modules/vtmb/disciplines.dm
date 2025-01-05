@@ -1660,6 +1660,7 @@
 	clane_restricted = TRUE
 
 /mob/living/carbon/human/baali_get_clan_weakness(/mob/living/carbon/human/target, mob/living/carbon/human/caster)
+	var/mob/living/carbon/human/target = target
 	if(iskindred(target))
 		if(target.clane)
 			if(target.clane == "Toreador")
