@@ -1658,32 +1658,34 @@
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
-	var/genrequired
-	var/activated
 
-/datum/discipline/daimonion/curses/proc/lying_weakness(mob/living/target)
+/datum/curse/daimonion
+	var/genrequired
+	var/name
+
+/datum/curse/daimonion/proc/lying_weakness(mob/living/target)
 	name = "No Lying Tongue"
 	genrequired = 13
 
-/datum/discipline/daimonion/curses/proc/physical_weakness(mob/living/target)
+/datum/curse/daimonion/proc/physical_weakness(mob/living/target)
 	name = "Baby Strength"
 	genrequired = 10
 
 
-/datum/discipline/daimonion/curses/proc/mental_weakness(mob/living/target)
+/datum/curse/daimonion/proc/mental_weakness(mob/living/target)
 	name = "Reap Mentality"
 	genrequired = 9
 
-/datum/discipline/daimonion/curses/proc/offspring_weakness(mob/living/target)
+/datum/curse/daimonion/proc/offspring_weakness(mob/living/target)
 	name = "Sterile Vitae"
 	genrequired = 8
 
-/datum/discipline/daimonion/curses/proc/success_weakness(mob/living/target)
+/datum/curse/daimonion/proc/success_weakness(mob/living/target)
 	name = "The Mark Of Doom"
 	genrequired = 7
 
 
-/datum/discipline/daimonion/proc/baali_get_clan_weakness(target, caster)
+/datum/daimonion/proc/baali_get_clan_weakness(target, caster)
 	var/mob/living/carbon/human/H = target
 	if(iskindred(H))
 		if(H.clane?.name)
@@ -1741,7 +1743,8 @@
 			if(isgarou(target))
 				to_chat(caster, "Victim's natural banishment is silver...")
 			if(iskindred(target))
-				baali_get_clan_weakness(target, caster)
+				var/datum/daimonion/daim
+				daim.baali_get_clan_weakness(target, caster)
 				if(target.generation >= 10)
 					to_chat(caster, "Victim's vitae is weak and thin. You can clearly see their fear for fire, it seems that's a kindred.")
 				else
@@ -1769,13 +1772,13 @@
 			H.fire(direct_target = target)
 		if(5)
 			var/list/curses = list()
-			for(var/i in subtypesof(/datum/discipline/daimonion/curses))
-				var/datum/discipline/daimonion/curses/C = new i(caster)
+			for(var/i in subtypesof(/datum/curse/daimonion))
+				var/datum/curse/daimonion/C = new i(caster)
 				if(caster.generation <= C.genrequired)
 					curses += C
 			var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in curses
 			if(choosecurse)
-				var/datum/discipline/daimonion/curses/curs
+				var/datum/curse/daimonion/curs
 				if(choosecurse == "No Lying Tongue")
 					curs.lying_weakness(target)
 				if(choosecurse == "Baby Strength")
