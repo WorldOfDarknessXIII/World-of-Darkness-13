@@ -1716,10 +1716,10 @@
 				to_chat(caster, "Victim's natural banishment is silver...")
 			if(iskindred(target))
 				baali_get_clan_weakness(target, caster)
-				if(target.generation <= 11)
-					to_chat(caster, "Victim doesn't seem to have much vitae concentrated, looks like a weak one... Despite that, you can clearly see their fear for fire.")
+				if(target.generation >= 10)
+					to_chat(caster, "Victim's vitae is weak and thin. You can clearly see their fear for fire, it seems that's a kindred.")
 				else
-					to_chat(caster, "Victim has a lot of vitae, it seems that's an old one... Despite that, you can clearly see their fear for fire.")
+					to_chat(caster, "Victim's vitae is thick and strong. You can clearly see their fear for fire, it seems that's a kindred.")
 			if(isghoul(target))
 				var/mob/living/carbon/human/H = target
 				if(H.mind.enslaved_to)
