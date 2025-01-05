@@ -1659,9 +1659,14 @@
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
 
-/datum/curse/daimonion
-	var/genrequired
+/datum/curse
 	var/name
+
+/datum/curse/proc/activate(mob/living/target)
+    return
+
+/datum/curse/daimonion
+    var/genrequired
 
 /datum/curse/daimonion/lying_weakness
 	name = "No Lying Tongue"
@@ -1684,6 +1689,20 @@
 	name = "The Mark Of Doom"
 	genrequired = 7
 
+/datum/curse/daimonion/lying_weakness/proc/activate(mob/living/target)
+	. = ..()
+
+/datum/curse/daimonion/physical_weakness/proc/activate(mob/living/target)
+	. = ..()
+
+/datum/curse/daimonion/mental_weakness/proc/activate(mob/living/target)
+	. = ..()
+
+/datum/curse/daimonion/offspring_weakness/proc/activate(mob/living/target)
+	. = ..()
+
+/datum/curse/daimonion/success_weakness/proc/activate(mob/living/target)
+	. = ..()
 
 /datum/daimonion/proc/baali_get_clan_weakness(target, caster)
 	var/mob/living/carbon/human/H = target
@@ -1778,17 +1797,21 @@
 					curses += i
 			var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in curses
 			if(choosecurse)
-				var/datum/curse/daimonion/curs
 				if(choosecurse == "No Lying Tongue")
-					curs.lying_weakness(target)
+					var/datum/curse/daimonion/lying_weakness/curs
+					curs.activate(target)
 				if(choosecurse == "Baby Strength")
-					curs.physical_weakness(target)
+					var/datum/curse/daimonion/physical_weakness/curs
+					curs.activate(target)
 				if(choosecurse == "Reap Mentality")
-					curs.mental_weakness(target)
+					var/datum/curse/daimonion/mental_weakness/curs
+					curs.activate(target)
 				if(choosecurse == "Sterile Vitae")
-					curs.offspring_weakness(target)
+					var/datum/curse/daimonion/offspring_weakness/curs
+					curs.activate(target)
 				if(choosecurse == "The Mark Of Doom")
-					curs.success_weakness(target)
+					var/datum/curse/daimonion/success_weakness/curs
+					curs.activate(target)
 
 /datum/discipline/valeren
 	name = "Valeren"
