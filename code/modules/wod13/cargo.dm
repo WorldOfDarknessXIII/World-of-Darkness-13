@@ -5,6 +5,17 @@
 	contains = list(/obj/item/storage/box/handcuffs)
 	crate_name = "handcuff crate"
 
+/datum/supply_pack/vampire/radio
+	name = "Box of Radios"
+	desc = "Contains a box of radios."
+	cost = 150
+	contains = list(/obj/item/radio,
+					/obj/item/radio,
+					/obj/item/radio,
+					/obj/item/radio,
+					/obj/item/radio)
+	crate_name = "radio crate"
+
 /datum/supply_pack/vampire/fixing
 	name = "Fixing kit (wirecutters, lamps)"
 	desc = "Contains wirecutters, lamps and other stuff to restore light in the area."
