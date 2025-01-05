@@ -1,10 +1,9 @@
-
-/datum/job/vamp/bruiser
-	title = "Anarch Member"
+/datum/job/vamp/reeve
+	title = "Reeve"
 	department_head = list("Baron")
 	faction = "Vampire"
-	total_positions = 7
-	spawn_positions = 7
+	total_positions = 1
+	spawn_positions = 1
 	supervisors = "the Baron"
 	selection_color = "#434343"
 
@@ -18,17 +17,17 @@
 	mind_traits = list(TRAIT_DONUT_LOVER)
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_BRUISER
+	display_order = JOB_DISPLAY_ORDER_REEVE
 	known_contacts = list("Baron")
-	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Tremere", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian", "Ministry")
+	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian")
 
-	v_duty = "You are a member of the Anarch Free State. You listen to the undisputed Baron of the city and the Emissary as their second in command. You ensure the traditions are maintained - The Anarch way."
+	v_duty = "You are the Reeve of the Anarch Free State. You keep order within Anarch territory and act as a Judge in place of the Baron which is investigative in nature."
 	minimal_masquerade = 2
 	experience_addition = 15
 
-/datum/outfit/job/bruiser
-	name = "Anarch Member"
-	jobtype = /datum/job/vamp/bruiser
+/datum/outfit/job/reeve
+	name = "Revee"
+	jobtype = /datum/job/vamp/reeve
 
 	id = /obj/item/card/id/anarch
 	uniform = /obj/item/clothing/under/vampire/bouncer
@@ -43,6 +42,6 @@
 	..()
 	H.vampire_faction = "Anarchs"
 
-/obj/effect/landmark/start/bruiser
-	name = "Bruiser"
+/obj/effect/landmark/start/reeve
+	name = "Reeve"
 	icon_state = "Bouncer"

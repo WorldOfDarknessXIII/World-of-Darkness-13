@@ -1,11 +1,10 @@
-
 /datum/job/vamp/agent
 	title = "Scourge"
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list("Prince")
 	faction = "Vampire"
-	total_positions = 7
-	spawn_positions = 7
+	total_positions = 1
+	spawn_positions = 1
 	supervisors = "the prince"
 	selection_color = "#bd3327"
 	minimal_player_age = 7
@@ -26,7 +25,7 @@
 	bounty_types = CIV_JOB_SEC
 	known_contacts = list("Prince")
 
-	v_duty = "You are the Prince's enforcer. You report to the sheriff and uphold the Traditions."
+	v_duty = "The foremost member of the Camarilla. You are the hammer that the Prince brings when an investigation is not needed. You enforce the traditions and cooperate with the Sheriff."
 	minimal_masquerade = 4
 	experience_addition = 10
 	allowed_bloodlines = list("True Brujah", "Daughters of Cacophony", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian")
