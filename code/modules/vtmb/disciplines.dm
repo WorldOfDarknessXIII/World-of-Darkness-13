@@ -1775,7 +1775,7 @@
 			for(var/i in subtypesof(/datum/curse/daimonion))
 				var/datum/curse/daimonion/C = new i(caster)
 				if(caster.generation <= C.genrequired)
-					curses += C
+					curses += i
 			var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in curses
 			if(choosecurse)
 				var/datum/curse/daimonion/curs
