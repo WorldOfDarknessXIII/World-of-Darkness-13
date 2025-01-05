@@ -2937,25 +2937,26 @@
 			var/A
 			A = input(caster, "Area to jump to", "BOOYEA", A) as null|anything in GLOB.teleportlocs
 			if(A)
-				var/area/thearea = GLOB.teleportlocs[A]
+				if(do_mob(caster, caster, delay))
+					var/area/thearea = GLOB.teleportlocs[A]
 
-				var/datum/effect_system/smoke_spread/smoke = new
-				smoke.set_up(2, caster.loc)
-				smoke.attach(caster)
-				smoke.start()
-				var/list/L = list()
-				for(var/turf/T in get_area_turfs(thearea.type))
-					if(!T.is_blocked_turf())
-						L += T
-
-				if(!L.len)
-					to_chat(caster, "<span class='warning'>The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.</span>")
-					return
-
-				if(do_teleport(caster, pick(L), forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
+					var/datum/effect_system/smoke_spread/smoke = new
+					smoke.set_up(2, caster.loc)
+					smoke.attach(caster)
 					smoke.start()
-				else
-					to_chat(caster, "<span class='warning'>The spell matrix was disrupted by something near the destination.</span>")
+					var/list/L = list()
+					for(var/turf/T in get_area_turfs(thearea.type))
+						if(!T.is_blocked_turf())
+							L += T
+
+					if(!L.len)
+						to_chat(caster, "<span class='warning'>The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.</span>")
+						return
+
+					if(do_teleport(caster, pick(L), forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
+						smoke.start()
+					else
+						to_chat(caster, "<span class='warning'>The spell matrix was disrupted by something near the destination.</span>")
 		if(5)
 			var/obj/effect/anomaly/grav_kuei/G = new (get_turf(caster))
 			G.owner = caster
