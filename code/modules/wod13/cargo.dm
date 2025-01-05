@@ -1,3 +1,10 @@
+/datum/supply_pack/weed_tray
+	name = "Weed Tray"
+	desc = "Contains a tray of weed."
+	cost = 600
+	contains = list(/obj/structure/weedshit/buyable)
+	crate_name = "weed crate"
+
 /datum/supply_pack/vampire/cuffs
 	name = "Box of Handcuffs"
 	desc = "Contains a box of handcuffs."
