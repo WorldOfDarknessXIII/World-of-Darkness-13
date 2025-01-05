@@ -1659,10 +1659,78 @@
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
 
+/datum/discipline/daimonion/proc/get_clan_weakness(var/mob/living/carbon/target)
+	var/message = ""
+	if(target.iskindred())
+		if(target.clane)
+			if(target.clane == "Toreador")
+				message += "The blood is sweet and rich. The owner must, too, be beautiful."
+			elseif(target.clane == "Daughters of Cacophony")
+				message += ""
+			else if(target.clane == "Ventrue")
+				message += "The blood has kingly power in it, descending from Mithras or Hardestadt."
+			else if(target.clane == "Lasombra")
+				message += "Cold and dark, this blood has a mystical connection to the Abyss."
+			else if(target.clane == "Tzimisce")
+				message += "The vitae is mutable and twisted. Is there any doubt to the cursed line it belongs to?"
+			else if(target.clane == "Gangrel")
+				message += "The blood emits a primal and feral aura. The same is likely of the owner."
+			else if(target.clane == "Malkavian")
+				message += "You can sense chaos and madness within this blood. It's owner must be maddened too."
+			else if(target.clane == "Brujah")
+				message += "The blood is filled with passion and anger. So must be the owner of the blood."
+			else if(target.clane == "Nosferatu")
+				message += "The blood is foul and disgusting. Same must apply to the owner."
+			else if(target.clane == "Tremere")
+				message += "The blood is filled with the power of magic. The owner must be a thaumaturge."
+			else if(target.clane == "Baali")
+				message += "Tainted and corrupt. Vile and filthy. You see your reflection in the blood, but something else stares back."
+			else if(target.clane == "Assamite")
+				message += "Potent... Deadly... And cursed. You know well the curse laid by Tremere on the assassins."
+			else if(target.clane == "True Brujah")
+				message += "The blood is cold and static... It's hard to feel any emotion within it."
+			else if(target.clane == "Salubri")
+				message += "The cursed blood of the Salubri! The owner of this blood must be slain."
+			else if(target.clane == "Giovanni" || target.clane == "Cappadocian")
+				message += "The blood is very cold and filled with death. The owner must be a necromancer."
+			else if(target.clane == "Kiasyd")
+				message += "The blood is filled with traces of fae magic."
+			else if(target.clane == "Gargoyle")
+				message += "The blood of our stone servants."
+			else if(target.clane == "Ministry")
+				message += "Seduction and allure are in the blood. Ah, one of the snakes."
+			else
+				message += "The blood's origin is hard to trace. Perhaps it is one of the clanless?"
+	return message
+
+
+
 /datum/discipline/daimonion/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
 	switch(level_casting)
 		if(1)
+			if(target.get_total_social() <= 3)
+				to_chat(caster, "Victim is not as social and influencing as one could be...")
+			if(target.get_total_mentality() <= 3)
+				to_chat(caster, "Victim lacks appropiate willpower...")
+			if(target.get_total_physique() <= 3)
+				to_chat(caster, "Victim's body is weak and feeble.")
+			if(target.isgarou())
+				to_chat(caster, "Victim's natural banishment is silver...")
+			if(target.iskindred())
+				target.get_clan_weakness()
+				if(target.generation <= 11)
+					to_chat(caster, "Victim doesn't seem to have much vitae concentrated, looks like a weak one... Despite that, you can clearly see their fear for fire.")
+				else
+					to_chat(caster, "Victim has a lot of vitae, it seems that's an old one... Despite that, you can clearly see their fear for fire."))
+			if(target.isghoul())
+				var/mob/living/carbon/human/target = owner
+				if(owner.mind.enslaved_to)
+					to_chat(caster, "Victim is addicted to vampiric vitae and its true master is [owner.mind.enslaved_to]")
+				else
+					to_chat(caster, "Victim is addicted to vampiric vitae, but is independent and free.")
+			if(target.ishuman())
+				to_chat(caster, "Victim is a feeble worm with no strengths and visible weaknesses.")
 
 		if(2)
 			to_chat(target, "<span class='warning'>Your mind is enveloped by your greatest fear!</span>")
