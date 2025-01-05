@@ -61,7 +61,7 @@
 
 /mob/living/carbon/human/proc/check_kuei_jin_alive()
 	if(iscathayan(src))
-		if(mind.dharma)
+		if(mind?.dharma)
 			if(mind.dharma.animated == "Yang")
 				if(yin_chi < yang_chi+2)
 					return TRUE
