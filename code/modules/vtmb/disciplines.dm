@@ -1659,7 +1659,7 @@
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
 
-/mob/living/carbon/human/baali_get_clan_weakness(mob/living/target, mob/living/carbon/human/caster)
+/mob/living/carbon/human/baali_get_clan_weakness(target, caster)
 	var/mob/living/carbon/human/target = target
 	if(iskindred(target))
 		if(target.clane)
@@ -1716,7 +1716,7 @@
 				to_chat(caster, "Victim's natural banishment is silver...")
 			if(iskindred(target))
 				var/mob/living/carbon/human/target = target
-				target.baali_get_clan_weakness(target, caster)
+				baali_get_clan_weakness(target, caster)
 				if(target.generation <= 11)
 					to_chat(caster, "Victim doesn't seem to have much vitae concentrated, looks like a weak one... Despite that, you can clearly see their fear for fire.")
 				else
