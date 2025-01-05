@@ -1,6 +1,5 @@
-
 /datum/job/vamp/cammember
-	title = "Camarilla Member"
+	title = "Hound"
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list("Prince")
 	faction = "Vampire"
@@ -26,22 +25,23 @@
 	bounty_types = CIV_JOB_SEC
 	known_contacts = list("Prince")
 
-	v_duty = "You are a member of the Camarilla! You have no tasks at the start of the night but you may be given one by Camarilla membership in the round. You are expected to maintain the traditions."
+	v_duty = "You are a Hound; Tasked with serving either the Sheriff, Scourge or even the Keeper of Elysium, you are here to ensure Camarilla law is enforced."
 	minimal_masquerade = 4
 	experience_addition = 10
 	allowed_bloodlines = list("True Brujah", "Daughters of Cacophony", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian")
 
-/datum/outfit/job/cammember
-	name = "Camarilla Member"
-	jobtype = /datum/job/vamp/cammember
+/datum/outfit/job/hound
+	name = "Hound"
+	jobtype = /datum/job/vamp/hound
 
 	uniform = /obj/item/clothing/under/vampire/agent
+	id = /obj/item/cockclock
 	gloves = /obj/item/clothing/gloves/vampire/work
 	suit = /obj/item/clothing/suit/vampire/trench
 	shoes = /obj/item/clothing/shoes/vampire
 	r_pocket = /obj/item/vamp/keys/camarilla
 	l_pocket = /obj/item/vamp/phone/camarilla
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/vampire_stake=3, /obj/item/flashlight=1, /obj/item/masquerade_contract=1, /obj/item/vamp/keys/hack=1, /obj/item/vamp/creditcard=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/vampire_stake=3, /obj/item/flashlight=1, /obj/item/masquerade_contract=1, /obj/item/vamp/keys/hack=1, /obj/item/vamp/creditcard=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -53,6 +53,6 @@
 	..()
 	H.vampire_faction = "Camarilla"
 
-/obj/effect/landmark/start/camarillamember
-	name = "Camarilla Member"
+/obj/effect/landmark/start/hound
+	name = "Hound"
 	icon_state = "Camarilla Agent"

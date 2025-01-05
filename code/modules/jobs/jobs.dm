@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(command_positions, list(
 	"Sheriff",
 	"Harpy",
 	"Keeper",
-	"Camarilla Member",
+	"Hound",
 	"Scourge"))
 
 GLOBAL_LIST_INIT(camarilla_council_positions, list(
