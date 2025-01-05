@@ -461,7 +461,6 @@
 								
 								BLOODBONDED_prefs_v.clane = BLOODBONDED.clane
 								BLOODBONDED_prefs_v.generation = 13
-								BLOODBONDED_prefs_v.skin_tone = get_vamp_skin_color(BLOODBONDED.skin_tone)
 								BLOODBONDED_prefs_v.clane.enlightenment = H.clane.enlightenment
 								
 							
