@@ -1774,10 +1774,9 @@
 				to_chat(world, "For")
 				if(caster.generation <= C.genrequired)
 					curses += i
+					to_chat(world, "Completed Generation Check")
 				qdel(C)
-				else
-					to_chat(world, "Failed Generation Check")
-			var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in i
+			var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in curses
 			if(choosecurse)
 				to_chat(world, "Input")
 				var/datum/discipline/daimonion/curses/curs
