@@ -1663,7 +1663,7 @@
 
 /datum/discipline/daimonion/curses/proc/lying_weakness(mob/living/target)
 	name = "No Lying Tongue"
-	genrequired = list(11, 12, 13)
+	genrequired = 13
 
 /datum/discipline/daimonion/curses/proc/physical_weakness(mob/living/target)
 	name = "Baby Weakness"
@@ -1771,14 +1771,11 @@
 			var/list/curses = list()
 			for(var/i in subtypesof(/datum/discipline/daimonion/curses))
 				var/datum/discipline/daimonion/curses/C = new i(caster)
-				to_chat(world, "For")
 				if(caster.generation <= C.genrequired)
 					curses += i
-					to_chat(world, "Completed Generation Check")
 				qdel(C)
 			var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in curses
 			if(choosecurse)
-				to_chat(world, "Input")
 				var/datum/discipline/daimonion/curses/curs
 				if(choosecurse == "No Lying Tongue")
 					curs.lying_weakness(target)
@@ -1790,9 +1787,6 @@
 					curs.offspring_weakness(target)
 				if(choosecurse == "The Mark Of Doom")
 					curs.success_weakness(target)
-
-
-
 
 /datum/discipline/valeren
 	name = "Valeren"
