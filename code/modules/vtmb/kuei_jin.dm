@@ -89,7 +89,6 @@
 		animated = "Yin"
 		mob.yin_chi = max(0, mob.yin_chi-1)
 		mob.skin_tone = get_vamp_skin_color(mob.skin_tone)
-		mob.social = 0
 		mob.dna?.species.brutemod = initial(mob.dna?.species.brutemod)
 		mob.dna?.species.burnmod = initial(mob.dna?.species.burnmod)
 
@@ -216,12 +215,13 @@
 						H.mind.dharma?.roll_po(source, H)
 
 /datum/dharma/proc/roll_po(var/atom/Source, var/mob/living/carbon/human/owner)
-	if(last_po_call + 5 SECONDS > world.time)
-		return
-	last_po_call = world.time
-	Po_Focus = Source
-	owner.demon_chi = min(owner.demon_chi+1, owner.max_demon_chi)
-	to_chat(owner, "<span class='warning'>Some <b>DEMON</b> Chi energy fills you...</span>")
+	if(!owner.in_frenzy)
+		if(last_po_call + 5 SECONDS > world.time)
+			return
+		last_po_call = world.time
+		Po_Focus = Source
+		owner.demon_chi = min(owner.demon_chi+1, owner.max_demon_chi)
+		to_chat(owner, "<span class='warning'>Some <b>DEMON</b> Chi energy fills you...</span>")
 
 /mob/living/carbon/human/frenzystep()
 	if(iscathayan(src))
@@ -671,15 +671,24 @@
 
 		if(H.mind.dharma.Po == "Monkey")
 			if(H.mind.dharma.last_po_call + 5 SECONDS <= world.time)
+				var/atom/trigger1
+				var/atom/trigger2
+				var/atom/trigger3
 				for(var/obj/structure/pole/pole in view(5, H))
 					if(pole)
-						H.mind.dharma.roll_po(pole, H)
+						trigger1 = pole
+				if(trigger1)
+					H.mind.dharma.roll_po(trigger1, H)
 				for(var/obj/item/toy/toy in view(5, H))
 					if(toy)
-						H.mind.dharma.roll_po(toy, H)
+						trigger2 = toy
+				if(trigger2)
+					H.mind.dharma.roll_po(trigger2, H)
 				for(var/obj/machinery/computer/slot_machine/slot in view(5, H))
 					if(slot)
-						H.mind.dharma.roll_po(slot, H)
+						trigger3 = slot
+				if(trigger3)
+					H.mind.dharma.roll_po(trigger3, H)
 
 		if(H.mind.dharma.Po == "Fool")
 			if(fool_turf != get_turf(H))
@@ -694,10 +703,13 @@
 
 		if(H.mind.dharma.Po == "Demon")
 			if(H.mind.dharma.last_po_call + 5 SECONDS <= world.time)
+				var/atom/trigger
 				for(var/mob/living/carbon/human/hum in viewers(5, H))
 					if(hum != H)
 						if(hum.stat > CONSCIOUS && hum.stat < DEAD)
-							H.mind.dharma.roll_po(hum, H)
+							trigger = hum
+				if(trigger)
+					H.mind.dharma.roll_po(trigger, H)
 	H.nutrition = NUTRITION_LEVEL_START_MAX
 	if((H.last_bloodpool_restore + 60 SECONDS) <= world.time)
 		H.last_bloodpool_restore = world.time
@@ -744,8 +756,9 @@
 						to_chat(owner, "<span class='warning'>It doesn't have <b>Yang Chi</b> to feed on, try getting closer...</span>")
 						return
 					else
-						var/atom/chi_particle = new (get_turf(victim))
+						var/atom/movable/chi_particle = new (get_turf(victim))
 						chi_particle.density = FALSE
+						chi_particle.anchored = TRUE
 						chi_particle.icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 						chi_particle.icon_state = "drain"
 						var/matrix/M = matrix()
