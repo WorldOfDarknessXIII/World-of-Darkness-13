@@ -301,10 +301,15 @@
 	var/jade_shintai_override = 0
 	//For freezing/burning/blurry/storm aura
 	var/freezing_aura = FALSE
+	var/last_freeze = 0
 	var/burning_aura = FALSE
+	var/last_burn = 0
 	var/foul_aura = 0
+	var/last_foul = 0
 	var/storm_aura = FALSE
+	var/last_storm = 0
 	var/wind_aura = FALSE
+	var/last_wind = 0
 	var/yang_mantle = FALSE
 	var/yang_dodge = FALSE
 	var/insane_luck = FALSE
