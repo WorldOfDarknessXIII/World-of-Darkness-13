@@ -5,7 +5,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = " the Traditions"
-	selection_color = "#cb4aad"
+	selection_color = "#4f0404"
 
 	outfit = /datum/outfit/job/malkav
 
@@ -14,7 +14,7 @@
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_MALKAVIAN
-	exp_type_department = EXP_TYPE_INDEPENDENT
+	exp_type_department = EXP_TYPE_COUNCIL
 
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Malkavian")
@@ -55,7 +55,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = " the Traditions"
-	selection_color = "#cb4aad"
+	selection_color = "#4f0404"
 
 	outfit = /datum/outfit/job/nosferatu
 
@@ -64,7 +64,7 @@
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_NOSFERATU
-	exp_type_department = EXP_TYPE_INDEPENDENT
+	exp_type_department = EXP_TYPE_COUNCIL
 
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Nosferatu")
@@ -102,7 +102,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = " the Traditions"
-	selection_color = "#cb4aad"
+	selection_color = "#4f0404"
 
 	outfit = /datum/outfit/job/ventrue
 
@@ -111,7 +111,7 @@
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_VENTRUE
-	exp_type_department = EXP_TYPE_INDEPENDENT
+	exp_type_department = EXP_TYPE_COUNCIL
 
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Ventrue")
@@ -148,7 +148,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = " the Traditions"
-	selection_color = "#cb4aad"
+	selection_color = "#4f0404"
 
 	outfit = /datum/outfit/job/toreador
 
@@ -157,7 +157,7 @@
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_TOREADOR
-	exp_type_department = EXP_TYPE_INDEPENDENT
+	exp_type_department = EXP_TYPE_COUNCIL
 
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Toreador")
@@ -196,7 +196,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = " the Traditions"
-	selection_color = "#cb4aad"
+	selection_color = "#4f0404"
 
 	outfit = /datum/outfit/job/brujah
 
@@ -205,7 +205,7 @@
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_BRUJAH
-	exp_type_department = EXP_TYPE_INDEPENDENT
+	exp_type_department = EXP_TYPE_COUNCIL
 
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Brujah")

@@ -211,6 +211,7 @@
 							to_chat(src, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
 					SEND_SOUND(src, sound('code/modules/wod13/sounds/feed_failed.ogg', 0, 0, 75))
 					to_chat(src, "<span class='warning'>This sad sacrifice for your own pleasure affects something deep in your mind.</span>")
+					AdjustMasquerade(-1)
 					AdjustHumanity(-1, 0)
 					mob.death()
 			if(!ishuman(mob))

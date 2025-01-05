@@ -81,6 +81,10 @@ VENTORY!
 	screen_max_columns = 7
 	screen_max_rows = 9
 
+/datum/component/storage/concrete/vtm/car/track
+	screen_max_columns = 12
+	screen_max_rows = 12
+
 /datum/component/storage/concrete/vtm/sheathe
 	screen_max_columns = 2
 	screen_max_rows = 5
@@ -873,6 +877,10 @@ VENTORY!
 /obj/item/melee/vampirearms/katana
 	grid_width = 5 GRID_BOXES
 	grid_height = 1 GRID_BOXES
+
+/obj/item/melee/vampirearms/machete
+    grid_width = 3 GRID_BOXES
+    grid_height = 1 GRID_BOXES
 
 /obj/item/melee/vampirearms/rapier
 	grid_width = 2 GRID_BOXES

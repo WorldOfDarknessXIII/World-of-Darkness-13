@@ -14,7 +14,7 @@
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_VOIVODE
-	exp_type_department = EXP_TYPE_INDEPENDENT
+	exp_type_department = EXP_TYPE_TZIMISCE
 
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Old Clan Tzimisce")

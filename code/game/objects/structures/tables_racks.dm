@@ -106,6 +106,11 @@
 		return TRUE
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return TRUE
+	//Roughly the same elevation
+	if(istype(mover.loc, /turf/closed/wall/vampwall)) //Because "low" type walls aren't standardized and are subtypes of different wall types
+		var/turf/closed/wall/vampwall/vw = mover.loc
+		if(vw.low)
+			return TRUE
 
 /obj/structure/table/CanAStarPass(ID, dir, caller)
 	. = !density

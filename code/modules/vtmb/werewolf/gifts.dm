@@ -59,13 +59,13 @@
 	name = "Inspiration"
 	desc = "The Garou with this Gift lends new resolve and righteous anger to his brethren."
 	button_icon_state = "inspiration"
-//	rage_req = 1
+	rage_req = 1
 
 /mob/living/carbon/Life()
 	. = ..()
 	if(inspired)
 		if(stat != DEAD)
-			adjustBruteLoss(-4, TRUE)
+			adjustBruteLoss(-10, TRUE)
 			var/obj/effect/celerity/C = new(get_turf(src))
 			C.appearance = appearance
 			C.dir = dir
@@ -107,8 +107,9 @@
 			H.dna.species.attack_verb = "slash"
 			H.dna.species.attack_sound = 'sound/weapons/slash.ogg'
 			H.dna.species.miss_sound = 'sound/weapons/slashmiss.ogg'
-			H.dna.species.punchdamagelow = 25
-			H.dna.species.punchdamagehigh = 25
+			H.dna.species.punchdamagelow = 20
+			H.dna.species.punchdamagehigh = 20
+			H.agg_damage_plus = 5
 			to_chat(owner, "<span class='notice'>You feel your claws sharpening...</span>")
 			spawn(150)
 				H.dna.species.attack_verb = initial(H.dna.species.attack_verb)
@@ -116,23 +117,27 @@
 				H.dna.species.miss_sound = initial(H.dna.species.miss_sound)
 				H.dna.species.punchdamagelow = initial(H.dna.species.punchdamagelow)
 				H.dna.species.punchdamagehigh = initial(H.dna.species.punchdamagehigh)
+				H.agg_damage_plus = 0
 				to_chat(owner, "<span class='warning'>Your claws are not sharp anymore...</span>")
 		else
 			playsound(get_turf(owner), 'code/modules/wod13/sounds/razor_claws.ogg', 75, FALSE)
 			var/mob/living/carbon/H = owner
-			H.melee_damage_lower = H.melee_damage_lower+20
-			H.melee_damage_upper = H.melee_damage_upper+20
+			H.melee_damage_lower = H.melee_damage_lower+15
+			H.melee_damage_upper = H.melee_damage_upper+15
+			H.agg_damage_plus = 3
 			to_chat(owner, "<span class='notice'>You feel your claws sharpening...</span>")
 			spawn(150)
 				H.melee_damage_lower = initial(H.melee_damage_lower)
 				H.melee_damage_upper = initial(H.melee_damage_upper)
+				H.tox_damage_plus = 0
 				to_chat(owner, "<span class='warning'>Your claws are not sharp anymore...</span>")
 
 /datum/action/gift/beast_speech
 	name = "Beast Speech"
 	desc = "The werewolf with this Gift may communicate with any animals from fish to mammals."
 	button_icon_state = "beast_speech"
-	gnosis_req = 1
+	rage_req = 1
+	//gnosis_req = 1
 
 /datum/action/gift/beast_speech/Trigger()
 	. = ..()
@@ -196,7 +201,7 @@
 	name = "Resist Pain"
 	desc = "Through force of will, the Philodox is able to ignore the pain of his wounds and continue acting normally."
 	button_icon_state = "resist_pain"
-	rage_req = 1
+	rage_req = 2
 
 /datum/action/gift/resist_pain/Trigger()
 	. = ..()
@@ -204,19 +209,19 @@
 		if(ishuman(owner))
 			playsound(get_turf(owner), 'code/modules/wod13/sounds/resist_pain.ogg', 75, FALSE)
 			var/mob/living/carbon/human/H = owner
-			H.physiology.armor.melee = 50
-			H.physiology.armor.bullet = 50
+			H.physiology.armor.melee = 40
+			H.physiology.armor.bullet = 25
 			to_chat(owner, "<span class='notice'>You feel your skin thickering...</span>")
-			spawn(200)
+			spawn(15 SECONDS)
 				H.physiology.armor.melee = initial(H.physiology.armor.melee)
 				H.physiology.armor.bullet = initial(H.physiology.armor.bullet)
 				to_chat(owner, "<span class='warning'>Your skin is thin again...</span>")
 		else
 			playsound(get_turf(owner), 'code/modules/wod13/sounds/resist_pain.ogg', 75, FALSE)
 			var/mob/living/carbon/werewolf/H = owner
-			H.werewolf_armor = 50
+			H.werewolf_armor = 40
 			to_chat(owner, "<span class='notice'>You feel your skin thickering...</span>")
-			spawn(200)
+			spawn(15 SECONDS)
 				H.werewolf_armor = initial(H.werewolf_armor)
 				to_chat(owner, "<span class='warning'>Your skin is thin again...</span>")
 
@@ -224,7 +229,8 @@
 	name = "Scent Of The True Form"
 	desc = "This Gift allows the Garou to determine the true nature of a person."
 	button_icon_state = "scent_of_the_true_form"
-	gnosis_req = 1
+	rage_req = 1
+	//gnosis_req = 1
 
 /datum/action/gift/scent_of_the_true_form/Trigger()
 	. = ..()
@@ -244,7 +250,8 @@
 	name = "Mother's Touch"
 	desc = "The Garou is able to heal the wounds of any living creature, aggravated or otherwise, simply by laying hands over the afflicted area."
 	button_icon_state = "mothers_touch"
-	gnosis_req = 1
+	rage_req = 2
+	//gnosis_req = 1
 
 /datum/action/gift/mothers_touch/Trigger()
 	. = ..()
@@ -273,7 +280,7 @@
 	name = "Spirit Speech"
 	desc = "This Gift allows the Garou to communicate with encountered spirits."
 	button_icon_state = "spirit_speech"
-	gnosis_req = 1
+	//gnosis_req = 1
 
 /datum/action/gift/spirit_speech/Trigger()
 	. = ..()
@@ -287,7 +294,8 @@
 	name = "Blur Of The Milky Eye"
 	desc = "The Garou's form becomes a shimmering blur, allowing him to pass unnoticed among others."
 	button_icon_state = "blur_of_the_milky_eye"
-	gnosis_req = 1
+	rage_req = 2
+	//gnosis_req = 1
 
 /datum/action/gift/blur_of_the_milky_eye/Trigger()
 	. = ..()
@@ -353,10 +361,11 @@
 		var/mob/living/carbon/C = owner
 		if(C.stat != DEAD)
 			SEND_SOUND(owner, sound('code/modules/wod13/sounds/rage_heal.ogg', 0, 0, 75))
-			C.adjustBruteLoss(-50*C.auspice.level, TRUE)
-			C.adjustFireLoss(-35*C.auspice.level, TRUE)
-			C.adjustCloneLoss(-25*C.auspice.level, TRUE)
-			C.adjustOxyLoss(-25*C.auspice.level, TRUE)
+			C.adjustBruteLoss(-40*C.auspice.level, TRUE)
+			C.adjustFireLoss(-30*C.auspice.level, TRUE)
+			C.adjustCloneLoss(-10*C.auspice.level, TRUE)
+			C.adjustToxLoss(-10*C.auspice.level, TRUE)
+			C.adjustOxyLoss(-20*C.auspice.level, TRUE)
 			C.bloodpool = min(C.bloodpool + C.auspice.level, C.maxbloodpool)
 			C.blood_volume = min(C.blood_volume + 56 * C.auspice.level, BLOOD_VOLUME_NORMAL)
 			if(ishuman(owner))
@@ -411,14 +420,18 @@
 			H.melee_damage_upper = initial(H.melee_damage_upper)
 			H.hispo = FALSE
 			H.update_icons()
+			H.remove_movespeed_modifier(/datum/movespeed_modifier/crinosform)
+			H.add_movespeed_modifier(/datum/movespeed_modifier/lupusform)
 		else
 			H.icon = 'code/modules/wod13/hispo.dmi'
 			H.pixel_w = -16
 			H.pixel_z = -16
-			H.melee_damage_lower = 25
-			H.melee_damage_upper = 65
+			H.melee_damage_lower = 35
+			H.melee_damage_upper = 55
 			H.hispo = TRUE
 			H.update_icons()
+			H.remove_movespeed_modifier(/datum/movespeed_modifier/lupusform)
+			H.add_movespeed_modifier(/datum/movespeed_modifier/crinosform)
 
 /datum/action/gift/glabro
 	name = "Glabro Form"
@@ -435,6 +448,7 @@
 			H.remove_overlay(PROTEAN_LAYER)
 			G.punchdamagelow -= 15
 			G.punchdamagehigh -= 15
+			H.physique = initial(H.physique)
 			H.physiology.armor.melee -= 15
 			H.physiology.armor.bullet -= 15
 			var/matrix/M = matrix()
@@ -449,10 +463,11 @@
 			H.apply_overlay(PROTEAN_LAYER)
 			G.punchdamagelow += 15
 			G.punchdamagehigh += 15
+			H.physique = H.physique+2
 			H.physiology.armor.melee += 15
 			H.physiology.armor.bullet += 15
 			var/matrix/M = matrix()
-			M.Scale(1.3)
+			M.Scale(1.23)
 			animate(H, transform = M, time = 1 SECONDS)
 			G.glabro = TRUE
 			H.update_icons()

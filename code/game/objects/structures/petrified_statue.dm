@@ -6,7 +6,7 @@
 	anchored = TRUE
 //	max_integrity = 200
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
-	var/timer = 480 //eventually the person will be freed
+	var/timer = 7 SECONDS //eventually the person will be freed
 	var/mob/living/petrified_mob
 
 /obj/structure/statue/petrified/New(loc, mob/living/L, statue_timer)

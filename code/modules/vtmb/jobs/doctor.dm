@@ -7,6 +7,8 @@
 	spawn_positions = 4
 	supervisors = "the Camarilla or the Anarchs"
 	selection_color = "#e3e3e3"
+	exp_type_department = EXP_TYPE_SERVICES
+
 
 	outfit = /datum/outfit/job/vdoctor
 

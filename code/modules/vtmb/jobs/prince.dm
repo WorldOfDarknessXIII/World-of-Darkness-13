@@ -33,6 +33,9 @@
 	known_contacts = list(
 		"Sheriff",
 		"Seneschal",
+		"Dealer",
+		"Tremere Regent",
+		"Primogens",
 		"Baron"
 	)
 

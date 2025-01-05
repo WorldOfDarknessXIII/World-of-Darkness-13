@@ -98,6 +98,7 @@
 
 /datum/antagonist/national_guard/on_gain()
 	randomize_appearance()
+	forge_objectives()
 	add_antag_hud(ANTAG_HUD_OPS, "synd", owner.current)
 	owner.special_role = src
 	equip_national_guard()

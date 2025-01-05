@@ -63,10 +63,6 @@ There are several things that need to be remembered:
 	else
 		dna.species.limbs_id = "[base_body_mod]human"
 
-	if(clane)
-		if(clane.alt_sprite)
-			dna.species.limbs_id = "[base_body_mod][clane.alt_sprite]"
-
 	if(unique_body_sprite)
 		dna.species.limbs_id = "[base_body_mod][unique_body_sprite]"
 

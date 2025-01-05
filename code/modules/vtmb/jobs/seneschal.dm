@@ -43,7 +43,7 @@
 	minimal_masquerade = 5
 
 	my_contact_is_important = TRUE
-	known_contacts = list("Prince")
+	known_contacts = list("Prince","Sheriff","Tremere Regent","Dealer","Primogens")
 
 	v_duty = "You are the right hand man or woman of the most powerful vampire in the city. The Camarilla trusts you to run the city, even in their stead."
 	duty = "You are the right hand man or woman of the most powerful vampire in the city. The Camarilla trusts you to run the city, even in their stead."
@@ -60,7 +60,7 @@
 //	head = /obj/item/clothing/head/hopcap
 	l_pocket = /obj/item/vamp/phone/clerk
 	r_pocket = /obj/item/vamp/keys/clerk
-	backpack_contents = list(/obj/item/passport=1, /obj/item/phone_book=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/phone_book=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard/seneschal=1)
 
 /datum/outfit/job/clerk/pre_equip(mob/living/carbon/human/H)
 	..()

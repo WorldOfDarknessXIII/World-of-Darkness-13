@@ -17,6 +17,7 @@
 			for(var/obj/item/vamp/creditcard/caard in b.contents)
 				if(caard)
 					H.bank_id = caard.account.bank_id
+					caard.account.account_owner = H.true_real_name
 					caard.has_checked = TRUE
 
 //ID
@@ -196,9 +197,9 @@
 	worn_icon_state = "id2"
 
 /obj/item/card/id/archive
-	name = "librarian badge"
-	id_type_name = "librarian badge"
-	desc = "A badge which shows the love to books."
+	name = "scholar badge"
+	id_type_name = "scholar badge"
+	desc = "A badge which shows a love of culture."
 	icon = 'code/modules/wod13/items.dmi'
 	icon_state = "id7"
 	inhand_icon_state = "card-id"
@@ -207,6 +208,19 @@
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	worn_icon = 'code/modules/wod13/worn.dmi'
 	worn_icon_state = "id7"
+
+/obj/item/card/id/regent
+	name = "erudite scholar badge"
+	id_type_name = "erudite scholar badge"
+	desc = "A badge which shows a deep understanding of culture."
+	icon = 'code/modules/wod13/items.dmi'
+	icon_state = "id7_regent"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	worn_icon_state = "id7_regent"
 
 /obj/item/card/id/cleaning
 	name = "janitor badge"
@@ -420,10 +434,10 @@
 				objectives += money_objective
 				money_objective.update_explanation_text()
 		if(4)
-			var/list/available_factions = list("Camarilla", "Anarch", "Sabbat")
+			var/list/available_factions = list("Camarilla", "Anarchs", "Sabbat")
 			if(ishuman(owner))
 				var/mob/living/carbon/human/H = owner
-				if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarch" || H.vampire_faction == "Sabbat")
+				if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarchs" || H.vampire_faction == "Sabbat")
 					available_factions -= H.vampire_faction
 			var/datum/objective/become_member/member_objective = new
 			member_objective.owner = owner

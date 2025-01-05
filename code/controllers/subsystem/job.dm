@@ -819,7 +819,7 @@ SUBSYSTEM_DEF(job)
 	. = list()
 	for(var/i in GLOB.human_list)
 		var/mob/living/carbon/human/player = i
-		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.security_positions))
+		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.ss13))
 			. |= player.mind
 
 ////////////////////////////////////////
@@ -829,7 +829,7 @@ SUBSYSTEM_DEF(job)
 	. = list()
 	for(var/i in GLOB.human_list)
 		var/mob/living/carbon/human/player = i
-		if(player.mind && (player.mind.assigned_role in GLOB.security_positions))
+		if(player.mind && (player.mind.assigned_role in GLOB.ss13))
 			. |= player.mind
 
 /datum/controller/subsystem/job/proc/JobDebug(message)

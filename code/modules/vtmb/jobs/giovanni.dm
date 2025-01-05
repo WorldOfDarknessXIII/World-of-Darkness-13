@@ -14,7 +14,7 @@
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_GIOVANNI
-	exp_type_department = EXP_TYPE_INDEPENDENT
+	exp_type_department = EXP_TYPE_GIOVANNI
 
 	minimal_generation = 11	//Uncomment when players get exp enough
 
@@ -22,7 +22,7 @@
 	minimal_masquerade = 0
 	experience_addition = 10
 	allowed_species = list("Vampire")
-	allowed_bloodlines = list("Giovanni")
+	allowed_bloodlines = list("Giovanni", "Cappadocian")
 
 /datum/outfit/job/giovannielder
 	name = "Capo"
@@ -63,13 +63,13 @@
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_GIOVANNI
-	exp_type_department = EXP_TYPE_INDEPENDENT
+	exp_type_department = EXP_TYPE_GIOVANNI
 
 	v_duty = "Whether born or Embraced into the family, you are one of the Giovanni. Be you a necromancer, financier or lowly fledgling, remember that so long as you stand with your family, they too will stand with you."
 	minimal_masquerade = 0
 	experience_addition = 10
 	allowed_species = list("Vampire")
-	allowed_bloodlines = list("Giovanni")
+	allowed_bloodlines = list("Giovanni", "Cappadocian")
 
 /datum/outfit/job/giovanni
 	name = "La Squadra"
@@ -110,7 +110,7 @@
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_GIOVANNI
-	exp_type_department = EXP_TYPE_INDEPENDENT
+	exp_type_department = EXP_TYPE_GIOVANNI
 
 //	minimal_generation = 11	//Uncomment when players get exp enough
 

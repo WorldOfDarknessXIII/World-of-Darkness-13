@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(humannpcpool)
 	wait = 30
 
 	var/list/currentrun = list()
-	var/npc_max = 130
+	var/npc_max = 220
 
 /datum/controller/subsystem/humannpcpool/stat_entry(msg)
 	var/list/activelist = GLOB.npc_list

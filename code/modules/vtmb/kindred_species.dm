@@ -76,7 +76,7 @@
 			dat += "<BR>"
 			if(host.mind.enslaved_to)
 				dat += "My Regnant is [host.mind.enslaved_to], I should obey their wants.<BR>"
-		if(host.vampire_faction == "Camarilla" || host.vampire_faction == "Anarch" || host.vampire_faction == "Sabbat")
+		if(host.vampire_faction == "Camarilla" || host.vampire_faction == "Anarchs" || host.vampire_faction == "Sabbat")
 			dat += "I belong to [host.vampire_faction] faction, I shouldn't disobey their rules.<BR>"
 		if(host.generation)
 			dat += "I'm from [host.generation] generation.<BR>"
@@ -156,13 +156,13 @@
 				if(host.real_name != GLOB.ventruename)
 					dat += " My primogen is:  [GLOB.ventruename].<BR>"
 
-		dat += "<b>Physique</b>: [host.physique]<BR>"
-		dat += "<b>Dexterity</b>: [host.dexterity]<BR>"
-		dat += "<b>Social</b>: [host.social]<BR>"
-		dat += "<b>Mentality</b>: [host.mentality]<BR>"
-		dat += "<b>Lockpicking</b>: [host.lockpicking]<BR>"
-		dat += "<b>Athletics</b>: [host.athletics]<BR>"
-		dat += "<b>Cruelty</b>: [host.blood]<BR>"
+		dat += "<b>Physique</b>: [host.physique] + [host.additional_physique]<BR>"
+		dat += "<b>Dexterity</b>: [host.dexterity] + [host.additional_dexterity]<BR>"
+		dat += "<b>Social</b>: [host.social] + [host.additional_social]<BR>"
+		dat += "<b>Mentality</b>: [host.mentality] + [host.additional_mentality]<BR>"
+		dat += "<b>Cruelty</b>: [host.blood] + [host.additional_blood]<BR>"
+		dat += "<b>Lockpicking</b>: [host.lockpicking] + [host.additional_lockpicking]<BR>"
+		dat += "<b>Athletics</b>: [host.athletics] + [host.additional_athletics]<BR>"
 		if(host.hud_used)
 			dat += "<b>Known disciplines:</b><BR>"
 			for(var/datum/action/discipline/D in host.actions)
@@ -205,7 +205,7 @@
 			dat += "<b>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
 			for(var/i in host.knowscontacts)
 				dat += "-[i] contact<BR>"
-		for(var/datum/bank_account/account in GLOB.bank_account_list)
+		for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
 			if(host.bank_id == account.bank_id)
 				dat += "<b>My bank account code is: [account.code]</b><BR>"
 		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
@@ -355,7 +355,7 @@
 				var/new_master = FALSE
 				BLOODBONDED.faction |= H.faction
 				if(!istype(BLOODBONDED, /mob/living/carbon/human/npc))
-					if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarch" || H.vampire_faction == "Sabbat")
+					if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarchs" || H.vampire_faction == "Sabbat")
 						if(BLOODBONDED.vampire_faction != H.vampire_faction)
 							BLOODBONDED.vampire_faction = H.vampire_faction
 							if(H.vampire_faction == "Sabbat")
@@ -517,7 +517,8 @@
 				adding_disciplines += discipline
 		else if (disciplines.len) //initialise given disciplines
 			for (var/i in 1 to disciplines.len)
-				var/datum/discipline/discipline = new disciplines[i]
+				var/type_to_create = disciplines[i]
+				var/datum/discipline/discipline = new type_to_create
 				adding_disciplines += discipline
 
 		for (var/datum/discipline/discipline in adding_disciplines)
@@ -560,6 +561,26 @@
 
 /datum/species/kindred/check_roundstart_eligible()
 	return TRUE
+
+/datum/species/kindred/handle_body(mob/living/carbon/human/H)
+	if (!H.clane)
+		return ..()
+
+	//deflate people if they're super rotten
+	if ((H.clane.alt_sprite == "rotten4") && (H.base_body_mod == "f"))
+		H.base_body_mod = ""
+
+	if(H.clane.alt_sprite)
+		H.dna.species.limbs_id = "[H.base_body_mod][H.clane.alt_sprite]"
+
+	if (H.clane.no_hair)
+		H.hairstyle = "Bald"
+
+	if (H.clane.no_facial)
+		H.facial_hairstyle = "Shaved"
+
+	..()
+
 
 /**
  * Signal handler for lose_organ to near-instantly kill Kindred whose hearts have been removed.
