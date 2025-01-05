@@ -2875,7 +2875,7 @@
 	if(last_ghost_moved+5 <= world.time)
 		last_ghost_moved = world.time
 		dir = direction
-		Move(get_step(src, direction), direction)
+		forceMove(get_step(src, direction))
 
 /obj/effect/anomaly/grav_kuei
 	name = "gravitational anomaly"
