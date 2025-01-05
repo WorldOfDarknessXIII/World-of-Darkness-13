@@ -1,0 +1,21 @@
+name: IconDiffBot
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  icondiff:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      - name: Run IconDiffBot
+        run: |
+          docker build -t icondiffbot .
+          docker run icondiffbot
