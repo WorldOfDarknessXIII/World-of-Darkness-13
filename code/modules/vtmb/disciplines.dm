@@ -1796,7 +1796,7 @@
 				var/curse = subtype_list[i]
 				var/datum/curse/daimonion/C = new curse
 				if(caster.generation <= C.genrequired)
-					curses += i
+					curses += C
 			var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in curses
 			if(choosecurse)
 				if(choosecurse == "No Lying Tongue")
