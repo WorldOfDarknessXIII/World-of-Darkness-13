@@ -1719,7 +1719,7 @@
 				to_chat(caster, "Victim's natural banishment is silver...")
 			if(iskindred(target))
 				var/mob/living/carbon/human/target = target
-				target.baali_get_clan_weakness()
+				baali_get_clan_weakness(target)
 				to_chat(caster, message)
 				if(target.generation <= 11)
 					to_chat(caster, "Victim doesn't seem to have much vitae concentrated, looks like a weak one... Despite that, you can clearly see their fear for fire.")
