@@ -336,16 +336,14 @@
 			L.adjustFireLoss(-25)
 		if(istype(H.pulling, /mob/living/carbon/human))
 			var/mob/living/carbon/human/BLOODBONDED = H.pulling
-
-			/* if(!BLOODBONDED.client && !istype(H.pulling, /mob/living/carbon/human/npc))
+			if(!BLOODBONDED.client && !istype(H.pulling, /mob/living/carbon/human/npc))
 				to_chat(owner, "<span class='warning'>You need [BLOODBONDED]'s attention to do that!</span>")
 				return
 			if(BLOODBONDED.stat == DEAD)
 				if(!BLOODBONDED.key)
 					to_chat(owner, "<span class='warning'>You need [BLOODBONDED]'s mind to Embrace!</span>")
 					return
-				message_admins("[ADMIN_LOOKUPFLW(H)] is Embracing [ADMIN_LOOKUPFLW(BLOODBONDED)]!") */
-
+				message_admins("[ADMIN_LOOKUPFLW(H)] is Embracing [ADMIN_LOOKUPFLW(BLOODBONDED)]!")
 			if(giving)
 				return
 			giving = TRUE
