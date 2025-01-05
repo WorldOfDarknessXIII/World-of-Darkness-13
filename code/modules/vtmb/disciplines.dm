@@ -1791,8 +1791,10 @@
 			H.fire(direct_target = target)
 		if(5)
 			var/list/curses = list()
-			for(var/i in subtypesof(/datum/curse/daimonion))
-				var/datum/curse/daimonion/C = new i(caster)
+			var/list/subtype_list = subtypesof(/datum/curse/daimonion)
+			for(var/i in subtype_list)
+				var/curse = subtype_list[i]
+				var/datum/curse/daimonion/C = new curse
 				if(caster.generation <= C.genrequired)
 					curses += i
 			var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in curses
