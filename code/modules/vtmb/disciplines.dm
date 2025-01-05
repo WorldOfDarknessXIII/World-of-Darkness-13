@@ -1677,8 +1677,7 @@
 			H.preparePixelProjectile(target, start)
 			H.fire(direct_target = target)
 		if(4)
-			caster.hallucination += 50
-			new /datum/hallucination/baali(caster, TRUE)
+			to_chat(target, "...")
 
 /datum/discipline/valeren
 	name = "Valeren"
