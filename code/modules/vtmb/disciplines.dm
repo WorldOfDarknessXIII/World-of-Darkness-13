@@ -1841,7 +1841,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 			H.fire(direct_target = target)
 		if(4)
 			var/obj/effect/daimonion_monster/M
-			M.summon_scary_monster(target)
+			M.summon_scary_monster(caster)
 			to_chat(target, "<span class='warning'You see a monster appear out of thin air!<span>")
 		if(5)
 			var/list/curses = list()
