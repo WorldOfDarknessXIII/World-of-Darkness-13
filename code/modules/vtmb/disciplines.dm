@@ -1689,19 +1689,19 @@
 	name = "The Mark Of Doom"
 	genrequired = 7
 
-/datum/curse/daimonion/lying_weakness/proc/activate(mob/living/target)
+/datum/curse/daimonion/lying_weakness/activate(mob/living/target)
 	. = ..()
 
-/datum/curse/daimonion/physical_weakness/proc/activate(mob/living/target)
+/datum/curse/daimonion/physical_weakness/activate(mob/living/target)
 	. = ..()
 
-/datum/curse/daimonion/mental_weakness/proc/activate(mob/living/target)
+/datum/curse/daimonion/mental_weakness/activate(mob/living/target)
 	. = ..()
 
-/datum/curse/daimonion/offspring_weakness/proc/activate(mob/living/target)
+/datum/curse/daimonion/offspring_weakness/activate(mob/living/target)
 	. = ..()
 
-/datum/curse/daimonion/success_weakness/proc/activate(mob/living/target)
+/datum/curse/daimonion/success_weakness/activate(mob/living/target)
 	. = ..()
 
 /datum/daimonion/proc/baali_get_clan_weakness(target, caster)
