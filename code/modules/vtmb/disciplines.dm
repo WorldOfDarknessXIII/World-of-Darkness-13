@@ -1668,7 +1668,6 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 	var/genrequired
 
 /datum/curse/daimonion/proc/activate(var/mob/living/target)
-	. = ..()
 	GLOB.who_is_cursed += target
 
 /datum/curse/daimonion/lying_weakness
@@ -1706,7 +1705,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 /datum/curse/daimonion/physical_weakness/activate(mob/living/target)
 	. = ..()
 	if(target.physique >= 5)
-	target.physique = 4
+		target.physique = 4
 	var/mob/living/carbon/human/C
 	for (var/datum/action/blood_power/A in C.actions)
 		if(A)
@@ -1715,11 +1714,10 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 
 /datum/curse/daimonion/mental_weakness/activate(mob/living/target)
 	. = ..()
-	var/mob/living/carbon/human/target = target
 	if(target.social >= 5)
-	target.social = 4
+		target.social = 4
 	if(target.mentality >= 5)
-	target.mentality = 4
+		target.mentality = 4
 	to_chat(target, "<span class='danger'>You feel like a great curse was placed on you!</span>")
 
 /datum/curse/daimonion/offspring_weakness/activate(mob/living/target)
