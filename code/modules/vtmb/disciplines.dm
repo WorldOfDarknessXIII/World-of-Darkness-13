@@ -1715,14 +1715,13 @@
 			if(isgarou(target))
 				to_chat(caster, "Victim's natural banishment is silver...")
 			if(iskindred(target))
-				var/mob/living/carbon/human/target = target
 				baali_get_clan_weakness(target, caster)
 				if(target.generation <= 11)
 					to_chat(caster, "Victim doesn't seem to have much vitae concentrated, looks like a weak one... Despite that, you can clearly see their fear for fire.")
 				else
 					to_chat(caster, "Victim has a lot of vitae, it seems that's an old one... Despite that, you can clearly see their fear for fire.")
 			if(isghoul(target))
-				var/mob/living/carbon/human/target = target
+				var/mob/living/carbon/human/H = target
 				if(target.mind.enslaved_to)
 					to_chat(caster, "Victim is addicted to vampiric vitae and its true master is [target.mind.enslaved_to]")
 				else
