@@ -43,7 +43,7 @@
 	gloves = /obj/item/clothing/gloves/vampire/work
 	l_pocket = /obj/item/vamp/phone/barkeeper
 	r_pocket = /obj/item/vamp/keys/bar
-	backpack_contents = list(/obj/item/passport=1, /obj/item/phone_book=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/phone_book=1, /obj/item/radio=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
 
 /datum/outfit/job/barkeeper/pre_equip(mob/living/carbon/human/H)
 	..()
