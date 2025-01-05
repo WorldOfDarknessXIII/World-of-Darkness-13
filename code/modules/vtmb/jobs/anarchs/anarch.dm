@@ -1,4 +1,4 @@
-/datum/job/vamp/bruiser
+/datum/job/vamp/anarch
 	title = "Anarch"
 	department_head = list("Baron")
 	faction = "Vampire"
@@ -7,7 +7,7 @@
 	supervisors = "the Baron"
 	selection_color = "#434343"
 
-	outfit = /datum/outfit/job/bruiser
+	outfit = /datum/outfit/job/anarch
 
 	access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
 	minimal_access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
@@ -25,9 +25,9 @@
 	minimal_masquerade = 2
 	experience_addition = 15
 
-/datum/outfit/job/bruiser
+/datum/outfit/job/anarch
 	name = "Anarch"
-	jobtype = /datum/job/vamp/bruiser
+	jobtype = /datum/job/vamp/anarch
 
 	id = /obj/item/card/id/anarch
 	uniform = /obj/item/clothing/under/vampire/bouncer
@@ -42,6 +42,6 @@
 	..()
 	H.vampire_faction = "Anarchs"
 
-/obj/effect/landmark/start/bruiser
-	name = "Bruiser"
+/obj/effect/landmark/start/anarch
+	name = "Anarch"
 	icon_state = "Bouncer"
