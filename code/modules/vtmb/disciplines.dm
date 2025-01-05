@@ -1661,24 +1661,24 @@
 	var/genrequired
 	var/activated
 
-/datum/discipline/daimonion/curses/proc/lying_weakness(target)
+/datum/discipline/daimonion/curses/proc/lying_weakness(mob/living/target)
 	name = "No Lying Tongue"
 	genrequired = 11
 
-/datum/discipline/daimonion/curses/proc/physical_weakness(target)
+/datum/discipline/daimonion/curses/proc/physical_weakness(mob/living/target)
 	name = "Baby Weakness"
 	genrequired = 10
 
 
-/datum/discipline/daimonion/curses/proc/mental_weakness(target)
+/datum/discipline/daimonion/curses/proc/mental_weakness(mob/living/target)
 	name = "Reap Mentality"
 	genrequired = 9
 
-/datum/discipline/daimonion/curses/proc/offspring_weakness(target)
+/datum/discipline/daimonion/curses/proc/offspring_weakness(mob/living/target)
 	name = "Sterile Vitae"
 	genrequired = 8
 
-/datum/discipline/daimonion/curses/proc/success_weakness(target)
+/datum/discipline/daimonion/curses/proc/success_weakness(mob/living/target)
 	name = "The Mark Of Doom"
 	genrequired = 7
 
@@ -1768,22 +1768,28 @@
 			H.preparePixelProjectile(target, start)
 			H.fire(direct_target = target)
 		if(5)
-			var/cursed
-			var/namem = input(caster, "Choose target name:", "Curse someone") as text|null
-			qdel(src)
-			if(namem)
-				cursed = namem
-				for(var/mob/living/carbon/human/H in GLOB.player_list)
-					if(H.real_name == cursed)
-						var/list/curses = list()
-						for(var/i in subtypesof(/datum/discipline/daimonion/curses))
-							var/datum/discipline/daimonion/curses/C = new i(caster)
-							if(caster.generation <= C.genrequired)
-								curses += i
-							qdel(C)
-							var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in i
-					return
-			to_chat(caster, "<span class='warning'>There is no such names in the city!</span>")
+			var/list/curses = list()
+			for(var/i in subtypesof(/datum/discipline/daimonion/curses))
+				var/datum/discipline/daimonion/curses/C = new i(caster)
+				if(caster.generation <= C.genrequired)
+					curses += i
+				qdel(C)
+				var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in i
+				if(choosecurse)
+					var/datum/discipline/daimonion/curses/curs
+					if(choosecurse == "No Lying Tongue")
+						curs.lying_weakness(target)
+					if(choosecurse == "Baby Weakness")
+						curs.physical_weakness(target)
+					if(choosecurse == "Reap Mentality")
+						curs.mental_weakness(target)
+					if(choosecurse == "Sterile Vitae")
+						curs.offspring_weakness(target)
+					if(choosecurse == "The Mark Of Doom")
+						curs.success_weakness(target)
+
+
+
 
 /datum/discipline/valeren
 	name = "Valeren"
