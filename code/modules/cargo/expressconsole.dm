@@ -15,6 +15,7 @@
 	req_access = list(ACCESS_QM)
 	is_express = TRUE
 
+	var/list/order_queue = list()
 	var/message
 	var/printed_beacons = 0 //number of beacons printed. Used to determine beacon names.
 	var/list/meme_pack_data
@@ -26,6 +27,7 @@
 	var/locked = FALSE //is the console locked? unlock with ID
 	var/usingBeacon = TRUE //is the console in beacon mode? exists to let beacon know when a pod may come in
 	var/account_balance = 100
+	var/max_orders = 10
 
 /obj/machinery/computer/cargo/express/Initialize()
 	. = ..()
@@ -125,6 +127,13 @@
 /obj/machinery/computer/cargo/express/ui_data(mob/user)
 	var/canBeacon = beacon && (isturf(beacon.loc) || ismob(beacon.loc))//is the beacon in a valid location?
 	var/list/data = list()
+	var/list/serialized_order_queue = list()
+
+	for (var/datum/supply_pack/vampire/pack in order_queue)
+		serialized_order_queue += list(
+		"[pack.name] - [pack.cost] credits"
+	)
+
 	data["points"] = account_balance
 	data["locked"] = locked//swipe an ID to unlock
 	data["siliconUser"] = user.has_unlimited_silicon_privilege
@@ -137,6 +146,8 @@
 	data["beaconName"] = beacon ? beacon.name : "No Beacon Found"
 	data["printMsg"] = cooldown > 0 ? "Print Beacon for [BEACON_COST] credits ([cooldown])" : "Print Beacon for [BEACON_COST] credits"//buttontext for printing beacons
 	data["supplies"] = list()
+	data["total_order_cost"] = total_order_cost()
+	data["order_queue"] = json_encode(serialized_order_queue)
 	message = "Sales are near-instantaneous - please choose carefully."
 	if(SSshuttle.supplyBlocked)
 		message = blockade_warning
@@ -165,7 +176,72 @@
 //			usingBeacon = FALSE
 //			if (beacon)
 //				beacon.update_status(SP_UNREADY) //ready light on beacon will turn off
-		if("LZBeacon")
+
+		if("add_to_queue")
+			var/id = text2path(params["id"])
+			var/datum/supply_pack/vampire/pack = supply_packs[id]
+			if(!istype(pack))
+				return
+			order_queue += list(pack)
+			to_chat(usr, "Added [pack.name] to the order queue.")
+			return TRUE
+
+		if("remove_from_queue")
+			var/id = text2path(params["id"])
+			var/datum/supply_pack/vampire/pack = supply_packs[id]
+			if(pack in order_queue)
+				order_queue -= list(pack)
+				to_chat(usr, "Removed [pack.name] from the order queue.")
+			else
+				to_chat(usr, "Could not find [pack.name] in the order queue.")
+			return TRUE
+		if("reset_queue")
+			order_queue = list()
+			to_chat(usr, "Order queue reset.")
+			return TRUE
+		if("finalize_order")
+			if(!order_queue.len)
+				to_chat(usr, "Order queue is empty.")
+				return
+			if(order_queue.len > max_orders)
+				to_chat(usr, "You can only make 10 orders at a time!")
+				return
+			if(account_balance < total_order_cost())
+				to_chat(usr, "Insufficient funds.")
+				return
+			account_balance -= total_order_cost()
+			var/LZ
+			if(istype(beacon) && usingBeacon)
+				LZ = get_turf(beacon)
+				beacon.update_status(SP_LAUNCH)
+				TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 5 SECONDS)
+				var/obj/cargotrain/train = new(get_nearest_free_turf(LZ))
+				train.starter = usr
+				train.glide_size = (32 / 3) * world.tick_lag
+				walk_to(train, LZ, 1, 3)
+				playsound(train, 'code/modules/wod13/sounds/train_arrive.ogg', 50, FALSE)
+				var/trackLength = get_dist(get_nearest_free_turf(LZ), LZ)*5
+				spawn(trackLength)
+					var/obj/structure/closet/crate/crate = new(get_turf(train))
+					crate.name = "Supply Crate"
+					for(var/datum/supply_pack/vampire/pack in order_queue)
+						for(var/item_path in pack.contains)
+							var/obj/item/item_instance = new item_path
+							item_instance.forceMove(crate)
+					playsound(train, 'code/modules/wod13/sounds/train_depart.ogg', 50, FALSE)
+					walk_to(train, get_nearest_free_turf(LZ), 1, 3)
+					spawn(trackLength)
+						qdel(train)
+					order_queue = list()
+				return
+
+/obj/machinery/computer/cargo/express/proc/total_order_cost()
+	var/total = 0
+	for(var/datum/supply_pack/vampire/pack in order_queue)
+		total += pack.cost
+	return total
+
+/*		if("LZBeacon")
 			usingBeacon = TRUE
 			if (beacon)
 				beacon.update_status(SP_READY) //turns on the beacon's ready light
@@ -276,3 +352,4 @@
 							. = TRUE
 							update_icon()
 							CHECK_TICK
+*/

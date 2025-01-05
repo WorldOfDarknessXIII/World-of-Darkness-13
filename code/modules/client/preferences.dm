@@ -188,6 +188,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/lockpicking = 0
 	var/athletics = 0
 
+	var/info_known = INFO_KNOWN_UNKNOWN
+
 	var/friend = FALSE
 	var/enemy = FALSE
 	var/lover = FALSE
@@ -235,6 +237,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	blood = 1
 	lockpicking = 0
 	athletics = 0
+	info_known = INFO_KNOWN_UNKNOWN
 	masquerade = initial(masquerade)
 	generation = initial(generation)
 	archetype = pick(subtypesof(/datum/archetype))
@@ -654,6 +657,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<br><b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backpack]</a>"
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_BACKPACK]'>[(randomise[RANDOM_BACKPACK]) ? "Lock" : "Unlock"]</A>"
+
+			if(pref_species.name == "Vampire")
+				dat += "<BR><b>Fame:</b><BR><a href ='?_src_=prefs;preference=info_choose;task=input'>[info_known]</a>"
 
 			dat += "<BR><BR><b>Relationships:</b><BR>"
 			dat += "Have a Friend: <a href='?_src_=prefs;preference=friend'>[friend == TRUE ? "Enabled" : "Disabled"]</A><BR>"
@@ -1742,6 +1748,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if (total_age < age)
 							age = total_age
 						update_preview_icon()
+
+				if("info_choose")
+					var/new_info_known = input(user, "Choose who knows your character:", "Fame")  as null|anything in list(INFO_KNOWN_UNKNOWN,INFO_KNOWN_CLAN_ONLY,INFO_KNOWN_FACTION,INFO_KNOWN_PUBLIC)
+					if(new_info_known)
+						info_known = new_info_known
 
 				if("hair")
 					if(slotlocked)
@@ -2834,6 +2845,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.blood = blood
 	character.lockpicking = lockpicking
 	character.athletics = athletics
+	character.info_known = info_known
 
 	var/datum/archetype/A = new archetype()
 	character.additional_physique = A.archetype_additional_physique

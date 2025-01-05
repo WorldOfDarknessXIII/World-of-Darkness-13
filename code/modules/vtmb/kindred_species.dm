@@ -76,7 +76,7 @@
 			dat += "<BR>"
 			if(host.mind.enslaved_to)
 				dat += "My Regnant is [host.mind.enslaved_to], I should obey their wants.<BR>"
-		if(host.vampire_faction == "Camarilla" || host.vampire_faction == "Anarch" || host.vampire_faction == "Sabbat")
+		if(host.vampire_faction == "Camarilla" || host.vampire_faction == "Anarchs" || host.vampire_faction == "Sabbat")
 			dat += "I belong to [host.vampire_faction] faction, I shouldn't disobey their rules.<BR>"
 		if(host.generation)
 			dat += "I'm from [host.generation] generation.<BR>"
@@ -355,7 +355,7 @@
 				var/new_master = FALSE
 				BLOODBONDED.faction |= H.faction
 				if(!istype(BLOODBONDED, /mob/living/carbon/human/npc))
-					if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarch" || H.vampire_faction == "Sabbat")
+					if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarchs" || H.vampire_faction == "Sabbat")
 						if(BLOODBONDED.vampire_faction != H.vampire_faction)
 							BLOODBONDED.vampire_faction = H.vampire_faction
 							if(H.vampire_faction == "Sabbat")
