@@ -52,6 +52,13 @@
 	tennets_done = list("savelife" = 0, "meet" = 0, "cleangrow" = 0)
 	fails = list("kill", "grief", "steal")
 
+/datum/dharma/flame_of_rising_phoenix
+	name = "Flame of the Rising Phoenix (Yang+Hun)"
+	desc = "This path is heretic amongst other kuei-jin, it doesn't use typical training and bases around morality. It encourages the kuei-jin to stay as close as possible to human, to the moral standards instead of High Mission. Save lives of mortals, meet the debts of mortal life and protect your fellows. But don't try to grief."
+	tennets = list("savelife", "meet", "protect")
+	tennets_done = list("savelife" = 0, "meet" = 0, "protect" = 0)
+	fails = list("killfirst", "steal", "desire", "grief", "torture")
+
 /mob/living/carbon/human/proc/check_kuei_jin_alive()
 	if(iscathayan(src))
 		if(mind.dharma)
@@ -1125,7 +1132,7 @@
 	ranged = FALSE
 	delay = 10 SECONDS
 	cost_yin = 1
-	activate_sound = 'code/modules/wod13/sounds/fortitude_activate.ogg'
+	activate_sound = 'code/modules/wod13/sounds/bloodshintai_activate.ogg'
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/bloodcrawler/kuei_jin/BC
 
 /datum/movespeed_modifier/blood_fat
@@ -1306,7 +1313,7 @@
 	ranged = FALSE
 	delay = 12 SECONDS
 	cost_yang = 1
-	activate_sound = 'code/modules/wod13/sounds/potence_activate.ogg'
+	activate_sound = 'code/modules/wod13/sounds/jadeshintai_activate.ogg'
 
 /obj/item/melee/powerfist/stone
 	name = "stone-fist"
@@ -1387,7 +1394,7 @@
 	ranged = FALSE
 	delay = 12 SECONDS
 	cost_yin = 1
-	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
+	activate_sound = 'code/modules/wod13/sounds/boneshintai_activate.ogg'
 
 /obj/effect/particle_effect/smoke/bad/green/bone_shintai
 	name = "green dangerous smoke"
@@ -1494,7 +1501,7 @@
 	ranged = FALSE
 	delay = 12 SECONDS
 	cost_yang = 1
-	activate_sound = 'code/modules/wod13/sounds/necromancy.ogg'
+	activate_sound = 'code/modules/wod13/sounds/ghostflameshintai_activate.ogg'
 
 /mob/living/simple_animal/hostile/beastmaster/fireball
 	name = "fireball"
@@ -1626,6 +1633,8 @@
 								caster.dna.species.burnmod = initial(caster.dna.species.burnmod)
 					else
 						caster.dna.species.burnmod = initial(caster.dna.species.burnmod)
+					caster.bodytemperature = BODYTEMP_NORMAL
+					caster.coretemperature = BODYTEMP_NORMAL
 
 /datum/chi_discipline/flesh_shintai
 	name = "Flesh Shintai"
@@ -1634,7 +1643,7 @@
 	ranged = FALSE
 	cost_yin = 1
 	delay = 12 SECONDS
-	activate_sound = 'code/modules/wod13/sounds/vicissitude.ogg'
+	activate_sound = 'code/modules/wod13/sounds/fleshshintai_activate.ogg'
 	var/datum/component/tackler
 
 /obj/item/chameleon/temp
@@ -2216,7 +2225,7 @@
 	ranged = FALSE
 	delay = 12 SECONDS
 	cost_yang = 1
-	activate_sound = 'code/modules/wod13/sounds/wolves.ogg'
+	activate_sound = 'code/modules/wod13/sounds/beastshintai_activate.ogg'
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/werewolf_like/WL
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/werewolf_like
@@ -2316,7 +2325,7 @@
 	ranged = FALSE
 	delay = 12 SECONDS
 	cost_yang = 1
-	activate_sound = 'code/modules/wod13/sounds/presence_activate.ogg'
+	activate_sound = 'code/modules/wod13/sounds/smokeshintai_activate.ogg'
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/smoke_form/SF
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/hidden_smoke_form/HS
 
@@ -2456,7 +2465,7 @@
 	ranged = FALSE
 	delay = 12 SECONDS
 	cost_yang = 1
-	activate_sound = 'code/modules/wod13/sounds/dominate.ogg'
+	activate_sound = 'code/modules/wod13/sounds/stormshintai_activate.ogg'
 
 /obj/item/melee/touch_attack/storm_shintai
 	name = "Storm touch"

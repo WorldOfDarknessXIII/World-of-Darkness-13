@@ -556,6 +556,9 @@
 
 /datum/discipline/dominate/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
+	if(iscathayan(target))
+		if(target.mind.dharma?.Po == "Legalist")
+			target.mind.dharma?.roll_po(caster, target)
 	if(target.spell_immunity)
 		return
 	var/mypower = caster.get_total_social()
@@ -724,6 +727,9 @@
 
 /datum/discipline/dementation/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
+	if(iscathayan(target))
+		if(target.mind.dharma?.Po == "Legalist")
+			target.mind.dharma?.roll_po(caster, target)
 	//1 - instant laugh
 	//2 - hallucinations and less damage
 	//3 - victim dances
@@ -902,6 +908,9 @@
 
 /datum/discipline/presence/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
+	if(iscathayan(target))
+		if(target.mind.dharma?.Po == "Legalist")
+			target.mind.dharma?.roll_po(caster, target)
 	var/mypower = caster.get_total_social()
 	var/theirpower = target.get_total_mentality()
 	if((theirpower >= mypower) || ((caster.generation - 3) >= target.generation))
