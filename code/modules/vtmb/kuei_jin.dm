@@ -477,19 +477,19 @@
 			for(var/datum/antagonist/A in host.mind.antag_datums)
 				if(A.objectives)
 					dat += "[printobjectives(A.objectives)]<BR>"
-//		var/masquerade_level = " followed the Masquerade Tradition perfectly."
-//		switch(host.masquerade)
-//			if(4)
-//				masquerade_level = " broke the Masquerade rule once."
-//			if(3)
-//				masquerade_level = " made a couple of Masquerade breaches."
-//			if(2)
-//				masquerade_level = " provoked a moderate Masquerade breach."
-//			if(1)
-//				masquerade_level = " almost ruined the Masquerade."
-//			if(0)
-//				masquerade_level = "'m danger to the Masquerade and my own kind."
-//		dat += "Camarilla thinks I[masquerade_level]<BR>"
+		var/masquerade_level = " is clueless about my presence."
+		switch(host.masquerade)
+			if(4)
+				masquerade_level = " has some thoughts of awareness."
+			if(3)
+				masquerade_level = " is barely spotting the truth."
+			if(2)
+				masquerade_level = " is starting to know."
+			if(1)
+				masquerade_level = " knows me and my true nature."
+			if(0)
+				masquerade_level = " thinks I'm a monster and is hunting me."
+		dat += "West[masquerade_level]<BR>"
 		var/dharma = "I'm mindless carrion-eater!"
 		switch(host.mind.dharma?.level)
 			if(1)
@@ -2869,11 +2869,11 @@
 	var/prev_z
 
 /atom/movable/penumbra_ghost
-	var/last_move = 0
+	var/last_ghost_moved = 0
 
 /atom/movable/penumbra_ghost/relaymove(mob/living/user, direction)
-	if(last_move+5 <= world.time)
-		last_move = world.time
+	if(last_ghost_moved+5 <= world.time)
+		last_ghost_moved = world.time
 		dir = direction
 		Move(get_step(src, direction), direction)
 
