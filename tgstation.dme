@@ -3387,6 +3387,7 @@
 #include "code\modules\vtmb\jobs\triad.dm"
 #include "code\modules\vtmb\jobs\voivode.dm"
 #include "code\modules\vtmb\jobs\zadruga.dm"
+#include "code\modules\vtmb\jobs\anarchs\anarch.dm"
 #include "code\modules\vtmb\jobs\anarchs\baron.dm"
 #include "code\modules\vtmb\jobs\anarchs\emissary.dm"
 #include "code\modules\vtmb\jobs\anarchs\reeve.dm"
