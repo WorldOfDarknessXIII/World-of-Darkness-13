@@ -397,7 +397,12 @@
 		updatehealth()
 	if(iskindred(src) && HAS_TRAIT(src, TRAIT_TORPOR))
 		adjustOxyLoss(health - HEALTH_THRESHOLD_VAMPIRE_DEAD)
-	if(!iskindred(src))
+	if(iscathayan(src) && !HAS_TRAIT(src, TRAIT_TORPOR))
+		adjustOxyLoss(health - HEALTH_THRESHOLD_VAMPIRE_TORPOR)
+		updatehealth()
+	if(iscathayan(src) && HAS_TRAIT(src, TRAIT_TORPOR))
+		adjustOxyLoss(health - HEALTH_THRESHOLD_VAMPIRE_DEAD)
+	if(!iskindred(src) && !iscathayan(src))
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
 		updatehealth()
 	if(!whispered)
@@ -406,12 +411,24 @@
 /mob/living/verb/untorpor()
 	set hidden = TRUE
 	if(HAS_TRAIT(src, TRAIT_TORPOR))
-		if (bloodpool > 0)
-			bloodpool -= 1
-			cure_torpor()
-			to_chat(src, "<span class='notice'>You have awoken from your Torpor.</span>")
-		else
-			to_chat(src, "<span class='warning'>You have no blood to re-awaken with...</span>")
+		if(iskindred(src))
+			if (bloodpool > 0)
+				bloodpool -= 1
+				cure_torpor()
+				to_chat(src, "<span class='notice'>You have awoken from your Torpor.</span>")
+			else
+				to_chat(src, "<span class='warning'>You have no blood to re-awaken with...</span>")
+		if(iscathayan(src))
+			if (yang_chi > 0)
+				yang_chi -= 1
+				cure_torpor()
+				to_chat(src, "<span class='notice'>You have awoken from your Death.</span>")
+			else if (yin_chi > 0)
+				yin_chi -= 1
+				cure_torpor()
+				to_chat(src, "<span class='notice'>You have awoken from your Death.</span>")
+			else
+				to_chat(src, "<span class='warning'>You have no Chi to re-awaken with...</span>")
 
 /mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
 	if(HAS_TRAIT(src, TRAIT_INCAPACITATED) || (!ignore_restraints && (HAS_TRAIT(src, TRAIT_RESTRAINED) || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))) || (!ignore_stasis && IS_IN_STASIS(src)))

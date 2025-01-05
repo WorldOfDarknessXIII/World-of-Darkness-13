@@ -24,6 +24,8 @@
 	var/last_dharma_update = 0
 	var/last_po_call = 0
 
+	COOLDOWN_DECLARE(torpor_timer)
+
 /datum/dharma/devil_tiger
 	name = "Devil Tiger (P'o)"
 	desc = "This path encourages to explore your inner Demon Nature, but to never let it take full control of you. You may find enlightment in grief, torturing and exploring your body's darkest desires, but doing the opposite or letting your Po to take control of you will bring you back."
@@ -358,7 +360,7 @@
 	disliked_food = GROSS | RAW
 	liked_food = JUNKFOOD | FRIED
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, HAS_FLESH, HAS_BONE)
-	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_VIRUSIMMUNE, TRAIT_PERFECT_ATTACKER)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_VIRUSIMMUNE, TRAIT_PERFECT_ATTACKER, TRAIT_NOBREATH)
 	use_skintones = TRUE
 	limbs_id = "human"
 	wings_icon = "None"
@@ -832,6 +834,8 @@
 
 /datum/action/reanimate_yin/Trigger()
 	if(istype(owner, /mob/living/carbon/human))
+		if(HAS_TRAIT(owner, TRAIT_TORPOR))
+			return
 		SEND_SOUND(usr, sound('code/modules/wod13/sounds/chi_use.ogg', 0, 0, 75))
 		var/mob/living/carbon/human/BD = usr
 		BD.visible_message("<span class='warning'>Some of [BD]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
@@ -889,6 +893,8 @@
 
 /datum/action/reanimate_yang/Trigger()
 	if(istype(owner, /mob/living/carbon/human))
+		if(HAS_TRAIT(owner, TRAIT_TORPOR))
+			return
 		SEND_SOUND(usr, sound('code/modules/wod13/sounds/chi_use.ogg', 0, 0, 75))
 		var/mob/living/carbon/human/BD = usr
 		BD.visible_message("<span class='warning'>Some of [BD]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
