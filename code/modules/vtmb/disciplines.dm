@@ -1666,7 +1666,7 @@
 	genrequired = 13
 
 /datum/discipline/daimonion/curses/proc/physical_weakness(mob/living/target)
-	name = "Baby Weakness"
+	name = "Baby Strength"
 	genrequired = 10
 
 
@@ -1778,7 +1778,7 @@
 				var/datum/discipline/daimonion/curses/curs
 				if(choosecurse == "No Lying Tongue")
 					curs.lying_weakness(target)
-				if(choosecurse == "Baby Weakness")
+				if(choosecurse == "Baby Strength")
 					curs.physical_weakness(target)
 				if(choosecurse == "Reap Mentality")
 					curs.mental_weakness(target)
