@@ -229,7 +229,7 @@
 	color = "#ffa7e6"
 
 /obj/item/vamp/keys/banuhaqim
-	name = "Justicial keys"
+	name = "Justicar keys"
 	accesslocks = list(
 		"banuhaqim"
 	)
