@@ -54,13 +54,14 @@
 	name = "Seneschal"
 	jobtype = /datum/job/vamp/clerk
 
+	ears = /obj/item/p25radio
 	id = /obj/item/card/id/clerk
 	uniform = /obj/item/clothing/under/vampire/clerk
 	shoes = /obj/item/clothing/shoes/vampire/brown
 //	head = /obj/item/clothing/head/hopcap
 	l_pocket = /obj/item/vamp/phone/clerk
 	r_pocket = /obj/item/vamp/keys/clerk
-	backpack_contents = list(/obj/item/passport=1, /obj/item/phone_book=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/phone_book=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard/seneschal=1)
 
 /datum/outfit/job/clerk/pre_equip(mob/living/carbon/human/H)
 	..()

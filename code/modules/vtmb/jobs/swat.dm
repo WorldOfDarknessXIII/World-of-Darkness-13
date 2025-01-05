@@ -1,5 +1,6 @@
 /datum/outfit/job/swat
 	name = "Swat Officer"
+	ears = /obj/item/p25radio/police/tactical
 	uniform = /obj/item/clothing/under/vampire/police
 	mask = /obj/item/clothing/mask/vampire/balaclava
 	r_pocket = /obj/item/flashlight

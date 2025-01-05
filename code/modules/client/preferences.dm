@@ -218,6 +218,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/lockpicking = 0
 	var/athletics = 0
 
+	var/info_known = INFO_KNOWN_UNKNOWN
+
 	var/friend = FALSE
 	var/enemy = FALSE
 	var/lover = FALSE
@@ -265,6 +267,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	blood = 1
 	lockpicking = 0
 	athletics = 0
+	info_known = INFO_KNOWN_UNKNOWN
 	masquerade = initial(masquerade)
 	generation = initial(generation)
 	archetype = pick(subtypesof(/datum/archetype))
@@ -684,6 +687,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<br><b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backpack]</a>"
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_BACKPACK]'>[(randomise[RANDOM_BACKPACK]) ? "Lock" : "Unlock"]</A>"
+
+			if(pref_species.name == "Vampire")
+				dat += "<BR><b>Fame:</b><BR><a href ='?_src_=prefs;preference=info_choose;task=input'>[info_known]</a>"
 
 			dat += "<BR><BR><b>Relationships:</b><BR>"
 			dat += "Have a Friend: <a href='?_src_=prefs;preference=friend'>[friend == TRUE ? "Enabled" : "Disabled"]</A><BR>"
@@ -1773,6 +1779,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							age = total_age
 						update_preview_icon()
 
+				if("info_choose")
+					var/new_info_known = input(user, "Choose who knows your character:", "Fame")  as null|anything in list(INFO_KNOWN_UNKNOWN,INFO_KNOWN_CLAN_ONLY,INFO_KNOWN_FACTION,INFO_KNOWN_PUBLIC)
+					if(new_info_known)
+						info_known = new_info_known
+
 				if("hair")
 					if(slotlocked)
 						return
@@ -2055,9 +2066,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						discipline_levels = list()
 						if(result == "Caitiff")
 							generation = 13
-							for (var/i = 0; i < 3; i++)
-								if (clane.clane_disciplines.len >= 3)
-									break
+							for (var/i = clane.clane_disciplines.len; i < 3; i++)
 								if (slotlocked)
 									break
 								var/list/possible_new_disciplines = subtypesof(/datum/discipline) - clane.clane_disciplines
@@ -2247,16 +2256,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if (alert("Are you sure you want to change species? This will reset species-specific stats.", "Confirmation", "Yes", "No") != "Yes")
 						return
 
-					var/list/selectable_species = GLOB.selectable_races
-					for (var/key in selectable_species)
+					var/list/choose_species = list()
+					for (var/key in GLOB.selectable_races)
 						var/newtype = GLOB.species_list[key]
-						var/datum/species/new_species = new newtype
-						if (new_species.whitelisted)
+						var/datum/species/selecting_species = new newtype
+						if (!selecting_species.selectable)
+							qdel(selecting_species)
+							continue
+						if (selecting_species.whitelisted)
 							if (!SSwhitelists.is_whitelisted(parent.ckey, key))
-								selectable_species.Remove(key)
-						qdel(new_species)
+								qdel(selecting_species)
+								continue
+						choose_species += key
+						qdel(selecting_species)
 
-					var/result = input(user, "Select a species", "Species Selection") as null|anything in selectable_species
+					var/result = input(user, "Select a species", "Species Selection") as null|anything in choose_species
 					if(result)
 						all_quirks = list()
 						SetQuirks(user)
@@ -2861,6 +2875,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.blood = blood
 	character.lockpicking = lockpicking
 	character.athletics = athletics
+	character.info_known = info_known
 
 	var/datum/archetype/A = new archetype()
 	character.additional_physique = A.archetype_additional_physique

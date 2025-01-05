@@ -20,7 +20,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_EMISSARY
 	known_contacts = list("Baron")
-	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian")
+	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Tremere", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian", "Ministry")
 
 	v_duty = "You are a diplomat for the anarchs. Make deals, keep the peace, all through words, not violence. But the latter may come to pass if the former fails."
 	minimal_masquerade = 2
@@ -40,7 +40,7 @@
 
 /datum/outfit/job/emissary/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.vampire_faction = "Anarch"
+	H.vampire_faction = "Anarchs"
 
 /obj/effect/landmark/start/emissary
 	name = "Emissary"

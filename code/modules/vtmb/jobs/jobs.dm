@@ -17,6 +17,7 @@
 			for(var/obj/item/vamp/creditcard/caard in b.contents)
 				if(caard)
 					H.bank_id = caard.account.bank_id
+					caard.account.account_owner = H.true_real_name
 					caard.has_checked = TRUE
 
 //ID
@@ -300,8 +301,8 @@
 	worn_icon_state = "id12"
 
 /obj/item/card/id/police
-	name = "police department badge"
-	id_type_name = "police department badge"
+	name = "police officer badge"
+	id_type_name = "police officer badge"
 	desc = "Sponsored by the Government."
 	icon = 'code/modules/wod13/items.dmi'
 	icon_state = "id13"
@@ -313,15 +314,15 @@
 	worn_icon_state = "id13"
 
 /obj/item/card/id/police/sergeant
-	name = "police department badge"
+	name = "police sergeant badge"
 	desc = "Sponsored by the Government. This one seems slightly more worn down than all the others."
 
 /obj/item/card/id/police/chief
-	name = "police department badge"
+	name = "police chief badge"
 	desc = "Sponsored by the Government. This one has a chrome plated finish."
 
 /obj/item/card/id/police/fbi
-	name = "fbi agent badge"
+	name = "fbi special agent badge"
 	desc = "Sponsored by the Government. This one has all the bells and whistles."
 
 /obj/item/card/id/voivode
@@ -433,10 +434,10 @@
 				objectives += money_objective
 				money_objective.update_explanation_text()
 		if(4)
-			var/list/available_factions = list("Camarilla", "Anarch", "Sabbat")
+			var/list/available_factions = list("Camarilla", "Anarchs", "Sabbat")
 			if(ishuman(owner))
 				var/mob/living/carbon/human/H = owner
-				if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarch" || H.vampire_faction == "Sabbat")
+				if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarchs" || H.vampire_faction == "Sabbat")
 					available_factions -= H.vampire_faction
 			var/datum/objective/become_member/member_objective = new
 			member_objective.owner = owner

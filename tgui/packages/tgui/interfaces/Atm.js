@@ -1,30 +1,15 @@
-import { useBackend } from "../backend";
-import { Box, Button, Section, TextInput, NoticeBox, NumberInput } from "../components";
 import { Window } from "../layouts";
+import { AtmScreen } from "./Atm/index";
+import { useBackend } from "../backend";
+import { Component } from 'inferno';
 
-export const Atm = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { atmBalance, cardBalance } = data;
-
-  return (
-    <Window title="Bianchi Bank ATM" width={400} height={300}>
-      <Window.Content>
-        <Section title="ATM Balance">
-          <NoticeBox>
-            ATM currently holds: ${atmBalance}
-          </NoticeBox>
-        </Section>
-        <Section title="Card Balance">
-          <NoticeBox>
-            Your card balance: ${cardBalance}
-          </NoticeBox>
-        </Section>
-        <Section title="Actions">
-          <Button text="Withdraw Money" onClick={() => act("withdraw")} />
-          <Button text="Deposit Money" onClick={() => act("deposit")} />
-          <Button text="Exit" onClick={() => act("exit")} />
-        </Section>
-      </Window.Content>
-    </Window>
-  );
+export class Atm extends Component {
+  render() {
+    const { act, data } = useBackend(this.context);
+    return (
+      <Window width={500} height={500} theme="light">
+        <AtmScreen data={data} act={act}/>
+      </Window>
+    );
+  };
 };

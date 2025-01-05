@@ -61,7 +61,7 @@
 			if(G.master.clane)
 				if(G.master.clane.name != "Caitiff")
 					dat += "Regnant's clan is [G.master.clane], maybe I can try some of it's disciplines..."
-		if(host.vampire_faction == "Camarilla" || host.vampire_faction == "Anarch" || host.vampire_faction == "Sabbat")
+		if(host.vampire_faction == "Camarilla" || host.vampire_faction == "Anarchs" || host.vampire_faction == "Sabbat")
 			dat += "I belong to the [host.vampire_faction], I shouldn't disobey their rules.<BR>"
 		if(host.mind.special_role)
 			for(var/datum/antagonist/A in host.mind.antag_datums)
@@ -126,7 +126,7 @@
 			dat += "<b>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
 			for(var/i in host.knowscontacts)
 				dat += "-[i] contact<BR>"
-		for(var/datum/bank_account/account in GLOB.bank_account_list)
+		for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
 			if(host.bank_id == account.bank_id)
 				dat += "<b>My bank account code is: [account.code]</b><BR>"
 		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")

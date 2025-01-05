@@ -126,7 +126,7 @@ const CargoStatus = (props, context) => {
 };
 
 export const CargoCatalog = (props, context) => {
-  const { express } = props;
+  const { express, onAddToQueue, onRemoveFromQueue } = props;
   const { act, data } = useBackend(context);
   const {
     self_paid,
@@ -196,13 +196,18 @@ export const CargoCatalog = (props, context) => {
                       fluid
                       tooltip={pack.desc}
                       tooltipPosition="left"
-                      onClick={() => act('add', {
-                        id: pack.id,
-                      })}>
+                      onClick={() => onAddToQueue(pack.id)}>
                       {formatMoney((self_paid && !pack.goody) || app_cost
                         ? Math.round(pack.cost * 1.1)
                         : pack.cost)}
                       {' cr'}
+                    </Button>
+                    <Button
+                      fluid
+                      tooltip={`Remove ${pack.name} from queue`}
+                      tooltipPosition="left"
+                      onClick={() => onRemoveFromQueue(pack.id)}>
+                      Remove
                     </Button>
                   </Table.Cell>
                 </Table.Row>

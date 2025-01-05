@@ -12,7 +12,28 @@
 	. = ..()
 	var/turf/T = get_turf(user)
 	if(T)
-		. += "<b>Location:</b> [T.x]:[T.y]"
+		. += "<b>Location:</b> [T.x]:[T.y] ([get_cardinal_direction(T.x, T.y)])"
+
+/proc/get_cardinal_direction(x, y)
+	var/direction = ""
+	var/center_x = (x >= 98 && x <= 158)
+	var/center_y = (y >= 98 && y <= 158)
+	if(center_x && center_y)
+		return "Central"
+	if(center_x)
+		direction = ""
+	else if(x >= 128)
+		direction += "East"
+	else
+		direction += "West"
+	if(center_y)
+		direction = "Central [direction]"
+	else if(y >= 128)
+		direction = "North [direction]"
+	else
+		direction = "South [direction]"
+	direction += " San Francisco"
+	return direction
 
 /obj/item/police_radio/proc/announce_crime(var/crime, var/atom/location)
 	switch(crime)
@@ -20,15 +41,15 @@
 			if(last_shooting+50 < world.time)
 				last_shooting = world.time
 				var/area/A = get_area(location)
-				say("Gun shots at [A.name], [location.x]:[location.y]...")
+				say("Citizens report hearing gunshots at [A.name],[get_cardinal_direction(location.x, location.y)], [location.x]:[location.y]...")
 		if("victim")
 			if(last_shooting_victims+50 < world.time)
 				last_shooting_victims = world.time
 				var/area/A = get_area(location)
-				say("Engaged combat at [A.name], wounded civillian, [location.x]:[location.y]...")
+				say("Active firefight in progress at [A.name], wounded civilians,[get_cardinal_direction(location.x, location.y)], [location.x]:[location.y]...")
 		if("murder")
 			var/area/A = get_area(location)
-			say("Murder at [A.name], [location.x]:[location.y]...")
+			say("Murder at [A.name],[get_cardinal_direction(location.x, location.y)], [location.x]:[location.y]...")
 
 /obj/item/police_radio/Initialize()
 	. = ..()
@@ -47,37 +68,40 @@
 	var/image/holder = hud_list[GLAND_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	if(iskindred(src))
-		if(antifrenzy)
-			holder.icon = 'icons/effects/32x64.dmi'
-		holder.color = "#ffffff"
-		if(diablerist)
-			holder.icon_state = "diablerie_aura"
+	holder.icon_state = "aura"
+
+	if (client)
+		if(a_intent == INTENT_HARM)
+			holder.color = "#ff0000"
 		else
-			holder.icon_state = "aura"
-	else
+			holder.color = "#0000ff"
+	else if (isnpc(src))
+		var/mob/living/carbon/human/npc/N = src
+		if (N.danger_source)
+			holder.color = "#ff0000"
+		else
+			holder.color = "#0000ff"
+
+	if (iskindred(src))
+		//pale aura for vampires
+		holder.color = "#ffffff"
+		//only Baali can get antifrenzy through selling their soul, so this gives them the unholy halo (MAKE THIS BETTER)
+		if (antifrenzy)
+			holder.icon = 'icons/effects/32x64.dmi'
+		//black aura for diablerists
+		if (diablerist)
+			holder.icon_state = "diablerie_aura"
+
+	if (isgarou(src) || iswerewolf(src))
+		//garou have bright auras due to their spiritual potence
+		holder.icon_state = "aura_bright"
+
+	if (isghoul(src))
+		//Pale spots in the aura, had to be done manually since holder.color will show only a type of color
+		holder.overlays = null
+		holder.color = null
+		holder.icon_state = "aura_ghoul"
+
+	if(mind?.holy_role >= HOLY_ROLE_PRIEST)
+		holder.color = "#ffe12f"
 		holder.icon_state = "aura"
-		if(isgarou(src) || iswerewolf(src))
-			holder.icon_state = "aura_bright"
-		var/ghoul = FALSE
-		if(isghoul(src))
-			//Pale spots in the aura, had to be done manually since holder.color will show only a type of color
-			holder.icon_state = "aura_ghoul"
-			ghoul = TRUE
-
-		if(isnpc(src))
-			var/mob/living/carbon/human/npc/N = src
-			if(N.danger_source)
-				holder.color = "#ff0000"
-			else
-				holder.color = "#0000ff"
-		else if(!ghoul)
-		//Ghoul got a mix of two different colors on the dmi, so it can't recieve any holder.color 
-			if(a_intent == INTENT_HARM)
-				holder.color = "#ff0000"
-			else
-				holder.color = "#0000ff"
-
-		if(mind)
-			if(mind.holy_role == HOLY_ROLE_PRIEST)
-				holder.color = "#ffe12f"

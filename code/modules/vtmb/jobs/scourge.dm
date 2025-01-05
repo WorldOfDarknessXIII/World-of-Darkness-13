@@ -35,6 +35,7 @@
 	name = "Scourge"
 	jobtype = /datum/job/vamp/agent
 
+	ears = /obj/item/p25radio
 	id = /obj/item/card/id/camarilla
 	uniform = /obj/item/clothing/under/vampire/agent
 	gloves = /obj/item/clothing/gloves/vampire/work
