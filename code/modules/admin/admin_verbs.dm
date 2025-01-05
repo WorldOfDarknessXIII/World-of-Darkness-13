@@ -481,14 +481,13 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	var/value = input(usr, "Enter the Global Masquerade adjustment values(- will decrease, + will increase) :", "Global Masquerade Adjustment", 0) as num|null
 	if(!value)
 		return
-
+	
 	SSmasquerade.manual_adjustment += value
-	
-	
+
 	SSmasquerade.fire()
 	
-	var/msg = "<span class='adminnotice'><b>Global Masquerade Adjustment: [key_name_admin(usr)] has adjusted Global masquerade from [last_global_mask] to [SSmasquerade.total_level] with the value of :[SSmasquerade.manual_adjustment]</b></span>"
-	log_admin("Global MasqAdjust: [key_name(usr)] has adjusted Global masquerade from [last_global_mask] to [SSmasquerade.total_level] with the value of :[SSmasquerade.manual_adjustment]")
+	var/msg = "<span class='adminnotice'><b>Global Masquerade Adjustment: [key_name_admin(usr)] has adjusted Global masquerade from [last_global_mask] to [SSmasquerade.total_level] with the value of :[value]</b></span>"
+	log_admin("Global MasqAdjust: [key_name(usr)] has adjusted Global masquerade from [last_global_mask] to [SSmasquerade.total_level] with the value of :[value]")
 	message_admins(msg)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Global Adjust Masquerade")
 
