@@ -1722,8 +1722,8 @@
 					to_chat(caster, "Victim has a lot of vitae, it seems that's an old one... Despite that, you can clearly see their fear for fire.")
 			if(isghoul(target))
 				var/mob/living/carbon/human/H = target
-				if(target.mind.enslaved_to)
-					to_chat(caster, "Victim is addicted to vampiric vitae and its true master is [target.mind.enslaved_to]")
+				if(H.mind.enslaved_to)
+					to_chat(caster, "Victim is addicted to vampiric vitae and its true master is [H.mind.enslaved_to]")
 				else
 					to_chat(caster, "Victim is addicted to vampiric vitae, but is independent and free.")
 			if(ishuman(target))
