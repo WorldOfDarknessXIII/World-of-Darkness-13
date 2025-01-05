@@ -432,7 +432,7 @@
 								BLOODBONDED.clane = new H.clane.type()
 
 							BLOODBONDED.clane.on_gain(BLOODBONDED)
-              BLOODBONDED.clane.post_gain(BLOODBONDED)
+              				BLOODBONDED.clane.post_gain(BLOODBONDED)
 							if(BLOODBONDED.clane.alt_sprite && !BLOODBONDED.clane.alt_sprite_greyscale)
 								BLOODBONDED.skin_tone = ALBINO
 								BLOODBONDED.update_body()
