@@ -301,8 +301,8 @@
 	worn_icon_state = "id12"
 
 /obj/item/card/id/police
-	name = "police department badge"
-	id_type_name = "police department badge"
+	name = "police officer badge"
+	id_type_name = "police officer badge"
 	desc = "Sponsored by the Government."
 	icon = 'code/modules/wod13/items.dmi'
 	icon_state = "id13"
@@ -314,15 +314,15 @@
 	worn_icon_state = "id13"
 
 /obj/item/card/id/police/sergeant
-	name = "police department badge"
+	name = "police sergeant badge"
 	desc = "Sponsored by the Government. This one seems slightly more worn down than all the others."
 
 /obj/item/card/id/police/chief
-	name = "police department badge"
+	name = "police chief badge"
 	desc = "Sponsored by the Government. This one has a chrome plated finish."
 
 /obj/item/card/id/police/fbi
-	name = "fbi agent badge"
+	name = "fbi special agent badge"
 	desc = "Sponsored by the Government. This one has all the bells and whistles."
 
 /obj/item/card/id/voivode
