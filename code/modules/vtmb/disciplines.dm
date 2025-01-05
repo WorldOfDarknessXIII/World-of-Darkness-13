@@ -1792,7 +1792,7 @@
 		if(5)
 			var/list/curses = list()
 			var/list/subtype_list = subtypesof(/datum/curse/daimonion)
-			for(var/i in subtype_list)
+			for(var/i = 1 to subtype_list.len)
 				var/curse = subtype_list[i]
 				var/datum/curse/daimonion/C = new curse
 				if(caster.generation <= C.genrequired)
