@@ -1661,24 +1661,24 @@
 	var/genrequired
 	var/activated
 
-/datum/discipline/daimonion/curses/lying_weakness(mob/living/target)
+/datum/discipline/daimonion/curses/proc/lying_weakness(mob/living/target)
 	name = "No Lying Tongue"
 	genrequired = 13
 
-/datum/discipline/daimonion/curses/physical_weakness(mob/living/target)
+/datum/discipline/daimonion/curses/proc/physical_weakness(mob/living/target)
 	name = "Baby Weakness"
 	genrequired = 10
 
 
-/datum/discipline/daimonion/curses/mental_weakness(mob/living/target)
+/datum/discipline/daimonion/curses/proc/mental_weakness(mob/living/target)
 	name = "Reap Mentality"
 	genrequired = 9
 
-/datum/discipline/daimonion/curses/offspring_weakness(mob/living/target)
+/datum/discipline/daimonion/curses/proc/offspring_weakness(mob/living/target)
 	name = "Sterile Vitae"
 	genrequired = 8
 
-/datum/discipline/daimonion/curses/success_weakness(mob/living/target)
+/datum/discipline/daimonion/curses/proc/success_weakness(mob/living/target)
 	name = "The Mark Of Doom"
 	genrequired = 7
 
