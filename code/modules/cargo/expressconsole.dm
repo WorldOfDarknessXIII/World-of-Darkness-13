@@ -213,6 +213,18 @@
 			if(istype(beacon) && usingBeacon)
 				LZ = get_turf(beacon)
 				beacon.update_status(SP_LAUNCH)
+			else if(!usingBeacon)
+				landingzone = GLOB.areas_by_type[/area/vtm/supply]
+				if(!landingzone)
+					WARNING("[src] couldnt find a Quartermaster/Storage (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
+					landingzone = get_area(src)
+				for(var/turf/open/floor/T in landingzone.contents)
+					if(T.is_blocked_turf())
+						continue
+					LAZYADD(empty_turfs, T)
+					CHECK_TICK
+				if(empty_turfs?.len)
+					LZ = pick(empty_turfs)
 			var/obj/cargotrain/train = new(get_nearest_free_turf(LZ))
 			train.starter = usr
 			train.glide_size = (32 / 3) * world.tick_lag
@@ -226,12 +238,13 @@
 				for(var/item_path in pack.contains)
 					var/obj/item/item_instance = new item_path
 					item_instance.forceMove(crate)
-				playsound(train, 'code/modules/wod13/sounds/train_depart.ogg', 50, FALSE)
-				var/trackLength = get_dist(get_nearest_free_turf(LZ), LZ)*5
+
+			playsound(train, 'code/modules/wod13/sounds/train_depart.ogg', 50, FALSE)
+			var/trackLength = get_dist(get_nearest_free_turf(LZ), LZ)*5
+			spawn(trackLength)
+				walk_to(train, get_nearest_free_turf(LZ), 1, 3)
 				spawn(trackLength)
-					walk_to(train, get_nearest_free_turf(LZ), 1, 3)
-					spawn(trackLength)
-						qdel(train)
+					qdel(train)
 			to_chat(usr, "Order finalized and sent.")
 			order_queue = list()
 			return TRUE

@@ -1,4 +1,4 @@
-/datum/supply_pack/weed_tray
+/datum/supply_pack/vampire/weed_tray
 	name = "Weed Tray"
 	desc = "Contains a tray of weed."
 	cost = 600
