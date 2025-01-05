@@ -76,7 +76,7 @@
 			dat += "<BR>"
 			if(host.mind.enslaved_to)
 				dat += "My Regnant is [host.mind.enslaved_to], I should obey their wants.<BR>"
-		if(host.vampire_faction == "Camarilla" || host.vampire_faction == "Anarch" || host.vampire_faction == "Sabbat")
+		if(host.vampire_faction == "Camarilla" || host.vampire_faction == "Anarchs" || host.vampire_faction == "Sabbat")
 			dat += "I belong to [host.vampire_faction] faction, I shouldn't disobey their rules.<BR>"
 		if(host.generation)
 			dat += "I'm from [host.generation] generation.<BR>"
@@ -205,7 +205,7 @@
 			dat += "<b>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
 			for(var/i in host.knowscontacts)
 				dat += "-[i] contact<BR>"
-		for(var/datum/bank_account/account in GLOB.bank_account_list)
+		for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
 			if(host.bank_id == account.bank_id)
 				dat += "<b>My bank account code is: [account.code]</b><BR>"
 		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
@@ -363,7 +363,7 @@
 				var/new_master = FALSE
 				BLOODBONDED.faction |= H.faction
 				if(!istype(BLOODBONDED, /mob/living/carbon/human/npc))
-					if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarch" || H.vampire_faction == "Sabbat")
+					if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarchs" || H.vampire_faction == "Sabbat")
 						if(BLOODBONDED.vampire_faction != H.vampire_faction)
 							BLOODBONDED.vampire_faction = H.vampire_faction
 							if(H.vampire_faction == "Sabbat")
@@ -525,7 +525,8 @@
 				adding_disciplines += discipline
 		else if (disciplines.len) //initialise given disciplines
 			for (var/i in 1 to disciplines.len)
-				var/datum/discipline/discipline = new disciplines[i]
+				var/type_to_create = disciplines[i]
+				var/datum/discipline/discipline = new type_to_create
 				adding_disciplines += discipline
 
 		for (var/datum/discipline/discipline in adding_disciplines)
