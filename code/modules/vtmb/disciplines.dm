@@ -1659,7 +1659,7 @@
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
 
-/datum/discipline/daimonion/baali_get_clan_weakness(target, caster)
+/datum/discipline/daimonion/proc/baali_get_clan_weakness(target, caster)
 	var/mob/living/carbon/human/H = target
 	if(iskindred(H))
 		if(H.clane?.name)
