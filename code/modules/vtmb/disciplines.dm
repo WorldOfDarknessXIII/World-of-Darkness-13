@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(who_is_cursed)
+
 /mob/living
 	var/datum/action/discipline/discipline_ranged
 
@@ -1655,7 +1657,7 @@
 	cost = 1
 	ranged = TRUE
 	delay = 100
-	violates_masquerade = TRUE
+	violates_masquerade = FALSE
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
 
@@ -1665,8 +1667,16 @@
 /datum/curse/proc/activate(mob/living/target)
     return
 
+/datum/curse/proc/deactivate(mob/living/target)
+	return
+
+
 /datum/curse/daimonion
-    var/genrequired
+	var/genrequired
+
+/datum/curse/daimonion/proc/activate(var/mob/living/target)
+	. = ..()
+	GLOB.who_is_cursed += target
 
 /datum/curse/daimonion/lying_weakness
 	name = "No Lying Tongue"
@@ -1675,7 +1685,6 @@
 /datum/curse/daimonion/physical_weakness
 	name = "Baby Strength"
 	genrequired = 10
-
 
 /datum/curse/daimonion/mental_weakness
 	name = "Reap Mentality"
@@ -1689,20 +1698,71 @@
 	name = "The Mark Of Doom"
 	genrequired = 7
 
+/datum/curse/daimonion/proc/is_daimonion_curse_used(target)
+	if(GLOB.who_is_cursed.Find(target))
+		return TRUE
+	else
+		return FALSE
+
 /datum/curse/daimonion/lying_weakness/activate(mob/living/target)
 	. = ..()
+	var/mob/living/carbon/human/target = target
+	target.gain_trauma(/datum/brain_trauma/mild/mind_echo, TRAUMA_RESILIENCE_ABSOLUTE)
+	to_chat(target, "<span class='danger'>You feel like a great curse was placed on you!</span>")
 
 /datum/curse/daimonion/physical_weakness/activate(mob/living/target)
 	. = ..()
+	if(target.physique >= 5)
+	target.physique = 4
+	var/mob/living/carbon/human/C
+	for (var/datum/action/blood_power/A in C.actions)
+		if(A)
+			A.Remove(C)
+	to_chat(target, "<span class='danger'>You feel like a great curse was placed on you!</span>")
 
 /datum/curse/daimonion/mental_weakness/activate(mob/living/target)
 	. = ..()
+	var/mob/living/carbon/human/target = target
+	if(target.social >= 5)
+	target.social = 4
+	if(target.mentality >= 5)
+	target.mentality = 4
+	to_chat(target, "<span class='danger'>You feel like a great curse was placed on you!</span>")
 
 /datum/curse/daimonion/offspring_weakness/activate(mob/living/target)
 	. = ..()
+	var/mob/living/carbon/human/C
+	for (var/datum/action/give_vitae/A in C.actions)
+		if(A)
+			A.Remove(C)
+	to_chat(target, "<span class='danger'>You feel like a great curse was placed on you!</span>")
 
 /datum/curse/daimonion/success_weakness/activate(mob/living/target)
 	. = ..()
+	target.add_quirk(/datum/quirk/slowpoke)
+	target.add_quirk(/datum/quirk/lazy)
+	target.add_quirk(/datum/quirk/hungry)
+	to_chat(target, "<span class='danger'>You feel like a great curse was placed on you!</span>")
+
+/obj/effect/daimonion_monster
+	name = "Unnerving Creature"
+	desc = "Seems to stare at you."
+	icon = 'icons/mob/eldritch_mobs.dmi'
+	icon_state = "raw_prophet"
+	plane = GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+
+/obj/effect/daimonion_monster/proc/summon_scary_monster(mob/target)
+	var/client/C = target.client
+	C.images += /obj/effect/daimonion_monster
+	var/duration = rand(5 SECONDS, 7 SECONDS)
+	step_away(src, target, 3)
+	spawn(1 SECONDS)
+	step_towards(src, target)
+	spawn(duration)
+	if(C)
+	C.images.Remove(/obj/effect/daimonion_monster)
+
 
 /datum/daimonion/proc/baali_get_clan_weakness(target, caster)
 	var/mob/living/carbon/human/H = target
@@ -1789,31 +1849,70 @@
 			H.firer = caster
 			H.preparePixelProjectile(target, start)
 			H.fire(direct_target = target)
+		if(4)
+			var/obj/effect/daimonion_monster/M
+			M.summon_scary_monster(target)
+			to_chat(target, "<span class='warning'You see a monster appear out of thin air!<span>")
 		if(5)
 			var/list/curses = list()
 			var/list/subtype_list = subtypesof(/datum/curse/daimonion)
+			to_chat(caster, "<span class='danger'>To place a curse on someone is to pay the great price. Are you willing to take the risks?</span>")
 			for(var/i in 1 to subtype_list.len)
 				var/curse = subtype_list[i]
 				var/datum/curse/daimonion/C = new curse
 				if(caster.generation <= C.genrequired)
 					curses += C.name
-			var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in curses
-			if(choosecurse)
-				if(choosecurse == "No Lying Tongue")
-					var/datum/curse/daimonion/lying_weakness/curs
-					curs.activate(target)
-				if(choosecurse == "Baby Strength")
-					var/datum/curse/daimonion/physical_weakness/curs
-					curs.activate(target)
-				if(choosecurse == "Reap Mentality")
-					var/datum/curse/daimonion/mental_weakness/curs
-					curs.activate(target)
-				if(choosecurse == "Sterile Vitae")
-					var/datum/curse/daimonion/offspring_weakness/curs
-					curs.activate(target)
-				if(choosecurse == "The Mark Of Doom")
-					var/datum/curse/daimonion/success_weakness/curs
-					curs.activate(target)
+				var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in curses
+				if(choosecurse)
+					var/datum/curse/daimonion/L
+					if(!L.is_daimonion_curse_used(target))
+						if(choosecurse == "No Lying Tongue")
+							var/datum/curse/daimonion/lying_weakness/curs
+							var/mob/living/carbon/human/BD = usr
+							if(BD.maxbloodpool > 1)
+								curs.activate(target)
+								BD.maxbloodpool -= 1
+							else
+								to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.<span>")
+						if(choosecurse == "Baby Strength")
+							var/datum/curse/daimonion/physical_weakness/curs
+							var/mob/living/carbon/human/BD = usr
+							if(BD.maxbloodpool > 2)
+								curs.activate(target)
+								BD.maxbloodpool -= 2
+							else
+								to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.<span>")
+						if(choosecurse == "Reap Mentality")
+							var/datum/curse/daimonion/mental_weakness/curs
+							var/mob/living/carbon/human/BD = usr
+							if(BD.maxbloodpool > 3)
+								curs.activate(target)
+								BD.maxbloodpool -= 3
+							else
+								to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.<span>")
+						if(choosecurse == "Sterile Vitae")
+							if(iskindred(target))
+								var/datum/curse/daimonion/offspring_weakness/curs
+								var/mob/living/carbon/human/BD = usr
+								if(BD.maxbloodpool > 4)
+									curs.activate(target)
+									BD.maxbloodpool -= 4
+								else
+									to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.<span>")
+							else
+								to_chat(caster, "Victim is not a kindred!")
+						if(choosecurse == "The Mark Of Doom")
+							var/datum/curse/daimonion/success_weakness/curs
+							var/mob/living/carbon/human/BD = usr
+							if(BD.maxbloodpool > 5)
+								curs.activate(target)
+								BD.maxbloodpool -= 5
+							else
+								to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.<span>")
+					else
+						to_chat(caster, "<span class='warning'>One of the curses is already placed on this one, and there's no way to revert it.</span>")
+
+
 
 /datum/discipline/valeren
 	name = "Valeren"
