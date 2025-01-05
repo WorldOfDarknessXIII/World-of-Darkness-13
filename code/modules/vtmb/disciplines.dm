@@ -1659,51 +1659,47 @@
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
 
-/mob/living/carbon/human/baali_get_clan_weakness(/mob/living/carbon/human/target)
-	var/message = ""
+/mob/living/carbon/human/baali_get_clan_weakness(/mob/living/carbon/human/target, mob/living/carbon/human/caster)
 	if(iskindred(target))
 		if(target.clane)
 			if(target.clane == "Toreador")
-				message += "The blood is sweet and rich. The owner must, too, be beautiful."
+				to_chat(caster, "The blood is sweet and rich. The owner must, too, be beautiful.")
 			else if(target.clane == "Daughters of Cacophony")
-				message += ""
+				to_chat(caster, "The blood is sweet and rich. The owner must, too, be beautiful.")
 			else if(target.clane == "Ventrue")
-				message += "The blood has kingly power in it, descending from Mithras or Hardestadt."
+				to_chat(caster, "The blood is sweet and rich. The owner must, too, be beautiful.")
 			else if(target.clane == "Lasombra")
-				message += "Cold and dark, this blood has a mystical connection to the Abyss."
+				to_chat(caster, "The blood is sweet and rich. The owner must, too, be beautiful.")
 			else if(target.clane == "Tzimisce")
-				message += "The vitae is mutable and twisted. Is there any doubt to the cursed line it belongs to?"
+				to_chat(caster, "The blood is sweet and rich. The owner must, too, be beautiful.")
 			else if(target.clane == "Gangrel")
-				message += "The blood emits a primal and feral aura. The same is likely of the owner."
+				to_chat(caster, "The blood is sweet and rich. The owner must, too, be beautiful.")
 			else if(target.clane == "Malkavian")
-				message += "You can sense chaos and madness within this blood. It's owner must be maddened too."
+				to_chat(caster, "The blood is sweet and rich. The owner must, too, be beautiful.")
 			else if(target.clane == "Brujah")
-				message += "The blood is filled with passion and anger. So must be the owner of the blood."
+				to_chat(caster, "The blood is sweet and rich. The owner must, too, be beautiful.")
 			else if(target.clane == "Nosferatu")
-				message += "The blood is foul and disgusting. Same must apply to the owner."
+				to_chat(caster, "The blood is sweet and rich. The owner must, too, be beautiful.")
 			else if(target.clane == "Tremere")
-				message += "The blood is filled with the power of magic. The owner must be a thaumaturge."
+				to_chat(caster, "The blood is sweet and rich. The owner must, too, be beautiful.")
 			else if(target.clane == "Baali")
-				message += "Tainted and corrupt. Vile and filthy. You see your reflection in the blood, but something else stares back."
+				to_chat(caster, "The blood is sweet and rich. The owner must, too, be beautiful.")
 			else if(target.clane == "Assamite")
-				message += "Potent... Deadly... And cursed. You know well the curse laid by Tremere on the assassins."
+				to_chat(caster, "The blood is sweet and rich. The owner must, too, be beautiful.")
 			else if(target.clane == "True Brujah")
-				message += "The blood is cold and static... It's hard to feel any emotion within it."
+				to_chat(caster, "The blood is sweet and rich. The owner must, too, be beautiful.")
 			else if(target.clane == "Salubri")
-				message += "The cursed blood of the Salubri! The owner of this blood must be slain."
+				to_chat(caster, "The blood is sweet and rich. The owner must, too, be beautiful.")
 			else if(target.clane == "Giovanni" || target.clane == "Cappadocian")
-				message += "The blood is very cold and filled with death. The owner must be a necromancer."
+				to_chat(caster, "The blood is sweet and rich. The owner must, too, be beautiful.")
 			else if(target.clane == "Kiasyd")
-				message += "The blood is filled with traces of fae magic."
+				to_chat(caster, "The blood is sweet and rich. The owner must, too, be beautiful.")
 			else if(target.clane == "Gargoyle")
-				message += "The blood of our stone servants."
+				to_chat(caster, "The blood is sweet and rich. The owner must, too, be beautiful.")
 			else if(target.clane == "Ministry")
-				message += "Seduction and allure are in the blood. Ah, one of the snakes."
+				to_chat(caster, "The blood is sweet and rich. The owner must, too, be beautiful.")
 			else
-				message += "The blood's origin is hard to trace. Perhaps it is one of the clanless?"
-	return message
-
-
+				to_chat(caster, "The blood is sweet and rich. The owner must, too, be beautiful.")
 
 /datum/discipline/daimonion/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
@@ -1719,8 +1715,7 @@
 				to_chat(caster, "Victim's natural banishment is silver...")
 			if(iskindred(target))
 				var/mob/living/carbon/human/target = target
-				baali_get_clan_weakness(target)
-				to_chat(caster, message)
+				target.baali_get_clan_weakness(target, caster)
 				if(target.generation <= 11)
 					to_chat(caster, "Victim doesn't seem to have much vitae concentrated, looks like a weak one... Despite that, you can clearly see their fear for fire.")
 				else
