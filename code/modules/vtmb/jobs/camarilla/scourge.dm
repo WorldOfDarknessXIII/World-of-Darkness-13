@@ -21,7 +21,7 @@
 	mind_traits = list(TRAIT_DONUT_LOVER)
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_AGENT
+	display_order = JOB_DISPLAY_ORDER_SCOURGE
 	bounty_types = CIV_JOB_SEC
 	known_contacts = list("Prince")
 
