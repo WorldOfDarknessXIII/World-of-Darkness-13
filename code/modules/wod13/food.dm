@@ -592,7 +592,6 @@
 		new /datum/data/mining_equipment("crime scene tape", /obj/item/barrier_tape/police, 1),
 		new /datum/data/mining_equipment("body bags", /obj/item/storage/box/bodybags, 1),
 		new /datum/data/mining_equipment("police vest", /obj/item/clothing/suit/vampire/vest/police, 1),
-		new /datum/data/mining_equipment("police radio", /obj/item/radio/cop, 2),
 		new /datum/data/mining_equipment("police uniform", /obj/item/clothing/under/vampire/police, 1),
 		new /datum/data/mining_equipment("police hat", /obj/item/clothing/head/vampire/police, 1),
 		new /datum/data/mining_equipment("flashlight", /obj/item/flashlight, 1),

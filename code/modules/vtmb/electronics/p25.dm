@@ -515,6 +515,11 @@ GLOBAL_LIST_EMPTY(p25_radios)
 	if(!ismob(speaker))
 		return NONE
 
+	var/mob/living/L = speaker
+	if(istype(L))
+		if(L.stat > CONSCIOUS)
+			return NONE
+
 	if(!can_transmit(speaker))
 		return NONE
 
