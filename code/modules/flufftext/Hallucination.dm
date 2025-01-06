@@ -425,7 +425,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	fakebroken = image('icons/turf/floors.dmi', wall, "plating", layer = TURF_LAYER)
 	landing = get_turf(target)
 	var/turf/landing_image_turf = get_step(landing, SOUTHWEST) //the icon is 3x3
-	fakerune = image('code/modules/wod13/64x64.dmi', landing_image_turf, "landing", layer = ABOVE_OPEN_TURF_LAYER)
+	fakerune = image('code/modules/wod13/64x64.dmi', landing_image_turf, "baali", layer = ABOVE_OPEN_TURF_LAYER)
 	fakebroken.override = TRUE
 	if(target.client)
 		target.client.images |= fakebroken
@@ -447,9 +447,6 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		return
 
 	if (get_turf(demon) != landing && target?.stat != DEAD)
-		if(!landing || (get_turf(demon)).loc.z != landing.loc.z)
-			qdel(src)
-			return
 		demon.forceMove(get_step_towards(demon, landing))
 		demon.setDir(get_dir(demon, landing))
 		target.playsound_local(get_turf(demon), 'sound/effects/meteorimpact.ogg', 150, 1)
