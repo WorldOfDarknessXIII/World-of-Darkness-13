@@ -54,6 +54,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/getcurrentlogs,		/*for accessing server logs for the current round*/
 	/client/proc/cmd_admin_subtle_message,	/*send a message to somebody as a 'voice in their head'*/
 	/client/proc/cmd_admin_adjust_masquerade, /*adjusts the masquerade level of a player*/
+	/client/proc/cmd_admin_global_adjust_masquerade, /*adjusts the global masquerade*/
 	/client/proc/cmd_admin_adjust_humanity, /*adjusts the humanity level of a player*/
 	/client/proc/cmd_admin_headset_message,	/*send a message to somebody through their headset as CentCom*/
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
@@ -221,6 +222,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/toggle_view_range,
 	/client/proc/cmd_admin_subtle_message,
 	/client/proc/cmd_admin_adjust_masquerade,
+	/client/proc/cmd_admin_global_adjust_masquerade,
 	/client/proc/cmd_admin_adjust_humanity,
 	/client/proc/cmd_admin_headset_message,
 	/client/proc/cmd_admin_check_contents,
@@ -466,6 +468,34 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	message_admins("[key_name_admin(usr)] toggled the round's canonicity. The round is [GLOB.canon_event ? "now canon." : "no longer canon."]")
 	log_admin("[key_name(usr)] toggled the round's canonicity. The round is [GLOB.canon_event ? "now canon." : "no longer canon."]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Canon") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/cmd_admin_global_adjust_masquerade()
+	set name = "Adjust Global Masquerade"
+	set category = "Admin"
+	if (!check_rights(R_ADMIN))
+		return
+
+
+	var/last_global_mask = SSmasquerade.total_level
+
+	var/value = input(usr, "Enter the Global Masquerade adjustment values(- will decrease, + will increase) :", "Global Masquerade Adjustment", 0) as num|null
+	if(value == null)
+		return
+	
+	SSmasquerade.manual_adjustment = value
+
+	var/changed_mask = max(0,min(1000,last_global_mask + value))
+
+	SSmasquerade.fire()
+	
+	var/msg = "<span class='adminnotice'><b>Global Masquerade Adjustment: [key_name_admin(usr)] has adjusted Global masquerade from [last_global_mask] to [changed_mask] with the value of : [value]. Real Masquerade Value with the other possible variables : [SSmasquerade.total_level]</b></span>"
+	log_admin("Global MasqAdjust: [key_name(usr)] has adjusted Global masquerade from [last_global_mask] to [changed_mask] with the value of : [value]. Real Masquerade Value with the other possible variables : [SSmasquerade.total_level]")
+	message_admins(msg)
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Global Adjust Masquerade")
+
+
+
+
 
 /client/proc/cmd_admin_adjust_masquerade(mob/living/carbon/human/M in GLOB.player_list)
 	set name = "Adjust Masquerade"
