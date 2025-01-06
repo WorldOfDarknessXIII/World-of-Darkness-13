@@ -1837,7 +1837,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 				if(choosecurse)
 					var/mob/living/BP = caster
 					var/datum/curse/daimonion/D = choosecurse
-					if(D.name == "No Lying Tongue")
+					if(D == "No Lying Tongue")
 						var/datum/curse/daimonion/lying_weakness/curs
 						if(caster.maxbloodpool > 1)
 							curs.activate(target)
@@ -1846,7 +1846,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 							GLOB.who_is_cursed += target
 						else
 							to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
-					if(D.name == "Baby Strength")
+					if(D == "Baby Strength")
 						var/datum/curse/daimonion/physical_weakness/curs
 						if(caster.maxbloodpool > 2)
 							curs.activate(target)
@@ -1855,7 +1855,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 							GLOB.who_is_cursed += target
 						else
 							to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
-					if(D.name == "Reap Mentality")
+					if(D == "Reap Mentality")
 						var/datum/curse/daimonion/mental_weakness/curs
 						if(caster.maxbloodpool > 3)
 							curs.activate(target)
@@ -1864,7 +1864,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 							GLOB.who_is_cursed += target
 						else
 							to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
-					if(D.name == "Sterile Vitae")
+					if(D == "Sterile Vitae")
 						if(iskindred(target))
 							var/datum/curse/daimonion/offspring_weakness/curs
 							if(caster.maxbloodpool > 4)
@@ -1876,7 +1876,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 								to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
 						else
 							to_chat(caster, "<span class='warning'>Victim is not a kindred!</span>")
-					if(D.name == "The Mark Of Doom")
+					if(D == "The Mark Of Doom")
 						var/datum/curse/daimonion/success_weakness/curs
 						if(caster.maxbloodpool > 5)
 							curs.activate(target)
