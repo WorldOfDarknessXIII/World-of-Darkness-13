@@ -31,6 +31,7 @@ GLOBAL_LIST_EMPTY(mob_living_list)				//all instances of /mob/living and subtype
 GLOBAL_LIST_EMPTY(carbon_list)				//all instances of /mob/living/carbon and subtypes, notably does not contain brains or simple animals
 GLOBAL_LIST_EMPTY(human_list)				//all instances of /mob/living/carbon/human and subtypes
 GLOBAL_LIST_EMPTY(npc_list)
+GLOBAL_LIST_EMPTY(alive_npc_list)
 GLOBAL_LIST_EMPTY(frenzy_list)
 GLOBAL_LIST_EMPTY(fires_list)
 GLOBAL_LIST_EMPTY(relationship_list)

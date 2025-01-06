@@ -431,6 +431,7 @@ SUBSYSTEM_DEF(smokeweedeveryday)
 	else if(health > 10)
 		. += "<span class='warning'>[src] has sustained some damage.</span>"
 	else if(health > 6)
+
 		. += "<span class='warning'>[src] is close to breaking!</span>"
 	else
 		. += "<span class='warning'>[src] is about to fall apart!</span>"
