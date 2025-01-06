@@ -1661,10 +1661,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/demon/daemon
-	if(level_casting == 4)
-		ranged = FALSE
-	else
-		ranged = TRUE
+	ranged = TRUE
 
 /datum/curse
 	var/name
@@ -1809,6 +1806,10 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 	. = ..()
 	if(!daemon)
 		daemon = new(caster)
+	if(level_casting == 4)
+		ranged = FALSE
+	else
+		ranged = TRUE
 	switch(level_casting)
 		if(1)
 			if(target.get_total_social() <= 3)
