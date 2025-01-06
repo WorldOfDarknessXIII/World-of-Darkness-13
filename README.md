@@ -7,27 +7,22 @@
 * **Coderbus Discord:** https://discord.gg/Vh8TJp9
 * ~~**IRC:** irc://irc.rizon.net/coderbus~~ (dead)
 
-This is the codebase for the /tg/station flavoured fork of SpaceStation 13.
+This is the codebase for World of Darkness 13, a branch off of Space Station 13 based in the setting of the [Chronicles of Darkness](https://theonyxpath.com/category/worlds/chroniclesofdarkness/).
 
-Space Station 13 is a paranoia-laden round-based roleplaying game set against the backdrop of a nonsensical, metal death trap masquerading as a space station, with charming spritework designed to represent the sci-fi setting and its dangerous undertones. Have fun, and survive!
+"We live our days completely ignorant of the true terrors lurking around us. Only rarely do our experiences draw back the veil of shadows and reveal the horror in our midst. These glimpses into the supernatural can cause us to retreat into comforting lies — “There are no such things as monsters” — or stir our morbid curiosity. Only a few, however, can overcome their fear and dare to look deeper."
+
+Play as a Kindred - A bloodsucking creature of the night struggling to keep a hold on their Humanity -- and in a steady struggle against the Beast -- as their horrific hunger spurs them onto ever more monstrous acts.
+Play as a Ghoul - Addicts to the power-granting Vitae that flows from Kindred's dead veins, hopelessly entangled in politics of beings more ancient than they can fathom.
+Or play as a human - just another hapless denizen of the World of Darkness, or do you have something greater inside you that will stand against the dark -- or bend it to your will?
 
 ## DOWNLOADING
 [Downloading](.github/DOWNLOADING.md)
 
 [Running on the server](.github/RUNNING_A_SERVER.md)
 
-[Maps and Away Missions](.github/MAPS_AND_AWAY_MISSIONS.md)
-
-## Requirements for contributors
-[Guidelines for Contributors](.github/CONTRIBUTING.md)
-
-[/tg/station HACKMD account](https://hackmd.io/@tgstation) - Design documentation here
-
 [Documenting your code](.github/AUTODOC_GUIDE.md)
 
 [Policy configuration system](.github/POLICYCONFIG.md)
-
-[Interested in some starting lore?](https://github.com/tgstation/common_core)
 
 ## LICENSE
 
