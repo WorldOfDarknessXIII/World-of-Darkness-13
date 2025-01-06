@@ -43,7 +43,7 @@
 		if (alert)
 			to_chat(owner, "<span class='warning'>[name] can only be used on humans!</span>")
 		return .
-	var/mypower = caster.get_total_social()
+	var/mypower = owner.get_total_social()
 	var/theirpower = target.get_total_mentality()
 	if((theirpower >= mypower) || ((owner.generation - 3) >= target.generation))
 		if (alert)

@@ -41,7 +41,7 @@
 		return .
 	if(target.spell_immunity)
 		return FALSE
-	var/mypower = caster.get_total_social()
+	var/mypower = owner.get_total_social()
 	var/theirpower = target.get_total_mentality()
 	if(theirpower >= mypower)
 		if (alert)

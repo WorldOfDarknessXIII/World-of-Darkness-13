@@ -635,7 +635,7 @@ Dancer
 		return
 	if(isturf(quirk_holder.loc))
 		SSbloodhunt.announce_hunted(quirk_holder, "Camarilla Wanted List")
-/*
+
 /datum/quirk/diablerist
 	name = "Black Secret"
 	desc = "You have a small, ancient secret, somehow related to Diablerie, and this decreases your chance to survive another one. <b>This isn't a licence to diablerie anyone you want!</b>"
