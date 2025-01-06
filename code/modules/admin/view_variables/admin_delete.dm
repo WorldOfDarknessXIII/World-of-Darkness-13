@@ -18,6 +18,9 @@
 			var/turf/T = D
 			T.ScrapeAway()
 		else
+			if(istype(D, /mob/living/carbon/human/npc))
+				GLOB.alive_npc_list -= D
+				GLOB.npc_list -= D
 			vv_update_display(D, "deleted", VV_MSG_DELETED)
 			qdel(D)
 			if(!QDELETED(D))
