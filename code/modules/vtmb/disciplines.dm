@@ -1806,10 +1806,11 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 	. = ..()
 	if(!daemon)
 		daemon = new(caster)
-	if(level_casting == 4)
-		ranged = FALSE
-	else
-		ranged = TRUE
+	for(var/i in level_casting)
+		if(level_casting == 4)
+			ranged = FALSE
+		else
+			ranged = TRUE
 	switch(level_casting)
 		if(1)
 			if(target.get_total_social() <= 3)
