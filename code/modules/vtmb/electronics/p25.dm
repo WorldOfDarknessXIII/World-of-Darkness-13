@@ -233,12 +233,9 @@ GLOBAL_LIST_EMPTY(p25_tranceivers)
 
 /obj/machinery/p25policeportal/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/p25radio))
-		if(!active)
-			to_chat(user, "<span class='warning'>[src] needs to be powered on first!</span>")
-			return
 		var/obj/item/p25radio/radio = W
 		if(radio.linked_network == transceiver.p25_network)
-			unregister_callsign(radio)
+			transceiver.unregister_callsign(radio)
 			radio.linked_network = null
 			radio.linked_transceiver = null
 			transceiver.connected_radios -= radio
@@ -248,7 +245,7 @@ GLOBAL_LIST_EMPTY(p25_tranceivers)
 		var/new_callsign = input(user, "Enter a callsign for this radio:", "Register Callsign") as text|null
 		if(!new_callsign)
 			return
-		var/registration_result = register_callsign(radio, new_callsign, user)
+		var/registration_result = transceiver.register_callsign(radio, new_callsign, user)
 		if(registration_result != "Successfully registered callsign [new_callsign]")
 			to_chat(user, "<span class='warning'>[registration_result]</span>")
 			return
