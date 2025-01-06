@@ -50,6 +50,7 @@
 	name = "Prince"
 	jobtype = /datum/job/vamp/prince
 
+	ears = /obj/item/p25radio
 	id = /obj/item/card/id/prince
 	glasses = /obj/item/clothing/glasses/vampire/sun
 	gloves = /obj/item/clothing/gloves/vampire/latex

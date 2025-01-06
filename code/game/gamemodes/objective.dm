@@ -1000,6 +1000,27 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			stol += I.amount
 	return stol >= amount
 
+
+
+
+/datum/objective/artefact
+	name = "Gather an artefact"
+
+/datum/objective/artefact/update_explanation_text()
+	..()
+	explanation_text = "Become the owner of an artefact."
+
+/datum/objective/artefact/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!isliving(M.current))
+			continue
+		var/list/all_items = M.current.GetAllContents()
+		for(var/obj/item/vtm_artifact/I in all_items) 
+			return TRUE
+	return FALSE 
+
+
 /datum/objective/blood
 	name = "get blood of"
 	var/target_name

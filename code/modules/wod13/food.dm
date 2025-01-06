@@ -481,7 +481,10 @@
 		new /datum/data/mining_equipment("Venetian mask",	/obj/item/clothing/mask/vampire/venetian_mask,	30),
 		new /datum/data/mining_equipment("fancy Venetian mask",	/obj/item/clothing/mask/vampire/venetian_mask/fancy,	200),
 		new /datum/data/mining_equipment("jester mask",	/obj/item/clothing/mask/vampire/venetian_mask/jester,	50),
-		new /datum/data/mining_equipment("bloody mask",	/obj/item/clothing/mask/vampire/venetian_mask/scary,	30)
+		new /datum/data/mining_equipment("bloody mask",	/obj/item/clothing/mask/vampire/venetian_mask/scary,	30),
+		new /datum/data/mining_equipment("comedy mask", /obj/item/clothing/mask/vampire/comedy,	25),
+		new /datum/data/mining_equipment("tragedy mask", /obj/item/clothing/mask/vampire/tragedy,	25)
+
 	)
 
 /obj/food_cart
@@ -586,9 +589,9 @@
 		new /datum/data/mining_equipment("tape recorder", /obj/item/taperecorder, 2),
 		new /datum/data/mining_equipment("white crayon", /obj/item/toy/crayon/white, 1),
 		new /datum/data/mining_equipment("evidence box", /obj/item/storage/box/evidence, 1),
+		new /datum/data/mining_equipment("crime scene tape", /obj/item/barrier_tape/police, 1),
 		new /datum/data/mining_equipment("body bags", /obj/item/storage/box/bodybags, 1),
 		new /datum/data/mining_equipment("police vest", /obj/item/clothing/suit/vampire/vest/police, 1),
-		new /datum/data/mining_equipment("police radio", /obj/item/radio/cop, 2),
 		new /datum/data/mining_equipment("police uniform", /obj/item/clothing/under/vampire/police, 1),
 		new /datum/data/mining_equipment("police hat", /obj/item/clothing/head/vampire/police, 1),
 		new /datum/data/mining_equipment("flashlight", /obj/item/flashlight, 1),

@@ -29,6 +29,7 @@
 	name = "Police Officer"
 	jobtype = /datum/job/vamp/police_officer
 
+	ears = /obj/item/p25radio/police
 	uniform = /obj/item/clothing/under/vampire/police
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	suit = /obj/item/clothing/suit/vampire/vest/police
@@ -36,9 +37,7 @@
 	gloves = /obj/item/cockclock
 	id = /obj/item/card/id/police
 	l_pocket = /obj/item/vamp/phone
-	r_pocket = /obj/item/radio/cop
-	l_hand = /obj/item/vamp/keys/police
-	r_hand = /obj/item/police_radio
+	r_pocket = /obj/item/vamp/keys/police
 	backpack_contents = list(/obj/item/passport=1, /obj/item/implant/radio=1, /obj/item/vamp/creditcard=1, /obj/item/ammo_box/vampire/c9mm = 1, /obj/item/restraints/handcuffs = 1,/obj/item/melee/classic_baton/vampire = 1, /obj/item/storage/firstaid/ifak = 1)
 
 /datum/job/vamp/police_sergeant
@@ -70,6 +69,7 @@
 	name = "Police Sergeant"
 	jobtype = /datum/job/vamp/police_sergeant
 
+	ears = /obj/item/p25radio/police/supervisor
 	uniform = /obj/item/clothing/under/vampire/police
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	suit = /obj/item/clothing/suit/vampire/vest/police/sergeant
@@ -77,9 +77,7 @@
 	gloves = /obj/item/cockclock
 	id = /obj/item/card/id/police/sergeant
 	l_pocket = /obj/item/vamp/phone
-	r_pocket = /obj/item/radio/cop
-	l_hand = /obj/item/vamp/keys/police/secure
-	r_hand = /obj/item/police_radio
+	r_pocket = /obj/item/vamp/keys/police/secure
 	backpack_contents = list(/obj/item/passport=1, /obj/item/implant/radio=1, /obj/item/vamp/creditcard=1, /obj/item/ammo_box/vampire/c9mm = 1, /obj/item/restraints/handcuffs = 1,/obj/item/melee/classic_baton/vampire = 1, /obj/item/storage/firstaid/ifak = 1)
 
 /datum/job/vamp/police_chief
@@ -111,6 +109,7 @@
 	name = "Police Chief"
 	jobtype = /datum/job/vamp/police_chief
 
+	ears = /obj/item/p25radio/police/command
 	uniform = /obj/item/clothing/under/vampire/police
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	suit = /obj/item/clothing/suit/vampire/vest/police/chief
@@ -118,7 +117,5 @@
 	gloves = /obj/item/cockclock
 	id = /obj/item/card/id/police/chief
 	l_pocket = /obj/item/vamp/phone
-	r_pocket = /obj/item/radio/cop
-	l_hand = /obj/item/vamp/keys/police/secure/chief
-	r_hand = /obj/item/police_radio
+	r_pocket = /obj/item/vamp/keys/police/secure/chief
 	backpack_contents = list(/obj/item/passport=1, /obj/item/implant/radio=1, /obj/item/vamp/creditcard=1, /obj/item/ammo_box/vampire/c9mm = 1, /obj/item/restraints/handcuffs = 1,/obj/item/melee/classic_baton/vampire = 1, /obj/item/storage/firstaid/ifak = 1)
