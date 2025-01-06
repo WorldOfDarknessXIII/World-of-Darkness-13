@@ -1,0 +1,67 @@
+"br" = (/obj/effect/decal/cardboard,/obj/effect/decal/pallet,/obj/effect/decal/cardboard,/obj/structure/closet/crate/large,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"bD" = (/obj/machinery/light/small{dir = 1},/obj/structure/closet/cardboard,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"cg" = (/obj/item/clothing/mask/vampire,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"dm" = (/obj/effect/mob_spawn/human/corpse/ciz1,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"is" = (/obj/effect/decal/pallet,/obj/effect/decal/cardboard,/obj/structure/closet/crate/large,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"lI" = (/obj/item/stack/dollar,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"mv" = (/obj/effect/decal/trash,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"mW" = (/obj/item/clothing/gloves/vampire/latex,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"ni" = (/turf/closed/wall/vampwall,/area/vtm/sewer)
+"no" = (/obj/effect/decal/cardboard,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"nU" = (/obj/structure/chair/plastic{dir = 8; icon_state = "plastic_chair"},/obj/effect/decal/cleanable/blood/footprints{icon_state = "splatter3"},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"nV" = (/obj/structure/table,/obj/item/stack/human_flesh,/obj/item/stack/human_flesh,/obj/item/stack/human_flesh,/obj/item/stack/human_flesh,/obj/item/stack/human_flesh,/obj/item/stack/human_flesh,/obj/item/stack/human_flesh,/obj/item/stack/human_flesh,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"oe" = (/obj/effect/decal/cleanable/blood/footprints{dir = 1},/obj/effect/decal/cleanable/blood/footprints{dir = 8; pixel_x = -13; pixel_y = -5},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"ph" = (/obj/item/clothing/suit/hooded/heisenberg,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"pw" = (/turf/open/floor/plating/vampcanalplating,/area/vtm/sewer)
+"pz" = (/obj/effect/decal/cleanable/blood/footprints{icon_state = "splatter2"},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"qR" = (/obj/structure/chair/plastic{dir = 4; pixel_y = 7},/obj/effect/decal/cleanable/blood/footprints{icon_state = "splatter4"},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"td" = (/obj/machinery/light/small{dir = 1},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"tP" = (/obj/structure/vampdoor/old,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"ub" = (/obj/effect/decal/litter,/obj/item/stack/dollar,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"vw" = (/turf/open/floor/plating/rough,/area/vtm/sewer)
+"xe" = (/obj/structure/methlab,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"Ag" = (/obj/machinery/light/small{dir = 8; pixel_x = 16},/obj/structure/closet/cardboard,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"Bu" = (/obj/structure/vampdoor/old,/obj/item/stack/dollar,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"CL" = (/obj/effect/decal/litter,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"Et" = (/obj/structure/vampipe{icon_state = "piping5"; pixel_y = 32},/turf/open/floor/plating/vampcanalplating,/area/vtm/sewer)
+"EH" = (/obj/item/gas_can/full,/obj/structure/table,/obj/machinery/light/small{pixel_y = 18},/obj/machinery/light/small{pixel_y = 18},/obj/machinery/light/small{pixel_y = 18},/obj/machinery/light/small{pixel_y = 18},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"EZ" = (/obj/item/reagent_containers/food/drinks/coffee/vampire,/obj/item/reagent_containers/food/drinks/coffee/vampire,/obj/item/reagent_containers/food/drinks/bottle/vodka,/obj/item/reagent_containers/food/drinks/bottle/vodka,/obj/structure/table,/obj/machinery/light/small{pixel_y = 18},/obj/machinery/light/small{pixel_y = 18},/obj/machinery/light/small{pixel_y = 18},/obj/machinery/light/small{pixel_y = 18},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"IS" = (/obj/effect/mob_spawn/human/corpse/ciz3,/obj/effect/decal/cleanable/blood/footprints{icon_state = "armorblood"},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"Kf" = (/obj/machinery/light/small{pixel_y = 32},/mob/living/simple_animal/hostile/fister/hostile{maxHealth = 300; name = "Boba"},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"KB" = (/obj/item/storage/pill_bottle/potassiodide,/obj/item/storage/pill_bottle/potassiodide,/obj/structure/table,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"Le" = (/obj/structure/vampipe{pixel_x = 0; pixel_y = 32},/turf/open/floor/plating/vampcanalplating,/area/vtm/sewer)
+"Mn" = (/obj/machinery/light/small{dir = 4; pixel_x = -16},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"NZ" = (/obj/structure/vampipe{icon_state = "piping7"; pixel_y = 32},/turf/open/floor/plating/vampcanalplating,/area/vtm/sewer)
+"OX" = (/obj/item/clothing/suit/hooded/heisenberg,/obj/item/clothing/mask/vampire,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"PB" = (/obj/effect/decal/trash,/obj/item/stack/dollar,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"PV" = (/obj/machinery/light/small{dir = 4; pixel_x = -16},/obj/structure/closet/cardboard,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"Qj" = (/obj/structure/closet/cardboard,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"Sp" = (/mob/living/simple_animal/hostile/fister/hostile{maxHealth = 300; name = "Biba"},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"Tb" = (/obj/machinery/light/small{dir = 1},/obj/item/stack/dollar,/obj/effect/decal/cleanable/blood/footprints{dir = 8; pixel_x = -13; pixel_y = -5},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"TD" = (/obj/matrix,/turf/template_noop,/area/template_noop)
+"Vc" = (/obj/item/clothing/gloves/vampire/latex,/obj/item/clothing/gloves/vampire/latex,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"Wo" = (/obj/effect/decal/cleanable/blood/gibs,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"WG" = (/obj/item/storage/pill_bottle/ephedrine,/obj/item/storage/pill_bottle/ephedrine,/obj/item/storage/pill_bottle/ephedrine,/obj/structure/table,/obj/item/vtm_artifact/rand,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"YS" = (/turf/template_noop,/area/template_noop)
+"ZF" = (/obj/item/stack/dollar,/obj/effect/decal/cleanable/blood/footprints{dir = 8; pixel_x = -13; pixel_y = -5},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"ZI" = (/obj/machinery/light/small{dir = 8; pixel_x = 16},/turf/open/floor/plating/rough,/area/vtm/sewer)
+
+(1,1,1) = {"
+YSYSYSYSTDTDTDTDTDTDTDTDTDYS
+YSYSYSYSTDnininininininiTDYS
+YSYSYSYSTDniWGEHxeEZKBniTDYS
+YSYSYSYSTDniVcvwcgphOXniTDYS
+TDTDTDTDTDnimWvwvwcgphniTDTD
+TDnininininininitPninininiTD
+TDnivwKfvwvwISCLvwqRnVnUniTD
+TDniMnlIZFTboevwmvvwpzAgniTD
+TDniniBuniniSpWovwvwvwQjniTD
+TDniQjlImvniisvwisisdmisniTD
+TDniPVlIvwniisbDisistdbrniTD
+TDnivwPBZIninininininininiTD
+TDninolIvwniTDTDTDTDTDTDTDTD
+TDniMnlIvwniTDYSYSYSYSYSYSYS
+TDnimvubvwniTDTDTDTDTDTDTDTD
+nininitPnininininininininini
+NZLeLepwLeEtLeLeLeLeLeLeLeLe
+"}

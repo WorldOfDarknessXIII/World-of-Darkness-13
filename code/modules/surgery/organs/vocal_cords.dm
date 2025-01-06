@@ -129,6 +129,9 @@
 	if(!user || !user.can_speak() || user.stat)
 		return 0 //no cooldown
 
+	//patch up an RCE exploit by sanitizing input
+	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+
 	var/log_message = uppertext(message)
 	if(!span_list || !span_list.len)
 		if(iscultist(user))
@@ -154,7 +157,7 @@
 					continue
 			if(user.generation > L.generation && !dominate_me) //Dominate can't be used on lower Generations
 				continue
-			if(((user.social + user.additional_social) <= (L.mentality + L.additional_mentality)) && !dominate_me) //Dominate must defeat resistance
+			if((user.get_total_social() <= L.get_total_mentality()) && !dominate_me) //Dominate must defeat resistance
 				continue
 			if(L.resistant_to_disciplines)
 				continue

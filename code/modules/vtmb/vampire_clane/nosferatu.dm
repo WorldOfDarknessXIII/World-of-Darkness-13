@@ -13,6 +13,7 @@
 	haircuts = list(
 		"Bald",
 		"Pyotr",
+		"Tau",
 		"Balding Hair",
 		"Boddicker",
 		"Feather",
@@ -24,11 +25,12 @@
 		"Cornrow Tail"
 	)
 	violating_appearance = TRUE
-	male_clothes = "/obj/item/clothing/under/vampire/nosferatu"
-	female_clothes = "/obj/item/clothing/under/vampire/nosferatu/female"
+	male_clothes = /obj/item/clothing/under/vampire/nosferatu
+	female_clothes = /obj/item/clothing/under/vampire/nosferatu/female
 	accessories = list("nosferatu_ears")
 	accessories_layers = list("nosferatu_ears" = UPPER_EARS_LAYER)
 	current_accessory = "nosferatu_ears"
+	clan_keys = /obj/item/vamp/keys/nosferatu
 
 /datum/vampireclane/nosferatu/on_gain(mob/living/carbon/human/H)
 	..()
@@ -38,5 +40,5 @@
 
 /datum/vampireclane/nosferatu/post_gain(mob/living/carbon/human/H)
 	..()
-	if(H.vampire_faction != "Camarilla" && H.vampire_faction != "Anarch" && H.vampire_faction != "Sabbat")
+	if(H.vampire_faction != "Camarilla" && H.vampire_faction != "Anarchs" && H.vampire_faction != "Sabbat")
 		H.vampire_faction = "Nosferatu"

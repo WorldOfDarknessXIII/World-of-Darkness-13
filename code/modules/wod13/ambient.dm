@@ -71,6 +71,12 @@
 	upper = FALSE
 	fire_controled = TRUE
 
+/area/vtm/interior/vjanitor
+	name = "Cleaners"
+	icon_state = "janitor"
+	upper = FALSE
+	fire_controled = TRUE
+
 /area/vtm/interior/strip
 	name = "Strip Club"
 	icon_state = "strip"
@@ -214,7 +220,7 @@
 	upper = FALSE
 	music = /datum/vampiremusic/bar
 	zone_type = "elysium"
-	zone_owner = "Anarch"
+	zone_owner = "Anarchs"
 	fire_controled = TRUE
 
 /area/vtm/hotel
@@ -413,10 +419,12 @@
 	if(istype(get_area(T), /area/vtm))
 		var/area/vtm/VTM = get_area(T)
 		if(VTM)
+			/*
 			if(VTM.upper)
 				if(SScityweather.raining)
 					SEND_SOUND(src, sound('code/modules/wod13/sounds/rain.ogg', 0, 0, CHANNEL_RAIN, 25))
 					wash(CLEAN_WASH)
+			*/
 
 			var/cacophony = FALSE
 

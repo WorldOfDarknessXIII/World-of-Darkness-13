@@ -300,6 +300,39 @@
 	icon_state = "fullgrass_[rand(1, 3)]"
 	. = ..()
 
+/obj/structure/flora/ausbushes/tallgrass
+	icon_state = "tallgrass_1"
+	icon = 'code/modules/wod13/32x48.dmi'
+	var/dry = FALSE
+
+/obj/structure/flora/ausbushes/tallgrass/dry
+	icon_state = "dry_tallgrass_1"
+	dry = TRUE
+
+/obj/structure/flora/ausbushes/tallgrass/Initialize()
+	if (!dry)
+		icon_state = "tallgrass_[rand(1, 4)]"
+	else
+		icon_state = "drytallgrass_[rand(1, 4)]"
+	. = ..()
+
+/obj/structure/flora/ausbushes/shortgrass
+	icon_state = "grass_1"
+	icon = 'code/modules/wod13/32x48.dmi'
+
+/obj/structure/flora/ausbushes/shortgrass/Initialize()
+	icon_state = "grass_[rand(1, 4)]"
+	. = ..()
+
+/obj/structure/flora/ausbushes/redflower
+	icon_state = "redplant_1"
+	icon = 'code/modules/wod13/32x48.dmi'
+
+/obj/structure/flora/ausbushes/redflower/Initialize()
+	icon_state = "redplant_[rand(1, 4)]"
+	. = ..()
+
+
 /obj/item/kirbyplants
 	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'

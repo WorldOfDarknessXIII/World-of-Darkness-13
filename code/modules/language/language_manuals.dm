@@ -49,12 +49,6 @@
 		var/obj/item/book/manual/random/book = new(T)
 		user.put_in_active_hand(book)
 
-/obj/item/language_manual/codespeak_manual
-	name = "codespeak manual"
-	desc = "The book's cover reads: \"Codespeak(tm) - Secure your communication with metaphors so elaborate, they seem randomly generated!\""
-	language = /datum/language/codespeak
-	flavour_text = "suddenly your mind is filled with codewords and responses"
-
 /obj/item/language_manual/codespeak_manual/unlimited
 	name = "deluxe codespeak manual"
 	charges = INFINITY
@@ -64,11 +58,10 @@
 /obj/item/language_manual/roundstart_species/Initialize()
 	. = ..()
 	language = pick( \
-		/datum/language/voltaic, \
 		/datum/language/japanese, \
-		/datum/language/chinese, \
+		/datum/language/mandarin, \
 		/datum/language/russian, \
-		/datum/language/calcic \
+
 	)
 	name = "[initial(language.name)] manual"
 	desc = "The book's cover reads: \"[initial(language.name)] for Xenos - Learn common galactic tongues in seconds.\""
@@ -88,13 +81,6 @@
 	. = ..()
 	name = "extended [initial(language.name)] manual"
 
-// So drones can teach borgs and AI dronespeak. For best effect, combine with mother drone lawset.
-/obj/item/language_manual/dronespeak_manual
-	name = "dronespeak manual"
-	desc = "The book's cover reads: \"Understanding Dronespeak - An exercise in futility.\" The book is written entirely in binary, non-silicons probably won't understand it."
-	language = /datum/language/drone
-	flavour_text = "suddenly the drone chittering makes sense"
-	charges = INFINITY
 
 /obj/item/language_manual/dronespeak_manual/attack(mob/living/M, mob/living/user)
 	// If they are not drone or silicon, we don't want them to learn this language.

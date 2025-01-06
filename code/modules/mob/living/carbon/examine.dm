@@ -29,7 +29,7 @@
 		appears_dead = TRUE
 		if(getorgan(/obj/item/organ/brain))
 			. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive, with no signs of life.</span>"
-		else if(get_bodypart(BODY_ZONE_HEAD))
+		else if(get_bodypart(BODY_ZONE_HEAD) && surgeries.len)
 			. += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>"
 
 	var/list/msg = list("<span class='warning'>")
@@ -153,6 +153,9 @@
 				if ((vampire.clane.name == "Baali") || ( (client?.prefs?.enlightenment && (humanity > 7)) || (!client?.prefs?.enlightenment && (humanity < 4)) ))
 					wyrm_taint++
 
+				if (istype(vampire.clane, /datum/vampireclane/kiasyd)) //the fae are Wyld-tainted by default
+					wyld_taint++
+
 			if (isgarou(src) || iswerewolf(src)) //werewolves have the taint of whatever Triat member they venerate most
 				var/mob/living/carbon/wolf = src
 
@@ -166,17 +169,17 @@
 
 			if (wyrm_taint == TAINTED)
 				msg += "<span class='purple'><i>[p_they(TRUE)] smell[p_s()] of corruption...</i></span><br>"
-			else if (wyrm_taint == VERY_TAINTED)
+			else if (wyrm_taint >= VERY_TAINTED)
 				msg += "<span class='purple'><i>[p_they(TRUE)] REEK[uppertext(p_s())] of the Wyrm and its defilement.</i></span><br>"
 
 			if (weaver_taint == TAINTED)
 				msg += "<span class='purple'><i>[p_they(TRUE)] emanate[p_s()] stasis and order...</i></span><br>"
-			else if (weaver_taint == VERY_TAINTED)
+			else if (weaver_taint >= VERY_TAINTED)
 				msg += "<span class='purple'><i>[p_they(TRUE)] exude[p_s()] the Weaver's choking stasis and control.</i></span><br>"
 
 			if (wyld_taint == TAINTED)
 				msg += "<span class='purple'><i>[p_they(TRUE)] radiate[p_s()] chaos and creation...</i></span><br>"
-			else if (wyld_taint == VERY_TAINTED)
+			else if (wyld_taint >= VERY_TAINTED)
 				msg += "<span class='purple'><i>[p_they(TRUE)] [p_are()] infused with the Wyld's primal energies of creation.</i></span><br>"
 
 			if (!wyrm_taint && !weaver_taint && !wyld_taint)

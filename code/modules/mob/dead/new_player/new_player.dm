@@ -158,6 +158,10 @@
 		new_player_panel()
 
 	if(href_list["late_party"])
+		if (!can_respawn())
+			to_chat(src, "<span class='boldwarning'>You cannot respawn yet.</span>")
+			return
+
 		ready = PLAYER_NOT_READY
 		if(late_ready)
 			late_ready = FALSE
@@ -167,6 +171,10 @@
 			SSbad_guys_party.candidates += src
 
 	if(href_list["late_join"])
+		if (!can_respawn())
+			to_chat(usr, "<span class='boldwarning'>You cannot respawn yet.</span>")
+			return
+
 		SSbad_guys_party.candidates -= src
 		late_ready = FALSE
 		if(!SSticker?.IsRoundInProgress())
@@ -297,6 +305,9 @@
 	return "Error: Unknown job availability."
 
 /mob/dead/new_player/proc/IsJobUnavailable(rank, latejoin = FALSE)
+	var/bypass = FALSE
+	if (check_rights_for(client, R_ADMIN))
+		bypass = TRUE
 	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)
 		return JOB_UNAVAILABLE_GENERIC
@@ -308,21 +319,21 @@
 		return JOB_UNAVAILABLE_BANNED
 	if(QDELETED(src))
 		return JOB_UNAVAILABLE_GENERIC
-	if(!job.player_old_enough(client))
+	if(!job.player_old_enough(client) && !bypass)
 		return JOB_UNAVAILABLE_ACCOUNTAGE
-	if(job.required_playtime_remaining(client))
+	if(job.required_playtime_remaining(client) && !bypass)
 		return JOB_UNAVAILABLE_PLAYTIME
 	if(latejoin && !job.special_check_latejoin(client))
 		return JOB_UNAVAILABLE_GENERIC
-	if(client.prefs.generation > job.minimal_generation)
+	if((client.prefs.generation > job.minimal_generation) && !bypass)
 		return JOB_UNAVAILABLE_GENERATION
-	if(client.prefs.masquerade < job.minimal_masquerade)
+	if((client.prefs.masquerade < job.minimal_masquerade) && !bypass)
 		return JOB_UNAVAILABLE_MASQUERADE
-	if(!job.allowed_species.Find(client.prefs.pref_species.name))
+	if(!job.allowed_species.Find(client.prefs.pref_species.name) && !bypass)
 		return JOB_UNAVAILABLE_SPECIES
-	if (job.species_slots[client.prefs.pref_species.name] == 0)
+	if ((job.species_slots[client.prefs.pref_species.name] == 0) && !bypass)
 		return JOB_UNAVAILABLE_SPECIES_LIMITED
-	if(client.prefs.pref_species.name == "Vampire")
+	if((client.prefs.pref_species.name == "Vampire") && !bypass)
 		if(client.prefs.clane)
 			for(var/i in job.allowed_bloodlines)
 				if(i == client.prefs.clane.name)
@@ -466,11 +477,11 @@
 		dat += jointext(dept_dat, "")
 		dat += "</fieldset><br>"
 		column_counter++
-		if(column_counter > 0 && (column_counter % 3 == 0))
+		if(column_counter > 0 && (column_counter % 4 == 0))
 			dat += "</td><td valign='top'>"
 	dat += "</td></tr></table></center>"
 	dat += "</div></div>"
-	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 680, 580)
+	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 900, 650)
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
 	popup.set_content(jointext(dat, ""))
 	popup.open(FALSE) // 0 is passed to open so that it doesn't use the onclose() proc
@@ -526,6 +537,7 @@
 		if(ishuman(new_character))
 			var/mob/living/carbon/human/H = new_character
 			if(H.client)
+				H.true_real_name = H.client.prefs.real_name
 				if(H.age < 16)
 					H.add_quirk(/datum/quirk/freerunning)
 					H.add_quirk(/datum/quirk/light_step)

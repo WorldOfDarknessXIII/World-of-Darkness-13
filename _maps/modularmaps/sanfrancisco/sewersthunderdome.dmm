@@ -1,0 +1,97 @@
+"bB" = (/obj/structure/chair/sofa/corp{dir = 4; icon_state = "corp_sofamiddle"},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"bG" = (/obj/item/stack/dollar/five,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"cg" = (/obj/effect/decal/cleanable/blood/footprints{icon_state = "floor2"},/turf/open/floor/light/colour_cycle/dancefloor_a,/area/vtm/sewer)
+"ck" = (/obj/structure/window/reinforced/spawner/east,/turf/open/floor/light/colour_cycle/dancefloor_b,/area/vtm/sewer)
+"cl" = (/obj/effect/decal/cardboard,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"cx" = (/obj/item/stack/dollar/ten,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"cR" = (/obj/matrix,/turf/template_noop,/area/template_noop)
+"eL" = (/obj/effect/decal/cleanable/cobweb/cobweb2,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"eM" = (/obj/effect/decal/litter{pixel_x = 5; pixel_y = 3},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"fJ" = (/obj/item/shard,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"gg" = (/obj/structure/vampipe{icon_state = "piping7"; pixel_y = 32},/obj/effect/decal/cleanable/blood/footprints{dir = 8; pixel_x = -13; pixel_y = -5},/turf/open/floor/plating/vampcanalplating,/area/vtm/sewer)
+"gJ" = (/obj/structure/window/reinforced/spawner/north,/turf/open/floor/light/colour_cycle/dancefloor_a,/area/vtm/sewer)
+"gM" = (/obj/effect/mob_spawn/human/corpse/ciz1,/obj/effect/decal/cleanable/blood/old{icon_state = "floor7-old"},/obj/effect/decal/cleanable/blood/innards,/turf/open/floor/light/colour_cycle/dancefloor_a,/area/vtm/sewer)
+"ia" = (/obj/structure/vampipe{icon_state = "piping5"; pixel_y = 32},/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plating/vampcanalplating,/area/vtm/sewer)
+"ji" = (/obj/structure/chair{dir = 8},/obj/effect/mob_spawn/human/corpse/ciz2,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"jx" = (/mob/living/simple_animal/hostile/gangrel,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"mq" = (/obj/machinery/light/small{dir = 4; pixel_x = -16},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"ny" = (/obj/effect/decal/pallet,/obj/effect/decal/cardboard,/obj/structure/closet/crate/large,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"nA" = (/obj/effect/decal/cleanable/blood/footprints{pixel_y = 9},/obj/effect/decal/cleanable/blood/footprints{icon_state = "splatter2"},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"nD" = (/obj/structure/vampipe{pixel_x = 0; pixel_y = 32},/turf/open/floor/plating/vampcanalplating,/area/vtm/sewer)
+"nX" = (/obj/structure/chair{dir = 1},/obj/effect/mob_spawn/human/corpse/ciz4,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"ol" = (/obj/structure/window/reinforced/spawner/north,/obj/effect/decal/cleanable/blood/footprints{icon_state = "armorblood"},/turf/open/floor/light/colour_cycle/dancefloor_b,/area/vtm/sewer)
+"pw" = (/obj/effect/decal/cleanable/blood/footprints{dir = 8},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"qh" = (/obj/item/shard,/turf/open/floor/light/colour_cycle/dancefloor_b,/area/vtm/sewer)
+"qy" = (/obj/structure/chair{dir = 1},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"rR" = (/obj/structure/chair/sofa/corp/left{alpha = 125; dir = 1},/obj/effect/mob_spawn/human/corpse/ciz4,/obj/effect/decal/cleanable/blood/old{dir = 1},/obj/effect/decal/cleanable/blood/footprints{icon_state = "floor1"},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"sr" = (/obj/structure/chair{dir = 8},/obj/effect/mob_spawn/human/corpse/ciz3,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"sB" = (/obj/effect/decal/cleanable/blood/footprints,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"sF" = (/obj/effect/decal/cleanable/blood/footprints,/obj/effect/decal/cleanable/blood/footprints{icon_state = "splatter4"},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"tQ" = (/obj/structure/chair/sofa/corp/corner{dir = 1; icon_state = "corp_sofacorner"},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"uO" = (/obj/structure/closet/cardboard,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"ve" = (/turf/open/floor/plating/rough,/area/vtm/sewer)
+"vJ" = (/obj/effect/decal/cleanable/blood/old{dir = 1},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"wp" = (/obj/effect/decal/cleanable/blood/footprints{icon_state = "floor2"},/obj/effect/decal/cleanable/blood/footprints,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"wU" = (/turf/closed/wall/vampwall,/area/vtm/sewer)
+"xH" = (/obj/effect/decal/cleanable/glass,/obj/effect/decal/cleanable/blood/footprints{pixel_y = 9},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"ys" = (/obj/structure/vampdoor/old,/obj/effect/decal/cleanable/blood/footprints,/obj/effect/decal/cleanable/blood/footprints{icon_state = "splatter4"},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"zj" = (/obj/effect/decal/cleanable/blood/footprints{icon_state = "splatter3"},/obj/effect/decal/cleanable/blood/footprints{dir = 8; pixel_x = -13; pixel_y = -5},/turf/open/floor/plating/vampcanalplating,/area/vtm/sewer)
+"As" = (/obj/effect/decal/litter{pixel_x = 5; pixel_y = 3},/obj/machinery/light/small{dir = 8; pixel_x = 20},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"CY" = (/obj/effect/decal/cleanable/oil/slippery,/obj/machinery/light/warm{pixel_y = 32},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"DA" = (/obj/structure/chair/sofa/corp{dir = 4; icon_state = "corp_sofamiddle"},/obj/effect/mob_spawn/human/corpse/ciz2,/obj/effect/decal/cleanable/blood/old{dir = 1},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"Fv" = (/obj/effect/decal/cleanable/blood/footprints{icon_state = "floor3"},/turf/open/floor/light/colour_cycle/dancefloor_a,/area/vtm/sewer)
+"Gf" = (/obj/effect/decal/cleanable/oil/slippery,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"GK" = (/obj/structure/window/reinforced/spawner/west,/obj/effect/decal/cleanable/oil/slippery,/turf/open/floor/light/colour_cycle/dancefloor_a,/area/vtm/sewer)
+"Hn" = (/turf/template_noop,/area/template_noop)
+"Hq" = (/obj/effect/decal/cleanable/blood/footprints{icon_state = "floor1"},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"Iy" = (/obj/structure/vampdoor/old,/obj/effect/decal/cleanable/blood/footprints,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"Km" = (/obj/effect/decal/cleanable/blood/footprints{icon_state = "splatter3"},/obj/effect/decal/cleanable/blood/footprints{pixel_y = 9},/turf/open/floor/light/colour_cycle/dancefloor_b,/area/vtm/sewer)
+"KB" = (/obj/effect/decal/litter,/obj/effect/decal/cleanable/cobweb/cobweb2,/obj/machinery/light/small{pixel_y = 18},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"KK" = (/obj/structure/chair/stool/bar,/obj/item/stack/dollar,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"Lc" = (/obj/machinery/light/small{dir = 8; pixel_x = 20},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"Ln" = (/obj/structure/closet/crate/bin,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"Mc" = (/obj/structure/window/reinforced/spawner/east,/obj/structure/window/reinforced/spawner/north,/obj/effect/decal/cleanable/oil/slippery,/obj/effect/decal/cleanable/blood/footprints{icon_state = "splatter3"},/turf/open/floor/light/colour_cycle/dancefloor_a,/area/vtm/sewer)
+"Mj" = (/obj/structure/chair/sofa/corp/left,/obj/effect/mob_spawn/human/corpse/ciz2,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"MG" = (/obj/effect/decal/cleanable/glass,/obj/effect/decal/cleanable/blood/footprints{icon_state = "armorblood"},/obj/item/stack/dollar/fifty,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"ML" = (/obj/structure/chair{dir = 8},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"Nd" = (/obj/machinery/door/window/northleft,/obj/structure/window/reinforced/spawner/west,/obj/effect/decal/cleanable/blood/old{icon_state = "floor4-old"},/obj/item/shard,/turf/open/floor/light/colour_cycle/dancefloor_b,/area/vtm/sewer)
+"OD" = (/obj/structure/window/reinforced/spawner/east,/mob/living/simple_animal/hostile/gangrel,/turf/open/floor/light/colour_cycle/dancefloor_a,/area/vtm/sewer)
+"OU" = (/obj/structure/chair/sofa/corp/corner{dir = 4; icon_state = "corp_sofacorner"},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"Pm" = (/obj/item/vtm_artifact/rand,/obj/effect/decal/cleanable/blood/old{dir = 1},/turf/open/floor/light/colour_cycle/dancefloor_b,/area/vtm/sewer)
+"PP" = (/obj/structure/vampipe{pixel_x = 0; pixel_y = 32},/obj/effect/decal/cleanable/blood/old{icon_state = "floor7-old"},/turf/open/floor/plating/vampcanalplating,/area/vtm/sewer)
+"Ru" = (/obj/machinery/light/warm{dir = 1; pixel_y = -16},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"Sc" = (/obj/structure/window/reinforced/spawner,/obj/structure/window/reinforced/spawner/west,/obj/effect/decal/cleanable/blood/old{icon_state = "drip4-old"},/turf/open/floor/light/colour_cycle/dancefloor_b,/area/vtm/sewer)
+"Su" = (/obj/effect/decal/cleanable/oil/slippery,/obj/effect/decal/cleanable/garbage,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"Ts" = (/obj/structure/window/reinforced/spawner,/mob/living/simple_animal/hostile/gangrel,/turf/open/floor/light/colour_cycle/dancefloor_a,/area/vtm/sewer)
+"TO" = (/obj/structure/window/reinforced/spawner/east,/obj/effect/decal/cleanable/blood/old{icon_state = "floor2-old"},/turf/open/floor/light/colour_cycle/dancefloor_b,/area/vtm/sewer)
+"TS" = (/obj/machinery/door/window,/obj/structure/window/reinforced/spawner/east,/obj/effect/decal/cleanable/blood/footprints{icon_state = "floor2"},/turf/open/floor/light/colour_cycle/dancefloor_a,/area/vtm/sewer)
+"Uk" = (/obj/structure/window/reinforced/spawner,/obj/effect/decal/cleanable/blood/footprints{icon_state = "floor1"},/turf/open/floor/light/colour_cycle/dancefloor_b,/area/vtm/sewer)
+"UT" = (/obj/effect/decal/cleanable/blood/footprints{pixel_y = 9},/turf/open/floor/plating/rough,/area/vtm/sewer)
+"VU" = (/obj/effect/decal/cleanable/blood/footprints{pixel_y = 9},/turf/open/floor/light/colour_cycle/dancefloor_b,/area/vtm/sewer)
+"Wy" = (/obj/structure/vampipe{icon_state = "piping5"; pixel_y = 32},/turf/open/floor/plating/vampcanalplating,/area/vtm/sewer)
+"Ym" = (/obj/structure/vampipe{pixel_x = 0; pixel_y = 32},/obj/effect/decal/cleanable/blood/footprints{dir = 8; pixel_x = -13; pixel_y = -5},/turf/open/floor/plating/vampcanalplating,/area/vtm/sewer)
+"Yo" = (/obj/structure/vampipe{pixel_x = 0; pixel_y = 32},/obj/effect/decal/cleanable/greenglow,/turf/open/floor/plating/vampcanalplating,/area/vtm/sewer)
+"Yy" = (/obj/structure/vampipe{pixel_x = 0; pixel_y = 32},/obj/effect/decal/cleanable/blood/footprints{dir = 8; pixel_x = -13; pixel_y = -5},/obj/machinery/light/small{pixel_y = 18},/turf/open/floor/plating/vampcanalplating,/area/vtm/sewer)
+"YG" = (/obj/effect/decal/cleanable/greenglow,/turf/open/floor/plating/rough,/area/vtm/sewer)
+"ZG" = (/obj/effect/decal/cleanable/glass,/obj/effect/decal/cleanable/blood/footprints{icon_state = "floor1"},/turf/open/floor/light/colour_cycle/dancefloor_a,/area/vtm/sewer)
+"ZU" = (/obj/effect/decal/cleanable/blood/old{icon_state = "floor4-old"},/turf/open/floor/plating/rough,/area/vtm/sewer)
+
+(1,1,1) = {"
+cRcRcRcRcRcRcRcRcRcRcRcRcRcR
+cRwUwUwUwUwUwUwUwUwUwUwUwUcR
+cRwUuOveveclveCYveYGveeLwUcR
+cRwUmqHqvJNdgJolMcvejiAswUcR
+cRwUOUMjfJZGVUcgckbGMLvewUcR
+cRwUbBjxxHKmgMPmODveMLvewUcR
+cRwUDAMGUTGKqhFvTOvesrclwUcR
+cRwUtQrRUTScTsUkTSbGMLvewUcR
+cRwUmqveveGfcxYGGfveveLcwUcR
+cRwUeMZUveqyqynXqynAveLnwUcR
+cRwUveclveveRuvewppwnynywUcR
+cRwUwUwUwUwUwUwUyswUwUwUwUcR
+cRcRcRcRcRcRwUKKsBKBwUcRcRcR
+HnHnHnHnHncRwUvesFuOwUcRHnHn
+cRcRcRcRcRcRwUSusBuOwUcRcRcR
+wUwUwUwUwUwUwUwUIywUwUwUwUwU
+iaPPYmggYmYmYmYyzjnDnDWynDYo
+"}

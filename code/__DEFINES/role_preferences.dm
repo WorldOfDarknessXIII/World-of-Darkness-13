@@ -6,6 +6,8 @@
 
 //These are synced with the Database, if you change the values of the defines
 //then you MUST update the database!
+#define ROLE_NATIONAL_GUARD		"National Guard"
+#define ROLE_SWAT				"Swat Officer"
 #define ROLE_SYNDICATE			"Syndicate"
 #define ROLE_TRAITOR			"Traitor"
 #define ROLE_OPERATIVE			"Operative"

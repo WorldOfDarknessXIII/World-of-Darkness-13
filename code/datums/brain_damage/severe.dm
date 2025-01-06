@@ -20,23 +20,6 @@
 	REMOVE_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
 	..()
 
-/datum/brain_trauma/severe/aphasia
-	name = "Aphasia"
-	desc = "Patient is unable to speak or understand any language."
-	scan_desc = "extensive damage to the brain's language center"
-	gain_text = "<span class='warning'>You have trouble forming words in your head...</span>"
-	lose_text = "<span class='notice'>You suddenly remember how languages work.</span>"
-
-/datum/brain_trauma/severe/aphasia/on_gain()
-	owner.add_blocked_language(subtypesof(/datum/language/) - /datum/language/aphasia, LANGUAGE_APHASIA)
-	owner.grant_language(/datum/language/aphasia, TRUE, TRUE, LANGUAGE_APHASIA)
-	..()
-
-/datum/brain_trauma/severe/aphasia/on_lose()
-	owner.remove_blocked_language(subtypesof(/datum/language/), LANGUAGE_APHASIA)
-	owner.remove_language(/datum/language/aphasia, TRUE, TRUE, LANGUAGE_APHASIA)
-	..()
-
 /datum/brain_trauma/severe/blindness
 	name = "Cerebral Blindness"
 	desc = "Patient's brain is no longer connected to its eyes."

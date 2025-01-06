@@ -209,7 +209,7 @@
 		/obj/item/clothing/under/vampire/sport,
 		/obj/item/clothing/under/vampire/office,
 		/obj/item/clothing/under/vampire/sexy,
-		/obj/item/clothing/under/vampire/pimp,
+		/obj/item/clothing/under/vampire/slickback,
 		/obj/item/clothing/under/vampire/emo
 	)
 	pockets = list(
@@ -815,8 +815,8 @@
 	anchored = FALSE
 	footstep_type = FOOTSTEP_MOB_CLAW
 	bloodquality = BLOOD_QUALITY_LOW
-	bloodpool = 2
-	maxbloodpool = 2
+	bloodpool = 1
+	maxbloodpool = 1
 	del_on_death = 1
 	maxHealth = 5
 	health = 5
@@ -868,9 +868,10 @@
 	maxHealth = 20
 	health = 20
 	harm_intent_damage = 10
-	melee_damage_lower = 10
+	melee_damage_lower = 5
 	melee_damage_upper = 10
 	speed = 0
+	dodging = TRUE
 
 /mob/living/simple_animal/hostile/beastmaster/rat/Initialize()
 	. = ..()
@@ -885,14 +886,16 @@
 	name = "bat"
 	desc = "It's a bat."
 	is_flying_animal = TRUE
-	speed = -1
+	maxHealth = 10
+	health = 10
+	speed = -0.8
 
 /mob/living/simple_animal/hostile/beastmaster/rat/flying/UnarmedAttack(atom/A)
 	. = ..()
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
 		if(H.bloodpool)
-			if(prob(25))
+			if(prob(10))
 				H.adjust_blood_points(-1)
 				beastmaster.adjust_blood_points(1)
 
@@ -1090,7 +1093,7 @@
 	shoes = list(/obj/item/clothing/shoes/vampire/jackboots)
 	uniforms = list(/obj/item/clothing/under/vampire/police)
 	hats = list(/obj/item/clothing/head/vampire/police)
-	suits = list(/obj/item/clothing/suit/vampire/vest)
+	suits = list(/obj/item/clothing/suit/vampire/vest/police)
 	pockets = list(/obj/item/stack/dollar/rand)
 
 	male_phrases = list("I see you.",
@@ -1140,10 +1143,12 @@
 						Aggro(H, FALSE)
 
 /datum/socialrole/guard
-	s_tones = list("albino",
-								"caucasian1",
-								"caucasian2",
-								"caucasian3")
+	s_tones = list(
+		"albino",
+		"caucasian1",
+		"caucasian2",
+		"caucasian3"
+	)
 
 	min_age = 18
 	max_age = 85
@@ -1151,79 +1156,89 @@
 	male_names = null
 	surnames = null
 
-	hair_colors = list("040404",	//Black
-										"120b05",	//Dark Brown
-										"342414",	//Brown
-										"554433",	//Light Brown
-										"695c3b",	//Dark Blond
-										"ad924e",	//Blond
-										"dac07f",	//Light Blond
-										"802400",	//Ginger
-										"a5380e",	//Ginger alt
-										"ffeace",	//Albino
-										"650b0b",	//Punk Red
-										"14350e",	//Punk Green
-										"080918")	//Punk Blue
-	male_hair = list("Balding Hair",
-										"Bedhead",
-										"Bedhead 2",
-										"Bedhead 3",
-										"Boddicker",
-										"Business Hair",
-										"Business Hair 2",
-										"Business Hair 3",
-										"Business Hair 4",
-										"Coffee House",
-										"Combover",
-										"Crewcut",
-										"Father",
-										"Flat Top",
-										"Gelled Back",
-										"Joestar",
-										"Keanu Hair",
-										"Oxton",
-										"Volaju")
-	male_facial = list("Beard (Abraham Lincoln)",
-											"Beard (Chinstrap)",
-											"Beard (Full)",
-											"Beard (Cropped Fullbeard)",
-											"Beard (Hipster)",
-											"Beard (Neckbeard)",
-											"Beard (Three o Clock Shadow)",
-											"Beard (Five o Clock Shadow)",
-											"Beard (Seven o Clock Shadow)",
-											"Moustache (Hulk Hogan)",
-											"Moustache (Watson)",
-											"Sideburns (Elvis)",
-											"Sideburns",
-											"Shaved")
+	hair_colors = list(
+		"040404",	//Black
+		"120b05",	//Dark Brown
+		"342414",	//Brown
+		"554433",	//Light Brown
+		"695c3b",	//Dark Blond
+		"ad924e",	//Blond
+		"dac07f",	//Light Blond
+		"802400",	//Ginger
+		"a5380e",	//Ginger alt
+		"ffeace",	//Albino
+		"650b0b",	//Punk Red
+		"14350e",	//Punk Green
+		"080918"	//Punk Blue
+	)
+	male_hair = list(
+		"Balding Hair",
+		"Bedhead",
+		"Bedhead 2",
+		"Bedhead 3",
+		"Boddicker",
+		"Business Hair",
+		"Business Hair 2",
+		"Business Hair 3",
+		"Business Hair 4",
+		"Coffee House",
+		"Combover",
+		"Crewcut",
+		"Father",
+		"Flat Top",
+		"Gelled Back",
+		"Joestar",
+		"Keanu Hair",
+		"Oxton",
+		"Volaju"
+	)
+	male_facial = list(
+		"Beard (Abraham Lincoln)",
+		"Beard (Chinstrap)",
+		"Beard (Full)",
+		"Beard (Cropped Fullbeard)",
+		"Beard (Hipster)",
+		"Beard (Neckbeard)",
+		"Beard (Three o Clock Shadow)",
+		"Beard (Five o Clock Shadow)",
+		"Beard (Seven o Clock Shadow)",
+		"Moustache (Hulk Hogan)",
+		"Moustache (Watson)",
+		"Sideburns (Elvis)",
+		"Sideburns",
+		"Shaved"
+	)
 
 	shoes = list(/obj/item/clothing/shoes/vampire)
 	uniforms = list(/obj/item/clothing/under/vampire/guard)
-	pockets = list(/obj/item/vamp/keys/npc,
-					/obj/item/stack/dollar/rand)
+	pockets = list(/obj/item/vamp/keys/npc, /obj/item/stack/dollar/rand)
 
-	male_phrases = list("I see you.",
-											"Looking suspicious...",
-											"I got some bullets if you got some crime-ass ideas.",
-											"I'm the law.",
-											"Have you seen man in black coat with black hair?")
-	neutral_phrases = list("I see you.",
-											"Looking suspicious...",
-											"I got some bullets if you got some crime-ass ideas.",
-											"I'm the law.",
-											"Have you seen man in black coat with black hair?")
-	random_phrases = list("I see you.",
-											"Looking suspicious...",
-											"I got some bullets if you got some crime-ass ideas.",
-											"I'm the law.",
-											"Have you seen man in black coat with black hair?")
-	answer_phrases = list("I'm here to protect you.")
-	help_phrases = list("Lay down!",
-											"Stop right there!!",
-											"Drop your weapon!",
-											"Stop there right now!!",
-											"This is SFPD, stay down!")
+	neutral_phrases = list(
+		"No Loitering.",
+		"I'm kinda like a  cop, you know.",
+		"I could go for some bear claws right about now.",
+		"Like the uniform?",
+		"Hey, catch me later, I'll buy you a beer."
+	)
+	neutral_phrases = list(
+		"No Loitering.",
+		"I'm kinda like a  cop, you know.",
+		"I could go for some bear claws right about now.",
+		"Like the uniform?",
+		"Hey, catch me later, I'll buy you a beer."
+	)
+	random_phrases = list(
+		"Real quiet night tonight.",
+		"My brothers and father are security guards too."
+	)
+	answer_phrases = list("I need some coffee.")
+	help_phrases = list(
+		"It's go time!",
+		"Stop right there!!",
+		"Drop your weapon!",
+		"Freeze!!",
+		"Not just a mall cop, you know!"
+	)
 
 /mob/living/carbon/human/npc/guard
 	vampire_faction = "City"
@@ -1235,7 +1250,7 @@
 	..()
 	if(prob(66))
 		base_body_mod = "f"
-	my_weapon = new /obj/item/gun/ballistic/automatic/vampire/deagle(src)
+	my_weapon = new /obj/item/gun/ballistic/automatic/vampire/m1911(src)
 	AssignSocialRole(/datum/socialrole/guard)
 
 /mob/living/carbon/human/npc/walkby/club/Life()
@@ -1330,7 +1345,7 @@
 										"Volaju")
 
 	shoes = list(/obj/item/clothing/shoes/vampire/heels)
-	uniforms = list(/obj/item/clothing/under/vampire/whore)
+	uniforms = list(/obj/item/clothing/under/vampire/burlesque)
 	backpacks = list()
 
 	female_phrases = list("Wanna touch this boobies?",

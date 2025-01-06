@@ -24,34 +24,44 @@ const NumpadWindow = (props, context) => {
     choosed_number,
   } = data;
   return (
-    <Box m="6px">
-      <Flex mb={1.5}>
-        <Flex.Item width="140px">
-          <Box height="60px" className="Telephone__displayBox">
-            {my_number}
-          </Box>
-        </Flex.Item>
-        <Flex.Item>
-          <Button
-            icon="book"
-            fontSize="24px"
-            lineHeight={1}
-            textAlign="center"
-            width="60px"
-            height="60px"
-            ml="6px"
-            mr="3px"
-            mt="3px"
-            className="Telephone__Button Telephone__Button--keypad"
-            onClick={() => act('contacts')} />
-        </Flex.Item>
+<Box m="6px">
+  <Flex mb={1.5}>
+    <Flex.Item width="155px"> 
+      <Box height="60px" className="Telephone__displayBox">
+        {my_number} 
+      </Box>
+    </Flex.Item>
+    <Flex.Item>
+      <Flex justifyContent="space-between" alignItems="center">
+        <Button
+          icon="book"
+          fontSize="20px"
+          lineHeight={1}
+          textAlign="center"
+          width="35px" 
+          height="40px" 
+          className="Telephone__Button Telephone__Button--keypad"
+          onClick={() => act('contacts')}
+        />
+        <Button
+          icon="wrench"
+          fontSize="20px"
+          lineHeight={1}
+          textAlign="center"
+          width="35x" 
+          height="40px" 
+          className="Telephone__Button Telephone__Button--settings"
+          onClick={() => act('settings')}
+        />
       </Flex>
-      <Flex ml="3px">
-        <Flex.Item>
-          <PhoneKeypad phoneNumber={choosed_number} />
-        </Flex.Item>
-      </Flex>
-    </Box>
+    </Flex.Item>
+  </Flex>
+  <Flex ml="3px">
+    <Flex.Item>
+      <PhoneKeypad phoneNumber={choosed_number} />
+    </Flex.Item>
+  </Flex>
+</Box>
   );
 };
 

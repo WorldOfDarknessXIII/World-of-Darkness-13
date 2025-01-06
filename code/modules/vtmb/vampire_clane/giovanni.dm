@@ -7,8 +7,8 @@
 		/datum/discipline/dominate = 2,
 		/datum/discipline/necromancy = 3
 	)
-	male_clothes = "/obj/item/clothing/under/vampire/suit"
-	female_clothes = "/obj/item/clothing/under/vampire/suit/female"
+	male_clothes = /obj/item/clothing/under/vampire/suit
+	female_clothes = /obj/item/clothing/under/vampire/suit/female
 	whitelisted = FALSE
 
 /datum/discipline/necromancy/post_gain(mob/living/carbon/human/H)

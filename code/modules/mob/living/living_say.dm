@@ -92,6 +92,22 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	return new_msg
 
 /mob/living/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	if(length(message) >= 2 && message[1] == "." && message[2] == "r")
+		var/obj/item/p25radio/radio = null
+		if(istype(get_item_by_slot(ITEM_SLOT_BELT), /obj/item/p25radio))
+			radio = get_item_by_slot(ITEM_SLOT_BELT)
+		else if(istype(get_item_by_slot(ITEM_SLOT_EARS), /obj/item/p25radio))
+			radio = get_item_by_slot(ITEM_SLOT_EARS)
+		else if(istype(get_active_held_item(), /obj/item/p25radio))
+			radio = get_active_held_item()
+		else if(istype(get_inactive_held_item(), /obj/item/p25radio))
+			radio = get_inactive_held_item()
+
+		if(radio)
+			var/p25_message = trim(copytext(message, 3))
+			radio.p25_talk_into(src, p25_message, null, spans, language)
+			return FALSE
+
 	var/ic_blocked = FALSE
 	if(client && !forced && CHAT_FILTER_CHECK(message))
 		//The filter doesn't act on the sanitized message, but the raw message.

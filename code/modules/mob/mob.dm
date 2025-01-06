@@ -713,22 +713,23 @@
 //		else
 //			return
 
-	if((respawntimeofdeath + 20 MINUTES) > world.time)
+	if(!usr.can_respawn())
 		if(istype(usr.client.mob, /mob/dead/observer))
 			var/mob/dead/observer/obs = usr.client.mob
 			if(obs.auspex_ghosted)
-				to_chat(usr, "<span class='notice'>You cannot respawn while using auspex!</span>")
+				to_chat(usr, "<span class='notice'>You cannot respawn while astrally projecting!</span>")
 				return
-			else
-				var/timetoresp = round(((respawntimeofdeath+12000)-world.time)/10)
-				to_chat(usr, "<span class='notice'>You need to wait [timetoresp] seconds before respawn</span>")
-				if(check_rights_for(usr.client, R_ADMIN))
-					if(alert(usr, "Do you want to respawn faster than usual player? (only admins can)", "Respawn", "Yes", "No") != "Yes")
-						return
+
+		to_chat(usr, "<span class='notice'>You need to wait [DisplayTimeText(GLOB.respawn_timers[usr.client.ckey] + 10 MINUTES - world.time)] before you can respawn.</span>")
+
+		if(check_rights_for(usr.client, R_ADMIN))
+			if(alert(usr, "Do you want to respawn faster than usual player? (only admins can)", "Respawn", "Yes", "No") != "Yes")
+				return
+			GLOB.respawn_timers[usr.client.ckey] = 0
 		else
 			return
 
-	log_game("[key_name(usr)] used abandon mob.")
+	log_game("[key_name(usr)] respawned.")
 
 	to_chat(usr, "<span class='boldnotice'>Please roleplay correctly!</span>")
 

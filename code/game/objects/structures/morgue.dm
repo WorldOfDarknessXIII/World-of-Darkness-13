@@ -279,8 +279,8 @@ GLOBAL_LIST_EMPTY(crematoriums)
 					HM.AdjustMasquerade(1)
 			else
 				M.log_message("was cremated", LOG_ATTACK)
-
-			M.death(1)
+			if(M.stat != DEAD)		//So it's the bug which causes to loose humanity if burning corpses
+				M.death(1)
 			if(M) //some animals get automatically deleted on death.
 				M.ghostize()
 				qdel(M)

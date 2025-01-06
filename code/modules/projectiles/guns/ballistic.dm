@@ -5,6 +5,7 @@
 	name = "projectile gun"
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_NORMAL
+	is_iron = TRUE
 
 	///sound when inserting magazine
 	var/load_sound = 'sound/weapons/gun/general/magazine_insert_full.ogg'

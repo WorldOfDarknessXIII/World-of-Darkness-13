@@ -288,7 +288,10 @@
 	// Okay, the signal was never processed, send a mundane broadcast.
 	signal.data["compression"] = 0
 	signal.transmission_method = TRANSMISSION_RADIO
-	signal.levels = list(T.z)
+
+	//WoD13 edit! We want the radio to reach most of the z-levels, not just the one it's on.
+	//Ugly hardcoding; z-level 1 is the splashscreen (no signal), 2 is sewers, 3 is city, 4 is upper floors, 5 is special, 6 is Penumbra (no signal)
+	signal.levels = list(2, 3, 4, 5)
 	signal.broadcast()
 
 /obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
@@ -395,6 +398,17 @@
 	. = ..()
 	set_frequency(FREQ_MEDICAL)
 
+/obj/item/radio/military
+	name = "military radio"
+	subspace_transmission = FALSE
+	subspace_switchable = FALSE
+	syndie = TRUE
+	keyslot = new /obj/item/encryptionkey/syndicate
+
+/obj/item/radio/military/Initialize()
+	. = ..()
+	set_frequency(FREQ_SYNDICATE)
+
 ///////////////////////////////
 //////////Borg Radios//////////
 ///////////////////////////////
@@ -420,7 +434,7 @@
 
 /obj/item/radio/borg/syndicate/Initialize()
 	. = ..()
-	set_frequency(FREQ_SYNDICATE)
+	set_frequency(FREQ_CTF_RED)
 
 /obj/item/radio/borg/attackby(obj/item/W, mob/user, params)
 

@@ -521,13 +521,22 @@ Dancer
 	H.grant_language(/datum/language/espanol)
 
 /datum/quirk/chinese
-	name = "Chinese"
-	desc = "You know the Chinese language."
+	name = "Mandarin"
+	desc = "You know Mandarin."
 	value = 1
 
 /datum/quirk/chinese/add()
 	var/mob/living/carbon/H = quirk_holder
-	H.grant_language(/datum/language/chinese)
+	H.grant_language(/datum/language/mandarin)
+
+/datum/quirk/cantonese
+	name = "Cantonese"
+	desc = "You know Cantonese."
+	value = 1
+
+/datum/quirk/cantonese/add()
+	var/mob/living/carbon/H = quirk_holder
+	H.grant_language(/datum/language/cantonese)
 
 /datum/quirk/russian
 	name = "Russian"
@@ -625,8 +634,8 @@ Dancer
 	if(iswerewolf(quirk_holder) || isgarou(quirk_holder))
 		return
 	if(isturf(quirk_holder.loc))
-		SSbloodhunt.announce_hunted(quirk_holder)
-
+		SSbloodhunt.announce_hunted(quirk_holder, "Camarilla Wanted List")
+/*
 /datum/quirk/diablerist
 	name = "Black Secret"
 	desc = "You have a small, ancient secret, somehow related to Diablerie, and this decreases your chance to survive another one. <b>This isn't a licence to diablerie anyone you want!</b>"

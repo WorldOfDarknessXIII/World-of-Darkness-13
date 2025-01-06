@@ -152,11 +152,11 @@
 	)
 	var/list/departments = list(
 		"Command" = GLOB.command_positions,
-		"Security" = GLOB.security_positions,
-		"Engineering" = GLOB.engineering_positions,
-		"Medical" = GLOB.medical_positions,
+		"Security" = GLOB.ss13,
+		"Engineering" = GLOB.ss13,
+		"Medical" = GLOB.ss13,
 		"Science" = GLOB.anarch_positions,
-		"Supply" = GLOB.supply_positions,
+		"Supply" = GLOB.ss13,
 		"Service" = GLOB.neutral_positions,
 		"Silicon" = GLOB.nonhuman_positions
 	)

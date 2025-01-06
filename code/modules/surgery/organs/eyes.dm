@@ -97,6 +97,9 @@
 /obj/item/organ/eyes/night_vision/salubri
 	eye_icon_state = "salubri"
 
+/obj/item/organ/eyes/night_vision/kiasyd
+	eye_icon_state = "kiasyd"
+
 /obj/item/organ/eyes/night_vision/ui_action_click()
 	sight_flags = initial(sight_flags)
 	switch(lighting_alpha)

@@ -738,6 +738,12 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	var/last_extracted = 0
 
+/obj/structure/reagent_dispensers/cleaningfluid
+	name = "cleaning fluid tank"
+	desc = "A container filled with cleaning fluid."
+	reagent_id = /datum/reagent/space_cleaner
+	icon_state = "water"
+
 /mob/living/carbon/human/MouseDrop(atom/over_object)
 	. = ..()
 	if(istype(over_object, /obj/structure/bloodextractor))

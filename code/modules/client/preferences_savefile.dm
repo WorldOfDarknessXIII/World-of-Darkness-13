@@ -406,6 +406,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["discipline4type"], discipline4type)
 	READ_FILE(S["discipline_types"], discipline_types)
 	READ_FILE(S["discipline_levels"], discipline_levels)
+	READ_FILE(S["info_known"], info_known)
 	READ_FILE(S["friend"], friend)
 	READ_FILE(S["enemy"], enemy)
 	READ_FILE(S["lover"], lover)
@@ -641,6 +642,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			discipline4type = null
 			discipline4level = null
 
+	//repair some damage done by an exploit by resetting
+	if ((true_experience > 1000) && !check_rights_for(parent, R_ADMIN))
+		message_admins("[ADMIN_LOOKUPFLW(parent)] loaded a character slot with [true_experience] experience. The slot has been reset.")
+		log_game("[key_name(parent)] loaded a character slot with [true_experience] experience. The slot has been reset.")
+		to_chat(parent, "<span class='userdanger'>You tried to load a character slot with [true_experience] experience. It has been reset.</span>")
+		reset_character()
+
 	return TRUE
 
 /datum/preferences/proc/save_character()
@@ -689,6 +697,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["discipline4type"]			, discipline4type)
 	WRITE_FILE(S["discipline_types"], discipline_types)
 	WRITE_FILE(S["discipline_levels"], discipline_levels)
+	WRITE_FILE(S["info_known"]		, info_known)
 	WRITE_FILE(S["friend"]			, friend)
 	WRITE_FILE(S["enemy"]			, enemy)
 	WRITE_FILE(S["lover"]			, lover)

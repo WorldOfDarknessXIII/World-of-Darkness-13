@@ -315,7 +315,6 @@ Works together with spawning an observer, noted above.
 		stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
 		var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
 		SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
-		ghost.respawntimeofdeath = respawntimeofdeath
 		ghost.can_reenter_corpse = can_reenter_corpse
 		// [ChillRaccoon] - setting mob icons
 		ghost.icon = src.icon // [ChillRaccoon] - We should transfer mob visuals to the ghost
@@ -332,6 +331,7 @@ Works together with spawning an observer, noted above.
 			ghost.movement_type = FLYING | GROUND | PHASING
 			ghost.sight = 0
 			ghost.client.prefs.chat_toggles &= ~CHAT_GHOSTEARS
+			ghost.client.prefs.chat_toggles &= ~CHAT_GHOSTWHISPER
 			ghost.client.prefs.chat_toggles ^= CHAT_DEAD
 			ghost.client.show_popup_menus = 0
 		if(aghosted)

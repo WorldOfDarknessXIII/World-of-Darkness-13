@@ -46,6 +46,11 @@
 	damage = 18
 	bare_wound_bonus = 10
 
+/obj/projectile/beam/beam_rifle/vampire/vamp9mm/plus
+	name = "9mm HV bullet"
+	damage = 22
+	armour_penetration = 10
+
 /obj/projectile/beam/beam_rifle/vampire/vamp45acp
 	name = ".45 ACP bullet"
 	damage = 20
@@ -62,6 +67,8 @@
 	name = ".50 bullet"
 	damage = 70
 	armour_penetration = 20
+	bare_wound_bonus = 5
+	wound_bonus = 5
 
 /obj/projectile/beam/beam_rifle/vampire/vamp556mm
 	name = "5.56mm bullet"
@@ -125,6 +132,11 @@
 	projectile_type = /obj/projectile/beam/beam_rifle/vampire/vamp9mm
 	icon_state = "9"
 	base_iconstate = "9"
+
+/obj/item/ammo_casing/vampire/c9mm/plus
+	name = "9mm HV bullet casing"
+	projectile_type = /obj/projectile/beam/beam_rifle/vampire/vamp9mm/plus
+	caliber = CALIBER_9MM
 
 /obj/item/ammo_casing/vampire/c45acp
 	name = ".45 ACP bullet casing"
@@ -221,6 +233,7 @@
 	icon = 'code/modules/wod13/ammo.dmi'
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
+
 ///9mm/////////////
 
 /obj/item/ammo_box/vampire/c9mm
@@ -228,6 +241,11 @@
 	icon_state = "9box"
 	ammo_type = /obj/item/ammo_casing/vampire/c9mm
 	max_ammo = 100
+
+/obj/item/ammo_box/vampire/c9mm/plus
+	name = "ammo box (9mm, +P)"
+	desc = "a box of High Velocity (HV) ammo."
+	ammo_type = /obj/item/ammo_casing/vampire/c9mm/plus
 
 /obj/item/ammo_box/vampire/c9mm/moonclip
 	name = "ammo clip (9mm)"
@@ -301,33 +319,61 @@
 	damage = 35
 
 /obj/projectile/beam/beam_rifle/vampire/vamp556mm/silver/on_hit(atom/target, blocked = FALSE)
-	if(iswerewolf(target))
-		var/mob/living/carbon/werewolf/M = target
-		M.adjustCloneLoss(damage)
-		damage = 0
-	..()
+	. = ..()
+	if(iswerewolf(target) || isgarou(target))
+		var/mob/living/carbon/M = target
+		if(M.auspice.gnosis)
+			if(prob(50))
+				adjust_gnosis(-1, M)
+		else
+			M.Stun(1 SECONDS)
+			M.Immobilize(1 SECONDS)
+			M.adjustBruteLoss(50, TRUE)
+			M.adjustCloneLoss(20, TRUE)
+		if(!M.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
+			M.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
+			spawn(7 SECONDS)
+			M.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
 
 /obj/projectile/beam/beam_rifle/vampire/vamp9mm/silver
 	name = "9mm silver bullet"
 	damage = 23
 
 /obj/projectile/beam/beam_rifle/vampire/vamp9mm/silver/on_hit(atom/target, blocked = FALSE)
-	if(iswerewolf(target))
-		var/mob/living/carbon/werewolf/M = target
-		M.adjustCloneLoss(damage)
-		damage = 0
-	..()
+	. = ..()
+	if(iswerewolf(target) || isgarou(target))
+		var/mob/living/carbon/M = target
+		if(M.auspice.gnosis)
+			if(prob(50))
+				adjust_gnosis(-1, M)
+		else
+			M.Stun(1 SECONDS)
+			M.adjustBruteLoss(25, TRUE)
+			M.adjustCloneLoss(10, TRUE)
+		if(!M.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
+			M.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
+			spawn(5 SECONDS)
+				M.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
 
 /obj/projectile/beam/beam_rifle/vampire/vamp45acp/silver
 	name = ".45 ACP silver bullet"
 	damage = 25
 
 /obj/projectile/beam/beam_rifle/vampire/vamp45acp/silver/on_hit(atom/target, blocked = FALSE)
-	if(iswerewolf(target))
-		var/mob/living/carbon/werewolf/M = target
-		M.adjustCloneLoss(damage)
-		damage = 0
-	..()
+	. = ..()
+	if(iswerewolf(target) || isgarou(target))
+		var/mob/living/carbon/M = target
+		if(M.auspice.gnosis)
+			if(prob(50))
+				adjust_gnosis(-1, M)
+		else
+			M.Stun(1 SECONDS)
+			M.adjustBruteLoss(30, TRUE)
+			M.adjustCloneLoss(15, TRUE)
+		if(!M.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
+			M.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
+			spawn(5 SECONDS)
+				M.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
 
 /obj/projectile/beam/beam_rifle/vampire/vamp44/silver
 	name = ".44 silver bullet"
@@ -336,11 +382,21 @@
 	icon_state = "s44"
 
 /obj/projectile/beam/beam_rifle/vampire/vamp44/silver/on_hit(atom/target, blocked = FALSE)
-	if(iswerewolf(target))
-		var/mob/living/carbon/werewolf/M = target
-		M.adjustCloneLoss(damage)
-		damage = 0
-	..()
+	. = ..()
+	if(iswerewolf(target) || isgarou(target))
+		var/mob/living/carbon/M = target
+		if(M.auspice.gnosis)
+			if(prob(50))
+				adjust_gnosis(-1, M)
+		else
+			M.Stun(2 SECONDS)
+			M.Immobilize(1 SECONDS)
+			M.adjustBruteLoss(40, TRUE)
+			M.adjustCloneLoss(25, TRUE)
+		if(!M.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
+			M.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
+			spawn(7 SECONDS)
+				M.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
 
 /obj/item/ammo_casing/vampire/c9mm/silver
 	name = "9mm silver bullet casing"

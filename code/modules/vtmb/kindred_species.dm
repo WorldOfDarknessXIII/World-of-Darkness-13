@@ -81,7 +81,7 @@
 			dat += "<BR>"
 			if(host.mind.enslaved_to)
 				dat += "My Regnant is [host.mind.enslaved_to], I should obey their wants.<BR>"
-		if(host.vampire_faction == "Camarilla" || host.vampire_faction == "Anarch" || host.vampire_faction == "Sabbat")
+		if(host.vampire_faction == "Camarilla" || host.vampire_faction == "Anarchs" || host.vampire_faction == "Sabbat")
 			dat += "I belong to [host.vampire_faction] faction, I shouldn't disobey their rules.<BR>"
 		if(host.generation)
 			dat += "I'm from [host.generation] generation.<BR>"
@@ -139,13 +139,35 @@
 					humanity = "I'm losing control over my beast!"
 
 		dat += "[humanity]<BR>"
-		dat += "<b>Physique</b>: [host.physique]<BR>"
-		dat += "<b>Dexterity</b>: [host.dexterity]<BR>"
-		dat += "<b>Social</b>: [host.social]<BR>"
-		dat += "<b>Mentality</b>: [host.mentality]<BR>"
-		dat += "<b>Lockpicking</b>: [host.lockpicking]<BR>"
-		dat += "<b>Athletics</b>: [host.athletics]<BR>"
-		dat += "<b>Cruelty</b>: [host.blood]<BR>"
+
+		if(host.clane.name == "Brujah")
+			if(GLOB.brujahname != "")
+				if(host.real_name != GLOB.brujahname)
+					dat += " My primogen is:  [GLOB.brujahname].<BR>"
+		if(host.clane.name == "Malkavian")
+			if(GLOB.malkavianname != "")
+				if(host.real_name != GLOB.malkavianname)
+					dat += " My primogen is:  [GLOB.malkavianname].<BR>"
+		if(host.clane.name == "Nosferatu")
+			if(GLOB.nosferatuname != "")
+				if(host.real_name != GLOB.nosferatuname)
+					dat += " My primogen is:  [GLOB.nosferatuname].<BR>"
+		if(host.clane.name == "Toreador")
+			if(GLOB.toreadorname != "")
+				if(host.real_name != GLOB.toreadorname)
+					dat += " My primogen is:  [GLOB.toreadorname].<BR>"
+		if(host.clane.name == "Ventrue")
+			if(GLOB.ventruename != "")
+				if(host.real_name != GLOB.ventruename)
+					dat += " My primogen is:  [GLOB.ventruename].<BR>"
+
+		dat += "<b>Physique</b>: [host.physique] + [host.additional_physique]<BR>"
+		dat += "<b>Dexterity</b>: [host.dexterity] + [host.additional_dexterity]<BR>"
+		dat += "<b>Social</b>: [host.social] + [host.additional_social]<BR>"
+		dat += "<b>Mentality</b>: [host.mentality] + [host.additional_mentality]<BR>"
+		dat += "<b>Cruelty</b>: [host.blood] + [host.additional_blood]<BR>"
+		dat += "<b>Lockpicking</b>: [host.lockpicking] + [host.additional_lockpicking]<BR>"
+		dat += "<b>Athletics</b>: [host.athletics] + [host.additional_athletics]<BR>"
 		if(host.hud_used)
 			dat += "<b>Known disciplines:</b><BR>"
 			for(var/datum/action/discipline/D in host.actions)
@@ -188,7 +210,7 @@
 			dat += "<b>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
 			for(var/i in host.knowscontacts)
 				dat += "-[i] contact<BR>"
-		for(var/datum/bank_account/account in GLOB.bank_account_list)
+		for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
 			if(host.bank_id == account.bank_id)
 				dat += "<b>My bank account code is: [account.code]</b><BR>"
 		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
@@ -424,7 +446,7 @@
 				var/new_master = FALSE
 				BLOODBONDED.faction |= H.faction
 				if(!istype(BLOODBONDED, /mob/living/carbon/human/npc))
-					if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarch" || H.vampire_faction == "Sabbat")
+					if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarchs" || H.vampire_faction == "Sabbat")
 						if(BLOODBONDED.vampire_faction != H.vampire_faction)
 							BLOODBONDED.vampire_faction = H.vampire_faction
 							if(H.vampire_faction == "Sabbat")
@@ -442,7 +464,7 @@
 						to_chat(H, "<span class='notice'>[BLOODBONDED.name] doesn't respond to your Vitae.</span>")
 						return
 
-					if((BLOODBONDED.respawntimeofdeath + 5 MINUTES) > world.time)
+					if((BLOODBONDED.timeofdeath + 5 MINUTES) > world.time)
 						//handle attempted werewolf Embraces, try to create an Abomination
 						if (BLOODBONDED.auspice?.level)
 							message_admins("[ADMIN_LOOKUPFLW(H)] is trying to turn [ADMIN_LOOKUPFLW(BLOODBONDED)] into an Abomination.")
@@ -474,33 +496,98 @@
 						log_game("[key_name(H)] has Embraced [key_name(BLOODBONDED)].")
 						message_admins("[ADMIN_LOOKUPFLW(H)] has Embraced [ADMIN_LOOKUPFLW(BLOODBONDED)].")
 						giving = FALSE
+						var/save_data_v = FALSE
 						if(BLOODBONDED.revive(full_heal = TRUE, admin_revive = TRUE))
 							BLOODBONDED.grab_ghost(force = TRUE)
 							to_chat(BLOODBONDED, "<span class='userdanger'>You're awake again. What just happened? Why is your heart not beating?</span>")
+							var/response_v = input(BLOODBONDED, "Do you wish to keep being a vampire on your save slot?(Yes will be a permanent choice and you can't go back!)") in list("Yes", "No")
+							if(response_v == "Yes")
+								save_data_v = TRUE
+							else
+								save_data_v = FALSE
 						BLOODBONDED.roundstart_vampire = FALSE
 						BLOODBONDED.set_species(/datum/species/kindred)
-						BLOODBONDED.generation = H.generation + 1
-						var/datum/species/kindred/kindred_species = BLOODBONDED.dna.species
-						kindred_species.initialize_generation(BLOODBONDED)
-
-						//proper full-blooded Embrace
+						BLOODBONDED.clane = null
 						if(H.generation < 13)
+							BLOODBONDED.generation = 13
 							BLOODBONDED.skin_tone = get_vamp_skin_color(BLOODBONDED.skin_tone)
 							BLOODBONDED.update_body()
-							BLOODBONDED.clane = new H.clane.type()
+							if (H.clane.whitelisted)
+								if (!SSwhitelists.is_whitelisted(BLOODBONDED.ckey, H.clane.name))
+									if(H.clane.name == "True Brujah")
+										BLOODBONDED.clane = new /datum/vampireclane/brujah()
+										to_chat(BLOODBONDED,"<span class='warning'> You don't got that whitelist! Changing to the non WL Brujah</span>")
+									else if(H.clane.name == "Tzimisce")
+										BLOODBONDED.clane = new /datum/vampireclane/old_clan_tzimisce()
+										to_chat(BLOODBONDED,"<span class='warning'> You don't got that whitelist! Changing to the non WL Old Tzmisce</span>")
+									else
+										to_chat(BLOODBONDED,"<span class='warning'> You don't got that whitelist! Changing to a random non WL clan.</span>")
+										var/list/non_whitelisted_clans = list(/datum/vampireclane/brujah,/datum/vampireclane/malkavian,/datum/vampireclane/nosferatu,/datum/vampireclane/gangrel,/datum/vampireclane/giovanni,/datum/vampireclane/ministry,/datum/vampireclane/salubri,/datum/vampireclane/toreador,/datum/vampireclane/tremere,/datum/vampireclane/ventrue)
+										var/random_clan = pick(non_whitelisted_clans)
+										BLOODBONDED.clane = new random_clan
+								else
+									BLOODBONDED.clane = new H.clane.type()
+							else
+								BLOODBONDED.clane = new H.clane.type()
+
+							BLOODBONDED.clane.on_gain(BLOODBONDED)
+							BLOODBONDED.clane.post_gain(BLOODBONDED)
 							if(BLOODBONDED.clane.alt_sprite)
 								BLOODBONDED.skin_tone = "albino"
 								BLOODBONDED.update_body()
+
 							//Gives the Childe the Sire's first three Disciplines
+
 							var/list/disciplines_to_give = list()
 							for (var/i in 1 to min(3, H.client.prefs.discipline_types.len))
 								disciplines_to_give += H.client.prefs.discipline_types[i]
 							BLOODBONDED.create_disciplines(FALSE, disciplines_to_give)
+
+							BLOODBONDED.maxbloodpool = 10+((13-min(13, BLOODBONDED.generation))*3)
 							BLOODBONDED.clane.enlightenment = H.clane.enlightenment
-						//create a thinblood
 						else
+							BLOODBONDED.maxbloodpool = 10+((13-min(13, BLOODBONDED.generation))*3)
+							BLOODBONDED.generation = 14
 							BLOODBONDED.clane = new /datum/vampireclane/caitiff()
+
+						//Verify if they accepted to save being a vampire
+						if (iskindred(BLOODBONDED) && save_data_v)
+							var/datum/preferences/BLOODBONDED_prefs_v = BLOODBONDED.client.prefs
+
+							BLOODBONDED_prefs_v.pref_species.id = "kindred"
+							BLOODBONDED_prefs_v.pref_species.name = "Vampire"
+							if(H.generation < 13)
+
+								BLOODBONDED_prefs_v.clane = BLOODBONDED.clane
+								BLOODBONDED_prefs_v.generation = 13
+								BLOODBONDED_prefs_v.skin_tone = get_vamp_skin_color(BLOODBONDED.skin_tone)
+								BLOODBONDED_prefs_v.clane.enlightenment = H.clane.enlightenment
+
+
+								//Rarely the new mid round vampires get the 3 brujah skil(it is default)
+								//This will remove if it happens
+								// Or if they are a ghoul with abunch of disciplines
+								if(BLOODBONDED_prefs_v.discipline_types.len > 0)
+									for (var/i in 1 to BLOODBONDED_prefs_v.discipline_types.len)
+										var/removing_discipline = BLOODBONDED_prefs_v.discipline_types[1]
+										if (removing_discipline)
+											var/index = BLOODBONDED_prefs_v.discipline_types.Find(removing_discipline)
+											BLOODBONDED_prefs_v.discipline_types.Cut(index, index + 1)
+											BLOODBONDED_prefs_v.discipline_levels.Cut(index, index + 1)
+
+								if(BLOODBONDED_prefs_v.discipline_types.len == 0)
+									for (var/i in 1 to 3)
+										BLOODBONDED_prefs_v.discipline_types += BLOODBONDED_prefs_v.clane.clane_disciplines[i]
+										BLOODBONDED_prefs_v.discipline_levels += 1
+								BLOODBONDED_prefs_v.save_character()
+
+							else
+								BLOODBONDED_prefs_v.generation = 13 // Game always set to 13 anyways, 14 is not possible.
+								BLOODBONDED_prefs_v.clane = new /datum/vampireclane/caitiff()
+								BLOODBONDED_prefs_v.save_character()
+
 					else
+
 						to_chat(owner, "<span class='notice'>[BLOODBONDED] is totally <b>DEAD</b>!</span>")
 						giving = FALSE
 						return
@@ -511,6 +598,9 @@
 					BLOODBONDED.apply_status_effect(STATUS_EFFECT_INLOVE, owner)
 					to_chat(owner, "<span class='notice'>You successfuly fed [BLOODBONDED] your Vitae.</span>")
 					to_chat(BLOODBONDED, "<span class='userlove'>[owner]'s blood tastes HEAVENLY...</span>")
+
+					message_admins("[ADMIN_LOOKUPFLW(H)] has bloodbonded [ADMIN_LOOKUPFLW(BLOODBONDED)].")
+					log_game("[key_name(H)] has bloodbonded [key_name(BLOODBONDED)].")
 
 					//transfer reagents in your blood to the bloodbonded
 					if(H.reagents)
@@ -557,7 +647,10 @@
 							G.changed_master = TRUE
 					//turn a human who's been fed blood into a new ghoul
 					else if(!iskindred(BLOODBONDED) && !isnpc(BLOODBONDED))
+						var/save_data_g = FALSE
 						BLOODBONDED.set_species(/datum/species/ghoul)
+						BLOODBONDED.clane = null
+						var/response_g = input(BLOODBONDED, "Do you wish to keep being a ghoul on your save slot?(Yes will be a permanent choice and you can't go back)") in list("Yes", "No")
 //						if(BLOODBONDED.hud_used)
 //							var/datum/hud/human/HU = BLOODBONDED.hud_used
 //							HU.create_ghoulic()
@@ -567,7 +660,22 @@
 						G.last_vitae = world.time
 						if(new_master)
 							G.changed_master = TRUE
-			//cancel the giving blood action
+						if(response_g == "Yes")
+							save_data_g = TRUE
+						else
+							save_data_g = FALSE
+						if(save_data_g)
+							var/datum/preferences/BLOODBONDED_prefs_g = BLOODBONDED.client.prefs
+							if(BLOODBONDED_prefs_g.discipline_types.len == 3)
+								for (var/i in 1 to 3)
+									var/removing_discipline = BLOODBONDED_prefs_g.discipline_types[1]
+									if (removing_discipline)
+										var/index = BLOODBONDED_prefs_g.discipline_types.Find(removing_discipline)
+										BLOODBONDED_prefs_g.discipline_types.Cut(index, index + 1)
+										BLOODBONDED_prefs_g.discipline_levels.Cut(index, index + 1)
+							BLOODBONDED_prefs_g.pref_species.name = "Ghoul"
+							BLOODBONDED_prefs_g.pref_species.id = "ghoul"
+							BLOODBONDED_prefs_g.save_character()
 			else
 				giving = FALSE
 
@@ -642,6 +750,26 @@
 
 /datum/species/kindred/check_roundstart_eligible()
 	return TRUE
+
+/datum/species/kindred/handle_body(mob/living/carbon/human/H)
+	if (!H.clane)
+		return ..()
+
+	//deflate people if they're super rotten
+	if ((H.clane.alt_sprite == "rotten4") && (H.base_body_mod == "f"))
+		H.base_body_mod = ""
+
+	if(H.clane.alt_sprite)
+		H.dna.species.limbs_id = "[H.base_body_mod][H.clane.alt_sprite]"
+
+	if (H.clane.no_hair)
+		H.hairstyle = "Bald"
+
+	if (H.clane.no_facial)
+		H.facial_hairstyle = "Shaved"
+
+	..()
+
 
 /**
  * Signal handler for lose_organ to near-instantly kill Kindred whose hearts have been removed.

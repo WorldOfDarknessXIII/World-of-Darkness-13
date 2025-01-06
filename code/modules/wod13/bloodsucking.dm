@@ -34,8 +34,9 @@
 		var/mob/living/carbon/human/npc/NPC = mob
 		NPC.danger_source = null
 //		NPC.last_attacker = src
+	mob.Stun(30)
 
-	if((mob.bloodpool <= 1) && (mob.maxbloodpool > 1))
+	if(mob.bloodpool <= 1 && mob.maxbloodpool > 1)
 		to_chat(src, "<span class='warning'>You feel small amount of <b>BLOOD</b> in your victim.</span>")
 		if(iskindred(mob))
 			if(!mob.client)
@@ -235,6 +236,7 @@
 						*/
 					SEND_SOUND(src, sound('code/modules/wod13/sounds/feed_failed.ogg', 0, 0, 75))
 					to_chat(src, "<span class='warning'>This sad sacrifice for your own pleasure affects something deep in your mind.</span>")
+					AdjustMasquerade(-1)
 					AdjustHumanity(-1, 0)
 					mob.death()
 

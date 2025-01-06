@@ -2,4 +2,6 @@
 
 <div class="motd"><h1>Welcome to Vampire: the Masquerade 13!</h1></div>
 
+<div class="warning"><h3 style="color: red;">This server is in open alpha. Progression will not carry into the full release.</h3></div>
+
 <i>Remember, wherever we go, it is the blood of Cain which makes our fate...</i>

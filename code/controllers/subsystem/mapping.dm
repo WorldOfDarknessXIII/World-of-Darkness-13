@@ -24,6 +24,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
 	var/list/holodeck_templates = list()
+	var/list/modular_templates = list()
 
 	var/list/areas_in_z = list()
 
@@ -189,6 +190,7 @@ Used by the AI doomsday and the self-destruct nuke.
 	ice_ruins_underground_templates = SSmapping.ice_ruins_underground_templates
 	shuttle_templates = SSmapping.shuttle_templates
 	shelter_templates = SSmapping.shelter_templates
+	modular_templates = SSmapping.modular_templates
 	unused_turfs = SSmapping.unused_turfs
 	turf_reservations = SSmapping.turf_reservations
 	used_turfs = SSmapping.used_turfs
@@ -397,6 +399,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	preloadShuttleTemplates()
 	preloadShelterTemplates()
 	preloadHolodeckTemplates()
+	preloadModularTemplates()
 
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename
@@ -502,6 +505,16 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	if(!away_level)
 		message_admins("Loading [away_name] failed!")
 		return
+
+/datum/controller/subsystem/mapping/proc/preloadModularTemplates()
+	for(var/item in subtypesof(/datum/map_template/modular))
+		var/datum/map_template/modular/modular_type = item
+
+		var/datum/map_template/modular/M = new modular_type()
+
+		LAZYINITLIST(modular_templates[M.modular_id])
+		modular_templates[M.modular_id] += M
+		map_templates[M.type] = M
 
 /datum/controller/subsystem/mapping/proc/RequestBlockReservation(width, height, z, type = /datum/turf_reservation, turf_type_override)
 	UNTIL((!z || reservation_ready["[z]"]) && !clearing_reserved_turfs)

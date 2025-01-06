@@ -89,22 +89,25 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/AssignRole(mob/dead/new_player/player, rank, latejoin = FALSE)
 	JobDebug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")
 	if(player?.mind && rank)
+		var/bypass = FALSE
+		if (check_rights_for(player.client, R_ADMIN))
+			bypass = TRUE
 		var/datum/job/job = GetJob(rank)
 		if(!job)
 			return FALSE
 		if(is_banned_from(player.ckey, rank) || QDELETED(player))
 			return FALSE
-		if(!job.player_old_enough(player.client))
+		if(!job.player_old_enough(player.client) && !bypass)
 			return FALSE
-		if(job.required_playtime_remaining(player.client))
+		if(job.required_playtime_remaining(player.client) && !bypass)
 			return FALSE
-		if(player.client.prefs.generation > job.minimal_generation)
+		if((player.client.prefs.generation > job.minimal_generation) && !bypass)
 			return FALSE
-		if(player.client.prefs.masquerade < job.minimal_masquerade)
+		if((player.client.prefs.masquerade < job.minimal_masquerade) && !bypass)
 			return FALSE
-		if(!job.allowed_species.Find(player.client.prefs.pref_species.name))
+		if(!job.allowed_species.Find(player.client.prefs.pref_species.name) && !bypass)
 			return FALSE
-		if (job.species_slots[player.client.prefs.pref_species.name] == 0)
+		if ((job.species_slots[player.client.prefs.pref_species.name] == 0) && !bypass)
 			return FALSE
 		var/position_limit = job.total_positions
 		if(!latejoin)
@@ -112,7 +115,7 @@ SUBSYSTEM_DEF(job)
 		JobDebug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
 		player.mind.assigned_role = rank
 		unassigned -= player
-		if (job.species_slots[player.client.prefs.pref_species.name] > 0)
+		if ((job.species_slots[player.client.prefs.pref_species.name] > 0) && !bypass)
 			job.species_slots[player.client.prefs.pref_species.name]--
 		job.current_positions++
 		return TRUE
@@ -124,25 +127,28 @@ SUBSYSTEM_DEF(job)
 	JobDebug("Running FOC, Job: [job], Level: [level], Flag: [flag]")
 	var/list/candidates = list()
 	for(var/mob/dead/new_player/player in unassigned)
+		var/bypass = FALSE
+		if (check_rights_for(player.client, R_ADMIN))
+			bypass = TRUE
 		if(is_banned_from(player.ckey, job.title) || QDELETED(player))
 			JobDebug("FOC isbanned failed, Player: [player]")
 			continue
-		if(!job.player_old_enough(player.client))
+		if(!job.player_old_enough(player.client) && !bypass)
 			JobDebug("FOC player not old enough, Player: [player]")
 			continue
-		if(job.required_playtime_remaining(player.client))
+		if(job.required_playtime_remaining(player.client) && !bypass)
 			JobDebug("FOC player not enough xp, Player: [player]")
 			continue
-		if(player.client.prefs.generation > job.minimal_generation)
+		if((player.client.prefs.generation > job.minimal_generation) && !bypass)
 			JobDebug("FOC player not enough generation, Player: [player]")
 			continue
-		if(player.client.prefs.masquerade < job.minimal_masquerade)
+		if((player.client.prefs.masquerade < job.minimal_masquerade) && !bypass)
 			JobDebug("FOC player not enough masquerade, Player: [player]")
 			continue
-		if(!job.allowed_species.Find(player.client.prefs.pref_species.name))
+		if(!job.allowed_species.Find(player.client.prefs.pref_species.name) && !bypass)
 			JobDebug("FOC player species not allowed, Player: [player]")
 			continue
-		if(job.species_slots[player.client.prefs.pref_species.name] == 0)
+		if((job.species_slots[player.client.prefs.pref_species.name] == 0) && !bypass)
 			JobDebug("FOC player species limit overrun, Player: [player]")
 			continue
 		if(player.client.prefs.pref_species.name == "Vampire")
@@ -151,7 +157,7 @@ SUBSYSTEM_DEF(job)
 				for(var/i in job.allowed_bloodlines)
 					if(i == player.client.prefs.clane.name)
 						alloww = TRUE
-				if(!alloww)
+				if(!alloww && !bypass)
 					JobDebug("FOC player clan not allowed, Player: [player]")
 					continue
 		if(flag && (!(flag in player.client.prefs.be_special)))
@@ -378,6 +384,10 @@ SUBSYSTEM_DEF(job)
 			if(PopcapReached())
 				RejectPlayer(player)
 
+			var/bypass = FALSE
+			if (check_rights_for(player.client, R_ADMIN))
+				bypass = TRUE
+
 			// Loop through all jobs
 			for(var/datum/job/job in shuffledoccupations) // SHUFFLE ME BABY
 				if(!job)
@@ -391,27 +401,27 @@ SUBSYSTEM_DEF(job)
 					JobDebug("DO player deleted during job ban check")
 					break
 
-				if(!job.player_old_enough(player.client))
+				if(!job.player_old_enough(player.client) && !bypass)
 					JobDebug("DO player not old enough, Player: [player], Job:[job.title]")
 					continue
 
-				if(job.required_playtime_remaining(player.client))
+				if(job.required_playtime_remaining(player.client) && !bypass)
 					JobDebug("DO player not enough xp, Player: [player], Job:[job.title]")
 					continue
 
-				if(player.client.prefs.generation > job.minimal_generation)
+				if((player.client.prefs.generation > job.minimal_generation) && !bypass)
 					JobDebug("DO player not enough generation, Player: [player]")
 					continue
 
-				if(player.client.prefs.masquerade < job.minimal_masquerade)
+				if((player.client.prefs.masquerade < job.minimal_masquerade) && !bypass)
 					JobDebug("DO player not enough masquerade, Player: [player]")
 					continue
 
-				if(!job.allowed_species.Find(player.client.prefs.pref_species.name))
+				if(!job.allowed_species.Find(player.client.prefs.pref_species.name) && !bypass)
 					JobDebug("DO player species not allowed, Player: [player]")
 					continue
 
-				if(job.species_slots[player.client.prefs.pref_species.name] == 0)
+				if((job.species_slots[player.client.prefs.pref_species.name] == 0) && !bypass)
 					JobDebug("DO player species limit overrun, Player: [player]")
 					continue
 
@@ -421,7 +431,7 @@ SUBSYSTEM_DEF(job)
 						for(var/i in job.allowed_bloodlines)
 							if(i == player.client.prefs.clane.name)
 								alloww = TRUE
-						if(!alloww)
+						if(!alloww && !bypass)
 							JobDebug("DO player clan not allowed, Player: [player]")
 							continue
 
@@ -809,7 +819,7 @@ SUBSYSTEM_DEF(job)
 	. = list()
 	for(var/i in GLOB.human_list)
 		var/mob/living/carbon/human/player = i
-		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.security_positions))
+		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.ss13))
 			. |= player.mind
 
 ////////////////////////////////////////
@@ -819,7 +829,7 @@ SUBSYSTEM_DEF(job)
 	. = list()
 	for(var/i in GLOB.human_list)
 		var/mob/living/carbon/human/player = i
-		if(player.mind && (player.mind.assigned_role in GLOB.security_positions))
+		if(player.mind && (player.mind.assigned_role in GLOB.ss13))
 			. |= player.mind
 
 /datum/controller/subsystem/job/proc/JobDebug(message)

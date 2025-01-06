@@ -10,11 +10,12 @@
 	alt_sprite = "gargoyle"
 	no_facial = TRUE
 	violating_appearance = TRUE
-	male_clothes = "/obj/item/clothing/under/vampire/malkavian"
-	female_clothes = "/obj/item/clothing/under/vampire/malkavian"
+	male_clothes = /obj/item/clothing/under/vampire/malkavian
+	female_clothes = /obj/item/clothing/under/vampire/malkavian
 	haircuts = list(
 		"Bald",
 		"Pyotr",
+		"Tau",
 		"Balding Hair",
 		"Boddicker",
 		"Feather",
@@ -26,8 +27,8 @@
 		"Cornrow Tail"
 	)
 	current_accessory = "gargoyle_full"
-	accessories = list("gargoyle_full", "gargoyle_left", "gargoyle_right", "gargoyle_broken", "gargoyle_round")
-	accessories_layers = list("gargoyle_full" = UNICORN_LAYER, "gargoyle_left" = UNICORN_LAYER, "gargoyle_right" = UNICORN_LAYER, "gargoyle_broken" = UNICORN_LAYER, "gargoyle_round" = UNICORN_LAYER)
+	accessories = list("gargoyle_full", "gargoyle_left", "gargoyle_right", "gargoyle_broken", "gargoyle_round", "none")
+	accessories_layers = list("gargoyle_full" = UNICORN_LAYER, "gargoyle_left" = UNICORN_LAYER, "gargoyle_right" = UNICORN_LAYER, "gargoyle_broken" = UNICORN_LAYER, "gargoyle_round" = UNICORN_LAYER, "none" = UNICORN_LAYER)
 	whitelisted = TRUE
 
 /datum/vampireclane/gargoyle/on_gain(mob/living/carbon/human/H)

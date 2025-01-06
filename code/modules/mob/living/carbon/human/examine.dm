@@ -53,6 +53,24 @@
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 
+	//faction, job, etc
+	if(iskindred(user) && iskindred(src) && is_face_visible())
+		var/mob/living/carbon/human/vampire = user
+		var/same_clan = vampire.clane == clane
+		var/same_faction = vampire.vampire_faction == vampire_faction
+		switch(info_known)
+			if(INFO_KNOWN_PUBLIC)
+				. += "<b>You know [p_them()] as a [job][vampire_faction ? " in the [vampire_faction]" : ""] of the [clane] bloodline.</b>"
+			if(INFO_KNOWN_CLAN_ONLY)
+				if(same_clan)
+					. += "<b>You know [p_them()] as a [job][vampire_faction ? " in the [vampire_faction]" : ""]. You are of the same bloodline.</b>"
+			if(INFO_KNOWN_FACTION)
+				if(same_faction && vampire_faction)
+					. += "<b>You know [p_them()] as a [job], belonging to the [clane] bloodline. You are both of the [vampire_faction].</b>"
+			else
+				if(same_faction && vampire_faction)
+					. += "<b>You know [p_them()] as a [job]. You are both of the [vampire_faction].</b>"
+
 	//uniform
 	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING) && !(w_uniform.item_flags & EXAMINE_SKIP))
 		//accessory
@@ -165,7 +183,7 @@
 
 			. += generate_death_examine_text()
 
-	if(get_bodypart(BODY_ZONE_HEAD) && !getorgan(/obj/item/organ/brain))
+	if(get_bodypart(BODY_ZONE_HEAD) && !getorgan(/obj/item/organ/brain) && surgeries.len)
 		. += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>"
 
 	var/temp = getBruteLoss() //no need to calculate each of these twice
@@ -279,7 +297,7 @@
 	if((apparent_blood_volume >= round(maxbloodpool * 0.5)) && (apparent_blood_volume < maxbloodpool))
 		msg += "[t_He] [t_has] pale skin.\n"
 	else if((apparent_blood_volume >= 1) && (apparent_blood_volume < round(maxbloodpool/2)))
-		msg += "<b>[t_He] look[p_s()] like pale death.</b>\n"
+		msg += "[t_He] look[p_s()] like pale death.\n"
 	else if(bloodpool <= 0)
 		msg += "<span class='deadsay'><b>[t_He] resemble[p_s()] a crushed, empty juice pouch.</b></span>\n"
 
@@ -387,6 +405,26 @@
 			if(CONSCIOUS)
 				if(HAS_TRAIT(src, TRAIT_DUMB))
 					msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
+
+		//examine text for unusual appearances
+		if (iskindred(src) && is_face_visible())
+			switch(clane.alt_sprite)
+				if ("nosferatu")
+					msg += "<span class='danger'><b>[p_they(TRUE)] look[p_s()] utterly deformed and inhuman!</b></span><br>"
+				if ("gargoyle")
+					msg += "<span class='danger'><b>[p_they(TRUE)] seem[p_s()] to be made out of stone!</b></span><br>"
+				if ("kiasyd")
+					if (!is_eyes_covered())
+						msg += "<span class='danger'><b>[p_they(TRUE)] [p_have()] no whites in [p_their()] eyes!<b></span><br>"
+				if ("rotten1")
+					msg += "[p_they(TRUE)] seem[p_s()] oddly gaunt.<br>"
+				if ("rotten2")
+					msg += "[p_they(TRUE)] [p_have()] a corpselike complexion.<br>"
+				if ("rotten3")
+					msg += "<span class='danger'><b>[p_they(TRUE)] [p_are()] a decayed corpse!</b></span><br>"
+				if ("rotten4")
+					msg += "<span class='danger'><b>[p_they(TRUE)] [p_are()] a skeletonised corpse!</b></span><br>"
+
 		if(getorgan(/obj/item/organ/brain))
 			if(ai_controller?.ai_status == AI_STATUS_ON)
 				msg += "<span class='deadsay'>[t_He] do[t_es]n't appear to be [t_him]self.</span>\n"
@@ -397,6 +435,7 @@
 			if(src.soul_state == SOUL_PROJECTING)
 				msg += "<span class='deadsay'>[t_He] [t_is] staring blanky into space, [t_his] eyes are slightly grayed out.</span>\n"
 
+	//examine text for garou detecting Triatic influences on others
 	if (isgarou(user) || iswerewolf(user))
 		if (get_dist(user, src) <= 2)
 			var/wyrm_taint = NONE
@@ -459,7 +498,6 @@
 			msg += "<span class='notice'><i>[t_He] [t_has] significantly disfiguring scarring, you can look again to take a closer look...</i></span>\n"
 		if(12 to INFINITY)
 			msg += "<span class='notice'><b><i>[t_He] [t_is] just absolutely fucked up, you can look again to take a closer look...</i></b></span>\n"
-
 
 	if (length(msg))
 		. += "<span class='warning'>[msg.Join("")]</span>"
@@ -530,3 +568,4 @@
 			dat += "[new_text]\n" //dat.Join("\n") doesn't work here, for some reason
 	if(dat.len)
 		return dat.Join()
+

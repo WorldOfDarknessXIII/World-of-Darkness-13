@@ -62,6 +62,7 @@ GLOBAL_LIST_EMPTY(totems)
 GLOBAL_LIST_EMPTY(umbra_portals)
 
 GLOBAL_LIST_EMPTY(fucking_joined)
+GLOBAL_LIST_EMPTY(respawn_timers)
 
 GLOBAL_LIST_EMPTY(police_radios)
 GLOBAL_LIST_EMPTY(cleanable_list)

@@ -615,8 +615,14 @@
 				//why? because of laziness, it sends messages to deadchat if you do that
 				to_chat(owner, "<span class='notice'>You can't use this on corpses.</span>")
 				return
-			var/new_say = input(owner, "What will your target say?") as text|null
+			var/new_say = input(caster, "What will your target say?") as null|text
 			if(new_say)
+				//prevent forceful emoting and whatnot
+				new_say = trim(copytext_char(sanitize(new_say), 1, MAX_MESSAGE_LEN))
+				if (findtext(new_say, "*"))
+					to_chat(caster, "<span class='danger'>You can't force others to perform emotes!</span>")
+					return
+
 				if(CHAT_FILTER_CHECK(new_say))
 					to_chat(owner, "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[new_say]\"</span></span>")
 					SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
@@ -640,7 +646,7 @@
 					difficulty_malus = 0
 					if (get_dist(hearer, target) > 3)
 						difficulty_malus += 1
-					if (storyteller_roll(hearer.mentality + hearer.additional_mentality, base_difficulty + difficulty_malus) == ROLL_SUCCESS)
+					if (storyteller_roll(hearer.get_total_mentality(), base_difficulty + difficulty_malus) == ROLL_SUCCESS)
 						if (masked)
 							to_chat(hearer, "<span class='warning'>[target.name]'s jaw isn't moving to match [target.p_their()] words.</span>")
 						else
@@ -650,6 +656,8 @@
 			if(target)
 				var/input_message = input(owner, "What message will you project to them?") as null|text
 				if (input_message)
+					//sanitisation!
+					input_message = trim(copytext_char(sanitize(input_message), 1, MAX_MESSAGE_LEN))
 					if(CHAT_FILTER_CHECK(input_message))
 						to_chat(owner, "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[input_message]\"</span></span>")
 						SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))

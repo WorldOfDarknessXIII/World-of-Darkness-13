@@ -12,7 +12,7 @@
 	minimal_player_age = 14
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
-	exp_type_department = EXP_TYPE_SECURITY
+	exp_type_department = EXP_TYPE_NEUTRALS
 
 	outfit = /datum/outfit/job/hos
 

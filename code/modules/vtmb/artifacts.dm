@@ -29,6 +29,7 @@
 	icon = 'code/modules/wod13/items.dmi'
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_SMALL
+	is_magic = TRUE
 	var/mob/living/owner
 	var/true_name = "artifact"
 	var/true_desc = "Debug"
@@ -231,8 +232,11 @@
 
 /obj/item/vtm_artifact/rand/Initialize()
 	. = ..()
-	var/spawnprobability = 0.5 //setting spawn probability of artifacts
-	if (rand() < spawnprobability) //generates a number between 0 and 1, if it's greater than .5, then we execute the next step
-		var/spawn_artifact = pick(/obj/item/vtm_artifact/odious_chalice, /obj/item/vtm_artifact/key_of_alamut, /obj/item/vtm_artifact/daimonori, /obj/item/vtm_artifact/bloodstar, /obj/item/vtm_artifact/heart_of_eliza, /obj/item/vtm_artifact/fae_charm, /obj/item/vtm_artifact/galdjum, /obj/item/vtm_artifact/saulocept, /obj/item/vtm_artifact/mummywrap_fetish, /obj/item/vtm_artifact/weekapaug_thistle)
+	if (prob(50)) //50% chance of spawning something
+		var/spawn_artifact = pick(/obj/item/vtm_artifact/odious_chalice, /obj/item/vtm_artifact/key_of_alamut,
+									/obj/item/vtm_artifact/daimonori, /obj/item/vtm_artifact/bloodstar,
+									/obj/item/vtm_artifact/heart_of_eliza, /obj/item/vtm_artifact/fae_charm,
+									/obj/item/vtm_artifact/galdjum, /obj/item/vtm_artifact/mummywrap_fetish,
+									/obj/item/vtm_artifact/weekapaug_thistle)
 		new spawn_artifact(loc)
 	qdel(src)
