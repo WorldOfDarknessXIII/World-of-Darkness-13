@@ -816,11 +816,20 @@
 
 /obj/item/vamp/phone/emergency/handle_hearing(datum/source, list/hearing_args)
 	. = ..()
-	if(hearing_args[HEARING_SPEAKER] && online)
-		if(isliving(hearing_args[HEARING_SPEAKER]) || istype(hearing_args[HEARING_SPEAKER], /obj/phonevoice))
+	var/speaker = hearing_args[HEARING_SPEAKER]
+	if(speaker && online)
+		if(isliving(speaker) || istype(speaker, /obj/phonevoice) && get_dist(src, speaker) < 2)
 			var/message = hearing_args[HEARING_RAW_MESSAGE]
 			for(var/obj/item/police_radio/R in GLOB.police_radios)
 				R.dispatcher_talk(message)
+			for(var/obj/machinery/p25transceiver/P in GLOB.p25_tranceivers)
+				if(P.p25_network == "police" || P.p25_network == "clinc")
+					var/formatted = ""
+					if (isliving(speaker))
+						formatted = "[icon2html(src, world)]\[<b>DISPATCHER</b>\]: <span class='robot'>[message]</span>"
+					else
+						formatted = "[icon2html(src, world)]\[<b>CALLER</b>\]: <span class='robot'>[message]</span>"
+					P.broadcast_to_network(formatted, P.p25_network, 'sound/effects/radioclick.ogg', 10, TRUE)
 
 /obj/item/vamp/phone/clean/Initialize()
 	. = ..()

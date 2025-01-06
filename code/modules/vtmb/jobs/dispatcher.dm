@@ -30,6 +30,7 @@
 	jobtype = /datum/job/vamp/dispatcher
 	uniform = /obj/item/clothing/under/vampire/office
 	suit = /obj/item/clothing/suit/vampire/jacket
+	ears = /obj/item/p25radio/police/dispatch
 	shoes = /obj/item/clothing/shoes/vampire/businessblack
 	gloves = /obj/item/cockclock
 	id = /obj/item/card/id/government
