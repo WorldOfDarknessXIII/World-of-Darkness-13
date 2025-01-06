@@ -86,6 +86,7 @@
 			SEND_SOUND(src, sound('code/modules/wod13/sounds/masquerade_violation.ogg', 0, 0, 75))
 			to_chat(src, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
 			my_creator.AdjustMasquerade(-1)
+			spawn(5 SECONDS)
 
 /mob/living/simple_animal/hostile/handle_automated_action()
 	if(AIStatus == AI_OFF)
