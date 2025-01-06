@@ -239,6 +239,9 @@
 		to_chat(owner, "<span class='warning'>You cannot cast [src] on [target]!</span>")
 	return FALSE
 
+/datum/discipline_power/proc/pre_activation(atom/target)
+	return
+
 /datum/discipline_power/proc/activate(atom/target)
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -304,7 +307,10 @@
 
 /datum/discipline_power/proc/try_activate(atom/target)
 	if (can_activate(target, TRUE))
-		activate(target)
+		if (pre_activation)
+			pre_activation(target)
+		else
+			activate(target)
 		return TRUE
 
 	return FALSE
@@ -367,7 +373,7 @@
 				to_chat(owner, "<span class='warning'>You can't spend enough blood to keep [src] active!")
 
 		if (repeat)
-			if (!fire_and_forget)
+			if (!fire_and_forget && !duration_override)
 				COOLDOWN_START(src, duration, duration_length)
 			addtimer(CALLBACK(src, PROC_REF(refresh), target), duration_length)
 			to_chat(owner, "<span class='warning'>[src] consumes your blood to stay active.</span>")

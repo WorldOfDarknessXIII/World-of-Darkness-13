@@ -57,6 +57,9 @@
 /datum/discipline/proc/can_activate_untargeted(alert)
 	return current_power.can_activate_untargeted(alert)
 
+/datum/discipline/proc/pre_activation(atom/target)
+	current_power.pre_activation(target)
+
 /datum/discipline/proc/activate(atom/target)
 	current_power.activate(target)
 
