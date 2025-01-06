@@ -19,7 +19,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_ANARCH
 	known_contacts = list("Baron")
-	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian")
+	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian", "Ministry")
 
 	v_duty = "You are a member of the Anarch Free State. You listen to the undisputed Baron of the city and the Emissary as their second in command. You ensure the traditions are maintained - The Anarch way."
 	minimal_masquerade = 2
