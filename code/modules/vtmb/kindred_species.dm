@@ -432,7 +432,7 @@
 								BLOODBONDED.clane = new H.clane.type()
 
 							BLOODBONDED.clane.on_gain(BLOODBONDED)
-              				BLOODBONDED.clane.post_gain(BLOODBONDED)
+							BLOODBONDED.clane.post_gain(BLOODBONDED)
 							if(BLOODBONDED.clane.alt_sprite && !BLOODBONDED.clane.alt_sprite_greyscale)
 								BLOODBONDED.skin_tone = ALBINO
 								BLOODBONDED.update_body()
@@ -458,22 +458,22 @@
 							BLOODBONDED_prefs_v.pref_species.id = "kindred"
 							BLOODBONDED_prefs_v.pref_species.name = "Vampire"
 							if(H.generation < 13)
-								
+
 								BLOODBONDED_prefs_v.clane = BLOODBONDED.clane
 								BLOODBONDED_prefs_v.generation = 13
 								BLOODBONDED_prefs_v.clane.enlightenment = H.clane.enlightenment
-								
-							
+
+
 								//Rarely the new mid round vampires get the 3 brujah skil(it is default)
 								//This will remove if it happens
 								if(BLOODBONDED_prefs_v.discipline_types.len == 3)
 									for (var/i in 1 to 3)
-										var/removing_discipline = BLOODBONDED_prefs_v.discipline_types[1] 
+										var/removing_discipline = BLOODBONDED_prefs_v.discipline_types[1]
 										if (removing_discipline)
 											var/index = BLOODBONDED_prefs_v.discipline_types.Find(removing_discipline)
-											BLOODBONDED_prefs_v.discipline_types.Cut(index, index + 1) 
+											BLOODBONDED_prefs_v.discipline_types.Cut(index, index + 1)
 											BLOODBONDED_prefs_v.discipline_levels.Cut(index, index + 1)
-									            
+
 								if(BLOODBONDED_prefs_v.discipline_types.len == 0)
 									for (var/i in 1 to 3)
 										BLOODBONDED_prefs_v.discipline_types += BLOODBONDED_prefs_v.clane.clane_disciplines[i]
@@ -557,10 +557,10 @@
 							var/datum/preferences/BLOODBONDED_prefs_g = BLOODBONDED.client.prefs
 							if(BLOODBONDED_prefs_g.discipline_types.len == 3)
 								for (var/i in 1 to 3)
-									var/removing_discipline = BLOODBONDED_prefs_g.discipline_types[1] 
+									var/removing_discipline = BLOODBONDED_prefs_g.discipline_types[1]
 									if (removing_discipline)
 										var/index = BLOODBONDED_prefs_g.discipline_types.Find(removing_discipline)
-										BLOODBONDED_prefs_g.discipline_types.Cut(index, index + 1) 
+										BLOODBONDED_prefs_g.discipline_types.Cut(index, index + 1)
 										BLOODBONDED_prefs_g.discipline_levels.Cut(index, index + 1)
 							BLOODBONDED_prefs_g.pref_species.name = "Ghoul"
 							BLOODBONDED_prefs_g.pref_species.id = "ghoul"
