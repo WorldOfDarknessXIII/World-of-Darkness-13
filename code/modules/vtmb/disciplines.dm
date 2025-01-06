@@ -1832,7 +1832,6 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 		if(5)
 			var/list/curses = list()
 			var/list/subtype_list = subtypesof(/datum/curse/daimonion)
-			var/datum/curse/daimonion/L
 			if(!GLOB.who_is_cursed.Find(target))
 				to_chat(caster, "<span class='danger'>To place a curse on someone is to pay the great price. Are you willing to take the risks?</span>")
 				for(var/i in 1 to subtype_list.len)
@@ -1842,7 +1841,6 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 						curses += C.name
 					var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in curses
 					if(choosecurse)
-						var/mob/living/carbon/human/caster
 						if(choosecurse == "No Lying Tongue")
 							var/datum/curse/daimonion/lying_weakness/curs
 							if(caster.maxbloodpool > 1)
