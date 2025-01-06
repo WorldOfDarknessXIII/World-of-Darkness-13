@@ -1842,7 +1842,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 						curses += C.name
 					var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in curses
 					if(choosecurse)
-						var/mob/living/carbon/human/caster = caster
+						var/mob/living/carbon/human/caster
 						if(choosecurse == "No Lying Tongue")
 							var/datum/curse/daimonion/lying_weakness/curs
 							if(caster.maxbloodpool > 1)
