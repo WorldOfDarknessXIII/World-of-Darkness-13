@@ -39,13 +39,14 @@
 	description = "Transform a vampire into a Baali"
 	cost = 5
 	category = "Vampire"
+	var/list/default_actions = list("About Me", "Give Vitae", "Blood Heal", "Blood Power")
 
 /datum/rune_ritual/vampire_to_baali/Execute(mob/user, obj/effect/decal/baalirune/rune)
 	var/mob/living/carbon/human/vampire = locate() in get_turf(rune)
 	if(vampire)
 		if(vampire.clane && !istype(vampire.clane, /datum/vampireclane/baali))
 			for(var/datum/action/action in vampire.actions)
-				if(action && action.vampiric)
+				if(action && !default_actions.Find(action.name))
 					action.Remove(vampire)
 			qdel(vampire.clane)
 			vampire.clane = new /datum/vampireclane/baali()
