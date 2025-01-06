@@ -6,9 +6,10 @@
 
 export const THEMES = ['light', 'dark'];
 
-const COLOR_DARK_BG = '#202020';
-const COLOR_DARK_BG_DARKER = '#171717';
-const COLOR_DARK_TEXT = '#a4bad6';
+const COLOR_DARK_BG = '#1b0101';
+const COLOR_DARK_BG_DARKER = '#080808';
+const COLOR_DARK_TEXT = '#c9b53f ';
+const COLOR_DARK_BUTTONS = '#660c0c';
 
 let setClientThemeTimer = null;
 
@@ -99,17 +100,17 @@ export const setClientTheme = name => {
       'mainwindow.background-color': COLOR_DARK_BG,
       'split.background-color': COLOR_DARK_BG,
       // Buttons
-      'changelog.background-color': '#3a3a3a',
+      'changelog.background-color': COLOR_DARK_BUTTONS,
       'changelog.text-color': COLOR_DARK_TEXT,
-      'rules.background-color': '#3a3a3a',
+      'rules.background-color': COLOR_DARK_BUTTONS,
       'rules.text-color': COLOR_DARK_TEXT,
-      'wiki.background-color': '#3a3a3a',
+      'wiki.background-color': COLOR_DARK_BUTTONS,
       'wiki.text-color': COLOR_DARK_TEXT,
-      'forum.background-color': '#3a3a3a',
+      'forum.background-color': COLOR_DARK_BUTTONS,
       'forum.text-color': COLOR_DARK_TEXT,
-      'discord.background-color': '#3a3a3a',
+      'discord.background-color': COLOR_DARK_BUTTONS,
       'discord.text-color': COLOR_DARK_TEXT,
-      'github.background-color': '#3a3a3a',
+      'github.background-color': COLOR_DARK_BUTTONS,
       'github.text-color': COLOR_DARK_TEXT,
       'report-issue.background-color': '#492020',
       'report-issue.text-color': COLOR_DARK_TEXT,

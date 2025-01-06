@@ -60,6 +60,7 @@ export const Panel = (props, context) => {
                   tooltip={settings.visible
                     ? 'Close settings'
                     : 'Open settings'}
+                  color="bad"
                   tooltipPosition="bottom-left"
                   onClick={() => settings.toggle()} />
               </Stack.Item>
