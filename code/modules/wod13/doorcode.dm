@@ -228,6 +228,13 @@
 	)
 	color = "#ffa7e6"
 
+/obj/item/vamp/keys/banuhaqim
+	name = "Just keys"
+	accesslocks = list(
+		"banuhaqim"
+	)
+	color = "#06053d"
+
 /obj/item/vamp/keys/toreador/primogen
 	name = "Really sexy keys"
 	accesslocks = list(
