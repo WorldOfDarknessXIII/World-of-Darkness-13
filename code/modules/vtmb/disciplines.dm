@@ -1826,7 +1826,6 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 					caster.do_jitter_animation(30)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
 		if(5)
-			var/list/curses = list()
 			if(!(target in GLOB.who_is_cursed))
 				var/list/curses_names = list()
 				for(var/i in subtypesof(/datum/curse/daimonion))
@@ -1835,8 +1834,9 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 					to_chat(caster, "<span class='danger'>To place a curse on someone is to pay the great price. Are you willing to take the risks?</span>")
 					var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in curses_names
 					if(choosecurse)
+						var/datum/curse/daimonion/D = choosecurse
 						var/mob/living/BP = caster
-						if(choosecurse == "No Lying Tongue")
+						if(initial(D.name == "No Lying Tongue"))
 							var/datum/curse/daimonion/lying_weakness/curs
 							if(caster.maxbloodpool > 1)
 								curs.activate(target)
@@ -1844,7 +1844,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 								GLOB.who_is_cursed += target
 						else
 						to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.<span>")
-						if(choosecurse == "Baby Strength")
+						if(initial(D.name == "Baby Strength"))
 							var/datum/curse/daimonion/physical_weakness/curs
 							if(caster.maxbloodpool > 2)
 								curs.activate(target)
@@ -1852,7 +1852,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 								GLOB.who_is_cursed += target
 							else
 								to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.<span>")
-						if(choosecurse == "Reap Mentality")
+						if(initial(D.name == "Reap Mentality"))
 							var/datum/curse/daimonion/mental_weakness/curs
 							if(caster.maxbloodpool > 3)
 								curs.activate(target)
@@ -1860,7 +1860,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 								GLOB.who_is_cursed += target
 							else
 								to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.<span>")
-						if(choosecurse == "Sterile Vitae")
+						if(initial(D.name == "Sterile Vitae"))
 							if(iskindred(target))
 								var/datum/curse/daimonion/offspring_weakness/curs
 								if(caster.maxbloodpool > 4)
@@ -1871,7 +1871,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 									to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.<span>")
 							else
 								to_chat(caster, "Victim is not a kindred!")
-						if(choosecurse == "The Mark Of Doom")
+						if(initial(D.name == "The Mark Of Doom"))
 							var/datum/curse/daimonion/success_weakness/curs
 							if(caster.maxbloodpool > 5)
 								curs.activate(target)
