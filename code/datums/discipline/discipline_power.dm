@@ -105,7 +105,7 @@
 			return FALSE
 		if (!COOLDOWN_FINISHED(found_power, cooldown))
 			if (alert)
-				to_chat(owner, "<span class='warning'>You cannot activate [name] before [found_power]'s cooldown expires.")
+				to_chat(owner, "<span class='warning'>You cannot activate [name] before [found_power]'s cooldown expires in [DisplayTimeText(COOLDOWN_TIMELEFT(found_power, cooldown))].")
 			return FALSE
 
 	//the user cannot afford the power's vitae expenditure
@@ -117,7 +117,7 @@
 	//the power's cooldown has not elapsed
 	if (!COOLDOWN_FINISHED(src, cooldown))
 		if (alert)
-			to_chat(owner, "<span class='warning'>[name] is on cooldown!</span>")
+			to_chat(owner, "<span class='warning'>[name] is still on cooldown for [DisplayTimeText(COOLDOWN_TIMELEFT(src, cooldown))]!</span>")
 		return FALSE
 
 	//status checks
