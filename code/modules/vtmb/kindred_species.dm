@@ -469,8 +469,9 @@
 							
 								//Rarely the new mid round vampires get the 3 brujah skil(it is default)
 								//This will remove if it happens
-								if(BLOODBONDED_prefs_v.discipline_types.len == 3)
-									for (var/i in 1 to 3)
+								// Or if they are a ghoul with abunch of disciplines
+								if(BLOODBONDED_prefs_v.discipline_types.len > 0)
+									for (var/i in 1 to BLOODBONDED_prefs_v.discipline_types.len)
 										var/removing_discipline = BLOODBONDED_prefs_v.discipline_types[1] 
 										if (removing_discipline)
 											var/index = BLOODBONDED_prefs_v.discipline_types.Find(removing_discipline)

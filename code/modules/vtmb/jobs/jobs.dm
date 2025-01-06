@@ -388,42 +388,45 @@
 
 /datum/antagonist/ambitious/on_gain()
 	owner.special_role = src
-	var/objectve = rand(1, 4)
-	switch(objectve)
+	var/needs_faction = TRUE
+	var/no_faction = FALSE
+	var/max_objective = 3
+
+	if(iskindred(owner) || isghoul(owner))
+		max_objective = 4
+
+	// Fourth if is for the vampire/ghouls since it is only their factions there
+
+	var/objective = rand(1,max_objective)
+
+	switch(objective)
 		if(1)
-			var/list/ambitious = list()
-			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				if(H.stat != DEAD && H.true_real_name != owner.current.true_real_name && H.vampire_faction != "Sabbat")
-					ambitious += H
-			if(length(ambitious))
-				var/datum/objective/blood/blood_objective = new
-				blood_objective.owner = owner
-				var/mob/living/carbon/human/HU = pick(ambitious)
-				blood_objective.owner = owner
-				blood_objective.target_name = HU.true_real_name
-				objectives += blood_objective
-				blood_objective.update_explanation_text()
-			else
-				var/datum/objective/money/money_objective = new
-				money_objective.owner = owner
-				money_objective.amount = rand(500, 5000)
-				objectives += money_objective
-				money_objective.update_explanation_text()
+			var/datum/objective/artefact/artefact_objective = new
+			artefact_objective.owner = owner
+			objectives += artefact_objective
+			artefact_objective.update_explanation_text()
 		if(2)
 			var/datum/objective/money/money_objective = new
 			money_objective.owner = owner
-			money_objective.amount = rand(300, 1000)
+			money_objective.amount = rand(500, 3000)
 			objectives += money_objective
 			money_objective.update_explanation_text()
 		if(3)
 			var/list/ambitious = list()
+			var/HU_name
+			var/mob/living/carbon/human/HU
+
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
 				if(H.stat != DEAD && H.true_real_name != owner.current.true_real_name && H.vampire_faction != "Sabbat")
 					ambitious += H
+
 			if(length(ambitious))
+				HU = pick(ambitious)
+				HU_name = HU.true_real_name
+
+			if(HU_name!= "" && HU_name != null)
 				var/datum/objective/protect_niga/protect_objective = new
 				protect_objective.owner = owner
-				var/mob/living/carbon/human/HU = pick(ambitious)
 				protect_objective.mine_target = HU
 				objectives += protect_objective
 				protect_objective.update_explanation_text()
@@ -434,16 +437,26 @@
 				objectives += money_objective
 				money_objective.update_explanation_text()
 		if(4)
+			if(needs_faction)
+				//Since this is called first than most of the iterations, their faction are not set so i had to make it stall abit so people get their faction, the null people will need to wait abit.
+				var/retries = 50 // total 5 seconds
+				while(owner.current.vampire_faction == null && retries > 0)
+					sleep(2) // wait 0.2 seconds
+					retries -= 1
 			var/list/available_factions = list("Camarilla", "Anarchs", "Sabbat")
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarchs" || H.vampire_faction == "Sabbat")
-					available_factions -= H.vampire_faction
-			var/datum/objective/become_member/member_objective = new
-			member_objective.owner = owner
-			member_objective.faction = pick(available_factions)
-			objectives += member_objective
-			member_objective.update_explanation_text()
+			if(owner.current.vampire_faction == null || owner.current.vampire_faction == "Nosferatu" )
+				no_faction = TRUE
+			if(no_faction)
+				var/datum/objective/become_member/member_objective = new
+				member_objective.owner = owner
+				member_objective.faction = pick(available_factions)
+				objectives += member_objective
+				member_objective.update_explanation_text()
+			else
+				var/datum/objective/artefact/artefact_objective = new
+				artefact_objective.owner = owner
+				objectives += artefact_objective
+				artefact_objective.update_explanation_text()
 	return ..()
 
 /datum/antagonist/ambitious/on_removal()
