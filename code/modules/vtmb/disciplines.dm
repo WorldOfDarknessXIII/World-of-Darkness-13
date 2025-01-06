@@ -1834,7 +1834,6 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 					to_chat(caster, "<span class='danger'>To place a curse on someone is to pay the great price. Are you willing to take the risks?</span>")
 					var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in curses_names
 					if(choosecurse)
-						var/datum/curse/daimonion/D = choosecurse
 						var/mob/living/BP = caster
 						if(initial(D.name == "No Lying Tongue"))
 							var/datum/curse/daimonion/lying_weakness/curs
@@ -1842,8 +1841,8 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 								curs.activate(target)
 								BP.cursed_bloodpool += 1
 								GLOB.who_is_cursed += target
-						else
-						to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.<span>")
+							else
+								to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.<span>")
 						if(initial(D.name == "Baby Strength"))
 							var/datum/curse/daimonion/physical_weakness/curs
 							if(caster.maxbloodpool > 2)
