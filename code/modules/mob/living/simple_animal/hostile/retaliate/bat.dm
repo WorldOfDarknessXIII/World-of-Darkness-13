@@ -72,3 +72,16 @@
 	speed = -1
 	icon = 'code/modules/wod13/icons.dmi'
 	icon_state = "bat"
+
+/mob/living/simple_animal/hostile/retaliate/bat/baali/demon
+	name = "Lesser Infernal Creature"
+	desc = "Infernal creature from the depths of hell itself."
+	health = 250
+	maxHealth = 250
+	speed = 1
+	icon = 'code/modules/wod13/32x48.dmi'
+	icon_state = "baali"
+	icon_living = "baali"
+	harm_intent_damage = 25
+	melee_damage_lower = 25
+	melee_damage_upper = 25
