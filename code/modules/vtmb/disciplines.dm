@@ -1829,7 +1829,7 @@ GLOBAL_LIST(who_is_cursed)
 			var/list/curses_names = list()
 			for(var/i in subtypesof(/datum/curse/daimonion))
 				var/datum/curse/daimonion/D = i
-				if(caster.generation <= D.genrequired && !(target in GLOB.who_is_cursed))
+				if(caster.generation <= D.genrequired && !(GLOB.who_is_cursed.Find(target)))
 					curses_names += initial(D.name)
 			to_chat(caster, "<span class='danger'>To place a curse on someone is to pay the great price. Are you willing to take the risks?</span>")
 			var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in curses_names
