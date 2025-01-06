@@ -418,19 +418,20 @@ SUBSYSTEM_DEF(smokeweedeveryday)
 	name = "movable chemical lab"
 	desc = "Not an RV, but it moves..."
 	anchored = FALSE
-	var/health = 13
+	var/health = 20
 
 /obj/structure/methlab/movable/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Alt-click to secure the [src] to the ground.</span>"
 
-	if(health == 13)
+	if(health == 20)
 		. += "<span class='notice'>[src] is in good condition.</span>"
-	else if(health > 10)
+	else if(health > 16)
 		. += "<span class='notice'>[src] is lightly damaged.</span>"
-	else if(health > 6)
+	else if(health > 10)
 		. += "<span class='warning'>[src] has sustained some damage.</span>"
-	else if(health > 3)
+	else if(health > 6)
+
 		. += "<span class='warning'>[src] is close to breaking!</span>"
 	else
 		. += "<span class='warning'>[src] is about to fall apart!</span>"
@@ -457,17 +458,17 @@ SUBSYSTEM_DEF(smokeweedeveryday)
 		playsound(src, 'code/modules/wod13/sounds/methcook.ogg', 50, TRUE)
 		spawn(3 SECONDS)
 			health -= 1
-			if(health <= 10)
-				if(health > 6)
-					if(prob(10))
-						explosion(loc,0,1,3,4)
-				else if(health > 3)
-					if(prob(20))
-						explosion(loc,0,1,3,4)
-				else if(health > 1)
-					if(prob(30))
-						explosion(loc,0,1,3,4)
+			if(health <= 16)
+				var/probability
+				if(health >= 10)
+					probability = 5
+				else if(health >= 6)
+					probability = 10
+				else if(health > 0)
+					probability = 20
 				else
+					probability = 100
+				if(prob(probability))
 					explosion(loc,0,1,3,4)
 	return
 
