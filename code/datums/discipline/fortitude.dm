@@ -17,7 +17,7 @@
 	deactivate_sound = 'code/modules/wod13/sounds/fortitude_deactivate.ogg'
 
 	toggled = TRUE
-	duration_length = DURATION_TURN_PLUS
+	duration_length = DURATION_TURN
 
 //FORTITUDE 1
 /datum/discipline_power/fortitude/one

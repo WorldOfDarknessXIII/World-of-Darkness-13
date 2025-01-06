@@ -953,7 +953,8 @@
 /datum/species/kindred/proc/spend_blood(mob/living/carbon/human/vampire, amount)
 	spent_blood_turn += amount
 	vampire.adjust_blood_points(-amount)
-	addtimer(CALLBACK(src, PROC_REF(refresh_spent_blood), amount), DURATION_TURN)
+	//one decisecond shorter than a turn to allow powers to refresh on a full turn basis
+	addtimer(CALLBACK(src, PROC_REF(refresh_spent_blood), amount), DURATION_TURN - 1)
 
 /datum/species/kindred/proc/try_spend_blood(mob/living/carbon/human/vampire, amount)
 	if (can_spend_blood(vampire, amount))

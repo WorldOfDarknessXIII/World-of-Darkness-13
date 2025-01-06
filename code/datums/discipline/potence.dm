@@ -17,7 +17,7 @@
 	deactivate_sound = 'code/modules/wod13/sounds/potence_deactivate.ogg'
 
 	toggled = TRUE
-	duration_length = DURATION_TURN_PLUS
+	duration_length = DURATION_TURN
 
 	var/datum/component/tackler
 

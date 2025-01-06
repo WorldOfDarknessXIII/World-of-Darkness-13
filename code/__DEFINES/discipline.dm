@@ -1,8 +1,6 @@
 //normal duration defines
 ///Duration of one "turn", which is 5 seconds according to us
 #define DURATION_TURN 50
-///Duration of one turn + a tick to execute after limiters like blood per turn
-#define DURATION_TURN_PLUS (DURATION_TURN + 1)
 ///Duration of one "scene" as defined in tabletop: 5 minutes
 #define DURATION_SCENE 3000
 

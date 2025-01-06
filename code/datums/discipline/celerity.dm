@@ -17,7 +17,7 @@
 	deactivate_sound = 'code/modules/wod13/sounds/celerity_deactivate.ogg'
 
 	toggled = TRUE
-	duration_length = DURATION_TURN_PLUS
+	duration_length = DURATION_TURN
 
 /datum/discipline_power/celerity/proc/celerity_visual(datum/discipline_power/celerity/source, atom/newloc, dir)
 	SIGNAL_HANDLER

@@ -387,16 +387,17 @@
 		return FALSE
 	return TRUE
 
-/datum/species/ghoul/proc/reset_blood_spending()
-	spent_blood_turn = 0
-
 /datum/species/ghoul/proc/spend_blood(mob/living/carbon/human/ghoul, amount)
 	spent_blood_turn += amount
 	ghoul.adjust_blood_points(-amount)
-	COOLDOWN_START(src, spend_blood_timer, DURATION_TURN / spend_blood_per_turn)
+	//one decisecond shorter than a turn to allow powers to refresh on a full turn basis
+	addtimer(CALLBACK(src, PROC_REF(refresh_spent_blood), amount), DURATION_TURN - 1)
 
 /datum/species/ghoul/proc/try_spend_blood(mob/living/carbon/human/ghoul, amount)
 	if (can_spend_blood(ghoul, amount))
 		spend_blood(ghoul, amount)
 		return TRUE
 	return FALSE
+
+/datum/species/ghoul/proc/refresh_spent_blood(amount)
+	spent_blood_turn -= amount
