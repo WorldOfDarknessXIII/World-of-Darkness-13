@@ -19,7 +19,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_REEVE
 	known_contacts = list("Baron")
-	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian", "Ministry")
+	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian", "Ministry", "Tremere")
 
 	v_duty = "You are the Reeve of the Anarch Free State. You keep order within Anarch territory and act as a Judge in place of the Baron which is investigative in nature."
 	minimal_masquerade = 2
