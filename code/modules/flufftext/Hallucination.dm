@@ -447,14 +447,14 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		return
 
 	if (get_turf(demon) != landing && target?.stat != DEAD)
-		demon.forceMove(get_step_towards(demon, landing))
-		demon.setDir(get_dir(demon, landing))
+		demon.forceMove(get_step_towards(demon, target))
+		demon.setDir(get_dir(demon, target))
 		target.playsound_local(get_turf(demon), 'sound/effects/meteorimpact.ogg', 150, 1)
 		shake_camera(target, 2, 1)
 		if(demon.Adjacent(target) && !charged)
 			charged = TRUE
-			target.Paralyze(80)
-			target.adjustStaminaLoss(40)
+			target.Paralyze(50)
+			target.adjustStaminaLoss(500)
 			step_away(target, demon)
 			shake_camera(target, 4, 3)
 			target.visible_message("<span class='warning'>[target] jumps backwards, falling on the ground!</span>","<span class='userdanger'>[demon] slams into you!</span>")
