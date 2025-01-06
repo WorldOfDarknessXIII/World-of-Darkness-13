@@ -29,6 +29,7 @@
 	name = "Police Officer"
 	jobtype = /datum/job/vamp/police_officer
 
+	ears = /obj/item/p25radio/police
 	uniform = /obj/item/clothing/under/vampire/police
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	suit = /obj/item/clothing/suit/vampire/vest/police
@@ -70,6 +71,7 @@
 	name = "Police Sergeant"
 	jobtype = /datum/job/vamp/police_sergeant
 
+	ears = /obj/item/p25radio/police/supervisor
 	uniform = /obj/item/clothing/under/vampire/police
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	suit = /obj/item/clothing/suit/vampire/vest/police/sergeant
@@ -111,6 +113,7 @@
 	name = "Police Chief"
 	jobtype = /datum/job/vamp/police_chief
 
+	ears = /obj/item/p25radio/police/command
 	uniform = /obj/item/clothing/under/vampire/police
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	suit = /obj/item/clothing/suit/vampire/vest/police/chief

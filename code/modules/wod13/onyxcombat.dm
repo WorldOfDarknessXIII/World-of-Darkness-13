@@ -18,6 +18,9 @@
 		SSbloodhunt.update_shit()
 	for(var/obj/item/police_radio/R in GLOB.police_radios)
 		R.announce_crime("murder", get_turf(src))
+	for(var/obj/item/p25radio/police/R in GLOB.p25_radios)
+		if(R.linked_network == "police")
+			R.announce_crime("murder", get_turf(src))
 	GLOB.masquerade_breakers_list -= src
 	GLOB.sabbatites -= src
 

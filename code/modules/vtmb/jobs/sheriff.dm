@@ -48,6 +48,7 @@
 	name = "Sheriff"
 	jobtype = /datum/job/vamp/sheriff
 
+	ears = /obj/item/p25radio
 	id = /obj/item/card/id/sheriff
 	uniform = /obj/item/clothing/under/vampire/sheriff
 	belt = /obj/item/storage/belt/vampire/sheathe/rapier

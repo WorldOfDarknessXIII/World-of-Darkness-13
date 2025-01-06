@@ -12,7 +12,28 @@
 	. = ..()
 	var/turf/T = get_turf(user)
 	if(T)
-		. += "<b>Location:</b> [T.x]:[T.y]"
+		. += "<b>Location:</b> [T.x]:[T.y] ([get_cardinal_direction(T.x, T.y)])"
+
+/proc/get_cardinal_direction(x, y)
+	var/direction = ""
+	var/center_x = (x >= 98 && x <= 158)
+	var/center_y = (y >= 98 && y <= 158)
+	if(center_x && center_y)
+		return "Central"
+	if(center_x)
+		direction = ""
+	else if(x >= 128)
+		direction += "East"
+	else
+		direction += "West"
+	if(center_y)
+		direction = "Central [direction]"
+	else if(y >= 128)
+		direction = "North [direction]"
+	else
+		direction = "South [direction]"
+	direction += " San Francisco"
+	return direction
 
 /obj/item/police_radio/proc/announce_crime(var/crime, var/atom/location)
 	switch(crime)
@@ -20,15 +41,15 @@
 			if(last_shooting+50 < world.time)
 				last_shooting = world.time
 				var/area/A = get_area(location)
-				say("Gun shots at [A.name], [location.x]:[location.y]...")
+				say("Citizens report hearing gunshots at [A.name],[get_cardinal_direction(location.x, location.y)], [location.x]:[location.y]...")
 		if("victim")
 			if(last_shooting_victims+50 < world.time)
 				last_shooting_victims = world.time
 				var/area/A = get_area(location)
-				say("Engaged combat at [A.name], wounded civillian, [location.x]:[location.y]...")
+				say("Active firefight in progress at [A.name], wounded civilians,[get_cardinal_direction(location.x, location.y)], [location.x]:[location.y]...")
 		if("murder")
 			var/area/A = get_area(location)
-			say("Murder at [A.name], [location.x]:[location.y]...")
+			say("Murder at [A.name],[get_cardinal_direction(location.x, location.y)], [location.x]:[location.y]...")
 
 /obj/item/police_radio/Initialize()
 	. = ..()
