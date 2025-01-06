@@ -736,7 +736,7 @@
 /mob/living/proc/update_blood_hud()
 	if(!client || !hud_used)
 		return
-	maxbloodpool = 10+((13-generation)*3)-cursed_bloodpool
+	maxbloodpool = (10+((13-generation)*3))-cursed_bloodpool
 	if(hud_used.blood_icon)
 		var/emm = round((bloodpool/maxbloodpool)*10)
 		if(emm > 10)

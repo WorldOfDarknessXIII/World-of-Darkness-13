@@ -1,4 +1,4 @@
-GLOBAL_LIST_EMPTY(who_is_cursed)
+GLOBAL_LIST(who_is_cursed)
 
 /mob/living
 	var/datum/action/discipline/discipline_ranged
