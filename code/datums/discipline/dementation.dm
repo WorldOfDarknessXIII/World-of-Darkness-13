@@ -41,8 +41,8 @@
 		return .
 	if(target.spell_immunity)
 		return FALSE
-	var/mypower = owner.social + owner.additional_social
-	var/theirpower = target.mentality + target.additional_mentality
+	var/mypower = caster.get_total_social()
+	var/theirpower = target.get_total_mentality()
 	if(theirpower >= mypower)
 		if (alert)
 			to_chat(owner, "<span class='warning'>[target]'s mind is too powerful to corrupt!</span>")

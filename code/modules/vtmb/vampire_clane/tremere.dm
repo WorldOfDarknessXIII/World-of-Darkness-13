@@ -7,5 +7,5 @@
 		/datum/discipline/dominate = 2,
 		/datum/discipline/thaumaturgy = 3
 	)
-	male_clothes = "/obj/item/clothing/under/vampire/tremere"
-	female_clothes = "/obj/item/clothing/under/vampire/tremere/female"
+	male_clothes = /obj/item/clothing/under/vampire/tremere
+	female_clothes = /obj/item/clothing/under/vampire/tremere/female

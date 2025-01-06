@@ -208,7 +208,6 @@
 			urn.own = owner
 			var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 			heart.forceMove(urn)
-
 	else
 		if(owner.dna?.species)
 			owner.dna.species.inherent_traits -= TRAIT_STUNIMMUNE
@@ -220,12 +219,14 @@
 				heart.Insert(owner)
 		urn.own = null
 		qdel(urn)
+		urn = null
 
 /obj/item/urn
 	name = "organ urn"
 	desc = "Stores some precious organs..."
 	icon = 'code/modules/wod13/icons.dmi'
 	icon_state = "urn"
+	is_magic = TRUE
 	var/mob/living/own
 
 /obj/item/urn/attackby(obj/item/I, mob/living/user, params)

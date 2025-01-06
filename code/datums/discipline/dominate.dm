@@ -39,8 +39,8 @@
 	. = ..()
 	if (!.)
 		return .
-	var/mypower = owner.social + owner.additional_social
-	var/theirpower = target.mentality + target.additional_mentality
+	var/mypower = owner.get_total_social()
+	var/theirpower = target.get_total_mentality()
 	var/dominate_me = FALSE
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
