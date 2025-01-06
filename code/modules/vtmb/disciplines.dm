@@ -1830,57 +1830,55 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 				var/list/curses_names = list()
 				for(var/i in subtypesof(/datum/curse/daimonion))
 					var/datum/curse/daimonion/D = i
-					curses_names += initial(D.name)
+					if(caster.generation <= D.genrequired)
+						curses_names += initial(D.name)
 				to_chat(caster, "<span class='danger'>To place a curse on someone is to pay the great price. Are you willing to take the risks?</span>")
 				var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in curses_names
-					if(choosecurse)
-						var/mob/living/BP = caster
-						if(caster.generation <= D.genrequired)
-							if(D.name == "No Lying Tongue")
-								var/datum/curse/daimonion/lying_weakness/curs
-								if(caster.maxbloodpool > 1)
-									curs.activate(target)
-									BP.cursed_bloodpool += 1
-									GLOB.who_is_cursed += target
-								else
-									to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
-							if(D.name == "Baby Strength")
-								var/datum/curse/daimonion/physical_weakness/curs
-								if(caster.maxbloodpool > 2)
-									curs.activate(target)
-									BP.cursed_bloodpool += 2
-									GLOB.who_is_cursed += target
-								else
-									to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
-							if(D.name == "Reap Mentality")
-								var/datum/curse/daimonion/mental_weakness/curs
-								if(caster.maxbloodpool > 3)
-									curs.activate(target)
-									BP.cursed_bloodpool += 3
-									GLOB.who_is_cursed += target
-								else
-									to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
-							if(D.name == "Sterile Vitae")
-								if(iskindred(target))
-									var/datum/curse/daimonion/offspring_weakness/curs
-									if(caster.maxbloodpool > 4)
-										curs.activate(target)
-										BP.cursed_bloodpool += 4
-										GLOB.who_is_cursed += target
-									else
-										to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
-								else
-									to_chat(caster, "<span class='warning'>Victim is not a kindred!</span>")
-							if(D.name == "The Mark Of Doom")
-								var/datum/curse/daimonion/success_weakness/curs
-								if(caster.maxbloodpool > 5)
-									curs.activate(target)
-									BP.cursed_bloodpool += 5
-									GLOB.who_is_cursed += target
-								else
-									to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
+				if(choosecurse)
+					var/mob/living/BP = caster
+					if(D.name == "No Lying Tongue")
+						var/datum/curse/daimonion/lying_weakness/curs
+						if(caster.maxbloodpool > 1)
+							curs.activate(target)
+							BP.cursed_bloodpool += 1
+							GLOB.who_is_cursed += target
 						else
-							to_chat(caster, "<span class='warning'>You need to be atleast generation [D.genrequired] to use this curse!</span>")
+							to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
+					if(D.name == "Baby Strength")
+						var/datum/curse/daimonion/physical_weakness/curs
+						if(caster.maxbloodpool > 2)
+							curs.activate(target)
+							BP.cursed_bloodpool += 2
+							GLOB.who_is_cursed += target
+						else
+							to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
+					if(D.name == "Reap Mentality")
+						var/datum/curse/daimonion/mental_weakness/curs
+						if(caster.maxbloodpool > 3)
+							curs.activate(target)
+							BP.cursed_bloodpool += 3
+							GLOB.who_is_cursed += target
+						else
+							to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
+					if(D.name == "Sterile Vitae")
+						if(iskindred(target))
+							var/datum/curse/daimonion/offspring_weakness/curs
+							if(caster.maxbloodpool > 4)
+								curs.activate(target)
+								BP.cursed_bloodpool += 4
+								GLOB.who_is_cursed += target
+							else
+								to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
+						else
+							to_chat(caster, "<span class='warning'>Victim is not a kindred!</span>")
+					if(D.name == "The Mark Of Doom")
+						var/datum/curse/daimonion/success_weakness/curs
+						if(caster.maxbloodpool > 5)
+							curs.activate(target)
+							BP.cursed_bloodpool += 5
+							GLOB.who_is_cursed += target
+						else
+							to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
 			else
 				to_chat(caster, "<span class='warning'>One of the curses is already placed on this one, and there's no way to revert it!</span>")
 
