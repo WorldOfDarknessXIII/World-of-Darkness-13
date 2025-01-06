@@ -58,7 +58,7 @@
 	name = "Flame of the Rising Phoenix (Yang+Hun)"
 	desc = "This path is heretic amongst other kuei-jin, it doesn't use typical training and bases around morality. It encourages the kuei-jin to stay as close as possible to human, to the moral standards instead of High Mission. Save lives of mortals, meet the debts of mortal life and protect your fellows. But don't try to grief."
 	tennets = list("savelife", "meet", "protect")
-	tennets_done = list("savelife" = 0, "meet" = 0, "protect" = 0)
+	tennets_done = list("savelife" = 0, "protect" = 0)
 	fails = list("killfirst", "steal", "desire", "grief", "torture")
 
 /mob/living/carbon/human/proc/check_kuei_jin_alive()
