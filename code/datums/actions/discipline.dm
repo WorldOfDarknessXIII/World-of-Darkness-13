@@ -101,8 +101,6 @@
 		return
 	var/client/client = owner.client
 
-	to_chat(owner, "<span class='warning'>You stop targeting [discipline.current_power].</span>")
-
 	UnregisterSignal(owner, COMSIG_MOB_CLICKON)
 	targeting = FALSE
 	owner.discipline_targeting = FALSE

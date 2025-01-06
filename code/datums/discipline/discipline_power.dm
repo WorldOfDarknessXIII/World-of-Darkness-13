@@ -33,6 +33,8 @@
 	var/violates_masquerade = FALSE
 
 	/* HOW AND WHEN IT'S ACTIVATED AND DEACTIVATED */
+	/// If this Discipline has a pre-activation phase for custom logic (eg dice rolling) that affects whether activation will take place or not.
+	var/pre_activation = FALSE
 	/// If this Discipline doesn't automatically expire, but rather periodically drains blood.
 	var/toggled = FALSE
 	/// If this power can be turned on and off.
@@ -90,7 +92,7 @@
 	//the power is currently active
 	if (active)
 		if (alert)
-			to_chat(owner, "<span class='warning'>[name] is already active!</span>")
+			to_chat(owner, "<span class='warning'>[src] is already active!</span>")
 		return FALSE
 
 	//a mutually exclusive power is already active or on cooldown
@@ -101,70 +103,70 @@
 
 		if (found_power.active)
 			if (alert)
-				to_chat(owner, "<span class='warning'>You cannot have [name] and [found_power] active at the same time!")
+				to_chat(owner, "<span class='warning'>You cannot have [src] and [found_power] active at the same time!")
 			return FALSE
 		if (!COOLDOWN_FINISHED(found_power, cooldown))
 			if (alert)
-				to_chat(owner, "<span class='warning'>You cannot activate [name] before [found_power]'s cooldown expires in [DisplayTimeText(COOLDOWN_TIMELEFT(found_power, cooldown))].")
+				to_chat(owner, "<span class='warning'>You cannot activate [src] before [found_power]'s cooldown expires in [DisplayTimeText(COOLDOWN_TIMELEFT(found_power, cooldown))].")
 			return FALSE
 
 	//the user cannot afford the power's vitae expenditure
 	if (!can_afford())
 		if (alert)
-			to_chat(owner, "<span class='warning'>You do not have enough blood to cast [name]!</span>")
+			to_chat(owner, "<span class='warning'>You do not have enough blood to cast [src]!</span>")
 		return FALSE
 
 	//the power's cooldown has not elapsed
 	if (!COOLDOWN_FINISHED(src, cooldown))
 		if (alert)
-			to_chat(owner, "<span class='warning'>[name] is still on cooldown for [DisplayTimeText(COOLDOWN_TIMELEFT(src, cooldown))]!</span>")
+			to_chat(owner, "<span class='warning'>[src] is still on cooldown for [DisplayTimeText(COOLDOWN_TIMELEFT(src, cooldown))]!</span>")
 		return FALSE
 
 	//status checks
 	if ((check_flags & DISC_CHECK_TORPORED) && HAS_TRAIT(owner, TRAIT_TORPOR))
 		if (alert)
-			to_chat(owner, "<span class='warning'>You cannot cast [name] while in Torpor!</span>")
+			to_chat(owner, "<span class='warning'>You cannot cast [src] while in Torpor!</span>")
 		return FALSE
 
 	if ((check_flags & DISC_CHECK_CONSCIOUS) && HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
 		if (alert)
-			to_chat(owner, "<span class='warning'>You cannot cast [name] while unconscious!</span>")
+			to_chat(owner, "<span class='warning'>You cannot cast [src] while unconscious!</span>")
 		return FALSE
 
 	if ((check_flags & DISC_CHECK_CAPABLE) && HAS_TRAIT(owner, TRAIT_INCAPACITATED))
 		if (alert)
-			to_chat(owner, "<span class='warning'>You cannot cast [name] while incapacitated!</span>")
+			to_chat(owner, "<span class='warning'>You cannot cast [src] while incapacitated!</span>")
 		return FALSE
 
 	if ((check_flags & DISC_CHECK_IMMOBILE) && HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
 		if (alert)
-			to_chat(owner, "<span class='warning'>You cannot cast [name] while immobilised!</span>")
+			to_chat(owner, "<span class='warning'>You cannot cast [src] while immobilised!</span>")
 		return FALSE
 
 	if ((check_flags & DISC_CHECK_LYING) && HAS_TRAIT(owner, TRAIT_FLOORED))
 		if (alert)
-			to_chat(owner, "<span class='warning'>You cannot cast [name] while lying on the floor!</span>")
+			to_chat(owner, "<span class='warning'>You cannot cast [src] while lying on the floor!</span>")
 		return FALSE
 
 	if ((check_flags & DISC_CHECK_SEE) && HAS_TRAIT(owner, TRAIT_BLIND))
 		if (alert)
-			to_chat(owner, "<span class='warning'>You cannot cast [name] without your sight!</span>")
+			to_chat(owner, "<span class='warning'>You cannot cast [src] without your sight!</span>")
 		return FALSE
 
 	if ((check_flags & DISC_CHECK_SPEAK) && HAS_TRAIT(owner, TRAIT_MUTE))
 		if (alert)
-			to_chat(owner, "<span class='warning'>You cannot cast [name] without speaking!</span>")
+			to_chat(owner, "<span class='warning'>You cannot cast [src] without speaking!</span>")
 		return FALSE
 
 	if ((check_flags & DISC_CHECK_FREE_HAND) && HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
 		if (alert)
-			to_chat(owner, "<span class='warning'>You cannot cast [name] without free hands!</span>")
+			to_chat(owner, "<span class='warning'>You cannot cast [src] without free hands!</span>")
 		return FALSE
 
 	//respect pacifism, prevent hostile Discipline usage from pacifists
 	if (hostile && HAS_TRAIT(owner, TRAIT_PACIFISM))
 		if (alert)
-			to_chat(owner, "<span class='warning'>You cannot cast [name] as a pacifist!</span>")
+			to_chat(owner, "<span class='warning'>You cannot cast [src] as a pacifist!</span>")
 		return FALSE
 
 	//TODO: separate this from being a human????
@@ -234,7 +236,7 @@
 
 	//target doesn't match any targeted types, so can't activate on them
 	if (alert)
-		to_chat(owner, "<span class='warning'>You cannot cast [name] on [target]!</span>")
+		to_chat(owner, "<span class='warning'>You cannot cast [src] on [target]!</span>")
 	return FALSE
 
 /datum/discipline_power/proc/activate(atom/target)
@@ -250,8 +252,8 @@
 	if (!fire_and_forget && (duration_length != 0))
 		active = TRUE
 
-	//start the cooldown if there is one, instead triggers on deactivate() if toggled
-	if (cooldown_length && !cancelable && !cooldown_override)
+	//start the cooldown if there is one, instead triggers on deactivate() if it has a duration and isn't fire and forget
+	if (cooldown_length && !cancelable && !cooldown_override && (!duration_length || fire_and_forget))
 		COOLDOWN_START(src, cooldown, cooldown_length)
 
 	//handle Discipline power duration, start duration timer if it can't have multiple effects running at once
@@ -335,9 +337,8 @@
 		active = FALSE
 
 	if (duration_length)
-		to_chat(owner, "<span class='warning'>[name] deactivates!</span>")
 		COOLDOWN_RESET(src, duration)
-	if (cancelable)
+	if (!fire_and_forget)
 		COOLDOWN_START(src, cooldown, cooldown_length)
 	if (deactivate_sound)
 		owner.playsound_local(owner, deactivate_sound, 50, FALSE)
@@ -358,18 +359,18 @@
 			if (species.try_spend_blood(human, vitae_cost))
 				repeat = TRUE
 			else
-				to_chat(owner, "<span class='warning'>You can't spend enough blood to keep [name] active!")
+				to_chat(owner, "<span class='warning'>You can't spend enough blood to keep [src] active!")
 		else
 			if (owner.try_adjust_blood_points(-vitae_cost))
 				repeat = TRUE
 			else
-				to_chat(owner, "<span class='warning'>You can't spend enough blood to keep [name] active!")
+				to_chat(owner, "<span class='warning'>You can't spend enough blood to keep [src] active!")
 
 		if (repeat)
 			if (!fire_and_forget)
 				COOLDOWN_START(src, duration, duration_length)
 			addtimer(CALLBACK(src, PROC_REF(refresh), target), duration_length)
-			to_chat(owner, "<span class='warning'>[name] consumes your blood to stay active.</span>")
+			to_chat(owner, "<span class='warning'>[src] consumes your blood to stay active.</span>")
 			return
 
 		try_deactivate(target)
