@@ -1838,7 +1838,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 					var/mob/living/BP = caster
 					var/datum/curse/daimonion/D = choosecurse
 					if(D == "No Lying Tongue")
-						var/datum/curse/daimonion/lying_weakness/curs
+						var/datum/curse/daimonion/lying_weakness/curs = new
 						if(caster.maxbloodpool > 1)
 							curs.activate(target)
 							BP.cursed_bloodpool += 1
@@ -1847,7 +1847,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 						else
 							to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
 					if(D == "Baby Strength")
-						var/datum/curse/daimonion/physical_weakness/curs
+						var/datum/curse/daimonion/physical_weakness/curs = new
 						if(caster.maxbloodpool > 2)
 							curs.activate(target)
 							BP.cursed_bloodpool += 2
@@ -1856,7 +1856,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 						else
 							to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
 					if(D == "Reap Mentality")
-						var/datum/curse/daimonion/mental_weakness/curs
+						var/datum/curse/daimonion/mental_weakness/curs = new
 						if(caster.maxbloodpool > 3)
 							curs.activate(target)
 							BP.cursed_bloodpool += 3
@@ -1866,7 +1866,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 							to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
 					if(D == "Sterile Vitae")
 						if(iskindred(target))
-							var/datum/curse/daimonion/offspring_weakness/curs
+							var/datum/curse/daimonion/offspring_weakness/curs = new
 							if(caster.maxbloodpool > 4)
 								curs.activate(target)
 								BP.cursed_bloodpool += 4
@@ -1877,7 +1877,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 						else
 							to_chat(caster, "<span class='warning'>Victim is not a kindred!</span>")
 					if(D == "The Mark Of Doom")
-						var/datum/curse/daimonion/success_weakness/curs
+						var/datum/curse/daimonion/success_weakness/curs = new
 						if(caster.maxbloodpool > 5)
 							curs.activate(target)
 							BP.cursed_bloodpool += 5
