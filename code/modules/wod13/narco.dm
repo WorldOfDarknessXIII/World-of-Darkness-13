@@ -8,7 +8,7 @@
 	anchored = TRUE
 	density = TRUE
 	var/wet = FALSE
-	var/weeded = 0
+	var/growth_stage = 0
 	var/health = 3
 
 /obj/structure/weedshit/buyable
@@ -20,7 +20,7 @@
 	. += "<span class='notice'>Alt-click to secure the [src] to the ground.</span>"
 	if(!wet)
 		. += "<span class='warning'>[src] is dry!</span>"
-	if(weeded == 5)
+	if(growth_stage == 5)
 		. += "<span class='warning'>The crop is dead!</span>"
 	else
 		if(health <= 2)
@@ -88,14 +88,27 @@
 
 /obj/structure/weedshit/attack_hand(mob/user, params)
 	. = ..()
-	if(weeded == 5)
-		weeded = 0
+	if(growth_stage == 5)
+		growth_stage = 0
 		health = 3
 		to_chat(user, "<span class='notice'>You rip the rotten weed out of [src].</span>")
-	if(weeded == 4)
-		weeded = 1
+	if(growth_stage == 4)
+		growth_stage = 1
 		to_chat(user, "<span class='notice'>You pull the grown weed out of [src].</span>")
-		new /obj/item/food/vampire/weed(get_turf(user))
+		var/mob/living/carbon/human/H = user
+		var/amount
+		switch(storyteller_roll(H.get_total_mentality(), 6, TRUE))
+			if(3 to INFINITY)
+				amount = 4
+			if(2)
+				amount = 3
+			if(1)
+				amount = 2
+			else
+				amount = 1
+		for(var/i = 1 to amount)
+			new /obj/item/food/vampire/weed(get_turf(user))
+	update_weed_icon()
 
 /obj/structure/weedshit/AltClick(mob/user)
 	if(do_after(user, 15))
@@ -119,9 +132,9 @@
 		else
 			to_chat(user, "<span class='warning'>[W] is empty!</span>")
 	if(istype(W, /obj/item/weedseed))
-		if(weeded == 0)
+		if(growth_stage == 0)
 			health = 3
-			weeded = 1
+			growth_stage = 1
 			qdel(W)
 	update_weed_icon()
 	return
@@ -135,7 +148,7 @@
 	GLOB.weed_list -= src
 
 /obj/structure/weedshit/proc/update_weed_icon()
-	icon_state = "soil[wet ? "" : "_dry"][weeded]"
+	icon_state = "soil[wet ? "" : "_dry"][growth_stage]"
 
 SUBSYSTEM_DEF(smokeweedeveryday)
 	name = "Smoke Weed Every Day"
@@ -146,17 +159,17 @@ SUBSYSTEM_DEF(smokeweedeveryday)
 /datum/controller/subsystem/smokeweedeveryday/fire()
 	for(var/obj/structure/weedshit/W in GLOB.weed_list)
 		if(W)
-			if(W.weeded != 0 && W.weeded != 5)
+			if(W.growth_stage != 0 && W.growth_stage != 5)
 				if(!W.wet)
 					if(W.health)
 						W.health = max(0, W.health-1)
 					else
-						W.weeded = 5
+						W.growth_stage = 5
 				else if(W.health)
 					if(prob(33))
 						W.wet = FALSE
 					W.health = min(3, W.health+1)
-					W.weeded = min(4, W.weeded+1)
+					W.growth_stage = min(4, W.growth_stage+1)
 			W.update_weed_icon()
 
 /obj/item/bong
@@ -405,10 +418,22 @@ SUBSYSTEM_DEF(smokeweedeveryday)
 	name = "movable chemical lab"
 	desc = "Not an RV, but it moves..."
 	anchored = FALSE
+	var/health = 13
 
 /obj/structure/methlab/movable/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Alt-click to secure the [src] to the ground.</span>"
+
+	if(health == 13)
+		. += "<span class='notice'>[src] is in good condition.</span>"
+	else if(health > 10)
+		. += "<span class='notice'>[src] is lightly damaged.</span>"
+	else if(health > 6)
+		. += "<span class='warning'>[src] has sustained some damage.</span>"
+	else if(health > 3)
+		. += "<span class='warning'>[src] is close to breaking!</span>"
+	else
+		. += "<span class='warning'>[src] is about to fall apart!</span>"
 
 /obj/structure/methlab/AltClick(mob/user)
 	if(do_after(user, 15))
@@ -420,6 +445,31 @@ SUBSYSTEM_DEF(smokeweedeveryday)
 			to_chat(user, "<span class='notice'>You secure the [src] to the ground.</span>")
 			anchored = TRUE
 			return
+
+/obj/structure/methlab/movable/attackby(obj/item/used_item, mob/user, params)
+	if(..(used_item, user, params))
+		if(health <= 0)
+			to_chat(user, "<span class='warning'>The [src] is too damaged to use!</span>")
+			return
+		return TRUE
+
+	if(added_ephed == 3 && added_iod == 2 && added_gas == TRUE)
+		playsound(src, 'code/modules/wod13/sounds/methcook.ogg', 50, TRUE)
+		spawn(3 SECONDS)
+			health -= 1
+			if(health <= 10)
+				if(health > 6)
+					if(prob(10))
+						explosion(loc,0,1,3,4)
+				else if(health > 3)
+					if(prob(20))
+						explosion(loc,0,1,3,4)
+				else if(health > 1)
+					if(prob(30))
+						explosion(loc,0,1,3,4)
+				else
+					explosion(loc,0,1,3,4)
+	return
 
 /obj/structure/methlab/attackby(obj/item/used_item, mob/user, params)
 	if(istype(used_item, /obj/item/reagent_containers/pill/ephedrine))
@@ -465,7 +515,7 @@ SUBSYSTEM_DEF(smokeweedeveryday)
 				to_chat(user, "Something may be going wrong, or may not...")
 	if(added_ephed == 3 && added_iod == 2 && added_gas == TRUE)
 		playsound(src, 'code/modules/wod13/sounds/methcook.ogg', 50, TRUE)
-		spawn(30)
+		spawn(3 SECONDS)
 			playsound(src, 'code/modules/wod13/sounds/methcook.ogg', 100, TRUE)
 			if(troll_explode)
 				explosion(loc,0,1,3,4)
