@@ -140,9 +140,3 @@
 	revert_on_death = TRUE
 	die_with_shapeshifted_form = FALSE
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/bat/baali
-
-/obj/effect/proc_holder/spell/targeted/shapeshift/bat/demon
-	name = "Demon Form"
-	desc = "Take on the shape of infernal creature from the depths of hell."
-	invocation = "H HE' LL'"
-	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/bat/baali/demon

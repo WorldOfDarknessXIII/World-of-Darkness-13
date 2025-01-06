@@ -1660,7 +1660,6 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 	fearless = TRUE
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/demon/daemon
 	ranged = TRUE
 
 /datum/curse
@@ -1804,13 +1803,6 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 
 /datum/discipline/daimonion/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
-	if(!daemon)
-		daemon = new(caster)
-	for(var/i in level_casting)
-		if(level_casting == 4)
-			ranged = FALSE
-		else
-			ranged = TRUE
 	switch(level_casting)
 		if(1)
 			if(target.get_total_social() <= 3)
@@ -1840,9 +1832,10 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 		if(2)
 			to_chat(target, "<span class='warning'>Your mind is enveloped by your greatest fear!</span>")
 			var/mob/living/carbon/human/H = target
-			if(!H.in_frenzy) // Cause target to frenzy no matter the race, up to 4,5 seconds
+			if(!H.in_frenzy) // Cause target to frenzy
 				H.enter_frenzymod()
-				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon, exit_frenzymod)), rand(30, 45))
+				H.Paralyze(3 SECONDS)
+				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon, exit_frenzymod)), 3 SECONDS)
 		if(3)
 			var/turf/start = get_turf(caster)
 			var/obj/projectile/magic/aoe/fireball/baali/H = new(start)
@@ -1850,13 +1843,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 			H.preparePixelProjectile(target, start)
 			H.fire(direct_target = target)
 		if(4)
-			daemon.Shapeshift(caster)
-			spawn(15 SECONDS)
-				if(caster && caster.stat != DEAD)
-					daemon.Restore(daemon.myshape)
-					caster.Stun(15)
-					caster.do_jitter_animation(30)
-					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
+			new /datum/hallucination/baali(caster, TRUE)
 		if(5)
 			var/list/curses_names = list()
 			if(GLOB.who_is_cursed.len > 0 && !(GLOB.who_is_cursed.Find(target)) || GLOB.who_is_cursed.len == 0)

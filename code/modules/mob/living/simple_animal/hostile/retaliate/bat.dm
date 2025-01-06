@@ -72,23 +72,3 @@
 	speed = -1
 	icon = 'code/modules/wod13/icons.dmi'
 	icon_state = "bat"
-
-/mob/living/simple_animal/hostile/retaliate/bat/baali/demon
-	name = "Lesser Infernal Creature"
-	desc = "Infernal creature from the depths of hell itself."
-	health = 500
-	maxHealth = 500
-	speed = -0.6
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	icon = 'code/modules/wod13/32x48.dmi'
-	icon_state = "baali"
-	icon_living = "baali"
-	harm_intent_damage = 45
-	melee_damage_lower = 45
-	melee_damage_upper = 45
-	is_flying_animal = FALSE
-	ventcrawler = VENTCRAWLER_NONE
-	dextrous = TRUE
-	held_items = list(null, null)
-	possible_a_intents = list(INTENT_HELP, INTENT_GRAB, INTENT_DISARM, INTENT_HARM)
-	a_intent = INTENT_HARM
