@@ -1732,8 +1732,8 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 
 /datum/daimonion/proc/baali_get_clan_weakness(target, caster)
 	var/mob/living/carbon/human/H = target
-	var/datum/species/kindred/K = target
 	if(iskindred(H))
+		var/datum/species/kindred/K = H.dna.species
 		if(H.clane?.name)
 			if(H.clane?.name == "Toreador")
 				to_chat(caster, "Victim is too clingy to the art.")
