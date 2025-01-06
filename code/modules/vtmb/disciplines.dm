@@ -1655,13 +1655,16 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 	desc = "Get a help from the Hell creatures, resist THE FIRE, transform into an imp. Violates Masquerade."
 	icon_state = "daimonion"
 	cost = 1
-	ranged = TRUE
 	delay = 100
 	violates_masquerade = FALSE
 	fearless = TRUE
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/demon/daemon
+	if(level_casting == 4)
+		ranged = FALSE
+	else
+		ranged = TRUE
 
 /datum/curse
 	var/name
@@ -1817,7 +1820,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 			if(isgarou(target))
 				to_chat(caster, "Victim's natural banishment is silver...")
 			if(iskindred(target))
-				var/datum/daimonion/daim
+				var/datum/daimonion/daim = new
 				daim.baali_get_clan_weakness(target, caster)
 				if(target.generation >= 10)
 					to_chat(caster, "Victim's vitae is weak and thin. You can clearly see their fear for fire, it seems that's a kindred.")
