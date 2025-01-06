@@ -1827,7 +1827,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
 		if(5)
 			var/list/curses_names = list()
-			if(!(GLOB.who_is_cursed.len > 0))
+			if(GLOB.who_is_cursed.len == 0)
 				return
 			else
 				if(!(GLOB.who_is_cursed.Find(target)))
