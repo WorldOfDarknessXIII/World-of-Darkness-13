@@ -34,6 +34,9 @@
 		examine_texts += "<span class='notice'>[source] looks climbable</span>"
 
 /datum/element/climbable/proc/can_climb(atom/source, mob/user)
+	if(get_turf(user) == get_turf(source))
+		to_chat(user, "<span class='warning'>You are already on \the [source]!</span>")
+		return FALSE
 	return TRUE
 
 /datum/element/climbable/proc/attack_hand(atom/climbed_thing, mob/user)
@@ -79,8 +82,13 @@
 
 /datum/element/climbable/proc/do_climb(atom/climbed_thing, mob/living/user)
 	climbed_thing.density = FALSE
-	. = step(user, get_dir(user,climbed_thing.loc))
+	//Switched from step() to Move() because it allows for diagonal movement
+	//Switched from loc to get_turf() because it is possible to climb through low walls, whose loc variable is the area they're in
+	user.Move(get_turf(climbed_thing))
 	climbed_thing.density = TRUE
+	if(get_turf(user) == get_turf(climbed_thing))
+		return TRUE
+	return FALSE
 
 ///Handles climbing onto the atom when you click-drag
 /datum/element/climbable/proc/mousedrop_receive(atom/climbed_thing, atom/movable/dropped_atom, mob/user)

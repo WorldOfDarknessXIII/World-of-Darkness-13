@@ -575,7 +575,7 @@
 		if(ishuman(firer))
 			var/mob/living/carbon/human/frer = firer
 			if(frer.blood)
-				if(prob(frer.blood*10))
+				if(prob(frer.get_total_blood()*10))
 					damage = initial(damage)*2
 	if(temporary_unstoppable_movement)
 		temporary_unstoppable_movement = FALSE

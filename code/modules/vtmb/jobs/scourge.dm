@@ -29,12 +29,13 @@
 	v_duty = "You are the Prince's enforcer. You report to the sheriff and uphold the Traditions."
 	minimal_masquerade = 4
 	experience_addition = 10
-	allowed_bloodlines = list("True Brujah", "Daughters of Cacophony", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Lasombra", "Gargoyle", "Kiasyd")
+	allowed_bloodlines = list("True Brujah", "Daughters of Cacophony", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian")
 
 /datum/outfit/job/agent
 	name = "Scourge"
 	jobtype = /datum/job/vamp/agent
 
+	ears = /obj/item/p25radio
 	id = /obj/item/card/id/camarilla
 	uniform = /obj/item/clothing/under/vampire/agent
 	gloves = /obj/item/clothing/gloves/vampire/work

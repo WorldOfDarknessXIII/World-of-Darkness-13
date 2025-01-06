@@ -1,5 +1,6 @@
 /datum/outfit/job/national_guard
 	name = "National Guard Soldier"
+	ears = /obj/item/p25radio/police/government
 	uniform = /obj/item/clothing/under/vampire/military_fatigues
 	mask = /obj/item/clothing/mask/vampire/balaclava
 	r_pocket = /obj/item/flashlight
@@ -98,6 +99,7 @@
 
 /datum/antagonist/national_guard/on_gain()
 	randomize_appearance()
+	forge_objectives()
 	add_antag_hud(ANTAG_HUD_OPS, "synd", owner.current)
 	owner.special_role = src
 	equip_national_guard()

@@ -7,8 +7,8 @@
 		/datum/discipline/fortitude = 2,
 		/datum/discipline/valeren = 3
 	)
-	male_clothes = "/obj/item/clothing/under/vampire/salubri"
-	female_clothes = "/obj/item/clothing/under/vampire/salubri/female"
+	male_clothes = /obj/item/clothing/under/vampire/salubri
+	female_clothes = /obj/item/clothing/under/vampire/salubri/female
 	enlightenment = FALSE
 	whitelisted = FALSE
 	clan_keys = /obj/item/vamp/keys/salubri

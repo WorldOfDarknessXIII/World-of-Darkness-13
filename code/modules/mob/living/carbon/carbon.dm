@@ -201,7 +201,9 @@
 		return
 
 	var/mob/living/carbon/H = src
-	var/physique = H.physique + H.additional_physique 
+	var/physique = H.get_total_physique()
+	var/dexterity = H.get_total_dexterity()
+	var/athletics = H.get_total_athletics()
 
 	if(HAS_TRAIT(H, TRAIT_IMMOBILIZED) || H.legcuffed)
 		return

@@ -10,7 +10,7 @@
 
 	outfit = /datum/outfit/job/fbi
 
-	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_ARMORY, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
 	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_SRV
@@ -29,6 +29,7 @@
 	name = "Federal Investigator"
 	jobtype = /datum/job/vamp/fbi
 
+	ears = /obj/item/p25radio/police/government
 	uniform = /obj/item/clothing/under/vampire/office
 	shoes = /obj/item/clothing/shoes/vampire
 	suit = /obj/item/clothing/suit/vampire/jacket/fbi

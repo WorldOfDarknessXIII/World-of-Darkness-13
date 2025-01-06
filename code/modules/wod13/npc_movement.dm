@@ -252,9 +252,9 @@
 		less_danger = null
 	if(!staying)
 		lifespan = lifespan+1
-	if(lifespan >= 1000)
+/*	if(lifespan >= 1000)
 		if(route_optimisation())
-			qdel(src)
+			qdel(src)*/
 	if(!walktarget && !staying)
 		stopturf = rand(1, 2)
 		walktarget = ChoosePath()

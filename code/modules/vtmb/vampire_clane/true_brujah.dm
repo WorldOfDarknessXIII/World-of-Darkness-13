@@ -9,8 +9,8 @@
 	)
 	violating_appearance = FALSE
 	enlightenment = TRUE
-	male_clothes = "/obj/item/clothing/under/vampire/rich"
-	female_clothes = "/obj/item/clothing/under/vampire/business"
+	male_clothes = /obj/item/clothing/under/vampire/rich
+	female_clothes = /obj/item/clothing/under/vampire/business
 	restricted_disciplines = list(/datum/discipline/celerity)
 	whitelisted = TRUE
 

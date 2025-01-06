@@ -554,8 +554,8 @@
 	. = ..()
 	if(target.spell_immunity)
 		return
-	var/mypower = caster.social + caster.additional_social
-	var/theirpower = target.mentality + target.additional_mentality
+	var/mypower = caster.get_total_social()
+	var/theirpower = target.get_total_mentality()
 	var/dominate_me = FALSE
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
@@ -727,8 +727,8 @@
 	//5 - victim starts to attack themself
 	if(target.spell_immunity)
 		return
-	var/mypower = caster.social + caster.additional_social
-	var/theirpower = target.mentality + target.additional_mentality
+	var/mypower = caster.get_total_social()
+	var/theirpower = target.get_total_mentality()
 	if(theirpower >= mypower)
 		to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to corrupt!</span>")
 		return
@@ -898,8 +898,8 @@
 
 /datum/discipline/presence/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
-	var/mypower = caster.social + caster.additional_social
-	var/theirpower = target.mentality + target.additional_mentality
+	var/mypower = caster.get_total_social()
+	var/theirpower = target.get_total_mentality()
 	if((theirpower >= mypower) || ((caster.generation - 3) >= target.generation))
 		to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to sway!</span>")
 		return
@@ -1835,7 +1835,7 @@
 					difficulty_malus = 0
 					if (get_dist(hearer, target) > 3)
 						difficulty_malus += 1
-					if (storyteller_roll(hearer.mentality + hearer.additional_mentality, base_difficulty + difficulty_malus) == ROLL_SUCCESS)
+					if (storyteller_roll(hearer.get_total_mentality(), base_difficulty + difficulty_malus) == ROLL_SUCCESS)
 						if (masked)
 							to_chat(hearer, "<span class='warning'>[target.name]'s jaw isn't moving to match [target.p_their()] words.</span>")
 						else

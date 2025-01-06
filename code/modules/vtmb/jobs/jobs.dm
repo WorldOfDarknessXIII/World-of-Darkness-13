@@ -17,6 +17,7 @@
 			for(var/obj/item/vamp/creditcard/caard in b.contents)
 				if(caard)
 					H.bank_id = caard.account.bank_id
+					caard.account.account_owner = H.true_real_name
 					caard.has_checked = TRUE
 
 //ID
@@ -196,9 +197,9 @@
 	worn_icon_state = "id2"
 
 /obj/item/card/id/archive
-	name = "librarian badge"
-	id_type_name = "librarian badge"
-	desc = "A badge which shows the love to books."
+	name = "scholar badge"
+	id_type_name = "scholar badge"
+	desc = "A badge which shows a love of culture."
 	icon = 'code/modules/wod13/items.dmi'
 	icon_state = "id7"
 	inhand_icon_state = "card-id"
@@ -207,6 +208,19 @@
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	worn_icon = 'code/modules/wod13/worn.dmi'
 	worn_icon_state = "id7"
+
+/obj/item/card/id/regent
+	name = "erudite scholar badge"
+	id_type_name = "erudite scholar badge"
+	desc = "A badge which shows a deep understanding of culture."
+	icon = 'code/modules/wod13/items.dmi'
+	icon_state = "id7_regent"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	worn_icon_state = "id7_regent"
 
 /obj/item/card/id/cleaning
 	name = "janitor badge"
@@ -287,8 +301,8 @@
 	worn_icon_state = "id12"
 
 /obj/item/card/id/police
-	name = "police department badge"
-	id_type_name = "police department badge"
+	name = "police officer badge"
+	id_type_name = "police officer badge"
 	desc = "Sponsored by the Government."
 	icon = 'code/modules/wod13/items.dmi'
 	icon_state = "id13"
@@ -300,15 +314,15 @@
 	worn_icon_state = "id13"
 
 /obj/item/card/id/police/sergeant
-	name = "police department badge"
+	name = "police sergeant badge"
 	desc = "Sponsored by the Government. This one seems slightly more worn down than all the others."
 
 /obj/item/card/id/police/chief
-	name = "police department badge"
+	name = "police chief badge"
 	desc = "Sponsored by the Government. This one has a chrome plated finish."
 
 /obj/item/card/id/police/fbi
-	name = "fbi agent badge"
+	name = "fbi special agent badge"
 	desc = "Sponsored by the Government. This one has all the bells and whistles."
 
 /obj/item/card/id/voivode
@@ -377,12 +391,12 @@
 	var/needs_faction = TRUE
 	var/no_faction = FALSE
 	var/max_objective = 3
-	
+
 	if(iskindred(owner) || isghoul(owner))
 		max_objective = 4
-		
+
 	// Fourth if is for the vampire/ghouls since it is only their factions there
-	
+
 	var/objective = rand(1,max_objective)
 
 	switch(objective)
@@ -401,15 +415,15 @@
 			var/list/ambitious = list()
 			var/HU_name
 			var/mob/living/carbon/human/HU
-			
+
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
 				if(H.stat != DEAD && H.true_real_name != owner.current.true_real_name && H.vampire_faction != "Sabbat")
 					ambitious += H
-					
+
 			if(length(ambitious))
 				HU = pick(ambitious)
 				HU_name = HU.true_real_name
-			
+
 			if(HU_name!= "" && HU_name != null)
 				var/datum/objective/protect_niga/protect_objective = new
 				protect_objective.owner = owner
@@ -429,7 +443,7 @@
 				while(owner.current.vampire_faction == null && retries > 0)
 					sleep(2) // wait 0.2 seconds
 					retries -= 1
-			var/list/available_factions = list("Camarilla", "Anarch", "Sabbat")
+			var/list/available_factions = list("Camarilla", "Anarchs", "Sabbat")
 			if(owner.current.vampire_faction == null || owner.current.vampire_faction == "Nosferatu" )
 				no_faction = TRUE
 			if(no_faction)

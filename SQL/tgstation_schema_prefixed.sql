@@ -693,6 +693,21 @@ CREATE TABLE `SS13_telemetry_connections` (
     UNIQUE INDEX `unique_constraints` (`ckey` , `telemetry_ckey` , `address` , `computer_id`)
 );
 
+--
+-- Table structure for table `whitelist`
+--
+DROP TABLE IF EXISTS `SS13_whitelist`;
+CREATE TABLE `SS13_whitelist` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `ckey` VARCHAR(32) NOT NULL,
+    `whitelist` VARCHAR(100) NOT NULL,
+    `approver_ckey` VARCHAR(32) NOT NULL,
+    `ticket_link` VARCHAR(100) NOT NULL,
+    `approval_reason` VARCHAR(2048) NOT NULL,
+    `date_whitelisted` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
+);
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
