@@ -1700,10 +1700,10 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 	. = ..()
 	if(target.physique >= 5)
 		target.physique = 4
-	var/mob/living/carbon/human/target = target
-	for (var/datum/action/blood_power/blood_power in target.actions)
+	var/mob/living/carbon/human/vampire = target
+	for (var/datum/action/blood_power/blood_power in vampire.actions)
 		if(blood_power)
-			blood_power.Remove(target)
+			blood_power.Remove(vampire)
 	to_chat(target, "<span class='userdanger'><b>You feel like a great curse was placed on you!</span></b>")
 
 /datum/curse/daimonion/mental_weakness/activate(mob/living/target)
@@ -1732,7 +1732,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 /datum/daimonion/proc/baali_get_clan_weakness(target, caster)
 	var/mob/living/carbon/human/vampire = target
 	if(iskindred(target))
-		var/datum/species/kindred/clan = target.dna.species
+		var/datum/species/kindred/clan = vampire.dna.species
 		if(vampire.clane?.name)
 			if(vampire.clane?.name == "Toreador")
 				to_chat(caster, "Victim is too clingy to the art.")
@@ -1780,7 +1780,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 			to_chat(caster, "They fear that the fact they stole Gangrel's Protean will be known.")
 		if(clan.get_discipline("Serpentis") && !(vampire.clane?.name == "Ministry"))
 			to_chat(caster, "They fear that the fact they stole Ministry's Serpentis will be known.")
-		if(clan.get_discipline("Necromancy") && !(vampire.clane?.name == "Giovanni") || !(target.clane?.name = "Cappadocian"))
+		if(clan.get_discipline("Necromancy") && !(vampire.clane?.name == "Giovanni") || !(vampire.clane?.name = "Cappadocian"))
 			to_chat(caster, "They fear that the fact they stole Giovanni's Necromancy will be known.")
 		if(clan.get_discipline("Obtenebration") && !(vampire.clane?.name == "Lasombra"))
 			to_chat(caster, "They fear that the fact they stole Lasombra's Obtenebration will be known.")
