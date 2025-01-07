@@ -681,7 +681,7 @@
 	R.color = color
 
 /obj/projectile/magic/aoe/fireball/baali
-	color = "#2dff00"
+	color = "#000000"
 	damage = 25
 	damage_type = CLONE
 
