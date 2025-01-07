@@ -14,17 +14,6 @@
 	restricted_disciplines = list(/datum/discipline/celerity)
 	whitelisted = TRUE
 
-/datum/discipline/temporis/post_gain(mob/living/carbon/human/H)
-	if(level >= 1)
-		var/datum/action/clock/clocke = new()
-		clocke.Grant(H)
-	if(level >= 4)
-		var/datum/action/temporis_step/tstep = new()
-		tstep.Grant(H)
-	if(level >= 5)
-		var/datum/action/clotho/clot = new()
-		clot.Grant(H)
-
 /datum/action/clock
 	name = "Check Time"
 	desc = "Telling the time is easy when you're True Brujah."
@@ -107,7 +96,7 @@ var/datum/martial_art/cowalker/style
 		return
 	M.temporis_blur = TRUE
 	M.add_movespeed_modifier(/datum/movespeed_modifier/temporis5)
-	M.next_move_modifier *= TEMPORIS_ATTACK_SPEED_MODIFIER
+	M.next_move_modifier *= 0.25 // PSEUDO_M: Retrieve discipline time modifier for this
 	style.teach(M, make_temporary = TRUE)
 	spawn(10 SECONDS)
 		if(usr == M)
@@ -115,7 +104,7 @@ var/datum/martial_art/cowalker/style
 			M.temporis_blur = FALSE
 			M.playsound_local(M.loc, 'code/modules/wod13/sounds/temporis end.ogg', 50, FALSE)
 			M.remove_movespeed_modifier(/datum/movespeed_modifier/temporis5)
-			M.next_move_modifier /= TEMPORIS_ATTACK_SPEED_MODIFIER
+			M.next_move_modifier /= 0.25 // PSEUDO_M: Retrieve discipline time modifier for this
 
 
 /datum/action/clotho/Trigger()

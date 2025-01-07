@@ -12,12 +12,6 @@
 	clan_keys = /obj/item/vamp/keys/banuhaqim
 	whitelisted = TRUE
 
-/*
-/datum/discipline/quietus/post_gain(mob/living/carbon/human/H)
-	if(level >= 3)
-		var/datum/action/silence_radius/SI = new()
-		SI.Grant(H)
-*/
 /datum/action/silence_radius
 	name = "Silence Radius"
 	desc = "Silence nearby location."

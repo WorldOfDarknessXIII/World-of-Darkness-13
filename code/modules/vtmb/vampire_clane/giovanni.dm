@@ -11,13 +11,6 @@
 	female_clothes = /obj/item/clothing/under/vampire/suit/female
 	whitelisted = FALSE
 
-/datum/discipline/necromancy/post_gain(mob/living/carbon/human/H)
-	H.faction |= "Giovanni"
-	H.grant_language(/datum/language/italian)
-	if(level >= 2)
-		var/datum/action/ghost_hear/GH = new()
-		GH.Grant(H)
-
 /datum/action/ghost_hear
 	name = "See Ghosts"
 	desc = "Allows you to see ghosts."
