@@ -441,13 +441,14 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		demon.forceMove(get_step_towards(demon, target))
 		demon.setDir(get_dir(demon, target))
 		target.playsound_local(get_turf(demon), 'sound/effects/meteorimpact.ogg', 150, 1)
+		QDEL_IN(src, 5 SECONDS)
 		if(demon.Adjacent(target) && !charged)
 			charged = TRUE
 			target.Paralyze(50)
 			target.adjustStaminaLoss(500)
 			step_away(target, demon)
 			target.visible_message("<span class='warning'>[target] jumps backwards, falling on the ground!</span>","<span class='userdanger'>[demon] slams into you!</span>")
-			QDEL_IN(src, 3 SECONDS)
+			QDEL(src)
 		next_action = 0.2
 	else
 		STOP_PROCESSING(SSfastprocess, src)
