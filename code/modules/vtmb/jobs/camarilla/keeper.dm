@@ -55,8 +55,8 @@
 		"Baron"
 	)
 
-	v_duty = "You are the right hand man or woman of the most powerful vampire in the city. The Camarilla trusts you to run the city, even in their stead."
-	duty = "You are the right hand man or woman of the most powerful vampire in the city. The Camarilla trusts you to run the city, even in their stead."
+	v_duty = "You maintain any and all Elysiums that are held by the Prince! You ensure that there are no fights held within..."
+	duty = "You maintain any and all Elysiums that are held by the Prince! You ensure that there are no fights held within..."
 	experience_addition = 15
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Lasombra", "Gargoyle", "Kiasyd")
 

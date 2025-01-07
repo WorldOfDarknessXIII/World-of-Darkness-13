@@ -31,7 +31,7 @@
 
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Tremere", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian", "Ministry")
 
-	v_duty = "You are the observer of the anarchs. You watch out for any new kindred, suspicious individuals, and any new rumors near the anarch turf, and then report it to your anarchs."
+	v_duty = "You are the chief problem solver among the unruly anarchs. Adjacent to the Sheriff, your position carries much scrutiny for saying you demand authority is not how you command authority within the Free State."
 	minimal_masquerade = 2
 	experience_addition = 15
 
