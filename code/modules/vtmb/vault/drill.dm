@@ -12,7 +12,6 @@
 	throwforce = 10
 	throw_range = 3
 	var/obj/structure/drill/origin_type = /obj/structure/drill
-	max_integrity = 3000
 
 
 /obj/item/vampire/drill/proc/plant(mob/user)
@@ -39,6 +38,7 @@
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	layer = GASFIRE_LAYER
+	max_integrity = 3000
 	var/item_drill = /obj/item/vampire/drill // if null it can't be picked up
 	var/gas = 0
 	var/max_gas = 300
@@ -48,20 +48,26 @@
 
 	var/drill_sound = 'code/modules/wod13/sounds/vault_drilling.ogg'
 
+/obj/structure/drill/proc/health_status()
+	if(obj_integrity < max_integrity)
+		switch(obj_integrity)
+			if(2500 to 3000)
+				return "slightly damaged"
+			if(2000 to 2500)
+				return "moderately damaged"
+			if(1000 to 2000)
+				return "severely damaged"
+			if(500 to 1000)
+				return "barely functional"
+			else
+				return "about to break"
+
 /obj/structure/drill/examine(mob/user)
 	. = ..()
+	var/health_status = health_status()
 	. += "[src] has [gas] gas left."
 	if(obj_integrity < max_integrity)
-		if(obj_integrity >= 2500)
-			. +="<span class='warning'>The drill is slightly damaged.</span>"
-		else if(obj_integrity >= 2000)
-			. +="<span class='warning'>The drill is damaged.</span>"
-		else if(obj_integrity >= 1000)
-			. +="<span class='warning'>The drill is heavily damaged.</span>"
-		else if(obj_integrity >= 500)
-			. +="<span class='warning'>The drill is barely functional.</span>"
-		else
-			. +="<span class='warning'>The drill is about to break!</span>"
+		. += "<span class='notice'>[src] is [health_status].</span>"
 
 /obj/structure/drill/MouseDrop(over_object, src_location, over_location)
 	. = ..()
@@ -78,7 +84,8 @@
 			TransferComponents(picked_drill)
 			usr.put_in_hands(picked_drill)
 			qdel(src)
-	if((istype(over_object, /obj/structure/vaultdoor)) && Adjacent(usr) && !ISDIAGONALDIR(get_dir(src, over_object)) && !active)
+	var/obj/structure/vaultdoor/target_door = over_object
+	if((istype(over_object, /obj/structure/vaultdoor)) && Adjacent(usr) && !ISDIAGONALDIR(get_dir(src, over_object)) && !active && !target_door.is_broken)
 		if(do_after(usr, 5 SECONDS))
 			ready = TRUE
 			attached_door = over_object

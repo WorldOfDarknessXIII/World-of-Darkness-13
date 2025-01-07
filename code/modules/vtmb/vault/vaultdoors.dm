@@ -28,24 +28,24 @@
 	//[Lucifernix] - Do the doors use keys, combination locks, or electric pin codes, or a mix of all three?
 	var/uses_key_lock = FALSE
 	var/uses_combination_lock = FALSE
-	var/uses_electric_lock = FALSE
+	var/uses_pincode_lock = FALSE
 
 	var/combination_locked = FALSE
-	var/electric_locked = FALSE
+	var/pincode_locked = FALSE
 	var/key_locked = FALSE
 
 /obj/structure/vaultdoor/New()
 	..()
-	if(uses_electric_lock)
+	if(uses_pincode_lock)
 		pincode = create_unique_pincode()
-		electric_locked = TRUE
+		pincode_locked = TRUE
 	if(uses_combination_lock)
 		combination_locked = TRUE
 	if(uses_key_lock)
 		key_locked = TRUE
 
-/obj/structure/vaultdoor/electric
-	uses_electric_lock = TRUE
+/obj/structure/vaultdoor/pincode
+	uses_pincode_lock = TRUE
 
 /obj/structure/vaultdoor/combination
 	uses_combination_lock = TRUE
@@ -53,12 +53,12 @@
 /obj/structure/vaultdoor/key
 	uses_key_lock = TRUE
 
-/obj/structure/vaultdoor/electric_key
-	uses_electric_lock = TRUE
+/obj/structure/vaultdoor/pincode_key
+	uses_pincode_lock = TRUE
 	uses_key_lock = TRUE
 
-/obj/structure/vaultdoor/electric_combination_key
-	uses_electric_lock = TRUE
+/obj/structure/vaultdoor/pincode_combination_key
+	uses_pincode_lock = TRUE
 	uses_combination_lock = TRUE
 	uses_key_lock = TRUE
 
@@ -68,7 +68,7 @@
 	if(is_broken)
 		return
 	if(is_locked() || key_locked)
-		if(uses_electric_lock)
+		if(uses_pincode_lock)
 			ui_interact()
 		if(door_user.a_intent != INTENT_HARM)
 			to_chat(user, "<span class='warning'>[src] is locked!</span>")
@@ -92,7 +92,7 @@
 /obj/structure/vaultdoor/proc/open_door(mob/user)
 	playsound(src, open_sound, 75, TRUE)
 	door_moving = TRUE
-	spawn(4 SECONDS)
+	if(do_after(user, 4 SECONDS))
 		icon_state = "[baseicon]-0"
 		density = FALSE
 		opacity = FALSE
@@ -102,13 +102,13 @@
 		door_moving = FALSE
 
 /obj/structure/vaultdoor/proc/close_door(mob/user)
-	for(var/mob/living/door_blocker in src.loc)
-		if(door_blocker)
+	for(var/atom/movable/door_blocker in src.loc)
+		if(door_blocker.density)
 			to_chat(user, "<span class='warning'>[door_blocker] is preventing you from closing [src].</span>")
 			return
 	playsound(src, close_sound, 75, TRUE)
 	door_moving = TRUE
-	spawn(4 SECONDS)
+	if(do_after(user, 4 SECONDS))
 		icon_state = "[baseicon]-1"
 		density = TRUE
 		layer = ABOVE_ALL_MOB_LAYER
@@ -117,15 +117,15 @@
 		door_moving = FALSE
 
 /obj/structure/vaultdoor/proc/is_locked()
-	return combination_locked || electric_locked
+	return combination_locked || pincode_locked
 
 /obj/structure/vaultdoor/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Electric lock or combination lock can be re-locked with alt-click!</span>"
+	. += "<span class='notice'>Pincode lock or combination lock can be re-locked with alt-click!</span>"
 	. += "<span class='notice'>Door health: [door_health]/100.</span>"
 	if(is_locked() || key_locked)
 		. += "<span class='warning'>[src] is locked.</span>"
-	if(uses_electric_lock)
+	if(uses_pincode_lock)
 		. += "<span class='notice'>[src] requires a pin code to unlock.</span>"
 	if(uses_combination_lock)
 		. += "<span class='notice'>[src] requires a combination to unlock.</span>"
@@ -144,10 +144,10 @@
 	if(uses_combination_lock && !combination_locked)
 		combination_locked = TRUE
 		to_chat(user, "<span class='notice'>You lock [src] with a combination lock.</span>")
-	else if (uses_electric_lock && !electric_locked)
-		electric_locked = TRUE
-		to_chat(user, "<span class='notice'>You lock [src] with an electric lock.</span>")
-	else if (combination_locked || electric_locked)
+	else if (uses_pincode_lock && !pincode_locked)
+		pincode_locked = TRUE
+		to_chat(user, "<span class='notice'>You lock [src] with a pincode lock.</span>")
+	else if (combination_locked || pincode_locked)
 		to_chat(user, "<span class='warning'>[src] is already locked!</span>")
 
 /obj/structure/vaultdoor/attackby(obj/item/used_item, mob/living/user, params)
@@ -185,7 +185,7 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(is_broken)
 		return
-	if(!electric_locked)
+	if(!pincode_locked)
 		return
 	else if(!ui)
 		ui = new(user, src, "VaultDoor")
@@ -203,7 +203,7 @@
 	if(action == "submit_pincode")
 		if(params["pincode"] == pincode)
 			to_chat(usr, "<span class='notice'>Access Granted.</span>")
-			electric_locked = FALSE
+			pincode_locked = FALSE
 		else
 			to_chat(usr, "<span class='notice'>Access Denied.</span>")
 		. = TRUE
