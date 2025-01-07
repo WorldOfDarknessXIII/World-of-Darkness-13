@@ -424,8 +424,6 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 	fakebroken = image('icons/turf/floors.dmi', wall, "plating", layer = TURF_LAYER)
 	landing = get_turf(target)
-	var/turf/landing_image_turf = get_step(landing, SOUTHWEST) //the icon is 3x3
-	fakerune = image('code/modules/wod13/64x64.dmi', landing_image_turf, "baali", layer = ABOVE_OPEN_TURF_LAYER)
 	fakebroken.override = TRUE
 	if(target.client)
 		target.client.images |= fakebroken
@@ -446,7 +444,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	if (next_action > 0)
 		return
 
-	if (get_turf(demon) != landing && target?.stat != DEAD)
+	if (target?.stat != DEAD)
 		demon.forceMove(get_step_towards(demon, target))
 		demon.setDir(get_dir(demon, target))
 		target.playsound_local(get_turf(demon), 'sound/effects/meteorimpact.ogg', 150, 1)
@@ -456,8 +454,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			target.Paralyze(50)
 			target.adjustStaminaLoss(500)
 			step_away(target, demon)
-			shake_camera(target, 4, 3)
 			target.visible_message("<span class='warning'>[target] jumps backwards, falling on the ground!</span>","<span class='userdanger'>[demon] slams into you!</span>")
+			QDEL_IN(src, 5 SECONDS)
 		next_action = 0.2
 	else
 		STOP_PROCESSING(SSfastprocess, src)
