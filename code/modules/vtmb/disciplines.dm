@@ -1731,7 +1731,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 
 /datum/daimonion/proc/baali_get_clan_weakness(target, caster)
 	var/mob/living/carbon/human/vampire = target
-	if(iskindred(target))
+	if(iskindred(vampire))
 		var/datum/species/kindred/clan = vampire.dna.species
 		if(vampire.clane?.name)
 			if(vampire.clane?.name == "Toreador")
