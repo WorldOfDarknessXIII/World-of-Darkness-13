@@ -10,6 +10,8 @@
 /datum/rune_ritual/proc/Execute(mob/user, obj/effect/decal/baalirune/rune)
 	return FALSE
 
+/// UPGRADES RITUALS
+
 /datum/rune_ritual/concordance
 	name = "Concordance"
 	description = "Gain a permanent physical feature of your dark masters"
@@ -19,6 +21,19 @@
 /datum/rune_ritual/concordance/Execute(mob/user, obj/effect/decal/baalirune/rune)
 	to_chat(user, "You gained this!")
 	return TRUE
+
+/datum/rune_ritual/antifrenzycontract
+	name = "Resist Beast"
+	description = "Resist Frenzy and Rotshreck by signing a contract with Demons."
+	cost = 10
+	category = "Upgrades"
+
+/datum/rune_ritual/antifrenzycontract/Execute(mob/user, obj/effect/decal/baalirune/rune)
+	var/datum/action/antifrenzy/A = new()
+	A.Grant(H)
+	return TRUE
+
+/// SERVERS RITUALS
 
 /datum/rune_ritual/infernal_servitor
 	name = "Infernal Servitor"
@@ -34,11 +49,13 @@
 	//P.exper = min(calculate_mob_max_exper(user), P.exper+15)
 	return TRUE
 
+/// CLAN RITUALS
+
 /datum/rune_ritual/vampire_to_baali
 	name = "The Re-Embrace"
 	description = "Transform a vampire into a Baali"
 	cost = 5
-	category = "Vampire"
+	category = "Clan"
 	var/list/default_actions = list("About Me", "Give Vitae", "Blood Heal", "Blood Power")
 
 /datum/rune_ritual/vampire_to_baali/Execute(mob/user, obj/effect/decal/baalirune/rune)
@@ -62,11 +79,13 @@
 		to_chat(user, "<span class='baali'>There is no vampire on the Rune!</span>")
 	return FALSE
 
+/// CURSES RITUALS
+
 /datum/rune_ritual/fire
 	name = "Adramelech's Wrath"
 	description = "Cause a Cainite to burn as if the sun itself were shining upon them"
 	cost = 15
-	category = "Vampire"
+	category = "Curses"
 
 /datum/rune_ritual/fire/Execute(mob/user, obj/effect/decal/baalirune/rune)
 	var/name = input(user, "Choose target name:", "Satanic Rune") as text|null
@@ -82,48 +101,13 @@
 		to_chat(user, "<span class='baali'>There is no such vampire in the city!</span>")
 	return FALSE
 
-/datum/rune_ritual/condemnation
-	name = "Condemnation"
-	description = "Place a debilitating curse upon a target."
-	cost = 10
-	category = "Vampire"
-
-/datum/rune_ritual/condemnation/Execute(mob/user, obj/effect/decal/baalirune/rune)
-	var/name = input(user, "Choose target name:", "Satanic Rune") as text|null
-	if(name)
-		for(var/mob/living/carbon/human/player in GLOB.player_list)
-			if(player.real_name == name)
-				// Заклятие
-				return TRUE
-		to_chat(user, "<span class='baali'>There is no such vampire in the city!</span>")
-	return FALSE
-
-/datum/rune_ritual/hellfear
-	name = "Fear of the Void Below"
-	description = "The Baali terrifies a target with feelings of going to Hell."
-	cost = 3
-	category = "Vampire"
-
-/datum/rune_ritual/hellfear/Execute(mob/user, obj/effect/decal/baalirune/rune)
-	var/name = input(user, "Choose target name:", "Satanic Rune") as text|null
-	if(name)
-		for(var/mob/living/carbon/human/player in GLOB.player_list)
-			if(player.real_name == name)
-				player.Stun(20)
-				playsound(player.loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
-				to_chat(player, "<span class='userdanger'>You feel you are going to HELL!</span>")
-				return TRUE
-		to_chat(user, "<span class='baali'>There is no such vampire in the city!</span>")
-	return FALSE
-
 #define MAX_BURN_COUNT 5
 
 /datum/rune_ritual/sunfire
 	name = "Unleash Hell's Fury"
 	description = "Cause a Cainite to feel the sun's light no matter what shelter they have."
 	cost = 10
-	category = "Vampire"
-	var/burn_count = 0
+	category = "Curses"
 
 /datum/rune_ritual/sunfire/Execute(mob/user, obj/effect/decal/baalirune/rune)
 	if(burn_count != 0)
@@ -133,22 +117,15 @@
 	if(name)
 		for(var/mob/living/carbon/human/player in GLOB.player_list)
 			if(player.real_name == name)
-				burn_vampire(player)
 				playsound(player.loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
 				to_chat(player, "<span class='userdanger'>You feel the Sun is upon you!</span>")
+				for(var/i = 0; i < MAX_BURN_COUNT; i++)
+					spawn(5 SECONDS)
+					burn_vampire(vampire)
+					to_chat(vampire, "You are feel burns")
 				return TRUE
 		to_chat(user, "<span class='baali'>There is no such vampire in the city!</span>")
 	return FALSE
-
-/datum/rune_ritual/sunfire/proc/burn_vampire(mob/living/carbon/human/vampire)
-	vampire.adjustFireLoss(10)
-	if(burn_count < MAX_BURN_COUNT)
-		burn_count++
-		spawn(5 SECONDS)
-		burn_vampire(vampire)
-		to_chat(vampire, "You are feel burns")
-	else
-		burn_count = 0
 
 #undef MAX_BURN_COUNT
 
