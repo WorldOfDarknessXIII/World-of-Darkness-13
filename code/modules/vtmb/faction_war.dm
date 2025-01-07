@@ -90,10 +90,10 @@ SUBSYSTEM_DEF(factionwar)
 					to_chat(H, "<b><span class='warning'>Anarch</span> don't have recources to sustain [A.name] [R.x]:[R.y], so it belongs to no one now.</b>")
 	if(length(marks_contested))
 		for(var/obj/graffiti/G in marks_contested)
-			for(var/mob/living/carbon/human/mob in view(7, G))
+			for(var/mob/living/carbon/human/mob in range(7, G))
 				if(mob?.vampire_faction == G.last_contender.vampire_faction && mob.stat != DEAD)
 					G.progress += 6
-				else if(mob?.vampire_faction != G.last_contender.vampire_faction && mob.stat != DEAD && mob.vampire_faction)
+				else if(mob?.vampire_faction != G.last_contender.vampire_faction && mob.stat != DEAD && (mob?.vampire_faction == "Camarilla" || mob?.vampire_faction == "Anarch" || mob?.vampire_faction == "Sabbat"))
 					G.progress -= 6
 			G.progress -= 2
 			if(G.progress >= 100)
@@ -111,25 +111,28 @@ SUBSYSTEM_DEF(factionwar)
 				if(A.zone_owner)
 					A.zone_owner = G.last_contender.vampire_faction
 				G.repainting = FALSE
+				G.progress = 0
+				marks_contested -= G
 			if(G.progress <= 0)
 				G.repainting = FALSE
+				G.progress = 0
+				marks_contested -= G
 				var/area/vtm/A = get_area(G)
 				message_all_faction("<b>[A.name] [G.x]:[G.y] mark was not captured by <span class='warning'>[G.last_contender.vampire_faction]</span></b>")
-				//finish bad
 
 /datum/controller/subsystem/factionwar/proc/message_faction(var/vampire_faction, var/message)
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(H.vampire_faction == vampire_faction)
 			for(var/obj/item/vamp/phone/phn in GLOB.phones_list)
 				if(phn.number == H.Myself.phone_number)
-					phn.say("#[message]")
+					phn.say("[message]", range = 1)
 
 /datum/controller/subsystem/factionwar/proc/message_all_faction(var/message)
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarch" || H.vampire_faction == "Sabbat")
 			for(var/obj/item/vamp/phone/phn in GLOB.phones_list)
 				if(phn.number == H.Myself.phone_number)
-					phn.say("#[message]")
+					phn.say("[message]", range = 1)
 
 /datum/controller/subsystem/factionwar/proc/switch_member(var/mob/living/member, var/vampire_faction)
 	switch(vampire_faction)
@@ -144,6 +147,7 @@ SUBSYSTEM_DEF(factionwar)
 			anarch_members -= member
 
 /datum/controller/subsystem/factionwar/proc/check_faction_ability(var/vampire_faction)
+	return TRUE
 	switch(vampire_faction)
 		if("Sabbat")
 			return TRUE
@@ -204,6 +208,11 @@ SUBSYSTEM_DEF(factionwar)
 
 /obj/graffiti/sabbat
 	icon_state = "Sabbat"
+
+/obj/graffiti/examine(mob/user)
+	. = ..()
+	if(repainting)
+		. += "<b>Progress:</b> [progress] %"
 
 /datum/controller/subsystem/factionwar/proc/start_capture(mob/living/carbon/human/user, obj/graffiti/G)
 	marks_contested |= G
