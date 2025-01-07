@@ -34,6 +34,8 @@
 	var/pincode_locked = FALSE
 	var/key_locked = FALSE
 
+/obj/structure/vaultdoor/pincode/bank
+
 /obj/structure/vaultdoor/New()
 	..()
 	if(uses_pincode_lock)
@@ -208,3 +210,10 @@
 			to_chat(usr, "<span class='notice'>Access Denied.</span>")
 		. = TRUE
 	update_icon()
+
+
+/proc/find_door_pin(door_type)
+    for(var/obj/structure/vaultdoor/vdoor in world)
+        if(istype(vdoor, door_type))
+            return vdoor
+    return null

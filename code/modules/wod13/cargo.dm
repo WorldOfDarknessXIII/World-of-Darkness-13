@@ -5,6 +5,13 @@
 	contains = list(/obj/structure/weedshit/buyable)
 	crate_name = "weed crate"
 
+/datum/supply_pack/vampire/thermal_drill
+	name = "Thermal Drill"
+	desc = "Contains a thermal drill."
+	cost = 4000
+	contains = list(/obj/structure/drill)
+	crate_name = "drill crate"
+
 /datum/supply_pack/vampire/potassiodide
 	name = "Potassium Iodide"
 	desc = "Contains bottle of potassium iodide."
