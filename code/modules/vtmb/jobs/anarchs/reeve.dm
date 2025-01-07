@@ -31,7 +31,7 @@
 
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Tremere", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian", "Ministry")
 
-	v_duty = "You are the chief problem solver among the unruly anarchs. Adjacent to the Sheriff, your position carries much scrutiny for saying you demand authority is not how you command authority within the Free State."
+	v_duty = "You are the chief problem solver among the unruly anarchs. Adjacent to the Sheriff, the position you are burdened carries much scrutiny within the Free State. Saying you demand immediate authority isn't going to cut it -- it is earned."
 	minimal_masquerade = 2
 	experience_addition = 15
 

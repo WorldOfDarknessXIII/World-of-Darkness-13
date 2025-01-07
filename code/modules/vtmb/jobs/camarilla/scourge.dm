@@ -52,7 +52,7 @@
 		"Baron"
 	)
 
-	v_duty = "Protect the Masquerade; You are the chief assassin of the Prince. The enemies of the Scourge are guilty by merit of the Scourge, you are not an investigator like the Sheriff."
+	v_duty = "Protect the Masquerade; You are the chief assassin of the Prince. The enemies of the Scourge are guilty by merit of your own word for you are not an investigator unlike the Sheriff."
 	experience_addition = 20
 
 /datum/outfit/job/scourge

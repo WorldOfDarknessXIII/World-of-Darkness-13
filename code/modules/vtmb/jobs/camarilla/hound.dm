@@ -32,7 +32,7 @@
 		"Dealer"
 	)
 
-	v_duty = "You are the Prince's enforcer. You report to the sheriff and uphold the Traditions."
+	v_duty = "You are the Prince's enforcer. You report to the sheriff and scourge! You don't get a fancy open-carry long-arms permit like the Sheriff or Scourge though..."
 	minimal_masquerade = 4
 	experience_addition = 10
 	allowed_bloodlines = list("True Brujah", "Daughters of Cacophony", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian")

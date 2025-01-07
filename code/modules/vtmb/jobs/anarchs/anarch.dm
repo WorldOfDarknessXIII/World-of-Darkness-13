@@ -26,7 +26,7 @@
 	)
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Tremere", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian", "Ministry")
 
-	v_duty = "You are a member of the Anarchs and listen to the Baron as much as you do the Emissary. Enforce the Masquerade, the Anarch way."
+	v_duty = "You are a member of the Anarchs! Listen to the Baron as much as you do the Emissary. Enforce the Masquerade, the Anarch Way."
 	minimal_masquerade = 2
 	experience_addition = 15
 
