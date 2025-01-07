@@ -1832,7 +1832,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 		if(2)
 			var/mypower = caster.get_total_social()
 			var/theirpower = target.get_total_mentality()
-			if(theirpower >= mypower)
+			if((theirpower >= mypower) || (caster.generation > target.generation))
 				to_chat(caster, "<span class='warning'>[target] has too much willpower to induce fear into them!</span>")
 				return
 			to_chat(target, "<span class='warning'><b>Your mind is enveloped by your greatest fear!</span></b>")
