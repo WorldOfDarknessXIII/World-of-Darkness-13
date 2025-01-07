@@ -217,10 +217,10 @@
 				talking = TRUE
 				online.online = src
 				online.talking = TRUE
-				
+
 				var/datum/phonehistory/NEWH_caller = new()
 				var/datum/phonehistory/NEWH_being_called = new()
-				
+
 				//Being called History
 				NEWH_being_called.name = "Unknown"
 				for(var/datum/phonecontact/Contact in contacts)
@@ -232,7 +232,7 @@
 				NEWH_being_called.time = "[SScity_time.timeofnight]"
 				NEWH_being_called.call_type = "I accepted the call"
 				phone_history_list += NEWH_being_called
-				
+
 				//Caller History
 				NEWH_caller.name = "Unknown"
 				for(var/datum/phonecontact/Contact in online.contacts)
@@ -248,15 +248,15 @@
 		if("decline")
 			talking = FALSE
 			if(online)
-			
+
 				if(!silence)
 					playsound(online, 'code/modules/wod13/sounds/phonestop.ogg', 25, FALSE)
 				online.talking = FALSE
-				
-				
+
+
 				var/datum/phonehistory/NEWH_caller = new()
 				var/datum/phonehistory/NEWH_being_called = new()
-				
+
 				//Being called History
 				NEWH_being_called.name = "Unknown"
 				for(var/datum/phonecontact/Contact in contacts)
@@ -268,7 +268,7 @@
 				NEWH_being_called.time = "[SScity_time.timeofnight]"
 				NEWH_being_called.call_type = "I declined the call"
 				phone_history_list += NEWH_being_called
-				
+
 				//Caller History
 				NEWH_caller.name = "Unknown"
 				for(var/datum/phonecontact/Contact in online.contacts)
@@ -283,7 +283,7 @@
 
 				online.online = null
 				online = null
-				
+
 			.= TRUE
 		if("call")
 //			if((iskindred(V) && V.clane.name == "Lasombra"))
@@ -332,7 +332,7 @@
 								NEWH_caller.time = "[SScity_time.timeofnight]"
 								NEWH_caller.call_type = "I called"
 								phone_history_list += NEWH_caller
-								
+
 								//Being Called History
 								NEWH_being_called.name = "Unknown"
 								for(var/datum/phonecontact/Contact in PHN.contacts)
@@ -503,10 +503,10 @@
 						else
 							for(var/i = 1 to number_of_deletions)
 								//It will always delete the first item of the list, so the last logs are deleted first
-								var/item_to_remove = phone_history_list[1] 
-								phone_history_list -= item_to_remove            
+								var/item_to_remove = phone_history_list[1]
+								phone_history_list -= item_to_remove
 						to_chat(usr, "[number_of_deletions] call history entries were deleted. Remaining: [phone_history_list.len]")
-						
+
 					else
 						to_chat(usr, "Your don't got a call history to delete")
 				if("My Number")
@@ -524,7 +524,7 @@
 						//If it is true, it will check all the other sounds for phone and disable them
 						silence = TRUE
 						to_chat(usr, "<span class='notice'>Notifications and Sounds toggled off.</span>")
-					else 
+					else
 						silence = FALSE
 						to_chat(usr, "<span class='notice'>Notifications and Sounds toggled on.</span>")
 				if ("Published Numbers as Contacts Toggle")
@@ -832,6 +832,14 @@
 	contacts += V
 	var/datum/phonecontact/brujah/B = new()
 	contacts += B
+	var/datum/phonecontact/keeper/KEEPER = new()
+	contacts += KEEPER
+	var/datum/phonecontact/harpy/HARPY = new()
+	contacts += HARPY
+	var/datum/phonecontact/reeve/REEVE = new()
+	contacts += REEVE
+	var/datum/phonecontact/emissary/EMISSARY = new()
+	contacts += EMISSARY
 
 /obj/item/vamp/phone/sheriff
 	exchange_num = 267
@@ -846,6 +854,70 @@
 	contacts += CLERK
 	var/datum/phonecontact/dealer/DEALER = new()
 	contacts += DEALER
+	var/datum/phonecontact/keeper/KEEPER = new()
+	contacts += KEEPER
+	var/datum/phonecontact/harpy/HARPY = new()
+	contacts += HARPY
+	var/datum/phonecontact/reeve/REEVE = new()
+	contacts += REEVE
+	var/datum/phonecontact/emissary/EMISSARY = new()
+	contacts += EMISSARY
+
+/obj/item/vamp/phone/scourge
+	exchange_num = 267
+
+/obj/item/vamp/phone/scourge/Initialize()
+	..()
+	GLOB.scourgenumber = number
+	GLOB.scourgename = owner
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+	var/datum/phonecontact/clerk/CLERK = new()
+	contacts += CLERK
+	var/datum/phonecontact/dealer/DEALER = new()
+	contacts += DEALER
+	var/datum/phonecontact/keeper/KEEPER = new()
+	contacts += KEEPER
+	var/datum/phonecontact/harpy/HARPY = new()
+	contacts += HARPY
+	var/datum/phonecontact/reeve/REEVE = new()
+	contacts += REEVE
+	var/datum/phonecontact/emissary/EMISSARY = new()
+	contacts += EMISSARY
+
+/obj/item/vamp/phone/keeper/Initialize()
+	..()
+	GLOB.keepernumber = number
+	GLOB.keepername = owner
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+	var/datum/phonecontact/clerk/CLERK = new()
+	contacts += CLERK
+	var/datum/phonecontact/dealer/DEALER = new()
+	contacts += DEALER
+	var/datum/phonecontact/harpy/HARPY = new()
+	contacts += HARPY
+	var/datum/phonecontact/reeve/REEVE = new()
+	contacts += REEVE
+	var/datum/phonecontact/emissary/EMISSARY = new()
+	contacts += EMISSARY
+
+/obj/item/vamp/phone/harpy/Initialize()
+	..()
+	GLOB.harpynumber = number
+	GLOB.harpyname = owner
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+	var/datum/phonecontact/clerk/CLERK = new()
+	contacts += CLERK
+	var/datum/phonecontact/dealer/DEALER = new()
+	contacts += DEALER
+	var/datum/phonecontact/reeve/REEVE = new()
+	contacts += REEVE
+	var/datum/phonecontact/keeper/KEEPER = new()
+	contacts += KEEPER
+	var/datum/phonecontact/emissary/EMISSARY = new()
+	contacts += EMISSARY
 
 /obj/item/vamp/phone/clerk
 	exchange_num = 267
@@ -872,6 +944,18 @@
 	contacts += V
 	var/datum/phonecontact/brujah/B = new()
 	contacts += B
+	var/datum/phonecontact/keeper/KEEPER = new()
+	contacts += KEEPER
+	var/datum/phonecontact/harpy/HARPY = new()
+	contacts += HARPY
+	var/datum/phonecontact/reeve/REEVE = new()
+	contacts += REEVE
+	var/datum/phonecontact/emissary/EMISSARY = new()
+	contacts += EMISSARY
+
+/* #####################################
+anarch leadership below
+######################################## */
 
 /obj/item/vamp/phone/barkeeper
 	exchange_num = 485
@@ -884,6 +968,58 @@
 	contacts += PRINCE
 	var/datum/phonecontact/dealer/DEALER = new()
 	contacts += DEALER
+	var/datum/phonecontact/keeper/KEEPER = new()
+	contacts += KEEPER
+	var/datum/phonecontact/harpy/HARPY = new()
+	contacts += HARPY
+	var/datum/phonecontact/reeve/REEVE = new()
+	contacts += REEVE
+	var/datum/phonecontact/emissary/EMISSARY = new()
+	contacts += EMISSARY
+
+/obj/item/vamp/phone/reeve
+	exchange_num = 485
+
+/obj/item/vamp/phone/reeve/Initialize()
+	..()
+	GLOB.reevenumber = number
+	GLOB.reevename = owner
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+	var/datum/phonecontact/barkeeper/BARKEEPER = new()
+	contacts += BARKEEPER
+	var/datum/phonecontact/dealer/DEALER = new()
+	contacts += DEALER
+	var/datum/phonecontact/keeper/KEEPER = new()
+	contacts += KEEPER
+	var/datum/phonecontact/harpy/HARPY = new()
+	contacts += HARPY
+	var/datum/phonecontact/emissary/EMISSARY = new()
+	contacts += EMISSARY
+
+/obj/item/vamp/phone/emissary
+	exchange_num = 485
+
+/obj/item/vamp/phone/emissary/Initialize()
+	..()
+	GLOB.emissarynumber = number
+	GLOB.emissaryname = owner
+	var/datum/phonecontact/prince/PRINCE = new()
+	contacts += PRINCE
+	var/datum/phonecontact/barkeeper/BARKEEPER = new()
+	contacts += BARKEEPER
+	var/datum/phonecontact/dealer/DEALER = new()
+	contacts += DEALER
+	var/datum/phonecontact/keeper/KEEPER = new()
+	contacts += KEEPER
+	var/datum/phonecontact/harpy/HARPY = new()
+	contacts += HARPY
+	var/datum/phonecontact/reeve/REEVE = new()
+	contacts += REEVE
+
+/* #####################################
+warehouse workers below
+######################################## */
 
 /obj/item/vamp/phone/dealer
 	exchange_num = 485
@@ -906,6 +1042,10 @@
 	var/datum/phonecontact/dealer/DEALER = new()
 	contacts += DEALER
 
+/* #####################################
+generic camarilla below
+######################################## */
+
 /obj/item/vamp/phone/camarilla
 	exchange_num = 267
 
@@ -917,6 +1057,10 @@
 	var/datum/phonecontact/clerk/CLERK = new()
 	contacts += CLERK
 
+/* #####################################
+generic anarch below
+######################################## */
+
 /obj/item/vamp/phone/anarch
 	exchange_num = 485
 
@@ -925,6 +1069,16 @@
 //	GLOB.dealernumber = number
 	var/datum/phonecontact/barkeeper/BARKEEPER = new()
 	contacts += BARKEEPER
+	var/datum/phonecontact/reeve/REEVE = new()
+	contacts += REEVE
+	var/datum/phonecontact/emissary/EMISSARY = new()
+	contacts += EMISSARY
+	var/datum/phonecontact/dealer/DEALER = new()
+	contacts += DEALER
+
+/* #####################################
+primogen
+######################################## */
 
 /obj/item/vamp/phone/malkavian/Initialize()
 	..()
@@ -1010,6 +1164,10 @@
 	contacts += T
 	var/datum/phonecontact/brujah/B = new()
 	contacts += B
+
+/* #####################################
+tremere below
+######################################## */
 
 /obj/item/vamp/phone/tremere/Initialize()
 	..()

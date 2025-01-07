@@ -69,7 +69,7 @@
 	uniform = /obj/item/clothing/under/vampire/clerk
 	shoes = /obj/item/clothing/shoes/vampire/brown
 //	head = /obj/item/clothing/head/hopcap
-	l_pocket = /obj/item/vamp/phone/clerk
+	l_pocket = /obj/item/vamp/phone/keeper
 	r_pocket = /obj/item/vamp/keys/clerk
 	backpack_contents = list(/obj/item/passport=1, /obj/item/radio=1, /obj/item/phone_book=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard/seneschal=1)
 

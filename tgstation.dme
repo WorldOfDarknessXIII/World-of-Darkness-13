@@ -3379,7 +3379,7 @@
 #include "code\modules\vtmb\jobs\priest.dm"
 #include "code\modules\vtmb\jobs\primogen.dm"
 #include "code\modules\vtmb\jobs\regent.dm"
-#include "code\modules\vtmb\jobs\sabbat.dm""
+#include "code\modules\vtmb\jobs\sabbat.dm"
 #include "code\modules\vtmb\jobs\stripper.dm"
 #include "code\modules\vtmb\jobs\supply_assistant.dm"
 #include "code\modules\vtmb\jobs\swat.dm"

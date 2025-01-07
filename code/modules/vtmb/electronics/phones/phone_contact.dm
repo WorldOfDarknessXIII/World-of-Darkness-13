@@ -110,7 +110,7 @@
 /datum/phonecontact/harpy
 	name = "Harpy"
 
-/datum/phonecontact/keeper/check_global_contacts()
+/datum/phonecontact/harpy/check_global_contacts()
 	if(number != GLOB.harpynumber && name_check != GLOB.harpyname)
 		number = GLOB.harpynumber
 		name = GLOB.harpyname + " - " + name
@@ -120,7 +120,7 @@
 /datum/phonecontact/scourge
 	name = "Scourge"
 
-/datum/phonecontact/keeper/check_global_contacts()
+/datum/phonecontact/scourge/check_global_contacts()
 	if(number != GLOB.scourgenumber && name_check != GLOB.scourgename)
 		number = GLOB.scourgenumber
 		name = GLOB.scourgename + " - " + name
