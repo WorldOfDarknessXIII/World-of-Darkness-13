@@ -1,17 +1,20 @@
 SUBSYSTEM_DEF(factionwar)
 	name = "Faction War"
 	init_order = INIT_ORDER_DEFAULT
-	wait = 6000
+	wait = 6 SECONDS
 	priority = FIRE_PRIORITY_VERYLOW
 
 	var/list/marks_camarilla = list()
 	var/list/marks_anarch = list()
 	var/list/marks_sabbat = list()
+	var/list/marks_contested = list()
 
 	var/camarilla_power = 500
 	var/list/camarilla_members = list()
 	var/anarch_power = 500
 	var/list/anarch_members = list()
+
+	var/last_check_time = 0
 
 /mob/living/carbon/human/Destroy()
 	if(vampire_faction == "Camarilla")
@@ -30,6 +33,11 @@ SUBSYSTEM_DEF(factionwar)
 
 /datum/controller/subsystem/factionwar/fire()
 	//Sanity check
+	var/time = world.time - SSticker.round_start_time
+	var/mark_expiration = FALSE
+	if(time - last_check_time >= 10 MINUTES)
+		last_check_time = time
+		mark_expiration = TRUE
 	camarilla_members = list()
 	anarch_members = list()
 	var/how_much_cam = length(marks_camarilla)
@@ -51,7 +59,7 @@ SUBSYSTEM_DEF(factionwar)
 //				if(H.vampire_faction == "Sabbat")
 //					P.exper = min(calculate_mob_max_exper(H), P.exper+((4/mode)*how_much_sab))
 	camarilla_power = max(0, camarilla_power-(how_much_cam*5))
-	if(camarilla_power == 0)
+	if(camarilla_power == 0 && mark_expiration)
 		var/list/shit = list()
 		for(var/obj/graffiti/G in marks_camarilla)
 			if(G)
@@ -66,7 +74,7 @@ SUBSYSTEM_DEF(factionwar)
 					var/area/A = get_area(R)
 					to_chat(H, "<b><span class='warning'>Camarilla</span> don't have recources to sustain [A.name] [R.x]:[R.y], so it belongs to no one now.</b>")
 	anarch_power = max(0, anarch_power-(how_much_an*5))
-	if(anarch_power == 0)
+	if(anarch_power == 0 && mark_expiration)
 		var/list/shit = list()
 		for(var/obj/graffiti/G in marks_anarch)
 			if(G)
@@ -80,7 +88,48 @@ SUBSYSTEM_DEF(factionwar)
 				if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarch" || H.vampire_faction == "Sabbat")
 					var/area/A = get_area(R)
 					to_chat(H, "<b><span class='warning'>Anarch</span> don't have recources to sustain [A.name] [R.x]:[R.y], so it belongs to no one now.</b>")
+	if(length(marks_contested))
+		for(var/obj/graffiti/G in marks_contested)
+			for(var/mob/living/carbon/human/mob in view(7, G))
+				if(mob?.vampire_faction == G.last_contender.vampire_faction && mob.stat != DEAD)
+					G.progress += 6
+				else if(mob?.vampire_faction != G.last_contender.vampire_faction && mob.stat != DEAD && mob.vampire_faction)
+					G.progress -= 6
+			G.progress -= 2
+			if(G.progress >= 100)
+				G.icon_state = G.last_contender.vampire_faction
+				if(ishuman(G.last_contender))
+					var/mob/living/carbon/human/H = G.last_contender
+					H.last_repainted_mark = G.last_contender.vampire_faction
+				if(G.last_contender.vampire_faction == "Camarilla")
+					camarilla_power = max(0, camarilla_power-length(marks_camarilla)*5)
+				if(G.last_contender.vampire_faction == "Anarch")
+					anarch_power = max(0, anarch_power-length(marks_anarch)*5)
+				move_mark(G, G.last_contender.vampire_faction)
+				var/area/vtm/A = get_area(G)
+				message_all_faction("<b>[A.name] [G.x]:[G.y] mark now belongs to <span class='warning'>[G.last_contender.vampire_faction]</span></b>")
+				if(A.zone_owner)
+					A.zone_owner = G.last_contender.vampire_faction
+				G.repainting = FALSE
+			if(G.progress <= 0)
+				G.repainting = FALSE
+				var/area/vtm/A = get_area(G)
+				message_all_faction("<b>[A.name] [G.x]:[G.y] mark was not captured by <span class='warning'>[G.last_contender.vampire_faction]</span></b>")
+				//finish bad
 
+/datum/controller/subsystem/factionwar/proc/message_faction(var/vampire_faction, var/message)
+	for(var/mob/living/carbon/human/H in GLOB.player_list)
+		if(H.vampire_faction == vampire_faction)
+			for(var/obj/item/vamp/phone/phn in GLOB.phones_list)
+				if(phn.number == H.Myself.phone_number)
+					phn.say("#[message]")
+
+/datum/controller/subsystem/factionwar/proc/message_all_faction(var/message)
+	for(var/mob/living/carbon/human/H in GLOB.player_list)
+		if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarch" || H.vampire_faction == "Sabbat")
+			for(var/obj/item/vamp/phone/phn in GLOB.phones_list)
+				if(phn.number == H.Myself.phone_number)
+					phn.say("#[message]")
 
 /datum/controller/subsystem/factionwar/proc/switch_member(var/mob/living/member, var/vampire_faction)
 	switch(vampire_faction)
@@ -139,6 +188,8 @@ SUBSYSTEM_DEF(factionwar)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	var/repainting = FALSE
 	var/permanent = FALSE
+	var/mob/living/carbon/human/last_contender
+	var/progress = 0
 
 /obj/graffiti/Initialize()
 	. = ..()
@@ -154,6 +205,12 @@ SUBSYSTEM_DEF(factionwar)
 /obj/graffiti/sabbat
 	icon_state = "Sabbat"
 
+/datum/controller/subsystem/factionwar/proc/start_capture(mob/living/carbon/human/user, obj/graffiti/G)
+	marks_contested |= G
+	G.last_contender = user
+	var/area/vtm/A = get_area(G)
+	message_all_faction("<b>[A.name] [G.x]:[G.y] mark is contended by <span class='warning'>[G.last_contender.vampire_faction]</span></b>")
+
 /obj/graffiti/AltClick(mob/user)
 	..()
 	if(isliving(user))
@@ -165,32 +222,10 @@ SUBSYSTEM_DEF(factionwar)
 			if(L.vampire_faction != icon_state)
 				if(SSfactionwar.check_faction_ability(L.vampire_faction))
 					if(!repainting)
-						repainting = TRUE
-						if(do_mob(user, src, 10 SECONDS))
-							icon_state = L.vampire_faction
-							if(ishuman(user))
-								var/mob/living/carbon/human/H = user
-								H.last_repainted_mark = L.vampire_faction
-							if(L.vampire_faction == "Camarilla")
-								SSfactionwar.camarilla_power = max(0, SSfactionwar.camarilla_power-length(SSfactionwar.marks_camarilla)*5)
-							if(L.vampire_faction == "Anarch")
-								SSfactionwar.anarch_power = max(0, SSfactionwar.anarch_power-length(SSfactionwar.marks_anarch)*5)
-							SSfactionwar.move_mark(src, L.vampire_faction)
-							for(var/mob/living/carbon/human/H in GLOB.player_list)
-								if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarch" || H.vampire_faction == "Sabbat")
-									var/area/vtm/A = get_area(src)
-									to_chat(H, "<b>[A.name] [x]:[y] mark now belongs to <span class='warning'>[L.vampire_faction]</span></b>")
-									if(A.zone_owner)
-										A.zone_owner = L.vampire_faction
-//						if(user.client)
-//							var/mode = 1
-//							if(HAS_TRAIT(user, TRAIT_NON_INT))
-//								mode = 2
-//							user.client.prefs.exper = min(calculate_mob_max_exper(user), user.client.prefs.exper+(50+L.experience_plus)/mode)
-//							to_chat(user, "Successfuly repainted to [L.vampire_faction]'s mark.")
-							repainting = FALSE
-						else
-							repainting = FALSE
+						if(ishuman(user))
+							var/mob/living/carbon/human/H = user
+							repainting = TRUE
+							SSfactionwar.start_capture(H, src)
 				else
 					if(L.vampire_faction == "Camarilla")
 						to_chat(user, "Your faction needs <span class='warning'>[round(length(SSfactionwar.marks_camarilla)/3)]</span> members and <span class='warning'>[length(SSfactionwar.marks_camarilla)*5]</span> influence to gain this mark.")
