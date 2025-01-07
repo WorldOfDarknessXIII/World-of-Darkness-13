@@ -65,12 +65,12 @@
 	icon_state = "tremere_f"
 
 /obj/item/clothing/under/vampire/ventrue
-	name = "Black luxury suit"
+	name = "Brown luxury suit"
 	desc = "Some rich clothes."
 	icon_state = "ventrue_m"
 
 /obj/item/clothing/under/vampire/ventrue/female
-	name = "Black luxury suit skirt"
+	name = "Brown luxury suit skirt"
 	icon_state = "ventrue_f"
 
 /obj/item/clothing/under/vampire/baali
