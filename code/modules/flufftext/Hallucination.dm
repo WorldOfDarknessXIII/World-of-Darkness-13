@@ -405,8 +405,6 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 /datum/hallucination/baali
 	var/obj/effect/hallucination/simple/demon/demon
-	var/image/fakebroken
-	var/image/fakerune
 	var/turf/landing
 	var/charged
 	var/next_action = 0
