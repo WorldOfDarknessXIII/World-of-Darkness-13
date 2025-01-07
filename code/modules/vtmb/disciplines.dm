@@ -1821,9 +1821,9 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 				else
 					to_chat(caster, "Victim's vitae is thick and strong. You can clearly see their fear for fire, it seems that's a kindred.")
 			if(isghoul(target))
-				var/mob/living/carbon/human/H = target
-				if(H.mind.enslaved_to)
-					to_chat(caster, "Victim is addicted to vampiric vitae and its true master is [H.mind.enslaved_to]")
+				var/mob/living/carbon/human/ghoul = target
+				if(ghoul.mind.enslaved_to)
+					to_chat(caster, "Victim is addicted to vampiric vitae and its true master is [ghoul.mind.enslaved_to]")
 				else
 					to_chat(caster, "Victim is addicted to vampiric vitae, but is independent and free.")
 			if(!iskindred(target) && !isghoul(target) && !isgarou(target))
