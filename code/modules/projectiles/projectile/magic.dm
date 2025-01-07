@@ -687,7 +687,7 @@
 
 /obj/projectile/magic/aoe/fireball/baali/on_hit(target)
 	. = ..()
-	var/obj/effect/fire/R = new(get_turf(target)) // Creates fire object on the hit if successfully landed
+	var/obj/effect/fire/created_fire = new(get_turf(target)) // Creates fire object on the hit if successfully landed
 	R.color = color
 
 //still magic related, but a different path
