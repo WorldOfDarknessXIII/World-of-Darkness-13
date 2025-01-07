@@ -37,6 +37,9 @@
 
 	var/list/spotted_bodies = list()
 
+/datum/movespeed_modifier/npc
+	multiplicative_slowdown = 2
+
 /datum/socialrole
 	//For randomizing
 	var/list/s_tones = list("albino",
@@ -476,6 +479,9 @@
 			Aggro(P.firer, TRUE)
 			for(var/obj/item/police_radio/R in GLOB.police_radios)
 				R.announce_crime("victim", get_turf(src))
+			for(var/obj/item/p25radio/police/R in GLOB.p25_radios)
+				if(R.linked_network == "police")
+					R.announce_crime("victim", get_turf(src))
 
 /mob/living/carbon/human/npc/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	. = ..()

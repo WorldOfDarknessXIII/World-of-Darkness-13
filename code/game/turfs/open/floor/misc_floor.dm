@@ -50,6 +50,9 @@
 /turf/open/floor/circuit/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
 
+/turf/open/floor/circuit/telecomms/normal_temp
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+
 /turf/open/floor/circuit/telecomms/mainframe
 	name = "mainframe base"
 

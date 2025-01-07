@@ -17,6 +17,10 @@
 	var/number_of_mats = 1
 	var/build_material = /obj/item/stack/rods
 
+/obj/structure/lattice/pentex
+	desc = "Looks sturdy enough and made of advanced materials."
+	icon = 'code/modules/wod13/pentexcatwalk.dmi'
+
 
 /obj/structure/lattice/examine(mob/user)
 	. = ..()

@@ -7,8 +7,8 @@
 		/datum/discipline/presence = 2,
 		/datum/discipline/serpentis = 3
 	)
-	male_clothes = "/obj/item/clothing/under/vampire/pimp"
-	female_clothes = "/obj/item/clothing/under/vampire/whore"
+	male_clothes = /obj/item/clothing/under/vampire/slickback
+	female_clothes = /obj/item/clothing/under/vampire/burlesque
 
 /datum/vampireclane/ministry/on_gain(mob/living/carbon/human/H)
 	..()

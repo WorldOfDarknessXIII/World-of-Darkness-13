@@ -7,6 +7,7 @@ SUBSYSTEM_DEF(masquerade)
 	var/total_level = 1000
 	var/dead_level = 0
 	var/last_level = "stable"
+	var/manual_adjustment = 0 
 
 /datum/controller/subsystem/masquerade/proc/get_description()
 	switch(total_level)
@@ -27,7 +28,7 @@ SUBSYSTEM_DEF(masquerade)
 	if(length(GLOB.sabbatites))
 		sabbat = (2000/length(GLOB.player_list))*length(GLOB.sabbatites)
 
-	total_level = max(0, 1000+dead_level-masquerade_violators-sabbat)
+	total_level = max(0, min(1000, 1000 + dead_level + manual_adjustment - masquerade_violators - sabbat))
 
 	var/shit_happens = "stable"
 	switch(total_level)
@@ -59,7 +60,7 @@ SUBSYSTEM_DEF(masquerade)
 		for(var/mob/living/carbon/human/H in GLOB.player_list)
 			if(H)
 				if(iskindred(H))
-					if(!H.warrant)
+					if(!H.warrant && !H.ignores_warrant)
 						H.last_nonraid = world.time
 						H.warrant = TRUE
 						SEND_SOUND(H, sound('code/modules/wod13/sounds/humanity_loss.ogg', 0, 0, 75))

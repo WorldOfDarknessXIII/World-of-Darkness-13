@@ -7,8 +7,8 @@
 		/datum/discipline/dominate = 2,
 		/datum/discipline/obtenebration = 3
 	)
-	male_clothes = "/obj/item/clothing/under/vampire/emo"
-	female_clothes = "/obj/item/clothing/under/vampire/business"
+	male_clothes = /obj/item/clothing/under/vampire/emo
+	female_clothes = /obj/item/clothing/under/vampire/business
 	enlightenment = TRUE
 	whitelisted = TRUE
 

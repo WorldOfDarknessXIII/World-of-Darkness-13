@@ -62,6 +62,10 @@ VENTORY!
 	screen_max_columns = 4
 	screen_max_rows = 4
 
+/datum/component/storage/concrete/vtm/firstaid/ifak
+	screen_max_columns = 3
+	screen_max_rows = 3
+
 /obj/item/storage/backpack
 	component_type = /datum/component/storage/concrete/vtm/backpack
 
@@ -69,9 +73,21 @@ VENTORY!
 	screen_max_columns = 2
 	screen_max_rows = 2
 
+/datum/component/storage/concrete/vtm/hardcase
+	screen_max_columns = 4
+	screen_max_rows = 4
+
 /datum/component/storage/concrete/vtm/car
 	screen_max_columns = 7
 	screen_max_rows = 9
+
+/datum/component/storage/concrete/vtm/car/track
+	screen_max_columns = 12
+	screen_max_rows = 12
+
+/datum/component/storage/concrete/vtm/sheathe
+	screen_max_columns = 2
+	screen_max_rows = 5
 
 /datum/component/storage
 	screen_max_columns = 5
@@ -842,6 +858,18 @@ VENTORY!
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 96
 
+/obj/item/storage/firstaid
+	grid_width = 2 GRID_BOXES
+	grid_height = 2 GRID_BOXES
+
+/obj/item/storage/firstaid/ifak
+	grid_width = 1 GRID_BOXES
+	grid_height = 2 GRID_BOXES
+
+/obj/item/storage/fancy/hardcase
+	grid_width = 3 GRID_BOXES
+	grid_height = 2 GRID_BOXES
+
 /obj/item/melee/vampirearms/fireaxe
 	grid_width = 7 GRID_BOXES
 	grid_height = 2 GRID_BOXES
@@ -849,6 +877,22 @@ VENTORY!
 /obj/item/melee/vampirearms/katana
 	grid_width = 5 GRID_BOXES
 	grid_height = 1 GRID_BOXES
+
+/obj/item/melee/vampirearms/machete
+    grid_width = 3 GRID_BOXES
+    grid_height = 1 GRID_BOXES
+
+/obj/item/melee/vampirearms/rapier
+	grid_width = 2 GRID_BOXES
+	grid_height = 5 GRID_BOXES
+
+/obj/item/melee/vampirearms/sabre
+	grid_width = 2 GRID_BOXES
+	grid_height = 5 GRID_BOXES
+
+/obj/item/melee/vampirearms/longsword
+	grid_width = 2 GRID_BOXES
+	grid_height = 5 GRID_BOXES
 
 /obj/item/melee/vampirearms/baseball
 	grid_width = 3 GRID_BOXES
@@ -903,6 +947,14 @@ VENTORY!
 	grid_height = 1 GRID_BOXES
 
 /obj/item/gun/ballistic/automatic/vampire/glock19
+	grid_width = 2 GRID_BOXES
+	grid_height = 1 GRID_BOXES
+
+/obj/item/ammo_box/magazine/glock45acp
+	grid_width = 1 GRID_BOXES
+	grid_height = 1 GRID_BOXES
+
+/obj/item/gun/ballistic/automatic/vampire/glock21
 	grid_width = 2 GRID_BOXES
 	grid_height = 1 GRID_BOXES
 
@@ -1045,3 +1097,7 @@ VENTORY!
 /obj/item/clothing/head
 	grid_width = 2 GRID_BOXES
 	grid_height = 2 GRID_BOXES
+
+/obj/item/vampire/drill
+	grid_width = 10 GRID_BOXES
+	grid_height = 10 GRID_BOXES

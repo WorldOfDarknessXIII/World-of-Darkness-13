@@ -331,6 +331,7 @@ Works together with spawning an observer, noted above.
 			ghost.movement_type = FLYING | GROUND | PHASING
 			ghost.sight = 0
 			ghost.client.prefs.chat_toggles &= ~CHAT_GHOSTEARS
+			ghost.client.prefs.chat_toggles &= ~CHAT_GHOSTWHISPER
 			ghost.client.prefs.chat_toggles ^= CHAT_DEAD
 			ghost.client.show_popup_menus = 0
 		if(aghosted)

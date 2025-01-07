@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
-	var/max_save_slots = 10
+	var/max_save_slots = 20
 
 	//non-preference stuff
 	var/muted = 0
@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/real_name						//our character's name
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
-	var/total_age = 0
+	var/total_age = 30
 	var/underwear = "Nude"				//underwear type
 	var/underwear_color = "000"			//underwear color
 	var/undershirt = "Nude"				//undershirt type
@@ -188,6 +188,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/lockpicking = 0
 	var/athletics = 0
 
+	var/info_known = INFO_KNOWN_UNKNOWN
+
 	var/friend = FALSE
 	var/enemy = FALSE
 	var/lover = FALSE
@@ -232,17 +234,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	dexterity = 1
 	mentality = 1
 	social = 1
+	blood = 1
 	lockpicking = 0
 	athletics = 0
-	blood = 1
+	info_known = INFO_KNOWN_UNKNOWN
 	masquerade = initial(masquerade)
 	generation = initial(generation)
 	archetype = pick(subtypesof(/datum/archetype))
 	var/datum/archetype/A = new archetype()
 	physique = A.start_physique
-	mentality = A.start_mentality
+	dexterity = A.start_dexterity
 	social = A.start_social
+	mentality = A.start_mentality
 	blood = A.start_blood
+	lockpicking = A.start_lockpicking
+	athletics = A.start_athletics
 	qdel(clane)
 	clane = new /datum/vampireclane/brujah()
 	discipline_types = list()
@@ -298,6 +304,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 #define APPEARANCE_CATEGORY_COLUMN "<td valign='top' width='14%'>"
 #define MAX_MUTANT_ROWS 4
+#define ATTRIBUTE_BASE_LIMIT 5 //Highest level that a base attribute can be upgraded to. Bonus attributes can increase the actual amount past the limit.
 
 /proc/make_font_cool(var/text)
 	if(text)
@@ -462,41 +469,23 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/datum/archetype/A = new archetype()
 			dat += "<a href='?_src_=prefs;preference=archetype;task=input'>[A.name]</a> [A.specialization]<BR>"
 
-			dat += "<b>Physique:</b> •[physique > 1 ? "•" : "o"][physique > 2 ? "•" : "o"][physique > 3 ? "•" : "o"][physique > 4 ? "•" : "o"]([physique])"
-			if(true_experience >= 4*physique && physique != 5)
-				dat += "<a href='?_src_=prefs;preference=physique;task=input'>Increase ([4*physique])</a>"
-			dat += "<BR>"
+			//Prices for each ability, can be adjusted, multiplied by current attribute level
+			var/physique_price = 4
+			var/dexterity_price = 4
+			var/social_price = 4
+			var/mentality_price = 4
+			var/blood_price = 6
+			//Lockpicking and Athletics have an initial price of 3
+			var/lockpicking_price = !lockpicking ? 3 : 2
+			var/athletics_price = !athletics ? 3 : 2
 
-			dat += "<b>Dexterity:</b> •[dexterity > 1 ? "•" : "o"][dexterity > 2 ? "•" : "o"][dexterity > 3 ? "•" : "o"][dexterity > 4 ? "•" : "o"]([dexterity])"
-			if(true_experience >= 4*dexterity && dexterity != 5)
-				dat += "<a href='?_src_=prefs;preference=dexterity;task=input'>Increase ([4*dexterity])</a>"
-			dat += "<BR>"
-
-			dat += "<b>Social:</b> •[social > 1 ? "•" : "o"][social > 2 ? "•" : "o"][social > 3 ? "•" : "o"][social > 4 ? "•" : "o"]([social])"
-			if(true_experience >= 4*social && social != 5)
-				dat += "<a href='?_src_=prefs;preference=social;task=input'>Increase ([4*social])</a>"
-			dat += "<BR>"
-
-			dat += "<b>Mentality:</b> •[mentality > 1 ? "•" : "o"][mentality > 2 ? "•" : "o"][mentality > 3 ? "•" : "o"][mentality > 4 ? "•" : "o"]([mentality])"
-			if(true_experience >= 4*mentality && mentality != 5)
-				dat += "<a href='?_src_=prefs;preference=mentality;task=input'>Increase ([4*mentality])</a>"
-			dat += "<BR>"
-
-			dat += "<b>Cruelty:</b> •[blood > 1 ? "•" : "o"][blood > 2 ? "•" : "o"][blood > 3 ? "•" : "o"][blood > 4 ? "•" : "o"]([blood])"
-			if(true_experience >= 6*blood && blood != 5)
-				dat += "<a href='?_src_=prefs;preference=blood;task=input'>Increase ([3*blood])</a>"
-			dat += "<BR>"
-
-			dat += "<b>Lockpicking:</b> [lockpicking > 0 ? "•" : "o"][lockpicking > 1 ? "•" : "o"][lockpicking > 2 ? "•" : "o"][lockpicking > 3 ? "•" : "o"][lockpicking > 4 ? "•" : "o"]([lockpicking])"
-			if(((true_experience >= ((lockpicking > 0) ? (2 * lockpicking) : 3))) && (lockpicking < 5))
-				dat += "<a href='?_src_=prefs;preference=lockpicking;task=input'>Increase ([(lockpicking > 0) ? (2 * lockpicking) : 3])</a>"
-			dat += "<BR>"
-
-			dat += "<b>Athletics:</b> [athletics > 0 ? "•" : "o"][athletics > 1 ? "•" : "o"][athletics > 2 ? "•" : "o"][athletics > 3 ? "•" : "o"][athletics > 4 ? "•" : "o"]([athletics])"
-			if(((true_experience >= ((athletics > 0) ? (2 * athletics) : 3))) && (athletics < 5))
-				dat += "<a href='?_src_=prefs;preference=athletics;task=input'>Increase ([(athletics > 0) ? (2 * athletics) : 3])</a>"
-			dat += "<BR>"
-
+			dat += "<b>Physique:</b> [build_attribute_score(physique, A.archetype_additional_physique, physique_price, "physique")]"
+			dat += "<b>Dexterity:</b> [build_attribute_score(dexterity, A.archetype_additional_dexterity, dexterity_price, "dexterity")]"
+			dat += "<b>Social:</b> [build_attribute_score(social, A.archetype_additional_social, social_price, "social")]"
+			dat += "<b>Mentality:</b> [build_attribute_score(mentality, A.archetype_additional_mentality, mentality_price, "mentality")]"
+			dat += "<b>Cruelty:</b> [build_attribute_score(blood, A.archetype_additional_blood, blood_price, "blood")]"
+			dat += "<b>Lockpicking:</b> [build_attribute_score(lockpicking, A.archetype_additional_lockpicking, lockpicking_price, "lockpicking")]"
+			dat += "<b>Athletics:</b> [build_attribute_score(athletics, A.archetype_additional_athletics, athletics_price, "athletics")]"
 			dat += "Experience rewarded: [true_experience]<BR>"
 			if(pref_species.name == "Werewolf")
 				dat += "<h2>[make_font_cool("TRIBE")]</h2>"
@@ -668,6 +657,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<br><b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backpack]</a>"
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_BACKPACK]'>[(randomise[RANDOM_BACKPACK]) ? "Lock" : "Unlock"]</A>"
+
+			if(pref_species.name == "Vampire")
+				dat += "<BR><b>Fame:</b><BR><a href ='?_src_=prefs;preference=info_choose;task=input'>[info_known]</a>"
 
 			dat += "<BR><BR><b>Relationships:</b><BR>"
 			dat += "Have a Friend: <a href='?_src_=prefs;preference=friend'>[friend == TRUE ? "Enabled" : "Disabled"]</A><BR>"
@@ -1188,6 +1180,23 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	popup.set_content(dat.Join())
 	popup.open(FALSE)
 	onclose(user, "preferences_window", src)
+
+//A proc that creates the score circles based on attribute and the additional bonus for the attribute
+//
+/datum/preferences/proc/build_attribute_score(var/attribute, var/bonus_number, var/price, var/variable_name)
+	var/dat
+	for(var/a in 1 to attribute)
+		dat += "•"
+	for(var/b in 1 to bonus_number)
+		dat += "•"
+	var/leftover_circles = 5 - attribute //5 is the default number of blank circles
+	for(var/c in 1 to leftover_circles)
+		dat += "o"
+	var/real_price = attribute ? (attribute*price) : price //In case we have an attribute of 0, we don't multiply by 0
+	if((true_experience >= real_price) && (attribute < ATTRIBUTE_BASE_LIMIT))
+		dat += "<a href='?_src_=prefs;preference=[variable_name];task=input'>Increase ([real_price])</a>"
+	dat += "<br>"
+	return dat
 
 #undef APPEARANCE_CATEGORY_COLUMN
 #undef MAX_MUTANT_ROWS
@@ -1725,6 +1734,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_age = input(user, "Choose your character's biological age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
 					if(new_age)
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
+						if (age > total_age)
+							total_age = age
+						update_preview_icon()
 
 				if("total_age")
 					if(slotlocked)
@@ -1733,6 +1745,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_age = input(user, "Choose your character's actual age:\n([age]-[age+1000])", "Character Preference") as num|null
 					if(new_age)
 						total_age = max(min(round(text2num(new_age)), age+1000), age)
+						if (total_age < age)
+							age = total_age
+						update_preview_icon()
+
+				if("info_choose")
+					var/new_info_known = input(user, "Choose who knows your character:", "Fame")  as null|anything in list(INFO_KNOWN_UNKNOWN,INFO_KNOWN_CLAN_ONLY,INFO_KNOWN_FACTION,INFO_KNOWN_PUBLIC)
+					if(new_info_known)
+						info_known = new_info_known
 
 				if("hair")
 					if(slotlocked)
@@ -1981,7 +2001,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						auspice = Auspic
 
 				if("clane_acc")
-					if(slotlocked || !(pref_species.id == "kindred"))
+					if(pref_species.id != "kindred")	//Due to a lot of people being locked to furries
 						return
 
 					if(!length(clane.accessories))
@@ -2016,7 +2036,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						discipline_levels = list()
 						if(result == "Caitiff")
 							generation = 13
-							while (clane.clane_disciplines.len < 3)
+							for (var/i = clane.clane_disciplines.len; i < 3; i++)
+								if (slotlocked)
+									break
 								var/list/possible_new_disciplines = subtypesof(/datum/discipline) - clane.clane_disciplines
 								for (var/discipline_type in possible_new_disciplines)
 									var/datum/discipline/discipline = new discipline_type
@@ -2049,60 +2071,32 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					auspice_level = max(1, auspice_level + 1)
 
 				if("physique")
-					var/cost = max(4, physique * 4)
-					if ((true_experience < cost) || (physique >= 5))
-						return
-
-					true_experience -= cost
-					physique = max(1, physique + 1)
+					if(handle_upgrade(physique, physique * 4))
+						physique++
 
 				if("dexterity")
-					var/cost = max(4, dexterity * 4)
-					if ((true_experience < cost) || (dexterity >= 5))
-						return
-
-					true_experience -= cost
-					dexterity = max(1, dexterity + 1)
+					if(handle_upgrade(dexterity, dexterity * 4))
+						dexterity++
 
 				if("social")
-					var/cost = max(4, social * 4)
-					if ((true_experience < cost) || (social >= 5))
-						return
-
-					true_experience -= cost
-					social = max(1, social + 1)
+					if(handle_upgrade(social, social * 4))
+						social++
 
 				if("mentality")
-					var/cost = max(4, mentality * 4)
-					if ((true_experience < cost) || (mentality >= 5))
-						return
-
-					true_experience -= cost
-					mentality = max(1, mentality + 1)
+					if(handle_upgrade(mentality, mentality * 4))
+						mentality++
 
 				if("blood")
-					var/cost = max(6, blood * 6)
-					if ((true_experience < cost) || (blood >= 5))
-						return
-
-					true_experience -= cost
-					blood = max(1, blood + 1)
+					if(handle_upgrade(blood, blood * 6))
+						blood++
 
 				if("lockpicking")
-					var/cost = (lockpicking > 0) ? max(2, lockpicking * 2) : 3
-					if ((true_experience < cost) || (lockpicking >= 5))
-						return
-
-					true_experience -= cost
-					lockpicking = max(1, lockpicking + 1)
+					if(handle_upgrade(lockpicking, lockpicking ? lockpicking*2 : 3))
+						lockpicking++
 
 				if("athletics")
-					var/cost = (athletics > 0) ? max(2, athletics * 2) : 3
-					if ((true_experience < cost) || (athletics >= 5))
-						return
-
-					true_experience -= cost
-					athletics = max(1, athletics + 1)
+					if(handle_upgrade(athletics, athletics ? athletics*2 : 3))
+						athletics++
 
 				if("tribe")
 					if(slotlocked || !(pref_species.id == "garou"))
@@ -2135,9 +2129,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						archetype = result
 						var/datum/archetype/archetip = new archetype()
 						physique = archetip.start_physique
+						dexterity = archetip.start_dexterity
 						mentality = archetip.start_mentality
 						social = archetip.start_social
 						blood = archetip.start_blood
+						lockpicking = archetip.start_lockpicking
+						athletics = archetip.start_athletics
 
 				if("discipline")
 					var/i = text2num(href_list["upgradediscipline"])
@@ -2229,16 +2226,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if (alert("Are you sure you want to change species? This will reset species-specific stats.", "Confirmation", "Yes", "No") != "Yes")
 						return
 
-					var/list/selectable_species = GLOB.selectable_races
-					for (var/key in selectable_species)
+					var/list/choose_species = list()
+					for (var/key in GLOB.selectable_races)
 						var/newtype = GLOB.species_list[key]
-						var/datum/species/new_species = new newtype
-						if (new_species.whitelisted)
+						var/datum/species/selecting_species = new newtype
+						if (!selecting_species.selectable)
+							qdel(selecting_species)
+							continue
+						if (selecting_species.whitelisted)
 							if (!SSwhitelists.is_whitelisted(parent.ckey, key))
-								selectable_species.Remove(key)
-						qdel(new_species)
+								qdel(selecting_species)
+								continue
+						choose_species += key
+						qdel(selecting_species)
 
-					var/result = input(user, "Select a species", "Species Selection") as null|anything in selectable_species
+					var/result = input(user, "Select a species", "Species Selection") as null|anything in choose_species
 					if(result)
 						all_quirks = list()
 						SetQuirks(user)
@@ -2676,9 +2678,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					chat_toggles ^= CHAT_GHOSTSIGHT
 
 				if("ghost_whispers")
-					chat_toggles ^= CHAT_GHOSTWHISPER
+					if(istype(user.client.mob, /mob/dead/observer))
+						var/mob/dead/observer/obs = user.client.mob
+						if(obs.auspex_ghosted)
+							return
+						else
+							chat_toggles ^= CHAT_GHOSTWHISPER
+					else
+						chat_toggles ^= CHAT_GHOSTWHISPER
 
 				if("ghost_radio")
+
 					chat_toggles ^= CHAT_GHOSTRADIO
 
 				if("ghost_pda")
@@ -2788,6 +2798,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	ShowChoices(user)
 	return TRUE
 
+/datum/preferences/proc/handle_upgrade(var/number, var/cost)
+	if ((true_experience < cost) || (number >= ATTRIBUTE_BASE_LIMIT))
+		return FALSE
+	true_experience -= cost
+	return TRUE
+
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE, is_latejoiner = TRUE)
 
 	hardcore_survival_score = 0 //Set to 0 to prevent you getting points from last another time.
@@ -2826,11 +2842,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dexterity = dexterity
 	character.social = social
 	character.mentality = mentality
+	character.blood = blood
 	character.lockpicking = lockpicking
 	character.athletics = athletics
-	character.blood = blood
+	character.info_known = info_known
 
 	var/datum/archetype/A = new archetype()
+	character.additional_physique = A.archetype_additional_physique
+	character.additional_dexterity = A.archetype_additional_dexterity
+	character.additional_social = A.archetype_additional_social
+	character.additional_mentality = A.archetype_additional_mentality
+	character.additional_blood = A.archetype_additional_blood
+	character.additional_lockpicking = A.archetype_additional_lockpicking
+	character.additional_athletics = A.archetype_additional_athletics
 	A.special_skill(character)
 
 	if(pref_species.name == "Vampire")
@@ -2869,6 +2893,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.flavor_text = sanitize_text(flavor_text)
 	character.gender = gender
 	character.age = age
+	character.chronological_age = total_age
 	if(gender == MALE || gender == FEMALE)
 		character.body_type = gender
 	else
@@ -2892,12 +2917,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.facial_hair_color = facial_hair_color
 
 	if(pref_species.name == "Vampire")
-		if(clane.alt_sprite)
+		if(clane.alt_sprite && !clane.alt_sprite_greyscale)
 			character.skin_tone = "albino"
 		else
 			character.skin_tone = get_vamp_skin_color(skin_tone)
 	else
 		character.skin_tone = skin_tone
+
 	character.hairstyle = hairstyle
 	if(character.age < 16)
 		facial_hairstyle = "Shaved"

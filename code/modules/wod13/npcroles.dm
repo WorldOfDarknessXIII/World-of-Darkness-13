@@ -209,7 +209,7 @@
 		/obj/item/clothing/under/vampire/sport,
 		/obj/item/clothing/under/vampire/office,
 		/obj/item/clothing/under/vampire/sexy,
-		/obj/item/clothing/under/vampire/pimp,
+		/obj/item/clothing/under/vampire/slickback,
 		/obj/item/clothing/under/vampire/emo
 	)
 	pockets = list(
@@ -868,9 +868,10 @@
 	maxHealth = 20
 	health = 20
 	harm_intent_damage = 10
-	melee_damage_lower = 10
+	melee_damage_lower = 5
 	melee_damage_upper = 10
 	speed = 0
+	dodging = TRUE
 
 /mob/living/simple_animal/hostile/beastmaster/rat/Initialize()
 	. = ..()
@@ -885,14 +886,16 @@
 	name = "bat"
 	desc = "It's a bat."
 	is_flying_animal = TRUE
-	speed = -1
+	maxHealth = 10
+	health = 10
+	speed = -0.8
 
 /mob/living/simple_animal/hostile/beastmaster/rat/flying/UnarmedAttack(atom/A)
 	. = ..()
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
 		if(H.bloodpool)
-			if(prob(25))
+			if(prob(10))
 				H.bloodpool = max(0, H.bloodpool-1)
 				beastmaster.bloodpool = min(beastmaster.maxbloodpool, beastmaster.bloodpool+1)
 
@@ -1090,7 +1093,7 @@
 	shoes = list(/obj/item/clothing/shoes/vampire/jackboots)
 	uniforms = list(/obj/item/clothing/under/vampire/police)
 	hats = list(/obj/item/clothing/head/vampire/police)
-	suits = list(/obj/item/clothing/suit/vampire/vest)
+	suits = list(/obj/item/clothing/suit/vampire/vest/police)
 	pockets = list(/obj/item/stack/dollar/rand)
 
 	male_phrases = list("I see you.",
@@ -1342,7 +1345,7 @@
 										"Volaju")
 
 	shoes = list(/obj/item/clothing/shoes/vampire/heels)
-	uniforms = list(/obj/item/clothing/under/vampire/whore)
+	uniforms = list(/obj/item/clothing/under/vampire/burlesque)
 	backpacks = list()
 
 	female_phrases = list("Wanna touch this boobies?",

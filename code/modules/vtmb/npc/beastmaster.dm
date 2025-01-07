@@ -26,6 +26,7 @@ SUBSYSTEM_DEF(beastmastering)
 
 		if (QDELETED(NPC)) // Some issue causes nulls to get into this list some times. This keeps it running, but the bug is still there.
 			GLOB.npc_list -= NPC
+			GLOB.alive_npc_list -= NPC
 			log_world("Found a null in npc list!")
 			continue
 

@@ -185,11 +185,16 @@
 	var/blood = 1
 
 	var/additional_physique = 0
+	var/additional_dexterity = 0
 	var/additional_mentality = 0
 	var/additional_social = 0
 	var/additional_blood = 0
+	var/additional_lockpicking = 0
+	var/additional_athletics = 0
 	var/more_companions = 0
 	var/melee_professional = FALSE
+
+	var/info_known = INFO_KNOWN_UNKNOWN
 
 	var/last_message
 	var/total_erp = 0
@@ -265,6 +270,7 @@
 	var/last_masquerade_violation = 0
 	var/last_nonraid = 0
 	var/warrant = FALSE
+	var/ignores_warrant = FALSE
 
 	var/obj/overlay/gnosis
 

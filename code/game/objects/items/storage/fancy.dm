@@ -461,3 +461,38 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 5
 	STR.set_holdable(list(/obj/item/food/vampire/nugget))
+
+/obj/item/storage/fancy/hardcase
+	name = "5.56 magazine hardcase"
+	desc = "A small metal hardcase specifically designed to carry 5.56 magazines."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "hardcasbox"
+	icon_type = "hardcase"
+	inhand_icon_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	spawn_type = /obj/item/ammo_box/magazine/vamp556
+	component_type = /datum/component/storage/concrete/vtm/hardcase
+
+/obj/item/storage/fancy/hardcase/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 4
+	STR.set_holdable(list(/obj/item/ammo_box/magazine/vamp556))
+
+/obj/item/storage/fancy/hardcase/mp5
+	name = "Mp5 magazine hardcase"
+	desc = "A small metal hardcase specifically designed to carry Mp5 magazines."
+	icon_state = "hardcasebox"
+	inhand_icon_state = "syringe_kit"
+	icon_type = "hardcase"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	spawn_type = /obj/item/ammo_box/magazine/vamp9mp5
+	component_type = /datum/component/storage/concrete/vtm/hardcase
+
+/obj/item/storage/fancy/hardcase/mp5/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 4
+	STR.set_holdable(list(/obj/item/ammo_box/magazine/vamp9mp5))

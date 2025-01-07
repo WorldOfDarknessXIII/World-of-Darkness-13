@@ -68,7 +68,7 @@
 /client/proc/play_web_sound()
 	set category = "Admin.Fun"
 	set name = "Play Internet Sound"
-	if(!check_rights(R_SOUND) && ckey != "leonko")
+	if(!check_rights(R_SOUND))
 		return
 
 	var/ytdl = CONFIG_GET(string/invoke_youtubedl)

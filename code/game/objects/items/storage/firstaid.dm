@@ -292,6 +292,21 @@
 	new /obj/item/reagent_containers/pill/patch/aiuri(src)
 	new /obj/item/clothing/glasses/hud/health/night(src)
 
+/obj/item/storage/firstaid/ifak
+	name = "IFAK"
+	desc = "An Individual First Aid Kit. Standard issue to duty belts."
+	icon_state = "ifak"
+	component_type = /datum/component/storage/concrete/vtm/firstaid/ifak
+
+/obj/item/storage/firstaid/ifak/PopulateContents()
+	if(empty)
+		return
+	var/static/items_inside = list(
+		/obj/item/reagent_containers/hypospray/medipen/ifak = 3,
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/healthanalyzer = 1)
+	generate_items_inside(items_inside,src)
+
 //medibot assembly
 /obj/item/storage/firstaid/attackby(obj/item/bodypart/S, mob/user, params)
 	if((!istype(S, /obj/item/bodypart/l_arm/robot)) && (!istype(S, /obj/item/bodypart/r_arm/robot)))

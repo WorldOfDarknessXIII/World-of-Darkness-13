@@ -8,8 +8,8 @@
 		/datum/discipline/dominate = 3
 	)
 	violating_appearance = FALSE
-	male_clothes = "/obj/item/clothing/under/vampire/sport"
-	female_clothes = "/obj/item/clothing/under/vampire/red"
+	male_clothes = /obj/item/clothing/under/vampire/sport
+	female_clothes = /obj/item/clothing/under/vampire/red
 	enlightenment = TRUE
 	var/obj/item/heirl
 	restricted_disciplines = list(/datum/discipline/vicissitude)

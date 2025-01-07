@@ -200,6 +200,15 @@
 	inhand_icon_state = "salpen"
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 10)
 
+/obj/item/reagent_containers/hypospray/medipen/ifak
+	name = "ifak stabilization medipen"
+	desc = "A single use autoinjector used for general healing and stabilization. DO NOT INJECT TWICE. Contains salicylic acid, salbutamol, oxandrolone, blood-coagulant and epinephrine."
+	icon_state = "salpen"
+	inhand_icon_state = "salpen"
+	volume = 45
+	amount_per_transfer_from_this = 45
+	list_reagents = list(/datum/reagent/medicine/sal_acid = 10, /datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/coagulant = 5)
+
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure
 	name = "BVAK autoinjector"
 	desc = "Bio Virus Antidote Kit autoinjector. Has a two use system for yourself, and someone else. Inject when infected."

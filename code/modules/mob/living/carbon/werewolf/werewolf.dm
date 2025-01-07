@@ -53,7 +53,7 @@
 	butcher_results = list(/obj/item/food/meat/slab = 5)
 	layer = LARGE_MOB_LAYER
 	var/obj_damage = 30
-	var/wound_bonus = 10
+	var/wound_bonus = 20
 	var/bare_wound_bonus = 25
 	var/sharpness = 50
 	var/armour_penetration = 100
@@ -74,7 +74,7 @@
 
 	var/step_variable = 0
 
-	var/werewolf_armor = 5
+	var/werewolf_armor = 0
 
 	var/assigned_quirks = FALSE
 
@@ -186,10 +186,10 @@
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	limb_destroyer = 1
 	hud_type = /datum/hud/werewolf
-	melee_damage_lower = 25
+	melee_damage_lower = 35
 	melee_damage_upper = 65
-	health = 300
-	maxHealth = 300
+	health = 250
+	maxHealth = 250
 //	speed = -1  doesn't work on carbons
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
@@ -206,10 +206,10 @@
 		/obj/item/bodypart/l_leg,
 		)
 
-	werewolf_armor = 35
+	werewolf_armor = 30
 
 /datum/movespeed_modifier/crinosform
-	multiplicative_slowdown = -0.25
+	multiplicative_slowdown = -0.2
 
 /datum/movespeed_modifier/silver_slowdown
 	multiplicative_slowdown = 0.3

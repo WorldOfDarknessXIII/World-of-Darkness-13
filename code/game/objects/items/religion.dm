@@ -86,7 +86,7 @@
 
 /obj/item/banner/security/Initialize()
 	. = ..()
-	job_loyalties = GLOB.security_positions
+	job_loyalties = GLOB.ss13
 
 /obj/item/banner/security/mundane
 	inspiration_available = FALSE
@@ -110,7 +110,7 @@
 
 /obj/item/banner/medical/Initialize()
 	. = ..()
-	job_loyalties = GLOB.medical_positions
+	job_loyalties = GLOB.ss13
 
 /obj/item/banner/medical/mundane
 	inspiration_available = FALSE
@@ -169,7 +169,7 @@
 
 /obj/item/banner/cargo/Initialize()
 	. = ..()
-	job_loyalties = GLOB.supply_positions
+	job_loyalties = GLOB.ss13
 
 /obj/item/banner/cargo/mundane
 	inspiration_available = FALSE
@@ -193,7 +193,7 @@
 
 /obj/item/banner/engineering/Initialize()
 	. = ..()
-	job_loyalties = GLOB.engineering_positions
+	job_loyalties = GLOB.ss13
 
 /obj/item/banner/engineering/mundane
 	inspiration_available = FALSE

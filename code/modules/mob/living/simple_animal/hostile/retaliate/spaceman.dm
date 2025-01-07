@@ -85,7 +85,7 @@
 	footstep_type = FOOTSTEP_MOB_SHOE
 	vision_range = 9
 	rapid = 3
-	ranged = 1
+	ranged = TRUE
 	maxHealth = 500
 	health = 500
 	retreat_distance = 3
@@ -95,23 +95,45 @@
 	loot = list()
 	faction = list("Police")
 	var/time_created = 0
+	var/last_seen_time = 0
 
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire/Initialize()
 	. = ..()
 	time_created = world.time
+	if(prob(10))
+		ranged = FALSE
+		name = "SWAT Brute"
+		desc = "He can handcuff you."
+		icon_state = "swat_melee"
+		icon_living = "swat_melee"
+		maxHealth = 600
+		health = 600
+		retreat_distance = 0
+		minimum_distance = 0
 
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire/Life()
 	if(stat != DEAD)
+		for(var/mob/living/carbon/human/E in enemies)
+			if(Adjacent(E) && E.canBeHandcuffed() && !E.handcuffed)
+				cuff(E)
+				return
 		if(time_created+600 < world.time)
-			new /obj/effect/temp_visual/desant_back(loc)
-			playsound(loc, 'code/modules/wod13/sounds/helicopter.ogg', 50, TRUE)
-			qdel(src)
-			return
+			leave()
+		if(enemies.len)
+			for(var/mob/living/carbon/human/E in enemies)
+				if(E.stat == UNCONSCIOUS || E.stat == DEAD || (world.time - last_seen_time > 20 SECONDS))
+					leave()
 	..()
 
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire/Destroy()
 	new /obj/effect/temp_visual/desant_back(loc)
 	..()
+
+/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire/proc/leave()
+	new /obj/effect/temp_visual/desant_back(loc)
+	playsound(loc, 'code/modules/wod13/sounds/helicopter.ogg', 50, TRUE)
+	qdel(src)
+	return
 
 /obj/effect/temp_visual/desant
 	name = "helicopter rope"
@@ -134,6 +156,7 @@
 		if(H)
 			if(H.warrant)
 				enemies |= H
+				last_seen_time = world.time
 	for(var/mob/living/simple_animal/hostile/T in oviewers(9, src))
 		if(T)
 			if(!istype(T, /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire))
@@ -144,6 +167,33 @@
 	icon = 'code/modules/wod13/64x64.dmi'
 	icon_state = "swat_back"
 	duration = 7
+
+/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire/UnarmedAttack(atom/A)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
+	if(iscarbon(A))
+		var/mob/living/carbon/C = A
+		if(C.canBeHandcuffed() && !C.handcuffed)
+			cuff(A)
+			return
+		else
+			..()
+	else
+		..()
+
+/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire/proc/cuff(mob/living/carbon/C)
+	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
+	C.visible_message("<span class='danger'>[src] is trying to put zipties on [C]!</span>",\
+						"<span class='userdanger'>[src] is trying to put zipties on you!</span>")
+	addtimer(CALLBACK(src, PROC_REF(attempt_handcuff), C), 4 SECONDS)
+
+/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire/proc/attempt_handcuff(mob/living/carbon/C)
+	if( !Adjacent(C) || !isturf(C.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
+		return
+	if(!C.handcuffed)
+		C.set_handcuffed(new /obj/item/restraints/handcuffs/cable/zipties/used(C))
+		C.update_handcuffed()
+
 
 /mob/living/simple_animal/hostile/retaliate/dementia
 	name = "Literally Me"

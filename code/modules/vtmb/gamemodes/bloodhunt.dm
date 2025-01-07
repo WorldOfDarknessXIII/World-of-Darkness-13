@@ -67,13 +67,13 @@ SUBSYSTEM_DEF(bloodhunt)
 			if(iskindred(H) || isghoul(H))
 				H.clear_alert("bloodhunt")
 
-/datum/controller/subsystem/bloodhunt/proc/announce_hunted(var/mob/living/target)
+/datum/controller/subsystem/bloodhunt/proc/announce_hunted(var/mob/living/target, var/reason)
 	if(!ishuman(target))
 		return
 	var/mob/living/carbon/human/H = target
 	if(!H.bloodhunted)
 		H.bloodhunted = TRUE
-		to_chat(world, "<b>The Blood Hunt after <span class='warning'>[H.true_real_name]</span> has been announced!</b>")
+		to_chat(world, "<b>The Blood Hunt after <span class='warning'>[H.true_real_name]</span> has been announced! <br> Reason: [reason]</b>")
 		SEND_SOUND(world, sound('code/modules/wod13/sounds/announce.ogg'))
 		hunted += H
 		update_shit()

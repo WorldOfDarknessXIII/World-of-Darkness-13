@@ -314,7 +314,7 @@ GLOBAL_VAR(restart_counter)
 	if (!host && hostedby)
 		features += "hosted by <b>[hostedby]</b>"
 
-	if (features)
+	if (features.len)
 		s += ": [jointext(features, ", ")]"
 
 	status = s

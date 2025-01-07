@@ -7,17 +7,17 @@
 		/datum/discipline/presence = 2,
 		/datum/discipline/daimonion = 3
 	)
-	male_clothes = "/obj/item/clothing/under/vampire/baali"
-	female_clothes = "/obj/item/clothing/under/vampire/baali/female"
+	male_clothes = /obj/item/clothing/under/vampire/baali
+	female_clothes = /obj/item/clothing/under/vampire/baali/female
 	enlightenment = TRUE
 	whitelisted = TRUE
+	clan_keys = /obj/item/vamp/keys/baali
 
 /datum/vampireclane/baali/on_gain(mob/living/carbon/human/H)
 	..()
 	H.faction |= "Baali"
 	var/datum/brain_trauma/mild/phobia/security/T = new()
 	H.gain_trauma(T, TRAUMA_RESILIENCE_ABSOLUTE)
-	H.put_in_r_hand(new /obj/item/vamp/keys/baali(H))
 
 /datum/discipline/daimonion/post_gain(mob/living/carbon/human/H)
 	if(level >= 3)

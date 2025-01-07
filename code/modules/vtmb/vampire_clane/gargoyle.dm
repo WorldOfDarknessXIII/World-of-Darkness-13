@@ -10,11 +10,12 @@
 	alt_sprite = "gargoyle"
 	no_facial = TRUE
 	violating_appearance = TRUE
-	male_clothes = "/obj/item/clothing/under/vampire/malkavian"
-	female_clothes = "/obj/item/clothing/under/vampire/malkavian"
+	male_clothes = /obj/item/clothing/under/vampire/malkavian
+	female_clothes = /obj/item/clothing/under/vampire/malkavian
 	haircuts = list(
 		"Bald",
 		"Pyotr",
+		"Tau",
 		"Balding Hair",
 		"Boddicker",
 		"Feather",

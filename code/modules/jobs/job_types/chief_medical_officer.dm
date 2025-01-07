@@ -12,7 +12,7 @@
 	minimal_player_age = 7
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
-	exp_type_department = EXP_TYPE_MEDICAL
+	exp_type_department = EXP_TYPE_NEUTRALS
 
 	outfit = /datum/outfit/job/cmo
 

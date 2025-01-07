@@ -7,38 +7,37 @@
 		/datum/discipline/dementation = 2,
 		/datum/discipline/obfuscate = 3
 	)
-	male_clothes = "/obj/item/clothing/under/vampire/malkavian"
-	female_clothes = "/obj/item/clothing/under/vampire/malkavian/female"
+	male_clothes = /obj/item/clothing/under/vampire/malkavian
+	female_clothes = /obj/item/clothing/under/vampire/malkavian/female
+	clan_keys = /obj/item/vamp/keys/malkav
+
+/datum/vampireclane/malkavian/post_gain(mob/living/carbon/human/H)
+	..()
+	var/datum/action/cooldown/malk_hivemind/GH = new()
+	GH.Grant(H)
+	GLOB.malkavian_list += H
 
 /datum/discipline/dementation/post_gain(mob/living/carbon/human/H)
 	..()
 	H.add_quirk(/datum/quirk/insanity)
-	var/datum/action/malk_hivemind/GH = new()
-	GH.Grant(H)
-	GLOB.malkavian_list += H
 
-/datum/action/malk_hivemind
+/datum/action/cooldown/malk_hivemind
 	name = "Hivemind"
-	desc = "Talk."
+	desc = "Talk"
 	button_icon_state = "hivemind"
 	check_flags = AB_CHECK_CONSCIOUS
 	vampiric = TRUE
-	var/abuse_fix = 0
+	cooldown_time = 5 SECONDS
 
-/datum/action/malk_hivemind/Trigger()
+/datum/action/cooldown/malk_hivemind/Trigger()
 	. = ..()
-	if((abuse_fix + 5 SECONDS) > world.time)
-		to_chat(owner, "<span class='warning'>Your mind feels a bit empty...</span>")
-		return
-	var/new_thought = input(owner, "Have any thought about this, buddy?") as null|text
+	var/new_thought = input(owner, "Have any thoughts about this, buddy?") as null|text
 	if(new_thought)
+		StartCooldown()
 		new_thought = trim(copytext_char(sanitize(new_thought), 1, MAX_MESSAGE_LEN))
-		abuse_fix = world.time
-		for(var/mob/living/carbon/human/H in GLOB.player_list)
-			if (iskindred(H))
-				var/datum/species/kindred/species = H.dna.species
-				if (species.get_discipline("Dementation"))
-					to_chat(H, "<span class='ghostalert'>[new_thought]</span>")
+		for(var/mob/living/carbon/human/H in GLOB.malkavian_list)
+			if (iskindred(H) && (H.stat != DEAD))
+				to_chat(H, "<span class='ghostalert'>[new_thought]</span>")
 
 		message_admins("[ADMIN_LOOKUPFLW(usr)] said \"[new_thought]\" through the Madness Network.")
 		log_game("[key_name(usr)] said \"[new_thought]\" through the Madness Network.")
