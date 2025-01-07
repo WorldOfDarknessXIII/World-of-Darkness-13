@@ -29,8 +29,12 @@
 	category = "Upgrades"
 
 /datum/rune_ritual/antifrenzycontract/Execute(mob/user, obj/effect/decal/baalirune/rune)
-	var/datum/action/antifrenzy/A = new()
-	A.Grant(H)
+	var/datum/action/antifrenzy/action = new()
+	for(var/datum/action/a in user.actions)
+		if(a.name == action.name)
+			to_chat(user, "<span class='baali'>You already gained THIS power</span>");
+			return FALSE
+	action.Grant(user)
 	return TRUE
 
 /// SERVERS RITUALS
