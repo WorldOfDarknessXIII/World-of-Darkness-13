@@ -1836,10 +1836,10 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 				to_chat(caster, "<span class='warning'>[target] has too much willpower to induce fear into them!</span>")
 				return
 			to_chat(target, "<span class='warning'><b>Your mind is enveloped by your greatest fear!</span></b>")
-			var/mob/living/carbon/human/H = target
-			if(!H.in_frenzy) // Cause target to frenzy
-				H.enter_frenzymod()
-				H.Paralyze(3 SECONDS)
+			var/mob/living/carbon/human/target = target
+			if(!target.in_frenzy) // Cause target to frenzy
+				target.enter_frenzymod()
+				target.Paralyze(3 SECONDS)
 				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon, exit_frenzymod)), 3 SECONDS)
 		if(3)
 			var/turf/start = get_turf(caster)
