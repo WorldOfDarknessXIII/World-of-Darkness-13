@@ -1694,7 +1694,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 /datum/curse/daimonion/lying_weakness/activate(mob/living/carbon/human/target)
 	. = ..()
 	target.gain_trauma(/datum/brain_trauma/mild/mind_echo, TRAUMA_RESILIENCE_ABSOLUTE)
-	to_chat(target, "<span class='danger'>You feel like a great curse was placed on you!</span>")
+	to_chat(target, "<span class='userdanger'><b>You feel like a great curse was placed on you!</span></b>")
 
 /datum/curse/daimonion/physical_weakness/activate(mob/living/target)
 	. = ..()
@@ -1704,7 +1704,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 	for (var/datum/action/blood_power/A in C.actions)
 		if(A)
 			A.Remove(C)
-	to_chat(target, "<span class='danger'>You feel like a great curse was placed on you!</span>")
+	to_chat(target, "<span class='userdanger'><b>You feel like a great curse was placed on you!</span></b>")
 
 /datum/curse/daimonion/mental_weakness/activate(mob/living/target)
 	. = ..()
@@ -1712,7 +1712,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 		target.social = 4
 	if(target.mentality >= 5)
 		target.mentality = 4
-	to_chat(target, "<span class='danger'>You feel like a great curse was placed on you!</span>")
+	to_chat(target, "<span class='userdanger'><b>You feel like a great curse was placed on you!</span></b>")
 
 /datum/curse/daimonion/offspring_weakness/activate(mob/living/target)
 	. = ..()
@@ -1720,14 +1720,14 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 	for (var/datum/action/give_vitae/A in C.actions)
 		if(A)
 			A.Remove(C)
-	to_chat(target, "<span class='danger'>You feel like a great curse was placed on you!</span>")
+	to_chat(target, "<span class='userdanger'><b>You feel like a great curse was placed on you!</span></b>")
 
 /datum/curse/daimonion/success_weakness/activate(mob/living/target)
 	. = ..()
 	target.add_quirk(/datum/quirk/slowpoke)
 	target.add_quirk(/datum/quirk/lazy)
 	target.add_quirk(/datum/quirk/hungry)
-	to_chat(target, "<span class='danger'>You feel like a great curse was placed on you!</span>")
+	to_chat(target, "<span class='userdanger'><b>You feel like a great curse was placed on you!</span></b>")
 
 /datum/daimonion/proc/baali_get_clan_weakness(target, caster)
 	var/mob/living/carbon/human/H = target
@@ -1830,7 +1830,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 				to_chat(caster, "Victim is a feeble worm with no strengths or visible weaknesses.")
 
 		if(2)
-			to_chat(target, "<span class='warning'>Your mind is enveloped by your greatest fear!</span>")
+			to_chat(target, "<span class='warning'><b>Your mind is enveloped by your greatest fear!</span></b>")
 			var/mob/living/carbon/human/H = target
 			if(!H.in_frenzy) // Cause target to frenzy
 				H.enter_frenzymod()
@@ -1843,6 +1843,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 			H.preparePixelProjectile(target, start)
 			H.fire(direct_target = target)
 		if(4)
+			to_chat(target, "<span class='warning'><b>You hear infernal laugh!</span></b>")
 			new /datum/hallucination/baali(caster, TRUE)
 		if(5)
 			var/list/curses_names = list()
@@ -1851,7 +1852,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 					var/datum/curse/daimonion/D = i
 					if(caster.generation <= D.genrequired)
 						curses_names += initial(D.name)
-				to_chat(caster, "<span class='danger'>To place a curse on someone is to pay the great price. Are you willing to take the risks?</span>")
+				to_chat(caster, "<span class='userdanger'><b>To place a curse on someone is to pay the great price. Are you willing to take the risks?</b></span>")
 				var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in curses_names
 				if(choosecurse)
 					var/mob/living/BP = caster
@@ -1905,7 +1906,7 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 						else
 							to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
 			else
-				to_chat(caster, "That fucker is already cursed!")
+				to_chat(caster, "<span class='warning'>This one is already cursed!</span>")
 
 /datum/discipline/valeren
 	name = "Valeren"

@@ -448,6 +448,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			target.adjustStaminaLoss(500)
 			step_away(target, demon)
 			target.visible_message("<span class='warning'>[target] jumps backwards, falling on the ground!</span>","<span class='userdanger'>[demon] slams into you!</span>")
+			STOP_PROCESSING(SSfastprocess, src)
 			QDEL(src)
 		next_action = 0.2
 	else
