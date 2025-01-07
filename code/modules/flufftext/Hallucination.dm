@@ -421,13 +421,6 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	if(!wall)
 		return INITIALIZE_HINT_QDEL
 	feedback_details += "Source: [wall.x],[wall.y],[wall.z]"
-
-	fakebroken = image('icons/turf/floors.dmi', wall, "plating", layer = TURF_LAYER)
-	landing = get_turf(target)
-	fakebroken.override = TRUE
-	if(target.client)
-		target.client.images |= fakebroken
-		target.client.images |= fakerune
 	target.playsound_local(wall,'sound/effects/meteorimpact.ogg', 150, 1)
 	demon = new(wall, target)
 	addtimer(CALLBACK(src, PROC_REF(start_processing)), 10)
@@ -448,14 +441,13 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		demon.forceMove(get_step_towards(demon, target))
 		demon.setDir(get_dir(demon, target))
 		target.playsound_local(get_turf(demon), 'sound/effects/meteorimpact.ogg', 150, 1)
-		shake_camera(target, 2, 1)
 		if(demon.Adjacent(target) && !charged)
 			charged = TRUE
 			target.Paralyze(50)
 			target.adjustStaminaLoss(500)
 			step_away(target, demon)
 			target.visible_message("<span class='warning'>[target] jumps backwards, falling on the ground!</span>","<span class='userdanger'>[demon] slams into you!</span>")
-			QDEL_IN(src, 5 SECONDS)
+			QDEL_IN(src, 3 SECONDS)
 		next_action = 0.2
 	else
 		STOP_PROCESSING(SSfastprocess, src)
