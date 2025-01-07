@@ -13,6 +13,7 @@
 //Normal phones won't use check_global_contacts, they can't add any of GLOB contacts.
 //Remember to set the job of the phone with "my_contact_is_important = TRUE", or the check_global_contacts proc won't get activate automatically
 
+// PRIMOGEN
 
 /datum/phonecontact/brujah
 	name = "Primogen Brujah"
@@ -57,6 +58,8 @@
 /datum/phonecontact/ventrue
 	name = "Primogen Ventrue"
 
+// CAMARILLA
+
 /datum/phonecontact/ventrue/check_global_contacts()
 	if(number != GLOB.ventruenumber && name_check != GLOB.ventruename)
 		number = GLOB.ventruenumber
@@ -94,15 +97,37 @@
 		return TRUE
 	..()
 
-/datum/phonecontact/barkeeper
-	name = "Baron"
+/datum/phonecontact/keeper
+	name = "Keeper"
 
-/datum/phonecontact/barkeeper/check_global_contacts()
-	if(number != GLOB.barkeepernumber && name_check != GLOB.barkeepername)
-		number = GLOB.barkeepernumber
-		name = GLOB.barkeepername + " - " + name
+/datum/phonecontact/keeper/check_global_contacts()
+	if(number != GLOB.keepernumber && name_check != GLOB.keepername)
+		number = GLOB.keepernumber
+		name = GLOB.keepername + " - " + name
 		return TRUE
 	..()
+
+/datum/phonecontact/harpy
+	name = "Harpy"
+
+/datum/phonecontact/keeper/check_global_contacts()
+	if(number != GLOB.harpynumber && name_check != GLOB.harpyname)
+		number = GLOB.harpynumber
+		name = GLOB.harpyname + " - " + name
+		return TRUE
+	..()
+
+/datum/phonecontact/scourge
+	name = "Scourge"
+
+/datum/phonecontact/keeper/check_global_contacts()
+	if(number != GLOB.scourgenumber && name_check != GLOB.scourgename)
+		number = GLOB.scourgenumber
+		name = GLOB.scourgename + " - " + name
+		return TRUE
+	..()
+
+// DEALER
 
 /datum/phonecontact/dealer
 	name = "Dealer"
@@ -114,6 +139,8 @@
 		return TRUE
 	..()
 
+// TREMERE
+
 /datum/phonecontact/tremere
 	name = "Tremere Regent"
 
@@ -124,4 +151,34 @@
 		return TRUE
 	..()
 
+// ANARCH
 
+/datum/phonecontact/emissary
+	name = "Anarch Emissary"
+
+/datum/phonecontact/emissary/check_global_contacts()
+	if(number != GLOB.emissarynumber && name_check != GLOB.emissaryname)
+		number = GLOB.emissarynumber
+		name = GLOB.emissaryname + " - " + name
+		return TRUE
+	..()
+
+/datum/phonecontact/reeve
+	name = "Anarch Reeve"
+
+/datum/phonecontact/reeve/check_global_contacts()
+	if(number != GLOB.reevenumber && name_check != GLOB.reevename)
+		number = GLOB.reevenumber
+		name = GLOB.reevename + " - " + name
+		return TRUE
+	..()
+
+/datum/phonecontact/barkeeper
+	name = "Baron"
+
+/datum/phonecontact/barkeeper/check_global_contacts()
+	if(number != GLOB.barkeepernumber && name_check != GLOB.barkeepername)
+		number = GLOB.barkeepernumber
+		name = GLOB.barkeepername + " - " + name
+		return TRUE
+	..()

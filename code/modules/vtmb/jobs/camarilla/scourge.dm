@@ -30,23 +30,34 @@
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SEC
 
-	display_order = JOB_DISPLAY_ORDER_SHERIFF
+	display_order = JOB_DISPLAY_ORDER_SCOURGE
 	bounty_types = CIV_JOB_SEC
 
-	minimal_generation = 12	//Uncomment when players get exp enough
+	minimal_generation = 9 // Personal assassin for a reason
 	minimal_masquerade = 5
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("True Brujah", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Lasombra")
 
 	my_contact_is_important = TRUE
-	known_contacts = list("Prince","Seneschal","Keeper","Harpy","Primogens","Reeve","Baron","Dealer")
+	known_contacts = list(
+		"Sheriff",
+		"Seneschal",
+		"Dealer",
+		"Tremere Regent",
+		"Primogens",
+		"Reeve",
+		"Emissary",
+		"Harpy",
+		"Keeper",
+		"Baron"
+	)
 
 	v_duty = "Protect the Prince and the Masquerade. You are their sword."
 	experience_addition = 20
 
-/datum/outfit/job/sheriff
-	name = "Sheriff"
-	jobtype = /datum/job/vamp/sheriff
+/datum/outfit/job/scourge
+	name = "Scourge"
+	jobtype = /datum/job/vamp/Scourge
 
 	ears = /obj/item/p25radio
 	id = /obj/item/card/id/sheriff
@@ -67,12 +78,12 @@
 
 	implants = list(/obj/item/implant/mindshield)
 
-/datum/outfit/job/sheriff/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/scourge/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.vampire_faction = "Camarilla"
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/sheriff/female
 
-/obj/effect/landmark/start/sheriff
-	name = "Sheriff"
+/obj/effect/landmark/start/scourge
+	name = "Scourge"
 	icon_state = "Sheriff"

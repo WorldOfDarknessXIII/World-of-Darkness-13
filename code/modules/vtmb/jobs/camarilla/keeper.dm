@@ -1,6 +1,5 @@
-
-/datum/job/vamp/clerk
-	title = "Seneschal"
+/datum/job/vamp/keeper
+	title = "Keeper"
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("Prince")
 	head_announce = list(RADIO_CHANNEL_SUPPLY, RADIO_CHANNEL_SERVICE)
@@ -37,22 +36,33 @@
 
 	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_CLERK
+	display_order = JOB_DISPLAY_ORDER_KEEPER
 
 //	minimal_generation = 12	//Uncomment when players get exp enough
 	minimal_masquerade = 5
 
 	my_contact_is_important = TRUE
-	known_contacts = list("Prince","Sheriff","Tremere Regent","Dealer","Primogens")
+	known_contacts = list(
+		"Sheriff",
+		"Seneschal",
+		"Dealer",
+		"Tremere Regent",
+		"Primogens",
+		"Reeve",
+		"Emissary",
+		"Harpy",
+		"Keeper",
+		"Baron"
+	)
 
 	v_duty = "You are the right hand man or woman of the most powerful vampire in the city. The Camarilla trusts you to run the city, even in their stead."
 	duty = "You are the right hand man or woman of the most powerful vampire in the city. The Camarilla trusts you to run the city, even in their stead."
 	experience_addition = 15
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Lasombra", "Gargoyle", "Kiasyd")
 
-/datum/outfit/job/clerk
-	name = "Seneschal"
-	jobtype = /datum/job/vamp/clerk
+/datum/outfit/job/keeper
+	name = "Keeper"
+	jobtype = /datum/job/vamp/keeper
 
 	ears = /obj/item/p25radio
 	id = /obj/item/card/id/clerk
@@ -61,15 +71,15 @@
 //	head = /obj/item/clothing/head/hopcap
 	l_pocket = /obj/item/vamp/phone/clerk
 	r_pocket = /obj/item/vamp/keys/clerk
-	backpack_contents = list(/obj/item/passport=1, /obj/item/phone_book=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard/seneschal=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/radio=1, /obj/item/phone_book=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard/seneschal=1)
 
-/datum/outfit/job/clerk/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/keeper/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.vampire_faction = "Camarilla"
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/clerk/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
 
-/obj/effect/landmark/start/clerk
-	name = "Seneschal"
+/obj/effect/landmark/start/keeper
+	name = "Keeper"
 	icon_state = "Clerk"

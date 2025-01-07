@@ -17,13 +17,22 @@
 	display_order = JOB_DISPLAY_ORDER_BARKEEPER
 	bounty_types = CIV_JOB_DRINK
 
-//	minimal_generation = 11	//Uncomment when players get exp enough
+	minimal_generation = 10
 
 	my_contact_is_important = TRUE
 	known_contacts = list(
 		"Prince",
+		"Scourge",
+		"Sheriff",
+		"Reeve",
+		"Emissary",
+		"Harpy",
 		"Dealer"
 	)
+
+	/datum/job/vamp/baron/announce(mob/living/carbon/human/H)
+	..()
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, PROC_REF(minor_announce), "The undisputed Baron [H.real_name] is in the city!"))
 
 	v_duty = "You lead the Anarchs in the City. A Camarilla faction that values freedom and individuality. While not a fan of the traditions, you still respect the Masquerade."
 	minimal_masquerade = 3
@@ -43,7 +52,7 @@
 	gloves = /obj/item/clothing/gloves/vampire/work
 	l_pocket = /obj/item/vamp/phone/barkeeper
 	r_pocket = /obj/item/vamp/keys/bar
-	backpack_contents = list(/obj/item/passport=1, /obj/item/phone_book=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/phone_book=1, /obj/item/radio=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
 
 /datum/outfit/job/barkeeper/pre_equip(mob/living/carbon/human/H)
 	..()

@@ -1,6 +1,5 @@
-
-/datum/job/vamp/bruiser
-	title = "Bruiser"
+/datum/job/vamp/anarch
+	title = "Anarch"
 	department_head = list("Baron")
 	faction = "Vampire"
 	total_positions = 7
@@ -8,7 +7,7 @@
 	supervisors = "the Baron"
 	selection_color = "#434343"
 
-	outfit = /datum/outfit/job/bruiser
+	outfit = /datum/outfit/job/anarch
 
 	access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
 	minimal_access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
@@ -18,17 +17,22 @@
 	mind_traits = list(TRAIT_DONUT_LOVER)
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_BRUISER
-	known_contacts = list("Baron")
+	display_order = JOB_DISPLAY_ORDER_ANARCH
+	known_contacts = list(
+		"Baron",
+		"Reeve",
+		"Emissary",
+		"Dealer"
+	)
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Tremere", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian", "Ministry")
 
 	v_duty = "You are the enforcer of the Anarchs. The baron is always in need of muscle power. Enforce the Traditions - in the anarch way."
 	minimal_masquerade = 2
 	experience_addition = 15
 
-/datum/outfit/job/bruiser
-	name = "Bruiser"
-	jobtype = /datum/job/vamp/bruiser
+/datum/outfit/job/anarch
+	name = "Anarch"
+	jobtype = /datum/job/vamp/anarch
 
 	id = /obj/item/card/id/anarch
 	uniform = /obj/item/clothing/under/vampire/bouncer
@@ -37,12 +41,12 @@
 	r_pocket = /obj/item/vamp/keys/anarch
 	l_pocket = /obj/item/vamp/phone/anarch
 	r_hand = /obj/item/melee/vampirearms/baseball
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/vampire_stake=3, /obj/item/flashlight=1, /obj/item/vamp/keys/hack=1, /obj/item/vamp/creditcard=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/radio=1, /obj/item/vampire_stake=3, /obj/item/flashlight=1, /obj/item/vamp/keys/hack=1, /obj/item/vamp/creditcard=1)
 
-/datum/outfit/job/bruiser/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/anarch/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.vampire_faction = "Anarchs"
 
-/obj/effect/landmark/start/bruiser
-	name = "Bruiser"
+/obj/effect/landmark/start/anarch
+	name = "Anarch"
 	icon_state = "Bouncer"

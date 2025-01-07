@@ -19,7 +19,16 @@
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_EMISSARY
-	known_contacts = list("Baron")
+	known_contacts = list(
+		"Sheriff",
+		"Seneschal",
+		"Scourge",
+		"Dealer",
+		"Reeve",
+		"Harpy",
+		"Baron"
+	)
+
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Tremere", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian", "Ministry")
 
 	v_duty = "You are a diplomat for the anarchs. Make deals, keep the peace, all through words, not violence. But the latter may come to pass if the former fails."
@@ -36,7 +45,7 @@
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	r_pocket = /obj/item/vamp/keys/anarch
 	l_pocket = /obj/item/vamp/phone/anarch
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/keys/hack=1, /obj/item/vamp/creditcard/rich=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/radio=1, /obj/item/vamp/keys/hack=1, /obj/item/vamp/creditcard/rich=1)
 
 /datum/outfit/job/emissary/pre_equip(mob/living/carbon/human/H)
 	..()
