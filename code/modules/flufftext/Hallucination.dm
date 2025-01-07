@@ -439,7 +439,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		demon.forceMove(get_step_towards(demon, target))
 		demon.setDir(get_dir(demon, target))
 		target.playsound_local(get_turf(demon), 'sound/effects/meteorimpact.ogg', 150, 1)
-		QDEL_IN(src, 5 SECONDS)
+		QDEL_IN(src, 4 SECONDS)
 		if(demon.Adjacent(target) && !charged)
 			charged = TRUE
 			target.Paralyze(50)
