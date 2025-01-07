@@ -1700,10 +1700,10 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 	. = ..()
 	if(target.physique >= 5)
 		target.physique = 4
-	var/mob/living/carbon/human/C
-	for (var/datum/action/blood_power/A in C.actions)
-		if(A)
-			A.Remove(C)
+	var/mob/living/carbon/human/target = target
+	for (var/datum/action/blood_power/blood_power in target.actions)
+		if(blood_power)
+			blood_power.Remove(target)
 	to_chat(target, "<span class='userdanger'><b>You feel like a great curse was placed on you!</span></b>")
 
 /datum/curse/daimonion/mental_weakness/activate(mob/living/target)
@@ -1716,10 +1716,10 @@ GLOBAL_LIST_EMPTY(who_is_cursed)
 
 /datum/curse/daimonion/offspring_weakness/activate(mob/living/target)
 	. = ..()
-	var/mob/living/carbon/human/C
-	for (var/datum/action/give_vitae/A in C.actions)
-		if(A)
-			A.Remove(C)
+	var/mob/living/carbon/human/target = target
+	for (var/datum/action/give_vitae/give_vitae in target.actions)
+		if(give_vitae)
+			give_vitae.Remove(target)
 	to_chat(target, "<span class='userdanger'><b>You feel like a great curse was placed on you!</span></b>")
 
 /datum/curse/daimonion/success_weakness/activate(mob/living/target)
