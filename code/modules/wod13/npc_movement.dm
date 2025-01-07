@@ -32,9 +32,12 @@
 /mob/living/carbon/human/npc/Initialize()
 	..()
 	GLOB.npc_list += src
+	GLOB.alive_npc_list += src
 	add_movespeed_modifier(/datum/movespeed_modifier/npc)
 
 /mob/living/carbon/human/npc/death()
+	GLOB.alive_npc_list -= src
+	SShumannpcpool.npclost()
 	walk(src,0)
 	if(last_attacker && !key && !hostile)
 		if(get_dist(src, last_attacker) < 10)
@@ -69,13 +72,12 @@
 							SEND_SOUND(HM, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
 							to_chat(HM, "<span class='userdanger'><b>SUSPICIOUS ACTION (murder)</b></span>")
 	remove_overlay(FIGHT_LAYER)
-	GLOB.npc_list -= src
-	SShumannpcpool.npclost() // [Lucifernix] - Removes dead NPCs from NPC list.
 	..()
 
 /mob/living/carbon/human/npc/Destroy()
 	..()
 	GLOB.npc_list -= src
+	GLOB.alive_npc_list -= src
 	SShumannpcpool.npclost()
 
 /mob/living/carbon/human/npc/Life()
