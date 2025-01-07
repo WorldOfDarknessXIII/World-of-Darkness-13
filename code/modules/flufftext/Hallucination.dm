@@ -449,18 +449,13 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			step_away(target, demon)
 			target.visible_message("<span class='warning'>[target] jumps backwards, falling on the ground!</span>","<span class='userdanger'>[demon] slams into you!</span>")
 			STOP_PROCESSING(SSfastprocess, src)
-			QDEL(src)
+			qdel(src)
 		next_action = 0.2
 	else
 		STOP_PROCESSING(SSfastprocess, src)
 		QDEL_IN(src, 3 SECONDS)
 
 /datum/hallucination/baali/Destroy()
-	if(target.client)
-		target.client.images.Remove(fakebroken)
-		target.client.images.Remove(fakerune)
-	QDEL_NULL(fakebroken)
-	QDEL_NULL(fakerune)
 	QDEL_NULL(demon)
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
