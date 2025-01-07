@@ -12,6 +12,9 @@ GLOBAL_LIST_INIT(command_positions, list(
 	"Prince",
 	"Seneschal",
 	"Sheriff",
+	"Hound",
+	"Keeper",
+	"Harpy",
 	"Scourge"))
 
 GLOBAL_LIST_INIT(camarilla_council_positions, list(
@@ -27,7 +30,8 @@ GLOBAL_LIST_INIT(anarch_positions, list(
 	"Baron",
 	"Emissary",
 	"Sweeper",
-	"Bruiser"
+	"Anarch",
+	"Reeve"
 	))
 
 
