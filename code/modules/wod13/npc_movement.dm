@@ -83,7 +83,6 @@
 /mob/living/carbon/human/npc/Life()
 	if(stat == DEAD)
 		return
-	..()
 	if(pulledby)
 		if(prob(25))
 			Aggro(pulledby, TRUE)
@@ -110,6 +109,8 @@
 				if(walktarget && !old_movement)
 					if(route_optimisation())
 						forceMove(get_turf(walktarget))
+		if((getBruteLoss()+getFireLoss()+getCloneLoss()+getToxLoss()+getOxyLoss() != 0) && bloodpool != maxbloodpool)
+			..()
 //		if(prob(5) && !danger_source)
 //			var/activity = rand(1, 3)
 //			switch(activity)

@@ -295,6 +295,8 @@
 	icon_state = "cat[id]"
 	icon_living = "cat[id]"
 	icon_dead = "cat[id]_dead"
+	if(prob(50))
+		qdel(src)
 
 /mob/living/simple_animal/hostile/beastmaster/cat
 	name = "cat"
