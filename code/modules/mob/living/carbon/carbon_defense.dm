@@ -264,7 +264,7 @@
 		if(mind?.dharma?.Po == "Rebel")
 			emit_po_call(src, "Rebel")
 		if(target)
-			if("judgement" in mind?.dharma?.tennets)
+			if("judgement" in mind?.dharma?.tenets)
 				if(target.lastattacker != src)
 					mind?.dharma?.deserving |= target.real_name
 

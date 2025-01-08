@@ -372,7 +372,7 @@
 			H.rollfrenzy()
 
 		if(H.mind.dharma.Po == "Monkey")
-			if(H.mind.dharma.last_po_call + 5 SECONDS <= world.time)
+			if(COOLDOWN_FINISHED(H.mind.dharma, po_call))
 				var/atom/trigger1
 				var/atom/trigger2
 				var/atom/trigger3
@@ -404,7 +404,7 @@
 						fool_fails = 0
 
 		if(H.mind.dharma.Po == "Demon")
-			if(H.mind.dharma.last_po_call + 5 SECONDS <= world.time)
+			if(COOLDOWN_FINISHED(H.mind.dharma, po_call))
 				var/atom/trigger
 				for(var/mob/living/carbon/human/hum in viewers(5, H))
 					if(hum != H)

@@ -526,32 +526,22 @@
 			COOLDOWN_START(vampire_species, torpor_timer, torpor_length)
 		if (iscathayan(src))
 			var/mob/living/carbon/human/cathayan = src
-			var/datum/dharma/D = cathayan.mind.dharma
+			var/datum/dharma/dharma = cathayan.mind.dharma
 			var/torpor_length = 0 SECONDS
-			switch(D.level)
-				if(10)
-					torpor_length = 1 MINUTES
-				if(9)
-					torpor_length = 3 MINUTES
-				if(8)
-					torpor_length = 4 MINUTES
-				if(7)
-					torpor_length = 5 MINUTES
+			switch(dharma.level)
 				if(6)
-					torpor_length = 10 MINUTES
+					torpor_length = 3 MINUTES
 				if(5)
-					torpor_length = 15 MINUTES
+					torpor_length = 4 MINUTES
 				if(4)
-					torpor_length = 30 MINUTES
+					torpor_length = 5 MINUTES
 				if(3)
-					torpor_length = 1 HOURS
+					torpor_length = 10 MINUTES
 				if(2)
-					torpor_length = 2 HOURS
+					torpor_length = 15 MINUTES
 				if(1)
-					torpor_length = 3 HOURS
-				else
-					torpor_length = 5 HOURS
-			COOLDOWN_START(D, torpor_timer, torpor_length)
+					torpor_length = 30 MINUTES
+			COOLDOWN_START(dharma, torpor_timer, torpor_length)
 
 ///Unignores all slowdowns that lack the IGNORE_NOSLOW flag.
 /mob/living/proc/unignore_slowdown(source)

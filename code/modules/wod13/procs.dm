@@ -2,7 +2,7 @@
 	if(value < 0)
 		for(var/mob/living/carbon/human/H in viewers(7, src))
 			if(H != src && H.mind?.dharma)
-				if("judgement" in H.mind.dharma.tennets)
+				if("judgement" in H.mind.dharma.tenets)
 					to_chat(H, "<span class='warning'>[src] is doing something bad, I need to punish them!")
 					H.mind.dharma.judgement |= real_name
 	if(!iskindred(src))
