@@ -118,7 +118,7 @@
 	var/discipline_type = "Shintai"		//Either "Shintai", "Chi" or "Demon" arts
 	COOLDOWN_DECLARE(activate)
 
-/datum/chi_discipline/proc/post_gain(mob/living/carbon/human/H)
+/datum/chi_discipline/proc/post_gain(mob/living/carbon/human/user)
 	return
 
 /datum/chi_discipline/proc/check_activated(mob/living/target, mob/living/carbon/human/caster)
@@ -965,9 +965,9 @@
 	activate_sound = 'code/modules/wod13/sounds/demonshintai_activate.ogg'
 	var/current_form = "Samurai"
 
-/datum/chi_discipline/demon_shintai/post_gain(var/mob/living/carbon/human/H)
-	var/datum/action/choose_demon_form/C = new()
-	C.Grant(H)
+/datum/chi_discipline/demon_shintai/post_gain(mob/living/carbon/human/user)
+	var/datum/action/choose_demon_form/demon_form_action = new()
+	demon_form_action.Grant(user)
 
 /datum/action/choose_demon_form
 	name = "Choose Demon Form"
@@ -980,17 +980,17 @@
 
 /datum/action/choose_demon_form/Trigger()
 	if(istype(owner, /mob/living/carbon/human))
-		var/mob/living/carbon/human/BD = usr
-		var/sett = input(BD, "Choose your Demon Form", "Demon Form") as null|anything in list("Samurai", "Tentacles", "Demon", "Giant", "Foul")
-		if(sett)
-			to_chat(BD, "Your new form is [sett].")
-			for(var/datum/action/chi_discipline/C in BD.actions)
-				if(C)
-					if(istype(C.discipline, /datum/chi_discipline/demon_shintai))
-						var/datum/chi_discipline/demon_shintai/D = C.discipline
-						D.current_form = sett
+		var/mob/living/carbon/human/user = usr
+		var/new_form = input(user, "Choose your Demon Form", "Demon Form") as null|anything in list("Samurai", "Tentacles", "Demon", "Giant", "Foul")
+		if(new_form)
+			to_chat(user, "Your new form is [new_form].")
+			for(var/datum/action/chi_discipline/chi_action in user.actions)
+				if(chi_action)
+					if(istype(chi_action.discipline, /datum/chi_discipline/demon_shintai))
+						var/datum/chi_discipline/demon_shintai/demon_shintai = chi_action.discipline
+						demon_shintai.current_form = new_form
 		button.color = "#970000"
-		animate(button, color = "#ffffff", time = 20, loop = 1)
+		animate(button, color = "#ffffff", time = 2 SECONDS, loop = 1)
 
 /datum/movespeed_modifier/tentacles1
 	multiplicative_slowdown = -0.5
@@ -1006,7 +1006,7 @@
 /datum/movespeed_modifier/demonform5
 	multiplicative_slowdown = -5
 
-/datum/chi_discipline/demon_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/chi_discipline/demon_shintai/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	switch(current_form)
 		if("Samurai")
