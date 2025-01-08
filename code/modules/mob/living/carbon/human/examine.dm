@@ -443,7 +443,6 @@
 			var/wyld_taint = NONE
 
 			if(iscathayan(src))
-				weaver_taint++
 				if(!check_kuei_jin_alive())
 					wyrm_taint++
 

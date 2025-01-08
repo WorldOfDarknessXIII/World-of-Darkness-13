@@ -118,7 +118,6 @@
 		"<span class='notice'>You turn on [src].</span>", \
 		"<span class='hear'>You hear a food processor.</span>")
 	playsound(src.loc, 'sound/machines/blender.ogg', 50, TRUE)
-	call_dharma("torture", user)
 	use_power(500)
 	var/total_time = 0
 	for(var/O in processor_contents)

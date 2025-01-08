@@ -177,9 +177,9 @@
 					if(cathayan.mind.dharma.tennets_done[i] == 0)
 						cathayan.mind.dharma.tennets_done[i] = 1
 						to_chat(cathayan, "<span class='help'>You find this action helping you on your path ([cathayan.mind.dharma.get_done_tennets()]/[length(cathayan.mind.dharma.tennets)]).</span>")
-//			for(var/i in cathayan.mind.dharma.fails)
-//				if(i == mod)
-//					to_chat(cathayan, "<span class='userdanger'>This action is against your path's philosophy.</span>")
+			for(var/i in cathayan.mind.dharma.fails)
+				if(i == mod)
+					to_chat(cathayan, "<span class='userdanger'>This action is against your path's philosophy.</span>")
 //					update_dharma(cathayan, -1)							//I was asked to remove dharma sins. Gonna be here if someone decides to get them back
 			var/tennets_needed = length(cathayan.mind.dharma.tennets)
 			var/tennets_done = 0
