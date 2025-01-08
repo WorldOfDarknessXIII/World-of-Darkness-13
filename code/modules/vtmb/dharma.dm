@@ -52,7 +52,7 @@
 	desc = "This path encourages to live with the light part of Circle, Yang. Live, love and laugh, save lives, meet your friends and lovers, clean the nature and grow it like a garden. However, killing, griefing and stealing leads you to the opposite."
 	tennets = list("savelife", "meet", "cleangrow")
 	tennets_done = list("savelife" = 0, "meet" = 0, "cleangrow" = 0)
-	fails = list("kill", "grief", "steal")
+	fails = list("killfirst", "extinguish")
 
 /datum/dharma/flame_of_rising_phoenix
 	name = "Flame of the Rising Phoenix (Yang+Hun)"
