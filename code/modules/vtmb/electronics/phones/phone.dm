@@ -62,6 +62,9 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_HEAR, PROC_REF(handle_hearing))
 	if(!number || number == "")
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H_O = loc
+			owner = H_O.real_name
 		number = create_unique_phone_number(exchange_num)
 		GLOB.phone_numbers_list += number
 		GLOB.phones_list += src
@@ -69,7 +72,6 @@
 			var/mob/living/carbon/human/H = loc
 			if(H.Myself)
 				H.Myself.phone_number = number
-				owner = H.true_real_name
 
 /obj/item/vamp/phone/Destroy()
 	GLOB.phone_numbers_list -= number

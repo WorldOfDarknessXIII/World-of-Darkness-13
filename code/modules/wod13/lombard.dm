@@ -17,7 +17,7 @@
 			return
 	if(W.cost > 0)
 		if(W.illegal == illegal)
-			for(var/i in 1 to (W.cost/5)*(user.social + user.additional_social * 0.1))
+			for(var/i in 1 to (W.cost / 5) * (user.social + (user.additional_social * 0.1)))
 				new /obj/item/stack/dollar(loc)
 			playsound(loc, 'code/modules/wod13/sounds/sell.ogg', 50, TRUE)
 			if(istype(W, /obj/item/organ))
@@ -26,13 +26,13 @@
 				H.AdjustHumanity(-1, 0)
 			else if(istype(W, /obj/item/reagent_containers/food/drinks/meth/cocaine))
 				var/mob/living/carbon/human/H = user
-				H.AdjustHumanity(-1, 4)
+				H.AdjustHumanity(-1, 5)
 			else if(istype(W, /obj/item/reagent_containers/food/drinks/meth))
 				var/mob/living/carbon/human/H = user
-				H.AdjustHumanity(-1, 3)
+				H.AdjustHumanity(-1, 4)
 			else if(illegal)
 				var/mob/living/carbon/human/H = user
-				H.AdjustHumanity(-1, 5)
+				H.AdjustHumanity(-1, 7)
 			qdel(W)
 			return
 	else

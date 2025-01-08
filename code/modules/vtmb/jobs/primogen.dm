@@ -30,6 +30,7 @@
 	name = "Primogen Malkavian"
 	jobtype = /datum/job/vamp/primogen_malkavian
 
+	ears = /obj/item/p25radio
 	id = /obj/item/card/id/primogen
 	glasses = /obj/item/clothing/glasses/vampire/sun
 	uniform = /obj/item/clothing/under/vampire/primogen_malkavian

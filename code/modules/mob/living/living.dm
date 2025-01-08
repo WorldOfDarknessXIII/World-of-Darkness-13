@@ -939,8 +939,8 @@
 			altered_grab_state++
 		var/resist_chance = BASE_GRAB_RESIST_CHANCE /// see defines/combat.dm, this should be baseline 60%
 		var/mob/living/G = pulledby
-		var/grabber_physique = (G.physique + G.additional_physique) * 10 // The one who is grabbing physique
-		var/resist_physique = (physique + additional_physique) * 10 // The one who is  resisting physique
+		var/grabber_physique = (G.get_total_physique()) * 10 // The one who is grabbing physique
+		var/resist_physique = (get_total_physique()) * 10 // The one who is  resisting physique
 		resist_chance = ((resist_chance + (resist_physique - grabber_physique))/altered_grab_state)
 		if(prob(resist_chance))
 			visible_message("<span class='danger'>[src] breaks free of [pulledby]'s grip!</span>", \
@@ -1973,3 +1973,26 @@
 			if (INTENT_HELP)
 				attack_result = style.help_act(src, target)
 	return attack_result
+
+//Making a proc for each of these.
+
+/mob/living/proc/get_total_physique()
+	return physique + additional_physique
+
+/mob/living/proc/get_total_dexterity()
+	return dexterity + additional_dexterity
+
+/mob/living/proc/get_total_social()
+	return social + additional_social
+
+/mob/living/proc/get_total_mentality()
+	return mentality + additional_mentality
+
+/mob/living/proc/get_total_blood()
+	return blood + additional_blood
+
+/mob/living/proc/get_total_lockpicking()
+	return lockpicking + additional_lockpicking
+
+/mob/living/proc/get_total_athletics()
+	return athletics + additional_athletics

@@ -11,7 +11,7 @@ Citizen=-1,-1
 
 Supply Technician=3,3
 Dealer=1,1
-Bouncer=3,3
+Bruiser=3,3
 Barkeeper=1,1
 
 Archivist=1,1

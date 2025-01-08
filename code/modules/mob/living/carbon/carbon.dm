@@ -201,7 +201,9 @@
 		return
 
 	var/mob/living/carbon/H = src
-	var/physique = H.physique + H.additional_physique 
+	var/physique = H.get_total_physique()
+	var/dexterity = H.get_total_dexterity()
+	var/athletics = H.get_total_athletics()
 
 	if(HAS_TRAIT(H, TRAIT_IMMOBILIZED) || H.legcuffed)
 		return
@@ -833,6 +835,8 @@
 
 	//Fire and Brute damage overlay (BSSR)
 	var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
+	//Now adjust the damage in proportion to actual maxHealth, 20 damage is considered 10 damage on a mob with a maxHealth of 200
+	hurtdamage = hurtdamage * 100/(max(maxHealth, 1)) //No dividing with 0 in case maxHealth somehow becomes 0.
 	if(hurtdamage)
 		var/severity = 0
 		switch(hurtdamage)

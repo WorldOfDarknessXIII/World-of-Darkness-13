@@ -36,14 +36,7 @@
 		var/mob/living/carbon/human/npc/NPC = mob
 		NPC.danger_source = null
 //		NPC.last_attacker = src
-
-	if(iskindred(mob))
-		to_chat(src, "<span class='userlove'>[mob]'s blood tastes HEAVENLY...</span>")
-		adjustBruteLoss(-25, TRUE)
-		adjustFireLoss(-25, TRUE)
-	else
-		mob.Stun(30)
-		to_chat(src, "<span class='warning'>You sip some <b>BLOOD</b> from your victim. It feels good.</span>")
+	mob.Stun(30)
 
 	if(mob.bloodpool <= 1 && mob.maxbloodpool > 1)
 		to_chat(src, "<span class='warning'>You feel small amount of <b>BLOOD</b> in your victim.</span>")
@@ -125,6 +118,12 @@
 					client.images -= suckbar
 				qdel(suckbar)
 				return
+		if(iskindred(mob))
+			to_chat(src, "<span class='userlove'>[mob]'s blood tastes HEAVENLY...</span>")
+			adjustBruteLoss(-25, TRUE)
+			adjustFireLoss(-25, TRUE)
+		else
+			to_chat(src, "<span class='warning'>You sip some <b>BLOOD</b> from your victim. It feels good.</span>")
 		bloodpool = min(maxbloodpool, bloodpool+1*max(1, mob.bloodquality-1))
 		adjustBruteLoss(-10, TRUE)
 		adjustFireLoss(-10, TRUE)

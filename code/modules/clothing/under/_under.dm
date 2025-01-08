@@ -92,6 +92,16 @@
 			H.update_inv_wear_suit()
 
 /obj/item/clothing/under/dropped(mob/user)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.back && istype(H.back, /obj/item/storage/backpack/satchel))
+			var/obj/item/storage/backpack/satchel/S = H.back
+			if(S.icon_hidden)
+				S.icon_hidden = FALSE
+				S.worn_icon_state = initial(S.worn_icon_state)
+				H.update_inv_back()
+
 	if(attached_accessory)
 		attached_accessory.on_uniform_dropped(src, user)
 		if(ishuman(user))

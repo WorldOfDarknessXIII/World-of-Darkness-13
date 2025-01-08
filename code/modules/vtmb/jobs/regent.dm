@@ -30,7 +30,7 @@
 	name = "Chantry Regent"
 	jobtype = /datum/job/vamp/regent
 
-	id = /obj/item/card/id/archive
+	id = /obj/item/card/id/regent
 	glasses = /obj/item/clothing/glasses/vampire/perception
 	suit = /obj/item/clothing/suit/vampire/trench/archive
 	shoes = /obj/item/clothing/shoes/vampire

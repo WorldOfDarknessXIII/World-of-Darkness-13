@@ -624,7 +624,6 @@
 	H.faction |= ROLE_SYNDICATE
 
 /obj/effect/mob_spawn/human/syndicatespace/special(mob/living/new_spawn)
-	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
 	var/policy = get_policy(assignedrole)
 	if(policy)
 		to_chat(new_spawn, "<span class='bold'>[policy]</span>")
