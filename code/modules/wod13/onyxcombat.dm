@@ -153,7 +153,7 @@
 		playsound(src, 'code/modules/wod13/sounds/parried.ogg', 70, TRUE)
 		clear_parrying()
 		return
-	if(yang_dodge)
+	if(HAS_TRAIT(src, TRAIT_ENHANCED_MELEE_DODGE))
 		apply_damage(3, STAMINA)
 		user.do_attack_animation(src)
 		playsound(src, 'sound/weapons/tap.ogg', 70, TRUE)
@@ -200,7 +200,7 @@
 		SwitchBlocking()
 	if(CheckFrenzyMove() && blocking)
 		SwitchBlocking()
-	if(user.a_intent == INTENT_HARM && yang_dodge)
+	if(user.a_intent == INTENT_HARM && HAS_TRAIT(src, TRAIT_ENHANCED_MELEE_DODGE))
 		playsound(src, 'sound/weapons/tap.ogg', 70, TRUE)
 		apply_damage(3, STAMINA)
 		user.do_attack_animation(src)
