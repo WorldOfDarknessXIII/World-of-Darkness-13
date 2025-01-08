@@ -1353,7 +1353,7 @@
 	maxbloodpool = 10
 	dodging = TRUE
 
-/datum/chi_discipline/beast_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/chi_discipline/beast_shintai/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	if(!wolflike_shapeshift)
 		wolflike_shapeshift = new(caster)
@@ -1413,8 +1413,8 @@
 	delay = 12 SECONDS
 	cost_yang = 1
 	activate_sound = 'code/modules/wod13/sounds/smokeshintai_activate.ogg'
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/smoke_form/SF
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/hidden_smoke_form/HS
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/smoke_form/smoke_shapeshift
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/hidden_smoke_form/hidden_smoke_shapeshift
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/smoke_form
 	name = "Smoke Form"
@@ -1466,12 +1466,12 @@
 	alpha = 10
 	speed = 5
 
-/datum/chi_discipline/smoke_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/chi_discipline/smoke_shintai/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	if(!SF)
-		SF = new(caster)
-	if(!HS)
-		HS = new(caster)
+	if(!smoke_shapeshift)
+		smoke_shapeshift = new(caster)
+	if(!hidden_smoke_shapeshift)
+		hidden_smoke_shapeshift = new(caster)
 	switch(level_casting)
 		if(1)
 			var/datum/effect_system/smoke_spread/bad/smoke = new
@@ -1527,22 +1527,22 @@
 				qdel(visual2)
 				qdel(visual3)
 		if(4)
-			SF.Shapeshift(caster)
-			var/mob/living/simple_animal/hostile/host = SF.myshape
+			smoke_shapeshift.Shapeshift(caster)
+			var/mob/living/simple_animal/hostile/host = smoke_shapeshift.myshape
 			host.my_creator = null
 			playsound(get_turf(caster), 'sound/effects/smoke.ogg', 50, TRUE)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster && caster.stat != DEAD)
-					SF.Restore(SF.myshape)
+					smoke_shapeshift.Restore(smoke_shapeshift.myshape)
 					caster.Stun(1.5 SECONDS)
 		if(5)
-			HS.Shapeshift(caster)
-			var/mob/living/simple_animal/hostile/host = HS.myshape
+			hidden_smoke_shapeshift.Shapeshift(caster)
+			var/mob/living/simple_animal/hostile/host = hidden_smoke_shapeshift.myshape
 			host.my_creator = null
 			playsound(get_turf(caster), 'sound/effects/smoke.ogg', 50, TRUE)
 			spawn(30 SECONDS + caster.discipline_time_plus)
 				if(caster && caster.stat != DEAD)
-					HS.Restore(HS.myshape)
+					hidden_smoke_shapeshift.Restore(hidden_smoke_shapeshift.myshape)
 					caster.Stun(1.5 SECONDS)
 
 /datum/chi_discipline/storm_shintai
