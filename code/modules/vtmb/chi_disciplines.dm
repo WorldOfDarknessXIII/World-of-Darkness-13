@@ -1615,7 +1615,6 @@
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					caster.remove_overlay(FORTITUDE_LAYER)
-					caster.wind_aura = FALSE
 		if(2)
 			caster.drop_all_held_items()
 			caster.put_in_active_hand(new /obj/item/melee/touch_attack/storm_shintai(caster))
@@ -1634,15 +1633,15 @@
 					caster.dna.species.ToggleFlight(caster)
 					caster.remove_overlay(FORTITUDE_LAYER)
 		if(5)
-			caster.storm_aura = TRUE
 			caster.remove_overlay(FORTITUDE_LAYER)
 			var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "puff_const", -FORTITUDE_LAYER)
 			fortitude_overlay.alpha = 128
 			caster.overlays_standing[FORTITUDE_LAYER] = fortitude_overlay
 			caster.apply_overlay(FORTITUDE_LAYER)
+			spawn()
+				storm_aura_loop(caster, delay + caster.discipline_time_plus)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
-					caster.storm_aura = FALSE
 					caster.remove_overlay(FORTITUDE_LAYER)
 
 /datum/chi_discipline/storm_shintai/proc/wind_aura_loop(mob/living/carbon/human/caster, duration)
@@ -1652,6 +1651,18 @@
 			step_away(pushed_by_wind, caster)
 
 		sleep(1 SECONDS)
+
+/datum/chi_discipline/storm_shintai/proc/storm_aura_loop(mob/living/carbon/human/caster, duration)
+	var/loop_started_time = world.time
+	while (world.time <= (loop_started_time + duration))
+		for(var/mob/living/shocked_mob in oviewers(5, caster))
+			var/turf/lightning_source = get_turf(caster)
+			lightning_source.Beam(shocked_mob, icon_state="lightning[rand(1,12)]", time = 0.5 SECONDS)
+			shocked_mob.Stun(0.5 SECONDS)
+			shocked_mob.electrocute_act(10, caster, siemens_coeff = 1, flags = NONE)
+			playsound(get_turf(shocked_mob), 'code/modules/wod13/sounds/lightning.ogg', 100, FALSE)
+
+		sleep(3 SECONDS)
 
 /datum/chi_discipline/equilibrium
 	name = "Equilibrium"

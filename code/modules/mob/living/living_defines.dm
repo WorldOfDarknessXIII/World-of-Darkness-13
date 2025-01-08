@@ -306,5 +306,3 @@
 	var/last_burn = 0
 	var/foul_aura = 0
 	var/last_foul = 0
-	var/storm_aura = FALSE
-	var/last_storm = 0

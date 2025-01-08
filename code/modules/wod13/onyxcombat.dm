@@ -790,16 +790,6 @@
 					C.adjustFireLoss(5, TRUE)
 					C.adjust_bodytemperature(15)
 //					C.adjust_coretemperature(15)
-	if(storm_aura)
-		if(last_storm+3 SECONDS <= world.time)
-			last_storm = world.time
-			for(var/mob/living/L in viewers(5, src))
-				if(L != src)
-					var/turf/lightning_source = get_turf(src)
-					lightning_source.Beam(L, icon_state="lightning[rand(1,12)]", time = 5)
-					L.Stun(5)
-					L.electrocute_act(10, src, siemens_coeff = 1, flags = NONE)
-					playsound(get_turf(L), 'code/modules/wod13/sounds/lightning.ogg', 100, FALSE)
 	..()
 
 /mob/living/Initialize()
