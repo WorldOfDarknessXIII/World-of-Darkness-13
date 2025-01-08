@@ -92,40 +92,23 @@
 /obj/item/melee/vampirearms/katana/fire
 	name = "burning katana"
 	icon_state = "firetana"
-	force = 0
-	block_chance = 0
-	armour_penetration = 0
 	pixel_w = -8
 	cost = 0
 	item_flags = DROPDEL
 	is_iron = FALSE
 	masquerade_violating = TRUE
-
-/obj/item/melee/vampirearms/katana/fire/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(!proximity)
-		return
-	if(isliving(target))
-		var/mob/living/L = target
-		L.apply_damage(45, BURN)
+	damtype = BURN
 
 /obj/item/melee/vampirearms/katana/blood
 	name = "bloody katana"
 	color = "#bb0000"
-	force = 0
-	block_chance = 0
-	armour_penetration = 0
+	force = 35
 	pixel_w = -8
 	cost = 0
 	item_flags = DROPDEL
 	is_iron = FALSE
 	masquerade_violating = TRUE
-
-/obj/item/melee/vampirearms/katana/blood/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(!proximity)
-		return
-	if(isliving(target))
-		var/mob/living/L = target
-		L.apply_damage(20, CLONE)
+	damtype = CLONE
 
 /obj/item/melee/vampirearms/rapier
 	name = "rapier"
