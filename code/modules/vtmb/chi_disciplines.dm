@@ -103,7 +103,7 @@
 	//Is ranged?
 	var/ranged = FALSE
 	///Duration of the Discipline.
-	var/delay = 5
+	var/delay = 0.5 SECONDS
 	///Whether this Discipline causes a Masquerade breach when used in front of mortals.
 	var/violates_masquerade = FALSE
 	///What rank, or how many dots the caster has in this Discipline.
@@ -126,48 +126,39 @@
 
 	if(caster.stat >= HARD_CRIT || caster.IsSleeping() || caster.IsUnconscious() || caster.IsParalyzed() || caster.IsStun() || HAS_TRAIT(caster, TRAIT_RESTRAINED) || !isturf(caster.loc))
 		return FALSE
+
 	if(!COOLDOWN_FINISHED(src, activate))
-		to_chat(caster, "<span class='warning'>Wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, activate))] before you can use this Discipline again!</span>")
+		to_chat(caster, "<span class='warning'>Wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, activate))] before you can use [src] again!</span>")
 		return FALSE
+
 	if(caster.yin_chi < cost_yin)
 		SEND_SOUND(caster, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
-		to_chat(caster, "<span class='warning'>You don't have enough <b>Yin Chi</b> to use this discipline.</span>")
+		to_chat(caster, "<span class='warning'>You don't have enough <b>Yin Chi</b> to use [src].</span>")
 		return FALSE
+
 	if(caster.yang_chi < cost_yang)
 		SEND_SOUND(caster, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
-		to_chat(caster, "<span class='warning'>You don't have enough <b>Yang Chi</b> to use this discipline.</span>")
+		to_chat(caster, "<span class='warning'>You don't have enough <b>Yang Chi</b> to use [src].</span>")
 		return FALSE
+
 	if(caster.demon_chi < cost_demon)
 		SEND_SOUND(caster, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
-		to_chat(caster, "<span class='warning'>You don't have enough <b>Demon Chi</b> to use this discipline.</span>")
+		to_chat(caster, "<span class='warning'>You don't have enough <b>Demon Chi</b> to use [src].</span>")
 		return FALSE
+
 	if(HAS_TRAIT(caster, TRAIT_PACIFISM))
 		return FALSE
+
 	if(target.stat == DEAD && dead_restricted)
 		return FALSE
+
 	if(target.resistant_to_disciplines || target.spell_immunity)
 		to_chat(caster, "<span class='danger'>[target] resists your powers!</span>")
 		return FALSE
-	caster.yin_chi = max(0, caster.yin_chi-cost_yin)
-	caster.yang_chi = max(0, caster.yang_chi-cost_yang)
-	caster.demon_chi = max(0, caster.demon_chi-cost_demon)
-	caster.update_chi_hud()
-	if(ranged)
-		to_chat(caster, "<span class='notice'>You activate [name] on [target].</span>")
-	else
-		to_chat(caster, "<span class='notice'>You activate [name].</span>")
-	if(ranged)
-		if(isnpc(target))
-			var/mob/living/carbon/human/npc/NPC = target
-			NPC.Aggro(caster, TRUE)
-	if(activate_sound)
-		caster.playsound_local(caster, activate_sound, 50, FALSE)
-	if(violates_masquerade)
-		if(caster.CheckEyewitness(target, caster, 7, TRUE))
-			caster.AdjustMasquerade(-1)
+
 	return TRUE
 
-/datum/chi_discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/chi_discipline/proc/activate(mob/living/target, mob/living/carbon/human/caster)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(!target)
@@ -177,6 +168,24 @@
 
 	COOLDOWN_START(src, activate, delay)
 
+	caster.yin_chi = max(0, caster.yin_chi - cost_yin)
+	caster.yang_chi = max(0, caster.yang_chi - cost_yang)
+	caster.demon_chi = max(0, caster.demon_chi - cost_demon)
+	caster.update_chi_hud()
+
+	if(ranged)
+		if(isnpc(target))
+			var/mob/living/carbon/human/npc/NPC = target
+			NPC.Aggro(caster, TRUE)
+
+	if(activate_sound)
+		caster.playsound_local(caster, activate_sound, 50, FALSE)
+
+	if(violates_masquerade)
+		if(caster.CheckEyewitness(target, caster, 7, TRUE))
+			caster.AdjustMasquerade(-1)
+
+	to_chat(caster, "<span class='notice'>You activate [src][(ranged && target) ? " on [target]" : ""].</span>")
 	log_attack("[key_name(caster)] casted level [src.level_casting] of the Discipline [src.name][target == caster ? "." : " on [key_name(target)]"]")
 
 /datum/chi_discipline/blood_shintai
