@@ -308,5 +308,3 @@
 	var/last_foul = 0
 	var/storm_aura = FALSE
 	var/last_storm = 0
-	var/wind_aura = FALSE
-	var/last_wind = 0

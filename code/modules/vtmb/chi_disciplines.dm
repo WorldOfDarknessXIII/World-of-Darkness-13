@@ -1610,7 +1610,8 @@
 			fortitude_overlay.alpha = 128
 			caster.overlays_standing[FORTITUDE_LAYER] = fortitude_overlay
 			caster.apply_overlay(FORTITUDE_LAYER)
-			caster.wind_aura = TRUE
+			spawn()
+				wind_aura_loop(caster, delay + caster.discipline_time_plus)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					caster.remove_overlay(FORTITUDE_LAYER)
@@ -1643,6 +1644,14 @@
 				if(caster)
 					caster.storm_aura = FALSE
 					caster.remove_overlay(FORTITUDE_LAYER)
+
+/datum/chi_discipline/storm_shintai/proc/wind_aura_loop(mob/living/carbon/human/caster, duration)
+	var/loop_started_time = world.time
+	while (world.time <= (loop_started_time + duration))
+		for(var/mob/living/pushed_by_wind in oviewers(2, caster))
+			step_away(pushed_by_wind, caster)
+
+		sleep(1 SECONDS)
 
 /datum/chi_discipline/equilibrium
 	name = "Equilibrium"
@@ -2219,7 +2228,7 @@
 /datum/chi_discipline/yang_prana/proc/yang_mantle_loop(mob/living/carbon/human/caster, duration)
 	var/loop_started_time = world.time
 	while (world.time <= (loop_started_time + duration))
-		for(var/mob/living/viewing_mantle in oviewers(3, src))
+		for(var/mob/living/viewing_mantle in oviewers(3, caster))
 			if(prob(20))
 				viewing_mantle.flash_act(affect_silicon = 1)
 
