@@ -72,7 +72,7 @@
 			return
 
 /mob/living/Click()
-	if(isliving(usr) && usr != src)
+	if(isliving(usr)) //&& usr != src)
 		var/mob/living/L = usr
 		if(L.discipline_ranged)
 			L.discipline_ranged.active_check = FALSE
@@ -462,6 +462,10 @@
 		animate(C, pixel_x = rand(-16, 16), pixel_y = rand(-16, 16), alpha = 0, time = 5)
 		if(CheckEyewitness(src, src, 7, FALSE))
 			AdjustMasquerade(-1)
+	if(pulledby && istype(pulledby, /mob/living/carbon))
+		var/mob/living/carbon/mob = pulledby
+		if(mob.celerity_visual && body_position == LYING_DOWN)
+			adjustBruteLoss(rand(2, 5))
 
 /datum/movespeed_modifier/celerity
 	multiplicative_slowdown = -0.5
@@ -562,9 +566,9 @@
 		if(H.clane)
 			if(H.clane.name == "Gargoyle")
 				dominate_me = TRUE
-	if(((theirpower >= mypower) || (caster.generation > target.generation)) && !dominate_me)
-		to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to dominate!</span>")
-		return
+	//if(((theirpower >= mypower) || (caster.generation > target.generation)) && !dominate_me)
+	//	to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to dominate!</span>")
+	//	return
 	if(HAS_TRAIT(caster, TRAIT_MUTE))
 		to_chat(caster, "<span class='warning'>You find yourself unable to speak!</span>")
 		return
@@ -888,7 +892,12 @@
 		a_intent = INTENT_HARM
 		var/obj/item/I = get_active_held_item()
 		if(I)
-			if(I.force)
+			if(istype(I, /obj/item/gun) && !istype(I, /obj/item/gun/ballistic/automatic/vampire/sniper))
+				zone_selected = BODY_ZONE_PRECISE_MOUTH
+				update_icon()
+				var/obj/item/gun/gun = I
+				gun.handle_suicide(src, src, null, FALSE, test, IGNORE_TARGET_LOC_CHANGE | IGNORE_USER_LOC_CHANGE)
+			else if(I.force)
 				ClickOn(src)
 			else
 				drop_all_held_items()
