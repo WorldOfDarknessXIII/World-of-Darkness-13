@@ -910,7 +910,7 @@
 	cost_demon = 1
 	discipline_type = "Demon"
 
-/datum/chi_discipline/black_wind/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/chi_discipline/black_wind/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	switch(level_casting)
 		if(1)
