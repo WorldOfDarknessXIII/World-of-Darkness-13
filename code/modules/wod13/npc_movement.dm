@@ -92,8 +92,8 @@
 		nutrition = 400
 		if(get_dist(danger_source, src) < 7)
 			last_danger_meet = world.time
-		if(fire_stacks >= 1)
-			resist()
+		if(on_fire)
+			resist_fire()
 		if(!staying)
 			if(!walktarget)
 				walktarget = ChoosePath()
