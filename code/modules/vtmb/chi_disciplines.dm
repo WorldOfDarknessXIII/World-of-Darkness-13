@@ -1226,21 +1226,21 @@
 	cost_demon = 1
 	discipline_type = "Demon"
 
-/datum/chi_discipline/iron_mountain/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/chi_discipline/iron_mountain/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	var/mod = level_casting
-	var/armah = 15*mod
+	var/bonus = 15 * mod
 //	caster.remove_overlay(FORTITUDE_LAYER)
 //	var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "mountain", -FORTITUDE_LAYER)
 //	caster.overlays_standing[FORTITUDE_LAYER] = fortitude_overlay
 //	caster.apply_overlay(FORTITUDE_LAYER)
-	caster.physiology.armor.melee += armah
-	caster.physiology.armor.bullet += armah
+	caster.physiology.armor.melee += bonus
+	caster.physiology.armor.bullet += bonus
 	spawn(delay+caster.discipline_time_plus)
 		if(caster)
 			caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/ironmountain_deactivate.ogg', 50, FALSE)
-			caster.physiology.armor.melee -= armah
-			caster.physiology.armor.bullet -= armah
+			caster.physiology.armor.melee -= bonus
+			caster.physiology.armor.bullet -= bonus
 //			caster.remove_overlay(FORTITUDE_LAYER)
 
 /datum/chi_discipline/kiai
