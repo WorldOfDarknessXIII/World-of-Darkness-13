@@ -16,11 +16,16 @@
 		SSbloodhunt.hunted -= src
 		bloodhunted = FALSE
 		SSbloodhunt.update_shit()
-	for(var/obj/item/police_radio/R in GLOB.police_radios)
-		R.announce_crime("murder", get_turf(src))
-	for(var/obj/item/p25radio/police/R in GLOB.p25_radios)
-		if(R.linked_network == "police")
-			R.announce_crime("murder", get_turf(src))
+	var/witness_count
+	for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, usr))
+		if(NEPIC && NEPIC.stat != DEAD)
+			witness_count++
+		if(witness_count > 1)
+			for(var/obj/item/police_radio/radio in GLOB.police_radios)
+				radio.announce_crime("murder", get_turf(src))
+			for(var/obj/item/p25radio/police/radio in GLOB.p25_radios)
+				if(radio.linked_network == "police")
+					radio.announce_crime("murder", get_turf(src))
 	GLOB.masquerade_breakers_list -= src
 	GLOB.sabbatites -= src
 

@@ -175,6 +175,14 @@
 		"bianchiBank"
 	)
 
+/obj/item/vamp/keys/capo
+	name = "Capo keys"
+	accesslocks = list(
+		"bankboss",
+		"bianchiBank",
+		"giovanni"
+	)
+
 /obj/item/vamp/keys/taxi
 	name = "Taxi keys"
 	accesslocks = list(
