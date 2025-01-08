@@ -2018,12 +2018,12 @@
 					caster.forceMove(GH)
 				playsound(get_turf(caster), 'code/modules/wod13/sounds/portal.ogg', 100, TRUE)
 		if(3)
-			caster.insane_luck = TRUE
+			ADD_TRAIT(caster, TRAIT_SUPERNATURAL_LUCK, "tapestry chi art")
 			to_chat(caster, "<b>You feel insanely lucky!</b>")
 			spawn(30 SECONDS)
 				if(caster)
-					caster.insane_luck = FALSE
-					to_chat(caster, "<span class='warning'>You are not lucky again...</span>")
+					REMOVE_TRAIT(caster, TRAIT_SUPERNATURAL_LUCK, "tapestry chi art")
+					to_chat(caster, "<span class='warning'>Your luck wanes...</span>")
 		if(4)
 			var/A
 			A = input(caster, "Area to jump to", "BOOYEA", A) as null|anything in GLOB.teleportlocs

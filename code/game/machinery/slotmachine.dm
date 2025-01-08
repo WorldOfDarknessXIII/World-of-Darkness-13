@@ -229,14 +229,12 @@
 /obj/machinery/computer/slot_machine/proc/give_prizes(usrname, mob/user)
 	var/linelength = get_lines()
 
-	if(isliving(user))
-		var/mob/living/L = user
-		if(L.insane_luck)
-			reels[1][2] = SEVEN
-			reels[2][2] = SEVEN
-			reels[3][2] = SEVEN
-			reels[4][2] = SEVEN
-			reels[5][2] = SEVEN
+	if(HAS_TRAIT(user, TRAIT_SUPERNATURAL_LUCK))
+		reels[1][2] = SEVEN
+		reels[2][2] = SEVEN
+		reels[3][2] = SEVEN
+		reels[4][2] = SEVEN
+		reels[5][2] = SEVEN
 
 	if(reels[1][2] + reels[2][2] + reels[3][2] + reels[4][2] + reels[5][2] == "[SEVEN][SEVEN][SEVEN][SEVEN][SEVEN]")
 		visible_message("<b>[src]</b> says, 'JACKPOT! You win [money] credits!'")
