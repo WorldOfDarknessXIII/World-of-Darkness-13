@@ -54,11 +54,12 @@ And it also helps for the character set panel
 /datum/vampireclane/proc/post_gain(var/mob/living/carbon/human/H)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(violating_appearance)
+	if(violating_appearance && H.roundstart_vampire)
 		if(length(GLOB.masquerade_latejoin))
 			var/obj/effect/landmark/latejoin_masquerade/LM = pick(GLOB.masquerade_latejoin)
 			if(LM)
 				H.forceMove(LM.loc)
+
 	if(clan_keys)
 		H.put_in_r_hand(new clan_keys(H))
 
@@ -126,15 +127,6 @@ And it also helps for the character set panel
 							to_chat(owner, "Your lover, <b>[R.owner.real_name]</b>, is now in the city!")
 							to_chat(R.owner, "Your lover, <b>[owner.real_name]</b>, is now in the city!")
 							need_lover = FALSE
-
-/datum/vampireclane/proc/post_gain(var/mob/living/carbon/human/H)
-	if(violating_appearance && H.roundstart_vampire)
-		if(length(GLOB.masquerade_latejoin))
-			var/obj/effect/landmark/latejoin_masquerade/LM = pick(GLOB.masquerade_latejoin)
-			if(LM)
-				H.forceMove(LM.loc)
-	if(clan_keys)
-		H.put_in_r_hand(new clan_keys(H))
 
 /**
  * Rots the vampire's body along four stages of decay.

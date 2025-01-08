@@ -599,21 +599,8 @@
 				var/datum/discipline/discipline = new type_to_create
 
 				//prevent Disciplines from being used if not whitelisted for them
-				if (discipline.clane_restricted && !clane.clane_disciplines.Find(type_to_create))
-					var/can_access_discipline = FALSE
-					for (var/clan_type in subtypesof(/datum/vampireclane))
-						var/datum/vampireclane/clan = new clan_type
-						//cancel checking this Clan if not whitelisted
-						if (clan.whitelisted)
-							if (!SSwhitelists.is_whitelisted(ckey, clan.name))
-								continue
-						//set the flag to true and break the loop if found
-						if (clane.clane_disciplines.Find(type_to_create))
-							can_access_discipline = TRUE
-							qdel(clan)
-							break
-						qdel(clan)
-					if (!can_access_discipline)
+				if (discipline.clane_restricted)
+					if (!can_access_discipline(src, type_to_create))
 						qdel(discipline)
 						continue
 
@@ -759,24 +746,7 @@
 
 		//if a Discipline is clan-restricted, it must be checked if the student has access to at least one Clan with that Discipline
 		if (giving_discipline.clane_restricted)
-			var/can_access_discipline = FALSE
-			for (var/clan_type in subtypesof(/datum/vampireclane))
-				var/datum/vampireclane/clan = new clan_type
-
-				//cancel checking this Clan if not whitelisted
-				if (clan.whitelisted)
-					if (!SSwhitelists.is_whitelisted(student.ckey, clan.name))
-						continue
-
-				//set the flag to true and break the loop if found
-				if (clane.clane_disciplines.Find(teaching_discipline))
-					can_access_discipline = TRUE
-					qdel(clan)
-					break
-
-				qdel(clan)
-
-			if (!can_access_discipline)
+			if (!can_access_discipline(student, teaching_discipline))
 				to_chat(teacher, "<span class='warning'>Your student is not whitelisted for any Clans with this Discipline, so they cannot learn it.</span>")
 				qdel(giving_discipline)
 				return
@@ -789,30 +759,30 @@
 
 		var/restricted = giving_discipline.clane_restricted
 		if (restricted)
-			if (alert(teacher, "Are you sure you want to teach [student.name] [giving_discipline.name], one of your Clan's most tightly guarded secrets? This will cost 10 experience points.", "Confirmation", "Yes", "No") != "Yes")
+			if (alert(teacher, "Are you sure you want to teach [student] [giving_discipline], one of your Clan's most tightly guarded secrets? This will cost 10 experience points.", "Confirmation", "Yes", "No") != "Yes")
 				qdel(giving_discipline)
 				return
 		else
-			if (alert(teacher, "Are you sure you want to teach [student.name] [giving_discipline.name]? This will cost 10 experience points.", "Confirmation", "Yes", "No") != "Yes")
+			if (alert(teacher, "Are you sure you want to teach [student] [giving_discipline]? This will cost 10 experience points.", "Confirmation", "Yes", "No") != "Yes")
 				qdel(giving_discipline)
 				return
 
 		var/alienation = FALSE
 		if (student.clane.restricted_disciplines.Find(teaching_discipline))
-			if (alert(student, "Learning [giving_discipline.name] will alienate you from the rest of the [student.clane.name], making you just like the false Clan. Do you wish to continue?", "Confirmation", "Yes", "No") != "Yes")
-				visible_message("<span class='warning'>[student.name] refuses [teacher.name]'s mentoring!</span>")
+			if (alert(student, "Learning [giving_discipline] will alienate you from the rest of the [student.clane], making you just like the false Clan. Do you wish to continue?", "Confirmation", "Yes", "No") != "Yes")
+				visible_message("<span class='warning'>[student] refuses [teacher]'s mentoring!</span>")
 				qdel(giving_discipline)
 				return
 			else
 				alienation = TRUE
-				to_chat(teacher, "<span class='notice'>[student.name] accepts your mentoring!</span>")
+				to_chat(teacher, "<span class='notice'>[student] accepts your mentoring!</span>")
 
 		if (get_dist(student.loc, teacher.loc) > 1)
 			to_chat(teacher, "<span class='warning'>Your student needs to be next to you!</span>")
 			qdel(giving_discipline)
 			return
 
-		visible_message("<span class='notice'>[teacher.name] begins mentoring [student.name] in [giving_discipline.name].</span>")
+		visible_message("<span class='notice'>[teacher] begins mentoring [student] in [giving_discipline].</span>")
 		if (do_after(teacher, 30 SECONDS, student))
 			teacher_prefs.true_experience -= 10
 
@@ -821,10 +791,10 @@
 
 			if (alienation)
 				var/datum/vampireclane/main_clan
-				switch(student.clane.name)
-					if ("True Brujah")
+				switch(student.clane.type)
+					if (/datum/vampireclane/true_brujah)
 						main_clan = new /datum/vampireclane/brujah
-					if ("Old Clan Tzimisce")
+					if (/datum/vampireclane/old_clan_tzimisce)
 						main_clan = new /datum/vampireclane/tzimisce
 
 				student_prefs.clane = main_clan
@@ -833,10 +803,58 @@
 			student_prefs.save_character()
 			teacher_prefs.save_character()
 
-			to_chat(teacher, "<span class='notice'>You finish teaching [student.name] the basics of [giving_discipline.name]. They seem to have absorbed your mentoring. [restricted ? "May your Clanmates take mercy on your soul for spreading their secrets." : ""]</span>")
-			to_chat(student, "<span class='nicegreen'>[teacher.name] has taught you the basics of [giving_discipline.name]. You may now spend experience points to learn its first level in the character menu.</span>")
+			to_chat(teacher, "<span class='notice'>You finish teaching [student] the basics of [giving_discipline]. [student.p_they(TRUE)] seem[student.p_s()] to have absorbed your mentoring.[restricted ? " May your Clanmates take mercy on your soul for spreading their secrets." : ""]</span>")
+			to_chat(student, "<span class='nicegreen'>[teacher] has taught you the basics of [giving_discipline]. You may now spend experience points to learn its first level in the character menu.</span>")
 
 			message_admins("[ADMIN_LOOKUPFLW(teacher)] taught [ADMIN_LOOKUPFLW(student)] the Discipline [giving_discipline.name].")
 			log_game("[key_name(teacher)] taught [key_name(student)] the Discipline [giving_discipline.name].")
 
 		qdel(giving_discipline)
+
+/**
+ * Checks a vampire for whitelist access to a Discipline.
+ *
+ * Checks the given vampire to see if they have access to a certain Discipline through
+ * one of their selectable Clans. This is only necessary for "unique" or Clan-restricted
+ * Disciplines, as those have a chance to only be available to a certain Clan that
+ * the vampire may or may not be whitelisted for.
+ *
+ * Arguments:
+ * * vampire_checking - The vampire mob being checked for their access.
+ * * discipline_checking - The Discipline type that access to is being checked.
+ */
+/proc/can_access_discipline(mob/living/carbon/human/vampire_checking, discipline_checking)
+	if (!iskindred(vampire_checking))
+		return FALSE
+	if (!vampire_checking.client)
+		return FALSE
+
+	//make sure it's actually restricted and this check is necessary
+	var/datum/discipline/discipline_object_checking = new discipline_checking
+	if (!discipline_object_checking.clane_restricted)
+		qdel(discipline_object_checking)
+		return TRUE
+	qdel(discipline_object_checking)
+
+	//first, check their Clan Disciplines to see if that gives them access
+	if (vampire_checking.clane.clane_disciplines.Find(discipline_checking))
+		return TRUE
+
+	//next, go through all Clans to check if they have access to any with the Discipline
+	for (var/clan_type in subtypesof(/datum/vampireclane))
+		var/datum/vampireclane/clan_checking = new clan_type
+
+		//skip this if they can't access it due to whitelists
+		if (clan_checking.whitelisted)
+			if (!SSwhitelists.is_whitelisted(checked_ckey = vampire_checking.ckey, checked_whitelist = clan_checking.name))
+				qdel(clan_checking)
+				continue
+
+		if (clan_checking.clane_disciplines.Find(discipline_checking))
+			qdel(clan_checking)
+			return TRUE
+
+		qdel(clan_checking)
+
+	//nothing found
+	return FALSE
