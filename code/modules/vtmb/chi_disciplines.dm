@@ -104,7 +104,6 @@
 	var/ranged = FALSE
 	///Duration of the Discipline.
 	var/delay = 5
-	var/next_fire_after
 	///Whether this Discipline causes a Masquerade breach when used in front of mortals.
 	var/violates_masquerade = FALSE
 	///What rank, or how many dots the caster has in this Discipline.
@@ -117,15 +116,18 @@
 	var/level_casting = 1
 
 	var/discipline_type = "Shintai"		//Either "Shintai", "Chi" or "Demon" arts
+	COOLDOWN_DECLARE(activate)
 
-/datum/chi_discipline/proc/post_gain(var/mob/living/carbon/human/H)
+/datum/chi_discipline/proc/post_gain(mob/living/carbon/human/H)
 	return
 
-/datum/chi_discipline/proc/check_activated(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/chi_discipline/proc/check_activated(mob/living/target, mob/living/carbon/human/caster)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(caster.stat >= HARD_CRIT || caster.IsSleeping() || caster.IsUnconscious() || caster.IsParalyzed() || caster.IsStun() || HAS_TRAIT(caster, TRAIT_RESTRAINED) || !isturf(caster.loc))
 		return FALSE
-	if(world.time < next_fire_after)
-		to_chat(caster, "<span class='warning'>It's too soon to use this discipline again!</span>")
+	if(!COOLDOWN_FINISHED(src, activate))
+		to_chat(caster, "<span class='warning'>Wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, activate))] before you can use this Discipline again!</span>")
 		return FALSE
 	if(caster.yin_chi < cost_yin)
 		SEND_SOUND(caster, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
@@ -166,11 +168,14 @@
 	return TRUE
 
 /datum/chi_discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(!target)
 		return
 	if(!caster)
 		return
-	next_fire_after = world.time+delay
+
+	COOLDOWN_START(src, activate, delay)
 
 	log_attack("[key_name(caster)] casted level [src.level_casting] of the Discipline [src.name][target == caster ? "." : " on [key_name(target)]"]")
 
