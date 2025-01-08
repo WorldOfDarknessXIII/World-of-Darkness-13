@@ -45,7 +45,6 @@
 	known_contacts = list("Prince","Sheriff","Tremere Regent","Dealer","Reeve","Emissary","Baron","Primogens")
 
 	v_duty = "You are an expert on the nightlife of Cainite society. Acting as the chief advisor on all things related to boons and diplomacy, the Prince defers quite the amount of judgement to you. Don't squander it."
-	v_duty = "You are an expert on the nightlife of Cainite society. Acting as the chief advisor on all things related to boons and diplomacy, the Prince defers quite the amount of judgement to you. Don't squander it."
 	experience_addition = 15
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Lasombra", "Gargoyle", "Kiasyd")
 

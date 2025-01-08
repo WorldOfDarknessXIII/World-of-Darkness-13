@@ -31,10 +31,6 @@
 	)
 	v_duty = "You lead the Anarchs in the City. A Camarilla faction that values freedom and individuality. While not a fan of the traditions, you still respect the Masquerade."
 
-/datum/job/vamp/barkeeper/announce(mob/living/carbon/human/H)
-	..()
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, PROC_REF(minor_announce), "The undisputed Baron [H.real_name] is in the city!"))
-
 	minimal_masquerade = 3
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Ventrue", "Lasombra", "Gargoyle", "Ministry")

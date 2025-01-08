@@ -2,8 +2,8 @@
 	title = "Anarch"
 	department_head = list("Baron")
 	faction = "Vampire"
-	total_positions = 7
-	spawn_positions = 7
+	total_positions = 5
+	spawn_positions = 5
 	supervisors = "the Baron"
 	selection_color = "#434343"
 
