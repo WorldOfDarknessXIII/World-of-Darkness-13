@@ -119,7 +119,7 @@
 	var/base_body_mod = ""
 	var/icon/body_sprite
 
-	bloodquality = 2
+	bloodquality = BLOOD_QUALITY_NORMAL
 
 	var/soul_state = SOUL_PRESENT
 

@@ -87,10 +87,9 @@
 	//turning all of this into one centralised proc would be preferable, but it requires more effort than I'm willing to put in right now
 	if(ishuman(user.mob))
 		var/mob/living/carbon/human/BD = user.mob
-		BD.update_blood_hud()
-		if(world.time < BD.last_drinkblood_use+30)
+		if(world.time < (BD.last_drinkblood_use + 3 SECONDS))
 			return
-		if(world.time < BD.last_drinkblood_click+10)
+		if(world.time < (BD.last_drinkblood_click + 1 SECONDS))
 			return
 		BD.last_drinkblood_click = world.time
 //		if(BD.bloodpool >= BD.maxbloodpool)

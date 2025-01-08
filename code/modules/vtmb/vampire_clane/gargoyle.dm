@@ -50,16 +50,19 @@
 	name = "Visceratika"
 	desc = "The Discipline of Visceratika is the exclusive possession of the Gargoyle bloodline and is an extension of their natural affinity for stone, earth, and things made thereof."
 	icon_state = "visceratika"
+	/*
 	cost = 1
 	ranged = FALSE
 	delay = 15 SECONDS
 	activate_sound = 'code/modules/wod13/sounds/visceratika.ogg'
 	leveldelay = FALSE
 	fearless = TRUE
-	clane_restricted = TRUE
+	clan_restricted = TRUE
+	*/
 
 /datum/discipline/visceratika/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
+	/*
 	switch(level_casting)
 		if(1)
 			for(var/mob/living/L in GLOB.player_list)
@@ -98,6 +101,7 @@
 				caster.alpha = 255
 				caster.gargoyle_pass = FALSE
 				REMOVE_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
+	*/
 
 /turf/closed/Enter(atom/movable/mover, atom/oldloc)
 	if(isliving(mover))

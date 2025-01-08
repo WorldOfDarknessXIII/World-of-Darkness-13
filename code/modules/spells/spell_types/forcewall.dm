@@ -27,7 +27,7 @@
 	//[Lucia] TODO: when Disciplines are refactored, make this not terrible
 	if (iskindred(user))
 		var/mob/living/carbon/human/human_user = user
-		human_user.bloodpool = max(0, human_user.bloodpool - 1)
+		human_user.adjust_blood_points(-1)
 		new wall_type(get_step(user, NORTH), user)
 		new wall_type(get_step(user, SOUTH), user)
 		new wall_type(get_step(user, EAST), user)

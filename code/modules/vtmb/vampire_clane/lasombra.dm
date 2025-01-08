@@ -54,7 +54,7 @@
 	if(H.bloodpool < 1)
 		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 		return
-	H.bloodpool = max(0, H.bloodpool-1)
+	H.adjust_blood_points(-1)
 	playsound(H.loc, 'sound/magic/voidblink.ogg', 50, FALSE)
 	abuse_fix = world.time
 	H.drop_all_held_items()
@@ -85,13 +85,13 @@
 
 /datum/action/lasarmor/Trigger()
 	. = ..()
-	if(abuse_fix+250 > world.time)
+	if((abuse_fix + 25 SECONDS) > world.time)
 		return
 	var/mob/living/carbon/human/H = owner
 	if(H.bloodpool < 2)
 		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 		return
-	H.bloodpool = max(0, H.bloodpool-2)
+	H.adjust_blood_points(-2)
 	playsound(H.loc, 'sound/magic/voidblink.ogg', 50, FALSE)
 	abuse_fix = world.time
 	H.physiology.damage_resistance += 60
@@ -120,7 +120,7 @@
 	if(H.bloodpool < 1)
 		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 		return
-	H.bloodpool = max(0, H.bloodpool-1)
+	H.adjust_blood_points(-1)
 	playsound(H.loc, 'sound/magic/voidblink.ogg', 50, FALSE)
 	abuse_fix = world.time
 	var/atom/movable/AM = new(H)
@@ -172,7 +172,7 @@
 			if(do_after(H, 30*max(1, 5-H.mentality), H))
 				drawing = FALSE
 				new ritual(H.loc)
-				H.bloodpool = max(0, H.bloodpool-2)
+				H.adjust_blood_points(-2)
 				if(H.CheckEyewitness(H, H, 7, FALSE))
 					H.AdjustMasquerade(-1)
 			else
@@ -192,7 +192,7 @@
 //				var/list/runes = subtypesof(/obj/abyssrune)
 				var/rune = pick(shit)
 				new rune(H.loc)
-				H.bloodpool = max(0, H.bloodpool-2)
+				H.adjust_blood_points(-2)
 				if(H.CheckEyewitness(H, H, 7, FALSE))
 					H.AdjustMasquerade(-1)
 			else

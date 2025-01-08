@@ -28,14 +28,14 @@
 			if(new_mirror)
 				if(istype(new_mirror, /obj/structure/mirror))
 					var/obj/structure/mirror/M = new_mirror
-					H.bloodpool = max(0, H.bloodpool-2)
-					H.Stun(10)
-					animate(H, color = "#000000", time = 10)
+					H.adjust_blood_points(-2)
+					H.Stun(1 SECONDS)
+					animate(H, color = "#000000", time = 1 SECONDS)
 					playsound(user.loc, 'code/modules/wod13/sounds/necromancy.ogg', 50, FALSE)
-					spawn(10)
+					spawn(1 SECONDS)
 						H.forceMove(M.loc)
-						H.Stun(10)
-						animate(H, color = initial(H.color), time = 10)
+						H.Stun(1 SECONDS)
+						animate(H, color = initial(H.color), time = 1 SECONDS)
 						playsound(L, 'code/modules/wod13/sounds/necromancy.ogg', 50, FALSE)
 					return
 			//Proceed to normal activation if they didn't select a mirror

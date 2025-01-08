@@ -50,7 +50,7 @@
 /datum/action/vicissitude_blood/Trigger()
 	. = ..()
 	var/mob/living/carbon/human/NG = owner
-	if(NG.stat > 1 || NG.IsSleeping() || NG.IsUnconscious() || NG.IsParalyzed() || NG.IsKnockdown() || NG.IsStun() || HAS_TRAIT(NG, TRAIT_RESTRAINED) || !isturf(NG.loc))
+	if(NG.stat > SOFT_CRIT || NG.IsSleeping() || NG.IsUnconscious() || NG.IsParalyzed() || NG.IsKnockdown() || NG.IsStun() || HAS_TRAIT(NG, TRAIT_RESTRAINED) || !isturf(NG.loc))
 		return
 	var/mob/living/carbon/human/H = owner
 	if(H.bloodpool < 2)
@@ -58,18 +58,18 @@
 		return
 	if(!BC)
 		BC = new(owner)
-	H.bloodpool = max(0, H.bloodpool-2)
+	H.adjust_blood_points(-2)
 	BC.Shapeshift(H)
-	spawn(200)
+	spawn(20 SECONDS)
 		if(BC)
 			var/mob/living/simple_animal/hostile/bloodcrawler/BD = BC.myshape
-			H.bloodpool = min(H.bloodpool+round(BD.collected_blood/2), H.maxbloodpool)
+			H.adjust_blood_points(round(BD.collected_blood / 2))
 			if(BD.collected_blood > 1)
 				H.adjustBruteLoss(-5*round(BD.collected_blood/2), TRUE)
 				H.adjustFireLoss(-5*round(BD.collected_blood/2), TRUE)
 			BC.Restore(BC.myshape)
-			NG.Stun(15)
-			NG.do_jitter_animation(30)
+			NG.Stun(1.5 SECONDS)
+			NG.do_jitter_animation(3 SECONDS)
 
 /datum/action/vicissitude_form
 	name = "Vicissitude Beast Form"
@@ -82,17 +82,17 @@
 /datum/action/vicissitude_form/Trigger()
 	. = ..()
 	var/mob/living/carbon/human/NG = owner
-	if(NG.stat > 1 || NG.IsSleeping() || NG.IsUnconscious() || NG.IsParalyzed() || NG.IsKnockdown() || NG.IsStun() || HAS_TRAIT(NG, TRAIT_RESTRAINED) || !isturf(NG.loc))
+	if(NG.stat > SOFT_CRIT || NG.IsSleeping() || NG.IsUnconscious() || NG.IsParalyzed() || NG.IsKnockdown() || NG.IsStun() || HAS_TRAIT(NG, TRAIT_RESTRAINED) || !isturf(NG.loc))
 		return
 	var/mob/living/carbon/human/H = owner
-	if(H.bloodpool < 3)
+	if(H.bloodpool < HARD_CRIT)
 		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 		return
 	if(!TE)
 		TE = new(owner)
-	H.bloodpool = max(0, H.bloodpool-3)
+	H.adjust_blood_points(-3)
 	TE.Shapeshift(H)
-	spawn(200)
+	spawn(20 SECONDS)
 		if(TE)
 			TE.Restore(TE.myshape)
 			NG.Stun(2 SECONDS)

@@ -5,10 +5,6 @@
 //			var/obj/effect/dummy/chameleon/C = loc
 //			C.say("[message]")
 //			return
-		if(length(GLOB.auspex_list))
-			for(var/mob/living/carbon/human/H in GLOB.auspex_list)
-				if(H)
-					to_chat(H, "<span class='scream_away'><b>[name]</b> says, \"[sanitize_text(message)]\"</span>")
 		if(prob(25))
 			if(iskindred(src))
 				if(clane)
@@ -103,7 +99,7 @@
 			to_chat(user, "<span class='warning'>You don't have enough <b>BLOOD</b> to activate \the [src].</span>")
 			user.cancel_camera()
 			return
-		L.bloodpool = max(0, L.bloodpool-1)
+		L.adjust_blood_points(-1)
 		playsound(get_turf(src), 'code/modules/wod13/sounds/vicissitude.ogg', 100, TRUE, -6)
 		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(user.drop_location())
 		C.activate(user, saved_appearance, src)

@@ -12,13 +12,12 @@ SUBSYSTEM_DEF(statpanels)
 /datum/controller/subsystem/statpanels/fire(resumed = FALSE)
 	if (!resumed)
 //		var/datum/map_config/cached = SSmapping.next_map_config
-		var/round_time = world.time - SSticker.round_start_time
 		var/list/global_data = list(
 //			"Map: [SSmapping.config?.map_name || "Loading..."]",
 //			cached ? "Next Map: [cached.map_name]" : null,
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
 //			"Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]",
-			"Round Time: [round_time > MIDNIGHT_ROLLOVER ? "[round(round_time/MIDNIGHT_ROLLOVER)]:[worldtime2text()]" : worldtime2text()]",
+			"Round Time: [ROUND_TIME()]",
 			"---",
 			"Canon: [GLOB.canon_event ? "Yes" : "No"]",
 			"Masquerade: [SSmasquerade.get_description()] [SSmasquerade.total_level]/1000",
@@ -28,9 +27,11 @@ SUBSYSTEM_DEF(statpanels)
 			"Anarch Power: [length(SSfactionwar.marks_anarch)]",
 			"Sabbat Power: [length(SSfactionwar.marks_sabbat)]",
 			"---",
+			/*
 			"Angst: 0",
 			"Plasm: ●●●●●" // [ChillRaccoon] - trolling
-//			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)"
+			*/
+			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)"
 		)
 
 //		if(SSshuttle.emergency)

@@ -39,7 +39,7 @@
 		return
 	else
 		if (H.blood_volume > (BLOOD_VOLUME_SAFE - 25)) // just barely survivable without treatment
-			H.blood_volume -= 0.275 * delta_time
+			H.adjust_blood_volume(-(0.275 * delta_time))
 
 /datum/quirk/blindness
 	name = "Blind"
@@ -162,9 +162,9 @@
 
 /datum/quirk/ground_heirloom/on_process()
 	if(!(heirloom in quirk_holder.GetAllContents()))
-		if(last_notice+300 < world.time)
+		if((last_notice + 30 SECONDS) < world.time)
 			to_chat(quirk_holder, "<span class='warning'>You are missing your domain...</span>")
-			quirk_holder.bloodpool = max(0, quirk_holder.bloodpool-1)
+			quirk_holder.adjust_blood_points(-1)
 			last_notice = world.time
 
 /datum/quirk/family_heirloom

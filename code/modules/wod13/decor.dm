@@ -764,10 +764,10 @@
 			V.last_extracted = world.time
 			if(!iskindred(src))
 				new /obj/item/drinkable_bloodpack(get_step(V, SOUTH))
-				bloodpool = max(0, bloodpool-2)
+				adjust_blood_points(-2)
 			else
 				new /obj/item/drinkable_bloodpack/vitae(get_step(V, SOUTH))
-				bloodpool = max(0, bloodpool-4)
+				adjust_blood_points(-4)
 
 
 /obj/structure/rack/tacobell

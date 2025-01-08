@@ -47,6 +47,7 @@
 	name = "Mytherceria"
 	desc = "Mytherceria is a Discipline that manifests in faerie-blooded vampires such as the Kiasyd and Maeghar. It grants the vampire mystical senses, the ability to steal knowledge, and other powers attributed to fae."
 	icon_state = "mytherceria"
+	/*
 	cost = 1
 	ranged = TRUE
 	delay = 10 SECONDS
@@ -56,6 +57,7 @@
 	clane_restricted = TRUE
 
 	var/stored_riddles = list()
+	*/
 
 /datum/riddle
 	var/riddle_text
@@ -141,6 +143,7 @@
 
 /datum/discipline/mytherceria/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
+	/*
 	switch(level_casting)
 		if(1)
 			var/list/total_list = list()
@@ -206,6 +209,7 @@
 					caster.say(R.riddle_text)
 				else
 					qdel(R)
+	*/
 
 /datum/movespeed_modifier/riddle
 	multiplicative_slowdown = 5
