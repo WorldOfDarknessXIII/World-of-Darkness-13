@@ -302,5 +302,3 @@
 	//For freezing/burning/blurry/storm aura
 	var/freezing_aura = FALSE
 	var/last_freeze = 0
-	var/burning_aura = FALSE
-	var/last_burn = 0

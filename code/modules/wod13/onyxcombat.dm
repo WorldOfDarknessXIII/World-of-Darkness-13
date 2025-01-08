@@ -773,14 +773,6 @@
 					C.do_jitter_animation(1 SECONDS)
 					C.adjust_bodytemperature(-15)
 //					C.adjust_coretemperature(-15)
-	if(burning_aura)
-		if(last_burn+2 SECONDS <= world.time)
-			last_burn = world.time
-			for(var/mob/living/carbon/C in viewers(3, src))
-				if(C != src)
-					C.adjustFireLoss(5, TRUE)
-					C.adjust_bodytemperature(15)
-//					C.adjust_coretemperature(15)
 	..()
 
 /mob/living/Initialize()

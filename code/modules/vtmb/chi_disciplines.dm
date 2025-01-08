@@ -637,11 +637,11 @@
 		if(1)
 			target.overlay_fullscreen("ghostflame", /atom/movable/screen/fullscreen/see_through_darkness)
 			caster.set_light(1.4,5,"#ff8c00")
-			caster.burning_aura = TRUE
+			spawn()
+				burning_aura_loop(caster, delay + caster.discipline_time_plus)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					target.clear_fullscreen("ghostflame", 5)
-					caster.burning_aura = FALSE
 					caster.set_light(0)
 		if(2)
 			if(!length(caster.beastmaster))
@@ -684,6 +684,15 @@
 						caster.dna.species.burnmod = initial(caster.dna.species.burnmod)
 					caster.bodytemperature = BODYTEMP_NORMAL
 					caster.coretemperature = BODYTEMP_NORMAL
+
+/datum/chi_discipline/ghost_flame_shintai/proc/burning_aura_loop(mob/living/carbon/human/caster, duration)
+	var/loop_started_time = world.time
+	while (world.time <= (loop_started_time + duration))
+		for(var/mob/living/carbon/burned_mob in oviewers(3, caster))
+			burned_mob.adjustFireLoss(5, TRUE)
+			burned_mob.adjust_bodytemperature(15)
+
+		sleep(2 SECONDS)
 
 /datum/chi_discipline/flesh_shintai
 	name = "Flesh Shintai"
