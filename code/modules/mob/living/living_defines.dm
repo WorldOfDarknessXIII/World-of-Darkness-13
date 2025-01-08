@@ -312,5 +312,3 @@
 	var/last_wind = 0
 	var/yang_mantle = FALSE
 	var/yang_dodge = FALSE
-	//Flesh shintai dodge
-	var/flesh_shintai_dodge = FALSE

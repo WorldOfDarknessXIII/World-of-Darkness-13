@@ -847,11 +847,11 @@
 					qdel(tackler)
 					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 		if(3)
-			caster.flesh_shintai_dodge = TRUE
+			ADD_TRAIT(caster, TRAIT_HANDS_BLOCK_PROJECTILES, "flesh shintai 3")
 			to_chat(caster, "<span class='notice'>Your muscles relax and start moving unintentionally. You feel perfect at projectile evasion skills...</span>")
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
-					caster.flesh_shintai_dodge = FALSE
+					REMOVE_TRAIT(caster, TRAIT_HANDS_BLOCK_PROJECTILES, "flesh shintai 3")
 					to_chat(caster, "<span class='warning'>Your muscles feel natural again..</span>")
 		if(4)
 			var/obj/structure/flesh_grip/F = new (get_turf(caster))
@@ -2204,8 +2204,8 @@
 					caster.yang_dodge = FALSE
 					to_chat(caster, "<span class='warning'>Your muscles feel natural again..</span>")
 		if(4)
-			caster.flesh_shintai_dodge = TRUE
-			to_chat(caster, "<span class='notice'>Your muscles relax and start moving unintentionally. You feel perfect at projectile evasion skills...</span>")
+			ADD_TRAIT(caster, TRAIT_HANDS_BLOCK_PROJECTILES, "yang prana 4")
+			to_chat(caster, "<span class='notice'>Your muscles relax and start moving on their own. You feel like you could deflect bullets...</span>")
 			var/i = rand(1, 2)
 			if(i == 1)
 				dancefirst(caster)
@@ -2213,7 +2213,7 @@
 				dancesecond(caster)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
-					caster.flesh_shintai_dodge = FALSE
-					to_chat(caster, "<span class='warning'>Your muscles feel natural again..</span>")
+					REMOVE_TRAIT(caster, TRAIT_HANDS_BLOCK_PROJECTILES, "yang prana 4")
+					to_chat(caster, "<span class='warning'>Your muscles feel normal again.</span>")
 		if(5)
 			E.cast(list(caster), caster)
