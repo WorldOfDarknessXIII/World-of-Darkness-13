@@ -546,7 +546,7 @@
 /datum/chi_discipline/ghost_flame_shintai
 	name = "Ghost Flame Shintai"
 	desc = "Manipulate fire and temperature."
-	icon_state = "ghostflame"
+	icon_state = "ghostfire"
 	ranged = FALSE
 	delay = 12 SECONDS
 	cost_yang = 1
