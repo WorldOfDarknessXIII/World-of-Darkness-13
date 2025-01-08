@@ -357,8 +357,8 @@
 				if(bloodcrawler_shapeshift)
 					var/mob/living/simple_animal/hostile/bloodcrawler/current_form = bloodcrawler_shapeshift.myshape
 					if(current_form.collected_blood > 1)
-						H.adjustBruteLoss(-5*round(current_form.collected_blood/2), TRUE)
-						H.adjustFireLoss(-5*round(current_form.collected_blood/2), TRUE)
+						caster.adjustBruteLoss(-5*round(current_form.collected_blood/2), TRUE)
+						caster.adjustFireLoss(-5*round(current_form.collected_blood/2), TRUE)
 					bloodcrawler_shapeshift.Restore(bloodcrawler_shapeshift.myshape)
 					caster.Stun(1.5 SECONDS)
 					caster.do_jitter_animation(3 SECONDS)
