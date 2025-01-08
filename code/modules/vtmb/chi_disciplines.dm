@@ -1713,7 +1713,7 @@
 	discipline_type = "Chi"
 	activate_sound = 'code/modules/wod13/sounds/equilibrium.ogg'
 
-/datum/chi_discipline/equilibrium/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/chi_discipline/equilibrium/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	switch(level_casting)
 		if(1)
@@ -1750,6 +1750,7 @@
 				caster.yang_chi -= actually_shifted
 				caster.demon_chi += actually_shifted
 				to_chat(caster, "<span class='warning'>You put your Yang into your Demon.</span>")
+
 			var/yin_shift = input(caster, "Where do you want to shift your Yin Chi?", "Chi Shift") as null|anything in list("Yang Pool", "Demon Pool", "Nowhere")
 			if(yin_shift == "Yang Pool")
 				var/init_yang = caster.yang_chi
@@ -1763,6 +1764,7 @@
 				caster.yin_chi -= actually_shifted
 				caster.demon_chi += actually_shifted
 				to_chat(caster, "<span class='warning'>You put your Yin into your Demon.</span>")
+
 			var/demon_shift = input(caster, "Where do you want to shift your Demon Chi?", "Chi Shift") as null|anything in list("Yin Pool", "Yang Pool", "Nowhere")
 			if(demon_shift == "Yin Pool")
 				var/init_yin = caster.yin_chi
@@ -1832,16 +1834,13 @@
 /datum/movespeed_modifier/pacifisting
 	multiplicative_slowdown = 3
 
-/datum/chi_discipline/feng_shui/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/chi_discipline/feng_shui/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	switch(level_casting)
 		if(1)
 			var/sound/auspexbeat = sound('code/modules/wod13/sounds/auspex.ogg', repeat = TRUE)
 			caster.playsound_local(caster, auspexbeat, 75, 0, channel = CHANNEL_DISCIPLINES, use_reverb = FALSE)
-			var/loh = FALSE
-			if(!HAS_TRAIT(caster, TRAIT_NIGHT_VISION))
-				ADD_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
-				loh = TRUE
+			ADD_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
 			caster.update_sight()
 			caster.add_client_colour(/datum/client_colour/glass_colour/lightblue)
 			var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]
@@ -1854,18 +1853,14 @@
 					abductor_hud.remove_hud_from(caster)
 					caster.stop_sound_channel(CHANNEL_DISCIPLINES)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/auspex_deactivate.ogg', 50, FALSE)
-					if(loh)
-						REMOVE_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
+					REMOVE_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
 					caster.remove_client_colour(/datum/client_colour/glass_colour/lightblue)
 					caster.update_sight()
 		if(2)
 			var/sound/auspexbeat = sound('code/modules/wod13/sounds/auspex.ogg', repeat = TRUE)
 			caster.playsound_local(caster, auspexbeat, 75, 0, channel = CHANNEL_DISCIPLINES, use_reverb = FALSE)
 			ADD_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
-			var/loh = FALSE
-			if(!HAS_TRAIT(caster, TRAIT_NIGHT_VISION))
-				ADD_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
-				loh = TRUE
+			ADD_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
 			caster.update_sight()
 			var/datum/atom_hud/health_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 			health_hud.add_hud_to(caster)
@@ -1878,23 +1873,22 @@
 					caster.stop_sound_channel(CHANNEL_DISCIPLINES)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/auspex_deactivate.ogg', 50, FALSE)
 					REMOVE_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
-					if(loh)
-						REMOVE_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
+					REMOVE_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
 					caster.update_sight()
 		if(3)
 			if(caster.lastattacked)
 				if(isliving(caster.lastattacked))
-					var/mob/living/L = caster.lastattacked
-					to_chat(L, "<span class='warning'>You feel bigger hunger than usual.</span>")
-					if(iskindred(L))
-						L.bloodpool = max(0, L.bloodpool-3)
-					else if(iscathayan(L))
-						L.yang_chi = max(0, L.yang_chi-2)
-						L.yin_chi = max(0, L.yin_chi-2)
+					var/mob/living/cursing_mob = caster.lastattacked
+					to_chat(cursing_mob, "<span class='warning'>You feel bigger hunger than usual.</span>")
+					if(iskindred(cursing_mob))
+						cursing_mob.bloodpool = max(0, cursing_mob.bloodpool-3)
+					else if(iscathayan(cursing_mob))
+						cursing_mob.yang_chi = max(0, cursing_mob.yang_chi-2)
+						cursing_mob.yin_chi = max(0, cursing_mob.yin_chi-2)
 					else
-						L.adjust_nutrition(-100)
-					playsound(get_turf(L), 'code/modules/wod13/sounds/hunger.ogg', 100, FALSE)
-					to_chat(caster, "You send your curse on [L], the last creature you attacked.")
+						cursing_mob.adjust_nutrition(-100)
+					playsound(get_turf(cursing_mob), 'code/modules/wod13/sounds/hunger.ogg', 100, FALSE)
+					to_chat(caster, "You send your curse on [cursing_mob], the last creature you attacked.")
 				else
 					to_chat(caster, "You don't seem to have last attacked soul earlier...")
 					return
@@ -1902,15 +1896,14 @@
 				to_chat(caster, "You don't seem to have last attacked soul earlier...")
 				return
 		if(4)
-			for(var/mob/living/L in viewers(5, caster))
-				if(L != caster)
-					ADD_TRAIT(L, TRAIT_PACIFISM, MAGIC_TRAIT)
-					L.add_movespeed_modifier(/datum/movespeed_modifier/pacifisting)
-					L.emote("stare")
-					spawn(delay+caster.discipline_time_plus)
-						if(L)
-							REMOVE_TRAIT(L, TRAIT_PACIFISM, MAGIC_TRAIT)
-							L.remove_movespeed_modifier(/datum/movespeed_modifier/pacifisting)
+			for(var/mob/living/affected_mob in oviewers(5, caster))
+				ADD_TRAIT(affected_mob, TRAIT_PACIFISM, MAGIC_TRAIT)
+				affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/pacifisting)
+				affected_mob.emote("stare")
+				spawn(delay+caster.discipline_time_plus)
+					if(affected_mob)
+						REMOVE_TRAIT(affected_mob, TRAIT_PACIFISM, MAGIC_TRAIT)
+						affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/pacifisting)
 		if(5)
 			var/atom/movable/visual1 = new (get_step(caster, caster.dir))
 			visual1.density = TRUE
