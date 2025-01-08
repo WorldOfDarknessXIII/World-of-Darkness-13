@@ -499,14 +499,14 @@
 			caster.hairstyle = "Bald"
 			caster.facial_hairstyle = "Shaved"
 			caster.update_body()
-			caster.freezing_aura = TRUE
+			spawn()
+				freezing_aura_loop(caster, delay + caster.discipline_time_plus)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					caster.unique_body_sprite = null
 					caster.hairstyle = initial_hair
 					caster.facial_hairstyle = initial_facial
 					caster.update_body()
-					caster.freezing_aura = FALSE
 		if(3)
 			var/obj/item/melee/vampirearms/knife/bone_shintai/S1 = new (caster)
 			var/obj/item/melee/vampirearms/knife/bone_shintai/S2 = new (caster)
@@ -542,6 +542,15 @@
 					caster.update_body()
 					caster.set_light(0)
 					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
+
+/datum/chi_discipline/bone_shintai/proc/freezing_aura_loop(mob/living/carbon/human/caster, duration)
+	var/loop_started_time = world.time
+	while (world.time <= (loop_started_time + duration))
+		for(var/mob/living/carbon/frozen_mob in oviewers(3, caster))
+			frozen_mob.do_jitter_animation(1 SECONDS)
+			frozen_mob.adjust_bodytemperature(-15)
+
+		sleep(2 SECONDS)
 
 /datum/chi_discipline/ghost_flame_shintai
 	name = "Ghost Flame Shintai"

@@ -299,6 +299,3 @@
 
 	//TO ovverride jump distance
 	var/jade_shintai_override = 0
-	//For freezing/burning/blurry/storm aura
-	var/freezing_aura = FALSE
-	var/last_freeze = 0

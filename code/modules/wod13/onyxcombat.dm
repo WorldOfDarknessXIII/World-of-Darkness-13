@@ -765,14 +765,6 @@
 			last_nonraid = world.time
 			killed_count = max(0, killed_count-1)
 
-	if(freezing_aura)
-		if(last_freeze+2 SECONDS <= world.time)
-			last_freeze = world.time
-			for(var/mob/living/carbon/C in viewers(3, src))
-				if(C != src)
-					C.do_jitter_animation(1 SECONDS)
-					C.adjust_bodytemperature(-15)
-//					C.adjust_coretemperature(-15)
 	..()
 
 /mob/living/Initialize()
