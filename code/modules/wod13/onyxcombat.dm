@@ -806,11 +806,6 @@
 			for(var/mob/living/L in viewers(2, src))
 				if(L != src)
 					step_away(L, src)
-	if(yang_mantle)
-		for(var/mob/living/L in viewers(3, src))
-			if(L != src)
-				if(prob(20))
-					L.flash_act(affect_silicon = 1)
 	..()
 
 /mob/living/Initialize()

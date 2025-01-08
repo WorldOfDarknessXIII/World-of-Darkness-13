@@ -2185,12 +2185,12 @@
 			caster.overlays_standing[HALO_LAYER] = fortitude_overlay
 			caster.apply_overlay(HALO_LAYER)
 			caster.set_light(2, 5, "#ffffff")
-			caster.yang_mantle = TRUE
+			spawn()
+				yang_mantle_loop(caster, delay + caster.discipline_time_plus)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					caster.remove_overlay(HALO_LAYER)
 					caster.set_light(0)
-					caster.yang_mantle = FALSE
 		if(3)
 			ADD_TRAIT(caster, TRAIT_ENHANCED_MELEE_DODGE, "yang prana 3")
 			to_chat(caster, "<span class='notice'>Your muscles relax and start moving unintentionally. You feel perfect at close range evasion skills...</span>")
@@ -2215,3 +2215,12 @@
 					to_chat(caster, "<span class='warning'>Your muscles feel normal again.</span>")
 		if(5)
 			E.cast(list(caster), caster)
+
+/datum/chi_discipline/yang_prana/proc/yang_mantle_loop(mob/living/carbon/human/caster, duration)
+	var/loop_started_time = world.time
+	while (world.time <= (loop_started_time + duration))
+		for(var/mob/living/viewing_mantle in oviewers(3, src))
+			if(prob(20))
+				viewing_mantle.flash_act(affect_silicon = 1)
+
+		sleep(2 SECONDS)

@@ -310,4 +310,3 @@
 	var/last_storm = 0
 	var/wind_aura = FALSE
 	var/last_wind = 0
-	var/yang_mantle = FALSE
