@@ -1164,22 +1164,22 @@
 /datum/effect_system/smoke_spread/bad/yomi
 	effect_type = /obj/effect/particle_effect/smoke/bad/yomi
 
-/obj/effect/particle_effect/smoke/bad/yomi/smoke_mob(mob/living/carbon/M)
+/obj/effect/particle_effect/smoke/bad/yomi/smoke_mob(mob/living/carbon/inhaling_mob)
 	. = ..()
 	if(.)
-		M.adjustCloneLoss(10, TRUE)
-		M.emote(pick("scream", "groan", "cry"))
+		inhaling_mob.adjustCloneLoss(10, TRUE)
+		inhaling_mob.emote(pick("scream", "groan", "cry"))
 		return TRUE
 
 /datum/movespeed_modifier/yomi_flashback
 	multiplicative_slowdown = 6
 
-/datum/chi_discipline/hellweaving/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/chi_discipline/hellweaving/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/mypower = caster.social + caster.additional_social
-	var/theirpower = target.mentality + target.additional_mentality
+	var/mypower = caster.get_total_social()
+	var/theirpower = caster.get_total_mentality()
 	if(theirpower >= mypower)
-		to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to flashback!</span>")
+		to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to cause flashbacks for!</span>")
 		return
 	switch(level_casting)
 		if(1)
@@ -1195,19 +1195,19 @@
 			target.clear_fullscreen("yomi", 5)
 			target.add_movespeed_modifier(/datum/movespeed_modifier/yomi_flashback)
 			target.emote("cry")
-			spawn(30)
+			spawn(3 SECONDS)
 				if(target)
 					target.remove_movespeed_modifier(/datum/movespeed_modifier/yomi_flashback)
 		if(4)
 			target.overlay_fullscreen("yomi", /atom/movable/screen/fullscreen/yomi_world)
 			target.clear_fullscreen("yomi", 5)
 			if(ishuman(target))
-				var/mob/living/carbon/human/H = target
-				var/datum/cb = CALLBACK(H,/mob/living/carbon/human/proc/attack_myself_command)
+				var/mob/living/carbon/human/human_target = target
+				var/datum/cb = CALLBACK(human_target, /mob/living/carbon/human/proc/attack_myself_command)
 				for(var/i in 1 to 20)
-					addtimer(cb, (i - 1)*15)
+					addtimer(cb, (i - 1) * 1.5 SECONDS)
 				target.emote("scream")
-				target.do_jitter_animation(30)
+				target.do_jitter_animation(3 SECONDS)
 		if(5)
 			target.emote(pick("cry", "scream", "groan"))
 			target.point_at(caster)
