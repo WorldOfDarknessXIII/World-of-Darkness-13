@@ -41,15 +41,15 @@
 			if(last_shooting+50 < world.time)
 				last_shooting = world.time
 				var/area/A = get_area(location)
-				say("Citizens report hearing gunshots at [A.name],[get_cardinal_direction(location.x, location.y)], [location.x]:[location.y]...")
+				say("Citizens report hearing gunshots at [A.name], to the [get_cardinal_direction(location.x, location.y)]...")
 		if("victim")
 			if(last_shooting_victims+50 < world.time)
 				last_shooting_victims = world.time
 				var/area/A = get_area(location)
-				say("Active firefight in progress at [A.name], wounded civilians,[get_cardinal_direction(location.x, location.y)], [location.x]:[location.y]...")
+				say("Active firefight in progress at [A.name], wounded civilians, to the [get_cardinal_direction(location.x, location.y)]...")
 		if("murder")
 			var/area/A = get_area(location)
-			say("Murder at [A.name],[get_cardinal_direction(location.x, location.y)], [location.x]:[location.y]...")
+			say("Murder at [A.name], to the [get_cardinal_direction(location.x, location.y)]...")
 
 /obj/item/police_radio/Initialize()
 	. = ..()

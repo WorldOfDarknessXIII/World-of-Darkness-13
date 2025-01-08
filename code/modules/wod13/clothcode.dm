@@ -48,7 +48,7 @@
 	icon_state = "nosferatu_f"
 
 /obj/item/clothing/under/vampire/toreador
-	name = "flamboiant outfit"
+	name = "flamboyant outfit"
 	desc = "Some sexy clothes."
 	icon_state = "toreador_m"
 
