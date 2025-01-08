@@ -275,7 +275,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Lets the mob block projectiles like bullets using only their hands.
 #define TRAIT_HANDS_BLOCK_PROJECTILES "hands_block_projectiles"
 /// The mob always dodges melee attacks
-#define TRAIT_ENHANCED_MELEE_DODGE	"enhanced melee dodge"
+#define TRAIT_ENHANCED_MELEE_DODGE "enhanced melee dodge"
+/// The mob can easily swim and jump very far.
+#define TRAIT_SUPERNATURAL_DEXTERITY "supernatural dexterity"
 
 // You can stare into the abyss, but it does not stare back.
 // You're immune to the hallucination effect of the supermatter, either

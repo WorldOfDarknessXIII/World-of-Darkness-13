@@ -228,8 +228,9 @@
 	if(adjusted_jump_range <1)
 		adjusted_jump_range = 1
 
-	if(jade_shintai_override)
-		adjusted_jump_range = jade_shintai_override
+	// very high override for powers like Jade Shintai 2
+	if(HAS_TRAIT(src, TRAIT_SUPERNATURAL_DEXTERITY))
+		adjusted_jump_range = 11
 
 	var/distance = get_dist(loc, target)
 	var/turf/adjusted_target = target

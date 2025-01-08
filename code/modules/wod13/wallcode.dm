@@ -1153,8 +1153,8 @@
 
 /turf/open/floor/plating/vampocean/Enter(atom/movable/mover, atom/oldloc)
 	if(isliving(mover))
-		var/mob/living/L = mover
-		if(!L.jade_shintai_override)
+		var/mob/living/swimmer = mover
+		if(!HAS_TRAIT(swimmer, TRAIT_SUPERNATURAL_DEXTERITY))
 			return FALSE
 	. = ..()
 

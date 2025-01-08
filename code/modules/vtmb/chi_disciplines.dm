@@ -391,11 +391,11 @@
 			caster.forceMove(B)
 		if(2)
 			caster.pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-			caster.jade_shintai_override = 11
+			ADD_TRAIT(caster, TRAIT_SUPERNATURAL_DEXTERITY, "jade shintai 2")
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					caster.pass_flags = initial(caster.pass_flags)
-					caster.jade_shintai_override = 0
+					REMOVE_TRAIT(caster, TRAIT_SUPERNATURAL_DEXTERITY, "jade shintai 2")
 		if(3)
 			caster.gargoyle_pass = TRUE
 			caster.alpha = 128
