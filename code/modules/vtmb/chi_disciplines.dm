@@ -400,13 +400,13 @@
 /obj/item/melee/powerfist/stone/updateTank(obj/item/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
 	return FALSE
 
-/datum/chi_discipline/jade_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/chi_discipline/jade_shintai/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	switch(level_casting)
 		if(1)
-			var/obj/structure/bury_pit/B = new (get_turf(caster))
-			B.icon_state = "pit0"
-			caster.forceMove(B)
+			var/obj/structure/bury_pit/burial_pit = new (get_turf(caster))
+			burial_pit.icon_state = "pit0"
+			caster.forceMove(burial_pit)
 		if(2)
 			caster.pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 			ADD_TRAIT(caster, TRAIT_SUPERNATURAL_DEXTERITY, "jade shintai 2")
@@ -415,7 +415,7 @@
 					caster.pass_flags = initial(caster.pass_flags)
 					REMOVE_TRAIT(caster, TRAIT_SUPERNATURAL_DEXTERITY, "jade shintai 2")
 		if(3)
-			caster.gargoyle_pass = TRUE
+			ADD_TRAIT(caster, TRAIT_PASS_THROUGH_WALLS, "jade shintai 3")
 			caster.alpha = 128
 			caster.obfuscate_level = 3
 			caster.add_movespeed_modifier(/datum/movespeed_modifier/wall_passing)
@@ -423,7 +423,7 @@
 				if(caster)
 					caster.obfuscate_level = 0
 					caster.alpha = 255
-					caster.gargoyle_pass = FALSE
+					REMOVE_TRAIT(caster, TRAIT_PASS_THROUGH_WALLS, "jade shintai 3")
 					caster.remove_movespeed_modifier(/datum/movespeed_modifier/wall_passing)
 		if(4)
 			caster.dna.species.ToggleFlight(caster)
@@ -438,10 +438,10 @@
 			caster.physiology.armor.melee += 50
 			caster.physiology.armor.bullet += 50
 			caster.drop_all_held_items()
-			var/obj/item/melee/powerfist/stone/S1 = new (caster)
-			var/obj/item/melee/powerfist/stone/S2 = new (caster)
-			caster.put_in_r_hand(S1)
-			caster.put_in_l_hand(S2)
+			var/obj/item/melee/powerfist/stone/righthand_stonefist = new (caster)
+			var/obj/item/melee/powerfist/stone/lefthand_stonefist = new (caster)
+			caster.put_in_r_hand(righthand_stonefist)
+			caster.put_in_l_hand(lefthand_stonefist)
 			ADD_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
@@ -449,10 +449,10 @@
 					caster.physiology.armor.bullet -= 50
 					caster.remove_overlay(POTENCE_LAYER)
 					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
-					if(S1)
-						qdel(S1)
-					if(S2)
-						qdel(S2)
+					if(righthand_stonefist)
+						qdel(righthand_stonefist)
+					if(lefthand_stonefist)
+						qdel(lefthand_stonefist)
 
 /datum/chi_discipline/bone_shintai
 	name = "Bone Shintai"
