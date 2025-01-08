@@ -160,30 +160,29 @@ SUBSYSTEM_DEF(carpool)
 			to_chat(user, "<span class='warning'>[src] is locked!</span>")
 			return
 		repairing = TRUE
-		if(do_mob(user, src, 10 SECONDS))
-			if(driver)
-				var/datum/action/carr/exit_car/C = locate() in driver.actions
-				to_chat(user, "<span class='notice'>You've managed to get [driver] out of [src].</span>")
-				if(C)
-					C.Trigger()
-				repairing = FALSE
-				return
-			else if(length(passengers))
-				var/mob/living/L = pick(passengers)
-				to_chat(user, "<span class='notice'>You've managed to get [L] out of [src].</span>")
-				var/datum/action/carr/exit_car/C = locate() in L.actions
-				if(C)
-					C.Trigger()
-				repairing = FALSE
-				return
-			else
-				to_chat(user, "<span class='warning'>There is no one in [src].</span>")
-				repairing = FALSE
-				return
+		var/mob/living/L
+
+		if(driver)
+			L = driver
+		else if(length(passengers))
+			L = pick(passengers)
 		else
-			to_chat(user, "<span class='warning'>You've failed to get anyone out of [src].</span>")
+			to_chat(user, "<span class='notice'>There's no one in [src].</span>")
 			repairing = FALSE
 			return
+
+		src.visible_message("<span class='warning'>[user] begins pulling someone out of [src]!</span>", \
+			"<span class='warning'>You begin pulling [L] out of [src]...</span>")
+		if(do_mob(user, src, 5 SECONDS))
+			var/datum/action/carr/exit_car/C = locate() in L.actions
+			src.visible_message("<span class='warning'>[user] has managed to get [L] out of [src].</span>", \
+				"<span class='warning'>You've managed to get [L] out of [src].</span>")
+			if(C)
+				C.Trigger()
+		else
+			to_chat(user, "<span class='warning'>You've failed to get [L] out of [src].</span>")
+		repairing = FALSE
+		return
 
 /obj/vampire_car/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/gas_can))
@@ -242,14 +241,24 @@ SUBSYSTEM_DEF(carpool)
 	if(istype(I, /obj/item/melee/vampirearms/tire))
 		if(!repairing)
 			repairing = TRUE
-			if(do_mob(user, src, 5 SECONDS))
-				get_damage(-20)
+
+			var time_to_repair = (maxhealth - health) / 4 //Repair 4hp for every second spent repairing
+			var start_time = world.time
+
+			src.visible_message("<span class='notice'>[user] begins repairing [src]...</span>", \
+				"<span class='notice'>You begin repairing [src]. Stop at any time to only partially repair it.</span>")
+			if(do_mob(user, src, time_to_repair SECONDS))
+				health = maxhealth
 				playsound(src, 'code/modules/wod13/sounds/repair.ogg', 50, TRUE)
-				to_chat(user, "<span class='notice'>You repair some dents on [src].</span>")
+				src.visible_message("<span class='notice'>[user] repairs [src].</span>", \
+					"<span class='notice'>You finish repairing all the dents on [src].</span>")
 				repairing = FALSE
 				return
 			else
-				to_chat(user, "<span class='warning'>You failed to repair [src].</span>")
+				get_damage((world.time - start_time) * -2 / 5) //partial repair
+				playsound(src, 'code/modules/wod13/sounds/repair.ogg', 50, TRUE)
+				src.visible_message("<span class='notice'>[user] repairs [src].</span>", \
+					"<span class='notice'>You repair some of the dents on [src].</span>")
 				repairing = FALSE
 				return
 		return
@@ -467,36 +476,47 @@ SUBSYSTEM_DEF(carpool)
 
 /mob/living/carbon/human/MouseDrop(atom/over_object)
 	. = ..()
-	if(istype(over_object, /obj/vampire_car))
-		if(get_dist(src, over_object) < 2)
-			var/obj/vampire_car/V = over_object
-			if(!V.locked)
-				if(!V.driver)
-					forceMove(over_object)
-					V.driver = src
-					var/datum/action/carr/exit_car/E = new()
-					E.Grant(src)
-					var/datum/action/carr/fari_vrubi/F = new()
-					F.Grant(src)
-					var/datum/action/carr/engine/N = new()
-					N.Grant(src)
-					var/datum/action/carr/stage/S = new()
-					S.Grant(src)
-					var/datum/action/carr/beep/B = new()
-					B.Grant(src)
-					var/datum/action/carr/baggage/G = new()
-					G.Grant(src)
-				else if(length(V.passengers) < V.max_passengers)
-					forceMove(over_object)
-					V.passengers += src
-					var/datum/action/carr/exit_car/E = new()
-					E.Grant(src)
-				to_chat(src, "<span class='notice'>You enter [V].</span>")
-				playsound(V, 'code/modules/wod13/sounds/door.ogg', 50, TRUE)
-				return
-			else
-				to_chat(src, "<span class='warning'>[V] is locked.</span>")
-				return
+	if(istype(over_object, /obj/vampire_car) & get_dist(src, over_object) < 2)
+		var/obj/vampire_car/V = over_object
+
+		if(V.locked)
+			to_chat(src, "<span class='warning'>[V] is locked.</span>")
+			return
+
+		if(V.driver & length(V.passengers) >= V.max_passengers)
+			to_chat(src, "<span class='warning'>There's no space left for you in [V].")
+			return
+
+		src.visible_message("<span class='notice'>[src] begins entering [V]...</span>", \
+			"<span class='notice'>You begin entering [V]...</span>")
+		if(do_mob(src, over_object, 1 SECONDS))
+			if(!V.driver)
+				forceMove(over_object)
+				V.driver = src
+				var/datum/action/carr/exit_car/E = new()
+				E.Grant(src)
+				var/datum/action/carr/fari_vrubi/F = new()
+				F.Grant(src)
+				var/datum/action/carr/engine/N = new()
+				N.Grant(src)
+				var/datum/action/carr/stage/S = new()
+				S.Grant(src)
+				var/datum/action/carr/beep/B = new()
+				B.Grant(src)
+				var/datum/action/carr/baggage/G = new()
+				G.Grant(src)
+			else if(length(V.passengers) < V.max_passengers)
+				forceMove(over_object)
+				V.passengers += src
+				var/datum/action/carr/exit_car/E = new()
+				E.Grant(src)
+			src.visible_message("<span class='notice'>[src] enters [V].</span>", \
+				"<span class='notice'>You enter [V].</span>")
+			playsound(V, 'code/modules/wod13/sounds/door.ogg', 50, TRUE)
+			return
+		else
+			to_chat(src, "<span class='warning'>You fail to enter [V].")
+			return
 
 /obj/vampire_car/Bump(atom/A)
 	if(!A)
