@@ -2131,20 +2131,22 @@
 	if(!proximity)
 		return
 	if(istype(target, /obj/structure/vampdoor))
-		var/obj/structure/vampdoor/V = target
+		var/obj/structure/vampdoor/door = target
+		if (door.lockpick_difficulty > 10)
+			return ..()
 		playsound(get_turf(target), 'code/modules/wod13/sounds/get_bent.ogg', 100, FALSE)
-		var/obj/item/shield/door/D = new(get_turf(target))
-		D.icon_state = V.baseicon
+		var/obj/item/shield/door/door_item = new(get_turf(target))
+		door_item.icon_state = door.baseicon
 		var/atom/throw_target = get_edge_target_turf(target, user.dir)
-		D.throw_at(throw_target, rand(2, 4), 4, src)
+		door_item.throw_at(throw_target, rand(2, 4), 4, src)
 		qdel(target)
 	if(isliving(target))
-		var/mob/living/L = target
-		L.adjustCloneLoss(20)
-		L.AdjustKnockdown(2 SECONDS)
+		var/mob/living/target_mob = target
+		target_mob.adjustCloneLoss(20)
+		target_mob.AdjustKnockdown(2 SECONDS)
 	return ..()
 
-/datum/chi_discipline/yin_prana/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/chi_discipline/yin_prana/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	switch(level_casting)
 		if(1)
@@ -2157,43 +2159,30 @@
 						caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/obfuscate_deactivate.ogg', 50, FALSE)
 						caster.alpha = 255
 		if(2)
-			var/atom/movable/AM = new(target)
-			AM.set_light(5, -7)
+			var/atom/movable/light_source = new(target)
+			light_source.set_light(5, -7)
 			spawn(delay+caster.discipline_time_plus)
-				AM.set_light(0)
+				light_source.set_light(0)
+				qdel(light_source)
 		if(3)
-			for(var/mob/living/L in viewers(5, caster))
-				if(L != caster)
-					L.AdjustKnockdown(2 SECONDS)
-					L.adjustStaminaLoss(50, TRUE)
-			var/matrix/M = matrix()
-			M.Scale(2, 2)
-			var/obj/effect/celerity/C1 = new(get_turf(caster))
-			var/obj/effect/celerity/C2 = new(get_turf(caster))
-			var/obj/effect/celerity/C3 = new(get_turf(caster))
-			C1.appearance = caster.appearance
-			C1.dir = caster.dir
-			C1.color = "#000000"
-			C2.appearance = caster.appearance
-			C2.dir = caster.dir
-			C2.color = "#000000"
-			C3.appearance = caster.appearance
-			C3.dir = caster.dir
-			C3.color = "#000000"
-			animate(C1, pixel_x = pick(-16, 0, 16), pixel_y = pick(-16, 0, 16), alpha = 0, transform = M, time = 2 SECONDS)
-			animate(C2, pixel_x = pick(-16, 0, 16), pixel_y = pick(-16, 0, 16), alpha = 0, transform = M, time = 2 SECONDS)
-			animate(C3, pixel_x = pick(-16, 0, 16), pixel_y = pick(-16, 0, 16), alpha = 0, transform = M, time = 2 SECONDS)
+			for(var/mob/living/affected_mob in oviewers(5, caster))
+				affected_mob.AdjustKnockdown(2 SECONDS)
+				affected_mob.adjustStaminaLoss(50, TRUE)
+			var/matrix/double_size = matrix()
+			double_size.Scale(2, 2)
+			for (var/i in 1 to 3)
+				var/obj/effect/celerity/celerity_effect = new(get_turf(caster))
+				celerity_effect.appearance = caster.appearance
+				celerity_effect.dir = caster.dir
+				celerity_effect.color = "#000000"
+				animate(celerity_effect, pixel_x = pick(-16, 0, 16), pixel_y = pick(-16, 0, 16), alpha = 0, transform = double_size, time = 2 SECONDS)
 		if(4)
 			caster.drop_all_held_items()
 			caster.put_in_active_hand(new /obj/item/melee/touch_attack/yin_touch(caster))
 		if(5)
-			for(var/mob/living/L in viewers(7, caster))
-				if(L != caster)
-					new /datum/hallucination/dangerflash(L, TRUE)
-					new /datum/hallucination/dangerflash(L, TRUE)
-					new /datum/hallucination/dangerflash(L, TRUE)
-					new /datum/hallucination/dangerflash(L, TRUE)
-					new /datum/hallucination/dangerflash(L, TRUE)
+			for(var/mob/living/affected_mob in oviewers(7, caster))
+				for (var/i in 1 to 5)
+					new /datum/hallucination/dangerflash(affected_mob, TRUE)
 			do_sparks(5, FALSE, caster)
 
 /datum/chi_discipline/yang_prana
