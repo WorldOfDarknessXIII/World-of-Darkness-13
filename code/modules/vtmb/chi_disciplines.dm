@@ -1717,107 +1717,105 @@
 	..()
 	switch(level_casting)
 		if(1)
-			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh+5
-			caster.physiology.armor.melee = caster.physiology.armor.melee+15
-			caster.physiology.armor.bullet = caster.physiology.armor.bullet+15
-			caster.dexterity = caster.dexterity+2
-			caster.athletics = caster.athletics+2
-			caster.lockpicking = caster.lockpicking+2
+			caster.dna.species.punchdamagehigh += 5
+			caster.physiology.armor.melee += 15
+			caster.physiology.armor.bullet += 15
+			caster.dexterity += 2
+			caster.athletics += 2
+			caster.lockpicking += 2
 			ADD_TRAIT(caster, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
-			caster.do_jitter_animation(10)
+			caster.do_jitter_animation(1 SECONDS)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
-					caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh-5
-					caster.physiology.armor.melee = caster.physiology.armor.melee-15
-					caster.physiology.armor.bullet = caster.physiology.armor.bullet-15
-					caster.dexterity = caster.dexterity-2
-					caster.athletics = caster.athletics-2
-					caster.lockpicking = caster.lockpicking-2
+					caster.dna.species.punchdamagehigh -= 5
+					caster.physiology.armor.melee -= 15
+					caster.physiology.armor.bullet -= 15
+					caster.dexterity -= 2
+					caster.athletics -= 2
+					caster.lockpicking -= 2
 					REMOVE_TRAIT(caster, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
 		if(2)
 			caster.yin_chi += 1
 			caster.yang_chi += 1		//Redeeming for the shift
-			var/next = input(caster, "Where do you want to shift your Yang Chi?", "Chi Shift") as null|anything in list("Yin Pool", "Demon Pool", "Nowhere")
-			if(next == "Yin Pool")
+			var/yang_shift = input(caster, "Where do you want to shift your Yang Chi?", "Chi Shift") as null|anything in list("Yin Pool", "Demon Pool", "Nowhere")
+			if(yang_shift == "Yin Pool")
 				var/init_yin = caster.yin_chi
-				var/actually_shifted = min(min(caster.max_yin_chi, caster.yin_chi+caster.yang_chi)-init_yin, caster.yang_chi)
+				var/actually_shifted = min(min(caster.max_yin_chi, caster.yin_chi + caster.yang_chi) - init_yin, caster.yang_chi)
 				caster.yang_chi -= actually_shifted
 				caster.yin_chi += actually_shifted
 				to_chat(caster, "<span class='warning'>You put your Yang into your Yin.</span>")
-			if(next == "Demon Pool")
+			if(yang_shift == "Demon Pool")
 				var/init_demon = caster.demon_chi
-				var/actually_shifted = min(min(caster.max_demon_chi, caster.demon_chi+caster.yang_chi)-init_demon, caster.yang_chi)
+				var/actually_shifted = min(min(caster.max_demon_chi, caster.demon_chi + caster.yang_chi) - init_demon, caster.yang_chi)
 				caster.yang_chi -= actually_shifted
 				caster.demon_chi += actually_shifted
 				to_chat(caster, "<span class='warning'>You put your Yang into your Demon.</span>")
-			var/next2 = input(caster, "Where do you want to shift your Yin Chi?", "Chi Shift") as null|anything in list("Yang Pool", "Demon Pool", "Nowhere")
-			if(next2 == "Yang Pool")
+			var/yin_shift = input(caster, "Where do you want to shift your Yin Chi?", "Chi Shift") as null|anything in list("Yang Pool", "Demon Pool", "Nowhere")
+			if(yin_shift == "Yang Pool")
 				var/init_yang = caster.yang_chi
-				var/actually_shifted = min(min(caster.max_yang_chi, caster.yang_chi+caster.yin_chi)-init_yang, caster.yin_chi)
+				var/actually_shifted = min(min(caster.max_yang_chi, caster.yang_chi + caster.yin_chi) - init_yang, caster.yin_chi)
 				caster.yin_chi -= actually_shifted
 				caster.yang_chi += actually_shifted
 				to_chat(caster, "<span class='warning'>You put your Yin into your Yang.</span>")
-			if(next2 == "Demon Pool")
+			if(yin_shift == "Demon Pool")
 				var/init_demon = caster.demon_chi
-				var/actually_shifted = min(min(caster.max_demon_chi, caster.demon_chi+caster.yin_chi)-init_demon, caster.yin_chi)
+				var/actually_shifted = min(min(caster.max_demon_chi, caster.demon_chi + caster.yin_chi) - init_demon, caster.yin_chi)
 				caster.yin_chi -= actually_shifted
 				caster.demon_chi += actually_shifted
 				to_chat(caster, "<span class='warning'>You put your Yin into your Demon.</span>")
-			var/next3 = input(caster, "Where do you want to shift your Demon Chi?", "Chi Shift") as null|anything in list("Yin Pool", "Yang Pool", "Nowhere")
-			if(next3 == "Yin Pool")
+			var/demon_shift = input(caster, "Where do you want to shift your Demon Chi?", "Chi Shift") as null|anything in list("Yin Pool", "Yang Pool", "Nowhere")
+			if(demon_shift == "Yin Pool")
 				var/init_yin = caster.yin_chi
-				var/actually_shifted = min(min(caster.max_yin_chi, caster.yin_chi+caster.demon_chi)-init_yin, caster.demon_chi)
+				var/actually_shifted = min(min(caster.max_yin_chi, caster.yin_chi + caster.demon_chi) - init_yin, caster.demon_chi)
 				caster.demon_chi -= actually_shifted
 				caster.yin_chi += actually_shifted
 				to_chat(caster, "<span class='warning'>You put your Demon into your Yin.</span>")
-			if(next3 == "Yang Pool")
+			if(demon_shift == "Yang Pool")
 				var/init_yang = caster.yang_chi
-				var/actually_shifted = min(min(caster.max_yang_chi, caster.yang_chi+caster.demon_chi)-init_yang, caster.demon_chi)
+				var/actually_shifted = min(min(caster.max_yang_chi, caster.yang_chi + caster.demon_chi) - init_yang, caster.demon_chi)
 				caster.demon_chi -= actually_shifted
 				caster.yang_chi += actually_shifted
 				to_chat(caster, "<span class='warning'>You put your Demon into your Yang.</span>")
 		if(3)
-			for(var/mob/living/carbon/human/H in viewers(5, caster))
-				if(H != caster)
-					H.dna.species.punchdamagehigh = H.dna.species.punchdamagehigh+5
-					H.physiology.armor.melee = H.physiology.armor.melee+15
-					H.physiology.armor.bullet = H.physiology.armor.bullet+15
-					H.dexterity = H.dexterity+2
-					H.athletics = H.athletics+2
-					H.lockpicking = H.lockpicking+2
-					ADD_TRAIT(H, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
-					var/obj/effect/celerity/C = new(get_turf(H))
-					C.appearance = H.appearance
-					C.dir = H.dir
-					var/matrix/ntransform = matrix(H.transform)
-					ntransform.Scale(2, 2)
-					animate(C, transform = ntransform, alpha = 0, time = 1 SECONDS)
-					spawn(delay+caster.discipline_time_plus)
-						qdel(C)
-						if(H)
-							H.dna.species.punchdamagehigh = H.dna.species.punchdamagehigh-5
-							H.physiology.armor.melee = H.physiology.armor.melee-15
-							H.physiology.armor.bullet = H.physiology.armor.bullet-15
-							H.dexterity = H.dexterity-2
-							H.athletics = H.athletics-2
-							H.lockpicking = H.lockpicking-2
-							REMOVE_TRAIT(H, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
+			for(var/mob/living/carbon/human/affected_mob in oviewers(5, caster))
+				affected_mob.dna.species.punchdamagehigh += 5
+				affected_mob.physiology.armor.melee += 15
+				affected_mob.physiology.armor.bullet += 15
+				affected_mob.dexterity += 2
+				affected_mob.athletics += 2
+				affected_mob.lockpicking += 2
+				ADD_TRAIT(affected_mob, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
+				var/obj/effect/celerity/celerity_effect = new(get_turf(affected_mob))
+				celerity_effect.appearance = affected_mob.appearance
+				celerity_effect.dir = affected_mob.dir
+				var/matrix/double_size = matrix(affected_mob.transform)
+				double_size.Scale(2, 2)
+				animate(celerity_effect, transform = double_size, alpha = 0, time = 1 SECONDS)
+				spawn(delay+caster.discipline_time_plus)
+					qdel(celerity_effect)
+					if(affected_mob)
+						affected_mob.dna.species.punchdamagehigh -= 5
+						affected_mob.physiology.armor.melee -= 15
+						affected_mob.physiology.armor.bullet -= 15
+						affected_mob.dexterity -= 2
+						affected_mob.athletics -= 2
+						affected_mob.lockpicking -= 2
+						REMOVE_TRAIT(affected_mob, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
 		if(4)
-			for(var/mob/living/H in viewers(5, caster))
-				if(H != caster)
-					H.AdjustKnockdown(2 SECONDS, TRUE)
-					H.emote("scream")
-					playsound(get_turf(H), 'code/modules/wod13/sounds/vicissitude.ogg', 75, FALSE)
-					step_away(H, caster)
+			for(var/mob/living/affected_mob in oviewers(5, caster))
+				affected_mob.AdjustKnockdown(2 SECONDS, TRUE)
+				affected_mob.emote("scream")
+				playsound(get_turf(affected_mob), 'code/modules/wod13/sounds/vicissitude.ogg', 75, FALSE)
+				step_away(affected_mob, caster)
 		if(5)
 			caster.yin_chi += 1
 			caster.yang_chi += 1
-			var/area/A = get_area(caster)
-			if(A.yang_chi)
-				caster.yang_chi = min(caster.yang_chi+A.yang_chi+1, caster.max_yang_chi)
+			var/area/current_area = get_area(caster)
+			if(current_area.yang_chi)
+				caster.yang_chi = min(caster.yang_chi + current_area.yang_chi, caster.max_yang_chi)
 				to_chat(caster, "<span class='engradio'>Some <b>Yang</b> Chi energy enters you...</span>")
-			if(A.yin_chi)
-				caster.yin_chi = min(caster.yin_chi+A.yin_chi+1, caster.max_yin_chi)
+			if(current_area.yin_chi)
+				caster.yin_chi = min(caster.yin_chi + current_area.yin_chi, caster.max_yin_chi)
 				to_chat(caster, "<span class='medradio'>Some <b>Yin</b> Chi energy enters you...</span>")
 
 /datum/chi_discipline/feng_shui
