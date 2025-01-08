@@ -1953,11 +1953,11 @@
 	var/prev_z
 
 /atom/movable/penumbra_ghost
-	var/last_ghost_moved = 0
+	COOLDOWN_DECLARE(move_ghost)
 
 /atom/movable/penumbra_ghost/relaymove(mob/living/user, direction)
-	if(last_ghost_moved+5 <= world.time)
-		last_ghost_moved = world.time
+	if(COOLDOWN_FINISHED(src, move_ghost))
+		COOLDOWN_START(src, move_ghost, 0.5 SECONDS)
 		dir = direction
 		forceMove(get_step(src, direction))
 
@@ -1979,25 +1979,27 @@
 
 /obj/effect/anomaly/grav_kuei/anomalyEffect()
 	..()
-	boing = 1
-	for(var/obj/O in orange(4, src))
-		if(!O.anchored)
-			step_towards(O,src)
-	for(var/mob/living/M in range(0, src))
-		if(M != owner)
-			gravShock(M)
-	for(var/mob/living/M in orange(4, src))
-		if(!M.mob_negates_gravity() && M != owner)
-			step_towards(M,src)
-	for(var/obj/O in range(0,src))
-		if(!O.anchored)
-			if(isturf(O.loc))
-				var/turf/T = O.loc
-				if(T.intact && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
+	boing = TRUE
+	for(var/obj/affected_object in orange(4, src))
+		if(!affected_object.anchored)
+			step_towards(affected_object, src)
+
+	for(var/mob/living/affected_mob in (range(0, src) - owner))
+		gravShock(affected_mob)
+
+	for(var/mob/living/affected_mob in (orange(4, src) - owner))
+		if(!affected_mob.mob_negates_gravity())
+			step_towards(affected_mob, src)
+
+	for(var/obj/affected_object in range(0, src))
+		if(!affected_object.anchored)
+			if(isturf(affected_object.loc))
+				var/turf/object_turf = affected_object.loc
+				if(object_turf.intact && HAS_TRAIT(affected_object, TRAIT_T_RAY_VISIBLE))
 					continue
-			var/mob/living/target = locate() in view(4,src)
-			if(target && !target.stat && target != owner)
-				O.throw_at(target, 5, 10)
+			var/mob/living/target = locate() in view(4,src) - owner
+			if(target && !target.stat)
+				affected_object.throw_at(target, 5, 10)
 
 /obj/effect/anomaly/grav_kuei/Crossed(atom/movable/AM)
 	. = ..()
@@ -2009,22 +2011,20 @@
 /obj/effect/anomaly/grav_kuei/Bumped(atom/movable/AM)
 	gravShock(AM)
 
-/obj/effect/anomaly/grav_kuei/proc/gravShock(mob/living/A)
-	if(boing && isliving(A) && !A.stat)
-		A.Paralyze(40)
-		var/atom/target = get_edge_target_turf(A, get_dir(src, get_step_away(A, src)))
-		A.throw_at(target, 5, 1)
-		boing = 0
+/obj/effect/anomaly/grav_kuei/proc/gravShock(mob/living/affected_mob)
+	if(boing && isliving(affected_mob) && !affected_mob.stat)
+		affected_mob.Paralyze(4 SECONDS)
+		var/atom/target = get_edge_target_turf(affected_mob, get_dir(src, get_step_away(affected_mob, src)))
+		affected_mob.throw_at(target, 5, 1)
+		boing = FALSE
 
-/datum/chi_discipline/tapestry/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/chi_discipline/tapestry/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	switch(level_casting)
 		if(1)
 			caster.client.prefs.chat_toggles ^= CHAT_DEAD
 			caster.see_invisible = SEE_INVISIBLE_OBSERVER
-			for(var/mob/dead/observer/G in GLOB.player_list)
-				if(G.key)
-					to_chat(G, "<span class='ghostalert'>[FOLLOW_LINK(G, caster)][caster] is calling you!</span>")
+			notify_ghosts("All ghosts are being called by [caster]!", source = caster, action = NOTIFY_ORBIT, header = "Ghost Summoning")
 			spawn(30 SECONDS)
 				if(caster)
 					caster.client?.prefs.chat_toggles &= ~CHAT_DEAD
@@ -2032,39 +2032,43 @@
 		if(2)
 			var/chosen_z
 			var/umbra_z
-			var/atom/movable/penumbra_ghost/GH
+			var/atom/movable/penumbra_ghost/ghost
+
 			if(istype(caster.loc, /atom/movable/penumbra_ghost))
-				GH = caster.loc
-			for(var/area/vtm/interior/penumbra/U in world)
-				if(U)
-					chosen_z = U.z
-					umbra_z = U.z
+				ghost = caster.loc
+
+			for(var/area/vtm/interior/penumbra/penumbra in world)
+				if(penumbra)
+					chosen_z = penumbra.z
+					umbra_z = penumbra.z
+
 			if(caster.z != chosen_z)
 				prev_z = caster.z
 			else
 				chosen_z = prev_z
-				var/turf/mine = get_turf(caster)
-				var/turf/to_wall = locate(mine.x, mine.y, chosen_z)
-				var/area/A = get_area(to_wall)
-				if(A)
-					if(A.wall_rating > 1)
+				var/turf/caster_turf = get_turf(caster)
+				var/turf/to_wall = locate(caster_turf.x, caster_turf.y, chosen_z)
+				var/area/cross_area = get_area(to_wall)
+				if(cross_area)
+					if(cross_area.wall_rating > 1)
 						to_chat(caster, "<span class='warning'><b>GAUNTLET</b> rating there is too high! You can't cross <b>PENUMBRA</b> like this...</span>")
 						caster.yin_chi += 1
 						caster.yang_chi += 1
 						return
+
 			if(do_mob(caster, caster, delay))
 				if(chosen_z != umbra_z)
 					var/atom/myloc = caster.loc
 					caster.forceMove(locate(myloc.x, myloc.y, chosen_z))
-					if(GH)
-						qdel(GH)
+					if(ghost)
+						qdel(ghost)
 				else
 					caster.z = chosen_z
-					GH = new (get_turf(caster))
-					GH.appearance = caster.appearance
-					GH.name = caster.name
-					GH.alpha = 128
-					caster.forceMove(GH)
+					ghost = new (get_turf(caster))
+					ghost.appearance = caster.appearance
+					ghost.name = caster.name
+					ghost.alpha = 128
+					caster.forceMove(ghost)
 				playsound(get_turf(caster), 'code/modules/wod13/sounds/portal.ogg', 100, TRUE)
 		if(3)
 			ADD_TRAIT(caster, TRAIT_SUPERNATURAL_LUCK, "tapestry 3")
@@ -2074,34 +2078,34 @@
 					REMOVE_TRAIT(caster, TRAIT_SUPERNATURAL_LUCK, "tapestry 3")
 					to_chat(caster, "<span class='warning'>Your luck wanes...</span>")
 		if(4)
-			var/A
-			A = input(caster, "Area to jump to", "BOOYEA", A) as null|anything in GLOB.teleportlocs
-			if(A)
+			var/teleport_to
+			teleport_to = input(caster, "Dragon Nest to travel to:", "BOOYEA", teleport_to) as null|anything in GLOB.teleportlocs
+			if(teleport_to)
 				if(do_mob(caster, caster, delay))
-					var/area/thearea = GLOB.teleportlocs[A]
+					var/area/thearea = GLOB.teleportlocs[teleport_to]
 
 					var/datum/effect_system/smoke_spread/smoke = new
 					smoke.set_up(2, caster.loc)
 					smoke.attach(caster)
 					smoke.start()
-					var/list/L = list()
-					for(var/turf/T in get_area_turfs(thearea.type))
-						if(!T.is_blocked_turf())
-							L += T
+					var/list/available_turfs = list()
+					for(var/turf/area_turf in get_area_turfs(thearea.type))
+						if(!area_turf.is_blocked_turf())
+							available_turfs += area_turf
 
-					if(!L.len)
-						to_chat(caster, "<span class='warning'>The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.</span>")
+					if(!available_turfs.len)
+						to_chat(caster, "<span class='warning'>There are no available destinations in that area!</span>")
 						return
 
-					if(do_teleport(caster, pick(L), forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
+					if(do_teleport(caster, pick(available_turfs), forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
 						smoke.start()
 					else
-						to_chat(caster, "<span class='warning'>The spell matrix was disrupted by something near the destination.</span>")
+						to_chat(caster, "<span class='warning'>Something disrupted your travel!</span>")
 		if(5)
-			var/obj/effect/anomaly/grav_kuei/G = new (get_turf(caster))
-			G.owner = caster
+			var/obj/effect/anomaly/grav_kuei/grav_anomaly = new (get_turf(caster))
+			grav_anomaly.owner = caster
 			spawn(30 SECONDS)
-				qdel(G)
+				qdel(grav_anomaly)
 
 /datum/chi_discipline/yin_prana
 	name = "Yin Prana"
