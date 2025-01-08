@@ -1263,7 +1263,7 @@
 		drop_all_held_items()
 		UnarmedAttack(caster)
 
-/datum/chi_discipline/kiai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/chi_discipline/kiai/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	var/sound_gender = 'code/modules/wod13/sounds/kiai_male.ogg'
 	switch(caster.gender)
@@ -1273,8 +1273,8 @@
 			sound_gender = 'code/modules/wod13/sounds/kiai_female.ogg'
 	caster.emote("scream")
 	playsound(caster.loc, sound_gender, 100, FALSE)
-	var/mypower = caster.social + caster.additional_social
-	var/theirpower = target.mentality + target.additional_mentality
+	var/mypower = caster.get_total_social()
+	var/theirpower = caster.get_total_mentality()
 	if(theirpower >= mypower)
 		to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to affect!</span>")
 		return
@@ -1285,17 +1285,17 @@
 		if(2)
 			target.emote("stare")
 			if(ishuman(target))
-				var/mob/living/carbon/human/H = target
-				var/datum/cb = CALLBACK(H,/mob/living/carbon/human/proc/combat_to_caster)
+				var/mob/living/carbon/human/human_target = target
+				var/datum/cb = CALLBACK(human_target, /mob/living/carbon/human/proc/combat_to_caster)
 				for(var/i in 1 to 20)
-					addtimer(cb, (i - 1)*15)
+					addtimer(cb, (i - 1) * 1.5 SECONDS)
 		if(3)
 			target.emote("scream")
 			if(ishuman(target))
-				var/mob/living/carbon/human/H = target
-				var/datum/cb = CALLBACK(H,/mob/living/carbon/human/proc/step_away_caster)
+				var/mob/living/carbon/human/human_target = target
+				var/datum/cb = CALLBACK(human_target, /mob/living/carbon/human/proc/step_away_caster)
 				for(var/i in 1 to 20)
-					addtimer(cb, (i - 1)*15)
+					addtimer(cb, (i - 1) * 1.5 SECONDS)
 		if(4)
 			if(prob(25))
 				target.resist_fire()
@@ -1304,11 +1304,10 @@
 			if(prob(25))
 				target.resist_fire()
 			new /datum/hallucination/fire(target, TRUE)
-			for(var/mob/living/L in viewers(5, target))
-				if(L != caster && L != target)
-					if(prob(20))
-						L.resist_fire()
-					new /datum/hallucination/fire(L, TRUE)
+			for(var/mob/living/hallucinating_mob in (oviewers(5, target) - caster))
+				if(prob(20))
+					hallucinating_mob.resist_fire()
+				new /datum/hallucination/fire(hallucinating_mob, TRUE)
 
 /datum/chi_discipline/beast_shintai
 	name = "Beast Shintai"
