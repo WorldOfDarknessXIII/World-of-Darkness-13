@@ -1568,13 +1568,13 @@
 	if(!(user.mobility_flags & MOBILITY_USE))
 		to_chat(user, "<span class='warning'>You can't reach out!</span>")
 		return
-	var/mob/living/M = target
-	if(M.anti_magic_check())
-		to_chat(user, "<span class='warning'>The spell can't seem to affect [M]!</span>")
-		to_chat(M, "<span class='warning'>You feel your flesh turn to stone for a moment, then revert back!</span>")
+	var/mob/living/human_target = target
+	if(human_target.anti_magic_check())
+		to_chat(user, "<span class='warning'>The spell can't seem to affect [human_target]!</span>")
+		to_chat(human_target, "<span class='warning'>You feel your flesh turn to stone for a moment, then revert back!</span>")
 		..()
 		return
-	M.electrocute_act(50, src, siemens_coeff = 1, flags = NONE)
+	human_target.electrocute_act(50, src, siemens_coeff = 1, flags = NONE)
 	return ..()
 
 /obj/item/gun/magic/hook/storm_shintai
@@ -1631,7 +1631,7 @@
 		playsound(get_turf(target), 'code/modules/wod13/sounds/lightning.ogg', 100, FALSE)
 		if (isliving(target))
 			var/mob/living/L = target
-			L.Stun(5)
+			L.Stun(0.5 SECONDS)
 			L.electrocute_act(50, src, siemens_coeff = 1, flags = NONE)
 			return
 
@@ -1639,7 +1639,7 @@
 	qdel(chain)
 	return ..()
 
-/datum/chi_discipline/storm_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/chi_discipline/storm_shintai/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	switch(level_casting)
 		if(1)
