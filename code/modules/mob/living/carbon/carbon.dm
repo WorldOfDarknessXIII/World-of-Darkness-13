@@ -835,6 +835,8 @@
 
 	//Fire and Brute damage overlay (BSSR)
 	var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
+	//Now adjust the damage in proportion to actual maxHealth, 20 damage is considered 10 damage on a mob with a maxHealth of 200
+	hurtdamage = hurtdamage * 100/(max(maxHealth, 1)) //No dividing with 0 in case maxHealth somehow becomes 0.
 	if(hurtdamage)
 		var/severity = 0
 		switch(hurtdamage)

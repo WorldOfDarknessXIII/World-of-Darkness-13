@@ -149,7 +149,7 @@ SUBSYSTEM_DEF(factionwar)
 	icon_state = "Camarilla"
 
 /obj/graffiti/anarch
-	icon_state = "Anarch"
+	icon_state = "Anarchs"
 
 /obj/graffiti/sabbat
 	icon_state = "Sabbat"

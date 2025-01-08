@@ -610,6 +610,16 @@ Dancer
 	var/mob/living/carbon/H = quirk_holder
 	H.grant_language(/datum/language/arabic)
 
+/datum/quirk/greek
+	name = "Greek"
+	desc = "You know the romantic language of the Greeks."
+	value = 1
+
+/datum/quirk/greek/add()
+	var/mob/living/carbon/H = quirk_holder
+	H.grant_language(/datum/language/greek)
+
+
 /datum/quirk/consumption
 	name = "Consumption"
 	desc = "Your blood is wrought with flesh eating bacteria that is literally eating you from inside out. You take some damage every random amount of time."

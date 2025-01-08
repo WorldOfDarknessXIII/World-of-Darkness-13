@@ -192,12 +192,12 @@
 		var/obj/keypad/armory/K = find_keypad(/obj/keypad/armory)
 		if(K && (host.mind.assigned_role == "Prince" || host.mind.assigned_role == "Sheriff"))
 			dat += "<b>The pincode for the armory keypad is: [K.pincode]</b><BR>"
-		var/obj/keypad/bankvault/V = find_keypad(/obj/keypad/bankvault)
-		if(V && (host.mind.assigned_role == "Capo"))
-			dat += "<b>The pincode for the bank vault keypad is: [V.pincode]</b><BR>"
-		if(V && (host.mind.assigned_role == "La Squadra"))
+		var/obj/structure/vaultdoor/pincode/bank/bankdoor = find_door_pin(/obj/structure/vaultdoor/pincode/bank)
+		if(bankdoor && (host.mind.assigned_role == "Capo"))
+			dat += "<b>The pincode for the bank vault is: [bankdoor.pincode]</b><BR>"
+		if(bankdoor && (host.mind.assigned_role == "La Squadra"))
 			if(prob(50))
-				dat += "<b>The pincode for the bank vault keypad is: [V.pincode]</b><BR>"
+				dat += "<b>The pincode for the bank vault is: [bankdoor.pincode]</b><BR>"
 			else
 				dat += "<b>Unfortunately you don't know the vault code.</b><BR>"
 
@@ -460,24 +460,24 @@
 							BLOODBONDED_prefs_v.pref_species.id = "kindred"
 							BLOODBONDED_prefs_v.pref_species.name = "Vampire"
 							if(H.generation < 13)
-								
+
 								BLOODBONDED_prefs_v.clane = BLOODBONDED.clane
 								BLOODBONDED_prefs_v.generation = 13
 								BLOODBONDED_prefs_v.skin_tone = get_vamp_skin_color(BLOODBONDED.skin_tone)
 								BLOODBONDED_prefs_v.clane.enlightenment = H.clane.enlightenment
-								
-							
+
+
 								//Rarely the new mid round vampires get the 3 brujah skil(it is default)
 								//This will remove if it happens
 								// Or if they are a ghoul with abunch of disciplines
 								if(BLOODBONDED_prefs_v.discipline_types.len > 0)
 									for (var/i in 1 to BLOODBONDED_prefs_v.discipline_types.len)
-										var/removing_discipline = BLOODBONDED_prefs_v.discipline_types[1] 
+										var/removing_discipline = BLOODBONDED_prefs_v.discipline_types[1]
 										if (removing_discipline)
 											var/index = BLOODBONDED_prefs_v.discipline_types.Find(removing_discipline)
-											BLOODBONDED_prefs_v.discipline_types.Cut(index, index + 1) 
+											BLOODBONDED_prefs_v.discipline_types.Cut(index, index + 1)
 											BLOODBONDED_prefs_v.discipline_levels.Cut(index, index + 1)
-									            
+
 								if(BLOODBONDED_prefs_v.discipline_types.len == 0)
 									for (var/i in 1 to 3)
 										BLOODBONDED_prefs_v.discipline_types += BLOODBONDED_prefs_v.clane.clane_disciplines[i]
@@ -561,10 +561,10 @@
 							var/datum/preferences/BLOODBONDED_prefs_g = BLOODBONDED.client.prefs
 							if(BLOODBONDED_prefs_g.discipline_types.len == 3)
 								for (var/i in 1 to 3)
-									var/removing_discipline = BLOODBONDED_prefs_g.discipline_types[1] 
+									var/removing_discipline = BLOODBONDED_prefs_g.discipline_types[1]
 									if (removing_discipline)
 										var/index = BLOODBONDED_prefs_g.discipline_types.Find(removing_discipline)
-										BLOODBONDED_prefs_g.discipline_types.Cut(index, index + 1) 
+										BLOODBONDED_prefs_g.discipline_types.Cut(index, index + 1)
 										BLOODBONDED_prefs_g.discipline_levels.Cut(index, index + 1)
 							BLOODBONDED_prefs_g.pref_species.name = "Ghoul"
 							BLOODBONDED_prefs_g.pref_species.id = "ghoul"
