@@ -654,12 +654,12 @@
 	if(charges == 0)
 		qdel(src)
 
-/datum/chi_discipline/ghost_flame_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/chi_discipline/ghost_flame_shintai/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	var/limit = min(2, level) + caster.social + caster.more_companions - 1
 	if(length(caster.beastmaster) >= limit)
-		var/mob/living/simple_animal/hostile/beastmaster/B = pick(caster.beastmaster)
-		B.death()
+		var/mob/living/simple_animal/hostile/beastmaster/random_beast = pick(caster.beastmaster)
+		random_beast.death()
 	switch(level_casting)
 		if(1)
 			target.overlay_fullscreen("ghostflame", /atom/movable/screen/fullscreen/see_through_darkness)
@@ -672,24 +672,24 @@
 					caster.set_light(0)
 		if(2)
 			if(!length(caster.beastmaster))
-				var/datum/action/beastmaster_stay/E1 = new()
-				E1.Grant(caster)
-				var/datum/action/beastmaster_deaggro/E2 = new()
-				E2.Grant(caster)
-			var/mob/living/simple_animal/hostile/beastmaster/fireball/C = new(get_turf(caster))
-			C.my_creator = caster
-			caster.beastmaster |= C
-			C.beastmaster = caster
+				var/datum/action/beastmaster_stay/stay_action = new()
+				stay_action.Grant(caster)
+				var/datum/action/beastmaster_deaggro/deaggro_action = new()
+				deaggro_action.Grant(caster)
+			var/mob/living/simple_animal/hostile/beastmaster/fireball/living_fireball = new(get_turf(caster))
+			living_fireball.my_creator = caster
+			caster.beastmaster |= living_fireball
+			living_fireball.beastmaster = caster
 		if(3)
 			caster.drop_all_held_items()
 			caster.put_in_active_hand(new /obj/item/gun/magic/ghostflame_shintai(caster))
 		if(4)
 			caster.drop_all_held_items()
-			var/obj/item/melee/vampirearms/katana/fire/F = new (caster)
-			caster.put_in_active_hand(F)
+			var/obj/item/melee/vampirearms/katana/fire/firekatana = new (caster)
+			caster.put_in_active_hand(firekatana)
 			spawn(delay+caster.discipline_time_plus)
-				if(F)
-					qdel(F)
+				if(firekatana)
+					qdel(firekatana)
 		if(5)
 			caster.dna.species.burnmod = 0
 			ADD_TRAIT(caster, TRAIT_PERMANENTLY_ONFIRE, MAGIC_TRAIT)
