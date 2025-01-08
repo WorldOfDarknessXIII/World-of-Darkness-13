@@ -85,6 +85,13 @@
 		"clinic"
 	)
 
+/obj/item/vamp/keys/clinics_director
+	name = "Clinic director keys"
+	accesslocks = list(
+		"clinic",
+		"director"
+	)
+
 /obj/item/vamp/keys/cleaning
 	name = "Cleaning keys"
 	accesslocks = list(
