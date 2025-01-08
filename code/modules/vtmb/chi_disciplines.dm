@@ -102,7 +102,7 @@
 	var/cost_demon = 0
 	//Is ranged?
 	var/ranged = FALSE
-	///Duration of the Discipline.
+	///Duration and cooldown of the Discipline.
 	var/delay = 0.5 SECONDS
 	///Whether this Discipline causes a Masquerade breach when used in front of mortals.
 	var/violates_masquerade = FALSE
@@ -196,7 +196,7 @@
 	delay = 10 SECONDS
 	cost_yin = 1
 	activate_sound = 'code/modules/wod13/sounds/bloodshintai_activate.ogg'
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/bloodcrawler/kuei_jin/BC
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/bloodcrawler/kuei_jin/bloodcrawler_shapeshift
 
 /datum/movespeed_modifier/blood_fat
 	multiplicative_slowdown = 1
@@ -249,7 +249,7 @@
 
 //		var/olddir = C.dir
 		C.moving_diagonally = 0 //If this was part of diagonal move slipping will stop it.
-		C.Knockdown(20)
+		C.Knockdown(2 SECONDS)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/bloodcrawler/kuei_jin
 	shapeshift_type = /mob/living/simple_animal/hostile/bloodcrawler/kuei_jin
@@ -308,16 +308,16 @@
 
 	hit_stunned_targets = TRUE
 
-/datum/chi_discipline/blood_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/chi_discipline/blood_shintai/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	switch(level_casting)
 		if(1)
 			var/result = alert(caster, "How do you manage your shape?",,"Shrink","Inflate")
 			if(result == "Inflate")
-				var/matrix/M = matrix()
-				M.Scale(1.2, 1)
+				var/matrix/inflating_matrix = matrix()
+				inflating_matrix.Scale(1.2, 1)
 				var/matrix/initial = caster.transform
-				animate(caster, transform = M, 1 SECONDS)
+				animate(caster, transform = inflating_matrix, 1 SECONDS)
 				caster.physiology.armor.melee += 20
 				caster.physiology.armor.bullet += 20
 				caster.add_movespeed_modifier(/datum/movespeed_modifier/blood_fat)
@@ -328,10 +328,10 @@
 						caster.physiology.armor.bullet -= 20
 						caster.remove_movespeed_modifier(/datum/movespeed_modifier/blood_fat)
 			else if(result == "Shrink")
-				var/matrix/M = matrix()
-				M.Scale(0.8, 1)
+				var/matrix/shrinking_matrix = matrix()
+				shrinking_matrix.Scale(0.8, 1)
 				var/matrix/initial = caster.transform
-				animate(caster, transform = M, 1 SECONDS)
+				animate(caster, transform = shrinking_matrix, 1 SECONDS)
 				caster.add_movespeed_modifier(/datum/movespeed_modifier/blood_slim)
 				spawn(delay+caster.discipline_time_plus)
 					if(caster)
@@ -340,34 +340,38 @@
 		if(2)
 			playsound(get_turf(caster), 'code/modules/wod13/sounds/spit.ogg', 50, FALSE)
 			spawn(1 SECONDS)
-				var/obj/item/reagent_containers/spray/pepper/kuei_jin/K = new (get_turf(caster))
-				K.spray(get_step(get_step(get_step(get_turf(caster), caster.dir), caster.dir), caster.dir), caster)
-				qdel(K)
+				var/obj/item/reagent_containers/spray/pepper/kuei_jin/sprayer = new (get_turf(caster))
+				//spits the weird pepper spray 3 tiles ahead of the caster
+				var/turf/sprayed_at_turf = get_turf(caster)
+				for (var/i in 1 to 3)
+					sprayed_at_turf = get_step(sprayed_at_turf, caster.dir)
+				sprayer.spray(sprayed_at_turf, caster)
+				qdel(sprayer)
 		if(3)
-			if(!BC)
-				BC = new (caster)
-			BC.Shapeshift(caster)
-			var/mob/living/simple_animal/hostile/host = BC.myshape
+			if(!bloodcrawler_shapeshift)
+				bloodcrawler_shapeshift = new (caster)
+			bloodcrawler_shapeshift.Shapeshift(caster)
+			var/mob/living/simple_animal/hostile/host = bloodcrawler_shapeshift.myshape
 			host.my_creator = null
 			spawn(delay+caster.discipline_time_plus)
-				if(BC)
-					var/mob/living/simple_animal/hostile/bloodcrawler/BD = BC.myshape
-					if(BD.collected_blood > 1)
-						H.adjustBruteLoss(-5*round(BD.collected_blood/2), TRUE)
-						H.adjustFireLoss(-5*round(BD.collected_blood/2), TRUE)
-					BC.Restore(BC.myshape)
-					caster.Stun(15)
-					caster.do_jitter_animation(30)
+				if(bloodcrawler_shapeshift)
+					var/mob/living/simple_animal/hostile/bloodcrawler/current_form = bloodcrawler_shapeshift.myshape
+					if(current_form.collected_blood > 1)
+						H.adjustBruteLoss(-5*round(current_form.collected_blood/2), TRUE)
+						H.adjustFireLoss(-5*round(current_form.collected_blood/2), TRUE)
+					bloodcrawler_shapeshift.Restore(bloodcrawler_shapeshift.myshape)
+					caster.Stun(1.5 SECONDS)
+					caster.do_jitter_animation(3 SECONDS)
 		if(4)
 			caster.drop_all_held_items()
 			caster.put_in_active_hand(new /obj/item/gun/magic/blood_shintai(caster))
 		if(5)
-			var/obj/item/melee/vampirearms/katana/blood/F = new (caster)
+			var/obj/item/melee/vampirearms/katana/blood/blood_katana = new (caster)
 			caster.drop_all_held_items()
-			caster.put_in_active_hand(F)
+			caster.put_in_active_hand(blood_katana)
 			spawn(delay+caster.discipline_time_plus)
-				if(F)
-					qdel(F)
+				if(blood_katana)
+					qdel(blood_katana)
 
 /datum/chi_discipline/jade_shintai
 	name = "Jade Shintai"
