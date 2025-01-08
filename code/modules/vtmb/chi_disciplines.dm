@@ -1084,14 +1084,24 @@
 			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "foul", -UNICORN_LAYER)
 			caster.overlays_standing[UNICORN_LAYER] = potence_overlay
 			caster.apply_overlay(UNICORN_LAYER)
-			caster.foul_aura = level_casting*5
+			spawn()
+				foul_aura_loop(caster, delay + caster.discipline_time_plus, level_casting)
 			ADD_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 			spawn((delay)+caster.discipline_time_plus)
 				if(caster)
 					caster.remove_overlay(UNICORN_LAYER)
-					caster.foul_aura = 0
 					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/demonshintai_deactivate.ogg', 50, FALSE)
+
+/datum/chi_discipline/demon_shintai/proc/foul_aura_loop(mob/living/carbon/human/caster, duration, strength)
+	var/loop_started_time = world.time
+	while (world.time <= (loop_started_time + duration))
+		for(var/mob/living/carbon/grossed_out_mob in oviewers(3, caster))
+			if(prob(strength))
+				grossed_out_mob.Unconscious(0.5 SECONDS)
+			grossed_out_mob.adjust_blurriness(strength * 5)
+
+		sleep(3 SECONDS)
 
 /datum/chi_discipline/hellweaving
 	name = "Hellweaving"

@@ -765,15 +765,6 @@
 			last_nonraid = world.time
 			killed_count = max(0, killed_count-1)
 
-	if(foul_aura)
-		if(last_foul+3 SECONDS <= world.time)
-			last_foul = world.time
-			for(var/mob/living/carbon/C in viewers(3, src))
-				if(C != src)
-					if(prob(foul_aura/5))
-						C.Unconscious(5)
-					C.adjust_blurriness(foul_aura)
-
 	if(freezing_aura)
 		if(last_freeze+2 SECONDS <= world.time)
 			last_freeze = world.time
