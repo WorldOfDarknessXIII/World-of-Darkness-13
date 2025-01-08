@@ -464,7 +464,7 @@
 						chi_particle.icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 						chi_particle.icon_state = "drain"
 						var/matrix/M = matrix()
-						M.Scale(1, get_dist_in_pixels(owner.x*32, owner.y*32, victim.x*32, victim.y*32)/32)
+//						M.Scale(1, get_dist_in_pixels(owner.x*32, owner.y*32, victim.x*32, victim.y*32)/32)
 						M.Turn(get_angle_raw(victim.x, victim.y, 0, 0, owner.x, owner.y, 0, 0))
 						chi_particle.transform = M
 						var/sucking_chi = TRUE
@@ -651,19 +651,20 @@
 /datum/action/rebalance/Trigger()
 	if(istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/BD = usr
-		var/max_limit = BD.mind.dharma.level*2
-		var/sett = input(BD, "Enter the maximum of Yin your character has (from 1 to [max_limit-1]):", "Yin/Yang") as num|null
-		if(sett)
-			sett = max(1, min(sett, max_limit-1))
-			BD.max_yin_chi = sett
-			BD.max_yang_chi = max_limit-sett
-			BD.yin_chi = min(BD.yin_chi, BD.max_yin_chi)
-			BD.yang_chi = min(BD.yang_chi, BD.max_yang_chi)
-			var/sett2 = input(BD, "Enter the maximum of Hun your character has (from 1 to [max_limit-1]):", "Hun/P'o") as num|null
-			if(sett2)
-				sett2 = max(1, min(sett2, max_limit-1))
-				BD.mind.dharma.Hun = sett2
-				BD.max_demon_chi = max_limit-sett2
-				BD.demon_chi = min(BD.demon_chi, BD.max_demon_chi)
+		if(BD.mind?.dharma)
+			var/max_limit = BD.mind.dharma.level*2
+			var/sett = input(BD, "Enter the maximum of Yin your character has (from 1 to [max_limit-1]):", "Yin/Yang") as num|null
+			if(sett)
+				sett = max(1, min(sett, max_limit-1))
+				BD.max_yin_chi = sett
+				BD.max_yang_chi = max_limit-sett
+				BD.yin_chi = min(BD.yin_chi, BD.max_yin_chi)
+				BD.yang_chi = min(BD.yang_chi, BD.max_yang_chi)
+				var/sett2 = input(BD, "Enter the maximum of Hun your character has (from 1 to [max_limit-1]):", "Hun/P'o") as num|null
+				if(sett2)
+					sett2 = max(1, min(sett2, max_limit-1))
+					BD.mind.dharma.Hun = sett2
+					BD.max_demon_chi = max_limit-sett2
+					BD.demon_chi = min(BD.demon_chi, BD.max_demon_chi)
 		button.color = "#970000"
 		animate(button, color = "#ffffff", time = 20, loop = 1)
