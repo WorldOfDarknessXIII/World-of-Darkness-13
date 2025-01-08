@@ -469,11 +469,11 @@
 /datum/effect_system/smoke_spread/bad/green/bone_shintai
 	effect_type = /obj/effect/particle_effect/smoke/bad/green/bone_shintai
 
-/obj/effect/particle_effect/smoke/bad/green/bone_shintai/smoke_mob(mob/living/carbon/M)
+/obj/effect/particle_effect/smoke/bad/green/bone_shintai/smoke_mob(mob/living/carbon/inhaling_mob)
 	. = ..()
 	if(.)
-		M.adjustToxLoss(15, TRUE)
-		M.emote("cough")
+		inhaling_mob.adjustToxLoss(15, TRUE)
+		inhaling_mob.emote("cough")
 		return TRUE
 
 /obj/item/melee/vampirearms/knife/bone_shintai
@@ -487,7 +487,7 @@
 	masquerade_violating = TRUE
 	is_iron = FALSE
 
-/datum/chi_discipline/bone_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/chi_discipline/bone_shintai/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	switch(level_casting)
 		if(1)
@@ -526,15 +526,15 @@
 					caster.facial_hairstyle = initial_facial
 					caster.update_body()
 		if(3)
-			var/obj/item/melee/vampirearms/knife/bone_shintai/S1 = new (caster)
-			var/obj/item/melee/vampirearms/knife/bone_shintai/S2 = new (caster)
-			caster.put_in_r_hand(S1)
-			caster.put_in_l_hand(S2)
+			var/obj/item/melee/vampirearms/knife/bone_shintai/righthand_boneknife = new (caster)
+			var/obj/item/melee/vampirearms/knife/bone_shintai/lefthand_boneknife = new (caster)
+			caster.put_in_r_hand(righthand_boneknife)
+			caster.put_in_l_hand(lefthand_boneknife)
 			spawn(delay+caster.discipline_time_plus)
-				if(S1)
-					qdel(S1)
-				if(S2)
-					qdel(S2)
+				if(righthand_boneknife)
+					qdel(righthand_boneknife)
+				if(lefthand_boneknife)
+					qdel(lefthand_boneknife)
 		if(4)
 			playsound(get_turf(caster), 'sound/effects/smoke.ogg', 50, TRUE)
 			var/datum/effect_system/smoke_spread/bad/green/bone_shintai/smoke = new
