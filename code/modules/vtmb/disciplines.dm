@@ -72,7 +72,7 @@
 			return
 
 /mob/living/Click()
-	if(isliving(usr)) //&& usr != src)
+	if(isliving(usr) && usr != src)
 		var/mob/living/L = usr
 		if(L.discipline_ranged)
 			L.discipline_ranged.active_check = FALSE
@@ -566,9 +566,9 @@
 		if(H.clane)
 			if(H.clane.name == "Gargoyle")
 				dominate_me = TRUE
-	//if(((theirpower >= mypower) || (caster.generation > target.generation)) && !dominate_me)
-	//	to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to dominate!</span>")
-	//	return
+	if(((theirpower >= mypower) || (caster.generation > target.generation)) && !dominate_me)
+		to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to dominate!</span>")
+		return
 	if(HAS_TRAIT(caster, TRAIT_MUTE))
 		to_chat(caster, "<span class='warning'>You find yourself unable to speak!</span>")
 		return
@@ -896,7 +896,7 @@
 				zone_selected = BODY_ZONE_PRECISE_MOUTH
 				update_icon()
 				var/obj/item/gun/gun = I
-				gun.handle_suicide(src, src, null, FALSE, test, IGNORE_TARGET_LOC_CHANGE | IGNORE_USER_LOC_CHANGE)
+				gun.handle_suicide(src, src, null, FALSE, 2 SECONDS, IGNORE_TARGET_LOC_CHANGE | IGNORE_USER_LOC_CHANGE)
 			else if(I.force)
 				ClickOn(src)
 			else
