@@ -783,17 +783,17 @@
 /obj/projectile/flesh_shintai/on_hit(atom/target)
 	. = ..()
 	if(ismovable(target))
-		var/atom/movable/A = target
-		if(A.anchored)
+		var/atom/movable/movable_target = target
+		if(movable_target.anchored)
 			return
-		A.visible_message("<span class='danger'>[A] is snagged by [firer]'s hand!</span>")
-		A.forceMove(get_turf(get_step_towards(firer, A)))
+		movable_target.visible_message("<span class='danger'>[movable_target] is snagged by [firer]'s hand!</span>")
+		movable_target.forceMove(get_turf(get_step_towards(firer, movable_target)))
 		if (isliving(target))
 			var/mob/living/fresh_meat = target
 			fresh_meat.grabbedby(firer, supress_message = FALSE)
 			fresh_meat.Knockdown(knockdown_time)
 			return
-		//TODO: keep the chain beamed to A
+		//TODO: keep the chain beamed to movable_target
 		//TODO: needs a callback to delete the chain
 
 /obj/projectile/flesh_shintai/Destroy()
@@ -815,51 +815,49 @@
 
 /obj/structure/flesh_grip/user_unbuckle_mob(mob/living/buckled_mob, mob/living/carbon/human/user)
 	if(buckled_mob)
-		var/mob/living/M = buckled_mob
-		if(M != user)
-			M.visible_message("<span class='notice'>[user] tries to pull [M] free of [src]!</span>",\
+		if(buckled_mob != user)
+			buckled_mob.visible_message("<span class='notice'>[user] tries to pull [buckled_mob] free of [src]!</span>",\
 				"<span class='notice'>[user] is trying to pull you off [src], opening up fresh wounds!</span>",\
 				"<span class='hear'>You hear a squishy wet noise.</span>")
-			if(!do_after(user, 300, target = src))
-				if(M?.buckled)
-					M.visible_message("<span class='notice'>[user] fails to free [M]!</span>",\
+			if(!do_after(user, 30 SECONDS, target = src))
+				if(buckled_mob?.buckled)
+					buckled_mob.visible_message("<span class='notice'>[user] fails to free [buckled_mob]!</span>",\
 					"<span class='notice'>[user] fails to pull you off of [src].</span>")
 				return
-
 		else
-			M.visible_message("<span class='warning'>[M] struggles to break free from [src]!</span>",\
+			buckled_mob.visible_message("<span class='warning'>[buckled_mob] struggles to break free from [src]!</span>",\
 			"<span class='notice'>You struggle to break free from [src], exacerbating your wounds! (Stay still for two minutes.)</span>",\
 			"<span class='hear'>You hear a wet squishing noise..</span>")
-			M.adjustBruteLoss(30)
-			if(!do_after(M, 1200, target = src))
-				if(M?.buckled)
-					to_chat(M, "<span class='warning'>You fail to free yourself!</span>")
+			buckled_mob.adjustBruteLoss(30)
+			if(!do_after(buckled_mob, 2 MINUTES, target = src))
+				if(buckled_mob?.buckled)
+					to_chat(buckled_mob, "<span class='warning'>You fail to free yourself!</span>")
 				return
-		if(!M.buckled)
+		if(!buckled_mob.buckled)
 			return
-		release_mob(M)
+		release_mob(buckled_mob)
 
-/obj/structure/flesh_grip/proc/release_mob(mob/living/M)
-	var/matrix/m180 = matrix(M.transform)
-	m180.Turn(180)
-	animate(M, transform = m180, time = 3)
-	M.pixel_y = M.base_pixel_y + PIXEL_Y_OFFSET_LYING
-	M.adjustBruteLoss(30)
-	src.visible_message(text("<span class='danger'>[M] falls free of [src]!</span>"))
-	unbuckle_mob(M,force=1)
-	M.emote("scream")
-	M.AdjustParalyzed(20)
+/obj/structure/flesh_grip/proc/release_mob(mob/living/buckled_mob)
+	var/matrix/turn_around = matrix(buckled_mob.transform)
+	turn_around.Turn(180)
+	animate(buckled_mob, transform = turn_around, time = 0.3 SECONDS)
+	buckled_mob.pixel_y = buckled_mob.base_pixel_y + PIXEL_Y_OFFSET_LYING
+	buckled_mob.adjustBruteLoss(30)
+	visible_message(text("<span class='danger'>[buckled_mob] falls free of [src]!</span>"))
+	unbuckle_mob(buckled_mob, force = TRUE)
+	buckled_mob.emote("scream")
+	buckled_mob.AdjustParalyzed(2 SECONDS)
 	qdel(src)
 
-/datum/chi_discipline/flesh_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/chi_discipline/flesh_shintai/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	switch(level_casting)
 		if(1)
-			var/obj/item/gun/magic/hook/flesh_shintai/F = new (caster)
+			var/obj/item/gun/magic/hook/flesh_shintai/fleshhook = new (caster)
 			caster.drop_all_held_items()
-			caster.put_in_active_hand(F)
+			caster.put_in_active_hand(fleshhook)
 			spawn(delay+caster.discipline_time_plus)
-				qdel(F)
+				qdel(fleshhook)
 		if(2)
 			caster.remove_overlay(PROTEAN_LAYER)
 			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "flesh_arms", -PROTEAN_LAYER)
@@ -890,15 +888,14 @@
 					REMOVE_TRAIT(caster, TRAIT_HANDS_BLOCK_PROJECTILES, "flesh shintai 3")
 					to_chat(caster, "<span class='warning'>Your muscles feel natural again..</span>")
 		if(4)
-			var/obj/structure/flesh_grip/F = new (get_turf(caster))
+			var/obj/structure/flesh_grip/flesh_grip = new (get_turf(caster))
 			if(caster.pulling)
 				if(isliving(caster.pulling))
-					F.buckle_mob(caster.pulling, TRUE, FALSE)
+					flesh_grip.buckle_mob(caster.pulling, TRUE, FALSE)
 			else
-				for(var/mob/living/L in range(2, caster))
-					if(L != caster)
-						if(L.stat != DEAD)
-							F.buckle_mob(L, TRUE, FALSE)
+				for(var/mob/living/grabbed_mob in (range(2, caster) - caster))
+					if(grabbed_mob.stat != DEAD)
+						flesh_grip.buckle_mob(grabbed_mob, TRUE, FALSE)
 		if(5)
 			caster.drop_all_held_items()
 			caster.put_in_active_hand(new /obj/item/chameleon/temp(caster))
