@@ -1317,7 +1317,7 @@
 	delay = 12 SECONDS
 	cost_yang = 1
 	activate_sound = 'code/modules/wod13/sounds/beastshintai_activate.ogg'
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/werewolf_like/WL
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/werewolf_like/wolflike_shapeshift
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/werewolf_like
 	name = "Crinos Form"
@@ -1355,58 +1355,54 @@
 
 /datum/chi_discipline/beast_shintai/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
 	..()
-	if(!WL)
-		WL = new(caster)
+	if(!wolflike_shapeshift)
+		wolflike_shapeshift = new(caster)
 	var/limit = min(2, level) + caster.social + caster.more_companions - 1
 	if(length(caster.beastmaster) >= limit)
-		var/mob/living/simple_animal/hostile/beastmaster/B = pick(caster.beastmaster)
-		B.death()
+		var/mob/living/simple_animal/hostile/beastmaster/random_beast = pick(caster.beastmaster)
+		random_beast.death()
 	switch(level_casting)
 		if(1)
 			if(!length(caster.beastmaster))
-				var/datum/action/beastmaster_stay/E1 = new()
-				E1.Grant(caster)
-				var/datum/action/beastmaster_deaggro/E2 = new()
-				E2.Grant(caster)
-			var/mob/living/simple_animal/hostile/beastmaster/rat/R = new(get_turf(caster))
-//			R.my_creator = caster
-			caster.beastmaster |= R
-			R.beastmaster = caster
+				var/datum/action/beastmaster_stay/stay_action = new()
+				stay_action.Grant(caster)
+				var/datum/action/beastmaster_deaggro/deaggro_action = new()
+				deaggro_action.Grant(caster)
+			var/mob/living/simple_animal/hostile/beastmaster/rat/rat = new(get_turf(caster))
+			caster.beastmaster |= rat
+			rat.beastmaster = caster
 		if(2)
 			if(!length(caster.beastmaster))
-				var/datum/action/beastmaster_stay/E1 = new()
-				E1.Grant(caster)
-				var/datum/action/beastmaster_deaggro/E2 = new()
-				E2.Grant(caster)
-			var/mob/living/simple_animal/hostile/beastmaster/cat/C = new(get_turf(caster))
-//			C.my_creator = caster
-			caster.beastmaster |= C
-			C.beastmaster = caster
+				var/datum/action/beastmaster_stay/stay_action = new()
+				stay_action.Grant(caster)
+				var/datum/action/beastmaster_deaggro/deaggro_action = new()
+				deaggro_action.Grant(caster)
+			var/mob/living/simple_animal/hostile/beastmaster/cat/cat = new(get_turf(caster))
+			caster.beastmaster |= cat
+			cat.beastmaster = caster
 		if(3)
 			if(!length(caster.beastmaster))
-				var/datum/action/beastmaster_stay/E1 = new()
-				E1.Grant(caster)
-				var/datum/action/beastmaster_deaggro/E2 = new()
-				E2.Grant(caster)
-			var/mob/living/simple_animal/hostile/beastmaster/D = new(get_turf(caster))
-//			D.my_creator = caster
-			caster.beastmaster |= D
-			D.beastmaster = caster
+				var/datum/action/beastmaster_stay/stay_action = new()
+				stay_action.Grant(caster)
+				var/datum/action/beastmaster_deaggro/deaggro_action = new()
+				deaggro_action.Grant(caster)
+			var/mob/living/simple_animal/hostile/beastmaster/dog = new(get_turf(caster))
+			caster.beastmaster |= dog
+			dog.beastmaster = caster
 		if(4)
 			if(!length(caster.beastmaster))
-				var/datum/action/beastmaster_stay/E1 = new()
-				E1.Grant(caster)
-				var/datum/action/beastmaster_deaggro/E2 = new()
-				E2.Grant(caster)
-			var/mob/living/simple_animal/hostile/beastmaster/rat/flying/F = new(get_turf(caster))
-//			F.my_creator = caster
-			caster.beastmaster |= F
-			F.beastmaster = caster
+				var/datum/action/beastmaster_stay/stay_action = new()
+				stay_action.Grant(caster)
+				var/datum/action/beastmaster_deaggro/deaggro_action = new()
+				deaggro_action.Grant(caster)
+			var/mob/living/simple_animal/hostile/beastmaster/rat/flying/bat = new(get_turf(caster))
+			caster.beastmaster |= bat
+			bat.beastmaster = caster
 		if(5)
-			WL.Shapeshift(caster)
-			spawn(30 SECONDS + caster.discipline_time_plus)
+			wolflike_shapeshift.Shapeshift(caster)
+			spawn(10 SECONDS + caster.discipline_time_plus)
 				if(caster && caster.stat != DEAD)
-					WL.Restore(WL.myshape)
+					wolflike_shapeshift.Restore(wolflike_shapeshift.myshape)
 					caster.Stun(1.5 SECONDS)
 
 /datum/chi_discipline/smoke_shintai
