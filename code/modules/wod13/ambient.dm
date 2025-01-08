@@ -21,11 +21,6 @@
 	var/zone_type = "masquerade"
 	var/zone_owner
 
-/area/vtm/Initialize(mapload)
-	. = ..()
-	if(name == "San Francisco")
-		area_flags = NOTELEPORT
-
 /area/vtm/powered(chan)
 	if(!requires_power)
 		return TRUE
