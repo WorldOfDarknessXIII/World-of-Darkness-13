@@ -1020,6 +1020,7 @@
 #include "code\game\objects\effects\temporary_visuals\temporary_visual.dm"
 #include "code\game\objects\effects\temporary_visuals\projectiles\impact.dm"
 #include "code\game\objects\effects\temporary_visuals\projectiles\muzzle.dm"
+#include "code\game\objects\effects\temporary_visuals\projectiles\muzzle_flash_highlight.dm"
 #include "code\game\objects\effects\temporary_visuals\projectiles\projectile_effects.dm"
 #include "code\game\objects\effects\temporary_visuals\projectiles\tracer.dm"
 #include "code\game\objects\items\AI_modules.dm"
