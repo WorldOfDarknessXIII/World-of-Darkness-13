@@ -1,11 +1,11 @@
-/datum/vampireclane/tzimisce
+/datum/vampireclan/tzimisce
 	name = "Tzimisce"
 	desc = "If someone were to call a Tzimisce inhuman and sadistic, the Tzimisce would probably commend them for their perspicacity, and then demonstrate that their mortal definition of sadism was laughably inadequate. The Tzimisce have left the human condition behind gladly, and now focus on transcending the limitations of the vampiric state. At a casual glance or a brief conversation, a Tzimisce appears to be one of the more pleasant vampires. Polite, intelligent, and inquisitive, they seem a stark contrast to the howling Sabbat mobs or even the apparently more humane Brujah or Nosferatu. However, upon closer inspection, it becomes clear that this is merely a mask hiding something alien and monstrous."
 	curse = "Grounded to material domain."
 //	alt_sprite = "tzi"
 //	no_hair = TRUE
 //	no_facial = TRUE	//FUCK WRONG RULEBOOK
-	clane_disciplines = list(
+	clan_disciplines = list(
 		/datum/discipline/auspex,
 		/datum/discipline/animalism,
 		/datum/discipline/vicissitude
@@ -115,8 +115,8 @@
 		return
 	var/upgrade = input(owner, "Choose basic upgrade:", "Vicissitude Upgrades") as null|anything in list("Skin armor", "Centipede legs", "Second pair of arms", "Leather wings")
 	if(upgrade)
-//		if(H.clane)
-//			H.clane.violating_appearance = TRUE
+//		if(H.clan)
+//			H.clan.violating_appearance = TRUE
 		if(used)
 			return
 		used = TRUE
@@ -237,7 +237,7 @@
 //			H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_stealth)
 			H.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_trench)
 
-/datum/vampireclane/tzimisce/post_gain(mob/living/carbon/human/H)
+/datum/vampireclan/tzimisce/post_gain(mob/living/carbon/human/H)
 	..()
 	var/obj/item/ground_heir/heirloom = new(get_turf(H))
 	var/list/slots = list(

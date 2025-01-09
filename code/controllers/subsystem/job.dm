@@ -152,10 +152,10 @@ SUBSYSTEM_DEF(job)
 			JobDebug("FOC player species limit overrun, Player: [player]")
 			continue
 		if(player.client.prefs.pref_species.name == "Vampire")
-			if(player.client.prefs.clane)
+			if(player.client.prefs.clan)
 				var/alloww = FALSE
 				for(var/i in job.allowed_bloodlines)
-					if(i == player.client.prefs.clane.name)
+					if(i == player.client.prefs.clan.name)
 						alloww = TRUE
 				if(!alloww && !bypass)
 					JobDebug("FOC player clan not allowed, Player: [player]")
@@ -216,10 +216,10 @@ SUBSYSTEM_DEF(job)
 			continue
 
 		if(player.client.prefs.pref_species.name == "Vampire")
-			if(player.client.prefs.clane)
+			if(player.client.prefs.clan)
 				var/alloww = FALSE
 				for(var/i in job.allowed_bloodlines)
-					if(i == player.client.prefs.clane.name)
+					if(i == player.client.prefs.clan.name)
 						alloww = TRUE
 				if(!alloww)
 					JobDebug("GRJ player clan not allowed, Player: [player]")
@@ -426,10 +426,10 @@ SUBSYSTEM_DEF(job)
 					continue
 
 				if(player.client.prefs.pref_species.name == "Vampire")
-					if(player.client.prefs.clane)
+					if(player.client.prefs.clan)
 						var/alloww = FALSE
 						for(var/i in job.allowed_bloodlines)
-							if(i == player.client.prefs.clane.name)
+							if(i == player.client.prefs.clan.name)
 								alloww = TRUE
 						if(!alloww && !bypass)
 							JobDebug("DO player clan not allowed, Player: [player]")
@@ -570,7 +570,7 @@ SUBSYSTEM_DEF(job)
 
 		to_chat(M, "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
 		var/mob/living/carbon/human/H = living_mob
-		if((iskindred(H) && H.clane))
+		if((iskindred(H) && H.clan))
 			if(job.v_duty && job.v_duty != "")
 				to_chat(M, "<span class='notice'><b>[job.v_duty]</b></span>")
 			if(job.title != "Prince")
@@ -744,8 +744,8 @@ SUBSYSTEM_DEF(job)
 	if(latejoin_trackers.len)
 		destination = pick(latejoin_trackers)
 		var/mob/living/carbon/human/H = M
-		if(H.clane)
-			if(H.clane.violating_appearance)
+		if(H.clan)
+			if(H.clan.violating_appearance)
 				destination = pick(GLOB.masquerade_latejoin)
 		if(isgarou(H))
 			for(var/obj/structure/werewolf_totem/W in GLOB.totems)

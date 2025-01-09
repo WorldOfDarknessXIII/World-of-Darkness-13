@@ -150,10 +150,10 @@
 				if ((humanity < 7) || client?.prefs?.enlightenment)
 					wyrm_taint++
 
-				if ((vampire.clane.name == "Baali") || ( (client?.prefs?.enlightenment && (humanity > 7)) || (!client?.prefs?.enlightenment && (humanity < 4)) ))
+				if ((vampire.clan.name == "Baali") || ( (client?.prefs?.enlightenment && (humanity > 7)) || (!client?.prefs?.enlightenment && (humanity < 4)) ))
 					wyrm_taint++
 
-				if (istype(vampire.clane, /datum/vampireclane/kiasyd)) //the fae are Wyld-tainted by default
+				if (istype(vampire.clan, /datum/vampireclan/kiasyd)) //the fae are Wyld-tainted by default
 					wyld_taint++
 
 			if (isgarou(src) || iswerewolf(src)) //werewolves have the taint of whatever Triat member they venerate most

@@ -58,9 +58,9 @@
 		dat += "<BR>"
 		if(G.master)
 			dat += "My Regnant is [G.master.real_name], I should obey their wants.<BR>"
-			if(G.master.clane)
-				if(G.master.clane.name != "Caitiff")
-					dat += "Regnant's clan is [G.master.clane], maybe I can try some of it's disciplines..."
+			if(G.master.clan)
+				if(G.master.clan.name != "Caitiff")
+					dat += "Regnant's clan is [G.master.clan], maybe I can try some of it's disciplines..."
 		if(host.vampire_faction == "Camarilla" || host.vampire_faction == "Anarchs" || host.vampire_faction == "Sabbat")
 			dat += "I belong to the [host.vampire_faction], I shouldn't disobey their rules.<BR>"
 		if(host.mind.special_role)

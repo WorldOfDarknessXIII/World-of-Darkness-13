@@ -2,7 +2,7 @@
 /////Initial Building/////
 //////////////////////////
 
-GLOBAL_LIST_EMPTY(clanes_list)	//>:3
+GLOBAL_LIST_EMPTY(clans_list)	//>:3
 
 GLOBAL_LIST_EMPTY(auspices_list)
 
@@ -45,10 +45,10 @@ GLOBAL_LIST_EMPTY(auspices_list)
 		GLOB.species_list[S.id] = spath
 	sortList(GLOB.species_list, GLOBAL_PROC_REF(cmp_typepaths_asc))
 
-	for(var/spath in subtypesof(/datum/vampireclane))
-		var/datum/vampireclane/S = new spath()
-		GLOB.clanes_list[S.name] = spath
-	sortList(GLOB.clanes_list, GLOBAL_PROC_REF(cmp_typepaths_asc))
+	for(var/spath in subtypesof(/datum/vampireclan))
+		var/datum/vampireclan/S = new spath()
+		GLOB.clans_list[S.name] = spath
+	sortList(GLOB.clans_list, GLOBAL_PROC_REF(cmp_typepaths_asc))
 
 	for(var/spath in subtypesof(/datum/auspice))
 		var/datum/auspice/S = new spath()

@@ -38,22 +38,22 @@
 			if (-INFINITY to 10) //normal corpse
 				return
 			if (10 to 50)
-				clane.rot_body(1) //skin takes on a weird colouration
+				clan.rot_body(1) //skin takes on a weird colouration
 				visible_message("<span class='notice'>[src]'s skin loses some of its colour.</span>")
 				update_body()
 				update_body() //this seems to be necessary due to stuff being set on update_body() and then only refreshing with a new call
 			if (50 to 100)
-				clane.rot_body(2) //looks slightly decayed
+				clan.rot_body(2) //looks slightly decayed
 				visible_message("<span class='notice'>[src]'s skin rapidly decays.</span>")
 				update_body()
 				update_body()
 			if (100 to 150)
-				clane.rot_body(3) //looks very decayed
+				clan.rot_body(3) //looks very decayed
 				visible_message("<span class='warning'>[src]'s body rapidly decomposes!</span>")
 				update_body()
 				update_body()
 			if (150 to 200)
-				clane.rot_body(4) //mummified skeletonised corpse
+				clan.rot_body(4) //mummified skeletonised corpse
 				visible_message("<span class='warning'>[src]'s body rapidly skeletonises!</span>")
 				update_body()
 				update_body()
@@ -303,9 +303,9 @@
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
-				if(BD.clane)
+				if(BD.clan)
 					var/special_clan = FALSE
-					if(BD.clane.name == "Salubri")
+					if(BD.clan.name == "Salubri")
 						if(PB.client)
 							if(alert(PB, "Do you consent to being fed on by [BD.name]?", "Consent To Feeding", "Yes", "No") != "Yes")
 								to_chat(BD, "<span class='warning'>You cannot feed on people who do not consent.</span>")
@@ -316,7 +316,7 @@
 
 						special_clan = TRUE
 						PB.emote("moan")
-					if(BD.clane.name == "Giovanni")
+					if(BD.clan.name == "Giovanni")
 						PB.emote("scream")
 						special_clan = TRUE
 					if(!special_clan)

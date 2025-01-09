@@ -1,8 +1,8 @@
-/datum/vampireclane/old_clan_tzimisce
+/datum/vampireclan/old_clan_tzimisce
 	name = "Old Clan Tzimisce"
 	desc = " The Old Clan Tzimisce are a small group of Fiends who predate the use of fleshcrafting. They regard Vicissitude as a disease of the soul, and refuse to learn or employ it. In most other respects, though, they resemble the rest of the Clan."
 	curse = "Grounded to material domain."
-	clane_disciplines = list(
+	clan_disciplines = list(
 		/datum/discipline/auspex,
 		/datum/discipline/animalism,
 		/datum/discipline/dominate
@@ -15,7 +15,7 @@
 	restricted_disciplines = list(/datum/discipline/vicissitude)
 	whitelisted = FALSE
 
-/datum/vampireclane/old_clan_tzimisce/post_gain(mob/living/carbon/human/H)
+/datum/vampireclan/old_clan_tzimisce/post_gain(mob/living/carbon/human/H)
 	..()
 	var/obj/item/ground_heir/heirloom = new(get_turf(H))
 	var/list/slots = list(

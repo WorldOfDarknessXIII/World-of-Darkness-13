@@ -20,7 +20,7 @@
 	var/button_icon_state = "default" //And this is the state for the action icon
 	var/mob/owner
 
-	//imported from clane.dm
+	//imported from clan.dm
 	var/vampiric = FALSE
 
 /datum/action/New(Target)

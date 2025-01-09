@@ -91,8 +91,8 @@
 	. = ..()
 //	if(iskindred(user))
 //		var/mob/living/carbon/human/H = user
-//		if(H.clane)
-//			if(H.clane.name == "Lasombra")
+//		if(H.clan)
+//			if(H.clan.name == "Lasombra")
 //				return
 	if(closed)
 		closed = FALSE
@@ -217,10 +217,10 @@
 				talking = TRUE
 				online.online = src
 				online.talking = TRUE
-				
+
 				var/datum/phonehistory/NEWH_caller = new()
 				var/datum/phonehistory/NEWH_being_called = new()
-				
+
 				//Being called History
 				NEWH_being_called.name = "Unknown"
 				for(var/datum/phonecontact/Contact in contacts)
@@ -232,7 +232,7 @@
 				NEWH_being_called.time = "[SScity_time.timeofnight]"
 				NEWH_being_called.call_type = "I accepted the call"
 				phone_history_list += NEWH_being_called
-				
+
 				//Caller History
 				NEWH_caller.name = "Unknown"
 				for(var/datum/phonecontact/Contact in online.contacts)
@@ -248,15 +248,15 @@
 		if("decline")
 			talking = FALSE
 			if(online)
-			
+
 				if(!silence)
 					playsound(online, 'code/modules/wod13/sounds/phonestop.ogg', 25, FALSE)
 				online.talking = FALSE
-				
-				
+
+
 				var/datum/phonehistory/NEWH_caller = new()
 				var/datum/phonehistory/NEWH_being_called = new()
-				
+
 				//Being called History
 				NEWH_being_called.name = "Unknown"
 				for(var/datum/phonecontact/Contact in contacts)
@@ -268,7 +268,7 @@
 				NEWH_being_called.time = "[SScity_time.timeofnight]"
 				NEWH_being_called.call_type = "I declined the call"
 				phone_history_list += NEWH_being_called
-				
+
 				//Caller History
 				NEWH_caller.name = "Unknown"
 				for(var/datum/phonecontact/Contact in online.contacts)
@@ -283,10 +283,10 @@
 
 				online.online = null
 				online = null
-				
+
 			.= TRUE
 		if("call")
-//			if((iskindred(V) && V.clane.name == "Lasombra"))
+//			if((iskindred(V) && V.clan.name == "Lasombra"))
 //				return
 //			else
 			choosed_number = replacetext(choosed_number, " ", "")
@@ -332,7 +332,7 @@
 								NEWH_caller.time = "[SScity_time.timeofnight]"
 								NEWH_caller.call_type = "I called"
 								phone_history_list += NEWH_caller
-								
+
 								//Being Called History
 								NEWH_being_called.name = "Unknown"
 								for(var/datum/phonecontact/Contact in PHN.contacts)
@@ -503,10 +503,10 @@
 						else
 							for(var/i = 1 to number_of_deletions)
 								//It will always delete the first item of the list, so the last logs are deleted first
-								var/item_to_remove = phone_history_list[1] 
-								phone_history_list -= item_to_remove            
+								var/item_to_remove = phone_history_list[1]
+								phone_history_list -= item_to_remove
 						to_chat(usr, "[number_of_deletions] call history entries were deleted. Remaining: [phone_history_list.len]")
-						
+
 					else
 						to_chat(usr, "Your don't got a call history to delete")
 				if("My Number")
@@ -524,7 +524,7 @@
 						//If it is true, it will check all the other sounds for phone and disable them
 						silence = TRUE
 						to_chat(usr, "<span class='notice'>Notifications and Sounds toggled off.</span>")
-					else 
+					else
 						silence = FALSE
 						to_chat(usr, "<span class='notice'>Notifications and Sounds toggled on.</span>")
 				if ("Published Numbers as Contacts Toggle")
@@ -758,13 +758,13 @@
 					var/mob/living/carbon/human/SPK = hearing_args[HEARING_SPEAKER]
 					voice_saying = "[age2agedescription(SPK.age)] [SPK.gender] voice ([SPK.phonevoicetag])"
 
-					if(SPK.clane && SPK.clane.name == "Lasombra")
+					if(SPK.clan && SPK.clan.name == "Lasombra")
 						message = scramble_lasombra_message(message)
 						playsound(online, 'code/modules/wod13/sounds/lasombra_whisper.ogg', 50, FALSE)
 					else
 						playsound(online, 'code/modules/wod13/sounds/phonetalk.ogg', 50, FALSE)
-//					if(SPK.clane)
-//						if(SPK.clane.name == "Lasombra")
+//					if(SPK.clan)
+//						if(SPK.clan.name == "Lasombra")
 //							return
 				var/obj/phonevoice/VOIC = new(online)
 				VOIC.name = voice_saying

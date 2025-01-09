@@ -1,8 +1,8 @@
-/datum/vampireclane/gargoyle
+/datum/vampireclan/gargoyle
 	name = "Gargoyle"
 	desc = "The Gargoyles are a vampiric bloodline created by the Tremere as their servitors. Although technically not a Tremere bloodline, the bloodline is largely under their control. In the Final Nights, Gargoyle populations seem to be booming; this is largely because older, free Gargoyles are coming out of hiding to join the Camarilla, because more indentured Gargoyles break free from the clutches of the Tremere, and because the free Gargoyles have also begun to Embrace more mortals on their own."
 	curse = "All Gargoyles, much like the Nosferatu, are hideous to look at, a byproduct of their occult origins (and the varied Kindred stock from which they originate). This means that Gargoyles, just like the Nosferatu, have to hide their existence from common mortals, as their mere appearance is a breach of the Masquerade. In addition, the nature of the bloodline's origin manifests itself in the fact that Gargoyles are highly susceptible to mind control of any source. This weakness is intentional; a flaw placed into all Gargoyles by the Tremere in the hope that it would make them easier to control (and less likely to rebel)."
-	clane_disciplines = list(
+	clan_disciplines = list(
 		/datum/discipline/fortitude,
 		/datum/discipline/potence,
 		/datum/discipline/visceratika
@@ -31,14 +31,14 @@
 	accessories_layers = list("gargoyle_full" = UNICORN_LAYER, "gargoyle_left" = UNICORN_LAYER, "gargoyle_right" = UNICORN_LAYER, "gargoyle_broken" = UNICORN_LAYER, "gargoyle_round" = UNICORN_LAYER, "none" = UNICORN_LAYER)
 	whitelisted = TRUE
 
-/datum/vampireclane/gargoyle/on_gain(mob/living/carbon/human/H)
+/datum/vampireclan/gargoyle/on_gain(mob/living/carbon/human/H)
 	..()
 	H.dna.species.no_equip = list(ITEM_SLOT_OCLOTHING, ITEM_SLOT_SUITSTORE)
 	H.dna.species.wings_icon = "Gargoyle"
 	H.physiology.armor.melee += 20
 	H.physiology.armor.bullet += 20
 
-/datum/vampireclane/gargoyle/post_gain(mob/living/carbon/human/H)
+/datum/vampireclan/gargoyle/post_gain(mob/living/carbon/human/H)
 	..()
 	H.dna.species.GiveSpeciesFlight(H)
 
@@ -56,7 +56,7 @@
 	activate_sound = 'code/modules/wod13/sounds/visceratika.ogg'
 	leveldelay = FALSE
 	fearless = TRUE
-	clane_restricted = TRUE
+	clan_restricted = TRUE
 
 /datum/discipline/visceratika/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()

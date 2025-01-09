@@ -209,8 +209,8 @@
 		if((!QDELETED(spawner) && spawner.faction_check_mob(L)) || L.stat == DEAD)
 			continue
 		var/krill = TRUE
-		if(L.clane)
-			if(L.clane.name == "Lasombra")
+		if(L.clan)
+			if(L.clan.name == "Lasombra")
 				krill = FALSE
 		if(krill)
 			visible_message("<span class='danger'>[src] grabs hold of [L]!</span>")
