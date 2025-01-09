@@ -1,6 +1,4 @@
 /mob/living/carbon/human/npc/proc/Aggro(var/mob/M, var/attacked = FALSE)
-	if(attacked && danger_source != M)
-		walk(src,0)
 	if(M == src)
 		return
 	if(ishuman(M))
@@ -14,7 +12,7 @@
 			if(health != last_health)
 				last_health = health
 				last_damager = M
-	if(CheckMove())
+	if(CheckMove(hardlock = TRUE))
 		return
 	if((last_danger_meet + 5 SECONDS) < world.time)
 		last_danger_meet = world.time

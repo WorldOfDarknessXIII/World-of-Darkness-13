@@ -139,6 +139,7 @@
 	var/obj/werewolf_holder/transformation/transformator
 
 	var/list/beastmaster = list()
+	var/list/puppets = list()
 
 	var/datum/relationship/MyRelationships
 

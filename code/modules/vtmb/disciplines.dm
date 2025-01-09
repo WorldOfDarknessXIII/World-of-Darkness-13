@@ -925,18 +925,52 @@
 				if(target.body_position == STANDING_UP)
 					target.toggle_resting()
 			if(3)
-				var/obj/item/I1 = H.get_active_held_item()
-				var/obj/item/I2 = H.get_inactive_held_item()
-				to_chat(target, "<span class='userlove'><b>PLEASE ME</b></span>")
-				caster.say("PLEASE ME!!")
-				target.face_atom(caster)
-				target.do_jitter_animation(30)
-				target.Immobilize(10)
-				target.drop_all_held_items()
-				if(I1)
-					I1.throw_at(get_turf(caster), 3, 1, target)
-				if(I2)
-					I2.throw_at(get_turf(caster), 3, 1, target)
+				// If target is an NPC, link them
+				if(istype(target, /mob/living/carbon/human/npc) && caster.puppets.len < caster.get_total_social())
+					if(!length(caster.puppets))
+						var/datum/action/presence_stay/E1 = new()
+						E1.Grant(caster)
+						var/datum/action/presence_deaggro/E2 = new()
+						E2.Grant(caster)
+					var/mob/living/carbon/human/npc/N = target
+					// Mark the controlling player:
+					N.presence_master = caster
+					// Let them follow:
+					N.presence_follow = TRUE
+					caster.puppets |= N
+					caster.say("Come with me...")
+					// Optionally add them to a global list if you like,
+					// but your existing SShumannpcpool subsystem should keep them updated.
+					// e.g. GLOB.presence_npc_list += N
+
+					// Possibly set a timer for effect end
+					spawn(300 SECONDS)
+						if(N && N.presence_master == caster)
+							// End presence effect
+							N.presence_master = null
+							N.presence_follow = FALSE
+							N.presence_enemies = list()
+							N.presence_target = null
+							caster.puppets -= N
+							if(!length(caster.puppets))
+								for(var/datum/action/presence_stay/VI in caster.actions)
+									if(VI)
+										VI.Remove(caster)
+							// also remove from any presence list if you used one
+				else
+					// continue your normal presence code for players
+					var/obj/item/I1 = H.get_active_held_item()
+					var/obj/item/I2 = H.get_inactive_held_item()
+					to_chat(target, "<span class='userlove'><b>PLEASE ME</b></span>")
+					caster.say("PLEASE ME!!")
+					target.face_atom(caster)
+					target.do_jitter_animation(30)
+					target.Immobilize(10)
+					target.drop_all_held_items()
+					if(I1)
+						I1.throw_at(get_turf(caster), 3, 1, target)
+					if(I2)
+						I2.throw_at(get_turf(caster), 3, 1, target)
 			if(4)
 				to_chat(target, "<span class='userlove'><b>FEAR ME</b></span>")
 				caster.say("FEAR ME!!")
@@ -957,6 +991,76 @@
 				H.remove_overlay(MUTATIONS_LAYER)
 				if(caster)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/presence_deactivate.ogg', 50, FALSE)
+
+/mob/living/carbon/human/npc/proc/handle_presence_movement()
+	// If for some reason we have no valid master, stop
+	if(!presence_master || stat >= DEAD)
+		return
+		// If not commanded to follow, do nothing
+	if(!presence_follow)
+		return
+		// Distance check—walk toward presence_master if too far:
+	if(presence_master.z == z && get_dist(src, presence_master) > 1)
+		// Use your same approach as the NPC subsystem
+		var/reqsteps = round((SShumannpcpool.next_fire - world.time) / total_multiplicative_slowdown())
+		walk_to(src, presence_master, reqsteps, total_multiplicative_slowdown())
+	else
+		// If close enough, maybe face them or do nothing
+		face_atom(presence_master)
+		// If you want aggression under Presence, handle it here:
+	if(presence_enemies.len)
+		var/dist = 100
+		var/mob/enemy = null
+		for(var/mob/i in presence_enemies)
+			if(get_dist(presence_master,i) < dist)
+				dist = get_dist(presence_master,i)
+				enemy = i
+		// Then maybe do a walk_to or click attack, etc.
+		danger_source = enemy
+
+/datum/action/presence_stay
+	name = "Stay/Follow (Presence)"
+	desc = "Tell your Presence-thralled NPC to stay put or follow."
+	button_icon_state = "wait"
+	var/cool_down = 0
+	var/following = FALSE
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+
+	/datum/action/presence_stay/Trigger()
+		. = ..()
+		if(ishuman(owner))
+			if(cool_down + 10 >= world.time)
+				return
+			cool_down = world.time
+			var/mob/living/carbon/human/H = owner
+				// flip “following” on or off
+			following = !following
+			if(following)
+				to_chat(H, "You call your thralls to follow you.")
+			else
+				to_chat(H, "You command your thralls to remain here.")
+				// For each Presence’d NPC you control, apply the new setting
+			for(var/mob/living/carbon/human/npc/N in GLOB.npc_list)
+				if(N.presence_master == H)
+					N.presence_follow = following
+
+/datum/action/presence_deaggro
+	name = "Loose Aggression (Presence)"
+	desc = "Command to stop your Presence-thralled NPC any aggressive moves."
+	button_icon_state = "deaggro"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	var/cool_down = 0
+
+/datum/action/beastmaster_deaggro/Trigger()
+	. = ..()
+	if(ishuman(owner))
+		if(cool_down+10 >= world.time)
+			return
+		cool_down = world.time
+		var/mob/living/carbon/human/H = owner
+		for(var/mob/living/carbon/human/npc/N in H.puppets)
+			N.presence_enemies = list()
+			N.danger_source = null
 
 /datum/discipline/protean
 	name = "Protean"
