@@ -3,9 +3,9 @@
 	desc = "The Baali are a bloodline of vampires associated with demon worship. Because of their affinity with the unholy, the Baali are particularly vulnerable to holy iconography, holy ground and holy water. They are highly vulnerable to True Faith."
 	curse = "Fear of the Religion."
 	clane_disciplines = list(
-		/datum/discipline/obfuscate = 1,
-		/datum/discipline/presence = 2,
-		/datum/discipline/daimonion = 3
+		/datum/discipline/obfuscate,
+		/datum/discipline/presence,
+		/datum/discipline/daimonion
 	)
 	male_clothes = /obj/item/clothing/under/vampire/baali
 	female_clothes = /obj/item/clothing/under/vampire/baali/female
