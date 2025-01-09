@@ -116,6 +116,7 @@ SUBSYSTEM_DEF(carpool)
 	var/list/passengers = list()
 	var/max_passengers = 3
 
+	var/car_weight = 20 //higher weight means less slowdown and damage for running over people
 	var/speed = 1	//Future
 	var/stage = 1
 	var/on = FALSE
@@ -465,14 +466,14 @@ SUBSYSTEM_DEF(carpool)
 		if(owner in V.passengers)
 			V.passengers -= owner
 		owner.forceMove(V.loc)
-		for(var/datum/action/carr/C in owner.actions)
-			qdel(C)
 		to_chat(owner, "<span class='notice'>You exit [V].</span>")
 		if(owner)
 			if(owner.client)
 				owner.client.pixel_x = 0
 				owner.client.pixel_y = 0
 		playsound(V, 'code/modules/wod13/sounds/door.ogg', 50, TRUE)
+		for(var/datum/action/carr/C in owner.actions)
+			qdel(C)
 
 /mob/living/carbon/human/MouseDrop(atom/over_object)
 	. = ..()
@@ -524,38 +525,47 @@ SUBSYSTEM_DEF(carpool)
 	var/prev_speed = round(abs(speed_in_pixels)/8)
 	if(!prev_speed)
 		return
-	speed_in_pixels = 0
-	last_pos["x_pix"] = 0
-	last_pos["y_pix"] = 0
-	for(var/mob/living/L in src)
-		if(L)
-			if(L.client)
-				L.client.pixel_x = 0
-				L.client.pixel_y = 0
+
+	var victim_weight = 20
+	if(istype(A, /mob/living/carbon/human))
+		var/mob/living/L = A
+		var/mob/living/carbon/human/H = A
+		if(L.get_total_physique())
+			victim_weight += L.get_total_physique() * 2
+		if(H.physiology.armor.melee)
+			victim_weight += H.physiology.armor.melee / 2
+		if(HAS_TRAIT(L, TRAIT_TOUGH_FLESH))
+			victim_weight += 10
+		victim_weight -= car_weight
+
+	var dmg_to_victim = max(prev_speed/4 - victim_weight, 0)
+	var dmg_to_car = max(prev_speed/8 + victim_weight/2, 0)
+
+	playsound(src, 'code/modules/wod13/sounds/bump.ogg', clamp(dmg_to_car*5, 30, 100), TRUE)
 	if(driver)
-		if(istype(A, /mob/living/carbon/human/npc))
+		// to_chat(driver, "<span class='warning'>SPEED_IN_PIXELS:[speed_in_pixels]")
+		// to_chat(driver, "<span class='warning'>VICTIM_WEIGHT:[victim_weight]")
+		// to_chat(driver, "<span class='notice'>DMG_TO_VICTIM:[dmg_to_victim]")
+		// to_chat(driver, "<span class='notice'>DMG_TO_CAR:[dmg_to_car]")
+		if(istype(A, /mob/living/carbon/human/npc) & dmg_to_victim > 15)
 			var/mob/living/carbon/human/npc/NPC = A
 			NPC.Aggro(driver, TRUE)
-	playsound(src, 'code/modules/wod13/sounds/bump.ogg', 50, TRUE)
+		if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
+			dmg_to_car = round(dmg_to_car/2)
+		driver.apply_damage(dmg_to_car, BRUTE, BODY_ZONE_CHEST)
 	if(istype(A, /mob/living))
 		var/mob/living/L = A
-		var/dam2 = prev_speed
-		if(!HAS_TRAIT(L, TRAIT_TOUGH_FLESH))
+		if(dmg_to_victim > 15)
 			L.Knockdown(10)
-			dam2 = dam2*2
-		L.apply_damage(dam2, BRUTE, BODY_ZONE_CHEST)
-		var/dam = prev_speed
-		if(driver)
-			if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
-				dam = round(dam/2)
-		get_damage(dam)
+			speed_in_pixels -= dmg_to_car / 2
+		else
+			L.Paralyze(1)
+			speed_in_pixels = 0
+		L.apply_damage(dmg_to_victim, BRUTE, BODY_ZONE_CHEST)
+		get_damage(dmg_to_car*2)
 	else
-		var/dam = prev_speed
-		if(driver)
-			if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
-				dam = round(dam/2)
-			driver.apply_damage(prev_speed, BRUTE, BODY_ZONE_CHEST)
-		get_damage(dam)
+		get_damage(dmg_to_car)
+		speed_in_pixels = 0
 	return
 
 /obj/vampire_car/retro
@@ -688,7 +698,7 @@ SUBSYSTEM_DEF(carpool)
 /obj/vampire_car
 	var/movement_vector = 0		//0-359 degrees
 	var/speed_in_pixels = 0		// 16 pixels (turf is 2x2m) = 1 meter per 1 SECOND (process fire). Minus equals to reverse, max should be 444
-	var/last_pos = list("x" = 0, "y" = 0, "x_pix" = 0, "y_pix" = 0)
+	var/last_pos = list("x" = 0, "y" = 0, "x_pix" = 0, "y_pix" = 0, "x_frwd" = 0, "y_frwd" = 0)
 	var/impact_delay = 0
 	glide_size = 96
 
@@ -831,28 +841,34 @@ SUBSYSTEM_DEF(carpool)
 	for(var/mob/living/L in src)
 		if(L)
 			if(L.client)
-				L.client.pixel_x = last_pos["x_pix"]
-				L.client.pixel_y = last_pos["y_pix"]
-				animate(L.client, pixel_x = last_pos["x_pix"]+moved_x, pixel_y = last_pos["y_pix"]+moved_y, SScarpool.wait, 1)
+				L.client.pixel_x = last_pos["x_frwd"]
+				L.client.pixel_y = last_pos["y_frwd"]
+				animate(L.client, \
+					pixel_x = last_pos["x_pix"] + moved_x * 2, \
+					pixel_y = last_pos["y_pix"] + moved_y * 2, \
+					SScarpool.wait, 1)
 	animate(src, pixel_x = last_pos["x_pix"]+moved_x, pixel_y = last_pos["y_pix"]+moved_y, SScarpool.wait, 1)
+
+	last_pos["x_frwd"] = last_pos["x_pix"] + moved_x * 2
+	last_pos["y_frwd"] = last_pos["y_pix"] + moved_y * 2
 	last_pos["x_pix"] = last_pos["x_pix"]+moved_x
 	last_pos["y_pix"] = last_pos["y_pix"]+moved_y
-	var/new_x = last_pos["x"]
-	var/new_y = last_pos["y"]
-	while(last_pos["x_pix"] > 16)
-		last_pos["x_pix"] -= 32
-		new_x++
-	while(last_pos["x_pix"] < -16)
-		last_pos["x_pix"] += 32
-		new_x--
-	while(last_pos["y_pix"] > 16)
-		last_pos["y_pix"] -= 32
-		new_y++
-	while(last_pos["y_pix"] < -16)
-		last_pos["y_pix"] += 32
-		new_y--
-	last_pos["x"] = clamp(new_x, 1, world.maxx)
-	last_pos["y"] = clamp(new_y, 1, world.maxx)		//since the map is 255x255
+
+	var/x_sign = 1
+	if(last_pos["x_pix"] < 0)
+		x_sign = -1
+	var/y_sign = 1
+	if(last_pos["y_pix"] < 0)
+		y_sign = -1
+	var/x_add = trunc((x_sign * abs(last_pos["x_pix"] + 16)) / 32)
+	var/y_add = trunc((y_sign * abs(last_pos["y_pix"] + 16)) / 32)
+	last_pos["x_frwd"] -= x_add * 32
+	last_pos["y_frwd"] -= y_add * 32
+	last_pos["x_pix"] -= x_add * 32
+	last_pos["y_pix"] -= y_add * 32
+
+	last_pos["x"] = clamp(last_pos["x"] + x_add, 1, world.maxx)
+	last_pos["y"] = clamp(last_pos["y"] + y_add, 1, world.maxy)
 
 /obj/vampire_car/relaymove(mob, direct)
 	if(world.time-impact_delay < 20)
