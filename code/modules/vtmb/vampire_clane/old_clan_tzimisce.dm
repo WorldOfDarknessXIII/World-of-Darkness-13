@@ -13,7 +13,7 @@
 	enlightenment = TRUE
 	var/obj/item/heirl
 	restricted_disciplines = list(/datum/discipline/vicissitude)
-	whitelisted = FALSE
+	whitelisted = TRUE
 
 /datum/vampireclane/old_clan_tzimisce/post_gain(mob/living/carbon/human/H)
 	..()
