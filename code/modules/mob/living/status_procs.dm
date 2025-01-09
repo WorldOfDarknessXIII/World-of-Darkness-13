@@ -488,7 +488,7 @@
 	if(iskindred(src))
 		to_chat(src, "<span class='notice'>You have awoken from your Torpor.</span>")
 	if(iscathayan(src))
-		to_chat(src, "<span class='notice'>You have awoken from your Death.</span>")
+		to_chat(src, "<span class='notice'>You have awoken from your Little Death.</span>")
 
 /mob/living/proc/torpor(source)
 	if (HAS_TRAIT(src, TRAIT_TORPOR))
@@ -527,20 +527,7 @@
 		if (iscathayan(src))
 			var/mob/living/carbon/human/cathayan = src
 			var/datum/dharma/dharma = cathayan.mind.dharma
-			var/torpor_length = 0 SECONDS
-			switch(dharma.level)
-				if(6)
-					torpor_length = 3 MINUTES
-				if(5)
-					torpor_length = 4 MINUTES
-				if(4)
-					torpor_length = 5 MINUTES
-				if(3)
-					torpor_length = 10 MINUTES
-				if(2)
-					torpor_length = 15 MINUTES
-				if(1)
-					torpor_length = 30 MINUTES
+			var/torpor_length = 1 MINUTES * max_yin_chi
 			COOLDOWN_START(dharma, torpor_timer, torpor_length)
 
 ///Unignores all slowdowns that lack the IGNORE_NOSLOW flag.

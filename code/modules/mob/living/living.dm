@@ -417,11 +417,11 @@
 			if (yang_chi > 0)
 				yang_chi -= 1
 				cure_torpor()
-				to_chat(src, "<span class='notice'>You have awoken from your Death.</span>")
+				to_chat(src, "<span class='notice'>You have awoken from your Little Death.</span>")
 			else if (yin_chi > 0)
 				yin_chi -= 1
 				cure_torpor()
-				to_chat(src, "<span class='notice'>You have awoken from your Death.</span>")
+				to_chat(src, "<span class='notice'>You have awoken from your Little Death.</span>")
 			else
 				to_chat(src, "<span class='warning'>You have no Chi to re-awaken with...</span>")
 

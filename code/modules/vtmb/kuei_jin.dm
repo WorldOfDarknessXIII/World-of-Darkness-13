@@ -40,16 +40,12 @@
 				adjustCloneLoss(5, TRUE)
 
 	if(!iscathayan(src))
-		if(yang_chi < max_yang_chi)
-			if(last_chi_restore + 30 SECONDS <= world.time)
-				last_chi_restore = world.time
+		if (COOLDOWN_FINISHED(src, chi_restore))
+			COOLDOWN_START(src, chi_restore, 30 SECONDS)
+			if(yang_chi < max_yang_chi)
 				yang_chi = min(yang_chi+1, max_yang_chi)
-		else if(yin_chi < max_yin_chi)
-			if(last_chi_restore + 30 SECONDS <= world.time)
-				last_chi_restore = world.time
+			else if(yin_chi < max_yin_chi)
 				yin_chi = min(yin_chi+1, max_yin_chi)
-		else
-			last_chi_restore = world.time
 
 /datum/species/kuei_jin
 	name = "Kuei-Jin"
@@ -425,74 +421,80 @@
 	background_icon_state = "discipline"
 	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	var/last_use = 0
+	var/cooldown = 10 SECONDS
+	COOLDOWN_DECLARE(use)
 
 /datum/action/breathe_chi/Trigger()
-	if(last_use + 10 SECONDS > world.time)
+	if(!COOLDOWN_FINISHED(src, use))
+		to_chat(usr, "<span class='warning'>You need to wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, use))] to Inhale Chi again!</span>")
 		return
-	if(istype(owner, /mob/living/carbon/human))
-		var/mob/living/carbon/human/BD = usr
-		last_use = world.time
-		if(isliving(BD.pulling) && BD.grab_state > GRAB_PASSIVE)
-			var/mob/living/L = BD.pulling
-			if(!L.yin_chi)
-				to_chat(owner, "<span class='warning'>It doesn't have <b>Yin Chi</b> to feed on, try some distance...</span>")
-				return
-			L.yin_chi = max(0, L.yin_chi-1)
-			BD.yin_chi = min(BD.yin_chi+1, BD.max_yin_chi)
-			L.last_chi_restore = world.time
-			to_chat(BD, "<span class='medradio'>Some <b>Yin</b> Chi energy enters you...</span>")
-			BD.update_chi_hud()
-		else
-			var/list/victims_list = list()
-			for(var/mob/living/L in range(3, owner))
-				if(L != owner)
-					victims_list |= L
-			if(!length(victims_list))
-				to_chat(owner, "<span class='warning'>There's no one with <b>Chi</b> around...</span>")
-				return
-			else
-				var/mob/living/victim = input(owner, "Choose breathe to inhale.", "Breathe Chi") as null|anything in victims_list
-				if(victim)
-					if(!victim.yang_chi)
-						to_chat(owner, "<span class='warning'>It doesn't have <b>Yang Chi</b> to feed on, try getting closer...</span>")
-						return
-					else
-						var/atom/movable/chi_particle = new (get_turf(victim))
-						chi_particle.density = FALSE
-						chi_particle.anchored = TRUE
-						chi_particle.icon = 'code/modules/wod13/UI/kuei_jin.dmi'
-						chi_particle.icon_state = "drain"
-						var/matrix/M = matrix()
-//						M.Scale(1, get_dist_in_pixels(owner.x*32, owner.y*32, victim.x*32, victim.y*32)/32)
-						M.Turn(get_angle_raw(victim.x, victim.y, 0, 0, owner.x, owner.y, 0, 0))
-						chi_particle.transform = M
-						var/sucking_chi = TRUE
-						if(isanimal(victim))
-							var/mob/living/simple_animal/S = victim
-							if(S.mob_biotypes & MOB_UNDEAD)
-								to_chat(owner, "<span class='warning'>This creature doesn't breathe cause it's <b>DEAD</b>!</span>")
-								sucking_chi = FALSE
-						if(victim.stat >= DEAD)
-							to_chat(owner, "<span class='warning'>This creature doesn't breathe cause it's <b>DEAD</b>!</span>")
-							sucking_chi = FALSE
-						if(iskindred(victim))
-							to_chat(owner, "<span class='warning'>This creature doesn't breathe cause it's <b>DEAD</b>!</span>")
-							sucking_chi = FALSE
-						if(sucking_chi)
-							if(victim.yang_chi)
-								victim.yang_chi = max(0, victim.yang_chi-1)
-								BD.yang_chi = min(BD.yang_chi+1, BD.max_yang_chi)
-								victim.last_chi_restore = world.time
-								to_chat(BD, "<span class='engradio'>Some <b>Yang</b> Chi energy enters you...</span>")
-								BD.update_chi_hud()
-							else
-								to_chat(owner, "<span class='warning'>This creature doesn't have enough <b>Yang</b> Chi!</span>")
-						spawn(3 SECONDS)
-							qdel(chi_particle)
+	if(!istype(owner, /mob/living/carbon/human))
+		return
+	var/mob/living/carbon/human/kueijin = usr
+	COOLDOWN_START(src, use, cooldown)
 
-		button.color = "#970000"
-		animate(button, color = "#ffffff", time = 20, loop = 1)
+	var/list/mob/living/victims_list = list()
+	for (var/mob/living/adding_victim in oviewers(3, kueijin))
+		victims_list += adding_victim
+	if(!length(victims_list))
+		to_chat(owner, "<span class='warning'>There's no one with <b>Chi</b> around...</span>")
+		return
+
+	var/mob/living/victim
+	if (length(victims_list) == 1)
+		victim = victims_list[1]
+	else
+		victim = input(owner, "Choose whose breath to inhale", "Inhale Chi") as null|anything in victims_list
+	if(!victim)
+		return
+
+	drain_breath(kueijin, victim)
+
+	button.color = "#970000"
+	animate(button, color = "#ffffff", time = cooldown)
+
+/datum/action/breathe_chi/proc/drain_breath(mob/living/carbon/human/kueijin, mob/living/victim)
+	//this one is on carbon instead of living which means it needs some annoying extra code
+	var/has_gnosis = FALSE
+	if (iscarbon(victim))
+		var/mob/living/carbon/werewolf_victim = victim
+		if (werewolf_victim.auspice?.gnosis > 0)
+			has_gnosis = TRUE
+
+	//this method of feeding targets splat-specific Quintessence sources first
+	if ((iskindred(victim) || isghoul(victim)) && (victim.bloodpool > 0)) //drain vitae bloodpool
+		victim.bloodpool = max(0, victim.bloodpool - 1)
+		kueijin.yin_chi = min(kueijin.yin_chi + 1, kueijin.max_yin_chi)
+		to_chat(kueijin, "<span class='engradio'>Some bitter <b>Yin</b> Chi enters you...</span>")
+	else if ((isgarou(victim) || iswerewolf(victim)) && has_gnosis) //drain gnosis
+		adjust_gnosis(-1, victim, sound = TRUE)
+		kueijin.yang_chi = min(kueijin.yang_chi + 1, kueijin.max_yang_chi)
+		to_chat(kueijin, "<span class='engradio'>Some fiery <b>Yang</b> Chi enters you...</span>")
+	else if ((victim.yin_chi > 0) || (victim.yang_chi > 0)) //normally drain chi from humans and simplemobs and kuei-jin
+		if ((prob(50) || victim.yang_chi == 0) && (victim.yin_chi > 0))
+			victim.yin_chi = max(0, victim.yin_chi - 1)
+			kueijin.yin_chi = min(kueijin.yin_chi + 1, kueijin.max_yin_chi)
+			to_chat(kueijin, "<span class='engradio'>Some <b>Yin</b> Chi enters you...</span>")
+		else if ((victim.yang_chi > 0))
+			victim.yang_chi = max(0, victim.yang_chi - 1)
+			kueijin.yang_chi = min(kueijin.yang_chi + 1, kueijin.max_yang_chi)
+			to_chat(kueijin, "<span class='engradio'>Some <b>Yang</b> Chi enters you...</span>")
+	else
+		return
+
+	//it would be nice for this to be invisible at a SEE_INVISIBLE_QUINTESSENCE or SEE_INVISIBLE_SPIRITUAL level, but that can come later...
+	var/atom/movable/chi_particle = new (get_turf(victim))
+	chi_particle.density = FALSE
+	chi_particle.anchored = TRUE
+	chi_particle.icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	chi_particle.icon_state = "drain"
+	var/matrix/face_kueijin = matrix()
+	face_kueijin.Turn(get_angle_raw(victim.x, victim.y, 0, 0, owner.x, owner.y, 0, 0))
+	chi_particle.transform = face_kueijin
+
+	kueijin.update_chi_hud()
+
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), chi_particle), 3 SECONDS)
 
 /datum/action/area_chi
 	name = "Area Chi"
@@ -502,24 +504,31 @@
 	background_icon_state = "discipline"
 	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	var/last_use = 0
+	var/cooldown = 30 SECONDS
+	COOLDOWN_DECLARE(use)
 
 /datum/action/area_chi/Trigger()
-	if(last_use + 30 SECONDS > world.time)
+	if(!COOLDOWN_FINISHED(src, use))
+		to_chat(usr, "<span class='warning'>You need to wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, use))] to gather Chi again!</span>")
 		return
-	if(istype(owner, /mob/living/carbon/human))
-		var/mob/living/carbon/human/BD = usr
-		var/area/A = get_area(BD)
-		last_use = world.time
-		if(A.yang_chi)
-			BD.yang_chi = min(BD.yang_chi+A.yang_chi, BD.max_yang_chi)
-			to_chat(BD, "<span class='engradio'>Some <b>Yang</b> Chi energy enters you...</span>")
-		if(A.yin_chi)
-			BD.yin_chi = min(BD.yin_chi+A.yin_chi, BD.max_yin_chi)
-			to_chat(BD, "<span class='medradio'>Some <b>Yin</b> Chi energy enters you...</span>")
+	if(!istype(owner, /mob/living/carbon/human))
+		return
+
+	var/mob/living/carbon/human/kueijin = usr
+
+	to_chat(usr, "<span class='notify'>You begin to gather <b>Chi</b> from your environment...</span>")
+	if (do_after(kueijin, 15 SECONDS))
+		COOLDOWN_START(src, use, cooldown)
+		var/area/draining_area = get_area(kueijin)
+		if(draining_area.yang_chi)
+			kueijin.yang_chi = min(kueijin.yang_chi + draining_area.yang_chi, kueijin.max_yang_chi)
+			to_chat(kueijin, "<span class='engradio'>Some <b>Yang</b> Chi energy enters you...</span>")
+		if(draining_area.yin_chi)
+			kueijin.yin_chi = min(kueijin.yin_chi + draining_area.yin_chi, kueijin.max_yin_chi)
+			to_chat(kueijin, "<span class='medradio'>Some <b>Yin</b> Chi energy enters you...</span>")
 
 		button.color = "#970000"
-		animate(button, color = "#ffffff", time = 20, loop = 1)
+		animate(button, color = "#ffffff", time = cooldown)
 
 /datum/action/reanimate_yin
 	name = "Yin Reanimate"
@@ -530,55 +539,54 @@
 	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	vampiric = TRUE
+	var/cooldown = 3 SECONDS
 
 /datum/action/reanimate_yin/Trigger()
-	if(istype(owner, /mob/living/carbon/human))
-		if(HAS_TRAIT(owner, TRAIT_TORPOR))
-			return
-		SEND_SOUND(usr, sound('code/modules/wod13/sounds/chi_use.ogg', 0, 0, 75))
-		var/mob/living/carbon/human/BD = usr
-		BD.visible_message("<span class='warning'>Some of [BD]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
-		BD.mind.dharma?.animated = "Yin"
-		BD.skin_tone = get_vamp_skin_color(BD.skin_tone)
-		BD.dna?.species.brutemod = initial(BD.dna?.species.brutemod)
-		BD.dna?.species.burnmod = initial(BD.dna?.species.burnmod)
-		BD.update_body()
-		if(length(BD.all_wounds))
-			var/datum/wound/W = pick(BD.all_wounds)
-			W.remove_wound()
-		if(length(BD.all_wounds))
-			var/datum/wound/W = pick(BD.all_wounds)
-			W.remove_wound()
-		if(length(BD.all_wounds))
-			var/datum/wound/W = pick(BD.all_wounds)
-			W.remove_wound()
-		if(length(BD.all_wounds))
-			var/datum/wound/W = pick(BD.all_wounds)
-			W.remove_wound()
-		if(length(BD.all_wounds))
-			var/datum/wound/W = pick(BD.all_wounds)
-			W.remove_wound()
-		var/obj/item/organ/eyes/eyes = BD.getorganslot(ORGAN_SLOT_EYES)
-		if(eyes)
-			BD.adjust_blindness(-2)
-			BD.adjust_blurriness(-2)
-			eyes.applyOrganDamage(-5)
-		var/obj/item/organ/brain/brain = BD.getorganslot(ORGAN_SLOT_BRAIN)
-		if(brain)
-			brain.applyOrganDamage(-100)
-		if(BD.yin_chi)
-			BD.heal_overall_damage(15*min(4, BD.mind.dharma.level), 10*min(4, BD.mind.dharma.level), 20*min(4, BD.mind.dharma.level))
-			BD.adjustBruteLoss(-20*min(4, BD.mind.dharma.level), TRUE)
-			BD.adjustFireLoss(-20*min(4, BD.mind.dharma.level), TRUE)
-			BD.adjustOxyLoss(-20*min(4, BD.mind.dharma.level), TRUE)
-			BD.adjustToxLoss(-20*min(4, BD.mind.dharma.level), TRUE)
-			BD.adjustCloneLoss(-5, TRUE)
-			BD.blood_volume = min(BD.blood_volume + 56, 560)
-		else
-			BD.adjustBruteLoss(20, TRUE)
-		BD.yin_chi = max(0, BD.yin_chi-1)
-		button.color = "#970000"
-		animate(button, color = "#ffffff", time = 20, loop = 1)
+	if(!istype(owner, /mob/living/carbon/human))
+		return
+	var/mob/living/carbon/human/kueijin = usr
+	if(HAS_TRAIT(owner, TRAIT_TORPOR))
+		return
+	if (!kueijin.yin_chi > 0)
+		return
+	if (!kueijin.mind?.dharma)
+		return
+	if (!COOLDOWN_FINISHED(kueijin.mind.dharma, chi_heal))
+		to_chat(kueijin, "<span class='warning'>You need to wait [DisplayTimeText(COOLDOWN_TIMELEFT(kueijin.mind.dharma, chi_heal))] before you can heal again!</span>")
+		return
+	COOLDOWN_START(kueijin.mind.dharma, chi_heal, cooldown)
+
+	SEND_SOUND(usr, sound('code/modules/wod13/sounds/chi_use.ogg', 0, 0, 75))
+	kueijin.visible_message("<span class='warning'>Some of [kueijin]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
+	kueijin.mind.dharma?.animated = "Yin"
+	kueijin.skin_tone = get_vamp_skin_color(kueijin.skin_tone)
+	kueijin.dna?.species.brutemod = initial(kueijin.dna?.species.brutemod)
+	kueijin.dna?.species.burnmod = initial(kueijin.dna?.species.burnmod)
+	kueijin.update_body()
+
+	for (var/i in 1 to 5)
+		if(length(kueijin.all_wounds))
+			var/datum/wound/wound = pick(kueijin.all_wounds)
+			wound.remove_wound()
+
+	var/obj/item/organ/eyes/eyes = kueijin.getorganslot(ORGAN_SLOT_EYES)
+	if(eyes)
+		kueijin.adjust_blindness(-2)
+		kueijin.adjust_blurriness(-2)
+		eyes.applyOrganDamage(-5)
+
+	var/obj/item/organ/brain/brain = kueijin.getorganslot(ORGAN_SLOT_BRAIN)
+	if(brain)
+		brain.applyOrganDamage(-100)
+
+	var/heal_level = min(kueijin.mind.dharma.level, 4)
+	kueijin.heal_ordered_damage(20 * heal_level, list(OXY, STAMINA, BRUTE, TOX))
+	kueijin.heal_ordered_damage(5 * heal_level, list(BURN, CLONE))
+	kueijin.blood_volume = min(kueijin.blood_volume + 56, 560)
+	kueijin.yin_chi = max(0, kueijin.yin_chi - 1)
+
+	button.color = "#970000"
+	animate(button, color = "#ffffff", time = cooldown)
 
 /datum/action/reanimate_yang
 	name = "Yang Reanimate"
@@ -589,55 +597,54 @@
 	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	vampiric = TRUE
+	var/cooldown = 3 SECONDS
 
 /datum/action/reanimate_yang/Trigger()
-	if(istype(owner, /mob/living/carbon/human))
-		if(HAS_TRAIT(owner, TRAIT_TORPOR))
-			return
-		SEND_SOUND(usr, sound('code/modules/wod13/sounds/chi_use.ogg', 0, 0, 75))
-		var/mob/living/carbon/human/BD = usr
-		BD.visible_message("<span class='warning'>Some of [BD]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
-		BD.mind.dharma?.animated = "Yang"
-		BD.skin_tone = BD.mind.dharma?.initial_skin_color
-		BD.dna?.species.brutemod = 1
-		BD.dna?.species.burnmod = 0.5
-		BD.update_body()
-		if(length(BD.all_wounds))
-			var/datum/wound/W = pick(BD.all_wounds)
-			W.remove_wound()
-		if(length(BD.all_wounds))
-			var/datum/wound/W = pick(BD.all_wounds)
-			W.remove_wound()
-		if(length(BD.all_wounds))
-			var/datum/wound/W = pick(BD.all_wounds)
-			W.remove_wound()
-		if(length(BD.all_wounds))
-			var/datum/wound/W = pick(BD.all_wounds)
-			W.remove_wound()
-		if(length(BD.all_wounds))
-			var/datum/wound/W = pick(BD.all_wounds)
-			W.remove_wound()
-		var/obj/item/organ/eyes/eyes = BD.getorganslot(ORGAN_SLOT_EYES)
-		if(eyes)
-			BD.adjust_blindness(-2)
-			BD.adjust_blurriness(-2)
-			eyes.applyOrganDamage(-5)
-		var/obj/item/organ/brain/brain = BD.getorganslot(ORGAN_SLOT_BRAIN)
-		if(brain)
-			brain.applyOrganDamage(-100)
-		if(BD.yang_chi)
-			BD.heal_overall_damage(15*min(4, BD.mind.dharma.level), 10*min(4, BD.mind.dharma.level), 20*min(4, BD.mind.dharma.level))
-			BD.adjustBruteLoss(-20*min(4, BD.mind.dharma.level), TRUE)
-			BD.adjustFireLoss(-20*min(4, BD.mind.dharma.level), TRUE)
-			BD.adjustOxyLoss(-20*min(4, BD.mind.dharma.level), TRUE)
-			BD.adjustToxLoss(-20*min(4, BD.mind.dharma.level), TRUE)
-			BD.adjustCloneLoss(-5, TRUE)
-			BD.blood_volume = min(BD.blood_volume + 56, 560)
-		else
-			BD.adjustBruteLoss(10, TRUE)
-		BD.yang_chi = max(0, BD.yang_chi-1)
-		button.color = "#970000"
-		animate(button, color = "#ffffff", time = 20, loop = 1)
+	if(!istype(owner, /mob/living/carbon/human))
+		return
+	var/mob/living/carbon/human/kueijin = usr
+	if(HAS_TRAIT(owner, TRAIT_TORPOR))
+		return
+	if (!kueijin.yin_chi > 0)
+		return
+	if (!kueijin.mind?.dharma)
+		return
+	if (!COOLDOWN_FINISHED(kueijin.mind.dharma, chi_heal))
+		to_chat(kueijin, "<span class='warning'>You need to wait [DisplayTimeText(COOLDOWN_TIMELEFT(kueijin.mind.dharma, chi_heal))] before you can heal again!</span>")
+		return
+	COOLDOWN_START(kueijin.mind.dharma, chi_heal, cooldown)
+
+	SEND_SOUND(usr, sound('code/modules/wod13/sounds/chi_use.ogg', 0, 0, 75))
+	kueijin.visible_message("<span class='warning'>Some of [kueijin]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
+	kueijin.mind.dharma?.animated = "Yang"
+	kueijin.skin_tone = kueijin.mind.dharma?.initial_skin_color
+	kueijin.dna?.species.brutemod = 1
+	kueijin.dna?.species.burnmod = 0.5
+	kueijin.update_body()
+
+	for (var/i in 1 to 5)
+		if(length(kueijin.all_wounds))
+			var/datum/wound/wound = pick(kueijin.all_wounds)
+			wound.remove_wound()
+
+	var/obj/item/organ/eyes/eyes = kueijin.getorganslot(ORGAN_SLOT_EYES)
+	if(eyes)
+		kueijin.adjust_blindness(-2)
+		kueijin.adjust_blurriness(-2)
+		eyes.applyOrganDamage(-5)
+
+	var/obj/item/organ/brain/brain = kueijin.getorganslot(ORGAN_SLOT_BRAIN)
+	if(brain)
+		brain.applyOrganDamage(-100)
+
+	var/heal_level = min(kueijin.mind.dharma.level, 4)
+	kueijin.heal_ordered_damage(10 * heal_level, list(OXY, STAMINA, BRUTE, TOX))
+	kueijin.heal_ordered_damage(2.5 * heal_level, list(BURN, CLONE))
+	kueijin.blood_volume = min(kueijin.blood_volume + 28, 560)
+	kueijin.yang_chi = max(0, kueijin.yang_chi - 1)
+
+	button.color = "#970000"
+	animate(button, color = "#ffffff", time = cooldown)
 
 /datum/action/rebalance
 	name = "Rebalance"
@@ -649,22 +656,23 @@
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 
 /datum/action/rebalance/Trigger()
-	if(istype(owner, /mob/living/carbon/human))
-		var/mob/living/carbon/human/BD = usr
-		if(BD.mind?.dharma)
-			var/max_limit = BD.mind.dharma.level*2
-			var/sett = input(BD, "Enter the maximum of Yin your character has (from 1 to [max_limit-1]):", "Yin/Yang") as num|null
-			if(sett)
-				sett = max(1, min(sett, max_limit-1))
-				BD.max_yin_chi = sett
-				BD.max_yang_chi = max_limit-sett
-				BD.yin_chi = min(BD.yin_chi, BD.max_yin_chi)
-				BD.yang_chi = min(BD.yang_chi, BD.max_yang_chi)
-				var/sett2 = input(BD, "Enter the maximum of Hun your character has (from 1 to [max_limit-1]):", "Hun/P'o") as num|null
-				if(sett2)
-					sett2 = max(1, min(sett2, max_limit-1))
-					BD.mind.dharma.Hun = sett2
-					BD.max_demon_chi = max_limit-sett2
-					BD.demon_chi = min(BD.demon_chi, BD.max_demon_chi)
-		button.color = "#970000"
-		animate(button, color = "#ffffff", time = 20, loop = 1)
+	if(!istype(owner, /mob/living/carbon/human))
+		return
+	var/mob/living/carbon/human/kueijin = usr
+	if(!kueijin.mind?.dharma)
+		return
+
+	var/max_limit = max(10, kueijin.mind.dharma.level * 2)
+	var/max_yin = input(kueijin, "Enter the maximum of Yin your character has (from 1 to [max_limit - 1]):", "Yin/Yang") as num|null
+	if(max_yin)
+		max_yin = clamp(max_yin, 1, max_limit - 1)
+		kueijin.max_yin_chi = max_yin
+		kueijin.max_yang_chi = max_limit - max_yin
+		kueijin.yin_chi = min(kueijin.yin_chi, kueijin.max_yin_chi)
+		kueijin.yang_chi = min(kueijin.yang_chi, kueijin.max_yang_chi)
+	var/max_hun = input(kueijin, "Enter the maximum of Hun your character has (from 1 to [max_limit-1]):", "Hun/P'o") as num|null
+	if(max_hun)
+		max_hun = clamp(max_hun, 1, max_limit - 1)
+		kueijin.mind.dharma.Hun = max_hun
+		kueijin.max_demon_chi = max_limit - max_hun
+		kueijin.demon_chi = min(kueijin.demon_chi, kueijin.max_demon_chi)

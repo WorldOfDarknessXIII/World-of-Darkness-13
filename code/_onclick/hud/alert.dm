@@ -390,16 +390,16 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				to_chat(usr, "<span class='danger'><i>You will not be able to re-awaken, because you have no blood available to do so.</i></span>")
 	if(iscathayan(living_owner))
 		var/mob/living/carbon/human/vampire = living_owner
-		var/datum/dharma/D = vampire.mind.dharma
-		if (COOLDOWN_FINISHED(D, torpor_timer) && (vampire.yang_chi > 0 || vampire.yin_chi > 0))
+		var/datum/dharma/dharma = vampire.mind.dharma
+		if (COOLDOWN_FINISHED(dharma, torpor_timer) && (vampire.yang_chi > 0 || vampire.yin_chi > 0))
 			vampire.untorpor()
 			spawn()
 				vampire.clear_alert("succumb")
 		else
-			to_chat(usr, "<span class='purple'><i>You are in Torpor, the little death that Kuei-Jin go into when injured, or exhausted.</i></span>")
+			to_chat(usr, "<span class='purple'><i>You are in the Little Death, the state that Kuei-Jin go into when injured or exhausted.</i></span>")
 			if (vampire.yang_chi > 0 || vampire.yin_chi > 0)
-				to_chat(usr, "<span class='purple'><i>You will be able to awaken in <b>[DisplayTimeText(COOLDOWN_TIMELEFT(D, torpor_timer))]</b>.</i></span>")
-				to_chat(usr, "<span class='purple'><i>The time to re-awaken depends on your [D.name] dharma rating of [D.level].</i></span>")
+				to_chat(usr, "<span class='purple'><i>You will be able to awaken in <b>[DisplayTimeText(COOLDOWN_TIMELEFT(dharma, torpor_timer))]</b>.</i></span>")
+				to_chat(usr, "<span class='purple'><i>The time to re-awaken depends on your [vampire.max_yin_chi <= 4 ? "low" : "high"] permanent Yin Chi rating of [vampire.max_yin_chi].</i></span>")
 			else
 				to_chat(usr, "<span class='danger'><i>You will not be able to re-awaken, because you have no Chi available to do so.</i></span>")
 //ALIENS

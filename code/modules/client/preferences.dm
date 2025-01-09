@@ -225,10 +225,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/dharma_type = /datum/dharma
 	var/dharma_level = 1
 	var/po_type = "Rebel"
-	var/po = 2
-	var/hun = 2
-	var/yang = 2
-	var/yin = 2
+	var/po = 5
+	var/hun = 5
+	var/yang = 5
+	var/yin = 5
 	var/list/chi_types = list()
 	var/list/chi_levels = list()
 
@@ -255,6 +255,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	po = initial(po)
 	yin = initial(yin)
 	yang = initial(yang)
+	chi_types = list()
+	chi_levels = list()
 	archetype = pick(subtypesof(/datum/archetype))
 	var/datum/archetype/A = new archetype()
 	physique = A.start_physique
@@ -280,7 +282,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	real_name = random_unique_name(gender)
 	save_character()
 
-/proc/reset_shit(var/mob/M)
+/proc/reset_shit(mob/M)
 	if(M.key)
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(M.key)]
 		if(P)
@@ -321,7 +323,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 #define MAX_MUTANT_ROWS 4
 #define ATTRIBUTE_BASE_LIMIT 5 //Highest level that a base attribute can be upgraded to. Bonus attributes can increase the actual amount past the limit.
 
-/proc/make_font_cool(var/text)
+/proc/make_font_cool(text)
 	if(text)
 		var/coolfont = "<font face='Percolator'>[text]</font>"
 		return coolfont
@@ -2296,11 +2298,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						return
 
 					true_experience -= 20
-					dharma_level = min(max(1, dharma_level + 1), 6)
-					hun = hun+1
-					po = po+1
-					yin = yin+1
-					yang = yang+1
+					dharma_level = clamp(dharma_level + 1, 1, 6)
+
+					if (dharma_level >= 6)
+						hun += 1
+						po += 1
+						yin += 1
+						yang += 1
 
 				/*
 				if("torpor_restore")
@@ -2317,20 +2321,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						return
 					var/list/dharmas = list()
 					for(var/i in subtypesof(/datum/dharma))
-						var/datum/dharma/D = i
-						dharmas += initial(D.name)
+						var/datum/dharma/dharma = i
+						dharmas += initial(dharma.name)
 					var/result = input(user, "Select Dharma", "Dharma") as null|anything in dharmas
 					if(result)
 						for(var/i in subtypesof(/datum/dharma))
-							var/datum/dharma/D = i
-							if(initial(D.name) == result)
+							var/datum/dharma/dharma = i
+							if(initial(dharma.name) == result)
 								dharma_type = i
 								dharma_level = initial(dharma_level)
 								hun = initial(hun)
 								po = initial(po)
 								yin = initial(yin)
 								yang = initial(yang)
-
 
 				if("potype")
 					if(slotlocked)
@@ -2341,7 +2344,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						po_type = result
 
 				if("chibalance")
-					var/max_limit = dharma_level*2
+					var/max_limit = max(10, dharma_level * 2)
 					var/sett = input(user, "Enter the maximum of Yin your character has:", "Yin/Yang") as num|null
 					if(sett)
 						sett = max(1, min(sett, max_limit-1))
@@ -3042,17 +3045,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		var/datum/vampireclane/CLN = new clane.type()
 		character.clane = CLN
 		character.clane.current_accessory = clane_accessory
-		character.maxbloodpool = 10+((13-generation)*3)
+		character.maxbloodpool = 10 + ((13 - generation) * 3)
 		character.bloodpool = rand(2, character.maxbloodpool)
 		character.generation = generation
-		character.yin_chi = 6+(13-generation)
-		character.max_yin_chi = 6+(13-generation)
+		character.max_yin_chi = character.maxbloodpool
+		character.yin_chi = character.max_yin_chi
 		character.clane.enlightenment = enlightenment
-//		if(generation < 13)
-//			character.maxHealth = initial(character.maxHealth)+50*(13-generation)
-//			character.health = initial(character.health)+50*(13-generation)
 	else
-//		character.clane.current_accessory = null
 		character.clane = null
 		character.generation = 13
 		character.bloodpool = character.maxbloodpool
@@ -3063,8 +3062,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			character.max_yin_chi = yin
 			character.max_demon_chi = po
 		else
-			character.yang_chi = 4
-			character.max_yang_chi = 4
+			character.yang_chi = 3
+			character.max_yang_chi = 3
 			character.yin_chi = 2
 			character.max_yin_chi = 2
 
@@ -3075,16 +3074,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if("Wendigo")
 				character.yin_chi = 1
 				character.max_yin_chi = 1
-				character.yang_chi = 5+(auspice_level*2)
-				character.max_yang_chi = 5+(auspice_level*2)
+				character.yang_chi = 5 + (auspice_level * 2)
+				character.max_yang_chi = 5 + (auspice_level * 2)
 			if("Glasswalkers")
-				character.yin_chi = 1+auspice_level
-				character.max_yin_chi = 1+auspice_level
-				character.yang_chi = 5+auspice_level
-				character.max_yang_chi = 5+auspice_level
+				character.yin_chi = 1 + auspice_level
+				character.max_yin_chi = 1 + auspice_level
+				character.yang_chi = 5 + auspice_level
+				character.max_yang_chi = 5 + auspice_level
 			if("Black Spiral Dancers")
-				character.yin_chi = 1+auspice_level*2
-				character.max_yin_chi = 1+auspice_level*2
+				character.yin_chi = 1 + auspice_level * 2
+				character.max_yin_chi = 1 + auspice_level * 2
 				character.yang_chi = 5
 				character.max_yang_chi = 5
 	else

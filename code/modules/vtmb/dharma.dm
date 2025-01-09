@@ -25,6 +25,7 @@
 	COOLDOWN_DECLARE(dharma_update)
 	COOLDOWN_DECLARE(po_call)
 	COOLDOWN_DECLARE(torpor_timer)
+	COOLDOWN_DECLARE(chi_heal)
 
 /datum/dharma/devil_tiger
 	name = "Devil Tiger (P'o)"
@@ -90,39 +91,40 @@
 	mob.maxHealth = initial(mob.maxHealth) + (initial(mob.maxHealth) / 4) * mob.mind.dharma.level
 	mob.health = mob.maxHealth
 
-//this is so fucked that I'm not even going to touch it
+/**
+ * Updates virtues to new temporary and permanent ratings with a Dharma level change.
+ *
+ * After Dharma level is changed, also updates maximum Chi and maximum virtues according
+ * to the new level's maximums. This is usually a total of 10 chi points and 10 virtues,
+ * but that changes to 12 when reaching Dharma 6 and will revert back if downgraded to
+ * Dharma 5.
+ *
+ * Arguments:
+ * * owner - the mob that owns this Dharma and is being updated.
+ */
 /datum/dharma/proc/align_virtues(mob/living/owner)
 	if(level <= 0)
 		return
 
+	var/virtue_pair_limit = max(10, level * 2)
+
 	var/total_chi = owner.max_yin_chi + owner.max_yang_chi
 	var/total_virtues = Hun + owner.max_demon_chi
-	if(total_chi > level * 2)
-		if(owner.max_yang_chi == 1)
-			owner.max_yin_chi = max(1, owner.max_yin_chi - 2)
-		else if(owner.max_yin_chi == 1)
-			owner.max_yang_chi = max(1, owner.max_yang_chi - 2)
-		else
-			owner.max_yang_chi = max(1, owner.max_yang_chi - 1)
-			owner.max_yin_chi = max(1, owner.max_yin_chi - 1)
-		owner.yang_chi = min(owner.yang_chi, owner.max_yang_chi)
-		owner.yin_chi = min(owner.yin_chi, owner.max_yin_chi)
-	if(total_chi < level * 2)
-		owner.max_yang_chi = min(owner.mind.dharma?.level * 2 - 1, owner.max_yang_chi + 1)
-		owner.max_yin_chi = min(owner.mind.dharma?.level * 2 - 1, owner.max_yin_chi + 1)
 
-	if(total_virtues > level * 2)
-		if(owner.max_demon_chi == 1)
-			Hun = max(1, Hun - 2)
-		else if(Hun == 1)
-			owner.max_demon_chi = max(1, owner.max_demon_chi - 2)
-		else
-			owner.max_demon_chi = max(1, owner.max_demon_chi - 1)
-			Hun = max(1, Hun - 1)
-		owner.demon_chi = min(owner.demon_chi, owner.max_demon_chi)
-	if(total_virtues < level * 2)
-		owner.max_demon_chi = min(owner.mind.dharma?.level * 2 - 1, owner.max_demon_chi + 1)
-		Hun = min(owner.mind.dharma?.level * 2 - 1, Hun + 1)
+	var/chi_discrepancy = virtue_pair_limit - total_chi
+	var/virtue_discrepancy = virtue_pair_limit - total_virtues
+
+	if ((chi_discrepancy == 0) && (virtue_discrepancy == 0))
+		return
+
+	owner.max_yin_chi += chi_discrepancy / 2
+	owner.max_yang_chi += chi_discrepancy / 2
+	owner.yin_chi = min(owner.yin_chi, owner.max_yin_chi)
+	owner.yang_chi = min(owner.yang_chi, owner.max_yang_chi)
+
+	Hun += virtue_discrepancy / 2
+	owner.max_demon_chi += virtue_discrepancy / 2
+	owner.demon_chi = min(owner.demon_chi, owner.max_demon_chi)
 
 /proc/update_dharma(mob/living/carbon/human/kueijin, dot)
 	if (!kueijin.mind?.dharma)
@@ -216,7 +218,7 @@
 	owner.demon_chi = min(owner.demon_chi + 1, owner.max_demon_chi)
 	to_chat(owner, "<span class='warning'>Some <b>DEMON</b> Chi energy fills you...</span>")
 
-//good luck whoever wants to fix this thing
+//good luck to whoever wants to fix this thing
 /mob/living/carbon/human/frenzystep()
 	if(!iscathayan(src))
 		return ..()

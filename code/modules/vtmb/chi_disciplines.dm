@@ -124,7 +124,7 @@
 /datum/chi_discipline/proc/check_activated(mob/living/target, mob/living/carbon/human/caster)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(caster.stat >= HARD_CRIT || caster.IsSleeping() || caster.IsUnconscious() || caster.IsParalyzed() || caster.IsStun() || HAS_TRAIT(caster, TRAIT_RESTRAINED) || !isturf(caster.loc))
+	if(caster.stat >= HARD_CRIT || caster.IsSleeping() || caster.IsUnconscious() || caster.IsParalyzed() || caster.IsStun() || HAS_TRAIT(caster, TRAIT_RESTRAINED))
 		return FALSE
 
 	if(!COOLDOWN_FINISHED(src, activate))
@@ -1950,16 +1950,19 @@
 	cost_yin = 1
 	discipline_type = "Chi"
 	activate_sound = 'code/modules/wod13/sounds/tapestry.ogg'
-	var/prev_z
+	//var/prev_z
 
-/atom/movable/penumbra_ghost
+//nonfunctional
+/*
+/obj/penumbra_ghost
 	COOLDOWN_DECLARE(move_ghost)
 
-/atom/movable/penumbra_ghost/relaymove(mob/living/user, direction)
+/obj/penumbra_ghost/relaymove(mob/living/user, direction)
 	if(COOLDOWN_FINISHED(src, move_ghost))
 		COOLDOWN_START(src, move_ghost, 0.5 SECONDS)
 		dir = direction
 		forceMove(get_step(src, direction))
+*/
 
 /obj/effect/anomaly/grav_kuei
 	name = "gravitational anomaly"
@@ -2030,11 +2033,15 @@
 					caster.client?.prefs.chat_toggles &= ~CHAT_DEAD
 					caster.see_invisible = initial(caster.see_invisible)
 		if(2)
+			caster.yin_chi += 1
+			caster.yang_chi += 1
+			//disabled due to bugs, sorry!
+			/*
 			var/chosen_z
 			var/umbra_z
-			var/atom/movable/penumbra_ghost/ghost
+			var/obj/penumbra_ghost/ghost
 
-			if(istype(caster.loc, /atom/movable/penumbra_ghost))
+			if(istype(caster.loc, /obj/penumbra_ghost))
 				ghost = caster.loc
 
 			for(var/area/vtm/interior/penumbra/penumbra in world)
@@ -2050,7 +2057,7 @@
 				var/turf/to_wall = locate(caster_turf.x, caster_turf.y, chosen_z)
 				var/area/cross_area = get_area(to_wall)
 				if(cross_area)
-					if(cross_area.wall_rating > 1)
+					if(cross_area.wall_rating > LOW_WALL_RATING)
 						to_chat(caster, "<span class='warning'><b>GAUNTLET</b> rating there is too high! You can't cross <b>PENUMBRA</b> like this...</span>")
 						caster.yin_chi += 1
 						caster.yang_chi += 1
@@ -2070,6 +2077,7 @@
 					ghost.alpha = 128
 					caster.forceMove(ghost)
 				playsound(get_turf(caster), 'code/modules/wod13/sounds/portal.ogg', 100, TRUE)
+			*/
 		if(3)
 			ADD_TRAIT(caster, TRAIT_SUPERNATURAL_LUCK, "tapestry 3")
 			to_chat(caster, "<b>You feel insanely lucky!</b>")

@@ -463,9 +463,9 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/human = M
-		if(human.Myself.Lover.owner == src)
+		if(human.Myself?.Lover?.owner == src)
 			call_dharma("meet", M)
-		if(human.Myself.Friend.owner == src)
+		if(human.Myself?.Friend?.owner == src)
 			call_dharma("meet", M)
 
 	if(body_position == LYING_DOWN)
