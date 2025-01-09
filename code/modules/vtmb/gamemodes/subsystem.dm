@@ -1,4 +1,4 @@
-//SABBAT = +90 threat
+//SABBAT = +90 threat - removed as of 1/9 given tdm reasons
 //HUNT = +60 threat
 //CAITIFF = +30 threat
 
@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 	return jobs[rank]
 
 /datum/controller/subsystem/bad_guys_party/proc/set_badguys(var/new_setting)
-	if(new_setting in list("caitiff", "sabbat", "hunter"))
+	if(new_setting in list("caitiff", /*"sabbat",*/ "hunter"))
 		SSbad_guys_party.setting = new_setting
 	else
 		setting = null
@@ -51,14 +51,14 @@ SUBSYSTEM_DEF(bad_guys_party)
 				go_on_next_fire = TRUE
 				Next = new /datum/outfit/job/caitiff()
 				setting = null
-			if("sabbat")
+			/*if("sabbat")
 				if(Next)
 					qdel(Next)
 				threat = min(100, threat+30)
 				max_candidates = 2
 				go_on_next_fire = TRUE
 				Next = new /datum/outfit/job/sabbatist()
-				setting = null
+				setting = null */
 			if("hunter")
 				if(Next)
 					qdel(Next)
