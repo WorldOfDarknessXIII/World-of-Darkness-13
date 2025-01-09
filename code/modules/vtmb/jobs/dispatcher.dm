@@ -29,12 +29,10 @@
 	name = "Dispatcher"
 	jobtype = /datum/job/vamp/dispatcher
 	uniform = /obj/item/clothing/under/vampire/office
-	suit = /obj/item/clothing/suit/vampire/jacket
 	ears = /obj/item/p25radio/police/dispatch
 	shoes = /obj/item/clothing/shoes/vampire/businessblack
 	gloves = /obj/item/cockclock
 	id = /obj/item/card/id/government
 	l_pocket = /obj/item/vamp/phone
-	r_pocket = /obj/item/police_radio
-	l_hand = /obj/item/vamp/keys/dispatch
+	r_pocket = /obj/item/vamp/keys/dispatch
 	backpack_contents = list(/obj/item/passport=1, /obj/item/vamp/creditcard=1, /obj/item/flashlight=1)
