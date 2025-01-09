@@ -566,7 +566,7 @@
 		var/mob/dead/observer/C = pick(candidates)
 		key = C.key
 		ghoulificated = TRUE
-		set_species(/datum/species/ghoul)
+		set_species(/datum/splat/supernatural/ghoul)
 		if(mind)
 			if(mind.enslaved_to != owner)
 				mind.enslave_mind_to_creator(owner)

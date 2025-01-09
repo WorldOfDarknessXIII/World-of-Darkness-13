@@ -1305,8 +1305,8 @@
 	if(use_random_name)
 		fully_replace_character_name(real_name, dna.species.random_name())
 
-/mob/living/carbon/human/species/kindred
-	race = /datum/species/kindred
+/mob/living/carbon/human/species/kindred	//PSEUDO_M initialize will need to apply splats
+	race = /datum/splat/supernatural/kindred
 
 /mob/living/carbon/human/species/vamp_mannequin
 	race = /datum/species/vamp_mannequin

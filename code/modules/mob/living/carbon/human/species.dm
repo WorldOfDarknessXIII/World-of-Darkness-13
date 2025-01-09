@@ -2128,9 +2128,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			H.dna.features["wings"] = "None"
 			H.update_body()
 
-/datum/species
-	var/animation_goes_up = FALSE	//
-
 /datum/species/proc/HandleFlight(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)
 		if(!CanFly(H))

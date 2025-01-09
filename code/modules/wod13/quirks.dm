@@ -641,7 +641,7 @@ Dancer
 	allowed_species = list("Vampire", "Ghoul")
 
 /datum/quirk/hunted/on_spawn()
-	if(iswerewolf(quirk_holder) || isgarou(quirk_holder))
+	if(iswerewolf(quirk_holder) || is_garou(quirk_holder))
 		return
 	if(isturf(quirk_holder.loc))
 		SSbloodhunt.announce_hunted(quirk_holder, "Camarilla Wanted List")
@@ -653,7 +653,7 @@ Dancer
 	allowed_species = list("Vampire")
 */
 /datum/quirk/diablerist/on_spawn()
-	if(iswerewolf(quirk_holder) || isgarou(quirk_holder))
+	if(iswerewolf(quirk_holder) || is_garou(quirk_holder))
 		return
 	var/mob/living/carbon/human/H = quirk_holder
 	H.diablerist = TRUE

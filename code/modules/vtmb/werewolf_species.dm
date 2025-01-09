@@ -1,4 +1,4 @@
-/datum/species/garou
+/datum/splat/supernatural/garou
 	name = "Werewolf"
 	id = "garou"
 	default_color = "FFFFFF"
@@ -94,7 +94,7 @@
 		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
 		onclose(host, "vampire", src)
 
-/datum/species/garou/on_species_gain(mob/living/carbon/human/C)
+/datum/splat/supernatural/garou/on_species_gain(mob/living/carbon/human/C)
 	. = ..()
 //	ADD_TRAIT(C, TRAIT_NOBLEED, HIGHLANDER)
 	C.update_body(0)
@@ -109,7 +109,7 @@
 	C.transformator = new(C)
 	C.transformator.human_form = C
 
-/datum/species/garou/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+/datum/splat/supernatural/garou/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
 	for(var/datum/action/garouinfo/VI in C.actions)
 		if(VI)
@@ -118,7 +118,7 @@
 		if(G)
 			G.Remove(C)
 
-/datum/species/garou/check_roundstart_eligible()
+/datum/splat/supernatural/garou/check_roundstart_eligible()
 	return FALSE
 
 /proc/adjust_rage(var/amount, var/mob/living/carbon/C, var/sound = TRUE)
@@ -143,7 +143,7 @@
 				playsound(get_turf(C), 'code/modules/wod13/sounds/crinos_growl.ogg', 75, FALSE)
 			if(islupus(C))
 				playsound(get_turf(C), 'code/modules/wod13/sounds/lupus_growl.ogg', 75, FALSE)
-			if(isgarou(C))
+			if(is_garou(C))
 				if(C.gender == FEMALE)
 					playsound(get_turf(C), 'code/modules/wod13/sounds/female_growl.ogg', 75, FALSE)
 				else

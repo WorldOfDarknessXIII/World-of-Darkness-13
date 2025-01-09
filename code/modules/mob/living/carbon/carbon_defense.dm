@@ -252,7 +252,7 @@
 */
 
 /mob/living/carbon/proc/do_werewolf_rage_from_attack()
-	if(isgarou(src) || iswerewolf(src))
+	if(is_garou(src) || iswerewolf(src))
 		if(last_rage_from_attack == 0 || last_rage_from_attack+50 < world.time)
 			last_rage_from_attack = world.time
 			adjust_rage(1, src, TRUE)

@@ -10,7 +10,7 @@
 	if(allowed_to_proceed)
 		playsound(get_turf(owner), 'code/modules/wod13/sounds/ice_blocking.ogg', 100, FALSE)
 		var/mob/living/carbon/C = owner
-		if(isgarou(C))
+		if(is_garou(C))
 			var/obj/were_ice/W = new (get_turf(owner))
 			C.Stun(12 SECONDS)
 			C.forceMove(W)

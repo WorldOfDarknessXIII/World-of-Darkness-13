@@ -1155,7 +1155,7 @@
 		var/mob/living/carbon/human/VH = firer
 		if(isliving(target))
 			var/mob/living/VL = target
-			if(isgarou(VL))
+			if(is_garou(VL))
 				if(VL.bloodpool >= 1 && VL.stat != DEAD)
 					var/sucked = min(VL.bloodpool, 2)
 					VL.bloodpool = VL.bloodpool-sucked
@@ -1164,7 +1164,7 @@
 					VL.visible_message("<span class='danger'>[target]'s wounds spray boiling hot blood!</span>", "<span class='userdanger'>Your blood boils!</span>")
 					VL.add_splatter_floor(get_turf(target))
 					VL.add_splatter_floor(get_turf(get_step(target, target.dir)))
-				if(!iskindred(target))
+				if(!is_kindred(target))
 					if(VL.bloodpool >= 1 && VL.stat != DEAD)
 						var/sucked = min(VL.bloodpool, 2)
 						VL.bloodpool = VL.bloodpool-sucked
@@ -1330,7 +1330,7 @@
 
 /datum/discipline/vicissitude/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
-	if(iswerewolf(target) || isgarou(target))
+	if(iswerewolf(target) || is_garou(target))
 		caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/vicissitude.ogg', 50, TRUE)
 		//caster.adjustFireLoss(35)		//abusers suffer no more
 		caster.Stun(20)
@@ -1347,7 +1347,7 @@
 			if(istype(target, /mob/living/carbon/human/npc))
 				var/mob/living/carbon/human/npc/NPC = target
 				NPC.last_attacker = null
-			if(!iskindred(target) || !isgarou(target))
+			if(!is_kindred(target) || !is_garou(target))
 				if(H.stat != DEAD)
 					H.death()
 				switch(level_casting)
@@ -1726,9 +1726,9 @@
 			to_chat(caster, "<b>[target]</b> has a rating of <b>[target.humanity]</b> on their path.")
 		if(2)
 			if(get_dist(caster, target) <= 2)
-				if(isgarou(target))
+				if(is_garou(target))
 					return
-				if(iskindred(target))
+				if(is_kindred(target))
 					target.add_confusion(5)
 					target.drowsyness += 4
 				else if(ishuman(target))
@@ -1766,7 +1766,7 @@
 			if(caster.grab_state > GRAB_PASSIVE)
 				if(ishuman(caster.pulling))
 					var/mob/living/carbon/human/PB = caster.pulling
-					if(do_after(caster, 10 SECONDS) && iskindred(PB) && humanity_restored < 3)
+					if(do_after(caster, 10 SECONDS) && is_kindred(PB) && humanity_restored < 3)
 						to_chat(caster, "<span class='notice'>You healed [PB]'s soul slightly.</span>")
 						PB.AdjustHumanity(1, 10)
 						humanity_restored += 1

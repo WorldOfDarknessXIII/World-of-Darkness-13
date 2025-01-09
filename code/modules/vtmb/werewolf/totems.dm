@@ -53,7 +53,7 @@
 			totem_light_overlay.icon_state = "[icon_state]_overlay"
 			overlays |= totem_light_overlay
 			for(var/mob/living/carbon/C in GLOB.player_list)
-				if(iswerewolf(C) || isgarou(C))
+				if(iswerewolf(C) || is_garou(C))
 					if(C.stat != DEAD)
 						if(C.auspice.tribe == tribe)
 							set_light(0)
@@ -66,7 +66,7 @@
 								qdel(prev)
 		else
 			for(var/mob/living/carbon/C in GLOB.player_list)
-				if(iswerewolf(C) || isgarou(C))
+				if(iswerewolf(C) || is_garou(C))
 					if(C.stat != DEAD)
 						if(C.auspice.tribe == tribe)
 							if(last_rage+50 < world.time)
@@ -79,7 +79,7 @@
 		if(totem_health > 0)
 			if(icon_state != initial(icon_state))
 				for(var/mob/living/carbon/C in GLOB.player_list)
-					if(iswerewolf(C) || isgarou(C))
+					if(iswerewolf(C) || is_garou(C))
 						if(C.stat != DEAD)
 							if(C.auspice.tribe == tribe)
 								to_chat(C, "<span class='userhelp'><b>YOUR TOTEM IS RESTORED</b></span>")
@@ -119,7 +119,7 @@
 
 /obj/structure/werewolf_totem/attack_hand(mob/user)
 	. = ..()
-	if(iswerewolf(user) || isgarou(user))
+	if(iswerewolf(user) || is_garou(user))
 		var/mob/living/carbon/C = user
 		if(C.a_intent != INTENT_HARM)
 			if(totem_health <= 0)

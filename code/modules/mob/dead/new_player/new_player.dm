@@ -66,7 +66,6 @@
 			if(PLAYER_READY_TO_OBSERVE)
 				output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | [LINKIFY_READY("Not Ready", PLAYER_NOT_READY)] | <b> Observe </b> \]</p>"
 	else
-//		output += "<p><a href='byond://?src=[REF(src)];manifest=1'>View the Kindred Population</a></p>"
 		output += "<p><a href='byond://?src=[REF(src)];late_join=1'>Join Game!</a></p>"
 		output += "<p>[LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)]</p>"
 
@@ -544,7 +543,7 @@
 					H.add_quirk(/datum/quirk/skittish)
 					H.add_quirk(/datum/quirk/pushover)
 				H.create_disciplines()
-				if(isgarou(H))
+				if(is_garou(H))
 					for(var/obj/structure/werewolf_totem/S in GLOB.totems)
 						if(S.tribe == H.auspice.tribe)
 							H.forceMove(get_turf(S))

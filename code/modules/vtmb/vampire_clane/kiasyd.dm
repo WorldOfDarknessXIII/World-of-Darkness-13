@@ -266,7 +266,7 @@
 /obj/item/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!proximity)
 		return
-	if(iskindred(target) && is_iron)
+	if(is_kindred(target) && is_iron)
 		var/mob/living/carbon/human/L = target
 		if(L.clane?.name == "Kiasyd")
 			var/datum/vampireclane/kiasyd/kiasyd = L.clane

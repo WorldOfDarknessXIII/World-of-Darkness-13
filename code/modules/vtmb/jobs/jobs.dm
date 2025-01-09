@@ -90,7 +90,7 @@
 				if(H.mind)
 					if(H.mind.holy_role == HOLY_ROLE_PRIEST)
 						return
-		if(iskindred(H))
+		if(is_kindred(H))
 			if(H.clane)
 				if(H.clane.name == "Baali")
 					H.emote("scream")
@@ -107,7 +107,7 @@
 		return
 	if(last_detonated+300 > world.time)
 		return
-	if(iskindred(target))
+	if(is_kindred(target))
 		var/mob/living/carbon/human/H = target
 		if(H.clane)
 			if(H.clane.name == "Baali")
@@ -392,7 +392,7 @@
 	var/no_faction = FALSE
 	var/max_objective = 3
 
-	if(iskindred(owner) || isghoul(owner))
+	if(is_kindred(owner) || is_ghoul(owner))
 		max_objective = 4
 
 	// Fourth if is for the vampire/ghouls since it is only their factions there

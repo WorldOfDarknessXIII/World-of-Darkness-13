@@ -1,5 +1,5 @@
 /mob/living/carbon/human/proc/AdjustHumanity(var/value, var/limit, var/forced = FALSE)
-	if(!iskindred(src))
+	if(!is_kindred(src))
 		return
 	if(!GLOB.canon_event)
 		return
@@ -56,7 +56,7 @@
 						to_chat(src, "<span class='userhelp'><b>HUMANITY INCREASED!</b></span>")
 
 /mob/living/carbon/human/proc/AdjustMasquerade(var/value, var/forced = FALSE)
-	if(!iskindred(src) && !isghoul(src))
+	if(!is_kindred(src) && !is_ghoul(src))
 		return
 	if(!GLOB.canon_event)
 		return

@@ -381,7 +381,7 @@ Behavior that's still missing from this component that original food items had t
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "breakfast", /datum/mood_event/breakfast)
 	last_check_time = world.time
 
-	if(H.dna.species.id == "kindred")
+	if(H.dna.species.id == "kindred")	//PSEUDO_M all this shit needs to be a signal
 		if(HAS_TRAIT(H, TRAIT_AGEUSIA))
 			to_chat(H, "<span class='warning'>You don't feel so good...</span>")
 			H.adjust_disgust(11 + 15 * fraction)

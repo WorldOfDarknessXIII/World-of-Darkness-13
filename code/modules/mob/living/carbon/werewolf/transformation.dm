@@ -46,7 +46,7 @@
 		return
 	trans.inspired = FALSE
 	if(ishuman(trans))
-		var/datum/species/garou/G = trans.dna.species
+		var/datum/splat/supernatural/garou/G = trans.dna.species
 		var/mob/living/carbon/human/H = trans
 		if(G.glabro)
 			H.remove_overlay(PROTEAN_LAYER)

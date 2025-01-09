@@ -428,7 +428,7 @@
 
 			var/cacophony = FALSE
 
-			if(iskindred(src))
+			if(is_kindred(src))
 				var/mob/living/carbon/human/H = src
 				if(H.clane)
 					if(H.clane.name == "Daughters of Cacophony")

@@ -619,8 +619,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	all_quirks = SANITIZE_LIST(all_quirks)
 	validate_quirks()
 
-	//Convert jank old Discipline system to new Discipline system
-	if ((istype(pref_species, /datum/species/kindred) || istype(pref_species, /datum/species/ghoul)) && !discipline_types.len)
+	//Convert jank old Discipline system to new Discipline system	//PSEUDO_M need to untangle species from prefs...
+	if ((istype(pref_species, /datum/splat/supernatural/kindred) || istype(pref_species, /datum/species/supernatural/ghoul)) && !discipline_types.len)
 		if (discipline1type && discipline1level)
 			discipline_types += discipline1type
 			discipline_levels += discipline1level

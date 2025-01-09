@@ -77,40 +77,16 @@
 
 /mob/proc/petrify(statue_timer)
 
-/mob/living/carbon/human/petrify(statue_timer, clane_type)
+/mob/living/carbon/human/petrify(statue_timer)
 	if(!isturf(loc))
 		return FALSE
-	if(iskindred(src))
-		if(clane_type)
-			if(clane_type == "Serpentis")
-				ADD_TRAIT(src, TRAIT_NOBLEED, MAGIC_TRAIT)
-				var/obj/structure/statue/petrified/S = new(loc, src, statue_timer)
-				S.name = "[name]'s mummy"
-				S.icon_state = "mummy"
-				S.desc = "CURSE OF RA 𓀀 𓀁 𓀂 𓀃 𓀄 𓀅 𓀆 𓀇 𓀈 𓀉 𓀊 𓀋 𓀌 𓀍 𓀎 𓀏 𓀐 𓀑 𓀒 𓀓 𓀔 𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓀭 𓀮 𓀯 𓀰 𓀱 𓀲 𓀳 𓀴 𓀵 𓀶 𓀷 𓀸 𓀹 𓀺 𓀻 𓀼 𓀽 𓀾 𓀿 𓁀 𓁁 𓁂 𓁃 𓁄 𓁅 𓁆 𓁇 𓁈 𓁉 𓁊 𓁋 𓁌 𓁍 𓁎 𓁏 𓁐 𓁑 𓀄 𓀅 𓀆."
-			if(clane_type == "Visceratika")
-				ADD_TRAIT(src, TRAIT_NOBLEED, MAGIC_TRAIT)
-				var/obj/structure/statue/petrified/S = new(loc, src, statue_timer)
-				S.name = "\improper gargoyle"
-				S.desc = "Some kind of gothic architecture."
-				S.icon = 'code/modules/wod13/32x48.dmi'
-				S.icon_state = "gargoyle"
-				S.dir = dir
-				S.pixel_z = -16
-		else
-			var/obj/structure/statue/petrified/S = new(loc, src, statue_timer)
-			S.name = "statue of [name]"
-			ADD_TRAIT(src, TRAIT_NOBLEED, MAGIC_TRAIT)
-			S.copy_overlays(src)
-			var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
-			S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
-	else
-		var/obj/structure/statue/petrified/S = new(loc, src, statue_timer)
-		S.name = "statue of [name]"
-		ADD_TRAIT(src, TRAIT_NOBLEED, MAGIC_TRAIT)
-		S.copy_overlays(src)
-		var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
-		S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
+	//PSEUDO_M_K SEND_SIGNAL check return
+	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer)
+	S.name = "statue of [name]"
+	ADD_TRAIT(src, TRAIT_NOBLEED, MAGIC_TRAIT)
+	S.copy_overlays(src)
+	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+	S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	return TRUE
 
 /mob/living/simple_animal/hostile/gargoyle/petrify(statue_timer)

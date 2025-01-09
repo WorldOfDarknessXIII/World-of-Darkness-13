@@ -25,7 +25,7 @@
 
 /obj/effect/proc_holder/spell/targeted/forcewall/salubri/cast(list/targets, mob/user = usr)
 	//[Lucia] TODO: when Disciplines are refactored, make this not terrible
-	if (iskindred(user))
+	if (is_kindred(user))
 		var/mob/living/carbon/human/human_user = user
 		human_user.bloodpool = max(0, human_user.bloodpool - 1)
 		new wall_type(get_step(user, NORTH), user)

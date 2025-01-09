@@ -65,7 +65,7 @@
 //	var/atom/movable/screen/inventory/inv_add
 	var/atom/movable/screen/transform_werewolf
 
-	if(isgarou(owner))
+	if(is_garou(owner))
 		transform_werewolf = new /atom/movable/screen/transform_lupus()
 		transform_werewolf.screen_loc = ui_werewolf_lupus
 		transform_werewolf.hud = src

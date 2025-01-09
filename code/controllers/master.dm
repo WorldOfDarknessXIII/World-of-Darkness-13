@@ -257,12 +257,6 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 							if(won)
 								if(H.vampire_faction == won)
 									P.add_experience(1)
-//							if(H.total_contracted > 1)
-//								P.add_experience(1)
-/*							var/toreador_bonus = 0
-							if(iskindred(H) && H.clane)
-								if(H.clane.name == "Toreador")
-									toreador_bonus = 1*/
 							if(H.total_erp > 9000)
 								P.add_experience(2)
 							if(H.total_cleaned > 25)

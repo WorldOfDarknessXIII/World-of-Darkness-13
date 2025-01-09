@@ -162,7 +162,7 @@ GENE SCANNER
 	var/brute_loss = M.getBruteLoss()
 	var/mob_status = (M.stat == DEAD ? "<span class='alert'><b>Deceased</b></span>" : "<b>[round(M.health/M.maxHealth,0.01)*100]% healthy</b>")
 
-	if(iskindred(M))
+	if(is_kindred(M)) //PSEUDO_M_K move kindred check to beginning of proc, go to different proc
 		mob_status = "<span class='alert'><b>Deceased</b></span>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss)))
 
@@ -239,7 +239,7 @@ GENE SCANNER
 //			if(advanced)
 //				render_list += "<span class='info ml-1'>Subject Minor Disabilities: [C.get_quirk_string(FALSE, CAT_QUIRK_MINOR_DISABILITY)].</span>\n"
 	if(advanced)
-		if(iskindred(M))
+		if(is_kindred(M))
 			render_list += "<span class='info ml-1'>Brain Activity Level: 0%.</span>\n"
 		else
 			render_list += "<span class='info ml-1'>Brain Activity Level: [(200 - M.getOrganLoss(ORGAN_SLOT_BRAIN))/2]%.</span>\n"
@@ -331,7 +331,7 @@ GENE SCANNER
 
 			for(var/obj/item/organ/organ in H.internal_organs)
 				var/status = ""
-				if (iskindred(H)) status = "<font color='#E42426'>Non-Functional</font>"
+				if (is_kindred(H)) status = "<font color='#E42426'>Non-Functional</font>"
 				else if (organ.organ_flags & ORGAN_FAILING) status = "<font color='#E42426'>Non-Functional</font>"
 				else if (organ.damage > organ.high_threshold) status = "<font color='#EC6224'>Severely Damaged</font>"
 				else if (organ.damage > organ.low_threshold) status = "<font color='#F28F1F'>Mildly Damaged</font>"
@@ -408,7 +408,7 @@ GENE SCANNER
 			if(blood_id != /datum/reagent/blood) // special blood substance
 				var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
 				blood_type = R ? R.name : blood_id
-			if(iskindred(C))
+			if(is_kindred(C))
 				render_list += "<span class='alert ml-1'>Blood level: LOW 0 %, 0 cl,</span> <span class='info'>type: [blood_type]</span>\n"
 			else if(C.blood_volume <= BLOOD_VOLUME_SAFE && C.blood_volume > BLOOD_VOLUME_OKAY)
 				render_list += "<span class='alert ml-1'>Blood level: LOW [blood_percent] %, [C.blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>\n"

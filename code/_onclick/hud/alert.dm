@@ -370,16 +370,16 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "Free yourself of your Torpor."
 	icon_state = "awaken"
 
-/atom/movable/screen/alert/untorpor/Click()
+/atom/movable/screen/alert/untorpor/Click() //PSEUDO_M this needs to call a do_action not do all the actions
 	if(isobserver(usr))
 		return
 	var/mob/living/living_owner = owner
-	if (!iskindred(living_owner))
+	if (!splatted_kindred(living_owner))
 		return
 
 	var/mob/living/carbon/human/vampire = living_owner
-	var/datum/species/kindred/kindred_species = vampire.dna.species
-	if (COOLDOWN_FINISHED(kindred_species, torpor_timer) && (vampire.bloodpool > 0))
+	var/datum/splat/supernatural/kindred/kindred_species = vampire.splat_flags & SPLAT_KINDRED
+	if (COOLDOWN_FINISHED(kindred_species, torpor_timer) && (vampire.bloodpool > 0))	//PSEUDO_M_K
 		vampire.untorpor()
 		spawn()
 			vampire.clear_alert("succumb")

@@ -24,7 +24,7 @@
 /*
 /obj/item/masquerade_contract/attack(mob/living/M, mob/living/user)
 	. = ..()
-	if(iskindred(M) || isghoul(M))
+	if(is_kindred(M) || is_ghoul(M))
 		var/mob/living/carbon/human/D = M
 		if(D.diablerist)
 			if(!GLOB.canon_event)
@@ -107,7 +107,7 @@
 
 /obj/item/drinkable_bloodpack/attack(mob/living/M, mob/living/user)
 	. = ..()
-	if(!iskindred(M))
+	if(!is_kindred(M))
 		if(!vitae)
 			return
 	if(empty)
@@ -124,7 +124,7 @@
 		M.adjustFireLoss(-20, TRUE)
 		M.update_damage_overlays()
 		M.update_health_hud()
-		if(iskindred(M))
+		if(is_kindred(M))
 			M.update_blood_hud()
 		playsound(M.loc,'sound/items/drink.ogg', 50, TRUE)
 		return

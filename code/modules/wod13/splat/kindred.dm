@@ -1,3 +1,4 @@
+
 /**
  * This is the splat (supernatural type, game line in the World of Darkness) container
  * for all vampire-related code. I think this is stupid and I don't want any of this to
@@ -5,35 +6,49 @@
  * my advice is to centralise all stuff directly relating to vampires to here if it isn't
  * already in another organisational structure.
  *
- * The same applies to other splats, like /datum/species/garou or /datum/species/ghoul.
+ * The same applies to other splats, like /datum/splat/supernatural/garou or /datum/splat/supernatural/ghoul.
  * Halfsplats like ghouls are going to share some code with their fullsplats (vampires).
  * I dunno what to do about this except a reorganisation to make this stuff actually good.
  * The plan right now is to create a /datum/splat parent type and then have everything branch
  * from there, but that's for the future.
  */
 
-/datum/species/kindred
+/datum/splat/supernatural/kindred
 	name = "Vampire"
-	id = "kindred"
-	default_color = "FFFFFF"
-	toxic_food = MEAT | VEGETABLES | RAW | JUNKFOOD | GRAIN | FRUIT | DAIRY | FRIED | ALCOHOL | SUGAR | PINEAPPLE
-	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, HAS_FLESH, HAS_BONE)
-	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LIMBATTACHMENT, TRAIT_VIRUSIMMUNE, TRAIT_NOBLEED, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_TOXIMMUNE, TRAIT_NOCRITDAMAGE)
-	use_skintones = TRUE
-	limbs_id = "human"
-	wings_icon = "Dragon"
-	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
-	mutantbrain = /obj/item/organ/brain/vampire
-	brutemod = 0.5	// or change to 0.8
-	heatmod = 1		//Sucking due to overheating	///THEY DON'T SUCK FROM FIRE ANYMORE
-	burnmod = 2
-	punchdamagelow = 10
-	punchdamagehigh = 20
-	dust_anim = "dust-h"
-	var/datum/vampireclane/clane
-	var/list/datum/discipline/disciplines = list()
-	selectable = TRUE
+	splat_traits = list(
+		TRAIT_VIRUSIMMUNE,	//PSEUDO_M_K kindred can spread disease, amend this
+		TRAIT_NOBLEED,		//PSEUDO_M_K we need to account for losing vitae to massive damage
+		TRAIT_NOHUNGER,
+		TRAIT_NOBREATH,
+		TRAIT_TOXIMMUNE,
+		TRAIT_NOCRITDAMAGE,
+	)
+	brutemod = 0.5	//PSEUDO_M_K account for dam resist
+	burnmod = 2	//PSEUDO_M_K this needs to be much higher considering fire does aggravated
+
+	power_stat_name = "Vitae"
+	power_stat_max = 5 //PSEUDO_MX this was moved here from mob/living
+	power_stat_current = 5
+	integrity_name = "Humanity"
+	integrity_level = 7
+
+	var/generation = 13
 	COOLDOWN_DECLARE(torpor_timer)
+
+	var/bloodpower_time_plus = 0					//PSEUDO_M_SR
+	var/thaum_damage_plus = 0						//
+	var/discipline_time_plus = 0					//
+	var/dust_anim = "dust-h"						//
+	var/datum/vampireclane/clane					//
+	var/list/datum/discipline/disciplines = list()	//
+	var/last_bloodheal_use = 0						//
+	var/last_bloodpower_use = 0						//
+	var/last_drinkblood_use = 0						//
+	var/last_bloodheal_click = 0					//
+	var/last_bloodpower_click = 0					//
+	var/last_drinkblood_click = 0					//
+	var/masquerade = 5								//
+	var/last_masquerade_violation = 0				//
 
 /datum/action/vampireinfo
 	name = "About Me"
@@ -211,7 +226,7 @@
 		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
 		onclose(host, "vampire", src)
 
-/datum/species/kindred/on_species_gain(mob/living/carbon/human/C)
+/datum/splat/supernatural/kindred/on_splat_gain(mob/living/carbon/human/C)
 	. = ..()
 	C.update_body(0)
 	C.last_experience = world.time + 5 MINUTES
@@ -236,7 +251,7 @@
 	//vampires don't die while in crit, they just slip into torpor after 2 minutes of being critted
 	RegisterSignal(C, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(slip_into_torpor))
 
-/datum/species/kindred/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+/datum/splat/supernatural/kindred/on_splat_loss(mob/living/carbon/human/C, datum/splat/new_splat, pref_load)
 	. = ..()
 	for(var/datum/action/vampireinfo/VI in C.actions)
 		if(VI)
@@ -285,16 +300,12 @@
 			BD.last_bloodpower_use = world.time
 			BD.bloodpool = max(0, BD.bloodpool-(2+plus))
 			to_chat(BD, "<span class='notice'>You use blood to become more powerful.</span>")
-			BD.dna.species.punchdamagehigh = BD.dna.species.punchdamagehigh+5
 			BD.physiology.armor.melee = BD.physiology.armor.melee+15
 			BD.physiology.armor.bullet = BD.physiology.armor.bullet+15
 			BD.dexterity = BD.dexterity+2
 			BD.athletics = BD.athletics+2
-			BD.lockpicking = BD.lockpicking+2
-			if(!HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
-				ADD_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
 			BD.update_blood_hud()
-			spawn(100+BD.discipline_time_plus+BD.bloodpower_time_plus)
+			addtimer(100+BD.discipline_time_plus+BD.bloodpower_time_plus)
 				end_bloodpower()
 		else
 			SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
@@ -366,7 +377,7 @@
 							to_chat(BLOODBONDED, "<span class='notice'>You are now member of <b>[H.vampire_faction]</b></span>")
 				BLOODBONDED.drunked_of |= "[H.dna.real_name]"
 
-				if(BLOODBONDED.stat == DEAD && !iskindred(BLOODBONDED))
+				if(BLOODBONDED.stat == DEAD && !is_kindred(BLOODBONDED))
 					if (!BLOODBONDED.can_be_embraced)
 						to_chat(H, "<span class='notice'>[BLOODBONDED.name] doesn't respond to your Vitae.</span>")
 						return
@@ -409,7 +420,7 @@
 							else
 								save_data_v = FALSE
 						BLOODBONDED.roundstart_vampire = FALSE
-						BLOODBONDED.set_species(/datum/species/kindred)
+						BLOODBONDED.set_species(/datum/splat/supernatural/kindred)
 						BLOODBONDED.clane = null
 						if(H.generation < 13)
 							BLOODBONDED.generation = 13
@@ -454,7 +465,7 @@
 							BLOODBONDED.clane = new /datum/vampireclane/caitiff()
 
 						//Verify if they accepted to save being a vampire
-						if (iskindred(BLOODBONDED) && save_data_v)
+						if (is_kindred(BLOODBONDED) && save_data_v)
 							var/datum/preferences/BLOODBONDED_prefs_v = BLOODBONDED.client.prefs
 
 							BLOODBONDED_prefs_v.pref_species.id = "kindred"
@@ -515,12 +526,12 @@
 					BLOODBONDED.bloodpool = min(BLOODBONDED.maxbloodpool, BLOODBONDED.bloodpool+2)
 					giving = FALSE
 
-					if (iskindred(BLOODBONDED))
-						var/datum/species/kindred/species = BLOODBONDED.dna.species
+					if (is_kindred(BLOODBONDED))
+						var/datum/splat/supernatural/kindred/splat = BLOODBONDED.dna.species
 						if (HAS_TRAIT(BLOODBONDED, TRAIT_TORPOR) && COOLDOWN_FINISHED(species, torpor_timer))
 							BLOODBONDED.untorpor()
 
-					if(!isghoul(H.pulling) && istype(H.pulling, /mob/living/carbon/human/npc))
+					if(!is_ghoul(H.pulling) && istype(H.pulling, /mob/living/carbon/human/npc))
 						var/mob/living/carbon/human/npc/NPC = H.pulling
 						if(NPC.ghoulificate(owner))
 							new_master = TRUE
@@ -533,22 +544,22 @@
 							BLOODBONDED.mind.enslave_mind_to_creator(owner)
 							to_chat(BLOODBONDED, "<span class='userdanger'><b>AS PRECIOUS VITAE ENTER YOUR MOUTH, YOU NOW ARE IN THE BLOODBOND OF [H]. SERVE YOUR REGNANT CORRECTLY, OR YOUR ACTIONS WILL NOT BE TOLERATED.</b></span>")
 							new_master = TRUE
-					if(isghoul(BLOODBONDED))
-						var/datum/species/ghoul/G = BLOODBONDED.dna.species
+					if(is_ghoul(BLOODBONDED))
+						var/datum/splat/supernatural/ghoul/G = BLOODBONDED.dna.species
 						G.master = owner
 						G.last_vitae = world.time
 						if(new_master)
 							G.changed_master = TRUE
-					else if(!iskindred(BLOODBONDED) && !isnpc(BLOODBONDED))
+					else if(!is_kindred(BLOODBONDED) && !isnpc(BLOODBONDED))
 						var/save_data_g = FALSE
-						BLOODBONDED.set_species(/datum/species/ghoul)
+						BLOODBONDED.set_species(/datum/splat/supernatural/ghoul)
 						BLOODBONDED.clane = null
 						var/response_g = input(BLOODBONDED, "Do you wish to keep being a ghoul on your save slot?(Yes will be a permanent choice and you can't go back)") in list("Yes", "No")
 //						if(BLOODBONDED.hud_used)
 //							var/datum/hud/human/HU = BLOODBONDED.hud_used
 //							HU.create_ghoulic()
 						BLOODBONDED.roundstart_vampire = FALSE
-						var/datum/species/ghoul/G = BLOODBONDED.dna.species
+						var/datum/splat/supernatural/ghoul/G = BLOODBONDED.dna.species
 						G.master = owner
 						G.last_vitae = world.time
 						if(new_master)
@@ -630,7 +641,7 @@
 		action.discipline = discipline
 		action.Grant(src)
 	discipline.post_gain(src)
-	var/datum/species/kindred/species = dna.species
+	var/datum/splat/supernatural/kindred/splat = dna.species
 	species.disciplines += discipline
 
 /**
@@ -639,7 +650,7 @@
  * Arguments:
  * * searched_discipline - Name or typepath of the Discipline being searched for.
  */
-/datum/species/kindred/proc/get_discipline(searched_discipline)
+/datum/splat/supernatural/kindred/proc/get_discipline(searched_discipline)
 	for(var/datum/discipline/discipline in disciplines)
 		if (ispath(searched_discipline, /datum/discipline))
 			if (istype(discipline, searched_discipline))
@@ -650,10 +661,10 @@
 
 	return FALSE
 
-/datum/species/kindred/check_roundstart_eligible()
+/datum/splat/supernatural/kindred/check_roundstart_eligible()
 	return TRUE
 
-/datum/species/kindred/handle_body(mob/living/carbon/human/H)
+/datum/splat/supernatural/kindred/handle_body(mob/living/carbon/human/H)
 	if (!H.clane)
 		return ..()
 
@@ -680,7 +691,7 @@
  * * source - The Kindred whose organ has been removed.
  * * organ - The organ which has been removed.
  */
-/datum/species/kindred/proc/lose_organ(var/mob/living/carbon/human/source, var/obj/item/organ/organ)
+/datum/splat/supernatural/kindred/proc/lose_organ(var/mob/living/carbon/human/source, var/obj/item/organ/organ)
 	SIGNAL_HANDLER
 
 	if (istype(organ, /obj/item/organ/heart))
@@ -688,7 +699,7 @@
 			if (!source.getorganslot(ORGAN_SLOT_HEART))
 				source.death()
 
-/datum/species/kindred/proc/slip_into_torpor(var/mob/living/carbon/human/source)
+/datum/splat/supernatural/kindred/proc/slip_into_torpor(var/mob/living/carbon/human/source)
 	SIGNAL_HANDLER
 
 	to_chat(source, "<span class='warning'>You can feel yourself slipping into Torpor. You can use succumb to immediately sleep...</span>")
@@ -716,14 +727,14 @@
 
 	var/mob/living/carbon/human/teacher = src
 	var/datum/preferences/teacher_prefs = teacher.client.prefs
-	var/datum/species/kindred/teacher_species = teacher.dna.species
+	var/datum/splat/supernatural/kindred/teacher_species = teacher.dna.species
 
 	if (!student.client)
 		to_chat(teacher, "<span class='warning'>Your student needs to be a player!</span>")
 		return
 	var/datum/preferences/student_prefs = student.client.prefs
 
-	if (!iskindred(student))
+	if (!is_kindred(student))
 		to_chat(teacher, "<span class='warning'>Your student needs to be a vampire!</span>")
 		return
 	if (student.stat >= SOFT_CRIT)
@@ -824,7 +835,7 @@
  * * discipline_checking - The Discipline type that access to is being checked.
  */
 /proc/can_access_discipline(mob/living/carbon/human/vampire_checking, discipline_checking)
-	if (!iskindred(vampire_checking))
+	if (!is_kindred(vampire_checking))
 		return FALSE
 	if (!vampire_checking.client)
 		return FALSE
@@ -858,3 +869,455 @@
 
 	//nothing found
 	return FALSE
+
+//Here's things for future madness
+
+//add_client_colour(/datum/client_colour/glass_colour/red)
+//remove_client_colour(/datum/client_colour/glass_colour/red)
+/client/Click(object,location,control,params)
+	if(isatom(object))
+		if(ishuman(mob))
+			var/mob/living/carbon/human/H = mob
+			if(H.in_frenzy)
+				return
+	..()
+
+/mob/living/carbon/proc/rollfrenzy()
+	if(client)
+		var/mob/living/carbon/human/H
+		if(ishuman(src))
+			H = src
+
+		if(is_garou(src) || iswerewolf(src))
+			to_chat(src, "I'm full of <span class='danger'><b>ANGER</b></span>, and I'm about to flare up in <span class='danger'><b>RAGE</b></span>. Rolling...")
+		else if(is_kindred(src))
+			to_chat(src, "I need <span class='danger'><b>BLOOD</b></span>. The <span class='danger'><b>BEAST</b></span> is calling. Rolling...")
+		else
+			to_chat(src, "I'm too <span class='danger'><b>AFRAID</b></span> to continue doing this. Rolling...")
+		SEND_SOUND(src, sound('code/modules/wod13/sounds/bloodneed.ogg', 0, 0, 50))
+		var/check = vampireroll(max(1, round(humanity/2)), min(frenzy_chance_boost, frenzy_hardness), src)
+		switch(check)
+			if(DICE_FAILURE)
+				enter_frenzymod()
+				if(is_kindred(src))
+					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 100*H.clane.frenzymod)
+				else
+					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 100)
+				frenzy_hardness = 1
+			if(DICE_CRIT_FAILURE)
+				enter_frenzymod()
+				if(is_kindred(src))
+					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 200*H.clane.frenzymod)
+				else
+					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 200)
+				frenzy_hardness = 1
+			if(DICE_CRIT_WIN)
+				frenzy_hardness = max(1, frenzy_hardness-1)
+			else
+				frenzy_hardness = min(10, frenzy_hardness+1)
+
+/mob/living/carbon/proc/enter_frenzymod()
+	SEND_SOUND(src, sound('code/modules/wod13/sounds/frenzy.ogg', 0, 0, 50))
+	in_frenzy = TRUE
+	add_client_colour(/datum/client_colour/glass_colour/red)
+	GLOB.frenzy_list += src
+
+/mob/living/carbon/proc/exit_frenzymod()
+	in_frenzy = FALSE
+	remove_client_colour(/datum/client_colour/glass_colour/red)
+	GLOB.frenzy_list -= src
+
+/mob/living/carbon/proc/CheckFrenzyMove()
+	if(stat >= SOFT_CRIT)
+		return TRUE
+	if(IsSleeping())
+		return TRUE
+	if(IsUnconscious())
+		return TRUE
+	if(IsParalyzed())
+		return TRUE
+	if(IsKnockdown())
+		return TRUE
+	if(IsStun())
+		return TRUE
+	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
+		return TRUE
+
+/mob/living/carbon/proc/frenzystep()
+	if(!isturf(loc) || CheckFrenzyMove())
+		return
+	if(m_intent == MOVE_INTENT_WALK)
+		toggle_move_intent(src)
+	set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
+
+	var/atom/fear
+	for(var/obj/effect/fire/F in GLOB.fires_list)
+		if(F)
+			if(get_dist(src, F) < 7 && F.z == src.z)
+				if(get_dist(src, F) < 6)
+					fear = F
+				if(get_dist(src, F) < 5)
+					fear = F
+				if(get_dist(src, F) < 4)
+					fear = F
+				if(get_dist(src, F) < 3)
+					fear = F
+				if(get_dist(src, F) < 2)
+					fear = F
+				if(get_dist(src, F) < 1)
+					fear = F
+
+//	if(!fear && !frenzy_target)
+//		return
+
+	if(is_kindred(src))
+		if(fear)
+			step_away(src,fear,99)
+			if(prob(25))
+				emote("scream")
+		else
+			var/mob/living/carbon/human/H = src
+			if(get_dist(frenzy_target, src) <= 1)
+				if(isliving(frenzy_target))
+					var/mob/living/L = frenzy_target
+					if(L.bloodpool && L.stat != DEAD && last_drinkblood_use+95 <= world.time)
+						L.grabbedby(src)
+						if(ishuman(L))
+							L.emote("scream")
+							var/mob/living/carbon/human/BT = L
+							BT.add_bite_animation()
+						if(CheckEyewitness(L, src, 7, FALSE))
+							H.AdjustMasquerade(-1)
+						playsound(src, 'code/modules/wod13/sounds/drinkblood1.ogg', 50, TRUE)
+						L.visible_message("<span class='warning'><b>[src] bites [L]'s neck!</b></span>", "<span class='warning'><b>[src] bites your neck!</b></span>")
+						face_atom(L)
+						H.drinksomeblood(L)
+			else
+				step_to(src,frenzy_target,0)
+				face_atom(frenzy_target)
+	else
+		if(get_dist(frenzy_target, src) <= 1)
+			if(isliving(frenzy_target))
+				var/mob/living/L = frenzy_target
+				if(L.stat != DEAD)
+					a_intent = INTENT_HARM
+					if(last_rage_hit+5 < world.time)
+						last_rage_hit = world.time
+						UnarmedAttack(L)
+		else
+			step_to(src,frenzy_target,0)
+			face_atom(frenzy_target)
+
+/mob/living/carbon/proc/get_frenzy_targets()
+	var/list/targets = list()
+	if(is_kindred(src))
+		for(var/mob/living/L in oviewers(7, src))
+			if(!is_kindred(L) && L.bloodpool && L.stat != DEAD)
+				targets += L
+				if(L == frenzy_target)
+					return L
+	else
+		for(var/mob/living/L in oviewers(7, src))
+			if(L.stat != DEAD)
+				targets += L
+				if(L == frenzy_target)
+					return L
+	if(length(targets) > 0)
+		return pick(targets)
+	else
+		return null
+
+/mob/living/carbon/proc/handle_automated_frenzy()
+	for(var/mob/living/carbon/human/npc/NPC in viewers(5, src))
+		NPC.Aggro(src)
+	if(isturf(loc))
+		frenzy_target = get_frenzy_targets()
+		if(frenzy_target)
+			var/datum/cb = CALLBACK(src, PROC_REF(frenzystep))
+			var/reqsteps = SSfrenzypool.wait/total_multiplicative_slowdown()
+			for(var/i in 1 to reqsteps)
+				addtimer(cb, (i - 1)*total_multiplicative_slowdown())
+		else
+			if(!CheckFrenzyMove())
+				if(isturf(loc))
+					var/turf/T = get_step(loc, pick(NORTH, SOUTH, WEST, EAST))
+					face_atom(T)
+					Move(T)
+
+/datum/splat/supernatural/kindred/spec_life(mob/living/carbon/human/H)
+	. = ..()
+	if(H.clane?.name == "Baali")
+		if(istype(get_area(H), /area/vtm/church))
+			if(prob(25))
+				to_chat(H, "<span class='warning'>You don't belong here!</span>")
+				H.adjustFireLoss(20)
+				H.adjust_fire_stacks(6)
+				H.IgniteMob()
+	//FIRE FEAR
+	if(!H.antifrenzy && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
+		var/fearstack = 0
+		for(var/obj/effect/fire/F in GLOB.fires_list)
+			if(F)
+				if(get_dist(F, H) < 8 && F.z == H.z)
+					fearstack += F.stage
+		for(var/mob/living/carbon/human/U in viewers(7, H))
+			if(U.on_fire)
+				fearstack += 1
+
+		fearstack = min(fearstack, 10)
+
+		if(fearstack)
+			if(prob(fearstack*5))
+				H.do_jitter_animation(10)
+				if(fearstack > 20)
+					if(prob(fearstack))
+						if(!H.in_frenzy)
+							H.rollfrenzy()
+			if(!H.has_status_effect(STATUS_EFFECT_FEAR))
+				H.apply_status_effect(STATUS_EFFECT_FEAR)
+		else
+			H.remove_status_effect(STATUS_EFFECT_FEAR)
+
+	//masquerade violations due to unnatural appearances
+	if(H.is_face_visible() && H.clane?.violating_appearance)
+		switch(H.clane.alt_sprite)
+			if ("kiasyd")
+				//masquerade breach if eyes are uncovered, short range
+				if (!H.is_eyes_covered())
+					if (H.CheckEyewitness(H, H, 3, FALSE))
+						H.AdjustMasquerade(-1)
+			if ("rotten3")
+				//slightly less range than if fully decomposed
+				if (H.CheckEyewitness(H, H, 5, FALSE))
+					H.AdjustMasquerade(-1)
+			else
+				//gargoyles, nosferatu, skeletons, that kind of thing
+				if (H.CheckEyewitness(H, H, 7, FALSE))
+					H.AdjustMasquerade(-1)
+
+	if(HAS_TRAIT(H, TRAIT_UNMASQUERADE))
+		if(H.CheckEyewitness(H, H, 7, FALSE))
+			H.AdjustMasquerade(-1)
+	if(HAS_TRAIT(H, TRAIT_NONMASQUERADE))
+		if(H.CheckEyewitness(H, H, 7, FALSE))
+			H.AdjustMasquerade(-1)
+	if(istype(get_area(H), /area/vtm))
+		var/area/vtm/V = get_area(H)
+		if(V.zone_type == "masquerade" && V.upper)
+			if(H.pulling)
+				if(ishuman(H.pulling))
+					var/mob/living/carbon/human/pull = H.pulling
+					if(pull.stat == DEAD)
+						var/obj/item/card/id/id_card = H.get_idcard(FALSE)
+						if(!istype(id_card, /obj/item/card/id/clinic))
+							if(H.CheckEyewitness(H, H, 7, FALSE))
+								if(H.last_loot_check+50 <= world.time)
+									H.last_loot_check = world.time
+									H.last_nonraid = world.time
+									H.killed_count = H.killed_count+1
+									if(!H.warrant && !H.ignores_warrant)
+										if(H.killed_count >= 5)
+											H.warrant = TRUE
+											SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
+											to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
+										else
+											SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
+											to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (corpse)</b></span>")
+			for(var/obj/item/I in H.contents)
+				if(I)
+					if(I.masquerade_violating)
+						if(I.loc == H)
+							var/obj/item/card/id/id_card = H.get_idcard(FALSE)
+							if(!istype(id_card, /obj/item/card/id/clinic))
+								if(H.CheckEyewitness(H, H, 7, FALSE))
+									if(H.last_loot_check+50 <= world.time)
+										H.last_loot_check = world.time
+										H.last_nonraid = world.time
+										H.killed_count = H.killed_count+1
+										if(!H.warrant && !H.ignores_warrant)
+											if(H.killed_count >= 5)
+												H.warrant = TRUE
+												SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
+												to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
+											else
+												SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
+												to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
+	if(H.hearing_ghosts)
+		H.bloodpool = max(0, H.bloodpool-1)
+		to_chat(H, "<span class='warning'>Necromancy Vision reduces your blood points too sustain itself.</span>")
+
+	if(H.clane?.name == "Tzimisce" || H.clane?.name == "Old Clan Tzimisce")
+		var/datum/vampireclane/tzimisce/TZ = H.clane
+		if(TZ.heirl)
+			if(!(TZ.heirl in H.GetAllContents()))
+				if(prob(5))
+					to_chat(H, "<span class='warning'>You are missing your home soil...</span>")
+					H.bloodpool = max(0, H.bloodpool-1)
+	if(H.clane?.name == "Kiasyd")
+		var/datum/vampireclane/kiasyd/kiasyd = H.clane
+		for(var/obj/item/I in H.contents)
+			if(I?.is_iron)
+				if (COOLDOWN_FINISHED(kiasyd, cold_iron_frenzy))
+					COOLDOWN_START(kiasyd, cold_iron_frenzy, 10 SECONDS)
+					H.rollfrenzy()
+					to_chat(H, "<span class='warning'>[I] is <b>COLD IRON</b>!")
+
+/*
+	if(!H in GLOB.masquerade_breakers_list)
+		if(H.masquerade < 4)
+			GLOB.masquerade_breakers_list += H
+	else if(H in GLOB.masquerade_breakers_list)
+		if(H.masquerade > 3)
+			GLOB.masquerade_breakers_list -= H
+*/
+
+	if(H.key && (H.stat <= HARD_CRIT))
+		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
+		if(P)
+			if(P.humanity != H.humanity)
+				P.humanity = H.humanity
+				P.save_preferences()
+				P.save_character()
+			if(P.masquerade != H.masquerade)
+				P.masquerade = H.masquerade
+				P.save_preferences()
+				P.save_character()
+//			if(H.last_experience+600 <= world.time)
+//				var/addd = 5
+//				if(!H.JOB && H.mind)
+//					H.JOB = SSjob.GetJob(H.mind.assigned_role)
+//					if(H.JOB)
+//						addd = H.JOB.experience_addition
+//				P.exper = min(calculate_mob_max_exper(H), P.exper+addd+H.experience_plus)
+//				if(P.exper == calculate_mob_max_exper(H))
+//					to_chat(H, "You've reached a new level! You can add new points in Character Setup (Lobby screen).")
+//				P.save_preferences()
+//				P.save_character()
+//				H.last_experience = world.time
+//			if(H.roundstart_vampire)
+//				if(P.generation != H.generation)
+//					P.generation = H.generation
+//					P.save_preferences()
+//					P.save_character()
+			if(!H.antifrenzy)
+				if(P.humanity < 1)
+					H.enter_frenzymod()
+					to_chat(H, "<span class='userdanger'>You have lost control of the Beast within you, and it has taken your body. Be more [H.client.prefs.enlightenment ? "Enlightened" : "humane"] next time.</span>")
+					H.ghostize(FALSE)
+					P.reason_of_death = "Lost control to the Beast ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
+
+	if(H.clane && !H.antifrenzy && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
+		if(H.clane.name == "Banu Haqim")
+			if(H.mind)
+				if(H.mind.enslaved_to)
+					if(get_dist(H, H.mind.enslaved_to) > 10)
+						if((H.last_frenzy_check + 40 SECONDS) <= world.time)
+							to_chat(H, "<span class='warning'><b>As you are far from [H.mind.enslaved_to], you feel the desire to drink more vitae!<b></span>")
+							H.last_frenzy_check = world.time
+							H.rollfrenzy()
+					else if(H.bloodpool > 1 || H.in_frenzy)
+						H.last_frenzy_check = world.time
+		else
+			if(H.bloodpool > 1 || H.in_frenzy)
+				H.last_frenzy_check = world.time
+
+//	var/list/blood_fr = list()
+//	for(var/obj/effect/decal/cleanable/blood/B in range(7, src))
+//		if(B.bloodiness)
+//			blood_fr += B
+	if(!H.antifrenzy && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
+		if(H.bloodpool <= 1 && !H.in_frenzy)
+			if((H.last_frenzy_check + 40 SECONDS) <= world.time)
+				H.last_frenzy_check = world.time
+				H.rollfrenzy()
+				if(H.clane)
+					if(H.clane.enlightenment)
+						if(!H.CheckFrenzyMove())
+							H.AdjustHumanity(1, 10)
+//	if(length(blood_fr) >= 10 && !H.in_frenzy)
+//		if(H.last_frenzy_check+400 <= world.time)
+//			H.last_frenzy_check = world.time
+//			H.rollfrenzy()
+
+/mob/living/proc/torpor(source)
+	if (HAS_TRAIT(src, TRAIT_TORPOR))
+		return
+	if (fakedeath(source))
+		to_chat(src, "<span class='danger'>You have fallen into Torpor. Use the button in the top right to learn more, or attempt to wake up.</span>")
+		ADD_TRAIT(src, TRAIT_TORPOR, source)
+		if (is_kindred(src))
+			var/mob/living/carbon/human/vampire = src
+			var/datum/splat/supernatural/kindred/vampire_species = vampire.dna.species
+			var/torpor_length = 0 SECONDS
+			switch(humanity)
+				if(10)
+					torpor_length = 1 MINUTES
+				if(9)
+					torpor_length = 3 MINUTES
+				if(8)
+					torpor_length = 4 MINUTES
+				if(7)
+					torpor_length = 5 MINUTES
+				if(6)
+					torpor_length = 10 MINUTES
+				if(5)
+					torpor_length = 15 MINUTES
+				if(4)
+					torpor_length = 30 MINUTES
+				if(3)
+					torpor_length = 1 HOURS
+				if(2)
+					torpor_length = 2 HOURS
+				if(1)
+					torpor_length = 3 HOURS
+				else
+					torpor_length = 5 HOURS
+			COOLDOWN_START(vampire_splat, torpor_timer, torpor_length)
+
+/atom/movable/screen/alert/untorpor
+	name = "Awaken"
+	desc = "Free yourself of your Torpor."
+	icon_state = "awaken"
+
+/atom/movable/screen/alert/untorpor/Click() //PSEUDO_M this needs to call a do_action not do all the actions
+	if(isobserver(usr))
+		return
+	var/mob/living/living_owner = owner
+	if (!is_kindred(living_owner))
+		return
+
+	var/mob/living/carbon/human/vampire = living_owner
+	var/datum/splat/supernatural/kindred/kindred_species = vampire.splat_flags & SPLAT_KINDRED
+	if (COOLDOWN_FINISHED(kindred_species, torpor_timer) && (vampire.bloodpool > 0))	//PSEUDO_M_K
+		vampire.untorpor()
+		spawn()
+			vampire.clear_alert("succumb")
+	else
+		to_chat(usr, "<span class='purple'><i>You are in Torpor, the sleep of death that vampires go into when injured, starved, or exhausted.</i></span>")
+		if (vampire.bloodpool > 0)
+			to_chat(usr, "<span class='purple'><i>You will be able to awaken in <b>[DisplayTimeText(COOLDOWN_TIMELEFT(kindred_species, torpor_timer))]</b>.</i></span>")
+			to_chat(usr, "<span class='purple'><i>The time to re-awaken depends on your [(vampire.humanity > 5) ? "high" : "low"] [vampire.client.prefs.enlightenment ? "Enlightenment" : "Humanity"] rating of [vampire.humanity].</i></span>")
+		else
+			to_chat(usr, "<span class='danger'><i>You will not be able to re-awaken, because you have no blood available to do so.</i></span>")
+
+//PSEUDO_M add some shit for malkavian craziness but they don't need to poll the entire
+//clan every time anyone says anything, for god's sake
+
+/datum/splat/supernatural/kindred/signal_for_clans_with_special_petrify_bs()
+	if(is_kindred(src))
+		if(clane_type)
+			if(clane_type == "Serpentis")
+				ADD_TRAIT(src, TRAIT_NOBLEED, MAGIC_TRAIT)
+				var/obj/structure/statue/petrified/S = new(loc, src, statue_timer)
+				S.name = "[name]'s mummy"
+				S.icon_state = "mummy"
+				S.desc = "CURSE OF RA 𓀀 𓀁 𓀂 𓀃 𓀄 𓀅 𓀆 𓀇 𓀈 𓀉 𓀊 𓀋 𓀌 𓀍 𓀎 𓀏 𓀐 𓀑 𓀒 𓀓 𓀔 𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓀭 𓀮 𓀯 𓀰 𓀱 𓀲 𓀳 𓀴 𓀵 𓀶 𓀷 𓀸 𓀹 𓀺 𓀻 𓀼 𓀽 𓀾 𓀿 𓁀 𓁁 𓁂 𓁃 𓁄 𓁅 𓁆 𓁇 𓁈 𓁉 𓁊 𓁋 𓁌 𓁍 𓁎 𓁏 𓁐 𓁑 𓀄 𓀅 𓀆."
+			if(clane_type == "Visceratika")
+				ADD_TRAIT(src, TRAIT_NOBLEED, MAGIC_TRAIT)
+				var/obj/structure/statue/petrified/S = new(loc, src, statue_timer)
+				S.name = "\improper gargoyle"
+				S.desc = "Some kind of gothic architecture."
+				S.icon = 'code/modules/wod13/32x48.dmi'
+				S.icon_state = "gargoyle"
+				S.dir = dir
+				S.pixel_z = -16

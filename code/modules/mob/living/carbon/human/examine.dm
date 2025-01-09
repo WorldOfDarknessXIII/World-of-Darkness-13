@@ -54,7 +54,7 @@
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 
 	//faction, job, etc
-	if(iskindred(user) && iskindred(src) && is_face_visible())
+	if(is_kindred(user) && is_kindred(src) && is_face_visible())
 		var/mob/living/carbon/human/vampire = user
 		var/same_clan = vampire.clane == clane
 		var/same_faction = vampire.vampire_faction == vampire_faction
@@ -145,11 +145,6 @@
 	//ID
 	if(wear_id && !(wear_id.item_flags & EXAMINE_SKIP))
 		. += "[t_He] [t_is] wearing [wear_id.get_examine_string(user)]."
-
-//	if(ishuman(user))
-//		var/mob/living/carbon/human/US = user
-//		if(US.dna.species.id == "kindred" && dna.species.id == "kindred")
-//			. += "[t_He] [t_is] at least from <b>[client.prefs.generation]</b> generation."
 
 	//Status effects
 	var/list/status_examines = status_effect_examines()
@@ -407,7 +402,7 @@
 					msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
 		//examine text for unusual appearances
-		if (iskindred(src) && is_face_visible())
+		if (is_kindred(src) && is_face_visible())
 			switch(clane.alt_sprite)
 				if ("nosferatu")
 					msg += "<span class='danger'><b>[p_they(TRUE)] look[p_s()] utterly deformed and inhuman!</b></span><br>"
@@ -436,13 +431,13 @@
 				msg += "<span class='deadsay'>[t_He] [t_is] staring blanky into space, [t_his] eyes are slightly grayed out.</span>\n"
 
 	//examine text for garou detecting Triatic influences on others
-	if (isgarou(user) || iswerewolf(user))
+	if (is_garou(user) || iswerewolf(user))
 		if (get_dist(user, src) <= 2)
 			var/wyrm_taint = NONE
 			var/weaver_taint = NONE
 			var/wyld_taint = NONE
 
-			if (iskindred(src)) //vampires are static, and may be Wyrm-tainted depending on behaviour
+			if (is_kindred(src)) //vampires are static, and may be Wyrm-tainted depending on behaviour
 				var/mob/living/carbon/human/vampire = src
 				weaver_taint++
 
@@ -452,7 +447,7 @@
 				if ((vampire.clane?.name == "Baali") || ( (client?.prefs?.enlightenment && (humanity > 7)) || (!client?.prefs?.enlightenment && (humanity < 4)) ))
 					wyrm_taint++
 
-			if (isgarou(src) || iswerewolf(src)) //werewolves have the taint of whatever Triat member they venerate most
+			if (is_garou(src) || iswerewolf(src)) //werewolves have the taint of whatever Triat member they venerate most
 				var/mob/living/carbon/wolf = src
 
 				switch(wolf.auspice.tribe)
