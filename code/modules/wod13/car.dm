@@ -465,14 +465,14 @@ SUBSYSTEM_DEF(carpool)
 		if(owner in V.passengers)
 			V.passengers -= owner
 		owner.forceMove(V.loc)
-		for(var/datum/action/carr/C in owner.actions)
-			qdel(C)
 		to_chat(owner, "<span class='notice'>You exit [V].</span>")
 		if(owner)
 			if(owner.client)
 				owner.client.pixel_x = 0
 				owner.client.pixel_y = 0
 		playsound(V, 'code/modules/wod13/sounds/door.ogg', 50, TRUE)
+		for(var/datum/action/carr/C in owner.actions)
+			qdel(C)
 
 /mob/living/carbon/human/MouseDrop(atom/over_object)
 	. = ..()
@@ -688,7 +688,7 @@ SUBSYSTEM_DEF(carpool)
 /obj/vampire_car
 	var/movement_vector = 0		//0-359 degrees
 	var/speed_in_pixels = 0		// 16 pixels (turf is 2x2m) = 1 meter per 1 SECOND (process fire). Minus equals to reverse, max should be 444
-	var/last_pos = list("x" = 0, "y" = 0, "x_pix" = 0, "y_pix" = 0)
+	var/last_pos = list("x" = 0, "y" = 0, "x_pix" = 0, "y_pix" = 0, "x_frwd" = 0, "y_frwd" = 0)
 	var/impact_delay = 0
 	glide_size = 96
 
@@ -828,31 +828,38 @@ SUBSYSTEM_DEF(carpool)
 	var/turf/south_turf = get_step(src, SOUTH)
 	if(length(south_turf.unpassable))
 		moved_y = max(-8-last_pos["y_pix"], moved_y)
+
 	for(var/mob/living/L in src)
 		if(L)
 			if(L.client)
-				L.client.pixel_x = last_pos["x_pix"]
-				L.client.pixel_y = last_pos["y_pix"]
-				animate(L.client, pixel_x = last_pos["x_pix"]+moved_x, pixel_y = last_pos["y_pix"]+moved_y, SScarpool.wait, 1)
+				L.client.pixel_x = last_pos["x_frwd"]
+				L.client.pixel_y = last_pos["y_frwd"]
+				animate(L.client, \
+					pixel_x = last_pos["x_pix"] + moved_x * 2, \
+					pixel_y = last_pos["y_pix"] + moved_y * 2, \
+					SScarpool.wait, 1)
+
 	animate(src, pixel_x = last_pos["x_pix"]+moved_x, pixel_y = last_pos["y_pix"]+moved_y, SScarpool.wait, 1)
+
+	last_pos["x_frwd"] = last_pos["x_pix"] + moved_x * 2
+	last_pos["y_frwd"] = last_pos["y_pix"] + moved_y * 2
 	last_pos["x_pix"] = last_pos["x_pix"]+moved_x
 	last_pos["y_pix"] = last_pos["y_pix"]+moved_y
-	var/new_x = last_pos["x"]
-	var/new_y = last_pos["y"]
-	while(last_pos["x_pix"] > 16)
-		last_pos["x_pix"] -= 32
-		new_x++
-	while(last_pos["x_pix"] < -16)
-		last_pos["x_pix"] += 32
-		new_x--
-	while(last_pos["y_pix"] > 16)
-		last_pos["y_pix"] -= 32
-		new_y++
-	while(last_pos["y_pix"] < -16)
-		last_pos["y_pix"] += 32
-		new_y--
-	last_pos["x"] = clamp(new_x, 1, world.maxx)
-	last_pos["y"] = clamp(new_y, 1, world.maxx)		//since the map is 255x255
+
+	var/x_sign = 1
+	if(last_pos["x_pix"] < 0)
+		x_sign = -1
+	var/y_sign = 1
+	if(last_pos["y_pix"] < 0)
+		y_sign = -1
+	var/x_add = trunc((x_sign * abs(last_pos["x_pix"] + 16)) / 32)
+	var/y_add = trunc((y_sign * abs(last_pos["y_pix"] + 16)) / 32)
+	last_pos["x_frwd"] -= x_add * 32
+	last_pos["y_frwd"] -= y_add * 32
+	last_pos["x_pix"] -= x_add * 32
+	last_pos["y_pix"] -= y_add * 32
+	last_pos["x"] = clamp(last_pos["x"] + x_add, 1, world.maxx)
+	last_pos["y"] = clamp(last_pos["y"] + y_add, 1, world.maxy)
 
 /obj/vampire_car/relaymove(mob, direct)
 	if(world.time-impact_delay < 20)
