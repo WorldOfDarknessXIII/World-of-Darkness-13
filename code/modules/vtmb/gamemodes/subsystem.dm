@@ -69,7 +69,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 				if(Next)
 					qdel(Next)
 				threat = min(100, threat+60)
-				max_candidates = 1*Max(1,floor(city_power/15))
+				max_candidates = 1*max(1,floor(city_power/15))
 				go_on_next_fire = TRUE
 				Next = new /datum/outfit/job/caitiff()
 				setting = null
@@ -77,7 +77,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 				if(Next)
 					qdel(Next)
 				threat = min(100, threat+30)
-				max_candidates = 2*Max(1,floor(city_power/15))
+				max_candidates = 2*max(1,floor(city_power/15))
 				go_on_next_fire = TRUE
 				Next = new /datum/outfit/job/sabbatist()
 				setting = null
@@ -85,7 +85,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 				if(Next)
 					qdel(Next)
 				threat = min(100, threat+60)
-				max_candidates = 5*Max(1,floor(city_power/15))
+				max_candidates = 5*max(1,floor(city_power/15))
 				go_on_next_fire = TRUE
 				Next = new /datum/outfit/job/hunter()
 				setting = null
@@ -97,7 +97,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 					if(Next)
 						qdel(Next)
 					threat = min(100, threat+60)
-					max_candidates = 1*Max(1,floor(city_power/15))
+					max_candidates = 1*max(1,floor(city_power/15))
 					go_on_next_fire = TRUE
 					Next = new /datum/outfit/job/caitiff()
 				else
@@ -105,7 +105,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 					if(Next)
 						qdel(Next)
 					threat = min(100, threat+30)
-					max_candidates = 2*Max(1,floor(city_power/15))
+					max_candidates = 2*max(1,floor(city_power/15))
 					go_on_next_fire = TRUE
 					Next = new /datum/outfit/job/sabbatist()
 			if(2)
@@ -114,7 +114,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 					if(Next)
 						qdel(Next)
 					threat = min(100, threat+90)
-					max_candidates = 3*Max(1,floor(city_power/15))
+					max_candidates = 3*max(1,floor(city_power/15))
 					go_on_next_fire = TRUE
 					Next = new /datum/outfit/job/sabbatist()
 				else
@@ -122,7 +122,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 					if(Next)
 						qdel(Next)
 					threat = min(100, threat+60)
-					max_candidates = 4*Max(1,floor(city_power/15))
+					max_candidates = 4*max(1,floor(city_power/15))
 					go_on_next_fire = TRUE
 					Next = new /datum/outfit/job/hunter()
 			/*if(3)
