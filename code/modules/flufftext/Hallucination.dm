@@ -325,6 +325,11 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	image_state = "eva"
 //	px = -32
 
+/obj/effect/hallucination/simple/demon
+	name = "Infernal Creature"
+	image_icon = 'code/modules/wod13/32x48.dmi'
+	image_state = "baali"
+
 /datum/hallucination/oh_yeah
 	var/obj/effect/hallucination/simple/bubblegum/bubblegum
 	var/image/fakebroken
@@ -395,6 +400,61 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	QDEL_NULL(fakebroken)
 	QDEL_NULL(fakerune)
 	QDEL_NULL(bubblegum)
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+/datum/hallucination/baali
+	var/obj/effect/hallucination/simple/demon/demon
+	var/turf/landing
+	var/charged
+	var/next_action = 0
+
+/datum/hallucination/baali/New(mob/living/carbon/C, forced = TRUE)
+	set waitfor = FALSE
+	. = ..()
+	var/turf/closed/wall/wall
+	for(var/turf/closed/wall/W in range(7,target))
+		wall = W
+		break
+	if(!wall)
+		return INITIALIZE_HINT_QDEL
+	feedback_details += "Source: [wall.x],[wall.y],[wall.z]"
+	target.playsound_local(wall,'sound/effects/meteorimpact.ogg', 150, 1)
+	demon = new(wall, target)
+	addtimer(CALLBACK(src, PROC_REF(start_processing)), 10)
+
+/datum/hallucination/baali/proc/start_processing()
+	if (isnull(target))
+		qdel(src)
+		return
+	START_PROCESSING(SSfastprocess, src)
+
+/datum/hallucination/baali/process(delta_time)
+	next_action -= delta_time
+
+	if (next_action > 0)
+		return
+
+	if (target?.stat != DEAD)
+		demon.forceMove(get_step_towards(demon, target))
+		demon.setDir(get_dir(demon, target))
+		target.playsound_local(get_turf(demon), 'sound/effects/meteorimpact.ogg', 150, 1)
+		QDEL_IN(src, 4 SECONDS)
+		if(demon.Adjacent(target) && !charged)
+			charged = TRUE
+			target.Paralyze(50)
+			target.adjustStaminaLoss(500)
+			step_away(target, demon)
+			target.visible_message("<span class='warning'>[target] jumps backwards, falling on the ground!</span>","<span class='userdanger'>[demon] slams into you!</span>")
+			STOP_PROCESSING(SSfastprocess, src)
+			qdel(src)
+		next_action = 0.2
+	else
+		STOP_PROCESSING(SSfastprocess, src)
+		QDEL_IN(src, 3 SECONDS)
+
+/datum/hallucination/baali/Destroy()
+	QDEL_NULL(demon)
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 

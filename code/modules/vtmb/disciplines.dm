@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(who_is_cursed)
+
 /mob/living
 	var/datum/action/discipline/discipline_ranged
 
@@ -1653,53 +1655,263 @@
 	desc = "Get a help from the Hell creatures, resist THE FIRE, transform into an imp. Violates Masquerade."
 	icon_state = "daimonion"
 	cost = 1
-	ranged = FALSE
-	delay = 150
-	violates_masquerade = TRUE
+	delay = 100
+	violates_masquerade = FALSE
+	fearless = TRUE
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/BAT
+	ranged = TRUE
+
+/datum/curse
+	var/name
+
+/datum/curse/daimonion
+	var/genrequired
+
+/datum/curse/daimonion/proc/activate(var/mob/living/target)
+	return
+
+/datum/curse/daimonion/lying_weakness
+	name = "No Lying Tongue"
+	genrequired = 13
+
+/datum/curse/daimonion/physical_weakness
+	name = "Baby Strength"
+	genrequired = 10
+
+/datum/curse/daimonion/mental_weakness
+	name = "Reap Mentality"
+	genrequired = 9
+
+/datum/curse/daimonion/offspring_weakness
+	name = "Sterile Vitae"
+	genrequired = 8
+
+/datum/curse/daimonion/success_weakness
+	name = "The Mark Of Doom"
+	genrequired = 7
+
+/datum/curse/daimonion/lying_weakness/activate(mob/living/carbon/human/target)
+	. = ..()
+	target.gain_trauma(/datum/brain_trauma/mild/mind_echo, TRAUMA_RESILIENCE_ABSOLUTE)
+	to_chat(target, "<span class='userdanger'><b>You feel like a great curse was placed on you!</span></b>")
+
+/datum/curse/daimonion/physical_weakness/activate(mob/living/target)
+	. = ..()
+	if(target.physique >= 5)
+		target.physique = 4
+	var/mob/living/carbon/human/vampire = target
+	for (var/datum/action/blood_power/blood_power in vampire.actions)
+		if(blood_power)
+			blood_power.Remove(vampire)
+	to_chat(target, "<span class='userdanger'><b>You feel like a great curse was placed on you!</span></b>")
+
+/datum/curse/daimonion/mental_weakness/activate(mob/living/target)
+	. = ..()
+	if(target.social >= 5)
+		target.social = 4
+	if(target.mentality >= 5)
+		target.mentality = 4
+	to_chat(target, "<span class='userdanger'><b>You feel like a great curse was placed on you!</span></b>")
+
+/datum/curse/daimonion/offspring_weakness/activate(mob/living/target)
+	. = ..()
+	var/mob/living/carbon/human/vampire = target
+	for (var/datum/action/give_vitae/give_vitae in vampire.actions)
+		if(give_vitae)
+			give_vitae.Remove(vampire)
+	to_chat(target, "<span class='userdanger'><b>You feel like a great curse was placed on you!</span></b>")
+
+/datum/curse/daimonion/success_weakness/activate(mob/living/target)
+	. = ..()
+	target.add_quirk(/datum/quirk/slowpoke)
+	target.add_quirk(/datum/quirk/lazy)
+	target.add_quirk(/datum/quirk/hungry)
+	to_chat(target, "<span class='userdanger'><b>You feel like a great curse was placed on you!</span></b>")
+
+/datum/daimonion/proc/baali_get_clan_weakness(target, caster)
+	var/mob/living/carbon/human/vampire = target
+	if(iskindred(vampire))
+		var/datum/species/kindred/clan = vampire.dna.species
+		if(vampire.clane?.name)
+			if(vampire.clane?.name == "Toreador")
+				to_chat(caster, "Victim is too clingy to the art.")
+			else if(vampire.clane?.name == "Daughters of Cacophony")
+				to_chat(caster, "Victim's mind is envelopped by nonstopping music.")
+			else if(vampire.clane?.name == "Ventrue")
+				to_chat(caster, "Victim finds no pleasure in poor's blood.")
+			else if(vampire.clane?.name == "Lasombra")
+				to_chat(caster, "Victim is afraid of modern technology.")
+			else if(vampire.clane?.name == "Tzimisce")
+				to_chat(caster, "Victim is tied to its domain.")
+			else if(vampire.clane?.name == "Gangrel")
+				to_chat(caster, "Victim is a feral being used to the nature.")
+			else if(vampire.clane?.name == "Malkavian")
+				to_chat(caster, "Victim is unstable, the mind is ill.")
+			else if(vampire.clane?.name == "Brujah")
+				to_chat(caster, "Victim is full of uncontrollable rage.")
+			else if(vampire.clane?.name == "Nosferatu")
+				to_chat(caster, "Victim is ugly and nothing will save them.")
+			else if(vampire.clane?.name == "Tremere")
+				to_chat(caster, "Victim is weak to kindred blood and vulnerable to blood bonds.")
+			else if(vampire.clane?.name == "Baali")
+				to_chat(caster, "Victim is afraid of holy.")
+			else if(vampire.clane?.name == "Banu Haqim")
+				to_chat(caster, "Victim is addicted to kindred vitae...")
+			else if(vampire.clane?.name == "True Brujah")
+				to_chat(caster, "Victim's emotions is cold and fake.")
+			else if(vampire.clane?.name == "Salubri")
+				to_chat(caster, "Victim is unable to feed on unwilling.")
+			else if(vampire.clane?.name == "Giovanni")
+				to_chat(caster, "Victim's bite inflicts too much harm.")
+			else if(vampire.clane?.name == "Cappadocian")
+				to_chat(caster, "Victim's skin will stay pale and lifeless no matter what.")
+			else if(vampire.clane?.name == "Kiasyd")
+				to_chat(caster, "Victim is afraid of cold iron.")
+			else if(vampire.clane?.name == "Gargoyle")
+				to_chat(caster, "Victim is too dependent on its masters, its mind is feeble.")
+			else if(vampire.clane?.name == "Ministry")
+				to_chat(caster, "Victim is afraid of bright lights.")
+			else
+				to_chat(caster, "Victim is shunned by most as it lacks a clan.")
+		if(clan.get_discipline("Quietus") && !(vampire.clane?.name == "Banu Haqim"))
+			to_chat(caster, "They fear that the fact they stole Banu Haqim's Quietus will be known.")
+		if(clan.get_discipline("Protean") && !(vampire.clane?.name == "Gangrel"))
+			to_chat(caster, "They fear that the fact they stole Gangrel's Protean will be known.")
+		if(clan.get_discipline("Serpentis") && !(vampire.clane?.name == "Ministry"))
+			to_chat(caster, "They fear that the fact they stole Ministry's Serpentis will be known.")
+		if(clan.get_discipline("Necromancy") && !(vampire.clane?.name == "Giovanni") || !(vampire.clane?.name = "Cappadocian"))
+			to_chat(caster, "They fear that the fact they stole Giovanni's Necromancy will be known.")
+		if(clan.get_discipline("Obtenebration") && !(vampire.clane?.name == "Lasombra"))
+			to_chat(caster, "They fear that the fact they stole Lasombra's Obtenebration will be known.")
+		if(clan.get_discipline("Dementation") && !(vampire.clane?.name == "Malkavian"))
+			to_chat(caster, "They fear that the fact they stole Malkavian's Dementation will be known.")
+		if(clan.get_discipline("Thaumaturgy") && !(vampire.clane?.name == "Tremere"))
+			to_chat(caster, "They fear that the fact they stole Tremere's Thaumaturgy will be known.")
+		if(clan.get_discipline("Vicissitude") && !(vampire.clane?.name == "Tzimisce"))
+			to_chat(caster, "They fear that the fact they stole Tzimisce's Vicissitude will be known.")
+		if(clan.get_discipline("Melpominee") && !(vampire.clane?.name == "Daughters of Cacophony"))
+			to_chat(caster, "They fear that the fact they stole Daughters of Cacophony's Melpominee will be known.")
+		if(clan.get_discipline("Daimonion") && !(vampire.clane?.name == "Baali"))
+			to_chat(caster, "They fear that the fact they stole Baali's Daimonion will be known.")
+		if(clan.get_discipline("Temporis") && !(vampire.clane?.name == "True Brujah"))
+			to_chat(caster, "They fear that the fact they stole True Brujah's Temporis will be known.")
+		if(clan.get_discipline("Valeren") && !(vampire.clane?.name == "Salubri"))
+			to_chat(caster, "They fear that the fact they stole Salubri's Valeren will be known.")
+		if(clan.get_discipline("Mytherceria") && !(vampire.clane?.name == "Kiasyd"))
+			to_chat(caster, "They fear that the fact they stole Kiasyd's Mytherceria will be known.")
 
 /datum/discipline/daimonion/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
-	var/mod = min(4, level_casting)
-//	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
-	if(!BAT)
-		BAT = new(caster)
-	switch(mod)
+	switch(level_casting)
 		if(1)
-			caster.physiology.burn_mod *= 1/100
-			caster.color = "#884200"
-			spawn(delay+caster.discipline_time_plus)
-				if(caster)
-					caster.color = initial(caster.color)
-					caster.physiology.burn_mod *= 100
-					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
+			if(target.get_total_social() <= 3)
+				to_chat(caster, "Victim is not social or influencing.")
+			if(target.get_total_mentality() <= 3)
+				to_chat(caster, "Victim lacks appropiate willpower.")
+			if(target.get_total_physique() <= 3)
+				to_chat(caster, "Victim's body is weak and feeble.")
+			if(isgarou(target))
+				to_chat(caster, "Victim's natural banishment is silver...")
+			if(iskindred(target))
+				var/datum/daimonion/daim = new
+				daim.baali_get_clan_weakness(target, caster)
+				if(target.generation >= 10)
+					to_chat(caster, "Victim's vitae is weak and thin. You can clearly see their fear for fire, it seems that's a kindred.")
+				else
+					to_chat(caster, "Victim's vitae is thick and strong. You can clearly see their fear for fire, it seems that's a kindred.")
+			if(isghoul(target))
+				var/mob/living/carbon/human/ghoul = target
+				if(ghoul.mind.enslaved_to)
+					to_chat(caster, "Victim is addicted to vampiric vitae and its true master is [ghoul.mind.enslaved_to]")
+				else
+					to_chat(caster, "Victim is addicted to vampiric vitae, but is independent and free.")
+			if(!iskindred(target) && !isghoul(target) && !isgarou(target))
+				to_chat(caster, "Victim is a feeble worm with no strengths or visible weaknesses.")
+
 		if(2)
-			caster.dna.species.GiveSpeciesFlight(caster)
-			spawn(delay+caster.discipline_time_plus)
-				if(caster)
-					caster.dna.species.RemoveSpeciesFlight(caster)
-					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
+			var/mypower = caster.get_total_social()
+			var/theirpower = target.get_total_mentality()
+			if((theirpower >= mypower) || (caster.generation > target.generation))
+				to_chat(caster, "<span class='warning'>[target] has too much willpower to induce fear into them!</span>")
+				return
+			to_chat(target, "<span class='warning'><b>Your mind is enveloped by your greatest fear!</span></b>")
+			var/mob/living/carbon/human/frenzied = target
+			if(!frenzied.in_frenzy) // Cause target to frenzy
+				frenzied.enter_frenzymod()
+				frenzied.Paralyze(3 SECONDS)
+				addtimer(CALLBACK(frenzied, TYPE_PROC_REF(/mob/living/carbon, exit_frenzymod)), 3 SECONDS)
 		if(3)
-			caster.drop_all_held_items()
-			caster.put_in_r_hand(new /obj/item/melee/vampirearms/knife/gangrel(caster))
-			caster.put_in_l_hand(new /obj/item/melee/vampirearms/knife/gangrel(caster))
-			spawn(delay+caster.discipline_time_plus)
-				if(caster)
-					for(var/obj/item/melee/vampirearms/knife/gangrel/G in caster)
-						if(G)
-							qdel(G)
-					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
-		if(4 to 5)
-			caster.drop_all_held_items()
-			BAT.Shapeshift(caster)
-			spawn(delay+caster.discipline_time_plus)
-				if(caster && caster.stat != DEAD)
-					BAT.Restore(BAT.myshape)
-					caster.Stun(15)
-					caster.do_jitter_animation(30)
-					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
+			var/turf/start = get_turf(caster)
+			var/obj/projectile/magic/aoe/fireball/baali/created_fireball = new(start)
+			created_fireball.firer = caster
+			created_fireball.preparePixelProjectile(target, start)
+			created_fireball.fire(direct_target = target)
+		if(4)
+			to_chat(target, "<span class='warning'><b>You hear infernal laugh!</span></b>")
+			new /datum/hallucination/baali(target, TRUE)
+		if(5)
+			var/list/curses_names = list()
+			if(GLOB.who_is_cursed.len > 0 && !(GLOB.who_is_cursed.Find(target)) || GLOB.who_is_cursed.len == 0)
+				for(var/i in subtypesof(/datum/curse/daimonion))
+					var/datum/curse/daimonion/D = i
+					if(caster.generation <= D.genrequired)
+						curses_names += initial(D.name)
+				to_chat(caster, "<span class='userdanger'><b>To place a curse on someone is to pay the great price. Are you willing to take the risks?</b></span>")
+				var/choosecurse = input(caster, "Choose curse to use:", "Daimonion") as null|anything in curses_names
+				if(choosecurse)
+					var/mob/living/BP = caster
+					var/datum/curse/daimonion/D = choosecurse
+					if(D == "No Lying Tongue")
+						var/datum/curse/daimonion/lying_weakness/curs = new
+						if(caster.maxbloodpool > 1)
+							curs.activate(target)
+							BP.cursed_bloodpool += 1
+							BP.update_blood_hud()
+							GLOB.who_is_cursed += target
+						else
+							to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
+					if(D == "Baby Strength")
+						var/datum/curse/daimonion/physical_weakness/curs = new
+						if(caster.maxbloodpool > 2)
+							curs.activate(target)
+							BP.cursed_bloodpool += 2
+							BP.update_blood_hud()
+							GLOB.who_is_cursed += target
+						else
+							to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
+					if(D == "Reap Mentality")
+						var/datum/curse/daimonion/mental_weakness/curs = new
+						if(caster.maxbloodpool > 3)
+							curs.activate(target)
+							BP.cursed_bloodpool += 3
+							BP.update_blood_hud()
+							GLOB.who_is_cursed += target
+						else
+							to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
+					if(D == "Sterile Vitae")
+						if(iskindred(target))
+							var/datum/curse/daimonion/offspring_weakness/curs = new
+							if(caster.maxbloodpool > 4)
+								curs.activate(target)
+								BP.cursed_bloodpool += 4
+								BP.update_blood_hud()
+								GLOB.who_is_cursed += target
+							else
+								to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
+						else
+							to_chat(caster, "<span class='warning'>Victim is not a kindred!</span>")
+					if(D == "The Mark Of Doom")
+						var/datum/curse/daimonion/success_weakness/curs = new
+						if(caster.maxbloodpool > 5)
+							curs.activate(target)
+							BP.cursed_bloodpool += 5
+							BP.update_blood_hud()
+							GLOB.who_is_cursed += target
+						else
+							to_chat(caster, "<span class='warning'>You don't have enough vitae to cast this curse.</span>")
+			else
+				to_chat(caster, "<span class='warning'>This one is already cursed!</span>")
 
 /datum/discipline/valeren
 	name = "Valeren"

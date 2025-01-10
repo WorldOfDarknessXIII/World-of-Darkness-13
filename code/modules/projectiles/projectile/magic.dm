@@ -681,7 +681,14 @@
 	R.color = color
 
 /obj/projectile/magic/aoe/fireball/baali
-	color = "#2dff00"
+	color = "#1c1f1d"
+	damage = 25
+	damage_type = CLONE
+
+/obj/projectile/magic/aoe/fireball/baali/on_hit(target)
+	. = ..()
+	var/obj/effect/fire/created_fire = new(get_turf(target)) // Creates fire object on the hit if successfully landed
+	created_fire.color = src.color
 
 //still magic related, but a different path
 
