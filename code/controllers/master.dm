@@ -271,10 +271,10 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 								if(H.mind.assigned_role == "Graveyard Keeper")
 									if(SSgraveyard.total_good > SSgraveyard.total_bad)
 										P.add_experience(1)
-								if(H.mind.special_role)
+/*								if(H.mind.special_role)
 									var/datum/antagonist/A = H.mind.special_role
 									if(A.check_completed())
-										P.add_experience(3)
+										P.add_experience(3)*/
 							P.save_preferences()
 							P.save_character()
 	var/old_runlevel = current_runlevel
