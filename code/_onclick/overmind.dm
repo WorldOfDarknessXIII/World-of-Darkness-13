@@ -1,36 +1,36 @@
 // Blob Overmind Controls
 
 
-/mob/camera/blob/ClickOn(atom/A, params) //Expand blob
+/mob/eye/blob/ClickOn(atom/A, params) //Expand blob
 	var/list/modifiers = params2list(params)
-	if(modifiers["middle"])
-		MiddleClickOn(A)
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
+		MiddleClickOn(A, params)
 		return
-	if(modifiers["shift"])
+	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		ShiftClickOn(A)
 		return
-	if(modifiers["alt"])
-		AltClickOn(A)
+	if(LAZYACCESS(modifiers, ALT_CLICK))
+		blob_click_alt(A)
 		return
-	if(modifiers["ctrl"])
+	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)
 		return
 	var/turf/T = get_turf(A)
 	if(T)
 		expand_blob(T)
 
-/mob/camera/blob/MiddleClickOn(atom/A) //Rally spores
+/mob/eye/blob/MiddleClickOn(atom/A) //Rally spores
 	. = ..()
 	var/turf/T = get_turf(A)
 	if(T)
 		rally_spores(T)
 
-/mob/camera/blob/CtrlClickOn(atom/A) //Create a shield
+/mob/eye/blob/CtrlClickOn(atom/A) //Create a shield
 	var/turf/T = get_turf(A)
 	if(T)
 		create_shield(T)
 
-/mob/camera/blob/AltClickOn(atom/A) //Remove a blob
+/mob/eye/blob/proc/blob_click_alt(atom/A) //Remove a blob
 	var/turf/T = get_turf(A)
 	if(T)
 		remove_blob(T)

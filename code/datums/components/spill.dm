@@ -7,10 +7,11 @@
 
 	var/list/droptext
 	var/list/dropsound
+	var/drop_memory
 
 // droptext is an arglist for visible_message
 // dropsound is a list of potential sounds that gets picked from
-/datum/component/spill/Initialize(list/_droptext, list/_dropsound)
+/datum/component/spill/Initialize(list/_droptext, list/_dropsound, _drop_memory)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -20,9 +21,11 @@
 
 	if(_dropsound && !islist(_dropsound))
 		_dropsound = list(_dropsound)
-	dropsound = _dropsound
 
-/datum/component/spill/PostTransfer()
+	dropsound = _dropsound
+	drop_memory = _drop_memory
+
+/datum/component/spill/PostTransfer(datum/new_parent)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -42,7 +45,7 @@
 /datum/component/spill/proc/equip_react(obj/item/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
-	if(slot == ITEM_SLOT_LPOCKET || slot == ITEM_SLOT_RPOCKET)
+	if(slot & (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET))
 		RegisterSignal(equipper, COMSIG_LIVING_STATUS_KNOCKDOWN, PROC_REF(knockdown_react), TRUE)
 	else
 		UnregisterSignal(equipper, COMSIG_LIVING_STATUS_KNOCKDOWN)
@@ -52,8 +55,11 @@
 
 	UnregisterSignal(dropper, COMSIG_LIVING_STATUS_KNOCKDOWN)
 
-/datum/component/spill/proc/knockdown_react(mob/living/fool)
+/datum/component/spill/proc/knockdown_react(mob/living/fool, amount)
 	SIGNAL_HANDLER
+
+	if(amount <= 0)
+		return
 
 	var/obj/item/master = parent
 	fool.dropItemToGround(master)
@@ -61,3 +67,5 @@
 		fool.visible_message(arglist(droptext))
 	if(dropsound)
 		playsound(master, pick(dropsound), 30)
+	if(drop_memory)
+		fool.add_mob_memory(drop_memory)

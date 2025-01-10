@@ -16,23 +16,41 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	GLOB.GPS_list -= src
 	return ..()
 
+/datum/component/gps/kheiral_cuffs
+
+/datum/component/gps/kheiral_cuffs/Initialize(_gpstag = "COM0")
+	. = ..()
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(deactivate_kheiral_cuffs))
+
+/datum/component/gps/kheiral_cuffs/proc/deactivate_kheiral_cuffs(datum/source)
+	SIGNAL_HANDLER
+	qdel(src)
+
 ///GPS component subtype. Only gps/item's can be used to open the UI.
 /datum/component/gps/item
 	var/updating = TRUE //Automatic updating of GPS list. Can be set to manual by user.
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
+	/// UI state of GPS, altering when it can be used.
+	var/datum/ui_state/state = null
 
-/datum/component/gps/item/Initialize(_gpstag = "COM0", emp_proof = FALSE)
+/datum/component/gps/item/Initialize(_gpstag = "COM0", emp_proof = FALSE, state = null, overlay_state = "working")
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE || !isitem(parent))
 		return COMPONENT_INCOMPATIBLE
+
+	if(isnull(state))
+		state = GLOB.default_state
+	src.state = state
+
 	var/atom/A = parent
-	A.add_overlay("working")
+	if(overlay_state)
+		A.add_overlay(overlay_state)
 	A.name = "[initial(A.name)] ([gpstag])"
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(interact))
 	if(!emp_proof)
 		RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_AltClick))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_click_alt))
 
 ///Called on COMSIG_ITEM_ATTACK_SELF
 /datum/component/gps/item/proc/interact(datum/source, mob/user)
@@ -41,16 +59,17 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	if(user)
 		INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
 
-///Called on COMSIG_PARENT_EXAMINE
+///Called on COMSIG_ATOM_EXAMINE
 /datum/component/gps/item/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += "<span class='notice'>Alt-click to switch it [tracking ? "off":"on"].</span>"
+	examine_list += span_notice("Alt-click to switch it [tracking ? "off":"on"].")
 
 ///Called on COMSIG_ATOM_EMP_ACT
-/datum/component/gps/item/proc/on_emp_act(datum/source, severity)
+/datum/component/gps/item/proc/on_emp_act(datum/source, severity, protection)
 	SIGNAL_HANDLER
-
+	if(protection & EMP_PROTECT_SELF)
+		return
 	emped = TRUE
 	var/atom/A = parent
 	A.cut_overlay("working")
@@ -66,37 +85,41 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	A.add_overlay("working")
 
 ///Calls toggletracking
-/datum/component/gps/item/proc/on_AltClick(datum/source, mob/user)
+/datum/component/gps/item/proc/on_click_alt(datum/source, mob/user)
 	SIGNAL_HANDLER
 
 	toggletracking(user)
+	return CLICK_ACTION_SUCCESS
 
 ///Toggles the tracking for the gps
 /datum/component/gps/item/proc/toggletracking(mob/user)
-	if(!user.canUseTopic(parent, BE_CLOSE))
+	if(!user.can_perform_action(parent))
 		return //user not valid to use gps
 	if(emped)
-		to_chat(user, "<span class='warning'>It's busted!</span>")
+		to_chat(user, span_warning("It's busted!"))
 		return
 	var/atom/A = parent
 	if(tracking)
 		A.cut_overlay("working")
-		to_chat(user, "<span class='notice'>[parent] is no longer tracking, or visible to other GPS devices.</span>")
+		to_chat(user, span_notice("[parent] is no longer tracking, or visible to other GPS devices."))
 		tracking = FALSE
 	else
 		A.add_overlay("working")
-		to_chat(user, "<span class='notice'>[parent] is now tracking, and visible to other GPS devices.</span>")
+		to_chat(user, span_notice("[parent] is now tracking, and visible to other GPS devices."))
 		tracking = TRUE
 
 /datum/component/gps/item/ui_interact(mob/user, datum/tgui/ui)
 	if(emped)
-		to_chat(user, "<span class='hear'>[parent] fizzles weakly.</span>")
+		to_chat(user, span_hear("[parent] fizzles weakly."))
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Gps")
 		ui.open()
 	ui.set_autoupdate(updating)
+
+/datum/component/gps/item/ui_state(mob/user)
+	return state
 
 /datum/component/gps/item/ui_data(mob/user)
 	var/list/data = list()
@@ -114,24 +137,28 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	var/list/signals = list()
 	data["signals"] = list()
 
-	for(var/gps in GLOB.GPS_list)
-		var/datum/component/gps/G = gps
-		if(G.emped || !G.tracking || G == src)
+	for(var/datum/component/gps/gps as anything in GLOB.GPS_list)
+		if(gps == src || gps.emped || !gps.tracking)
 			continue
-		var/turf/pos = get_turf(G.parent)
-		if(!pos || !global_mode && pos.z != curr.z)
+		var/turf/pos = get_turf(gps.parent)
+		if(!pos || (!global_mode && pos.z != curr.z))
 			continue
 		var/list/signal = list()
-		signal["entrytag"] = G.gpstag //Name or 'tag' of the GPS
+		signal["entrytag"] = gps.gpstag //Name or 'tag' of the GPS
 		signal["coords"] = "[pos.x], [pos.y], [pos.z]"
-		if(pos.z == curr.z) //Distance/Direction calculations for same z-level only
+		// Distance is calculated for the same z-level only, and direction is calculated for crosslinked/neighboring and same z-levels.
+		if(pos.z == curr.z)
 			signal["dist"] = max(get_dist(curr, pos), 0) //Distance between the src and remote GPS turfs
-			signal["degrees"] = round(Get_Angle(curr, pos)) //0-360 degree directional bearing, for more precision.
+			signal["degrees"] = round(get_angle(curr, pos)) //0-360 degree directional bearing, for more precision.
+		else
+			var/angle = get_linked_z_angle(curr.z, pos.z)
+			if(!isnull(angle))
+				signal["degrees"] = angle
 		signals += list(signal) //Add this signal to the list of signals
 	data["signals"] = signals
 	return data
 
-/datum/component/gps/item/ui_act(action, params)
+/datum/component/gps/item/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -139,15 +166,16 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	switch(action)
 		if("rename")
 			var/atom/parentasatom = parent
-			var/a = stripped_input(usr, "Please enter desired tag.", parentasatom.name, gpstag, 20)
-
+			var/a = tgui_input_text(usr, "Enter the desired tag", "GPS Tag", gpstag, max_length = 20)
+			if (QDELETED(ui) || ui.status != UI_INTERACTIVE)
+				return
 			if (!a)
 				return
 
 			gpstag = a
 			. = TRUE
-			log_game("[key_name(usr)] renamed [parentasatom] to \"global positioning system ([gpstag])\".")
-			parentasatom.name = "global positioning system ([gpstag])"
+			usr.log_message("renamed [parentasatom] to \"[initial(parentasatom.name)] ([gpstag])\".", LOG_GAME)
+			parentasatom.name = "[initial(parentasatom.name)] ([gpstag])"
 
 		if("power")
 			toggletracking(usr)

@@ -3,7 +3,7 @@
 /datum/component/wearertargeting
 	var/list/valid_slots = list()
 	var/list/signals = list()
-	var/proctype = PROC_REF(pass)
+	var/proctype = GLOBAL_PROC_REF(pass)
 	var/mobtype = /mob/living
 
 /datum/component/wearertargeting/Initialize()
@@ -16,7 +16,7 @@
 	SIGNAL_HANDLER
 
 	if((slot in valid_slots) && istype(equipper, mobtype))
-		RegisterSignal(equipper, signals, proctype, TRUE)
+		RegisterSignals(equipper, signals, proctype, TRUE)
 	else
 		UnregisterSignal(equipper, signals)
 

@@ -1,18 +1,18 @@
-
 /atom/movable/screen/ghost
-	icon = 'code/modules/wod13/UI/buttons32.dmi'
-	plane = 45 // [ChillRaccoon] - 42 was a value by default
-/*
-/atom/movable/screen/ghost/MouseEntered()
-	flick(icon_state + "_anim", src)
-*/
-/atom/movable/screen/ghost/jumptomob
-	name = "Jump to mob"
-	icon_state = "jumptomob"
+	icon = 'icons/hud/screen_ghost.dmi'
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
-/atom/movable/screen/ghost/jumptomob/Click()
-	var/mob/dead/observer/G = usr
-	G.jumptomob()
+/atom/movable/screen/ghost/MouseEntered(location, control, params)
+	. = ..()
+	flick(icon_state + "_anim", src)
+
+/atom/movable/screen/ghost/spawners_menu
+	name = "Spawners menu"
+	icon_state = "spawners"
+
+/atom/movable/screen/ghost/spawners_menu/Click()
+	var/mob/dead/observer/observer = usr
+	observer.open_spawners_menu()
 
 /atom/movable/screen/ghost/orbit
 	name = "Orbit"
@@ -46,79 +46,57 @@
 	var/mob/dead/observer/G = usr
 	G.register_pai()
 
+/atom/movable/screen/ghost/minigames_menu
+	name ="Minigames"
+	icon_state = "minigames"
 
-// [ChillRaccoon] - LFWB like ghost GUI
+/atom/movable/screen/ghost/minigames_menu/Click()
+	var/mob/dead/observer/observer = usr
+	observer.open_minigames_menu()
 
-/*
-/atom/movable/screen/fullscreen/ghost/lfwbLike
-	icon = 'icons/hud/fullscreen.dmi'
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/atom/movable/screen/fullscreen/ghost/lfwbLike/New()
-	..()
-	var/matrix/M = matrix()
-	M.Scale(1.3, 1) // client.view has 19x19
-	src.transform = M
-
-/atom/movable/screen/fullscreen/ghost/lfwbLike/screenLayer1 // [ChillRaccoon] - this layer should overlap screenLayer2
-	name = ""
-	icon_state = "ghost1"
-	alpha = 170
-	plane = 43
-
-/atom/movable/screen/fullscreen/ghost/lfwbLike/screenLayer2
-	name = ""
-	icon_state = "ghost2"
-	alpha = 100
-	plane = 42
-*/
 /datum/hud/ghost/New(mob/owner)
 	..()
 	var/atom/movable/screen/using
-	using = new /atom/movable/screen/ghost/jumptomob()
-	using.screen_loc = ui_ghost_jumptomob
-	using.hud = src
+
+	using = new /atom/movable/screen/ghost/spawners_menu(null, src)
+	using.screen_loc = ui_ghost_spawners_menu
 	static_inventory += using
 
-	using = new /atom/movable/screen/ghost/orbit()
+	using = new /atom/movable/screen/ghost/orbit(null, src)
 	using.screen_loc = ui_ghost_orbit
-	using.hud = src
 	static_inventory += using
 
-	using = new /atom/movable/screen/ghost/reenter_corpse()
+	using = new /atom/movable/screen/ghost/reenter_corpse(null, src)
 	using.screen_loc = ui_ghost_reenter_corpse
-	using.hud = src
 	static_inventory += using
 
-	using = new /atom/movable/screen/ghost/teleport()
+	using = new /atom/movable/screen/ghost/teleport(null, src)
 	using.screen_loc = ui_ghost_teleport
-	using.hud = src
 	static_inventory += using
 
-//	using = new /atom/movable/screen/ghost/pai()
-//	using.screen_loc = ui_ghost_pai
-//	using.hud = src
-//	static_inventory += using
-
-//	using = new /atom/movable/screen/language_menu
-//	using.icon = ui_style
-//	using.hud = src
-//	static_inventory += using
-
-
-	// [ChillRaccoon] - LFWB like GUI implementation
-
-/*
-	using = new /atom/movable/screen/fullscreen/ghost/lfwbLike/screenLayer1
-	using.hud = src
-	using.screen_loc = "CENTER-7,CENTER-7"
+	using = new /atom/movable/screen/ghost/pai(null, src)
+	using.screen_loc = ui_ghost_pai
 	static_inventory += using
 
-	using = new /atom/movable/screen/fullscreen/ghost/lfwbLike/screenLayer2
-	using.hud = src
-	using.screen_loc = "CENTER-7,CENTER-7"
+	using = new /atom/movable/screen/ghost/minigames_menu(null, src)
+	using.screen_loc = ui_ghost_minigames
 	static_inventory += using
-*/
+
+	using = new /atom/movable/screen/language_menu(null, src)
+	using.screen_loc = ui_ghost_language_menu
+	using.icon = ui_style
+	static_inventory += using
+
+	using = new /atom/movable/screen/language_menu(null, src)
+	using.screen_loc = ui_ghost_language_menu
+	using.icon = ui_style
+	static_inventory += using
+
+	floor_change = new /atom/movable/screen/floor_changer/vertical(null, src)
+	floor_change.icon = ui_style
+	floor_change.screen_loc = ui_ghost_floor_changer
+	static_inventory += floor_change
+
 /datum/hud/ghost/show_hud(version = 0, mob/viewmob)
 	// don't show this HUD if observing; show the HUD of the observee
 	var/mob/dead/observer/O = mymob
@@ -130,14 +108,10 @@
 	if(!.)
 		return
 	var/mob/screenmob = viewmob || mymob
-	/* // [ChillRaccoon] - do a little trolling
-	if(!screenmob.client.prefs.ghost_hud)
+	if(screenmob.client.prefs.read_preference(/datum/preference/toggle/ghost_hud))
+		screenmob.client.screen += static_inventory
+	else
 		screenmob.client.screen -= static_inventory
-	else*/
-	//if(!check_rights_for(screenmob.client, R_ADMIN)) // [ChillRaccoon] - administration shouldn't see overlays
-	// to_chat(screenmob.client, "Check rights (overlays) - [check_rights_for(screenmob.client, R_ADMIN)]")
-
-	screenmob.client.screen += static_inventory
 
 //We should only see observed mob alerts.
 /datum/hud/ghost/reorganize_alerts(mob/viewmob)
@@ -145,4 +119,3 @@
 	if (istype(O) && O.observetarget)
 		return
 	. = ..()
-

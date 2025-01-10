@@ -1,6 +1,7 @@
 /atom/movable/screen/movable/pic_in_pic
 	name = "Picture-in-picture"
 	screen_loc = "CENTER"
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 	var/atom/center
 	var/width = 0
@@ -13,9 +14,15 @@
 
 	var/mutable_appearance/standard_background
 
-/atom/movable/screen/movable/pic_in_pic/Initialize()
+/atom/movable/screen/movable/pic_in_pic/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	make_backgrounds()
+	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(multiz_offset_increase))
+	multiz_offset_increase(SSmapping)
+
+/atom/movable/screen/movable/pic_in_pic/proc/multiz_offset_increase(datum/source)
+	SIGNAL_HANDLER
+	SET_PLANE_W_SCALAR(src, initial(plane), SSmapping.max_plane_offset)
 
 /atom/movable/screen/movable/pic_in_pic/Destroy()
 	for(var/C in shown_to)
@@ -35,7 +42,7 @@
 
 /atom/movable/screen/movable/pic_in_pic/proc/make_backgrounds()
 	standard_background = new /mutable_appearance()
-	standard_background.icon = 'icons/misc/pic_in_pic.dmi'
+	standard_background.icon = 'icons/hud/pic_in_pic.dmi'
 	standard_background.icon_state = "background"
 	standard_background.layer = SPACE_LAYER
 
@@ -45,11 +52,11 @@
 		move_tab = new /mutable_appearance()
 		//all these properties are always the same, and since adding something to the overlay
 		//list makes a copy, there is no reason to make a new one each call
-		move_tab.icon = 'icons/misc/pic_in_pic.dmi'
+		move_tab.icon = 'icons/hud/pic_in_pic.dmi'
 		move_tab.icon_state = "move"
 		move_tab.plane = HUD_PLANE
 	var/matrix/M = matrix()
-	M.Translate(0, (height + 0.25) * world.icon_size)
+	M.Translate(0, (height + 0.25) * ICON_SIZE_Y)
 	move_tab.transform = M
 	add_overlay(move_tab)
 
@@ -57,12 +64,12 @@
 		button_x = new /atom/movable/screen/component_button(null, src)
 		var/mutable_appearance/MA = new /mutable_appearance()
 		MA.name = "close"
-		MA.icon = 'icons/misc/pic_in_pic.dmi'
+		MA.icon = 'icons/hud/pic_in_pic.dmi'
 		MA.icon_state = "x"
 		MA.plane = HUD_PLANE
 		button_x.appearance = MA
 	M = matrix()
-	M.Translate((max(4, width) - 0.75) * world.icon_size, (height + 0.25) * world.icon_size)
+	M.Translate((max(4, width) - 0.75) * ICON_SIZE_X, (height + 0.25) * ICON_SIZE_Y)
 	button_x.transform = M
 	vis_contents += button_x
 
@@ -70,12 +77,12 @@
 		button_expand = new /atom/movable/screen/component_button(null, src)
 		var/mutable_appearance/MA = new /mutable_appearance()
 		MA.name = "expand"
-		MA.icon = 'icons/misc/pic_in_pic.dmi'
+		MA.icon = 'icons/hud/pic_in_pic.dmi'
 		MA.icon_state = "expand"
 		MA.plane = HUD_PLANE
 		button_expand.appearance = MA
 	M = matrix()
-	M.Translate(world.icon_size, (height + 0.25) * world.icon_size)
+	M.Translate(ICON_SIZE_X, (height + 0.25) * ICON_SIZE_Y)
 	button_expand.transform = M
 	vis_contents += button_expand
 
@@ -83,12 +90,12 @@
 		button_shrink = new /atom/movable/screen/component_button(null, src)
 		var/mutable_appearance/MA = new /mutable_appearance()
 		MA.name = "shrink"
-		MA.icon = 'icons/misc/pic_in_pic.dmi'
+		MA.icon = 'icons/hud/pic_in_pic.dmi'
 		MA.icon_state = "shrink"
 		MA.plane = HUD_PLANE
 		button_shrink.appearance = MA
 	M = matrix()
-	M.Translate(2 * world.icon_size, (height + 0.25) * world.icon_size)
+	M.Translate(2 * ICON_SIZE_X, (height + 0.25) * ICON_SIZE_Y)
 	button_shrink.transform = M
 	vis_contents += button_shrink
 
@@ -96,7 +103,7 @@
 	if((width > 0) && (height > 0))
 		var/matrix/M = matrix()
 		M.Scale(width + 0.5, height + 0.5)
-		M.Translate((width-1)/2 * world.icon_size, (height-1)/2 * world.icon_size)
+		M.Translate((width-1)/2 * ICON_SIZE_X, (height-1)/2 * ICON_SIZE_Y)
 		standard_background.transform = M
 		add_overlay(standard_background)
 
@@ -108,7 +115,7 @@
 	src.width = width
 	src.height = height
 
-	y_off = -height * world.icon_size - 16
+	y_off = (-height * ICON_SIZE_Y) - (ICON_SIZE_Y / 2)
 
 	cut_overlays()
 	add_background()
