@@ -43,23 +43,24 @@ SUBSYSTEM_DEF(bad_guys_party)
 	for(var/i in GLOB.player_list)
 		var/mob/player = i
 		if(player.mind && (player.mind.assigned_role in GLOB.leader_positions))
-			. += 4
+			city_power += 4
 			continue
 		if(player.mind && (player.mind.assigned_role in GLOB.command_positions))
-			. += 3
+			city_power += 3
 			continue
 		if(player.mind && (player.mind.assigned_role in GLOB.camarilla_council_positions))
-			. += 3
+			city_power += 3
 			continue
 		if(player.mind && (player.mind.assigned_role in GLOB.anarch_positions))
-			. += 2
+			city_power += 2
 			continue
 		if(player.mind && (player.mind.assigned_role in GLOB.tremere_positions))
-			. += 2
+			city_power += 2
 			continue
 		if(player.mind && (player.mind.assigned_role in GLOB.police_positions))
-			. += 1
+			city_power += 1
 			continue
+	return city_power
 
 /datum/controller/subsystem/bad_guys_party/proc/get_badguys(var/level)
 	var/city_power = get_city_power()
@@ -77,7 +78,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 				if(Next)
 					qdel(Next)
 				threat = min(100, threat+30)
-				max_candidates = floor(city_power/7)
+				max_candidates = max(1,floor(city_power/7))
 				go_on_next_fire = TRUE
 				Next = new /datum/outfit/job/sabbatist()
 				setting = null
@@ -85,7 +86,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 				if(Next)
 					qdel(Next)
 				threat = min(100, threat+60)
-				max_candidates = floor(city_power/4)
+				max_candidates = max(1,floor(city_power/4))
 				go_on_next_fire = TRUE
 				Next = new /datum/outfit/job/hunter()
 				setting = null
@@ -105,7 +106,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 					if(Next)
 						qdel(Next)
 					threat = min(100, threat+30)
-					max_candidates = floor(city_power/7)
+					max_candidates = max(1,floor(city_power/7))
 					go_on_next_fire = TRUE
 					Next = new /datum/outfit/job/sabbatist()
 			if(2)
@@ -114,7 +115,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 					if(Next)
 						qdel(Next)
 					threat = min(100, threat+90)
-					max_candidates = floor(city_power/5)
+					max_candidates = max(1,floor(city_power/5))
 					go_on_next_fire = TRUE
 					Next = new /datum/outfit/job/sabbatist()
 				else
@@ -122,7 +123,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 					if(Next)
 						qdel(Next)
 					threat = min(100, threat+60)
-					max_candidates = floor(city_power/4)
+					max_candidates = max(1,floor(city_power/4))
 					go_on_next_fire = TRUE
 					Next = new /datum/outfit/job/hunter()
 			/*if(3)
