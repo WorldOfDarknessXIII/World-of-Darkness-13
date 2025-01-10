@@ -99,6 +99,7 @@
 	custom_objective.owner = owner
 	custom_objective.explanation_text = "Exterminate all evil spirits in the city. Let the Hunt begin!"
 	objectives += custom_objective
+	update_hunted()
 	var/datum/objective/martyr/die_objective = new
 	die_objective.owner = owner
 	objectives += die_objective
