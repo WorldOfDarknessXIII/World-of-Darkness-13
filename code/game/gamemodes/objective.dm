@@ -10,6 +10,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
 	var/completed = FALSE				//currently only used for custom objectives.
 	var/martyr_compatible = FALSE		//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
+	var/experience_reward = 0
 
 /datum/objective/New(text)
 	if(text)
@@ -174,6 +175,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	name = "assasinate"
 	var/target_role_type=FALSE
 	martyr_compatible = TRUE
+	experience_reward = 4
 
 /datum/objective/assassinate/find_target_by_role(role, role_type=FALSE,invert=FALSE)
 	if(!invert)
@@ -205,6 +207,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	name = "mutiny"
 	var/target_role_type=FALSE
 	martyr_compatible = 1
+	experience_reward = 4
 
 /datum/objective/mutiny/find_target_by_role(role, role_type=FALSE,invert=FALSE)
 	if(!invert)
@@ -496,6 +499,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/survive
 	name = "survive"
 	explanation_text = "Stay alive until the end."
+	experience_reward = 1
 
 /datum/objective/survive/check_completion()
 	var/list/datum/mind/owners = get_owners()
@@ -518,6 +522,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/martyr
 	name = "martyr"
 	explanation_text = "Die a glorious death."
+	experience_reward = 1
 
 /datum/objective/martyr/check_completion()
 	var/list/datum/mind/owners = get_owners()
@@ -537,11 +542,13 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	name = "national_guard"
 	explanation_text = "Follow the orders of your sergeant."
 	martyr_compatible = TRUE
+	experience_reward = 1
 
 /datum/objective/swat
 	name = "swat"
 	explanation_text = "Follow the orders of your commander."
 	martyr_compatible = TRUE
+	experience_reward = 1
 
 /datum/objective/nuclear/check_completion()
 	if(SSticker && SSticker.mode && SSticker.mode.station_was_nuked)
@@ -984,6 +991,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/money
 	name = "earn money"
 	var/amount = 500
+	experience_reward = 2
 
 /datum/objective/money/update_explanation_text()
 	..()
@@ -1005,6 +1013,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/artefact
 	name = "Gather an artefact"
+	experience_reward = 2
 
 /datum/objective/artefact/update_explanation_text()
 	..()
@@ -1016,14 +1025,15 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		if(!isliving(M.current))
 			continue
 		var/list/all_items = M.current.GetAllContents()
-		for(var/obj/item/vtm_artifact/I in all_items) 
+		for(var/obj/item/vtm_artifact/I in all_items)
 			return TRUE
-	return FALSE 
+	return FALSE
 
 
 /datum/objective/blood
 	name = "get blood of"
 	var/target_name
+	experience_reward = 2
 
 /datum/objective/blood/update_explanation_text()
 	..()
@@ -1044,6 +1054,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/protect_niga
 	name = "protect the"
 	var/mob/living/carbon/human/mine_target
+	experience_reward = 2
 
 /datum/objective/protect_niga/update_explanation_text()
 	..()
@@ -1055,6 +1066,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/become_member
 	name = "become member of"
 	var/faction
+	experience_reward = 2
 
 /datum/objective/become_member/update_explanation_text()
 	..()
