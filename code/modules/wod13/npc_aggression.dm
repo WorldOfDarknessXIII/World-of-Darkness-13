@@ -3,7 +3,11 @@
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.vampire_faction == vampire_faction && !H.client)
+		if(H.vampire_faction == vampire_faction && presence_master == H)
+			return
+	if(istype(M,/mob/living/carbon/human/npc))
+		var/mob/living/carbon/human/npc/H = M
+		if(H && !H.presence_master)
 			return
 	if((stat != DEAD) && !HAS_TRAIT(M, TRAIT_DEATHCOMA))
 		danger_source = M

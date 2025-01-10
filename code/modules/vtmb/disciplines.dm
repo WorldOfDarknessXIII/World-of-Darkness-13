@@ -938,25 +938,15 @@
 					// Let them follow:
 					N.presence_follow = TRUE
 					caster.puppets |= N
+					var/initial_fights_anyway = N.fights_anyway
+					N.fights_anyway = TRUE
 					caster.say("Come with me...")
 					// Optionally add them to a global list if you like,
 					// but your existing SShumannpcpool subsystem should keep them updated.
 					// e.g. GLOB.presence_npc_list += N
 
 					// Possibly set a timer for effect end
-					spawn(300 SECONDS)
-						if(N && N.presence_master == caster)
-							// End presence effect
-							N.presence_master = null
-							N.presence_follow = FALSE
-							N.presence_enemies = list()
-							N.presence_target = null
-							caster.puppets -= N
-							if(!length(caster.puppets))
-								for(var/datum/action/presence_stay/VI in caster.actions)
-									if(VI)
-										VI.Remove(caster)
-							// also remove from any presence list if you used one
+					addtimer(CALLBACK(src, PROC_REF(presence_end), target, caster, initial_fights_anyway), 50 SECONDS * mypower)
 				else
 					// continue your normal presence code for players
 					var/obj/item/I1 = H.get_active_held_item()
@@ -992,6 +982,21 @@
 				if(caster)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/presence_deactivate.ogg', 50, FALSE)
 
+/datum/discipline/presence/proc/presence_end(mob/living/target, mob/living/carbon/human/caster, var/initial_fights_anyway)
+	var/mob/living/carbon/human/npc/N = target
+	if(N && N.presence_master == caster)
+		// End presence effect
+		N.presence_master = null
+		N.presence_follow = FALSE
+		N.presence_enemies = list()
+		N.danger_source = null
+		caster.puppets -= N
+		N.fights_anyway = initial_fights_anyway
+		if(!length(caster.puppets))
+			for(var/datum/action/presence_stay/VI in caster.actions)
+				if(VI)
+					VI.Remove(caster)
+
 /mob/living/carbon/human/npc/proc/handle_presence_movement()
 	// If for some reason we have no valid master, stop
 	if(!presence_master || stat >= DEAD)
@@ -1000,7 +1005,7 @@
 	if(!presence_follow)
 		return
 		// Distance check—walk toward presence_master if too far:
-	if(presence_master.z == z && get_dist(src, presence_master) > 1)
+	if(presence_master.z == z && get_dist(src, presence_master) > 3)
 		// Use your same approach as the NPC subsystem
 		var/reqsteps = round((SShumannpcpool.next_fire - world.time) / total_multiplicative_slowdown())
 		walk_to(src, presence_master, reqsteps, total_multiplicative_slowdown())
@@ -1026,23 +1031,25 @@
 	var/following = FALSE
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 
-	/datum/action/presence_stay/Trigger()
-		. = ..()
-		if(ishuman(owner))
-			if(cool_down + 10 >= world.time)
-				return
-			cool_down = world.time
-			var/mob/living/carbon/human/H = owner
-				// flip “following” on or off
-			following = !following
-			if(following)
-				to_chat(H, "You call your thralls to follow you.")
-			else
-				to_chat(H, "You command your thralls to remain here.")
-				// For each Presence’d NPC you control, apply the new setting
-			for(var/mob/living/carbon/human/npc/N in GLOB.npc_list)
-				if(N.presence_master == H)
-					N.presence_follow = following
+/datum/action/presence_stay/Trigger()
+	. = ..()
+	if(ishuman(owner))
+		if(cool_down + 10 >= world.time)
+			return
+		cool_down = world.time
+		var/mob/living/carbon/human/H = owner
+			// flip “following” on or off
+		following = !following
+		if(following)
+			H.say("Follow me")
+			to_chat(H, "You call your thralls to follow you.")
+		else
+			H.say("Stay here")
+			to_chat(H, "You command your thralls to remain here.")
+			// For each Presence’d NPC you control, apply the new setting
+		for(var/mob/living/carbon/human/npc/N in GLOB.npc_list)
+			if(N.presence_master == H)
+				N.presence_follow = following
 
 /datum/action/presence_deaggro
 	name = "Loose Aggression (Presence)"
@@ -1051,13 +1058,15 @@
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	var/cool_down = 0
 
-/datum/action/beastmaster_deaggro/Trigger()
+/datum/action/presence_deaggro/Trigger()
 	. = ..()
 	if(ishuman(owner))
 		if(cool_down+10 >= world.time)
 			return
 		cool_down = world.time
 		var/mob/living/carbon/human/H = owner
+		H.say("Stop it!")
+		to_chat(H, "You order your thralls to stop attacking.")
 		for(var/mob/living/carbon/human/npc/N in H.puppets)
 			N.presence_enemies = list()
 			N.danger_source = null

@@ -240,10 +240,27 @@
 			Aggro(pulledby, TRUE)
 		if(fights_anyway)
 			Aggro(pulledby, TRUE)
-	if(!walktarget && !staying && !presence_follow)
-		stopturf = rand(1, 2)
-		walktarget = ChoosePath()
-		face_atom(walktarget)
+
+	if(!staying && !presence_master)
+		if(!walktarget)
+			stopturf = rand(1, 2)
+			walktarget = ChoosePath()
+			face_atom(walktarget)
+
+	if(!staying && (!presence_master || (presence_master && presence_follow)))
+		if(loc == tupik_loc)
+			tupik_steps += 1
+		if(loc != tupik_loc)
+			tupik_loc = loc
+			tupik_steps = 0
+		if(tupik_steps > 3)
+			var/turf/T = get_step(src, pick(NORTH, SOUTH, WEST, EAST))
+			face_atom(T)
+			step_to(src,T,0)
+			if(walktarget && !old_movement)
+				if(route_optimisation())
+					forceMove(get_turf(walktarget))
+
 	if(isturf(loc))
 		if(danger_source)
 			a_intent = INTENT_HARM
