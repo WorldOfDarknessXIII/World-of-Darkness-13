@@ -557,7 +557,6 @@
 //           ABDUCTORS    (GHOST)           //
 //                                          //
 //////////////////////////////////////////////
-#define ABDUCTOR_MAX_TEAMS 4
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors
 	name = "Abductors"

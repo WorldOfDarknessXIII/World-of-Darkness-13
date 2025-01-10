@@ -1,4 +1,3 @@
-GLOBAL_LIST_EMPTY(sacrificed) //a mixed list of minds and mobs
 GLOBAL_LIST(rune_types) //Every rune that can be drawn by ritual daggers
 GLOBAL_LIST_EMPTY(teleport_runes)
 GLOBAL_LIST_EMPTY(wall_runes)

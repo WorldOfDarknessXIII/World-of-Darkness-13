@@ -1,125 +1,4247 @@
-diff --git a/code/controllers/subsystem/dcs.dm b/code/controllers/subsystem/dcs.dm
-index a3dcc26af54..104c3eef31d 100644
---- a/code/controllers/subsystem/dcs.dm
-+++ b/code/controllers/subsystem/dcs.dm
-@@ -5,34 +5,10 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
+diff --git a/code/modules/mapping/map_template.dm b/code/modules/mapping/map_template.dm
+index 27b305841c9..950f3e2809e 100644
+--- a/code/modules/mapping/map_template.dm
++++ b/code/modules/mapping/map_template.dm
+@@ -8,6 +8,9 @@
+ 	var/keep_cached_map = FALSE
+ 	var/station_id = null // used to override the root id when generating
  
- 	var/list/elements_by_type = list()
++	///Default area associated with the map template
++	var/default_area
++
+ 	///if true, turfs loaded from this template are placed on top of the turfs already there, defaults to TRUE
+ 	var/should_place_on_top = TRUE
  
--	/**
--	 * A nested assoc list of bespoke element types (keys) and superlists containing all lists used as arguments (values).
--	 * Inside the superlists, lists that've been sorted alphabetically are keys, while the original unsorted lists are values.
--	 *
--	 * e.g. list(
--	 *	/datum/element/first = list(list(A, B, C) = list(B, A, C), list(A, B) = list(A, B)),
--	 *	/datum/element/second = list(list(B, C) = list(C, B), list(D) = list(D)),
--	 * )
--	 *
--	 * Used by the dcs_check_list_arguments unit test.
--	 */
--	var/list/arguments_that_are_lists_by_element = list()
--	/**
--	 * An assoc list of list instances and their sorted counterparts.
--	 *
--	 * e.g. list(
--	 *	list(B, A, C) = list(A, B, C),
--	 *	list(C, B) = list(B, C),
--	 * )
--	 *
--	 * Used to make sure each list instance is sorted no more than once, or the unit test won't work.
--	 */
--	var/list/sorted_arguments_that_are_lists = list()
--
- /datum/controller/subsystem/processing/dcs/Recover()
--	_listen_lookup = SSdcs._listen_lookup
-+	comp_lookup = SSdcs.comp_lookup
+@@ -18,13 +21,23 @@
+ 	var/list/created_atoms = list()
+ 	//make sure this list is accounted for/cleared if you request it from ssatoms!
  
--/datum/controller/subsystem/processing/dcs/proc/GetElement(list/arguments, init_element = TRUE)
-+/datum/controller/subsystem/processing/dcs/proc/GetElement(list/arguments)
- 	var/datum/element/eletype = arguments[1]
- 	var/element_id = eletype
++	///If true, any openspace turfs above the template will be replaced with ceiling_turf when loading. Should probably be FALSE for lower levels of multi-z ruins.
++	var/has_ceiling = FALSE
++	///What turf to replace openspace with when has_ceiling is true
++	var/turf/ceiling_turf = /turf/open/floor/plating
++	///What baseturfs to set when replacing openspace when has_ceiling is true
++	var/list/ceiling_baseturfs = list()
++
+ /datum/map_template/New(path = null, rename = null, cache = FALSE)
++	SHOULD_CALL_PARENT(TRUE)
++	. = ..()
+ 	if(path)
+ 		mappath = path
+ 	if(mappath)
+ 		preload_size(mappath, cache)
+ 	if(rename)
+ 		name = rename
++	ceiling_baseturfs.Insert(1, /turf/baseturf_bottom)
  
-@@ -40,10 +16,10 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
- 		CRASH("Attempted to instantiate [eletype] as a /datum/element")
+ /datum/map_template/proc/preload_size(path, cache = FALSE)
+ 	var/datum/parsed_map/parsed = new(file(path))
+@@ -43,7 +56,8 @@
  
- 	if(initial(eletype.element_flags) & ELEMENT_BESPOKE)
--		element_id = length(arguments) == 1 ? "[arguments[1]]" : GetIdFromArguments(arguments)
-+		element_id = GetIdFromArguments(arguments)
+ 	var/list/obj/machinery/atmospherics/atmos_machines = list()
+ 	var/list/obj/structure/cable/cables = list()
+-	var/list/atom/atoms = list()
++	var/list/atom/movable/movables = list()
++	var/list/obj/docking_port/stationary/ports = list()
+ 	var/list/area/areas = list()
  
- 	. = elements_by_type[element_id]
--	if(. || !init_element)
-+	if(.)
+ 	var/list/turfs = block(
+@@ -58,30 +72,41 @@
+ 			bounds[MAP_MAXZ]
+ 			)
+ 		)
+-	for(var/L in turfs)
+-		var/turf/B = L
+-		var/area/G = B.loc
+-		areas |= G
++	for(var/turf/current_turf as anything in turfs)
++		var/area/current_turfs_area = current_turf.loc
++		areas |= current_turfs_area
+ 		if(!SSatoms.initialized)
+ 			continue
+ 
+-		for(var/A in B)
+-			atoms += A
+-			if(istype(A, /obj/structure/cable))
+-				cables += A
++		for(var/movable_in_turf in current_turf)
++			if(istype(movable_in_turf, /obj/docking_port/mobile))
++				continue // mobile docking ports need to be initialized after their template has finished loading, to ensure that their bounds are setup
++			movables += movable_in_turf
++			if(istype(movable_in_turf, /obj/structure/cable))
++				cables += movable_in_turf
+ 				continue
+-			if(istype(A, /obj/machinery/atmospherics))
+-				atmos_machines += A
++			if(istype(movable_in_turf, /obj/machinery/atmospherics))
++				atmos_machines += movable_in_turf
++			if(istype(movable_in_turf, /obj/docking_port/stationary))
++				ports += movable_in_turf
+ 
+ 	// Not sure if there is some importance here to make sure the area is in z
+ 	// first or not.  Its defined In Initialize yet its run first in templates
+ 	// BEFORE so... hummm
+ 	SSmapping.reg_in_areas_in_z(areas)
+-	SSnetworks.assign_areas_root_ids(areas, src)
+ 	if(!SSatoms.initialized)
  		return
- 	. = elements_by_type[element_id] = new eletype
  
-@@ -55,55 +31,24 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
- 	**/
- /datum/controller/subsystem/processing/dcs/proc/GetIdFromArguments(list/arguments)
- 	var/datum/element/eletype = arguments[1]
--	var/list/fullid = list(eletype)
--	var/list/named_arguments
--	for(var/i in initial(eletype.argument_hash_start_idx) to (initial(eletype.argument_hash_end_idx) || length(arguments)))
-+	var/list/fullid = list("[eletype]")
-+	var/list/named_arguments = list()
-+	for(var/i in initial(eletype.id_arg_index) to length(arguments))
- 		var/key = arguments[i]
+-	SSatoms.InitializeAtoms(areas + turfs + atoms, returns_created_atoms ? created_atoms : null)
++	SSatoms.InitializeAtoms(areas + turfs + movables, returns_created_atoms ? created_atoms : null)
++
++	for(var/turf/unlit as anything in turfs)
++		if(unlit.space_lit)
++			continue
++		var/area/loc_area = unlit.loc
++		if(!loc_area.static_lighting)
++			continue
++		unlit.lighting_build_overlay()
++
+ 	// NOTE, now that Initialize and LateInitialize run correctly, do we really
+ 	// need these two below?
+ 	SSmachines.setup_template_powernets(cables)
+@@ -100,23 +125,29 @@
+ 			bounds[MAP_MAXZ]
+ 			)
+ 		)
+-	for(var/t in template_and_bordering_turfs)
+-		var/turf/affected_turf = t
++	for(var/turf/affected_turf as anything in template_and_bordering_turfs)
+ 		affected_turf.air_update_turf(TRUE, TRUE)
+ 		affected_turf.levelupdate()
+ 
+-/datum/map_template/proc/load_new_z()
++/datum/map_template/proc/load_new_z(secret = FALSE)
+ 	var/x = round((world.maxx - width) * 0.5) + 1
+ 	var/y = round((world.maxy - height) * 0.5) + 1
+ 
+-	var/datum/space_level/level = SSmapping.add_new_zlevel(name, list(ZTRAIT_AWAY = TRUE))
+-	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top)
++	var/datum/space_level/level = SSmapping.add_new_zlevel(name, secret ? ZTRAITS_AWAY_SECRET : ZTRAITS_AWAY, contain_turfs = FALSE)
++	var/datum/parsed_map/parsed = load_map(
++		file(mappath),
++		x,
++		y,
++		level.z_value,
++		no_changeturf = (SSatoms.initialized == INITIALIZATION_INSSATOMS),
++		place_on_top = should_place_on_top,
++		new_z = TRUE,
++	)
+ 	var/list/bounds = parsed.bounds
+ 	if(!bounds)
+ 		return FALSE
+ 
+-	repopulate_sorted_areas()
 -
-+		var/value
- 		if(istext(key))
--			var/value = arguments[key]
--			if (isnull(value))
--				fullid += key
++	require_area_resort()
+ 	//initialize things that are normally initialized after map load
+ 	initTemplateBounds(bounds)
+ 	smooth_zlevel(world.maxz)
+@@ -129,17 +160,20 @@
+ 		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
+ 	if(!T)
+ 		return
+-	if(T.x+width > world.maxx)
++	if((T.x+width) - 1 > world.maxx)
+ 		return
+-	if(T.y+height > world.maxy)
++	if((T.y+height) - 1 > world.maxy)
+ 		return
+ 
+-	var/list/border = block(locate(max(T.x-1, 1),			max(T.y-1, 1),			 T.z),
+-							locate(min(T.x+width+1, world.maxx),	min(T.y+height+1, world.maxy), T.z))
+-	for(var/L in border)
+-		var/turf/turf_to_disable = L
+-		SSair.remove_from_active(turf_to_disable) //stop processing turfs along the border to prevent runtimes, we return it in initTemplateBounds()
+-		turf_to_disable.atmos_adjacent_turfs?.Cut()
++	// Cache for sonic speed
++	var/list/to_rebuild = SSair.adjacent_rebuild
++	// iterate over turfs in the border and clear them from active atmos processing
++	for(var/turf/border_turf as anything in CORNER_BLOCK_OFFSET(T, width + 2, height + 2, -1, -1))
++		SSair.remove_from_active(border_turf)
++		to_rebuild -= border_turf
++		for(var/turf/sub_turf as anything in border_turf.atmos_adjacent_turfs)
++			sub_turf.atmos_adjacent_turfs?.Remove(border_turf)
++		border_turf.atmos_adjacent_turfs?.Cut()
+ 
+ 	// Accept cached maps, but don't save them automatically - we don't want
+ 	// ruins clogging up memory for the whole round.
+@@ -149,22 +183,41 @@
+ 	var/list/turf_blacklist = list()
+ 	update_blacklist(T, turf_blacklist)
+ 
++	UNSETEMPTY(turf_blacklist)
+ 	parsed.turf_blacklist = turf_blacklist
+-	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top))
++	if(!parsed.load(
++		T.x,
++		T.y,
++		T.z,
++		crop_map = TRUE,
++		no_changeturf = (SSatoms.initialized == INITIALIZATION_INSSATOMS),
++		place_on_top = should_place_on_top,
++	))
+ 		return
++
+ 	var/list/bounds = parsed.bounds
+ 	if(!bounds)
+ 		return
+ 
+-	if(!SSmapping.loading_ruins) //Will be done manually during mapping ss init
+-		repopulate_sorted_areas()
++	require_area_resort()
+ 
+ 	//initialize things that are normally initialized after map load
+ 	initTemplateBounds(bounds)
+ 
++	if(has_ceiling)
++		var/affected_turfs = get_affected_turfs(T, FALSE)
++		generate_ceiling(affected_turfs)
++
+ 	log_game("[name] loaded at [T.x],[T.y],[T.z]")
+ 	return bounds
+ 
++/datum/map_template/proc/generate_ceiling(affected_turfs)
++	for (var/turf/turf in affected_turfs)
++		var/turf/ceiling = get_step_multiz(turf, UP)
++		if (ceiling)
++			if (istype(ceiling, /turf/open/openspace) || istype(ceiling, /turf/open/space/openspace))
++				ceiling.ChangeTurf(ceiling_turf, ceiling_baseturfs, CHANGETURF_INHERIT_AIR)
++
+ /datum/map_template/proc/post_load()
+ 	return
+ 
+@@ -179,9 +232,30 @@
+ 			placement = corner
+ 	return block(placement, locate(placement.x+width-1, placement.y+height-1, placement.z))
+ 
++/// Takes in a type path, locates an instance of that type in the cached map, and calculates its offset from the origin of the map, returns this offset in the form list(x, y).
++/datum/map_template/proc/discover_offset(obj/marker)
++	var/key
++	var/list/models = cached_map.grid_models
++	for(key in models)
++		if(findtext(models[key], "[marker]")) // Yay compile time checks
++			break // This works by assuming there will ever only be one mobile dock in a template at most
++
++	for(var/datum/grid_set/gset as anything in cached_map.gridSets)
++		var/ycrd = gset.ycrd
++		for(var/line in gset.gridLines)
++			var/xcrd = gset.xcrd
++			for(var/j in 1 to length(line) step cached_map.key_len)
++				if(key == copytext(line, j, j + cached_map.key_len))
++					return list(xcrd, ycrd)
++				++xcrd
++			--ycrd
++
+ 
+ //for your ever biggening badminnery kevinz000
+ //❤ - Cyberboss
+-/proc/load_new_z_level(file, name)
+-	var/datum/map_template/template = new(file, name)
+-	template.load_new_z()
++/proc/load_new_z_level(file, name, secret)
++	var/datum/map_template/template = new(file, name, TRUE)
++	if(!template.cached_map || template.cached_map.check_for_errors())
++		return FALSE
++	template.load_new_z(secret)
++	return TRUE
+diff --git a/code/modules/mapping/mapping_helpers.dm b/code/modules/mapping/mapping_helpers.dm
+index d9aea4abaef..e5f53c2b02d 100644
+--- a/code/modules/mapping/mapping_helpers.dm
++++ b/code/modules/mapping/mapping_helpers.dm
+@@ -6,13 +6,14 @@
+ 	name = "baseturf editor"
+ 	icon = 'icons/effects/mapping_helpers.dmi'
+ 	icon_state = ""
+-
++	/// Replacing a specific turf
+ 	var/list/baseturf_to_replace
++	/// The desired bottom turf
+ 	var/baseturf
+ 
+-	layer = POINT_LAYER
++	plane = POINT_PLANE
+ 
+-/obj/effect/baseturf_helper/Initialize()
++/obj/effect/baseturf_helper/Initialize(mapload)
+ 	. = ..()
+ 	return INITIALIZE_HINT_LATELOAD
+ 
+@@ -33,23 +34,16 @@
+ 
+ 	qdel(src)
+ 
++/// Replaces all the requested baseturfs (usually space/baseturfbottom) with the desired baseturf. Skips if its already there
+ /obj/effect/baseturf_helper/proc/replace_baseturf(turf/thing)
+-	if(length(thing.baseturfs))
+-		var/list/baseturf_cache = thing.baseturfs.Copy()
+-		for(var/i in baseturf_cache)
+-			if(baseturf_to_replace[i])
+-				baseturf_cache -= i
+-		thing.baseturfs = baseturfs_string_list(baseturf_cache, thing)
+-		if(!baseturf_cache.len)
+-			thing.assemble_baseturfs(baseturf)
+-		else
+-			thing.PlaceOnBottom(null, baseturf)
+-	else if(baseturf_to_replace[thing.baseturfs])
+-		thing.assemble_baseturfs(baseturf)
+-	else
+-		thing.PlaceOnBottom(null, baseturf)
++	thing.remove_baseturfs_from_typecache(baseturf_to_replace)
+ 
++	if(length(thing.baseturfs))
++		var/turf/tile = thing.baseturfs[1]
++		if(tile == baseturf)
++			return
+ 
++	thing.place_on_bottom(baseturf)
+ 
+ /obj/effect/baseturf_helper/space
+ 	name = "space baseturf editor"
+@@ -57,27 +51,31 @@
+ 
+ /obj/effect/baseturf_helper/asteroid
+ 	name = "asteroid baseturf editor"
+-	baseturf = /turf/open/floor/plating/asteroid
++	baseturf = /turf/open/misc/asteroid
+ 
+ /obj/effect/baseturf_helper/asteroid/airless
+ 	name = "asteroid airless baseturf editor"
+-	baseturf = /turf/open/floor/plating/asteroid/airless
++	baseturf = /turf/open/misc/asteroid/airless
+ 
+ /obj/effect/baseturf_helper/asteroid/basalt
+ 	name = "asteroid basalt baseturf editor"
+-	baseturf = /turf/open/floor/plating/asteroid/basalt
++	baseturf = /turf/open/misc/asteroid/basalt
+ 
+ /obj/effect/baseturf_helper/asteroid/snow
+ 	name = "asteroid snow baseturf editor"
+-	baseturf = /turf/open/floor/plating/asteroid/snow
++	baseturf = /turf/open/misc/asteroid/snow
++
++/obj/effect/baseturf_helper/asteroid/moon
++	name = "lunar sand baseturf editor"
++	baseturf = /turf/open/misc/asteroid/moon
+ 
+ /obj/effect/baseturf_helper/beach/sand
+ 	name = "beach sand baseturf editor"
+-	baseturf = /turf/open/floor/plating/beach/sand
++	baseturf = /turf/open/misc/beach/sand
+ 
+ /obj/effect/baseturf_helper/beach/water
+ 	name = "water baseturf editor"
+-	baseturf = /turf/open/floor/plating/beach/water
++	baseturf = /turf/open/water/beach
+ 
+ /obj/effect/baseturf_helper/lava
+ 	name = "lava baseturf editor"
+@@ -87,32 +85,104 @@
+ 	name = "lavaland baseturf editor"
+ 	baseturf = /turf/open/lava/smooth/lava_land_surface
+ 
++/obj/effect/baseturf_helper/reinforced_plating
++	name = "reinforced plating baseturf editor"
++	baseturf = /turf/open/floor/plating/reinforced
++	baseturf_to_replace = list(/turf/open/floor/plating)
++
++/obj/effect/baseturf_helper/reinforced_plating/replace_baseturf(turf/thing)
++	if(istype(thing, /turf/open/floor/plating))
++		return //Plates should not be placed under other plates
++	thing.stack_ontop_of_baseturf(/turf/open/floor/plating, baseturf)
++
++//This applies the reinforced plating to the above Z level for every tile in the area where this is placed
++/obj/effect/baseturf_helper/reinforced_plating/ceiling
++	name = "reinforced ceiling plating baseturf editor"
++
++/obj/effect/baseturf_helper/reinforced_plating/ceiling/replace_baseturf(turf/thing)
++	var/turf/ceiling = get_step_multiz(thing, UP)
++	if(isnull(ceiling))
++		CRASH("baseturf helper is attempting to modify the Z level above but there is no Z level above above it.")
++	if(isspaceturf(ceiling) || istype(ceiling, /turf/open/openspace))
++		return
++	return ..(ceiling)
++
++///Used for marking mapping errors. These should only be created by cases explicitly caught by unit tests, and should NEVER actually appear in production.
++/obj/effect/mapping_error
++	name = "I AM ERROR"
++	desc = "IF YOU SEE ME, YELL AT A MAPPER!!!"
++	icon = 'icons/effects/mapping_helpers.dmi'
++	icon_state = "mapping_error"
+ 
+ /obj/effect/mapping_helpers
+ 	icon = 'icons/effects/mapping_helpers.dmi'
+ 	icon_state = ""
++	anchored = TRUE
++	// Unless otherwise specified, layer above everything
++	layer = ABOVE_ALL_MOB_LAYER
+ 	var/late = FALSE
+ 
+-/obj/effect/mapping_helpers/Initialize()
++/obj/effect/mapping_helpers/Initialize(mapload)
+ 	..()
+ 	return late ? INITIALIZE_HINT_LATELOAD : INITIALIZE_HINT_QDEL
+ 
+-
+ //airlock helpers
+ /obj/effect/mapping_helpers/airlock
+ 	layer = DOOR_HELPER_LAYER
++	late = TRUE
+ 
+ /obj/effect/mapping_helpers/airlock/Initialize(mapload)
+ 	. = ..()
+ 	if(!mapload)
+ 		log_mapping("[src] spawned outside of mapload!")
+ 		return
++
+ 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
+ 	if(!airlock)
+ 		log_mapping("[src] failed to find an airlock at [AREACOORD(src)]")
+ 	else
+ 		payload(airlock)
+ 
++/obj/effect/mapping_helpers/airlock/LateInitialize()
++	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
++	if(!airlock)
++		qdel(src)
++		return
++	if(airlock.cyclelinkeddir)
++		airlock.cyclelinkairlock()
++	if(airlock.closeOtherId)
++		airlock.update_other_id()
++	if(airlock.abandoned)
++		var/outcome = rand(1,100)
++		switch(outcome)
++			if(1 to 9)
++				var/turf/here = get_turf(src)
++				for(var/turf/closed/T in range(2, src))
++					here.place_on_top(T.type)
++					qdel(airlock)
++					qdel(src)
++					return
++				here.place_on_top(/turf/closed/wall)
++				qdel(airlock)
++				qdel(src)
++				return
++			if(9 to 11)
++				airlock.lights = FALSE
++				// These do not use airlock.bolt() because we want to pretend it was always locked. That means no sound effects.
++				airlock.locked = TRUE
++			if(12 to 15)
++				airlock.locked = TRUE
++			if(16 to 23)
++				airlock.welded = TRUE
++			if(24 to 30)
++				airlock.set_panel_open(TRUE)
++	if(airlock.cutAiWire)
++		airlock.wires.cut(WIRE_AI)
++	if(airlock.autoname)
++		airlock.name = get_area_name(src, TRUE)
++	airlock.update_appearance()
++	qdel(src)
++
+ /obj/effect/mapping_helpers/airlock/proc/payload(obj/machinery/door/airlock/payload)
+ 	return
+ 
+@@ -126,6 +196,18 @@
+ 	else
+ 		airlock.cyclelinkeddir = dir
+ 
++/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi
++	name = "airlock multi-cyclelink helper"
++	icon_state = "airlock_multicyclelink_helper"
++	var/cycle_id
++
++/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi/payload(obj/machinery/door/airlock/airlock)
++	if(airlock.closeOtherId)
++		log_mapping("[src] at [AREACOORD(src)] tried to set [airlock] closeOtherId, but it's already set!")
++	else if(!cycle_id)
++		log_mapping("[src] at [AREACOORD(src)] doesn't have a cycle_id to assign to [airlock]!")
++	else
++		airlock.closeOtherId = cycle_id
+ 
+ /obj/effect/mapping_helpers/airlock/locked
+ 	name = "airlock lock helper"
+@@ -135,15 +217,16 @@
+ 	if(airlock.locked)
+ 		log_mapping("[src] at [AREACOORD(src)] tried to bolt [airlock] but it's already locked!")
+ 	else
++		// Used instead of bolt so that we can pretend it was always locked, i.e. no sound effects on init.
+ 		airlock.locked = TRUE
+ 
+-
+ /obj/effect/mapping_helpers/airlock/unres
+-	name = "airlock unresctricted side helper"
++	name = "airlock unrestricted side helper"
+ 	icon_state = "airlock_unres_helper"
+ 
+ /obj/effect/mapping_helpers/airlock/unres/payload(obj/machinery/door/airlock/airlock)
+ 	airlock.unres_sides ^= dir
++	airlock.unres_sensor = TRUE
+ 
+ /obj/effect/mapping_helpers/airlock/abandoned
+ 	name = "airlock abandoned helper"
+@@ -155,6 +238,15 @@
+ 	else
+ 		airlock.abandoned = TRUE
+ 
++/obj/effect/mapping_helpers/airlock/welded
++	name = "airlock welded helper"
++	icon_state = "airlock_welded"
++
++/obj/effect/mapping_helpers/airlock/welded/payload(obj/machinery/door/airlock/airlock)
++	if(airlock.welded)
++		log_mapping("[src] at [AREACOORD(src)] tried to make [airlock] welded but it's already welded closed!")
++	airlock.welded = TRUE
++
+ /obj/effect/mapping_helpers/airlock/cutaiwire
+ 	name = "airlock cut ai wire helper"
+ 	icon_state = "airlock_cutaiwire"
+@@ -165,132 +257,712 @@
+ 	else
+ 		airlock.cutAiWire = TRUE
+ 
++/obj/effect/mapping_helpers/airlock/autoname
++	name = "airlock autoname helper"
++	icon_state = "airlock_autoname"
++
++/obj/effect/mapping_helpers/airlock/autoname/payload(obj/machinery/door/airlock/airlock)
++	if(airlock.autoname)
++		log_mapping("[src] at [AREACOORD(src)] tried to autoname the [airlock] but it's already autonamed!")
++	else
++		airlock.autoname = TRUE
++
++/obj/effect/mapping_helpers/airlock/inaccessible
++	name = "airlock inaccessible helper"
++	icon_state = "airlock_inaccessible"
++
++/obj/effect/mapping_helpers/airlock/inaccessible/payload(obj/machinery/door/airlock/airlock)
++	if(airlock.req_one_access != null)
++		log_mapping("[src] at [AREACOORD(src)] tried to set req_access, but req__one_access was already set!")
++	else
++		airlock.req_access += list(ACCESS_INACCESSIBLE)
++
++//air alarm helpers
++/obj/effect/mapping_helpers/airalarm
++	desc = "You shouldn't see this. Report it please."
++	late = TRUE
++
++/obj/effect/mapping_helpers/airalarm/Initialize(mapload)
++	. = ..()
++	if(!mapload)
++		log_mapping("[src] spawned outside of mapload!")
++		return INITIALIZE_HINT_QDEL
++
++	var/obj/machinery/airalarm/target = locate(/obj/machinery/airalarm) in loc
++	if(isnull(target))
++		var/area/target_area = get_area(src)
++		log_mapping("[src] failed to find an air alarm at [AREACOORD(src)] ([target_area.type]).")
++	else
++		payload(target)
++
++	return INITIALIZE_HINT_LATELOAD
++
++/obj/effect/mapping_helpers/airalarm/LateInitialize()
++	var/obj/machinery/airalarm/target = locate(/obj/machinery/airalarm) in loc
++
++	if(isnull(target))
++		qdel(src)
++		return
++	if(target.unlocked)
++		target.unlock()
++
++	if(target.tlv_cold_room)
++		target.set_tlv_cold_room()
++	if(target.tlv_no_checks)
++		target.set_tlv_no_checks()
++	if(target.tlv_no_checks && target.tlv_cold_room)
++		CRASH("Tried to apply incompatible air alarm threshold helpers!")
++
++	if(target.syndicate_access)
++		target.give_syndicate_access()
++	if(target.away_general_access)
++		target.give_away_general_access()
++	if(target.engine_access)
++		target.give_engine_access()
++	if(target.mixingchamber_access)
++		target.give_mixingchamber_access()
++	if(target.all_access)
++		target.give_all_access()
++	if(target.syndicate_access + target.away_general_access + target.engine_access + target.mixingchamber_access + target.all_access > 1)
++		CRASH("Tried to combine incompatible air alarm access helpers!")
++
++	target.update_appearance()
++	qdel(src)
++
++/obj/effect/mapping_helpers/airalarm/proc/payload(obj/machinery/airalarm/target)
++	return
++
++/obj/effect/mapping_helpers/airalarm/unlocked
++	name = "airalarm unlocked interface helper"
++	icon_state = "airalarm_unlocked_interface_helper"
++
++/obj/effect/mapping_helpers/airalarm/unlocked/payload(obj/machinery/airalarm/target)
++	if(target.unlocked)
++		var/area/area = get_area(target)
++		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to unlock the [target] but it's already unlocked!")
++	target.unlocked = TRUE
++
++/obj/effect/mapping_helpers/airalarm/syndicate_access
++	name = "airalarm syndicate access helper"
++	icon_state = "airalarm_syndicate_access_helper"
++
++/obj/effect/mapping_helpers/airalarm/syndicate_access/payload(obj/machinery/airalarm/target)
++	if(target.syndicate_access)
++		var/area/area = get_area(target)
++		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s access to syndicate but it's already changed!")
++	target.syndicate_access = TRUE
++
++/obj/effect/mapping_helpers/airalarm/away_general_access
++	name = "airalarm away access helper"
++	icon_state = "airalarm_away_general_access_helper"
++
++/obj/effect/mapping_helpers/airalarm/away_general_access/payload(obj/machinery/airalarm/target)
++	if(target.away_general_access)
++		var/area/area = get_area(target)
++		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s access to away_general but it's already changed!")
++	target.away_general_access = TRUE
++
++/obj/effect/mapping_helpers/airalarm/engine_access
++	name = "airalarm engine access helper"
++	icon_state = "airalarm_engine_access_helper"
++
++/obj/effect/mapping_helpers/airalarm/engine_access/payload(obj/machinery/airalarm/target)
++	if(target.engine_access)
++		var/area/area = get_area(target)
++		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s access to engine_access but it's already changed!")
++	target.engine_access = TRUE
++
++/obj/effect/mapping_helpers/airalarm/mixingchamber_access
++	name = "airalarm mixingchamber access helper"
++	icon_state = "airalarm_mixingchamber_access_helper"
++
++/obj/effect/mapping_helpers/airalarm/mixingchamber_access/payload(obj/machinery/airalarm/target)
++	if(target.mixingchamber_access)
++		var/area/area = get_area(target)
++		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s access to mixingchamber_access but it's already changed!")
++	target.mixingchamber_access = TRUE
++
++/obj/effect/mapping_helpers/airalarm/all_access
++	name = "airalarm all access helper"
++	icon_state = "airalarm_all_access_helper"
++
++/obj/effect/mapping_helpers/airalarm/all_access/payload(obj/machinery/airalarm/target)
++	if(target.all_access)
++		var/area/area = get_area(target)
++		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s access to all_access but it's already changed!")
++	target.all_access = TRUE
++
++/obj/effect/mapping_helpers/airalarm/tlv_cold_room
++	name = "airalarm cold room tlv helper"
++	icon_state = "airalarm_tlv_cold_room_helper"
++
++/obj/effect/mapping_helpers/airalarm/tlv_cold_room/payload(obj/machinery/airalarm/target)
++	if(target.tlv_cold_room)
++		var/area/area = get_area(target)
++		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s tlv to cold_room but it's already changed!")
++	target.tlv_cold_room = TRUE
++
++/obj/effect/mapping_helpers/airalarm/tlv_no_checks
++	name = "airalarm no checks tlv helper"
++	icon_state = "airalarm_tlv_no_checks_helper"
++
++/obj/effect/mapping_helpers/airalarm/tlv_no_checks/payload(obj/machinery/airalarm/target)
++	if(target.tlv_no_checks)
++		var/area/area = get_area(target)
++		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s tlv to no_checks but it's already changed!")
++	target.tlv_no_checks = TRUE
++
++/obj/effect/mapping_helpers/airalarm/link
++	name = "airalarm link helper"
++	icon_state = "airalarm_link_helper"
++	late = TRUE
++	var/chamber_id = ""
++	var/allow_link_change = FALSE
++
++/obj/effect/mapping_helpers/airalarm/link/Initialize(mapload)
++	. = ..()
++	if(!mapload)
++		log_mapping("[src] spawned outside of mapload!")
++		return INITIALIZE_HINT_QDEL
++
++/obj/effect/mapping_helpers/airalarm/link/LateInitialize(mapload)
++	var/obj/machinery/airalarm/alarm = locate(/obj/machinery/airalarm) in loc
++	if(!isnull(alarm))
++		alarm.air_sensor_chamber_id = chamber_id
++		alarm.allow_link_change = allow_link_change
++		alarm.setup_chamber_link()
++	else
++		log_mapping("[src] failed to find air alarm at [AREACOORD(src)].")
++	qdel(src)
++
++//apc helpers
++/obj/effect/mapping_helpers/apc
++	desc = "You shouldn't see this. Report it please."
++	late = TRUE
++
++/obj/effect/mapping_helpers/apc/Initialize(mapload)
++	. = ..()
++	if(!mapload)
++		log_mapping("[src] spawned outside of mapload!")
++		return INITIALIZE_HINT_QDEL
++
++	var/obj/machinery/power/apc/target = locate(/obj/machinery/power/apc) in loc
++	if(isnull(target))
++		var/area/target_area = get_area(src)
++		log_mapping("[src] failed to find an apc at [AREACOORD(src)] ([target_area.type]).")
++	else
++		payload(target)
++
++	return INITIALIZE_HINT_LATELOAD
++
++/obj/effect/mapping_helpers/apc/LateInitialize()
++	var/obj/machinery/power/apc/target = locate(/obj/machinery/power/apc) in loc
++
++	if(isnull(target))
++		qdel(src)
++		return
++	if(target.cut_AI_wire)
++		target.wires.cut(WIRE_AI)
++	if(target.cell_5k)
++		target.install_cell_5k()
++	if(target.cell_10k)
++		target.install_cell_10k()
++	if(target.unlocked)
++		target.unlock()
++	if(target.syndicate_access)
++		target.give_syndicate_access()
++	if(target.away_general_access)
++		target.give_away_general_access()
++	if(target.no_charge)
++		target.set_no_charge()
++	if(target.full_charge)
++		target.set_full_charge()
++	if(target.cell_5k && target.cell_10k)
++		CRASH("Tried to combine non-combinable cell_5k and cell_10k APC helpers!")
++	if(target.syndicate_access && target.away_general_access)
++		CRASH("Tried to combine non-combinable syndicate_access and away_general_access APC helpers!")
++	if(target.no_charge && target.full_charge)
++		CRASH("Tried to combine non-combinable no_charge and full_charge APC helpers!")
++	target.update_appearance()
++	qdel(src)
++
++/obj/effect/mapping_helpers/apc/proc/payload(obj/machinery/power/apc/target)
++	return
++
++/obj/effect/mapping_helpers/apc/cut_AI_wire
++	name = "apc AI wire mended helper"
++	icon_state = "apc_cut_AIwire_helper"
++
++/obj/effect/mapping_helpers/apc/cut_AI_wire/payload(obj/machinery/power/apc/target)
++	if(target.cut_AI_wire)
++		var/area/apc_area = get_area(target)
++		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to mend the AI wire on the [target] but it's already cut!")
++	target.cut_AI_wire = TRUE
++
++/obj/effect/mapping_helpers/apc/cell_5k
++	name = "apc 5k cell helper"
++	icon_state = "apc_5k_cell_helper"
++
++/obj/effect/mapping_helpers/apc/cell_5k/payload(obj/machinery/power/apc/target)
++	if(target.cell_5k)
++		var/area/apc_area = get_area(target)
++		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to change [target]'s cell to cell_5k but it's already changed!")
++	target.cell_5k = TRUE
++
++/obj/effect/mapping_helpers/apc/cell_10k
++	name = "apc 10k cell helper"
++	icon_state = "apc_10k_cell_helper"
++
++/obj/effect/mapping_helpers/apc/cell_10k/payload(obj/machinery/power/apc/target)
++	if(target.cell_10k)
++		var/area/apc_area = get_area(target)
++		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to change [target]'s cell to cell_10k but it's already changed!")
++	target.cell_10k = TRUE
++
++/obj/effect/mapping_helpers/apc/syndicate_access
++	name = "apc syndicate access helper"
++	icon_state = "apc_syndicate_access_helper"
++
++/obj/effect/mapping_helpers/apc/syndicate_access/payload(obj/machinery/power/apc/target)
++	if(target.syndicate_access)
++		var/area/apc_area = get_area(target)
++		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to adjust [target]'s access to syndicate but it's already changed!")
++	target.syndicate_access = TRUE
++
++/obj/effect/mapping_helpers/apc/away_general_access
++	name = "apc away access helper"
++	icon_state = "apc_away_general_access_helper"
++
++/obj/effect/mapping_helpers/apc/away_general_access/payload(obj/machinery/power/apc/target)
++	if(target.away_general_access)
++		var/area/apc_area = get_area(target)
++		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to adjust [target]'s access to away_general but it's already changed!")
++	target.away_general_access = TRUE
++
++/obj/effect/mapping_helpers/apc/unlocked
++	name = "apc unlocked interface helper"
++	icon_state = "apc_unlocked_interface_helper"
++
++/obj/effect/mapping_helpers/apc/unlocked/payload(obj/machinery/power/apc/target)
++	if(target.unlocked)
++		var/area/apc_area = get_area(target)
++		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to unlock the [target] but it's already unlocked!")
++	target.unlocked = TRUE
++
++/obj/effect/mapping_helpers/apc/no_charge
++	name = "apc no charge helper"
++	icon_state = "apc_no_charge_helper"
++
++/obj/effect/mapping_helpers/apc/no_charge/payload(obj/machinery/power/apc/target)
++	if(target.no_charge)
++		var/area/apc_area = get_area(target)
++		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to set [target]'s charge to 0 but it's already at 0!")
++	target.no_charge = TRUE
++
++/obj/effect/mapping_helpers/apc/full_charge
++	name = "apc full charge helper"
++	icon_state = "apc_full_charge_helper"
++
++/obj/effect/mapping_helpers/apc/full_charge/payload(obj/machinery/power/apc/target)
++	if(target.full_charge)
++		var/area/apc_area = get_area(target)
++		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to set [target]'s charge to 100 but it's already at 100!")
++	target.full_charge = TRUE
++
++//Used to turn off lights with lightswitch in areas.
++/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch
++	name = "area turned off lights helper"
++	icon_state = "lights_off"
++
++/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch/Initialize(mapload)
++	. = ..()
++	if(!mapload)
++		log_mapping("[src] spawned outside of mapload!")
++		return INITIALIZE_HINT_QDEL
++	return INITIALIZE_HINT_LATELOAD
++
++/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch/LateInitialize()
++	var/area/needed_area = get_area(src)
++	if(!needed_area.lightswitch)
++		stack_trace("[src] at [AREACOORD(src)] [(needed_area.type)] tried to turn lights off but they are already off!")
++	var/obj/machinery/light_switch/light_switch = locate(/obj/machinery/light_switch) in needed_area
++	if(!light_switch)
++		CRASH("Trying to turn off lights with lightswitch in area without lightswitches. In [(needed_area.type)] to be precise.")
++	light_switch.set_lights(FALSE)
++	qdel(src)
++
+ //needs to do its thing before spawn_rivers() is called
+ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
+ 
+ /obj/effect/mapping_helpers/no_lava
+ 	icon_state = "no_lava"
+ 
+-/obj/effect/mapping_helpers/no_lava/Initialize()
++/obj/effect/mapping_helpers/no_lava/Initialize(mapload)
+ 	. = ..()
+ 	var/turf/T = get_turf(src)
+-	T.flags_1 |= NO_LAVA_GEN_1
++	T.turf_flags |= NO_LAVA_GEN
+ 
+-//This helper applies components to things on the map directly.
+-/obj/effect/mapping_helpers/component_injector
+-	name = "Component Injector"
+-	icon_state = "component"
++INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
++/obj/effect/mapping_helpers/no_atoms_ontop
++	icon_state = "no_atoms_ontop"
++
++/obj/effect/mapping_helpers/no_atoms_ontop/Initialize(mapload)
++	. = ..()
++	var/turf/loc_turf = get_turf(src)
++	loc_turf.turf_flags |= TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES
++
++///Helpers used for injecting stuff into atoms on the map.
++/obj/effect/mapping_helpers/atom_injector
++	name = "Atom Injector"
++	icon_state = "injector"
+ 	late = TRUE
+-	var/all = FALSE //Will inject into all fitting the criteria if true, otherwise first found
+-	var/target_type //Will inject into atoms of this type
+-	var/target_name //Will inject into atoms with this name
+-	var/component_type
++	///Will inject into all fitting the criteria if false, otherwise first found.
++	var/first_match_only = TRUE
++	///Will inject into atoms of this type.
++	var/target_type
++	///Will inject into atoms with this name.
++	var/target_name
+ 
+ //Late init so everything is likely ready and loaded (no warranty)
+-/obj/effect/mapping_helpers/component_injector/LateInitialize()
+-	if(!ispath(component_type,/datum/component))
+-		CRASH("Wrong component type in [type] - [component_type] is not a component")
+-	var/turf/T = get_turf(src)
+-	for(var/atom/A in T.GetAllContents())
+-		if(A == src)
++/obj/effect/mapping_helpers/atom_injector/LateInitialize()
++	if(!check_validity())
++		return
++	var/turf/target_turf = get_turf(src)
++	var/matches_found = 0
++	for(var/atom/atom_on_turf as anything in target_turf.get_all_contents())
++		if(atom_on_turf == src)
+ 			continue
+-		if(target_name && A.name != target_name)
++		if(target_name && atom_on_turf.name != target_name)
+ 			continue
+-		if(target_type && !istype(A,target_type))
++		if(target_type && !istype(atom_on_turf, target_type))
+ 			continue
+-		var/cargs = build_args()
+-		A._AddComponent(cargs)
+-		if(!all)
++		inject(atom_on_turf)
++		matches_found++
++		if(first_match_only)
+ 			qdel(src)
+ 			return
+-	if(all)
+-		qdel(src)
++	if(!matches_found)
++		stack_trace(generate_stack_trace())
++	qdel(src)
++
++///Checks if whatever we are trying to inject with is valid
++/obj/effect/mapping_helpers/atom_injector/proc/check_validity()
++	return TRUE
++
++///Injects our stuff into the atom
++/obj/effect/mapping_helpers/atom_injector/proc/inject(atom/target)
++	return
++
++///Generates text for our stack trace
++/obj/effect/mapping_helpers/atom_injector/proc/generate_stack_trace()
++	. = "[name] found no targets at ([x], [y], [z]). First Match Only: [first_match_only ? "true" : "false"] target type: [target_type] | target name: [target_name]"
++
++/obj/effect/mapping_helpers/atom_injector/obj_flag
++	name = "Obj Flag Injector"
++	icon_state = "objflag_helper"
++	var/inject_flags = NONE
++
++/obj/effect/mapping_helpers/atom_injector/obj_flag/inject(atom/target)
++	if(!isobj(target))
++		return
++	var/obj/obj_target = target
++	obj_target.obj_flags |= inject_flags
++
++///This helper applies components to things on the map directly.
++/obj/effect/mapping_helpers/atom_injector/component_injector
++	name = "Component Injector"
++	icon_state = "component"
++	///Typepath of the component.
++	var/component_type
++	///Arguments for the component.
++	var/list/component_args = list()
++
++/obj/effect/mapping_helpers/atom_injector/component_injector/check_validity()
++	if(!ispath(component_type, /datum/component))
++		CRASH("Wrong component type in [type] - [component_type] is not a component")
++	return TRUE
++
++/obj/effect/mapping_helpers/atom_injector/component_injector/inject(atom/target)
++	var/arguments = list(component_type)
++	arguments += component_args
++	target._AddComponent(arguments)
++
++/obj/effect/mapping_helpers/atom_injector/component_injector/generate_stack_trace()
++	. = ..()
++	. += " | component type: [component_type] | component arguments: [list2params(component_args)]"
++
++///This helper applies elements to things on the map directly.
++/obj/effect/mapping_helpers/atom_injector/element_injector
++	name = "Element Injector"
++	icon_state = "element"
++	///Typepath of the element.
++	var/element_type
++	///Arguments for the element.
++	var/list/element_args = list()
++
++/obj/effect/mapping_helpers/atom_injector/element_injector/check_validity()
++	if(!ispath(element_type, /datum/element))
++		CRASH("Wrong element type in [type] - [element_type] is not a element")
++	return TRUE
++
++/obj/effect/mapping_helpers/atom_injector/element_injector/inject(atom/target)
++	var/arguments = list(element_type)
++	arguments += element_args
++	target._AddElement(arguments)
++
++/obj/effect/mapping_helpers/atom_injector/element_injector/generate_stack_trace()
++	. = ..()
++	. += " | element type: [element_type] | element arguments: [list2params(element_args)]"
+ 
+-/obj/effect/mapping_helpers/component_injector/proc/build_args()
+-	return list(component_type)
++///This helper applies traits to things on the map directly.
++/obj/effect/mapping_helpers/atom_injector/trait_injector
++	name = "Trait Injector"
++	icon_state = "trait"
++	///Name of the trait, in the lower-case text (NOT the upper-case define) form.
++	var/trait_name
+ 
+-/obj/effect/mapping_helpers/component_injector/infective
+-	name = "Infective Injector"
+-	icon_state = "component_infective"
+-	component_type = /datum/component/infective
+-	var/disease_type
++/obj/effect/mapping_helpers/atom_injector/trait_injector/check_validity()
++	if(!istext(trait_name))
++		CRASH("Wrong trait in [type] - [trait_name] is not a trait")
++	if(!GLOB.global_trait_name_map)
++		GLOB.global_trait_name_map = generate_global_trait_name_map()
++	if(!GLOB.global_trait_name_map.Find(trait_name))
++		stack_trace("Possibly wrong trait in [type] - [trait_name] is not a trait in the global trait list")
++	return TRUE
+ 
+-/obj/effect/mapping_helpers/component_injector/infective/build_args()
+-	if(!ispath(disease_type,/datum/disease))
+-		CRASH("Wrong disease type passed in.")
+-	var/datum/disease/D = new disease_type()
+-	return list(component_type,D)
++/obj/effect/mapping_helpers/atom_injector/trait_injector/inject(atom/target)
++	ADD_TRAIT(target, trait_name, MAPPING_HELPER_TRAIT)
+ 
+-/obj/effect/mapping_helpers/component_injector/areabound
+-	name = "Areabound Injector"
+-	icon_state = "component_areabound"
+-	component_type = /datum/component/areabound
+-	target_type = /atom/movable
++/obj/effect/mapping_helpers/atom_injector/trait_injector/generate_stack_trace()
++	. = ..()
++	. += " | trait name: [trait_name]"
++
++///This helper applies dynamic human icons to things on the map
++/obj/effect/mapping_helpers/atom_injector/human_icon_injector
++	name = "Human Icon Injector"
++	icon_state = "icon"
++	/// Path of the outfit we give the human.
++	var/outfit_path
++	/// Path of the species we give the human.
++	var/species_path = /datum/species/human
++	/// Path of the mob spawner we base the human off of.
++	var/mob_spawn_path
++	/// Path of the right hand item we give the human.
++	var/r_hand = NO_REPLACE
++	/// Path of the left hand item we give the human.
++	var/l_hand = NO_REPLACE
++	/// Which slots on the mob should be bloody?
++	var/bloody_slots = NONE
++	/// Do we draw more than one frame for the mob?
++	var/animated = TRUE
++
++/obj/effect/mapping_helpers/atom_injector/human_icon_injector/check_validity()
++	if(!ispath(species_path, /datum/species))
++		CRASH("Wrong species path in [type] - [species_path] is not a species")
++	if(outfit_path && !ispath(outfit_path, /datum/outfit))
++		CRASH("Wrong outfit path in [type] - [species_path] is not an outfit")
++	if(mob_spawn_path && !ispath(mob_spawn_path, /obj/effect/mob_spawn))
++		CRASH("Wrong mob spawn path in [type] - [mob_spawn_path] is not a mob spawner")
++	if(l_hand && !ispath(l_hand, /obj/item))
++		CRASH("Wrong left hand item path in [type] - [l_hand] is not an item")
++	if(r_hand && !ispath(r_hand, /obj/item))
++		CRASH("Wrong left hand item path in [type] - [r_hand] is not an item")
++	return TRUE
++
++/obj/effect/mapping_helpers/atom_injector/human_icon_injector/inject(atom/target)
++	apply_dynamic_human_appearance(target, outfit_path, species_path, mob_spawn_path, r_hand, l_hand, bloody_slots, animated)
++
++/obj/effect/mapping_helpers/atom_injector/human_icon_injector/generate_stack_trace()
++	. = ..()
++	. += " | outfit path: [outfit_path] | species path: [species_path] | mob spawner path: [mob_spawn_path] | right/left hand path: [r_hand]/[l_hand]"
++
++///Fetches an external dmi and applies to the target object
++/obj/effect/mapping_helpers/atom_injector/custom_icon
++	name = "Custom Icon Injector"
++	icon_state = "icon"
++	///This is the var that will be set with the fetched icon. In case you want to set some secondary icon sheets like inhands and such.
++	var/target_variable = "icon"
++	///This should return raw dmi in response to http get request. For example: "https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi?raw=true"
++	var/icon_url
++	///The icon file we fetched from the http get request.
++	var/icon_file
++
++/obj/effect/mapping_helpers/atom_injector/custom_icon/check_validity()
++	var/static/icon_cache = list()
++	var/static/query_in_progress = FALSE //We're using a single tmp file so keep it linear.
++	if(query_in_progress)
++		UNTIL(!query_in_progress)
++	if(icon_cache[icon_url])
++		icon_file = icon_cache[icon_url]
++		return TRUE
++	log_asset("Custom Icon Helper fetching dmi from: [icon_url]")
++	var/datum/http_request/request = new()
++	var/file_name = "tmp/custom_map_icon.dmi"
++	request.prepare(RUSTG_HTTP_METHOD_GET, icon_url, "", "", file_name)
++	query_in_progress = TRUE
++	request.begin_async()
++	UNTIL(request.is_complete())
++	var/datum/http_response/response = request.into_response()
++	if(response.errored || response.status_code != 200)
++		query_in_progress = FALSE
++		CRASH("Failed to fetch mapped custom icon from url [icon_url], code: [response.status_code], error: [response.error]")
++	var/icon/new_icon = new(file_name)
++	icon_cache[icon_url] = new_icon
++	query_in_progress = FALSE
++	icon_file = new_icon
++	return TRUE
++
++/obj/effect/mapping_helpers/atom_injector/custom_icon/inject(atom/target)
++	if(IsAdminAdvancedProcCall())
++		return
++	target.vars[target_variable] = icon_file
++
++/obj/effect/mapping_helpers/atom_injector/custom_icon/generate_stack_trace()
++	. = ..()
++	. += " | target variable: [target_variable] | icon url: [icon_url]"
++
++///Fetches an external sound and applies to the target object
++/obj/effect/mapping_helpers/atom_injector/custom_sound
++	name = "Custom Sound Injector"
++	icon_state = "sound"
++	///This is the var that will be set with the fetched sound.
++	var/target_variable = "hitsound"
++	///This should return raw sound in response to http get request. For example: "https://github.com/tgstation/tgstation/blob/master/sound/misc/bang.ogg?raw=true"
++	var/sound_url
++	///The sound file we fetched from the http get request.
++	var/sound_file
++
++/obj/effect/mapping_helpers/atom_injector/custom_sound/check_validity()
++	var/static/sound_cache = list()
++	var/static/query_in_progress = FALSE //We're using a single tmp file so keep it linear.
++	if(query_in_progress)
++		UNTIL(!query_in_progress)
++	if(sound_cache[sound_url])
++		sound_file = sound_cache[sound_url]
++		return TRUE
++	log_asset("Custom Sound Helper fetching sound from: [sound_url]")
++	var/datum/http_request/request = new()
++	var/file_name = "tmp/custom_map_sound.ogg"
++	request.prepare(RUSTG_HTTP_METHOD_GET, sound_url, "", "", file_name)
++	query_in_progress = TRUE
++	request.begin_async()
++	UNTIL(request.is_complete())
++	var/datum/http_response/response = request.into_response()
++	if(response.errored || response.status_code != 200)
++		query_in_progress = FALSE
++		CRASH("Failed to fetch mapped custom sound from url [sound_url], code: [response.status_code], error: [response.error]")
++	var/sound/new_sound = new(file_name)
++	sound_cache[sound_url] = new_sound
++	query_in_progress = FALSE
++	sound_file = new_sound
++	return TRUE
++
++/obj/effect/mapping_helpers/atom_injector/custom_sound/inject(atom/target)
++	if(IsAdminAdvancedProcCall())
++		return
++	target.vars[target_variable] = sound_file
++
++/obj/effect/mapping_helpers/atom_injector/custom_sound/generate_stack_trace()
++	. = ..()
++	. += " | target variable: [target_variable] | sound url: [sound_url]"
+ 
+ /obj/effect/mapping_helpers/dead_body_placer
+ 	name = "Dead Body placer"
+ 	late = TRUE
+ 	icon_state = "deadbodyplacer"
+-	var/bodycount = 2 //number of bodies to spawn
++	///if TRUE, was spawned out of mapload.
++	var/admin_spawned
++	///number of bodies to spawn
++	var/bodycount = 3
++	/// Corpse type we spawn thats always human
++	var/datum/corpse_damage_class/morgue_body_class = /datum/corpse_damage_class/station/morgue
++
++/obj/effect/mapping_helpers/dead_body_placer/Initialize(mapload)
++	. = ..()
++	if(mapload)
++		return
++	admin_spawned = TRUE
+ 
+ /obj/effect/mapping_helpers/dead_body_placer/LateInitialize()
+-	var/area/a = get_area(src)
+-	var/list/trays = list()
+-	for (var/i in a.contents)
+-		if (istype(i, /obj/structure/bodycontainer/morgue))
+-			trays += i
+-	if(!trays.len)
+-		log_mapping("[src] at [x],[y] could not find any morgues.")
++	var/area/morgue_area = get_area(src)
++	var/list/obj/structure/bodycontainer/morgue/trays = list()
++	for (var/list/zlevel_turfs as anything in morgue_area.get_zlevel_turf_lists())
++		for(var/turf/area_turf as anything in zlevel_turfs)
++			var/obj/structure/bodycontainer/morgue/morgue_tray = locate() in area_turf
++			if(isnull(morgue_tray) || !morgue_tray.beeper || morgue_tray.connected.loc != morgue_tray)
++				continue
++			trays += morgue_tray
++
++	var/numtrays = length(trays)
++	if(numtrays == 0)
++		if(admin_spawned)
++			message_admins("[src] spawned at [ADMIN_VERBOSEJMP(src)] failed to find a closed morgue to spawn a body!")
++		else
++			log_mapping("[src] at [x],[y] could not find any morgues.")
+ 		return
+-	for (var/i = 1 to bodycount)
+-		var/obj/structure/bodycontainer/morgue/j = pick(trays)
+-		var/mob/living/carbon/human/h = new /mob/living/carbon/human(j, 1)
+-		h.death()
+-		for (var/part in h.internal_organs) //randomly remove organs from each body, set those we keep to be in stasis
+-			if (prob(40))
+-				qdel(part)
 -			else
--				if (!istext(value) && !isnum(value))
--					if(PERFORM_ALL_TESTS(dcs_check_list_arguments) && islist(value))
--						add_to_arguments_that_are_lists(value, eletype)
--					value = REF(value)
--
--				if (!named_arguments)
--					named_arguments = list()
--
--				named_arguments[key] = value
--			continue
--
--		if (isnum(key))
--			fullid += key
-+			value = arguments[key]
-+		if(!(istext(key) || isnum(key)))
-+			key = REF(key)
-+		key = "[key]" // Key is stringified so numbers dont break things
-+		if(!isnull(value))
-+			if(!(istext(value) || isnum(value)))
-+				value = REF(value)
-+			named_arguments["[key]"] = value
- 		else
--			if(PERFORM_ALL_TESTS(dcs_check_list_arguments) && islist(key))
--				add_to_arguments_that_are_lists(key, eletype)
--			fullid += REF(key)
-+			fullid += "[key]"
+-				var/obj/item/organ/O = part
+-				O.organ_flags |= ORGAN_FROZEN
+-		j.update_icon()
+-	qdel(src)
  
--	if(named_arguments)
--		sortTim(named_arguments, GLOBAL_PROC_REF(cmp_text_asc))
-+	if(length(named_arguments))
-+		named_arguments = sortList(named_arguments)
- 		fullid += named_arguments
++	var/reuse_trays = (numtrays < bodycount) //are we going to spawn more trays than bodies?
++
++	for (var/i in 1 to bodycount)
++		var/obj/structure/bodycontainer/morgue/morgue_tray = reuse_trays ? pick(trays) : pick_n_take(trays)
++		var/obj/structure/closet/body_bag/body_bag = new(morgue_tray.loc)
++		var/mob/living/carbon/human/new_human = GLOB.lost_crew_manager.create_lost_crew(revivable = FALSE, forced_class = morgue_body_class)
++
++		body_bag.insert(new_human, TRUE)
++		body_bag.close()
++		body_bag.handle_tag("[new_human.real_name][new_human.dna?.species ? " - [new_human.dna.species.name]" : " - Human"]")
++		body_bag.forceMove(morgue_tray)
++
++		morgue_tray.update_appearance()
++
++	qdel(src)
+ 
+ //On Ian's birthday, the hop's office is decorated.
+ /obj/effect/mapping_helpers/ianbirthday
+ 	name = "Ian's Bday Helper"
+ 	late = TRUE
+ 	icon_state = "iansbdayhelper"
++	/// How many clusters of balloons to spawn.
+ 	var/balloon_clusters = 2
++	/// if TRUE, we give a map log warning if we can't find Ian's dogbed.
++	var/map_warning = TRUE
+ 
+ /obj/effect/mapping_helpers/ianbirthday/LateInitialize()
+-	if(locate(/datum/holiday/ianbirthday) in SSevents.holidays)
++	if(check_holidays(IAN_HOLIDAY))
+ 		birthday()
+ 	qdel(src)
+ 
+ /obj/effect/mapping_helpers/ianbirthday/proc/birthday()
+-	var/area/a = get_area(src)
+-	var/list/table = list()//should only be one aka the front desk, but just in case...
+-	var/list/openturfs = list()
 -
- 	return list2params(fullid)
+-	//confetti and a corgi balloon! (and some list stuff for more decorations)
+-	for(var/thing in a.contents)
+-		if(istype(thing, /obj/structure/table/reinforced))
+-			table += thing
+-		if(isopenturf(thing))
+-			new /obj/effect/decal/cleanable/confetti(thing)
+-			if(locate(/obj/structure/bed/dogbed/ian) in thing)
+-				new /obj/item/toy/balloon/corgi(thing)
+-			else
+-				openturfs += thing
+-	//cake + knife to cut it!
+-	var/turf/food_turf = get_turf(pick(table))
+-	new /obj/item/kitchen/knife(food_turf)
+-	var/obj/item/food/cake/birthday/iancake = new(food_turf)
+-	iancake.desc = "Happy birthday, Ian!"
++	var/area/celebration_area = get_area(src)
++	var/list/table_turfs = list()
++	var/list/open_turfs = list()
++	var/turf/dogbed_turf
++	for (var/list/zlevel_turfs as anything in celebration_area.get_zlevel_turf_lists())
++		for(var/turf/area_turf as anything in zlevel_turfs)
++			if(locate(/obj/structure/table/reinforced) in area_turf)
++				table_turfs += area_turf
++			if(locate(/obj/structure/bed/dogbed/ian) in area_turf)
++				dogbed_turf = area_turf
++			if(isopenturf(area_turf))
++				new /obj/effect/decal/cleanable/confetti(area_turf)
++				open_turfs += area_turf
++
++	if(isnull(dogbed_turf) && map_warning)
++		log_mapping("[src] in [celebration_area] could not find Ian's dogbed.")
++
++	else
++		new /obj/item/toy/balloon/corgi(dogbed_turf)
++		var/turf/food_turf = length(table_turfs) ? pick(table_turfs) : dogbed_turf
++		new /obj/item/knife/kitchen(food_turf)
++		var/obj/item/food/cake/birthday/iancake = new(food_turf)
++		iancake.desc = "Happy birthday, Ian!"
++
++	if(!length(open_turfs))
++		return
++
+ 	//some balloons! this picks an open turf and pops a few balloons in and around that turf, yay.
+ 	for(var/i in 1 to balloon_clusters)
+-		var/turf/clusterspot = pick_n_take(openturfs)
++		var/turf/clusterspot = pick_n_take(open_turfs)
+ 		new /obj/item/toy/balloon(clusterspot)
+ 		var/balloons_left_to_give = 3 //the amount of balloons around the cluster
+ 		var/list/dirs_to_balloon = GLOB.cardinals.Copy()
+@@ -317,6 +989,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
+ /obj/effect/mapping_helpers/ianbirthday/admin//so admins may birthday any room
+ 	name = "generic birthday setup"
+ 	icon_state = "bdayhelper"
++	map_warning = FALSE
+ 
+ /obj/effect/mapping_helpers/ianbirthday/admin/LateInitialize()
+ 	birthday()
+@@ -329,29 +1002,32 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
+ 	icon_state = "iansnewyrshelper"
+ 
+ /obj/effect/mapping_helpers/iannewyear/LateInitialize()
+-	if(SSevents.holidays && SSevents.holidays[NEW_YEAR])
++	if(check_holidays(NEW_YEAR))
+ 		fireworks()
+ 	qdel(src)
+ 
+ /obj/effect/mapping_helpers/iannewyear/proc/fireworks()
+-	var/area/a = get_area(src)
+-	var/list/table = list()//should only be one aka the front desk, but just in case...
+-	var/list/openturfs = list()
 -
--/**
-- * Offloading the first half of the dcs_check_list_arguments here, which is populating the superlist
-- * with sublists that will be later compared with each other by the dcs_check_list_arguments unit test.
-- */
--/datum/controller/subsystem/processing/dcs/proc/add_to_arguments_that_are_lists(list/argument, datum/element/element_type)
--	if(initial(element_type.element_flags) & ELEMENT_NO_LIST_UNIT_TEST)
+-	for(var/thing in a.contents)
+-		if(istype(thing, /obj/structure/table/reinforced))
+-			table += thing
+-		else if(isopenturf(thing))
+-			if(locate(/obj/structure/bed/dogbed/ian) in thing)
+-				new /obj/item/clothing/head/festive(thing)
+-				var/obj/item/reagent_containers/food/drinks/bottle/champagne/iandrink = new(thing)
+-				iandrink.name = "dog champagne"
+-				iandrink.pixel_y += 8
+-				iandrink.pixel_x += 8
+-			else
+-				openturfs += thing
+-
+-	var/turf/fireworks_turf = get_turf(pick(table))
++	var/area/celebration_area = get_area(src)
++	var/list/table_turfs = list()
++	var/turf/dogbed_turf
++	for (var/list/zlevel_turfs as anything in celebration_area.get_zlevel_turf_lists())
++		for(var/turf/area_turf as anything in zlevel_turfs)
++			if(locate(/obj/structure/table/reinforced) in area_turf)
++				table_turfs += area_turf
++			if(locate(/obj/structure/bed/dogbed/ian) in area_turf)
++				dogbed_turf = area_turf
++
++	if(isnull(dogbed_turf))
++		log_mapping("[src] in [celebration_area] could not find Ian's dogbed.")
++		return
++
++	new /obj/item/clothing/head/costume/festive(dogbed_turf)
++	var/obj/item/reagent_containers/cup/glass/bottle/champagne/iandrink = new(dogbed_turf)
++	iandrink.name = "dog champagne"
++	iandrink.pixel_y += 8
++	iandrink.pixel_x += 8
++
++	var/turf/fireworks_turf = length(table_turfs) ? pick(table_turfs) : dogbed_turf
+ 	var/obj/item/storage/box/matches/matchbox = new(fireworks_turf)
+ 	matchbox.pixel_y += 8
+ 	matchbox.pixel_x -= 3
+@@ -368,190 +1044,404 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
+ 
+ /obj/effect/mapping_helpers/airlock_note_placer/LateInitialize()
+ 	var/turf/turf = get_turf(src)
+-	if(note_path && !istype(note_path, /obj/item/paper)) //don't put non-paper in the paper slot thank you
++	if(note_path && !ispath(note_path, /obj/item/paper)) //don't put non-paper in the paper slot thank you
+ 		log_mapping("[src] at [x],[y] had an improper note_path path, could not place paper note.")
+ 		qdel(src)
++		return
+ 	if(locate(/obj/machinery/door/airlock) in turf)
+ 		var/obj/machinery/door/airlock/found_airlock = locate(/obj/machinery/door/airlock) in turf
+ 		if(note_path)
+ 			found_airlock.note = note_path
+-			found_airlock.update_icon()
++			found_airlock.update_appearance()
+ 			qdel(src)
++			return
+ 		if(note_info)
+ 			var/obj/item/paper/paper = new /obj/item/paper(src)
+ 			if(note_name)
+ 				paper.name = note_name
+-			paper.info = "[note_info]"
++			paper.add_raw_text("[note_info]")
++			paper.update_appearance()
+ 			found_airlock.note = paper
+ 			paper.forceMove(found_airlock)
+-			found_airlock.update_icon()
++			found_airlock.update_appearance()
+ 			qdel(src)
++			return
+ 		log_mapping("[src] at [x],[y] had no note_path or note_info, cannot place paper note.")
+ 		qdel(src)
++		return
+ 	log_mapping("[src] at [x],[y] could not find an airlock on current turf, cannot place paper note.")
+ 	qdel(src)
+ 
+-/obj/effect/mapping_helpers/simple_pipes
+-	name = "Simple Pipes"
++/**
++ * ## trapdoor placer!
++ *
++ * This places an unlinked trapdoor in the tile its on (so someone with a remote needs to link it up first)
++ * Pre-mapped trapdoors (unlike player-made ones) are not conspicuous by default so nothing stands out with them
++ * Admins may spawn this in the round for additional trapdoors if they so desire
++ * if YOU want to learn more about trapdoors, read about the component at trapdoor.dm
++ * note: this is not a turf subtype because the trapdoor needs the type of the turf to turn back into
++ */
++/obj/effect/mapping_helpers/trapdoor_placer
++	name = "trapdoor placer"
++	icon_state = "trapdoor"
+ 	late = TRUE
+-	icon_state = "pipe-3"
+-	var/piping_layer = 3
+-	var/pipe_color = ""
+-	var/connection_num = 0
+-	var/hide = FALSE
+-
+-/obj/effect/mapping_helpers/simple_pipes/LateInitialize()
+-	var/list/connections = list( dir2text(NORTH)  = FALSE, dir2text(SOUTH) = FALSE , dir2text(EAST) = FALSE , dir2text(WEST) = FALSE)
+-	var/list/valid_connectors = typecacheof(/obj/machinery/atmospherics)
+-	for(var/direction in connections)
+-		var/turf/T = get_step(src,  text2dir(direction))
+-		for(var/machine_type_owo in T.contents)
+-			if(istype(machine_type_owo,type))
+-				var/obj/effect/mapping_helpers/simple_pipes/found = machine_type_owo
+-				if(found.piping_layer != piping_layer)
+-					continue
+-				connections[direction] = TRUE
+-				connection_num++
+-				break
+-			if(!is_type_in_typecache(machine_type_owo,valid_connectors))
+-				continue
+-			var/obj/machinery/atmospherics/machine = machine_type_owo
+ 
+-			if(machine.piping_layer != piping_layer)
+-				continue
++/obj/effect/mapping_helpers/trapdoor_placer/LateInitialize()
++	var/turf/component_target = get_turf(src)
++	component_target.AddComponent(/datum/component/trapdoor, starts_open = FALSE, conspicuous = FALSE)
++	qdel(src)
+ 
+-			if(angle2dir(dir2angle(text2dir(direction))+180) & machine.initialize_directions)
+-				connections[direction] = TRUE
+-				connection_num++
+-				break
+-
+-	switch(connection_num)
+-		if(1)
+-			for(var/direction in connections)
+-				if(connections[direction] != TRUE)
+-					continue
+-				spawn_pipe(direction,/obj/machinery/atmospherics/pipe/simple)
+-		if(2)
+-			for(var/direction in connections)
+-				if(connections[direction] != TRUE)
+-					continue
+-				//Detects straight pipes connected from east to west , north to south etc.
+-				if(connections[dir2text(angle2dir(dir2angle(text2dir(direction))+180))] == TRUE)
+-					spawn_pipe(direction,/obj/machinery/atmospherics/pipe/simple)
+-					break
+-
+-				for(var/direction2 in connections - direction)
+-					if(connections[direction2] != TRUE)
+-						continue
+-					spawn_pipe(dir2text(text2dir(direction)+text2dir(direction2)),/obj/machinery/atmospherics/pipe/simple)
+-		if(3)
+-			for(var/direction in connections)
+-				if(connections[direction] == FALSE)
+-					spawn_pipe(direction,/obj/machinery/atmospherics/pipe/manifold)
+-		if(4)
+-			spawn_pipe(dir2text(NORTH),/obj/machinery/atmospherics/pipe/manifold4w)
++/obj/effect/mapping_helpers/ztrait_injector
++	name = "ztrait injector"
++	icon_state = "ztrait"
++	late = TRUE
++	/// List of traits to add to this Z-level.
++	var/list/traits_to_add = list()
+ 
++/obj/effect/mapping_helpers/ztrait_injector/LateInitialize()
++	var/datum/space_level/level = SSmapping.z_list[z]
++	if(!level || !length(traits_to_add))
++		return
++	level.traits |= traits_to_add
++	SSweather.update_z_level(level) //in case of someone adding a weather for the level, we want SSweather to update for that
++
++/obj/effect/mapping_helpers/circuit_spawner
++	name = "circuit spawner"
++	icon_state = "circuit"
++	/// The shell for the circuit.
++	var/atom/movable/circuit_shell
++	/// Capacity of the shell.
++	var/shell_capacity = SHELL_CAPACITY_VERY_LARGE
++	/// The url for the json. Example: "https://pastebin.com/raw/eH7VnP9d"
++	var/json_url
++
++/obj/effect/mapping_helpers/circuit_spawner/Initialize(mapload)
++	. = ..()
++	INVOKE_ASYNC(src, PROC_REF(spawn_circuit))
++
++/obj/effect/mapping_helpers/circuit_spawner/proc/spawn_circuit()
++	var/list/errors = list()
++	var/obj/item/integrated_circuit/loaded/new_circuit = new(loc)
++	var/json_data = load_data()
++	new_circuit.load_circuit_data(json_data, errors)
++	if(!circuit_shell)
++		return
++	circuit_shell = new(loc)
++	var/datum/component/shell/shell_component = circuit_shell.GetComponent(/datum/component/shell)
++	if(shell_component)
++		shell_component.shell_flags |= SHELL_FLAG_CIRCUIT_UNMODIFIABLE|SHELL_FLAG_CIRCUIT_UNREMOVABLE
++		shell_component.attach_circuit(new_circuit)
++	else
++		shell_component = circuit_shell.AddComponent(/datum/component/shell, \
++			capacity = shell_capacity, \
++			shell_flags = SHELL_FLAG_CIRCUIT_UNMODIFIABLE|SHELL_FLAG_CIRCUIT_UNREMOVABLE, \
++			starting_circuit = new_circuit, \
++			)
++
++/obj/effect/mapping_helpers/circuit_spawner/proc/load_data()
++	var/static/json_cache = list()
++	var/static/query_in_progress = FALSE //We're using a single tmp file so keep it linear.
++	if(query_in_progress)
++		UNTIL(!query_in_progress)
++	if(json_cache[json_url])
++		return json_cache[json_url]
++	log_asset("Circuit Spawner fetching json from: [json_url]")
++	var/datum/http_request/request = new()
++	request.prepare(RUSTG_HTTP_METHOD_GET, json_url, "")
++	query_in_progress = TRUE
++	request.begin_async()
++	UNTIL(request.is_complete())
++	var/datum/http_response/response = request.into_response()
++	if(response.errored || response.status_code != 200)
++		query_in_progress = FALSE
++		CRASH("Failed to fetch mapped custom json from url [json_url], code: [response.status_code], error: [response.error]")
++	var/json_data = response.body
++	json_cache[json_url] = json_data
++	query_in_progress = FALSE
++	return json_data
++
++/obj/effect/mapping_helpers/broken_floor
++	name = "broken floor"
++	icon = 'icons/turf/damaged.dmi'
++	icon_state = "damaged1"
++	layer = ABOVE_NORMAL_TURF_LAYER
++	late = TRUE
++
++/obj/effect/mapping_helpers/broken_floor/LateInitialize()
++	var/turf/open/floor/floor = get_turf(src)
++	floor.break_tile()
+ 	qdel(src)
+ 
+-//spawn pipe
+-/obj/effect/mapping_helpers/simple_pipes/proc/spawn_pipe(direction,type )
+-	var/obj/machinery/atmospherics/pipe/pipe = new type(get_turf(src),TRUE,text2dir(direction))
+-	pipe.hide = hide
+-	pipe.piping_layer = piping_layer
+-	pipe.update_layer()
+-	pipe.paint(pipe_color)
++/obj/effect/mapping_helpers/burnt_floor
++	name = "burnt floor"
++	icon = 'icons/turf/damaged.dmi'
++	icon_state = "floorscorched1"
++	layer = ABOVE_NORMAL_TURF_LAYER
++	late = TRUE
+ 
++/obj/effect/mapping_helpers/burnt_floor/LateInitialize()
++	var/turf/open/floor/floor = get_turf(src)
++	floor.burn_tile()
++	qdel(src)
+ 
+-//This helper applies traits to things on the map directly.
+-/obj/effect/mapping_helpers/trait_injector
+-	name = "Trait Injector"
+-	icon_state = "trait"
++///Applies BROKEN flag to the first found machine on a tile
++/obj/effect/mapping_helpers/broken_machine
++	name = "broken machine helper"
++	icon_state = "broken_machine"
+ 	late = TRUE
+-	///Will inject into all fitting the criteria if false, otherwise first found.
+-	var/first_match_only = TRUE
+-	///Will inject into atoms of this type.
+-	var/target_type
+-	///Will inject into atoms with this name.
+-	var/target_name
+-	///Name of the trait, in the lower-case text (NOT the upper-case define) form.
+-	var/trait_name
+ 
+-//Late init so everything is likely ready and loaded (no warranty)
+-/obj/effect/mapping_helpers/trait_injector/LateInitialize()
+-	if(!GLOB.trait_name_map)
+-		GLOB.trait_name_map = generate_trait_name_map()
+-	if(!GLOB.trait_name_map.Find(trait_name))
+-		CRASH("Wrong trait in [type] - [trait_name] is not a trait")
+-	var/turf/target_turf = get_turf(src)
+-	var/matches_found = 0
+-	for(var/a in target_turf.GetAllContents())
+-		var/atom/atom_on_turf = a
+-		if(atom_on_turf == src)
+-			continue
+-		if(target_name && atom_on_turf.name != target_name)
+-			continue
+-		if(target_type && !istype(atom_on_turf,target_type))
+-			continue
+-		ADD_TRAIT(atom_on_turf, trait_name, MAPPING_HELPER_TRAIT)
+-		matches_found++
+-		if(first_match_only)
+-			qdel(src)
+-			return
+-	if(!matches_found)
+-		stack_trace("Trait mapper found no targets at ([x], [y], [z]). First Match Only: [first_match_only ? "true" : "false"] target type: [target_type] | target name: [target_name] | trait name: [trait_name]")
++/obj/effect/mapping_helpers/broken_machine/Initialize(mapload)
++	. = ..()
++	if(!mapload)
++		log_mapping("[src] spawned outside of mapload!")
++		return INITIALIZE_HINT_QDEL
++
++	var/obj/machinery/target = locate(/obj/machinery) in loc
++	if(isnull(target))
++		var/area/target_area = get_area(src)
++		log_mapping("[src] failed to find a machine at [AREACOORD(src)] ([target_area.type]).")
++	else
++		payload(target)
++
++	return INITIALIZE_HINT_LATELOAD
++
++/obj/effect/mapping_helpers/broken_machine/LateInitialize()
++	var/obj/machinery/target = locate(/obj/machinery) in loc
++
++	if(isnull(target))
++		qdel(src)
++		return
++
++	target.update_appearance()
+ 	qdel(src)
+ 
+-/// Fetches an external dmi and applies to the target object
+-/obj/effect/mapping_helpers/custom_icon
+-	name = "Custom Icon Helper"
+-	icon_state = "trait"
++/obj/effect/mapping_helpers/broken_machine/proc/payload(obj/machinery/airalarm/target)
++	if(target.machine_stat & BROKEN)
++		var/area/area = get_area(target)
++		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to break [target] but it's already broken!")
++	target.set_machine_stat(target.machine_stat | BROKEN)
++
++///Deals random damage to the first window found on a tile to appear cracked
++/obj/effect/mapping_helpers/damaged_window
++	name = "damaged window helper"
++	icon_state = "damaged_window"
+ 	late = TRUE
+-	///Will inject into all fitting the criteria if false, otherwise first found.
+-	var/first_match_only = TRUE
+-	///Will inject into atoms of this type.
+-	var/target_type
+-	///Will inject into atoms with this name.
+-	var/target_name
+-	/// This is the var tha will be set with the fetched icon. In case you want to set some secondary icon sheets like inhands and such.
+-	var/target_variable = "icon"
+-	/// This should return raw dmi in response to http get request. For example: "https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi"
+-	var/icon_url
++	/// Minimum roll of integrity damage in percents needed to show cracks
++	var/integrity_damage_min = 0.25
++	/// Maximum roll of integrity damage in percents needed to show cracks
++	var/integrity_damage_max = 0.85
+ 
+-/obj/effect/mapping_helpers/custom_icon/LateInitialize()
+-	///TODO put this injector stuff under common root
+-	var/I = fetch_icon(icon_url)
+-	var/turf/target_turf = get_turf(src)
+-	var/matches_found = 0
+-	for(var/a in target_turf.GetAllContents())
+-		var/atom/atom_on_turf = a
+-		if(atom_on_turf == src)
+-			continue
+-		if(target_name && atom_on_turf.name != target_name)
+-			continue
+-		if(target_type && !istype(atom_on_turf,target_type))
++/obj/effect/mapping_helpers/damaged_window/Initialize(mapload)
++	. = ..()
++	if(!mapload)
++		log_mapping("[src] spawned outside of mapload!")
++		return INITIALIZE_HINT_QDEL
++	return INITIALIZE_HINT_LATELOAD
++
++/obj/effect/mapping_helpers/damaged_window/LateInitialize()
++	var/obj/structure/window/target = locate(/obj/structure/window) in loc
++
++	if(isnull(target))
++		var/area/target_area = get_area(src)
++		log_mapping("[src] failed to find a window at [AREACOORD(src)] ([target_area.type]).")
++		qdel(src)
++		return
++	else
++		payload(target)
++
++	target.update_appearance()
++	qdel(src)
++
++/obj/effect/mapping_helpers/damaged_window/proc/payload(obj/structure/window/target)
++	if(target.get_integrity() < target.max_integrity)
++		var/area/area = get_area(target)
++		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to damage [target] but it's already damaged!")
++	target.take_damage(rand(target.max_integrity * integrity_damage_min, target.max_integrity * integrity_damage_max))
++
++//requests console helpers
++/obj/effect/mapping_helpers/requests_console
++	desc = "You shouldn't see this. Report it please."
++	late = TRUE
++
++/obj/effect/mapping_helpers/requests_console/Initialize(mapload)
++	. = ..()
++	if(!mapload)
++		log_mapping("[src] spawned outside of mapload!")
++		return INITIALIZE_HINT_QDEL
++
++	return INITIALIZE_HINT_LATELOAD
++
++/obj/effect/mapping_helpers/requests_console/LateInitialize()
++	var/obj/machinery/airalarm/target = locate(/obj/machinery/requests_console) in loc
++	if(isnull(target))
++		var/area/target_area = get_area(target)
++		log_mapping("[src] failed to find a requests console at [AREACOORD(src)] ([target_area.type]).")
++	else
++		payload(target)
++
++	qdel(src)
++
++/// Fills out the request console's variables
++/obj/effect/mapping_helpers/requests_console/proc/payload(obj/machinery/requests_console/console)
++	return
++
++/obj/effect/mapping_helpers/requests_console/announcement
++	name = "request console announcement helper"
++	icon_state = "requests_console_announcement_helper"
++
++/obj/effect/mapping_helpers/requests_console/announcement/payload(obj/machinery/requests_console/console)
++	console.can_send_announcements = TRUE
++
++/obj/effect/mapping_helpers/requests_console/assistance
++	name = "request console assistance requestable helper"
++	icon_state = "requests_console_assistance_helper"
++
++/obj/effect/mapping_helpers/requests_console/assistance/payload(obj/machinery/requests_console/console)
++	GLOB.req_console_assistance |= console.department
++
++/obj/effect/mapping_helpers/requests_console/supplies
++	name = "request console supplies requestable helper"
++	icon_state = "requests_console_supplies_helper"
++
++/obj/effect/mapping_helpers/requests_console/supplies/payload(obj/machinery/requests_console/console)
++	GLOB.req_console_supplies |= console.department
++
++/obj/effect/mapping_helpers/requests_console/information
++	name = "request console information relayable helper"
++	icon_state = "requests_console_information_helper"
++
++/obj/effect/mapping_helpers/requests_console/information/payload(obj/machinery/requests_console/console)
++	GLOB.req_console_information |= console.department
++
++/obj/effect/mapping_helpers/requests_console/ore_update
++	name = "request console ore update helper"
++	icon_state = "requests_console_ore_update_helper"
++
++/obj/effect/mapping_helpers/requests_console/ore_update/payload(obj/machinery/requests_console/console)
++	console.receive_ore_updates = TRUE
++
++/obj/effect/mapping_helpers/engraving
++	name = "engraving helper"
++	icon = 'icons/turf/wall_overlays.dmi'
++	icon_state = "engraving2"
++	late = TRUE
++	layer = ABOVE_NORMAL_TURF_LAYER
++
++/obj/effect/mapping_helpers/engraving/Initialize(mapload)
++	. = ..()
++	return INITIALIZE_HINT_LATELOAD
++
++/obj/effect/mapping_helpers/engraving/LateInitialize()
++	var/turf/closed/engraved_wall = get_turf(src)
++
++	if(!isclosedturf(engraved_wall) || !SSpersistence.saved_engravings.len || HAS_TRAIT(engraved_wall, TRAIT_NOT_ENGRAVABLE))
++		qdel(src)
++		return
++
++	var/engraving = pick_n_take(SSpersistence.saved_engravings)
++	if(!islist(engraving))
++		stack_trace("something's wrong with the engraving data! one of the saved engravings wasn't a list!")
++		qdel(src)
++		return
++
++	engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])
++	qdel(src)
++
++/// Apply to a wall (or floor, technically) to ensure it is instantly destroyed by any explosion, even if usually invulnerable
++/obj/effect/mapping_helpers/bombable_wall
++	name = "bombable wall helper"
++	icon = 'icons/turf/overlays.dmi'
++	icon_state = "explodable"
++
++/obj/effect/mapping_helpers/bombable_wall/Initialize(mapload)
++	. = ..()
++	if(!mapload)
++		log_mapping("[src] spawned outside of mapload!")
++		return
++
++	var/turf/our_turf = get_turf(src) // In case a locker ate us or something
++	our_turf.AddElement(/datum/element/bombable_turf)
++	return INITIALIZE_HINT_QDEL
++
++/// this helper buckles all mobs on the tile to the first buckleable object
++/obj/effect/mapping_helpers/mob_buckler
++	name = "Buckle Mob"
++	icon_state = "buckle"
++	late = TRUE
++	///whether we force a buckle
++	var/force_buckle = FALSE
++
++/obj/effect/mapping_helpers/mob_buckler/Initialize(mapload)
++	. = ..()
++	var/atom/movable/buckle_to
++	var/list/mobs = list()
++	for(var/atom/movable/possible_buckle as anything in loc)
++		if(isnull(buckle_to) && possible_buckle.can_buckle)
++			buckle_to = possible_buckle
+ 			continue
+-		atom_on_turf.vars[target_variable] = I
+-		matches_found++
+-		if(first_match_only)
+-			qdel(src)
+-			return
+-	if(!matches_found)
+-		stack_trace("[src] found no targets at ([x], [y], [z]). First Match Only: [first_match_only ? "true" : "false"] target type: [target_type] | target name: [target_name]")
++
++		if(isliving(possible_buckle))
++			mobs += possible_buckle
++
++	if(isnull(buckle_to))
++		log_mapping("[type] at [x] [y] [z] did not find anything to buckle to")
++		return INITIALIZE_HINT_QDEL
++
++	for(var/mob/living/mob as anything in mobs)
++		buckle_to.buckle_mob(mob, force = force_buckle)
++
++	return INITIALIZE_HINT_QDEL
++
++///Basic mob flag helpers for things like deleting on death.
++/obj/effect/mapping_helpers/basic_mob_flags
++	name = "Basic mob flags helper"
++	desc = "Used to apply basic_mob_flags to basic mobs on the same turf."
++	late = TRUE
++
++	///The basic mob flag that we're adding to all basic mobs on the turf.
++	var/flag_to_give
++
++/obj/effect/mapping_helpers/basic_mob_flags/Initialize(mapload)
++	. = ..()
++	if(!mapload)
++		log_mapping("[src] spawned outside of mapload!")
++		return INITIALIZE_HINT_QDEL
++
++/obj/effect/mapping_helpers/basic_mob_flags/LateInitialize()
++	var/had_any_mobs = FALSE
++	for(var/mob/living/basic/basic_mobs in loc)
++		had_any_mobs = TRUE
++		basic_mobs.basic_mob_flags |= flag_to_give
++	if(!had_any_mobs)
++		CRASH("[src] called on a turf without any basic mobs.")
+ 	qdel(src)
+ 
+-/obj/effect/mapping_helpers/custom_icon/proc/fetch_icon(url)
+-	var/static/icon_cache = list()
+-	if(icon_cache[url])
+-		return icon_cache[url]
+-	log_asset("Custom Icon Helper fetching dmi from: [url]")
+-	var/datum/http_request/request = new()
+-	var/file_name = "tmp/custom_map_icon.dmi"
+-	request.prepare(RUSTG_HTTP_METHOD_GET, url , "", "", file_name)
+-	request.begin_async()
+-	UNTIL(request.is_complete())
+-	var/datum/http_response/response = request.into_response()
+-	if(response.errored || response.status_code != 200)
+-		stack_trace("Failed to fetch mapped custom icon from url [url], code: [response.status_code]")
+-	var/icon/I = new(file_name)
+-	icon_cache[url] = I
+-	return I
++/obj/effect/mapping_helpers/basic_mob_flags/del_on_death
++	name = "Basic mob del on death flag helper"
++	icon_state = "basic_mob_del_on_death"
++	flag_to_give = DEL_ON_DEATH
++
++/obj/effect/mapping_helpers/basic_mob_flags/flip_on_death
++	name = "Basic mob flip on death flag helper"
++	icon_state = "basic_mob_flip_on_death"
++	flag_to_give = FLIP_ON_DEATH
++
++/obj/effect/mapping_helpers/basic_mob_flags/remain_dense_while_dead
++	name = "Basic mob remain dense while dead flag helper"
++	icon_state = "basic_mob_remain_dense_while_dead"
++	flag_to_give = REMAIN_DENSE_WHILE_DEAD
++
++/obj/effect/mapping_helpers/basic_mob_flags/flammable_mob
++	name = "Basic mob flammable flag helper"
++	icon_state = "basic_mob_flammable"
++	flag_to_give = FLAMMABLE_MOB
++
++/obj/effect/mapping_helpers/basic_mob_flags/immune_to_fists
++	name = "Basic mob immune to fists flag helper"
++	icon_state = "basic_mob_immune_to_fists"
++	flag_to_give = IMMUNE_TO_FISTS
++
++/obj/effect/mapping_helpers/basic_mob_flags/immune_to_getting_wet
++	name = "Basic mob immune to getting wet flag helper"
++	icon_state = "basic_mob_immune_to_getting_wet"
++	flag_to_give = IMMUNE_TO_GETTING_WET
+diff --git a/code/modules/mapping/preloader.dm b/code/modules/mapping/preloader.dm
+index 6fb1e4cdb64..6ac3fd75f96 100644
+--- a/code/modules/mapping/preloader.dm
++++ b/code/modules/mapping/preloader.dm
+@@ -1,6 +1,7 @@
+ // global datum that will preload variables on atoms instanciation
+ GLOBAL_VAR_INIT(use_preloader, FALSE)
+-GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
++GLOBAL_LIST_INIT(_preloader_attributes, null)
++GLOBAL_LIST_INIT(_preloader_path, null)
+ 
+ /// Preloader datum
+ /datum/map_preloader
+@@ -10,17 +11,16 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
+ /world/proc/preloader_setup(list/the_attributes, path)
+ 	if(the_attributes.len)
+ 		GLOB.use_preloader = TRUE
+-		var/datum/map_preloader/preloader_local = GLOB._preloader
+-		preloader_local.attributes = the_attributes
+-		preloader_local.target_path = path
++		GLOB._preloader_attributes = the_attributes
++		GLOB._preloader_path = path
+ 
+ /world/proc/preloader_load(atom/what)
+ 	GLOB.use_preloader = FALSE
+-	var/datum/map_preloader/preloader_local = GLOB._preloader
+-	for(var/attribute in preloader_local.attributes)
+-		var/value = preloader_local.attributes[attribute]
++	var/list/attributes = GLOB._preloader_attributes
++	for(var/attribute in attributes)
++		var/value = attributes[attribute]
+ 		if(islist(value))
+-			value = deepCopyList(value)
++			value = deep_copy_list(value)
+ 		#ifdef TESTING
+ 		if(what.vars[attribute] == value)
+ 			var/message = "<font color=green>[what.type]</font> at [AREACOORD(what)] - <b>VAR:</b> <font color=red>[attribute] = [isnull(value) ? "null" : (isnum(value) ? value : "\"[value]\"")]</font>"
+@@ -29,9 +29,13 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
+ 		#endif
+ 		what.vars[attribute] = value
+ 
++/// Template noop (no operation) is used to skip a turf or area when the template is loaded this allows for template transparency
++/// ex. if a ship has gaps in its design, you would use template_noop to fill these in so that when the ship moves z-level, any
++/// tiles these gaps land on will not be deleted and replaced with the ships (empty) tiles
+ /area/template_noop
+ 	name = "Area Passthrough"
+ 
++/// See above explanation
+ /turf/template_noop
+ 	name = "Turf Passthrough"
+ 	icon_state = "noop"
+diff --git a/code/modules/mapping/reader.dm b/code/modules/mapping/reader.dm
+index 0dbe35beaf4..10d506f8c48 100644
+--- a/code/modules/mapping/reader.dm
++++ b/code/modules/mapping/reader.dm
+@@ -1,7 +1,67 @@
+ ///////////////////////////////////////////////////////////////
+ //SS13 Optimized Map loader
+ //////////////////////////////////////////////////////////////
+-#define SPACE_KEY "space"
++// We support two different map formats
++// It is kinda possible to process them together, but if we split them up
++// I can make optimization decisions more easily
++/**
++ * DMM SPEC:
++ * DMM is split into two parts. First we have strings of text linked to lists of paths and their modifications (I will call this the cache)
++ * We call these strings "keys" and the things they point to members. Keys have a static length
++ *
++ * The second part is a list of locations matched to a string of keys. (I'll be calling this the grid)
++ * These are used to lookup the cache we built earlier.
++ * We store location lists as grid_sets. the lines represent different things depending on the spec
++ *
++ * In standard DMM (which you can treat as the base case, since it also covers weird modifications) each line
++ * represents an x file, and there's typically only one grid set per z level.
++ * The meme is you can look at a DMM formatted map and literally see what it should roughly look like
++ * This differs in TGM, and we can pull some performance from this
++ *
++ * Any restrictions here also apply to TGM
++ *
++ * /tg/ Restrictions:
++ * Paths have a specified order. First atoms in the order in which they should be loaded, then a single turf, then the area of the cell
++ * DMM technically supports turf stacking, but this is deprecated for all formats
++
++ */
++#define MAP_DMM "dmm"
++/**
++ * TGM SPEC:
++ * TGM is a derevation of DMM, with restrictions placed on it
++ * to make it easier to parse and to reduce merge conflicts/ease their resolution
++ *
++ * Requirements:
++ * Each "statement" in a key's details ends with a new line, and wrapped in (...)
++ * All paths end with either a comma or occasionally a {, then a new line
++ * Excepting the area, who is listed last and ends with a ) to mark the end of the key
++ *
++ * {} denotes a list of variable edits applied to the path that came before the first {
++ * the final } is followed by a comma, and then a new line
++ * Variable edits have the form \tname = value;\n
++ * Except the last edit, which has no final ;, and just ends in a newline
++ * No extra padding is permitted
++ * Many values are supported. See parse_constant()
++ * Strings must be wrapped in "...", files in '...', and lists in list(...)
++ * Files are kinda susy, and may not actually work. buyer beware
++ * Lists support assoc values as expected
++ * These constants can be further embedded into lists
++ *
++ * There can be no padding in front of, or behind a path
++ *
++ * Therefore:
++ * "key" = (
++ * /path,
++ * /other/path{
++ *     var = list("name" = 'filepath');
++ *     other_var = /path
++ *     },
++ * /turf,
++ * /area)
++ *
++ */
++#define MAP_TGM "tgm"
++#define MAP_UNKNOWN "unknown"
+ 
+ /datum/grid_set
+ 	var/xcrd
+@@ -11,9 +71,20 @@
+ 
+ /datum/parsed_map
+ 	var/original_path
++	var/map_format
++	/// The length of a key in this file. This is promised by the standard to be static
+ 	var/key_len = 0
++	/// The length of a line in this file. Not promised by dmm but standard dmm uses it, so we can trust it
++	var/line_len = 0
++	/// If we've expanded world.maxx
++	var/expanded_y = FALSE
++	/// If we've expanded world.maxy
++	var/expanded_x = FALSE
+ 	var/list/grid_models = list()
+ 	var/list/gridSets = list()
++	/// List of area types we've loaded AS A PART OF THIS MAP
++	/// We do this to allow non unique areas, so we'll only load one per map
++	var/list/area/loaded_areas = list()
+ 
+ 	var/list/modelCache
+ 
+@@ -22,36 +93,92 @@
+ 	/// Offset bounds. Same as parsed_bounds until load().
+ 	var/list/bounds
+ 
+-	///any turf in this list is skipped inside of build_coordinate
+-	var/list/turf_blacklist = list()
++	///any turf in this list is skipped inside of build_coordinate. Lazy assoc list
++	var/list/turf_blacklist
+ 
+ 	// raw strings used to represent regexes more accurately
+ 	// '' used to avoid confusing syntax highlighting
+-	var/static/regex/dmmRegex = new(@'"([a-zA-Z]+)" = \(((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}', "g")
+-	var/static/regex/trimQuotesRegex = new(@'^[\s\n]+"?|"?[\s\n]+$|^"|"$', "g")
+-	var/static/regex/trimRegex = new(@'^[\s\n]+|[\s\n]+$', "g")
++	var/static/regex/dmm_regex = new(@'"([a-zA-Z]+)" = (?:\(\n|\()((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}', "g")
++	/// Matches key formats in TMG (IE: newline after the \()
++	var/static/regex/matches_tgm = new(@'^"[A-z]*"[\s]*=[\s]*\([\s]*\n', "m")
++	/// Pulls out key value pairs for TGM
++	var/static/regex/var_edits_tgm = new(@'^\t([A-z]*) = (.*?);?$')
++	/// Pulls out model paths for DMM
++	var/static/regex/model_path = new(@'(\/[^\{]*?(?:\{.*?\})?)(?:,|$)', "g")
++
++	/// If we are currently loading this map
++	var/loading = FALSE
+ 
+ 	#ifdef TESTING
+ 	var/turfsSkipped = 0
+ 	#endif
+ 
+-/// Shortcut function to parse a map and apply it to the world.
+-///
+-/// - `dmm_file`: A .dmm file to load (Required).
+-/// - `x_offset`, `y_offset`, `z_offset`: Positions representign where to load the map (Optional).
+-/// - `cropMap`: When true, the map will be cropped to fit the existing world dimensions (Optional).
+-/// - `measureOnly`: When true, no changes will be made to the world (Optional).
+-/// - `no_changeturf`: When true, [/turf/proc/AfterChange] won't be called on loaded turfs
+-/// - `x_lower`, `x_upper`, `y_lower`, `y_upper`: Coordinates (relative to the map) to crop to (Optional).
+-/// - `placeOnTop`: Whether to use [/turf/proc/PlaceOnTop] rather than [/turf/proc/ChangeTurf] (Optional).
+-/proc/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, x_lower = -INFINITY as num, x_upper = INFINITY as num, y_lower = -INFINITY as num, y_upper = INFINITY as num, placeOnTop = FALSE as num)
+-	var/datum/parsed_map/parsed = new(dmm_file, x_lower, x_upper, y_lower, y_upper, measureOnly)
+-	if(parsed.bounds && !measureOnly)
+-		parsed.load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
+-	return parsed
++/datum/parsed_map/proc/copy()
++	// Avoids duped work just in case
++	build_cache()
++	var/datum/parsed_map/newfriend = new()
++	newfriend.original_path = original_path
++	newfriend.map_format = map_format
++	newfriend.key_len = key_len
++	newfriend.line_len = line_len
++	newfriend.grid_models = grid_models.Copy()
++	newfriend.gridSets = gridSets.Copy()
++	newfriend.modelCache = modelCache.Copy()
++	newfriend.parsed_bounds = parsed_bounds.Copy()
++	// Copy parsed bounds to reset to initial values
++	newfriend.bounds = parsed_bounds.Copy()
++	newfriend.turf_blacklist = turf_blacklist?.Copy()
++	return newfriend
++
++/**
++ * Helper and recommened way to load a map file
++ * - dmm_file: The path to the map file
++ * - x_offset: The x offset to load the map at
++ * - y_offset: The y offset to load the map at
++ * - z_offset: The z offset to load the map at
++ * - crop_map: If true, the map will be cropped to the world bounds
++ * - measure_only: If true, the map will not be loaded, but the bounds will be calculated
++ * - no_changeturf: If true, the map will not call /turf/AfterChange
++ * - x_lower: The minimum x coordinate to load
++ * - x_upper: The maximum x coordinate to load
++ * - y_lower: The minimum y coordinate to load
++ * - y_upper: The maximum y coordinate to load
++ * - z_lower: The minimum z coordinate to load
++ * - z_upper: The maximum z coordinate to load
++ * - place_on_top: Whether to use /turf/proc/PlaceOnTop rather than /turf/proc/ChangeTurf
++ * - new_z: If true, a new z level will be created for the map
++ */
++/proc/load_map(
++	dmm_file,
++	x_offset = 0,
++	y_offset = 0,
++	z_offset = 0,
++	crop_map = FALSE,
++	measure_only = FALSE,
++	no_changeturf = FALSE,
++	x_lower = -INFINITY,
++	x_upper = INFINITY,
++	y_lower = -INFINITY,
++	y_upper = INFINITY,
++	z_lower = -INFINITY,
++	z_upper = INFINITY,
++	place_on_top = FALSE,
++	new_z = FALSE,
++)
++	if(!(dmm_file in GLOB.cached_maps))
++		GLOB.cached_maps[dmm_file] = new /datum/parsed_map(dmm_file)
++
++	var/datum/parsed_map/parsed_map = GLOB.cached_maps[dmm_file]
++	parsed_map = parsed_map.copy()
++	if(!measure_only && !isnull(parsed_map.bounds))
++		parsed_map.load(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
++	return parsed_map
+ 
+ /// Parse a map, possibly cropping it.
+-/datum/parsed_map/New(tfile, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper=INFINITY, measureOnly=FALSE)
++/datum/parsed_map/New(tfile, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper=INFINITY, z_lower = -INFINITY, z_upper=INFINITY, measureOnly=FALSE)
++	// This proc sleeps for like 6 seconds. why?
++	// Is it file accesses? if so, can those be done ahead of time, async to save on time here? I wonder.
++	// Love ya :)
+ 	if(isfile(tfile))
+ 		original_path = "[tfile]"
+ 		tfile = file2text(tfile)
+@@ -59,16 +186,30 @@
+ 		// create a new datum without loading a map
+ 		return
+ 
+-	bounds = parsed_bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
+-	var/stored_index = 1
++	src.bounds = parsed_bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
++
++	if(findtext(tfile, matches_tgm))
++		map_format = MAP_TGM
++	else
++		map_format = MAP_DMM // Fallback
+ 
++	// lists are structs don't you know :)
++	var/list/bounds = src.bounds
++	var/list/grid_models = src.grid_models
++	var/key_len = src.key_len
++	var/line_len = src.line_len
++
++	var/stored_index = 1
++	var/list/regexOutput
+ 	//multiz lool
+-	while(dmmRegex.Find(tfile, stored_index))
+-		stored_index = dmmRegex.next
++	while(dmm_regex.Find(tfile, stored_index))
++		stored_index = dmm_regex.next
++		// Datum var lookup is expensive, this isn't
++		regexOutput = dmm_regex.group
+ 
+ 		// "aa" = (/type{vars=blah})
+-		if(dmmRegex.group[1]) // Model
+-			var/key = dmmRegex.group[1]
++		if(regexOutput[1]) // Model
++			var/key = regexOutput[1]
+ 			if(grid_models[key]) // Duplicate model keys are ignored in DMMs
+ 				continue
+ 			if(key_len != length(key))
+@@ -77,327 +218,770 @@
+ 				else
+ 					CRASH("Inconsistent key length in DMM")
+ 			if(!measureOnly)
+-				grid_models[key] = dmmRegex.group[2]
++				grid_models[key] = regexOutput[2]
+ 
+ 		// (1,1,1) = {"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+-		else if(dmmRegex.group[3]) // Coords
++		else if(regexOutput[3]) // Coords
+ 			if(!key_len)
+ 				CRASH("Coords before model definition in DMM")
+ 
+-			var/curr_x = text2num(dmmRegex.group[3])
+-
++			var/curr_x = text2num(regexOutput[3])
+ 			if(curr_x < x_lower || curr_x > x_upper)
+ 				continue
+ 
++			var/curr_y = text2num(regexOutput[4])
++			if(curr_y < y_lower || curr_y > y_upper)
++				continue
++
++			var/curr_z = text2num(regexOutput[5])
++			if(curr_z < z_lower || curr_z > z_upper)
++				continue
++
+ 			var/datum/grid_set/gridSet = new
+ 
+ 			gridSet.xcrd = curr_x
+-			//position of the currently processed square
+-			gridSet.ycrd = text2num(dmmRegex.group[4])
+-			gridSet.zcrd = text2num(dmmRegex.group[5])
++			gridSet.ycrd = curr_y
++			gridSet.zcrd = curr_z
+ 
+-			bounds[MAP_MINX] = min(bounds[MAP_MINX], clamp(gridSet.xcrd, x_lower, x_upper))
+-			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], gridSet.zcrd)
+-			bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], gridSet.zcrd)
++			bounds[MAP_MINX] = min(bounds[MAP_MINX], curr_x)
++			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], curr_y)
++			bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], curr_z)
+ 
+-			var/list/gridLines = splittext(dmmRegex.group[6], "\n")
++			var/list/gridLines = splittext(regexOutput[6], "\n")
+ 			gridSet.gridLines = gridLines
+ 
+ 			var/leadingBlanks = 0
+-			while(leadingBlanks < gridLines.len && gridLines[++leadingBlanks] == "")
++			while(leadingBlanks < length(gridLines) && gridLines[++leadingBlanks] == "")
+ 			if(leadingBlanks > 1)
+ 				gridLines.Cut(1, leadingBlanks) // Remove all leading blank lines.
+ 
+-			if(!gridLines.len) // Skip it if only blank lines exist.
++			if(!length(gridLines)) // Skip it if only blank lines exist.
+ 				continue
+ 
+ 			gridSets += gridSet
+ 
+-			if(gridLines.len && gridLines[gridLines.len] == "")
+-				gridLines.Cut(gridLines.len) // Remove only one blank line at the end.
++			if(gridLines[length(gridLines)] == "")
++				gridLines.Cut(length(gridLines)) // Remove only one blank line at the end.
+ 
+-			bounds[MAP_MINY] = min(bounds[MAP_MINY], clamp(gridSet.ycrd, y_lower, y_upper))
+-			gridSet.ycrd += gridLines.len - 1 // Start at the top and work down
+-			bounds[MAP_MAXY] = max(bounds[MAP_MAXY], clamp(gridSet.ycrd, y_lower, y_upper))
++			bounds[MAP_MINY] = min(bounds[MAP_MINY], gridSet.ycrd)
++			gridSet.ycrd += length(gridLines) - 1 // Start at the top and work down
++			bounds[MAP_MAXY] = max(bounds[MAP_MAXY], gridSet.ycrd)
+ 
+-			var/maxx = gridSet.xcrd
+-			if(gridLines.len) //Not an empty map
+-				maxx = max(maxx, gridSet.xcrd + length(gridLines[1]) / key_len - 1)
++			if(!line_len)
++				line_len = length(gridLines[1])
+ 
+-			bounds[MAP_MAXX] = clamp(max(bounds[MAP_MAXX], maxx), x_lower, x_upper)
++			var/maxx = curr_x
++			if(length(gridLines)) //Not an empty map
++				maxx = max(maxx, curr_x + line_len / key_len - 1)
++
++			bounds[MAP_MAXX] = max(bounds[MAP_MAXX], maxx)
+ 		CHECK_TICK
+ 
+ 	// Indicate failure to parse any coordinates by nulling bounds
+ 	if(bounds[1] == 1.#INF)
+-		bounds = null
+-	parsed_bounds = bounds
++		src.bounds = null
++	else
++		// Clamp all our mins and maxes down to the proscribed limits
++		bounds[MAP_MINX] = clamp(bounds[MAP_MINX], x_lower, x_upper)
++		bounds[MAP_MAXX] = clamp(bounds[MAP_MAXX], x_lower, x_upper)
++		bounds[MAP_MINY] = clamp(bounds[MAP_MINY], y_lower, y_upper)
++		bounds[MAP_MAXY] = clamp(bounds[MAP_MAXY], y_lower, y_upper)
++		bounds[MAP_MINZ] = clamp(bounds[MAP_MINZ], z_lower, z_upper)
++		bounds[MAP_MAXZ] = clamp(bounds[MAP_MAXZ], z_lower, z_upper)
++
++	parsed_bounds = src.bounds
++	src.key_len = key_len
++	src.line_len = line_len
++
++/// Iterates over all grid sets and returns ones with z values within the given bounds. Inclusive
++/datum/parsed_map/proc/filter_grid_sets_based_on_z_bounds(lower_z, upper_z)
++	var/list/filtered_sets = list()
++	for(var/datum/grid_set/grid_set as anything in gridSets)
++		if(grid_set.zcrd < lower_z)
++			continue
++		if(grid_set.zcrd > upper_z)
++			continue
++		filtered_sets += grid_set
++	return filtered_sets
+ 
+-/// Load the parsed map into the world. See [/proc/load_map] for arguments.
+-/datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
++/// Load the parsed map into the world. You probably want [/proc/load_map]. Keep the signature the same.
++/datum/parsed_map/proc/load(x_offset = 0, y_offset = 0, z_offset = 0, crop_map = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, z_lower = -INFINITY, z_upper = INFINITY, place_on_top = FALSE, new_z = FALSE)
+ 	//How I wish for RAII
+ 	Master.StartLoadingMap()
+-	. = _load_impl(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
++	. = _load_impl(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
+ 	Master.StopLoadingMap()
+ 
++#define MAPLOADING_CHECK_TICK \
++	if(TICK_CHECK) { \
++		if(loading) { \
++			SSatoms.map_loader_stop(REF(src)); \
++			stoplag(); \
++			SSatoms.map_loader_begin(REF(src)); \
++		} else { \
++			stoplag(); \
++		} \
++	}
++
+ // Do not call except via load() above.
+-/datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
++/datum/parsed_map/proc/_load_impl(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
+ 	PRIVATE_PROC(TRUE)
+-	var/list/areaCache = list()
++	// Tell ss atoms that we're doing maploading
++	// We'll have to account for this in the following tick_checks so it doesn't overflow
++	loading = TRUE
++	SSatoms.map_loader_begin(REF(src))
++
++	// Loading used to be done in this proc
++	// We make the assumption that if the inner procs runtime, we WANT to do cleanup on them, but we should stil tell our parents we failed
++	// Since well, we did
++	var/sucessful = FALSE
++	switch(map_format)
++		if(MAP_TGM)
++			sucessful = _tgm_load(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
++		else
++			sucessful = _dmm_load(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
++
++	// And we are done lads, call it off
++	SSatoms.map_loader_stop(REF(src))
++	loading = FALSE
++
++	if(new_z)
++		for(var/z_index in bounds[MAP_MINZ] to bounds[MAP_MAXZ])
++			SSmapping.build_area_turfs(z_index)
++
++	if(!no_changeturf)
++		var/list/turfs = block(
++			locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
++			locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
++		for(var/turf/T as anything in turfs)
++			//we do this after we load everything in. if we don't, we'll have weird atmos bugs regarding atmos adjacent turfs
++			T.AfterChange(CHANGETURF_IGNORE_AIR)
++
++	if(expanded_x || expanded_y)
++		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_EXPANDED_WORLD_BOUNDS, expanded_x, expanded_y)
++
++	#ifdef TESTING
++	if(turfsSkipped)
++		testing("Skipped loading [turfsSkipped] default turfs")
++	#endif
++
++	return sucessful
++
++// Wanna clear something up about maps, talking in 255x255 here
++// In the tgm format, each gridset contains 255 lines, each line representing one tile, with 255 total gridsets
++// In the dmm format, each gridset contains 255 lines, each line representing one row of tiles, containing 255 * line length characters, with one gridset per z
++// You can think of dmm as storing maps in rows, whereas tgm stores them in columns
++/datum/parsed_map/proc/_tgm_load(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
++	// setup
+ 	var/list/modelCache = build_cache(no_changeturf)
+ 	var/space_key = modelCache[SPACE_KEY]
+ 	var/list/bounds
+ 	src.bounds = bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
+ 
+-	for(var/I in gridSets)
+-		var/datum/grid_set/gset = I
+-		var/ycrd = gset.ycrd + y_offset - 1
+-		var/zcrd = gset.zcrd + z_offset - 1
+-		if(!cropMap && ycrd > world.maxy)
+-			world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
++	// Building y coordinate ranges
++	var/y_relative_to_absolute = y_offset - 1
++	var/x_relative_to_absolute = x_offset - 1
++
++	// Ok so like. something important
++	// We talk in "relative" coords here, so the coordinate system of the map datum
++	// This is so we can do offsets, but it is NOT the same as positions in game
++	// That's why there's some uses of - y_relative_to_absolute here, to turn absolute positions into relative ones
++	// TGM maps process in columns, so the starting y will always be the max size
++	// We know y starts at 1
++	var/datum/grid_set/first_column = gridSets[1]
++	var/relative_y = first_column.ycrd
++	var/highest_y = relative_y + y_relative_to_absolute
++
++	if(!crop_map && highest_y > world.maxy)
++		if(new_z)
++			// Need to avoid improperly loaded area/turf_contents
++			world.increase_max_y(highest_y, map_load_z_cutoff = z_offset - 1)
++		else
++			world.increase_max_y(highest_y)
++		expanded_y = TRUE
++
++	// Skip Y coords that are above the smallest of the three params
++	// So maxy and y_upper get to act as thresholds, and relative_y can play
++	var/y_skip_above = min(world.maxy - y_relative_to_absolute, y_upper, relative_y)
++	// How many lines to skip because they'd be above the y cuttoff line
++	var/y_starting_skip = relative_y - y_skip_above
++	highest_y -= y_starting_skip
++
++	// Y is the LOWEST it will ever be here, so we can easily set a threshold for how low to go
++	var/line_count = length(first_column.gridLines)
++	var/lowest_y = relative_y - (line_count - 1) // -1 because we decrement at the end of the loop, not the start
++	var/y_ending_skip = max(max(y_lower, 1 - y_relative_to_absolute) - lowest_y, 0)
++
++	// X setup
++	var/x_delta_with = x_upper
++	if(crop_map)
++		// Take our smaller crop threshold yes?
++		x_delta_with = min(x_delta_with, world.maxx)
++
++	// We're gonna skip all the entries above the upper x, or maxx if cropMap is set
++	// The last column is guarenteed to have the highest x value we;ll encounter
++	// Even if z scales, this still works
++	var/datum/grid_set/last_column = gridSets[length(gridSets)]
++	var/final_x = last_column.xcrd + x_relative_to_absolute
++
++	if(final_x > x_delta_with)
++		// If our relative x is greater then X upper, well then we've gotta limit our expansion
++		var/delta = max(final_x - x_delta_with, 0)
++		final_x -= delta
++	if(final_x > world.maxx && !crop_map)
++		if(new_z)
++			// Need to avoid improperly loaded area/turf_contents
++			world.increase_max_x(final_x, map_load_z_cutoff = z_offset - 1)
++		else
++			world.increase_max_x(final_x)
++		expanded_x = TRUE
++
++	var/lowest_x = max(x_lower, 1 - x_relative_to_absolute)
++
++	// Amount we offset the grid zcrd to get the true zcrd
++	var/grid_z_offset = z_offset - 1
++	var/z_upper_set = z_upper < INFINITY
++	var/z_lower_set = z_lower > -INFINITY
++
++	// We make the assumption that the last block of turfs will have the highest embedded z in it
++	// true max zcrd
++	var/map_bounds_z_max = last_column.zcrd
++	var/z_upper_parsed = map_bounds_z_max + z_offset - 1
++	if(z_upper_set)
++		z_upper_parsed -= map_bounds_z_max - z_upper
++	if(z_lower_set)
++		var/offset_amount = z_lower - 1
++		z_upper_parsed -= offset_amount
++		grid_z_offset -= offset_amount
++
++	var/list/target_grid_sets = gridSets
++	if(z_lower_set || z_upper_set) // bounds are set, filter out gridsets for z levels we don't want
++		target_grid_sets = filter_grid_sets_based_on_z_bounds(z_lower, z_upper)
++
++	var/z_threshold = world.maxz
++	if(z_upper_parsed > z_threshold && crop_map)
++		for(var/i in z_threshold + 1 to z_upper_parsed) //create a new z_level if needed
++			world.incrementMaxZ()
++		if(!no_changeturf)
++			WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
++
++	for(var/datum/grid_set/gset as anything in target_grid_sets)
++		var/true_xcrd = gset.xcrd + x_relative_to_absolute
++
++		// any cutoff of x means we just shouldn't iterate this gridset
++		if(final_x < true_xcrd || lowest_x > gset.xcrd)
++			continue
++
++		var/zcrd = gset.zcrd + grid_z_offset
++		// If we're using changeturf, we disable it if we load into a z level we JUST created
++		var/no_afterchange = no_changeturf || zcrd > z_threshold
++
++		// We're gonna track the first and last pairs of coords we find
++		// Since x is always incremented in steps of 1, we only need to deal in y
++		// The first x is guarenteed to be the lowest, the first y the highest, and vis versa
++		// This is faster then doing mins and maxes inside the hot loop below
++		var/first_found = FALSE
++		var/first_y = 0
++		var/last_y = 0
++
++		var/ycrd = highest_y
++		// Everything following this line is VERY hot.
++		for(var/i in 1 + y_starting_skip to line_count - y_ending_skip)
++			if(gset.gridLines[i] == space_key && no_afterchange)
++				#ifdef TESTING
++				++turfsSkipped
++				#endif
++				ycrd--
++				MAPLOADING_CHECK_TICK
++				continue
++
++			var/list/cache = modelCache[gset.gridLines[i]]
++			if(!cache)
++				SSatoms.map_loader_stop(REF(src))
++				CRASH("Undefined model key in DMM: [gset.gridLines[i]]")
++			build_coordinate(cache, locate(true_xcrd, ycrd, zcrd), no_afterchange, place_on_top, new_z)
++
++			// only bother with bounds that actually exist
++			if(!first_found)
++				first_found = TRUE
++				first_y = ycrd
++			last_y = ycrd
++			ycrd--
++			MAPLOADING_CHECK_TICK
++
++		// The x coord never changes, so not tracking first x is safe
++		// If no ycrd is found, we assume this row is totally empty and just continue on
++		if(first_found)
++			bounds[MAP_MINX] = min(bounds[MAP_MINX], true_xcrd)
++			bounds[MAP_MINY] = min(bounds[MAP_MINY], last_y)
++			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
++			bounds[MAP_MAXX] = max(bounds[MAP_MAXX], true_xcrd)
++			bounds[MAP_MAXY] = max(bounds[MAP_MAXY], first_y)
++			bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], zcrd)
++	return TRUE
++
++/// Stanrdard loading, not used in production
++/// Doesn't take advantage of any tgm optimizations, which makes it slower but also more general
++/// Use this if for some reason your map format is messy
++/datum/parsed_map/proc/_dmm_load(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
++	// setup
++	var/list/modelCache = build_cache(no_changeturf)
++	var/space_key = modelCache[SPACE_KEY]
++	var/list/bounds
++	var/key_len = src.key_len
++	src.bounds = bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
++
++	var/y_relative_to_absolute = y_offset - 1
++	var/x_relative_to_absolute = x_offset - 1
++	var/line_len = src.line_len
++
++	// Amount we offset the grid zcrd to get the true zcrd
++	var/grid_z_offset = z_offset - 1
++	var/z_upper_set = z_upper < INFINITY
++	var/z_lower_set = z_lower > -INFINITY
++
++	// we now need to find the maximum z, fun!
++	var/map_bounds_z_max = 1
++	for(var/datum/grid_set/grid_set as anything in gridSets)
++		map_bounds_z_max = max(map_bounds_z_max, grid_set.zcrd)
++
++	var/z_upper_parsed = map_bounds_z_max + z_offset - 1
++	if(z_upper_set)
++		z_upper_parsed -= map_bounds_z_max - z_upper
++	if(z_lower_set)
++		var/offset_amount = z_lower - 1
++		z_upper_parsed -= offset_amount
++		grid_z_offset -= offset_amount
++
++	var/list/target_grid_sets = gridSets
++	if(z_lower_set || z_upper_set) // bounds are set, filter out gridsets for z levels we don't want
++		target_grid_sets = filter_grid_sets_based_on_z_bounds(z_lower, z_upper)
++
++	for(var/datum/grid_set/gset as anything in target_grid_sets)
++		var/relative_x = gset.xcrd
++		var/relative_y = gset.ycrd
++		var/true_xcrd = relative_x + x_relative_to_absolute
++		var/ycrd = relative_y + y_relative_to_absolute
++		var/zcrd = gset.zcrd + grid_z_offset
++		if(!crop_map && ycrd > world.maxy)
++			if(new_z)
++				// Need to avoid improperly loaded area/turf_contents
++				world.increase_max_y(ycrd, map_load_z_cutoff = z_offset - 1)
++			else
++				world.increase_max_y(ycrd)
++			expanded_y = TRUE
+ 		var/zexpansion = zcrd > world.maxz
++		var/no_afterchange = no_changeturf
+ 		if(zexpansion)
+-			if(cropMap)
++			if(crop_map)
+ 				continue
+ 			else
+ 				while (zcrd > world.maxz) //create a new z_level if needed
+ 					world.incrementMaxZ()
+ 			if(!no_changeturf)
+ 				WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
+-
+-		for(var/line in gset.gridLines)
+-			if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
+-				--ycrd
+-				continue
+-			if(ycrd <= world.maxy && ycrd >= 1)
+-				var/xcrd = gset.xcrd + x_offset - 1
+-				for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
+-					if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper)			//Same as above.
+-						++xcrd
+-						continue								//X cropping.
+-					if(xcrd > world.maxx)
+-						if(cropMap)
+-							break
+-						else
+-							world.maxx = xcrd
+-
+-					if(xcrd >= 1)
+-						var/model_key = copytext(line, tpos, tpos + key_len)
+-						var/no_afterchange = no_changeturf || zexpansion
+-						if(!no_afterchange || (model_key != space_key))
+-							var/list/cache = modelCache[model_key]
+-							if(!cache)
+-								CRASH("Undefined model key in DMM: [model_key]")
+-							build_coordinate(areaCache, cache, locate(xcrd, ycrd, zcrd), no_afterchange, placeOnTop)
+-
+-							// only bother with bounds that actually exist
+-							bounds[MAP_MINX] = min(bounds[MAP_MINX], xcrd)
+-							bounds[MAP_MINY] = min(bounds[MAP_MINY], ycrd)
+-							bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
+-							bounds[MAP_MAXX] = max(bounds[MAP_MAXX], xcrd)
+-							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], ycrd)
+-							bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], zcrd)
+-						#ifdef TESTING
+-						else
+-							++turfsSkipped
+-						#endif
+-						CHECK_TICK
++				no_afterchange = TRUE
++		// Ok so like. something important
++		// We talk in "relative" coords here, so the coordinate system of the map datum
++		// This is so we can do offsets, but it is NOT the same as positions in game
++		// That's why there's some uses of - y_relative_to_absolute here, to turn absolute positions into relative ones
++
++		// Skip Y coords that are above the smallest of the three params
++		// So maxy and y_upper get to act as thresholds, and relative_y can play
++		var/y_skip_above = min(world.maxy - y_relative_to_absolute, y_upper, relative_y)
++		// How many lines to skip because they'd be above the y cuttoff line
++		var/y_starting_skip = relative_y - y_skip_above
++		ycrd += y_starting_skip
++
++		// Y is the LOWEST it will ever be here, so we can easily set a threshold for how low to go
++		var/line_count = length(gset.gridLines)
++		var/lowest_y = relative_y - (line_count - 1) // -1 because we decrement at the end of the loop, not the start
++		var/y_ending_skip = max(max(y_lower, 1 - y_relative_to_absolute) - lowest_y, 0)
++
++		// Now we're gonna precompute the x thresholds
++		// We skip all the entries below the lower x, or 1
++		var/starting_x_delta = max(max(x_lower, 1 - x_relative_to_absolute) - relative_x, 0)
++		// The x loop counts by key length, so we gotta multiply here
++		var/x_starting_skip = starting_x_delta * key_len
++		true_xcrd += starting_x_delta
++
++		// We're gonna skip all the entries above the upper x, or maxx if cropMap is set
++		var/x_target = line_len - key_len + 1
++		var/x_step_count = ROUND_UP(x_target / key_len)
++		var/final_x = relative_x + (x_step_count - 1)
++		var/x_delta_with = x_upper
++		if(crop_map)
++			// Take our smaller crop threshold yes?
++			x_delta_with = min(x_delta_with, world.maxx)
++		if(final_x > x_delta_with)
++			// If our relative x is greater then X upper, well then we've gotta limit our expansion
++			var/delta = max(final_x - x_delta_with, 0)
++			x_step_count -= delta
++			final_x -= delta
++			x_target = x_step_count * key_len
++		if(final_x > world.maxx && !crop_map)
++			if(new_z)
++				// Need to avoid improperly loaded area/turf_contents
++				world.increase_max_x(final_x, map_load_z_cutoff = z_offset - 1)
++			else
++				world.increase_max_x(final_x)
++			expanded_x = TRUE
++
++		// We're gonna track the first and last pairs of coords we find
++		// The first x is guarenteed to be the lowest, the first y the highest, and vis versa
++		// This is faster then doing mins and maxes inside the hot loop below
++		var/first_found = FALSE
++		var/first_x = 0
++		var/first_y = 0
++		var/last_x = 0
++		var/last_y = 0
++
++		// Everything following this line is VERY hot. How hot depends on the map format
++		// (Yes this does mean dmm is technically faster to parse. shut up)
++		for(var/i in 1 + y_starting_skip to line_count - y_ending_skip)
++			var/line = gset.gridLines[i]
++
++			var/xcrd = true_xcrd
++			for(var/tpos in 1 + x_starting_skip to x_target step key_len)
++				var/model_key = copytext(line, tpos, tpos + key_len)
++				if(model_key == space_key && no_afterchange)
++					#ifdef TESTING
++					++turfsSkipped
++					#endif
++					MAPLOADING_CHECK_TICK
+ 					++xcrd
+-			--ycrd
++					continue
++				var/list/cache = modelCache[model_key]
++				if(!cache)
++					SSatoms.map_loader_stop(REF(src))
++					CRASH("Undefined model key in DMM: [model_key]")
++				build_coordinate(cache, locate(xcrd, ycrd, zcrd), no_afterchange, place_on_top, new_z)
++
++				// only bother with bounds that actually exist
++				if(!first_found)
++					first_found = TRUE
++					first_x = xcrd
++					first_y = ycrd
++				last_x = xcrd
++				last_y = ycrd
++				MAPLOADING_CHECK_TICK
++				++xcrd
++			ycrd--
++			MAPLOADING_CHECK_TICK
++		bounds[MAP_MINX] = min(bounds[MAP_MINX], first_x)
++		bounds[MAP_MINY] = min(bounds[MAP_MINY], last_y)
++		bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
++		bounds[MAP_MAXX] = max(bounds[MAP_MAXX], last_x)
++		bounds[MAP_MAXY] = max(bounds[MAP_MAXY], first_y)
++		bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], zcrd)
+ 
+-		CHECK_TICK
++	return TRUE
+ 
+-	if(!no_changeturf)
+-		for(var/t in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
+-			var/turf/T = t
+-			//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
+-			T.AfterChange(CHANGETURF_IGNORE_AIR)
++GLOBAL_LIST_EMPTY(map_model_default)
+ 
+-	#ifdef TESTING
+-	if(turfsSkipped)
+-		testing("Skipped loading [turfsSkipped] default turfs")
+-	#endif
++/datum/parsed_map/proc/build_cache(no_changeturf, bad_paths)
++	if(map_format == MAP_TGM)
++		return tgm_build_cache(no_changeturf, bad_paths)
++	return dmm_build_cache(no_changeturf, bad_paths)
+ 
+-	return TRUE
+-
+-/datum/parsed_map/proc/build_cache(no_changeturf, bad_paths=null)
++/datum/parsed_map/proc/tgm_build_cache(no_changeturf, bad_paths=null)
+ 	if(modelCache && !bad_paths)
+ 		return modelCache
+ 	. = modelCache = list()
+ 	var/list/grid_models = src.grid_models
++	var/set_space = FALSE
++	// Use where a list is needed, but where it will not be modified
++	// Used here to remove the cost of needing to make a new list for each fields entry when it's set manually later
++	var/static/list/default_list = GLOB.map_model_default // It's stupid, but it saves += list(list)
++	var/static/list/wrapped_default_list = list(default_list) // It's stupid, but it saves += list(list)
++	var/static/regex/var_edits = var_edits_tgm
++
++	var/path_to_init = ""
++	// Reference to the attributes list we're currently filling, if any
++	var/list/current_attributes
++	// If we are currently editing a path or not
++	var/editing = FALSE
+ 	for(var/model_key in grid_models)
+-		var/model = grid_models[model_key]
+-		var/list/members = list() //will contain all members (paths) in model (in our example : /turf/unsimulated/wall and /area/mine/explored)
+-		var/list/members_attributes = list() //will contain lists filled with corresponding variables, if any (in our example : list(icon_state = "rock") and list())
++		// We're going to split models by newline
++		// This guarentees that each entry will be of interest to us
++		// Then we'll process them step by step
++		// Hopefully this reduces the cost from read_list that we'd otherwise have
++		var/list/lines = splittext(grid_models[model_key], "\n")
++		// Builds list of path/edits for later
++		// Of note: we cannot preallocate them to save time in list expansion later
++		// But fortunately lists allocate at least 8 entries normally anyway, and
++		// We are unlikely to have more then that many members
++		//will contain all members (paths) in model (in our example : /turf/unsimulated/wall)
++		var/list/members = list()
++		//will contain lists filled with corresponding variables, if any (in our example : list(icon_state = "rock") and list())
++		var/list/members_attributes = list()
+ 
+ 		/////////////////////////////////////////////////////////
+ 		//Constructing members and corresponding variables lists
+ 		////////////////////////////////////////////////////////
++		// string representation of the path to init
++		for(var/line in lines)
++			// We do this here to avoid needing to check at each return statement
++			// No harm in it anyway
++			MAPLOADING_CHECK_TICK
++
++			switch(line[length(line)])
++				if(";") // Var edit, we'll apply it
++					// Var edits look like \tname = value;
++					// I'm gonna try capturing them with regex, since it ought to be the fastest here
++					// Should hand back key = value
++					var_edits.Find(line)
++					var/value = parse_constant(var_edits.group[2])
++					if(istext(value))
++						value = apply_text_macros(value)
++					current_attributes[var_edits.group[1]] = value
++					continue // Keep on keeping on brother
++				if("{") // Start of an edit, and so also the start of a path
++					editing = TRUE
++					current_attributes = list() // Init the list we'll be filling
++					members_attributes += list(current_attributes)
++					path_to_init = copytext(line, 1, -1)
++				if(",") // Either the end of a path, or the end of an edit
++					if(editing) // it was the end of a path
++						editing = FALSE
++						continue
++					members_attributes += wrapped_default_list // We know this is a path, and we also know it has no vv's. so we'll just set this to the default list
++					// Drop the last char mind
++					path_to_init = copytext(line, 1, -1)
++				if("}") // Gotta be the end of an area edit, let's check to be sure
++					if(editing) // it was the end of an area edit (shouldn't do those anyhow)
++						editing = FALSE
++						continue
++					stack_trace("ended a line on JUST a }, with no ongoing edit. What? Area shit?")
++				else // If we're editing, this is a var edit entry. the last one in a stack, cause god hates me. Otherwise, it's an area
++					if(editing) // I want inline I want inline I want inline
++						// Var edits look like \tname = value;
++						// I'm gonna try capturing them with regex, since it ought to be the fastest here
++						// Should hand back key = value
++						var_edits.Find(line)
++						var/value = parse_constant(var_edits.group[2])
++						if(istext(value))
++							value = apply_text_macros(value)
++						current_attributes[var_edits.group[1]] = value
++						continue // Keep on keeping on brother
+ 
+-		var/index = 1
+-		var/old_position = 1
+-		var/dpos
++					members_attributes += wrapped_default_list // We know this is a path, and we also know it has no vv's. so we'll just set this to the default list
++					path_to_init = line
+ 
+-		while(dpos != 0)
+-			//finding next member (e.g /turf/unsimulated/wall{icon_state = "rock"} or /area/mine/explored)
+-			dpos = find_next_delimiter_position(model, old_position, ",", "{", "}") //find next delimiter (comma here) that's not within {...}
+ 
+-			var/full_def = trim_text(copytext(model, old_position, dpos)) //full definition, e.g : /obj/foo/bar{variables=derp}
+-			var/variables_start = findtext(full_def, "{")
+-			var/path_text = trim_text(copytext(full_def, 1, variables_start))
++			// Alright, if we've gotten to this point, our string is a path
++			// Oh and we don't trim it, because we require no padding for these
++			// Saves like 1.5 deciseconds
++			var/atom_def = text2path(path_to_init) //path definition, e.g /obj/foo/bar
++
++			if(!ispath(atom_def, /atom)) // Skip the item if the path does not exist.  Fix your crap, mappers!
++				if(bad_paths)
++					// Rare case, avoid the var to save time most of the time
++					LAZYOR(bad_paths[copytext(line, 1, -1)], model_key)
++				continue
++			// Index is already incremented either way, just gotta set the path and all
++			members += atom_def
++
++		//check and see if we can just skip this turf
++		//So you don't have to understand this horrid statement, we can do this if
++		// 1. the space_key isn't set yet
++		// 2. no_changeturf is set
++		// 3. there are exactly 2 members
++		// 4. with no attributes
++		// 5. and the members are world.turf and world.area
++		// Basically, if we find an entry like this: "XXX" = (/turf/default, /area/default)
++		// We can skip calling this proc every time we see XXX
++		if(!set_space \
++			&& no_changeturf \
++			&& members_attributes.len == 2 \
++			&& members.len == 2 \
++			&& members_attributes[1] == default_list \
++			&& members_attributes[2] == default_list \
++			&& members[2] == world.area \
++			&& members[1] == world.turf
++		)
++			set_space = TRUE
++			.[SPACE_KEY] = model_key
++			continue
++
++		.[model_key] = list(members, members_attributes)
++	return .
++
++/// Builds key caches for general formats
++/// Slower then the proc above, tho it could still be optimized slightly. it's just not a priority
++/// Since we don't run DMM maps, ever.
++/datum/parsed_map/proc/dmm_build_cache(no_changeturf, bad_paths=null)
++	if(modelCache && !bad_paths)
++		return modelCache
++	. = modelCache = list()
++	var/list/grid_models = src.grid_models
++	var/set_space = FALSE
++	// Use where a list is needed, but where it will not be modified
++	// Used here to remove the cost of needing to make a new list for each fields entry when it's set manually later
++	var/static/list/default_list = list(GLOB.map_model_default)
++	for(var/model_key in grid_models)
++		//will contain all members (paths) in model (in our example : /turf/unsimulated/wall)
++		var/list/members = list()
++		//will contain lists filled with corresponding variables, if any (in our example : list(icon_state = "rock") and list())
++		var/list/members_attributes = list()
++
++		var/model = grid_models[model_key]
++		/////////////////////////////////////////////////////////
++		//Constructing members and corresponding variables lists
++		////////////////////////////////////////////////////////
++
++		var/model_index = 1
++		while(model_path.Find(model, model_index))
++			var/variables_start = 0
++			var/member_string = model_path.group[1]
++			model_index = model_path.next
++			//findtext is a bit expensive, lets only do this if the last char of our string is a } (IE: we know we have vars)
++			//this saves about 25 miliseconds on my machine. Not a major optimization
++			if(member_string[length(member_string)] == "}")
++				variables_start = findtext(member_string, "{")
++
++			var/path_text = trim(copytext(member_string, 1, variables_start))
+ 			var/atom_def = text2path(path_text) //path definition, e.g /obj/foo/bar
+-			if(dpos)
+-				old_position = dpos + length(model[dpos])
+ 
+ 			if(!ispath(atom_def, /atom)) // Skip the item if the path does not exist.  Fix your crap, mappers!
+ 				if(bad_paths)
+ 					LAZYOR(bad_paths[path_text], model_key)
+ 				continue
+-			members.Add(atom_def)
++			members += atom_def
+ 
+ 			//transform the variables in text format into a list (e.g {var1="derp"; var2; var3=7} => list(var1="derp", var2, var3=7))
+-			var/list/fields = list()
+-
++			// OF NOTE: this could be made faster by replacing readlist with a progressive regex
++			// I'm just too much of a bum to do it rn, especially since we mandate tgm format for any maps in repo
++			var/list/fields = default_list
+ 			if(variables_start)//if there's any variable
+-				full_def = copytext(full_def, variables_start + length(full_def[variables_start]), -length(copytext_char(full_def, -1))) //removing the last '}'
+-				fields = readlist(full_def, ";")
+-				if(fields.len)
+-					if(!trim(fields[fields.len]))
+-						--fields.len
+-					for(var/I in fields)
+-						var/value = fields[I]
+-						if(istext(value))
+-							fields[I] = apply_text_macros(value)
++				member_string = copytext(member_string, variables_start + length(member_string[variables_start]), -length(copytext_char(member_string, -1))) //removing the last '}'
++				fields = list(readlist(member_string, ";"))
++				for(var/I in fields)
++					var/value = fields[I]
++					if(istext(value))
++						fields[I] = apply_text_macros(value)
+ 
+ 			//then fill the members_attributes list with the corresponding variables
+-			members_attributes.len++
+-			members_attributes[index++] = fields
+-
+-			CHECK_TICK
++			members_attributes += fields
++			MAPLOADING_CHECK_TICK
+ 
+ 		//check and see if we can just skip this turf
+ 		//So you don't have to understand this horrid statement, we can do this if
+-		// 1. no_changeturf is set
+-		// 2. the space_key isn't set yet
++		// 1. the space_key isn't set yet
++		// 2. no_changeturf is set
+ 		// 3. there are exactly 2 members
+ 		// 4. with no attributes
+ 		// 5. and the members are world.turf and world.area
+ 		// Basically, if we find an entry like this: "XXX" = (/turf/default, /area/default)
+ 		// We can skip calling this proc every time we see XXX
+-		if(no_changeturf \
+-			&& !(.[SPACE_KEY]) \
++		if(!set_space \
++			&& no_changeturf \
+ 			&& members.len == 2 \
+ 			&& members_attributes.len == 2 \
+ 			&& length(members_attributes[1]) == 0 \
+ 			&& length(members_attributes[2]) == 0 \
+ 			&& (world.area in members) \
+ 			&& (world.turf in members))
+-
++			set_space = TRUE
+ 			.[SPACE_KEY] = model_key
+ 			continue
+ 
+-
+ 		.[model_key] = list(members, members_attributes)
++	return .
+ 
+-/datum/parsed_map/proc/build_coordinate(list/areaCache, list/model, turf/crds, no_changeturf as num, placeOnTop as num)
++/datum/parsed_map/proc/build_coordinate(list/model, turf/crds, no_changeturf as num, placeOnTop as num, new_z)
++	// If we don't have a turf, nothing we will do next will actually acomplish anything, so just go back
++	// Note, this would actually drop area vvs in the tile, but like, why tho
++	if(!crds)
++		return
+ 	var/index
+ 	var/list/members = model[1]
+ 	var/list/members_attributes = model[2]
+ 
++	// We use static lists here because it's cheaper then passing them around
++	var/static/list/default_list = GLOB.map_model_default
+ 	////////////////
+ 	//Instanciation
+ 	////////////////
+ 
+-	for (var/turf_in_blacklist in turf_blacklist)
+-		if (crds == turf_in_blacklist) //if the given turf is blacklisted, dont do anything with it
+-			return
++	if(turf_blacklist?[crds])
++		return
+ 
+ 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
+ 	//first instance the /area and remove it from the members list
+ 	index = members.len
++	var/area/old_area
+ 	if(members[index] != /area/template_noop)
+-		var/atype = members[index]
+-		world.preloader_setup(members_attributes[index], atype)//preloader for assigning  set variables on atom creation
+-		var/atom/instance = areaCache[atype]
+-		if (!instance)
+-			instance = GLOB.areas_by_type[atype]
+-			if (!instance)
+-				instance = new atype(null)
+-			areaCache[atype] = instance
+-		if(crds)
+-			instance.contents.Add(crds)
+-
+-		if(GLOB.use_preloader && instance)
+-			world.preloader_load(instance)
+-
+-	//then instance the /turf and, if multiple tiles are presents, simulates the DMM underlays piling effect
++		if(members_attributes[index] != default_list)
++			world.preloader_setup(members_attributes[index], members[index])//preloader for assigning  set variables on atom creation
++		var/area/area_instance = loaded_areas[members[index]]
++		if(!area_instance)
++			var/area_type = members[index]
++			// If this parsed map doesn't have that area already, we check the global cache
++			area_instance = GLOB.areas_by_type[area_type]
++			// If the global list DOESN'T have this area it's either not a unique area, or it just hasn't been created yet
++			if (!area_instance)
++				area_instance = new area_type(null)
++				if(!area_instance)
++					CRASH("[area_type] failed to be new'd, what'd you do?")
++			loaded_areas[area_type] = area_instance
++
++		if(!new_z)
++			old_area = crds.loc
++			LISTASSERTLEN(old_area.turfs_to_uncontain_by_zlevel, crds.z, list())
++			LISTASSERTLEN(area_instance.turfs_by_zlevel, crds.z, list())
++			old_area.turfs_to_uncontain_by_zlevel[crds.z] += crds
++			area_instance.turfs_by_zlevel[crds.z] += crds
++		area_instance.contents.Add(crds)
++
++		if(GLOB.use_preloader)
++			world.preloader_load(area_instance)
++
++	// Index right before /area is /turf
++	index--
++	var/atom/instance
++	//then instance the /turf
++	//NOTE: this used to place any turfs before the last "underneath" it using .appearance and underlays
++	//We don't actually use this, and all it did was cost cpu, so we don't do this anymore
++	if(members[index] != /turf/template_noop)
++		if(members_attributes[index] != default_list)
++			world.preloader_setup(members_attributes[index], members[index])
++
++		// Note: we make the assertion that the last path WILL be a turf. if it isn't, this will fail.
++		if(placeOnTop)
++			instance = crds.load_on_top(members[index], CHANGETURF_DEFER_CHANGE | (no_changeturf ? CHANGETURF_SKIP : NONE))
++		else if(no_changeturf)
++			instance = create_atom(members[index], crds)//first preloader pass
++		else
++			instance = crds.ChangeTurf(members[index], null, CHANGETURF_DEFER_CHANGE)
+ 
+-	var/first_turf_index = 1
+-	while(!ispath(members[first_turf_index], /turf)) //find first /turf object in members
+-		first_turf_index++
++		if(GLOB.use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
++			world.preloader_load(instance)
++	// If this isn't template work, we didn't change our turf and we changed area, then we've gotta handle area lighting transfer
++	else if(!no_changeturf && old_area)
++		// Don't do contain/uncontain stuff, this happens a few lines up when the area actally changes
++		crds.on_change_area(old_area, crds.loc)
++	MAPLOADING_CHECK_TICK
+ 
+-	//turn off base new Initialization until the whole thing is loaded
+-	SSatoms.map_loader_begin()
+-	//instanciate the first /turf
+-	var/turf/T
+-	if(members[first_turf_index] != /turf/template_noop)
+-		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],crds,no_changeturf,placeOnTop)
++	//finally instance all remainings objects/mobs
++	for(var/atom_index in 1 to index-1)
++		if(members_attributes[atom_index] != default_list)
++			world.preloader_setup(members_attributes[atom_index], members[atom_index])
+ 
+-	if(T)
+-		//if others /turf are presents, simulates the underlays piling effect
+-		index = first_turf_index + 1
+-		while(index <= members.len - 1) // Last item is an /area
+-			var/underlay = T.appearance
+-			T = instance_atom(members[index],members_attributes[index],crds,no_changeturf,placeOnTop)//instance new turf
+-			T.underlays += underlay
+-			index++
++		// We make the assertion that only /atom s will be in this portion of the code. if that isn't true, this will fail
++		instance = create_atom(members[atom_index], crds)//first preloader pass
+ 
+-	//finally instance all remainings objects/mobs
+-	for(index in 1 to first_turf_index-1)
+-		instance_atom(members[index],members_attributes[index],crds,no_changeturf,placeOnTop)
+-	//Restore initialization to the previous value
+-	SSatoms.map_loader_stop()
++		if(GLOB.use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
++			world.preloader_load(instance)
++		MAPLOADING_CHECK_TICK
+ 
+ ////////////////
+ //Helpers procs
+ ////////////////
+ 
+-//Instance an atom at (x,y,z) and gives it the variables in attributes
+-/datum/parsed_map/proc/instance_atom(path,list/attributes, turf/crds, no_changeturf, placeOnTop)
+-	world.preloader_setup(attributes, path)
+-
+-	if(crds)
+-		if(ispath(path, /turf))
+-			if(placeOnTop)
+-				. = crds.PlaceOnTop(null, path, CHANGETURF_DEFER_CHANGE | (no_changeturf ? CHANGETURF_SKIP : NONE))
+-			else if(!no_changeturf)
+-				. = crds.ChangeTurf(path, null, CHANGETURF_DEFER_CHANGE)
+-			else
+-				. = create_atom(path, crds)//first preloader pass
+-		else
+-			. = create_atom(path, crds)//first preloader pass
+-
+-	if(GLOB.use_preloader && .)//second preloader pass, for those atoms that don't ..() in New()
+-		world.preloader_load(.)
+-
+-	//custom CHECK_TICK here because we don't want things created while we're sleeping to not initialize
+-	if(TICK_CHECK)
+-		SSatoms.map_loader_stop()
+-		stoplag()
+-		SSatoms.map_loader_begin()
+-
+ /datum/parsed_map/proc/create_atom(path, crds)
+ 	set waitfor = FALSE
+ 	. = new path (crds)
+ 
+-//text trimming (both directions) helper proc
+-//optionally removes quotes before and after the text (for variable name)
+-/datum/parsed_map/proc/trim_text(what as text,trim_quotes=0)
+-	if(trim_quotes)
+-		return trimQuotesRegex.Replace(what, "")
+-	else
+-		return trimRegex.Replace(what, "")
+-
+-
+ //find the position of the next delimiter,skipping whatever is comprised between opening_escape and closing_escape
+ //returns 0 if reached the last delimiter
+ /datum/parsed_map/proc/find_next_delimiter_position(text as text,initial_position as num, delimiter=",",opening_escape="\"",closing_escape="\"")
+@@ -412,7 +996,6 @@
+ 
+ 	return next_delimiter
+ 
+-
+ //build a list from variables in text form (e.g {var1="derp"; var2; var3=7} => list(var1="derp", var2, var3=7))
+ //return the filled list
+ /datum/parsed_map/proc/readlist(text as text, delimiter=",")
+@@ -422,26 +1005,25 @@
+ 
+ 	var/position
+ 	var/old_position = 1
+-
+ 	while(position != 0)
+ 		// find next delimiter that is not within  "..."
+ 		position = find_next_delimiter_position(text,old_position,delimiter)
+ 
+ 		// check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
+ 		var/equal_position = findtext(text,"=",old_position, position)
+-
+-		var/trim_left = trim_text(copytext(text,old_position,(equal_position ? equal_position : position)))
+-		var/left_constant = delimiter == ";" ? trim_left : parse_constant(trim_left)
++		var/trim_left = trim(copytext(text,old_position,(equal_position ? equal_position : position)))
++		var/left_constant = parse_constant(trim_left)
+ 		if(position)
+ 			old_position = position + length(text[position])
++		if(!left_constant) // damn newlines man. Exists to provide behavior consistency with the above loop. not a major cost becuase this path is cold
++			continue
+ 
+ 		if(equal_position && !isnum(left_constant))
+ 			// Associative var, so do the association.
+ 			// Note that numbers cannot be keys - the RHS is dropped if so.
+-			var/trim_right = trim_text(copytext(text, equal_position + length(text[equal_position]), position))
++			var/trim_right = trim(copytext(text, equal_position + length(text[equal_position]), position))
+ 			var/right_constant = parse_constant(trim_right)
+ 			.[left_constant] = right_constant
+-
+ 		else  // simple var
+ 			. += list(left_constant)
+ 
+@@ -453,7 +1035,10 @@
+ 
+ 	// string
+ 	if(text[1] == "\"")
+-		return copytext(text, length(text[1]) + 1, findtext(text, "\"", length(text[1]) + 1))
++		// insert implied locate \" and length("\"") here
++		// It's a minimal timesave but it is a timesave
++		// Safe becuase we're guarenteed trimmed constants
++		return copytext(text, 2, -1)
+ 
+ 	// list
+ 	if(copytext(text, 1, 6) == "list(")//6 == length("list(") + 1
+@@ -481,9 +1066,16 @@
+ 
+ /datum/parsed_map/Destroy()
+ 	..()
+-	turf_blacklist.Cut()
++	SSatoms.map_loader_stop(REF(src)) // Just in case, I don't want to double up here
++	if(turf_blacklist)
++		turf_blacklist.Cut()
+ 	parsed_bounds.Cut()
+ 	bounds.Cut()
+ 	grid_models.Cut()
+ 	gridSets.Cut()
+ 	return QDEL_HINT_HARDDEL_NOW
++
++#undef MAP_DMM
++#undef MAP_TGM
++#undef MAP_UNKNOWN
++#undef MAPLOADING_CHECK_TICK
+diff --git a/code/modules/mapping/ruins.dm b/code/modules/mapping/ruins.dm
+index b322fe0cf7a..c157636b121 100644
+--- a/code/modules/mapping/ruins.dm
++++ b/code/modules/mapping/ruins.dm
+@@ -1,4 +1,4 @@
+-/datum/map_template/ruin/proc/try_to_place(z,allowed_areas,turf/forced_turf)
++/datum/map_template/ruin/proc/try_to_place(z, list/allowed_areas_typecache, turf/forced_turf, clear_below)
+ 	var/sanity = forced_turf ? 1 : PLACEMENT_TRIES
+ 	if(SSmapping.level_trait(z,ZTRAIT_ISOLATED_RUINS))
+ 		return place_on_isolated_level(z)
+@@ -8,17 +8,21 @@
+ 		var/height_border = TRANSITIONEDGE + SPACERUIN_MAP_EDGE_PAD + round(height / 2)
+ 		var/turf/central_turf = forced_turf ? forced_turf : locate(rand(width_border, world.maxx - width_border), rand(height_border, world.maxy - height_border), z)
+ 		var/valid = TRUE
++		var/list/affected_turfs = get_affected_turfs(central_turf,1)
++		var/list/affected_areas = list()
+ 
+-		for(var/turf/check in get_affected_turfs(central_turf,1))
+-			var/area/new_area = get_area(check)
+-			valid = FALSE // set to false before we check
+-			if(check.flags_1 & NO_RUINS_1)
++		for(var/turf/check in affected_turfs)
++			// Use assoc lists to move this out, it's easier that way
++			if(check.turf_flags & NO_RUINS)
++				valid = FALSE // set to false before we check
+ 				break
+-			for(var/type in allowed_areas)
+-				if(istype(new_area, type)) // it's at least one of our types so it's whitelisted
+-					valid = TRUE
+-					break
+-			if(!valid)
++			var/area/new_area = get_area(check)
++			affected_areas[new_area] = TRUE
++
++		// This is faster yes. Only BARELY but it is faster
++		for(var/area/affct_area as anything in affected_areas)
++			if(!allowed_areas_typecache[affct_area.type])
++				valid = FALSE
+ 				break
+ 
+ 		if(!valid)
+@@ -26,42 +30,55 @@
+ 
+ 		testing("Ruin \"[name]\" placed at ([central_turf.x], [central_turf.y], [central_turf.z])")
+ 
+-		for(var/i in get_affected_turfs(central_turf, 1))
+-			var/turf/T = i
+-			for(var/obj/structure/spawner/nest in T)
+-				qdel(nest)
+-			for(var/mob/living/simple_animal/monster in T)
+-				qdel(monster)
+-			for(var/obj/structure/flora/plant in T)
+-				qdel(plant)
++		if(clear_below)
++			var/static/list/clear_below_typecache = typecacheof(list(
++				/obj/structure/spawner,
++				/mob/living/simple_animal,
++				/obj/structure/flora
++			))
++			for(var/turf/T as anything in affected_turfs)
++				for(var/atom/thing as anything in T)
++					if(clear_below_typecache[thing.type])
++						qdel(thing)
+ 
+ 		load(central_turf,centered = TRUE)
+ 		loaded++
+ 
+-		for(var/turf/T in get_affected_turfs(central_turf, 1))
+-			T.flags_1 |= NO_RUINS_1
++		for(var/turf/T in affected_turfs)
++			T.turf_flags |= NO_RUINS
+ 
+ 		new /obj/effect/landmark/ruin(central_turf, src)
+ 		return central_turf
+ 
+ /datum/map_template/ruin/proc/place_on_isolated_level(z)
+-	var/datum/turf_reservation/reservation = SSmapping.RequestBlockReservation(width, height, z) //Make the new level creation work with different traits.
++	var/datum/turf_reservation/reservation = SSmapping.request_turf_block_reservation(width, height, 1, z) //Make the new level creation work with different traits.
+ 	if(!reservation)
+ 		return
+-	var/turf/placement = locate(reservation.bottom_left_coords[1],reservation.bottom_left_coords[2],reservation.bottom_left_coords[3])
++	var/turf/placement = reservation.bottom_left_turfs[1]
+ 	load(placement)
+ 	loaded++
+ 	for(var/turf/T in get_affected_turfs(placement))
+-		T.flags_1 |= NO_RUINS_1
++		T.turf_flags |= NO_RUINS
+ 	var/turf/center = locate(placement.x + round(width/2),placement.y + round(height/2),placement.z)
+ 	new /obj/effect/landmark/ruin(center, src)
+ 	return center
+ 
+-
+-/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = list(/area/space), list/potentialRuins)
++/**
++ * Loads the ruins for a given z level.
++ * @param z_levels The z levels to load ruins on.
++ * @param budget The budget to spend on ruins. Compare against the cost of the ruins in /datum/map_template/ruin.
++ * @param whitelist A list of areas to allow ruins to be placed in.
++ * @param potentialRuins A list of ruins to choose from.
++ * @param clear_below Whether to clear the area below the ruin. Used for multiz ruins.
++ * @param mineral_budget The budget to spend on ruins that spawn ore vents. Map templates with vents have that defined by mineral_cost.
++ * @param mineral_budget_update What type of ore distribution should spawn from ruins picked by this cave generator? This list is copied from ores_spawned.dm into SSore_generation.ore_vent_minerals.
++ * @param ruin_type The type of ruins that are spawning (ZTRAIT_SPACE_RUINS, ZTRAIT_ICE_RUINS, ZTRAIT_LAVA_RUINS, etc.)
++ */
++/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = list(/area/space), list/potentialRuins, clear_below = FALSE, mineral_budget = 15, mineral_budget_update, ruins_type = ZTRAIT_STATION)
+ 	if(!z_levels || !z_levels.len)
+ 		WARNING("No Z levels provided - Not generating ruins")
+ 		return
++	var/list/whitelist_typecache = typecacheof(whitelist)
+ 
+ 	for(var/zl in z_levels)
+ 		var/turf/T = locate(1, 1, zl)
+@@ -70,24 +87,39 @@
+ 			return
+ 
+ 	var/list/ruins = potentialRuins.Copy()
++	var/placed_ruins = 0 // our count of how many ruins have been placed
++	var/list/forced_ruins = list() //These go first on the z level associated (same random one by default) or if the assoc value is a turf to the specified turf.
++	var/list/ruins_available = list() //we can try these in the current pass
+ 
+-	var/list/forced_ruins = list()		//These go first on the z level associated (same random one by default) or if the assoc value is a turf to the specified turf.
+-	var/list/ruins_available = list()	//we can try these in the current pass
++	if(PERFORM_ALL_TESTS(log_mapping))
++		log_mapping("All ruins being loaded for map testing.")
++
++	switch(mineral_budget_update) //If we use more map configurations, add another case
++		if(OREGEN_PRESET_LAVALAND)
++			SSore_generation.ore_vent_minerals = expand_weights(GLOB.ore_vent_minerals_lavaland)
++		if(OREGEN_PRESET_TRIPLE_Z)
++			SSore_generation.ore_vent_minerals = expand_weights(GLOB.ore_vent_minerals_triple_z)
+ 
+ 	//Set up the starting ruin list
+ 	for(var/key in ruins)
+ 		var/datum/map_template/ruin/R = ruins[key]
+-		if(R.cost > budget) //Why would you do that
++
++		if(PERFORM_ALL_TESTS(log_mapping))
++			R.cost = 0
++			R.allow_duplicates = FALSE // no multiples for testing
++			R.always_place = !R.unpickable // unpickable ruin means it spawns as a set with another ruin
++
++		if(R.cost > budget || R.mineral_cost > mineral_budget) //Why would you do that
+ 			continue
+ 		if(R.always_place)
+ 			forced_ruins[R] = -1
+ 		if(R.unpickable)
+ 			continue
+ 		ruins_available[R] = R.placement_weight
+-	while(budget > 0 && (ruins_available.len || forced_ruins.len))
++	while(((budget > 0 || mineral_budget > 0) && ruins_available.len) || forced_ruins.len)
+ 		var/datum/map_template/ruin/current_pick
+ 		var/forced = FALSE
+-		var/forced_z	//If set we won't pick z level and use this one instead.
++		var/forced_z //If set we won't pick z level and use this one instead.
+ 		var/forced_turf //If set we place the ruin centered on the given turf
+ 		if(forced_ruins.len) //We have something we need to load right now, so just pick it
+ 			for(var/ruin in forced_ruins)
+@@ -101,7 +133,7 @@
+ 				forced = TRUE
+ 				break
+ 		else //Otherwise just pick random one
+-			current_pick = pickweight(ruins_available)
++			current_pick = pick_weight(ruins_available)
+ 
+ 		var/placement_tries = forced_turf ? 1 : PLACEMENT_TRIES //Only try once if we target specific turf
+ 		var/failed_to_place = TRUE
+@@ -117,13 +149,13 @@
+ 					for(var/v in current_pick.always_spawn_with)
+ 						if(current_pick.always_spawn_with[v] == PLACE_BELOW)
+ 							var/turf/T = locate(1,1,target_z)
+-							if(!SSmapping.get_turf_below(T))
++							if(!GET_TURF_BELOW(T))
+ 								if(forced_z)
+ 									continue outer
+ 								else
+ 									break outer
+ 
+-				placed_turf = current_pick.try_to_place(target_z,whitelist,forced_turf)
++				placed_turf = current_pick.try_to_place(target_z,whitelist_typecache,forced_turf,clear_below)
+ 				if(!placed_turf)
+ 					continue
+ 				else
+@@ -140,9 +172,11 @@
+ 			for(var/datum/map_template/ruin/R in ruins_available)
+ 				if(R.id == current_pick.id)
+ 					ruins_available -= R
+-			log_world("Failed to place [current_pick.name] ruin.")
++			log_mapping("Failed to place [current_pick.name] ruin!")
+ 		else
++			placed_ruins++
+ 			budget -= current_pick.cost
++			mineral_budget -= current_pick.mineral_cost
+ 			if(!current_pick.allow_duplicates)
+ 				for(var/datum/map_template/ruin/R in ruins_available)
+ 					if(R.id == current_pick.id)
+@@ -167,13 +201,16 @@
+ 								if(PLACE_DEFAULT)
+ 									forced_ruins[linked] = -1
+ 								if(PLACE_BELOW)
+-									forced_ruins[linked] = SSmapping.get_turf_below(placed_turf)
++									forced_ruins[linked] = GET_TURF_BELOW(placed_turf)
+ 								if(PLACE_ISOLATED)
+ 									forced_ruins[linked] = SSmapping.get_isolated_ruin_z()
+ 
++
++			log_mapping("Successfully placed [current_pick.name] ruin.")
++
+ 		//Update the available list
+ 		for(var/datum/map_template/ruin/R in ruins_available)
+-			if(R.cost > budget)
++			if(R.cost > budget || R.mineral_cost > mineral_budget)
+ 				ruins_available -= R
+ 
+-	log_world("Ruin loader finished with [budget] left to spend.")
++	log_world("[ruins_type] loader finished placing [placed_ruins]/[ruins.len] ruins with [budget] left to spend.")
+diff --git a/code/modules/mapping/space_management/multiz_helpers.dm b/code/modules/mapping/space_management/multiz_helpers.dm
+index 4f9174e719f..b0e2ff7fa06 100644
+--- a/code/modules/mapping/space_management/multiz_helpers.dm
++++ b/code/modules/mapping/space_management/multiz_helpers.dm
+@@ -1,10 +1,11 @@
+ /proc/get_step_multiz(ref, dir)
++	var/turf/us = get_turf(ref)
+ 	if(dir & UP)
+ 		dir &= ~UP
+-		return get_step(SSmapping.get_turf_above(get_turf(ref)), dir)
++		return get_step(GET_TURF_ABOVE(us), dir)
+ 	if(dir & DOWN)
+ 		dir &= ~DOWN
+-		return get_step(SSmapping.get_turf_below(get_turf(ref)), dir)
++		return get_step(GET_TURF_BELOW(us), dir)
+ 	return get_step(ref, dir)
+ 
+ /proc/get_dir_multiz(turf/us, turf/them)
+@@ -15,20 +16,31 @@
+ 	if(us.z == them.z)
+ 		return get_dir(us, them)
+ 	else
+-		var/turf/T = us.above()
++		var/turf/T = GET_TURF_ABOVE(us)
+ 		var/dir = NONE
+ 		if(T && (T.z == them.z))
+ 			dir = UP
+ 		else
+-			T = us.below()
++			T = GET_TURF_BELOW(us)
+ 			if(T && (T.z == them.z))
+ 				dir = DOWN
+ 			else
+ 				return get_dir(us, them)
+ 		return (dir | get_dir(us, them))
+ 
+-/turf/proc/above()
+-	return get_step_multiz(src, UP)
++/proc/get_lowest_turf(atom/ref)
++	var/turf/us = get_turf(ref)
++	var/turf/next = GET_TURF_BELOW(us)
++	while(next)
++		us = next
++		next = GET_TURF_BELOW(us)
++	return us
+ 
+-/turf/proc/below()
+-	return get_step_multiz(src, DOWN)
++// I wish this was lisp
++/proc/get_highest_turf(atom/ref)
++	var/turf/us = get_turf(ref)
++	var/turf/next = GET_TURF_ABOVE(us)
++	while(next)
++		us = next
++		next = GET_TURF_ABOVE(us)
++	return us
+diff --git a/code/modules/mapping/space_management/space_level.dm b/code/modules/mapping/space_management/space_level.dm
+index cc9c6e11f17..1747806cb21 100644
+--- a/code/modules/mapping/space_management/space_level.dm
++++ b/code/modules/mapping/space_management/space_level.dm
+@@ -11,4 +11,12 @@
+ 	z_value = new_z
+ 	name = new_name
+ 	traits = new_traits
++
++	if (islist(new_traits))
++		for (var/trait in new_traits)
++			SSmapping.z_trait_levels[trait] += list(new_z)
++	else // in case a single trait is passed in
++		SSmapping.z_trait_levels[new_traits] += list(new_z)
++
++
+ 	set_linkage(new_traits[ZTRAIT_LINKAGE])
+diff --git a/code/modules/mapping/space_management/space_reservation.dm b/code/modules/mapping/space_management/space_reservation.dm
+index 265d2c996d0..fe0050d418d 100644
+--- a/code/modules/mapping/space_management/space_reservation.dm
++++ b/code/modules/mapping/space_management/space_reservation.dm
+@@ -1,26 +1,157 @@
+-
+ //Yes, they can only be rectangular.
+ //Yes, I'm sorry.
+ /datum/turf_reservation
++	/// All turfs that we've reserved
+ 	var/list/reserved_turfs = list()
++
++	/// Turfs around the reservation for cordoning
++	var/list/cordon_turfs = list()
++
++	/// Area of turfs next to the cordon to fill with pre_cordon_area's
++	var/list/pre_cordon_turfs = list()
++
++	/// The width of the reservation
+ 	var/width = 0
++
++	/// The height of the reservation
+ 	var/height = 0
+-	var/bottom_left_coords[3]
+-	var/top_right_coords[3]
+-	var/wipe_reservation_on_release = TRUE
++
++	/// The z stack size of the reservation. Note that reservations are ALWAYS reserved from the bottom up
++	var/z_size = 0
++
++	/// List of the bottom left turfs. Indexed by what their z index for this reservation is
++	var/list/bottom_left_turfs = list()
++
++	/// List of the top right turfs. Indexed by what their z index for this reservation is
++	var/list/top_right_turfs = list()
++
++	/// The turf type the reservation is initially made with
+ 	var/turf_type = /turf/open/space
+ 
++	/// Do we override baseturfs with turf_type?
++	var/turf_type_is_baseturf = TRUE
++
++	///Distance away from the cordon where we can put a "sort-cordon" and run some extra code (see make_repel). 0 makes nothing happen
++	var/pre_cordon_distance = 0
++
+ /datum/turf_reservation/transit
+ 	turf_type = /turf/open/space/transit
++	pre_cordon_distance = 7
+ 
+ /datum/turf_reservation/proc/Release()
+-	var/v = reserved_turfs.Copy()
+-	for(var/i in reserved_turfs)
+-		reserved_turfs -= i
+-		SSmapping.used_turfs -= i
+-	SSmapping.reserve_turfs(v)
++	bottom_left_turfs.Cut()
++	top_right_turfs.Cut()
++
++	var/list/reserved_copy = reserved_turfs.Copy()
++	SSmapping.used_turfs -= reserved_turfs
++	reserved_turfs = list()
++
++	var/list/cordon_copy = cordon_turfs.Copy()
++	SSmapping.used_turfs -= cordon_turfs
++	cordon_turfs = list()
++
++	var/release_turfs = reserved_copy + cordon_copy
++
++	for(var/turf/reserved_turf as anything in release_turfs)
++		SEND_SIGNAL(reserved_turf, COMSIG_TURF_RESERVATION_RELEASED, src)
++
++		// immediately disconnect from atmos
++		reserved_turf.blocks_air = TRUE
++		CALCULATE_ADJACENT_TURFS(reserved_turf, KILL_EXCITED)
++
++	// Makes the linter happy, even tho we don't await this
++	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, reserve_turfs), release_turfs)
++
++/// Attempts to calaculate and store a list of turfs around the reservation for cordoning. Returns whether a valid cordon was calculated
++/datum/turf_reservation/proc/calculate_cordon_turfs(turf/bottom_left, turf/top_right)
++	if(bottom_left.x < 2 || bottom_left.y < 2 || top_right.x > (world.maxx - 2) || top_right.y > (world.maxy - 2))
++		return FALSE // no space for a cordon here
++
++	var/list/possible_turfs = CORNER_OUTLINE(bottom_left, width, height)
++	// if they're our cordon turfs, accept them
++	possible_turfs -= cordon_turfs
++	for(var/turf/cordon_turf as anything in possible_turfs)
++		if(!(cordon_turf.turf_flags & UNUSED_RESERVATION_TURF))
++			return FALSE
++	cordon_turfs |= possible_turfs
++
++	if(pre_cordon_distance)
++		var/turf/offset_turf = locate(bottom_left.x + pre_cordon_distance, bottom_left.y + pre_cordon_distance, bottom_left.z)
++		var/list/to_add = CORNER_OUTLINE(offset_turf, width - pre_cordon_distance * 2, height - pre_cordon_distance * 2) //we step-by-stop move inwards from the outer cordon
++		for(var/turf/turf_being_added as anything in to_add)
++			pre_cordon_turfs |= turf_being_added //add one by one so we can filter out duplicates
++
++	return TRUE
++
++/// Actually generates the cordon around the reservation, and marking the cordon turfs as reserved
++/datum/turf_reservation/proc/generate_cordon()
++	for(var/turf/cordon_turf as anything in cordon_turfs)
++		var/area/misc/cordon/cordon_area = GLOB.areas_by_type[/area/misc/cordon] || new
++		var/area/old_area = cordon_turf.loc
++
++		LISTASSERTLEN(old_area.turfs_to_uncontain_by_zlevel, cordon_turf.z, list())
++		LISTASSERTLEN(cordon_area.turfs_by_zlevel, cordon_turf.z, list())
++		old_area.turfs_to_uncontain_by_zlevel[cordon_turf.z] += cordon_turf
++		cordon_area.turfs_by_zlevel[cordon_turf.z] += cordon_turf
++		cordon_area.contents += cordon_turf
++
++		// Its no longer unused, but its also not "used"
++		cordon_turf.turf_flags &= ~UNUSED_RESERVATION_TURF
++		cordon_turf.empty(/turf/cordon, /turf/cordon)
++		SSmapping.unused_turfs["[cordon_turf.z]"] -= cordon_turf
++		// still gets linked to us though
++		SSmapping.used_turfs[cordon_turf] = src
++
++	//swap the area with the pre-cordoning area
++	for(var/turf/pre_cordon_turf as anything in pre_cordon_turfs)
++		make_repel(pre_cordon_turf)
++
++///Register signals in the cordon "danger zone" to do something with whoever trespasses
++/datum/turf_reservation/proc/make_repel(turf/pre_cordon_turf)
++	SHOULD_CALL_PARENT(TRUE)
++	//Okay so hear me out. If we place a special turf IN the reserved area, it will be overwritten, so we can't do that
++	//But signals are preserved even between turf changes, so even if we register a signal now it will stay even if that turf is overriden by the template
++	RegisterSignals(pre_cordon_turf, list(COMSIG_QDELETING, COMSIG_TURF_RESERVATION_RELEASED), PROC_REF(on_stop_repel))
++
++/datum/turf_reservation/proc/on_stop_repel(turf/pre_cordon_turf)
++	SHOULD_CALL_PARENT(TRUE)
++	SIGNAL_HANDLER
++
++	stop_repel(pre_cordon_turf)
++
++///Unregister all the signals we added in RegisterRepelSignals
++/datum/turf_reservation/proc/stop_repel(turf/pre_cordon_turf)
++	UnregisterSignal(pre_cordon_turf, list(COMSIG_QDELETING, COMSIG_TURF_RESERVATION_RELEASED))
++
++/datum/turf_reservation/transit/make_repel(turf/pre_cordon_turf)
++	..()
++
++	RegisterSignal(pre_cordon_turf, COMSIG_ATOM_ENTERED, PROC_REF(space_dump_soft))
++
++/datum/turf_reservation/transit/stop_repel(turf/pre_cordon_turf)
++	..()
+ 
+-/datum/turf_reservation/proc/Reserve(width, height, zlevel)
++	UnregisterSignal(pre_cordon_turf, COMSIG_ATOM_ENTERED)
++
++/datum/turf_reservation/transit/proc/space_dump(atom/source, atom/movable/enterer)
++	SIGNAL_HANDLER
++
++	dump_in_space(enterer)
++
++///Only dump if we don't have the hyperspace cordon movement exemption trait
++/datum/turf_reservation/transit/proc/space_dump_soft(atom/source, atom/movable/enterer)
++	SIGNAL_HANDLER
++
++	if(!HAS_TRAIT(enterer, TRAIT_FREE_HYPERSPACE_SOFTCORDON_MOVEMENT))
++		space_dump(source, enterer)
++
++/datum/turf_reservation/turf_not_baseturf
++	turf_type_is_baseturf = FALSE
++
++/// Internal proc which handles reserving the area for the reservation.
++/datum/turf_reservation/proc/_reserve_area(width, height, zlevel)
++	src.width = width
++	src.height = height
+ 	if(width > world.maxx || height > world.maxy || width < 1 || height < 1)
+ 		return FALSE
+ 	var/list/avail = SSmapping.unused_turfs["[zlevel]"]
+@@ -31,12 +162,12 @@
+ 	for(var/i in avail)
+ 		CHECK_TICK
+ 		BL = i
+-		if(!(BL.flags_1 & UNUSED_RESERVATION_TURF_1))
++		if(!(BL.turf_flags & UNUSED_RESERVATION_TURF))
+ 			continue
+ 		if(BL.x + width > world.maxx || BL.y + height > world.maxy)
+ 			continue
+ 		TR = locate(BL.x + width - 1, BL.y + height - 1, BL.z)
+-		if(!(TR.flags_1 & UNUSED_RESERVATION_TURF_1))
++		if(!(TR.turf_flags & UNUSED_RESERVATION_TURF))
+ 			continue
+ 		final = block(BL, TR)
+ 		if(!final)
+@@ -44,27 +175,104 @@
+ 		passing = TRUE
+ 		for(var/I in final)
+ 			var/turf/checking = I
+-			if(!(checking.flags_1 & UNUSED_RESERVATION_TURF_1))
++			if(!(checking.turf_flags & UNUSED_RESERVATION_TURF))
+ 				passing = FALSE
+ 				break
++		if(passing) // found a potentially valid area, now try to calculate its cordon
++			passing = calculate_cordon_turfs(BL, TR)
+ 		if(!passing)
+ 			continue
+ 		break
+ 	if(!passing || !istype(BL) || !istype(TR))
+ 		return FALSE
+-	bottom_left_coords = list(BL.x, BL.y, BL.z)
+-	top_right_coords = list(TR.x, TR.y, TR.z)
+ 	for(var/i in final)
+ 		var/turf/T = i
+ 		reserved_turfs |= T
+-		T.flags_1 &= ~UNUSED_RESERVATION_TURF_1
+ 		SSmapping.unused_turfs["[T.z]"] -= T
+ 		SSmapping.used_turfs[T] = src
+-		T.ChangeTurf(turf_type, turf_type)
+-	src.width = width
+-	src.height = height
++		T.turf_flags = (T.turf_flags | RESERVATION_TURF) & ~UNUSED_RESERVATION_TURF
++		T.empty(turf_type, turf_type_is_baseturf ? turf_type : null)
++
++	bottom_left_turfs += BL
++	top_right_turfs += TR
++	return TRUE
++
++/datum/turf_reservation/proc/reserve(width, height, z_size, z_reservation)
++	src.z_size = z_size
++	var/failed_reservation = FALSE
++	for(var/_ in 1 to z_size)
++		if(!_reserve_area(width, height, z_reservation))
++			failed_reservation = TRUE
++			break
++
++	if(failed_reservation)
++		Release()
++		return FALSE
++
++	generate_cordon()
+ 	return TRUE
+ 
++/// Calculates the effective bounds information for the given turf. Returns a list of the information, or null if not applicable.
++/datum/turf_reservation/proc/calculate_turf_bounds_information(turf/target)
++	for(var/z_idx in 1 to z_size)
++		var/turf/bottom_left = bottom_left_turfs[z_idx]
++		var/turf/top_right = top_right_turfs[z_idx]
++		var/bl_x = bottom_left.x
++		var/bl_y = bottom_left.y
++		var/tr_x = top_right.x
++		var/tr_y = top_right.y
++
++		if(target.x < bl_x)
++			continue
++
++		if(target.y < bl_y)
++			continue
++
++		if(target.x > tr_x)
++			continue
++
++		if(target.y > tr_y)
++			continue
++
++		var/list/return_information = list()
++		return_information["z_idx"] = z_idx
++		return_information["offset_x"] = target.x - bl_x
++		return_information["offset_y"] = target.y - bl_y
++		return return_information
++	return null
++
++/// Gets the turf below the given target. Returns null if there is no turf below the target
++/datum/turf_reservation/proc/get_turf_below(turf/target)
++	var/list/bounds_info = calculate_turf_bounds_information(target)
++	if(isnull(bounds_info))
++		return null
++
++	var/z_idx = bounds_info["z_idx"]
++	// check what z level, if its the max, then there is no turf below
++	if(z_idx == z_size)
++		return null
++
++	var/offset_x = bounds_info["offset_x"]
++	var/offset_y = bounds_info["offset_y"]
++	var/turf/bottom_left = bottom_left_turfs[z_idx + 1]
++	return locate(bottom_left.x + offset_x, bottom_left.y + offset_y, bottom_left.z)
++
++/// Gets the turf above the given target. Returns null if there is no turf above the target
++/datum/turf_reservation/proc/get_turf_above(turf/target)
++	var/list/bounds_info = calculate_turf_bounds_information(target)
++	if(isnull(bounds_info))
++		return null
++
++	var/z_idx = bounds_info["z_idx"]
++	// check what z level, if its the min, then there is no turf above
++	if(z_idx == 1)
++		return null
++
++	var/offset_x = bounds_info["offset_x"]
++	var/offset_y = bounds_info["offset_y"]
++	var/turf/bottom_left = bottom_left_turfs[z_idx - 1]
++	return locate(bottom_left.x + offset_x, bottom_left.y + offset_y, bottom_left.z)
++
+ /datum/turf_reservation/New()
+ 	LAZYADD(SSmapping.turf_reservations, src)
+ 
+diff --git a/code/modules/mapping/space_management/space_transition.dm b/code/modules/mapping/space_management/space_transition.dm
+index 5a9d52033c1..b61897dd7b6 100644
+--- a/code/modules/mapping/space_management/space_transition.dm
++++ b/code/modules/mapping/space_management/space_transition.dm
+@@ -22,122 +22,143 @@
+ 				neigbours[TEXT_WEST] = P.spl
+ 				P.spl.neigbours[TEXT_EAST] = src
+ 
++#define CHORDS_TO_1D(x, y, grid_diameter) ((x) + ((y) - 1) * (grid_diameter))
+ /datum/space_transition_point          //this is explicitly utilitarian datum type made specially for the space map generation and are absolutely unusable for anything else
+ 	var/list/neigbours = list()
+ 	var/x
+ 	var/y
+ 	var/datum/space_level/spl
+ 
+-/datum/space_transition_point/New(nx, ny, list/point_grid)
+-	if(!point_grid)
++/datum/space_transition_point/New(nx, ny, list/grid)
++	if(!grid)
+ 		qdel(src)
+ 		return
+-	var/list/L = point_grid[1]
+-	if(nx > point_grid.len || ny > L.len)
++	var/grid_diameter = sqrt(length(grid))
++	if(nx > grid_diameter || ny > grid_diameter)
++		stack_trace("Attempted to set a position outside the size of [grid_diameter]")
+ 		qdel(src)
+ 		return
+ 	x = nx
+ 	y = ny
+-	if(point_grid[x][y])
++	var/position = CHORDS_TO_1D(x, y, grid_diameter)
++	if(grid[position])
+ 		return
+-	point_grid[x][y] = src
++	grid[position] = src
+ 
+-/datum/space_transition_point/proc/set_neigbours(list/grid)
+-	var/max_X = grid.len
+-	var/list/max_Y = grid[1]
+-	max_Y = max_Y.len
++/datum/space_transition_point/proc/set_neigbours(list/grid, size)
+ 	neigbours.Cut()
+-	if(x+1 <= max_X)
+-		neigbours |= grid[x+1][y]
++
++	if(x+1 <= size)
++		neigbours |= grid[CHORDS_TO_1D(x+1, y, size)]
+ 	if(x-1 >= 1)
+-		neigbours |= grid[x-1][y]
+-	if(y+1 <= max_Y)
+-		neigbours |= grid[x][y+1]
++		neigbours |= grid[CHORDS_TO_1D(x-1, y, size)]
++	if(y+1 <= size)
++		neigbours |= grid[CHORDS_TO_1D(x, y + 1, size)]
+ 	if(y-1 >= 1)
+-		neigbours |= grid[x][y-1]
++		neigbours |= grid[CHORDS_TO_1D(x, y - 1, size)]
+ 
+ /datum/controller/subsystem/mapping/proc/setup_map_transitions() //listamania
+-	var/list/SLS = list()
++	var/list/transition_levels = list()
+ 	var/list/cached_z_list = z_list
+-	var/conf_set_len = 0
+-	for(var/A in cached_z_list)
+-		var/datum/space_level/D = A
+-		if (D.linkage == CROSSLINKED)
+-			SLS.Add(D)
+-		conf_set_len++
+-	var/list/point_grid[conf_set_len*2+1][conf_set_len*2+1]
+-	var/list/grid = list()
+-	var/datum/space_transition_point/P
+-	for(var/i = 1, i<=conf_set_len*2+1, i++)
+-		for(var/j = 1, j<=conf_set_len*2+1, j++)
+-			P = new/datum/space_transition_point(i,j, point_grid)
+-			point_grid[i][j] = P
+-			grid.Add(P)
+-	for(var/datum/space_transition_point/pnt in grid)
+-		pnt.set_neigbours(point_grid)
+-	P = point_grid[conf_set_len+1][conf_set_len+1]
++	for(var/datum/space_level/level as anything in cached_z_list)
++		if (level.linkage == CROSSLINKED)
++			transition_levels.Add(level)
++
++	var/grid_diameter = (length(transition_levels) * 2) + 1
++	var/list/grid = new /list(grid_diameter ** 2)
++
++	var/datum/space_transition_point/point
++	for(var/x in 1 to grid_diameter)
++		for(var/y in 1 to grid_diameter)
++			point = new/datum/space_transition_point(x, y, grid)
++			grid[CHORDS_TO_1D(x, y, grid_diameter)] = point
++	for(point as anything in grid)
++		point.set_neigbours(grid, grid_diameter)
++
++	var/center = round(grid_diameter / 2)
++	point = grid[CHORDS_TO_1D(grid_diameter, center, center)]
++	grid.Cut()
++
++	var/list/transition_pick = transition_levels.Copy()
+ 	var/list/possible_points = list()
+ 	var/list/used_points = list()
+-	grid.Cut()
+-	while(SLS.len)
+-		var/datum/space_level/D = pick_n_take(SLS)
+-		D.xi = P.x
+-		D.yi = P.y
+-		P.spl = D
+-		possible_points |= P.neigbours
+-		used_points |= P
++	while(transition_pick.len)
++		var/datum/space_level/level = pick_n_take(transition_pick)
++		level.xi = point.x
++		level.yi = point.y
++		point.spl = level
++		possible_points |= point.neigbours
++		used_points |= point
+ 		possible_points.Remove(used_points)
+-		D.set_neigbours(used_points)
+-		P = pick(possible_points)
++		level.set_neigbours(used_points)
++		point = pick(possible_points)
+ 		CHECK_TICK
+ 
++	// Now that we've handed out neighbors, we're gonna handle an edge case
++	// Need to check if all our levels have neighbors in all directions
++	// If they don't, we'll make them wrap all the way around to the other side of the grid
++	for(var/direction in GLOB.cardinals)
++		var/dir = "[direction]"
++		var/inverse = "[REVERSE_DIR(direction)]"
++		for(var/datum/space_level/level as anything in transition_levels)
++			// If we have something in this dir that isn't just us, continue on
++			if(level.neigbours[dir] && level.neigbours[dir] != level)
++				continue
++			var/datum/space_level/head = level
++			while(head.neigbours[inverse] && head.neigbours[inverse] != head)
++				head = head.neigbours[inverse]
++
++			// Alllright we've landed on someone who we can wrap around onto safely, let's make that connection yeah?
++			head.neigbours[inverse] = level
++			level.neigbours[dir] = head
++
+ 	//Lists below are pre-calculated values arranged in the list in such a way to be easily accessable in the loop by the counter
+ 	//Its either this or madness with lotsa math
++	var/inner_max_x = world.maxx - TRANSITIONEDGE
++	var/inner_max_y = world.maxy - TRANSITIONEDGE
++	var/list/x_pos_beginning = list(1, 1, inner_max_x, 1)  //x values of the lowest-leftest turfs of the respective 4 blocks on each side of zlevel
++	var/list/y_pos_beginning = list(inner_max_y, 1, 1 + TRANSITIONEDGE, 1 + TRANSITIONEDGE)  //y values respectively
++	var/list/x_pos_ending = list(world.maxx, world.maxx, world.maxx, 1 + TRANSITIONEDGE) //x values of the highest-rightest turfs of the respective 4 blocks on each side of zlevel
++	var/list/y_pos_ending = list(world.maxy, 1 + TRANSITIONEDGE, inner_max_y, inner_max_y) //y values respectively
++	var/list/x_pos_transition = list(1, 1, TRANSITIONEDGE + 2, inner_max_x - 1) //values of x for the transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective x value later in the code
++	var/list/y_pos_transition = list(TRANSITIONEDGE + 2, inner_max_y - 1, 1, 1) //values of y for the transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective y value later in the code
+ 
+-	var/list/x_pos_beginning = list(1, 1, world.maxx - TRANSITIONEDGE, 1)  //x values of the lowest-leftest turfs of the respective 4 blocks on each side of zlevel
+-	var/list/y_pos_beginning = list(world.maxy - TRANSITIONEDGE, 1, 1 + TRANSITIONEDGE, 1 + TRANSITIONEDGE)  //y values respectively
+-	var/list/x_pos_ending = list(world.maxx, world.maxx, world.maxx, 1 + TRANSITIONEDGE)	//x values of the highest-rightest turfs of the respective 4 blocks on each side of zlevel
+-	var/list/y_pos_ending = list(world.maxy, 1 + TRANSITIONEDGE, world.maxy - TRANSITIONEDGE, world.maxy - TRANSITIONEDGE)	//y values respectively
+-	var/list/x_pos_transition = list(1, 1, TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 1)		//values of x for the transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective x value later in the code
+-	var/list/y_pos_transition = list(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 1, 1, 1)		//values of y for the transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective y value later in the code
++	// Cache the range passed to the mirage border element, to reduce world var access in the thousands
++	var/range_cached = world.view
+ 
+-	for(var/I in cached_z_list)
+-		var/datum/space_level/D = I
+-		if(!D.neigbours.len)
++	for(var/datum/space_level/level as anything in cached_z_list)
++		if(!level.neigbours.len)
+ 			continue
+-		var/zlevelnumber = D.z_value
++		var/zlevelnumber = level.z_value
+ 		for(var/side in 1 to 4)
+ 			var/turf/beginning = locate(x_pos_beginning[side], y_pos_beginning[side], zlevelnumber)
+ 			var/turf/ending = locate(x_pos_ending[side], y_pos_ending[side], zlevelnumber)
+ 			var/list/turfblock = block(beginning, ending)
+ 			var/dirside = 2**(side-1)
+-			var/zdestination = zlevelnumber
+-			if(D.neigbours["[dirside]"] && D.neigbours["[dirside]"] != D)
+-				D = D.neigbours["[dirside]"]
+-				zdestination = D.z_value
+-			else
+-				dirside = turn(dirside, 180)
+-				while(D.neigbours["[dirside]"] && D.neigbours["[dirside]"] != D)
+-					D = D.neigbours["[dirside]"]
+-				zdestination = D.z_value
+-			D = I
++			var/x_target = x_pos_transition[side] == 1 ? 0 : x_pos_transition[side]
++			var/y_target = y_pos_transition[side] == 1 ? 0 : y_pos_transition[side]
++			var/datum/space_level/neighbor = level.neigbours["[dirside]"]
++			var/zdestination = neighbor.z_value
++
+ 			for(var/turf/open/space/S in turfblock)
+-				S.destination_x = x_pos_transition[side] == 1 ? S.x : x_pos_transition[side]
+-				S.destination_y = y_pos_transition[side] == 1 ? S.y : y_pos_transition[side]
++				S.destination_x = x_target || S.x
++				S.destination_y = y_target || S.y
+ 				S.destination_z = zdestination
+-				
++
+ 				// Mirage border code
+ 				var/mirage_dir
+ 				if(S.x == 1 + TRANSITIONEDGE)
+ 					mirage_dir |= WEST
+-				else if(S.x == world.maxx - TRANSITIONEDGE)
++				else if(S.x == inner_max_x)
+ 					mirage_dir |= EAST
+ 				if(S.y == 1 + TRANSITIONEDGE)
+ 					mirage_dir |= SOUTH
+-				else if(S.y == world.maxy - TRANSITIONEDGE)
++				else if(S.y == inner_max_y)
+ 					mirage_dir |= NORTH
+ 				if(!mirage_dir)
+ 					continue
+ 
+-				var/turf/place = locate(S.destination_x, S.destination_y, S.destination_z)
+-				S.AddComponent(/datum/component/mirage_border, place, mirage_dir)
++				var/turf/place = locate(S.destination_x, S.destination_y, zdestination)
++				S.AddElement(/datum/element/mirage_border, place, mirage_dir, range_cached)
++
++#undef CHORDS_TO_1D
+diff --git a/code/modules/mapping/space_management/traits.dm b/code/modules/mapping/space_management/traits.dm
+index 9ba8d96d5e1..9841f85ebd7 100644
+--- a/code/modules/mapping/space_management/traits.dm
++++ b/code/modules/mapping/space_management/traits.dm
+@@ -1,4 +1,4 @@
+-// Look up levels[z].traits[trait]
++/// Look up levels[z].traits[trait]
+ /datum/controller/subsystem/mapping/proc/level_trait(z, trait)
+ 	if (!isnum(z) || z < 1)
+ 		return null
+@@ -6,7 +6,7 @@
+ 		if (z > z_list.len)
+ 			stack_trace("Unmanaged z-level [z]! maxz = [world.maxz], z_list.len = [z_list.len]")
+ 			return list()
+-		var/datum/space_level/S = get_level(z)
++		var/datum/space_level/S = z_list[z]
+ 		return S.traits[trait]
+ 	else
+ 		var/list/default = DEFAULT_MAP_TRAITS
+@@ -15,59 +15,41 @@
+ 			return list()
+ 		return default[z][DL_TRAITS][trait]
+ 
+-// Check if levels[z] has any of the specified traits
++/// Check if levels[z] has any of the specified traits
+ /datum/controller/subsystem/mapping/proc/level_has_any_trait(z, list/traits)
+-	for (var/I in traits)
+-		if (level_trait(z, I))
+-			return TRUE
++	var/datum/space_level/level_to_check = z_list[z]
++	if (length(level_to_check.traits & traits))
++		return TRUE
+ 	return FALSE
+ 
+-// Check if levels[z] has all of the specified traits
++/// Check if levels[z] has all of the specified traits
+ /datum/controller/subsystem/mapping/proc/level_has_all_traits(z, list/traits)
+-	for (var/I in traits)
+-		if (!level_trait(z, I))
+-			return FALSE
+-	return TRUE
++	var/datum/space_level/level_to_check = z_list[z]
++	if (length(level_to_check.traits & traits) == length(traits))
++		return TRUE
++	return FALSE
+ 
+-// Get a list of all z which have the specified trait
++/// Get a list of all z which have the specified trait
+ /datum/controller/subsystem/mapping/proc/levels_by_trait(trait)
+-	. = list()
+-	var/list/_z_list = z_list
+-	for(var/A in _z_list)
+-		var/datum/space_level/S = A
+-		if (S.traits[trait])
+-			. += S.z_value
++	return z_trait_levels[trait] || list()
+ 
+-// Get a list of all z which have any of the specified traits
++/// Get a list of all z which have any of the specified traits
+ /datum/controller/subsystem/mapping/proc/levels_by_any_trait(list/traits)
+-	. = list()
+-	var/list/_z_list = z_list
+-	for(var/A in _z_list)
+-		var/datum/space_level/S = A
+-		for (var/trait in traits)
+-			if (S.traits[trait])
+-				. += S.z_value
+-				break
+-
+-// Attempt to get the turf below the provided one according to Z traits
+-/datum/controller/subsystem/mapping/proc/get_turf_below(turf/T)
+-	if (!T)
 -		return
--	var/list/element_type_superlist = arguments_that_are_lists_by_element[element_type]
--	if(!element_type_superlist)
--		arguments_that_are_lists_by_element[element_type] = element_type_superlist = list()
--
--	var/list/sorted_argument = argument
--	if(!(initial(element_type.element_flags) & ELEMENT_DONT_SORT_LIST_ARGS))
--		sorted_argument = sorted_arguments_that_are_lists[argument]
--		if(!sorted_argument)
--			sorted_arguments_that_are_lists[argument] = sorted_argument = sortTim(argument.Copy(), GLOBAL_PROC_REF(cmp_embed_text_asc))
--
--	element_type_superlist[sorted_argument] = argument
+-	var/offset = level_trait(T.z, ZTRAIT_DOWN)
+-	if (!offset)
+-		return
+-	return locate(T.x, T.y, T.z + offset)
++	var/list/final_return = list()
++	for (var/trait in traits)
++		if (z_trait_levels[trait])
++			final_return |= z_trait_levels[trait]
++	return final_return
+ 
+-// Attempt to get the turf above the provided one according to Z traits
+-/datum/controller/subsystem/mapping/proc/get_turf_above(turf/T)
+-	if (!T)
+-		return
+-	var/offset = level_trait(T.z, ZTRAIT_UP)
+-	if (!offset)
+-		return
+-	return locate(T.x, T.y, T.z + offset)
++/// Get a list of all z which have all of the specified traits
++/datum/controller/subsystem/mapping/proc/levels_by_all_traits(list/traits)
++	var/list/final_return = list()
++	for(var/datum/space_level/level as anything in z_list)
++		if(level_has_all_traits(level.z_value, traits))
++			final_return += level.z_value
++	return final_return
+ 
+-// Prefer not to use this one too often
++/// Prefer not to use this one too often
+ /datum/controller/subsystem/mapping/proc/get_station_center()
+ 	var/station_z = levels_by_trait(ZTRAIT_STATION)[1]
+ 	return locate(round(world.maxx * 0.5, 1), round(world.maxy * 0.5, 1), station_z)
+diff --git a/code/modules/mapping/space_management/zlevel_manager.dm b/code/modules/mapping/space_management/zlevel_manager.dm
+index 6129c5fd2b6..61f252edf2b 100644
+--- a/code/modules/mapping/space_management/zlevel_manager.dm
++++ b/code/modules/mapping/space_management/zlevel_manager.dm
+@@ -4,30 +4,42 @@
+ 		return
+ 
+ 	z_list = list()
++	z_level_to_plane_offset = list()
++	z_level_to_lowest_plane_offset = list()
+ 	var/list/default_map_traits = DEFAULT_MAP_TRAITS
+ 
+ 	if (default_map_traits.len != world.maxz)
+-		WARNING("More or less map attributes pre-defined ([default_map_traits.len]) than existent z-levels ([world.maxz]). Ignoring the larger.")
++		log_mapping("More or less map attributes pre-defined ([default_map_traits.len]) than existent z-levels ([world.maxz]). Ignoring the larger.")
+ 		if (default_map_traits.len > world.maxz)
+ 			default_map_traits.Cut(world.maxz + 1)
+ 
+ 	for (var/I in 1 to default_map_traits.len)
+ 		var/list/features = default_map_traits[I]
+ 		var/datum/space_level/S = new(I, features[DL_NAME], features[DL_TRAITS])
+-		z_list += S
++		manage_z_level(S, filled_with_space = FALSE)
++	generate_z_level_linkages() // Default Zs don't use add_new_zlevel() so they don't automatically generate z-linkages.
+ 
+-/datum/controller/subsystem/mapping/proc/add_new_zlevel(name, traits = list(), z_type = /datum/space_level)
+-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_Z, args)
++/// Generates a real, honest to god new z level. Will create the actual space, and also generate a datum that holds info about the new plot of land
++/// Accepts the name, traits list, datum type, and if we should manage the turfs we create
++/datum/controller/subsystem/mapping/proc/add_new_zlevel(name, traits = list(), z_type = /datum/space_level, contain_turfs = TRUE)
++	UNTIL(!adding_new_zlevel)
++	adding_new_zlevel = TRUE
+ 	var/new_z = z_list.len + 1
+ 	if (world.maxz < new_z)
+ 		world.incrementMaxZ()
+ 		CHECK_TICK
+ 	// TODO: sleep here if the Z level needs to be cleared
+ 	var/datum/space_level/S = new z_type(new_z, name, traits)
+-	z_list += S
++	manage_z_level(S, filled_with_space = TRUE, contain_turfs = contain_turfs)
++	generate_linkages_for_z_level(new_z)
++	calculate_z_level_gravity(new_z)
++	adding_new_zlevel = FALSE
++	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_Z, S)
+ 	return S
+ 
+-/datum/controller/subsystem/mapping/proc/get_level(z)
+-	if (z_list && z >= 1 && z <= z_list.len)
++/// Returns the /datum/space_level associated with the given z level.
++/datum/controller/subsystem/mapping/proc/get_level(z) as /datum/space_level
++	RETURN_TYPE(/datum/space_level)
++	if(ISINRANGE(z, 1, length(z_list)))
+ 		return z_list[z]
+ 	CRASH("Unmanaged z-level [z]! maxz = [world.maxz], z_list.len = [z_list ? z_list.len : "null"]")
+diff --git a/code/modules/mapping/verify.dm b/code/modules/mapping/verify.dm
+index 7fe07d3b9ec..b7211bac6a9 100644
+--- a/code/modules/mapping/verify.dm
++++ b/code/modules/mapping/verify.dm
+@@ -1,3 +1,6 @@
++/// Global list of map report datums
++GLOBAL_LIST_EMPTY(map_reports)
++
+ /// An error report generated by [/datum/parsed_map/proc/check_for_errors].
+ /datum/map_report
+ 	var/original_path
+@@ -11,11 +14,16 @@
+ 
+ /datum/map_report/New(datum/parsed_map/map)
+ 	original_path = map.original_path || "Untitled"
++	GLOB.map_reports += src
++
++/datum/map_report/Destroy(force)
++	GLOB.map_reports -= src
++	return ..()
++
+ 
+ /// Show a rendered version of this report to a client.
+ /datum/map_report/proc/show_to(client/C)
+ 	var/list/html = list()
+-	html += "<p>Report for map file <tt>[original_path]</tt></p>"
+ 	if(crashed)
+ 		html += "<p><b>Validation crashed</b>: check the runtime logs.</p>"
+ 	if(!loadable)
+@@ -39,7 +47,9 @@
+ 				html += "<ul><li>[messages.Join("</li><li>")]</li></ul>"
+ 			html += "</li>"
+ 		html += "</ul></p>"
+-	C << browse(html.Join(), "window=[tag];size=600x400")
++	var/datum/browser/browser = new(C.mob, "[tag]", "Report for map file [original_path]", 600, 400)
++	browser.set_content(html.Join())
++	browser.open()
+ 
+ /datum/map_report/Topic(href, href_list)
+ 	. = ..()

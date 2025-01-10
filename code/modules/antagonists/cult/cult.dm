@@ -1,7 +1,3 @@
-#define SUMMON_POSSIBILITIES 3
-#define CULT_VICTORY 1
-#define CULT_LOSS 0
-#define CULT_NARSIE_KILLED -1
 
 /datum/antagonist/cult
 	name = "Cultist"

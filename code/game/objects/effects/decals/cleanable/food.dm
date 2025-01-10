@@ -10,6 +10,9 @@
 	icon_state = "tomato_floor1"
 	random_icon_states = list("tomato_floor1", "tomato_floor2", "tomato_floor3")
 
+/obj/effect/decal/cleanable/food/tomato_smudge/can_bloodcrawl_in()
+	return TRUE // why? why not.
+
 /obj/effect/decal/cleanable/food/plant_smudge
 	name = "plant smudge"
 	desc = "Chlorophyll? More like borophyll!"
@@ -32,23 +35,23 @@
 	icon_state = "salt_pile"
 	var/safepasses = 3 //how many times can this salt pile be passed before dissipating
 
-/obj/effect/decal/cleanable/food/salt/CanAllowThrough(atom/movable/AM, turf/target)
+/obj/effect/decal/cleanable/food/salt/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(is_species(AM, /datum/species/snail))
+	if(is_species(mover, /datum/species/snail))
 		return FALSE
 
 /obj/effect/decal/cleanable/food/salt/Bumped(atom/movable/AM)
 	. = ..()
 	if(is_species(AM, /datum/species/snail))
-		to_chat(AM, "<span class='danger'>Your path is obstructed by <span class='phobia'>salt</span>.</span>")
+		to_chat(AM, span_danger("Your path is obstructed by [span_phobia("salt")]."))
 
-/obj/effect/decal/cleanable/food/salt/Crossed(atom/movable/AM)
-	..()
+/obj/effect/decal/cleanable/food/salt/on_entered(datum/source, atom/movable/AM)
+	. = ..()
 	if(!isliving(AM))
 		return
 	if(iscarbon(AM))
 		var/mob/living/carbon/C = AM
-		if(C.m_intent == MOVE_INTENT_WALK)
+		if(C.move_intent == MOVE_INTENT_WALK)
 			return
 	safepasses--
 	if(safepasses <= 0 && !QDELETED(src))
@@ -58,3 +61,14 @@
 	name = "flour"
 	desc = "It's still good. Four second rule!"
 	icon_state = "flour"
+
+/obj/effect/decal/cleanable/food/squid_ink
+	name = "ink smear"
+	desc = "a smear from some inky substance..."
+	icon = 'icons/mob/silicon/robots.dmi'
+	icon_state = "floor1"
+	color = COLOR_DARK
+
+/obj/effect/decal/cleanable/food/squid_ink/Initialize(mapload, list/datum/disease/diseases)
+	icon_state = "floor[rand(1, 7)]"
+	return ..()

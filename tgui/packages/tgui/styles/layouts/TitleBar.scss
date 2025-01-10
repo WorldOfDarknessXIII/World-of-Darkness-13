@@ -4,13 +4,13 @@
  */
 
 @use 'sass:color';
-@use '../base.scss';
-@use '../colors.scss';
+@use '../base';
+@use '../colors';
 
-$text-color: rgba(255, 255, 255, 0.75) !default;
-$background-color: #363636 !default;
-$shadow-color-core: #161616 !default;
-$shadow-color: rgba(0, 0, 0, 0.1) !default;
+$text-color: hsla(0, 0%, 100%, 0.75) !default;
+$background-color: hsl(0, 0%, 21%) !default;
+$shadow-color-core: hsl(0, 0%, 8.6%) !default;
+$shadow-color: hsla(0, 0%, 0%, 0.1) !default;
 
 .TitleBar {
   background-color: $background-color;
@@ -24,17 +24,22 @@ $shadow-color: rgba(0, 0, 0, 0.1) !default;
 .TitleBar__clickable {
   color: color.change($text-color, $alpha: 0.5);
   background-color: $background-color;
-  transition: color 250ms, background-color 250ms;
+  transition:
+    color 250ms ease-out,
+    background-color 250ms ease-out;
 
   &:hover {
-    color: rgba(255, 255, 255, 1.0);
-    background-color: #cc0000;
-    transition: color 0ms, background-color 0ms;
+    color: rgba(255, 255, 255, 1);
+    background-color: hsl(0, 100%, 40%);
+    transition:
+      color 0ms,
+      background-color 0ms;
   }
 }
 
 .TitleBar__title {
   position: absolute;
+  display: inline-block;
   top: 0;
   left: 46px;
   left: base.rem(46px);
@@ -44,6 +49,14 @@ $shadow-color: rgba(0, 0, 0, 0.1) !default;
   line-height: 31px;
   line-height: base.rem(31px);
   white-space: nowrap;
+  pointer-events: none;
+}
+
+.TitleBar__buttons {
+  pointer-events: initial;
+  display: inline-block;
+  width: 100%;
+  margin-left: 10px;
 }
 
 .TitleBar__dragZone {
@@ -92,7 +105,7 @@ $shadow-color: rgba(0, 0, 0, 0.1) !default;
   min-width: base.rem(20px);
   padding: 2px 4px;
   padding: base.rem(2px) base.rem(4px);
-  background-color: rgba(colors.$good, 0.75);
-  color: #fff;
+  background-color: color.adjust(colors.$good, $lightness: -10%, $space: hsl);
+  color: hsl(120, 100%, 100%);
   text-align: center;
 }

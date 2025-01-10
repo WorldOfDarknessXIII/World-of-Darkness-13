@@ -1,11 +1,5 @@
 //predominantly negative traits
 
-/// Defines for locations of items being added to your inventory on spawn
-#define LOCATION_LPOCKET "in your left pocket"
-#define LOCATION_RPOCKET "in your right pocket"
-#define LOCATION_BACKPACK "in your backpack"
-#define LOCATION_HANDS "in your hands"
-
 /datum/quirk/badback
 	name = "Bad Back"
 	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evently weighted objects are fine, though."

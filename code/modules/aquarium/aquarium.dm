@@ -1,8 +1,3 @@
-#define AQUARIUM_LAYER_STEP 0.01
-/// Aquarium content layer offsets
-#define AQUARIUM_MIN_OFFSET 0.01
-#define AQUARIUM_MAX_OFFSET 1
-
 /obj/structure/aquarium
 	name = "aquarium"
 	density = TRUE

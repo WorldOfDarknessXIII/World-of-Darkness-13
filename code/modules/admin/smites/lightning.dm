@@ -1,6 +1,3 @@
-#define LIGHTNING_BOLT_DAMAGE 75
-#define LIGHTNING_BOLT_ELECTROCUTION_ANIMATION_LENGTH 40
-
 /// Strikes the target with a lightning bolt
 /datum/smite/lightning
 	name = "Lightning bolt"

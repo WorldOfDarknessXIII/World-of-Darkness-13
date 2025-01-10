@@ -1,8 +1,8 @@
 /obj/item/chromosome
 	name = "blank chromosome"
-	icon = 'icons/obj/chromosomes.dmi'
+	icon = 'icons/obj/science/chromosomes.dmi'
 	icon_state = ""
-	desc = "A tube holding chromosomic data."
+	desc = "A tube holding chromosomal data."
 	force = 0
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -16,7 +16,7 @@
 /obj/item/chromosome/proc/can_apply(datum/mutation/human/HM)
 	if(!HM || !(HM.can_chromosome == CHROMOSOME_NONE))
 		return FALSE
-	if((stabilizer_coeff != 1) && (HM.stabilizer_coeff != -1)) //if the chromosome is 1, we dont change anything. If the mutation is -1, we cant change it. sorry
+	if((stabilizer_coeff != 1) && (HM.stabilizer_coeff != -1)) //if the chromosome is 1, we don't change anything. If the mutation is -1, we can't change it. sorry
 		return TRUE
 	if((synchronizer_coeff != 1) && (HM.synchronizer_coeff != -1))
 		return TRUE
@@ -34,9 +34,13 @@
 		HM.power_coeff = power_coeff
 	if(HM.energy_coeff != -1)
 		HM.energy_coeff = energy_coeff
-	HM.can_chromosome = 2
+	HM.can_chromosome = CHROMOSOME_USED
 	HM.chromosome_name = name
-	HM.modify()
+
+	// Do the actual modification
+	if(HM.modify())
+		HM.modified = TRUE
+
 	qdel(src)
 
 /proc/generate_chromosome()
@@ -48,7 +52,7 @@
 			if(!initial(CM.weight))
 				break
 			chromosomes[A] = initial(CM.weight)
-	return pickweight(chromosomes)
+	return pick_weight(chromosomes)
 
 
 /obj/item/chromosome/stabilizer
