@@ -132,4 +132,6 @@
 
 /datum/outfit/job/police_sergeant/post_equip(mob/living/carbon/human/H)
 	..()
+	var/datum/martial_art/martial_art = new /datum/martial_art/cqc
 	H.ignores_warrant = TRUE
+	martial_art.teach(H)
