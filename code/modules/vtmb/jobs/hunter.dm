@@ -116,14 +116,13 @@
 	owner.announce_objectives()
 
 /datum/antagonist/hunter/proc/update_hunted(initial = FALSE)
-	for(var/datum/objective/O in objectives)
-		if(istype(O,/datum/objective/hunter))
-			for(var/mob/M in O.to_hunt)
-				if(!considered_alive(M) && get_dist(O,owner.current) < 20)
-					O.experience_reward += 1
-					O.to_hunt -= M
-					O.hunted_down |= M
-					to_chat(owner.current, "<span class='alertsyndie'>[O] was hunted down.</span>")
+	for(var/datum/objective/hunter/O in objectives)
+		for(var/mob/M in O.to_hunt)
+			if(!considered_alive(M) && get_dist(O,owner.current) < 20)
+				O.experience_reward += 1
+				O.to_hunt -= M
+				O.hunted_down |= M
+				to_chat(owner.current, "<span class='alertsyndie'>[O] was hunted down.</span>")
 	addtimer(CALLBACK(src, PROC_REF(update_hunted)),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
 
 

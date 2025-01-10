@@ -131,7 +131,8 @@
 				var/result = O.check_completion() ? "SUCCESS" : "FAIL"
 				antag_info["objectives"] += list(list("objective_type"=O.type,"text"=O.explanation_text,"result"=result))
 				if(result)
-					A.owner.add_experience(O.experience_reward)
+					var/datum/preferences/P = GLOB.preferences_datums[ckey(A.owner.key)]
+					P.add_experience(O.experience_reward)
 		SSblackbox.record_feedback("associative", "antagonists", 1, antag_info)
 
 /datum/controller/subsystem/ticker/proc/record_nuke_disk_location()
