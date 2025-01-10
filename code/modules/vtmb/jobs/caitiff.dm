@@ -56,6 +56,12 @@
 	var/datum/objective/assassinate/kill_objective = new
 	kill_objective.owner = owner
 	kill_objective.find_target()
+	if(kill_objective.target)
+		var/datum/objective/survive/surv = new
+		surv.owner = kill_objective.target
+		kill_objective.target.objectives += surv
+		kill_objective.target.current.playsound_local(get_turf(owner.current), 'code/modules/wod13/sounds/sad_start.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+		kill_objective.target.announce_objectives()
 	objectives += kill_objective
 	owner.current.playsound_local(get_turf(owner.current), 'code/modules/wod13/sounds/sad_start.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	return ..()
