@@ -54,6 +54,14 @@
 
 
 /mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCK_PROJECTILES) && !HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		if(prob(75))
+			src.visible_message("<span class='danger'>[src] effortlessly swats the projectile aside! [p_they(TRUE)] can block bullets with [p_their()] bare hands!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+			playsound(get_turf(src), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+			P.firer = src
+			P.setAngle(rand(0, 360))//SHING
+			emote("flip")
+			return BULLET_ACT_FORCE_PIERCE
 	if(dna?.species)
 		var/spec_return = dna.species.bullet_act(P, src)
 		if(spec_return)

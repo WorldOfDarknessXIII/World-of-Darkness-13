@@ -75,7 +75,7 @@ Dancer
 	value = 2
 	gain_text = "<span class='notice'>You feel more experienced in love.</span>"
 	lose_text = "<span class='warning'>You feel more clueless in love.</span>"
-	allowed_species = list("Vampire")
+	allowed_species = list("Vampire", "Kuei-Jin")
 
 /datum/quirk/tough_flesh
 	name = "Tough Flesh"
@@ -106,7 +106,7 @@ Dancer
 	value = -2
 	gain_text = "<span class='warning'>You feel anxious about the way you feed.</span>"
 	lose_text = "<span class='warning'>You can feed normal again.</span>"
-	allowed_species = list("Vampire")
+	allowed_species = list("Vampire", "Kuei-Jin")
 
 /datum/quirk/lazy
 	name = "Lazy"
@@ -142,7 +142,7 @@ Dancer
 	value = -5
 	gain_text = "<span class='warning'>You feel dumb.</span>"
 	lose_text = "<span class='notice'>You don't feel dumb anymore.</span>"
-	allowed_species = list("Vampire", "Human", "Ghoul")
+	allowed_species = list("Vampire", "Human", "Ghoul", "Kuei-Jin")
 
 /datum/quirk/coffin_therapy
 	name = "Coffin Therapy"
@@ -627,7 +627,7 @@ Dancer
 	gain_text = "<span class='danger'>You feel injured from inside.</span>"
 	lose_text = "<span class='notice'>You feel healthy again.</span>"
 	medical_record_text = "Patient has aggressive flesh eating bacteria in their boody."
-	allowed_species = list("Vampire", "Ghoul", "Human")
+	allowed_species = list("Vampire", "Ghoul", "Human", "Kuei-Jin")
 
 /datum/quirk/consumption/on_process(delta_time)
 	if(prob(5))
@@ -682,7 +682,7 @@ Dancer
 	desc = "You can't recover your masquerade at all."
 	value = -2
 	mob_trait = TRAIT_VIOLATOR
-	allowed_species = list("Vampire", "Ghoul")
+	allowed_species = list("Vampire", "Ghoul", "Kuei-Jin")
 
 /datum/quirk/irongullet
 	name = "Iron Gullet"
@@ -700,7 +700,7 @@ Dancer
 	mob_trait = TRAIT_CHARMER
 	gain_text = "<span class='notice'>You feel charismatic.</span>"
 	lose_text = "<span class='notice'>You don't feel charismatic anymore.</span>"
-	allowed_species = list("Vampire")
+	allowed_species = list("Vampire", "Kuei-Jin")
 
 /datum/quirk/tower
 	name = "Tower"

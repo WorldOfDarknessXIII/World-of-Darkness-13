@@ -100,6 +100,11 @@
 		if (diablerist)
 			holder.icon_state = "diablerie_aura"
 
+	if(iscathayan(src))
+		var/mob/living/carbon/human/H = src
+		if(!H.check_kuei_jin_alive())
+			holder.color = "#ffffff"
+
 	if (isgarou(src) || iswerewolf(src))
 		//garou have bright auras due to their spiritual potence
 		holder.icon_state = "aura_bright"

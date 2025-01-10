@@ -83,6 +83,8 @@
 			m180.Turn(180)
 			animate(L, transform = m180, time = 3)
 			L.pixel_y = L.base_pixel_y + PIXEL_Y_OFFSET_LYING
+			if(ishuman(L))
+				call_dharma("torture", user)
 	else if (has_buckled_mobs())
 		for(var/mob/living/L in buckled_mobs)
 			user_unbuckle_mob(L, user)

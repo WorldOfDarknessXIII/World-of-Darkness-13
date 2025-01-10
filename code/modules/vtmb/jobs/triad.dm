@@ -17,7 +17,7 @@
 	display_order = JOB_DISPLAY_ORDER_TRIAD_GANGSTER
 	exp_type_department = EXP_TYPE_GANG
 
-	allowed_species = list("Human", "Werewolf")
+	allowed_species = list("Human", "Werewolf", "Kuei-Jin")
 	minimal_generation = 13
 
 	duty = "Make money, do drugs, fight law. Your hideout is the laundromat in Chinatown."

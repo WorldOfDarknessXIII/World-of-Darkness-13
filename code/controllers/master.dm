@@ -267,6 +267,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 								P.add_experience(2)
 							if(H.total_cleaned > 25)
 								P.add_experience(1)
+								call_dharma("cleangrow", H)
 							if(H.mind)
 								if(H.mind.assigned_role == "Graveyard Keeper")
 									if(SSgraveyard.total_good > SSgraveyard.total_bad)

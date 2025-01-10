@@ -129,6 +129,7 @@
 			wet = TRUE
 			to_chat(user, "<span class='notice'>You fill [src] with water.</span>")
 			playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
+			call_dharma("cleangrow", user)
 		else
 			to_chat(user, "<span class='warning'>[W] is empty!</span>")
 	if(istype(W, /obj/item/weedseed))
