@@ -39,9 +39,9 @@
 	allowed_bloodlines = list("True Brujah", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Lasombra")
 
 	my_contact_is_important = TRUE
-	known_contacts = list("Prince","Seneschal","Dealer")
+	known_contacts = list("Prince","Seneschal","Keeper","Harpy","Primogens","Reeve","Baron","Dealer")
 
-	v_duty = "Protect the Prince and the Masquerade. You are their sword."
+	v_duty = "Entrusted by the Prince, you are her most treasured investigator and law enforcement officer in Kindred society. Where the Scourge is the hammer, you are the blade of the Masquerade."
 	experience_addition = 20
 
 /datum/outfit/job/sheriff

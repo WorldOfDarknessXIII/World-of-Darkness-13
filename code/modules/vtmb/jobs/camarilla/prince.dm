@@ -36,6 +36,10 @@
 		"Dealer",
 		"Tremere Regent",
 		"Primogens",
+		"Reeve",
+		"Emissary",
+		"Harpy",
+		"Keeper",
 		"Baron"
 	)
 
