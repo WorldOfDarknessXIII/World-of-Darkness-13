@@ -128,7 +128,7 @@
 	///What rank of this Discipline is currently being casted.
 	var/level_casting = 1
 	///Whether this Discipline is exclusive to one Clan.
-	var/clane_restricted = FALSE
+	var/clan_restricted = FALSE
 	///Whether this Discipline is restricted from affecting dead people.
 	var/dead_restricted = TRUE
 
@@ -559,8 +559,8 @@
 	var/dominate_me = FALSE
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		if(H.clane)
-			if(H.clane.name == "Gargoyle")
+		if(H.clan)
+			if(H.clan.name == "Gargoyle")
 				dominate_me = TRUE
 	if(((theirpower >= mypower) || (caster.generation > target.generation)) && !dominate_me)
 		to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to dominate!</span>")
@@ -626,7 +626,7 @@
 	ranged = TRUE
 	delay = 10 SECONDS
 	activate_sound = 'code/modules/wod13/sounds/insanity.ogg'
-	clane_restricted = TRUE
+	clan_restricted = TRUE
 
 /proc/dancefirst(mob/living/M)
 	if(M.dancing)
@@ -967,7 +967,7 @@
 	delay = 20 SECONDS
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
-	clane_restricted = TRUE
+	clan_restricted = TRUE
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/gangrel/GA
 
 /datum/movespeed_modifier/protean2
@@ -1199,7 +1199,7 @@
 	delay = 5 SECONDS
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/wod13/sounds/thaum.ogg'
-	clane_restricted = TRUE
+	clan_restricted = TRUE
 	dead_restricted = FALSE
 
 /datum/discipline/thaumaturgy/activate(mob/living/target, mob/living/carbon/human/caster)
@@ -1274,7 +1274,7 @@
 	delay = 5
 //	range_sh = 2
 	violates_masquerade = TRUE
-	clane_restricted = TRUE
+	clan_restricted = TRUE
 	dead_restricted = FALSE
 
 /datum/discipline/serpentis/activate(mob/living/target, mob/living/carbon/human/caster)
@@ -1325,7 +1325,7 @@
 	delay = 100
 	range_sh = 2
 	violates_masquerade = TRUE
-	clane_restricted = TRUE
+	clan_restricted = TRUE
 	dead_restricted = FALSE
 
 /datum/discipline/vicissitude/activate(mob/living/target, mob/living/carbon/human/caster)
@@ -1454,7 +1454,7 @@
 	delay = 50
 //	range = 2
 	violates_masquerade = TRUE
-	clane_restricted = TRUE
+	clan_restricted = TRUE
 
 /datum/discipline/quietus/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
@@ -1549,7 +1549,7 @@
 	range_sh = 2
 	delay = 50
 	violates_masquerade = TRUE
-	clane_restricted = TRUE
+	clan_restricted = TRUE
 	dead_restricted = FALSE
 
 /datum/discipline/necromancy/activate(mob/living/target, mob/living/carbon/human/caster)
@@ -1633,7 +1633,7 @@
 	ranged = TRUE
 	delay = 100
 	violates_masquerade = TRUE
-	clane_restricted = TRUE
+	clan_restricted = TRUE
 	activate_sound = 'sound/magic/voidblink.ogg'
 
 /datum/discipline/obtenebration/activate(mob/living/target, mob/living/carbon/human/caster)
@@ -1657,7 +1657,7 @@
 	delay = 150
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
-	clane_restricted = TRUE
+	clan_restricted = TRUE
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/BAT
 
 /datum/discipline/daimonion/activate(mob/living/target, mob/living/carbon/human/caster)
@@ -1710,7 +1710,7 @@
 	delay = 50
 	violates_masquerade = FALSE
 	activate_sound = 'code/modules/wod13/sounds/valeren.ogg'
-	clane_restricted = TRUE
+	clan_restricted = TRUE
 	dead_restricted = FALSE
 	var/datum/beam/current_beam
 	var/humanity_restored = 0
@@ -1788,7 +1788,7 @@
 	delay = 75
 	violates_masquerade = FALSE
 	activate_sound = 'code/modules/wod13/sounds/melpominee.ogg'
-	clane_restricted = TRUE
+	clan_restricted = TRUE
 	dead_restricted = FALSE
 
 /mob/living/carbon/human/proc/create_walk_to(var/max)
@@ -1906,7 +1906,7 @@
 	delay = 50
 	violates_masquerade = FALSE
 	activate_sound = 'code/modules/wod13/sounds/temporis.ogg'
-	clane_restricted = TRUE
+	clan_restricted = TRUE
 	dead_restricted = FALSE
 	var/current_cycle = 0
 	var/datum/component/temporis_target

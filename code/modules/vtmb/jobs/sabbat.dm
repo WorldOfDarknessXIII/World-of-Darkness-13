@@ -11,14 +11,14 @@
 	H.vampire_faction = "Sabbat"
 	if(H.gender == MALE)
 		shoes = /obj/item/clothing/shoes/vampire
-		if(H.clane)
-			if(H.clane.male_clothes)
-				uniform = H.clane.male_clothes
+		if(H.clan)
+			if(H.clan.male_clothes)
+				uniform = H.clan.male_clothes
 	else
 		shoes = /obj/item/clothing/shoes/vampire/heels
-		if(H.clane)
-			if(H.clane.female_clothes)
-				uniform = H.clane.female_clothes
+		if(H.clan)
+			if(H.clan.female_clothes)
+				uniform = H.clan.female_clothes
 
 /datum/outfit/job/sabbatist/post_equip(mob/living/carbon/human/H)
 	..()
@@ -36,12 +36,12 @@
 //Commented out code for future sabbat character setup
 /*
 	H.generation = 13
-	H.clane = null
+	H.clan = null
 
 	H.maxHealth = round((initial(H.maxHealth)-initial(H.maxHealth)/4)+(initial(H.maxHealth)/4)*(H.physique+13-H.generation))
 	H.health = round((initial(H.health)-initial(H.health)/4)+(initial(H.health)/4)*(H.physique+13-H.generation))
 	H.thaumaturgy_knowledge = FALSE
-	QDEL_NULL(H.clane)
+	QDEL_NULL(H.clan)
 	var/obj/item/organ/eyes/NV = new()
 	NV.Insert(H, TRUE, FALSE)
 	add_verb(H, /datum/job/sabbatist/verb/setup_character)
@@ -131,9 +131,9 @@
 
 	H.skin_tone = get_vamp_skin_color(H.skin_tone)
 	H.update_body()
-	H.clane = new H.clane.type()
-	H.clane.on_gain(H)
-	if(H.clane.alt_sprite)
+	H.clan = new H.clan.type()
+	H.clan.on_gain(H)
+	if(H.clan.alt_sprite)
 		H.skin_tone = "albino"
 		H.update_body()
 	H.create_disciplines(FALSE, discipline1, discipline2, discipline3)
@@ -144,7 +144,7 @@
 
 	H.generation = generation_choice
 	H.maxbloodpool = 10+((13-min(13, H.generation))*3)
-	H.clane.enlightenment = H.clane.enlightenment
+	H.clan.enlightenment = H.clan.enlightenment
 	H.maxHealth = round((initial(H.maxHealth)-initial(H.maxHealth)/4)+(initial(H.maxHealth)/4)*(H.physique+13-H.generation))
 	H.health = round((initial(H.maxHealth)-initial(H.maxHealth)/4)+(initial(H.maxHealth)/4)*(H.physique+13-H.generation))
 

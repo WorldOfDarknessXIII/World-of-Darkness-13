@@ -41,8 +41,8 @@
 /obj/item/flashlight/attack_self(mob/user)
 	if(iskindred(user))
 		var/mob/living/carbon/human/H = user
-		if(H.clane)
-			if(H.clane.name == "Lasombra")
+		if(H.clan)
+			if(H.clan.name == "Lasombra")
 				return
 	..()
 	on = !on

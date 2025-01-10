@@ -28,14 +28,14 @@
 			if(DICE_FAILURE)
 				enter_frenzymod()
 				if(iskindred(src))
-					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 100*H.clane.frenzymod)
+					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 100*H.clan.frenzymod)
 				else
 					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 100)
 				frenzy_hardness = 1
 			if(DICE_CRIT_FAILURE)
 				enter_frenzymod()
 				if(iskindred(src))
-					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 200*H.clane.frenzymod)
+					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 200*H.clan.frenzymod)
 				else
 					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 200)
 				frenzy_hardness = 1
@@ -172,9 +172,9 @@
 					face_atom(T)
 					Move(T)
 
-/datum/species/kindred/spec_life(mob/living/carbon/human/H)
+/datum/species/kindred/spec_life(mob/living/carbon/human/vampire)
 	. = ..()
-	if(H.clane?.name == "Baali")
+	if(H.clan?.name == "Baali")
 		if(istype(get_area(H), /area/vtm/church))
 			if(prob(25))
 				to_chat(H, "<span class='warning'>You don't belong here!</span>")
@@ -207,8 +207,8 @@
 			H.remove_status_effect(STATUS_EFFECT_FEAR)
 
 	//masquerade violations due to unnatural appearances
-	if(H.is_face_visible() && H.clane?.violating_appearance)
-		switch(H.clane.alt_sprite)
+	if(H.is_face_visible() && H.clan?.violating_appearance)
+		switch(H.clan.alt_sprite)
 			if ("kiasyd")
 				//masquerade breach if eyes are uncovered, short range
 				if (!H.is_eyes_covered())
@@ -274,15 +274,15 @@
 		H.bloodpool = max(0, H.bloodpool-1)
 		to_chat(H, "<span class='warning'>Necromancy Vision reduces your blood points too sustain itself.</span>")
 
-	if(H.clane?.name == "Tzimisce" || H.clane?.name == "Old Clan Tzimisce")
-		var/datum/vampireclane/tzimisce/TZ = H.clane
+	if(H.clan?.name == "Tzimisce" || H.clan?.name == "Old Clan Tzimisce")
+		var/datum/vampireclan/tzimisce/TZ = H.clan
 		if(TZ.heirl)
 			if(!(TZ.heirl in H.GetAllContents()))
 				if(prob(5))
 					to_chat(H, "<span class='warning'>You are missing your home soil...</span>")
 					H.bloodpool = max(0, H.bloodpool-1)
-	if(H.clane?.name == "Kiasyd")
-		var/datum/vampireclane/kiasyd/kiasyd = H.clane
+	if(H.clan?.name == "Kiasyd")
+		var/datum/vampireclan/kiasyd/kiasyd = H.clan
 		for(var/obj/item/I in H.contents)
 			if(I?.is_iron)
 				if (COOLDOWN_FINISHED(kiasyd, cold_iron_frenzy))
@@ -334,8 +334,8 @@
 					H.ghostize(FALSE)
 					P.reason_of_death = "Lost control to the Beast ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 
-	if(H.clane && !H.antifrenzy && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
-		if(H.clane.name == "Banu Haqim")
+	if(H.clan && !H.antifrenzy && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
+		if(H.clan.name == "Banu Haqim")
 			if(H.mind)
 				if(H.mind.enslaved_to)
 					if(get_dist(H, H.mind.enslaved_to) > 10)
@@ -358,8 +358,8 @@
 			if((H.last_frenzy_check + 40 SECONDS) <= world.time)
 				H.last_frenzy_check = world.time
 				H.rollfrenzy()
-				if(H.clane)
-					if(H.clane.enlightenment)
+				if(H.clan)
+					if(H.clan.enlightenment)
 						if(!H.CheckFrenzyMove())
 							H.AdjustHumanity(1, 10)
 //	if(length(blood_fr) >= 10 && !H.in_frenzy)

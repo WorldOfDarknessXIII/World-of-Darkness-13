@@ -56,17 +56,17 @@
 	//faction, job, etc
 	if(iskindred(user) && iskindred(src) && is_face_visible())
 		var/mob/living/carbon/human/vampire = user
-		var/same_clan = vampire.clane == clane
+		var/same_clan = vampire.clan == clan
 		var/same_faction = vampire.vampire_faction == vampire_faction
 		switch(info_known)
 			if(INFO_KNOWN_PUBLIC)
-				. += "<b>You know [p_them()] as a [job][vampire_faction ? " in the [vampire_faction]" : ""] of the [clane] bloodline.</b>"
+				. += "<b>You know [p_them()] as a [job][vampire_faction ? " in the [vampire_faction]" : ""] of the [clan] bloodline.</b>"
 			if(INFO_KNOWN_CLAN_ONLY)
 				if(same_clan)
 					. += "<b>You know [p_them()] as a [job][vampire_faction ? " in the [vampire_faction]" : ""]. You are of the same bloodline.</b>"
 			if(INFO_KNOWN_FACTION)
 				if(same_faction && vampire_faction)
-					. += "<b>You know [p_them()] as a [job], belonging to the [clane] bloodline. You are both of the [vampire_faction].</b>"
+					. += "<b>You know [p_them()] as a [job], belonging to the [clan] bloodline. You are both of the [vampire_faction].</b>"
 			else
 				if(same_faction && vampire_faction)
 					. += "<b>You know [p_them()] as a [job]. You are both of the [vampire_faction].</b>"
@@ -408,7 +408,7 @@
 
 		//examine text for unusual appearances
 		if (iskindred(src) && is_face_visible())
-			switch(clane.alt_sprite)
+			switch(clan.alt_sprite)
 				if ("nosferatu")
 					msg += "<span class='danger'><b>[p_they(TRUE)] look[p_s()] utterly deformed and inhuman!</b></span><br>"
 				if ("gargoyle")
@@ -449,7 +449,7 @@
 				if ((humanity < 7) || client?.prefs?.enlightenment)
 					wyrm_taint++
 
-				if ((vampire.clane?.name == "Baali") || ( (client?.prefs?.enlightenment && (humanity > 7)) || (!client?.prefs?.enlightenment && (humanity < 4)) ))
+				if ((vampire.clan?.name == "Baali") || ( (client?.prefs?.enlightenment && (humanity > 7)) || (!client?.prefs?.enlightenment && (humanity < 4)) ))
 					wyrm_taint++
 
 			if (isgarou(src) || iswerewolf(src)) //werewolves have the taint of whatever Triat member they venerate most

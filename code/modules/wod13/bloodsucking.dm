@@ -53,13 +53,13 @@
 					if(mind.special_role)
 						var/datum/antagonist/A = mind.special_role
 						special_role_name = A.name
-				if(clane)
+				if(clan)
 					var/salubri_allowed = FALSE
 					var/mob/living/carbon/human/H = mob
-					if(H.clane)
-						if(H.clane.name == "Salubri")
+					if(H.clan)
+						if(H.clan.name == "Salubri")
 							salubri_allowed = TRUE
-					if(clane.name != "Banu Haqim" && clane.name != "Caitiff")
+					if(clan.name != "Banu Haqim" && clan.name != "Caitiff")
 						if(!salubri_allowed)
 							if(!mind.special_role || special_role_name == "Ambitious")
 								to_chat(src, "<span class='warning'>You find the idea of drinking your own <b>KIND's</b> blood disgusting!</span>")
@@ -104,10 +104,10 @@
 				if(length(H.reagents.reagent_list))
 					if(prob(50))
 						H.reagents.trans_to(src, min(10, H.reagents.total_volume), transfered_by = mob, methods = VAMPIRE)
-		if(clane)
-			if(clane.name == "Giovanni")
+		if(clan)
+			if(clan.name == "Giovanni")
 				mob.adjustBruteLoss(20, TRUE)
-			if(clane.name == "Ventrue" && mob.bloodquality < BLOOD_QUALITY_NORMAL)	//Ventrue can suck on normal people, but not homeless people and animals. BLOOD_QUALITY_LOV - 1, BLOOD_QUALITY_NORMAL - 2, BLOOD_QUALITY_HIGH - 3. Blue blood gives +1 to suction
+			if(clan.name == "Ventrue" && mob.bloodquality < BLOOD_QUALITY_NORMAL)	//Ventrue can suck on normal people, but not homeless people and animals. BLOOD_QUALITY_LOV - 1, BLOOD_QUALITY_NORMAL - 2, BLOOD_QUALITY_HIGH - 3. Blue blood gives +1 to suction
 				to_chat(src, "<span class='warning'>You are too privileged to drink that awful <b>BLOOD</b>. Go get something better.</span>")
 				visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
 				playsound(get_turf(src), 'code/modules/wod13/sounds/vomit.ogg', 75, TRUE)

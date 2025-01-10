@@ -36,8 +36,8 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 	. = ..()
 //	if(ishuman(AM) && ref)
 //		var/mob/living/carbon/human/H = AM
-//		if(H.clane)
-//			if(H.clane.name == "Lasombra")
+//		if(H.clan)
+//			if(H.clan.name == "Lasombra")
 //				var/obj/effect/reflection/reflection = ref.resolve()
 //				if(istype(reflection))
 //					qdel(reflection)
@@ -62,8 +62,8 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 		var/mob/living/carbon/human/H = user
 
 		//Sorry, you can't see yourself in front of the mirror!
-		if(H.clane)
-			if(H.clane.name == "Lasombra")
+		if(H.clan)
+			if(H.clan.name == "Lasombra")
 				return
 
 		//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
