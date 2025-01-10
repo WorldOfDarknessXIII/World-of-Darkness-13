@@ -109,7 +109,7 @@
 	masquerade_violating = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 	cost = 800
-	is_iron = TRUE
+	is_iron = FALSE
 
 /obj/item/melee/vampirearms/machete
     name = "machete"
@@ -553,7 +553,7 @@
 	armor = list(MELEE = 25, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	resistance_flags = FIRE_PROOF
 	masquerade_violating = FALSE
-	is_iron = TRUE
+	is_iron = FALSE
 
 /obj/item/melee/vampirearms/shovel/attack(mob/living/target, mob/living/user)
 	. = ..()
@@ -582,6 +582,7 @@
 	bare_wound_bonus = 10
 	resistance_flags = FIRE_PROOF
 	masquerade_violating = TRUE
+	is_iron = FALSE
 
 /obj/item/melee/vampirearms/eguitar
 	icon = 'code/modules/wod13/48x32weapons.dmi'
