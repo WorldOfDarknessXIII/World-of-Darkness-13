@@ -39,11 +39,9 @@
 	shoes = /obj/item/clothing/shoes/vampire/white
 	suit =  /obj/item/clothing/suit/vampire/labcoat
 	gloves = /obj/item/clothing/gloves/vampire/latex
-	l_hand = /obj/item/storage/firstaid/medical
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/vamp/keys/clinic
-	r_hand = /obj/item/radio/clinic
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1, /obj/item/storage/firstaid/medical)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -95,10 +93,8 @@
 	shoes = /obj/item/clothing/shoes/vampire/white
 	suit =  /obj/item/clothing/suit/vampire/labcoat
 	gloves = /obj/item/clothing/gloves/vampire/latex
-	l_hand = /obj/item/storage/firstaid/medical
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/vamp/keys/clinics_director
-	r_hand = /obj/item/radio/clinic
 	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
 
 	backpack = /obj/item/storage/backpack
