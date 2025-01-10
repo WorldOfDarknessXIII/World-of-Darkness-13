@@ -152,4 +152,7 @@
 	var/diablerist = FALSE
 	var/antifrenzy = FALSE
 
+	var/account_id //Making bank accounts work for Garou is a pain if this isn't defined here
+	var/bank_id
+
 	COOLDOWN_DECLARE(bleeding_message_cd)
