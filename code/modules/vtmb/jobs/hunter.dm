@@ -123,6 +123,13 @@
 				O.to_hunt -= M
 				O.hunted_down |= M
 				to_chat(owner.current, "<span class='alertsyndie'>[O] was hunted down.</span>")
+
+	for(var/i in GLOB.player_list)
+		var/mob/M = i
+		if(iskindred(M) || isgarou(M) || isghoul(M))
+			if(considered_alive(M))
+				to_hunt |= M
+
 	addtimer(CALLBACK(src, PROC_REF(update_hunted)),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
 
 
