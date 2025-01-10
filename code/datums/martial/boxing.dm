@@ -44,7 +44,7 @@
 	if(D.getStaminaLoss() > 60 && istype(D.mind?.martial_art, /datum/martial_art/boxing))
 		//PSEUDO_M add signal here for knockout attempt
 		var/knockout_prob = D.getStaminaLoss()-20
-		if(D.stat != DEAD) && prob(knockout_prob)
+		if(D.stat != DEAD && prob(knockout_prob))
 			D.visible_message("<span class='danger'>[A] knocks [D] out with a haymaker!</span>", \
 							"<span class='userdanger'>You're knocked unconscious by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 			to_chat(A, "<span class='danger'>You knock [D] out with a haymaker!</span>")

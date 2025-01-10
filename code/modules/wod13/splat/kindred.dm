@@ -305,8 +305,7 @@
 			BD.dexterity = BD.dexterity+2
 			BD.athletics = BD.athletics+2
 			BD.update_blood_hud()
-			addtimer(100+BD.discipline_time_plus+BD.bloodpower_time_plus)
-				end_bloodpower()
+			end_bloodpower()
 		else
 			SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to become more powerful.</span>")
