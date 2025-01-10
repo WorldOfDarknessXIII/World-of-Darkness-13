@@ -1,4 +1,3 @@
-//SABBAT = +90 threat - removed as of 1/9 given tdm reasons
 //HUNT = +60 threat
 //CAITIFF = +30 threat
 
@@ -33,7 +32,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 	return jobs[rank]
 
 /datum/controller/subsystem/bad_guys_party/proc/set_badguys(var/new_setting)
-	if(new_setting in list("caitiff", /*"sabbat",*/ "hunter"))
+	if(new_setting in list("caitiff", "hunter"))
 		SSbad_guys_party.setting = new_setting
 	else
 		setting = null
@@ -51,14 +50,6 @@ SUBSYSTEM_DEF(bad_guys_party)
 				go_on_next_fire = TRUE
 				Next = new /datum/outfit/job/caitiff()
 				setting = null
-			/*if("sabbat")
-				if(Next)
-					qdel(Next)
-				threat = min(100, threat+30)
-				max_candidates = 2
-				go_on_next_fire = TRUE
-				Next = new /datum/outfit/job/sabbatist()
-				setting = null */
 			if("hunter")
 				if(Next)
 					qdel(Next)
@@ -79,23 +70,6 @@ SUBSYSTEM_DEF(bad_guys_party)
 					go_on_next_fire = TRUE
 					Next = new /datum/outfit/job/caitiff()
 				else
-					//sabbat
-					if(Next)
-						qdel(Next)
-					threat = min(100, threat+30)
-					max_candidates = 2
-					go_on_next_fire = TRUE
-					Next = new /datum/outfit/job/sabbatist()
-			if(2)
-				if(prob(30))
-					//sabbat
-					if(Next)
-						qdel(Next)
-					threat = min(100, threat+90)
-					max_candidates = 4
-					go_on_next_fire = TRUE
-					Next = new /datum/outfit/job/sabbatist()
-				else
 					//hunt
 					if(Next)
 						qdel(Next)
@@ -111,15 +85,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 					threat = min(100, threat+60)
 					max_candidates = 2
 					go_on_next_fire = TRUE
-					Next = new /datum/outfit/job/hunter()
-				else
-					//sabbat
-					if(Next)
-						qdel(Next)
-					threat = min(100, threat+90)
-					max_candidates = 3
-					go_on_next_fire = TRUE
-					Next = new /datum/outfit/job/sabbatist()*/
+					Next = new /datum/outfit/job/hunter()*/
 
 /mob/dead/new_player/proc/ForceLateSpawn()
 	if(SSticker.late_join_disabled)
