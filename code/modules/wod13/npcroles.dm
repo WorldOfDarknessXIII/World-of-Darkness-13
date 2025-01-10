@@ -1139,7 +1139,7 @@
 		if(prob(10))
 			for(var/mob/living/carbon/human/H in oviewers(4, src))
 				if(H)
-					if(H.warrant)
+					if(H.warrant || H.APB)
 						Aggro(H, FALSE)
 
 /datum/socialrole/guard
