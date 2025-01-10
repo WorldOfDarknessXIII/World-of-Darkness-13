@@ -375,11 +375,9 @@
 		new /datum/data/mining_equipment("leather pants", /obj/item/clothing/under/vampire/leatherpants,	200),
 		new /datum/data/mining_equipment("fancy gray suit",	/obj/item/clothing/under/vampire/fancy_gray,	150),
 		new /datum/data/mining_equipment("fancy red suit",	/obj/item/clothing/under/vampire/fancy_red,	150),
-		new /datum/data/mining_equipment("brown luxury suit",	/obj/item/clothing/under/vampire/ventrue,	50),
-		new /datum/data/mining_equipment("brown luxury suit skirt",	/obj/item/clothing/under/vampire/ventrue/female,	50),
+		new /datum/data/mining_equipment("black luxury suit",	/obj/item/clothing/under/vampire/ventrue,	50),
+		new /datum/data/mining_equipment("black luxury suit skirt",	/obj/item/clothing/under/vampire/ventrue/female,	50),
 		new /datum/data/mining_equipment("white buisness suit",	/obj/item/clothing/under/vampire/office,	50),
-		new /datum/data/mining_equipment("black buisness suit",	/obj/item/clothing/under/vampire/suit,	50),
-		new /datum/data/mining_equipment("black buisness skirt",	/obj/item/clothing/under/vampire/suit/female,	50),
 		new /datum/data/mining_equipment("black overcoat",	/obj/item/clothing/under/vampire/rich,	45),
 		new /datum/data/mining_equipment("burgundy suit",	/obj/item/clothing/under/vampire/tremere,	35),
 		new /datum/data/mining_equipment("burgundy suit skirt",	/obj/item/clothing/under/vampire/tremere/female,	35),
@@ -459,10 +457,7 @@
 		new /datum/data/mining_equipment("yellow robes",	/obj/item/clothing/suit/hooded/robes/yellow,	40),
 		new /datum/data/mining_equipment("green robes",	/obj/item/clothing/suit/hooded/robes/green,	40),
 		new /datum/data/mining_equipment("red robes",	/obj/item/clothing/suit/hooded/robes/red,	40),
-		new /datum/data/mining_equipment("purple robes",	/obj/item/clothing/suit/hooded/robes/purple,	40),
-		new /datum/data/mining_equipment("red lipstick",	/obj/item/lipstick,	10),
-		new /datum/data/mining_equipment("purple lipstick",	/obj/item/lipstick/purple,	10),
-		new /datum/data/mining_equipment("jade lipstick",	/obj/item/lipstick/jade,	10),
+		new /datum/data/mining_equipment("purple robes",	/obj/item/clothing/suit/hooded/robes/purple,	40)
 	)
 
 /obj/machinery/mineral/equipment_vendor/fastfood/costumes
