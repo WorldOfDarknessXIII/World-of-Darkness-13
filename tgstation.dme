@@ -141,7 +141,6 @@
 #include "code\__DEFINES\wounds.dm"
 #include "code\__DEFINES\dcs\flags.dm"
 #include "code\__DEFINES\dcs\helpers.dm"
-#include "code\__DEFINES\dcs\signals.dm"
 #include "code\__DEFINES\research\anomalies.dm"
 #include "code\__DEFINES\splats\_splat_defines.dm"
 #include "code\__HELPERS\_lists.dm"
