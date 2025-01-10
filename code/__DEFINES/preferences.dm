@@ -82,6 +82,7 @@
 #define EXP_TYPE_COUNCIL        "Camarilla Primogen Council"
 #define EXP_TYPE_POLICE         "Police Force"
 #define EXP_TYPE_SERVICES   "City Services"
+#define EXP_TYPE_CLINIC   "St. John's Clinic"
 #define EXP_TYPE_GIOVANNI   "Giovanni Family"
 #define EXP_TYPE_TZIMISCE   "Tzimisce Mansion"
 #define EXP_TYPE_WAREHOUSE      "Warehouse"
