@@ -103,7 +103,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	status_flags = CANPUSH
-	faction = list(FACTION_GIOVANNI)
+	faction = list("Giovanni")
 	bloodpool = 0
 	maxbloodpool = 0
 
@@ -143,7 +143,7 @@
 	light_system = MOVABLE_LIGHT
 	light_range = 1 // same glowing as visible player ghosts
 	light_power = 2
-	faction = list(FACTION_GIOVANNI)
+	faction = list("Giovanni")
 	bloodpool = 0
 	maxbloodpool = 0
 
