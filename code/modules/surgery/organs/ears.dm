@@ -3,7 +3,7 @@
 	icon_state = "ears"
 	desc = "There are three parts to the ear. Inner, middle and outer. Only one of these parts should be normally visible."
 	illegal = TRUE
-	cost = 300
+	cost = 100
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EARS
 	gender = PLURAL
