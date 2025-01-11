@@ -465,7 +465,11 @@
 	if(pulledby && istype(pulledby, /mob/living/carbon))
 		var/mob/living/carbon/mob = pulledby
 		if(mob.celerity_visual && body_position == LYING_DOWN)
+		{
 			adjustBruteLoss(rand(2, 5))
+			if(prob(50))
+				add_splatter_floor(get_step(loc, dir), TRUE)
+		}
 
 /datum/movespeed_modifier/celerity
 	multiplicative_slowdown = -0.5
@@ -896,7 +900,7 @@
 				zone_selected = BODY_ZONE_PRECISE_MOUTH
 				update_icon()
 				var/obj/item/gun/gun = I
-				gun.handle_suicide(src, src, null, FALSE, 2 SECONDS, IGNORE_TARGET_LOC_CHANGE | IGNORE_USER_LOC_CHANGE)
+				gun.handle_suicide(src, src, null, FALSE, 3 SECONDS, IGNORE_TARGET_LOC_CHANGE | IGNORE_USER_LOC_CHANGE)
 			else if(I.force)
 				ClickOn(src)
 			else
