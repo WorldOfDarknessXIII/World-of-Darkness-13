@@ -417,7 +417,7 @@
 			var/mob/living/carbon/human/HU
 
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				if(H.stat != DEAD && H.true_real_name != owner.current.true_real_name && H.vampire_faction != "Sabbat")
+				if(H.stat != DEAD && H.true_real_name != owner.current.true_real_name && H.vampire_faction != FACTION_SABBAT)
 					ambitious += H
 
 			if(length(ambitious))
@@ -443,8 +443,8 @@
 				while(owner.current.vampire_faction == null && retries > 0)
 					sleep(2) // wait 0.2 seconds
 					retries -= 1
-			var/list/available_factions = list("Camarilla", "Anarchs", "Sabbat")
-			if(owner.current.vampire_faction == null || owner.current.vampire_faction == "Nosferatu" )
+			var/list/available_factions = list(FACTION_CAMARILLA, FACTION_ANARCHS, FACTION_SABBAT)
+			if(owner.current.vampire_faction == null || owner.current.vampire_faction == FACTION_NOSFERATU)
 				no_faction = TRUE
 			if(no_faction)
 				var/datum/objective/become_member/member_objective = new

@@ -34,7 +34,7 @@
 	light_system = MOVABLE_LIGHT
 	light_range = 1 // same glowing as visible player ghosts
 	light_power = 2
-	faction = list("Giovanni")
+	faction = list(FACTION_GIOVANNI)
 	bloodpool = 0
 	maxbloodpool = 0
 

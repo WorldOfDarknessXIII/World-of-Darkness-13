@@ -12,7 +12,7 @@
 	whitelisted = FALSE
 
 /datum/discipline/necromancy/post_gain(mob/living/carbon/human/H)
-	H.faction |= "Giovanni"
+	H.faction |= FACTION_GIOVANNI
 	H.grant_language(/datum/language/italian)
 	if(level >= 2)
 		var/datum/action/ghost_hear/GH = new()
