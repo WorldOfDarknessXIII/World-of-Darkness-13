@@ -3,7 +3,7 @@
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.vampire_faction == vampire_faction && presence_master == H)
+		if(H.vampire_faction == vampire_faction || presence_master == H)
 			return
 	if(istype(M,/mob/living/carbon/human/npc))
 		var/mob/living/carbon/human/npc/H = M

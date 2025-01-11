@@ -306,7 +306,8 @@
 							spawned_weapon = FALSE
 						else
 							my_weapon = null
-					walktarget = ChoosePath()
+					if(!presence_master)
+						walktarget = ChoosePath()
 					a_intent = INTENT_HELP
 
 			if(last_danger_meet+300 <= world.time)
@@ -318,7 +319,8 @@
 						spawned_weapon = FALSE
 					else
 						my_weapon = null
-				walktarget = ChoosePath()
+				if(!presence_master)
+					walktarget = ChoosePath()
 				a_intent = INTENT_HELP
 		else if(less_danger)
 			var/reqsteps = round((SShumannpcpool.next_fire-world.time)/total_multiplicative_slowdown())

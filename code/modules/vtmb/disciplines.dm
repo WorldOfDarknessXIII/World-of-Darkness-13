@@ -996,39 +996,38 @@
 			for(var/datum/action/presence_stay/VI in caster.actions)
 				if(VI)
 					VI.Remove(caster)
+			for(var/datum/action/presence_deaggro/VI in caster.actions)
+				if(VI)
+					VI.Remove(caster)
 
 /mob/living/carbon/human/npc/proc/handle_presence_movement()
-	// If for some reason we have no valid master, stop
 	if(!presence_master || stat >= DEAD)
 		return
-		// If not commanded to follow, do nothing
-	if(!presence_follow)
-		return
-		// Distance check—walk toward presence_master if too far:
-	if(presence_master.z == z && get_dist(src, presence_master) > 3)
-		// Use your same approach as the NPC subsystem
-		var/reqsteps = round((SShumannpcpool.next_fire - world.time) / total_multiplicative_slowdown())
-		walk_to(src, presence_master, reqsteps, total_multiplicative_slowdown())
-	else
-		// If close enough, maybe face them or do nothing
-		face_atom(presence_master)
-		// If you want aggression under Presence, handle it here:
 	if(presence_enemies.len)
 		var/dist = 100
 		var/mob/enemy = null
 		for(var/mob/i in presence_enemies)
-			if(get_dist(presence_master,i) < dist)
+			if(get_dist(presence_master,i) < dist && i.stat < 2)
 				dist = get_dist(presence_master,i)
 				enemy = i
-		// Then maybe do a walk_to or click attack, etc.
 		danger_source = enemy
+
+	if(!presence_follow && !danger_source)
+		walktarget = null
+	if(presence_follow)
+		if(presence_master.z == z && get_dist(src, presence_master) > 3)
+			walktarget = presence_master
+		else
+			walktarget = null
+	else
+		face_atom(presence_master)
 
 /datum/action/presence_stay
 	name = "Stay/Follow (Presence)"
 	desc = "Tell your Presence-thralled NPC to stay put or follow."
 	button_icon_state = "wait"
 	var/cool_down = 0
-	var/following = FALSE
+	var/following = TRUE
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 
 /datum/action/presence_stay/Trigger()
