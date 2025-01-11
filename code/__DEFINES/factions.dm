@@ -1,4 +1,4 @@
-// Put factions here & use these defines for 'em.
+// Put vampire_faction strings here & use these defines for 'em.
 
 // Vampire sects
 #define FACTION_ANARCHS "Anarchs"
