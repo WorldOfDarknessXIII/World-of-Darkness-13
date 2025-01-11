@@ -91,7 +91,7 @@
 	id = /obj/item/card/id/clinic/director
 	uniform = /obj/item/clothing/under/vampire/nurse
 	shoes = /obj/item/clothing/shoes/vampire/white
-	suit =  /obj/item/clothing/suit/vampire/labcoat
+	suit =  /obj/item/clothing/suit/vampire/labcoat/director
 	gloves = /obj/item/clothing/gloves/vampire/latex
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/vamp/keys/clinics_director
