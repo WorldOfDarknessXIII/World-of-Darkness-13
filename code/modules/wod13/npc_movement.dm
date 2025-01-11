@@ -301,8 +301,9 @@
 					danger_source = null
 					if(my_weapon)
 						if(get_active_held_item() == my_weapon)
+							var/obj/item/weapon = get_active_held_item()
 							drop_all_held_items()
-							my_weapon.forceMove(src)
+							qdel(weapon)
 							spawned_weapon = FALSE
 						else
 							my_weapon = null
@@ -314,8 +315,9 @@
 				danger_source = null
 				if(my_weapon)
 					if(get_active_held_item() == my_weapon)
+						var/obj/item/weapon = get_active_held_item()
 						drop_all_held_items()
-						my_weapon.forceMove(src)
+						qdel(weapon)
 						spawned_weapon = FALSE
 					else
 						my_weapon = null

@@ -18,7 +18,7 @@
 				last_damager = M
 	if(CheckMove(hardlock = TRUE))
 		return
-	if((last_danger_meet + 5 SECONDS) < world.time)
+	if((last_danger_meet + 2 SECONDS) < world.time)
 		last_danger_meet = world.time
 		if(prob(50))
 			if(!my_weapon)

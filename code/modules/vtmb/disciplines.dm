@@ -927,26 +927,23 @@
 			if(3)
 				// If target is an NPC, link them
 				if(istype(target, /mob/living/carbon/human/npc) && caster.puppets.len < caster.get_total_social())
-					if(!length(caster.puppets))
-						var/datum/action/presence_stay/E1 = new()
-						E1.Grant(caster)
-						var/datum/action/presence_deaggro/E2 = new()
-						E2.Grant(caster)
 					var/mob/living/carbon/human/npc/N = target
-					// Mark the controlling player:
-					N.presence_master = caster
-					// Let them follow:
-					N.presence_follow = TRUE
-					caster.puppets |= N
-					var/initial_fights_anyway = N.fights_anyway
-					N.fights_anyway = TRUE
-					caster.say("Come with me...")
-					// Optionally add them to a global list if you like,
-					// but your existing SShumannpcpool subsystem should keep them updated.
-					// e.g. GLOB.presence_npc_list += N
+					if(!N.presence_master)
+						if(!length(caster.puppets))
+							var/datum/action/presence_stay/E1 = new()
+							E1.Grant(caster)
+							var/datum/action/presence_deaggro/E2 = new()
+							E2.Grant(caster)
 
-					// Possibly set a timer for effect end
-					addtimer(CALLBACK(src, PROC_REF(presence_end), target, caster, initial_fights_anyway), 50 SECONDS * mypower)
+						N.presence_master = caster
+
+						N.presence_follow = TRUE
+						caster.puppets |= N
+						var/initial_fights_anyway = N.fights_anyway
+						N.fights_anyway = TRUE
+						caster.say("Come with me...")
+
+						addtimer(CALLBACK(src, PROC_REF(presence_end), target, caster, initial_fights_anyway), 50 SECONDS * mypower)
 				else
 					// continue your normal presence code for players
 					var/obj/item/I1 = H.get_active_held_item()
@@ -970,12 +967,37 @@
 				target.emote("scream")
 				target.do_jitter_animation(30)
 			if(5)
-				to_chat(target, "<span class='userlove'><b>UNDRESS YOURSELF</b></span>")
-				caster.say("UNDRESS YOURSELF!!")
-				target.Immobilize(10)
-				for(var/obj/item/clothing/W in H.contents)
-					if(W)
-						H.dropItemToGround(W, TRUE)
+				if(istype(target, /mob/living/carbon/human/npc))
+					caster.say("You all belong with me!")
+					for(var/mob/living/carbon/human/npc/N in viewers(7,target))
+						if(!N.presence_master)
+							if(!length(caster.puppets))
+								var/datum/action/presence_stay/E1 = new()
+								E1.Grant(caster)
+								var/datum/action/presence_deaggro/E2 = new()
+								E2.Grant(caster)
+
+							N.remove_overlay(MUTATIONS_LAYER)
+
+							N.overlays_standing[MUTATIONS_LAYER] = presence_overlay
+							N.apply_overlay(MUTATIONS_LAYER)
+							N.caster = caster
+
+							N.presence_master = caster
+
+							N.presence_follow = TRUE
+							caster.puppets |= N
+							var/initial_fights_anyway = N.fights_anyway
+							N.fights_anyway = TRUE
+
+							addtimer(CALLBACK(src, PROC_REF(presence_end), N, caster, initial_fights_anyway), 10 SECONDS * mypower)
+				else
+					to_chat(target, "<span class='userlove'><b>UNDRESS YOURSELF</b></span>")
+					caster.say("UNDRESS YOURSELF!!")
+					target.Immobilize(10)
+					for(var/obj/item/clothing/W in H.contents)
+						if(W)
+							H.dropItemToGround(W, TRUE)
 		spawn(delay + caster.discipline_time_plus)
 			if(H)
 				H.remove_overlay(MUTATIONS_LAYER)
@@ -988,6 +1010,7 @@
 		// End presence effect
 		N.presence_master = null
 		N.presence_follow = FALSE
+		N.remove_overlay(MUTATIONS_LAYER)
 		N.presence_enemies = list()
 		N.danger_source = null
 		caster.puppets -= N
