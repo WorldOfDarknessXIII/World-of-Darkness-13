@@ -41,7 +41,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	illegal = TRUE
-	cost = 175
+	cost = 550
 
 /datum/crafting_recipe/weed_leaf
 	name = "Sort Weed"
