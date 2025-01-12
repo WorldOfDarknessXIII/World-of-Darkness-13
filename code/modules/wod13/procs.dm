@@ -55,6 +55,19 @@
 						SEND_SOUND(src, sound('code/modules/wod13/sounds/humanity_gain.ogg', 0, 0, 75))
 						to_chat(src, "<span class='userhelp'><b>HUMANITY INCREASED!</b></span>")
 
+	var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
+	if(P)
+		if(P.humanity != humanity)
+			P.humanity = humanity
+			P.save_preferences()
+			P.save_character()
+		if(!antifrenzy)
+			if(P.humanity < 1)
+				enter_frenzymod()
+				to_chat(src, "<span class='userdanger'>You have lost control of the Beast within you, and it has taken your body. Be more [H.client.prefs.enlightenment ? "Enlightened" : "humane"] next time.</span>")
+				ghostize(FALSE)
+				P.reason_of_death = "Lost control to the Beast ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
+
 /mob/living/carbon/human/proc/AdjustMasquerade(var/value, var/forced = FALSE)
 	if(!iskindred(src) && !isghoul(src))
 		return
@@ -99,6 +112,13 @@
 	else if(masquerade < 3)
 		GLOB.masquerade_breakers_list |= src
 
+	var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
+	if(P)
+		if(P.masquerade != masquerade)
+			P.masquerade = masquerade
+			P.save_preferences()
+			P.save_character()
+
 /mob/living/carbon/human/npc/proc/backinvisible(var/atom/A)
 	switch(dir)
 		if(NORTH)
@@ -125,13 +145,17 @@
 	if(source.ignores_warrant)
 		return
 	else
-		for(var/mob/living/carbon/human/npc/NPC in oviewers(1, source))
-			if(!NPC.CheckMove())
-				if(get_turf(src) != turn(NPC.dir, 180))
-					seenby |= NPC
-					NPC.Aggro(attacker, FALSE)
+//		for(var/mob/living/carbon/human/npc/NPC in oviewers(1, source))
+//			if(!NPC.CheckMove())
+//				if(get_turf(src) != turn(NPC.dir, 180))
+//					seenby |= NPC
+//					NPC.Aggro(attacker, FALSE)
 		for(var/mob/living/carbon/human/npc/NPC in viewers(actual_range, source))
 			if(!NPC.CheckMove())
+				if(NPC != source && get_dist(NPC, source) <= 1)
+					if(get_turf(src) != turn(NPC.dir, 180))
+						seenby |= NPC
+						NPC.Aggro(attacker, FALSE)
 				if(affects_source)
 					if(NPC == source)
 						NPC.Aggro(attacker, TRUE)

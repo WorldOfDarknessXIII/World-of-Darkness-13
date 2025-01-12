@@ -65,8 +65,3 @@
 /mob/living/carbon/werewolf/lupus/update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.
 	. = ..()
 	update_icons()
-
-/mob/living/carbon/werewolf/lupus/Life()
-	if(hispo)
-		CheckEyewitness(src, src, 7, FALSE)
-	..()
