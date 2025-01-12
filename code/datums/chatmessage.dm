@@ -117,18 +117,17 @@
 		text = copytext_char(text, 1, maxlen + 1) + "..." // BYOND index moment
 
 	// Calculate target color if not already present
-	if (!target.chat_color || target.chat_color_name != target.name)
-		target.chat_color = "#ffffff"
-		target.chat_color_darkened = "#9b9b9b"
-		if(isliving(target))
-			var/mob/living/LivingTarget = target
-			if(LivingTarget.a_intent == INTENT_HARM)
-				target.chat_color = "#b60f0f"
-				target.chat_color_darkened = "#651717"
-			if(LivingTarget.a_intent == INTENT_HELP && LivingTarget.m_intent == MOVE_INTENT_WALK)
-				target.chat_color = "#87f07e"
-				target.chat_color_darkened = "#3fa661"
-		target.chat_color_name = target.name
+	target.chat_color = "#ffffff"
+	target.chat_color_darkened = "#9b9b9b"
+	if(isliving(target))
+		var/mob/living/LivingTarget = target
+		if(LivingTarget.a_intent == INTENT_HARM)
+			target.chat_color = "#b60f0f"
+			target.chat_color_darkened = "#651717"
+		if(LivingTarget.a_intent == INTENT_HELP && LivingTarget.m_intent == MOVE_INTENT_WALK)
+			target.chat_color = "#87f07e"
+			target.chat_color_darkened = "#3fa661"
+	target.chat_color_name = target.name
 
 	// Get rid of any URL schemes that might cause BYOND to automatically wrap something in an anchor tag
 	var/static/regex/url_scheme = new(@"[A-Za-z][A-Za-z0-9+-\.]*:\/\/", "g")
