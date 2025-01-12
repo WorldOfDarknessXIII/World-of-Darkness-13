@@ -85,11 +85,10 @@
 		return
 	..()
 	if(pulledby)
-		if(stat == CONSCIOUS)
-			if(prob(25))
-				Aggro(pulledby, TRUE)
-			if(fights_anyway)
-				Aggro(pulledby, TRUE)
+		if(prob(25))
+			Aggro(pulledby, TRUE)
+		if(fights_anyway)
+			Aggro(pulledby, TRUE)
 	if(!CheckMove())
 		nutrition = 400
 		if(get_dist(danger_source, src) < 7)
