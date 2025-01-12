@@ -232,11 +232,11 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		GLOB.canon_event = FALSE
 		var/won
 		if(length(SSfactionwar.marks_camarilla) > length(SSfactionwar.marks_anarch) && length(SSfactionwar.marks_camarilla) > length(SSfactionwar.marks_sabbat))
-			won = "camarilla"
+			won = /datum/faction/camarilla
 		if(length(SSfactionwar.marks_anarch) > length(SSfactionwar.marks_camarilla) && length(SSfactionwar.marks_anarch) > length(SSfactionwar.marks_sabbat))
-			won = "anarch"
+			won = /datum/faction/anarchs
 		if(length(SSfactionwar.marks_sabbat) > length(SSfactionwar.marks_anarch) && length(SSfactionwar.marks_sabbat) > length(SSfactionwar.marks_camarilla))
-			won = "sabbat"
+			won = /datum/faction/sabbat
 		for(var/mob/living/carbon/werewolf/W in GLOB.player_list)
 			if(W)
 				if(W.stat != DEAD)

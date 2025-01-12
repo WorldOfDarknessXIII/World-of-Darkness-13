@@ -27,6 +27,7 @@
 	var/mob/living/carbon/human/host
 
 /datum/action/ghoulinfo/Trigger()
+	var/datum/faction/hostfaction = host.vampire_faction
 	if(host)
 		var/dat = {"
 			<style type="text/css">
@@ -61,8 +62,8 @@
 			if(G.master.clane)
 				if(G.master.clane.name != "Caitiff")
 					dat += "Regnant's clan is [G.master.clane], maybe I can try some of it's disciplines..."
-		if(host.vampire_faction == FACTION_CAMARILLA || host.vampire_faction == FACTION_CAMARILLA || host.vampire_faction == FACTION_SABBAT)
-			dat += "I belong to the [host.vampire_faction], I shouldn't disobey their rules.<BR>"
+		if(IS_CAMARILLA(host) | IS_ANARCHS(host) | IS_SABBAT(host))
+			dat += "I belong to the [hostfaction.name], I shouldn't disobey their rules.<BR>"
 		if(host.mind.special_role)
 			for(var/datum/antagonist/A in host.mind.antag_datums)
 				if(A.objectives)

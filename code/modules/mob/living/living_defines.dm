@@ -217,7 +217,7 @@
 	var/temporis_visual = FALSE
 	var/temporis_blur = FALSE
 
-	var/vampire_faction
+	var/vampire_faction = /datum/faction
 
 	var/frenzy_chance_boost = 10
 

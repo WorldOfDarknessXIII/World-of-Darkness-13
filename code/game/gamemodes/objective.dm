@@ -1016,9 +1016,9 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		if(!isliving(M.current))
 			continue
 		var/list/all_items = M.current.GetAllContents()
-		for(var/obj/item/vtm_artifact/I in all_items) 
+		for(var/obj/item/vtm_artifact/I in all_items)
 			return TRUE
-	return FALSE 
+	return FALSE
 
 
 /datum/objective/blood
@@ -1054,11 +1054,12 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/become_member
 	name = "become member of"
-	var/faction
+	var/faction = /datum/faction
 
 /datum/objective/become_member/update_explanation_text()
 	..()
-	explanation_text = "Become a member of [faction]. Help your faction by claiming at least one mark on the map."
+	var/datum/faction/thisfaction = faction
+	explanation_text = "Become a member of [thisfaction.name]. Help your faction by claiming at least one mark on the map."
 
 /datum/objective/become_member/check_completion()
 	var/list/datum/mind/owners = get_owners()

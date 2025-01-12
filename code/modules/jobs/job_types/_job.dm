@@ -333,6 +333,9 @@
 	if(H.client?.prefs.playtime_reward_cloak)
 		neck = /obj/item/clothing/neck/cloak/skill_reward/playing
 
+	var/datum/faction/faction = H.vampire_faction
+	faction.Initialize()
+
 
 /datum/outfit/job/get_chameleon_disguise_info()
 	var/list/types = ..()
