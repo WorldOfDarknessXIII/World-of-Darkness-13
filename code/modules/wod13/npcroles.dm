@@ -828,12 +828,13 @@
 
 /mob/living/simple_animal/pet/rat/Life()
 	. = ..()
-	var/delete_me = TRUE
-	for(var/mob/living/carbon/human/H in oviewers(5, src))
-		if(H)
-			delete_me = FALSE
-	if(delete_me)
-		death()
+	if(!key)
+		var/delete_me = TRUE
+		for(var/mob/living/carbon/human/H in oviewers(5, src))
+			if(H)
+				delete_me = FALSE
+		if(delete_me)
+			death()
 
 /mob/living/simple_animal/hostile/beastmaster/rat
 	name = "rat"
@@ -1133,9 +1134,9 @@
 		my_weapon = new /obj/item/gun/ballistic/automatic/vampire/ar15(src)
 	AssignSocialRole(/datum/socialrole/police)
 
-/mob/living/carbon/human/npc/police/Life()
+/mob/living/carbon/human/npc/police/handle_automated_action()
 	. = ..()
-	if(stat < 1)
+	if(stat == CONSCIOUS)
 		if(prob(10))
 			for(var/mob/living/carbon/human/H in oviewers(4, src))
 				if(H)
@@ -1253,9 +1254,9 @@
 	my_weapon = new /obj/item/gun/ballistic/automatic/vampire/m1911(src)
 	AssignSocialRole(/datum/socialrole/guard)
 
-/mob/living/carbon/human/npc/walkby/club/Life()
+/mob/living/carbon/human/npc/walkby/club/handle_automated_action()
 	. = ..()
-	if(staying && stat < 2)
+	if(staying && stat == CONSCIOUS)
 		if(prob(5))
 			var/hasjukebox = FALSE
 			for(var/obj/machinery/jukebox/J in range(5, src))
@@ -1396,11 +1397,11 @@
 	socks = "Nude"
 	update_body()
 
-/mob/living/carbon/human/npc/stripper/Life()
+/mob/living/carbon/human/npc/stripper/handle_automated_action()
 	. = ..()
-	if(stat < 2)
+	if(stat == CONSCIOUS)
 		if(prob(20))
-			for(var/obj/structure/pole/P in range(1, src))
+			for(var/obj/structure/pole/P in oview(1, src))
 				if(P)
 					drop_all_held_items()
 					ClickOn(P)

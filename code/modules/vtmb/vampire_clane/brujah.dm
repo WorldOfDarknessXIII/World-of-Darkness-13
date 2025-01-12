@@ -4,9 +4,9 @@
 	curse = "Increased frenzy chances and time."
 	frenzymod = 2
 	clane_disciplines = list(
-		/datum/discipline/celerity = 1,
-		/datum/discipline/potence = 2,
-		/datum/discipline/presence = 3
+		/datum/discipline/celerity,
+		/datum/discipline/potence,
+		/datum/discipline/presence
 	)
 	male_clothes = /obj/item/clothing/under/vampire/brujah
 	female_clothes = /obj/item/clothing/under/vampire/brujah/female

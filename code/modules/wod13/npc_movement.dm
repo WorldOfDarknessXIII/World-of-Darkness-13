@@ -83,34 +83,8 @@
 /mob/living/carbon/human/npc/Life()
 	if(stat == DEAD)
 		return
-	if(pulledby)
-		if(prob(25))
-			Aggro(pulledby, TRUE)
-		if(fights_anyway)
-			Aggro(pulledby, TRUE)
-	if(!CheckMove())
-		nutrition = 400
-		if(get_dist(danger_source, src) < 7)
-			last_danger_meet = world.time
-		if(on_fire)
-			resist_fire()
-		if(!staying)
-			if(!walktarget)
-				walktarget = ChoosePath()
-			if(loc == tupik_loc)
-				tupik_steps += 1
-			if(loc != tupik_loc)
-				tupik_loc = loc
-				tupik_steps = 0
-			if(tupik_steps > 3)
-				var/turf/T = get_step(src, pick(NORTH, SOUTH, WEST, EAST))
-				face_atom(T)
-				step_to(src,T,0)
-				if(walktarget && !old_movement)
-					if(route_optimisation())
-						forceMove(get_turf(walktarget))
-		if((getBruteLoss()+getFireLoss()+getCloneLoss()+getToxLoss()+getOxyLoss() != 0) && bloodpool != maxbloodpool)
-			..()
+	if((getBruteLoss()+getFireLoss()+getCloneLoss()+getToxLoss()+getOxyLoss() != 0) && bloodpool != maxbloodpool)
+		..()
 //		if(prob(5) && !danger_source)
 //			var/activity = rand(1, 3)
 //			switch(activity)
@@ -376,3 +350,33 @@
 
 //			walk_to(src, walktarget, stopturf, total_multiplicative_slowdown())
 //			walk_to(src, walktarget, stopturf, total_multiplicative_slowdown())
+
+/mob/living/carbon/human/npc/proc/handle_automated_action()
+	if(CheckMove())
+		return
+	if(pulledby)
+		if(stat == CONSCIOUS)
+			if(prob(25))
+				Aggro(pulledby, TRUE)
+			if(fights_anyway)
+				Aggro(pulledby, TRUE)
+	nutrition = 400
+	if(get_dist(danger_source, src) < 7)
+		last_danger_meet = world.time
+	if(on_fire)
+		resist_fire()
+	if(!staying)
+		if(!walktarget)
+			walktarget = ChoosePath()
+		if(loc == tupik_loc)
+			tupik_steps += 1
+		if(loc != tupik_loc)
+			tupik_loc = loc
+			tupik_steps = 0
+		if(tupik_steps > 3)
+			var/turf/T = get_step(src, pick(NORTH, SOUTH, WEST, EAST))
+			face_atom(T)
+			step_to(src,T,0)
+			if(walktarget && !old_movement)
+				if(route_optimisation())
+					forceMove(get_turf(walktarget))

@@ -3402,7 +3402,7 @@
 #include "code\modules\vtmb\npc\defines.dm"
 #include "code\modules\vtmb\vampire_clane\baali.dm"
 #include "code\modules\vtmb\vampire_clane\banu_haqim.dm"
-#include "code\modules\vtmb\vampire_clane\bruja.dm"
+#include "code\modules\vtmb\vampire_clane\brujah.dm"
 #include "code\modules\vtmb\vampire_clane\caitiff.dm"
 #include "code\modules\vtmb\vampire_clane\cappadocian.dm"
 #include "code\modules\vtmb\vampire_clane\clane.dm"
