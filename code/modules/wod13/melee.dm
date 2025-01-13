@@ -801,16 +801,19 @@
 
 /obj/item/melee/vampirearms/klaive/glasswalker
 	name = "glasswalker klaive"
+	icon = 'code/modules/wod13/weapons.dmi'
 	icon_state = "glassklaive"
 	desc = "An unwieldy military knife forged out of silver. Solid and sharp, a reliable weapon."
 
 /obj/item/melee/vampirearms/klaive/wendigo
 	name = "wendigo klaive"
+	icon = 'code/modules/wod13/weapons.dmi'
 	icon_state = "wendiklaive"
 	desc = "A large tribal blade carved out of pure silver. Remind them of the old ways."
 
 /obj/item/melee/vampirearms/klaive/bsd
 	name = "dancer klaive"
+	icon = 'code/modules/wod13/weapons.dmi'
 	icon_state = "bsdklaive"
 	desc = "An oversized, wicked dagger fashioned from silver. Eerie runes are engraved along its length."
 
