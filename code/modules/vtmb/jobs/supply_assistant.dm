@@ -40,7 +40,7 @@
 
 /datum/outfit/job/supply/pre_equip(mob/living/carbon/human/H)
 	..()
-	//H.vampire_faction = /datum/faction/anarchs
+	//H.vampire_faction = FACTION_ANARCHS
 
 /obj/effect/landmark/start/supplytechnician
 	name = "Supply Technician"

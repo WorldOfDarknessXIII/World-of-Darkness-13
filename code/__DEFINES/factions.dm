@@ -1,35 +1,14 @@
-// Put faction bitfields here & use these defines for 'em.
-// Used in conjunction with code/datums/faction/_faction.dm
+// Put vampire_faction strings here & use these defines for 'em.
 
 // Vampire sects
-#define FACTION_ANARCHS (1<<0)
-#define FACTION_CAMARILLA (1<<1)
-#define FACTION_SABBAT (1<<2)
+#define FACTION_ANARCHS "Anarchs"
+#define FACTION_CAMARILLA "Camarilla"
+#define FACTION_SABBAT "Sabbat"
 
 // Clan/Bloodline specific factions
-#define FACTION_NOSFERATU (1<<3)
-#define FACTION_GIOVANNI (1<<4)
-#define FACTION_TREMERE (1<<5)
+#define FACTION_NOSFERATU "Nosferatu"
+#define FACTION_GIOVANNI "Giovanni"
+#define FACTION_TREMERE "Tremere"
 
 // City faction
-#define FACTION_CITY (0<<0) // Since it applies primarily to NPCs and such
-
-DEFINE_BITFIELD(faction_flags, list(
-	"FACTION_ANARCHS" = FACTION_ANARCHS,
-	"FACTION_CAMARILLA" = FACTION_CAMARILLA,
-	"FACTION_SABBAT" = FACTION_SABBAT,
-	"FACTION_NOSFERATU" = FACTION_NOSFERATU,
-	"FACTION_GIOVANNI" = FACTION_GIOVANNI,
-	"FACTION_TREMERE" = FACTION_TREMERE,
-	"FACTION_CITY" = FACTION_CITY,
-))
-
-// Which faction/sect do you belong to?
-#define	FACTION_APPLIED(A)	SEND_SIGNAL(A, COMSIG_FACTION_FACTION_CHECKED)
-#define IS_ANARCHS(A)	(FACTION_APPLIED(A) & FACTION_ANARCHS)
-#define IS_CAMARILLA(A)	(FACTION_APPLIED(A) & FACTION_CAMARILLA)
-#define IS_SABBAT(A)	(FACTION_APPLIED(A) & FACTION_SABBAT)
-#define IS_NOSFERATU(A)	(FACTION_APPLIED(A) & FACTION_NOSFERATU)
-#define IS_GIOVANNI(A)	(FACTION_APPLIED(A) & FACTION_GIOVANNI)
-#define IS_TREMERE(A)	(FACTION_APPLIED(A) & FACTION_TREMERE)
-#define IS_CITY(A)	(FACTION_APPLIED(A) & FACTION_CITY)
+#define FACTION_CITY "City"

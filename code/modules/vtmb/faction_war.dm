@@ -14,8 +14,7 @@ SUBSYSTEM_DEF(factionwar)
 	var/list/anarch_members = list()
 
 /mob/living/carbon/human/Destroy()
-	var/mob/living/carbon/human/H
-	if(IS_CAMARILLA(H))
+	if(vampire_faction == FACTION_CAMARILLA)
 		SSfactionwar.camarilla_members -= src
 	..()
 
@@ -24,9 +23,9 @@ SUBSYSTEM_DEF(factionwar)
 	anarch_members = list()
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(H)
-			if(IS_CAMARILLA(H))
+			if(H.vampire_faction == FACTION_CAMARILLA)
 				camarilla_members += H
-			if(IS_ANARCHS(H))
+			if(H.vampire_faction == FACTION_ANARCHS)
 				anarch_members += H
 
 /datum/controller/subsystem/factionwar/fire()
@@ -43,13 +42,13 @@ SUBSYSTEM_DEF(factionwar)
 //			if(HAS_TRAIT(H, TRAIT_NON_INT))
 //				mode = 2
 //			if(P)
-			if(IS_CAMARILLA(H))
+			if(H.vampire_faction == FACTION_CAMARILLA)
 				camarilla_members += H
 //					P.exper = min(calculate_mob_max_exper(H), P.exper+((4/mode)*how_much_cam))
-			if(IS_ANARCHS(H))
+			if(H.vampire_faction == FACTION_ANARCHS)
 				anarch_members += H
 //					P.exper = min(calculate_mob_max_exper(H), P.exper+((4/mode)*how_much_an))
-//				if(IS_SABBAT(H))
+//				if(H.vampire_faction == FACTION_SABBAT)
 //					P.exper = min(calculate_mob_max_exper(H), P.exper+((4/mode)*how_much_sab))
 	camarilla_power = max(0, camarilla_power-(how_much_cam*5))
 	if(camarilla_power == 0)
@@ -63,7 +62,7 @@ SUBSYSTEM_DEF(factionwar)
 			marks_camarilla -= R
 			R.icon_state = "Unknown"
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				if(IS_CAMARILLA(H) | IS_ANARCHS(H) | IS_SABBAT(H))
+				if(H.vampire_faction == FACTION_CAMARILLA || H.vampire_faction == FACTION_ANARCHS || H.vampire_faction == FACTION_SABBAT)
 					var/area/A = get_area(R)
 					to_chat(H, "<b><span class='warning'>Camarilla</span> don't have resources to sustain [A.name] [R.x]:[R.y], so it belongs to no one now.</b>")
 	anarch_power = max(0, anarch_power-(how_much_an*5))
@@ -78,34 +77,34 @@ SUBSYSTEM_DEF(factionwar)
 			marks_anarch -= R
 			R.icon_state = "Unknown"
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				if(IS_CAMARILLA(H) | IS_ANARCHS(H) | IS_SABBAT(H))
+				if(H.vampire_faction == FACTION_CAMARILLA || H.vampire_faction == FACTION_ANARCHS || H.vampire_faction == FACTION_SABBAT)
 					var/area/A = get_area(R)
 					to_chat(H, "<b><span class='warning'>Anarch</span> don't have resources to sustain [A.name] [R.x]:[R.y], so it belongs to no one now.</b>")
 
 
 /datum/controller/subsystem/factionwar/proc/switch_member(var/mob/living/member, var/vampire_faction)
 	switch(vampire_faction)
-		if(/datum/faction/camarilla)
+		if(FACTION_CAMARILLA)
 			anarch_members -= member
 			camarilla_members += member
-		if(/datum/faction/anarchs)
+		if(FACTION_ANARCHS)
 			camarilla_members -= member
 			anarch_members += member
-		if(/datum/faction/sabbat)
+		if(FACTION_SABBAT)
 			camarilla_members -= member
 			anarch_members -= member
 
 /datum/controller/subsystem/factionwar/proc/check_faction_ability(var/vampire_faction)
 	switch(vampire_faction)
-		if(/datum/faction/sabbat)
+		if(FACTION_SABBAT)
 			return TRUE
-		if(/datum/faction/camarilla)
+		if(FACTION_CAMARILLA)
 			if(round(length(marks_camarilla)/3) > length(camarilla_members))
 				return FALSE
 			if(camarilla_power < length(marks_camarilla)*5)
 				return FALSE
 			return TRUE
-		if(/datum/faction/anarchs)
+		if(FACTION_ANARCHS)
 			if(round(length(marks_anarch)/3) > length(anarch_members))
 				return FALSE
 			if(anarch_power < length(marks_anarch)*5)
@@ -114,15 +113,15 @@ SUBSYSTEM_DEF(factionwar)
 
 /datum/controller/subsystem/factionwar/proc/move_mark(var/obj/graffiti/G, var/vampire_faction)
 	switch(vampire_faction)
-		if(/datum/faction/camarilla)
+		if(FACTION_CAMARILLA)
 			marks_anarch -= G
 			marks_sabbat -= G
 			marks_camarilla |= G
-		if(/datum/faction/anarchs)
+		if(FACTION_ANARCHS)
 			marks_camarilla -= G
 			marks_sabbat -= G
 			marks_anarch |= G
-		if(/datum/faction/sabbat)
+		if(FACTION_SABBAT)
 			marks_camarilla -= G
 			marks_anarch -= G
 			marks_sabbat |= G
@@ -159,44 +158,43 @@ SUBSYSTEM_DEF(factionwar)
 	..()
 	if(isliving(user))
 		var/mob/living/L = user
-		var/datum/faction/faction = L.vampire_faction
-		if(FACTION_APPLIED(L))
+		if(!L.vampire_faction)
 			to_chat(user, "You don't belong to any faction, so you can't repaint it.")
 			return
-		if(IS_CAMARILLA(L) | IS_ANARCHS(L) | IS_SABBAT(L))
-			if(faction.name != icon_state)
+		if(L.vampire_faction == FACTION_CAMARILLA || L.vampire_faction == FACTION_ANARCHS || L.vampire_faction == FACTION_SABBAT)
+			if(L.vampire_faction != icon_state)
 				if(SSfactionwar.check_faction_ability(L.vampire_faction))
 					if(!repainting)
 						repainting = TRUE
 						if(do_mob(user, src, 10 SECONDS))
-							icon_state = faction.name
+							icon_state = L.vampire_faction
 							if(ishuman(user))
 								var/mob/living/carbon/human/H = user
 								H.last_repainted_mark = L.vampire_faction
-							if(IS_CAMARILLA(L))
+							if(L.vampire_faction == FACTION_CAMARILLA)
 								SSfactionwar.camarilla_power = max(0, SSfactionwar.camarilla_power-length(SSfactionwar.marks_camarilla)*5)
-							if(IS_ANARCHS(L))
+							if(L.vampire_faction == FACTION_ANARCHS)
 								SSfactionwar.anarch_power = max(0, SSfactionwar.anarch_power-length(SSfactionwar.marks_anarch)*5)
 							SSfactionwar.move_mark(src, L.vampire_faction)
 							for(var/mob/living/carbon/human/H in GLOB.player_list)
-								if(IS_CAMARILLA(H) | IS_ANARCHS(H) | IS_SABBAT(H))
+								if(H.vampire_faction == FACTION_CAMARILLA || H.vampire_faction == FACTION_ANARCHS || H.vampire_faction == FACTION_SABBAT)
 									var/area/vtm/A = get_area(src)
-									to_chat(H, "<b>[A.name] [x]:[y] mark now belongs to <span class='warning'>[faction.name]</span></b>")
+									to_chat(H, "<b>[A.name] [x]:[y] mark now belongs to <span class='warning'>[L.vampire_faction]</span></b>")
 									if(A.zone_owner)
-										A.zone_owner = faction.name
+										A.zone_owner = L.vampire_faction
 //						if(user.client)
 //							var/mode = 1
 //							if(HAS_TRAIT(user, TRAIT_NON_INT))
 //								mode = 2
 //							user.client.prefs.exper = min(calculate_mob_max_exper(user), user.client.prefs.exper+(50+L.experience_plus)/mode)
-//							to_chat(user, "Successfuly repainted to [L.faction.name]'s mark.")
+//							to_chat(user, "Successfuly repainted to [L.vampire_faction]'s mark.")
 							repainting = FALSE
 						else
 							repainting = FALSE
 				else
-					if(IS_CAMARILLA(L))
+					if(L.vampire_faction == FACTION_CAMARILLA)
 						to_chat(user, "Your faction needs <span class='warning'>[round(length(SSfactionwar.marks_camarilla)/3)]</span> members and <span class='warning'>[length(SSfactionwar.marks_camarilla)*5]</span> influence to gain this mark.")
-					if(IS_ANARCHS(L))
+					if(L.vampire_faction == FACTION_ANARCHS)
 						to_chat(user, "Your faction needs <span class='warning'>[round(length(SSfactionwar.marks_anarch)/3)]</span> members and <span class='warning'>[length(SSfactionwar.marks_anarch)*5]</span> influence to gain this mark.")
 			else
 				to_chat(user, "Your faction already own this.")

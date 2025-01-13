@@ -40,5 +40,5 @@
 
 /datum/vampireclane/nosferatu/post_gain(mob/living/carbon/human/H)
 	..()
-	if(~IS_CAMARILLA(H) & ~IS_ANARCHS(H) & ~IS_SABBAT(H))
-		H.vampire_faction = /datum/faction/nosferatu
+	if(H.vampire_faction != FACTION_CAMARILLA && H.vampire_faction != FACTION_ANARCHS && H.vampire_faction != FACTION_SABBAT)
+		H.vampire_faction = FACTION_NOSFERATU

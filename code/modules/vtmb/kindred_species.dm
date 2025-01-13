@@ -43,7 +43,6 @@
 	var/mob/living/carbon/human/host
 
 /datum/action/vampireinfo/Trigger()
-	var/datum/faction/hostfaction = host.vampire_faction
 	if(host)
 		var/dat = {"
 			<style type="text/css">
@@ -77,8 +76,8 @@
 			dat += "<BR>"
 			if(host.mind.enslaved_to)
 				dat += "My Regnant is [host.mind.enslaved_to], I should obey their wants.<BR>"
-		if(IS_CAMARILLA(host) | IS_ANARCHS(host) | IS_SABBAT(host))
-			dat += "I belong to [hostfaction.name] faction, I shouldn't disobey their rules.<BR>"
+		if(host.vampire_faction == FACTION_CAMARILLA || host.vampire_faction == FACTION_ANARCHS || host.vampire_faction == FACTION_SABBAT)
+			dat += "I belong to [host.vampire_faction] faction, I shouldn't disobey their rules.<BR>"
 		if(host.generation)
 			dat += "I'm from [host.generation] generation.<BR>"
 		if(host.mind.special_role)
@@ -356,16 +355,15 @@
 				var/new_master = FALSE
 				BLOODBONDED.faction |= H.faction
 				if(!istype(BLOODBONDED, /mob/living/carbon/human/npc))
-					if(IS_CAMARILLA(H) | IS_ANARCHS(H) | IS_SABBAT(H))
+					if(H.vampire_faction == FACTION_CAMARILLA || H.vampire_faction == FACTION_ANARCHS || H.vampire_faction == FACTION_SABBAT)
 						if(BLOODBONDED.vampire_faction != H.vampire_faction)
 							BLOODBONDED.vampire_faction = H.vampire_faction
-							if(IS_SABBAT(H))
+							if(H.vampire_faction == FACTION_SABBAT)
 								if(BLOODBONDED.mind)
 									BLOODBONDED.mind.add_antag_datum(/datum/antagonist/sabbatist)
 									GLOB.sabbatites += BLOODBONDED
 							SSfactionwar.adjust_members()
-							var/datum/faction/faction = H.vampire_faction
-							to_chat(BLOODBONDED, "<span class='notice'>You are now member of <b>[faction.name]</b></span>")
+							to_chat(BLOODBONDED, "<span class='notice'>You are now member of <b>[H.vampire_faction]</b></span>")
 				BLOODBONDED.drunked_of |= "[H.dna.real_name]"
 
 				if(BLOODBONDED.stat == DEAD && !iskindred(BLOODBONDED))
