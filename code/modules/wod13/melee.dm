@@ -781,6 +781,7 @@
 	icon = 'code/modules/wod13/48x32weapons.dmi'
 	icon_state = "klaive"
 	flags_1 = CONDUCT_1
+	item_flags = WEREWOLF_HOLDABLE
 	force = 45
 	throwforce = 10
 	w_class = WEIGHT_CLASS_BULKY
@@ -800,22 +801,22 @@
 
 /obj/item/melee/vampirearms/klaive/glasswalker
 	name = "glasswalker klaive"
-	iconstate = "glassklaive"
-	desc = "An oversized, silver-forged knife manufactured to deadly perfection."
+	icon_state = "glassklaive"
+	desc = "An unwieldy military knife forged out of silver. Solid and sharp, a reliable weapon."
 
 /obj/item/melee/vampirearms/klaive/wendigo
 	name = "wendigo klaive"
-	iconstate = "wendiklaive"
-	desc = "The carved, silver-bathed bone of some great beast, the first kill of many."
+	icon_state = "wendiklaive"
+	desc = "A large tribal blade carved out of pure silver. Remind them of the old ways."
 
 /obj/item/melee/vampirearms/klaive/bsd
 	name = "dancer klaive"
-	iconstate = "bsdklaive"
-	desc = "A crude, hammered blade of sharpened silver, liable to tear and mangle as much as cut."
+	icon_state = "bsdklaive"
+	desc = "An oversized, wicked dagger fashioned from silver. Eerie runes are engraved along its length."
 
 //This code allows a garou to spend 1 gnosis to buff the klaive and allow it to deal aggravated damage (clone damage) to non-supernatural beings
 /obj/item/melee/vampirearms/klaive/attack_self(mob/user)
-	if(isgarou(user) || iscrinos(user))
+	if((isgarou(user) || iscrinos(user)) && !aggravate)
 		var/mob/living/carbon/wolf = user
 		if(wolf.auspice.gnosis > 0)
 			to_chat(user, "You beckon the [src]'s spirit, you can feel it answer your call.")
@@ -836,17 +837,18 @@
 /obj/item/melee/vampirearms/klaive/attack(mob/living/target, mob/living/user)
 	. = ..()
 	if(isgarou(target) || iswerewolf(target))
-		if(target.auspice.gnosis)
+		var/mob/living/carbon/wolf = target
+		if(wolf.auspice.gnosis)
 			if(prob(50))
-				adjust_gnosis(-1, target)
+				adjust_gnosis(-1, wolf)
 		if(!aggravate)
-			target.apply_damage(20, CLONE)
+			wolf.apply_damage(20, CLONE)
 		else
-			target.apply_damage(35, CLONE)
-		if(!target.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
-			target.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
+			wolf.apply_damage(35, CLONE)
+		if(!wolf.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
+			wolf.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
 			spawn(7 SECONDS)
-			target.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
+			wolf.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
 	else if(iscarbon(target) || isvampire(target))
 		if(aggravate)
 			target.apply_damage(20, CLONE)
