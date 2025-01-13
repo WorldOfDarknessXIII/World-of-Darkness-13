@@ -187,6 +187,17 @@
 		else
 			msg += "<span class='purple'><i>[p_they(TRUE)] [p_are()] too far away to sense any taint...</i></span><br>"
 
+	if (isgarou(user) || iswerewolf(user))
+		if (get_dist(user, src) <= 2)
+			if (!iskindred(src) && HAS_TRAIT(src, TRAIT_KINFOLK))
+				msg += "<span class='purple'><i>[p_they(TRUE)] feel familiar...</i></span><br>"
+			else if (iskindred(src) && HAS_TRAIT(src, TRAIT_KINFOLK))
+				msg += "<span class='purple'><i>[p_they(TRUE)] have a unnatural emptyness that is unnerving...</i></span><br>"
+			else
+				return
+		else
+			return
+
 	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
 	if(mood)
 		switch(mood.shown_mood)

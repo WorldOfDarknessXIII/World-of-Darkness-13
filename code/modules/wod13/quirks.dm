@@ -755,3 +755,12 @@ Dancer
 
 #undef SHORT
 #undef TALL
+
+/datum/quirk/kinfolk
+	name = "Kinfolk"
+	desc = "You feel a kinship with garou, whether you know of their existence or not. You aren't as limited as a Ghoul when dealing with Garou, but there is some expectation of "
+	value = 0
+	mob_trait = TRAIT_KINFOLK
+	gain_text = "<span class='notice'>You feel a unique kinship.</span>"
+	lose_text = "<span class='notice'>Your spiritual connection is severed, and a empty hollowness is in it's place.</span>"
+	allowed_species = list("Human")
