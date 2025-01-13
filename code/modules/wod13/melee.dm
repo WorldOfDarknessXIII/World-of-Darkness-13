@@ -774,4 +774,82 @@
 		grid_width = 2 GRID_BOXES
 		grid_height = 1 GRID_BOXES
 
+//Start of garou klaive code
+/obj/item/melee/vampirearms/klaive
+	name = "klaive"
+	desc = "A Garou's ritual blade, as rare as it is deadly."
+	icon = 'code/modules/wod13/48x32weapons.dmi'
+	icon_state = "klaive"
+	flags_1 = CONDUCT_1
+	force = 45
+	throwforce = 10
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
+	block_chance = 40
+	armour_penetration = 15 //Silver weapon, shouldn't pen that much
+	sharpness = SHARP_EDGED
+	attack_verb_continuous = list("slashes", "cuts")
+	attack_verb_simple = list("slash", "cut")
+	hitsound = 'sound/weapons/rapierhit.ogg'
+	wound_bonus = 5
+	bare_wound_bonus = 25
+	pixel_w = -8
+	resistance_flags = FIRE_PROOF
+	cost = 250
+	var/aggravate = FALSE
 
+/obj/item/melee/vampirearms/klaive/glasswalker
+	name = "glasswalker klaive"
+	iconstate = "glassklaive"
+	desc = "An oversized, silver-forged knife manufactured to deadly perfection."
+
+/obj/item/melee/vampirearms/klaive/wendigo
+	name = "wendigo klaive"
+	iconstate = "wendiklaive"
+	desc = "The carved, silver-bathed bone of some great beast, the first kill of many."
+
+/obj/item/melee/vampirearms/klaive/bsd
+	name = "dancer klaive"
+	iconstate = "bsdklaive"
+	desc = "A crude, hammered blade of sharpened silver, liable to tear and mangle as much as cut."
+
+//This code allows a garou to spend 1 gnosis to buff the klaive and allow it to deal aggravated damage (clone damage) to non-supernatural beings
+/obj/item/melee/vampirearms/klaive/attack_self(mob/user)
+	if(isgarou(user) || iscrinos(user))
+		var/mob/living/carbon/wolf = user
+		if(wolf.auspice.gnosis > 0)
+			to_chat(user, "You beckon the [src]'s spirit, you can feel it answer your call.")
+			adjust_gnosis(-1, wolf)
+			aggravate = TRUE
+			force = 70
+			armour_penetration = 40
+			spawn(10 SECONDS)
+				aggravate = initial(aggravate)
+				force = initial(force)
+				armour_penetration = initial(armour_penetration)
+		else
+			to_chat(user, "You beckon the [src]'s spirit, but all that answers is silence and indifference.")
+
+//Code here is for dealing special damage and effects to garou, as well as the extra damage if the glaive is active
+//The non-active if(!aggravate) deals the same clone damage as a silver bullet, as well as some of its debuffs
+//The active if(aggravate) deals extra clone damage to the garou, and also deals clone damage to all carbons and vampires
+/obj/item/melee/vampirearms/klaive/attack(mob/living/target, mob/living/user)
+	. = ..()
+	if(isgarou(target) || iswerewolf(target))
+		if(target.auspice.gnosis)
+			if(prob(50))
+				adjust_gnosis(-1, target)
+		if(!aggravate)
+			target.apply_damage(20, CLONE)
+		else
+			target.apply_damage(35, CLONE)
+		if(!target.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
+			target.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
+			spawn(7 SECONDS)
+			target.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
+	else if(iscarbon(target) || isvampire(target))
+		if(aggravate)
+			target.apply_damage(20, CLONE)
+
+
+//End of Garou klaive code
