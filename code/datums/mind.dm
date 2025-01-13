@@ -83,6 +83,9 @@
 	/// A lazy list of statuses to add next to this mind in the traitor panel
 	var/list/special_statuses
 
+	//Dharma path
+	var/datum/dharma/dharma
+
 /datum/mind/New(_key)
 	key = _key
 	martial_art = default_martial_art

@@ -48,6 +48,7 @@
 		speech_vary = TRUE
 		reverb = FALSE
 	playsound(get_turf(user), speech_sound, speech_volume, speech_vary, 5, use_reverb = reverb)
+	emit_po_call(user, "Legalist")
 	var/cooldown = voice_of_god(uppertext(command), user, spans, base_multiplier = power_mod)
 	charge_max = (cooldown * cooldown_mod)
 

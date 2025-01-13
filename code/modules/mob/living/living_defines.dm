@@ -282,7 +282,15 @@
 
 	///Whether the mob currently has the JUMP button selected
 	var/prepared_to_jump = FALSE
-	///Allows Gargoyles to move through solid objects using Visceratika 5.
-	var/gargoyle_pass = FALSE
 	///If this mob can strip people from range with a delay of 0.1 seconds. Currently only activated by Mytherceria 2.
 	var/enhanced_strip = FALSE
+
+	//Kuei Jin stuff
+	var/yang_chi = 2
+	var/max_yang_chi = 2
+	var/yin_chi = 1
+	var/max_yin_chi = 1
+	var/demon_chi = 0
+	var/max_demon_chi = 0
+	COOLDOWN_DECLARE(chi_restore)
+	var/datum/action/chi_discipline/chi_ranged

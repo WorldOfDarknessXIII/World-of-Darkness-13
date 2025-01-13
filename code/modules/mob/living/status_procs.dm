@@ -485,7 +485,10 @@
 
 	cure_fakedeath(source)
 	REMOVE_TRAIT(src, TRAIT_TORPOR, source)
-	to_chat(src, "<span class='notice'>You have awoken from your Torpor.</span>")
+	if(iskindred(src))
+		to_chat(src, "<span class='notice'>You have awoken from your Torpor.</span>")
+	if(iscathayan(src))
+		to_chat(src, "<span class='notice'>You have awoken from your Little Death.</span>")
 
 /mob/living/proc/torpor(source)
 	if (HAS_TRAIT(src, TRAIT_TORPOR))
@@ -521,6 +524,11 @@
 				else
 					torpor_length = 5 HOURS
 			COOLDOWN_START(vampire_species, torpor_timer, torpor_length)
+		if (iscathayan(src))
+			var/mob/living/carbon/human/cathayan = src
+			var/datum/dharma/dharma = cathayan.mind.dharma
+			var/torpor_length = 1 MINUTES * max_yin_chi
+			COOLDOWN_START(dharma, torpor_timer, torpor_length)
 
 ///Unignores all slowdowns that lack the IGNORE_NOSLOW flag.
 /mob/living/proc/unignore_slowdown(source)

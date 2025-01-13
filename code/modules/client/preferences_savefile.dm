@@ -457,6 +457,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["feature_moth_antennae"], features["moth_antennae"])
 	READ_FILE(S["feature_moth_markings"], features["moth_markings"])
 	READ_FILE(S["persistent_scars"] , persistent_scars)
+	READ_FILE(S["dharma_type"], dharma_type)
+	READ_FILE(S["dharma_level"], dharma_level)
+	READ_FILE(S["po_type"], po_type)
+	READ_FILE(S["po"], po)
+	READ_FILE(S["hun"], hun)
+	READ_FILE(S["yang"], yang)
+	READ_FILE(S["yin"], yin)
+	READ_FILE(S["chi_types"], chi_types)
+	READ_FILE(S["chi_levels"], chi_levels)
 	if(!CONFIG_GET(flag/join_with_mutant_humans))
 		features["tail_human"] = "none"
 		features["ears"] = "none"
@@ -500,6 +509,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Prevent Wighting upon joining a round
 	if(humanity <= 0)
 		humanity = 1
+
+	if(dharma_level <= 0)
+		dharma_level = 1
 
 	for(var/custom_name_id in GLOB.preferences_custom_names)
 		var/namedata = GLOB.preferences_custom_names[custom_name_id]
@@ -575,6 +587,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		discipline4type				= sanitize_discipline(discipline4type, subtypesof(/datum/discipline))
 	discipline_types = sanitize_islist(discipline_types, list())
 	discipline_levels = sanitize_islist(discipline_levels, list())
+	dharma_level = sanitize_integer(dharma_level, 0, 6, initial(dharma_level))
+	dharma_type = sanitize_inlist(dharma_type, subtypesof(/datum/dharma))
+	po_type = sanitize_inlist(po_type, list("Rebel", "Legalist", "Demon", "Monkey", "Fool"))
+	po = sanitize_integer(po, 1, 12, initial(po))
+	hun = sanitize_integer(hun, 1, 12, initial(hun))
+	yang = sanitize_integer(yang, 1, 12, initial(yang))
+	yin = sanitize_integer(yin, 1, 12, initial(yin))
+	chi_types = sanitize_islist(chi_types, list())
+	chi_levels = sanitize_islist(chi_levels, list())
 	//TODO: custom sanitization for discipline_types and discipline_levels
 	friend				= sanitize_integer(friend, 0, 1, initial(friend))
 	enemy				= sanitize_integer(enemy, 0, 1, initial(enemy))
@@ -752,6 +773,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_moth_antennae"]			, features["moth_antennae"])
 	WRITE_FILE(S["feature_moth_markings"]		, features["moth_markings"])
 	WRITE_FILE(S["persistent_scars"]			, persistent_scars)
+	WRITE_FILE(S["dharma_type"], dharma_type)
+	WRITE_FILE(S["dharma_level"], dharma_level)
+	WRITE_FILE(S["po_type"], po_type)
+	WRITE_FILE(S["po"], po)
+	WRITE_FILE(S["hun"], hun)
+	WRITE_FILE(S["yang"], yang)
+	WRITE_FILE(S["yin"], yin)
+	WRITE_FILE(S["chi_types"], chi_types)
+	WRITE_FILE(S["chi_levels"], chi_levels)
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)

@@ -107,6 +107,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		var/area/AR = V
 		if(istype(AR, /area/shuttle) || AR.area_flags & NOTELEPORT)
 			continue
+		if(AR.wall_rating > 1)
+			continue
 		if(GLOB.teleportlocs[AR.name])
 			continue
 		if (!AR.contents.len)

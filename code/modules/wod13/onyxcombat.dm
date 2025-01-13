@@ -29,11 +29,16 @@
 	GLOB.masquerade_breakers_list -= src
 	GLOB.sabbatites -= src
 
+	//So upon death the corpse is filled with yin chi
+	yin_chi = min(max_yin_chi, yin_chi+yang_chi)
+	yang_chi = 0
+
 	if(iskindred(src))
 		qdel(getorganslot(ORGAN_SLOT_BRAIN)) //NO REVIVAL EVER
 		if(in_frenzy)
 			exit_frenzymod()
 		var/years_undead = chronological_age - age
+		SEND_SOUND(src, sound('code/modules/wod13/sounds/final_death.ogg', 0, 0, 50))
 		switch (years_undead)
 			if (-INFINITY to 10) //normal corpse
 				return
@@ -59,11 +64,46 @@
 				update_body()
 			if (200 to INFINITY)
 				playsound(src, 'code/modules/wod13/sounds/burning_death.ogg', 80, TRUE)
-				SEND_SOUND(src, sound('code/modules/wod13/sounds/final_death.ogg', 0, 0, 50))
 				lying_fix()
 				dir = SOUTH
 				spawn(1 SECONDS)
 					dust(TRUE, TRUE) //turn to ash
+	if(iscathayan(src))
+		qdel(getorganslot(ORGAN_SLOT_BRAIN)) //NO REVIVAL EVER
+		if(in_frenzy)
+			exit_frenzymod()
+		var/years_undead = chronological_age - age
+		SEND_SOUND(src, sound('code/modules/wod13/sounds/final_death.ogg', 0, 0, 50))
+		switch (years_undead)
+			if (-INFINITY to 10) //normal corpse
+				return
+			if (10 to 50)
+				clane.rot_body(1) //skin takes on a weird colouration
+				visible_message("<span class='notice'>[src]'s skin loses some of its colour.</span>")
+				update_body()
+				update_body() //this seems to be necessary due to stuff being set on update_body() and then only refreshing with a new call
+			if (50 to 100)
+				clane.rot_body(2) //looks slightly decayed
+				visible_message("<span class='notice'>[src]'s skin rapidly decays.</span>")
+				update_body()
+				update_body()
+			if (100 to 150)
+				clane.rot_body(3) //looks very decayed
+				visible_message("<span class='warning'>[src]'s body rapidly decomposes!</span>")
+				update_body()
+				update_body()
+			if (150 to 200)
+				clane.rot_body(4) //mummified skeletonised corpse
+				visible_message("<span class='warning'>[src]'s body rapidly skeletonises!</span>")
+				update_body()
+				update_body()
+			if (200 to INFINITY)
+				playsound(src, 'code/modules/wod13/sounds/vicissitude.ogg', 80, TRUE)
+				lying_fix()
+				dir = SOUTH
+				spawn(1 SECONDS)
+					dust(TRUE, TRUE) //turn to ash
+
 
 /mob/living/carbon/human/toggle_move_intent(mob/living/user)
 	if(blocking && m_intent == MOVE_INTENT_WALK)
@@ -118,6 +158,13 @@
 		playsound(src, 'code/modules/wod13/sounds/parried.ogg', 70, TRUE)
 		clear_parrying()
 		return
+	if(HAS_TRAIT(src, TRAIT_ENHANCED_MELEE_DODGE))
+		apply_damage(3, STAMINA)
+		user.do_attack_animation(src)
+		playsound(src, 'sound/weapons/tap.ogg', 70, TRUE)
+		emote("flip")
+		visible_message("<span class='danger'>[src] dodges the attack!</span>", "<span class='danger'>You dodge the attack!</span>")
+		return
 	if(blocking)
 		if(istype(W, /obj/item/melee))
 			var/obj/item/melee/WEP = W
@@ -158,6 +205,13 @@
 		SwitchBlocking()
 	if(CheckFrenzyMove() && blocking)
 		SwitchBlocking()
+	if(user.a_intent == INTENT_HARM && HAS_TRAIT(src, TRAIT_ENHANCED_MELEE_DODGE))
+		playsound(src, 'sound/weapons/tap.ogg', 70, TRUE)
+		apply_damage(3, STAMINA)
+		user.do_attack_animation(src)
+		emote("flip")
+		visible_message("<span class='danger'>[src] dodges the punch!</span>", "<span class='danger'>You dodge the punch!</span>")
+		return
 	if(user.a_intent == INTENT_HARM && blocking)
 		playsound(src, 'sound/weapons/tap.ogg', 70, TRUE)
 		apply_damage(10, STAMINA)
@@ -270,6 +324,10 @@
 	plane = HUD_PLANE
 
 /atom/movable/screen/drinkblood/Click()
+	bite()
+	. = ..()
+
+/atom/movable/screen/drinkblood/proc/bite()
 //	SEND_SOUND(usr, sound('code/modules/wod13/sounds/highlight.ogg', 0, 0, 50))
 	if(ishuman(usr))
 		var/mob/living/carbon/human/BD = usr
@@ -286,34 +344,29 @@
 		if(BD.grab_state > GRAB_PASSIVE)
 			if(ishuman(BD.pulling))
 				var/mob/living/carbon/human/PB = BD.pulling
-				if(isghoul(usr))
+				if(isghoul(BD))
 					if(!iskindred(PB))
 						SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 						to_chat(BD, "<span class='warning'>Eww, that is <b>GROSS</b>.</span>")
 						return
-				if(!isghoul(usr) && !iskindred(usr))
+				if(!isghoul(BD) && !iskindred(BD) && !iscathayan(BD))
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>Eww, that is <b>GROSS</b>.</span>")
 					return
-				if(PB.stat == DEAD && !HAS_TRAIT(BD, TRAIT_GULLET))
+				if(PB.stat == DEAD && !HAS_TRAIT(BD, TRAIT_GULLET) && !iscathayan(BD))
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
 					return
-				if(PB.bloodpool <= 0 && !iskindred(BD.pulling))
+				if(PB.bloodpool <= 0 && (!iskindred(BD.pulling) || !iskindred(BD)))
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
 				if(BD.clane)
 					var/special_clan = FALSE
 					if(BD.clane.name == "Salubri")
-						if(PB.client)
-							if(alert(PB, "Do you consent to being fed on by [BD.name]?", "Consent To Feeding", "Yes", "No") != "Yes")
-								to_chat(BD, "<span class='warning'>You cannot feed on people who do not consent.</span>")
-								return
-						else if(!PB.IsSleeping())
+						if(!PB.IsSleeping())
 							to_chat(BD, "<span class='warning'>You can't drink from aware targets!</span>")
 							return
-
 						special_clan = TRUE
 						PB.emote("moan")
 					if(BD.clane.name == "Giovanni")
@@ -323,16 +376,16 @@
 						PB.emote("groan")
 				PB.add_bite_animation()
 			if(isliving(BD.pulling))
-				if (!iskindred(BD))
+				if(!iskindred(BD) && !iscathayan(BD))
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>Eww, that is <b>GROSS</b>.</span>")
 					return
 				var/mob/living/LV = BD.pulling
-				if(LV.bloodpool <= 0 && !iskindred(BD.pulling))
+				if(LV.bloodpool <= 0 && (!iskindred(BD.pulling) || !iskindred(BD)))
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
-				if(LV.stat == DEAD && !HAS_TRAIT(BD, TRAIT_GULLET))
+				if(LV.stat == DEAD && !HAS_TRAIT(BD, TRAIT_GULLET) && !iscathayan(BD))
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
 					return
@@ -352,7 +405,6 @@
 							to_chat(BD, "<span class='warning'>There is no <b>HEART</b> in this creature.</span>")
 							return
 					BD.drinksomeblood(LV)
-	..()
 
 /atom/movable/screen/bloodheal
 	name = "Bloodheal"
@@ -681,9 +733,9 @@
 	update_auspex_hud()
 
 /mob/living/carbon/human/Life()
-	if(!iskindred(src))
+	if(!iskindred(src) && !iscathayan(src))
 		if(prob(5))
-			adjustCloneLoss(-1, TRUE)
+			adjustCloneLoss(-5, TRUE)
 	update_blood_hud()
 	update_zone_hud()
 	update_rage_hud()
@@ -717,6 +769,7 @@
 		if(last_nonraid+1800 < world.time)
 			last_nonraid = world.time
 			killed_count = max(0, killed_count-1)
+
 	..()
 
 /mob/living/Initialize()

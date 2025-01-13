@@ -226,6 +226,11 @@
 	bloodpower.Grant(C)
 	add_verb(C, /mob/living/carbon/human/verb/teach_discipline)
 
+	C.yang_chi = 0
+	C.max_yang_chi = 0
+	C.yin_chi = 6
+	C.max_yin_chi = 6
+
 	//vampires go to -200 damage before dying
 	for (var/obj/item/bodypart/bodypart in C.bodyparts)
 		bodypart.max_damage *= 1.5
@@ -336,6 +341,9 @@
 			L.adjustFireLoss(-25)
 		if(istype(H.pulling, /mob/living/carbon/human))
 			var/mob/living/carbon/human/BLOODBONDED = H.pulling
+			if(iscathayan(BLOODBONDED))
+				to_chat(owner, "<span class='warning'>[BLOODBONDED] vomits the vitae back!</span>")
+				return
 			if(!BLOODBONDED.client && !istype(H.pulling, /mob/living/carbon/human/npc))
 				to_chat(owner, "<span class='warning'>You need [BLOODBONDED]'s attention to do that!</span>")
 				return
@@ -618,6 +626,19 @@
 		if(clane)
 			clane.post_gain(src)
 
+	if((dna.species.id == "kuei-jin")) //only splats that have Disciplines qualify
+		var/list/datum/chi_discipline/adding_disciplines = list()
+
+		if (discipline_pref) //initialise character's own disciplines
+			for (var/i in 1 to client.prefs.discipline_types.len)
+				var/type_to_create = client.prefs.discipline_types[i]
+				var/datum/chi_discipline/discipline = new type_to_create
+				discipline.level = client.prefs.discipline_levels[i]
+				adding_disciplines += discipline
+
+		for (var/datum/chi_discipline/discipline in adding_disciplines)
+			give_chi_discipline(discipline)
+
 /**
  * Creates an action button and applies post_gain effects of the given Discipline.
  *
@@ -632,6 +653,13 @@
 	discipline.post_gain(src)
 	var/datum/species/kindred/species = dna.species
 	species.disciplines += discipline
+
+/mob/living/carbon/human/proc/give_chi_discipline(datum/chi_discipline/discipline)
+	if (discipline.level > 0)
+		var/datum/action/chi_discipline/action = new
+		action.discipline = discipline
+		action.Grant(src)
+	discipline.post_gain(src)
 
 /**
  * Accesses a certain Discipline that a Kindred has. Returns false if they don't.
