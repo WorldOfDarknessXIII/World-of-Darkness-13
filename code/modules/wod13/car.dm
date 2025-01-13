@@ -846,14 +846,13 @@ SUBSYSTEM_DEF(carpool)
 	last_pos["x_pix"] = last_pos["x_pix"]+moved_x
 	last_pos["y_pix"] = last_pos["y_pix"]+moved_y
 
-	var/x_sign = 1
-	if(last_pos["x_pix"] < 0)
-		x_sign = -1
-	var/y_sign = 1
-	if(last_pos["y_pix"] < 0)
-		y_sign = -1
-	var/x_add = trunc((x_sign * abs(last_pos["x_pix"] + 16)) / 32)
-	var/y_add = trunc((y_sign * abs(last_pos["y_pix"] + 16)) / 32)
+	var/x_add = round(((last_pos["x_pix"] < 0 ? -1 : 1) * abs(last_pos["x_pix"] + 16)) / 32)
+	var/y_add = round(((last_pos["y_pix"] < 0 ? -1 : 1) * abs(last_pos["y_pix"] + 16)) / 32)
+	if(x_add < 0)
+		x_add += 1
+	if(y_add < 0)
+		y_add += 1
+
 	last_pos["x_frwd"] -= x_add * 32
 	last_pos["y_frwd"] -= y_add * 32
 	last_pos["x_pix"] -= x_add * 32
