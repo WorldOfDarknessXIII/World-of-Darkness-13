@@ -556,6 +556,41 @@
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 
+/obj/item/ammo_box/magazine/vampautoshot
+	name = "shotgun magazine (12ga)"
+	icon = 'code/modules/wod13/ammo.dmi'
+	lefthand_file = 'code/modules/wod13/righthand.dmi'
+	righthand_file = 'code/modules/wod13/lefthand.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon_state = "spas15"
+	ammo_type = /obj/item/ammo_casing/vampire/c12g/buck
+	caliber = CALIBER_12G
+	max_ammo = 6
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+
+/obj/item/gun/ballistic/automatic/vampire/autoshotgun
+	name = "\improper Jaegerspas-XV"
+	desc = "A semi-automatic shotgun. It looks more like an assault rifle than a shotgun and fires at a deadly pace."
+	icon = 'code/modules/wod13/48x32weapons.dmi'
+	icon_state = "spas15"
+	inhand_icon_state = "spas15"
+	worn_icon_state = "rifle"
+	w_class = WEIGHT_CLASS_BULKY
+	mag_type = /obj/item/ammo_box/magazine/vampautoshot
+	burst_size = 1
+	fire_delay = 2
+	spread = 4
+	bolt_type = BOLT_TYPE_LOCKING
+	show_bolt_icon = FALSE
+	mag_display = TRUE
+	fire_sound = 'code/modules/wod13/sounds/pomp.ogg'
+	slot_flags = ITEM_SLOT_BACK
+	projectile_damage_multiplier = 0.9
+	masquerade_violating = TRUE
+	recoil = 6
+	cost = 500
+
 /obj/item/gun/ballistic/shotgun/toy/crossbow/vampire
 	name = "crossbow"
 	desc = "Welcome to the Middle Ages!"

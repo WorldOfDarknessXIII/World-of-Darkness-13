@@ -167,6 +167,7 @@ VENTORY!
 				if(!bound_underlay)
 					bound_underlay = generate_bound_underlay(stored_item.grid_width, stored_item.grid_height)
 					underlay_appearances_by_size["[stored_item.grid_width]x[stored_item.grid_height]"] = bound_underlay
+				stored_item.underlays = null
 				stored_item.underlays += bound_underlay
 				screen_loc = LAZYACCESSASSOC(master.item_to_grid_coordinates, stored_item, 1)
 				screen_loc = master.grid_coordinates_to_screen_loc(screen_loc)
@@ -191,6 +192,7 @@ VENTORY!
 				if(!bound_underlay)
 					bound_underlay = generate_bound_underlay(stored_item.grid_width, stored_item.grid_height)
 					underlay_appearances_by_size["[stored_item.grid_width]x[stored_item.grid_height]"] = bound_underlay
+				stored_item.underlays = null
 				stored_item.underlays += bound_underlay
 				screen_loc = LAZYACCESSASSOC(master.item_to_grid_coordinates, stored_item, 1)
 				screen_loc = master.grid_coordinates_to_screen_loc(screen_loc)
@@ -1035,6 +1037,10 @@ VENTORY!
 	grid_height = 2 GRID_BOXES
 
 /obj/item/gun/ballistic/automatic/vampire/thompson
+	grid_width = 5 GRID_BOXES
+	grid_height = 2 GRID_BOXES
+
+/obj/item/gun/ballistic/automatic/vampire/autoshotgun
 	grid_width = 5 GRID_BOXES
 	grid_height = 2 GRID_BOXES
 
