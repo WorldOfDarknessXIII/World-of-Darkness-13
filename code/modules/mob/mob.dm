@@ -1203,6 +1203,8 @@
 		var/mob/living/carbon/human/H = src
 		if(istype(H.get_active_held_item(), /obj/item/gun))
 			shootahell = TRUE
+		if(H.discipline_ranged)
+			discipliner = TRUE
 //		for(var/atom/movable/screen/disciplines/DISCP in H.hud_used.static_inventory)
 //			if(DISCP)
 //				if(DISCP.active)
@@ -1221,6 +1223,8 @@
 		var/obj/vehicle/sealed/E = loc
 		if(E.mouse_pointer)
 			client.mouse_pointer_icon = E.mouse_pointer
+	else
+		client.mouse_pointer_icon = default_cursor_icon
 
 
 ///This mob is abile to read books

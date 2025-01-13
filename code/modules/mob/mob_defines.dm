@@ -43,6 +43,7 @@
 	/// A special action? No idea why this lives here
 	var/list/datum/action/chameleon_item_actions
 	///Cursor icon used when holding shift over things
+	var/default_cursor_icon = 'icons/effects/mouse_pointers/default.dmi'
 	var/examine_cursor_icon = 'icons/effects/mouse_pointers/examine_pointer.dmi'
 	var/pvp_cursor_icon = 'icons/effects/mouse_pointers/pvp.dmi'
 	var/discipline_cursor_icon = 'icons/effects/mouse_pointers/discipline.dmi'

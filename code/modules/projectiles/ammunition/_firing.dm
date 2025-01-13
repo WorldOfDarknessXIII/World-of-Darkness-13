@@ -73,18 +73,26 @@
 					if(P.linked_network == "police")
 						P.announce_crime("shooting", get_turf(user))
 		var/atom/A = new firing_effect_type(get_turf(src), firing_dir)
-		var/atom/movable/shit = new(A.loc)
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.remove_overlay(FIRING_EFFECT_LAYER)
-			var/mutable_appearance/firing_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "firing", -PROTEAN_LAYER)
-			H.overlays_standing[FIRING_EFFECT_LAYER] = firing_overlay
-			H.apply_overlay(FIRING_EFFECT_LAYER)
-			shit.set_light(3, 2, "#ffedbb")
+		var/matrix/M = matrix()
+		M.Turn(get_angle_raw(user.x, user.y, 0, 0, target.x, target.y, 0, 0))
+		A.transform = M
+		A.layer = ABOVE_LIGHTING_LAYER
+		A.plane = ABOVE_LIGHTING_PLANE
+//		var/atom/movable/shit = new(A.loc)
+		var/atom/movable/firing_overlay = new (get_turf(user))
+		firing_overlay.icon = 'icons/effects/light_overlays/firing_light.dmi'
+		firing_overlay.icon_state = "light"
+		firing_overlay.layer = O_LIGHTING_VISUAL_LAYER
+		firing_overlay.plane = O_LIGHTING_VISUAL_PLANE
+		firing_overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		firing_overlay.color = "#ffedbb"
+		firing_overlay.pixel_x = -32
+		firing_overlay.pixel_y = -32
+//			shit.set_light(3, 2, "#ffedbb")
 //			animate(firing_overlay, alpha = 0, time = 2)
-			spawn(2)
-				H.remove_overlay(FIRING_EFFECT_LAYER)
-				qdel(shit)
+		spawn(5)
+			qdel(firing_overlay)
+//				qdel(shit)
 
 	var/direct_target
 	if(targloc == curloc)
