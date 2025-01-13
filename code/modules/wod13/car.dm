@@ -854,11 +854,6 @@ SUBSYSTEM_DEF(carpool)
 	last_pos["x_pix"] -= x_add * 32
 	last_pos["y_pix"] -= y_add * 32
 
-	if(abs(last_pos["x_pix"]) > 32)
-		to_chat(driver, "<span class='warning'>x_pix over 32</span>")
-	if(abs(last_pos["y_pix"]) > 32)
-		to_chat(driver, "<span class='notice'>y_pix over 32</span>")
-
 	last_pos["x"] = clamp(last_pos["x"] + x_add, 1, world.maxx)
 	last_pos["y"] = clamp(last_pos["y"] + y_add, 1, world.maxy)
 
