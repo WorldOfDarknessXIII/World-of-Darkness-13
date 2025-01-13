@@ -856,5 +856,27 @@
 		if(aggravate)
 			target.apply_damage(20, CLONE)
 
+/datum/crafting_recipe/klaive/glasswalker
+	name = "Glasswalker Klaive"
+	result = /obj/item/melee/vampirearms/klaive/glasswalker
+	reqs = list(/obj/item/silverbar = 1, /obj/item/melee/vampirearms/knife = 1)
+	time = 30
+	always_available = FALSE
+	category = CAT_GAROU
 
+/datum/crafting_recipe/klaive/wendigo
+	name = "Wendigo Klaive"
+	result = /obj/item/melee/vampirearms/klaive/wendigo
+	reqs = list(/obj/item/silverbar = 1, /obj/item/vampire_stake = 1)
+	time = 30
+	always_available = FALSE
+	category = CAT_GAROU
+
+/datum/crafting_recipe/klaive/bsd
+	name = "Bsd Klaive"
+	result = /obj/item/melee/vampirearms/klaive/bsd
+	reqs = list(/obj/item/silverbar = 1, /obj/item/drinkable_bloodpack = 1)
+	time = 30
+	always_available = FALSE
+	category = CAT_GAROU
 //End of Garou klaive code
