@@ -789,7 +789,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
 	block_chance = 40
-	armour_penetration = 15 //Silver weapon, shouldn't pen that much
+	armour_penetration = 15 // Silver weapon, shouldn't pen that much
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("slashes", "cuts")
 	attack_verb_simple = list("slash", "cut")
@@ -799,7 +799,7 @@
 	pixel_w = -8
 	resistance_flags = FIRE_PROOF
 	cost = 250
-	var/aggravate = FALSE
+	var/aggravate = FALSE // Unique variable used for spending gnosis and giving the weapon bonuses
 
 /obj/item/melee/vampirearms/klaive/glasswalker
 	name = "glasswalker klaive"
@@ -865,7 +865,7 @@
 /datum/crafting_recipe/klaive/glasswalker
 	name = "Glasswalker Klaive"
 	result = /obj/item/melee/vampirearms/klaive/glasswalker
-	reqs = list(/obj/item/silverbar = 1, /obj/item/melee/vampirearms/knife = 1)
+	reqs = list(/obj/item/silverbar = 2, /obj/item/melee/vampirearms/knife = 1)
 	time = 30
 	garou_only = TRUE
 	category = CAT_GAROU
@@ -873,7 +873,7 @@
 /datum/crafting_recipe/klaive/wendigo
 	name = "Wendigo Klaive"
 	result = /obj/item/melee/vampirearms/klaive/wendigo
-	reqs = list(/obj/item/silverbar = 1, /obj/item/vampire_stake = 1)
+	reqs = list(/obj/item/silverbar = 2, /obj/item/vampire_stake = 1)
 	time = 30
 	garou_only = TRUE
 	category = CAT_GAROU
@@ -881,7 +881,7 @@
 /datum/crafting_recipe/klaive/bsd
 	name = "Spiral Dancer Klaive"
 	result = /obj/item/melee/vampirearms/klaive/bsd
-	reqs = list(/obj/item/silverbar = 1, /obj/item/drinkable_bloodpack = 1)
+	reqs = list(/obj/item/silverbar = 2, /obj/item/drinkable_bloodpack = 1)
 	time = 30
 	garou_only = TRUE
 	category = CAT_GAROU
@@ -899,7 +899,7 @@
 	. = ..()
 	if(isgarou(target) || iswerewolf(target))
 		var/mob/living/carbon/wolf = target
-		if(wolf.auspice.gnosis)
+		if(wolf.auspice.gnosis > 0)
 			adjust_gnosis(-1, wolf)
 		if(!aggravate)
 			wolf.apply_damage(20, CLONE)
