@@ -889,7 +889,7 @@
 // Fancy adminspawn only item, this thing is a monstrous weapon. Doubly so in a garou's hands
 /obj/item/melee/vampirearms/klaive/grand
 	name = "grand klaive"
-	desc = "A legend's supremely deadly blade. It's wielder's deeds weigh heavy in your hand. Its ancient spirit demands you hunt."
+	desc = "A legend's supremely deadly blade. Its wielder's deeds weigh heavy in your hand. Its ancient spirit demands you hunt."
 	force = 60
 	throwforce = 20
 	block_chance = 60
