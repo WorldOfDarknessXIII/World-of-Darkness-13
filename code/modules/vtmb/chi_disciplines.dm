@@ -1693,12 +1693,13 @@
 /datum/chi_discipline/storm_shintai/proc/storm_aura_loop(mob/living/carbon/human/caster, duration)
 	var/loop_started_time = world.time
 	while (world.time <= (loop_started_time + duration))
-		for(var/mob/living/shocked_mob in oviewers(5, caster))
-			var/turf/lightning_source = get_turf(caster)
-			lightning_source.Beam(shocked_mob, icon_state="lightning[rand(1,12)]", time = 0.5 SECONDS)
-			shocked_mob.Stun(0.5 SECONDS)
-			shocked_mob.electrocute_act(10, caster, siemens_coeff = 1, flags = NONE)
-			playsound(get_turf(shocked_mob), 'code/modules/wod13/sounds/lightning.ogg', 100, FALSE)
+		for(var/mob/living/shocked_mob in oviewers(2, caster))
+			if(prob(25))
+				var/turf/lightning_source = get_turf(caster)
+				lightning_source.Beam(shocked_mob, icon_state="lightning[rand(1,12)]", time = 0.5 SECONDS)
+				shocked_mob.Stun(0.5 SECONDS)
+				shocked_mob.electrocute_act(10, caster, siemens_coeff = 1, flags = NONE)
+				playsound(get_turf(shocked_mob), 'code/modules/wod13/sounds/lightning.ogg', 100, FALSE)
 
 		sleep(3 SECONDS)
 
