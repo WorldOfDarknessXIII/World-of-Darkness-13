@@ -59,7 +59,7 @@
 
 /datum/outfit/job/hound/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.vampire_faction = "Camarilla"
+	H.vampire_faction = FACTION_CAMARILLA
 
 /obj/effect/landmark/start/hound
 	name = "Hound"

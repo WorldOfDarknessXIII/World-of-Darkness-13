@@ -348,9 +348,9 @@
 	return GLOB.not_incapacitated_turf_state
 
 //For the UI related things we're going to assume the user is a mob rather than typesetting it to an atom as the UI isn't generated if the parent is an atom
-/datum/component/personal_crafting/ui_interact(mob/user, datum/tgui/ui)
+/datum/component/personal_crafting/ui_interact(mob/user, datum/tgui/ui, var/open_ui = TRUE)
 	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
+	if(!ui && open_ui)
 		cur_category = categories[1]
 		if(islist(categories[cur_category]))
 			var/list/subcats = categories[cur_category]
@@ -431,6 +431,7 @@
 			else
 				to_chat(user, "<span class='warning'>Construction failed[result]</span>")
 			busy = FALSE
+			ui_interact(user, open_ui = FALSE) //Update the UI again as soon as possible after the UI is no longer busy, but don't open it again if it got closed.
 		if("toggle_recipes")
 			display_craftable_only = !display_craftable_only
 			. = TRUE
