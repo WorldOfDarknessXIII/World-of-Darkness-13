@@ -186,6 +186,7 @@
 /obj/item/card/id/clinic
 	name = "medical badge"
 	id_type_name = "medical badge"
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY)
 	desc = "A badge which shows medical qualification."
 	icon = 'code/modules/wod13/items.dmi'
 	icon_state = "id2"
