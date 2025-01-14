@@ -91,6 +91,28 @@
 		rage_icon.hud = src
 		infodisplay += rage_icon
 
+	if(iscathayan(owner))
+		chi_icon = new /atom/movable/screen/chi_pool()
+		chi_icon.screen_loc = ui_chi_pool
+		chi_icon.hud = src
+		static_inventory += chi_icon
+		yang_chi_icon = new /atom/movable/screen/yang_chi()
+		yang_chi_icon.screen_loc = ui_chi_pool
+		yang_chi_icon.hud = src
+		static_inventory += yang_chi_icon
+		yin_chi_icon = new /atom/movable/screen/yin_chi()
+		yin_chi_icon.screen_loc = ui_chi_pool
+		yin_chi_icon.hud = src
+		static_inventory += yin_chi_icon
+		imbalance_chi_icon = new /atom/movable/screen/imbalance_chi()
+		imbalance_chi_icon.screen_loc = ui_chi_pool
+		imbalance_chi_icon.hud = src
+		static_inventory += imbalance_chi_icon
+		demon_chi_icon = new /atom/movable/screen/demon_chi()
+		demon_chi_icon.screen_loc = ui_chi_demon
+		demon_chi_icon.hud = src
+		static_inventory += demon_chi_icon
+
 	using = new/atom/movable/screen/language_menu
 	using.icon = 'code/modules/wod13/UI/buttons_wide.dmi'
 	using.hud = src

@@ -728,6 +728,7 @@
 				var/mob/living/carbon/human/npc/N = target
 				if(N.last_damager != src)
 					AdjustHumanity(1, 10)
+					call_dharma("savelife", src)
 //			if(key)
 //				var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
 //				if(P)
