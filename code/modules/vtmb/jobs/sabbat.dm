@@ -8,7 +8,7 @@
 
 /datum/outfit/job/sabbatist/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.vampire_faction = "Sabbat"
+	H.vampire_faction = FACTION_SABBAT
 	if(H.gender == MALE)
 		shoes = /obj/item/clothing/shoes/vampire
 		if(H.clane)
@@ -57,7 +57,7 @@
 //Commented out code for future sabbat character setup
 /*
 /datum/job/sabbatist/verb/setup_character()
-	set category = "Sabbat"
+	set category = FACTION_SABBAT
 	set name = "Set Up Character"
 	set desc = "Prepare your character."
 	var/list/clans = list("Tzimisce", "Lasombra", "Gangrel", "Brujah", "Toreador", "Ventrue")
@@ -160,7 +160,7 @@
 /datum/antagonist/sabbatist
 	name = "Sabbatist"
 	roundend_category = "sabbattites"
-	antagpanel_category = "Sabbat"
+	antagpanel_category = FACTION_SABBAT
 	job_rank = ROLE_REV
 	antag_moodlet = /datum/mood_event/revolution
 	antag_hud_type = ANTAG_HUD_REV

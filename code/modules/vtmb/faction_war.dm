@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(factionwar)
 	var/list/anarch_members = list()
 
 /mob/living/carbon/human/Destroy()
-	if(vampire_faction == "Camarilla")
+	if(vampire_faction == FACTION_CAMARILLA)
 		SSfactionwar.camarilla_members -= src
 	..()
 
@@ -23,9 +23,9 @@ SUBSYSTEM_DEF(factionwar)
 	anarch_members = list()
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(H)
-			if(H.vampire_faction == "Camarilla")
+			if(H.vampire_faction == FACTION_CAMARILLA)
 				camarilla_members += H
-			if(H.vampire_faction == "Anarchs")
+			if(H.vampire_faction == FACTION_ANARCHS)
 				anarch_members += H
 
 /datum/controller/subsystem/factionwar/fire()
@@ -42,13 +42,13 @@ SUBSYSTEM_DEF(factionwar)
 //			if(HAS_TRAIT(H, TRAIT_NON_INT))
 //				mode = 2
 //			if(P)
-			if(H.vampire_faction == "Camarilla")
+			if(H.vampire_faction == FACTION_CAMARILLA)
 				camarilla_members += H
 //					P.exper = min(calculate_mob_max_exper(H), P.exper+((4/mode)*how_much_cam))
-			if(H.vampire_faction == "Anarchs")
+			if(H.vampire_faction == FACTION_ANARCHS)
 				anarch_members += H
 //					P.exper = min(calculate_mob_max_exper(H), P.exper+((4/mode)*how_much_an))
-//				if(H.vampire_faction == "Sabbat")
+//				if(H.vampire_faction == FACTION_SABBAT)
 //					P.exper = min(calculate_mob_max_exper(H), P.exper+((4/mode)*how_much_sab))
 	camarilla_power = max(0, camarilla_power-(how_much_cam*5))
 	if(camarilla_power == 0)
@@ -62,7 +62,7 @@ SUBSYSTEM_DEF(factionwar)
 			marks_camarilla -= R
 			R.icon_state = "Unknown"
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarchs" || H.vampire_faction == "Sabbat")
+				if(H.vampire_faction == FACTION_CAMARILLA || H.vampire_faction == FACTION_ANARCHS || H.vampire_faction == FACTION_SABBAT)
 					var/area/A = get_area(R)
 					to_chat(H, "<b><span class='warning'>Camarilla</span> don't have resources to sustain [A.name] [R.x]:[R.y], so it belongs to no one now.</b>")
 	anarch_power = max(0, anarch_power-(how_much_an*5))
@@ -77,34 +77,34 @@ SUBSYSTEM_DEF(factionwar)
 			marks_anarch -= R
 			R.icon_state = "Unknown"
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarchs" || H.vampire_faction == "Sabbat")
+				if(H.vampire_faction == FACTION_CAMARILLA || H.vampire_faction == FACTION_ANARCHS || H.vampire_faction == FACTION_SABBAT)
 					var/area/A = get_area(R)
 					to_chat(H, "<b><span class='warning'>Anarch</span> don't have resources to sustain [A.name] [R.x]:[R.y], so it belongs to no one now.</b>")
 
 
 /datum/controller/subsystem/factionwar/proc/switch_member(var/mob/living/member, var/vampire_faction)
 	switch(vampire_faction)
-		if("Camarilla")
+		if(FACTION_CAMARILLA)
 			anarch_members -= member
 			camarilla_members += member
-		if("Anarchs")
+		if(FACTION_ANARCHS)
 			camarilla_members -= member
 			anarch_members += member
-		if("Sabbat")
+		if(FACTION_SABBAT)
 			camarilla_members -= member
 			anarch_members -= member
 
 /datum/controller/subsystem/factionwar/proc/check_faction_ability(var/vampire_faction)
 	switch(vampire_faction)
-		if("Sabbat")
+		if(FACTION_SABBAT)
 			return TRUE
-		if("Camarilla")
+		if(FACTION_CAMARILLA)
 			if(round(length(marks_camarilla)/3) > length(camarilla_members))
 				return FALSE
 			if(camarilla_power < length(marks_camarilla)*5)
 				return FALSE
 			return TRUE
-		if("Anarchs")
+		if(FACTION_ANARCHS)
 			if(round(length(marks_anarch)/3) > length(anarch_members))
 				return FALSE
 			if(anarch_power < length(marks_anarch)*5)
@@ -113,15 +113,15 @@ SUBSYSTEM_DEF(factionwar)
 
 /datum/controller/subsystem/factionwar/proc/move_mark(var/obj/graffiti/G, var/vampire_faction)
 	switch(vampire_faction)
-		if("Camarilla")
+		if(FACTION_CAMARILLA)
 			marks_anarch -= G
 			marks_sabbat -= G
 			marks_camarilla |= G
-		if("Anarchs")
+		if(FACTION_ANARCHS)
 			marks_camarilla -= G
 			marks_sabbat -= G
 			marks_anarch |= G
-		if("Sabbat")
+		if(FACTION_SABBAT)
 			marks_camarilla -= G
 			marks_anarch -= G
 			marks_sabbat |= G
@@ -161,7 +161,7 @@ SUBSYSTEM_DEF(factionwar)
 		if(!L.vampire_faction)
 			to_chat(user, "You don't belong to any faction, so you can't repaint it.")
 			return
-		if(L.vampire_faction == "Camarilla" || L.vampire_faction == "Anarchs" || L.vampire_faction == "Sabbat")
+		if(L.vampire_faction == FACTION_CAMARILLA || L.vampire_faction == FACTION_ANARCHS || L.vampire_faction == FACTION_SABBAT)
 			if(L.vampire_faction != icon_state)
 				if(SSfactionwar.check_faction_ability(L.vampire_faction))
 					if(!repainting)
@@ -171,13 +171,13 @@ SUBSYSTEM_DEF(factionwar)
 							if(ishuman(user))
 								var/mob/living/carbon/human/H = user
 								H.last_repainted_mark = L.vampire_faction
-							if(L.vampire_faction == "Camarilla")
+							if(L.vampire_faction == FACTION_CAMARILLA)
 								SSfactionwar.camarilla_power = max(0, SSfactionwar.camarilla_power-length(SSfactionwar.marks_camarilla)*5)
-							if(L.vampire_faction == "Anarchs")
+							if(L.vampire_faction == FACTION_ANARCHS)
 								SSfactionwar.anarch_power = max(0, SSfactionwar.anarch_power-length(SSfactionwar.marks_anarch)*5)
 							SSfactionwar.move_mark(src, L.vampire_faction)
 							for(var/mob/living/carbon/human/H in GLOB.player_list)
-								if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarchs" || H.vampire_faction == "Sabbat")
+								if(H.vampire_faction == FACTION_CAMARILLA || H.vampire_faction == FACTION_ANARCHS || H.vampire_faction == FACTION_SABBAT)
 									var/area/vtm/A = get_area(src)
 									to_chat(H, "<b>[A.name] [x]:[y] mark now belongs to <span class='warning'>[L.vampire_faction]</span></b>")
 									if(A.zone_owner)
@@ -192,9 +192,9 @@ SUBSYSTEM_DEF(factionwar)
 						else
 							repainting = FALSE
 				else
-					if(L.vampire_faction == "Camarilla")
+					if(L.vampire_faction == FACTION_CAMARILLA)
 						to_chat(user, "Your faction needs <span class='warning'>[round(length(SSfactionwar.marks_camarilla)/3)]</span> members and <span class='warning'>[length(SSfactionwar.marks_camarilla)*5]</span> influence to gain this mark.")
-					if(L.vampire_faction == "Anarchs")
+					if(L.vampire_faction == FACTION_ANARCHS)
 						to_chat(user, "Your faction needs <span class='warning'>[round(length(SSfactionwar.marks_anarch)/3)]</span> members and <span class='warning'>[length(SSfactionwar.marks_anarch)*5]</span> influence to gain this mark.")
 			else
 				to_chat(user, "Your faction already own this.")
@@ -214,14 +214,14 @@ SUBSYSTEM_DEF(factionwar)
 /obj/structure/faction_map/examine(mob/user)
 	. = ..()
 	switch(faction)
-		if("Camarilla")
+		if(FACTION_CAMARILLA)
 			. += "<b>Total Influence:</b> [SSfactionwar.camarilla_power]"
 			if(length(SSfactionwar.camarilla_members))
 				. += "<b>Total Members:</b> [length(SSfactionwar.camarilla_members)]"
 			if(length(SSfactionwar.marks_camarilla))
 				. += "<b>Total Marks:</b> [length(SSfactionwar.marks_camarilla)]"
 			. += "<b>Next Mark Cost:</b> [round(length(SSfactionwar.marks_camarilla)/3)] members and [length(SSfactionwar.marks_camarilla)*5] influence"
-		if("Anarchs")
+		if(FACTION_ANARCHS)
 			. += "<b>Total Influence:</b> [SSfactionwar.anarch_power]"
 			if(length(SSfactionwar.anarch_members))
 				. += "<b>Total Members:</b> [length(SSfactionwar.anarch_members)]"
@@ -231,19 +231,19 @@ SUBSYSTEM_DEF(factionwar)
 
 /obj/structure/faction_map/camarilla
 	icon_state = "camarilla_map"
-	faction = "Camarilla"
+	faction = FACTION_CAMARILLA
 
 /obj/structure/faction_map/anarch
 	icon_state = "anarch_map"
-	faction = "Anarchs"
+	faction = FACTION_ANARCHS
 
 /obj/structure/faction_map/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 	if(istype(I, /obj/item/stack/dollar))
 		var/obj/item/stack/dollar/D = I
-		if(faction == "Camarilla")
+		if(faction == FACTION_CAMARILLA)
 			SSfactionwar.camarilla_power += D.amount
 			qdel(I)
-		if(faction == "Anarchs")
+		if(faction == FACTION_ANARCHS)
 			SSfactionwar.anarch_power += D.amount
 			qdel(I)
