@@ -408,7 +408,7 @@
 					/obj/item/clothing/head/vampire/eod)
 	crate_name = "armor crate"
 
-/datum/supply_pack/vampire/bloodpack
+/datum/supply_pack/vampire/silverbars
 	name = "Silver Bars"
 	desc = "Contains 3 pure silver bars."
 	cost = 3000
