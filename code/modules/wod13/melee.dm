@@ -861,8 +861,7 @@
 			target.apply_damage(20, CLONE)
 
 // These are the crafting recipes for each glaive
-// Each is set to available false, so each can only be learned by its corresponding tribe
-// The granting code is located in the auspcie code file, the recipes are granted at the same time as tribal gifts
+// Each is set to garou_only = TRUE, a new variable that checks if the player is garou before showing these in the crafting tab
 /datum/crafting_recipe/klaive/glasswalker
 	name = "Glasswalker Klaive"
 	result = /obj/item/melee/vampirearms/klaive/glasswalker
