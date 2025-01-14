@@ -784,6 +784,7 @@
 	icon_state = "klaive"
 	flags_1 = CONDUCT_1
 	item_flags = WEREWOLF_HOLDABLE
+	obj_flags = UNIQUE_RENAME
 	force = 45
 	throwforce = 10
 	w_class = WEIGHT_CLASS_BULKY
