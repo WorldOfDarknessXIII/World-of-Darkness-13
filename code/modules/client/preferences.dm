@@ -476,18 +476,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(pref_species.name == "Vampire" || pref_species.name == "Ghoul")
 				dat += "<b>Masquerade:</b> [masquerade]/5<BR>"
 			if(pref_species.name == "Vampire")
-				dat += "<b>Generation:</b> [generation]"
+				dat += "<b>Generation:</b> [generation-generation_bonus]"
 				var/generation_allowed = TRUE
 				if(clane)
 					if(clane.name == "Caitiff")
 						generation_allowed = FALSE
+				if(slotlocked)
+					generation_allowed = FALSE
 				if(generation_allowed)
-					if(generation_bonus)
-						dat += " (+[generation_bonus]/[min(6, generation-7)])"
-					if(true_experience >= 20 && generation_bonus < max(0, generation-7))
-						dat += " <a href='?_src_=prefs;preference=generation;task=input'>Claim generation bonus (20)</a><BR>"
-					else
-						dat += "<BR>"
+					dat += " <a href='?_src_=prefs;preference=generation;task=input'>Change</a><BR>"
 				else
 					dat += "<BR>"
 			dat += "<h2>[make_font_cool("ATTRIBUTES")]</h2>"
@@ -704,10 +701,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			if(true_experience >= 3 && slotlocked)
 				dat += "<a href='?_src_=prefs;preference=change_appearance;task=input'>Change Appearance (3)</a><BR>"
-			if(clane)
-				if(clane.name != "Caitiff")
-					if(generation_bonus)
-						dat += "<a href='?_src_=prefs;preference=reset_with_bonus;task=input'>Create new character with generation bonus ([generation]-[generation_bonus])</a><BR>"
 
 			dat += "<BR><b>Flavor Text:</b> [flavor_text] <a href='?_src_=prefs;preference=flavor_text;task=input'>Change</a><BR>"
 
@@ -1361,8 +1354,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				var/available_in_days = job.available_in_days(user.client)
 				HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
 				continue
-			if((generation > job.minimal_generation) && !bypass)
+			if((generation-generation_bonus > job.minimal_generation) && !bypass)
 				HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[FROM [job.minimal_generation] GENERATION AND OLDER\]</font></td></tr>"
+				continue
+			if((generation < job.max_generation) && !bypass)
+				HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[FROM [job.max_generation] GENERATION AND YOUNGER\]</font></td></tr>"
 				continue
 			if((masquerade < job.minimal_masquerade) && !bypass)
 				HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[job.minimal_masquerade] MASQUERADE POINTS REQUIRED\]</font></td></tr>"
@@ -2360,11 +2356,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						po = max_limit-sett
 
 				if("generation")
-					if((clane?.name == "Caitiff") || (true_experience < 20))
+					if((clane?.name == "Caitiff") || slotlocked)
 						return
 
-					true_experience -= 20
-					generation_bonus = min(generation_bonus + 1, max(0, generation-7))
+					var/new_gen = input(user, "Select your generation (LOWER GENERATION MEANS LESS JOB SLOTS):", "Character Preference") as num|null
+					if(new_gen)
+						generation = clamp(new_gen, 7, 13)
 
 				if("friend_text")
 					var/new_text = input(user, "What a Friend knows about me:", "Character Preference") as text|null
@@ -2390,18 +2387,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 					slotlocked = FALSE
 					true_experience -= 3
-
-				if("reset_with_bonus")
-					if((clane?.name == "Caitiff") || !generation_bonus)
-						return
-
-					var/bonus = generation-generation_bonus
-					slotlocked = 0
-					torpor_count = 0
-					masquerade = initial(masquerade)
-					generation = bonus
-					generation_bonus = 0
-					save_character()
 
 				if("species")
 					if(slotlocked)
@@ -3047,7 +3032,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.clane.current_accessory = clane_accessory
 		character.maxbloodpool = 10 + ((13 - generation) * 3)
 		character.bloodpool = rand(2, character.maxbloodpool)
-		character.generation = generation
+		character.generation = generation-generation_bonus
 		character.max_yin_chi = character.maxbloodpool
 		character.yin_chi = character.max_yin_chi
 		character.clane.enlightenment = enlightenment

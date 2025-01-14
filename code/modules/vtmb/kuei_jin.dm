@@ -287,132 +287,6 @@
 		if(A)
 			A.Remove(C)
 
-/datum/species/kuei_jin/spec_life(mob/living/carbon/human/H)
-	. = ..()
-	if(istype(get_area(H), /area/vtm))
-		var/area/vtm/V = get_area(H)
-		if(V.zone_type == "masquerade" && V.upper)
-			if(H.pulling)
-				if(ishuman(H.pulling))
-					var/mob/living/carbon/human/pull = H.pulling
-					if(pull.stat == DEAD)
-						var/obj/item/card/id/id_card = H.get_idcard(FALSE)
-						if(!istype(id_card, /obj/item/card/id/clinic) && !istype(id_card, /obj/item/card/id/police) && !istype(id_card, /obj/item/card/id/sheriff) && !istype(id_card, /obj/item/card/id/prince) && !istype(id_card, /obj/item/card/id/camarilla))
-							if(H.CheckEyewitness(H, H, 7, FALSE))
-								if(H.last_loot_check+50 <= world.time)
-									H.last_loot_check = world.time
-									H.last_nonraid = world.time
-									H.killed_count = H.killed_count+1
-									if(!H.warrant && !H.ignores_warrant)
-										if(H.killed_count >= 5)
-											H.warrant = TRUE
-											SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
-											to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
-										else
-											SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
-											to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (corpse)</b></span>")
-			for(var/obj/item/I in H.contents)
-				if(I)
-					if(I.masquerade_violating)
-						if(I.loc == H)
-							var/obj/item/card/id/id_card = H.get_idcard(FALSE)
-							if(!istype(id_card, /obj/item/card/id/clinic) && !istype(id_card, /obj/item/card/id/police) && !istype(id_card, /obj/item/card/id/sheriff) && !istype(id_card, /obj/item/card/id/prince) && !istype(id_card, /obj/item/card/id/camarilla))
-								if(H.CheckEyewitness(H, H, 7, FALSE))
-									if(H.last_loot_check+50 <= world.time)
-										H.last_loot_check = world.time
-										H.last_nonraid = world.time
-										H.killed_count = H.killed_count+1
-										if(!H.warrant && !H.ignores_warrant)
-											if(H.killed_count >= 5)
-												H.warrant = TRUE
-												SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
-												to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
-											else
-												SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
-												to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
-
-	if(H.key && (H.stat <= HARD_CRIT) && H.mind.dharma)
-		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
-		if(P)
-			if(H.mind.dharma.level < 1)
-				H.enter_frenzymod()
-				to_chat(H, "<span class='userdanger'>You have lost control of the P'o within you, and it has taken your body. Stay closer to your Dharma next time.</span>")
-				H.ghostize(FALSE)
-				P.reason_of_death = "Lost control to the P'o ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
-				return
-			if(P.hun != H.mind.dharma.Hun)
-				P.hun = H.mind.dharma.Hun
-				P.save_preferences()
-				P.save_character()
-			if(P.po != H.max_demon_chi)
-				P.po = H.max_demon_chi
-				P.save_preferences()
-				P.save_character()
-			if(P.yin != H.max_yin_chi)
-				P.yin = H.max_yin_chi
-				P.save_preferences()
-				P.save_character()
-			if(P.yang != H.max_yang_chi)
-				P.yang = H.max_yang_chi
-				P.save_preferences()
-				P.save_character()
-			if(P.masquerade != H.masquerade)
-				P.masquerade = H.masquerade
-				P.save_preferences()
-				P.save_character()
-
-		H.update_chi_hud()
-		if(!H.in_frenzy)
-			H.mind.dharma.Po_combat = FALSE
-		if(H.demon_chi == H.max_demon_chi && H.max_demon_chi != 0 && !H.in_frenzy)
-			H.rollfrenzy()
-
-		if(H.mind.dharma.Po == "Monkey")
-			if(COOLDOWN_FINISHED(H.mind.dharma, po_call))
-				var/atom/trigger1
-				var/atom/trigger2
-				var/atom/trigger3
-				for(var/obj/structure/pole/pole in view(5, H))
-					if(pole)
-						trigger1 = pole
-				if(trigger1)
-					H.mind.dharma.roll_po(trigger1, H)
-				for(var/obj/item/toy/toy in view(5, H))
-					if(toy)
-						trigger2 = toy
-				if(trigger2)
-					H.mind.dharma.roll_po(trigger2, H)
-				for(var/obj/machinery/computer/slot_machine/slot in view(5, H))
-					if(slot)
-						trigger3 = slot
-				if(trigger3)
-					H.mind.dharma.roll_po(trigger3, H)
-
-		if(H.mind.dharma.Po == "Fool")
-			if(fool_turf != get_turf(H))
-				fool_fails = 0
-				fool_turf = get_turf(H)
-			else
-				if(H.client)
-					fool_fails = fool_fails+1
-					if(fool_fails >= 10)
-						H.mind.dharma.roll_po(H, H)
-						fool_fails = 0
-
-		if(H.mind.dharma.Po == "Demon")
-			if(COOLDOWN_FINISHED(H.mind.dharma, po_call))
-				var/atom/trigger
-				for(var/mob/living/carbon/human/hum in viewers(5, H))
-					if(hum != H)
-						if(hum.stat > CONSCIOUS && hum.stat < DEAD)
-							trigger = hum
-				if(trigger)
-					H.mind.dharma.roll_po(trigger, H)
-	H.nutrition = NUTRITION_LEVEL_START_MAX
-	if((H.last_bloodpool_restore + 60 SECONDS) <= world.time)
-		H.last_bloodpool_restore = world.time
-		H.bloodpool = min(H.maxbloodpool, H.bloodpool+1)
-
 /datum/action/breathe_chi
 	name = "Inhale Chi"
 	desc = "Get chi from a target by inhaling their breathe."
@@ -676,3 +550,21 @@
 		kueijin.mind.dharma.Hun = max_hun
 		kueijin.max_demon_chi = max_limit - max_hun
 		kueijin.demon_chi = min(kueijin.demon_chi, kueijin.max_demon_chi)
+		var/datum/preferences/P = GLOB.preferences_datums[ckey(kueijin.key)]
+		if(P)
+			if(P.hun != kueijin.mind.dharma.Hun)
+				P.hun = kueijin.mind.dharma.Hun
+				P.save_preferences()
+				P.save_character()
+			if(P.po != kueijin.max_demon_chi)
+				P.po = kueijin.max_demon_chi
+				P.save_preferences()
+				P.save_character()
+			if(P.yin != kueijin.max_yin_chi)
+				P.yin = kueijin.max_yin_chi
+				P.save_preferences()
+				P.save_character()
+			if(P.yang != kueijin.max_yang_chi)
+				P.yang = kueijin.max_yang_chi
+				P.save_preferences()
+				P.save_character()

@@ -602,7 +602,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	lover				= sanitize_integer(lover, 0, 1, initial(lover))
 	ambitious				= sanitize_integer(ambitious, 0, 1, initial(ambitious))
 	masquerade				= sanitize_integer(masquerade, 0, 5, initial(masquerade))
-	generation				= sanitize_integer(generation, 3, 13, initial(generation))
+	generation				= sanitize_integer(generation, 1, 13, initial(generation))
 	generation_bonus				= sanitize_integer(generation_bonus, 0, 6, initial(generation_bonus))
 	hair_color			= sanitize_hexcolor(hair_color, 3, 0)
 	facial_hair_color			= sanitize_hexcolor(facial_hair_color, 3, 0)

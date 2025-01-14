@@ -24,6 +24,8 @@
 
 	v_duty = "You are the observer of the anarchs. You watch out for any new kindred, suspicious individuals, and any new rumors near the anarch turf, and then report it to your anarchs."
 	minimal_masquerade = 2
+	minimal_generation = 12
+	max_generation = 10
 	experience_addition = 15
 
 /datum/outfit/job/sweeper

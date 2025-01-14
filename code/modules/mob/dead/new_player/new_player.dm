@@ -325,7 +325,9 @@
 		return JOB_UNAVAILABLE_PLAYTIME
 	if(latejoin && !job.special_check_latejoin(client))
 		return JOB_UNAVAILABLE_GENERIC
-	if((client.prefs.generation > job.minimal_generation) && !bypass)
+	if((client.prefs.generation-client.prefs.generation_bonus > job.minimal_generation) && !bypass)
+		return JOB_UNAVAILABLE_GENERATION
+	if((client.prefs.generation < job.max_generation) && !bypass)
 		return JOB_UNAVAILABLE_GENERATION
 	if((client.prefs.masquerade < job.minimal_masquerade) && !bypass)
 		return JOB_UNAVAILABLE_MASQUERADE

@@ -155,9 +155,12 @@
 					if(K.generation >= generation)
 						message_admins("[ADMIN_LOOKUPFLW(src)] successfully Diablerized [ADMIN_LOOKUPFLW(mob)]")
 						log_attack("[key_name(src)] successfully Diablerized [key_name(mob)].")
+						if(key)
+							if(P)
+								P.diablerist = 1
+							diablerist = 1
 						if(K.client)
-							K.generation = 13
-							P2.generation = 13
+//							P2.reset_character()
 							var/datum/brain_trauma/special/imaginary_friend/trauma = gain_trauma(/datum/brain_trauma/special/imaginary_friend)
 							trauma.friend.key = K.key
 						mob.death()
@@ -165,10 +168,6 @@
 							P2.reason_of_death =  "Diablerized by [true_real_name ? true_real_name : real_name] ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 						adjustBruteLoss(-50, TRUE)
 						adjustFireLoss(-50, TRUE)
-						if(key)
-							if(P)
-								P.diablerist = 1
-							diablerist = 1
 					else
 						var/start_prob = 10
 						if(HAS_TRAIT(src, TRAIT_DIABLERIE))
@@ -177,10 +176,9 @@
 							to_chat(src, "<span class='userdanger'><b>[K]'s SOUL OVERCOMES YOURS AND GAIN CONTROL OF YOUR BODY.</b></span>")
 							message_admins("[ADMIN_LOOKUPFLW(src)] tried to Diablerize [ADMIN_LOOKUPFLW(mob)] and was overtaken.")
 							log_attack("[key_name(src)] tried to Diablerize [key_name(mob)] and was overtaken.")
-							generation = 13
 							death()
 							if(P)
-								P.generation = 13
+//								P.reset_character()
 								P.reason_of_death = "Failed the Diablerie ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 //							ghostize(FALSE)
 //							key = K.key
@@ -193,16 +191,15 @@
 							log_attack("[key_name(src)] successfully Diablerized [key_name(mob)].")
 							if(P)
 								P.diablerist = 1
-								P.generation = K.generation
-								generation = P.generation
+								P.generation_bonus = generation-mob.generation
+								generation = mob.generation
 							diablerist = 1
+//							if(P2)
+//								P2.reset_character()
 							maxHealth = initial(maxHealth)+max(0, 50*(13-generation))
 							health = initial(health)+max(0, 50*(13-generation))
-							if(K.client)
-								K.generation = 13
-								P2.generation = 13
-								var/datum/brain_trauma/special/imaginary_friend/trauma = gain_trauma(/datum/brain_trauma/special/imaginary_friend)
-								trauma.friend.key = K.key
+							var/datum/brain_trauma/special/imaginary_friend/trauma = gain_trauma(/datum/brain_trauma/special/imaginary_friend)
+							trauma.friend.key = K.key
 							mob.death()
 							if(P2)
 								P2.reason_of_death = "Diablerized by [true_real_name ? true_real_name : real_name] ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."

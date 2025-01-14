@@ -21,6 +21,7 @@
 	v_duty = "Drive people in the city."
 	duty = "Drive people in the city."
 	minimal_masquerade = 0
+	max_generation = 1		//CAINE RULES
 	experience_addition = 10
 	allowed_bloodlines = list("Daughters of Cacaphony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff", "Kiasyd", "Cappadocian")
 

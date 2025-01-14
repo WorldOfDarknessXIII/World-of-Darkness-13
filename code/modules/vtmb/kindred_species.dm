@@ -420,26 +420,10 @@
 						BLOODBONDED.set_species(/datum/species/kindred)
 						BLOODBONDED.clane = null
 						if(H.generation < 13)
-							BLOODBONDED.generation = 13
+							BLOODBONDED.generation = H.generation+1
 							BLOODBONDED.skin_tone = get_vamp_skin_color(BLOODBONDED.skin_tone)
 							BLOODBONDED.update_body()
-							if (H.clane.whitelisted)
-								if (!SSwhitelists.is_whitelisted(BLOODBONDED.ckey, H.clane.name))
-									if(H.clane.name == "True Brujah")
-										BLOODBONDED.clane = new /datum/vampireclane/brujah()
-										to_chat(BLOODBONDED,"<span class='warning'> You don't got that whitelist! Changing to the non WL Brujah</span>")
-									else if(H.clane.name == "Tzimisce")
-										BLOODBONDED.clane = new /datum/vampireclane/old_clan_tzimisce()
-										to_chat(BLOODBONDED,"<span class='warning'> You don't got that whitelist! Changing to the non WL Old Tzmisce</span>")
-									else
-										to_chat(BLOODBONDED,"<span class='warning'> You don't got that whitelist! Changing to a random non WL clan.</span>")
-										var/list/non_whitelisted_clans = list(/datum/vampireclane/brujah,/datum/vampireclane/malkavian,/datum/vampireclane/nosferatu,/datum/vampireclane/gangrel,/datum/vampireclane/giovanni,/datum/vampireclane/ministry,/datum/vampireclane/salubri,/datum/vampireclane/toreador,/datum/vampireclane/tremere,/datum/vampireclane/ventrue)
-										var/random_clan = pick(non_whitelisted_clans)
-										BLOODBONDED.clane = new random_clan
-								else
-									BLOODBONDED.clane = new H.clane.type()
-							else
-								BLOODBONDED.clane = new H.clane.type()
+							BLOODBONDED.clane = new H.clane.type()
 
 							BLOODBONDED.clane.on_gain(BLOODBONDED)
 							BLOODBONDED.clane.post_gain(BLOODBONDED)
@@ -470,7 +454,7 @@
 							if(H.generation < 13)
 
 								BLOODBONDED_prefs_v.clane = BLOODBONDED.clane
-								BLOODBONDED_prefs_v.generation = 13
+								BLOODBONDED_prefs_v.generation = H.generation+1
 								BLOODBONDED_prefs_v.skin_tone = get_vamp_skin_color(BLOODBONDED.skin_tone)
 								BLOODBONDED_prefs_v.clane.enlightenment = H.clane.enlightenment
 
@@ -493,7 +477,7 @@
 								BLOODBONDED_prefs_v.save_character()
 
 							else
-								BLOODBONDED_prefs_v.generation = 13 // Game always set to 13 anyways, 14 is not possible.
+								BLOODBONDED_prefs_v.generation = 14
 								BLOODBONDED_prefs_v.clane = new /datum/vampireclane/caitiff()
 								BLOODBONDED_prefs_v.save_character()
 

@@ -160,6 +160,20 @@
 		areac.Grant(kueijin)
 
 	kueijin.maxHealth = initial(kueijin.maxHealth) + (initial(kueijin.maxHealth) / 4) * dharma.level
+	var/datum/preferences/P = GLOB.preferences_datums[ckey(kueijin.key)]
+	if(P)
+		P.dharma_level = dharma.level
+		if(dharma.level <= 0)
+			P.dharma_level = 1
+			P.save_preferences()
+			P.save_character()
+			kueijin.enter_frenzymod()
+			to_chat(kueijin, "<span class='userdanger'>You have lost control of the P'o within you, and it has taken your body. Stay closer to your Dharma next time.</span>")
+			kueijin.ghostize(FALSE)
+			P.reason_of_death = "Lost control to the P'o ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
+			return
+		P.save_preferences()
+		P.save_character()
 
 /datum/dharma/proc/get_done_tenets()
 	var/total = 0

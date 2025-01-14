@@ -130,7 +130,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 	SSticker.queued_players -= src
 	SSticker.queue_delay = 4
 
-	SSjob.AssignRole(src, "Citizen", 1)
+	SSjob.AssignRole(src, "Citizen", 1, TRUE)
 
 	var/mob/living/character = create_character(TRUE)	//creates the human and transfers vars and mind
 	SSbad_guys_party.Next.equip(H = character, visualsOnly = FALSE)

@@ -24,7 +24,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_PRINCE
 
-	minimal_generation = 10	//Uncomment when players get exp enough
+	minimal_generation = 9	//Uncomment when players get exp enough
 	minimal_masquerade = 5
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Tremere", "Ventrue", "Nosferatu", "Toreador", "Malkavian", "Brujah", "Lasombra", "Gangrel", "True Brujah")

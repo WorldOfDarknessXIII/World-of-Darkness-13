@@ -39,7 +39,8 @@
 
 	display_order = JOB_DISPLAY_ORDER_CLERK
 
-//	minimal_generation = 12	//Uncomment when players get exp enough
+	minimal_generation = 11	//Uncomment when players get exp enough
+	max_generation = 9
 	minimal_masquerade = 5
 
 	my_contact_is_important = TRUE

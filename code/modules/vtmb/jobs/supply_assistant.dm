@@ -24,6 +24,7 @@
 	v_duty = "You work for the Dealer, or are a part of their coterie. They pay well and the job is easy. Don't disappoint them."
 	duty = "Though your boss is odd and only works late night hours, they pay you well enough that you avoid questioning it."
 	minimal_masquerade = 2
+	max_generation = 10
 	experience_addition = 15
 
 /datum/outfit/job/supply
