@@ -116,7 +116,6 @@
 	create_internal_organs()
 
 	ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, ROUNDSTART_TRAIT)
-
 	. = ..()
 
 /mob/living/carbon/werewolf/create_internal_organs()
@@ -190,13 +189,11 @@
 	melee_damage_upper = 65
 	health = 250
 	maxHealth = 250
-//	speed = -1  doesn't work on carbons
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/pounce_cooldown = 0
 	var/pounce_cooldown_time = 30
 	pixel_w = -8
-//	deathsound = 'sound/voice/hiss6.ogg'
 	bodyparts = list(
 		/obj/item/bodypart/chest,
 		/obj/item/bodypart/head,

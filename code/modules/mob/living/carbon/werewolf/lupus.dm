@@ -7,25 +7,22 @@
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	hud_type = /datum/hud/werewolf
 	limb_destroyer = 1
-	has_limbs = 0
-//	dextrous = FALSE
-//	speed = -1.5     doesn't work on carbons
-//	var/move_delay_add = -1.5 // movement delay to add    also didn't work
 	melee_damage_lower = 15
 	melee_damage_upper = 35
 	health = 150
 	maxHealth = 150
 	werewolf_armor = 10
-//	bodyparts = list(
-//		/obj/item/bodypart/chest,
-//		/obj/item/bodypart/head,
-//		/obj/item/bodypart/r_arm,
-//		/obj/item/bodypart/l_arm,
-//		/obj/item/bodypart/r_leg,
-//		/obj/item/bodypart/l_leg,
-//		)
 	var/hispo = FALSE
+	bodyparts = list(
+		/obj/item/bodypart/chest,
+		/obj/item/bodypart/head,
+		/obj/item/bodypart/l_arm,
+		/obj/item/bodypart/r_arm,
+		/obj/item/bodypart/r_leg,
+		/obj/item/bodypart/l_leg,
+		)
 
+//Only way to make lupus fast
 /datum/movespeed_modifier/lupusform
 	multiplicative_slowdown = -0.80
 
@@ -70,3 +67,21 @@
 	if(hispo)
 		CheckEyewitness(src, src, 7, FALSE)
 	..()
+
+/mob/living/carbon/werewolf/lupus/show_inv(mob/user)
+	user.set_machine(src)
+	var/list/dat = list()
+	dat += "<table>"
+	for(var/i in 1 to held_items.len)
+		var/obj/item/I = get_item_for_held_index(i)
+		dat += "<tr><td><B>[get_held_index_name(i)]:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_HANDS];hand_index=[i]'>[(I && !(I.item_flags & ABSTRACT)) ? I : "<font color=grey>Empty</font>"]</a></td></tr>"
+	dat += "</td></tr><tr><td>&nbsp;</td></tr>"
+	dat += "<tr><td><A href='?src=[REF(src)];pouches=1'>Empty Pouches</A></td></tr>"
+
+	dat += {"</table>
+	<A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
+	"}
+
+	var/datum/browser/popup = new(user, "mob[REF(src)]", "[src]", 440, 510)
+	popup.set_content(dat.Join())
+	popup.open()

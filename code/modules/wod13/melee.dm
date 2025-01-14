@@ -774,7 +774,9 @@
 		grid_width = 2 GRID_BOXES
 		grid_height = 1 GRID_BOXES
 
-//Start of garou klaive code
+// Start of garou klaive code
+// The idea with this weapon is something less powerful than a katana that is bane to garou
+// Gnosis can be used to briefly turn this into a monster of a melee weapon that deals aggravated (clone) damage to everything
 /obj/item/melee/vampirearms/klaive
 	name = "klaive"
 	desc = "A Garou's ritual blade, as rare as it is deadly."
@@ -812,17 +814,18 @@
 	desc = "A large tribal blade carved out of pure silver. Remind them of the old ways."
 
 /obj/item/melee/vampirearms/klaive/bsd
-	name = "dancer klaive"
+	name = "spiral dancer klaive"
 	icon = 'code/modules/wod13/weapons.dmi'
 	icon_state = "bsdklaive"
 	desc = "An oversized, wicked dagger fashioned from silver. Eerie runes are engraved along its length."
 
-//This code allows a garou to spend 1 gnosis to buff the klaive and allow it to deal aggravated damage (clone damage) to non-supernatural beings
+// This code allows a garou to spend 1 gnosis to buff the klaive and allow it to deal aggravated damage (clone damage) to non-supernatural beings
+// This lasts for 10 seconds, and while it is active you cannot activate it again to prevent spam
 /obj/item/melee/vampirearms/klaive/attack_self(mob/user)
 	if((isgarou(user) || iscrinos(user)) && !aggravate)
 		var/mob/living/carbon/wolf = user
 		if(wolf.auspice.gnosis > 0)
-			to_chat(user, "You beckon the [src]'s spirit, you can feel it answer your call.")
+			to_chat(user, "You beckon [src]'s spirit, you can feel it answer your call.")
 			adjust_gnosis(-1, wolf)
 			aggravate = TRUE
 			force = 70
@@ -831,12 +834,13 @@
 				aggravate = initial(aggravate)
 				force = initial(force)
 				armour_penetration = initial(armour_penetration)
+				to_chat(user, "[src]'s spirit slumbers once more.")
 		else
-			to_chat(user, "You beckon the [src]'s spirit, but all that answers is silence and indifference.")
+			to_chat(user, "You beckon [src]'s spirit, but all that answers is silence and indifference.")
 
-//Code here is for dealing special damage and effects to garou, as well as the extra damage if the glaive is active
-//The non-active if(!aggravate) deals the same clone damage as a silver bullet, as well as some of its debuffs
-//The active if(aggravate) deals extra clone damage to the garou, and also deals clone damage to all carbons and vampires
+// Code here is for dealing special damage and effects to garou, as well as the extra damage if the glaive is active
+// The non-active if(!aggravate) deals the same clone damage as a silver bullet, as well as some of its debuffs
+// The active if(aggravate) deals extra clone damage to the garou, and also deals clone damage to all carbons and vampires
 /obj/item/melee/vampirearms/klaive/attack(mob/living/target, mob/living/user)
 	. = ..()
 	if(isgarou(target) || iswerewolf(target))
@@ -856,6 +860,9 @@
 		if(aggravate)
 			target.apply_damage(20, CLONE)
 
+// These are the crafting recipes for each glaive
+// Each is set to available false, so each can only be learned by its corresponding tribe
+// The granting code is located in the auspcie code file, the recipes are granted at the same time as tribal gifts
 /datum/crafting_recipe/klaive/glasswalker
 	name = "Glasswalker Klaive"
 	result = /obj/item/melee/vampirearms/klaive/glasswalker
@@ -879,4 +886,50 @@
 	time = 30
 	always_available = FALSE
 	category = CAT_GAROU
+
+// Fancy adminspawn only item, this thing is a monstrous weapon. Doubly so in a garou's hands
+/obj/item/melee/vampirearms/klaive/grand
+	name = "grand klaive"
+	desc = "A legend's supremely deadly blade. It's wielder's deeds weigh heavy in your hand. Its ancient spirit demands you hunt."
+	force = 60
+	throwforce = 20
+	block_chance = 60
+	armour_penetration = 35
+
+/obj/item/melee/vampirearms/klaive/grand/attack(mob/living/target, mob/living/user)
+	. = ..()
+	if(isgarou(target) || iswerewolf(target))
+		var/mob/living/carbon/wolf = target
+		if(wolf.auspice.gnosis)
+			adjust_gnosis(-1, wolf)
+		if(!aggravate)
+			wolf.apply_damage(20, CLONE)
+		else
+			wolf.apply_damage(40, CLONE)
+		if(!wolf.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
+			wolf.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
+			spawn(7 SECONDS)
+			wolf.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
+	else if(iscarbon(target) || isvampire(target))
+		if(aggravate)
+			target.apply_damage(20, CLONE)
+
+/obj/item/melee/vampirearms/klaive/grand/attack_self(mob/user)
+	if((isgarou(user) || iscrinos(user)) && !aggravate)
+		var/mob/living/carbon/wolf = user
+		if(wolf.auspice.gnosis > 0)
+			to_chat(user, "You call [src]'s spirit. It answers in wrathful glee.")
+			adjust_gnosis(-1, wolf)
+			aggravate = TRUE
+			force = 120
+			armour_penetration = 60
+			spawn(10 SECONDS)
+				aggravate = initial(aggravate)
+				force = initial(force)
+				armour_penetration = initial(armour_penetration)
+				to_chat(user, "You manage to put [src]'s spirit to rest once more.")
+		else
+			to_chat(user, "You call [src]'s spirit. You feel an ancient presence's disappointment.")
+//End of fancy adminspawn item
+
 //End of Garou klaive code

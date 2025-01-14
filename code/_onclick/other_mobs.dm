@@ -216,6 +216,15 @@
 		A.attack_hand(src)
 		update_inv_hands()
 
+/mob/living/carbon/werewolf/lupus/UnarmedAttack(atom/A, proximity)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
+	if(A)
+		if(a_intent == INTENT_HARM)
+			return ..()
+		A.attack_hand(src)
+		update_inv_hands()
+
 /atom/proc/attack_crinos(mob/user)
 	return
 
