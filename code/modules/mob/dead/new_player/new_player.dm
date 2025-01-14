@@ -551,6 +551,14 @@
 				if(H.client.prefs.ambitious)
 					if(H.mind)
 						H.mind.add_antag_datum(/datum/antagonist/ambitious)
+				if(iscathayan(H))
+					if(H.mind)
+						H.mind.dharma = new H.client.prefs.dharma_type()
+						H.mind.dharma.level = H.client.prefs.dharma_level
+						H.mind.dharma.Po = H.client.prefs.po_type
+						H.mind.dharma.Hun = H.client.prefs.hun
+						H.mind.dharma.on_gain(H)
+//						H.mind.dharma.initial_skin_color = H.skin_tone
 				GLOB.fucking_joined |= H.client.prefs.real_name
 				var/datum/relationship/R = new ()
 				H.Myself = R
