@@ -405,7 +405,7 @@
 	switch(level_casting)
 		if(1)
 			var/obj/structure/bury_pit/burial_pit = new (get_turf(caster))
-			burial_pit.icon_state = "pit0"
+			burial_pit.icon_state = "pit1"
 			caster.forceMove(burial_pit)
 		if(2)
 			caster.pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
