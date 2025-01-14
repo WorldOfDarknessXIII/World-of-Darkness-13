@@ -125,7 +125,7 @@
 
 		playsound(src, 'sound/weapons/guillotine.ogg', 100, TRUE)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
-			for(var/mob/living/carbon/human/M in viewers(src, 7))
+			for(var/mob/living/carbon/human/M in viewers(7, src))
 				if(M.stat == CONSCIOUS)
 					var/loved = TRUE
 					var/datum/preferences/P1 = GLOB.preferences_datums[ckey(M.key)]
@@ -169,6 +169,7 @@
 			kill_count += 1
 			var/blood_overlay = "bloody"
 			if(P)
+				P.reset_character()
 				P.reason_of_death = "Executed to sustain the Traditions ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 			if (kill_count == 2)
 				blood_overlay = "bloodier"
