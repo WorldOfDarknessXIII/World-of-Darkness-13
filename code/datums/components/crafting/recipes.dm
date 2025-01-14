@@ -13,6 +13,7 @@
 	var/always_available = TRUE //Set to FALSE if it needs to be learned first.
 	/// Additonal requirements text shown in UI
 	var/additional_req_text
+	var/garou_only = FALSE // So I don't go insane, for now
 
 /datum/crafting_recipe/New()
 	if(!(result in reqs))

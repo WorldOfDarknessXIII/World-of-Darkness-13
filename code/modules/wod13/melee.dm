@@ -868,7 +868,7 @@
 	result = /obj/item/melee/vampirearms/klaive/glasswalker
 	reqs = list(/obj/item/silverbar = 1, /obj/item/melee/vampirearms/knife = 1)
 	time = 30
-	always_available = FALSE
+	garou_only = TRUE
 	category = CAT_GAROU
 
 /datum/crafting_recipe/klaive/wendigo
@@ -876,15 +876,15 @@
 	result = /obj/item/melee/vampirearms/klaive/wendigo
 	reqs = list(/obj/item/silverbar = 1, /obj/item/vampire_stake = 1)
 	time = 30
-	always_available = FALSE
+	garou_only = TRUE
 	category = CAT_GAROU
 
 /datum/crafting_recipe/klaive/bsd
-	name = "Bsd Klaive"
+	name = "Spiral Dancer Klaive"
 	result = /obj/item/melee/vampirearms/klaive/bsd
 	reqs = list(/obj/item/silverbar = 1, /obj/item/drinkable_bloodpack = 1)
 	time = 30
-	always_available = FALSE
+	garou_only = TRUE
 	category = CAT_GAROU
 
 // Fancy adminspawn only item, this thing is a monstrous weapon. Doubly so in a garou's hands
