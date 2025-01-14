@@ -437,7 +437,7 @@
 
 	//examine text for garou detecting Triatic influences on others
 	if (isgarou(user) || iswerewolf(user))
-		if (get_dist(user, src) <= 5)
+		if (get_dist(user, src) <= 4)
 			var/wyrm_taint = NONE
 			var/weaver_taint = NONE
 			var/wyld_taint = NONE
@@ -484,7 +484,7 @@
 			msg += "<span class='purple'><i>[p_they(TRUE)] [p_are()] too far away to sense any taint...</i></span>\n"
 		
 	if (isgarou(user) || iswerewolf(user))
-		if (get_dist(user, src) <= 2)
+		if (get_dist(user, src) <= 4)
 			if (!iskindred(src) && HAS_TRAIT(src, TRAIT_KINFOLK))
 				msg += "<span class='purple'><i>[p_they(TRUE)] feel[p_s()] familiar...</i></span><br>"
 			else if (iskindred(src) && HAS_TRAIT(src, TRAIT_KINFOLK))
