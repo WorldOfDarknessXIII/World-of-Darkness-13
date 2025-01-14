@@ -232,7 +232,7 @@
 /obj/item/vamp/keys/toreador
 	name = "Sexy keys"
 	accesslocks = list(
-		"toreador"
+		"toreador3"
 	)
 	color = "#ffa7e6"
 
