@@ -6,9 +6,9 @@
 //	no_hair = TRUE		//Pyotr from Hunter the Parenting had hair and it didn't go out of place in the setting. I'll do limited hairstyles
 	no_facial = TRUE
 	clane_disciplines = list(
-		/datum/discipline/animalism = 1,
-		/datum/discipline/potence = 2,
-		/datum/discipline/obfuscate = 3
+		/datum/discipline/animalism,
+		/datum/discipline/potence,
+		/datum/discipline/obfuscate
 	)
 	haircuts = list(
 		"Bald",
@@ -40,5 +40,5 @@
 
 /datum/vampireclane/nosferatu/post_gain(mob/living/carbon/human/H)
 	..()
-	if(H.vampire_faction != "Camarilla" && H.vampire_faction != "Anarchs" && H.vampire_faction != "Sabbat")
-		H.vampire_faction = "Nosferatu"
+	if(H.vampire_faction != FACTION_CAMARILLA && H.vampire_faction != FACTION_ANARCHS && H.vampire_faction != FACTION_SABBAT)
+		H.vampire_faction = FACTION_NOSFERATU
