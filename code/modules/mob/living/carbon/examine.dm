@@ -192,7 +192,7 @@
 			if (!iskindred(src) && HAS_TRAIT(src, TRAIT_KINFOLK))
 				msg += "<span class='purple'><i>[p_they(TRUE)] feel familiar...</i></span><br>"
 			else if (iskindred(src) && HAS_TRAIT(src, TRAIT_KINFOLK))
-				msg += "<span class='purple'><i>[p_they(TRUE)] have a unnatural emptyness that is unnerving...</i></span><br>"
+				msg += "<span class='purple'><i>[p_they(TRUE)] have a unnatural emptiness that is unnerving...</i></span><br>"
 			else
 				return
 		else
