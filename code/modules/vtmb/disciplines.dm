@@ -1,5 +1,8 @@
 /mob/living
 	var/datum/action/discipline/discipline_ranged
+	var/total_discipline_used = 0
+	var/max_discipline_used = 1
+	var/next_discipline_delay = 0
 
 /datum/action/discipline
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
@@ -18,6 +21,15 @@
 		var/mob/living/owning = owner
 		if(discipline.ranged)
 			if(!active_check)
+				if(owning.total_discipline_used >= owning.max_discipline_used)
+					if(next_discipline_delay > world.time)
+						to_chat(owner, "<span class='warning'>It's too soon to use disciplines again!</span>")
+						return
+					else
+						owning.total_discipline_used = 0
+				owning.total_discipline_used = owning.total_discipline_used+1
+				if(owning.total_discipline_used >= owning.max_discipline_used)
+					owning.next_discipline_delay = world.time+discipline.delay
 				active_check = TRUE
 				if(owning.discipline_ranged)
 					owning.discipline_ranged.Trigger()

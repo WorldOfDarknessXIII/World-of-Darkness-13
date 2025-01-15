@@ -797,7 +797,7 @@
 /mob/living/proc/update_blood_hud()
 	if(!client || !hud_used)
 		return
-	maxbloodpool = 10+((13-generation)*3)
+	maxbloodpool = get_gen_bloodpool(generation)
 	if(hud_used.blood_icon)
 		var/emm = round((bloodpool/maxbloodpool)*10)
 		if(emm > 10)
@@ -806,6 +806,14 @@
 			hud_used.blood_icon.icon_state = "blood0"
 		else
 			hud_used.blood_icon.icon_state = "blood[emm]"
+
+/proc/get_gen_bloodpool(gen)
+	if(gen > 7)
+		return max(10, 10+(13-gen))
+	if(gen == 7)
+		return 20
+	if(gen < 7)
+		return 20+(10*(7-gen))
 
 /mob/living/proc/update_zone_hud()
 	if(!client || !hud_used)
