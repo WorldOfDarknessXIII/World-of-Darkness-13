@@ -311,8 +311,6 @@
 	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)
 		return JOB_UNAVAILABLE_GENERIC
-	if (job.title == "Citizen")
-		return JOB_AVAILABLE
 	if((job.current_positions >= job.total_positions) && (job.total_positions != -1))
 		return JOB_UNAVAILABLE_SLOTFULL
 	if(is_banned_from(ckey, rank))
@@ -329,6 +327,8 @@
 		return JOB_UNAVAILABLE_GENERATION
 	if((client.prefs.generation < job.max_generation) && !bypass)
 		return JOB_UNAVAILABLE_GENERATION
+	if (job.title == "Citizen")
+		return JOB_AVAILABLE
 	if((client.prefs.masquerade < job.minimal_masquerade) && !bypass)
 		return JOB_UNAVAILABLE_MASQUERADE
 	if(!job.allowed_species.Find(client.prefs.pref_species.name) && !bypass)

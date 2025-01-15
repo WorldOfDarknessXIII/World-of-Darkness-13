@@ -478,7 +478,7 @@ SUBSYSTEM_DEF(carpool)
 		if(V.locked)
 			to_chat(src, "<span class='warning'>[V] is locked.</span>")
 			return
-		if(V.driver & length(V.passengers) >= V.max_passengers)
+		if(V.driver && length(V.passengers) >= V.max_passengers)
 			to_chat(src, "<span class='warning'>There's no space left for you in [V].")
 			return
 		src.visible_message("<span class='notice'>[src] begins entering [V]...</span>", \
