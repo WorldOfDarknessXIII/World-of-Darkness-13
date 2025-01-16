@@ -1,59 +1,69 @@
 {
 	"suspicion": [
-		"I'm watching you...",
-		"I know what you're up to.",
-		"What are you hiding?",
-		"I saw it, admit it."
+		"Я слежу за тобой...",
+		"Преращай прятаться.",
+		"Я тебя уже заметил.",
+		"Я знаю, что ты задумал.",
+		"Что ты прячешь?",
+		"Я видел это, признавайся."
 	],
 
 	"conversation": [
-		"Yes.",
-		"Certainly.",
-		"Of course.",
-		"No.",
-		"Nope.",
-		"No way.",
-		"Oh...",
-		"Why?",
+		"Да.",
+		"Конечно.",
+		"Само собой.",
+		"Нет.",
+		"Не-а.",
+		"Ни за что.",
+		"Оу...",
+		"Я не понял",
+		"Почему?",
 		"Но...",
-		"Wait a minute.",
-		"Hmmm.",
-		"Yes, I know.",
-		"Strange."
+		"Погоди минутку.",
+		"Хмм.",
+		"Да, я знаю.",
+		"Странно."
 	],
 
 	"greetings": [
-		"...",
-		"hey, hey...",
-		"Hello!",
-		"Hello.",
-		"Wait,..",
-		"My fairest greetings, beautiful."
+		"",
+		"Эй, ",
+		"Здаров ",
+		"Привет ",
+		"Подожди, ",
+		"Это же ",
+		"Ты же"
 	],
 
 	"getout": [
-		"Get out.",
-		"Get out!",
-		"Leave.",
-		"Fuck off.",
-		"FUCK YOU!",
-		"Out!"
+		"Убирайся.",
+		"Убирайся!",
+		"Уходи.",
+		"УХАДИ!",
+		"ПШОЛ ВОН!",
+		"Тебе пора!",
+		"Отъебись.",
+		"НАХУЙ!",
+		"Вон!"
 	],
 
 	"weird": [
-		"Oh, oh? Wow!",
-		"Urgh...",
+		"Аыаыаы? Ыааа!",
+		"Ааыыыы...",
+		"Паааан...",
 		"ЕЕЕЕЕЕ.",
-		"Huh...huh...huh...",
-		"I'm turning inside out..",
-		"Let me help you.",
-		"I'm going to reach inside you and pull out all those pretty little organs."
+		"Ху... ху... ху...",
+		"Чууш...",
+		"Жрал ху...",
+		"Помом-ом мнене-не.",
+		"А-хххх..."
 	],
 
 	"didyouhearthat": [
-		"Did you hear that noise?",
-		"Who was that?",
-		"What was that?"
+		"Мне же послышалось?",
+		"Ты слышал это?",
+		"Кто это?",
+		"Что это было?"
 	],
 
 	"add_name": [
@@ -63,131 +73,136 @@
 	],
 
 	"doubt": [
-		"Why?",
-		"What?",
-		"Wait, what?",
-		"Wait.",
-		"Just a second. What?",
-		"Ohh.. uh..."
+		"Почему?",
+		"Что?",
+		"Погоди, что?",
+		"Ты что-то сказал?",
+		"Подожди.",
+		"Секунду.",
+		"Ох..."
 	],
 
 	"aggressive": [
-		"Give it to me!",
-		"I'm going to hurt your pretty little face!",
-		"You asked for what's about to happen to you!",
-		"You deserve this!"
+		"Отдай это мне!",
+		"Остановись!",
+		"Я тебя убью!",
+		"Ты сдохнешь!",
+		"Пошёл нахуй!"
 	],
 
 	"help": [
-		"HELP!",
-		"GET HELP!",
-		"HELP ME!!",
-		"PLEASE, NO...",
-		"NO, NO, NO, DON'T HURT ME!",
-		"PLEASE, HELP ME!",
-		"I'M BEGGING YOU, PLEASE HELP!",
-		"PLEASE, HELP HER!",
-		"THEY NEED YOUR HELP!",
-		"PLEASE GOD, HELP US!!",
-		"HELP YOURSELF! RUN! DON'T LET THEM GET YOU!"
+		"ПОМОГИ",
+		"НА ПОМОЩЬ",
+		"ПОМОГИТЕ",
+		"ПОМОЩЬ",
+		"БЫСТРЕЕ, ПОМОГИТЕ",
+		"ПОМОГИТЕ МНЕ",
+		"П О М О Г И Т Е!",
+		"ПОМОГИТЕ ЕМУ",
+		"ПОМОГИТЕ ЕЙ",
+		"ПОМОГИТЕ ИМ",
+		"ПОМОГИТЕ НАМ",
+		"ПОМОГИ СЕБЕ САМ"
 	],
 
 	"escape": [
-		"RUN!!",
-		"They're chasing me!",
-		"It's here, Run!",
-		"Follow me!",
-		"Come with me."
+		"БЕГИ!!",
+		"Они гонятся за мной!",
+		"Оно здесь!",
+		"Они рядом!",
+		"Пиздуй за мной!",
+		"Следуй за мной."
 	],
 
 	"infection_advice": [
-		"Don't come too close, I'm sick.",
-		"Don't touch me.",
-		"Are you alright? You look sick.",
-		"Help me, I'm dying..",
-		"Put me.. out of my misery.."
+		"не подходи",
+		"не трогай меня",
+		"будь осторожнее",
+		"помоги мне",
+		"убей меня"
 	],
 
 	"people": [
-		"The Prince",
-		"The Sheriff",
-		"The Doctor",
-		"The Gravekeeper",
-		"The barkeep",
-		"The scourge",
-		"The janitor",
-		"the dealer",
-		"supply manager"
+		"Князь",
+		"Шериф",
+		"Главврач",
+		"Юстициар",
+		"Гробовщик",
+		"Бухгалтер",
+		"Уборщик",
+		"Архонт",
+		"Начальник склада"
 	],
 
 	"accusations": [
-		"is Sabbat",
-		"Is Bahari",
-		"is a witch",
-		"is a vampire",
-		"is a werewolf",
-		"is a traitor",
-		"is an alien",
-		"is a Diablerist",
-		"is Caitiff"
+		"труп",
+		"бандит",
+		"шабаш",
+		"шабашит",
+		"глава повстания",
+		"повстанец",
+		"предатель",
+		"пердатель",
+		"каитифф"
 	],
 
 	"threat": [
-		"sabbat",
-		"expendable",
-		"caitiff",
-		"primogen",
-		"traitor",
-		"anarch",
-		"tzimisce",
-		"werewolf"
+		"Шабаш",
+		"Оборотни",
+		"Каитифф",
+		"Патриарх",
+		"Предатель",
+		"Драка",
+		"Выстрелы",
+		"На помощь"
 	],
 
 	"location": [
-		"near the park",
-		"at city hall",
-		"at the law office",
-		"at the police station",
-		"at the prince's office",
-		"at the factory",
-		"in harmony",
-		"in the hospital",
-		"in the ghetto",
-		"in the morgue",
-		"in the Barons's office",
-		"in the church",
-		"in the library",
-		"in the dining room"
+		"возле @pick(sublocation)",
+		"в мэрии",
+		"у легавых",
+		"у полиции",
+		"в полицейском участке",
+		"на заводе",
+		"у склада",
+		"в больнице",
+		"в гетто",
+		"в морге",
+		"в оффисе Князя",
+		"в церкви",
+		"в библиотеке",
+		"в столовой"
 	],
 
 	"sublocation": [
-		"city ​​hall",
-		"law office",
-		"Anarch's bar",
-		"police station",
-		"park",
-		"warehouse",
-		"hospital",
-		"ghetto",
-		"morgue",
-		"prince's office",
-		"church",
-		"theatre",
-		"dining room"
+		"мэрии",
+		"легавых",
+		"полиции",
+		"полицейского участка",
+		"завода",
+		"склада",
+		"больницы",
+		"гетто",
+		"морге",
+		"оффиса князя",
+		"церкви",
+		"библиотеки",
+		"столовой"
 	],
 
 	"advice": [
-		"Hmm... I don't know.",
-		"Yes. exactly like that.",
-		"No. Stop.",
-		"Beware of this guy.",
-		"You can trust him.",
-		"He wants to kill you.",
-		"Kill him. You know who.",
-		"Hide somewhere. Fast.",
-		"Good luck. You'll need it.",
-		"You have my permission. Do it.",
-		"Just do it."
+		"Хмм... не знаю.",
+		"Да. именно так.",
+		"Нет. Остановись.",
+		"Остерегайся этого типа.",
+		"Можешь доверять ему.",
+		"Он стоит твоего внимания.",
+		"Он хочет убить тебя.",
+		"Убей его. Ты знаешь кого.",
+		"Спрячься где-нибудь. Быстрее.",
+		"Удачи. Она тебе понадобится.",
+		"У тебя есть моё разрешение. Делай.",
+		"Просто сделай это."
 	],
 
 	"chemicals": [
