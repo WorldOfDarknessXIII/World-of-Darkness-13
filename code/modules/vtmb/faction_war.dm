@@ -69,10 +69,8 @@ SUBSYSTEM_DEF(factionwar)
 			var/obj/graffiti/R = pick(shit)
 			marks_camarilla -= R
 			R.icon_state = "Unknown"
-			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				if(H.vampire_faction == FACTION_CAMARILLA || H.vampire_faction == FACTION_ANARCHS || H.vampire_faction == FACTION_SABBAT)
-					var/area/A = get_area(R)
-					to_chat(H, "<b><span class='warning'>Camarilla</span> don't have resources to sustain [A.name] [R.x]:[R.y], so it belongs to no one now.</b>")
+			var/area/A = get_area(R)
+			message_all_factions("<b><span class='warning'>Camarilla</span> don't have resources to sustain [A.name] [R.x]:[R.y], so it belongs to no one now.</b>")
 	anarch_power = max(0, anarch_power-(how_much_an*5))
 	if(anarch_power == 0 && mark_expiration)
 		var/list/shit = list()
@@ -84,16 +82,14 @@ SUBSYSTEM_DEF(factionwar)
 			var/obj/graffiti/R = pick(shit)
 			marks_anarch -= R
 			R.icon_state = "Unknown"
-			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				if(H.vampire_faction == FACTION_CAMARILLA || H.vampire_faction == FACTION_ANARCHS || H.vampire_faction == FACTION_SABBAT)
-					var/area/A = get_area(R)
-					to_chat(H, "<b><span class='warning'>Anarch</span> don't have recources to sustain [A.name] [R.x]:[R.y], so it belongs to no one now.</b>")
+			var/area/A = get_area(R)
+			message_all_factions("<b><span class='warning'>Anarch</span> don't have recources to sustain [A.name] [R.x]:[R.y], so it belongs to no one now.</b>")
 	if(length(marks_contested))
 		for(var/obj/graffiti/G in marks_contested)
 			for(var/mob/living/carbon/human/mob in range(7, G))
 				if(mob?.vampire_faction == G.last_contender.vampire_faction && mob.stat != DEAD)
 					G.progress += 6
-				else if(mob?.vampire_faction != G.last_contender.vampire_faction && mob.stat != DEAD && (mob?.vampire_faction == "Camarilla" || mob?.vampire_faction == "Anarch" || mob?.vampire_faction == "Sabbat"))
+				else if(mob?.vampire_faction != G.last_contender.vampire_faction && mob.stat != DEAD && (mob?.vampire_faction == FACTION_CAMARILLA || mob?.vampire_faction == FACTION_ANARCHS || mob?.vampire_faction == FACTION_SABBAT))
 					G.progress -= 6
 			G.progress -= 2
 			if(G.progress <= 0)
@@ -107,9 +103,9 @@ SUBSYSTEM_DEF(factionwar)
 				if(ishuman(G.last_contender))
 					var/mob/living/carbon/human/H = G.last_contender
 					H.last_repainted_mark = G.last_contender.vampire_faction
-				if(G.last_contender.vampire_faction == "Camarilla")
+				if(G.last_contender.vampire_faction == FACTION_CAMARILLA)
 					camarilla_power = max(0, camarilla_power-length(marks_camarilla)*5)
-				if(G.last_contender.vampire_faction == "Anarch")
+				if(G.last_contender.vampire_faction == FACTION_ANARCHS)
 					anarch_power = max(0, anarch_power-length(marks_anarch)*5)
 				move_mark(G, G.last_contender.vampire_faction)
 				var/area/vtm/A = get_area(G)
@@ -129,7 +125,7 @@ SUBSYSTEM_DEF(factionwar)
 
 /datum/controller/subsystem/factionwar/proc/message_all_factions(var/message)
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
-		if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarch" || H.vampire_faction == "Sabbat")
+		if(H.vampire_faction == FACTION_CAMARILLA || H.vampire_faction == FACTION_ANARCHS || H.vampire_faction == FACTION_SABBAT)
 			for(var/obj/item/vamp/phone/phn in GLOB.phones_list)
 				if(phn.number == H.Myself.phone_number)
 					phn.say("[message]", range = 1)
