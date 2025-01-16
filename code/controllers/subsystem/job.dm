@@ -86,11 +86,13 @@ SUBSYSTEM_DEF(job)
 		SetupOccupations()
 	return type_occupations[jobtype]
 
-/datum/controller/subsystem/job/proc/AssignRole(mob/dead/new_player/player, rank, latejoin = FALSE)
+/datum/controller/subsystem/job/proc/AssignRole(mob/dead/new_player/player, rank, latejoin = FALSE, forcespawn = FALSE)
 	JobDebug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")
 	if(player?.mind && rank)
 		var/bypass = FALSE
 		if (check_rights_for(player.client, R_ADMIN))
+			bypass = TRUE
+		if(forcespawn)
 			bypass = TRUE
 		var/datum/job/job = GetJob(rank)
 		if(!job)
@@ -101,7 +103,9 @@ SUBSYSTEM_DEF(job)
 			return FALSE
 		if(job.required_playtime_remaining(player.client) && !bypass)
 			return FALSE
-		if((player.client.prefs.generation > job.minimal_generation) && !bypass)
+		if((player.client.prefs.generation-player.client.prefs.generation_bonus > job.minimal_generation) && !bypass)
+			return FALSE
+		if((player.client.prefs.generation < job.max_generation) && !bypass)
 			return FALSE
 		if((player.client.prefs.masquerade < job.minimal_masquerade) && !bypass)
 			return FALSE
@@ -139,7 +143,10 @@ SUBSYSTEM_DEF(job)
 		if(job.required_playtime_remaining(player.client) && !bypass)
 			JobDebug("FOC player not enough xp, Player: [player]")
 			continue
-		if((player.client.prefs.generation > job.minimal_generation) && !bypass)
+		if((player.client.prefs.generation-player.client.prefs.generation_bonus > job.minimal_generation) && !bypass)
+			JobDebug("FOC player not enough generation, Player: [player]")
+			continue
+		if((player.client.prefs.generation < job.max_generation) && !bypass)
 			JobDebug("FOC player not enough generation, Player: [player]")
 			continue
 		if((player.client.prefs.masquerade < job.minimal_masquerade) && !bypass)
@@ -199,7 +206,10 @@ SUBSYSTEM_DEF(job)
 			JobDebug("GRJ player not enough xp, Player: [player]")
 			continue
 
-		if(player.client.prefs.generation > job.minimal_generation)
+		if(player.client.prefs.generation-player.client.prefs.generation_bonus > job.minimal_generation)
+			JobDebug("GRJ player not enough generation, Player: [player]")
+			continue
+		if(player.client.prefs.generation < job.max_generation)
 			JobDebug("GRJ player not enough generation, Player: [player]")
 			continue
 
@@ -409,7 +419,10 @@ SUBSYSTEM_DEF(job)
 					JobDebug("DO player not enough xp, Player: [player], Job:[job.title]")
 					continue
 
-				if((player.client.prefs.generation > job.minimal_generation) && !bypass)
+				if((player.client.prefs.generation-player.client.prefs.generation_bonus > job.minimal_generation) && !bypass)
+					JobDebug("DO player not enough generation, Player: [player]")
+					continue
+				if((player.client.prefs.generation < job.max_generation) && !bypass)
 					JobDebug("DO player not enough generation, Player: [player]")
 					continue
 

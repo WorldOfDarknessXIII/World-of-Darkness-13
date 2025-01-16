@@ -24,6 +24,7 @@
 	v_duty = "Whether you are of Voivode-in-Waiting's blood or if you've been honored, you are one of the Kin of the Voivode. Protect your Family, as your Family would protect you."
 	experience_addition = 15
 	minimal_masquerade = 2
+	max_generation = 9
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince", "Baron", "Sheriff")
 

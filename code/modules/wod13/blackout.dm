@@ -155,38 +155,37 @@ SUBSYSTEM_DEF(witness_pool)
 			for(var/obj/item/I in contents)
 				if(I)
 					if(I.masquerade_violating)
-						if(I.loc == H)
-							var/obj/item/card/id/id_card = get_idcard(FALSE)
-							if(!istype(id_card, /obj/item/card/id/clinic))
-								if(CheckEyewitness(H, H, 7, FALSE))
-									if(last_loot_check+50 <= world.time)
-										last_loot_check = world.time
-										last_nonraid = world.time
-										killed_count = killed_count+1
-										if(!warrant && !ignores_warrant)
-											if(killed_count >= 5)
-												warrant = TRUE
-												SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
-												to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
-											else
-												SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
-												to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
+						var/obj/item/card/id/id_card = get_idcard(FALSE)
+						if(!istype(id_card, /obj/item/card/id/clinic))
+							if(CheckEyewitness(H, H, 7, FALSE))
+								if(last_loot_check+50 <= world.time)
+									last_loot_check = world.time
+									last_nonraid = world.time
+									killed_count = killed_count+1
+									if(!warrant && !ignores_warrant)
+										if(killed_count >= 5)
+											warrant = TRUE
+											SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
+											to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
+										else
+											SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
+											to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
 
 	if(iskindred(src))
 
 
 		if(clane?.name == "Baali")
-			if(istype(get_area(H), /area/vtm/church))
+			if(istype(get_area(src), /area/vtm/church))
 				if(prob(50))
 					to_chat(H, "<span class='warning'>You don't belong here!</span>")
 					adjustFireLoss(20)
 					adjust_fire_stacks(6)
 					IgniteMob()
-		if(!antifrenzy && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
+		if(!antifrenzy && !HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
 			var/fearstack = 0
 			for(var/obj/effect/fire/F in GLOB.fires_list)
 				if(F)
-					if(get_dist(F, H) < 8 && F.z == z)
+					if(get_dist(F, src) < 8 && F.z == z)
 						fearstack += F.stage
 			for(var/mob/living/carbon/human/U in viewers(7, H))
 				if(U.on_fire)
@@ -346,6 +345,62 @@ SUBSYSTEM_DEF(witness_pool)
 					drop_all_held_items()
 					emote("scream")
 
+	else if(iscathayan(src))
+
+
+		if(key && (stat <= HARD_CRIT) && mind?.dharma)
+			update_chi_hud()
+			if(!in_frenzy)
+				mind.dharma.Po_combat = FALSE
+			if(demon_chi == max_demon_chi && max_demon_chi != 0 && !in_frenzy)
+				rollfrenzy()
+
+			if(mind.dharma.Po == "Monkey")
+				if(COOLDOWN_FINISHED(mind.dharma, po_call))
+					var/atom/trigger1
+					var/atom/trigger2
+					var/atom/trigger3
+					for(var/obj/structure/pole/pole in view(5, src))
+						if(pole)
+							trigger1 = pole
+					if(trigger1)
+						mind.dharma.roll_po(trigger1, src)
+					for(var/obj/item/toy/toy in view(5, src))
+						if(toy && toy.loc != src)
+							trigger2 = toy
+					if(trigger2)
+						mind.dharma.roll_po(trigger2, src)
+					for(var/obj/machinery/computer/slot_machine/slot in view(5, src))
+						if(slot)
+							trigger3 = slot
+					if(trigger3)
+						mind.dharma.roll_po(trigger3, src)
+
+			if(mind.dharma.Po == "Fool")
+				var/datum/species/kuei_jin/K = dna.species
+				if(K.fool_turf != get_turf(src))
+					K.fool_fails = 0
+					K.fool_turf = get_turf(src)
+				else
+					if(client)
+						K.fool_fails = K.fool_fails+1
+						if(K.fool_fails >= 10)
+							mind.dharma.roll_po(src, src)
+							K.fool_fails = 0
+
+			if(mind.dharma.Po == "Demon")
+				if(COOLDOWN_FINISHED(H.mind.dharma, po_call))
+					var/atom/trigger
+					for(var/mob/living/carbon/human/hum in viewers(5, src))
+						if(hum != src)
+							if(hum.stat > CONSCIOUS && hum.stat < DEAD)
+								trigger = hum
+					if(trigger)
+						mind.dharma.roll_po(trigger, src)
+		nutrition = NUTRITION_LEVEL_START_MAX
+		if((last_bloodpool_restore + 60 SECONDS) <= world.time)
+			last_bloodpool_restore = world.time
+			bloodpool = min(maxbloodpool, bloodpool+1)
 
 	else
 

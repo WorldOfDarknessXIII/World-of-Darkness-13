@@ -2,8 +2,8 @@
 	title = "Taxi Driver"
 	department_head = list("Justicar")
 	faction = "Vampire"
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 2
+	spawn_positions = 2
 	supervisors = " the Traditions"
 	selection_color = "#e3e3e3"
 
@@ -16,11 +16,12 @@
 	display_order = JOB_DISPLAY_ORDER_TAXI
 	exp_type_department = EXP_TYPE_SERVICES
 
-	allowed_species = list("Vampire", "Ghoul", "Human", "Werewolf")
+	allowed_species = list("Vampire", "Ghoul", "Human", "Werewolf", "Kuei-Jin")
 
 	v_duty = "Drive people in the city."
 	duty = "Drive people in the city."
 	minimal_masquerade = 0
+	max_generation = 11
 	experience_addition = 10
 	allowed_bloodlines = list("Daughters of Cacaphony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff", "Kiasyd", "Cappadocian")
 

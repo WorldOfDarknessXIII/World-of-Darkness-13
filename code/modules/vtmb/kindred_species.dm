@@ -226,6 +226,11 @@
 	bloodpower.Grant(C)
 	add_verb(C, /mob/living/carbon/human/verb/teach_discipline)
 
+	C.yang_chi = 0
+	C.max_yang_chi = 0
+	C.yin_chi = 6
+	C.max_yin_chi = 6
+
 	//vampires go to -200 damage before dying
 	for (var/obj/item/bodypart/bodypart in C.bodyparts)
 		bodypart.max_damage *= 1.5
@@ -336,6 +341,9 @@
 			L.adjustFireLoss(-25)
 		if(istype(H.pulling, /mob/living/carbon/human))
 			var/mob/living/carbon/human/BLOODBONDED = H.pulling
+			if(iscathayan(BLOODBONDED))
+				to_chat(owner, "<span class='warning'>[BLOODBONDED] vomits the vitae back!</span>")
+				return
 			if(!BLOODBONDED.client && !istype(H.pulling, /mob/living/carbon/human/npc))
 				to_chat(owner, "<span class='warning'>You need [BLOODBONDED]'s attention to do that!</span>")
 				return
@@ -412,26 +420,10 @@
 						BLOODBONDED.set_species(/datum/species/kindred)
 						BLOODBONDED.clane = null
 						if(H.generation < 13)
-							BLOODBONDED.generation = 13
+							BLOODBONDED.generation = H.generation+1
 							BLOODBONDED.skin_tone = get_vamp_skin_color(BLOODBONDED.skin_tone)
 							BLOODBONDED.update_body()
-							if (H.clane.whitelisted)
-								if (!SSwhitelists.is_whitelisted(BLOODBONDED.ckey, H.clane.name))
-									if(H.clane.name == "True Brujah")
-										BLOODBONDED.clane = new /datum/vampireclane/brujah()
-										to_chat(BLOODBONDED,"<span class='warning'> You don't got that whitelist! Changing to the non WL Brujah</span>")
-									else if(H.clane.name == "Tzimisce")
-										BLOODBONDED.clane = new /datum/vampireclane/old_clan_tzimisce()
-										to_chat(BLOODBONDED,"<span class='warning'> You don't got that whitelist! Changing to the non WL Old Tzmisce</span>")
-									else
-										to_chat(BLOODBONDED,"<span class='warning'> You don't got that whitelist! Changing to a random non WL clan.</span>")
-										var/list/non_whitelisted_clans = list(/datum/vampireclane/brujah,/datum/vampireclane/malkavian,/datum/vampireclane/nosferatu,/datum/vampireclane/gangrel,/datum/vampireclane/giovanni,/datum/vampireclane/ministry,/datum/vampireclane/salubri,/datum/vampireclane/toreador,/datum/vampireclane/tremere,/datum/vampireclane/ventrue)
-										var/random_clan = pick(non_whitelisted_clans)
-										BLOODBONDED.clane = new random_clan
-								else
-									BLOODBONDED.clane = new H.clane.type()
-							else
-								BLOODBONDED.clane = new H.clane.type()
+							BLOODBONDED.clane = new H.clane.type()
 
 							BLOODBONDED.clane.on_gain(BLOODBONDED)
 							BLOODBONDED.clane.post_gain(BLOODBONDED)
@@ -462,7 +454,7 @@
 							if(H.generation < 13)
 
 								BLOODBONDED_prefs_v.clane = BLOODBONDED.clane
-								BLOODBONDED_prefs_v.generation = 13
+								BLOODBONDED_prefs_v.generation = H.generation+1
 								BLOODBONDED_prefs_v.skin_tone = get_vamp_skin_color(BLOODBONDED.skin_tone)
 								BLOODBONDED_prefs_v.clane.enlightenment = H.clane.enlightenment
 
@@ -485,7 +477,7 @@
 								BLOODBONDED_prefs_v.save_character()
 
 							else
-								BLOODBONDED_prefs_v.generation = 13 // Game always set to 13 anyways, 14 is not possible.
+								BLOODBONDED_prefs_v.generation = 14
 								BLOODBONDED_prefs_v.clane = new /datum/vampireclane/caitiff()
 								BLOODBONDED_prefs_v.save_character()
 
@@ -618,6 +610,19 @@
 		if(clane)
 			clane.post_gain(src)
 
+	if((dna.species.id == "kuei-jin")) //only splats that have Disciplines qualify
+		var/list/datum/chi_discipline/adding_disciplines = list()
+
+		if (discipline_pref) //initialise character's own disciplines
+			for (var/i in 1 to client.prefs.discipline_types.len)
+				var/type_to_create = client.prefs.discipline_types[i]
+				var/datum/chi_discipline/discipline = new type_to_create
+				discipline.level = client.prefs.discipline_levels[i]
+				adding_disciplines += discipline
+
+		for (var/datum/chi_discipline/discipline in adding_disciplines)
+			give_chi_discipline(discipline)
+
 /**
  * Creates an action button and applies post_gain effects of the given Discipline.
  *
@@ -632,6 +637,13 @@
 	discipline.post_gain(src)
 	var/datum/species/kindred/species = dna.species
 	species.disciplines += discipline
+
+/mob/living/carbon/human/proc/give_chi_discipline(datum/chi_discipline/discipline)
+	if (discipline.level > 0)
+		var/datum/action/chi_discipline/action = new
+		action.discipline = discipline
+		action.Grant(src)
+	discipline.post_gain(src)
 
 /**
  * Accesses a certain Discipline that a Kindred has. Returns false if they don't.

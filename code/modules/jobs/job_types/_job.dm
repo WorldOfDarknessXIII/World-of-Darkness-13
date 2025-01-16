@@ -73,6 +73,7 @@
 
 	///Minimum vampire Generation necessary to do this job.
 	var/minimal_generation = 13
+	var/max_generation = 7
 	///Minimum Masquerade level necessary to do this job.
 	var/minimal_masquerade = 1
 

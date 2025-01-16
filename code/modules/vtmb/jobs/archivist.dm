@@ -20,6 +20,7 @@
 
 	v_duty = "Keep a census of events and provide information to neonates. Listen to the Regent Carefully. Study blood magic and protect the chantry."
 	minimal_masquerade = 3
+	max_generation = 9
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Tremere", "Gargoyle")
 	known_contacts = list("Tremere Regent")

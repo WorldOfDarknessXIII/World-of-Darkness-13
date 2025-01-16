@@ -1,5 +1,8 @@
 /mob/living
 	var/datum/action/discipline/discipline_ranged
+	var/total_discipline_used = 0
+	var/max_discipline_used = 1
+	var/next_discipline_delay = 0
 
 /datum/action/discipline
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
@@ -18,6 +21,15 @@
 		var/mob/living/owning = owner
 		if(discipline.ranged)
 			if(!active_check)
+				if(owning.total_discipline_used >= owning.max_discipline_used)
+					if(next_discipline_delay > world.time)
+						to_chat(owner, "<span class='warning'>It's too soon to use disciplines again!</span>")
+						return
+					else
+						owning.total_discipline_used = 0
+				owning.total_discipline_used = owning.total_discipline_used+1
+				if(owning.total_discipline_used >= owning.max_discipline_used)
+					owning.next_discipline_delay = world.time+discipline.delay
 				active_check = TRUE
 				if(owning.discipline_ranged)
 					owning.discipline_ranged.Trigger()
@@ -332,7 +344,7 @@
 				var/datum/action/beastmaster_deaggro/E2 = new()
 				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/rat/R = new(get_turf(caster))
-			R.my_creator = caster
+//			R.my_creator = caster
 			caster.beastmaster |= R
 			R.beastmaster = caster
 		if(2)
@@ -342,7 +354,7 @@
 				var/datum/action/beastmaster_deaggro/E2 = new()
 				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/cat/C = new(get_turf(caster))
-			C.my_creator = caster
+//			C.my_creator = caster
 			caster.beastmaster |= C
 			C.beastmaster = caster
 		if(3)
@@ -352,7 +364,7 @@
 				var/datum/action/beastmaster_deaggro/E2 = new()
 				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/D = new(get_turf(caster))
-			D.my_creator = caster
+//			D.my_creator = caster
 			caster.beastmaster |= D
 			D.beastmaster = caster
 		if(4)
@@ -362,7 +374,7 @@
 				var/datum/action/beastmaster_deaggro/E2 = new()
 				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/rat/flying/F = new(get_turf(caster))
-			F.my_creator = caster
+//			F.my_creator = caster
 			caster.beastmaster |= F
 			F.beastmaster = caster
 		if(5)
@@ -459,7 +471,11 @@
 		C.name = name
 		C.appearance = appearance
 		C.dir = dir
-		animate(C, pixel_x = rand(-16, 16), pixel_y = rand(-16, 16), alpha = 0, time = 5)
+		if(iscathayan(src))
+			C.color = "#40ffb4"		////WE GIVE IT SANDEVISTAN LOOK YEEEHAAAAW
+			animate(C, pixel_x = rand(-16, 16), pixel_y = rand(-16, 16), color = "#00196e", time = 5)
+		else
+			animate(C, pixel_x = rand(-16, 16), pixel_y = rand(-16, 16), alpha = 0, time = 5)
 		if(CheckEyewitness(src, src, 7, FALSE))
 			AdjustMasquerade(-1)
 
@@ -552,6 +568,9 @@
 
 /datum/discipline/dominate/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
+	if(iscathayan(target))
+		if(target.mind.dharma?.Po == "Legalist")
+			target.mind.dharma?.roll_po(caster, target)
 	if(target.spell_immunity)
 		return
 	var/mypower = caster.get_total_social()
@@ -720,6 +739,9 @@
 
 /datum/discipline/dementation/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
+	if(iscathayan(target))
+		if(target.mind.dharma?.Po == "Legalist")
+			target.mind.dharma?.roll_po(caster, target)
 	//1 - instant laugh
 	//2 - hallucinations and less damage
 	//3 - victim dances
@@ -898,6 +920,9 @@
 
 /datum/discipline/presence/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
+	if(iscathayan(target))
+		if(target.mind.dharma?.Po == "Legalist")
+			target.mind.dharma?.roll_po(caster, target)
 	var/mypower = caster.get_total_social()
 	var/theirpower = target.get_total_mentality()
 	if((theirpower >= mypower) || ((caster.generation - 3) >= target.generation))
@@ -1347,7 +1372,7 @@
 			if(istype(target, /mob/living/carbon/human/npc))
 				var/mob/living/carbon/human/npc/NPC = target
 				NPC.last_attacker = null
-			if(!iskindred(target) || !isgarou(target))
+			if(!iskindred(target) && !isgarou(target) && !iscathayan(target))	//Who tf wrote this with || lmao
 				if(H.stat != DEAD)
 					H.death()
 				switch(level_casting)

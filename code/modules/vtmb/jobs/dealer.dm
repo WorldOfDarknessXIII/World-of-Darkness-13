@@ -31,6 +31,8 @@
 	minimal_masquerade = 3
 	allowed_species = list("Vampire")
 	experience_addition = 20
+	minimal_generation = 11
+	max_generation = 9
 
 /datum/outfit/job/dealer
 	name = "Dealer"
