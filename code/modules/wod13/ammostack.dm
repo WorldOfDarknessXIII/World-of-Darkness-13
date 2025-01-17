@@ -124,10 +124,9 @@
 
 /obj/projectile/bullet/crossbow_bolt
 	name = "bolt"
-	damage = 160
+	damage = 45
 	armour_penetration = 75
 	sharpness = SHARP_POINTY
-	wound_bonus = 50
 
 /obj/item/ammo_casing/vampire
 	icon = 'code/modules/wod13/ammo.dmi'
