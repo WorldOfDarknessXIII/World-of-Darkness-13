@@ -843,20 +843,37 @@
 	delay = 10 SECONDS
 	activate_sound = 'code/modules/wod13/sounds/obfuscate_activate.ogg'
 	leveldelay = TRUE
+	COOLDOWN_DECLARE(obfuscate_combat_cooldown)
 
 /datum/discipline/obfuscate/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
+	if(!COOLDOWN_FINISHED(src, obfuscate_combat_cooldown))
+		to_chat(caster, span_warning("You have acted overtly too recently to pull the cloak of obfuscation upon yourself; your attempt fails!"))
+		return
+	RegisterSignal(caster, COMSIG_MOB_ITEM_ATTACK, PROC_REF(on_hostile_action))
 	for(var/mob/living/carbon/human/npc/NPC in GLOB.npc_list)
 		if(NPC)
 			if(NPC.danger_source == caster)
 				NPC.danger_source = null
 	caster.alpha = 10
 	caster.obfuscate_level = level_casting
-	spawn((delay*level_casting)+caster.discipline_time_plus)
-		if(caster)
-			if(caster.alpha != 255)
-				caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/obfuscate_deactivate.ogg', 50, FALSE)
-				caster.alpha = 255
+	var/duration = delay*level_casting+caster.discipline_time_plus
+	addtimer(CALLBACK(src, PROC_REF(reveal), caster), duration)
+
+/datum/discipline/obfuscate/proc/reveal(mob/living/carbon/human/caster)
+
+	if(caster.alpha == 255)
+		return
+	caster.alpha = 255
+	caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/obfuscate_deactivate.ogg', 50, FALSE)
+	UnregisterSignal(caster, COMSIG_MOB_ITEM_ATTACK)
+
+/datum/discipline/obfuscate/proc/on_hostile_action(datum/source, mob/living/carbon/human/caster)
+	SIGNAL_HANDLER
+
+	COOLDOWN_START(src, obfuscate_combat_cooldown, (60-(min(30, level_casting*5)) SECONDS))
+	to_chat("You feel your cloak of obfuscation fly away from you as you act so overtly.")
+	reveal(caster)
 
 /datum/discipline/presence
 	name = "Presence"
