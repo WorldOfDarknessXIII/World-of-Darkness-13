@@ -248,7 +248,7 @@
 		button.color = "#970000"
 		animate(button, color = "#ffffff", time = 20, loop = 1)
 		if(length(H.all_wounds))
-			for(var/i in 1 to min(5, length(H.all_wounds))
+			for(var/i in 1 to min(5, length(H.all_wounds)))
 				var/datum/wound/W = pick(H.all_wounds)
 				W.remove_wound()
 		H.adjustCloneLoss(-5, TRUE)
