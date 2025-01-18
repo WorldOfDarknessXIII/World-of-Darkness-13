@@ -162,7 +162,7 @@
 /obj/item/reagent_containers/food/drinks/coffee/vampire
 	name = "coffee"
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."
-	icon_state = "coffee"
+	icon_state = "coffee-alt"
 	icon = 'code/modules/wod13/items.dmi'
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	list_reagents = list(/datum/reagent/consumable/coffee = 30)
@@ -172,7 +172,20 @@
 	foodtype = BREAKFAST
 
 /obj/item/reagent_containers/food/drinks/coffee/vampire/robust
-	name = "robust coffee"
+	name = "Cafe Latte"
+	icon_state = "coffee"
+	list_reagents = list(/datum/reagent/consumable/cafe_latte = 30)
+	desc = "A nice, strong and tasty beverage while you are reading."
+
+/obj/item/reagent_containers/food/drinks/coffee/vampire/tea
+	name = "tea"
+	desc = "This is a hot tea, mate. Queen would be proud of you!"
+	list_reagents = list(/datum/reagent/consumable/tea = 30)
+
+/obj/item/reagent_containers/food/drinks/coffee/vampire/choco
+	name = "hot chocolate"
+	desc = "Perfect mix of sweetness and bitterness, it gets even better in cold nights."
+	list_reagents = list(/datum/reagent/consumable/hot_coco = 15, /datum/reagent/consumable/sugar = 5)
 	icon_state = "coffee-alt"
 
 /obj/item/reagent_containers/food/drinks/beer/vampire
@@ -304,7 +317,9 @@
 	density = TRUE
 	owner_needed = FALSE
 	prize_list = list(new /datum/data/mining_equipment("coffee",	/obj/item/reagent_containers/food/drinks/coffee/vampire,	10),
-		new /datum/data/mining_equipment("strong coffee", /obj/item/reagent_containers/food/drinks/coffee/vampire/robust, 5)
+		new /datum/data/mining_equipment("Cafe Latte", /obj/item/reagent_containers/food/drinks/coffee/vampire/robust, 14)
+		new /datum/data/mining_equipment("hot chocolate",	/obj/item/reagent_containers/food/drinks/coffee/vampire/choco,	12),
+		new /datum/data/mining_equipment("tea",	/obj/item/reagent_containers/food/drinks/coffee/vampire/tea,	10)
 	)
 
 /obj/machinery/mineral/equipment_vendor/fastfood/AltClick(mob/user)
@@ -339,7 +354,9 @@
 	prize_list = list(new /datum/data/mining_equipment("donut",	/obj/item/food/vampire/donut,	5),
 		new /datum/data/mining_equipment("burger",	/obj/item/food/vampire/burger,	10),
 		new /datum/data/mining_equipment("coffee",	/obj/item/reagent_containers/food/drinks/coffee/vampire,	5),
-		new /datum/data/mining_equipment("robust coffee",	/obj/item/reagent_containers/food/drinks/coffee/vampire/robust,	10),
+		new /datum/data/mining_equipment("Cafe Latte",	/obj/item/reagent_containers/food/drinks/coffee/vampire/robust,	10),
+		new /datum/data/mining_equipment("hot chocolate",	/obj/item/reagent_containers/food/drinks/coffee/vampire/choco,	8),
+		new /datum/data/mining_equipment("tea",	/obj/item/reagent_containers/food/drinks/coffee/vampire/tea,	6),
 		new /datum/data/mining_equipment("thaw club soda", /obj/item/reagent_containers/food/drinks/bottle/vampirecola/thaw_club, 8)
 	)
 
@@ -365,7 +382,9 @@
 		new /datum/data/mining_equipment("blue stripe", /obj/item/reagent_containers/food/drinks/beer/vampire/blue_stripe, 8),
 		new /datum/data/mining_equipment("candle pack",	/obj/item/storage/fancy/candle_box,	12),
 		new /datum/data/mining_equipment("bruise pack", /obj/item/stack/medical/bruise_pack, 100),
-		new /datum/data/mining_equipment("respirator",	/obj/item/clothing/mask/vampire,	35)
+		new /datum/data/mining_equipment("respirator",	/obj/item/clothing/mask/vampire,	35),
+		new /datum/data/mining_equipment("spray cleaner",	/obj/item/reagent_containers/spray/cleaner,	55),
+		new /datum/data/mining_equipment("spray can",	/obj/item/toy/crayon/spraycan,	29)
 	)
 
 /obj/machinery/mineral/equipment_vendor/fastfood/clothing
@@ -434,6 +453,7 @@
 		new /datum/data/mining_equipment("red aviators",	/obj/item/clothing/glasses/vampire/red,	20),
 		new /datum/data/mining_equipment("sunglasses",	/obj/item/clothing/glasses/vampire/sun,	20),
 		new /datum/data/mining_equipment("prescription glasses",	/obj/item/clothing/glasses/vampire/perception,	20),
+		new /datum/data/mining_equipment("eyepatch",	/obj/item/clothing/glasses/eyepatch,	10),
 		new /datum/data/mining_equipment("leather gloves", /obj/item/clothing/gloves/vampire/leather,	25),
 		new /datum/data/mining_equipment("rubber gloves", /obj/item/clothing/gloves/vampire/cleaning,	15),
 		new /datum/data/mining_equipment("latex gloves", /obj/item/clothing/gloves/vampire/latex,	5),
@@ -463,6 +483,10 @@
 		new /datum/data/mining_equipment("red lipstick",	/obj/item/lipstick,	10),
 		new /datum/data/mining_equipment("purple lipstick",	/obj/item/lipstick/purple,	10),
 		new /datum/data/mining_equipment("jade lipstick",	/obj/item/lipstick/jade,	10),
+		new /datum/data/mining_equipment("duffelbag",	/obj/item/storage/backpack/duffelbag,	60),
+		new /datum/data/mining_equipment("backpack",	/obj/item/storage/backpack,	55),
+		new /datum/data/mining_equipment("grey satchel",	/obj/item/storage/backpack/satchel,	50),
+		new /datum/data/mining_equipment("leather satchel",	/obj/item/storage/backpack/satchel/leather,	50)
 	)
 
 /obj/machinery/mineral/equipment_vendor/fastfood/costumes
