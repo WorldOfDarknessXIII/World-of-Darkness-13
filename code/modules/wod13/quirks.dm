@@ -769,7 +769,6 @@ Dancer
 		to_chat(H, "<span class='danger'>What's this doohickey about animal people?! You don't have anything to do with this 'kinfolk' nonsense, and your soul is nothing but American through-and-through.</span>")
 		H.remove_quirk(/datum/quirk/kinfolk)
 	else if (H.mind.assigned_role == ("La Famiglia"))
-		to_chat(H, "<span class='danger'>You ain't related to no dog or cat. The only thing in your blood is Giovanni, and no outsiders managed to disturb that.</span>")
-		H.remove_quirk(/datum/quirk/kinfolk)
+		to_chat(H, "<span class='danger'>You have Dunsirn blood in you, whether or not you actually have the last name, and worse you like wolves, pick your clan or tribe, because you know for a fact the Family doesn't like split loyalties.</span>")
 	else
 		to_chat(H, "<span class='notice'>You are a kinfolk. You could have been born into a Garou tribe, were introduced to a Garou tribe, or have yet to learn what Garou are. You are immune to delirium, but you should avoid picking fights with a werewolf if you are yet to be introduced to their society.</span>")
