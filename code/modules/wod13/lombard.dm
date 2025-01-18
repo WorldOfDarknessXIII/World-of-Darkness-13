@@ -30,9 +30,6 @@
 			else if(istype(W, /obj/item/reagent_containers/food/drinks/meth))
 				var/mob/living/carbon/human/H = user
 				H.AdjustHumanity(-1, 4)
-			else if(illegal)
-				var/mob/living/carbon/human/H = user
-				H.AdjustHumanity(-1, 7)
 			qdel(W)
 			return
 	else
