@@ -91,13 +91,12 @@ window "mainwindow"
 window "mapwindow"
 	elem "mapwindow"
 		type = MAIN
-		pos = 281,0
+		pos = 0,0
 		size = 640x480
-		anchor1 = -1,-1
-		anchor2 = -1,-1
+		anchor1 = -1, -1
+		anchor2 = -1, -1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
-		on-status = ".winset \"status_bar.text=[[*]]\" "
 	elem "map"
 		type = MAP
 		pos = 0,0
@@ -115,7 +114,7 @@ window "mapwindow"
 		pos = 0,464
 		size = 280x16
 		anchor1 = 0,100
-		is-visible = true
+		is-visible = false
 		text = ""
 		align = left
 		background-color = #222222
@@ -210,9 +209,8 @@ window "outputwindow"
 		type = MAIN
 		pos = 0,0
 		size = 640x480
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		background-color = #000000
+		anchor1 = -1, -1
+		anchor2 = -1, -1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "input"
@@ -222,7 +220,6 @@ window "outputwindow"
 		anchor1 = 0,100
 		anchor2 = 100,100
 		is-default = true
-		background-color = none
 		border = line
 		saved-params = "command"
 	elem "oocbutton"
