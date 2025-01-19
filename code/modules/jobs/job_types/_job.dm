@@ -77,7 +77,7 @@
 	var/minimal_masquerade = 1
 
 	///List of species that are allowed to do this job.
-	var/list/allowed_species = list("Human", "Ghoul")
+	var/list/allowed_species = list("Vampire")
 	///List of species that are limited to a certain amount of that species doing this job.
 	var/list/species_slots = list()
 	///List of Bloodlines that are allowed to do this job.

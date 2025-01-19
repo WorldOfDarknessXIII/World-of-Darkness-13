@@ -190,12 +190,19 @@
 			else if(current_card.account.balance < amount)
 				to_chat(usr, "<span class='notice'>Insufficient funds.</span>")
 			else
-				var/obj/item/stack/dollar/cash = new /obj/item/stack/dollar()
-				cash.amount = amount
+				var/remaining_amount = amount
+				do
+					var/obj/item/stack/dollar/cash = new /obj/item/stack/dollar()
+					if(remaining_amount >= 10000)
+						cash.amount = 10000
+					else
+						cash.amount = remaining_amount
+					remaining_amount -= 10000
+					var/mob/living/carbon/human/user = usr // not rebuilding this right now
+					if(!user.put_in_active_hand(cash))
+						cash.forceMove(get_turf(src))
+				while(remaining_amount > 0)
 				to_chat(usr, "<span class='notice'>You have withdrawn [amount] dollars.</span>")
-				var/mob/living/carbon/human/user = usr // not rebuilding this right now
-				if(!user.put_in_active_hand(cash))
-					cash.forceMove(get_turf(src))
 				current_card.account.balance -= amount
 			return TRUE
 		if("transfer")

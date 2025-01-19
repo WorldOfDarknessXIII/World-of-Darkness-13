@@ -23,7 +23,7 @@
 	experience_addition = 10
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Giovanni", "Cappadocian")
-	starting_balance = 0 // keeping your assets exposed to taxation? what am I, a prole?
+	starting_balance = 50000
 
 /datum/outfit/job/giovannielder
 	name = "Capo"
@@ -44,12 +44,6 @@
 	if(the_don.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/suit/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
-
-/datum/outfit/job/giovannielder/post_equip(mob/living/carbon/human/the_don)
-	. = ..()
-	var/obj/item/stack/dollar/protection_money = new(the_don)
-	protection_money.amount = 15000
-	the_don.put_in_hands(protection_money)
 
 
 /obj/effect/landmark/start/giovannielder
@@ -78,7 +72,7 @@
 	experience_addition = 10
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Giovanni", "Cappadocian")
-	starting_balance = 0 //tax free family trust off the books
+	starting_balance = 10000
 
 /datum/outfit/job/giovanni
 	name = "La Squadra"
@@ -99,12 +93,6 @@
 	if(gabagool_enjoyer.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/suit/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
-
-/datum/outfit/job/giovanni/pre_equip(mob/living/carbon/human/gabagool_enjoyer)
-	. = ..()
-	var/obj/item/stack/dollar/inheritance = new(gabagool_enjoyer)
-	inheritance.amount = 9500
-	gabagool_enjoyer.put_in_hands(inheritance)
 
 /obj/effect/landmark/start/giovanni
 	name = "La Squadra"
@@ -130,8 +118,7 @@
 	allowed_species = list("Ghoul", "Human")
 	duty = "Your family is a strange one. Maybe you are strange too, because sitting next to your great uncles as an equal is something you are greatly interested in."
 	minimal_masquerade = 0
-	experience_addition = 10
-
+	starting_balance = 1000 // street soldiers, they can ask for cash from their bosses
 
 /datum/outfit/job/giovannimafia
 	name = "La Famiglia"

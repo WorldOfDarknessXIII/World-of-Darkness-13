@@ -19,8 +19,7 @@
 
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
 
-	allowed_species = list("Human", "Ghoul", "Vampire")
-	species_slots = list("Vampire" = 1)
+	allowed_species = list("Vampire", "Ghoul", "Human", "Werewolf")
 	display_order = JOB_DISPLAY_ORDER_DOCTOR
 	bounty_types = CIV_JOB_MED
 
