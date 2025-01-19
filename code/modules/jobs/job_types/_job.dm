@@ -77,7 +77,7 @@
 	var/minimal_masquerade = 1
 
 	///List of species that are allowed to do this job.
-	var/list/allowed_species = list("Vampire")
+	var/list/allowed_species = list("Human", "Ghoul")
 	///List of species that are limited to a certain amount of that species doing this job.
 	var/list/species_slots = list()
 	///List of Bloodlines that are allowed to do this job.
@@ -90,6 +90,7 @@
 
 	var/duty
 	var/v_duty
+	var/starting_balance = 700
 
 /datum/job/New()
 	. = ..()
@@ -165,19 +166,11 @@
 /datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null, client/preference_source)
 	if(!H)
 		return FALSE
-/*
-	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
-		if(H.dna.species.id != "human")
-			H.set_species(/datum/species/human)
-			H.apply_pref_name("human", preference_source)
-*/
-//No need to humanize fucking furries, since there is no fucking furries
 	if(!visualsOnly)
 		var/datum/bank_account/bank_account = new(H.real_name, src, H.dna.species.payday_modifier)
 		bank_account.payday(STARTING_PAYCHECKS, TRUE)
 		H.account_id = bank_account.account_id
 
-	//Equip the rest of the gear
 	H.dna.species.before_equip_job(src, H, visualsOnly)
 
 	if(outfit_override || outfit)

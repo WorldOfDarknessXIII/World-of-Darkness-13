@@ -41,6 +41,7 @@
 
 	v_duty = "You are the top dog of this city. You hold Praxis over San Francisco, and your word is law. Make sure the Masquerade is upheld, and your status is respected."
 	experience_addition = 25
+	starting_balance = 150000 // that's just my walking-around bank account
 
 /datum/job/vamp/prince/announce(mob/living/carbon/human/H)
 	..()

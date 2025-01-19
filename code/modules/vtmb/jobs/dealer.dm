@@ -30,7 +30,7 @@
 	v_duty = "You provide supplies to other kindred. The warehouse is yours, and it's your business who you'll deal with."
 	minimal_masquerade = 3
 	allowed_species = list("Vampire")
-	experience_addition = 20
+	starting_balance = 0 // you don't fuck with bank accounts
 
 /datum/outfit/job/dealer
 	name = "Dealer"
@@ -42,14 +42,22 @@
 	glasses = /obj/item/clothing/glasses/vampire/sun
 	l_pocket = /obj/item/vamp/phone/dealer
 	r_pocket = /obj/item/vamp/keys/supply
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard/rich=1)
+	backpack_contents = list(/obj/item/passport=1,
+	/obj/item/cockclock=1,
+	/obj/item/flashlight=1
+	)
 
-/datum/outfit/job/dealer/pre_equip(mob/living/carbon/human/H)
-	..()
-	//H.vampire_faction = FACTION_ANARCHS
-	if(H.gender == FEMALE)
+/datum/outfit/job/dealer/pre_equip(mob/living/carbon/human/dealer)
+	. = ..()
+	if(dealer.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/suit/female
 		shoes = /obj/item/clothing/shoes/vampire/heels/red
+
+/datum/outfit/job/dealer/post_equip(mob/living/carbon/human/dealer)
+	. = ..()
+	var/obj/item/stack/dollar/under_the_table_gains = new(dealer)
+	under_the_table_gains.amount = 7500
+	dealer.put_in_hands(under_the_table_gains)
 
 /obj/effect/landmark/start/dealer
 	name = "Dealer"

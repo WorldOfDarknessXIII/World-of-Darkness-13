@@ -25,6 +25,7 @@
 	v_duty = "You are a diplomat for the anarchs. Make deals, keep the peace, all through words, not violence. But the latter may come to pass if the former fails."
 	minimal_masquerade = 2
 	experience_addition = 15
+	starting_balance = 2000 //smooth talked your way into a little bit of walking around money
 
 /datum/outfit/job/emissary
 	name = "emissary"

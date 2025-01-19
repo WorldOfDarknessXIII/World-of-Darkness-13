@@ -21,16 +21,22 @@
 	minimal_generation = 13
 
 	duty = "Make money, do drugs, fight law. Your hideout is the laundromat in Chinatown."
-	experience_addition = 10
 	minimal_masquerade = 0
 	my_contact_is_important = FALSE
+	starting_balance = 0 // you're a gangster, not a banker
 
-/datum/outfit/job/triad_soldier/pre_equip(mob/living/carbon/human/H)
-	..()
-	H.grant_language(/datum/language/cantonese)
-	if(H.gender == FEMALE)
+/datum/outfit/job/triad_soldier/pre_equip(mob/living/carbon/human/heavenly_soldier)
+	. = ..()
+	heavenly_soldier.grant_language(/datum/language/cantonese)
+	if(heavenly_soldier.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/suit/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
+
+/datum/outfit/job/triad_soldier/post_equip(mob/living/carbon/human/heavenly_soldier)
+	. = ..()
+	var/obj/item/stack/dollar/under_the_table_gains = new(heavenly_soldier)
+	under_the_table_gains.amount = 2500
+	heavenly_soldier.put_in_hands(under_the_table_gains)
 
 /datum/outfit/job/triad_soldier
 	name = "Triad Soldier"

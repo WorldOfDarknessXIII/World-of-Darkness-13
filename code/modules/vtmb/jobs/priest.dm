@@ -24,6 +24,7 @@
 	v_duty = "The mortals believe you to be their savior. The kindred look at you with suspicion. Yours is the charge of this church."
 	minimal_masquerade = 0
 	my_contact_is_important = FALSE
+	starting_balance = 0 // God provides
 
 /datum/outfit/job/priest
 	name = "Priest"

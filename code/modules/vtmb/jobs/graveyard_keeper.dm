@@ -24,6 +24,7 @@
 	minimal_masquerade = 0
 	experience_addition = 15
 	allowed_bloodlines = list("True Brujah", "Daughters of Cacophony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff", "Cappadocian")
+	starting_balance = 0 // PSEUDO_M we need to get rid of this job soonish
 
 /datum/outfit/job/graveyard
 	name = "Graveyard Keeper"

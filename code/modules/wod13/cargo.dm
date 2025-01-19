@@ -418,7 +418,7 @@
 	righthand_file = null
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	max_amount = 1000
+	max_amount = 10000
 	merge_type = /obj/item/stack/dollar
 
 /obj/item/stack/dollar/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)

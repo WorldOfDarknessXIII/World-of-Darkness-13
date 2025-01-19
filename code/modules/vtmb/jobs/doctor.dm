@@ -19,7 +19,8 @@
 
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
 
-	allowed_species = list("Vampire", "Ghoul", "Human", "Werewolf")
+	allowed_species = list("Human", "Ghoul", "Vampire")
+	species_slots = list("Vampire" = 1)
 	display_order = JOB_DISPLAY_ORDER_DOCTOR
 	bounty_types = CIV_JOB_MED
 
@@ -27,6 +28,7 @@
 	duty = "Collect blood by helping mortals at the Clinic."
 	experience_addition = 15
 	allowed_bloodlines = list("Daughters of Cacophony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff", "Kiasyd")
+	starting_balance = 8000
 
 /datum/outfit/job/vdoctor
 	name = "Doctor"

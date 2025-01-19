@@ -123,6 +123,7 @@
 	minimal_masquerade = 5
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
+	starting_balance = 66600 // old vampire in a clan notorious for being rich dicks, no shit
 
 /datum/outfit/job/ventrue
 	name = "Primogen Ventrue"
@@ -135,12 +136,17 @@
 	shoes = /obj/item/clothing/shoes/vampire
 	l_pocket = /obj/item/vamp/phone/ventrue
 	r_pocket = /obj/item/cockclock
-	backpack_contents = list(/obj/item/vamp/keys/ventrue/primogen=1, /obj/item/passport=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard/elder=1)
+	backpack_contents = list(
+		/obj/item/vamp/keys/ventrue/primogen=1,
+		/obj/item/passport=1,
+		/obj/item/flashlight=1,
+		/obj/item/vamp/creditcard/elder=1)
 
-/datum/outfit/job/ventrue/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/ventrue/pre_equip(mob/living/carbon/human/ventrue_scion)
 	..()
-	if(H.gender == FEMALE)
+	if(ventrue_scion.gender == FEMALE)
 		shoes = /obj/item/clothing/shoes/vampire/heels
+
 
 /datum/job/vamp/primogen_toreador
 	title = "Primogen Toreador"

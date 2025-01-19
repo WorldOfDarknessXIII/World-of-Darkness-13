@@ -24,6 +24,7 @@
 	minimal_masquerade = 0
 	my_contact_is_important = FALSE
 	known_contacts = list("Police Chief")
+	starting_balance = 10000 // that pension is no joke!
 
 /datum/outfit/job/police_officer
 	name = "Police Officer"

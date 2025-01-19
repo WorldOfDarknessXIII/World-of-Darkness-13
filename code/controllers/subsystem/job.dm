@@ -122,6 +122,10 @@ SUBSYSTEM_DEF(job)
 	JobDebug("AR has failed, Player: [player], Rank: [rank]")
 	return FALSE
 
+/datum/controller/subsystem/job/proc/get_starting_balance(datum/job/job)
+	return job.starting_balance
+
+
 
 /datum/controller/subsystem/job/proc/FindOccupationCandidates(datum/job/job, level, flag)
 	JobDebug("Running FOC, Job: [job], Level: [level], Flag: [flag]")
@@ -579,18 +583,9 @@ SUBSYSTEM_DEF(job)
 				to_chat(M, "<span class='notice'><b>As a member of the Chantry, you are part of the Tremere Pyramid and are blood bonded to the Regent. Always be loyal.</b></span>")
 		else if(job.duty && job.duty != "")
 			to_chat(M, "<span class='notice'><b>[job.duty]</b></span>")
-//		job.radio_help_message(M)
 		if(job.req_admin_notify)
 			to_chat(M, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
-//		if(CONFIG_GET(number/minimal_access_threshold))
-//			to_chat(M, "<span class='notice'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></span>")
 
-//	var/related_policy = get_policy(rank)
-//	if(related_policy)
-//		to_chat(M,related_policy)
-//	if(ishuman(living_mob))
-//		var/mob/living/carbon/human/wageslave = living_mob
-//		living_mob.add_memory("Your account ID is [wageslave.account_id].")
 	if(job && living_mob)
 		job.after_spawn(living_mob, M, joined_late) // note: this happens before the mob has a key! M will always have a client, H might not.
 

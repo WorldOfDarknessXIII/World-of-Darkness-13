@@ -26,6 +26,7 @@
 	minimal_masquerade = 2
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince", "Baron", "Sheriff")
+	starting_balance = 5000
 
 /datum/outfit/job/bogatyr/pre_equip(mob/living/carbon/human/H)
 	..()

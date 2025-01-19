@@ -15,13 +15,13 @@
 
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_STRIP
-	allowed_species = list("Vampire", "Ghoul", "Human", "Werewolf")
+	allowed_species = list("Ghoul", "Human")
 
 	v_duty = "Offer strip club services to humans or undead."
 	duty = "Offer strip club services."
 	minimal_masquerade = 3
 	allowed_bloodlines = list("True Brujah", "Daughters of Cacophony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff", "Kiasyd")
-	experience_addition = 10
+	starting_balance = 0 // you keep your money in your g-string, not the bank
 
 /datum/outfit/job/strip
 	name = "Stripper"
@@ -31,14 +31,20 @@
 	id = /obj/item/cockclock
 	backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
 
-/datum/outfit/job/strip/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/strip/pre_equip(mob/living/carbon/human/sugar_baby)
 	..()
-	if(H.gender == MALE)
+	if(sugar_baby.gender == MALE)
 		shoes = /obj/item/clothing/shoes/vampire/white
 		uniform = /obj/item/clothing/under/vampire/slickback
 	else
 		shoes = /obj/item/clothing/shoes/vampire/heels
 		uniform = /obj/item/clothing/under/vampire/burlesque
+
+/datum/outfit/job/strip/post_equip(mob/living/carbon/human/sugar_baby)
+	. = ..()
+	var/obj/item/stack/dollar/tips = new(sugar_baby)
+	tips.amount = 1250
+	sugar_baby.put_in_hands(tips)
 
 /obj/effect/landmark/start/strip
 	name = "Strip"

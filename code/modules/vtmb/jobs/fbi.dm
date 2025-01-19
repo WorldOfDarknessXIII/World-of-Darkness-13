@@ -24,6 +24,7 @@
 	minimal_masquerade = 0
 	my_contact_is_important = FALSE
 	known_contacts = list("Police Chief")
+	starting_balance = 7500
 
 /datum/outfit/job/fbi
 	name = "Federal Investigator"
