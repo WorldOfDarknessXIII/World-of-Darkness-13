@@ -1537,7 +1537,12 @@ GLOBAL_LIST_EMPTY(selectable_races)
 
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
-	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_melee(user)+get_potence_dices(user), 6+user.stat, user)
+	var/add_hard = 0
+	if(user.zone_selected == BODY_ZONE_HEAD)
+		add_hard = 2
+	if(user.zone_selected == BODY_ZONE_PRECISE_EYES || user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
+		add_hard = 3
+	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_melee(user)+get_potence_dices(user), 6+user.stat+add_hard, user)
 	if(modifikator == -1)
 		H = user
 		modifikator = 3

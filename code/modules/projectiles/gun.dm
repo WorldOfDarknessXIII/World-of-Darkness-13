@@ -281,7 +281,12 @@
 			var/mob/living/carbon/human/humhuman = user
 			if(humhuman.binocling)
 				used_roll = get_a_perception(user)
-		var/successess = secret_vampireroll(used_roll+get_a_firearms(user), 6+user.stat, user)
+		var/add_hard = 0
+		if(user.zone_selected == BODY_ZONE_HEAD)
+			add_hard = 2
+		if(user.zone_selected == BODY_ZONE_PRECISE_EYES || user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
+			add_hard = 3
+		var/successess = secret_vampireroll(used_roll+get_a_firearms(user), 6+user.stat+add_hard, user)
 		if(successess == -1)
 			target = user
 		if(randomspread)
@@ -348,7 +353,12 @@
 				var/mob/living/carbon/human/humhuman = user
 				if(humhuman.binocling)
 					used_roll = get_a_perception(user)
-			var/successess = secret_vampireroll(used_roll+get_a_firearms(user), 6+user.stat, user)
+			var/add_hard = 0
+			if(user.zone_selected == BODY_ZONE_HEAD)
+				add_hard = 2
+			if(user.zone_selected == BODY_ZONE_PRECISE_EYES || user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
+				add_hard = 3
+			var/successess = secret_vampireroll(used_roll+get_a_firearms(user), 6+user.stat+add_hard, user)
 			if(successess == -1)
 				target = user
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
