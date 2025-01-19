@@ -560,8 +560,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						gifts_text += "[ACT.name].<BR>"
 					qdel(ACT)
 				dat += "<b>Initial Gifts:</b> [gifts_text]"
-				var/mob/living/carbon/werewolf/crinos/DAWOF = new(get_turf(parent.mob))
-				var/mob/living/carbon/werewolf/lupus/DAWOF2 = new(get_turf(parent.mob))
+				/*
+				var/mob/living/carbon/werewolf/crinos/DAWOF = new (get_turf(parent.mob))
+				var/mob/living/carbon/werewolf/lupus/DAWOF2 = new (get_turf(parent.mob))
 
 				DAWOF.sprite_color = werewolf_color
 				DAWOF2.sprite_color = werewolf_color
@@ -598,6 +599,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "[icon2html(getFlatIcon(DAWOF), user)][icon2html(getFlatIcon(DAWOF2), user)]<BR>"
 				qdel(DAWOF)
 				qdel(DAWOF2)
+				*/
 				dat += "<b>Breed:</b> <a href='?_src_=prefs;preference=breed;task=input'>[breed]</a><BR>"
 				dat += "<b>Tribe:</b> <a href='?_src_=prefs;preference=tribe;task=input'>[tribe]</a><BR>"
 				dat += "Color: <a href='?_src_=prefs;preference=werewolf_color;task=input'>[werewolf_color]</a><BR>"

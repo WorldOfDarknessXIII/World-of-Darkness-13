@@ -227,7 +227,7 @@
 				to_chat(user, "<I># No forensic traces found #</I>") // Don't display this to the holder user
 			return
 		else if(isobj(src) || ismob(src))
-			if(secret_vampireroll(get_a_perception(user)+get_a_investigation(user), 6, user) < 1)
+			if(secret_vampireroll(get_a_perception(user)+get_a_investigation(user), 6, user) < 4)
 				return
 
 			var/list/fingerprints = list()
