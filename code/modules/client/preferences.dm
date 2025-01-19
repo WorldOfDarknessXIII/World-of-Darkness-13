@@ -3431,8 +3431,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				character.transformator.crinos_form.sprite_eye_color = werewolf_eye_color
 				character.transformator.lupus_form.sprite_color = werewolf_color
 				character.transformator.lupus_form.sprite_eye_color = werewolf_eye_color
-				character.lupus_form.attributes = character.attributes
-				character.crinos_form.attributes = character.attributes
+				character.transformator.lupus_form.attributes = character.attributes
+				character.transformator.crinos_form.attributes = character.attributes
 
 				if(werewolf_name)
 					character.transformator.crinos_form.name = werewolf_name
