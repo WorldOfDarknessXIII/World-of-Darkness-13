@@ -113,8 +113,8 @@
 	title = "La Famiglia"
 	department_head = list("Capo")
 	faction = "Vampire"
-	total_positions = 10
-	spawn_positions = 10
+	total_positions = 5
+	spawn_positions = 5
 	supervisors = "the Family"
 	selection_color = "#cb4aad"
 
@@ -126,8 +126,6 @@
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_GIOVANNI
 	exp_type_department = EXP_TYPE_GIOVANNI
-
-//	minimal_generation = 11	//Uncomment when players get exp enough
 
 	allowed_species = list("Ghoul", "Human")
 	duty = "Your family is a strange one. Maybe you are strange too, because sitting next to your great uncles as an equal is something you are greatly interested in."

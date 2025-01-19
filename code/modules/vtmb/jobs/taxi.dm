@@ -1,10 +1,10 @@
 /datum/job/vamp/taxi
 	title = "Taxi Driver"
-	department_head = list("Justicar")
-	faction = "Vampire"
+	department_head = list("your monthly rent.")
+	faction = "none"
 	total_positions = 3
 	spawn_positions = 3
-	supervisors = " the Traditions"
+	supervisors = " the meter. Get to work!"
 	selection_color = "#e3e3e3"
 
 	outfit = /datum/outfit/job/taxi
@@ -16,12 +16,11 @@
 	display_order = JOB_DISPLAY_ORDER_TAXI
 	exp_type_department = EXP_TYPE_SERVICES
 
-	allowed_species = list("Vampire", "Ghoul", "Human", "Werewolf")
+	allowed_species = list("Ghoul", "Human", "Werewolf")
 
 	v_duty = "Drive people in the city."
 	duty = "Drive people in the city."
 	minimal_masquerade = 0
-	experience_addition = 10
 	allowed_bloodlines = list("Daughters of Cacaphony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff", "Kiasyd", "Cappadocian")
 
 /datum/job/vamp/taxi/after_spawn(mob/living/H, mob/M, latejoin = FALSE)

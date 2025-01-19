@@ -3,8 +3,8 @@
 	title = "Priest"
 	department_head = list("Bishop")
 	faction = "Vampire"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 4
+	spawn_positions = 4
 	supervisors = "God"
 	selection_color = "#fff700"
 

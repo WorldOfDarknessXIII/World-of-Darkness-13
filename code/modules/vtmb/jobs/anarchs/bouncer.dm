@@ -21,6 +21,8 @@
 	display_order = JOB_DISPLAY_ORDER_BRUISER
 	known_contacts = list("Baron")
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Tremere", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian", "Ministry")
+	allowed_species = list("Vampire", "Ghoul")
+	species_slots = list("Ghoul" = 2)
 
 	v_duty = "You are the enforcer of the Anarchs. The baron is always in need of muscle power. Enforce the Traditions - in the anarch way."
 	minimal_masquerade = 2

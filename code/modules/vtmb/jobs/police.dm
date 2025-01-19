@@ -3,8 +3,8 @@
 	title = "Police Officer"
 	department_head = list("Police Department")
 	faction = "Vampire"
-	total_positions = 5
-	spawn_positions = 5
+	total_positions = 7
+	spawn_positions = 7
 	supervisors = " the SFPD Chief and your Sergeant."
 	selection_color = "#7e7e7e"
 
@@ -18,7 +18,7 @@
 	exp_type_department = EXP_TYPE_POLICE
 
 	allowed_species = list("Ghoul", "Human")
-	species_slots = list("Ghoul" = 1)
+	species_slots = list("Ghoul" = 2)
 
 	duty = "Enforce the Law."
 	minimal_masquerade = 0
@@ -104,7 +104,6 @@
 	duty = "Underpaid, overworked, and understrength. Do your best to keep the order in San Francisco. Keep the officers in line."
 	minimal_masquerade = 0
 	my_contact_is_important = FALSE
-//	known_contacts = list("Investigator")
 
 /datum/outfit/job/police_chief
 	name = "Police Chief"
