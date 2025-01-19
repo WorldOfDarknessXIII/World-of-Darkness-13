@@ -286,7 +286,7 @@
 			add_hard = 2
 		if(user.zone_selected == BODY_ZONE_PRECISE_EYES || user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 			add_hard = 3
-		var/successess = secret_vampireroll(used_roll+get_a_firearms(user), 6+user.stat+add_hard, user)
+		var/successess = secret_vampireroll(used_roll+get_a_firearms(user), 7+user.stat+add_hard, user)
 		if(successess == -1)
 			target = user
 		if(randomspread)
