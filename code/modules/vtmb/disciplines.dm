@@ -859,7 +859,7 @@
 					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
 					caster.remove_overlay(POTENCE_LAYER)
 					caster.potential = 0
-					qdel(tackler)
+					tackler.RemoveComponent()
 
 /datum/discipline/fortitude
 	name = "Fortitude"
