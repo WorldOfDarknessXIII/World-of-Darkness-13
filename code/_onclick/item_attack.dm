@@ -62,6 +62,8 @@
 	if(..())
 		return TRUE
 	user.changeNext_move(CLICK_CD_MELEE)
+	SEND_SIGNAL(user, COMSIG_MOB_ATTACKING_MELEE, /*target =*/src, /*item =*/I, /*params =*/params)
+	SEND_SIGNAL(src, COMSIG_MOB_ATTACKED_BY_MELEE, /*attacker =*/user, /*item =*/I, /*params =*/params)
 	return I.attack(src, user)
 
 /**
