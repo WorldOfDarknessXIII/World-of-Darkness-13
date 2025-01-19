@@ -337,8 +337,8 @@
 		brain.applyOrganDamage(-100)
 
 	var/heal_level = min(kueijin.mind.dharma.level, 4)
-	kueijin.heal_ordered_damage(10 * heal_level, list(OXY, STAMINA, BRUTE, TOX))
-	kueijin.heal_ordered_damage(5 * heal_level, list(BURN, CLONE))
+	kueijin.heal_ordered_damage(20, list(OXY, STAMINA, BRUTE, TOX))
+	kueijin.heal_ordered_damage(10, list(BURN, CLONE))
 	kueijin.blood_volume = min(kueijin.blood_volume + 56, 560)
 	kueijin.yin_chi = max(0, kueijin.yin_chi - 1)
 
@@ -393,8 +393,8 @@
 		brain.applyOrganDamage(-100)
 
 	var/heal_level = min(kueijin.mind.dharma.level, 4)
-	kueijin.heal_ordered_damage(10 * heal_level, list(OXY, STAMINA, BRUTE, TOX))
-	kueijin.heal_ordered_damage(5 * heal_level, list(BURN, CLONE))
+	kueijin.heal_ordered_damage(20, list(OXY, STAMINA, BRUTE, TOX))
+	kueijin.heal_ordered_damage(10, list(BURN, CLONE))
 	kueijin.blood_volume = min(kueijin.blood_volume + 28, 560)
 	kueijin.yang_chi = max(0, kueijin.yang_chi - 1)
 
