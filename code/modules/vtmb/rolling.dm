@@ -315,6 +315,7 @@
 	wins = wins+(max(0, crits-brokes))
 	if(wins < 0)
 		create_number_on_mob(rollperformer, "#ff0000", "Botch!")
+		to_chat(rollperformer, "<span class='danger'>Botch!</span>")
 		return -1
 	if(wins == 0)
 		create_number_on_mob(rollperformer, "#646464", "0")
@@ -332,6 +333,10 @@
 		create_number_on_mob(rollperformer, "#0066ff", "6")
 	if(wins >= 7)
 		create_number_on_mob(rollperformer, "#b200ff", "7+")
+	if(wins)
+		to_chat(rollperformer, "<span class='help'><b>[wins] successes!</b></span>")
+	else
+		to_chat(rollperformer, "<b>No successes!</b>")
 	return wins
 
 /datum/action/aboutme
