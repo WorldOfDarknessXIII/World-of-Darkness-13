@@ -134,7 +134,37 @@
 	..()
 
 /mob/living/carbon/werewolf/getarmor(def_zone, type)
-	if(type == BRUTE)
-		return werewolf_armor
-	else
+	var/total_cubes = get_a_stamina(src)
+	total_cubes += get_fortitude_dices(src)+get_visceratika_dices(src)+get_bloodshield_dices(src)+get_lasombra_dices(src)+get_tzimisce_dices(src)
+	var/final_block = secret_vampireroll(total_cubes, 6, src)
+	if(final_block == -1)
+		to_chat(src, "<span class='userdanger'>Your armor was penetrated!</span>")
 		return 0
+	else
+		final_block = min(10, final_block)
+		var/armah = final_block*10
+		armah = min(armah, 90)+werewolf_armor
+		if(armour_penetration)
+			to_chat(src, "<span class='userdanger'>Your armor was penetrated!</span>")
+			return max(0, armah-armour_penetration)
+		else if(armah >= 100)
+			to_chat(src, "<span class='notice'>Your armor absorbs the blow!</span>")
+			return 100
+
+/mob/living/simple_animal/getarmor(def_zone, type)
+	var/total_cubes = get_a_stamina(src)
+	total_cubes += get_fortitude_dices(src)+get_visceratika_dices(src)+get_bloodshield_dices(src)+get_lasombra_dices(src)+get_tzimisce_dices(src)
+	var/final_block = secret_vampireroll(total_cubes, 6, src)
+	if(final_block == -1)
+		to_chat(src, "<span class='userdanger'>Your armor was penetrated!</span>")
+		return 0
+	else
+		final_block = min(10, final_block)
+		var/armah = final_block*10
+		armah = min(armah, 90)
+		if(armour_penetration)
+			to_chat(src, "<span class='userdanger'>Your armor was penetrated!</span>")
+			return max(0, armah-armour_penetration)
+		else if(armah >= 100)
+			to_chat(src, "<span class='notice'>Your armor absorbs the blow!</span>")
+			return 100

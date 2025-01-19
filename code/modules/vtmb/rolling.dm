@@ -1,4 +1,39 @@
+GLOBAL_LIST_EMPTY(vampireroll_numbers)
+SUBSYSTEM_DEF(woddices)
+	name = "World of Darkness dices"
+	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_BACKGROUND
+	priority = FIRE_PRIORITY_VERYLOW
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+	wait = 10 SECONDS
 
+/datum/controller/subsystem/woddices/fire(resumed = FALSE)
+	if(MC_TICK_CHECK)
+		return
+	if(length(GLOB.vampireroll_numbers))
+		var/atom/a = pick(GLOB.vampireroll_numbers)
+		if(a)
+			GLOB.vampireroll_numbers -= a
+			qdel(a)
+	if(length(GLOB.vampireroll_numbers))
+		var/atom/a = pick(GLOB.vampireroll_numbers)
+		if(a)
+			GLOB.vampireroll_numbers -= a
+			qdel(a)
+	if(length(GLOB.vampireroll_numbers))
+		var/atom/a = pick(GLOB.vampireroll_numbers)
+		if(a)
+			GLOB.vampireroll_numbers -= a
+			qdel(a)
+	if(length(GLOB.vampireroll_numbers))
+		var/atom/a = pick(GLOB.vampireroll_numbers)
+		if(a)
+			GLOB.vampireroll_numbers -= a
+			qdel(a)
+	if(length(GLOB.vampireroll_numbers))
+		var/atom/a = pick(GLOB.vampireroll_numbers)
+		if(a)
+			GLOB.vampireroll_numbers -= a
+			qdel(a)
 
 /proc/create_number_on_mob(mob/Mob, what_color, text)
 	var/turf/T = get_turf(Mob)
@@ -16,7 +51,7 @@
 		animate(message_atom, pixel_y = message_atom.pixel_y+8, time = 20, loop = 1)
 		animate(message_atom, pixel_y = message_atom.pixel_y+32, alpha = 0, time = 10)
 		spawn(20)
-			qdel(message_atom)
+			GLOB.vampireroll_numbers += message_atom
 
 /mob/living
 	var/datum/attributes/attributes
