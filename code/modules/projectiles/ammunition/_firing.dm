@@ -63,29 +63,18 @@
 		firing_dir = BB.firer.dir
 	if(!BB.suppressed && firing_effect_type)
 		var/witness_count
-		for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, usr))
-			if(NEPIC && NEPIC.stat != DEAD)
+		for(var/mob/living/carbon/human/npc/witness_npc in viewers(7, usr))
+			if(witness_npc && witness_npc.stat != DEAD)
 				witness_count++
 			if(witness_count > 1)
-				for(var/obj/item/police_radio/P in GLOB.police_radios)
-					P.announce_crime("shooting", get_turf(user))
-				for(var/obj/item/p25radio/police/P in GLOB.p25_radios)
-					if(P.linked_network == "police")
-						P.announce_crime("shooting", get_turf(user))
-		var/atom/A = new firing_effect_type(get_turf(src), firing_dir)
-		var/atom/movable/shit = new(A.loc)
+				for(var/obj/item/police_radio/p_radio in GLOB.police_radios)
+					p_radio.announce_crime("shooting", get_turf(user))
+				for(var/obj/item/p25radio/police/p_radio in GLOB.p25_radios)
+					if(p_radio.linked_network == "police")
+						p_radio.announce_crime("shooting", get_turf(user))
+		new firing_effect_type(get_turf(src), firing_dir)
 		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.remove_overlay(FIRING_EFFECT_LAYER)
-			var/mutable_appearance/firing_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "firing", -PROTEAN_LAYER)
-			H.overlays_standing[FIRING_EFFECT_LAYER] = firing_overlay
-			H.apply_overlay(FIRING_EFFECT_LAYER)
-			shit.set_light(3, 2, "#ffedbb")
-//			animate(firing_overlay, alpha = 0, time = 2)
-			spawn(2)
-				H.remove_overlay(FIRING_EFFECT_LAYER)
-				qdel(shit)
-
+			new /obj/effect/temp_visual/dir_setting/muzzle_flash_highlight(get_turf(src), firing_dir)
 	var/direct_target
 	if(targloc == curloc)
 		if(target) //if the target is right on our location we'll skip the travelling code in the proj's fire()
