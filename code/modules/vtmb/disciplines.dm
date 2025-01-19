@@ -902,11 +902,10 @@
 
 /datum/discipline/obfuscate/proc/handle_signals(bool, mob/living/carbon/human/caster) // the bool in this instance indicates if the ability is activating
 	if(bool)
-		for(var/signal in aggressive_signals)
-			RegisterSignal(caster, signal, PROC_REF(on_hostile_action))
+		RegisterSignal(caster, aggressive_signals, PROC_REF(on_hostile_action))
 		return
 	for(var/signal in aggressive_signals)
-		UnregisterSignal(caster, signal)
+		UnregisterSignal(caster, aggressive_signals)
 
 /datum/discipline/presence
 	name = "Presence"
