@@ -169,10 +169,7 @@
 /datum/antagonist/sabbatist/on_gain()
 	add_antag_hud(ANTAG_HUD_REV, "rev", owner.current)
 	owner.special_role = src
-	var/datum/objective/custom/custom_objective = new
-	custom_objective.owner = owner
-	custom_objective.explanation_text = "Sow chaos, maim, butcher and kill. When you're done The Ivory Tower should be but a distant memory."
-	objectives += custom_objective
+	update_objectives()
 	var/datum/objective/survive/survive_objective = new
 	survive_objective.owner = owner
 	objectives += survive_objective
@@ -187,3 +184,16 @@
 /datum/antagonist/sabbatist/greet()
 	to_chat(owner.current, "<span class='alertsyndie'>You are the part of Sabbat.</span>")
 	owner.announce_objectives()
+
+/datum/antagonist/sabbatist/proc/update_objectives(initial = FALSE)
+	var/untracked_heads = SSjob.get_all_heads()
+	for(var/datum/objective/mutiny/O in objectives)
+		untracked_heads -= O.target
+	for(var/datum/mind/M in untracked_heads)
+		var/datum/objective/mutiny/new_target = new()
+		new_target.owner = src.owner
+		new_target.target = M
+		new_target.update_explanation_text()
+		objectives += new_target
+
+	addtimer(CALLBACK(src, PROC_REF(update_objectives)),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)

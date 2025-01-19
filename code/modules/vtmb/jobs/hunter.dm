@@ -95,10 +95,11 @@
 	owner.holy_role = HOLY_ROLE_PRIEST
 	add_antag_hud(ANTAG_HUD_OPS, "synd", owner.current)
 	owner.special_role = src
-	var/datum/objective/custom/custom_objective = new
+	var/datum/objective/hunter/custom_objective = new
 	custom_objective.owner = owner
 	custom_objective.explanation_text = "Exterminate all evil spirits in the city. Let the Hunt begin!"
 	objectives += custom_objective
+	update_hunted()
 	var/datum/objective/martyr/die_objective = new
 	die_objective.owner = owner
 	objectives += die_objective
@@ -113,3 +114,40 @@
 /datum/antagonist/hunter/greet()
 	to_chat(owner.current, "<span class='alertsyndie'>You are the Hunter.</span>")
 	owner.announce_objectives()
+
+/datum/antagonist/hunter/proc/update_hunted(initial = FALSE)
+	for(var/datum/objective/hunter/O in objectives)
+		for(var/mob/M in O.to_hunt)
+			if(!considered_alive(M) && get_dist(O,owner.current) < 20)
+				O.experience_reward += 1
+				O.to_hunt -= M
+				O.hunted_down |= M
+				to_chat(owner.current, "<span class='alertsyndie'>[O] was hunted down.</span>")
+
+		for(var/i in GLOB.player_list)
+			var/mob/M = i
+			if(iskindred(M) || isgarou(M) || isghoul(M))
+				if(considered_alive(M))
+					O.to_hunt |= M
+
+	addtimer(CALLBACK(src, PROC_REF(update_hunted)),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
+
+
+/datum/objective/hunter
+	name = "hunter"
+	var/target_role_type=FALSE
+	martyr_compatible = TRUE
+	experience_reward = 0
+	var/list/to_hunt = list()
+	var/list/hunted_down = list()
+
+/datum/objective/hunter/New(text)
+	..()
+	for(var/i in GLOB.player_list)
+		var/mob/M = i
+		if(iskindred(M) || isgarou(M) || isghoul(M))
+			if(considered_alive(M))
+				to_hunt |= M
+
+/datum/objective/hunter/check_completion()
+	return completed || (hunted_down.len)
