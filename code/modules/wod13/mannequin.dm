@@ -8,7 +8,6 @@
 	siemens_coeff = 0
 	punchdamagelow = 5
 	punchdamagehigh = 5
-	punchstunthreshold = 0 //about 40% chance to stun
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	damage_overlay_type = ""
 	meat = /obj/item/food/meat/slab/human/mutant/golem
