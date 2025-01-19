@@ -769,7 +769,7 @@
 	for(var/m in buckled_mobs)
 		var/mob/living/buckled_mob = m
 		if(!buckled_mob.Move(newloc, direct, glide_size_override))
-			forceMove(buckled_mob.loc)
+			doMove(buckled_mob.loc) //forcemove has an override that breaks grabs and unbuckles, for some reason
 			last_move = buckled_mob.last_move
 			inertia_dir = last_move
 			buckled_mob.inertia_dir = last_move
