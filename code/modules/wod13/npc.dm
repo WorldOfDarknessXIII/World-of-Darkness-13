@@ -37,6 +37,10 @@
 
 	var/list/spotted_bodies = list()
 
+	var/mob/living/carbon/human/presence_master	// Who is controlling this NPC via Presence
+	var/presence_follow = FALSE	// Should follow the presence_master?
+	var/list/presence_enemies = list()	// If you want them to be aggressive
+
 /datum/movespeed_modifier/npc
 	multiplicative_slowdown = 2
 
