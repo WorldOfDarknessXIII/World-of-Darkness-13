@@ -1258,8 +1258,10 @@
 /turf/open/floor/plating/vampcanal/Enter(atom/movable/mover, atom/oldloc)
 	. = ..()
 	if(istype(mover, /mob/living/carbon/human))
-		if(prob(10))
-			new /mob/living/simple_animal/pet/rat(oldloc)
+		var/mob/living/L = mover
+		if(L.client)
+			if(prob(10))
+				new /mob/living/simple_animal/pet/rat(oldloc)
 
 /turf/open/floor/plating/vampcanal/Initialize()
 	..()
@@ -1281,8 +1283,10 @@
 /turf/open/floor/plating/vampcanalplating/Enter(atom/movable/mover, atom/oldloc)
 	. = ..()
 	if(istype(mover, /mob/living/carbon/human))
-		if(prob(10))
-			new /mob/living/simple_animal/pet/rat(oldloc)
+		var/mob/living/L = mover
+		if(L.client)
+			if(prob(10))
+				new /mob/living/simple_animal/pet/rat(oldloc)
 
 /turf/open/floor/plating/vampcanal/Initialize()
 	..()
