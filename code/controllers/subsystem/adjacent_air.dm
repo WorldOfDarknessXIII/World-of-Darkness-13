@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(adjacent_air)
 	name = "Atmos Adjacency"
 	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	wait = 10
+	wait = 10 SECONDS
 	priority = FIRE_PRIORITY_ATMOS_ADJACENCY
 	var/list/queue = list()
 
