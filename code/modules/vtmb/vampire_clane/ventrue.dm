@@ -10,11 +10,11 @@
 	male_clothes = /obj/item/clothing/under/vampire/ventrue
 	female_clothes = /obj/item/clothing/under/vampire/ventrue/female
 
-/datum/discipline/dominate/post_gain(mob/living/carbon/human/H)
-	if(level >= 1)
+/datum/discipline/presence/post_gain(mob/living/carbon/human/H)
+	if(level >= 5)
 		var/obj/effect/proc_holder/spell/voice_of_god/S = new(H)
 		H.mind.AddSpell(S)
-
+/*
 /datum/action/dominate
 	name = "Dominate"
 	desc = "Dominate over other living or un-living beings."
@@ -36,10 +36,11 @@
 		for(var/mob/living/carbon/human/H in ohearers(7, src))
 			if(H)
 				if(H.can_hear())
-					var/mypower = 13-A.generation+A.social
-					var/theirpower = 13-H.generation+H.mentality
+					var/mypower = 13
+					var/theirpower = 13
 					if(theirpower <= mypower)
 						H.cure_trauma_type(/datum/brain_trauma/severe/hypnotic_trigger, TRAUMA_RESILIENCE_BASIC)
 						H.gain_trauma(new /datum/brain_trauma/severe/hypnotic_trigger(new_say), TRAUMA_RESILIENCE_BASIC)
 						H.do_jitter_animation(30)
 		owner.say("[new_say]")
+*/

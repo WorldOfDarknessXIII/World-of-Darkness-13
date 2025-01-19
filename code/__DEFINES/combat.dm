@@ -20,6 +20,13 @@
 
 //Damage flag defines //
 /// Involves a melee attack or a thrown object.
+
+#define BASHING		"bashing"
+
+#define LETHAL		"lethal"
+
+#define AGGRAVATED	"aggravated"
+
 #define MELEE		"melee"
 /// Involves a solid projectile.
 #define BULLET		"bullet"

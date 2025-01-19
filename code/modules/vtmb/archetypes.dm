@@ -59,9 +59,6 @@
 	start_social = 2
 	start_mentality = 2
 
-/datum/archetype/diplomatic/special_skill(var/mob/living/carbon/human/H)
-	H.more_companions = 3
-
 /datum/archetype/masochist
 	name = "Masochist"
 	specialization = "<i>Takes more blows before passage.</i><br>You can sustain 30 more damage before falling into a critical condition."

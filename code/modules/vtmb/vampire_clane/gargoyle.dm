@@ -35,8 +35,7 @@
 	..()
 	H.dna.species.no_equip = list(ITEM_SLOT_OCLOTHING, ITEM_SLOT_SUITSTORE)
 	H.dna.species.wings_icon = "Gargoyle"
-	H.physiology.armor.melee += 20
-	H.physiology.armor.bullet += 20
+	H.attributes.visceratika_bonus = 2
 
 /datum/vampireclane/gargoyle/post_gain(mob/living/carbon/human/H)
 	..()

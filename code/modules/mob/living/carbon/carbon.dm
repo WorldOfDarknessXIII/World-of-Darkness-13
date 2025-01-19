@@ -201,31 +201,30 @@
 		return
 
 	var/mob/living/carbon/H = src
-	var/physique = H.get_total_physique()
-	var/dexterity = H.get_total_dexterity()
-	var/athletics = H.get_total_athletics()
 
 	if(HAS_TRAIT(H, TRAIT_IMMOBILIZED) || H.legcuffed)
 		return
 	if(pulledby && H.pulledby.grab_state >= GRAB_PASSIVE)
 		return
 
+	var/total_successess = secret_vampireroll(max(get_a_strength(src), get_a_dexterity(src))+get_a_athletics(src), 6, src)
+	if(total_successess == -1)
+		visible_message("<span class='danger'>[src] fails to jump and falls!</span>")
+		AdjustKnockdown(10, TRUE)
+		return
+
 	var/current_time = world.time
-	var/adjusted_jump_delay = JUMP_DELAY - (0.4 * dexterity) - (1 * athletics)
-	if(current_time - last_jump_time < adjusted_jump_delay)
+	if(current_time - last_jump_time < JUMP_DELAY)
 		to_chat(src, "<span class='notice'>You can't jump so soon!")
 		return
 
 	var/adjusted_jump_range = MAX_JUMP_DISTANCE
 
-	if(physique < 2)
-		adjusted_jump_range += 0.75 + athletics
-	else
-		adjusted_jump_range += 0.75 + (physique -1) * 0.5 + athletics
+	adjusted_jump_range = total_successess
 
-	if(adjusted_jump_range > 6)
-		adjusted_jump_range = 6
-	if(adjusted_jump_range <1)
+	if(adjusted_jump_range > 7)
+		adjusted_jump_range = 7
+	if(adjusted_jump_range < 1)
 		adjusted_jump_range = 1
 
 	// very high override for powers like Jade Shintai 2

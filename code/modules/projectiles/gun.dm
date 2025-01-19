@@ -276,12 +276,20 @@
 			if(chambered.harmful) // Is the bullet chambered harmful?
 				to_chat(user, "<span class='warning'>[src] is lethally chambered! You don't want to risk harming anyone...</span>")
 				return
+		var/used_roll = get_a_dexterity(user)
+		if(ishuman(user))
+			var/mob/living/carbon/human/humhuman = user
+			if(humhuman.binocling)
+				used_roll = get_a_perception(user)
+		var/successess = secret_vampireroll(used_roll+get_a_firearms(user), 6+user.stat, user)
+		if(successess == -1)
+			target = user
 		if(randomspread)
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 		else //Smart spread
 			sprd = round((((rand_spr/burst_size) * iteration) - (0.5 + (rand_spr * 0.25))) * (randomized_gun_spread + randomized_bonus_spread))
 		before_firing(target,user)
-		if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd, src))
+		if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd, src, successess))
 			shoot_with_empty_chamber(user)
 			firing_burst = FALSE
 			return FALSE
@@ -335,9 +343,17 @@
 				if(chambered.harmful) // Is the bullet chambered harmful?
 					to_chat(user, "<span class='warning'>[src] is lethally chambered! You don't want to risk harming anyone...</span>")
 					return
+			var/used_roll = get_a_dexterity(user)
+			if(ishuman(user))
+				var/mob/living/carbon/human/humhuman = user
+				if(humhuman.binocling)
+					used_roll = get_a_perception(user)
+			var/successess = secret_vampireroll(used_roll+get_a_firearms(user), 6+user.stat, user)
+			if(successess == -1)
+				target = user
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 			before_firing(target,user)
-			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd, src))
+			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd, src, successess))
 				shoot_with_empty_chamber(user)
 				return
 			else

@@ -181,6 +181,77 @@
 		if(!G)
 			continue
 		G.setup(C, src, receiving)
+		if(isnpc(C) && ishuman(src))
+			var/mob/living/carbon/human/npc/N = C
+			var/mob/living/carbon/human/caster = src
+			if(istype(receiving, /obj/item/stack/dollar))
+				var/obj/item/stack/dollar/D = receiving
+				var/guh = secret_vampireroll(get_a_appearance(caster)+get_a_empathy(caster), 6, caster)
+				if(guh == -1)
+					N.Aggro(src, FALSE)
+				else if(guh >= 2)
+					if(istype(C, /mob/living/carbon/human/npc/hobo))
+						if(C.take(src, receiving))
+							if(prob(round(D.amount/10)))
+								caster.AdjustHumanity(1, 10)
+							N.RealisticSay(pick("Охх... Спасибо...", "Благодарю вас...", "С вашей помощью я смогу купить еды..."))
+							qdel(receiving)
+							if(caster.puppets.len > get_a_charisma(caster)+get_a_empathy(caster))
+								var/mob/living/carbon/human/npc/NPC = pick(caster.puppets)
+								if(NPC && NPC.presence_master == caster)
+									NPC.presence_master = null
+									NPC.presence_follow = FALSE
+									NPC.presence_enemies = list()
+									NPC.danger_source = null
+									caster.puppets -= NPC
+								if(!length(caster.puppets))
+									for(var/datum/action/presence_stay/VI in caster.actions)
+										if(VI)
+											VI.Remove(caster)
+									for(var/datum/action/presence_deaggro/VI in caster.actions)
+										if(VI)
+											VI.Remove(caster)
+							if(!N.presence_master)
+								if(!length(caster.puppets))
+									var/datum/action/presence_stay/E1 = new()
+									E1.Grant(caster)
+									var/datum/action/presence_deaggro/E2 = new()
+									E2.Grant(caster)
+								N.presence_master = caster
+								N.presence_follow = TRUE
+								caster.puppets |= N
+								N.fights_anyway = TRUE
+					else
+						if(D.amount > 200)
+							if(C.take(src, receiving))
+								N.RealisticSay(pick("Возможно можно договориться.", "Допустим, я смогу с этим поработать...", "Я помогу с этим."))
+								qdel(receiving)
+								if(caster.puppets.len > get_a_charisma(caster)+get_a_empathy(caster))
+									var/mob/living/carbon/human/npc/NPC = pick(caster.puppets)
+									if(NPC && NPC.presence_master == caster)
+										NPC.presence_master = null
+										NPC.presence_follow = FALSE
+										NPC.presence_enemies = list()
+										NPC.danger_source = null
+										caster.puppets -= NPC
+									if(!length(caster.puppets))
+										for(var/datum/action/presence_stay/VI in caster.actions)
+											if(VI)
+												VI.Remove(caster)
+										for(var/datum/action/presence_deaggro/VI in caster.actions)
+											if(VI)
+												VI.Remove(caster)
+								if(!N.presence_master)
+									if(!length(caster.puppets))
+										var/datum/action/presence_stay/E1 = new()
+										E1.Grant(caster)
+										var/datum/action/presence_deaggro/E2 = new()
+										E2.Grant(caster)
+									N.presence_master = caster
+									N.presence_follow = TRUE
+									caster.puppets |= N
+									N.fights_anyway = TRUE
+
 
 /**
  * Proc called when the player clicks the give alert

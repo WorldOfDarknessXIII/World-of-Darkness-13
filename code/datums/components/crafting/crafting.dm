@@ -178,13 +178,18 @@
 	if(check_contents(a, R, contents))
 		if(check_tools(a, R, contents))
 			//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
-			if(ismob(a) && !do_after(a, R.time*max(1, (5-PIS.mentality)), target = a))
+			if(ismob(a) && !do_after(a, R.time, target = a))
 				return "."
 			contents = get_surroundings(a,R.blacklist)
 			if(!check_contents(a, R, contents))
 				return ", missing component."
 			if(!check_tools(a, R, contents))
 				return ", missing tool."
+			var/craftroll = secret_vampireroll(get_a_intelligence(PIS)+get_a_crafts(PIS), 6, PIS)
+			if(craftroll < 1)
+				if(craftroll == -1)
+					del_reqs(R, a)
+				return ", failed."
 			var/list/parts = del_reqs(R, a)
 			var/atom/movable/I = new R.result (get_turf(a.loc))
 			if(istype(I, /mob/living/simple_animal/hostile))

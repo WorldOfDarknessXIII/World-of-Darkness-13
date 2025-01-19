@@ -198,11 +198,11 @@
 		.manifest tr.alt td {[monochrome?"border-top-width: 2px":"background-color: #DEF"]}
 	</style></head>
 	<table class="manifest" width='350px'>
-	<tr class='head'><th>Name</th><th>Rank</th></tr>
+	<tr class='head'><th>Name</th><th>Role</th></tr>
 	"}
 	for(var/department in manifest)
 		var/list/entries = manifest[department]
-		dat += "<tr><th colspan=3>[department]</th></tr>"
+//		dat += "<tr><th colspan=3>[department]</th></tr>"
 		//JUST
 		var/even = FALSE
 		for(var/entry in entries)

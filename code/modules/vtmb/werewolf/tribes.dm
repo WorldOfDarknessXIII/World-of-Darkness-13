@@ -192,12 +192,12 @@
 		if(ishuman(owner))
 			playsound(get_turf(owner), 'code/modules/wod13/sounds/electro_cast.ogg', 75, FALSE)
 			var/mob/living/carbon/human/H = owner
-			H.physiology.armor.melee = 25
-			H.physiology.armor.bullet = 45
+			H.attributes.stamina_bonus += 4
+			H.attributes.dexterity_bonus += 2
 			to_chat(owner, "<span class='notice'>You feel your skin replaced with the machine...</span>")
 			spawn(20 SECONDS)
-				H.physiology.armor.melee = initial(H.physiology.armor.melee)
-				H.physiology.armor.bullet = initial(H.physiology.armor.bullet)
+				H.attributes.stamina_bonus -= 4
+				H.attributes.dexterity_bonus -= 2
 				to_chat(owner, "<span class='warning'>Your skin is natural again...</span>")
 				owner.color = "#FFFFFF"
 		else

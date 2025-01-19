@@ -1147,6 +1147,7 @@
 		my_weapon = new /obj/item/gun/ballistic/vampire/revolver(src)
 	else
 		my_weapon = new /obj/item/gun/ballistic/automatic/vampire/ar15(src)
+	ignores_warrant = TRUE
 	AssignSocialRole(/datum/socialrole/police)
 
 /mob/living/carbon/human/npc/police/Life()

@@ -51,6 +51,7 @@ GLOBAL_LIST_INIT(services_positions, list(
     "Graveyard Keeper",
     "Stripper",
     "Street Janitor",
+	"Chief Doctor",
     "Doctor",
     "Taxi Driver"
 ))

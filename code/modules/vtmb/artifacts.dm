@@ -58,14 +58,12 @@
 /obj/item/vtm_artifact/weekapaug_thistle/get_powers()
 	..()
 	var/mob/living/carbon/human/H = owner
-	H.physiology.armor.melee = H.physiology.armor.melee+10
-	H.physiology.armor.bullet = H.physiology.armor.bullet+10
+	H.attributes.stamina_bonus += 4
 
 /obj/item/vtm_artifact/weekapaug_thistle/remove_powers()
 	..()
 	var/mob/living/carbon/human/H = owner
-	H.physiology.armor.melee = H.physiology.armor.melee-10
-	H.physiology.armor.bullet = H.physiology.armor.bullet-10
+	H.attributes.stamina_bonus -= 4
 
 /obj/item/vtm_artifact/tarulfang
 	true_name = "Tarulfang"

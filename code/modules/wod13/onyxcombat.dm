@@ -453,8 +453,7 @@
 			if(length(BD.all_wounds))
 				var/datum/wound/W = pick(BD.all_wounds)
 				W.remove_wound()
-			BD.adjustFireLoss(-10*min(4, 15-BD.generation), TRUE)
-			BD.adjustCloneLoss(-5, TRUE)
+			BD.adjustCloneLoss(-10, TRUE)
 			var/obj/item/organ/eyes/eyes = BD.getorganslot(ORGAN_SLOT_EYES)
 			if(eyes)
 				BD.adjust_blindness(-2)
@@ -560,14 +559,25 @@
 	level5.layer = ABOVE_HUD_LAYER+5
 	level5.plane = HUD_PLANE
 
+/mob/living/carbon
+	var/binocling = FALSE
+	var/last_binocled = 0
+
 /atom/MouseEntered(location,control,params)
 	if(isturf(src) || ismob(src) || isobj(src))
-		if(loc && iscarbon(usr))
+		if(loc && iscarbon(usr) && isturf(usr.loc))
 			var/mob/living/carbon/H = usr
 			if(H.a_intent == INTENT_HARM)
 				if(!H.IsSleeping() && !H.IsUnconscious() && !H.IsParalyzed() && !H.IsKnockdown() && !H.IsStun() && !HAS_TRAIT(H, TRAIT_RESTRAINED))
 					H.face_atom(src)
 					H.harm_focus = H.dir
+			if(H.binocling)
+				var/actual_distance = get_dist_in_pixels(usr.x*32, usr.y*32, x*32, y*32)
+				var/view_buff = min(14, get_a_perception(usr)+get_a_alertness(usr))
+				var/view_distance = round((actual_distance/15)*view_buff)
+				var/myangle = get_angle_raw(H.x, H.y, 0, 0, x, y, 0, 0)
+				var/time_to_animate = 5
+				animate(H.client, pixel_x = round(view_distance*sin(myangle)), pixel_y = round(view_distance*cos(myangle)), time = time_to_animate)
 
 /mob/living/carbon/Move(atom/newloc, direct, glide_size_override)
 	..()
@@ -594,35 +604,42 @@
 	else
 		usr.client.show_popup_menus = TRUE
 */
+	var/list/modifiers = params2list(params)
 	if(ishuman(usr))
-		if(isopenturf(src.loc) || isopenturf(src))
-			var/list/modifiers = params2list(params)
-			var/mob/living/carbon/human/HUY = usr
-			if(!HUY.get_active_held_item() && Adjacent(usr))
-				if(LAZYACCESS(modifiers, "right"))
-					var/list/shit = list()
-					var/obj/item/item_to_pick
-					var/turf/T
-					if(isturf(src))
-						T = src
-					else
-						T = src.loc
-					for(var/obj/item/I in T)
-						if(I)
-							if(!I.anchored)
-								shit[I.name] = I
-						if(length(shit) == 1)
-							item_to_pick = I
-					if(length(shit) >= 2)
-						var/result = input(usr, "Select the item you want to pick up.", "Pick up") as null|anything in shit
-						if(result)
-							item_to_pick = shit[result]
+		if(LAZYACCESS(modifiers, "right"))
+			if(isopenturf(src.loc) || isopenturf(src))
+				var/mob/living/carbon/human/HUY = usr
+				if(Adjacent(usr))
+					if(!HUY.get_active_held_item())
+						var/list/shit = list()
+						var/obj/item/item_to_pick
+						var/turf/T
+						if(isturf(src))
+							T = src
 						else
+							T = src.loc
+						for(var/obj/item/I in T)
+							if(I)
+								if(!I.anchored)
+									shit[I.name] = I
+							if(length(shit) == 1)
+								item_to_pick = I
+						if(length(shit) >= 2)
+							var/result = input(usr, "Select the item you want to pick up.", "Pick up") as null|anything in shit
+							if(result)
+								item_to_pick = shit[result]
+							else
+								return
+						if(item_to_pick)
+							if(HUY.CanReach(item_to_pick))
+								HUY.put_in_active_hand(item_to_pick)
 							return
-					if(item_to_pick)
-						if(HUY.CanReach(item_to_pick))
-							HUY.put_in_active_hand(item_to_pick)
-						return
+				else
+					if(isturf(HUY.loc))
+						HUY.binocling = !HUY.binocling
+						if(!HUY.binocling)
+							HUY.client.pixel_x = 0
+							HUY.client.pixel_y = 0
 	..()
 /*
 /atom/movable/screen/disciplines/Initialize()

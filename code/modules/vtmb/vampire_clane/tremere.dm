@@ -49,12 +49,18 @@
 		var/ritual = input(owner, "Choose rune to draw:", "Thaumaturgy") as null|anything in shit
 		if(ritual)
 			drawing = TRUE
-			if(do_after(H, 30*max(1, 5-H.mentality), H))
-				drawing = FALSE
-				new ritual(H.loc)
-				H.bloodpool = max(0, H.bloodpool-2)
-				if(H.CheckEyewitness(H, H, 7, FALSE))
-					H.AdjustMasquerade(-1)
+			if(do_after(H, 5 SECONDS, H))
+				var/result = secret_vampireroll(get_a_intelligence(H)+get_a_occult(H), 6, H)
+				if(result > 1)
+					drawing = FALSE
+					new ritual(H.loc)
+					H.bloodpool = max(0, H.bloodpool-2)
+					if(H.CheckEyewitness(H, H, 7, FALSE))
+						H.AdjustMasquerade(-1)
+				else
+					drawing = FALSE
+					if(result == -1)
+						H.AdjustKnockdown(3 SECONDS)
 			else
 				drawing = FALSE
 	else
@@ -67,14 +73,19 @@
 		var/ritual = input(owner, "Choose rune to draw (You need an Arcane Tome to reduce random):", "Thaumaturgy") as null|anything in list("???")
 		if(ritual)
 			drawing = TRUE
-			if(do_after(H, 30*max(1, 5-H.mentality), H))
-				drawing = FALSE
-//				var/list/runes = subtypesof(/obj/ritualrune)
-				var/rune = pick(shit)
-				new rune(H.loc)
-				H.bloodpool = max(0, H.bloodpool-2)
-				if(H.CheckEyewitness(H, H, 7, FALSE))
-					H.AdjustMasquerade(-1)
+			if(do_after(H, 5 SECONDS, H))
+				var/result = secret_vampireroll(get_a_intelligence(H)+get_a_occult(H), 6, H)
+				if(result > 1)
+					drawing = FALSE
+					var/rune = pick(shit)
+					new rune (H.loc)
+					H.bloodpool = max(0, H.bloodpool-2)
+					if(H.CheckEyewitness(H, H, 7, FALSE))
+						H.AdjustMasquerade(-1)
+				else
+					drawing = FALSE
+					if(result == -1)
+						H.AdjustKnockdown(3 SECONDS)
 			else
 				drawing = FALSE
 
@@ -97,12 +108,12 @@
 	H.bloodpool = max(0, H.bloodpool-2)
 	playsound(H.loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
 	abuse_fix = world.time
-	H.physiology.damage_resistance += 60
+	H.attributes.bloodshield_bonus = 4
 	animate(H, color = "#ff0000", time = 1 SECONDS, loop = 1)
 	if(H.CheckEyewitness(H, H, 7, FALSE))
 		H.AdjustMasquerade(-1)
 	spawn(15 SECONDS)
 		if(H)
 			playsound(H.loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
-			H.physiology.damage_resistance -= 60
+			H.attributes.bloodshield_bonus = 0
 			H.color = initial(H.color)

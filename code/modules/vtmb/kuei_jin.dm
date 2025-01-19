@@ -60,9 +60,9 @@
 	limbs_id = "human"
 	wings_icon = "None"
 	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
-	brutemod = 0.5
+	brutemod = 1
 	heatmod = 1
-	burnmod = 3
+	burnmod = 1
 	dust_anim = "dust-k"
 	whitelisted = TRUE
 	selectable = TRUE
@@ -134,126 +134,11 @@
 	var/mob/living/C = usr
 	to_chat(usr, "Yin Chi: [C.yin_chi]/[C.max_yin_chi], Yang Chi: [C.yang_chi]/[C.max_yang_chi], Demon Chi: [C.demon_chi]/[C.max_demon_chi]")
 
-/datum/action/kueijininfo
-	name = "About Me"
-	desc = "Check assigned role, dharma, known disciplines, known contacts etc."
-	button_icon_state = "masquerade"
-	check_flags = NONE
-	var/mob/living/carbon/human/host
-
-/datum/action/kueijininfo/Trigger()
-	if(host)
-		var/dat = {"
-			<style type="text/css">
-
-			body {
-				background-color: #090909; color: white;
-			}
-
-			</style>
-			"}
-		dat += "<center><h2>Memories</h2><BR></center>"
-		dat += "[icon2html(getFlatIcon(host), host)]I am "
-		if(host.real_name)
-			dat += "[host.real_name],"
-		if(!host.real_name)
-			dat += "Unknown,"
-		dat += " the Kuei-Jin"
-
-		if(host.mind)
-
-			if(host.mind.assigned_role)
-				if(host.mind.special_role)
-					dat += ", carrying the [host.mind.assigned_role] (<font color=red>[host.mind.special_role]</font>) role."
-				else
-					dat += ", carrying the [host.mind.assigned_role] role."
-			if(!host.mind.assigned_role)
-				dat += "."
-			dat += "<BR>"
-		if(host.mind.special_role)
-			for(var/datum/antagonist/A in host.mind.antag_datums)
-				if(A.objectives)
-					dat += "[printobjectives(A.objectives)]<BR>"
-		var/masquerade_level = " is clueless about my presence."
-		switch(host.masquerade)
-			if(4)
-				masquerade_level = " has some thoughts of awareness."
-			if(3)
-				masquerade_level = " is barely spotting the truth."
-			if(2)
-				masquerade_level = " is starting to know."
-			if(1)
-				masquerade_level = " knows me and my true nature."
-			if(0)
-				masquerade_level = " thinks I'm a monster and is hunting me."
-		dat += "West[masquerade_level]<BR>"
-		var/dharma = "I'm mindless carrion-eater!"
-		switch(host.mind.dharma?.level)
-			if(1)
-				dharma = "I have not proved my worthiness to exist as Kuei-jin..."
-			if(2 to 3)
-				dharma = "I'm only at the basics of my Dharma."
-			if(4 to 5)
-				dharma = "I'm so enlighted I can be a guru."
-			if(6)
-				dharma = "I have mastered the Dharma so far!"
-
-		dat += "[dharma]<BR>"
-
-		dat += "The <b>[host.mind.dharma?.animated]</b> Chi Energy helps me to stay alive...<BR>"
-		dat += "My P'o is [host.mind.dharma?.Po]<BR>"
-		dat += "<b>Yin/Yang</b>[host.max_yin_chi]/[host.max_yang_chi]<BR>"
-		dat += "<b>Hun/P'o</b>[host.mind.dharma?.Hun]/[host.max_demon_chi]<BR>"
-
-		dat += "<b>Physique</b>: [host.physique]<BR>"
-		dat += "<b>Dexterity</b>: [host.dexterity]<BR>"
-		dat += "<b>Social</b>: [host.social]<BR>"
-		dat += "<b>Mentality</b>: [host.mentality]<BR>"
-		dat += "<b>Lockpicking</b>: [host.lockpicking]<BR>"
-		dat += "<b>Athletics</b>: [host.athletics]<BR>"
-		dat += "<b>Cruelty</b>: [host.blood]<BR>"
-//		if(host.hud_used)
-//			dat += "<b>Known disciplines:</b><BR>"
-//			for(var/datum/action/discipline/D in host.actions)
-//				if(D)
-//					if(D.discipline)
-//						dat += "[D.discipline.name] [D.discipline.level] - [D.discipline.desc]<BR>"
-		if(host.Myself)
-			if(host.Myself.Friend)
-				if(host.Myself.Friend.owner)
-					dat += "<b>My friend's name is [host.Myself.Friend.owner.true_real_name].</b><BR>"
-					if(host.Myself.Friend.phone_number)
-						dat += "Their number is [host.Myself.Friend.phone_number].<BR>"
-					if(host.Myself.Friend.friend_text)
-						dat += "[host.Myself.Friend.friend_text]<BR>"
-			if(host.Myself.Enemy)
-				if(host.Myself.Enemy.owner)
-					dat += "<b>My nemesis is [host.Myself.Enemy.owner.true_real_name]!</b><BR>"
-					if(host.Myself.Enemy.enemy_text)
-						dat += "[host.Myself.Enemy.enemy_text]<BR>"
-			if(host.Myself.Lover)
-				if(host.Myself.Lover.owner)
-					dat += "<b>I'm in love with [host.Myself.Lover.owner.true_real_name].</b><BR>"
-					if(host.Myself.Lover.phone_number)
-						dat += "Their number is [host.Myself.Lover.phone_number].<BR>"
-					if(host.Myself.Lover.lover_text)
-						dat += "[host.Myself.Lover.lover_text]<BR>"
-
-		if(length(host.knowscontacts) > 0)
-			dat += "<b>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
-			for(var/i in host.knowscontacts)
-				dat += "-[i] contact<BR>"
-		for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
-			if(host.bank_id == account.bank_id)
-				dat += "<b>My bank account code is: [account.code]</b><BR>"
-		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
-		onclose(host, "vampire", src)
-
 /datum/species/kuei_jin/on_species_gain(mob/living/carbon/human/C)
 	. = ..()
 	C.update_body(0)
 	C.last_experience = world.time + 5 MINUTES
-	var/datum/action/kueijininfo/infor = new()
+	var/datum/action/aboutme/infor = new()
 	infor.host = C
 	infor.Grant(C)
 	var/datum/action/reanimate_yang/YG = new()
@@ -265,7 +150,7 @@
 
 /datum/species/kuei_jin/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
-	for(var/datum/action/kueijininfo/VI in C.actions)
+	for(var/datum/action/aboutme/VI in C.actions)
 		if(VI)
 			VI.Remove(C)
 	for(var/datum/action/breathe_chi/QI in C.actions)
@@ -434,8 +319,6 @@
 	kueijin.visible_message("<span class='warning'>Some of [kueijin]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
 	kueijin.mind.dharma?.animated = "Yin"
 	kueijin.skin_tone = get_vamp_skin_color(kueijin.skin_tone)
-	kueijin.dna?.species.brutemod = initial(kueijin.dna?.species.brutemod)
-	kueijin.dna?.species.burnmod = initial(kueijin.dna?.species.burnmod)
 	kueijin.update_body()
 
 	for (var/i in 1 to 5)
@@ -454,7 +337,7 @@
 		brain.applyOrganDamage(-100)
 
 	var/heal_level = min(kueijin.mind.dharma.level, 4)
-	kueijin.heal_ordered_damage(20 * heal_level, list(OXY, STAMINA, BRUTE, TOX))
+	kueijin.heal_ordered_damage(10 * heal_level, list(OXY, STAMINA, BRUTE, TOX))
 	kueijin.heal_ordered_damage(5 * heal_level, list(BURN, CLONE))
 	kueijin.blood_volume = min(kueijin.blood_volume + 56, 560)
 	kueijin.yin_chi = max(0, kueijin.yin_chi - 1)
@@ -492,8 +375,6 @@
 	kueijin.visible_message("<span class='warning'>Some of [kueijin]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
 	kueijin.mind.dharma?.animated = "Yang"
 	kueijin.skin_tone = kueijin.mind.dharma?.initial_skin_color
-	kueijin.dna?.species.brutemod = 1
-	kueijin.dna?.species.burnmod = 0.5
 	kueijin.update_body()
 
 	for (var/i in 1 to 5)
@@ -513,7 +394,7 @@
 
 	var/heal_level = min(kueijin.mind.dharma.level, 4)
 	kueijin.heal_ordered_damage(10 * heal_level, list(OXY, STAMINA, BRUTE, TOX))
-	kueijin.heal_ordered_damage(2.5 * heal_level, list(BURN, CLONE))
+	kueijin.heal_ordered_damage(5 * heal_level, list(BURN, CLONE))
 	kueijin.blood_volume = min(kueijin.blood_volume + 28, 560)
 	kueijin.yang_chi = max(0, kueijin.yang_chi - 1)
 

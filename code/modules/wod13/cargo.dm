@@ -449,6 +449,9 @@
 /obj/item/stack/dollar/hundred
 	amount = 100
 
+/obj/item/stack/dollar/twohundredfifty
+	amount = 250
+
 /obj/item/stack/dollar/rand
 	amount = 1.3
 

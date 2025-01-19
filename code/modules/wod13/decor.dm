@@ -240,6 +240,7 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	anchored = TRUE
 	density = TRUE
+	var/searching = FALSE
 
 /obj/structure/trashcan/Initialize()
 	. = ..()
@@ -250,6 +251,37 @@
 			var/area/vtm/V = get_area(src)
 			if(V.upper)
 				icon_state = "[initial(icon_state)]-snow"
+
+/obj/structure/trashcan/attack_hand(mob/living/user)
+	. = ..()
+	if(!searching)
+		searching = TRUE
+		if(do_mob(user, src, 20 SECONDS))
+			searching = FALSE
+			var/result = secret_vampireroll(get_a_perception(user)+get_a_investigation(user), 6, user)
+			switch(result)
+				if(-1)
+					if(ishuman(user))
+						var/mob/living/carbon/human/debil = user
+						var/obj/item/bodypart/arm = debil.get_bodypart(pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+						arm.force_wound_upwards(/datum/wound/blunt/critical)
+					user.adjustBruteLoss(10, TRUE)
+					visible_message("<span class='danger'>[user] breaks their arm while scavenging [src]!</span>", \
+					"<span class='userdanger'>You break your arm while scavenging [src]!</span>")
+				if(0 to 2)
+					to_chat(user, "<span class='warning'>You find nothing interesting...</span>")
+				if(3 to 5)
+					var/i = pick(/obj/item/food/vampire/burger, /obj/item/reagent_containers/food/drinks/soda_cans/vampirecola/blue, /obj/item/food/vampire/donut, /obj/item/food/vampire/pizza, /obj/item/food/vampire/taco)
+					var/obj/item/to_spawn = new i(get_turf(user))
+					to_chat(user, "<span class='notice'>You found [to_spawn].</span>")
+					user.put_in_active_hand(to_spawn)
+				if(6 to INFINITY)
+					var/i = pick(/obj/item/reagent_containers/food/drinks/meth/cocaine, /obj/item/reagent_containers/food/drinks/meth, /obj/item/food/vampire/weed, /obj/structure/methlab/movable, /obj/item/bong, /obj/item/gun/ballistic/vampire/revolver/snub, /obj/item/gun/ballistic/vampire/revolver, /obj/item/gun/ballistic/automatic/vampire/uzi, /obj/item/melee/vampirearms/knife, /obj/item/melee/vampirearms/baseball, /obj/item/melee/vampirearms/tire, /obj/item/melee/vampirearms/baseball/hand)
+					var/obj/item/to_spawn = new i(get_turf(user))
+					to_chat(user, "<span class='notice'>You found [to_spawn].</span>")
+					user.put_in_active_hand(to_spawn)
+		else
+			searching = FALSE
 
 /obj/structure/trashbag
 	name = "trash bag"
@@ -1027,6 +1059,29 @@
 		obj_flags &= ~IN_USE
 		user.pixel_y = 0
 		icon_state = initial(icon_state)
+		var/difficulties = 0
+		for(var/obj/item/clothing/C in user)
+			if(C)
+				difficulties += 1
+		difficulties = round(difficulties/2)
+		if(difficulties)
+			to_chat(user, "<span class='warning'>Clothes are making you worse at dancing... Take them off.")
+		var/result = secret_vampireroll(get_a_appearance(user)+get_a_empathy(user), 6+difficulties, user)
+		if(result == -1)
+			for(var/mob/living/carbon/human/npc/NPC in oviewers(2, user))
+				if(NPC)
+					if(NPC.CheckMove())
+						NPC.RealisticSay(pick("Фуу!", "Позорище!", "Убирайся!"))
+		if(result >= 3)
+			for(var/mob/living/carbon/human/npc/NPC in oviewers(2, user))
+				if(NPC)
+					if(NPC.CheckMove())
+						if(prob(50))
+							NPC.RealisticSay(pick("Так держать!", "Красотища...", "Детка, я твой фанат!"))
+						else
+							NPC.emote("clap")
+			var/obj/item/stack/dollar/fifty/F = new get_turf(user)
+			user.put_in_active_hand(F)
 
 /obj/structure/pole/proc/animatepole(mob/living/user)
 	return

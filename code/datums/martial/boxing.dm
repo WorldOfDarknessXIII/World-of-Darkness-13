@@ -31,7 +31,7 @@
 
 
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
-	var/armor_block = D.run_armor_check(affecting, MELEE)
+	var/armor_block = D.run_armor_check(affecting, BASHING)
 
 	playsound(D.loc, species.attack_sound, 25, TRUE, -1)
 

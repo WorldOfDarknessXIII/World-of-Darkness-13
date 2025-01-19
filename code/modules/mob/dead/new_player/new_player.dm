@@ -66,7 +66,7 @@
 			if(PLAYER_READY_TO_OBSERVE)
 				output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | [LINKIFY_READY("Not Ready", PLAYER_NOT_READY)] | <b> Observe </b> \]</p>"
 	else
-//		output += "<p><a href='byond://?src=[REF(src)];manifest=1'>View the Kindred Population</a></p>"
+		output += "<p><a href='byond://?src=[REF(src)];manifest=1'>View Population</a></p>"
 		output += "<p><a href='byond://?src=[REF(src)];late_join=1'>Join Game!</a></p>"
 		output += "<p>[LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)]</p>"
 
@@ -540,6 +540,8 @@
 			var/mob/living/carbon/human/H = new_character
 			if(H.client)
 				H.true_real_name = H.client.prefs.real_name
+				for(var/i in H.client.prefs.languages)
+					H.grant_language(i)
 				if(H.age < 16)
 					H.add_quirk(/datum/quirk/freerunning)
 					H.add_quirk(/datum/quirk/light_step)
@@ -583,7 +585,7 @@
 	client.crew_manifest_delay = world.time + (1 SECONDS)
 
 	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'></head><body>"
-	dat += "<h4>Kindred population</h4>"
+	dat += "<h4>City population</h4>"
 	dat += GLOB.data_core.get_manifest_html()
 
 	src << browse(dat, "window=manifest;size=387x420;can_close=1")

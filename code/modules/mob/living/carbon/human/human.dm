@@ -44,8 +44,13 @@
 
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
 	if(!HAS_TRAIT(src, TRAIT_FREERUNNING) || levels > 1)
-		if(src.athletics < 5) // falling off one level
-			return ..()
+		if(!HAS_TRAIT(src, TRAIT_SUPERNATURAL_DEXTERITY))
+			var/stuffchick = secret_vampireroll(get_a_dexterity(src)+get_a_athletics(src), 6, src) // falling off one level
+			if(stuffchick == -1)
+				var/obj/item/bodypart/leg = get_bodypart(pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+				leg.force_wound_upwards(/datum/wound/blunt/critical)
+			if(stuffchick < 3)
+				return ..()
 	visible_message("<span class='danger'>[src] makes a hard landing on [T] but remains unharmed from the fall.</span>", \
 					"<span class='userdanger'>You brace for the fall. You make a hard landing on [T] but remain unharmed.</span>")
 	Knockdown(levels * 50)
@@ -1162,11 +1167,9 @@
 	if(body_position != STANDING_UP)
 		return
 	if(above_turf && istype(above_turf, /turf/open/openspace))
-		var/total_dexterity = get_total_dexterity()
-		var/total_athletics = get_total_athletics()
 		to_chat(src, "<span class='notice'>You start climbing up...</span>")
 
-		var/result = do_after(src, 50 - (total_dexterity + total_athletics * 5), 0)
+		var/result = do_after(src, 3 SECONDS, 0)
 		if(!result)
 			to_chat(src, "<span class='warning'>You were interrupted and failed to climb up.</span>")
 			return
@@ -1183,17 +1186,18 @@
 			return
 
 		//(< 5, slip and take damage), (5-14, fail to climb), (>= 15, climb up successfully)
-		var/roll = rand(1, 20)
+		var/roll = secret_vampireroll(max(get_a_strength(src), get_a_dexterity(src))+get_a_athletics(src)+get_potence_dices(src), 6+stat, src)
 		// var/physique = physique
-		if((roll + total_dexterity + (total_athletics * 2)) >= 15)
+		if(roll >= 3)
 			loc = above_turf
 			var/turf/forward_turf = get_step(loc, dir)
 			if(forward_turf && !forward_turf.density)
 				forceMove(forward_turf)
 				to_chat(src, "<span class='notice'>You climb up successfully.</span>")
 				// Reset pixel offsets after climbing up
-		else if((roll + total_dexterity + (total_athletics * 2)) < 5)
+		else if(roll < 0)
 			ZImpactDamage(loc, 1)
+			AdjustKnockdown(20, TRUE)
 			to_chat(src, "<span class='warning'>You slip while climbing!</span>")
 			// Reset pixel offsets if failed
 		else

@@ -265,7 +265,7 @@
 			if(check_shields(M, damage, "the [M.name]"))
 				return FALSE
 			if(stat != DEAD)
-				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, MELEE))
+				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, BASHING))
 		return TRUE
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
@@ -290,7 +290,7 @@
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 		if(!affecting)
 			affecting = get_bodypart(BODY_ZONE_CHEST)
-		var/armor_block = run_armor_check(affecting, MELEE,"","",10)
+		var/armor_block = run_armor_check(affecting, LETHAL,"","",10)
 
 		playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 		visible_message("<span class='danger'>[M] slashes at [src]!</span>", \
@@ -331,7 +331,7 @@
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(L.zone_selected))
 		if(!affecting)
 			affecting = get_bodypart(BODY_ZONE_CHEST)
-		var/armor_block = run_armor_check(affecting, MELEE)
+		var/armor_block = run_armor_check(affecting, BASHING)
 		apply_damage(damage, BRUTE, affecting, armor_block)
 
 
@@ -348,7 +348,7 @@
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	if(!affecting)
 		affecting = get_bodypart(BODY_ZONE_CHEST)
-	var/armor = run_armor_check(affecting, MELEE, armour_penetration = M.armour_penetration)
+	var/armor = run_armor_check(affecting, BASHING, armour_penetration = M.armour_penetration)
 	apply_damage(damage, M.melee_damage_type, affecting, armor, wound_bonus = M.wound_bonus, bare_wound_bonus = M.bare_wound_bonus, sharpness = M.sharpness)
 
 
@@ -374,7 +374,7 @@
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	if(!affecting)
 		affecting = get_bodypart(BODY_ZONE_CHEST)
-	var/armor_block = run_armor_check(affecting, MELEE)
+	var/armor_block = run_armor_check(affecting, BASHING)
 	apply_damage(damage, BRUTE, affecting, armor_block, wound_bonus=wound_mod)
 
 
@@ -453,7 +453,7 @@
 	show_message("<span class='userdanger'>The blob attacks you!</span>")
 	var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
-	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, MELEE))
+	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, AGGRAVATED))
 
 
 ///Calculates the siemens coeff based on clothing and species, can also restart hearts.

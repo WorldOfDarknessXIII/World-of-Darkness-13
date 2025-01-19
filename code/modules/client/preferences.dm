@@ -178,12 +178,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///Ranks of the Disciplines this character knows, corresponding to discipline_types.
 	var/list/discipline_levels = list()
 
-	var/physique = 1
-	var/dexterity = 1
-	var/social = 1
-	var/mentality = 1
-	var/blood = 1
-
 	//Skills
 	var/lockpicking = 0
 	var/athletics = 0
@@ -232,21 +226,72 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/chi_types = list()
 	var/list/chi_levels = list()
 
+	var/list/priorities = list("Physical" = 1, "Social" = 2, "Mental" = 3)
+	var/list/languages = list()
+
+	var/Strength = 1
+	var/Dexterity = 1
+	var/Stamina = 1
+	var/Manipulation = 1
+	var/Charisma = 1
+	var/Appearance = 1
+	var/Perception = 1
+	var/Intelligence = 1
+	var/Wits = 1
+
+	var/Alertness = 0
+	var/Athletics = 0
+	var/Brawl = 0
+	var/Empathy = 0
+	var/Intimidation = 0
+	var/Crafts = 0
+	var/Melee = 0
+	var/Firearms = 0
+	var/Drive = 0
+	var/Security = 0
+	var/Finance = 0
+	var/Investigation = 0
+	var/Medicine = 0
+	var/Linguistics = 0
+	var/Occult = 0
+
 /datum/preferences/proc/add_experience(amount)
 	true_experience = clamp(true_experience + amount, 0, 1000)
+
+/datum/preferences/proc/reset_stats(var/attributes_only = FALSE)
+	Strength = 1
+	Dexterity = 1
+	Stamina = 1
+	Manipulation = 1
+	Charisma = 1
+	Appearance = 1
+	Perception = 1
+	Intelligence = 1
+	Wits = 1
+	if(!attributes_only)
+		Alertness = 0
+		Athletics = 0
+		Brawl = 0
+		Empathy = 0
+		Intimidation = 0
+		Crafts = 0
+		Melee = 0
+		Firearms = 0
+		Drive = 0
+		Security = 0
+		Finance = 0
+		Investigation = 0
+		Medicine = 0
+		Linguistics = 0
+		Occult = 0
 
 /datum/preferences/proc/reset_character()
 	slotlocked = 0
 	diablerist = 0
 	torpor_count = 0
 	generation_bonus = 0
-	physique = 1
-	dexterity = 1
-	mentality = 1
-	social = 1
-	blood = 1
-	lockpicking = 0
-	athletics = 0
+	reset_stats()
+	languages = list()
 	info_known = INFO_KNOWN_UNKNOWN
 	masquerade = initial(masquerade)
 	generation = initial(generation)
@@ -257,15 +302,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	yang = initial(yang)
 	chi_types = list()
 	chi_levels = list()
-	archetype = pick(subtypesof(/datum/archetype))
-	var/datum/archetype/A = new archetype()
-	physique = A.start_physique
-	dexterity = A.start_dexterity
-	social = A.start_social
-	mentality = A.start_mentality
-	blood = A.start_blood
-	lockpicking = A.start_lockpicking
-	athletics = A.start_athletics
 	qdel(clane)
 	clane = new /datum/vampireclane/brujah()
 	discipline_types = list()
@@ -337,9 +373,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	if(istype(user, /mob/dead/new_player))
 		dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>[make_font_cool("CHARACTER SETTINGS")]</a>"
-	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>[make_font_cool("GAME PREFERENCES")]</a>"
-	dat += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>[make_font_cool("OOC PREFERENCES")]</a>"
-	dat += "<a href='?_src_=prefs;preference=tab;tab=3' [current_tab == 3 ? "class='linkOn'" : ""]>[make_font_cool("CUSTOM KEYBINDINGS")]</a>"
+		dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>[make_font_cool("CHARACTER LIST")]</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>[make_font_cool("GAME PREFERENCES")]</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=3' [current_tab == 3 ? "class='linkOn'" : ""]>[make_font_cool("OOC PREFERENCES")]</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=4' [current_tab == 4 ? "class='linkOn'" : ""]>[make_font_cool("CUSTOM KEYBINDINGS")]</a>"
 
 	if(!path)
 		dat += "<div class='notice'>Please create an account to save your preferences</div>"
@@ -374,10 +411,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<center><h2>[make_font_cool("OCCUPATION CHOISES")]</h2>"
 			dat += "<a href='?_src_=prefs;preference=job;task=menu'>Set Occupation Preferences</a><br></center>"
-			if(CONFIG_GET(flag/roundstart_traits))
-				dat += "<center><h2>[make_font_cool("QUIRK SETUP")]</h2>"
-				dat += "<a href='?_src_=prefs;preference=trait;task=menu'>Configure Quirks</a><br></center>"
-				dat += "<center><b>Current Quirks:</b> [all_quirks.len ? all_quirks.Join(", ") : "None"]</center>"
 			dat += "<h2>[make_font_cool("IDENTITY")]</h2>"
 			dat += "<table width='100%'><tr><td width='75%' valign='top'>"
 			if(is_banned_from(user.ckey, "Appearance"))
@@ -411,6 +444,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<br><b>Biological Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
 			dat += "<br><b>Actual Age:</b> <a href='?_src_=prefs;preference=total_age;task=input'>[max(age, total_age)]</a>"
+			dat += "<br><b>Known Languages:</b> <br>English"
+			for(var/i in languages)
+				var/datum/language/L = i
+				dat += "<br>[initial(L.name)]"
+			if(length(languages) < Linguistics)
+				dat += "<br><a href='?_src_=prefs;preference=languages;task=input'>Learn</a>"
+
 
 			dat += "</tr></table>"
 
@@ -487,30 +527,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += " <a href='?_src_=prefs;preference=generation;task=input'>Change</a><BR>"
 				else
 					dat += "<BR>"
-			dat += "<h2>[make_font_cool("ATTRIBUTES")]</h2>"
-
-			dat += "<b>Archetype</b><BR>"
-			var/datum/archetype/A = new archetype()
-			dat += "<a href='?_src_=prefs;preference=archetype;task=input'>[A.name]</a> [A.specialization]<BR>"
-
-			//Prices for each ability, can be adjusted, multiplied by current attribute level
-			var/physique_price = 4
-			var/dexterity_price = 4
-			var/social_price = 4
-			var/mentality_price = 4
-			var/blood_price = 6
-			//Lockpicking and Athletics have an initial price of 3
-			var/lockpicking_price = !lockpicking ? 3 : 2
-			var/athletics_price = !athletics ? 3 : 2
-
-			dat += "<b>Physique:</b> [build_attribute_score(physique, A.archetype_additional_physique, physique_price, "physique")]"
-			dat += "<b>Dexterity:</b> [build_attribute_score(dexterity, A.archetype_additional_dexterity, dexterity_price, "dexterity")]"
-			dat += "<b>Social:</b> [build_attribute_score(social, A.archetype_additional_social, social_price, "social")]"
-			dat += "<b>Mentality:</b> [build_attribute_score(mentality, A.archetype_additional_mentality, mentality_price, "mentality")]"
-			dat += "<b>Cruelty:</b> [build_attribute_score(blood, A.archetype_additional_blood, blood_price, "blood")]"
-			dat += "<b>Lockpicking:</b> [build_attribute_score(lockpicking, A.archetype_additional_lockpicking, lockpicking_price, "lockpicking")]"
-			dat += "<b>Athletics:</b> [build_attribute_score(athletics, A.archetype_additional_athletics, athletics_price, "athletics")]"
-			dat += "Experience rewarded: [true_experience]<BR>"
 			if(pref_species.name == "Werewolf")
 				dat += "<h2>[make_font_cool("TRIBE")]</h2>"
 				dat += "<br><b>Werewolf Name:</b> "
@@ -1004,8 +1020,66 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				mutant_category = 0
 			dat += "</tr></table>"
 
+		if(1)
+			dat += "Experience rewarded: [true_experience]<BR>"
 
-		if (1) // Game Preferences
+			dat += "<h2>[make_font_cool("ATTRIBUTES")]</h2>"
+
+			if(!slotlocked)
+				dat += "<a href='?_src_=prefs;preference=priorities;task=input'>Change Priorities</a><BR>"
+
+			var/physical_priorities = get_freebie_points("Physical")
+			var/social_priorities = get_freebie_points("Social")
+			var/mental_priorities = get_freebie_points("Mental")
+			dat += "<b>PHYSICAL</b>"
+			if(physical_priorities)
+				dat += "([physical_priorities])"
+			dat += "<BR>"
+			dat += "Strength: [build_attribute_score(Strength, get_gen_attribute_limit(generation-generation_bonus), 5, "strength", physical_priorities)]"
+			dat += "Dexterity: [build_attribute_score(Dexterity, get_gen_attribute_limit(generation-generation_bonus), 5, "dexterity", physical_priorities)]"
+			dat += "Stamina: [build_attribute_score(Stamina, get_gen_attribute_limit(generation-generation_bonus), 5, "stamina", physical_priorities)]"
+			dat += "<b>SOCIAL</b>"
+			if(social_priorities)
+				dat += "([social_priorities])"
+			dat += "<BR>"
+			dat += "Charisma: [build_attribute_score(Charisma, get_gen_attribute_limit(generation-generation_bonus), 5, "charisma", social_priorities)]"
+			dat += "Manipulation: [build_attribute_score(Manipulation, get_gen_attribute_limit(generation-generation_bonus), 5, "manipulation", social_priorities)]"
+			dat += "Appearance: [build_attribute_score(Appearance, get_gen_attribute_limit(generation-generation_bonus), 5, "appearance", social_priorities)]"
+			dat += "<b>MENTAL</b>"
+			if(mental_priorities)
+				dat += "([mental_priorities])"
+			dat += "<BR>"
+			dat += "Perception: [build_attribute_score(Perception, get_gen_attribute_limit(generation-generation_bonus), 5, "perception", mental_priorities)]"
+			dat += "Intelligence: [build_attribute_score(Intelligence, get_gen_attribute_limit(generation-generation_bonus), 5, "intelligence", mental_priorities)]"
+			dat += "Wits: [build_attribute_score(Wits, get_gen_attribute_limit(generation-generation_bonus), 5, "wits", mental_priorities)]"
+
+			dat += "<h2>[make_font_cool("ABILITIES")]</h2>"
+
+			dat += "<b>TALENTS</b><BR>"
+			dat += "Alertness: [build_attribute_score(Alertness, 5, 3, "alertness")]"
+			dat += "Athletics: [build_attribute_score(Athletics, 5, 3, "athletics")]"
+			dat += "Brawl: [build_attribute_score(Brawl, 5, 3, "brawl")]"
+			dat += "Empathy: [build_attribute_score(Empathy, 5, 3, "empathy")]"
+			dat += "Intimidation: [build_attribute_score(Intimidation, 5, 3, "intimidation")]"
+			dat += "<b>SKILLS</b><BR>"
+			dat += "Crafts: [build_attribute_score(Crafts, 5, 3, "crafts")]"
+			dat += "Melee: [build_attribute_score(Melee, 5, 3, "melee")]"
+			dat += "Firearms: [build_attribute_score(Firearms, 5, 3, "firearms")]"
+			dat += "Drive: [build_attribute_score(Drive, 5, 3, "drive")]"
+			dat += "Security: [build_attribute_score(Security, 5, 3, "security")]"
+			dat += "<b>KNOWLEDGES</b><BR>"
+			dat += "Finance: [build_attribute_score(Finance, 5, 3, "finance")]"
+			dat += "Investigation: [build_attribute_score(Investigation, 5, 3, "investigation")]"
+			dat += "Medicine: [build_attribute_score(Medicine, 5, 3, "medicine")]"
+			dat += "Linguistics: [build_attribute_score(Linguistics, 5, 3, "linguistics")]"
+			dat += "Occult: [build_attribute_score(Occult, 5, 3, "occult")]"
+
+			if(CONFIG_GET(flag/roundstart_traits))
+				dat += "<center><h2>[make_font_cool("QUIRK SETUP")]</h2>"
+				dat += "<a href='?_src_=prefs;preference=trait;task=menu'>Configure Quirks</a><br></center>"
+				dat += "<center><b>Current Quirks:</b> [all_quirks.len ? all_quirks.Join(", ") : "None"]</center>"
+
+		if (2) // Game Preferences
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>[make_font_cool("GENERAL")]</h2>"
 			dat += "<b>UI Style:</b> <a href='?_src_=prefs;task=input;preference=ui'>[UI_style]</a><br>"
@@ -1113,7 +1187,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(CONFIG_GET(flag/preference_map_voting))
 					dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a><br>"
 
-		if(2) //OOC Preferences
+		if(3) //OOC Preferences
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>[make_font_cool("OOC")]</h2>"
 			dat += "<b>Window Flashing:</b> <a href='?_src_=prefs;preference=winflash'>[(windowflashing) ? "Enabled":"Disabled"]</a><br>"
@@ -1189,7 +1263,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "</td>"
 			dat += "</tr></table>"
-		if(3) // Custom keybindings
+		if(4) // Custom keybindings
 			// Create an inverted list of keybindings -> key
 			var/list/user_binds = list()
 			for (var/key in key_bindings)
@@ -1251,20 +1325,77 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 //A proc that creates the score circles based on attribute and the additional bonus for the attribute
 //
-/datum/preferences/proc/build_attribute_score(var/attribute, var/bonus_number, var/price, var/variable_name)
+/datum/preferences/proc/build_attribute_score(var/attribute, var/max_number, var/price, var/variable_name, var/freepoints)
 	var/dat
 	for(var/a in 1 to attribute)
 		dat += "•"
-	for(var/b in 1 to bonus_number)
-		dat += "•"
-	var/leftover_circles = 5 - attribute //5 is the default number of blank circles
+	var/leftover_circles = max_number - attribute //5 is the default number of blank circles
 	for(var/c in 1 to leftover_circles)
 		dat += "o"
 	var/real_price = attribute ? (attribute*price) : price //In case we have an attribute of 0, we don't multiply by 0
-	if((true_experience >= real_price) && (attribute < ATTRIBUTE_BASE_LIMIT))
-		dat += "<a href='?_src_=prefs;preference=[variable_name];task=input'>Increase ([real_price])</a>"
+	if(leftover_circles)
+		if(freepoints > 0)
+			dat += "<a href='?_src_=prefs;preference=[variable_name];task=input'>Increase (free)</a>"
+		else if(true_experience >= real_price)
+			dat += "<a href='?_src_=prefs;preference=[variable_name];task=input'>Increase ([real_price])</a>"
 	dat += "<br>"
 	return dat
+
+/datum/preferences/proc/get_freebie_points(var/categor)
+	var/physical_priorities = 0
+	var/social_priorities = 0
+	var/mental_priorities = 0
+	for(var/i in priorities)
+		if(i == "Physical")
+			switch(priorities[i])
+				if(1)
+					physical_priorities = 7
+				if(2)
+					physical_priorities = 5
+				if(3)
+					physical_priorities = 3
+		if(i == "Social")
+			switch(priorities[i])
+				if(1)
+					social_priorities = 7
+				if(2)
+					social_priorities = 5
+				if(3)
+					social_priorities = 3
+		if(i == "Mental")
+			switch(priorities[i])
+				if(1)
+					mental_priorities = 7
+				if(2)
+					mental_priorities = 5
+				if(3)
+					mental_priorities = 3
+	physical_priorities = max(0, physical_priorities+3-Strength-Dexterity-Stamina)
+	social_priorities = max(0, social_priorities+3-Charisma-Manipulation-Appearance)
+	mental_priorities = max(0, mental_priorities+3-Perception-Intelligence-Wits)
+
+	switch(categor)
+		if("Physical")
+			return physical_priorities
+		if("Social")
+			return social_priorities
+		if("Mental")
+			return mental_priorities
+	return 0
+
+/proc/get_gen_attribute_limit(var/gen = 13)
+	switch(gen)
+		if(9)
+			return 6
+		if(8)
+			return 7
+		if(7)
+			return 8
+		if(6)
+			return 9
+	if(gen < 6)
+		return 10
+	return 5
 
 #undef APPEARANCE_CATEGORY_COLUMN
 #undef MAX_MUTANT_ROWS
@@ -2176,33 +2307,123 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					true_experience -= cost
 					auspice_level = max(1, auspice_level + 1)
 
-				if("physique")
-					if(handle_upgrade(physique, physique * 4))
-						physique++
+				if("priorities")
+					if(slotlocked)
+						return
+					if (alert("Are you sure you want to change your Priorities? This will reset your Attributes.", "Confirmation", "Yes", "No") != "Yes")
+						return
+					var/new_priorities = input(user, "Select a Discipline", "Discipline Selection") as null|anything in list("Physical, Social, Mental", "Physical, Mental, Social", "Social, Physical, Mental", "Social, Mental, Physical", "Mental, Social, Physical", "Mental, Physical, Social")
+					if(new_priorities)
+						switch(new_priorities)
+							if("Physical, Social, Mental")
+								priorities = list("Physical" = 1, "Social" = 2, "Mental" = 3)
+							if("Physical, Mental, Social")
+								priorities = list("Physical" = 1, "Mental" = 2, "Social" = 3)
+							if("Social, Physical, Mental")
+								priorities = list("Social" = 1, "Physical" = 2, "Mental" = 3)
+							if("Social, Mental, Physical")
+								priorities = list("Social" = 1, "Mental" = 2, "Physical" = 3)
+							if("Mental, Social, Physical")
+								priorities = list("Mental" = 1, "Social" = 2, "Physical" = 3)
+							if("Mental, Physical, Social")
+								priorities = list("Mental" = 1, "Physical" = 2, "Social" = 3)
+						reset_stats(TRUE)
+
+				if("strength")
+					if(handle_upgrade(Strength, Strength * 5, get_gen_attribute_limit(generation), "Physical"))
+						Strength++
 
 				if("dexterity")
-					if(handle_upgrade(dexterity, dexterity * 4))
-						dexterity++
+					if(handle_upgrade(Dexterity, Dexterity * 5, get_gen_attribute_limit(generation), "Physical"))
+						Dexterity++
 
-				if("social")
-					if(handle_upgrade(social, social * 4))
-						social++
+				if("stamina")
+					if(handle_upgrade(Stamina, Stamina * 5, get_gen_attribute_limit(generation), "Physical"))
+						Stamina++
 
-				if("mentality")
-					if(handle_upgrade(mentality, mentality * 4))
-						mentality++
+				if("charisma")
+					if(handle_upgrade(Charisma, Charisma * 5, get_gen_attribute_limit(generation), "Social"))
+						Charisma++
 
-				if("blood")
-					if(handle_upgrade(blood, blood * 6))
-						blood++
+				if("manipulation")
+					if(handle_upgrade(Manipulation, Manipulation * 5, get_gen_attribute_limit(generation), "Social"))
+						Manipulation++
 
-				if("lockpicking")
-					if(handle_upgrade(lockpicking, lockpicking ? lockpicking*2 : 3))
-						lockpicking++
+				if("appearance")
+					if(handle_upgrade(Appearance, Appearance * 5, get_gen_attribute_limit(generation), "Social"))
+						Appearance++
+
+				if("perception")
+					if(handle_upgrade(Perception, Perception * 5, get_gen_attribute_limit(generation), "Mental"))
+						Perception++
+
+				if("intelligence")
+					if(handle_upgrade(Intelligence, Intelligence * 5, get_gen_attribute_limit(generation), "Mental"))
+						Intelligence++
+
+				if("wits")
+					if(handle_upgrade(Wits, Wits * 5, get_gen_attribute_limit(generation), "Mental"))
+						Wits++
+
+				if("alertness")
+					if(handle_upgrade(Alertness, Alertness * 3, 5))
+						Alertness++
 
 				if("athletics")
-					if(handle_upgrade(athletics, athletics ? athletics*2 : 3))
-						athletics++
+					if(handle_upgrade(Athletics, Athletics * 3, 5))
+						Athletics++
+
+				if("brawl")
+					if(handle_upgrade(Brawl, Brawl * 3, 5))
+						Brawl++
+
+				if("empathy")
+					if(handle_upgrade(Empathy, Empathy * 3, 5))
+						Empathy++
+
+				if("intimidation")
+					if(handle_upgrade(Intimidation, Intimidation * 3, 5))
+						Intimidation++
+
+				if("crafts")
+					if(handle_upgrade(Crafts, Crafts * 3, 5))
+						Crafts++
+
+				if("melee")
+					if(handle_upgrade(Melee, Melee * 3, 5))
+						Melee++
+
+				if("firearms")
+					if(handle_upgrade(Firearms, Firearms * 3, 5))
+						Firearms++
+
+				if("drive")
+					if(handle_upgrade(Drive, Drive * 3, 5))
+						Drive++
+
+				if("security")
+					if(handle_upgrade(Security, Security * 3, 5))
+						Security++
+
+				if("finance")
+					if(handle_upgrade(Finance, Finance * 3, 5))
+						Finance++
+
+				if("investigation")
+					if(handle_upgrade(Investigation, Investigation * 3, 5))
+						Investigation++
+
+				if("medicine")
+					if(handle_upgrade(Medicine, Medicine * 3, 5))
+						Medicine++
+
+				if("linguistics")
+					if(handle_upgrade(Linguistics, Linguistics * 3, 5))
+						Linguistics++
+
+				if("occult")
+					if(handle_upgrade(Occult, Occult * 3, 5))
+						Occult++
 
 				if("tribe")
 					if(slotlocked || !(pref_species.id == "garou"))
@@ -2219,7 +2440,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_breed = input("Choose your Breed.", "Breed") as null|anything in list("Homid", "Metis", "Lupus")
 					if (new_breed)
 						breed = new_breed
-
+/*
 				if("archetype")
 					if(slotlocked)
 						return
@@ -2241,7 +2462,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						blood = archetip.start_blood
 						lockpicking = archetip.start_lockpicking
 						athletics = archetip.start_athletics
-
+*/
 				if("discipline")
 					if(pref_species.id == "kindred")
 						var/i = text2num(href_list["upgradediscipline"])
@@ -2288,6 +2509,32 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						return
 
 					enlightenment = !enlightenment
+
+				if("languages")
+					if(length(languages) >= Linguistics)
+						return
+
+					var/list/languages_possible_base = list(
+					/datum/language/espanol,
+					/datum/language/mandarin,
+					/datum/language/beachbum,
+					/datum/language/russian,
+					/datum/language/italian,
+					/datum/language/latin,
+					/datum/language/hebrew,
+					/datum/language/french,
+					/datum/language/arabic,
+					/datum/language/german,
+					/datum/language/hebrew,
+					/datum/language/japanese,
+					/datum/language/cantonese,
+					/datum/language/greek
+					)
+					var/list/available = languages_possible_base - languages
+
+					var/result = input(user, "Learn Language", "Language") as null|anything in available
+					if(result)
+						languages += result
 
 				if("dharmarise")
 					if ((true_experience < 20) || (dharma_level >= 6) || !(pref_species.id == "kuei-jin"))
@@ -2967,10 +3214,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	ShowChoices(user)
 	return TRUE
 
-/datum/preferences/proc/handle_upgrade(var/number, var/cost)
-	if ((true_experience < cost) || (number >= ATTRIBUTE_BASE_LIMIT))
+/datum/preferences/proc/handle_upgrade(var/number, var/cost, var/numlimit, var/catgr)
+	if (((true_experience < cost) && !get_freebie_points(catgr)) || (number >= numlimit))
 		return FALSE
-	true_experience -= cost
+	if(!get_freebie_points(catgr))
+		true_experience -= cost
 	return TRUE
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE, is_latejoiner = TRUE)
@@ -3007,6 +3255,35 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.name = character.real_name
 	character.diablerist = diablerist
 
+	character.attributes.strength = Strength
+	character.attributes.dexterity = Dexterity
+	character.attributes.stamina = Stamina
+	character.attributes.charisma = Charisma
+	character.attributes.manipulation = Manipulation
+	character.attributes.appearance = Appearance
+	character.attributes.perception = Perception
+	character.attributes.intelligence = Intelligence
+	character.attributes.wits = Wits
+
+	character.attributes.Alertness = Alertness
+	character.attributes.Athletics = Athletics
+	character.attributes.Brawl = Brawl
+	character.attributes.Empathy = Empathy
+	character.attributes.Intimidation = Intimidation
+
+	character.attributes.Crafts = Crafts
+	character.attributes.Melee = Melee
+	character.attributes.Firearms = Firearms
+	character.attributes.Drive = Drive
+	character.attributes.Security = Security
+
+	character.attributes.Finance = Finance
+	character.attributes.Investigation = Investigation
+	character.attributes.Medicine = Medicine
+	character.attributes.Linguistics = Linguistics
+	character.attributes.Occult = Occult
+
+/*
 	character.physique = physique
 	character.dexterity = dexterity
 	character.social = social
@@ -3015,17 +3292,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.lockpicking = lockpicking
 	character.athletics = athletics
 	character.info_known = info_known
-
-	var/datum/archetype/A = new archetype()
-	character.additional_physique = A.archetype_additional_physique
-	character.additional_dexterity = A.archetype_additional_dexterity
-	character.additional_social = A.archetype_additional_social
-	character.additional_mentality = A.archetype_additional_mentality
-	character.additional_blood = A.archetype_additional_blood
-	character.additional_lockpicking = A.archetype_additional_lockpicking
-	character.additional_athletics = A.archetype_additional_athletics
-	A.special_skill(character)
-
+*/
 	if(pref_species.name == "Vampire")
 		var/datum/vampireclane/CLN = new clane.type()
 		character.clane = CLN
@@ -3053,8 +3320,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			character.max_yin_chi = 2
 
 	if(pref_species.name == "Werewolf")
-		character.maxHealth = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*(character.physique + character.additional_physique)))
-		character.health = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*(character.physique + character.additional_physique )))
 		switch(tribe)
 			if("Wendigo")
 				character.yin_chi = 1
@@ -3071,14 +3336,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				character.max_yin_chi = 1 + auspice_level * 2
 				character.yang_chi = 5
 				character.max_yang_chi = 5
-	else
-		var/dharma_bonus = 0
-		if(pref_species.name == "Kuei-Jin")
-			dharma_bonus = dharma_level
-		character.maxHealth = round((initial(character.maxHealth)-initial(character.maxHealth)/4)+(initial(character.maxHealth)/4)*((character.physique+character.additional_physique )+13-generation+dharma_bonus))
-		character.health = character.maxHealth
-	if(pref_species.name == "Vampire")
-		character.humanity = humanity
+	character.humanity = humanity
 	character.masquerade = masquerade
 	if(!character_setup)
 		if(character in GLOB.masquerade_breakers_list)
@@ -3180,7 +3438,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				else
 					character.transformator.crinos_form.name = real_name
 					character.transformator.lupus_form.name = real_name
-
+/*
 				character.transformator.crinos_form.physique = physique
 				character.transformator.crinos_form.dexterity = dexterity
 				character.transformator.crinos_form.mentality = mentality
@@ -3192,11 +3450,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				character.transformator.lupus_form.mentality = mentality
 				character.transformator.lupus_form.social = social
 				character.transformator.lupus_form.blood = blood
-
-				character.transformator.lupus_form.maxHealth = round((initial(character.transformator.lupus_form.maxHealth)+(initial(character.maxHealth)/4)*(character.physique + character.additional_physique )))+(character.auspice.level-1)*50
-				character.transformator.lupus_form.health = character.transformator.lupus_form.maxHealth
-				character.transformator.crinos_form.maxHealth = round((initial(character.transformator.crinos_form.maxHealth)+(initial(character.maxHealth)/4)*(character.physique + character.additional_physique )))+(character.auspice.level-1)*50
-				character.transformator.crinos_form.health = character.transformator.crinos_form.maxHealth
+*/
 //		character.transformator.crinos_form.update_icons()
 //		character.transformator.lupus_form.update_icons()
 	if(pref_species.mutant_bodyparts["tail_lizard"])

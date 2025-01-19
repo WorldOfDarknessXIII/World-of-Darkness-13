@@ -11,6 +11,9 @@
 					HUN.forceMove(B)
 
 	var/obj/item/storage/backpack/b = locate() in H
+	for(var/i in 1 to get_a_manipulation(H)+get_a_finance(H))
+		var/obj/item/stack/dollar/twohundredfifty/HUN = new(H.loc)
+		HUN.forceMove(b)
 	if(b)
 		var/obj/item/vamp/creditcard/card = locate() in b.contents
 		if(card && card.has_checked == FALSE)

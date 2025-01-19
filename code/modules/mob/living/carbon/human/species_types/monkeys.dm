@@ -72,7 +72,7 @@
 		if(ishuman(victim))
 			var/mob/living/carbon/human/human_victim = victim
 			affecting = human_victim.get_bodypart(pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-		var/armor = victim.run_armor_check(affecting, MELEE)
+		var/armor = victim.run_armor_check(affecting, BASHING)
 		if(prob(25))
 			victim.visible_message("<span class='danger'>[user]'s bite misses [victim]!</span>",
 				"<span class='danger'>You avoid [user]'s bite!</span>", "<span class='hear'>You hear jaws snapping shut!</span>", COMBAT_MESSAGE_RANGE, user)

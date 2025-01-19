@@ -1345,6 +1345,19 @@ GLOBAL_LIST_EMPTY(selectable_races)
 						"<span class='userdanger'>You block [user]'s grab!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, "<span class='warning'>Your grab at [target] was blocked!</span>")
 		return FALSE
+	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_brawl(user)+get_potence_dices(user), 6+user.stat, user)
+	if(modifikator == -1)
+		user.AdjustKnockdown(20, TRUE)
+		playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
+		target.visible_message("<span class='danger'>[user]'s grab misses [target]!</span>", \
+			"<span class='danger'>You avoid [user]'s grab!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, "<span class='warning'>Your grab misses [target]!</span>")
+		return FALSE
+	else if(modifikator == 0)
+		target.visible_message("<span class='warning'>[target] blocks [user]'s grab!</span>", \
+						"<span class='userdanger'>You block [user]'s grab!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, "<span class='warning'>Your grab at [target] was blocked!</span>")
+		return FALSE
 	if(attacker_style?.grab_act(user,target))
 		return TRUE
 	else
@@ -1356,6 +1369,20 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
+
+	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_brawl(user)+get_potence_dices(user), 6+user.stat, user)
+	var/atk_verb = user.dna.species.attack_verb
+	if(modifikator == -1)
+		target = user
+		modifikator = 3
+	else if(modifikator == 0)
+		playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
+		target.visible_message("<span class='danger'>[user]'s [atk_verb] misses [target]!</span>", \
+			"<span class='danger'>You avoid [user]'s [atk_verb]!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, "<span class='warning'>Your [atk_verb] misses [target]!</span>")
+		log_combat(user, target, "attempted to punch")
+		return FALSE
+
 	if(target.check_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s attack!</span>", \
 						"<span class='userdanger'>You block [user]'s attack!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
@@ -1365,7 +1392,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		return TRUE
 	else
 
-		var/atk_verb = user.dna.species.attack_verb
 		if(target.body_position == LYING_DOWN)
 			atk_verb = ATTACK_EFFECT_KICK
 
@@ -1384,18 +1410,15 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			else
 				user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
-		var/damage = (rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)/3)*(user.get_total_physique())
+		var/damage = (rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh))*(modifikator/3)
 		if(user.age < 16)
 			damage = round(damage/2)
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 
-		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
+		var/miss_chance = 0//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(user.dna.species.punchdamagelow)
-			if(atk_verb == ATTACK_EFFECT_KICK || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER)) //kicks never miss (provided your species deals more than 0 damage)
-				miss_chance = 0
-			else
-				miss_chance = min((user.dna.species.punchdamagehigh/user.dna.species.punchdamagelow) + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
+			miss_chance = 0
 
 		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 			playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
@@ -1405,7 +1428,11 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			log_combat(user, target, "attempted to punch")
 			return FALSE
 
-		var/armor_block = target.run_armor_check(affecting, MELEE)
+		var/armor_block
+		if(get_potence_dices(user))
+			armor_block = target.run_armor_check(affecting, AGGRAVATED)
+		else
+			armor_block = target.run_armor_check(affecting, BASHING)
 
 		playsound(target.loc, user.dna.species.attack_sound, 25, TRUE, -1)
 
@@ -1450,6 +1477,19 @@ GLOBAL_LIST_EMPTY(selectable_races)
 						"<span class='danger'>You block [user]'s shove!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, "<span class='warning'>Your shove at [target] was blocked!</span>")
 		return FALSE
+	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_brawl(user)+get_potence_dices(user), 6+user.stat, user)
+	if(modifikator == -1)
+		user.AdjustKnockdown(20, TRUE)
+		playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
+		target.visible_message("<span class='danger'>[user]'s disarm misses [target]!</span>", \
+			"<span class='danger'>You avoid [user]'s disarm!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, "<span class='warning'>Your disarm misses [target]!</span>")
+		return FALSE
+	else if(modifikator == 0)
+		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm!</span>", \
+						"<span class='userdanger'>You block [user]'s disarm!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, "<span class='warning'>Your disarm at [target] was blocked!</span>")
+		return FALSE
 	if(attacker_style?.disarm_act(user,target))
 		return TRUE
 	if(user.body_position != STANDING_UP)
@@ -1472,6 +1512,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 
 	if(!istype(M)) //sanity check for drones.
 		return
+
 	if(M.mind)
 		attacker_style = M.mind.martial_art
 	if((M != H) && M.a_intent != INTENT_HELP && H.check_shields(M, 0, M.name, attack_type = UNARMED_ATTACK))
@@ -1496,16 +1537,14 @@ GLOBAL_LIST_EMPTY(selectable_races)
 
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
-	var/modifikator = 1
-	if(ishuman(user))
-		var/mob/living/carbon/human/USR = user
-		if(USR.dna)
-			if(USR.dna.species)
-				modifikator = USR.dna.species.meleemod
-		if(USR.age < 16)
-			modifikator = modifikator/2
-		if(ishuman(user))
-			modifikator = (modifikator/3)*(user.get_total_physique())
+	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_melee(user)+get_potence_dices(user), 6+user.stat, user)
+	if(modifikator == -1)
+		H = user
+		modifikator = 3
+	else if(modifikator == 0)
+		user.visible_message("<span class='warning'>[user] fails to attack with [I]!</span>", \
+						"<span class='userdanger'>You fail to attack with [I]!</span>")
+		return
 	if(user != H)
 		if(H.check_shields(I, I.force, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
 			return FALSE
@@ -1514,6 +1553,8 @@ GLOBAL_LIST_EMPTY(selectable_races)
 						"<span class='userdanger'>You block [I]!</span>")
 		return FALSE
 
+	modifikator = modifikator/3
+
 	var/hit_area
 	if(!affecting) //Something went wrong. Maybe the limb is missing?
 		affecting = H.bodyparts[1]
@@ -1521,8 +1562,14 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	hit_area = affecting.name
 	var/def_zone = affecting.body_zone
 
-	var/armor_block = H.run_armor_check(affecting, MELEE, "<span class='notice'>Your armor has protected your [hit_area]!</span>", "<span class='warning'>Your armor has softened a hit to your [hit_area]!</span>",I.armour_penetration)
-	armor_block = min(90,armor_block) //cap damage reduction at 90%
+	var/damagtype = BASHING
+	if(I.sharpness)
+		damagtype = LETHAL
+	if(I.damtype == CLONE || ((iskindred(H) || iscathayan(H)) && I.damtype == BURN))
+		damagtype = AGGRAVATED
+
+	var/armor_block = H.run_armor_check(affecting, damagtype, "<span class='notice'>Your armor has protected your [hit_area]!</span>", "<span class='warning'>Your armor has softened a hit to your [hit_area]!</span>",I.armour_penetration)
+//	armor_block = min(90,armor_block) //cap damage reduction at 90%
 	var/Iwound_bonus = I.wound_bonus
 
 	// this way, you can't wound with a surgical tool on help intent if they have a surgery active and are lying down, so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
@@ -1546,7 +1593,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		return FALSE //item force is zero
 
 	var/bloody = FALSE
-	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
+	if(((I.damtype == BRUTE) && I.force && (I.sharpness || H.getBruteLoss() > 25) && prob(25 + (I.force * 2))))
 		if(affecting.status == BODYPART_ORGANIC)
 			I.add_mob_blood(H)	//Make the weapon bloody, not the person.
 			if(prob(I.force * 2))	//blood spatter!

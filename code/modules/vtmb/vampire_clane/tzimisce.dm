@@ -128,8 +128,7 @@
 				H.skin_tone = "albino"
 				H.hairstyle = "Bald"
 				H.base_body_mod = ""
-				H.physiology.armor.melee = H.physiology.armor.melee+20
-				H.physiology.armor.bullet = H.physiology.armor.bullet+20
+				H.attributes.tzimisce_bonus = 2
 				H.update_body()
 				H.update_body_parts()
 				H.update_hair()

@@ -23,19 +23,25 @@
 			success = TRUE
 
 	else if(tool)
-		for(var/key in implements)
-			var/match = FALSE
+		var/rollcheck = secret_vampireroll(get_a_intelligence(user)+get_a_medicine(user), 6, user)
+		if(rollcheck > 1)
+			for(var/key in implements)
+				var/match = FALSE
 
-			if(ispath(key) && istype(tool, key))
-				match = TRUE
-			else if(tool.tool_behaviour == key)
-				match = TRUE
+				if(ispath(key) && istype(tool, key))
+					match = TRUE
+				else if(tool.tool_behaviour == key)
+					match = TRUE
 
-			if(match)
-				implement_type = key
-				if(tool_check(user, tool))
-					success = TRUE
-					break
+				if(match)
+					implement_type = key
+					if(tool_check(user, tool))
+						success = TRUE
+						break
+		else
+			success = FALSE
+			if(rollcheck == -1)
+				target.adjustBruteLoss(20, TRUE, TRUE)
 
 	if(success)
 		if(target_zone == surgery.location)

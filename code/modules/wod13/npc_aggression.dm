@@ -1,11 +1,13 @@
 /mob/living/carbon/human/npc/proc/Aggro(var/mob/M, var/attacked = FALSE)
-	if(attacked && danger_source != M)
-		walk(src,0)
 	if(M == src)
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.vampire_faction == vampire_faction && !H.client)
+		if(H.vampire_faction == vampire_faction || presence_master == H)
+			return
+	if(istype(M,/mob/living/carbon/human/npc))
+		var/mob/living/carbon/human/npc/H = M
+		if(H && !H.presence_master)
 			return
 	if((stat != DEAD) && !HAS_TRAIT(M, TRAIT_DEATHCOMA))
 		danger_source = M
@@ -14,9 +16,9 @@
 			if(health != last_health)
 				last_health = health
 				last_damager = M
-	if(CheckMove())
+	if(CheckMove(hardlock = TRUE))
 		return
-	if((last_danger_meet + 5 SECONDS) < world.time)
+	if((last_danger_meet + 2 SECONDS) < world.time)
 		last_danger_meet = world.time
 		if(prob(50))
 			if(!my_weapon)

@@ -510,7 +510,7 @@ Dancer
 /datum/quirk/foreign/remove()
 	var/mob/living/carbon/H = quirk_holder
 	H.remove_blocked_language(/datum/language/english)
-
+/*
 /datum/quirk/espanol
 	name = "Espanol"
 	desc = "You know the Spanish language."
@@ -618,7 +618,7 @@ Dancer
 /datum/quirk/greek/add()
 	var/mob/living/carbon/H = quirk_holder
 	H.grant_language(/datum/language/greek)
-
+*/
 
 /datum/quirk/consumption
 	name = "Consumption"

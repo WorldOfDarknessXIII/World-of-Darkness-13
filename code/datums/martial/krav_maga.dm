@@ -87,7 +87,7 @@
 	if(D.stat || D.IsParalyzed())
 		return FALSE
 	var/obj/item/bodypart/affecting = D.get_bodypart(BODY_ZONE_CHEST)
-	var/armor_block = D.run_armor_check(affecting, MELEE)
+	var/armor_block = D.run_armor_check(affecting, BASHING)
 	D.visible_message("<span class='warning'>[A] leg sweeps [D]!</span>", \
 					"<span class='userdanger'>Your legs are sweeped by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
 	to_chat(A, "<span class='danger'>You leg sweep [D]!</span>")
@@ -132,7 +132,7 @@
 		return TRUE
 	log_combat(A, D, "punched")
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
-	var/armor_block = D.run_armor_check(affecting, MELEE)
+	var/armor_block = D.run_armor_check(affecting, BASHING)
 	var/picked_hit_type = pick("punch", "kick")
 	var/bonus_damage = 0
 	if(D.body_position == LYING_DOWN)
@@ -155,7 +155,7 @@
 	if(check_streak(A,D))
 		return TRUE
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
-	var/armor_block = D.run_armor_check(affecting, MELEE)
+	var/armor_block = D.run_armor_check(affecting, BASHING)
 	if(D.body_position == STANDING_UP)
 		D.visible_message("<span class='danger'>[A] reprimands [D]!</span>", \
 					"<span class='userdanger'>You're slapped by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)

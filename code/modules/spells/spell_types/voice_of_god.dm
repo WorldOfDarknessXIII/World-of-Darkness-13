@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/voice_of_god
-	name = "Voice of Domination"
+	name = "Voice of Presence"
 	desc = "Speak with an incredibly compelling voice, forcing listeners to obey your commands."
 	charge_max = 1200 //variable
 	cooldown_min = 0
@@ -12,8 +12,8 @@
 	var/command
 	var/cooldown_mod = 1
 	var/power_mod = 1
-	var/list/spans = list("colossus","yell")
-	var/speech_sound = 'sound/magic/clockwork/invoke_general.ogg'
+	var/list/spans = list("userlove","yell")
+	var/speech_sound = 'code/modules/wod13/sounds/presence_activate.ogg'
 	var/speech_volume = 300
 	var/speech_vary = TRUE
 	var/reverb = FALSE

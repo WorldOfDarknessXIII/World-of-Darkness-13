@@ -1,11 +1,14 @@
 //Speech verbs.
 
 ///Say verb
-/mob/verb/say_verb()
+/mob/verb/say_verb(message as text|null)
 	set name = "Say"
 	set category = "IC"
+	set instant = TRUE
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		return
+	if(!message)
 		return
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -13,18 +16,13 @@
 		var/mutable_appearance/say_overlay = mutable_appearance('icons/mob/talk.dmi', "default0", -SAY_LAYER)
 		H.overlays_standing[SAY_LAYER] = say_overlay
 		H.apply_overlay(SAY_LAYER)
-		var/mess = input("What are you trying to say?") as text|null
-		if(say(mess))
+		if(say(message))
 			H.remove_overlay(SAY_LAYER)
-		else
-			H.remove_overlay(SAY_LAYER)
-//				H.remove_overlay(SAY_LAYER)
-//			else
-//				H.remove_overlay(SAY_LAYER)
+			return
+		//We do this here after an if/return to make sure the overlay gets removed if they can't say something for some reason
+		H.remove_overlay(SAY_LAYER)
 	else
-		var/mess = input("What are you trying to say?") as text|null
-		if(mess)
-			say(mess)
+		say(message)
 
 /mob/living/verb/flavor_verb()
 	set name = "Flavor Text"

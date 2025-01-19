@@ -209,12 +209,10 @@
 		if(ishuman(owner))
 			playsound(get_turf(owner), 'code/modules/wod13/sounds/resist_pain.ogg', 75, FALSE)
 			var/mob/living/carbon/human/H = owner
-			H.physiology.armor.melee = 40
-			H.physiology.armor.bullet = 25
+			H.attributes.stamina_bonus += 4
 			to_chat(owner, "<span class='notice'>You feel your skin thickering...</span>")
 			spawn(15 SECONDS)
-				H.physiology.armor.melee = initial(H.physiology.armor.melee)
-				H.physiology.armor.bullet = initial(H.physiology.armor.bullet)
+				H.attributes.stamina_bonus -= 4
 				to_chat(owner, "<span class='warning'>Your skin is thin again...</span>")
 		else
 			playsound(get_turf(owner), 'code/modules/wod13/sounds/resist_pain.ogg', 75, FALSE)
@@ -446,11 +444,9 @@
 		playsound(get_turf(owner), 'code/modules/wod13/sounds/transform.ogg', 50, FALSE)
 		if(G.glabro)
 			H.remove_overlay(PROTEAN_LAYER)
-			G.punchdamagelow -= 15
-			G.punchdamagehigh -= 15
-			H.physique = initial(H.physique)
-			H.physiology.armor.melee -= 15
-			H.physiology.armor.bullet -= 15
+			H.attributes.strength_bonus -= 2
+			H.attributes.stamina_bonus -= 2
+			H.attributes.dexterity_bonus -= 2
 			var/matrix/M = matrix()
 			M.Scale(1)
 			animate(H, transform = M, time = 1 SECONDS)
@@ -461,11 +457,9 @@
 			var/mutable_appearance/glabro_overlay = mutable_appearance('code/modules/wod13/werewolf_abilities.dmi', H.transformator.crinos_form?.sprite_color, -PROTEAN_LAYER)
 			H.overlays_standing[PROTEAN_LAYER] = glabro_overlay
 			H.apply_overlay(PROTEAN_LAYER)
-			G.punchdamagelow += 15
-			G.punchdamagehigh += 15
-			H.physique = H.physique+2
-			H.physiology.armor.melee += 15
-			H.physiology.armor.bullet += 15
+			H.attributes.strength_bonus += 2
+			H.attributes.stamina_bonus += 2
+			H.attributes.dexterity_bonus += 2
 			var/matrix/M = matrix()
 			M.Scale(1.23)
 			animate(H, transform = M, time = 1 SECONDS)

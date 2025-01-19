@@ -318,14 +318,12 @@
 				inflating_matrix.Scale(1.2, 1)
 				var/matrix/initial = caster.transform
 				animate(caster, transform = inflating_matrix, 1 SECONDS)
-				caster.physiology.armor.melee += 20
-				caster.physiology.armor.bullet += 20
+				caster.attributes.bloodshield_bonus = 3
 				caster.add_movespeed_modifier(/datum/movespeed_modifier/blood_fat)
 				spawn(delay+caster.discipline_time_plus)
 					if(caster)
 						animate(caster, transform = initial, 1 SECONDS)
-						caster.physiology.armor.melee -= 20
-						caster.physiology.armor.bullet -= 20
+						caster.attributes.bloodshield_bonus = 0
 						caster.remove_movespeed_modifier(/datum/movespeed_modifier/blood_fat)
 			else if(result == "Shrink")
 				var/matrix/shrinking_matrix = matrix()
@@ -435,8 +433,7 @@
 			var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "[caster.base_body_mod]rock", -POTENCE_LAYER)
 			caster.overlays_standing[POTENCE_LAYER] = fortitude_overlay
 			caster.apply_overlay(POTENCE_LAYER)
-			caster.physiology.armor.melee += 50
-			caster.physiology.armor.bullet += 50
+			caster.attributes.stamina_bonus += 3
 			caster.drop_all_held_items()
 			var/obj/item/melee/powerfist/stone/righthand_stonefist = new (caster)
 			var/obj/item/melee/powerfist/stone/lefthand_stonefist = new (caster)
@@ -445,8 +442,7 @@
 			ADD_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
-					caster.physiology.armor.melee -= 50
-					caster.physiology.armor.bullet -= 50
+					caster.attributes.stamina_bonus -= 3
 					caster.remove_overlay(POTENCE_LAYER)
 					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 					if(righthand_stonefist)
@@ -493,8 +489,7 @@
 		if(1)
 			ADD_TRAIT(caster, TRAIT_NOSOFTCRIT, MAGIC_TRAIT)
 			ADD_TRAIT(caster, TRAIT_NOHARDCRIT, MAGIC_TRAIT)
-			caster.physiology.armor.melee += 25
-			caster.physiology.armor.bullet += 25
+			caster.attributes.stamina_bonus += 3
 			caster.add_movespeed_modifier(/datum/movespeed_modifier/necroing)
 			var/initial_limbs_id = caster.dna.species.limbs_id
 			caster.dna.species.limbs_id = "rotten1"
@@ -504,8 +499,7 @@
 				if(caster)
 					REMOVE_TRAIT(caster, TRAIT_NOSOFTCRIT, MAGIC_TRAIT)
 					REMOVE_TRAIT(caster, TRAIT_NOHARDCRIT, MAGIC_TRAIT)
-					caster.physiology.armor.melee -= 25
-					caster.physiology.armor.bullet -= 25
+					caster.attributes.stamina_bonus -= 3
 					caster.remove_movespeed_modifier(/datum/movespeed_modifier/necroing)
 					caster.dna.species.limbs_id = initial_limbs_id
 					caster.update_body()
@@ -544,8 +538,7 @@
 		if(5)
 			ADD_TRAIT(caster, TRAIT_NOSOFTCRIT, MAGIC_TRAIT)
 			ADD_TRAIT(caster, TRAIT_NOHARDCRIT, MAGIC_TRAIT)
-			caster.physiology.armor.melee += 25
-			caster.physiology.armor.bullet += 25
+			caster.attributes.stamina_bonus += 3
 			caster.unique_body_sprite = "rotten1"
 			caster.update_body()
 			caster.set_light(1.4,5,"#34D352")
@@ -554,8 +547,7 @@
 				if(caster)
 					REMOVE_TRAIT(caster, TRAIT_NOSOFTCRIT, MAGIC_TRAIT)
 					REMOVE_TRAIT(caster, TRAIT_NOHARDCRIT, MAGIC_TRAIT)
-					caster.physiology.armor.melee -= 25
-					caster.physiology.armor.bullet -= 25
+					caster.attributes.stamina_bonus -= 3
 					caster.unique_body_sprite = null
 					caster.update_body()
 					caster.set_light(0)
@@ -656,7 +648,7 @@
 
 /datum/chi_discipline/ghost_flame_shintai/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/limit = min(2, level) + caster.social + caster.more_companions - 1
+	var/limit = min(2, level) + get_a_charisma(caster)+get_a_empathy(caster)
 	if(length(caster.beastmaster) >= limit)
 		var/mob/living/simple_animal/hostile/beastmaster/random_beast = pick(caster.beastmaster)
 		random_beast.death()
@@ -863,9 +855,7 @@
 			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "flesh_arms", -PROTEAN_LAYER)
 			caster.overlays_standing[PROTEAN_LAYER] = potence_overlay
 			caster.apply_overlay(PROTEAN_LAYER)
-			caster.dna.species.punchdamagelow += 20
-			caster.dna.species.punchdamagehigh += 20
-			caster.dna.species.meleemod += 1
+			caster.attributes.strength_bonus += 2
 			caster.dna.species.attack_sound = 'code/modules/wod13/sounds/heavypunch.ogg'
 			tackler = caster.AddComponent(/datum/component/tackler, stamina_cost=0, base_knockdown = 1 SECONDS, range = 2+level_casting, speed = 1, skill_mod = 0, min_distance = 0)
 			caster.potential = 4
@@ -874,9 +864,7 @@
 				if(caster)
 					caster.remove_overlay(PROTEAN_LAYER)
 					caster.potential = 0
-					caster.dna.species.punchdamagelow -= 20
-					caster.dna.species.punchdamagehigh -= 20
-					caster.dna.species.meleemod -= 1
+					caster.attributes.strength_bonus -= 2
 					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
 					qdel(tackler)
 					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
@@ -1010,18 +998,15 @@
 	..()
 	switch(current_form)
 		if("Samurai")
-			var/mod = 10*level_casting
 			caster.remove_overlay(UNICORN_LAYER)
 			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "samurai", -UNICORN_LAYER)
 			caster.overlays_standing[UNICORN_LAYER] = potence_overlay
 			caster.apply_overlay(UNICORN_LAYER)
-			caster.physiology.armor.melee += mod
-			caster.physiology.armor.bullet += mod
+			caster.attributes.stamina_bonus += level_casting
 			ADD_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 			spawn((delay)+caster.discipline_time_plus)
 				if(caster)
-					caster.physiology.armor.melee -= mod
-					caster.physiology.armor.bullet -= mod
+					caster.attributes.stamina_bonus -= level_casting
 					caster.remove_overlay(UNICORN_LAYER)
 					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/demonshintai_deactivate.ogg', 50, FALSE)
@@ -1094,22 +1079,16 @@
 							caster.remove_movespeed_modifier(/datum/movespeed_modifier/demonform5)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/demonshintai_deactivate.ogg', 50, FALSE)
 		if("Giant")
-			var/mod = level_casting*10
-			var/meleemod = level_casting*0.5
 			caster.remove_overlay(UNICORN_LAYER)
 			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "giant", -UNICORN_LAYER)
 			caster.overlays_standing[UNICORN_LAYER] = potence_overlay
 			caster.apply_overlay(UNICORN_LAYER)
-			caster.dna.species.punchdamagelow += mod
-			caster.dna.species.punchdamagehigh += mod
-			caster.dna.species.meleemod += meleemod
+			caster.attributes.strength_bonus += level_casting
 			ADD_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 			spawn((delay)+caster.discipline_time_plus)
 				if(caster)
 					caster.remove_overlay(UNICORN_LAYER)
-					caster.dna.species.punchdamagelow -= mod
-					caster.dna.species.punchdamagehigh -= mod
-					caster.dna.species.meleemod -= meleemod
+					caster.attributes.strength_bonus -= level_casting
 					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/demonshintai_deactivate.ogg', 50, FALSE)
 		if("Foul")
@@ -1176,10 +1155,17 @@
 
 /datum/chi_discipline/hellweaving/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/mypower = caster.get_total_social()
-	var/theirpower = caster.get_total_mentality()
-	if(theirpower >= mypower)
-		to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to cause flashbacks for!</span>")
+	var/mypower = secret_vampireroll(max(get_a_strength(caster), get_a_manipulation(caster))+get_a_intimidation(caster), 7-level, caster)
+	if(mypower < 1)
+		to_chat(caster, "<span class='warning'>You fail at hellweaving!</span>")
+		if(mypower == -1)
+			caster.Stun(3 SECONDS)
+			caster.do_jitter_animation(10)
+		return
+	var/difficulty = 4+mypower
+	var/theirpower = secret_vampireroll(get_a_wits(target)+get_a_alertness(target), difficulty, target)
+	if(theirpower >= 2)
+		to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to hellweave!</span>")
 		return
 	switch(level_casting)
 		if(1)
@@ -1228,19 +1214,15 @@
 
 /datum/chi_discipline/iron_mountain/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/mod = level_casting
-	var/bonus = 15 * mod
 //	caster.remove_overlay(FORTITUDE_LAYER)
 //	var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "mountain", -FORTITUDE_LAYER)
 //	caster.overlays_standing[FORTITUDE_LAYER] = fortitude_overlay
 //	caster.apply_overlay(FORTITUDE_LAYER)
-	caster.physiology.armor.melee += bonus
-	caster.physiology.armor.bullet += bonus
+	caster.attributes.fortitude_bonus = level_casting
 	spawn(delay+caster.discipline_time_plus)
 		if(caster)
 			caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/ironmountain_deactivate.ogg', 50, FALSE)
-			caster.physiology.armor.melee -= bonus
-			caster.physiology.armor.bullet -= bonus
+			caster.attributes.fortitude_bonus = 0
 //			caster.remove_overlay(FORTITUDE_LAYER)
 
 /datum/chi_discipline/kiai
@@ -1273,10 +1255,17 @@
 			sound_gender = 'code/modules/wod13/sounds/kiai_female.ogg'
 	caster.emote("scream")
 	playsound(caster.loc, sound_gender, 100, FALSE)
-	var/mypower = caster.get_total_social()
-	var/theirpower = caster.get_total_mentality()
-	if(theirpower >= mypower)
-		to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to affect!</span>")
+	var/mypower = secret_vampireroll(max(get_a_strength(caster), get_a_manipulation(caster))+get_a_intimidation(caster), 7-level, caster)
+	if(mypower < 1)
+		to_chat(caster, "<span class='warning'>You fail at screaming!</span>")
+		if(mypower == -1)
+			caster.Stun(3 SECONDS)
+			caster.do_jitter_animation(10)
+		return
+	var/difficulty = 4+mypower
+	var/theirpower = secret_vampireroll(get_a_wits(target)+get_a_alertness(target), difficulty, target)
+	if(theirpower >= 2)
+		to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to battlescream!</span>")
 		return
 	switch(level_casting)
 		if(1)
@@ -1357,7 +1346,7 @@
 	..()
 	if(!wolflike_shapeshift)
 		wolflike_shapeshift = new(caster)
-	var/limit = min(2, level) + caster.social + caster.more_companions - 1
+	var/limit = min(2, level) + get_a_charisma(caster)+get_a_empathy(caster)
 	if(length(caster.beastmaster) >= limit)
 		var/mob/living/simple_animal/hostile/beastmaster/random_beast = pick(caster.beastmaster)
 		random_beast.death()
@@ -1718,22 +1707,16 @@
 	..()
 	switch(level_casting)
 		if(1)
-			caster.dna.species.punchdamagehigh += 5
-			caster.physiology.armor.melee += 15
-			caster.physiology.armor.bullet += 15
-			caster.dexterity += 2
-			caster.athletics += 2
-			caster.lockpicking += 2
+			caster.attributes.strength_bonus += 2
+			caster.attributes.dexterity_bonus += 2
+			caster.attributes.stamina_bonus += 2
 			ADD_TRAIT(caster, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
 			caster.do_jitter_animation(1 SECONDS)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
-					caster.dna.species.punchdamagehigh -= 5
-					caster.physiology.armor.melee -= 15
-					caster.physiology.armor.bullet -= 15
-					caster.dexterity -= 2
-					caster.athletics -= 2
-					caster.lockpicking -= 2
+					caster.attributes.strength_bonus -= 2
+					caster.attributes.dexterity_bonus -= 2
+					caster.attributes.stamina_bonus -= 2
 					REMOVE_TRAIT(caster, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
 		if(2)
 			caster.yin_chi += 1
@@ -1781,12 +1764,9 @@
 				to_chat(caster, "<span class='warning'>You put your Demon into your Yang.</span>")
 		if(3)
 			for(var/mob/living/carbon/human/affected_mob in oviewers(5, caster))
-				affected_mob.dna.species.punchdamagehigh += 5
-				affected_mob.physiology.armor.melee += 15
-				affected_mob.physiology.armor.bullet += 15
-				affected_mob.dexterity += 2
-				affected_mob.athletics += 2
-				affected_mob.lockpicking += 2
+				affected_mob.attributes.strength_bonus += 2
+				affected_mob.attributes.dexterity_bonus += 2
+				affected_mob.attributes.stamina_bonus += 2
 				ADD_TRAIT(affected_mob, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
 				var/obj/effect/celerity/celerity_effect = new(get_turf(affected_mob))
 				celerity_effect.appearance = affected_mob.appearance
@@ -1797,12 +1777,9 @@
 				spawn(delay+caster.discipline_time_plus)
 					qdel(celerity_effect)
 					if(affected_mob)
-						affected_mob.dna.species.punchdamagehigh -= 5
-						affected_mob.physiology.armor.melee -= 15
-						affected_mob.physiology.armor.bullet -= 15
-						affected_mob.dexterity -= 2
-						affected_mob.athletics -= 2
-						affected_mob.lockpicking -= 2
+						affected_mob.attributes.strength_bonus -= 2
+						affected_mob.attributes.dexterity_bonus -= 2
+						affected_mob.attributes.stamina_bonus -= 2
 						REMOVE_TRAIT(affected_mob, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
 		if(4)
 			for(var/mob/living/affected_mob in oviewers(5, caster))

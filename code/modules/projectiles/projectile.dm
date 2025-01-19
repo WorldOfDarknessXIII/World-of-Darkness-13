@@ -570,13 +570,13 @@
 	. = ..()
 	if(!fired)
 		return
-	if(firer && !probed_to_crit)
-		probed_to_crit = TRUE
-		if(ishuman(firer))
-			var/mob/living/carbon/human/frer = firer
-			if(frer.blood)
-				if(prob(frer.get_total_blood()*10))
-					damage = initial(damage)*2
+//	if(firer && !probed_to_crit)
+//		probed_to_crit = TRUE
+//		if(ishuman(firer))
+//			var/mob/living/carbon/human/frer = firer
+//			if(frer.blood)
+//				if(prob(frer.get_total_blood()*10))
+//					damage = initial(damage)*2
 	if(temporary_unstoppable_movement)
 		temporary_unstoppable_movement = FALSE
 		movement_type &= ~PHASING

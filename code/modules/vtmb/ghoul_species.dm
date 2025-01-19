@@ -19,124 +19,11 @@
 	var/list/datum/discipline/disciplines = list()
 	selectable = TRUE
 
-/datum/action/ghoulinfo
-	name = "About Me"
-	desc = "Check assigned role, master, humanity, masquerade, known contacts etc."
-	button_icon_state = "masquerade"
-	check_flags = NONE
-	var/mob/living/carbon/human/host
-
-/datum/action/ghoulinfo/Trigger()
-	if(host)
-		var/dat = {"
-			<style type="text/css">
-
-			body {
-				background-color: #090909; color: white;
-			}
-
-			</style>
-			"}
-		dat += "<center><h2>Memories</h2><BR></center>"
-		dat += "[icon2html(getFlatIcon(host), host)]I am "
-		if(host.real_name)
-			dat += "[host.real_name],"
-		if(!host.real_name)
-			dat += "Unknown,"
-		var/datum/species/ghoul/G
-		if(host.dna.species.name == "Ghoul")
-			G = host.dna.species
-			dat += " the ghoul"
-
-		if(host.mind.assigned_role)
-			if(host.mind.special_role)
-				dat += ", carrying the [host.mind.assigned_role] (<font color=red>[host.mind.special_role]</font>) role."
-			else
-				dat += ", carrying the [host.mind.assigned_role] role."
-		if(!host.mind.assigned_role)
-			dat += "."
-		dat += "<BR>"
-		if(G.master)
-			dat += "My Regnant is [G.master.real_name], I should obey their wants.<BR>"
-			if(G.master.clane)
-				if(G.master.clane.name != "Caitiff")
-					dat += "Regnant's clan is [G.master.clane], maybe I can try some of it's disciplines..."
-		if(host.vampire_faction == "Camarilla" || host.vampire_faction == "Anarchs" || host.vampire_faction == "Sabbat")
-			dat += "I belong to the [host.vampire_faction], I shouldn't disobey their rules.<BR>"
-		if(host.mind.special_role)
-			for(var/datum/antagonist/A in host.mind.antag_datums)
-				if(A.objectives)
-					dat += "[printobjectives(A.objectives)]<BR>"
-		var/masquerade_level = " followed the Masquerade Tradition perfectly."
-		switch(host.masquerade)
-			if(4)
-				masquerade_level = " broke the Masquerade rule once."
-			if(3)
-				masquerade_level = " made a couple of Masquerade breaches."
-			if(2)
-				masquerade_level = " provoked a moderate Masquerade breach."
-			if(1)
-				masquerade_level = " almost ruined the Masquerade."
-			if(0)
-				masquerade_level = "'m danger to the Masquerade and my own kind."
-		dat += "Camarilla thinks I[masquerade_level]<BR>"
-//		var/humanity = "I'm out of my mind."
-//		switch(host.humanity)
-//			if(8 to 10)
-//				humanity = "I'm the best example of mercy and kindness."
-//			if(7)
-//				humanity = "I have nothing to complain about my humanity."
-//			if(5 to 6)
-//				humanity = "I'm slightly above the humane."
-//			if(4)
-//				humanity = "I don't care about kine."
-//			if(2 to 3)
-//				humanity = "There's nothing bad in murdering for <b>BLOOD</b>."
-//			if(1)
-//				humanity = "I'm slowly falling into madness..."
-//		dat += "[humanity]<BR>"
-		dat += "<b>Physique</b>: [host.physique] + [host.additional_physique]<BR>"
-		dat += "<b>Dexterity</b>: [host.dexterity] + [host.additional_dexterity]<BR>"
-		dat += "<b>Social</b>: [host.social] + [host.additional_social]<BR>"
-		dat += "<b>Mentality</b>: [host.mentality] + [host.additional_mentality]<BR>"
-		dat += "<b>Cruelty</b>: [host.blood] + [host.additional_blood]<BR>"
-		dat += "<b>Lockpicking</b>: [host.lockpicking] + [host.additional_lockpicking]<BR>"
-		dat += "<b>Athletics</b>: [host.athletics] + [host.additional_athletics]<BR>"
-		if(host.Myself)
-			if(host.Myself.Friend)
-				if(host.Myself.Friend.owner)
-					dat += "<b>My friend's name is [host.Myself.Friend.owner.true_real_name].</b><BR>"
-					if(host.Myself.Friend.phone_number)
-						dat += "Their number is [host.Myself.Friend.phone_number].<BR>"
-					if(host.Myself.Friend.friend_text)
-						dat += "[host.Myself.Friend.friend_text]<BR>"
-			if(host.Myself.Enemy)
-				if(host.Myself.Enemy.owner)
-					dat += "<b>My nemesis is [host.Myself.Enemy.owner.true_real_name]!</b><BR>"
-					if(host.Myself.Enemy.enemy_text)
-						dat += "[host.Myself.Enemy.enemy_text]<BR>"
-			if(host.Myself.Lover)
-				if(host.Myself.Lover.owner)
-					dat += "<b>I'm in love with [host.Myself.Lover.owner.true_real_name].</b><BR>"
-					if(host.Myself.Lover.phone_number)
-						dat += "Their number is [host.Myself.Lover.phone_number].<BR>"
-					if(host.Myself.Lover.lover_text)
-						dat += "[host.Myself.Lover.lover_text]<BR>"
-		if(length(host.knowscontacts) > 0)
-			dat += "<b>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
-			for(var/i in host.knowscontacts)
-				dat += "-[i] contact<BR>"
-		for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
-			if(host.bank_id == account.bank_id)
-				dat += "<b>My bank account code is: [account.code]</b><BR>"
-		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
-		onclose(host, "ghoul", src)
-
 /datum/species/ghoul/on_species_gain(mob/living/carbon/human/C)
 	..()
 	C.update_body(0)
 	C.last_experience = world.time+3000
-	var/datum/action/ghoulinfo/infor = new()
+	var/datum/action/aboutme/infor = new()
 	infor.host = C
 	infor.Grant(C)
 	var/datum/action/blood_heal/bloodheal = new()
@@ -153,7 +40,7 @@
 		if(A)
 			if(A.vampiric)
 				A.Remove(C)
-	for(var/datum/action/ghoulinfo/infor in C.actions)
+	for(var/datum/action/aboutme/infor in C.actions)
 		if(infor)
 			infor.Remove(C)
 
@@ -239,11 +126,10 @@
 		last_heal = world.time
 		H.bloodpool = max(0, H.bloodpool-1)
 		SEND_SOUND(H, sound('code/modules/wod13/sounds/bloodhealing.ogg', 0, 0, 50))
-		H.heal_overall_damage(15*min(4, level), 10*min(4, level), 20*min(4, level))
 		H.adjustBruteLoss(-15*min(4, level), TRUE)
-		H.adjustFireLoss(-10*min(4, level), TRUE)
 		H.adjustOxyLoss(-20*min(4, level), TRUE)
 		H.adjustToxLoss(-20*min(4, level), TRUE)
+		H.adjustCloneLoss(-5*min(4, level), TRUE)
 		H.blood_volume = min(H.blood_volume + 56, 560)
 		button.color = "#970000"
 		animate(button, color = "#ffffff", time = 20, loop = 1)

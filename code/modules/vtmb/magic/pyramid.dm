@@ -118,7 +118,7 @@
 	BG.melee_damage_lower = BG.melee_damage_lower+activator_bonus
 	BG.melee_damage_upper = BG.melee_damage_upper+activator_bonus
 	playsound(loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
-	if(length(H.beastmaster) > 3+H.mentality)
+	if(length(H.beastmaster) > get_a_intelligence(H)+get_a_occult(H))
 		var/mob/living/simple_animal/hostile/beastmaster/B = pick(H.beastmaster)
 		B.death()
 	qdel(src)

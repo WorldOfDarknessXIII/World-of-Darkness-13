@@ -316,6 +316,10 @@
 
 	if(LAZYLEN(armor_list))
 		armor_list.Cut()
+	armor_list += list("BASHING" = armor.bashing)
+	armor_list += list("LETHAL" = armor.lethal)
+	armor_list += list("AGGRAVATED" = armor.aggravated)
+/*
 	if(armor.bio)
 		armor_list += list("TOXIN" = armor.bio)
 	if(armor.bomb)
@@ -332,7 +336,7 @@
 		armor_list += list("MELEE" = armor.melee)
 	if(armor.rad)
 		armor_list += list("RADIATION" = armor.rad)
-
+*/
 	if(LAZYLEN(durability_list))
 		durability_list.Cut()
 	if(armor.fire)
@@ -352,7 +356,7 @@
 			readout += "\n<b>ARMOR</b>"
 			for(var/dam_type in armor_list)
 				var/armor_amount = armor_list[dam_type]
-				readout += "\n[dam_type] [armor_to_protection_class(armor_amount)]" //e.g. BOMB IV
+				readout += "\n[dam_type]: [armor_amount]" //e.g. BOMB IV
 		if(LAZYLEN(durability_list))
 			readout += "\n<b>DURABILITY</b>"
 			for(var/dam_type in durability_list)

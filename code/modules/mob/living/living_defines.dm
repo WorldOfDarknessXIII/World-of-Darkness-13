@@ -176,22 +176,6 @@
 
 	var/total_cleaned = 0
 
-	var/physique = 1
-	var/dexterity = 1
-	var/social = 1
-	var/mentality = 1
-	var/lockpicking = 0
-	var/athletics = 0
-	var/blood = 1
-
-	var/additional_physique = 0
-	var/additional_dexterity = 0
-	var/additional_mentality = 0
-	var/additional_social = 0
-	var/additional_blood = 0
-	var/additional_lockpicking = 0
-	var/additional_athletics = 0
-	var/more_companions = 0
 	var/melee_professional = FALSE
 
 	var/info_known = INFO_KNOWN_UNKNOWN

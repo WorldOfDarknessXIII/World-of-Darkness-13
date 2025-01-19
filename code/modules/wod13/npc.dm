@@ -37,6 +37,10 @@
 
 	var/list/spotted_bodies = list()
 
+	var/mob/living/carbon/human/presence_master	// Who is controlling this NPC via Presence
+	var/presence_follow = FALSE	// Should follow the presence_master?
+	var/list/presence_enemies = list()	// If you want them to be aggressive
+
 /datum/movespeed_modifier/npc
 	multiplicative_slowdown = 2
 
@@ -240,13 +244,7 @@
 /mob/living/carbon/human/npc/proc/AssignSocialRole(var/datum/socialrole/S, var/dont_random = FALSE)
 	if(!S)
 		return
-	physique = rand(1, max_stat)
-	social = rand(1, max_stat)
-	mentality = rand(1, max_stat)
-	lockpicking = rand(1, max_stat)
-	blood = rand(1, 2)
-	maxHealth = round(initial(maxHealth)+(initial(maxHealth)/3)*(physique))
-	health = round(initial(health)+(initial(health)/3)*(physique))
+	attributes.randomize()
 	last_health = health
 	socialrole = new S()
 	if(GLOB.winter && !length(socialrole.suits))

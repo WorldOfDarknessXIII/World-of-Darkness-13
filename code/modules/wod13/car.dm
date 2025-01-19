@@ -148,10 +148,15 @@ SUBSYSTEM_DEF(carpool)
 
 /obj/vampire_car/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
 	. = ..()
-	get_damage(5)
+	get_damage(round(P.damage/2))
+	var/list/people_inside = list()
 	for(var/mob/living/L in src)
-		if(prob(50))
-			L.apply_damage(P.damage, P.damage_type, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST))
+		if(L)
+			people_inside += L
+	if(length(people_inside))
+		var/mob/living/LA = pick(people_inside)
+		var/armah = LA.run_armor_check(pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST), LETHAL)
+		LA.apply_damage(P.damage-((P.damage/100)*armah), P.damage_type, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST))
 
 /obj/vampire_car/AltClick(mob/user)
 	..()
@@ -198,14 +203,14 @@ SUBSYSTEM_DEF(carpool)
 			if(!repairing)
 				repairing = TRUE
 				if(do_mob(user, src, 20 SECONDS))
-					var/roll = rand(1, 20) + (user.get_total_lockpicking()+user.get_total_dexterity()) - 8
+					var/roll = secret_vampireroll(get_a_dexterity(user)+get_a_security(user), 6, user)
 					//(<= 1, break lockpick) (2-9, trigger car alarm), (>= 10, unlock car)
-					if (roll <= 1)
+					if (roll == -1)
 						to_chat(user, "<span class='warning'>Your lockpick broke!</span>")
 						qdel(K)
 						repairing = FALSE
 						return
-					else if (roll >= 10)
+					else if (roll >= 3)
 						locked = FALSE
 						repairing = FALSE
 						to_chat(user, "<span class='notice'>You've managed to open [src]'s lock.</span>")
@@ -263,9 +268,14 @@ SUBSYSTEM_DEF(carpool)
 	else
 		if(I.force)
 			get_damage(round(I.force/2))
+			var/list/people_inside = list()
 			for(var/mob/living/L in src)
-				if(prob(50))
-					L.apply_damage(round(I.force/2), I.damtype, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST))
+				if(L)
+					people_inside += L
+			if(length(people_inside))
+				var/mob/living/LA = pick(people_inside)
+				var/armah = LA.run_armor_check(pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST), LETHAL)
+				LA.apply_damage(I.force-((I.force/100)*armah), I.damtype, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST))
 
 			if(!driver && !length(passengers) && last_beep+70 < world.time && locked)
 				last_beep = world.time
@@ -320,7 +330,38 @@ SUBSYSTEM_DEF(carpool)
 	for(var/mob/living/L in src)
 		. += "<span class='notice'>You see [L] inside.</span>"
 
-/obj/vampire_car/proc/get_damage(var/cost)
+/obj/vampire_car/proc/get_damage(var/cost, var/mob/living/bumped_into, var/onbump_force = 0)
+	if(cost < 0)
+		var/dam_multiplicator = 1
+		var/hardness_bonus = round((6/initial(health))*health)
+		if(driver)
+			dam_multiplicator = secret_vampireroll(get_a_dexterity(driver)+get_a_drive(driver), 10-hardness_bonus, driver)
+		if(dam_multiplicator == -1)
+			on = FALSE
+			set_light(0)
+			dam_multiplicator = 1
+		if(onbump_force)
+			for(var/mob/living/L in src)
+				if(L)
+					var/dam = round((onbump_force*5)/dam_multiplicator)
+					if(driver)
+						if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
+							dam = round(dam/2)
+					var/armah = L.run_armor_check(BODY_ZONE_CHEST, LETHAL)
+					dam = dam-((dam/100)*armah)
+					L.apply_damage(dam, BRUTE, BODY_ZONE_CHEST)
+
+		if(bumped_into)
+			var/dam2 = onbump_force
+			if(!HAS_TRAIT(bumped_into, TRAIT_TOUGH_FLESH))
+				bumped_into.Knockdown(10)
+				dam2 = dam2*2
+			var/armah = bumped_into.run_armor_check(BODY_ZONE_CHEST, LETHAL)
+			dam2 = (dam2*dam_multiplicator)-(((dam2*dam_multiplicator)/100)*armah)
+			bumped_into.apply_damage(dam2, BRUTE, BODY_ZONE_CHEST)
+
+		cost = cost*(10-min(9, dam_multiplicator))
+
 	if(cost > 0)
 		health = max(0, health-cost)
 	if(cost < 0)
@@ -354,9 +395,6 @@ SUBSYSTEM_DEF(carpool)
 					qdel(G)
 			explosion(loc,0,1,3,4)
 			GLOB.car_list -= src
-	else if(prob(50) && health <= maxhealth/2)
-		on = FALSE
-		set_light(0)
 	return
 
 /datum/action/carr/fari_vrubi
@@ -484,6 +522,10 @@ SUBSYSTEM_DEF(carpool)
 		src.visible_message("<span class='notice'>[src] begins entering [V]...</span>", \
 			"<span class='notice'>You begin entering [V]...</span>")
 		if(do_mob(src, over_object, 1 SECONDS))
+			binocling = FALSE
+			if(client)
+				client.pixel_x = 0
+				client.pixel_y = 0
 			if(!V.driver)
 				forceMove(over_object)
 				V.driver = src
@@ -532,24 +574,11 @@ SUBSYSTEM_DEF(carpool)
 			NPC.Aggro(driver, TRUE)
 	playsound(src, 'code/modules/wod13/sounds/bump.ogg', 50, TRUE)
 	if(istype(A, /mob/living))
-		var/mob/living/L = A
-		var/dam2 = prev_speed
-		if(!HAS_TRAIT(L, TRAIT_TOUGH_FLESH))
-			L.Knockdown(10)
-			dam2 = dam2*2
-		L.apply_damage(dam2, BRUTE, BODY_ZONE_CHEST)
-		var/dam = prev_speed
-		if(driver)
-			if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
-				dam = round(dam/2)
-		get_damage(dam)
+		var/dam = prev_speed*5
+		get_damage(dam, A, dam)
 	else
-		var/dam = prev_speed
-		if(driver)
-			if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
-				dam = round(dam/2)
-			driver.apply_damage(prev_speed, BRUTE, BODY_ZONE_CHEST)
-		get_damage(dam)
+		var/dam = prev_speed*5
+		get_damage(dam, , dam)
 	return
 
 /obj/vampire_car/retro

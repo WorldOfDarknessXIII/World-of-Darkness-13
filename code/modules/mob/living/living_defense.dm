@@ -2,29 +2,68 @@
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null, armour_penetration, penetrated_text, silent=FALSE)
 	var/armor = getarmor(def_zone, attack_flag)
 
-	if(armor <= 0)
-		return armor
-	if(silent)
-		return max(0, armor - armour_penetration)
+	var/total_cubes = max(0, armor)
 
-	//the if "armor" check is because this is used for everything on /living, including humans
-	if(armour_penetration)
-		armor = max(0, armor - armour_penetration)
-		if(penetrated_text)
-			to_chat(src, "<span class='userdanger'>[penetrated_text]</span>")
+	switch(attack_flag)
+		if(BASHING)
+			total_cubes += get_a_stamina(src)
+		if(LETHAL)
+			if((iskindred(src) || iscathayan(src)) && (def_zone != get_bodypart(BODY_ZONE_HEAD) && def_zone != BODY_ZONE_HEAD))
+				total_cubes += get_a_stamina(src)
+		if(AGGRAVATED)
+			if(isgarou(src) || iswerewolf(src))
+				total_cubes += get_a_stamina(src)
+
+	total_cubes += get_fortitude_dices(src)+get_visceratika_dices(src)+get_bloodshield_dices(src)+get_lasombra_dices(src)+get_tzimisce_dices(src)
+
+	if(attack_flag == BASHING || attack_flag == LETHAL || attack_flag == AGGRAVATED)
+		var/final_block = secret_vampireroll(total_cubes, 6, src)
+		if(final_block == -1)
+			if(penetrated_text)
+				to_chat(src, "<span class='userdanger'>[penetrated_text]</span>")
+			else
+				to_chat(src, "<span class='userdanger'>Your armor was penetrated!</span>")
+			return 0
 		else
-			to_chat(src, "<span class='userdanger'>Your armor was penetrated!</span>")
-	else if(armor >= 100)
-		if(absorb_text)
-			to_chat(src, "<span class='notice'>[absorb_text]</span>")
-		else
-			to_chat(src, "<span class='notice'>Your armor absorbs the blow!</span>")
+			final_block = min(10, final_block)
+			var/armah = final_block*10
+			armah = min(armah, 90)
+			if(armour_penetration)
+				if(penetrated_text)
+					to_chat(src, "<span class='userdanger'>[penetrated_text]</span>")
+				else
+					to_chat(src, "<span class='userdanger'>Your armor was penetrated!</span>")
+				return max(0, armah-armour_penetration)
+			else if(armah >= 100)
+				if(absorb_text)
+					to_chat(src, "<span class='notice'>[absorb_text]</span>")
+				else
+					to_chat(src, "<span class='notice'>Your armor absorbs the blow!</span>")
+				return 100
 	else
-		if(soften_text)
-			to_chat(src, "<span class='warning'>[soften_text]</span>")
+		if(armor <= 0)
+			return armor
+		if(silent)
+			return max(0, armor - armour_penetration)
+
+		//the if "armor" check is because this is used for everything on /living, including humans
+		if(armour_penetration)
+			armor = max(0, armor - armour_penetration)
+			if(penetrated_text)
+				to_chat(src, "<span class='userdanger'>[penetrated_text]</span>")
+			else
+				to_chat(src, "<span class='userdanger'>Your armor was penetrated!</span>")
+		else if(armor >= 100)
+			if(absorb_text)
+				to_chat(src, "<span class='notice'>[absorb_text]</span>")
+			else
+				to_chat(src, "<span class='notice'>Your armor absorbs the blow!</span>")
 		else
-			to_chat(src, "<span class='warning'>Your armor softens the blow!</span>")
-	return armor
+			if(soften_text)
+				to_chat(src, "<span class='warning'>[soften_text]</span>")
+			else
+				to_chat(src, "<span class='warning'>Your armor softens the blow!</span>")
+		return armor
 
 /mob/living/proc/getarmor(def_zone, type)
 	return 0
@@ -48,7 +87,7 @@
 	return BULLET_ACT_HIT
 
 /mob/living/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
-	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
+	var/armor = run_armor_check(def_zone, LETHAL, "","",P.armour_penetration)
 	var/on_hit_state = P.on_hit(src, armor, piercing_hit)
 	if(!P.nodamage && on_hit_state != BULLET_ACT_BLOCK)
 		apply_damage(P.damage, P.damage_type, def_zone, armor, wound_bonus=P.wound_bonus, bare_wound_bonus=P.bare_wound_bonus, sharpness = P.sharpness)

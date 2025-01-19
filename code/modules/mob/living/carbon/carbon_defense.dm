@@ -704,6 +704,11 @@
 		if (limb.status != BODYPART_ORGANIC)
 			. += (limb.brute_dam * limb.body_damage_coeff) + (limb.burn_dam * limb.body_damage_coeff)
 
+/mob/living/carbon/proc/get_all_organs()
+	for (var/_limb in bodyparts)
+		var/obj/item/bodypart/limb = _limb
+		. += limb.get_organs()
+
 /mob/living/carbon/grabbedby(mob/living/carbon/user, supress_message = FALSE)
 	do_rage_from_attack(user)
 	if(user != src)

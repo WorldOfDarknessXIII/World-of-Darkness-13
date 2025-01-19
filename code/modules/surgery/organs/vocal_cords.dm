@@ -142,12 +142,11 @@
 	user.say(message, spans = span_list, sanitize = FALSE)
 
 	message = lowertext(message)
+	var/user_roll = secret_vampireroll(max(get_a_charisma(user), get_a_manipulation(user), get_a_appearance(user))+get_a_empathy(user), 6+user.stat, user)
 	var/list/mob/living/listeners = list()
 	for(var/mob/living/L in get_hearers_in_view(8, user))
 		if(L.can_hear() && !L.anti_magic_check(FALSE, TRUE) && L.stat != DEAD)
 			var/dominate_me = FALSE
-			if(L == user && !include_speaker)
-				continue
 			if(ishuman(L))
 				var/mob/living/carbon/human/H = L
 				if(H.clane)
@@ -155,12 +154,20 @@
 						dominate_me = TRUE
 				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 					continue
-			if(user.generation > L.generation && !dominate_me) //Dominate can't be used on lower Generations
+			if(L == user)
+				if(user_roll <= -1)
+					include_speaker = TRUE
+					listeners += L
+					continue
+			if(!include_speaker)
 				continue
-			if((user.get_total_social() <= L.get_total_mentality()) && !dominate_me) //Dominate must defeat resistance
+			if(user_roll <= 1)
 				continue
 			if(L.resistant_to_disciplines)
 				continue
+			if(!dominate_me)
+				if(secret_vampireroll(get_a_wits(L)+get_a_alertness(L), 4+user_roll-(user.generation-L.generation), L) >= 3)
+					continue
 			listeners += L
 
 	if(!listeners.len)

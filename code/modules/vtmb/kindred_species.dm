@@ -24,9 +24,9 @@
 	wings_icon = "Dragon"
 	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
 	mutantbrain = /obj/item/organ/brain/vampire
-	brutemod = 0.5	// or change to 0.8
+	brutemod = 1	// or change to 0.8
 	heatmod = 1		//Sucking due to overheating	///THEY DON'T SUCK FROM FIRE ANYMORE
-	burnmod = 2
+	burnmod = 1
 	punchdamagelow = 10
 	punchdamagehigh = 20
 	dust_anim = "dust-h"
@@ -35,187 +35,11 @@
 	selectable = TRUE
 	COOLDOWN_DECLARE(torpor_timer)
 
-/datum/action/vampireinfo
-	name = "About Me"
-	desc = "Check assigned role, clan, generation, humanity, masquerade, known disciplines, known contacts etc."
-	button_icon_state = "masquerade"
-	check_flags = NONE
-	var/mob/living/carbon/human/host
-
-/datum/action/vampireinfo/Trigger()
-	if(host)
-		var/dat = {"
-			<style type="text/css">
-
-			body {
-				background-color: #090909; color: white;
-			}
-
-			</style>
-			"}
-		dat += "<center><h2>Memories</h2><BR></center>"
-		dat += "[icon2html(getFlatIcon(host), host)]I am "
-		if(host.real_name)
-			dat += "[host.real_name],"
-		if(!host.real_name)
-			dat += "Unknown,"
-		if(host.clane)
-			dat += " the [host.clane.name]"
-		if(!host.clane)
-			dat += " the caitiff"
-
-		if(host.mind)
-
-			if(host.mind.assigned_role)
-				if(host.mind.special_role)
-					dat += ", carrying the [host.mind.assigned_role] (<font color=red>[host.mind.special_role]</font>) role."
-				else
-					dat += ", carrying the [host.mind.assigned_role] role."
-			if(!host.mind.assigned_role)
-				dat += "."
-			dat += "<BR>"
-			if(host.mind.enslaved_to)
-				dat += "My Regnant is [host.mind.enslaved_to], I should obey their wants.<BR>"
-		if(host.vampire_faction == "Camarilla" || host.vampire_faction == "Anarchs" || host.vampire_faction == "Sabbat")
-			dat += "I belong to [host.vampire_faction] faction, I shouldn't disobey their rules.<BR>"
-		if(host.generation)
-			dat += "I'm from [host.generation] generation.<BR>"
-		if(host.mind.special_role)
-			for(var/datum/antagonist/A in host.mind.antag_datums)
-				if(A.objectives)
-					dat += "[printobjectives(A.objectives)]<BR>"
-		var/masquerade_level = " followed the Masquerade Tradition perfectly."
-		switch(host.masquerade)
-			if(4)
-				masquerade_level = " broke the Masquerade rule once."
-			if(3)
-				masquerade_level = " made a couple of Masquerade breaches."
-			if(2)
-				masquerade_level = " provoked a moderate Masquerade breach."
-			if(1)
-				masquerade_level = " almost ruined the Masquerade."
-			if(0)
-				masquerade_level = "'m danger to the Masquerade and my own kind."
-		dat += "Camarilla thinks I[masquerade_level]<BR>"
-		var/humanity = "I'm out of my mind."
-		var/enlight = FALSE
-		if(host.clane)
-			if(host.clane.enlightenment)
-				enlight = TRUE
-
-		if(!enlight)
-			switch(host.humanity)
-				if(8 to 10)
-					humanity = "I'm saintly."
-				if(7)
-					humanity = "I feel as human as when I lived."
-				if(5 to 6)
-					humanity = "I'm feeling distant from my humanity."
-				if(4)
-					humanity = "I don't feel any compassion for the Kine anymore."
-				if(2 to 3)
-					humanity = "I feel hunger for <b>BLOOD</b>. My humanity is slipping away."
-				if(1)
-					humanity = "Blood. Feed. Hunger. It gnaws. Must <b>FEED!</b>"
-
-		else
-			switch(host.humanity)
-				if(8 to 10)
-					humanity = "I'm <b>ENLIGHTENED</b>, my <b>BEAST</b> and I are in complete harmony."
-				if(7)
-					humanity = "I've made great strides in co-existing with my beast."
-				if(5 to 6)
-					humanity = "I'm starting to learn how to share this unlife with my beast."
-				if(4)
-					humanity = "I'm still new to my path, but I'm learning."
-				if(2 to 3)
-					humanity = "I'm a complete novice to my path."
-				if(1)
-					humanity = "I'm losing control over my beast!"
-
-		dat += "[humanity]<BR>"
-
-		if(host.clane.name == "Brujah")
-			if(GLOB.brujahname != "")
-				if(host.real_name != GLOB.brujahname)
-					dat += " My primogen is:  [GLOB.brujahname].<BR>"
-		if(host.clane.name == "Malkavian")
-			if(GLOB.malkavianname != "")
-				if(host.real_name != GLOB.malkavianname)
-					dat += " My primogen is:  [GLOB.malkavianname].<BR>"
-		if(host.clane.name == "Nosferatu")
-			if(GLOB.nosferatuname != "")
-				if(host.real_name != GLOB.nosferatuname)
-					dat += " My primogen is:  [GLOB.nosferatuname].<BR>"
-		if(host.clane.name == "Toreador")
-			if(GLOB.toreadorname != "")
-				if(host.real_name != GLOB.toreadorname)
-					dat += " My primogen is:  [GLOB.toreadorname].<BR>"
-		if(host.clane.name == "Ventrue")
-			if(GLOB.ventruename != "")
-				if(host.real_name != GLOB.ventruename)
-					dat += " My primogen is:  [GLOB.ventruename].<BR>"
-
-		dat += "<b>Physique</b>: [host.physique] + [host.additional_physique]<BR>"
-		dat += "<b>Dexterity</b>: [host.dexterity] + [host.additional_dexterity]<BR>"
-		dat += "<b>Social</b>: [host.social] + [host.additional_social]<BR>"
-		dat += "<b>Mentality</b>: [host.mentality] + [host.additional_mentality]<BR>"
-		dat += "<b>Cruelty</b>: [host.blood] + [host.additional_blood]<BR>"
-		dat += "<b>Lockpicking</b>: [host.lockpicking] + [host.additional_lockpicking]<BR>"
-		dat += "<b>Athletics</b>: [host.athletics] + [host.additional_athletics]<BR>"
-		if(host.hud_used)
-			dat += "<b>Known disciplines:</b><BR>"
-			for(var/datum/action/discipline/D in host.actions)
-				if(D)
-					if(D.discipline)
-						dat += "[D.discipline.name] [D.discipline.level] - [D.discipline.desc]<BR>"
-		if(host.Myself)
-			if(host.Myself.Friend)
-				if(host.Myself.Friend.owner)
-					dat += "<b>My friend's name is [host.Myself.Friend.owner.true_real_name].</b><BR>"
-					if(host.Myself.Friend.phone_number)
-						dat += "Their number is [host.Myself.Friend.phone_number].<BR>"
-					if(host.Myself.Friend.friend_text)
-						dat += "[host.Myself.Friend.friend_text]<BR>"
-			if(host.Myself.Enemy)
-				if(host.Myself.Enemy.owner)
-					dat += "<b>My nemesis is [host.Myself.Enemy.owner.true_real_name]!</b><BR>"
-					if(host.Myself.Enemy.enemy_text)
-						dat += "[host.Myself.Enemy.enemy_text]<BR>"
-			if(host.Myself.Lover)
-				if(host.Myself.Lover.owner)
-					dat += "<b>I'm in love with [host.Myself.Lover.owner.true_real_name].</b><BR>"
-					if(host.Myself.Lover.phone_number)
-						dat += "Their number is [host.Myself.Lover.phone_number].<BR>"
-					if(host.Myself.Lover.lover_text)
-						dat += "[host.Myself.Lover.lover_text]<BR>"
-		var/obj/keypad/armory/K = find_keypad(/obj/keypad/armory)
-		if(K && (host.mind.assigned_role == "Prince" || host.mind.assigned_role == "Sheriff"))
-			dat += "<b>The pincode for the armory keypad is: [K.pincode]</b><BR>"
-		var/obj/structure/vaultdoor/pincode/bank/bankdoor = find_door_pin(/obj/structure/vaultdoor/pincode/bank)
-		if(bankdoor && (host.mind.assigned_role == "Capo"))
-			dat += "<b>The pincode for the bank vault is: [bankdoor.pincode]</b><BR>"
-		if(bankdoor && (host.mind.assigned_role == "La Squadra"))
-			if(prob(50))
-				dat += "<b>The pincode for the bank vault is: [bankdoor.pincode]</b><BR>"
-			else
-				dat += "<b>Unfortunately you don't know the vault code.</b><BR>"
-
-		if(length(host.knowscontacts) > 0)
-			dat += "<b>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
-			for(var/i in host.knowscontacts)
-				dat += "-[i] contact<BR>"
-		for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
-			if(host.bank_id == account.bank_id)
-				dat += "<b>My bank account code is: [account.code]</b><BR>"
-		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
-		onclose(host, "vampire", src)
-
 /datum/species/kindred/on_species_gain(mob/living/carbon/human/C)
 	. = ..()
 	C.update_body(0)
 	C.last_experience = world.time + 5 MINUTES
-	var/datum/action/vampireinfo/infor = new()
+	var/datum/action/aboutme/infor = new()
 	infor.host = C
 	infor.Grant(C)
 	var/datum/action/give_vitae/vitae = new()
@@ -243,7 +67,7 @@
 
 /datum/species/kindred/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
-	for(var/datum/action/vampireinfo/VI in C.actions)
+	for(var/datum/action/aboutme/VI in C.actions)
 		if(VI)
 			VI.Remove(C)
 	for(var/datum/action/A in C.actions)
@@ -290,12 +114,9 @@
 			BD.last_bloodpower_use = world.time
 			BD.bloodpool = max(0, BD.bloodpool-(2+plus))
 			to_chat(BD, "<span class='notice'>You use blood to become more powerful.</span>")
-			BD.dna.species.punchdamagehigh = BD.dna.species.punchdamagehigh+5
-			BD.physiology.armor.melee = BD.physiology.armor.melee+15
-			BD.physiology.armor.bullet = BD.physiology.armor.bullet+15
-			BD.dexterity = BD.dexterity+2
-			BD.athletics = BD.athletics+2
-			BD.lockpicking = BD.lockpicking+2
+			BD.attributes.dexterity_bonus += 2
+			BD.attributes.strength_bonus += 2
+			BD.attributes.stamina_bonus += 2
 			if(!HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
 				ADD_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
 			BD.update_blood_hud()
@@ -309,15 +130,11 @@
 	if(owner && ishuman(owner))
 		var/mob/living/carbon/human/BD = owner
 		to_chat(BD, "<span class='warning'>You feel like your <b>BLOOD</b>-powers slowly decrease.</span>")
-		if(BD.dna.species)
-			BD.dna.species.punchdamagehigh = BD.dna.species.punchdamagehigh-5
-			BD.physiology.armor.melee = BD.physiology.armor.melee-15
-			BD.physiology.armor.bullet = BD.physiology.armor.bullet-15
-			if(HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
-				REMOVE_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
-		BD.dexterity = BD.dexterity-2
-		BD.athletics = BD.athletics-2
-		BD.lockpicking = BD.lockpicking-2
+		if(HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
+			REMOVE_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
+		BD.attributes.dexterity_bonus -= 2
+		BD.attributes.strength_bonus -= 2
+		BD.attributes.stamina_bonus -= 2
 
 /datum/action/give_vitae
 	name = "Give Vitae"
