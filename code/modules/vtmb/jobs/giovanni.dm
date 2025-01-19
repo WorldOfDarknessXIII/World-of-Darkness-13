@@ -23,7 +23,7 @@
 	experience_addition = 10
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Giovanni", "Cappadocian")
-	starting_balance = 50000
+	starting_balance = 2000
 
 /datum/outfit/job/giovannielder
 	name = "Capo"
@@ -72,7 +72,7 @@
 	experience_addition = 10
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Giovanni", "Cappadocian")
-	starting_balance = 10000
+	starting_balance = 5000
 
 /datum/outfit/job/giovanni
 	name = "La Squadra"
@@ -118,7 +118,6 @@
 	allowed_species = list("Ghoul", "Human")
 	duty = "Your family is a strange one. Maybe you are strange too, because sitting next to your great uncles as an equal is something you are greatly interested in."
 	minimal_masquerade = 0
-	starting_balance = 1000 // street soldiers, they can ask for cash from their bosses
 
 /datum/outfit/job/giovannimafia
 	name = "La Famiglia"

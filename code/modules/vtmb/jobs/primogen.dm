@@ -130,7 +130,7 @@
 	minimal_masquerade = 5
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
-	starting_balance = 66600 // old vampire in a clan notorious for being rich dicks, no shit
+	starting_balance = 20000 // old vampire in a clan notorious for being rich dicks, no shit
 
 /datum/outfit/job/ventrue
 	name = "Primogen Ventrue"

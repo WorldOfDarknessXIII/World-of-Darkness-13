@@ -48,7 +48,7 @@
 	duty = "You are the right hand man or woman of the most powerful vampire in the city. The Camarilla trusts you to run the city, even in their stead."
 	experience_addition = 15
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Lasombra", "Gargoyle", "Kiasyd")
-	starting_balance = 20000 // hey, who hasn't taken a little off the top?
+	starting_balance = 9000 // hey, who hasn't taken a little off the top?
 
 /datum/outfit/job/clerk
 	name = "Seneschal"

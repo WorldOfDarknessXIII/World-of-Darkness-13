@@ -27,7 +27,7 @@
 	duty = "Collect blood by helping mortals at the Clinic."
 	experience_addition = 15
 	allowed_bloodlines = list("Daughters of Cacophony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff", "Kiasyd")
-	starting_balance = 8000
+	starting_balance = 4000
 
 /datum/outfit/job/vdoctor
 	name = "Doctor"
