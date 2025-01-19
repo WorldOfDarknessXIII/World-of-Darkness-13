@@ -317,7 +317,7 @@
 	density = TRUE
 	owner_needed = FALSE
 	prize_list = list(new /datum/data/mining_equipment("coffee",	/obj/item/reagent_containers/food/drinks/coffee/vampire,	10),
-		new /datum/data/mining_equipment("Cafe Latte", /obj/item/reagent_containers/food/drinks/coffee/vampire/robust, 14)
+		new /datum/data/mining_equipment("Cafe Latte", /obj/item/reagent_containers/food/drinks/coffee/vampire/robust, 14),
 		new /datum/data/mining_equipment("hot chocolate",	/obj/item/reagent_containers/food/drinks/coffee/vampire/choco,	12),
 		new /datum/data/mining_equipment("tea",	/obj/item/reagent_containers/food/drinks/coffee/vampire/tea,	10)
 	)
