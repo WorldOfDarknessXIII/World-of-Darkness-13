@@ -450,7 +450,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<br>[initial(L.name)]"
 			if(length(languages) < Linguistics)
 				dat += "<br><a href='?_src_=prefs;preference=languages;task=input'>Learn</a>"
-
+			if(length(languages))
+				dat += "<br><a href='?_src_=prefs;preference=languages_reset;task=input'>Reset</a>"
 
 			dat += "</tr></table>"
 
@@ -2509,6 +2510,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						return
 
 					enlightenment = !enlightenment
+
+				if("languages_reset")
+					languages = list()
 
 				if("languages")
 					if(length(languages) >= Linguistics)
