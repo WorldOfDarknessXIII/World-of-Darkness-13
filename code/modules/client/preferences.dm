@@ -3221,6 +3221,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return TRUE
 
 /datum/preferences/proc/handle_upgrade(var/number, var/cost, var/numlimit, var/catgr)
+	if(cost <= 0)
+		if(!catgr)
+			cost = 3
 	if (((true_experience < cost) && !get_freebie_points(catgr)) || (number >= numlimit))
 		return FALSE
 	if(!get_freebie_points(catgr))
