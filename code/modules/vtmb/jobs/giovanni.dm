@@ -23,7 +23,7 @@
 	experience_addition = 10
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Giovanni", "Cappadocian")
-	starting_balance = 2000
+	starting_balance = 20000
 
 /datum/outfit/job/giovannielder
 	name = "Capo"
