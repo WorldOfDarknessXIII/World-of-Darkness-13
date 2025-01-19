@@ -904,8 +904,7 @@
 	if(bool)
 		RegisterSignal(caster, aggressive_signals, PROC_REF(on_hostile_action))
 		return
-	for(var/signal in aggressive_signals)
-		UnregisterSignal(caster, aggressive_signals)
+	UnregisterSignal(caster, aggressive_signals)
 
 /datum/discipline/presence
 	name = "Presence"
