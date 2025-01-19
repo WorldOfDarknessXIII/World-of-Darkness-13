@@ -268,6 +268,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DIABLERIE			"diablerie"
 #define TRAIT_GULLET			"gullet"
 #define TRAIT_CHARMER			"charmer"
+#define TRAIT_KINFOLK			"kinfolk"
 #define TRAIT_UNMASQUERADE		"unmasquerade"	//For tzi clothing
 #define TRAIT_NONMASQUERADE		"nonmasquerade"	//For tzi mods
 
