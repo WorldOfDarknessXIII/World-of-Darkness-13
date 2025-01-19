@@ -684,12 +684,6 @@
 
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_THROW, args) & COMPONENT_CANCEL_THROW)
 		return
-/*
-	if(istype(get_area(target), /area/vtm))
-		var/area/vtm/V = get_area(target)
-		if(V.zone_type == "elysium")
-			return
-*/
 
 	if (pulledby)
 		pulledby.stop_pulling()
@@ -759,6 +753,7 @@
 		SpinAnimation(5, 1)
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_THROW, TT, spin)
+	SEND_SIGNAL(thrower, COMSIG_MOB_THREW_MOVABLE, target, TT)
 	SSthrowing.processing[src] = TT
 	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = TT
