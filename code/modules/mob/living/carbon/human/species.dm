@@ -95,9 +95,9 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	///Type of damage attack does. Ethereals attack with burn damage for example.
 	var/attack_type = BRUTE
 	///Lowest possible punch damage this species can give. If this is set to 0, punches will always miss.
-	var/punchdamagelow = 1
+	var/punchdamagelow = 15
 	///Highest possible punch damage this species can give.
-	var/punchdamagehigh = 10
+	var/punchdamagehigh = 15
 	///Damage at which punches from this race will stun
 	var/punchstunthreshold = 20 //yes it should be to the attacked race but it's not useful that way even if it's logical
 	///Base electrocution coefficient.  Basically a multiplier for damage from electrocutions.

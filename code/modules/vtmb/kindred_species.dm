@@ -27,8 +27,8 @@
 	brutemod = 1	// or change to 0.8
 	heatmod = 1		//Sucking due to overheating	///THEY DON'T SUCK FROM FIRE ANYMORE
 	burnmod = 1
-	punchdamagelow = 10
-	punchdamagehigh = 20
+	punchdamagelow = 15
+	punchdamagehigh = 15
 	dust_anim = "dust-h"
 	var/datum/vampireclane/clane
 	var/list/datum/discipline/disciplines = list()

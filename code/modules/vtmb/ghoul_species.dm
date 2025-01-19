@@ -10,8 +10,8 @@
 	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
 	brutemod = 1	//0.8 instead, if changing.
 	burnmod = 1
-	punchdamagelow = 10
-	punchdamagehigh = 20
+	punchdamagelow = 15
+	punchdamagehigh = 15
 	dust_anim = "dust-h"
 	var/mob/living/carbon/human/master
 	var/changed_master = FALSE
