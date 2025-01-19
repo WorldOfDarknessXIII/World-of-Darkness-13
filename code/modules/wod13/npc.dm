@@ -311,7 +311,7 @@
 		update_hair()
 		update_body_parts()
 
-	var/datum/outfit/O = new()
+	var/datum/outfit/O = new ()
 	if(length(socialrole.backpacks))
 		O.back = pick(socialrole.backpacks)
 	if(length(socialrole.uniforms))

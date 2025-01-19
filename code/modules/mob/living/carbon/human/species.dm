@@ -1799,6 +1799,8 @@ GLOBAL_LIST_EMPTY(selectable_races)
 
 	// get the enviroment details of where the mob is standing
 	var/turf/T = get_turf(humi)
+	if(!T || !isopenturf(T))
+		return
 	var/datum/gas_mixture/environment = T.return_air()
 	if(!environment) // if there is no environment (nullspace) drop out here.
 		return

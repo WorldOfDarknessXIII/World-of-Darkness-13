@@ -16,15 +16,15 @@
 /datum/vampireclane/baali/on_gain(mob/living/carbon/human/H)
 	..()
 	H.faction |= "Baali"
-	var/datum/brain_trauma/mild/phobia/security/T = new()
+	var/datum/brain_trauma/mild/phobia/security/T = new ()
 	H.gain_trauma(T, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/discipline/daimonion/post_gain(mob/living/carbon/human/H)
 	if(level >= 3)
-		var/obj/effect/proc_holder/spell/aimed/fireball/baali/S = new(H)
+		var/obj/effect/proc_holder/spell/aimed/fireball/baali/S = new (H)
 		H.mind.AddSpell(S)
 	if(level >= 5)
-		var/datum/action/antifrenzy/A = new()
+		var/datum/action/antifrenzy/A = new ()
 		A.Grant(H)
 
 /datum/action/antifrenzy
