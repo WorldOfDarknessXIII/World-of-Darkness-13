@@ -17,14 +17,13 @@
 	selectable = TRUE
 	var/glabro = FALSE
 
-/datum/action/garouinfo
+/datum/action/info_action/garouinfo
 	name = "About Me"
 	desc = "Check assigned role, auspice, generation, humanity, masquerade, known disciplines, known contacts etc."
 	button_icon_state = "masquerade"
 	check_flags = NONE
-	var/mob/living/carbon/host
 
-/datum/action/garouinfo/Trigger()
+/datum/action/info_action/garouinfo/Trigger()
 	if(host)
 		var/dat = {"
 			<style type="text/css">
@@ -42,10 +41,6 @@
 		if(!host.real_name)
 			dat += "Unknown,"
 		dat += " [host.auspice.tribe] [host.auspice.base_breed]"
-//		if(host.clane)
-//			dat += " the [host.clane.name]"
-//		if(!host.clane)
-//			dat += " the caitiff"
 
 		if(host.mind)
 
@@ -91,6 +86,7 @@
 			dat += "<b>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
 			for(var/i in host.knowscontacts)
 				dat += "-[i] contact<BR>"
+		dat += ..()
 		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
 		onclose(host, "vampire", src)
 
@@ -99,7 +95,7 @@
 //	ADD_TRAIT(C, TRAIT_NOBLEED, HIGHLANDER)
 	C.update_body(0)
 	C.last_experience = world.time+3000
-	var/datum/action/garouinfo/infor = new()
+	var/datum/action/info_action/garouinfo/infor = new()
 	infor.host = C
 	infor.Grant(C)
 	var/datum/action/gift/glabro/glabro = new()
@@ -111,7 +107,7 @@
 
 /datum/species/garou/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
-	for(var/datum/action/garouinfo/VI in C.actions)
+	for(var/datum/action/info_action/garouinfo/VI in C.actions)
 		if(VI)
 			VI.Remove(C)
 	for(var/datum/action/gift/G in C.actions)

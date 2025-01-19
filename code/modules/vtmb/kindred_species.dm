@@ -35,14 +35,13 @@
 	selectable = TRUE
 	COOLDOWN_DECLARE(torpor_timer)
 
-/datum/action/vampireinfo
+/datum/action/info_action/vampireinfo
 	name = "About Me"
 	desc = "Check assigned role, clan, generation, humanity, masquerade, known disciplines, known contacts etc."
 	button_icon_state = "masquerade"
 	check_flags = NONE
-	var/mob/living/carbon/human/host
 
-/datum/action/vampireinfo/Trigger()
+/datum/action/info_action/vampireinfo/Trigger()
 	if(host)
 		var/dat = {"
 			<style type="text/css">
@@ -215,7 +214,7 @@
 	. = ..()
 	C.update_body(0)
 	C.last_experience = world.time + 5 MINUTES
-	var/datum/action/vampireinfo/infor = new()
+	var/datum/action/info_action/vampireinfo/infor = new()
 	infor.host = C
 	infor.Grant(C)
 	var/datum/action/give_vitae/vitae = new()
@@ -238,7 +237,7 @@
 
 /datum/species/kindred/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
-	for(var/datum/action/vampireinfo/VI in C.actions)
+	for(var/datum/action/info_action/vampireinfo/VI in C.actions)
 		if(VI)
 			VI.Remove(C)
 	for(var/datum/action/A in C.actions)

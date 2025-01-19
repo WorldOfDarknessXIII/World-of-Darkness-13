@@ -19,14 +19,13 @@
 	var/list/datum/discipline/disciplines = list()
 	selectable = TRUE
 
-/datum/action/ghoulinfo
+/datum/action/info_action/ghoulinfo
 	name = "About Me"
 	desc = "Check assigned role, master, humanity, masquerade, known contacts etc."
 	button_icon_state = "masquerade"
 	check_flags = NONE
-	var/mob/living/carbon/human/host
 
-/datum/action/ghoulinfo/Trigger()
+/datum/action/info_action/ghoulinfo/Trigger()
 	if(host)
 		var/dat = {"
 			<style type="text/css">
@@ -80,21 +79,6 @@
 			if(0)
 				masquerade_level = "'m danger to the Masquerade and my own kind."
 		dat += "Camarilla thinks I[masquerade_level]<BR>"
-//		var/humanity = "I'm out of my mind."
-//		switch(host.humanity)
-//			if(8 to 10)
-//				humanity = "I'm the best example of mercy and kindness."
-//			if(7)
-//				humanity = "I have nothing to complain about my humanity."
-//			if(5 to 6)
-//				humanity = "I'm slightly above the humane."
-//			if(4)
-//				humanity = "I don't care about kine."
-//			if(2 to 3)
-//				humanity = "There's nothing bad in murdering for <b>BLOOD</b>."
-//			if(1)
-//				humanity = "I'm slowly falling into madness..."
-//		dat += "[humanity]<BR>"
 		dat += "<b>Physique</b>: [host.physique] + [host.additional_physique]<BR>"
 		dat += "<b>Dexterity</b>: [host.dexterity] + [host.additional_dexterity]<BR>"
 		dat += "<b>Social</b>: [host.social] + [host.additional_social]<BR>"
@@ -129,6 +113,7 @@
 		for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
 			if(host.bank_id == account.bank_id)
 				dat += "<b>My bank account code is: [account.code]</b><BR>"
+		dat += ..()
 		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
 		onclose(host, "ghoul", src)
 
@@ -136,7 +121,7 @@
 	..()
 	C.update_body(0)
 	C.last_experience = world.time+3000
-	var/datum/action/ghoulinfo/infor = new()
+	var/datum/action/info_action/ghoulinfo/infor = new()
 	infor.host = C
 	infor.Grant(C)
 	var/datum/action/blood_heal/bloodheal = new()
@@ -153,7 +138,7 @@
 		if(A)
 			if(A.vampiric)
 				A.Remove(C)
-	for(var/datum/action/ghoulinfo/infor in C.actions)
+	for(var/datum/action/info_action/ghoulinfo/infor in C.actions)
 		if(infor)
 			infor.Remove(C)
 
