@@ -36,11 +36,11 @@ endmap
 
 map kindredcity
 	votable
-	default
+	#default
 endmap
 
 map runtimestation
-	disabled
+	default
 endmap
 
 map multiz_debug
