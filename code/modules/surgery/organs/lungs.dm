@@ -4,7 +4,7 @@
 	name = "lungs"
 	icon_state = "lungs"
 	illegal = TRUE
-	cost = 450
+	cost = 800
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LUNGS
 	gender = PLURAL

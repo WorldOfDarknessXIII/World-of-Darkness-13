@@ -3,7 +3,7 @@
 	desc = "A fleshy muscle mostly used for lying."
 	icon_state = "tonguenormal"
 	illegal = TRUE
-	cost = 100
+	cost = 200
 	zone = BODY_ZONE_PRECISE_MOUTH
 	slot = ORGAN_SLOT_TONGUE
 	attack_verb_continuous = list("licks", "slobbers", "slaps", "frenches", "tongues")

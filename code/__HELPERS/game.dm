@@ -416,8 +416,7 @@
 		return candidates
 
 	for(var/mob/dead/observer/G in GLOB.player_list)
-		if(!G.auspex_ghosted) //No Auspex ghosts as candidates.
-			candidates += G
+		candidates += G
 
 	return pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
 

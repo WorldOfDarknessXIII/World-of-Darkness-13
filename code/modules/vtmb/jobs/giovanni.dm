@@ -39,7 +39,7 @@
 
 /datum/outfit/job/giovannielder/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.vampire_faction = FACTION_GIOVANNI
+	H.vampire_faction = "Giovanni"
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/suit/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
@@ -86,7 +86,7 @@
 
 /datum/outfit/job/giovanni/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.vampire_faction = FACTION_GIOVANNI
+	H.vampire_faction = "Giovanni"
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/suit/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
