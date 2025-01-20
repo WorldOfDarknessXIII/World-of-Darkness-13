@@ -481,13 +481,13 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	var/value = input(usr, "Enter the Global Masquerade adjustment values(- will decrease, + will increase) :", "Global Masquerade Adjustment", 0) as num|null
 	if(value == null)
 		return
-	
+
 	SSmasquerade.manual_adjustment = value
 
 	var/changed_mask = max(0,min(1000,last_global_mask + value))
 
 	SSmasquerade.fire()
-	
+
 	var/msg = "<span class='adminnotice'><b>Global Masquerade Adjustment: [key_name_admin(usr)] has adjusted Global masquerade from [last_global_mask] to [changed_mask] with the value of : [value]. Real Masquerade Value with the other possible variables : [SSmasquerade.total_level]</b></span>"
 	log_admin("Global MasqAdjust: [key_name(usr)] has adjusted Global masquerade from [last_global_mask] to [changed_mask] with the value of : [value]. Real Masquerade Value with the other possible variables : [SSmasquerade.total_level]")
 	message_admins(msg)
@@ -967,7 +967,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Set Late Party"
 	set category = "Admin.Game"
 
-	var/setting = input(usr, "Choose the bad guys party setting:", "Set Late Party") in list("caitiff", "sabbat", "hunter", "random")
+	var/setting = input(usr, "Choose the bad guys party setting:", "Set Late Party") in list("caitiff", "sabbat", "hunter", "kuei-jin", "noddist", "random")
 	if(setting == "random")
 		SSbad_guys_party.setting = null
 		SSbad_guys_party.get_badguys()
