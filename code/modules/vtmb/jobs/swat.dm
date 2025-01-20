@@ -3,6 +3,7 @@
 	ears = /obj/item/p25radio/police/tactical
 	uniform = /obj/item/clothing/under/vampire/police
 	mask = /obj/item/clothing/mask/vampire/balaclava
+	glasses = /obj/item/clothing/glasses/vampire/sun
 	r_pocket = /obj/item/flashlight
 	l_pocket = /obj/item/ammo_box/magazine/vamp556
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
@@ -13,7 +14,9 @@
 	backpack_contents = list(
 		/obj/item/ammo_box/magazine/vamp556 = 3,
 		/obj/item/radio/cop = 1,
-		/obj/item/vamp/keys/hack=2
+		/obj/item/vamp/keys/hack=2,
+		/obj/item/storage/firstaid/ifak=1,
+		/obj/item/storage/box/flashbangs=1
 		)
 
 /datum/antagonist/swat/proc/equip_swat()

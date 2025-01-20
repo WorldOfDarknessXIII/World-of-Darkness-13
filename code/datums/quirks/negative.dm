@@ -44,12 +44,10 @@
 /datum/quirk/blindness
 	name = "Blind"
 	desc = "You are completely blind, nothing can counteract this."
-	value = -16
+	value = -6
 	gain_text = "<span class='danger'>You can't see anything.</span>"
 	lose_text = "<span class='notice'>You miraculously gain back your vision.</span>"
 	medical_record_text = "Patient has permanent blindness."
-	hardcore_value = 15
-	mood_quirk = TRUE
 
 /datum/quirk/blindness/add()
 	quirk_holder.become_blind(ROUNDSTART_TRAIT)
@@ -300,13 +298,11 @@
 /datum/quirk/frail
 	name = "Frail"
 	desc = "You have skin of paper and bones of glass! You suffer wounds much more easily than most."
-	value = -6
+	value = -2
 	mob_trait = TRAIT_EASILY_WOUNDED
 	gain_text = "<span class='danger'>You feel frail.</span>"
 	lose_text = "<span class='notice'>You feel sturdy again.</span>"
 	medical_record_text = "Patient is absurdly easy to injure. Please take all due dilligence to avoid possible malpractice suits."
-	hardcore_value = 4
-	mood_quirk = TRUE
 
 /datum/quirk/heavy_sleeper
 	name = "Heavy Sleeper"
@@ -425,13 +421,10 @@
 /datum/quirk/paraplegic
 	name = "Paraplegic"
 	desc = "Your legs do not function. Nothing will ever fix this. But hey, free wheelchair!"
-	value = -12
-	human_only = TRUE
+	value = -6
 	gain_text = null // Handled by trauma.
 	lose_text = null
 	medical_record_text = "Patient has an untreatable impairment in motor function in the lower extremities."
-	hardcore_value = 15
-	mood_quirk = TRUE
 
 /datum/quirk/paraplegic/add()
 	var/datum/brain_trauma/severe/paralysis/paraplegic/T = new()
@@ -556,12 +549,10 @@
 /datum/quirk/social_anxiety
 	name = "Social Anxiety"
 	desc = "Talking to people is very difficult for you, and you often stutter or even lock up."
-	value = -3
+	value = -1
 	gain_text = "<span class='danger'>You start worrying about what you're saying.</span>"
 	lose_text = "<span class='notice'>You feel easier about talking again.</span>" //if only it were that easy!
 	medical_record_text = "Patient is usually anxious in social encounters and prefers to avoid them."
-	hardcore_value = 4
-	mood_quirk = TRUE
 	var/dumb_thing = TRUE
 
 /datum/quirk/social_anxiety/add()
@@ -752,6 +743,15 @@
 	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."
 	hardcore_value = 9
 	mood_quirk = TRUE
+
+/datum/quirk/mute
+	name = "Mute"
+	desc = "Due to past troubles, you are unable to recover your ability to speak."
+	value = -2
+	mob_trait = TRAIT_MUTE
+	gain_text = "<span class='danger'>You find yourself unable to speak.</span>"
+	lose_text = "<span class='notice'>You can finally speak.</span>"
+	medical_record_text = "Patient's mind is in a traumatic state, refusing to produce speech."
 
 /datum/quirk/allergic
 	name = "Extreme Medicine Allergy"

@@ -510,6 +510,40 @@ Dancer
 /datum/quirk/foreign/remove()
 	var/mob/living/carbon/H = quirk_holder
 	H.remove_blocked_language(/datum/language/english)
+
+/datum/quirk/boxer
+	name = "Boxing Champion"
+	desc = "You know something about boxing."
+	allowed_species = list("Human", "Ghoul")
+	value = 2
+
+/datum/quirk/boxer/add()
+	var/mob/living/carbon/H = quirk_holder
+	var/datum/martial_art/boxing/W = new
+	W.teach(quirk_holder, FALSE)
+
+/datum/quirk/wrestler
+	name = "Wrestling Champion"
+	desc = "You know something about wrestling."
+	allowed_species = list("Human", "Ghoul")
+	value = 3
+
+/datum/quirk/wrestler/add()
+	var/mob/living/carbon/H = quirk_holder
+	var/datum/martial_art/wrestling/W = new
+	W.teach(quirk_holder, FALSE)
+
+/datum/quirk/krav_maga
+	name = "Krav Maga Master"
+	desc = "You know a really lethal martial art."
+	allowed_species = list("Human", "Kuei-Jin")
+	value = 5
+
+/datum/quirk/krav_maga/add()
+	var/mob/living/carbon/H = quirk_holder
+	var/datum/martial_art/krav_maga/W = new
+	W.teach(quirk_holder, FALSE)
+
 /*
 /datum/quirk/espanol
 	name = "Espanol"
