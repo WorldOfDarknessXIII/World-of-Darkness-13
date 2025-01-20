@@ -14,6 +14,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 
 	var/list/candidates = list()
 	var/max_candidates = 0
+	var/species_restrict = list()
 	var/datum/outfit/job/Next = null
 	var/go_on_next_fire = FALSE
 
@@ -48,6 +49,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 					qdel(Next)
 				threat = min(100, threat+60)
 				max_candidates = 1
+				species_restrict = list("Vampire")
 				go_on_next_fire = TRUE
 				Next = new /datum/outfit/job/caitiff()
 				setting = null
@@ -56,6 +58,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 					qdel(Next)
 				threat = min(100, threat+30)
 				max_candidates = 2
+				species_restrict = list("Ghoul", "Vampire")
 				go_on_next_fire = TRUE
 				Next = new /datum/outfit/job/sabbatist()
 				setting = null
@@ -64,6 +67,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 					qdel(Next)
 				threat = min(100, threat+60)
 				max_candidates = 5
+				species_restrict = list("Human")
 				go_on_next_fire = TRUE
 				Next = new /datum/outfit/job/hunter()
 				setting = null
@@ -76,6 +80,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 						qdel(Next)
 					threat = min(100, threat+60)
 					max_candidates = 1
+					species_restrict = list("Vampire")
 					go_on_next_fire = TRUE
 					Next = new /datum/outfit/job/caitiff()
 				else
@@ -84,6 +89,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 						qdel(Next)
 					threat = min(100, threat+30)
 					max_candidates = 2
+					species_restrict = list("Ghoul", "Vampire")
 					go_on_next_fire = TRUE
 					Next = new /datum/outfit/job/sabbatist()
 			if(2)
@@ -93,6 +99,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 						qdel(Next)
 					threat = min(100, threat+90)
 					max_candidates = 4
+					species_restrict = list("Human")
 					go_on_next_fire = TRUE
 					Next = new /datum/outfit/job/sabbatist()
 				else
@@ -101,6 +108,7 @@ SUBSYSTEM_DEF(bad_guys_party)
 						qdel(Next)
 					threat = min(100, threat+60)
 					max_candidates = 2
+					species_restrict = list("Human")
 					go_on_next_fire = TRUE
 					Next = new /datum/outfit/job/hunter()
 			/*if(3)
@@ -162,6 +170,12 @@ SUBSYSTEM_DEF(bad_guys_party)
 				if(length(candidates) > max_candidates)
 					for(var/i in 1 to length(candidates)-max_candidates)
 						actual_candidates -= pick(candidates)
+				for(var/mob/dead/new_player/newplayer in candidates)
+					if(newplayer?.client?.prefs?.pref_species)
+						if(!newplayer.client.prefs.pref_species.name in species_restrict)
+							actual_candidates -= newplayer
+					else
+						actual_candidates -= newplayer
 				for(var/mob/dead/new_player/NP in actual_candidates)
 					candidates -= NP
 					NP.late_ready = FALSE

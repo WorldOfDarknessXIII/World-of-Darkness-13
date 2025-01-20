@@ -13,6 +13,17 @@ SUBSYSTEM_DEF(statpanels)
 	if (!resumed)
 //		var/datum/map_config/cached = SSmapping.next_map_config
 		var/round_time = world.time - SSticker.round_start_time
+		var/badguys_specieslist = "Nothing"
+		if(length(SSbad_guys_party.species_restrict))
+			badguys_specieslist = ""
+			var/coma_limit = 0
+			for(var/i in SSbad_guys_party.species_restrict)
+				if(i)
+					coma_limit = coma_limit+1
+					if(coma_limit >= length(SSbad_guys_party.species_restrict))
+						badguys_specieslist += "[i]"
+					else
+						badguys_specieslist += "[i], "
 		var/list/global_data = list(
 //			"Map: [SSmapping.config?.map_name || "Loading..."]",
 //			cached ? "Next Map: [cached.map_name]" : null,
@@ -22,7 +33,7 @@ SUBSYSTEM_DEF(statpanels)
 			"---",
 			"Canon: [GLOB.canon_event ? "Yes" : "No"]",
 			"Masquerade: [SSmasquerade.get_description()] [SSmasquerade.total_level]/1000",
-			"Late Party: [length(SSbad_guys_party.candidates)]/[SSbad_guys_party.go_on_next_fire == TRUE ? SSbad_guys_party.max_candidates : "???"] in [round((SSbad_guys_party.next_fire-world.time)/10)]s",
+			"Late Party: [badguys_specieslist] [length(SSbad_guys_party.candidates)]/[SSbad_guys_party.go_on_next_fire == TRUE ? SSbad_guys_party.max_candidates : "???"] in [round((SSbad_guys_party.next_fire-world.time)/10)]s",
 			"---",
 			"Camarilla Power: [length(SSfactionwar.marks_camarilla)]",
 			"Anarch Power: [length(SSfactionwar.marks_anarch)]",

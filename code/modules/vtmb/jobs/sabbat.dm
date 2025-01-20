@@ -169,9 +169,8 @@
 /datum/antagonist/sabbatist/on_gain()
 	add_antag_hud(ANTAG_HUD_REV, "rev", owner.current)
 	owner.special_role = src
-	var/datum/objective/custom/custom_objective = new
+	var/datum/objective/sabbat/custom_objective = new
 	custom_objective.owner = owner
-	custom_objective.explanation_text = "Sow chaos, maim, butcher and kill. When you're done The Ivory Tower should be but a distant memory."
 	objectives += custom_objective
 	var/datum/objective/survive/survive_objective = new
 	survive_objective.owner = owner
@@ -181,9 +180,9 @@
 
 /datum/antagonist/sabbatist/on_removal()
 	..()
-	to_chat(owner.current,"<span class='userdanger'>You are no longer the part of Sabbat!</span>")
+	to_chat(owner.current,"<span class='userdanger'>You are no longer the Sabbat Shovelhead!</span>")
 	owner.special_role = null
 
 /datum/antagonist/sabbatist/greet()
-	to_chat(owner.current, "<span class='alertsyndie'>You are the part of Sabbat.</span>")
+	to_chat(owner.current, "<span class='alertsyndie'>You are the Sabbat Shovelhead.</span>")
 	owner.announce_objectives()

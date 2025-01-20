@@ -187,6 +187,24 @@
 								if(BLOODBONDED.mind)
 									BLOODBONDED.mind.add_antag_datum(/datum/antagonist/sabbatist)
 									GLOB.sabbatites += BLOODBONDED
+							if(H.vampire_faction == "Cult of Nod")
+								if(BLOODBONDED.mind)
+									BLOODBONDED.mind.add_antag_datum(/datum/antagonist/noddist)
+									GLOB.noddists += BLOODBONDED
+									if(GLOB.noddists >= round(GLOB.player_list/2))
+										if(!GLOB.sarcophagus_spawned)
+											GLOB.sarcophagus_spawned = TRUE
+											var/list/possible_list = list()
+											for(var/obj/effect/landmark/sarcophagus/S in GLOB.landmarks_list)
+												if(S)
+													possible_list += S
+											if(length(possible_list))
+												new /obj/sarcophagus (get_turf(pick(possible_list)))
+												new /obj/item/sarcophagus_key (get_turf(pick(possible_list)))
+											else
+												new /obj/sarcophagus (get_turf(BLOODBONDED))
+												new /obj/item/sarcophagus_key (get_turf(BLOODBONDED))
+											to_chat(world, "<span class='userdanger'>THE SARCOPHAGUS HAS ARRIVED...</span>")
 							SSfactionwar.adjust_members()
 							to_chat(BLOODBONDED, "<span class='notice'>You are now member of <b>[H.vampire_faction]</b></span>")
 				BLOODBONDED.drunked_of |= "[H.dna.real_name]"

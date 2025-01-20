@@ -7,8 +7,8 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/wendigo
 	name = "Unknown Antediluvian"
 	desc = "A mythological legendary kindred, you probably aren't going to survive this."
-	health = 2500
-	maxHealth = 2500
+	health = 9999
+	maxHealth = 9999
 	icon_state = "eva"
 	icon_living = "eva"
 	icon_dead = "eva_dead"
@@ -44,8 +44,9 @@ Difficulty: Hard
 	deathsound = 'sound/effects/gravhit.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list(/datum/action/innate/megafauna_attack/heavy_stomp,
-							   /datum/action/innate/megafauna_attack/teleport,
-							   /datum/action/innate/megafauna_attack/disorienting_scream)
+								/datum/action/innate/megafauna_attack/teleport,
+								/datum/action/innate/megafauna_attack/disorienting_scream,
+								)
 	/// Saves the turf the megafauna was created at (spawns exit portal here)
 	var/turf/starting
 	/// Range for wendigo stomping when it moves
@@ -56,6 +57,15 @@ Difficulty: Hard
 	var/can_move = TRUE
 	/// Stores the last scream time so it doesn't spam it
 	var/last_scream = 0
+	var/burst_range = 3 //range on burst aoe
+	var/beam_range = 5 //range on cross blast beams
+	var/chaser_speed = 3 //how fast chasers are currently
+	var/chaser_cooldown = 101 //base cooldown/cooldown var between spawning chasers
+	var/major_attack_cooldown = 60 //base cooldown for major attacks
+	var/arena_cooldown = 200 //base cooldown/cooldown var for creating an arena
+	var/blinking = FALSE //if we're doing something that requires us to stand still and not attac
+	var/dashing = FALSE
+	var/dash_cooldown = 15
 
 /datum/action/innate/megafauna_attack/heavy_stomp
 	name = "Heavy Stomp"
@@ -81,6 +91,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/wendigo/Initialize()
 	. = ..()
 	starting = get_turf(src)
+	attributes.stamina = 10
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/OpenFire()
 	SetRecoveryTime(0, 100)
@@ -93,6 +104,20 @@ Difficulty: Hard
 		speed = initial(speed)
 		move_to_delay = initial(move_to_delay)
 
+	var/blink_counter = 1 + round(anger_modifier * 0.08)
+	var/cross_counter = 1 + round(anger_modifier * 0.12)
+
+	var/target_slowness = 0
+	var/mob/living/L
+	if(isliving(target))
+		L = target
+		target_slowness += L.cached_multiplicative_slowdown
+	if(client)
+		target_slowness += 1
+
+	target_slowness = max(target_slowness, 1)
+	chaser_speed = max(1, (3 - anger_modifier * 0.04) + ((target_slowness - 1) * 0.5))
+
 	if(client)
 		switch(chosen_attack)
 			if(1)
@@ -101,12 +126,17 @@ Difficulty: Hard
 				teleport()
 			if(3)
 				disorienting_scream()
+			if(4)
+				dash(target)
+			if(5)
+				fire_rain()
+			if(6)
+				chaser_swarm(blink_counter, target_slowness, cross_counter)
+			if(7)
+				alternating_dir_shots()
 		return
 
-	if(world.time > last_scream + 60)
-		chosen_attack = rand(1, 3)
-	else
-		chosen_attack = rand(1, 2)
+	chosen_attack = rand(1, 7)
 	switch(chosen_attack)
 		if(1)
 			heavy_stomp()
@@ -114,6 +144,142 @@ Difficulty: Hard
 			teleport()
 		if(3)
 			disorienting_scream()
+		if(4)
+			dash(target)
+		if(5)
+			fire_rain()
+		if(6)
+			chaser_swarm(blink_counter, target_slowness, cross_counter)
+		if(7)
+			alternating_dir_shots()
+
+/mob/living/simple_animal/hostile/megafauna/wendigo/proc/alternating_dir_shots()
+	ranged_cooldown = world.time + 40
+	dir_shots(GLOB.diagonals)
+	SLEEP_CHECK_DEATH(10)
+	dir_shots(GLOB.cardinals)
+	SLEEP_CHECK_DEATH(10)
+	dir_shots(GLOB.diagonals)
+	SLEEP_CHECK_DEATH(10)
+	dir_shots(GLOB.cardinals)
+
+/mob/living/simple_animal/hostile/megafauna/wendigo/proc/shoot_projectile(turf/marker, set_angle)
+	if(!isnum(set_angle) && (!marker || marker == loc))
+		return
+	var/turf/startloc = get_turf(src)
+	var/obj/projectile/P = new /obj/projectile/colossus(startloc)
+	P.preparePixelProjectile(marker, startloc)
+	P.firer = src
+	if(target)
+		P.original = target
+	P.fire(set_angle)
+
+/mob/living/simple_animal/hostile/megafauna/wendigo/proc/dir_shots(list/dirs)
+	if(!islist(dirs))
+		dirs = GLOB.alldirs.Copy()
+//	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 2)
+	for(var/d in dirs)
+		var/turf/E = get_step(src, d)
+		shoot_projectile(E)
+
+/mob/living/simple_animal/hostile/megafauna/wendigo/proc/dash_attack()
+	INVOKE_ASYNC(src, PROC_REF(dash), target)
+	shoot_ka()
+
+/mob/living/simple_animal/hostile/megafauna/wendigo/proc/shoot_ka()
+	if(ranged_cooldown <= world.time && get_dist(src, target) <= 4 && !Adjacent(target))
+		ranged_cooldown = world.time + ranged_cooldown_time
+		visible_message("<span class='danger'>[src] fires the proto-kinetic accelerator!</span>")
+		face_atom(target)
+		new /obj/effect/temp_visual/dir_setting/firing_effect(loc, dir)
+		Shoot(target)
+		changeNext_move(CLICK_CD_RANGE)
+
+/mob/living/simple_animal/hostile/megafauna/wendigo/proc/fire_rain()
+	if(!target)
+		return
+	target.visible_message("<span class='boldwarning'>Fire rains from the sky!</span>")
+	for(var/turf/turf in range(9,get_turf(target)))
+		if(prob(11))
+			new /obj/effect/temp_visual/target(turf)
+
+/mob/living/simple_animal/hostile/megafauna/wendigo/proc/chaser_swarm(blink_counter, target_slowness, cross_counter)
+	ranged_cooldown = world.time + max(5, major_attack_cooldown - anger_modifier * 0.75)
+	visible_message("<span class='hierophant'>\"Mx gerrsx lmhi.\"</span>")
+	blinking = TRUE
+	var/oldcolor = color
+	animate(src, color = "#660099", time = 6)
+	SLEEP_CHECK_DEATH(6)
+	var/list/targets = ListTargets()
+	var/list/cardinal_copy = GLOB.cardinals.Copy()
+	while(targets.len && cardinal_copy.len)
+		var/mob/living/pickedtarget = pick(targets)
+		if(targets.len >= cardinal_copy.len)
+			pickedtarget = pick_n_take(targets)
+		if(!istype(pickedtarget) || pickedtarget.stat == DEAD)
+			pickedtarget = target
+			if(QDELETED(pickedtarget) || (istype(pickedtarget) && pickedtarget.stat == DEAD))
+				break //main target is dead and we're out of living targets, cancel out
+		var/obj/effect/temp_visual/hierophant/chaser/C = new(loc, src, pickedtarget, chaser_speed, FALSE)
+		C.moving = 3
+		C.moving_dir = pick_n_take(cardinal_copy)
+		SLEEP_CHECK_DEATH(8 + target_slowness)
+	chaser_cooldown = world.time + initial(chaser_cooldown)
+	animate(src, color = oldcolor, time = 8)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 8)
+	SLEEP_CHECK_DEATH(8)
+	blinking = FALSE
+
+/mob/living/simple_animal/hostile/megafauna/wendigo/proc/dash(atom/dash_target)
+	if(world.time < dash_cooldown)
+		return
+	var/list/accessable_turfs = list()
+	var/self_dist_to_target = 0
+	var/turf/own_turf = get_turf(src)
+	if(!QDELETED(dash_target))
+		self_dist_to_target += get_dist(dash_target, own_turf)
+	for(var/turf/open/O in RANGE_TURFS(4, own_turf))
+		var/turf_dist_to_target = 0
+		if(!QDELETED(dash_target))
+			turf_dist_to_target += get_dist(dash_target, O)
+		if(get_dist(src, O) >= 4 && turf_dist_to_target <= self_dist_to_target && !islava(O) && !ischasm(O))
+			var/valid = TRUE
+			for(var/turf/T in getline(own_turf, O))
+				if(T.is_blocked_turf(TRUE))
+					valid = FALSE
+					continue
+			if(valid)
+				accessable_turfs[O] = turf_dist_to_target
+	var/turf/target_turf
+	if(!QDELETED(dash_target))
+		var/closest_dist = 4
+		for(var/t in accessable_turfs)
+			if(accessable_turfs[t] < closest_dist)
+				closest_dist = accessable_turfs[t]
+		for(var/t in accessable_turfs)
+			if(accessable_turfs[t] != closest_dist)
+				accessable_turfs -= t
+	if(!LAZYLEN(accessable_turfs))
+		return
+	dash_cooldown = world.time + dash_cooldown
+	target_turf = pick(accessable_turfs)
+	var/turf/step_back_turf = get_step(target_turf, get_cardinal_dir(target_turf, own_turf))
+	var/turf/step_forward_turf = get_step(own_turf, get_cardinal_dir(own_turf, target_turf))
+	new /obj/effect/temp_visual/small_smoke/halfsecond(step_back_turf)
+	new /obj/effect/temp_visual/small_smoke/halfsecond(step_forward_turf)
+	var/obj/effect/temp_visual/decoy/fading/halfsecond/D = new (own_turf, src)
+	forceMove(step_back_turf)
+	playsound(own_turf, 'sound/weapons/punchmiss.ogg', 40, TRUE, -1)
+	dashing = TRUE
+	alpha = 0
+	animate(src, alpha = 255, time = 5)
+	SLEEP_CHECK_DEATH(2)
+	D.forceMove(step_forward_turf)
+	forceMove(target_turf)
+	playsound(target_turf, 'sound/weapons/punchmiss.ogg', 40, TRUE, -1)
+	SLEEP_CHECK_DEATH(1)
+	dashing = FALSE
+	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/Life()
 	. = ..()
@@ -180,7 +346,7 @@ Difficulty: Hard
 	can_move = FALSE
 	last_scream = world.time
 	playsound(src, pick('code/modules/wod13/sounds/mp_judgement.ogg', 'code/modules/wod13/sounds/mp_die.ogg', 'code/modules/wod13/sounds/mp_end.ogg'), 600, FALSE, 10)
-	animate(src, pixel_z = rand(5, 15), time = 1, loop = 6)
+	animate(src, pixel_z = rand(5, dash_cooldown), time = 1, loop = 6)
 	animate(pixel_z = 0, time = 1)
 	for(var/mob/living/L in get_hearers_in_view(7, src) - src)
 		L.Dizzy(6)
@@ -193,10 +359,10 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/wendigo/death(gibbed, list/force_grant)
 	if(health > 0)
 		return
-	var/obj/effect/portal/permanent/one_way/exit = new /obj/effect/portal/permanent/one_way(starting)
-	exit.id = "wendigo arena exit"
-	exit.add_atom_colour(COLOR_RED_LIGHT, ADMIN_COLOUR_PRIORITY)
-	exit.set_light(20, 1, COLOR_SOFT_RED)
+//	var/obj/effect/portal/permanent/one_way/exit = new /obj/effect/portal/permanent/one_way(starting)
+//	exit.id = "wendigo arena exit"
+//	exit.add_atom_colour(COLOR_RED_LIGHT, ADMIN_COLOUR_PRIORITY)
+//	exit.set_light(20, 1, COLOR_SOFT_RED)
 	return ..()
 
 /obj/item/wendigo_blood

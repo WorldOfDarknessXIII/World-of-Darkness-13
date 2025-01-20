@@ -269,6 +269,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	GLOB.nukeop_leader_start += loc
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/sarcophagus
+	name = "sarcophagus"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "snukeop_leader_spawn"
+
 // Must be immediate because players will
 // join before SSatom initializes everything.
 INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)

@@ -158,6 +158,7 @@
 		my_name = pick(GLOB.first_names_female)
 	var/my_surname = pick(GLOB.last_names)
 	new_spawn.fully_replace_character_name(null,"[my_name] [my_surname]")
+	new_spawn.attributes.randomize()
 
 /datum/outfit/civillian1
 	name = "civillian"
@@ -255,6 +256,7 @@
 		my_name = pick(GLOB.first_names_female_triad)
 	var/my_surname = pick(GLOB.last_names_triad)
 	new_spawn.fully_replace_character_name(null,"[my_name] [my_surname]")
+	new_spawn.attributes.randomize()
 
 /datum/outfit/triadsoldier
 	name = "triad soldier"
@@ -292,6 +294,7 @@
 		my_name = pick(GLOB.first_names_female)
 	var/my_surname = pick(GLOB.last_names)
 	new_spawn.fully_replace_character_name(null,"[my_name] [my_surname]")
+	new_spawn.attributes.randomize()
 
 /datum/outfit/policeofficer
 	name = "police officer"
@@ -330,6 +333,7 @@
 	var/my_surname = pick(GLOB.last_names)
 	new_spawn.fully_replace_character_name(null,"[my_name] [my_surname]")
 	new_spawn.mind.holy_role = HOLY_ROLE_PRIEST
+	new_spawn.attributes.randomize()
 
 /datum/outfit/achaplain
 	name = "chaplain"
@@ -366,6 +370,7 @@
 		my_name = pick(GLOB.first_names_female)
 	var/my_surname = pick(GLOB.last_names)
 	new_spawn.fully_replace_character_name(null,"[my_name] [my_surname]")
+	new_spawn.attributes.randomize()
 
 /datum/outfit/chunk
 	name = "Security Guard Chunk"

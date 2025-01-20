@@ -32,6 +32,7 @@ GLOBAL_VAR_INIT(internal_tick_usage, 0.2 * world.tick_lag)
 
 //IT'S CHRISTMAS TIME
 GLOBAL_VAR_INIT(winter, FALSE)
+GLOBAL_VAR_INIT(sarcophagus_spawned, FALSE)
 
 GLOBAL_DATUM(vampgate, /obj/structure/vampgate)
 
