@@ -274,7 +274,7 @@
 			caster.AdjustMasquerade(-1)
 	return TRUE
 
-/datum/discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/discipline/proc/activate(mob/living/target, mob/living/carbon/human/caster)
 	if(!target)
 		return
 	if(!caster)
@@ -843,20 +843,68 @@
 	delay = 10 SECONDS
 	activate_sound = 'code/modules/wod13/sounds/obfuscate_activate.ogg'
 	leveldelay = TRUE
+	// if the caster acts overtly, the ability is deactivated
+	COOLDOWN_DECLARE(obfuscate_combat_cooldown)
+	var/static/list/aggressive_signals = list(
+		COMSIG_HUMAN_MELEE_UNARMED_ATTACK,
+		COMSIG_MOB_ITEM_ATTACK,
+		COMSIG_MOB_ATTACK_RANGED,
+	)
+	var/deactivation_timer = null	//separate from the combat cooldown; this is the timer for the ability itself
+	var/active = FALSE // this is used to determine if the ability is active or not
+
+/datum/discipline/obfuscate/check_activated(mob/living/target, mob/living/carbon/human/caster)
+	// check if the caster has acted overtly recently before we go assigning or calculating anything
+	if(!COOLDOWN_FINISHED(src, obfuscate_combat_cooldown))
+		to_chat(caster, span_warning("You have acted overtly too recently to pull the cloak of obfuscation upon yourself; your attempt fails!"))
+		return FALSE
+	. = ..()
 
 /datum/discipline/obfuscate/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
-	for(var/mob/living/carbon/human/npc/NPC in GLOB.npc_list)
+	var/duration = delay*level_casting+caster.discipline_time_plus
+	if(active)	// if they're popping it again while it's already active, extend the duration
+		if(deactivation_timer)	// BYOND is mysterious and the timer may be null, so we check before we try deleting it
+			deltimer(deactivation_timer)
+			deactivation_timer = null
+		deactivation_timer = addtimer(CALLBACK(src, PROC_REF(reveal), caster), duration, TIMER_STOPPABLE)
+		return
+	for(var/mob/living/carbon/human/npc/NPC in GLOB.npc_list)	// ... this iterates over every NPC in the game?
 		if(NPC)
 			if(NPC.danger_source == caster)
 				NPC.danger_source = null
 	caster.alpha = 10
 	caster.obfuscate_level = level_casting
-	spawn((delay*level_casting)+caster.discipline_time_plus)
-		if(caster)
-			if(caster.alpha != 255)
-				caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/obfuscate_deactivate.ogg', 50, FALSE)
-				caster.alpha = 255
+	deactivation_timer = addtimer(CALLBACK(src, PROC_REF(reveal), caster), duration, TIMER_STOPPABLE)
+	handle_signals(TRUE, caster)
+	active = TRUE
+
+/datum/discipline/obfuscate/proc/reveal(mob/living/carbon/human/caster)
+
+	to_chat(caster, "<span class='warning'>Your cloak of obfuscation fades away.</span>")
+	caster.alpha = 255
+	caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/obfuscate_deactivate.ogg', 50, FALSE)
+	handle_signals(FALSE, caster)
+	if(deactivation_timer)
+		deltimer(deactivation_timer)
+		deactivation_timer = null	// just in case
+	active = FALSE
+
+/datum/discipline/obfuscate/proc/on_hostile_action(datum/source, mob/living/carbon/human/caster)
+	SIGNAL_HANDLER
+
+	var/cooldown_length = (60-min(30, level_casting*5)) SECONDS
+	COOLDOWN_START(src, obfuscate_combat_cooldown, cooldown_length)
+	to_chat(source, span_warning("You feel your cloak of obfuscation fly away from you as you act conspicuously."))
+	reveal(source)
+
+/datum/discipline/obfuscate/proc/handle_signals(bool, mob/living/carbon/human/caster) // the bool in this instance indicates if the ability is activating
+	if(bool)
+		for(var/signal in aggressive_signals)
+			RegisterSignal(caster, signal, PROC_REF(on_hostile_action))
+		return
+	for(var/signal in aggressive_signals)
+		UnregisterSignal(caster, signal)
 
 /datum/discipline/presence
 	name = "Presence"

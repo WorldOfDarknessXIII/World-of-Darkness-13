@@ -91,16 +91,25 @@
 	bare_wound_bonus = 10
 	wound_bonus = 5
 
-/obj/projectile/beam/beam_rifle/vampire/vamp12g/pellet
-	name = "12g shotgun pellet"
-	damage = 9
-	range = 22 //range of where you can see + one screen after
-
 /obj/projectile/beam/beam_rifle/vampire/vamp12g/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
-		M.Stun(20)
+		M.Stun(25)
+
+/obj/projectile/beam/beam_rifle/vampire/shotpellet
+	name = "12g shotgun pellet"
+	damage = 9
+	range = 22 //range of where you can see + one screen after
+	armour_penetration = 15
+	bare_wound_bonus = 5
+	wound_bonus = 0
+
+/obj/projectile/beam/beam_rifle/vampire/shotpellet/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		M.Stun(4)
 
 /obj/projectile/beam/beam_rifle/vampire/vamp556mm/incendiary
 	armour_penetration = 0
@@ -115,10 +124,9 @@
 
 /obj/projectile/bullet/crossbow_bolt
 	name = "bolt"
-	damage = 160
+	damage = 45
 	armour_penetration = 75
 	sharpness = SHARP_POINTY
-	wound_bonus = 50
 
 /obj/item/ammo_casing/vampire
 	icon = 'code/modules/wod13/ammo.dmi'
@@ -191,7 +199,7 @@
 
 /obj/item/ammo_casing/vampire/c12g/buck
 	desc = "A 12g shell casing (00 buck)."
-	projectile_type = /obj/projectile/beam/beam_rifle/vampire/vamp12g/pellet
+	projectile_type = /obj/projectile/beam/beam_rifle/vampire/shotpellet
 	pellets = 8
 	variance = 25
 
