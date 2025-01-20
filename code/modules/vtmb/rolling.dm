@@ -333,9 +333,10 @@ SUBSYSTEM_DEF(woddices)
 	else
 		return 3
 
-/proc/secret_vampireroll(var/dices_num = 1, var/hardness = 1, var/mob/rollperformer)
+/proc/secret_vampireroll(var/dices_num = 1, var/hardness = 1, var/mob/living/rollperformer)
 	hardness = clamp(hardness, 1, 10)
-	dices_num = max(1, dices_num)
+	var/dices_decap = rollperformer.get_health_difficulty()
+	dices_num = max(1, dices_num-dices_decap)
 	var/wins = 0
 	var/crits = 0
 	var/brokes = 0

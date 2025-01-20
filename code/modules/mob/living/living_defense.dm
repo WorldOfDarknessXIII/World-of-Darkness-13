@@ -8,7 +8,7 @@
 		if(BASHING)
 			total_cubes += get_a_stamina(src)
 		if(LETHAL)
-			if((iskindred(src) || iscathayan(src)) && (def_zone != get_bodypart(BODY_ZONE_HEAD) && def_zone != BODY_ZONE_HEAD))
+			if((iskindred(src) || iscathayan(src) || isghoul(src)) && (def_zone != get_bodypart(BODY_ZONE_HEAD) && def_zone != BODY_ZONE_HEAD))
 				total_cubes += get_a_stamina(src)
 		if(AGGRAVATED)
 			if(isgarou(src) || iswerewolf(src))

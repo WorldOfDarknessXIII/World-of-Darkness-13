@@ -574,10 +574,10 @@ SUBSYSTEM_DEF(carpool)
 			NPC.Aggro(driver, TRUE)
 	playsound(src, 'code/modules/wod13/sounds/bump.ogg', 50, TRUE)
 	if(istype(A, /mob/living))
-		var/dam = prev_speed*5
+		var/dam = prev_speed*2
 		get_damage(dam, A, dam)
 	else
-		var/dam = prev_speed*5
+		var/dam = prev_speed*2
 		get_damage(dam, , dam)
 	return
 

@@ -497,3 +497,18 @@
 			hud_used.healths.icon_state = "[icon_state]_health5"
 		else
 			hud_used.healths.icon_state = "[icon_state]_health6"
+
+
+/mob/living/proc/get_health_difficulty()
+	if(health >= maxHealth)
+		return 0
+	else if(health > maxHealth*0.8)
+		return 0
+	else if(health > maxHealth*0.6)
+		return -1
+	else if(health > maxHealth*0.4)
+		return -2
+	else if(health > maxHealth*0.2)
+		return -5
+	else
+		return -10
