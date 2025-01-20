@@ -518,7 +518,6 @@ Dancer
 	value = 2
 
 /datum/quirk/boxer/add()
-	var/mob/living/carbon/H = quirk_holder
 	var/datum/martial_art/boxing/W = new
 	W.teach(quirk_holder, FALSE)
 
@@ -529,7 +528,6 @@ Dancer
 	value = 3
 
 /datum/quirk/wrestler/add()
-	var/mob/living/carbon/H = quirk_holder
 	var/datum/martial_art/wrestling/W = new
 	W.teach(quirk_holder, FALSE)
 
@@ -540,7 +538,6 @@ Dancer
 	value = 5
 
 /datum/quirk/krav_maga/add()
-	var/mob/living/carbon/H = quirk_holder
 	var/datum/martial_art/krav_maga/W = new
 	W.teach(quirk_holder, FALSE)
 

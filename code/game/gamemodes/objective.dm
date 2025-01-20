@@ -1003,9 +1003,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/steal_skull
 	name = "steal skull"
-
-/datum/objective/steal_skull/update_explanation_text()
-	..()
 	explanation_text = "Steal the Archon, which is used amongst western kin to announce bloodhunt."
 
 /datum/objective/steal_skull/check_completion()
@@ -1022,9 +1019,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/reach_sarcophagus
 	name = "reach sarcophagus"
-
-/datum/objective/reach_sarcophagus/update_explanation_text()
-	..()
 	explanation_text = "Scavenge for new cultists and find the sarcophagus."
 
 /datum/objective/reach_sarcophagus/check_completion()
@@ -1032,9 +1026,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/steal_keys
 	name = "steal keys"
-
-/datum/objective/steal_keys/update_explanation_text()
-	..()
 	explanation_text = "Steal the main keys of Millenium Tower."
 
 /datum/objective/steal_keys/check_completion()
