@@ -51,7 +51,7 @@
 
 	var/paint_mode = PAINT_NORMAL
 
-	var/charges = 30 //-1 or less for unlimited uses
+	var/charges = 60 //-1 or less for unlimited uses
 	var/charges_left
 	var/volume_multiplier = 1 // Increases reagent effect
 
@@ -372,7 +372,7 @@
 		wait_time *= 3
 
 	if(gang_mode || !instant)
-		if(!do_after(user, 50, target = target))
+		if(!do_after(user, 30, target = target))
 			return
 
 	var/charges_used = use_charges(user, cost)
