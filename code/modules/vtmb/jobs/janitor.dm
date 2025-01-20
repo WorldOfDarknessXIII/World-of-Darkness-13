@@ -15,7 +15,7 @@
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 
-	allowed_species = list("Ghoul", "Human")
+	allowed_species = list("Vampire", "Ghoul", "Human")
 
 	display_order = JOB_DISPLAY_ORDER_STREETJAN
 	allowed_bloodlines = list("True Brujah", "Daughters of Cacophony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff")
