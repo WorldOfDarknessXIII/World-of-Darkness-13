@@ -1110,9 +1110,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/sabbat
 	name = "sabbat"
-
-/datum/objective/sabbat/update_explanation_text()
-	..()
 	explanation_text = "Gain the power for Sabbat by claiming faction marks, shovelhead!"
 
 /datum/objective/sabbat/check_completion()
