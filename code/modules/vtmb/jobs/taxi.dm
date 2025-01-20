@@ -17,8 +17,6 @@
 	exp_type_department = EXP_TYPE_SERVICES
 
 	allowed_species = list("Ghoul", "Human", "Vampire")
-	species_slots = list("Vampire" = 1) // vampires should be doing literally anything but driving taxis, but let's give
-										// em one to pay respect to VtMB
 
 	v_duty = "Drive people in the city."
 	duty = "Drive people in the city."
