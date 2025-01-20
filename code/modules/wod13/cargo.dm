@@ -1,3 +1,77 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////BUY NOW AVAILABLE FOR A LIMITED TIME ONLY WHILE SUPPLIES LAST//////////////////////
+///////////////////////////////BUY NOW AVAILABLE FOR A LIMITED TIME ONLY WHILE SUPPLIES LAST//////////////////////
+///////////////////////////////BUY NOW AVAILABLE FOR A LIMITED TIME ONLY WHILE SUPPLIES LAST//////////////////////
+///////////////////////////////BUY NOW AVAILABLE FOR A LIMITED TIME ONLY WHILE SUPPLIES LAST//////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/supply_pack/vampire/limited
+	//if you want a range available, set while_supplies_last to a list of ONLY two numbers
+	var/list/while_supplies_last = null
+	//if you set while_supplies_last, this gets set automatically; otherwise, how many are available
+	var/remaining_for_order
+
+/datum/supply_pack/vampire/limited/New()
+	. = ..()
+	if(while_supplies_last)
+		remaining_for_order = rand(while_supplies_last[1], while_supplies_last[2])
+	if(remaining_for_order <= 0)
+		hidden = TRUE // remove it as an option to buy
+	RegisterSignal(src, COMSIG_CARGO_NEW_ORDER, PROC_REF(handle_new_order_request))
+	RegisterSignal(src, COMSIG_CARGO_DELETED_ORDER, PROC_REF(handle_deleted_order_request))
+
+/datum/supply_pack/vampire/limited/proc/handle_new_order_request(datum/source, list/order_message)
+	SIGNAL_HANDLER
+	if(remaining_for_order > 0)
+		remaining_for_order--
+		if(remaining_for_order == 0)
+			hidden = TRUE
+		return COMPONENT_VALID_ORDER
+	order_message[1] = "ERROR! Not enough in stock!"
+	return COMPONENT_INVALID_ORDER
+
+/datum/supply_pack/vampire/limited/proc/handle_deleted_order_request(datum/source)
+	SIGNAL_HANDLER
+	remaining_for_order++ //it ain't much, but it's good signal work
+	if(remaining_for_order > 0)
+		hidden = FALSE
+
+/datum/supply_pack/vampire/limited/ammo9/silver
+	name = "Ammo (9mm, silver)"
+	desc = "Contains a box of silver 9mm ammunition."
+	cost = 8000
+	contains = list(/obj/item/ammo_box/vampire/c9mm/silver)
+	crate_name = "ammo crate"
+	remaining_for_order = 2
+
+/datum/supply_pack/vampire/limited/ammo44/silver
+	name = "Ammo (.44, silver)"
+	desc = "Contains a box of silver .44 ammunition."
+	cost = 8000
+	contains = list(/obj/item/ammo_box/vampire/c44/silver)
+	crate_name = "ammo crate"
+	remaining_for_order = 2
+
+/datum/supply_pack/vampire/limited/ammo45/silver
+	name = "Ammo (.45, silver)"
+	desc = "Contains a box of silver .45 ammunition."
+	cost = 7000
+	contains = list(/obj/item/ammo_box/vampire/c45acp/silver)
+	crate_name = "ammo crate"
+	remaining_for_order = 2
+
+/datum/supply_pack/vampire/limited/ammo556/silver
+	name = "Ammo (5.56, silver)"
+	desc = "Contains a box of silver 5.56 ammunition."
+	cost = 8000
+	contains = list(/obj/item/ammo_box/vampire/c556/silver)
+	crate_name = "ammo crate"
+	remaining_for_order = 2
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /datum/supply_pack/vampire/weed_tray
 	name = "Weed Tray"
 	desc = "Contains a tray of weed."
@@ -232,32 +306,11 @@
 	contains = list(/obj/item/ammo_box/vampire/c9mm)
 	crate_name = "ammo crate"
 
-/datum/supply_pack/vampire/ammo9/silver
-	name = "Ammo (9mm, silver)"
-	desc = "Contains a box of silver 9mm ammunition."
-	cost = 2000
-	contains = list(/obj/item/ammo_box/vampire/c9mm/silver)
-	crate_name = "ammo crate"
-
 /datum/supply_pack/vampire/ammo44
 	name = "Ammo (.44)"
 	desc = "Contains a box of .44 ammunition."
 	cost = 600
 	contains = list(/obj/item/ammo_box/vampire/c44)
-	crate_name = "ammo crate"
-
-/datum/supply_pack/vampire/ammo44/silver
-	name = "Ammo (.44, silver)"
-	desc = "Contains a box of silver .44 ammunition."
-	cost = 2000
-	contains = list(/obj/item/ammo_box/vampire/c44/silver)
-	crate_name = "ammo crate"
-
-/datum/supply_pack/vampire/ammo45/silver
-	name = "Ammo (.45, silver)"
-	desc = "Contains a box of silver .45 ammunition."
-	cost = 2000
-	contains = list(/obj/item/ammo_box/vampire/c45acp/silver)
 	crate_name = "ammo crate"
 
 /datum/supply_pack/vampire/ammo556
@@ -274,12 +327,6 @@
 	contains = list(/obj/item/ammo_box/vampire/c556/incendiary)
 	crate_name = "ammo crate"
 
-/datum/supply_pack/vampire/ammo556/silver
-	name = "Ammo (5.56, silver)"
-	desc = "Contains a box of silver 5.56 ammunition."
-	cost = 3000
-	contains = list(/obj/item/ammo_box/vampire/c556/silver)
-	crate_name = "ammo crate"
 
 /datum/supply_pack/vampire/ammo12g
 	name = "Ammo (12g, slug)"

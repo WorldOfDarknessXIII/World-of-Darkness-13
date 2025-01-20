@@ -234,6 +234,16 @@
 					applied_coupon = coupon_check
 					break
 
+			//we make this a list because we can pass lists to signals and manipulate them
+			//we can't do the same with a text string or set of numbers
+			var/list/order_message = list(
+				"Order processed. The price will be charged to [account.account_holder]'s bank account on delivery."
+			)
+			var/signal_response = SEND_SIGNAL(pack, COMSIG_CARGO_NEW_ORDER, order_message)
+			if(signal_response & COMPONENT_INVALID_ORDER)
+				say(order_message[1])
+				. = TRUE
+				return
 			var/turf/T = get_turf(src)
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account, applied_coupon)
 			SO.generateRequisition(T)

@@ -311,22 +311,6 @@
 	ammo_type = /obj/item/ammo_casing/caseless/bolt
 	max_ammo = 30
 
-//obj/item/ammo_casing/vampire/c12g/buck/silver
-//	name = "silver 12g shell casing"
-//	desc = "A silver filled 12g shell casing."
-//	icon_state = "s12"
-
-//obj/item/ammo_casing/vampire/c12g/buck/silver/on_hit(atom/target, blocked = FALSE)
-//	. = ..()
-//	if(iswerewolf(target) || isgarou(target))
-//		var/mob/living/carbon/M = target
-//		if(M.auspice.gnosis)
-//			if(prob(40))
-//				adjust_gnosis(-1, M)
-//		else
-//			M.Stun(10)
-//			M.adjustBruteLoss(50, TRUE)
-
 /obj/projectile/beam/beam_rifle/vampire/vamp556mm/silver
 	name = "5.56mm silver bullet"
 	armour_penetration = 10
@@ -462,7 +446,3 @@
 	ammo_type = /obj/item/ammo_casing/vampire/c556mm/silver
 	max_ammo = 60
 
-//obj/item/ammo_box/vampire/c12g/buck/silver
-//	name = "ammo box (12g, 00 buck silver)"
-//	icon_state = "s12box_buck"
-//	ammo_type = /obj/item/ammo_casing/vampire/c12g/buck/silver

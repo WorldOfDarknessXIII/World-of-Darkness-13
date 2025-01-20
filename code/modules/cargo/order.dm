@@ -42,6 +42,9 @@
 	src.paying_account = paying_account
 	src.applied_coupon = coupon
 
+/datum/supply_order/proc/delete_order()
+	SEND_SIGNAL(pack, COMSIG_CARGO_DELETED_ORDER)
+
 /datum/supply_order/proc/generateRequisition(turf/T)
 	var/obj/item/paper/P = new(T)
 

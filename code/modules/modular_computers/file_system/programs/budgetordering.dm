@@ -227,6 +227,7 @@
 			SO.generateRequisition(T)
 			if((requestonly && !self_paid) || !(card_slot?.GetID()))
 				SSshuttle.requestlist += SO
+
 			else
 				SSshuttle.shoppinglist += SO
 				if(self_paid)
@@ -257,11 +258,14 @@
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.requestlist)
 				if(SO.id == id)
+					SO.delete_order()
 					SSshuttle.requestlist -= SO
 					. = TRUE
 					break
 		if("denyall")
-			SSshuttle.requestlist.Cut()
+			for(var/datum/supply_order/SO in SSshuttle.requestlist)
+				SO.delete_order()
+				SSshuttle.requestlist -= SO
 			. = TRUE
 		if("toggleprivate")
 			self_paid = !self_paid

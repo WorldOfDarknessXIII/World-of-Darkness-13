@@ -140,6 +140,7 @@
 #include "code\__DEFINES\wires.dm"
 #include "code\__DEFINES\wod13.dm"
 #include "code\__DEFINES\wounds.dm"
+#include "code\__DEFINES\dcs\cargo_signals.dm"
 #include "code\__DEFINES\dcs\flags.dm"
 #include "code\__DEFINES\dcs\helpers.dm"
 #include "code\__DEFINES\dcs\signals.dm"
