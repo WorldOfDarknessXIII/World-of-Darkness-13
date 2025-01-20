@@ -803,7 +803,7 @@
 	max_buckled_mobs = 1
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
-	layer = ABOVE_MOB_LAYER
+	layer = ABOVE_ALL_MOB_LAYER
 
 /obj/structure/flesh_grip/user_unbuckle_mob(mob/living/buckled_mob, mob/living/carbon/human/user)
 	if(buckled_mob)
@@ -821,7 +821,7 @@
 			"<span class='notice'>You struggle to break free from [src], exacerbating your wounds! (Stay still for two minutes.)</span>",\
 			"<span class='hear'>You hear a wet squishing noise..</span>")
 			buckled_mob.adjustBruteLoss(30)
-			if(!do_after(buckled_mob, 2 MINUTES, target = src))
+			if(!do_after(buckled_mob, 10 SECONDS, target = src))
 				if(buckled_mob?.buckled)
 					to_chat(buckled_mob, "<span class='warning'>You fail to free yourself!</span>")
 				return
@@ -830,9 +830,6 @@
 		release_mob(buckled_mob)
 
 /obj/structure/flesh_grip/proc/release_mob(mob/living/buckled_mob)
-	var/matrix/turn_around = matrix(buckled_mob.transform)
-	turn_around.Turn(180)
-	animate(buckled_mob, transform = turn_around, time = 0.3 SECONDS)
 	buckled_mob.pixel_y = buckled_mob.base_pixel_y + PIXEL_Y_OFFSET_LYING
 	buckled_mob.adjustBruteLoss(30)
 	visible_message(text("<span class='danger'>[buckled_mob] falls free of [src]!</span>"))
