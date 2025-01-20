@@ -186,6 +186,7 @@
 /obj/item/card/id/clinic
 	name = "medical badge"
 	id_type_name = "medical badge"
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY)
 	desc = "A badge which shows medical qualification."
 	icon = 'code/modules/wod13/items.dmi'
 	icon_state = "id2"
@@ -195,6 +196,10 @@
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	worn_icon = 'code/modules/wod13/worn.dmi'
 	worn_icon_state = "id2"
+
+/obj/item/card/id/clinic/director
+	name = "clinic director's badge"
+	desc = "A badge which shows not only medical qualification, but also an authority over the clinic."
 
 /obj/item/card/id/archive
 	name = "scholar badge"
