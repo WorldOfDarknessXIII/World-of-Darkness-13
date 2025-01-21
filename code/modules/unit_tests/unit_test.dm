@@ -14,6 +14,8 @@ You can use the run_loc_bottom_left and run_loc_top_right to get turfs for testi
 GLOBAL_DATUM(current_test, /datum/unit_test)
 GLOBAL_VAR_INIT(failed_any_test, FALSE)
 GLOBAL_VAR(test_log)
+/// When unit testing, all logs sent to log_mapping are stored here and retrieved in log_mapping unit test.
+GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 
 /datum/unit_test
 	//Bit of metadata for the future maybe
@@ -24,6 +26,9 @@ GLOBAL_VAR(test_log)
 
 	/// The top right turf of the testing zone
 	var/turf/run_loc_top_right
+
+	///The priority of the test, the larger it is the later it fires
+	var/priority = TEST_DEFAULT
 
 	/// The type of turf to allocate for the testing zone
 	var/test_turf_type = /turf/open/floor/plasteel
