@@ -41,7 +41,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	illegal = TRUE
-	cost = 175
+	cost = 550
 
 /datum/crafting_recipe/weed_leaf
 	name = "Sort Weed"
@@ -71,7 +71,7 @@
 	food_reagents = list(/datum/reagent/drug/space_drugs = 20, /datum/reagent/toxin/lipolicide = 20)
 	eat_time = 10
 	illegal = TRUE
-	cost = 50
+	cost = 350
 
 /obj/item/bailer
 	name = "bailer"
@@ -541,13 +541,13 @@ SUBSYSTEM_DEF(smokeweedeveryday)
 	isGlass = FALSE
 	foodtype = BREAKFAST
 	illegal = TRUE
-	cost = 300
+	cost = 650
 
 /obj/item/reagent_containers/food/drinks/meth/cocaine
 	name = "white package"
 	icon_state = "package_cocaine"
 	list_reagents = list(/datum/reagent/drug/methamphetamine/cocaine = 30)
-	cost = 500
+	cost = 750
 
 /obj/item/reagent_containers/drug/methpack
 	name = "\improper elite blood pack (full)"

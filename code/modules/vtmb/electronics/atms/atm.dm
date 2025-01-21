@@ -103,7 +103,7 @@ var/mob/living/carbon/human/H
 	else if(istype(src, /obj/item/vamp/creditcard/seneschal))
 		account.balance = rand(4000, 8000)
 	else
-		account.balance = rand(100, 1000)
+		account.balance = rand(600, 1000)
 
 /obj/machinery/vamp/atm/Initialize()
 	..()
