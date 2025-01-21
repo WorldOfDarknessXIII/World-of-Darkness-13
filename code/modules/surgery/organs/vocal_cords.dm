@@ -142,7 +142,7 @@
 	user.say(message, spans = span_list, sanitize = FALSE)
 
 	message = lowertext(message)
-	var/user_roll = secret_vampireroll(max(get_a_charisma(user), get_a_manipulation(user), get_a_appearance(user))+get_a_empathy(user), 6+user.stat, user)
+	var/user_roll = secret_vampireroll(max(get_a_charisma(user), get_a_manipulation(user), get_a_appearance(user))+get_a_empathy(user), 6, user)
 	var/list/mob/living/listeners = list()
 	for(var/mob/living/L in get_hearers_in_view(8, user))
 		if(L.can_hear() && !L.anti_magic_check(FALSE, TRUE) && L.stat != DEAD)

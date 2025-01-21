@@ -1345,7 +1345,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 						"<span class='userdanger'>You block [user]'s grab!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, "<span class='warning'>Your grab at [target] was blocked!</span>")
 		return FALSE
-	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_brawl(user)+get_potence_dices(user), 6+user.stat, user)
+	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_brawl(user)+get_potence_dices(user), 6, user)
 	if(modifikator == -1)
 		user.AdjustKnockdown(20, TRUE)
 		playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
@@ -1370,7 +1370,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
 
-	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_brawl(user)+get_potence_dices(user), 6+user.stat, user)
+	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_brawl(user)+get_potence_dices(user), 6, user)
 	var/atk_verb = user.dna.species.attack_verb
 	if(modifikator == -1)
 		target = user
@@ -1477,7 +1477,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 						"<span class='danger'>You block [user]'s shove!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, "<span class='warning'>Your shove at [target] was blocked!</span>")
 		return FALSE
-	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_brawl(user)+get_potence_dices(user), 6+user.stat, user)
+	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_brawl(user)+get_potence_dices(user), 6, user)
 	if(modifikator == -1)
 		user.AdjustKnockdown(20, TRUE)
 		playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
@@ -1539,10 +1539,10 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	// Allows you to put in item-specific reactions based on species
 	var/add_hard = 0
 	if(user.zone_selected == BODY_ZONE_HEAD)
-		add_hard = 2
+		add_hard = 1
 	if(user.zone_selected == BODY_ZONE_PRECISE_EYES || user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
-		add_hard = 3
-	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_melee(user)+get_potence_dices(user), 6+user.stat+add_hard, user)
+		add_hard = 2
+	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_melee(user)+get_potence_dices(user), 6+add_hard, user)
 	if(modifikator == -1)
 		H = user
 		modifikator = 3

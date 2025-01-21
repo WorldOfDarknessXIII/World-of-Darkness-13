@@ -22,7 +22,7 @@
 	minimal_masquerade = 3
 	max_generation = 11
 	allowed_bloodlines = list("True Brujah", "Daughters of Cacophony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff", "Kiasyd")
-	experience_addition = 10
+	experience_addition = 2
 
 /datum/outfit/job/strip
 	name = "Stripper"

@@ -1186,7 +1186,7 @@
 			return
 
 		//(< 5, slip and take damage), (5-14, fail to climb), (>= 15, climb up successfully)
-		var/roll = secret_vampireroll(max(get_a_strength(src), get_a_dexterity(src))+get_a_athletics(src)+get_potence_dices(src), 6+stat, src)
+		var/roll = secret_vampireroll(max(get_a_strength(src), get_a_dexterity(src))+get_a_athletics(src)+get_potence_dices(src), 6, src)
 		// var/physique = physique
 		if(roll >= 3)
 			loc = above_turf

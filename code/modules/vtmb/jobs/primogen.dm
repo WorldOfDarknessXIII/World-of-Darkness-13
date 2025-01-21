@@ -21,7 +21,7 @@
 	minimal_generation = 8	//Uncomment when players get exp enough
 
 	v_duty = "Offer your infinite knowledge to Prince of the City."
-	experience_addition = 20
+	experience_addition = 4
 	minimal_masquerade = 5
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
@@ -72,7 +72,7 @@
 	minimal_generation = 8	//Uncomment when players get exp enough
 
 	v_duty = "Offer your infinite knowledge to Prince of the City."
-	experience_addition = 20
+	experience_addition = 4
 	minimal_masquerade = 5
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
@@ -119,7 +119,7 @@
 	minimal_generation = 8	//Uncomment when players get exp enough
 
 	v_duty = "Offer your infinite knowledge to Prince of the City."
-	experience_addition = 20
+	experience_addition = 4
 	minimal_masquerade = 5
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
@@ -165,7 +165,7 @@
 	minimal_generation = 8	//Uncomment when players get exp enough
 
 	v_duty = "Offer your infinite knowledge to Prince of the City."
-	experience_addition = 20
+	experience_addition = 4
 	minimal_masquerade = 5
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")
@@ -213,7 +213,7 @@
 	minimal_generation = 8	//Uncomment when players get exp enough
 
 	v_duty = "Offer your infinite knowledge to Prince of the City."
-	experience_addition = 20
+	experience_addition = 4
 	minimal_masquerade = 5
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince")

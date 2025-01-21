@@ -26,7 +26,7 @@
 	minimal_generation = 11
 	max_generation = 9
 	minimal_masquerade = 2
-	experience_addition = 15
+	experience_addition = 3
 
 /datum/outfit/job/emissary
 	name = "emissary"
