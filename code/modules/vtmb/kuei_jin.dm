@@ -2,17 +2,12 @@
 	if(iscathayan(src))
 		if(mind?.dharma)
 			if(mind.dharma.animated == "Yang")
-				if(yin_chi < yang_chi+2)
-					return TRUE
-				else
-					return FALSE
-			else
-				if(yang_chi > yin_chi+2)
-					return TRUE
-				else
-					return FALSE
-		else
-			return FALSE
+				return TRUE
+			else if (max_yang_chi > max_yin_chi + 2)
+				return TRUE
+	else
+		return FALSE
+
 	return TRUE
 
 /mob/living/Life()
@@ -82,9 +77,9 @@
 		hud_used.yin_chi_icon.icon_state = "yin-[round((yin_chi/max_yin_chi)*12)]"
 		hud_used.yang_chi_icon.icon_state = "yang-[round((yang_chi/max_yang_chi)*12)]"
 		hud_used.demon_chi_icon.icon_state = "demon-[round((demon_chi/max_demon_chi)*12)]"
-		if(yin_chi > yang_chi+2)
+		if(max_yin_chi > max_yang_chi + 2)
 			hud_used.imbalance_chi_icon.icon_state = "yin_imbalance"
-		else if(yang_chi > yin_chi+2)
+		else if(max_yang_chi > max_yin_chi + 2)
 			hud_used.imbalance_chi_icon.icon_state = "yang_imbalance"
 		else
 			hud_used.imbalance_chi_icon.icon_state = "base"
