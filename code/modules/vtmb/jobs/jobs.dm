@@ -4,6 +4,8 @@
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
 	var/i = get_a_manipulation(H)+get_a_finance(H)
+	if(!backpack_contents)
+		backpack_contents = list()
 	backpack_contents.Add(list(/obj/item/stack/dollar/hundred=i))
 
 /datum/outfit/job/post_equip(mob/living/carbon/human/H)
