@@ -56,7 +56,7 @@
 	var/wound_bonus = 20
 	var/bare_wound_bonus = 25
 	var/sharpness = 50
-	var/armour_penetration = 100
+	var/armour_penetration = 0
 	var/melee_damage_type = BRUTE
 	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	var/attack_verb_continuous = "attacks"

@@ -17,7 +17,7 @@
 	icon_state= "84mm-hedp"
 	damage = 80
 	var/anti_armour_damage = 200
-	armour_penetration = 100
+	armour_penetration = 0
 	dismemberment = 100
 	embedding = null
 	shrapnel_type = null

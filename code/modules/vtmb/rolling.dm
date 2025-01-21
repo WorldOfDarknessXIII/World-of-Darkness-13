@@ -338,17 +338,14 @@ SUBSYSTEM_DEF(woddices)
 	var/dices_decap = rollperformer.get_health_difficulty()
 	dices_num = max(1, dices_num-dices_decap)
 	var/wins = 0
-	var/crits = 0
 	var/brokes = 0
 	for(var/i in 1 to dices_num)
 		var/roll = rand(1, 10)
-		if(roll == 10)
-			crits += 1
-		else if(roll == 1)
+		if(roll == 1)
 			brokes += 1
 		else if(roll >= hardness)
 			wins += 1
-	wins = wins+(max(0, crits-brokes))
+	wins = wins-brokes
 	if(wins < 0)
 		create_number_on_mob(rollperformer, "#ff0000", "Botch!")
 		to_chat(rollperformer, "<span class='danger'>Botch!</span>")

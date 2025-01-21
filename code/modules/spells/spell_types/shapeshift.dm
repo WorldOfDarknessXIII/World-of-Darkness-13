@@ -102,6 +102,7 @@
 	if(istype(shape, /mob/living/simple_animal/hostile))
 		var/mob/living/simple_animal/hostile/hostile = shape
 		hostile.my_creator = caster
+		hostile.attributes = caster.attributes
 	H = new(shape,src,caster)
 
 	clothes_req = FALSE

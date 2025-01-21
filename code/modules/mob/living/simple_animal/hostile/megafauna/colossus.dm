@@ -34,7 +34,7 @@
 	friendly_verb_simple = "stare down"
 	icon = 'icons/mob/32x64.dmi'
 	speak_emote = list("roars")
-	armour_penetration = 100
+	armour_penetration = 0
 	melee_damage_lower = 100
 	melee_damage_upper = 100
 	speed = 10
@@ -288,7 +288,7 @@
 	name ="death bolt"
 	icon_state= "chronobolt"
 	damage = 100
-	armour_penetration = 100
+	armour_penetration = 0
 	speed = 2
 	eyeblur = 0
 	damage_type = BRUTE

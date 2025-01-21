@@ -4,7 +4,7 @@
 	icon_state = "guardian"
 	damage = 5
 	damage_type = BRUTE
-	armour_penetration = 100
+	armour_penetration = 0
 
 /mob/living/simple_animal/hostile/guardian/ranged
 	a_intent = INTENT_HELP

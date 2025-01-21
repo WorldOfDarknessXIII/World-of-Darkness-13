@@ -726,7 +726,7 @@
 "vJ" = (/obj/effect/turf_decal/siding/white,/obj/structure/vampdoor/giovanni{dir = 1; icon_state = "wood-1"},/turf/open/floor/plating/parquetry,/area/space)
 "vK" = (/obj/machinery/light/small/broken{dir = 1},/turf/open/floor/plating/concrete,/area/space)
 "vL" = (/obj/effect/decal/bordur{dir = 4},/obj/effect/decal/bordur{dir = 4},/obj/effect/decal/bordur{dir = 10; icon_state = "border"},/turf/open/floor/plating/sidewalk/rich,/area/space)
-"vM" = (/obj/structure/closet/cabinet,/obj/item/melee/vampirearms/katana/kosa{armour_penetration = 25; block_chance = 35; color = "#808000"; desc = "A sophisticated scythe made from the best materials brought from Italy. Strange, usually mafiosi prefer guns... Emits grave energy"; force = 40; name = "gravekeeper"},/obj/item/clothing/under/vampire/rich,/obj/item/clothing/suit/vampire/vest,/turf/open/floor/plating/parquetry,/area/space)
+"vM" = (/obj/structure/closet/cabinet,/obj/item/melee/vampirearms/katana/kosa{armour_penetration = 0; block_chance = 35; color = "#808000"; desc = "A sophisticated scythe made from the best materials brought from Italy. Strange, usually mafiosi prefer guns... Emits grave energy"; force = 40; name = "gravekeeper"},/obj/item/clothing/under/vampire/rich,/obj/item/clothing/suit/vampire/vest,/turf/open/floor/plating/parquetry,/area/space)
 "vN" = (/obj/structure/sink{pixel_y = 16},/turf/open/floor/plating/rough/cave,/area/space)
 "vO" = (/obj/machinery/light/small{pixel_y = 32},/turf/open/floor/plating/parquetry,/area/space)
 "vR" = (/obj/structure/vampfence/corner/rich{dir = 1; icon_state = "fence_end"},/obj/effect/decal/bordur{dir = 4; icon_state = "border"},/turf/open/floor/plating/sidewalk/rich,/area/space)

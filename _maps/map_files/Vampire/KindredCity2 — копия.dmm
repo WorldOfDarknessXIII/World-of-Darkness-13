@@ -4721,7 +4721,7 @@
 "ilq" = (/obj/structure/closet/crate/bin,/turf/open/floor/plating/parquetry,/area/space)
 "inA" = (/obj/structure/table/wood,/obj/structure/sign/poster/random{pixel_y = 32},/turf/open/floor/plating/rough,/area/vtm/anarch)
 "inC" = (/obj/effect/turf_decal/siding/wood,/turf/open/floor/plating/parquetry,/area/vtm/camarilla)
-"iue" = (/obj/structure/closet/cabinet,/obj/item/melee/vampirearms/katana/kosa{armour_penetration = 25; block_chance = 35; color = "#808000"; desc = "A sophisticated scythe made from the best materials brought from Italy. Strange, usually mafiosi prefer guns... Emits grave energy"; force = 40; name = "gravekeeper"},/turf/open/floor/plating/parquetry,/area/space)
+"iue" = (/obj/structure/closet/cabinet,/obj/item/melee/vampirearms/katana/kosa{armour_penetration = 0; block_chance = 35; color = "#808000"; desc = "A sophisticated scythe made from the best materials brought from Italy. Strange, usually mafiosi prefer guns... Emits grave energy"; force = 40; name = "gravekeeper"},/turf/open/floor/plating/parquetry,/area/space)
 "iwq" = (/obj/item/target,/obj/machinery/light{pixel_y = 32},/turf/open/floor/plating/rough,/area/vtm/anarch)
 "iIg" = (/obj/machinery/light{dir = 1},/obj/machinery/vending/boozeomat/all_access,/turf/open/floor/carpet/airless,/area/vtm/anarch)
 "iMr" = (/obj/effect/turf_decal/stripes/white/line{dir = 5},/turf/open/floor/plating/rough,/area/space)

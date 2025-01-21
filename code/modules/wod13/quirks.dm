@@ -510,7 +510,7 @@ Dancer
 /datum/quirk/foreign/remove()
 	var/mob/living/carbon/H = quirk_holder
 	H.remove_blocked_language(/datum/language/english)
-
+/*
 /datum/quirk/boxer
 	name = "Boxing Champion"
 	desc = "You know something about boxing."
@@ -530,12 +530,12 @@ Dancer
 /datum/quirk/wrestler/add()
 	var/datum/martial_art/wrestling/W = new
 	W.teach(quirk_holder, FALSE)
-
+*/
 /datum/quirk/krav_maga
 	name = "Krav Maga Master"
 	desc = "You know a really lethal martial art."
-	allowed_species = list("Human", "Kuei-Jin")
-	value = 5
+//	allowed_species = list("Human", "Kuei-Jin")
+	value = 6
 
 /datum/quirk/krav_maga/add()
 	var/datum/martial_art/krav_maga/W = new

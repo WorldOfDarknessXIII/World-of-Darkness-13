@@ -200,6 +200,7 @@
 			var/current_loc = get_turf(trans)
 			lupus_form.forceMove(current_loc)
 			lupus_form.key = trans.key
+			lupus_form.mind.language_holder = trans.mind.language_holder
 			forceMove(lupus_form)
 			trans.forceMove(src)
 		if("Crinos")
@@ -208,6 +209,7 @@
 			var/current_loc = get_turf(trans)
 			crinos_form.forceMove(current_loc)
 			crinos_form.key = trans.key
+			crinos_form.mind.language_holder = trans.mind.language_holder
 			forceMove(crinos_form)
 			trans.forceMove(src)
 		if("Homid")

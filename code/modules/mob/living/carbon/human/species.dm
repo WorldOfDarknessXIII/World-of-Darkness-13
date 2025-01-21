@@ -1410,7 +1410,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			else
 				user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
-		var/damage = (rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh))*(modifikator/3)
+		var/damage = round((rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh))*(modifikator+1)/4)
 		if(user.age < 16)
 			damage = round(damage/2)
 
@@ -1429,7 +1429,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			return FALSE
 
 		var/armor_block
-		if(get_potence_dices(user))
+		if(get_potence_dices(user) || iscrinos(user))
 			armor_block = target.run_armor_check(affecting, AGGRAVATED)
 		else
 			armor_block = target.run_armor_check(affecting, BASHING)
@@ -1558,8 +1558,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
 						"<span class='userdanger'>You block [I]!</span>")
 		return FALSE
 
-	modifikator = modifikator/3
-
 	var/hit_area
 	if(!affecting) //Something went wrong. Maybe the limb is missing?
 		affecting = H.bodyparts[1]
@@ -1592,7 +1590,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 					if(H.bloodpool)
 						H.bloodpool = max(0, H.bloodpool-1)
 						OC.stored_blood = OC.stored_blood+1
-	apply_damage((I.force*modifikator) * weakness, I.damtype, def_zone, armor_block, H, wound_bonus = Iwound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
+	apply_damage(round(I.force*((modifikator+1)/4)) * weakness, I.damtype, def_zone, armor_block, H, wound_bonus = Iwound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
 
 	if(!I.force)
 		return FALSE //item force is zero

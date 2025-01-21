@@ -115,14 +115,14 @@
 /mob/living/simple_animal/hostile/megafauna/AttackingTarget()
 	if(recovery_time >= world.time)
 		return
-	. = ..()
-	if(. && isliving(target))
+	if(isliving(target))
 		var/mob/living/L = target
-		if(L.stat != DEAD)
+		if(L.stat < DEAD)
 			if(!client && ranged && ranged_cooldown <= world.time)
+				. = ..()
 				OpenFire()
 
-			if(L.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(L, TRAIT_NODEATH)) //Nope, it still gibs yall
+			if(L.health <= HEALTH_THRESHOLD_DEAD) //Nope, it still gibs yall
 				devour(L)
 		else
 			devour(L)

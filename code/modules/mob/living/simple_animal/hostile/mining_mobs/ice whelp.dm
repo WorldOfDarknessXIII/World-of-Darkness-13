@@ -17,7 +17,7 @@
 	maxHealth = 350
 	health = 350
 	obj_damage = 40
-	armour_penetration = 20
+	armour_penetration = 0
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	attack_verb_continuous = "chomps"

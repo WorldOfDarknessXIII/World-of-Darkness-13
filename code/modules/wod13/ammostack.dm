@@ -49,7 +49,7 @@
 /obj/projectile/beam/beam_rifle/vampire/vamp9mm/plus
 	name = "9mm HV bullet"
 	damage = 22
-	armour_penetration = 10
+	armour_penetration = 0
 
 /obj/projectile/beam/beam_rifle/vampire/vamp45acp
 	name = ".45 ACP bullet"
@@ -59,35 +59,35 @@
 /obj/projectile/beam/beam_rifle/vampire/vamp44
 	name = ".44 bullet"
 	damage = 35
-	armour_penetration = 15
+	armour_penetration = 0
 	bare_wound_bonus = -5
 	wound_bonus = 10
 
 /obj/projectile/beam/beam_rifle/vampire/vamp50
 	name = ".50 bullet"
 	damage = 70
-	armour_penetration = 20
+	armour_penetration = 0
 	bare_wound_bonus = 5
 	wound_bonus = 5
 
 /obj/projectile/beam/beam_rifle/vampire/vamp556mm
 	name = "5.56mm bullet"
 	damage = 45
-	armour_penetration = 25
+	armour_penetration = 0
 	bare_wound_bonus = -5
 	wound_bonus = 5
 
 /obj/projectile/beam/beam_rifle/vampire/vamp545mm
 	name = "5.45mm bullet"
 	damage = 40
-	armour_penetration = 30
+	armour_penetration = 0
 	bare_wound_bonus = 5
 	wound_bonus = -5
 
 /obj/projectile/beam/beam_rifle/vampire/vamp12g
 	name = "12g shotgun slug"
 	damage = 70
-	armour_penetration = 15
+	armour_penetration = 0
 	bare_wound_bonus = 10
 	wound_bonus = 5
 
@@ -101,7 +101,7 @@
 	name = "12g shotgun pellet"
 	damage = 9
 	range = 22 //range of where you can see + one screen after
-	armour_penetration = 15
+	armour_penetration = 0
 	bare_wound_bonus = 5
 	wound_bonus = 0
 
@@ -125,7 +125,7 @@
 /obj/projectile/bullet/crossbow_bolt
 	name = "bolt"
 	damage = 75
-	armour_penetration = 75
+	armour_penetration = 0
 	sharpness = SHARP_POINTY
 	wound_bonus = 50
 
@@ -329,7 +329,7 @@
 
 /obj/projectile/beam/beam_rifle/vampire/vamp556mm/silver
 	name = "5.56mm silver bullet"
-	armour_penetration = 10
+	armour_penetration = 0
 	damage = 35
 
 /obj/projectile/beam/beam_rifle/vampire/vamp556mm/silver/on_hit(atom/target, blocked = FALSE)
@@ -392,7 +392,7 @@
 /obj/projectile/beam/beam_rifle/vampire/vamp44/silver
 	name = ".44 silver bullet"
 	damage = 40
-	armour_penetration = 15
+	armour_penetration = 0
 	icon_state = "s44"
 
 /obj/projectile/beam/beam_rifle/vampire/vamp44/silver/on_hit(atom/target, blocked = FALSE)

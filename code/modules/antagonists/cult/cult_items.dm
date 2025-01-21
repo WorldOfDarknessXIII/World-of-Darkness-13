@@ -21,7 +21,7 @@
 	throwforce = 25
 	wound_bonus = -10
 	bare_wound_bonus = 20
-	armour_penetration = 35
+	armour_penetration = 0
 	actions_types = list(/datum/action/item_action/cult_dagger)
 	var/drawing_rune = FALSE
 
@@ -89,7 +89,7 @@
 	block_chance = 50
 	throwforce = 20
 	force = 35
-	armour_penetration = 45
+	armour_penetration = 0
 	throw_speed = 1
 	throw_range = 3
 	sharpness = SHARP_EDGED
@@ -641,7 +641,7 @@
 	force = 17
 	throwforce = 40
 	throw_speed = 2
-	armour_penetration = 30
+	armour_penetration = 0
 	block_chance = 30
 	attack_verb_continuous = list("attacks", "impales", "stabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "impale", "stab", "tear", "lacerate", "gore")

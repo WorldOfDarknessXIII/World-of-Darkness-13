@@ -23,7 +23,7 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	hitsound = "swing_hit"
-	armour_penetration = 50
+	armour_penetration = 0
 	var/active = 0
 	var/saber_color
 

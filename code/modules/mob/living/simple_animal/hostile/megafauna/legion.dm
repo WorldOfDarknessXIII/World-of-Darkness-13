@@ -29,7 +29,7 @@
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	speak_emote = list("echoes")
-	armour_penetration = 50
+	armour_penetration = 0
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	speed = 5
