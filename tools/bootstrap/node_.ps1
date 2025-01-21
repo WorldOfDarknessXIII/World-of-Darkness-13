@@ -1,3 +1,5 @@
+#Requires -Version 4.0
+
 ## bootstrap/node_.ps1
 ## Downloads a Node version to a cache directory and invokes it.
 

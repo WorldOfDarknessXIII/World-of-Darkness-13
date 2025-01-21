@@ -49,16 +49,16 @@ module.exports = (env = {}, argv) => {
       chunkLoadTimeout: 15000,
     },
     resolve: {
-      extensions: ['.js', '.jsx'],
+      extensions: ['.tsx', '.ts', '.jsx', '.js'],
       alias: {},
     },
     module: {
       rules: [
         {
-          test: /\.m?jsx?$/,
+          test: /\.(js|jsx|cjs|mjs|ts|tsx)$/,
           use: [
             {
-              loader: require.resolve('babel-loader'),
+              loader: 'babel-loader',
               options: createBabelConfig({ mode }),
             },
           ],
@@ -73,20 +73,20 @@ module.exports = (env = {}, argv) => {
               },
             },
             {
-              loader: require.resolve('css-loader'),
+              loader: 'css-loader',
               options: {
                 esModule: false,
               },
             },
             {
-              loader: require.resolve('sass-loader'),
+              loader: 'sass-loader',
             },
           ],
         },
         {
           test: /\.(png|jpg|svg)$/,
           use: [
-            require.resolve('url-loader'),
+            'url-loader',
           ],
         },
       ],
@@ -105,9 +105,6 @@ module.exports = (env = {}, argv) => {
     cache: {
       type: 'filesystem',
       cacheLocation: path.resolve(__dirname, `.yarn/webpack/${mode}`),
-      buildDependencies: {
-        config: [__filename],
-      },
     },
     stats: createStats(true),
     plugins: [

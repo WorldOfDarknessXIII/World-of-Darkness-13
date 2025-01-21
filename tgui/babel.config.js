@@ -34,7 +34,7 @@ const createBabelConfig = options => {
   };
 };
 
-module.exports = (api) => {
+module.exports = api => {
   api.cache(true);
   const mode = process.env.NODE_ENV;
   return createBabelConfig({ mode });
