@@ -19,5 +19,5 @@ if %errorlevel% == 0 (
 	call node.exe %*
 	exit /b %errorlevel%
 )
-echo "build.bat: Failed to bootstrap Node!"
+echo "node.bat: Failed to bootstrap Node!"
 exit /b 1
