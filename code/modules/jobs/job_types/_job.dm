@@ -82,7 +82,7 @@
 	///List of species that are limited to a certain amount of that species doing this job.
 	var/list/species_slots = list()
 	///List of Bloodlines that are allowed to do this job.
-	var/list/allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry")
+	var/list/allowed_bloodlines = list("Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Followers of Set")
 
 	// List for phone shit
 	var/my_contact_is_important = FALSE

@@ -1,5 +1,5 @@
-/datum/vampireclane/ministry
-	name = "Ministry"
+/datum/vampireclane/setite
+	name = "Followers of Set"
 	desc = "The Ministry, also called the Ministry of Set, Followers of Set, or Setites, are a clan of vampires who believe their founder was the Egyptian god Set."
 	curse = "Decreased moving speed in lighted areas."
 	clane_disciplines = list(
@@ -10,11 +10,11 @@
 	male_clothes = /obj/item/clothing/under/vampire/slickback
 	female_clothes = /obj/item/clothing/under/vampire/burlesque
 
-/datum/vampireclane/ministry/on_gain(mob/living/carbon/human/H)
+/datum/vampireclane/setite/on_gain(mob/living/carbon/human/H)
 	..()
 	H.add_quirk(/datum/quirk/lightophobia)
 
-/datum/vampireclane/ministry/post_gain(mob/living/carbon/human/H)
+/datum/vampireclane/setite/post_gain(mob/living/carbon/human/H)
 	..()
 	var/obj/item/organ/eyes/night_vision/NV = new()
 	NV.Insert(H, TRUE, FALSE)

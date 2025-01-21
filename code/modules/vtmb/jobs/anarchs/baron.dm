@@ -30,7 +30,7 @@
 	minimal_generation = 11
 	max_generation = 7
 	allowed_species = list("Vampire")
-	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Ventrue", "Lasombra", "Gargoyle", "Ministry")
+	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Ventrue", "Lasombra", "Gargoyle", "Followers of Set")
 	experience_addition = 4
 
 /datum/outfit/job/barkeeper

@@ -1691,7 +1691,7 @@
 	. = ..()
 	if(charges == 0)
 		qdel(src)
-
+/*
 	playsound(target.loc, 'code/modules/wod13/sounds/quietus.ogg', 50, TRUE)
 	target.Stun(5*level_casting)
 	if(level_casting >= 3)
@@ -1707,7 +1707,7 @@
 		H.apply_overlay(MUTATIONS_LAYER)
 		spawn(5*level_casting)
 			H.remove_overlay(MUTATIONS_LAYER)
-
+*/
 /datum/discipline/necromancy
 	name = "Necromancy"
 	desc = "Offers control over another, undead reality."
