@@ -372,6 +372,7 @@
 						trigger1 = pole
 				if(trigger1)
 					H.mind.dharma.roll_po(trigger1, H)
+					COOLDOWN_START(H.mind.dharma, po_call, 5 SECONDS)
 
 				for(var/obj/item/toy/toy in view(5, H))
 					if(toy)
@@ -381,12 +382,14 @@
 					trigger2 = toy
 				if(trigger2)
 					H.mind.dharma.roll_po(trigger2, H)
+					COOLDOWN_START(H.mind.dharma, po_call, 5 SECONDS)
 
 				for(var/obj/machinery/computer/slot_machine/slot in view(5, H))
 					if(slot)
 						trigger3 = slot
 				if(trigger3)
 					H.mind.dharma.roll_po(trigger3, H)
+					COOLDOWN_START(H.mind.dharma, po_call, 5 SECONDS)
 
 		if(H.mind.dharma.Po == "Fool")
 			if(fool_turf != get_turf(H))
@@ -397,6 +400,7 @@
 					fool_fails = fool_fails+1
 					if(fool_fails >= 10)
 						H.mind.dharma.roll_po(H, H)
+						COOLDOWN_START(H.mind.dharma, po_call, 5 SECONDS)
 						fool_fails = 0
 
 		if(H.mind.dharma.Po == "Demon")
@@ -408,6 +412,7 @@
 							trigger = hum
 				if(trigger)
 					H.mind.dharma.roll_po(trigger, H)
+					COOLDOWN_START(H.mind.dharma, po_call, 5 SECONDS)
 	H.nutrition = NUTRITION_LEVEL_START_MAX
 	if((H.last_bloodpool_restore + 60 SECONDS) <= world.time)
 		H.last_bloodpool_restore = world.time
@@ -465,7 +470,7 @@
 	if ((iskindred(victim) || isghoul(victim)) && (victim.bloodpool > 0)) //drain vitae bloodpool
 		victim.bloodpool = max(0, victim.bloodpool - 1)
 		kueijin.yin_chi = min(kueijin.yin_chi + 1, kueijin.max_yin_chi)
-		to_chat(kueijin, "<span class='engradio'>Some bitter <b>Yin</b> Chi enters you...</span>")
+		to_chat(kueijin, "<span class='medradio'>Some bitter <b>Yin</b> Chi enters you...</span>")
 	else if ((isgarou(victim) || iswerewolf(victim)) && has_gnosis) //drain gnosis
 		adjust_gnosis(-1, victim, sound = TRUE)
 		kueijin.yang_chi = min(kueijin.yang_chi + 1, kueijin.max_yang_chi)
@@ -474,7 +479,7 @@
 		if ((prob(50) || victim.yang_chi == 0) && (victim.yin_chi > 0))
 			victim.yin_chi = max(0, victim.yin_chi - 1)
 			kueijin.yin_chi = min(kueijin.yin_chi + 1, kueijin.max_yin_chi)
-			to_chat(kueijin, "<span class='engradio'>Some <b>Yin</b> Chi enters you...</span>")
+			to_chat(kueijin, "<span class='medradio'>Some <b>Yin</b> Chi enters you...</span>")
 		else if ((victim.yang_chi > 0))
 			victim.yang_chi = max(0, victim.yang_chi - 1)
 			kueijin.yang_chi = min(kueijin.yang_chi + 1, kueijin.max_yang_chi)
@@ -548,6 +553,7 @@
 	if(HAS_TRAIT(owner, TRAIT_TORPOR))
 		return
 	if (!kueijin.yin_chi > 0)
+		to_chat(kueijin, "<span class='warning'>You don't have enough Yin Chi to heal!</span>")
 		return
 	if (!kueijin.mind?.dharma)
 		return
@@ -605,7 +611,8 @@
 	var/mob/living/carbon/human/kueijin = usr
 	if(HAS_TRAIT(owner, TRAIT_TORPOR))
 		return
-	if (!kueijin.yin_chi > 0)
+	if (!kueijin.yang_chi > 0)
+		to_chat(kueijin, "<span class='warning'>You don't have enough Yang Chi to heal!</span>")
 		return
 	if (!kueijin.mind?.dharma)
 		return

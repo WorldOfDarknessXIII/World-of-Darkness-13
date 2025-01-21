@@ -1127,6 +1127,8 @@
 				grossed_out_mob.Unconscious(0.5 SECONDS)
 			grossed_out_mob.adjust_blurriness(strength * 5)
 
+			addtimer(CALLBACK(grossed_out_mob, TYPE_PROC_REF(/mob/living/carbon, adjust_blurriness), -strength * 5), duration)
+
 		sleep(3 SECONDS)
 
 /datum/chi_discipline/hellweaving
@@ -1690,7 +1692,6 @@
 			var/turf/lightning_source = get_turf(caster)
 			lightning_source.Beam(shocked_mob, icon_state="lightning[rand(1,12)]", time = 0.5 SECONDS)
 			shocked_mob.Stun(0.5 SECONDS)
-			shocked_mob.electrocute_act(10, caster, siemens_coeff = 1, flags = NONE)
 			playsound(get_turf(shocked_mob), 'code/modules/wod13/sounds/lightning.ogg', 100, FALSE)
 
 		sleep(6 SECONDS)
