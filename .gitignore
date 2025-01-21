@@ -160,9 +160,6 @@ Temporary Items
 
 #Visual studio stuff
 *.vscode/*
-!/.vscode/extensions.json
-!/.vscode/launch.json
-!/.vscode/tasks.json
 /tools/MapAtmosFixer/MapAtmosFixer/obj/*
 /tools/MapAtmosFixer/MapAtmosFixer/bin/*
 /tools/CreditsTool/bin/*
@@ -190,10 +187,3 @@ Temporary Items
 /tools/LinuxOneShot/TGS_Config
 /tools/LinuxOneShot/TGS_Instances
 /tools/LinuxOneShot/TGS_Logs
-imgui.ini
-config/config.txt
-config/dbconfig.txt
-
-#tgs_test thats generated @ obj & bin
-/tools/tgs_test/obj*
-/tools/tgs_test/bin*
