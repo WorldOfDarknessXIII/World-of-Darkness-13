@@ -3,6 +3,10 @@
 
 $ErrorActionPreference = "Stop"
 
+# This forces UTF-8 encoding across all powershell built-ins
+$OutputEncoding = [System.Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$PSDefaultParameterValues['*:Encoding'] = 'utf8'
+
 function Extract-Variable {
 	param([string] $Path, [string] $Key)
 	foreach ($Line in Get-Content $Path) {
