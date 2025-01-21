@@ -25,7 +25,7 @@
 
 	v_duty = "Help your fellow kindred in all matters medicine related. Sell blood. Keep your human colleagues ignorant."
 	duty = "Collect blood by helping mortals at the Clinic."
-	experience_addition = 3
+	experience_addition = 6
 	max_generation = 11
 	allowed_bloodlines = list("Daughters of Cacophony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Followers of Set", "Tzimisce", "Lasombra", "Caitiff", "Kiasyd")
 
@@ -81,7 +81,7 @@
 
 	v_duty = "Help your fellow kindred in all matters medicine related. Sell blood. Keep your human colleagues ignorant."
 	duty = "Collect blood by helping mortals at the Clinic."
-	experience_addition = 3
+	experience_addition = 6
 	max_generation = 7
 	allowed_bloodlines = list("Salubri", "Tremere", "Malkavian", "Tzimisce", "Kiasyd")
 	known_contacts = list("Prince","Seneschal","Dealer")

@@ -23,7 +23,7 @@
 	minimal_generation = 8
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Tremere")
-	experience_addition = 4
+	experience_addition = 8
 	known_contacts = list("Prince")
 
 /datum/outfit/job/regent

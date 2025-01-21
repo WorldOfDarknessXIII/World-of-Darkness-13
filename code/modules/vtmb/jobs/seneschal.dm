@@ -48,7 +48,7 @@
 
 	v_duty = "You are the right hand man or woman of the most powerful vampire in the city. The Camarilla trusts you to run the city, even in their stead."
 	duty = "You are the right hand man or woman of the most powerful vampire in the city. The Camarilla trusts you to run the city, even in their stead."
-	experience_addition = 3
+	experience_addition = 6
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Followers of Set", "Lasombra", "Gargoyle", "Kiasyd")
 
 /datum/outfit/job/clerk

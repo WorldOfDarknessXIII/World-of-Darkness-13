@@ -22,7 +22,7 @@
 	duty = "Drive people in the city."
 	minimal_masquerade = 0
 	max_generation = 11
-	experience_addition = 2
+	experience_addition = 4
 	allowed_bloodlines = list("Daughters of Cacaphony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Followers of Set", "Tzimisce", "Lasombra", "Caitiff", "Kiasyd", "Cappadocian")
 
 /datum/job/vamp/taxi/after_spawn(mob/living/H, mob/M, latejoin = FALSE)

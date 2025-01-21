@@ -21,7 +21,7 @@
 	minimal_generation = 8
 
 	v_duty = "You are a Childe of the Voivode-in-Waiting, the ancient Tzimisce Elder who has rested beneath the Earth for an age longer than the city that now rests on their bones. Honor them in all your actions, and remember that you walk with their favor."
-	experience_addition = 4
+	experience_addition = 8
 	minimal_masquerade = 2
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince", "Baron", "Sheriff")

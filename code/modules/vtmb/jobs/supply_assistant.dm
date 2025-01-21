@@ -25,7 +25,7 @@
 	duty = "Though your boss is odd and only works late night hours, they pay you well enough that you avoid questioning it."
 	minimal_masquerade = 2
 	max_generation = 10
-	experience_addition = 3
+	experience_addition = 6
 
 /datum/outfit/job/supply
 	name = "Supply Technician"

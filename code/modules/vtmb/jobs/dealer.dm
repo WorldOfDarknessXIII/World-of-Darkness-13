@@ -30,7 +30,7 @@
 	v_duty = "You provide supplies to other kindred. The warehouse is yours, and it's your business who you'll deal with."
 	minimal_masquerade = 3
 	allowed_species = list("Vampire")
-	experience_addition = 4
+	experience_addition = 8
 	minimal_generation = 11
 	max_generation = 9
 
