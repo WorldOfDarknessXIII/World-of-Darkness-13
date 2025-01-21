@@ -44,7 +44,8 @@
 //					playsound(get_turf(src), 'code/modules/wod13/sounds/male_speak.ogg', 75, TRUE)
 
 /obj/item/chameleon
-	name = "Vicissitude Projector"
+	name = "Appearance Projector"
+	desc = "Use on others to save their appearance, and use on yourself to copy it."
 	icon = 'code/modules/wod13/icons.dmi'
 	icon_state = "vicissitude"
 	flags_1 = CONDUCT_1
@@ -113,7 +114,7 @@
 /obj/item/chameleon/proc/disrupt(delete_dummy = 1)
 	if(active_dummy)
 		for(var/mob/M in active_dummy)
-			to_chat(M, "<span class='danger'>Your Vicissitude Projector deactivates.</span>")
+			to_chat(M, "<span class='danger'>Your Appearance Projector deactivates.</span>")
 		eject_all()
 		if(delete_dummy)
 			qdel(active_dummy)
