@@ -3,13 +3,13 @@
 	var/targloc = get_turf(target)
 	var/actual_spread = 0
 	if(successes == 0)
-		actual_spread = rand(-45, 45)
+		actual_spread = rand(-40, 40)
 	if(successes == 1)
-		actual_spread = rand(-23, 23)
+		actual_spread = rand(-20, 20)
 	if(successes == 2)
-		actual_spread = rand(-12, 12)
-	if(successes == 3)
-		actual_spread = rand(-6, 6)
+		actual_spread = rand(-10, 10)
+//	if(successes == 3)
+//		actual_spread = rand(-6, 6)
 
 	ready_proj(target, user, quiet, zone_override, fired_from)
 	if(pellets == 1)
