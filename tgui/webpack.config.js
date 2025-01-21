@@ -86,7 +86,12 @@ module.exports = (env = {}, argv) => {
         {
           test: /\.(png|jpg|svg)$/,
           use: [
-            'url-loader',
+            {
+              loader: require.resolve('url-loader'),
+              options: {
+                esModule: false,
+              },
+            },
           ],
         },
       ],
