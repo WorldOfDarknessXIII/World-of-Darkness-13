@@ -1,0 +1,153 @@
+/obj/structure/vip_barrier
+	name = "Basic Check Point"
+	desc = "Not a real checkpoint."
+	icon = 'icons/obj/vtr13/barrier.dmi'
+	icon_state = "camarilla_blocking"
+	var/icon_block = "camarilla_blocking"
+	var/icon_pass = "camarilla_passing"
+	var/block_sound = "sound/vtr13/bouncer_blocked.ogg"
+
+	//Social bypass numbers
+	var/social_bypass_allowed = TRUE
+	var/social_bypass_time = 20 SECONDS
+	var/can_use_badge = TRUE
+	var/mean_to_cops = TRUE
+	var/social_roll_difficulty = 7
+
+
+	density = FALSE
+	anchored = TRUE
+
+
+
+	//Assigns an ID to NPCs that guard certain doors, must match a barrier's ID
+	//*********All barriers under a protected_zone_id should be of the same type!*********
+	var/protected_zone_id = "test"
+
+	var/datum/vip_barrier_perm/linked_perm = null
+
+
+/obj/structure/vip_barrier/Initialize()
+	. = ..()
+	GLOB.vip_barriers += src
+
+	//we do this in an initialize so mappers do not have to code as much
+	if(!GLOB.vip_barrier_perms?[protected_zone_id])
+		GLOB.vip_barrier_perms[protected_zone_id] = new /datum/vip_barrier_perm(protected_zone_id)
+
+	linked_perm = GLOB.vip_barrier_perms[protected_zone_id]
+	linked_perm.add_barrier(src)
+
+	RegisterSignal(linked_perm, COMSIG_VIP_PERM_ACTIVE_GUARD_UPDATE, PROC_REF(signal_update_icon))
+
+	//spessman purity means I have to register a signal with myself, pain
+	RegisterSignal(src, COMSIG_BARRIER_TRIGGER_SOUND, PROC_REF(playBlockSound))
+
+
+	update_icon()
+
+
+/obj/structure/vip_barrier/CanPass(atom/movable/mover, turf/target)
+	. = ..()
+	to_chat(src, "<span class='nicegreen'>Commendation sent!</span>")
+	var/entry_allowed = TRUE
+	if(istype(mover, /mob/living/carbon/human))
+		if(linked_perm && linked_perm.actively_guarded)
+			entry_allowed = check_entry_permission_base(mover)
+	if(entry_allowed)
+		SEND_SIGNAL(src, COMSIG_BARRIER_NOTIFY_GUARD_ENTRY)
+	else
+		SEND_SIGNAL(src, COMSIG_BARRIER_NOTIFY_GUARD_BLOCKED)
+		SEND_SIGNAL(src, COMSIG_BARRIER_TRIGGER_SOUND, mover)
+
+	return entry_allowed
+
+/obj/structure/vip_barrier/proc/playBlockSound(atom/movable/mover)
+	SIGNAL_HANDLER
+	playsound(mover, block_sound, vol = 0.5, falloff_distance = 1, vary = TRUE)
+
+
+//Call this parent after any children run
+/obj/structure/vip_barrier/proc/check_entry_permission_base(var/mob/living/carbon/human/entering_mob)
+	if(LAZYFIND(linked_perm.allow_list, entering_mob.name))
+		return TRUE
+
+	if(LAZYFIND(linked_perm.block_list, entering_mob.name))
+		return FALSE
+
+	return check_entry_permission_custom(entering_mob)
+
+//Function for providing custom blocks and allowances for entering people
+/obj/structure/vip_barrier/proc/check_entry_permission_custom(var/mob/living/carbon/human/entering_mob)
+	return TRUE
+
+
+/obj/structure/vip_barrier/attackby(obj/item/used_item, mob/user, params)
+	if(social_bypass_allowed && can_use_badge && istype(used_item,/obj/item/card/id/police))
+		to_chat(user, "<span class='notice'>You flash your [used_item] as you try to talk your way through.</span>")
+		handle_social_bypass(user, used_badge=TRUE)
+	. = ..()
+
+
+
+
+/obj/structure/vip_barrier/attack_hand(mob/user)
+	if (user.a_intent == INTENT_HELP)
+		to_chat(user, "<span class='notice'>You try to talk your way through.</span>")
+		handle_social_bypass(user)
+		return
+
+	. = ..()
+
+
+/obj/structure/vip_barrier/proc/handle_social_bypass(mob/user, used_badge = FALSE)
+
+	if(check_entry_permission_base(user))
+		to_chat(user, "<span class='notice'>...But you are already allowed entry.</span>")
+		return
+
+	var/mob/living/carbon/human/human_user = user
+
+	if(do_mob(user, src, max(5 SECONDS, social_bypass_time - (human_user.get_total_social() * 2 SECONDS))))
+
+		//handle block list babies
+		if(LAZYFIND(linked_perm.block_list, human_user.name))
+			if(identify_cop(human_user, used_badge))
+				linked_perm.notify_guard_police_denial()
+			else
+				linked_perm.notify_guard_blocked_denial()
+
+		if(storyteller_roll(human_user.get_total_social(), social_roll_difficulty))
+			to_chat(user, "<span class='notice'>You manage to persuade your way past the guards.</span>")
+			allowlist += human_user.name
+		else
+			to_chat(user, "<span class='notice'>The guards turn you away, taking note of you as they do.</span>")
+			blocklist += human_user.name
+			if(identify_cop(human_user, used_badge))
+				linked_perm.notify_guard_police_denial()
+			else
+				linked_perm.notify_guard_blocked()
+
+
+/obj/structure/vip_barrier/proc/identify_cop(var/mob/living/carbon/human/human_user, var/used_badge = FALSE)
+	if(mean_to_cops && (used_badge || (human_user.wear_id && istype(human_user.wear_id,/obj/item/card/id/police))))
+		return TRUE
+	return FALSE
+
+
+
+/obj/structure/vip_barrier/proc/signal_update_icon()
+	SIGNAL_HANDLER
+	update_icon()
+
+/obj/structure/vip_barrier/update_icon()
+	if(linked_perm.actively_guarded)
+		alpha = 255
+		if(icon_block)
+			icon_state = icon_block
+		else
+			icon_state = initial(icon_state)
+	else
+		alpha = 128
+		if(icon_pass)
+			icon_state = icon_pass
