@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "target": "es3",
     "noEmit": true,
     "strict": false,
     "allowJs": true,
