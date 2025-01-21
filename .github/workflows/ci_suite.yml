@@ -6,11 +6,26 @@ on:
   pull_request:
     branches:
     - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  start_gate:
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
+    name: Start Gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mandatory Empty Step
+        run: exit 0
+
   run_linters:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Run Linters
+    needs: start_gate
     runs-on: ubuntu-20.04
+    timeout-minutes: 5
+
     steps:
       - uses: actions/checkout@v2
       - name: Setup cache
@@ -42,9 +57,11 @@ jobs:
           outputFile: output-annotations.txt
 
   compile_all_maps:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Compile Maps
+    needs: start_gate
     runs-on: ubuntu-20.04
+    timeout-minutes: 5
+
     steps:
       - uses: actions/checkout@v2
       - name: Setup cache
@@ -61,9 +78,10 @@ jobs:
           bash tools/ci/dm.sh -DCIBUILDING -DCITESTING -DALL_MAPS tgstation.dme
 
   run_all_tests:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Integration Tests
     runs-on: ubuntu-20.04
+    needs: start_gate
+
     services:
       mysql:
         image: mysql:latest
@@ -117,3 +135,11 @@ jobs:
         with:
           name: deploy
           path: deploy
+
+  completion_gate: # Serves as a non-moving target for branch rulesets
+    name: Completion Gate
+    needs: [ test_windows, run_all_tests, compile_all_maps, run_linters ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mandatory Empty Step
+        run: exit 0
