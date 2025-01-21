@@ -107,13 +107,17 @@
 /obj/item/melee/vampirearms/katana/blood
 	name = "bloody katana"
 	color = "#bb0000"
-	force = 35
 	pixel_w = -8
 	cost = 0
 	item_flags = DROPDEL
 	is_iron = FALSE
 	masquerade_violating = TRUE
-	damtype = CLONE
+
+/obj/item/melee/vampirearms/katana/blood/afterattack(atom/target, mob/living/carbon/user, proximity)
+	. = ..()
+	if (isliving(target) && proximity)
+		var/mob/living/burnt_mob = target
+		burnt_mob.apply_damage(30, CLONE)
 
 /obj/item/melee/vampirearms/rapier
 	name = "rapier"
