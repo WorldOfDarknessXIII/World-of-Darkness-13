@@ -10,9 +10,6 @@
  * @license MIT
  */
 
-// Change working directory to project root
-process.chdir(require('path').resolve(__dirname, '../../'));
-
 // Validate NodeJS version
 const NODE_VERSION = parseInt(process.versions.node.match(/(\d+)/)[1]);
 const NODE_VERSION_TARGET = parseInt(require('fs')
