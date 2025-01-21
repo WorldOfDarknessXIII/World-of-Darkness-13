@@ -37,8 +37,13 @@
 		qdel(getorganslot(ORGAN_SLOT_BRAIN)) //NO REVIVAL EVER
 		if(in_frenzy)
 			exit_frenzymod()
-		var/years_undead = chronological_age - age
 		SEND_SOUND(src, sound('code/modules/wod13/sounds/final_death.ogg', 0, 0, 50))
+
+		//annoying code that depends on clan doesn't work for Kuei-jin
+		if (iscathayan(src))
+			return
+
+		var/years_undead = chronological_age - age
 		switch (years_undead)
 			if (-INFINITY to 10) //normal corpse
 				return
@@ -295,7 +300,6 @@
 	. = ..()
 
 /atom/movable/screen/drinkblood/proc/bite()
-//	SEND_SOUND(usr, sound('code/modules/wod13/sounds/highlight.ogg', 0, 0, 50))
 	if(ishuman(usr))
 		var/mob/living/carbon/human/BD = usr
 		BD.update_blood_hud()
@@ -304,10 +308,6 @@
 		if(world.time < BD.last_drinkblood_click+10)
 			return
 		BD.last_drinkblood_click = world.time
-//		if(BD.bloodpool >= BD.maxbloodpool)
-//			SEND_SOUND(BD, sound('code/modules/wod13/need_blood.ogg'))
-//			to_chat(BD, "<span class='warning'>You're full of <b>BLOOD</b>.</span>")
-//			return
 		if(BD.grab_state > GRAB_PASSIVE)
 			if(ishuman(BD.pulling))
 				var/mob/living/carbon/human/PB = BD.pulling
