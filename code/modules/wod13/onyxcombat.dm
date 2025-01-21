@@ -34,7 +34,9 @@
 	yang_chi = 0
 
 	if(iskindred(src) || iscathayan(src))
-		qdel(getorganslot(ORGAN_SLOT_BRAIN)) //NO REVIVAL EVER
+		can_be_embraced = FALSE
+		can_be_revived = FALSE
+
 		if(in_frenzy)
 			exit_frenzymod()
 		SEND_SOUND(src, sound('code/modules/wod13/sounds/final_death.ogg', 0, 0, 50))
