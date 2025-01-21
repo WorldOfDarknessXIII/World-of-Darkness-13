@@ -2352,7 +2352,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						yang = max_limit-sett
 
 				if("demonbalance")
-					var/max_limit = dharma_level*2
+					var/max_limit = max(10, dharma_level * 2)
 					var/sett = input(user, "Enter the maximum of Hun your character has:", "Hun/P'o") as num|null
 					if(sett)
 						sett = max(1, min(sett, max_limit-1))

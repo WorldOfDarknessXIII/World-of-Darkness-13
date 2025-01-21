@@ -377,11 +377,16 @@
 						trigger1 = pole
 				if(trigger1)
 					H.mind.dharma.roll_po(trigger1, H)
+
 				for(var/obj/item/toy/toy in view(5, H))
 					if(toy)
 						trigger2 = toy
+				var/obj/item/toy/toy = locate() in H
+				if (toy)
+					trigger2 = toy
 				if(trigger2)
 					H.mind.dharma.roll_po(trigger2, H)
+
 				for(var/obj/machinery/computer/slot_machine/slot in view(5, H))
 					if(slot)
 						trigger3 = slot

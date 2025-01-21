@@ -1998,7 +1998,7 @@
 /mob/living/proc/get_total_social()
 	if(iscathayan(src))
 		if(mind?.dharma?.animated == "Yin")
-			return 0
+			return max(0, social + additional_social - 2)
 	return social + additional_social
 
 /mob/living/proc/get_total_mentality()

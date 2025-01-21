@@ -819,17 +819,17 @@
 			buckled_mob.visible_message("<span class='notice'>[user] tries to pull [buckled_mob] free of [src]!</span>",\
 				"<span class='notice'>[user] is trying to pull you off [src], opening up fresh wounds!</span>",\
 				"<span class='hear'>You hear a squishy wet noise.</span>")
-			if(!do_after(user, 30 SECONDS, target = src))
+			if(!do_after(user, 10 SECONDS, target = src))
 				if(buckled_mob?.buckled)
 					buckled_mob.visible_message("<span class='notice'>[user] fails to free [buckled_mob]!</span>",\
 					"<span class='notice'>[user] fails to pull you off of [src].</span>")
 				return
 		else
 			buckled_mob.visible_message("<span class='warning'>[buckled_mob] struggles to break free from [src]!</span>",\
-			"<span class='notice'>You struggle to break free from [src], exacerbating your wounds! (Stay still for two minutes.)</span>",\
+			"<span class='notice'>You struggle to break free from [src], exacerbating your wounds! (Stay still for twenty seconds)</span>",\
 			"<span class='hear'>You hear a wet squishing noise..</span>")
 			buckled_mob.adjustBruteLoss(30)
-			if(!do_after(buckled_mob, 10 SECONDS, target = src))
+			if(!do_after(buckled_mob, 20 SECONDS, target = src))
 				if(buckled_mob?.buckled)
 					to_chat(buckled_mob, "<span class='warning'>You fail to free yourself!</span>")
 				return
@@ -886,13 +886,9 @@
 					to_chat(caster, "<span class='warning'>Your muscles feel natural again..</span>")
 		if(4)
 			var/obj/structure/flesh_grip/flesh_grip = new (get_turf(caster))
-			if(caster.pulling)
+			if(caster.pulling && caster.grab_state > GRAB_PASSIVE)
 				if(isliving(caster.pulling))
 					flesh_grip.buckle_mob(caster.pulling, TRUE, FALSE)
-			else
-				for(var/mob/living/grabbed_mob in (range(2, caster) - caster))
-					if(grabbed_mob.stat != DEAD)
-						flesh_grip.buckle_mob(grabbed_mob, TRUE, FALSE)
 		if(5)
 			caster.drop_all_held_items()
 			caster.put_in_active_hand(new /obj/item/chameleon/temp(caster))
@@ -1697,7 +1693,7 @@
 			shocked_mob.electrocute_act(10, caster, siemens_coeff = 1, flags = NONE)
 			playsound(get_turf(shocked_mob), 'code/modules/wod13/sounds/lightning.ogg', 100, FALSE)
 
-		sleep(3 SECONDS)
+		sleep(6 SECONDS)
 
 /datum/chi_discipline/equilibrium
 	name = "Equilibrium"

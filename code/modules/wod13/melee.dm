@@ -97,7 +97,12 @@
 	item_flags = DROPDEL
 	is_iron = FALSE
 	masquerade_violating = TRUE
-	damtype = BURN
+
+/obj/item/melee/vampirearms/katana/fire/afterattack(atom/target, mob/living/carbon/user, proximity)
+	. = ..()
+	if (isliving(target) && proximity)
+		var/mob/living/burnt_mob = target
+		burnt_mob.apply_damage(30, BURN)
 
 /obj/item/melee/vampirearms/katana/blood
 	name = "bloody katana"
