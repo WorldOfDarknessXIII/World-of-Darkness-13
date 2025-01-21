@@ -1,13 +1,6 @@
 /datum/job
 	var/experience_addition = 1
 
-/datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly)
-	. = ..()
-	var/i = get_a_manipulation(H)+get_a_finance(H)
-	if(!backpack_contents)
-		backpack_contents = list()
-	backpack_contents.Add(list(/obj/item/stack/dollar/hundred=i))
-
 /datum/outfit/job/post_equip(mob/living/carbon/human/H)
 	. = ..()
 	var/obj/item/storage/backpack/b = locate() in H
@@ -19,6 +12,9 @@
 					H.bank_id = caard.account.bank_id
 					caard.account.account_owner = H.true_real_name
 					caard.has_checked = TRUE
+
+	for(var/i in 1 to get_a_manipulation(H)+get_a_finance(H))
+		H.equip_to_slot_or_del(new /obj/item/stack/dollar/hundred(H),ITEM_SLOT_BACKPACK, TRUE)
 
 //ID
 
