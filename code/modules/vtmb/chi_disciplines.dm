@@ -846,11 +846,6 @@
 	buckled_mob.AdjustParalyzed(2 SECONDS)
 	qdel(src)
 
-/obj/structure/flesh_grip/attacked_by(obj/item/I, mob/living/user)
-	. = ..()
-	if (!length(buckled_mobs))
-		qdel(src)
-
 /datum/chi_discipline/flesh_shintai/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	switch(level_casting)
