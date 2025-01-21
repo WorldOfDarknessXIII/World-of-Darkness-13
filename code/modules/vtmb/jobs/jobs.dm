@@ -186,6 +186,7 @@
 /obj/item/card/id/clinic
 	name = "medical badge"
 	id_type_name = "medical badge"
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY)
 	desc = "A badge which shows medical qualification."
 	icon = 'code/modules/wod13/items.dmi'
 	icon_state = "id2"
@@ -195,6 +196,10 @@
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	worn_icon = 'code/modules/wod13/worn.dmi'
 	worn_icon_state = "id2"
+
+/obj/item/card/id/clinic/director
+	name = "clinic director's badge"
+	desc = "A badge which shows not only medical qualification, but also an authority over the clinic."
 
 /obj/item/card/id/archive
 	name = "scholar badge"
@@ -417,7 +422,7 @@
 			var/mob/living/carbon/human/HU
 
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				if(H.stat != DEAD && H.true_real_name != owner.current.true_real_name && H.vampire_faction != "Sabbat")
+				if(H.stat != DEAD && H.true_real_name != owner.current.true_real_name && H.vampire_faction != FACTION_SABBAT)
 					ambitious += H
 
 			if(length(ambitious))
@@ -443,8 +448,8 @@
 				while(owner.current.vampire_faction == null && retries > 0)
 					sleep(2) // wait 0.2 seconds
 					retries -= 1
-			var/list/available_factions = list("Camarilla", "Anarchs", "Sabbat")
-			if(owner.current.vampire_faction == null || owner.current.vampire_faction == "Nosferatu" )
+			var/list/available_factions = list(FACTION_CAMARILLA, FACTION_ANARCHS, FACTION_SABBAT)
+			if(owner.current.vampire_faction == null || owner.current.vampire_faction == FACTION_NOSFERATU)
 				no_faction = TRUE
 			if(no_faction)
 				var/datum/objective/become_member/member_objective = new

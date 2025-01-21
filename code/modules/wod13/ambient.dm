@@ -60,7 +60,7 @@
 	icon_state = "giovanni"
 	upper = FALSE
 	zone_type = "elysium"
-	zone_owner = "Giovanni"
+	zone_owner = FACTION_GIOVANNI
 	fire_controled = TRUE
 	yang_chi = 0
 	yin_chi = 2
@@ -78,7 +78,7 @@
 	icon_state = "giovanni"
 	upper = FALSE
 	zone_type = "elysium"
-	zone_owner = "Giovanni"
+	zone_owner = FACTION_GIOVANNI
 	fire_controled = TRUE
 	wall_rating = HIGH_WALL_RATING
 
@@ -174,7 +174,7 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	zone_type = "elysium"
-	zone_owner = "Camarilla"
+	zone_owner = FACTION_CAMARILLA
 	fire_controled = TRUE
 	wall_rating = HIGH_WALL_RATING
 
@@ -184,7 +184,7 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	zone_type = "elysium"
-	zone_owner = "Camarilla"
+	zone_owner = FACTION_CAMARILLA
 	fire_controled = TRUE
 	wall_rating = HIGH_WALL_RATING
 
@@ -194,7 +194,7 @@
 	ambience_index = AMBIENCE_PRINCE
 	upper = FALSE
 	zone_type = "elysium"
-	zone_owner = "Camarilla"
+	zone_owner = FACTION_CAMARILLA
 	fire_controled = TRUE
 	wall_rating = HIGH_WALL_RATING
 
@@ -204,7 +204,7 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	zone_type = "elysium"
-	zone_owner = "Camarilla"
+	zone_owner = FACTION_CAMARILLA
 	fire_controled = TRUE
 	wall_rating = HIGH_WALL_RATING
 
@@ -214,7 +214,7 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	zone_type = "elysium"
-	zone_owner = "Camarilla"
+	zone_owner = FACTION_CAMARILLA
 	fire_controled = TRUE
 	wall_rating = HIGH_WALL_RATING
 
@@ -233,7 +233,7 @@
 	music = /datum/vampiremusic/prince
 	upper = FALSE
 	zone_type = "elysium"
-	zone_owner = "Camarilla"
+	zone_owner = FACTION_CAMARILLA
 	fire_controled = TRUE
 	wall_rating = HIGH_WALL_RATING
 
@@ -261,7 +261,7 @@
 	upper = FALSE
 	music = /datum/vampiremusic/bar
 	zone_type = "elysium"
-	zone_owner = "Anarchs"
+	zone_owner = FACTION_ANARCHS
 	fire_controled = TRUE
 	wall_rating = HIGH_WALL_RATING
 
@@ -318,7 +318,7 @@
 	upper = FALSE
 	music = /datum/vampiremusic/theatre
 	zone_type = "elysium"
-	zone_owner = "Chantry"
+	zone_owner = FACTION_TREMERE
 	fire_controled = TRUE
 	yang_chi = 0
 	yin_chi = 2
@@ -341,7 +341,7 @@
 	upper = FALSE
 	music = /datum/vampiremusic/nosferatu
 	zone_type = "elysium"
-	zone_owner = "Nosferatu"
+	zone_owner = FACTION_NOSFERATU
 	yang_chi = 0
 	yin_chi = 2
 	wall_rating = HIGH_WALL_RATING
@@ -352,7 +352,7 @@
 	music = /datum/vampiremusic/elevator
 	upper = FALSE
 	zone_type = "elysium"
-	zone_owner = "Camarilla"
+	zone_owner = FACTION_CAMARILLA
 	fire_controled = TRUE
 	wall_rating = HIGH_WALL_RATING
 

@@ -41,7 +41,7 @@
 
 /datum/outfit/job/bruiser/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.vampire_faction = "Anarchs"
+	H.vampire_faction = FACTION_ANARCHS
 
 /obj/effect/landmark/start/bruiser
 	name = "Bruiser"

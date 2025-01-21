@@ -130,7 +130,7 @@
 					var/loved = TRUE
 					var/datum/preferences/P1 = GLOB.preferences_datums[ckey(M.key)]
 					if(H in GLOB.masquerade_breakers_list)
-						if(M.vampire_faction == "Sabbat")
+						if(M.vampire_faction == FACTION_SABBAT)
 							to_chat(M, "<span class='userdanger'><b>You feel your interests being ignored</b></span>")
 							loved = FALSE
 						else
@@ -138,7 +138,7 @@
 							if(P1)
 								P1.add_experience(1)
 					if(H.diablerist)
-						if(M.vampire_faction == "Camarilla")
+						if(M.vampire_faction == FACTION_CAMARILLA)
 							to_chat(M, "<span class='userhelp'><b>Diablerist was punished</b></span>")
 							if(P1)
 								P1.add_experience(1)
@@ -146,7 +146,7 @@
 							loved = FALSE
 							to_chat(M, "<span class='userdanger'><b>You feel your interests being ignored</b></span>")
 					if(H.bloodhunted)
-						if(M.vampire_faction == "Camarilla")
+						if(M.vampire_faction == FACTION_CAMARILLA)
 							to_chat(M, "<span class='userhelp'><b>Blood Hunt after [H] is over</b></span>")
 							if(P1)
 								P1.add_experience(1)
@@ -154,7 +154,7 @@
 							loved = FALSE
 							to_chat(M, "<span class='userdanger'><b>You feel your interests being ignored</b></span>")
 					if("[H.mind.assigned_role]" == "Prince" || "[H.mind.assigned_role]" == "Sheriff" || "[H.mind.assigned_role]" == "Seneschal" || "[H.mind.assigned_role]" == "Chantry Regent" || "[H.mind.assigned_role]" == "Baron" || "[H.mind.assigned_role]" == "Dealer")
-						if(M.vampire_faction == "Sabbat")
+						if(M.vampire_faction == FACTION_SABBAT)
 							to_chat(M, "<span class='userhelp'><b>Authority increased</b></span>")
 							loved = TRUE
 							if(P1)
