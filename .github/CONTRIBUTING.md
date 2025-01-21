@@ -436,6 +436,10 @@ When adding new signals to root level procs, eg;
 ```
 The `SHOULD_CALL_PARENT(TRUE)` lint should be added to ensure that overrides/child procs call the parent chain and ensure the signal is sent.
 
+### Don't create code that hangs references
+
+This is part of the larger issue of hard deletes, read this file for more info: [Guide to Harddels](guides/HARDDEL_GUIDE.md)
+
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
 
