@@ -397,9 +397,6 @@
 		if(!R.always_available && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
 			continue
 
-		if(R.garou_only && !isgarou(user)) //User isn't a werewolf and the recipe is garou only
-			continue
-
 		if(isnull(crafting_recipes[R.category]))
 			crafting_recipes[R.category] = list()
 

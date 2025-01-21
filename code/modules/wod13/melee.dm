@@ -801,6 +801,9 @@
 	resistance_flags = FIRE_PROOF
 	cost = 250
 	var/aggravate = FALSE // Unique variable used for spending gnosis and giving the weapon bonuses
+	var/awakened_force = 70
+	var/awakened_penetration = 40
+	var/aggravate_damage = 20
 
 /obj/item/melee/vampirearms/klaive/glasswalker
 	name = "glasswalker klaive"
@@ -824,68 +827,76 @@
 // This lasts for 10 seconds, and while it is active you cannot activate it again to prevent spam
 /obj/item/melee/vampirearms/klaive/attack_self(mob/user)
 	if((isgarou(user) || iscrinos(user)) && !aggravate)
-		var/mob/living/carbon/wolf = user
-		if(wolf.auspice.gnosis > 0)
-			to_chat(user, "You beckon [src]'s spirit, you can feel it answer your call.")
-			adjust_gnosis(-1, wolf)
-			aggravate = TRUE
-			force = 70
-			armour_penetration = 40
-			spawn(10 SECONDS)
-				aggravate = initial(aggravate)
-				force = initial(force)
-				armour_penetration = initial(armour_penetration)
-				to_chat(user, "[src]'s spirit slumbers once more.")
-		else
-			to_chat(user, "You beckon [src]'s spirit, but all that answers is silence and indifference.")
+		Awaken(user)
+
+/obj/item/melee/vampirearms/klaive/proc/Awaken(mob/user)
+	var/mob/living/carbon/wolf = user
+	if(wolf.auspice.gnosis > 0)
+		to_chat(wolf, "You beckon [src]'s spirit, you can feel it answer your call.")
+		adjust_gnosis(-1, wolf)
+		aggravate = TRUE
+		force = awakened_force
+		armour_penetration = awakened_penetration
+		addtimer(CALLBACK(src, PROC_REF(Slumber), wolf), 10)
+	else
+		to_chat(user, "You beckon [src]'s spirit, but all that answers is silence and indifference.")
+
+/obj/item/melee/vampirearms/klaive/proc/Slumber(mob/user)
+	aggravate = FALSE
+	force = initial(force)
+	armour_penetration = initial(armour_penetration)
+	to_chat(user, "[src]'s spirit slumbers once more.")
 
 // Code here is for dealing special damage and effects to garou, as well as the extra damage if the glaive is active
 // The non-active if(!aggravate) deals the same clone damage as a silver bullet, as well as some of its debuffs
 // The active if(aggravate) deals extra clone damage to the garou, and also deals clone damage to all carbons and vampires
-/obj/item/melee/vampirearms/klaive/attack(mob/living/target, mob/living/user)
-	. = ..()
+/obj/item/melee/vampirearms/klaive/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity)
+		return
 	if(isgarou(target) || iswerewolf(target))
 		var/mob/living/carbon/wolf = target
+		//Chance to remove gnosis from target werewolf
 		if(wolf.auspice.gnosis)
 			if(prob(50))
 				adjust_gnosis(-1, wolf)
+
 		if(!aggravate)
-			wolf.apply_damage(20, CLONE)
+			wolf.apply_damage(aggravate_damage, CLONE)
 		else
-			wolf.apply_damage(35, CLONE)
+			wolf.apply_damage(aggravate_damage + 15, CLONE)
+
 		if(!wolf.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
 			wolf.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
 			spawn(7 SECONDS)
 			wolf.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
-	else if(iscarbon(target) || isvampire(target))
-		if(aggravate)
-			target.apply_damage(20, CLONE)
 
-// These are the crafting recipes for each glaive
-// Each is set to garou_only = TRUE, a new variable that checks if the player is garou before showing these in the crafting tab
+	else if(iscarbon(target) || isvampire(target))
+		var/mob/living/carbon/human
+		if(aggravate)
+			human.apply_damage(aggravate_damage, CLONE)
+
+// These are the crafting recipes for each klaive
+/datum/crafting_recipe/klaive
+	category = CAT_GAROU
+	always_available = FALSE
+
 /datum/crafting_recipe/klaive/glasswalker
 	name = "Glasswalker Klaive"
 	result = /obj/item/melee/vampirearms/klaive/glasswalker
 	reqs = list(/obj/item/silverbar = 2, /obj/item/melee/vampirearms/knife = 1)
 	time = 30
-	garou_only = TRUE
-	category = CAT_GAROU
 
 /datum/crafting_recipe/klaive/wendigo
 	name = "Wendigo Klaive"
 	result = /obj/item/melee/vampirearms/klaive/wendigo
 	reqs = list(/obj/item/silverbar = 2, /obj/item/vampire_stake = 1)
 	time = 30
-	garou_only = TRUE
-	category = CAT_GAROU
 
 /datum/crafting_recipe/klaive/bsd
 	name = "Spiral Dancer Klaive"
 	result = /obj/item/melee/vampirearms/klaive/bsd
 	reqs = list(/obj/item/silverbar = 2, /obj/item/drinkable_bloodpack = 1)
 	time = 30
-	garou_only = TRUE
-	category = CAT_GAROU
 
 // Fancy adminspawn only item, this thing is a monstrous weapon. Doubly so in a garou's hands
 /obj/item/melee/vampirearms/klaive/grand
@@ -895,24 +906,6 @@
 	throwforce = 20
 	block_chance = 60
 	armour_penetration = 35
-
-/obj/item/melee/vampirearms/klaive/grand/attack(mob/living/target, mob/living/user)
-	. = ..()
-	if(isgarou(target) || iswerewolf(target))
-		var/mob/living/carbon/wolf = target
-		if(wolf.auspice.gnosis > 0)
-			adjust_gnosis(-1, wolf)
-		if(!aggravate)
-			wolf.apply_damage(20, CLONE)
-		else
-			wolf.apply_damage(40, CLONE)
-		if(!wolf.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
-			wolf.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
-			spawn(7 SECONDS)
-			wolf.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
-	else if(iscarbon(target) || isvampire(target))
-		if(aggravate)
-			target.apply_damage(20, CLONE)
 
 /obj/item/melee/vampirearms/klaive/grand/attack_self(mob/user)
 	if((isgarou(user) || iscrinos(user)) && !aggravate)

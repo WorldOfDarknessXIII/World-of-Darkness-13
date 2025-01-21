@@ -108,6 +108,9 @@
 	GH.Grant(C)
 	C.transformator = new(C)
 	C.transformator.human_form = C
+	C.mind.teach_crafting_recipe(/datum/crafting_recipe/klaive/glasswalker)
+	C.mind.teach_crafting_recipe(/datum/crafting_recipe/klaive/wendigo)
+	C.mind.teach_crafting_recipe(/datum/crafting_recipe/klaive/bsd)
 
 /datum/species/garou/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
