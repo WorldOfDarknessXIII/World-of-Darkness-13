@@ -179,6 +179,7 @@
 			var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(get_turf(src))
 			var/my_target = pick(the_targets)
 			water_particles[W] = my_target
+			W.Extinguisher = user
 			// If precise, remove turf from targets so it won't be picked more than once
 			if(precision)
 				the_targets -= my_target
@@ -204,6 +205,9 @@
 		var/obj/effect/fire/F = locate() in get_turf(W)
 		if(F)
 			qdel(F)
+			if(W.Extinguisher)
+				call_dharma("extinguish", W.Extinguisher)
+				call_dharma("cleangrow", W.Extinguisher)
 		if(!W.reagents)
 			continue
 		W.reagents.expose(get_turf(W))

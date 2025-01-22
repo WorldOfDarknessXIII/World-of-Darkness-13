@@ -105,7 +105,7 @@
 	bare_wound_bonus = 5
 	wound_bonus = 0
 
-/obj/projectile/beam/beam_rifle/vampire/vamp12g/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/beam/beam_rifle/vampire/shotpellet/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
@@ -124,10 +124,9 @@
 
 /obj/projectile/bullet/crossbow_bolt
 	name = "bolt"
-	damage = 160
+	damage = 45
 	armour_penetration = 75
 	sharpness = SHARP_POINTY
-	wound_bonus = 50
 
 /obj/item/ammo_casing/vampire
 	icon = 'code/modules/wod13/ammo.dmi'

@@ -584,6 +584,11 @@
 
 	point_at(A)
 
+	if(iscathayan(A))
+		var/mob/living/carbon/human/hum = A
+		if(hum.mind?.dharma?.Po == "Legalist")
+			hum.mind.dharma.roll_po(src, hum)
+
 	return TRUE
 
 /**
@@ -1203,10 +1208,6 @@
 		var/mob/living/carbon/human/H = src
 		if(istype(H.get_active_held_item(), /obj/item/gun))
 			shootahell = TRUE
-//		for(var/atom/movable/screen/disciplines/DISCP in H.hud_used.static_inventory)
-//			if(DISCP)
-//				if(DISCP.active)
-//					discipliner = TRUE
 	if(examine_cursor_icon && client.keys_held["Shift"]) //mouse shit is hardcoded, make this non hard-coded once we make mouse modifiers bindable
 		client.mouse_pointer_icon = examine_cursor_icon
 	else if(discipliner)
