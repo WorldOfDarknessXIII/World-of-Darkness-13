@@ -8,7 +8,6 @@
 
 /datum/outfit/job/sabbatist/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.vampire_faction = FACTION_SABBAT
 	if(H.gender == MALE)
 		shoes = /obj/item/clothing/shoes/vampire
 		if(H.clane)

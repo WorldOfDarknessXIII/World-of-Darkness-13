@@ -48,11 +48,6 @@
 			log_attack("[key_name(src)] is attempting to Diablerize [key_name(mob)].")
 			if(mob.key)
 				var/vse_taki = FALSE
-				var/special_role_name
-				if(mind)
-					if(mind.special_role)
-						var/datum/antagonist/A = mind.special_role
-						special_role_name = A.name
 				if(clane)
 					var/salubri_allowed = FALSE
 					var/mob/living/carbon/human/H = mob
@@ -61,7 +56,7 @@
 							salubri_allowed = TRUE
 					if(clane.name != "Banu Haqim" && clane.name != "Caitiff")
 						if(!salubri_allowed)
-							if(!mind.special_role || special_role_name == "Ambitious")
+							if(!mind.special_role)
 								to_chat(src, "<span class='warning'>You find the idea of drinking your own <b>KIND's</b> blood disgusting!</span>")
 								last_drinkblood_use = 0
 								if(client)

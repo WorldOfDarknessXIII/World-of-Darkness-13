@@ -40,7 +40,6 @@
 
 /datum/outfit/job/giovannielder/pre_equip(mob/living/carbon/human/the_don)
 	..()
-	the_don.vampire_faction = FACTION_GIOVANNI
 	if(the_don.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/suit/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
@@ -89,7 +88,6 @@
 
 /datum/outfit/job/giovanni/pre_equip(mob/living/carbon/human/gabagool_enjoyer)
 	. = ..()
-	gabagool_enjoyer.vampire_faction = FACTION_GIOVANNI
 	if(gabagool_enjoyer.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/suit/female
 		shoes = /obj/item/clothing/shoes/vampire/heels

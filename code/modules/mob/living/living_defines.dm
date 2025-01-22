@@ -217,8 +217,6 @@
 	var/temporis_visual = FALSE
 	var/temporis_blur = FALSE
 
-	var/vampire_faction
-
 	var/frenzy_chance_boost = 10
 
 	var/last_bloodpool_restore = 0
