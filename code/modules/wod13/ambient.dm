@@ -1,3 +1,4 @@
+//this needs to be changed to a rating from 1 to 10, but this is how it was added for Kuei-jin
 #define VERY_HIGH_WALL_RATING 3
 #define HIGH_WALL_RATING 2
 #define LOW_WALL_RATING 1

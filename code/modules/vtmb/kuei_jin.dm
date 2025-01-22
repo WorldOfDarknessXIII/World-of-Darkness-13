@@ -255,8 +255,6 @@
 	YG.Grant(C)
 	var/datum/action/reanimate_yin/YN = new()
 	YN.Grant(C)
-	var/datum/action/rebalance/R = new()
-	R.Grant(C)
 
 /datum/species/kuei_jin/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()

@@ -1707,6 +1707,12 @@
 	discipline_type = "Chi"
 	activate_sound = 'code/modules/wod13/sounds/equilibrium.ogg'
 
+/datum/chi_discipline/equilibrium/post_gain(mob/living/carbon/human/user)
+	. = ..()
+	if (level >= 3)
+		var/datum/action/rebalance/rebalance = new()
+		rebalance.Grant(user)
+
 /datum/chi_discipline/equilibrium/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	switch(level_casting)
