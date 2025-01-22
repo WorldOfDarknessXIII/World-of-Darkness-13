@@ -1,4 +1,10 @@
 /mob/living/carbon/human/proc/AdjustHumanity(var/value, var/limit, var/forced = FALSE)
+	if(value < 0)
+		for(var/mob/living/carbon/human/H in viewers(7, src))
+			if(H != src && H.mind?.dharma)
+				if("judgement" in H.mind.dharma.tenets)
+					to_chat(H, "<span class='warning'>[src] is doing something bad, I need to punish them!")
+					H.mind.dharma.judgement |= real_name
 	if(!iskindred(src))
 		return
 	if(!GLOB.canon_event)
@@ -56,7 +62,7 @@
 						to_chat(src, "<span class='userhelp'><b>HUMANITY INCREASED!</b></span>")
 
 /mob/living/carbon/human/proc/AdjustMasquerade(var/value, var/forced = FALSE)
-	if(!iskindred(src) && !isghoul(src))
+	if(!iskindred(src) && !isghoul(src) && !iscathayan(src))
 		return
 	if(!GLOB.canon_event)
 		return

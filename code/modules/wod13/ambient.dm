@@ -1,6 +1,15 @@
+//this needs to be changed to a rating from 1 to 10, but this is how it was added for Kuei-jin
+#define VERY_HIGH_WALL_RATING 3
+#define HIGH_WALL_RATING 2
+#define LOW_WALL_RATING 1
+
 /area
 	var/fire_controled = FALSE
 	var/fire_controling = FALSE
+	//Chi stuff
+	var/yang_chi = 1
+	var/yin_chi = 1
+	var/wall_rating = VERY_HIGH_WALL_RATING
 
 /area/vtm
 	name = "San Francisco"
@@ -9,6 +18,7 @@
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	wall_rating = VERY_HIGH_WALL_RATING
 	var/music
 	var/upper = TRUE
 	var/zone_type = "masquerade"
@@ -30,18 +40,21 @@
 	icon_state = "interior"
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/interior/shop
 	name = "Shop"
 	icon_state = "shop"
 	upper = FALSE
 	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/interior/laundromat
 	name = "Laundromat"
 	icon_state = "shop"
 	upper = FALSE
 	fire_controled = TRUE
+	wall_rating = LOW_WALL_RATING
 
 /area/vtm/interior/giovanni
 	name = "Giovanni Mansion"
@@ -49,12 +62,16 @@
 	upper = FALSE
 	zone_type = "elysium"
 	fire_controled = TRUE
+	yang_chi = 0
+	yin_chi = 2
+	wall_rating = LOW_WALL_RATING
 
 /area/vtm/interior/techshop
 	name = "Nightwolf Techshop"
 	icon_state = "shop"
 	upper = FALSE
 	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/interior/bianchiBank
 	name = "Bianchi Bank"
@@ -62,30 +79,37 @@
 	upper = FALSE
 	zone_type = "elysium"
 	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/interior/police
 	name = "Police Station"
 	icon_state = "police"
 	upper = FALSE
 	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/interior/vjanitor
 	name = "Cleaners"
 	icon_state = "janitor"
 	upper = FALSE
 	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/interior/strip
 	name = "Strip Club"
 	icon_state = "strip"
 	upper = FALSE
 	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/interior/mansion
 	name = "Abandoned Mansion"
 	icon_state = "mansion"
 	upper = FALSE
 	zone_type = "battle"
+	yang_chi = 0
+	yin_chi = 2
+	wall_rating = LOW_WALL_RATING
 
 /area/vtm/financialdistrict
 	name = "Financial District"
@@ -93,6 +117,7 @@
 	ambience_index = AMBIENCE_CITY
 	music = /datum/vampiremusic/downtown
 	upper = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/ghetto
 	name = "Ghetto"
@@ -100,6 +125,7 @@
 	ambience_index = AMBIENCE_CITY
 	music = /datum/vampiremusic/downtown
 	upper = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/pacificheights
 	name = "Pacific Heights"
@@ -107,6 +133,7 @@
 	ambience_index = AMBIENCE_NATURE
 	music = /datum/vampiremusic/hollywood
 	upper = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/chinatown
 	name = "Chinatown"
@@ -114,6 +141,7 @@
 	ambience_index = AMBIENCE_CITY
 	music = /datum/vampiremusic/chinatown
 	upper = TRUE
+	wall_rating = LOW_WALL_RATING	//Kinda chinatown is part of asia and has some deeper connection?
 
 /area/vtm/fishermanswharf
 	name = "Fisherman's Wharf"
@@ -121,6 +149,7 @@
 	ambience_index = AMBIENCE_CITY
 	music = /datum/vampiremusic/santamonica
 	upper = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/northbeach
 	name = "North Beach"
@@ -128,6 +157,7 @@
 	ambience_index = AMBIENCE_BEACH
 	music = /datum/vampiremusic/santamonica
 	upper = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/unionsquare
 	name = "Union Square"
@@ -135,6 +165,7 @@
 	ambience_index = AMBIENCE_CITY
 	music = /datum/vampiremusic/downtown
 	upper = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/prince_elevator
 	name = "Millenium Elevator"
@@ -143,6 +174,7 @@
 	upper = FALSE
 	zone_type = "elysium"
 	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/city_elevator
 	name = "City Elevator"
@@ -151,6 +183,7 @@
 	upper = FALSE
 	zone_type = "elysium"
 	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/prince
 	name = "Millenium Tower"
@@ -159,6 +192,7 @@
 	upper = FALSE
 	zone_type = "elysium"
 	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/camarilla
 	name = "Millenium Appartements"
@@ -167,6 +201,7 @@
 	upper = FALSE
 	zone_type = "elysium"
 	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/jazzclub
 	name = "Jazz Club"
@@ -175,6 +210,7 @@
 	upper = FALSE
 	zone_type = "elysium"
 	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/cabaret
 	name = "Siren's Cabaret"
@@ -182,6 +218,7 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/cabinet
 	name = "Millenium Upper Level"
@@ -191,6 +228,7 @@
 	upper = FALSE
 	zone_type = "elysium"
 	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/clinic
 	name = "Clinic"
@@ -198,12 +236,16 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	fire_controled = TRUE
+	yang_chi = 2
+	yin_chi = 0
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/supply
 	name = "Supply"
 	icon_state = "supply"
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/anarch
 	name = "Bar"
@@ -213,6 +255,7 @@
 	music = /datum/vampiremusic/bar
 	zone_type = "elysium"
 	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/hotel
 	name = "Hotel"
@@ -221,6 +264,7 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/church
 	name = "Church"
@@ -228,6 +272,7 @@
 	music = /datum/vampiremusic/church
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
+	wall_rating = LOW_WALL_RATING
 
 /area/vtm/graveyard
 	name = "Graveyard"
@@ -236,12 +281,17 @@
 	music = /datum/vampiremusic/hollywood
 	upper = TRUE
 	zone_type = "battle"
+	yang_chi = 0
+	yin_chi = 2
+	wall_rating = LOW_WALL_RATING
 
 /area/vtm/graveyard/interior
 	name = "Graveyard Interior"
 	icon_state = "interior"
 	upper = FALSE
 	zone_type = "battle"
+	yang_chi = 0
+	yin_chi = 2
 
 /area/vtm/park
 	name = "Park"
@@ -249,6 +299,9 @@
 	ambience_index = AMBIENCE_NATURE
 	music = /datum/vampiremusic/downtown
 	upper = TRUE
+	yang_chi = 2
+	yin_chi = 0
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/theatre
 	name = "Theatre"
@@ -258,6 +311,9 @@
 	music = /datum/vampiremusic/theatre
 	zone_type = "elysium"
 	fire_controled = TRUE
+	yang_chi = 0
+	yin_chi = 2
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/sewer
 	name = "Sewer"
@@ -266,6 +322,9 @@
 	music = /datum/vampiremusic/sewer
 	upper = FALSE
 	zone_type = "battle"
+	yang_chi = 0
+	yin_chi = 2
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/sewer/nosferatu_town
 	name = "Underground Town"
@@ -273,6 +332,9 @@
 	upper = FALSE
 	music = /datum/vampiremusic/nosferatu
 	zone_type = "elysium"
+	yang_chi = 0
+	yin_chi = 2
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/elevator
 	name = "Elevator"
@@ -281,6 +343,7 @@
 	upper = FALSE
 	zone_type = "elysium"
 	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/forest
 	name = "Forest"
@@ -288,6 +351,9 @@
 	upper = TRUE
 	zone_type = "battle"
 	music = /datum/vampiremusic/forest
+	yang_chi = 2
+	yin_chi = 0
+	wall_rating = LOW_WALL_RATING	//for werewolves in future
 
 /area/vtm/interior/glasswalker
 	name = "Glasswalker's Lab"
@@ -296,6 +362,7 @@
 	zone_type = "battle"
 	music = /datum/vampiremusic/forest
 	fire_controled = TRUE
+	wall_rating = LOW_WALL_RATING
 
 /area/vtm/interior/wyrm_corrupted
 	name = "Corrupted by Wyrm"
@@ -304,6 +371,9 @@
 	zone_type = "battle"
 	music = /datum/vampiremusic/forest
 	fire_controled = FALSE
+	yang_chi = 0
+	yin_chi = 2
+	wall_rating = LOW_WALL_RATING
 
 /area/vtm/interior/penumbra
 	name = "Penumbra"
@@ -313,6 +383,7 @@
 	zone_type = "battle"
 	music = /datum/vampiremusic/penumbra
 	fire_controled = FALSE
+	wall_rating = LOW_WALL_RATING
 
 /area/vtm/interior/backrooms
 	name = "Backrooms"
@@ -321,6 +392,7 @@
 	upper = FALSE
 	zone_type = "battle"
 	fire_controled = FALSE
+	wall_rating = LOW_WALL_RATING
 
 //MUSIC
 
@@ -454,3 +526,7 @@
 					wait_for_music = 1740
 					client << sound('code/modules/wod13/sounds/daughters.ogg', 0, 0, CHANNEL_LOBBYMUSIC, 5)
 					last_vampire_ambience = world.time
+
+#undef VERY_HIGH_WALL_RATING
+#undef HIGH_WALL_RATING
+#undef LOW_WALL_RATING
