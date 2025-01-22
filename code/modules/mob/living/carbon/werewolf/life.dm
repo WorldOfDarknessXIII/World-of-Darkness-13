@@ -48,11 +48,6 @@
 					adjust_rage(1, src, TRUE)
 
 			if(masquerade == 0)
-				var/special_role_name
-				if(mind)
-					if(mind.special_role)
-						var/datum/antagonist/A = mind.special_role
-						special_role_name = A.name
 				if(!is_special_character(src))
 					if(auspice.gnosis)
 						to_chat(src, "<span class='warning'>My Veil is too low to connect with the spirits of Umbra!</span>")
@@ -126,11 +121,6 @@
 			if(V.zone_type != "masquerade")
 				return
 	last_veil_adjusting = world.time
-	var/special_role_name
-	if(mind)
-		if(mind.special_role)
-			var/datum/antagonist/A = mind.special_role
-			special_role_name = A.name
 	if(!is_special_character(src))
 		if(amount < 0)
 			if(masquerade > 0)

@@ -48,11 +48,6 @@
 			log_attack("[key_name(src)] is attempting to Diablerize [key_name(mob)].")
 			if(mob.key)
 				var/vse_taki = FALSE
-				var/special_role_name
-				if(mind)
-					if(mind.special_role)
-						var/datum/antagonist/A = mind.special_role
-						special_role_name = A.name
 				if(clane)
 					var/salubri_allowed = FALSE
 					var/mob/living/carbon/human/H = mob
