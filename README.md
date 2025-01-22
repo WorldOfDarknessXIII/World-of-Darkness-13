@@ -8,7 +8,6 @@
 * ~~**IRC:** irc://irc.rizon.net/coderbus~~ (dead)
 
 This is the codebase for the World of Darkness 13, a build of a fork of a downstream of a-- in any case...
-We dredged the foundation of oure codebase from the hands of a Russian teenager with an immense artistic talent and... a seeming bane to writing readable, functional code. However, we have happened upon many enthusiastic contributors -- perhaps even YOU, dear reader -- and are plugging away every day at reshaping this beast into something worthy of the name of a "game".
 
 We are based on the Paradox Interactive World of Darkness(c) gamelines, with administrative oversight determining what we add to our game. Please see below for our guides on contributing.
 
