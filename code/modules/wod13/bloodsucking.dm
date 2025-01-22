@@ -61,7 +61,7 @@
 							salubri_allowed = TRUE
 					if(clane.name != "Banu Haqim" && clane.name != "Caitiff")
 						if(!salubri_allowed)
-							if(!mind.special_role || special_role_name == "Ambitious")
+							if(!mind.special_role)
 								to_chat(src, "<span class='warning'>You find the idea of drinking your own <b>KIND's</b> blood disgusting!</span>")
 								last_drinkblood_use = 0
 								if(client)

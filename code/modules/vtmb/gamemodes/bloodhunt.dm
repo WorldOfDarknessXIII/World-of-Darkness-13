@@ -1,79 +1,64 @@
 /atom/movable/screen/alert/bloodhunt
-	name = "Blood Hunt Is Going On"
+	name = "The Red Hunt is on!"
 	icon_state = "bloodhunt"
 
 /atom/movable/screen/alert/bloodhunt/Click()
-	for(var/mob/living/carbon/human/H in SSbloodhunt.hunted)
-		if(H)
-			var/area/A = get_area(H)
-			to_chat(usr, "[icon2html(getFlatIcon(H), usr)][H.true_real_name], [H.mind ? H.mind.assigned_role : "Citizen"]. Was last seen at [A.name]")
+	SSbloodhunt.inform_bloodhunt(src)
 
-/*/mob/living/proc/check_elysium(var/instant = FALSE)
-	if(ishuman(src))
-		var/mob/living/carbon/human/human = src
-		if(human.obfuscate_level < 5)
-			if(alpha != 255)
-				playsound(loc, 'code/modules/wod13/sounds/obfuscate_deactivate.ogg', 50, FALSE)
-				alpha = 255
-	if(!HAS_TRAIT(src, TRAIT_ELYSIUM))
-		return
-	if(!ishuman(src))
-		return
-	if(!client)
-		return
-	var/area/vtm/V
-	if(istype(get_area(src), /area/vtm))
-		V = get_area(src)
-		var/mob/living/carbon/human/H = src
-		if(V.zone_owner == H.vampire_faction)
-			return
-		for(var/mob/living/carbon/human/HU in SSbloodhunt.hunted)
-			if(HU)
-				if(HU.true_real_name == H.true_real_name)
-					return
-	to_chat(src, "<span class='userdanger'><b>You feel like your actions are against the rules...</b></span>")
-	if(instant)
-		SSbloodhunt.announce_hunted(src)
-		if(V)
-			V.break_elysium()
-	else
-		elysium_checks = elysium_checks+1
-		if(elysium_checks > 2)
-			SSbloodhunt.announce_hunted(src)
-			if(V)
-				V.break_elysium()
-*/
 SUBSYSTEM_DEF(bloodhunt)
 	name = "Blood Hunt"
 	init_order = INIT_ORDER_DEFAULT
 	wait = 600
 	priority = FIRE_PRIORITY_VERYLOW
 
+	/* Associated list: Hunted = list("message" = yadda, "reason" = yadda) */
 	var/list/hunted = list()
+
 
 /datum/controller/subsystem/bloodhunt/fire()
 	update_shit()
 
 /datum/controller/subsystem/bloodhunt/proc/update_shit()
-	for(var/mob/living/L in hunted)
-		if(QDELETED(L))
-			hunted -= L
-	if(length(hunted))
-		for(var/mob/living/carbon/human/H in GLOB.player_list)
-			if(iskindred(H) || isghoul(H))
-				H.throw_alert("bloodhunt", /atom/movable/screen/alert/bloodhunt)
+	if(!length(hunted))
+		SEND_SIGNAL(SSmasquerade, COMSIG_BLOODHUNT_INACTIVE)
+		return
+	for(var/mob/living/prey in hunted)
+		if(QDELETED(prey))
+			hunted -= prey
+			if(!length(hunted))
+				SEND_SIGNAL(SSmasquerade, COMSIG_BLOODHUNT_INACTIVE)
+			continue
+		var/area/vtm/last_known_location = get_area(prey)
+		if(!istype(A, /area/vtm) || A.zone_type == "battle")
+			continue	//PSEUDO_M todo: add signals for checking if they're in an area sympathetic to them, snitches get stitches
+		update_bloodhunt_message(prey, reason, last_known_location)
+	SEND_SIGNAL(SSmasquerade, COMSIG_BLOODHUNT_ACTIVE)
+
+/datum/controller/subsystem/bloodhunt/proc/update_bloodhunt_message(mob/living/carbon/human/prey, reason, area/vtm/last_known_location, initial_announcement = FALSE)
+		var/location_name = null
+		if(initial_announcement && (!istype(last_known_location, /area/vtm) || last_known_location.zone_type == "battle"))
+			location_name = "Whereabouts unknown."
+		var/hunted_reason = reason
+		var/hunted_message = "\
+		[icon2html(getFlatIcon(prey))][prey.true_real_name], \
+		[prey.mind ? prey.mind.assigned_role : "Citizen"].<br>\
+		Crime pronounced by the Camarilla: [hunted_reason]\
+		<br>[location_name]."
+
+
+		H.throw_alert("bloodhunt", /atom/movable/screen/alert/bloodhunt)
 	else
 		for(var/mob/living/carbon/human/H in GLOB.player_list)
 			if(iskindred(H) || isghoul(H))
 				H.clear_alert("bloodhunt")
 
-/datum/controller/subsystem/bloodhunt/proc/announce_hunted(var/mob/living/target, var/reason)
-	if(!ishuman(target))
+/datum/controller/subsystem/bloodhunt/proc/announce_hunted(mob/living/carbon/human/prey, reason)
+	if(!ishuman(prey))
 		return
-	var/mob/living/carbon/human/H = target
-	if(!H.bloodhunted)
-		H.bloodhunted = TRUE
-		to_chat(world, "<b>The Blood Hunt after <span class='warning'>[H.true_real_name]</span> has been announced! <br> Reason: [reason]</b>")
-		SEND_SOUND(world, sound('code/modules/wod13/sounds/announce.ogg'))
-		hunted += H
-		update_shit()
+	if(!prey.bloodhunted)
+		prey.bloodhunted = TRUE
+	hunted[prey] = list(
+		"message" = SSbloodhunt.update_bloodhunt_message(prey, reason, /*last_known_location =*/get_area(prey), /*initial_announcement =*/TRUE),
+		"reason" = reason
+	)
+	SEND_SIGNAL(SSmasquerade, COMSIG_BLOODHUNT_ANNOUNCED, prey, reason)

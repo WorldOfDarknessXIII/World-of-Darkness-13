@@ -57,19 +57,12 @@
 	if(iskindred(user) && iskindred(src) && is_face_visible())
 		var/mob/living/carbon/human/vampire = user
 		var/same_clan = vampire.clane == clane
-		var/same_faction = vampire.vampire_faction == vampire_faction
 		switch(info_known)
 			if(INFO_KNOWN_PUBLIC)
-				. += "<b>You know [p_them()] as a [job][vampire_faction ? " in the [vampire_faction]" : ""] of the [clane] bloodline.</b>"
+				. += "<b>You know [p_them()] as a [job] of the [clane] bloodline.</b>"
 			if(INFO_KNOWN_CLAN_ONLY)
 				if(same_clan)
-					. += "<b>You know [p_them()] as a [job][vampire_faction ? " in the [vampire_faction]" : ""]. You are of the same bloodline.</b>"
-			if(INFO_KNOWN_FACTION)
-				if(same_faction && vampire_faction)
-					. += "<b>You know [p_them()] as a [job], belonging to the [clane] bloodline. You are both of the [vampire_faction].</b>"
-			else
-				if(same_faction && vampire_faction)
-					. += "<b>You know [p_them()] as a [job]. You are both of the [vampire_faction].</b>"
+					. += "<b>You know [p_them()] as a [job]. You are of the same bloodline.</b>"
 
 	//uniform
 	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING) && !(w_uniform.item_flags & EXAMINE_SKIP))

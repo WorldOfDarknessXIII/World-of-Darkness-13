@@ -40,7 +40,6 @@
 
 /datum/outfit/job/sweeper/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.vampire_faction = FACTION_ANARCHS
 
 /obj/effect/landmark/start/sweeper
 	name = "Sweeper"

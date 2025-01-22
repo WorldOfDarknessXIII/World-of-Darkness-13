@@ -53,7 +53,7 @@
 					if(mind.special_role)
 						var/datum/antagonist/A = mind.special_role
 						special_role_name = A.name
-				if(!is_special_character(src) || special_role_name == "Ambitious")
+				if(!is_special_character(src))
 					if(auspice.gnosis)
 						to_chat(src, "<span class='warning'>My Veil is too low to connect with the spirits of Umbra!</span>")
 						adjust_gnosis(-1, src, FALSE)
@@ -131,7 +131,7 @@
 		if(mind.special_role)
 			var/datum/antagonist/A = mind.special_role
 			special_role_name = A.name
-	if(!is_special_character(src) || special_role_name == "Ambitious")
+	if(!is_special_character(src))
 		if(amount < 0)
 			if(masquerade > 0)
 				SEND_SOUND(src, sound('code/modules/wod13/sounds/veil_violation.ogg', 0, 0, 75))

@@ -548,9 +548,6 @@
 					for(var/obj/structure/werewolf_totem/S in GLOB.totems)
 						if(S.tribe == H.auspice.tribe)
 							H.forceMove(get_turf(S))
-				if(H.client.prefs.ambitious)
-					if(H.mind)
-						H.mind.add_antag_datum(/datum/antagonist/ambitious)
 				GLOB.fucking_joined |= H.client.prefs.real_name
 				var/datum/relationship/R = new ()
 				H.Myself = R

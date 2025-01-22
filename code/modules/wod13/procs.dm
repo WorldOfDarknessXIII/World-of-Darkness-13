@@ -8,7 +8,7 @@
 		if(mind.special_role)
 			var/datum/antagonist/A = mind.special_role
 			special_role_name = A.name
-	if(!is_special_character(src) || special_role_name == "Ambitious" || forced)
+	if(!is_special_character(src) || forced)
 		if(!in_frenzy || forced)
 			var/mod = 1
 			var/enlight = FALSE
@@ -73,7 +73,7 @@
 		if(mind.special_role)
 			var/datum/antagonist/A = mind.special_role
 			special_role_name = A.name
-	if(!is_special_character(src) || special_role_name == "Ambitious" || forced)
+	if(!is_special_character(src) || forced)
 		if(((last_masquerade_violation + 10 SECONDS) < world.time) || forced)
 			last_masquerade_violation = world.time
 			if(value < 0)

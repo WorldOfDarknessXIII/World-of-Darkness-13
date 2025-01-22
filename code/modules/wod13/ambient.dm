@@ -12,7 +12,7 @@
 	var/music
 	var/upper = TRUE
 	var/zone_type = "masquerade"
-	var/zone_owner
+
 
 /area/vtm/powered(chan)
 	if(!requires_power)
@@ -48,7 +48,6 @@
 	icon_state = "giovanni"
 	upper = FALSE
 	zone_type = "elysium"
-	zone_owner = FACTION_GIOVANNI
 	fire_controled = TRUE
 
 /area/vtm/interior/techshop
@@ -62,7 +61,6 @@
 	icon_state = "giovanni"
 	upper = FALSE
 	zone_type = "elysium"
-	zone_owner = FACTION_GIOVANNI
 	fire_controled = TRUE
 
 /area/vtm/interior/police
@@ -144,7 +142,6 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	zone_type = "elysium"
-	zone_owner = FACTION_CAMARILLA
 	fire_controled = TRUE
 
 /area/vtm/city_elevator
@@ -153,7 +150,6 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	zone_type = "elysium"
-	zone_owner = FACTION_CAMARILLA
 	fire_controled = TRUE
 
 /area/vtm/prince
@@ -162,7 +158,6 @@
 	ambience_index = AMBIENCE_PRINCE
 	upper = FALSE
 	zone_type = "elysium"
-	zone_owner = FACTION_CAMARILLA
 	fire_controled = TRUE
 
 /area/vtm/camarilla
@@ -171,7 +166,6 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	zone_type = "elysium"
-	zone_owner = FACTION_CAMARILLA
 	fire_controled = TRUE
 
 /area/vtm/jazzclub
@@ -180,7 +174,6 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	zone_type = "elysium"
-	zone_owner = FACTION_CAMARILLA
 	fire_controled = TRUE
 
 /area/vtm/cabaret
@@ -197,7 +190,6 @@
 	music = /datum/vampiremusic/prince
 	upper = FALSE
 	zone_type = "elysium"
-	zone_owner = FACTION_CAMARILLA
 	fire_controled = TRUE
 
 /area/vtm/clinic
@@ -220,7 +212,6 @@
 	upper = FALSE
 	music = /datum/vampiremusic/bar
 	zone_type = "elysium"
-	zone_owner = FACTION_ANARCHS
 	fire_controled = TRUE
 
 /area/vtm/hotel
@@ -266,7 +257,6 @@
 	upper = FALSE
 	music = /datum/vampiremusic/theatre
 	zone_type = "elysium"
-	zone_owner = FACTION_TREMERE
 	fire_controled = TRUE
 
 /area/vtm/sewer
@@ -283,7 +273,6 @@
 	upper = FALSE
 	music = /datum/vampiremusic/nosferatu
 	zone_type = "elysium"
-	zone_owner = FACTION_NOSFERATU
 
 /area/vtm/elevator
 	name = "Elevator"
@@ -291,7 +280,6 @@
 	music = /datum/vampiremusic/elevator
 	upper = FALSE
 	zone_type = "elysium"
-	zone_owner = FACTION_CAMARILLA
 	fire_controled = TRUE
 
 /area/vtm/forest

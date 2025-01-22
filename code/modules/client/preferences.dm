@@ -194,7 +194,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/enemy = FALSE
 	var/lover = FALSE
 
-	var/ambitious = FALSE
 	var/flavor_text
 
 	var/friend_text
@@ -670,8 +669,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<BR>"
 			dat += "Have a Lover: <a href='?_src_=prefs;preference=lover'>[lover == TRUE ? "Enabled" : "Disabled"]</A><BR>"
 			dat += "What a Lover knows about me: [lover_text] <a href='?_src_=prefs;preference=lover_text;task=input'>Change</a><BR>"
-
-			dat += "<BR><b>Be Ambitious: </b><a href='?_src_=prefs;preference=ambitious'>[ambitious == TRUE ? "Enabled" : "Disabled"]</A><BR>"
 
 			if((HAS_FLESH in pref_species.species_traits) || (HAS_BONE in pref_species.species_traits))
 				dat += "<BR><b>Temporal Scarring:</b><BR><a href='?_src_=prefs;preference=persistent_scars'>[(persistent_scars) ? "Enabled" : "Disabled"]</A>"
@@ -2639,9 +2636,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("lover")
 					lover = !lover
-
-				if("ambitious")
-					ambitious = !ambitious
 
 				if("persistent_scars")
 					persistent_scars = !persistent_scars
