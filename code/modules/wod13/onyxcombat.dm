@@ -35,7 +35,9 @@
 
 	if(iskindred(src) || iscathayan(src))
 		can_be_embraced = FALSE
-		can_be_revived = FALSE
+		var/obj/item/organ/brain/brain = getorganslot(ORGAN_SLOT_BRAIN) //NO REVIVAL EVER
+		if (brain)
+			brain.organ_flags |= ORGAN_FAILING
 
 		if(in_frenzy)
 			exit_frenzymod()
