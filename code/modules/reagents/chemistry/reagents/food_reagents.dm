@@ -399,17 +399,22 @@
 		if(1 to 5)
 			M.Dizzy(5)
 			M.set_drugginess(30)
+			M.attributes.dexterity_reagent = -1
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 		if(5 to 10)
 			M.Jitter(10)
 			M.Dizzy(10)
+			M.attributes.perception_reagent = 2
 			M.set_drugginess(35)
 			if(prob(20))
 				M.emote(pick("twitch","giggle"))
 		if (10 to INFINITY)
 			M.Jitter(20)
 			M.Dizzy(20)
+			M.attributes.perception_reagent = 3
+			M.attributes.wits_reagent = 1
+			M.attributes.stamina_reagent = -2
 			M.set_drugginess(40)
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
