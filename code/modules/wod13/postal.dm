@@ -100,6 +100,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "delivery_list"
 	inhand_icon_state = "delivery_list"
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
