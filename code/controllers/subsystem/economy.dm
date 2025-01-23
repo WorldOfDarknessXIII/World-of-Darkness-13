@@ -57,7 +57,7 @@ SUBSYSTEM_DEF(economy)
 										/obj/item/stack/dollar/rand,
 										/obj/item/melee/vampirearms/knife,
 										/obj/item/melee/vampirearms/tire,
-										/datum/supply_pack/vampire/bloodpack,
+										/obj/item/drinkable_bloodpack,
 										/obj/item/gun/ballistic/vampire/revolver,
 										/obj/item/vamp/keys/hack)
 
