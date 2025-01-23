@@ -27,9 +27,9 @@
 	known_contacts = list("Prince","Seneschal", "Sheriff", "Baron")
 	allowed_bloodlines = list("True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Ministry", "Kiasyd", "Cappadocian")
 
-	v_duty = "You provide supplies to other kindred. The warehouse is yours, and it's your business who you'll deal with."
+	v_duty = "You provide both legal and illegal supplies to those that get busy during the night. You are your own man yet you know people are out for you. Time to buckle in..."
 	minimal_masquerade = 3
-	allowed_species = list("Vampire")
+	allowed_species = list("Vampire", "Werewolf", "Kuei-Jin")
 	experience_addition = 20
 
 /datum/outfit/job/dealer
