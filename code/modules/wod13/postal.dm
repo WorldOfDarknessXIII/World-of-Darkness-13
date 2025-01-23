@@ -223,7 +223,7 @@
 			qdel(letter)
 			// Pay our employee
 			var/obj/item/stack/dollar/money = new /obj/item/stack/dollar()
-			money.amount = payment
+			money.amount = refund_amount
 			user.put_in_hands(money)
 			say("Letter refunded.")
 
