@@ -36,8 +36,7 @@
 	if (owner.temporis_visual || owner.temporis_blur) //sorry guys, no using two time powers at once
 		to_chat(owner, "<span class='userdanger'>Your active Temporis causes Celerity to wrench your body's temporal field apart!</span>")
 		owner.emote("scream")
-		spawn(3 SECONDS)
-			owner.gib()
+		addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon, gib)), 3 SECONDS, TIMER_UNIQUE)
 		return FALSE
 
 	owner.celerity_visual = TRUE
@@ -49,7 +48,7 @@
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
 /obj/effect/celerity
-	name = "Damn"
+	name = "Afterimage"
 	desc = "..."
 	anchored = TRUE
 

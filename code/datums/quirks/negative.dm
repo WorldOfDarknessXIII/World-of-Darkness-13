@@ -33,13 +33,13 @@
 	hardcore_value = 8
 	mood_quirk = TRUE
 
-/datum/quirk/blooddeficiency/on_process(delta_time)
-	var/mob/living/carbon/human/H = quirk_holder
-	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
+/datum/quirk/blooddeficiency/on_process(seconds_per_tick)
+	var/mob/living/carbon/human/holder = quirk_holder
+	if(NOBLOOD in holder.dna.species.species_traits) //can't lose blood if your species doesn't have any
 		return
 	else
-		if (H.blood_volume > (BLOOD_VOLUME_SAFE - 25)) // just barely survivable without treatment
-			H.adjust_blood_volume(-(0.275 * delta_time))
+		if (holder.blood_volume > (BLOOD_VOLUME_SAFE - 25)) // just barely survivable without treatment
+			holder.adjust_blood_volume(-(0.275 * seconds_per_tick))
 
 /datum/quirk/blindness
 	name = "Blind"

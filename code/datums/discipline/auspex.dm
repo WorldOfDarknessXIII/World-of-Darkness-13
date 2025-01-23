@@ -101,5 +101,5 @@
 
 /datum/discipline_power/auspex/psychic_projection/activate()
 	. = ..()
-	owner.ghostize(TRUE, FALSE, TRUE)
+	owner.ghostize(can_reenter_corpse = TRUE, aghosted = FALSE, auspex_ghosted = TRUE)
 	owner.soul_state = SOUL_PROJECTING
