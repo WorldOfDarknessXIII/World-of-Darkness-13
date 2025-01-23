@@ -23,6 +23,7 @@
 	experience_addition = 10
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Giovanni", "Cappadocian")
+	starting_balance = 20000
 
 /datum/outfit/job/giovannielder
 	name = "Capo"
@@ -37,11 +38,12 @@
 	r_pocket = /obj/item/vamp/keys/capo
 	backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard/giovanniboss=1)
 
-/datum/outfit/job/giovannielder/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/giovannielder/pre_equip(mob/living/carbon/human/the_don)
 	..()
-	if(H.gender == FEMALE)
+	if(the_don.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/suit/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
+
 
 /obj/effect/landmark/start/giovannielder
 	name = "Capo"
@@ -69,6 +71,7 @@
 	experience_addition = 10
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Giovanni", "Cappadocian")
+	starting_balance = 5000
 
 /datum/outfit/job/giovanni
 	name = "La Squadra"
@@ -83,9 +86,9 @@
 	r_pocket = /obj/item/vamp/keys/giovanni
 	backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard/rich=1)
 
-/datum/outfit/job/giovanni/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.gender == FEMALE)
+/datum/outfit/job/giovanni/pre_equip(mob/living/carbon/human/gabagool_enjoyer)
+	. = ..()
+	if(gabagool_enjoyer.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/suit/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
 
@@ -96,8 +99,8 @@
 	title = "La Famiglia"
 	department_head = list("Capo")
 	faction = "Vampire"
-	total_positions = 10
-	spawn_positions = 10
+	total_positions = 5
+	spawn_positions = 5
 	supervisors = "the Family"
 	selection_color = "#cb4aad"
 
@@ -110,13 +113,9 @@
 	display_order = JOB_DISPLAY_ORDER_GIOVANNI
 	exp_type_department = EXP_TYPE_GIOVANNI
 
-//	minimal_generation = 11	//Uncomment when players get exp enough
-
 	allowed_species = list("Ghoul", "Human")
 	duty = "Your family is a strange one. Maybe you are strange too, because sitting next to your great uncles as an equal is something you are greatly interested in."
 	minimal_masquerade = 0
-	experience_addition = 10
-
 
 /datum/outfit/job/giovannimafia
 	name = "La Famiglia"

@@ -172,16 +172,18 @@
 		return
 
 	switch(action)
-//		if("LZCargo")
-//			usingBeacon = FALSE
-//			if (beacon)
-//				beacon.update_status(SP_UNREADY) //ready light on beacon will turn off
 
 		if("add_to_queue")
 			var/id = text2path(params["id"])
 			var/datum/supply_pack/vampire/pack = supply_packs[id]
 			if(!istype(pack))
 				return
+			var/list/pack_message = list(
+				"Added [pack.name] to the order queue.",
+			)
+			if(SEND_SIGNAL(pack, COMSIG_CARGO_NEW_ORDER, pack_message) & COMPONENT_INVALID_ORDER)
+				to_chat(usr, pack_message[1])
+				return TRUE
 			order_queue += list(pack)
 			to_chat(usr, "Added [pack.name] to the order queue.")
 			return TRUE
@@ -191,12 +193,15 @@
 			var/datum/supply_pack/vampire/pack = supply_packs[id]
 			if(pack in order_queue)
 				order_queue -= list(pack)
+				SEND_SIGNAL(pack, COMSIG_CARGO_DELETED_ORDER)
 				to_chat(usr, "Removed [pack.name] from the order queue.")
 			else
 				to_chat(usr, "Could not find [pack.name] in the order queue.")
 			return TRUE
 		if("reset_queue")
-			order_queue = list()
+			for(var/datum/supply_pack/vampire/pack in order_queue)
+				SEND_SIGNAL(pack, COMSIG_CARGO_DELETED_ORDER)
+				order_queue -= pack
 			to_chat(usr, "Order queue reset.")
 			return TRUE
 		if("finalize_order")

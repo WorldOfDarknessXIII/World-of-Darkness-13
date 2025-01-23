@@ -24,7 +24,7 @@
 	v_duty = "You work for the Dealer, or are a part of their coterie. They pay well and the job is easy. Don't disappoint them."
 	duty = "Though your boss is odd and only works late night hours, they pay you well enough that you avoid questioning it."
 	minimal_masquerade = 2
-	experience_addition = 15
+	starting_balance = 0 // keeping my money in the bank? what i look like, a ventrue?
 
 /datum/outfit/job/supply
 	name = "Supply Technician"
@@ -38,8 +38,11 @@
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	backpack_contents = list(/obj/item/passport=1, /obj/item/phone_book=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
 
-/datum/outfit/job/supply/pre_equip(mob/living/carbon/human/H)
-	..()
+/datum/outfit/job/supply/post_equip(mob/living/carbon/human/crate_slave)
+	. = ..()
+	var/obj/item/stack/dollar/tax_free_wages = new(crate_slave)
+	tax_free_wages.amount = 3000
+	crate_slave.put_in_hands(tax_free_wages)
 
 /obj/effect/landmark/start/supplytechnician
 	name = "Supply Technician"

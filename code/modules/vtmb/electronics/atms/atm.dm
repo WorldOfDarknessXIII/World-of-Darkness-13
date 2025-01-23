@@ -24,28 +24,34 @@
 	light_power = 1
 	light_on = TRUE
 
-/obj/machinery/vamp/atm/New()
-	..()
-	logged_in = FALSE
-	current_card = null
-
-
-
 /datum/vtm_bank_account
+	var/name = ""
 	var/account_owner = ""
 	var/bank_id = 0
 	var/balance = 0
 	var/code = ""
-	var/list/credit_cards = list()
 
-var/mob/living/carbon/human/H
 /datum/vtm_bank_account/New()
-	..()
+	. = ..()
 	if(!code || code == "")
 		code = create_bank_code()
 		var/random_id = rand(1, 999999)
 		bank_id = random_id
 		GLOB.bank_account_list += src
+
+/datum/vtm_bank_account/proc/setup_owner(mob/living/carbon/human/owner)
+	var/starting_balance = SSjob.get_starting_balance(SSjob.GetJob(owner.mind.assigned_role))
+	// some jobs don't have a bank account because they're punk rock
+	if(starting_balance)
+		//starting_balance can be +-20% of usual, just to shake things up a little
+		var/lady_luck = rand((starting_balance * 0.2), (starting_balance * 0.2 * -1))
+		starting_balance += lady_luck
+	balance = starting_balance
+	account_owner = owner.real_name
+	name = owner.real_name + "'s Bank Account"
+	// we already nullcheck this before this setup gets called
+	var/datum/mind/owner_mind = owner.mind
+	owner_mind.store_memory("My bank account ID is [bank_id]. My bank code is [code].")
 
 /obj/item/vamp/creditcard
 	name = "\improper credit card"
@@ -62,19 +68,7 @@ var/mob/living/carbon/human/H
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 
-	var/owner = ""
 	var/datum/vtm_bank_account/account
-	var/code
-	var/balance = 0
-	var/has_checked = FALSE
-
-/obj/item/vamp/creditcard/prince
-	icon_state = "card2"
-	inhand_icon_state = "card2"
-
-/obj/item/vamp/creditcard/seneschal
-	icon_state = "card2"
-	inhand_icon_state = "card2"
 
 /obj/item/vamp/creditcard/elder
 	icon_state = "card3"
@@ -84,29 +78,33 @@ var/mob/living/carbon/human/H
 	icon_state = "card2"
 	inhand_icon_state = "card2"
 
+/obj/item/vamp/creditcard/prince
+	icon_state = "card2"
+	inhand_icon_state = "card2"
+
+/obj/item/vamp/creditcard/seneschal
+	icon_state = "card2"
+	inhand_icon_state = "card2"
+
 /obj/item/vamp/creditcard/rich
+	icon_state = "card2"
+	inhand_icon_state = "card2"
 
-/obj/item/vamp/creditcard/New(mob/user)
-	..()
-	if(!account || code == "")
-		account = new /datum/vtm_bank_account()
-	if(user)
-		owner = user.ckey
-	if(istype(src, /obj/item/vamp/creditcard/prince))
-		account.balance = rand(10000, 15000)
-	else if(istype(src, /obj/item/vamp/creditcard/elder))
-		account.balance = rand(3000, 7000)
-	else if(istype(src, /obj/item/vamp/creditcard/rich))
-		account.balance = rand(1000, 4000)
-	else if(istype(src, /obj/item/vamp/creditcard/giovanniboss))
-		account.balance = rand(8000, 15000)
-	else if(istype(src, /obj/item/vamp/creditcard/seneschal))
-		account.balance = rand(4000, 8000)
-	else
-		account.balance = rand(600, 1000)
+/obj/item/vamp/creditcard/Initialize(mapload)
+	. = ..()
+	account = new /datum/vtm_bank_account()
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/vamp/atm/Initialize()
-	..()
+/obj/item/vamp/creditcard/LateInitialize()
+	. = ..()
+	var/mob/living/carbon/human/owner = get(loc, /mob/living/carbon/human)
+	///Maybe someone printed a new credit card? I don't fucking know
+	if(!owner)
+		return
+	///For now, assume only players have bank accounts
+	if(!owner.mind)
+		return
+	account.setup_owner(owner)
 
 /obj/machinery/vamp/atm/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/vamp/creditcard))
@@ -192,14 +190,20 @@ var/mob/living/carbon/human/H
 			else if(current_card.account.balance < amount)
 				to_chat(usr, "<span class='notice'>Insufficient funds.</span>")
 			else
-				while(amount > 0)
-					var/drop_amount = min(amount, 1000)
+				var/remaining_amount = amount
+				do
 					var/obj/item/stack/dollar/cash = new /obj/item/stack/dollar()
-					cash.amount = drop_amount
-					to_chat(usr, "<span class='notice'>You have withdrawn [drop_amount] dollars.</span>")
-					cash.loc = usr.loc
-					amount -= drop_amount
-					current_card.account.balance -= drop_amount
+					if(remaining_amount >= 10000)
+						cash.amount = 10000
+					else
+						cash.amount = remaining_amount
+					remaining_amount -= 10000
+					var/mob/living/carbon/human/user = usr // not rebuilding this right now
+					if(!user.put_in_active_hand(cash))
+						cash.forceMove(get_turf(src))
+				while(remaining_amount > 0)
+				to_chat(usr, "<span class='notice'>You have withdrawn [amount] dollars.</span>")
+				current_card.account.balance -= amount
 			return TRUE
 		if("transfer")
 			var/amount = text2num(params["transfer_amount"])
@@ -244,50 +248,3 @@ var/mob/living/carbon/human/H
 			else
 				to_chat(usr, "<span class='notice'>The ATM is empty. Nothing to deposit.</span>")
 				return TRUE
-/*
-/obj/machinery/vamp/atm/attack_hand(mob/user)
-	.=..()
-	ui_interact(user)
-
-/obj/machinery/vamp/atm/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/vamp/creditcard))
-		inserted_card = W
-		to_chat(user, "<span class='notice'>Card inserted into ATM.</span>")
-		user.ui_interact(src)
-		return
-	else
-		return
-
-/obj/machinery/vamp/atm/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "Atm")
-		ui.open()
-
-/obj/machinery/vamp/atm/ui_data(mob/user)
-	var/list/data = list()
-//	data["balance"] = balance
-	data["atm_balance"] = atm_balance
-
-	return data
-
-/obj/machinery/vamp/atm/ui_act(action, params)
-	.=..()
-	if(.)
-		return
-
-	switch(action)
-		if("login")
-			var/input_code = input(usr, "Enter your code:", "ATM access")
-			if(input_code == inserted_card.account.code)
-				to_chat(usr, "<span class='notice'>Access granted.</span>")
-				logged_in = TRUE
-			else
-				to_chat(usr, "<span class='notice'>Invalid PIN Code.</span>")
-				logged_in = FALSE
-
-
-/obj/machinery/vamp/atm/attack_hand(mob/user)
-	.=..()
-	ui_interact(user)
-*/

@@ -3,8 +3,8 @@
 	title = "Federal Investigator"
 	department_head = list("Federal Bureau of Investigation")
 	faction = "Vampire"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 4
+	spawn_positions = 4
 	supervisors = " the FBI"
 	selection_color = "#1a1d8a"
 
@@ -24,6 +24,7 @@
 	minimal_masquerade = 0
 	my_contact_is_important = FALSE
 	known_contacts = list("Police Chief")
+	starting_balance = 7500
 
 /datum/outfit/job/fbi
 	name = "Federal Investigator"

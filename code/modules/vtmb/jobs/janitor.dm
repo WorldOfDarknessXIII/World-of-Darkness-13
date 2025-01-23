@@ -23,7 +23,6 @@
 	v_duty = "Clean up all traces of Masquerade violations as the Camarilla has instructed you to."
 	duty = "Keep the streets clean. You are paid to keep your mouth shut about the things you see."
 	minimal_masquerade = 0
-	experience_addition = 15
 
 /datum/outfit/job/vjanitor
 	name = "Street Janitor"

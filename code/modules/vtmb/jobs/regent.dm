@@ -25,6 +25,7 @@
 	allowed_bloodlines = list("Tremere")
 	experience_addition = 20
 	known_contacts = list("Prince")
+	starting_balance = 20000
 
 /datum/outfit/job/regent
 	name = "Chantry Regent"

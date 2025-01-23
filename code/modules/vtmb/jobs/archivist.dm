@@ -24,6 +24,7 @@
 	allowed_bloodlines = list("Tremere", "Gargoyle")
 	known_contacts = list("Tremere Regent")
 	experience_addition = 15
+	starting_balance = 2500
 
 /datum/outfit/job/archivist
 	name = "Archivist"

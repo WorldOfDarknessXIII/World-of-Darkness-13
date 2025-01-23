@@ -21,12 +21,10 @@
 	minimal_generation = 7
 
 	v_duty = "You are a Childe of the Voivode-in-Waiting, the ancient Tzimisce Elder who has rested beneath the Earth for an age longer than the city that now rests on their bones. Honor them in all your actions, and remember that you walk with their favor."
-	experience_addition = 20
 	minimal_masquerade = 2
 	my_contact_is_important = TRUE
 	known_contacts = list("Prince", "Baron", "Sheriff")
-
-
+	starting_balance = 25000 // old money. really really old money
 
 /datum/outfit/job/voivode
 	name = "Voivode"

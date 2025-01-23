@@ -16,6 +16,7 @@
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_BARKEEPER
 	bounty_types = CIV_JOB_DRINK
+	starting_balance = 8000 // you don't become baron by luck, assume you have some money to get a bit done
 
 //	minimal_generation = 11	//Uncomment when players get exp enough
 

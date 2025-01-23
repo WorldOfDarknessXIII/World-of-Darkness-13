@@ -30,6 +30,7 @@
 	minimal_masquerade = 4
 	experience_addition = 10
 	allowed_bloodlines = list("True Brujah", "Daughters of Cacophony", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian")
+	starting_balance = 2000 // the Prince and Sheriff finance what you need
 
 /datum/outfit/job/agent
 	name = "Scourge"
