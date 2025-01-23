@@ -28,6 +28,14 @@
 		M.emote(pick("twitch","drool","moan","giggle"))
 	..()
 
+/datum/reagent/drug/space_drugs/on_mob_end_metabolize(mob/living/M)
+	M.attributes.wits_reagent = 0
+	M.attributes.perception_reagent = 0
+	M.attributes.strength_reagent = 0
+	M.attributes.dexterity_reagent = 0
+	..()
+
+
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You start tripping hard!</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
@@ -69,6 +77,10 @@
 	..()
 	. = 1
 
+/datum/reagent/drug/nicotine/on_mob_end_metabolize(mob/living/M)
+	M.attributes.wits_reagent = 0
+	..()
+
 /datum/reagent/drug/nicotine/overdose_process(mob/living/M)
 	M.adjustToxLoss(0.1*REM, 0)
 	M.adjustOxyLoss(1.1*REM, 0)
@@ -97,6 +109,10 @@
 	M.AdjustParalyzed(-20)
 	..()
 	. = 1
+
+/datum/reagent/drug/crank/on_mob_end_metabolize(mob/living/M)
+	M.attributes.dexterity_reagent = 0
+	..()
 
 /datum/reagent/drug/crank/overdose_process(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
@@ -141,6 +157,7 @@
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smacked out", /datum/mood_event/narcotic_heavy, name)
 	..()
+	M.attributes.stamina_reagent = 1
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25*REM)
@@ -199,6 +216,9 @@
 
 /datum/reagent/drug/methamphetamine/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
+	L.attributes.strength_reagent = 0
+	L.attributes.perception_reagent = 0
+	L.attributes.stamina_reagent = 0
 	..()
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M)
@@ -489,11 +509,12 @@
 
 /datum/reagent/drug/pumpup/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	L.attributes.dexterity_reagent = 0
 	..()
 
 /datum/reagent/drug/pumpup/on_mob_life(mob/living/carbon/M)
 	M.Jitter(5)
-
+	M.attributes.dexterity_reagent = 1
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[pick("Go! Go! GO!", "You feel ready...", "You feel invincible...")]</span>")
 	if(prob(15))
@@ -652,6 +673,9 @@
 
 /datum/reagent/drug/methamphetamine/cocaine/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
+	L.attributes.wits_reagent = 0
+	L.attributes.stamina_reagent = 0
+	L.attributes.dexterity_reagent = 0
 	..()
 
 /datum/reagent/drug/methamphetamine/cocaine/on_mob_life(mob/living/carbon/M)
