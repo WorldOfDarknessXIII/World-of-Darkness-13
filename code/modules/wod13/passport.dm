@@ -16,10 +16,10 @@
 	switch(option)
 		if("Open/Close")
 			if(closed)
-				icon_state = "passport1"
-			else
 				icon_state = "passport0"
-			to_chat(user, "<span class='notice'>You [closed ? "open" : "close"] [src].</span>")
+			else
+				icon_state = "passport1"
+			to_chat(user, "<span class='notice'>You [closed ? "close" : "open"] [src].</span>")
 			closed = !closed
 			return
 		// Adding people who can sign your documents, handled by /datum/component/signature_system
