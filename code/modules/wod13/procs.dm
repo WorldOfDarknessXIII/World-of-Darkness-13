@@ -1,14 +1,15 @@
 /mob/living/carbon/human/proc/AdjustHumanity(var/value, var/limit, var/forced = FALSE)
+	if(value < 0)
+		for(var/mob/living/carbon/human/H in viewers(7, src))
+			if(H != src && H.mind?.dharma)
+				if("judgement" in H.mind.dharma.tenets)
+					to_chat(H, "<span class='warning'>[src] is doing something bad, I need to punish them!")
+					H.mind.dharma.judgement |= real_name
 	if(!iskindred(src))
 		return
 	if(!GLOB.canon_event)
 		return
-	var/special_role_name
-	if(mind)
-		if(mind.special_role)
-			var/datum/antagonist/A = mind.special_role
-			special_role_name = A.name
-	if(!is_special_character(src) || special_role_name == "Ambitious" || forced)
+	if(!is_special_character(src) || forced)
 		if(!in_frenzy || forced)
 			var/mod = 1
 			var/enlight = FALSE
@@ -56,7 +57,7 @@
 						to_chat(src, "<span class='userhelp'><b>HUMANITY INCREASED!</b></span>")
 
 /mob/living/carbon/human/proc/AdjustMasquerade(var/value, var/forced = FALSE)
-	if(!iskindred(src) && !isghoul(src))
+	if(!iskindred(src) && !isghoul(src) && !iscathayan(src))
 		return
 	if(!GLOB.canon_event)
 		return
@@ -68,12 +69,7 @@
 			var/area/vtm/V = get_area(src)
 			if(V.zone_type != "masquerade")
 				return
-	var/special_role_name
-	if(mind)
-		if(mind.special_role)
-			var/datum/antagonist/A = mind.special_role
-			special_role_name = A.name
-	if(!is_special_character(src) || special_role_name == "Ambitious" || forced)
+	if(!is_special_character(src) || forced)
 		if(((last_masquerade_violation + 10 SECONDS) < world.time) || forced)
 			last_masquerade_violation = world.time
 			if(value < 0)

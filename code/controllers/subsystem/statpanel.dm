@@ -11,26 +11,16 @@ SUBSYSTEM_DEF(statpanels)
 
 /datum/controller/subsystem/statpanels/fire(resumed = FALSE)
 	if (!resumed)
-//		var/datum/map_config/cached = SSmapping.next_map_config
 		var/list/global_data = list(
 //			"Map: [SSmapping.config?.map_name || "Loading..."]",
 //			cached ? "Next Map: [cached.map_name]" : null,
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
-//			"Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]",
 			"Round Time: [ROUND_TIME()]",
 			"---",
 			"Canon: [GLOB.canon_event ? "Yes" : "No"]",
 			"Masquerade: [SSmasquerade.get_description()] [SSmasquerade.total_level]/1000",
 			"Late Party: [length(SSbad_guys_party.candidates)]/[SSbad_guys_party.go_on_next_fire == TRUE ? SSbad_guys_party.max_candidates : "???"] in [round((SSbad_guys_party.next_fire-world.time)/10)]s",
 			"---",
-			"Camarilla Power: [length(SSfactionwar.marks_camarilla)]",
-			"Anarch Power: [length(SSfactionwar.marks_anarch)]",
-			"Sabbat Power: [length(SSfactionwar.marks_sabbat)]",
-			"---",
-			/*
-			"Angst: 0",
-			"Plasm: ●●●●●" // [ChillRaccoon] - trolling
-			*/
 			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)"
 		)
 

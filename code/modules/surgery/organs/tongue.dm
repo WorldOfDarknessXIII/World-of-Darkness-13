@@ -3,7 +3,7 @@
 	desc = "A fleshy muscle mostly used for lying."
 	icon_state = "tonguenormal"
 	illegal = TRUE
-	cost = 200
+	cost = 100
 	zone = BODY_ZONE_PRECISE_MOUTH
 	slot = ORGAN_SLOT_TONGUE
 	attack_verb_continuous = list("licks", "slobbers", "slaps", "frenches", "tongues")
@@ -30,7 +30,8 @@
 		/datum/language/german,
 		/datum/language/hebrew,
 		/datum/language/japanese,
-		/datum/language/cantonese
+		/datum/language/cantonese,
+		/datum/language/greek
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)
@@ -115,7 +116,8 @@
 		/datum/language/german,
 		/datum/language/hebrew,
 		/datum/language/japanese,
-		/datum/language/cantonese
+		/datum/language/cantonese,
+		/datum/language/greek
 	))
 
 /obj/item/organ/tongue/fly/handle_speech(datum/source, list/speech_args)
@@ -255,7 +257,8 @@
 		/datum/language/german,
 		/datum/language/hebrew,
 		/datum/language/japanese,
-		/datum/language/cantonese
+		/datum/language/cantonese,
+		/datum/language/greek
 	))
 
 /obj/item/organ/tongue/bone/Initialize()
@@ -334,7 +337,8 @@
 		/datum/language/german,
 		/datum/language/hebrew,
 		/datum/language/japanese,
-		/datum/language/cantonese
+		/datum/language/cantonese,
+		/datum/language/greek
 	))
 
 /obj/item/organ/tongue/ethereal/Initialize(mapload)

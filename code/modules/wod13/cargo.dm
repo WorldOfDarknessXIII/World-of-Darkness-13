@@ -5,6 +5,13 @@
 	contains = list(/obj/structure/weedshit/buyable)
 	crate_name = "weed crate"
 
+/datum/supply_pack/vampire/thermal_drill
+	name = "Thermal Drill"
+	desc = "Contains a thermal drill."
+	cost = 4000
+	contains = list(/obj/structure/drill)
+	crate_name = "drill crate"
+
 /datum/supply_pack/vampire/potassiodide
 	name = "Potassium Iodide"
 	desc = "Contains bottle of potassium iodide."
@@ -281,7 +288,7 @@
 	contains = list(/obj/item/ammo_box/vampire/c12g)
 	crate_name = "ammo crate"
 
-/datum/supply_pack/vampire/ammo12g
+/datum/supply_pack/vampire/ammo12gbuck
 	name = "Ammo (12g, buckshot)"
 	desc = "Contains a box of 12g 00 buckshot shells."
 	cost = 400

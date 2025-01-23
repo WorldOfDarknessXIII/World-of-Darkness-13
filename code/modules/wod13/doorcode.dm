@@ -85,6 +85,13 @@
 		"clinic"
 	)
 
+/obj/item/vamp/keys/clinics_director
+	name = "Clinic director keys"
+	accesslocks = list(
+		"clinic",
+		"director"
+	)
+
 /obj/item/vamp/keys/cleaning
 	name = "Cleaning keys"
 	accesslocks = list(
@@ -175,6 +182,14 @@
 		"bianchiBank"
 	)
 
+/obj/item/vamp/keys/capo
+	name = "Capo keys"
+	accesslocks = list(
+		"bankboss",
+		"bianchiBank",
+		"giovanni"
+	)
+
 /obj/item/vamp/keys/taxi
 	name = "Taxi keys"
 	accesslocks = list(
@@ -224,7 +239,11 @@
 /obj/item/vamp/keys/toreador
 	name = "Sexy keys"
 	accesslocks = list(
-		"toreador"
+		"toreador",
+		"toreador1",
+		"toreador2",
+		"toreador3",
+		"toreador4"
 	)
 	color = "#ffa7e6"
 

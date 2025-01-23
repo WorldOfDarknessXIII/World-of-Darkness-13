@@ -728,6 +728,7 @@
 				var/mob/living/carbon/human/npc/N = target
 				if(N.last_damager != src)
 					AdjustHumanity(1, 10)
+					call_dharma("savelife", src)
 //			if(key)
 //				var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
 //				if(P)
@@ -1262,9 +1263,11 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 		return
 	var/health_deficiency = max((maxHealth - health), staminaloss)
-	if(health_deficiency >= 40)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, TRUE, multiplicative_slowdown = health_deficiency / 75)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, TRUE, multiplicative_slowdown = health_deficiency / 25)
+	var/health_scale_modifier = maxHealth/100 //If the human has a higher amount of max health this will be reflected in the amount of damage required to slow down.
+	var/health_slowdown = health_deficiency / (75 * health_scale_modifier)
+	if(health_deficiency >= (40 * health_scale_modifier))
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, TRUE, multiplicative_slowdown = health_slowdown)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, TRUE, multiplicative_slowdown = health_slowdown)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)

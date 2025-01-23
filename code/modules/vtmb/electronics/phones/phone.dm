@@ -217,10 +217,10 @@
 				talking = TRUE
 				online.online = src
 				online.talking = TRUE
-				
+
 				var/datum/phonehistory/NEWH_caller = new()
 				var/datum/phonehistory/NEWH_being_called = new()
-				
+
 				//Being called History
 				NEWH_being_called.name = "Unknown"
 				for(var/datum/phonecontact/Contact in contacts)
@@ -232,7 +232,7 @@
 				NEWH_being_called.time = "[SScity_time.timeofnight]"
 				NEWH_being_called.call_type = "I accepted the call"
 				phone_history_list += NEWH_being_called
-				
+
 				//Caller History
 				NEWH_caller.name = "Unknown"
 				for(var/datum/phonecontact/Contact in online.contacts)
@@ -248,15 +248,15 @@
 		if("decline")
 			talking = FALSE
 			if(online)
-			
+
 				if(!silence)
 					playsound(online, 'code/modules/wod13/sounds/phonestop.ogg', 25, FALSE)
 				online.talking = FALSE
-				
-				
+
+
 				var/datum/phonehistory/NEWH_caller = new()
 				var/datum/phonehistory/NEWH_being_called = new()
-				
+
 				//Being called History
 				NEWH_being_called.name = "Unknown"
 				for(var/datum/phonecontact/Contact in contacts)
@@ -268,7 +268,7 @@
 				NEWH_being_called.time = "[SScity_time.timeofnight]"
 				NEWH_being_called.call_type = "I declined the call"
 				phone_history_list += NEWH_being_called
-				
+
 				//Caller History
 				NEWH_caller.name = "Unknown"
 				for(var/datum/phonecontact/Contact in online.contacts)
@@ -283,7 +283,7 @@
 
 				online.online = null
 				online = null
-				
+
 			.= TRUE
 		if("call")
 //			if((iskindred(V) && V.clane.name == "Lasombra"))
@@ -332,7 +332,7 @@
 								NEWH_caller.time = "[SScity_time.timeofnight]"
 								NEWH_caller.call_type = "I called"
 								phone_history_list += NEWH_caller
-								
+
 								//Being Called History
 								NEWH_being_called.name = "Unknown"
 								for(var/datum/phonecontact/Contact in PHN.contacts)
@@ -491,7 +491,7 @@
 							var/split_number = display_number_first + " " + display_number_second
 							to_chat(usr, "# [PH.call_type]: [PH.name] , [split_number] at [PH.time]")
 					else
-						to_chat(usr, "Your don't got a call history")
+						to_chat(usr, "You have no call history.") //PSEUDO_M return to fix all this
 				if("Delete Call History")
 					if(phone_history_list.len > 0)
 						to_chat(usr, "Your total amount of history saved is: [phone_history_list.len]")
@@ -503,12 +503,12 @@
 						else
 							for(var/i = 1 to number_of_deletions)
 								//It will always delete the first item of the list, so the last logs are deleted first
-								var/item_to_remove = phone_history_list[1] 
-								phone_history_list -= item_to_remove            
+								var/item_to_remove = phone_history_list[1]
+								phone_history_list -= item_to_remove
 						to_chat(usr, "[number_of_deletions] call history entries were deleted. Remaining: [phone_history_list.len]")
-						
+
 					else
-						to_chat(usr, "Your don't got a call history to delete")
+						to_chat(usr, "You have no call history to delete it.")
 				if("My Number")
 					var/number_first_part = copytext(number, 1, 4)
 					var/number_second_part = copytext(number, 4, 8)
@@ -524,7 +524,7 @@
 						//If it is true, it will check all the other sounds for phone and disable them
 						silence = TRUE
 						to_chat(usr, "<span class='notice'>Notifications and Sounds toggled off.</span>")
-					else 
+					else
 						silence = FALSE
 						to_chat(usr, "<span class='notice'>Notifications and Sounds toggled on.</span>")
 				if ("Published Numbers as Contacts Toggle")

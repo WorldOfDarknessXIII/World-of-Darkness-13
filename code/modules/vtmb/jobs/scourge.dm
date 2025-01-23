@@ -53,7 +53,6 @@
 
 /datum/outfit/job/agent/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.vampire_faction = "Camarilla"
 
 /obj/effect/landmark/start/camarillaagent
 	name = "Scourge"

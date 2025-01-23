@@ -28,7 +28,7 @@
 
 /mob/living/carbon/werewolf/attack_animal(mob/living/simple_animal/M)
 	. = ..()
-	do_werewolf_rage_from_attack()
+	do_rage_from_attack()
 	if(.)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		switch(M.melee_damage_type)

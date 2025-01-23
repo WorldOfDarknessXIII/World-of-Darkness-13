@@ -46,6 +46,10 @@ SUBSYSTEM_DEF(whitelists)
 		if (admin.ckey == checked_ckey)
 			return TRUE
 
+	//return as whitelisted if the given whitelist doesn't exist
+	if (!possible_whitelists.Find(checked_whitelist))
+		return TRUE
+
 	for (var/datum/whitelist/current_whitelist in whitelist_entries)
 		if ((current_whitelist.ckey == checked_ckey) && (current_whitelist.whitelist == checked_whitelist))
 			return TRUE
