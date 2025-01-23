@@ -5,6 +5,7 @@
 	icon_state = "extinguish"
 	var/life = 15
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	var/mob/living/Extinguisher
 
 
 /obj/effect/particle_effect/water/Initialize()

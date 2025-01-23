@@ -3,10 +3,6 @@
 		walk(src,0)
 	if(M == src)
 		return
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.vampire_faction == vampire_faction && !H.client)
-			return
 	if((stat != DEAD) && !HAS_TRAIT(M, TRAIT_DEATHCOMA))
 		danger_source = M
 		if(attacked)

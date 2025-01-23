@@ -38,10 +38,6 @@
 	l_pocket = /obj/item/vamp/phone/anarch
 	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/keys/hack=1, /obj/item/vamp/creditcard=1, /obj/item/binoculars = 1)
 
-/datum/outfit/job/sweeper/pre_equip(mob/living/carbon/human/H)
-	..()
-	H.vampire_faction = FACTION_ANARCHS
-
 /obj/effect/landmark/start/sweeper
 	name = "Sweeper"
 	icon_state = "Bouncer"
