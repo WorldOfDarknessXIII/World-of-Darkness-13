@@ -658,7 +658,7 @@
 	name = "bolt of fireball"
 	icon_state = "fireball"
 	damage = 10
-	damage_type = BRUTE
+	damage_type = BURN
 	nodamage = FALSE
 
 	//explosion values

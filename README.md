@@ -1,22 +1,31 @@
 
-* **Website:** https://www.tgstation13.org
-* **Code:** https://github.com/tgstation/tgstation
-* **Wiki:** https://tgstation13.org/wiki/Main_Page
-* **Codedocs:** https://codedocs.tgstation13.org/
-* **/tg/station Discord:** https://tgstation13.org/phpBB/viewforum.php?f=60
+* **Website:** TO_BE_DECLARED
+* **Code:** https://github.com/WorldOfDarknessXIII/World-of-Darkness-13
+* **Wiki:** UNDER_CONSTRUCTION
+* **Codedocs:** https://codedocs.tgstation13.org/ + For the time being +
+* **World of Darkness 13 Discord:** https://discord.gg/WBktth6Z8j
 * **Coderbus Discord:** https://discord.gg/Vh8TJp9
 * ~~**IRC:** irc://irc.rizon.net/coderbus~~ (dead)
 
-This is the codebase for the /tg/station flavoured fork of SpaceStation 13.
+This is the codebase for the World of Darkness 13, a build of a fork of a downstream of a-- in any case...
 
-Space Station 13 is a paranoia-laden round-based roleplaying game set against the backdrop of a nonsensical, metal death trap masquerading as a space station, with charming spritework designed to represent the sci-fi setting and its dangerous undertones. Have fun, and survive!
+We are based on the Paradox Interactive World of Darkness(c) gamelines, with administrative oversight determining what we add to our game. Please see below for our guides on contributing.
+
+## Attribution: tgstation
+## The vast majority of our code was written by the maintainers and members of the /tg/station community up to February 3rd, 2021. We regularly pull and port features from /tg/station as well. We would like to officially recognize and pay our respect to the thousands of development hours that created the foundation and continue to create the function of our server.
+## Changes to the below files have taken place to amend references to /tg/station with our own where appropriate. These changes are not intended and should not be interpreted as any attempt to inappropriately misattribute credit for the efforts of the original developers, maintainers, artists, or community managers.
+## The commit for the point at which we diverged from /tg/station:
+
+## commit c0c39018f369fa4d4950a56d565dadb573be54f2 (tg-divergence-backup, tg-divergence)
+## Author: tgstation-server <tgstation-server@tgstation13.org>
+## Date:   Wed Feb 3 16:50:49 2021 -0800
+##
+##    Automatic changelog generation for PR #56506 [ci skip]
 
 ## DOWNLOADING
 [Downloading](.github/DOWNLOADING.md)
 
 [Running on the server](.github/RUNNING_A_SERVER.md)
-
-[Maps and Away Missions](.github/MAPS_AND_AWAY_MISSIONS.md)
 
 ## Requirements for contributors
 [Guidelines for Contributors](.github/CONTRIBUTING.md)

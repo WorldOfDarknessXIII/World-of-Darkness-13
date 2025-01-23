@@ -40,7 +40,6 @@
 
 /datum/outfit/job/emissary/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.vampire_faction = FACTION_ANARCHS
 
 /obj/effect/landmark/start/emissary
 	name = "Emissary"

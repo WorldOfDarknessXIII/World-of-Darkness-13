@@ -107,64 +107,7 @@ var/mob/living/carbon/human/H
 
 /obj/machinery/vamp/atm/Initialize()
 	..()
-/*
-/obj/machinery/vamp/atm/attackby(obj/item/W, mob/user)
-	var/obj/item/vamp/creditcard/card = null
-	var/obj/item/stack/dollar/cash = null
 
-	if(istype(W, /obj/item/vamp/creditcard))
-		card = W
-	else if(istype(W, /obj/item/stack/dollar))
-		cash = W
-	else
-		to_chat(user, "<span class='notice'>This does not work with the ATM.</span>")
-
-	if(cash)
-		var/amount = cash.amount
-		atm_balance += amount
-		to_chat(user, "<span class='notice'>You have deposited [amount] dollars into the ATM. The ATM now holds [atm_balance] dollars.</span>")
-		qdel(cash)
-		return
-
-	if(card)
-		to_chat(user, "<span class='notice'>Prompting for card code.</span>") // debug
-		var/input_code = input(user, "Enter your code:", "ATM Access") as text
-		if(input_code == card.account.code)
-			to_chat(user, "<span class='notice'>Access granted. Welcome to Bianchi bank.</span>")
-			var/choice
-			while(TRUE)
-				choice = alert(user, "Choose an action:", "Current Balance: $[card.account.balance]", "Withdraw Money", "Deposit into Card", "Exit")
-
-				if(choice == "Withdraw Money")
-					var/amount = input(user, "Enter the amount to withdraw:", "Withdraw Money") as num
-					if(card.account.balance < amount)
-						to_chat(user, "<span class='notice'>Insufficient funds.</span>")
-					else
-						while(amount > 0)
-							var/withdraw_amount = min(amount, 1000)
-							cash = new /obj/item/stack/dollar()
-							cash.amount = withdraw_amount
-							to_chat(user, "<span class='notice'>You have withdrawn [withdraw_amount] dollars.</span>")
-							cash.loc = user.loc
-							amount -= withdraw_amount
-							card.account.balance -= withdraw_amount
-
-				else if(choice == "Deposit into Card")
-					if(atm_balance > 0)
-						card.account.balance += atm_balance
-						to_chat(user, "<span class='notice'>You have deposited [atm_balance] dollars into your card. Your new balance is [card.account.balance] dollars.</span>")
-						atm_balance = 0
-					else
-						to_chat(user, "<span class='notice'>The ATM is empty. Nothing to deposit.</span>")
-				else if(choice == "Exit")
-					to_chat(user, "<span class='notice'>Thank you for using Bianchi bank.</span>")
-					break
-				else
-					to_chat(user, "<span class='notice'>Transaction cancelled.</span>")
-		else
-			to_chat(user, "<span class='notice'>Invalid code.</span>")
-
-*/
 /obj/machinery/vamp/atm/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/vamp/creditcard))
 		if(logged_in)
