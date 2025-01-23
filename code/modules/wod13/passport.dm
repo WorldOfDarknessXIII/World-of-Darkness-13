@@ -19,7 +19,7 @@
 				icon_state = "passport0"
 			else
 				icon_state = "passport1"
-			to_chat(user, "<span class='notice'>You [closed ? "close" : "open"] [src].</span>")
+			to_chat(user, "<span class='notice'>You [closed ? "open" : "close"] [src].</span>")
 			closed = !closed
 			return
 		// Adding people who can sign your documents, handled by /datum/component/signature_system
