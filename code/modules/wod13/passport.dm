@@ -28,12 +28,11 @@
 			// Our mob does not have this component
 			if(!signature_system)
 				return
-			// Get all human mobs
+			// Get all human mobs except for the user
 			var/list/eligible_signers_minus_owner = list()
 			for(var/mob/living/carbon/human/human in GLOB.player_list)
-				if(human == user)
-					continue
 				eligible_signers_minus_owner += human
+			eligible_signers_minus_owner.Remove(user)
 			var/choice =  input(user,"Choose a person who will also be able to sign your documents. This will allow them to sign your mail and open them, too.","Add Eligible Signer") as null|anything in sortList(eligible_signers_minus_owner)
 			if(choice)
 				// Try to add the new name to the list
@@ -49,7 +48,7 @@
 				return
 			var/list/eligible_signers_minus_owner = sortList(signature_system.eligible_signers)
 			// You cannot remove yourself, silly
-			eligible_signers_minus_owner.Remove(user.real_name)
+			eligible_signers_minus_owner.Remove(user)
 			if(length(eligible_signers_minus_owner))
 				var/choice = input(user,"Choose a person to be removed from your eligible signers. They will no longer be able to sign your mail or open them.","Remove Eligible Signer") as null|anything in sortList(eligible_signers_minus_owner)
 				if(choice)

@@ -10,10 +10,7 @@
 // If you wish to edit it on a global scale, go to MC tab > Economy, click the numbers next to it > edit the variables starting with the mail_ prefix.
 // If you want to do it on a per-letter basis, you can change its own loot table by resetting the 'possible_gifts' list to default (empty),
 // and then add whatever item's path you want it to contain.
-// You can edit the recipient by changing the 'recipient' variable to the real_name of the target mob.
-
-#define LETTER_STATUS_INVALID		1
-#define LETTER_STATUS_UNDELIVERED	2
+// You can edit the recipient by marking the target mob and changing the 'recipient' variable to it.
 
 // Letter that can only be opened by their recipient, contains a random item
 /obj/item/letter
@@ -24,7 +21,7 @@
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	///The person who can open this letter, assigned upon Initialize()
-	var/recipient
+	var/mob/living/carbon/human/recipient
 	///The list of items this letter can contain, we copy this list on Initialize() so admins can create custom letters
 	var/list/possible_gifts = list()
 	///Do we belong to a delivery list? By default, yes, but this remains null when admins spawn this item by itself
@@ -40,8 +37,7 @@
 		possible_choices.Add(human)
 
 	if(length(possible_choices))
-		var/mob/living/carbon/human/chosen_recipient = pick(possible_choices)
-		recipient = chosen_recipient.real_name
+		recipient = pick(possible_choices)
 		name = "letter ([recipient])"
 		return
 
