@@ -241,6 +241,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		. = 1
 	return ..() || .
 
+/datum/reagent/consumable/ethanol/vodka/on_mob_end_metabolize(mob/living/M)
+	M.attributes.stamina_reagent = 0
+	M.attributes.dexterity_reagent = 0
+	M.attributes.wits_reagent = 0
+
+
 /datum/reagent/consumable/ethanol/gin
 	name = "Gin"
 	description = "It's gin. In space. I say, good sir."
