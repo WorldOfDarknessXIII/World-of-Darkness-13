@@ -320,8 +320,6 @@
 	parts += goal_report()
 	//Economy & Money
 	parts += market_report()
-	// Mail
-	parts += mail_report()
 
 	listclearnulls(parts)
 
@@ -513,18 +511,12 @@
 	parts += "<div class='panel stationborder'>There were [station_vault] credits collected by crew this shift.<br>"
 	if(total_players > 0)
 		parts += "An average of [station_vault/total_players] credits were collected.<br>"
-		log_econ("Roundend credit total: [station_vault] credits. Average Credits: [station_vault/total_players]")
+		log_econ("Roundend credit total: [station_vault] credits. Average Credits: [station_vault/total_players]. Letters signed: [SSeconomy.mail_signed]")
 	if(mr_moneybags)
 		parts += "The most affluent crew member at shift end was <b>[mr_moneybags.account_holder] with [mr_moneybags.account_balance]</b> cr!</div>"
 	else
 		parts += "Somehow, nobody made any money this shift! This'll result in some budget cuts...</div>"
-	return parts
-
-///Generate a report for how many letters were delivered and who was the last recipient
-/datum/controller/subsystem/ticker/proc/mail_report()
-	var/list/parts = list()
 	parts += "Signed letters: [SSeconomy.mail_signed].[SSeconomy.mail_last_recipient ? " The last person to open their letter was: [SSeconomy.mail_last_recipient]!" : ""]"
-	log_econ("Roundend letters delivered: [SSeconomy.mail_signed]")
 	return parts
 
 /datum/controller/subsystem/ticker/proc/medal_report()
