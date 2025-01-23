@@ -11,13 +11,13 @@
 /datum/discipline/thaumaturgy/post_gain()
 	owner.faction |= "Tremere"
 	if(level >= 1)
-		var/datum/action/thaumaturgy/T = new()
-		T.Grant(owner)
-		T.level = level
+		var/datum/action/thaumaturgy/thaumaturgy = new()
+		thaumaturgy.Grant(owner)
+		thaumaturgy.level = level
 		owner.thaumaturgy_knowledge = TRUE
 	if(level >= 3)
-		var/datum/action/bloodshield/B = new()
-		B.Grant(owner)
+		var/datum/action/bloodshield/bloodshield = new()
+		bloodshield.Grant(owner)
 
 /datum/discipline_power/thaumaturgy
 	name = "Thaumaturgy power name"

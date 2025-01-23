@@ -42,10 +42,6 @@
 	..()
 	H.dna.species.GiveSpeciesFlight(H)
 
-//datum/discipline/visceratika/post_gain(mob/living/carbon/human/H)
-//	var/obj/effect/proc_holder/spell/voice_of_god/S = new(H)
-//	H.mind.AddSpell(S)
-
 /datum/discipline/visceratika
 	name = "Visceratika"
 	desc = "The Discipline of Visceratika is the exclusive possession of the Gargoyle bloodline and is an extension of their natural affinity for stone, earth, and things made thereof."

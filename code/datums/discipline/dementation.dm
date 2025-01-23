@@ -8,6 +8,10 @@
 	all_powers = subtypesof(/datum/discipline_power/dementation)
 	..()
 
+/datum/discipline/dementation/post_gain()
+	. = ..()
+	owner.add_quirk(/datum/quirk/insanity)
+
 /datum/discipline_power/dementation
 	name = "Dementation power name"
 	desc = "Dementation power description"

@@ -76,5 +76,7 @@
 	current_power.deactivate(target)
 
 /datum/discipline/proc/post_gain()
+	SHOULD_CALL_PARENT(TRUE)
+
 	for (var/datum/discipline_power/power in known_powers)
 		power.post_gain()
