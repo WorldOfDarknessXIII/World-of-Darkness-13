@@ -95,11 +95,11 @@
 	UpdateButtonIcon()
 
 /datum/action/discipline/proc/end_targeting()
-	if (!owner?.client)
+	var/client/client = owner?.client
+	if (!client)
 		return
 	if (!targeting)
 		return
-	var/client/client = owner.client
 
 	UnregisterSignal(owner, COMSIG_MOB_CLICKON)
 	targeting = FALSE
@@ -119,14 +119,13 @@
 		return
 
 /datum/action/discipline/proc/begin_targeting()
-	if (!owner?.client)
+	var/client/client = owner?.client
+	if (!client)
 		return
 	if (targeting)
 		return
 	if (!discipline.can_activate_untargeted(TRUE))
 		return
-	var/client/client = owner.client
-
 	SEND_SOUND(owner, sound('code/modules/wod13/sounds/highlight.ogg', 0, 0, 50))
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(handle_click))
 	targeting = TRUE

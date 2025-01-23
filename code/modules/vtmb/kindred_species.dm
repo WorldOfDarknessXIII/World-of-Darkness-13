@@ -214,35 +214,39 @@
 		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
 		onclose(host, "vampire", src)
 
-/datum/species/kindred/on_species_gain(mob/living/carbon/human/C)
+/datum/species/kindred/on_species_gain(mob/living/carbon/human/vampire)
 	. = ..()
-	C.update_body(0)
-	C.last_experience = world.time + 5 MINUTES
-	var/datum/action/vampireinfo/infor = new()
-	infor.host = C
-	infor.Grant(C)
-	var/datum/action/give_vitae/vitae = new()
-	vitae.Grant(C)
-	var/datum/action/blood_heal/bloodheal = new()
-	bloodheal.Grant(C)
-	var/datum/action/blood_power/bloodpower = new()
-	bloodpower.Grant(C)
-	add_verb(C, /mob/living/carbon/human/verb/teach_discipline)
+	vampire.update_body()
+	vampire.last_experience = world.time + 5 MINUTES
 
-	C.yang_chi = 0
-	C.max_yang_chi = 0
-	C.yin_chi = 6
-	C.max_yin_chi = 6
+	var/datum/action/vampireinfo/infor = new()
+	infor.host = vampire
+	infor.Grant(vampire)
+	var/datum/action/give_vitae/vitae = new()
+	vitae.Grant(vampire)
+	var/datum/action/blood_heal/bloodheal = new()
+	bloodheal.Grant(vampire)
+	var/datum/action/blood_power/bloodpower = new()
+	bloodpower.Grant(vampire)
+
+	add_verb(vampire, /mob/living/carbon/human/verb/teach_discipline)
+
+	vampire.yang_chi = 0
+	vampire.max_yang_chi = 0
+	vampire.yin_chi = 6
+	vampire.max_yin_chi = 6
 
 	//vampires go to -200 damage before dying
-	for (var/obj/item/bodypart/bodypart in C.bodyparts)
+	for (var/obj/item/bodypart/bodypart in vampire.bodyparts)
 		bodypart.max_damage *= 1.5
 
 	//vampires die instantly upon having their heart removed
-	RegisterSignal(C, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(lose_organ))
+	RegisterSignal(vampire, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(lose_organ))
 
 	//vampires don't die while in crit, they just slip into torpor after 2 minutes of being critted
-	RegisterSignal(C, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(slip_into_torpor))
+	RegisterSignal(vampire, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(slip_into_torpor))
+
+	initialize_generation(vampire)
 
 /datum/species/kindred/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
@@ -701,7 +705,7 @@
 				var/datum/discipline/discipline = new type_to_create(level)
 
 				//prevent Disciplines from being used if not whitelisted for them
-				if (discipline.clane_restricted)
+				if (discipline.clan_restricted)
 					if (!can_access_discipline(src, type_to_create))
 						qdel(discipline)
 						continue
@@ -864,7 +868,7 @@
 		var/datum/discipline/giving_discipline = new teaching_discipline
 
 		//if a Discipline is clan-restricted, it must be checked if the student has access to at least one Clan with that Discipline
-		if (giving_discipline.clane_restricted)
+		if (giving_discipline.clan_restricted)
 			if (!can_access_discipline(student, teaching_discipline))
 				to_chat(teacher, "<span class='warning'>Your student is not whitelisted for any Clans with this Discipline, so they cannot learn it.</span>")
 				qdel(giving_discipline)
@@ -952,7 +956,7 @@
 
 	//make sure it's actually restricted and this check is necessary
 	var/datum/discipline/discipline_object_checking = new discipline_checking
-	if (!discipline_object_checking.clane_restricted)
+	if (!discipline_object_checking.clan_restricted)
 		qdel(discipline_object_checking)
 		return TRUE
 	qdel(discipline_object_checking)
@@ -1013,10 +1017,16 @@
 				spend_blood_per_turn = 2
 			if (10)
 				vampire.maxbloodpool = 13
+				spend_blood_per_turn = 1
 			if (11)
 				vampire.maxbloodpool = 12
+				spend_blood_per_turn = 1
 			if (12)
 				vampire.maxbloodpool = 11
+				spend_blood_per_turn = 1
+			else
+				vampire.maxbloodpool = 10
+				spend_blood_per_turn = 1
 
 		//forces blood_volume into line with new blood potency
 		if (old_max_bloodpool != vampire.maxbloodpool)

@@ -25,13 +25,13 @@
 
 	var/limit = min(2, level) + owner.social + owner.more_companions - 1
 	if(length(owner.beastmaster) >= limit)
-		var/mob/living/simple_animal/hostile/beastmaster/B = pick(owner.beastmaster)
-		B.death()
+		var/mob/living/simple_animal/hostile/beastmaster/beast = pick(owner.beastmaster)
+		beast.death()
 	if(!length(owner.beastmaster))
-		var/datum/action/beastmaster_stay/E1 = new()
-		E1.Grant(owner)
-		var/datum/action/beastmaster_deaggro/E2 = new()
-		E2.Grant(owner)
+		var/datum/action/beastmaster_stay/stay = new()
+		stay.Grant(owner)
+		var/datum/action/beastmaster_deaggro/deaggro = new()
+		deaggro.Grant(owner)
 
 //SUMMON RAT
 /datum/discipline_power/animalism/summon_rat
@@ -43,10 +43,10 @@
 
 /datum/discipline_power/animalism/summon_rat/activate()
 	. = ..()
-	var/mob/living/simple_animal/hostile/beastmaster/rat/R = new(get_turf(owner))
-	R.my_creator = owner
-	owner.beastmaster |= R
-	R.beastmaster = owner
+	var/mob/living/simple_animal/hostile/beastmaster/rat/rat = new(get_turf(owner))
+	rat.my_creator = owner
+	owner.beastmaster |= rat
+	rat.beastmaster = owner
 
 //SUMMON CAT
 /datum/discipline_power/animalism/summon_cat
@@ -58,10 +58,10 @@
 
 /datum/discipline_power/animalism/summon_cat/activate()
 	. = ..()
-	var/mob/living/simple_animal/hostile/beastmaster/cat/C = new(get_turf(owner))
-	C.my_creator = owner
-	owner.beastmaster |= C
-	C.beastmaster = owner
+	var/mob/living/simple_animal/hostile/beastmaster/cat/cat = new(get_turf(owner))
+	cat.my_creator = owner
+	owner.beastmaster |= cat
+	cat.beastmaster = owner
 
 //SUMMON WOLF
 /*
@@ -82,10 +82,10 @@
 
 /datum/discipline_power/animalism/summon_wolf/activate()
 	. = ..()
-	var/mob/living/simple_animal/hostile/beastmaster/D = new(get_turf(owner))
-	D.my_creator = owner
-	owner.beastmaster |= D
-	D.beastmaster = owner
+	var/mob/living/simple_animal/hostile/beastmaster/dog = new(get_turf(owner))
+	dog.my_creator = owner
+	owner.beastmaster |= dog
+	dog.beastmaster = owner
 
 //SUMMON BAT
 /datum/discipline_power/animalism/summon_bat
@@ -117,16 +117,16 @@
 
 	duration_length = 20 SECONDS
 
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/animalism/AN
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/animalism/shapeshift
 
 /datum/discipline_power/animalism/rat_shapeshift/activate()
 	. = ..()
-	if(!AN)
-		AN = new(owner)
-	AN.Shapeshift(owner)
+	if(!shapeshift)
+		shapeshift = new(owner)
+	shapeshift.Shapeshift(owner)
 
 /datum/discipline_power/animalism/rat_shapeshift/deactivate()
 	. = ..()
 	if(owner.stat != DEAD)
-		AN.Restore(AN.myshape)
+		shapeshift.Restore(shapeshift.myshape)
 		owner.Stun(1.5 SECONDS)
