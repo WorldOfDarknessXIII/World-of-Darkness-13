@@ -36,3 +36,9 @@
 #define DISC_CHECK_SPEAK (1<<6)
 ///Caster must be able to see
 #define DISC_CHECK_SEE (1<<7)
+
+//power type defines, will be useful when it's made generic
+///Power is a Discipline of the Vampire: The Masquerade game line
+#define POWER_TYPE_DISCIPLINE "discipline"
+///Power is a Chi Art of the Kindred of the East game line
+#define POWER_TYPE_CHI_ART "chi_art"

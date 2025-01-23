@@ -33,8 +33,6 @@
 	var/violates_masquerade = FALSE
 
 	/* HOW AND WHEN IT'S ACTIVATED AND DEACTIVATED */
-	/// If this Discipline has a pre-activation phase for custom logic (eg dice rolling) that affects whether activation will take place or not.
-	var/pre_activation = FALSE
 	/// If this Discipline doesn't automatically expire, but rather periodically drains blood.
 	var/toggled = FALSE
 	/// If this power can be turned on and off.
@@ -184,6 +182,13 @@
 /datum/discipline_power/proc/can_activate(atom/target, alert = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
+	var/signal_return = SEND_SIGNAL(src, COMSIG_POWER_TRY_ACTIVATE, target) | SEND_SIGNAL(owner, COMSIG_POWER_TRY_ACTIVATE, target)
+	if (target)
+		signal_return |= SEND_SIGNAL(target, COMSIG_POWER_TRY_ACTIVATE_ON)
+	if (signal_return & POWER_PREVENT_ACTIVATE)
+		//feedback is sent by the proc preventing activation
+		return FALSE
+
 	//can't activate if the owner isn't capable of it
 	if (!can_activate_untargeted(alert))
 		return FALSE
@@ -240,7 +245,15 @@
 	return FALSE
 
 /datum/discipline_power/proc/pre_activation(atom/target)
-	return
+	//overrides should take care to still send and receive these signals!
+	var/signal_return = SEND_SIGNAL(src, COMSIG_POWER_PRE_ACTIVATION, target) | SEND_SIGNAL(owner, COMSIG_POWER_PRE_ACTIVATION, target)
+	if (target)
+		signal_return |= SEND_SIGNAL(src, COMSIG_POWER_PRE_ACTIVATION_ON)
+	if (signal_return & POWER_CANCEL_ACTIVATION)
+		//feedback is sent by the proc cancelling activation
+		return
+
+	activate(target)
 
 /datum/discipline_power/proc/activate(atom/target)
 	SHOULD_CALL_PARENT(TRUE)
@@ -250,6 +263,11 @@
 		return FALSE
 	if(!discipline?.owner)
 		return FALSE
+
+	SEND_SIGNAL(src, COMSIG_POWER_ACTIVATE, target)
+	SEND_SIGNAL(owner, COMSIG_POWER_ACTIVATE, target)
+	if (target)
+		SEND_SIGNAL(target, COMSIG_POWER_ACTIVATE_ON)
 
 	//make it active if it can only have one active instance at a time
 	if (!fire_and_forget && (duration_length != 0))
@@ -307,10 +325,7 @@
 
 /datum/discipline_power/proc/try_activate(atom/target)
 	if (can_activate(target, TRUE))
-		if (pre_activation)
-			pre_activation(target)
-		else
-			activate(target)
+		pre_activation(target)
 		return TRUE
 
 	return FALSE
@@ -327,6 +342,13 @@
 /datum/discipline_power/proc/can_deactivate(atom/target)
 	SHOULD_CALL_PARENT(TRUE)
 
+	var/signal_return = SEND_SIGNAL(src, COMSIG_POWER_TRY_DEACTIVATE, target) | SEND_SIGNAL(owner, COMSIG_POWER_TRY_DEACTIVATE, target)
+	if (target)
+		signal_return |= SEND_SIGNAL(target, COMSIG_POWER_TRY_DEACTIVATE_ON)
+	if (signal_return & POWER_PREVENT_DEACTIVATE)
+		//feedback is sent by the proc cancelling activation
+		return FALSE
+
 	if (!can_deactivate_untargeted())
 		return FALSE
 
@@ -338,6 +360,11 @@
 
 /datum/discipline_power/proc/deactivate(atom/target)
 	SHOULD_CALL_PARENT(TRUE)
+
+	SEND_SIGNAL(src, COMSIG_POWER_DEACTIVATE, target)
+	SEND_SIGNAL(owner, COMSIG_POWER_DEACTIVATE, target)
+	if (target)
+		SEND_SIGNAL(target, COMSIG_POWER_DEACTIVATE_ON)
 
 	if (!fire_and_forget && (duration_length != 0))
 		active = FALSE
@@ -357,26 +384,28 @@
 	return
 
 /datum/discipline_power/proc/refresh(atom/target)
-	if (active)
-		var/repeat = FALSE
-		if (ishuman(owner))
-			var/mob/living/carbon/human/human = owner
-			var/datum/species/kindred/species = human.dna.species
-			if (species.try_spend_blood(human, vitae_cost))
-				repeat = TRUE
-			else
-				to_chat(owner, "<span class='warning'>You can't spend enough blood to keep [src] active!")
+	if (!active)
+		return
+
+	var/repeat = FALSE
+	if (ishuman(owner))
+		var/mob/living/carbon/human/human = owner
+		var/datum/species/kindred/species = human.dna.species
+		if (species.try_spend_blood(human, vitae_cost))
+			repeat = TRUE
 		else
-			if (owner.try_adjust_blood_points(-vitae_cost))
-				repeat = TRUE
-			else
-				to_chat(owner, "<span class='warning'>You can't spend enough blood to keep [src] active!")
+			to_chat(owner, "<span class='warning'>You can't spend enough blood to keep [src] active!")
+	else
+		if (owner.try_adjust_blood_points(-vitae_cost))
+			repeat = TRUE
+		else
+			to_chat(owner, "<span class='warning'>You can't spend enough blood to keep [src] active!")
 
-		if (repeat)
-			if (!fire_and_forget && !duration_override)
-				COOLDOWN_START(src, duration, duration_length)
-			addtimer(CALLBACK(src, PROC_REF(refresh), target), duration_length)
-			to_chat(owner, "<span class='warning'>[src] consumes your blood to stay active.</span>")
-			return
+	if (repeat)
+		if (!fire_and_forget && !duration_override)
+			COOLDOWN_START(src, duration, duration_length)
+		addtimer(CALLBACK(src, PROC_REF(refresh), target), duration_length)
+		to_chat(owner, "<span class='warning'>[src] consumes your blood to stay active.</span>")
+		return
 
-		try_deactivate(target)
+	try_deactivate(target)
