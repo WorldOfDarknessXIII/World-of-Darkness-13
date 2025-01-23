@@ -594,6 +594,7 @@
 
 /datum/reagent/medicine/morphine/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
+	L.attributes.stamina_reagent = 0
 	..()
 
 /datum/reagent/medicine/morphine/on_mob_life(mob/living/carbon/M)
