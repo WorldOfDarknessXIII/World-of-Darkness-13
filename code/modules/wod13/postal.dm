@@ -220,6 +220,8 @@
 		var/obj/item/letter/letter = I
 		if(!letter.associated_delivery_list)
 			var/refund_amount = round(SSeconomy.mail_delivery_list_letters / SSeconomy.mail_delivery_list_cost)
+			// This is a safety net in case admins wrongly varedited SSeconomy
+			refund_amount = max(1, refund_amount)
 			qdel(letter)
 			// Pay our employee
 			var/obj/item/stack/dollar/money = new /obj/item/stack/dollar()
