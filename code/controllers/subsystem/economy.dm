@@ -37,6 +37,30 @@ SUBSYSTEM_DEF(economy)
 	var/earning_report
 	var/market_crashing = FALSE
 
+	// Mail-related variables
+	///How many letters should spawn per delivery list
+	var/mail_delivery_list_letters = 10
+	///How much a delivery list costs
+	var/mail_delivery_list_cost = 100
+	///How much a signed letter will earn us
+	var/mail_delivery_signed_letter_reward = 30
+	///Who was the last person receiving mail, used for roundend trivia
+	var/mail_last_recipient
+	///How many letters were signed this round, used for roundend trivia
+	var/mail_signed = 0
+	///The list of gifts letters can contain (TODO: edit this...)
+	var/list/mail_possible_gifts = list(/obj/item/storage/pill_bottle/estrogen,
+										/obj/item/storage/pill_bottle/antibirth,
+										/obj/item/storage/pill_bottle/ephedrine,
+										/obj/item/storage/pill_bottle/potassiodide,
+										/obj/item/vampire_stake,
+										/obj/item/stack/dollar/rand,
+										/obj/item/melee/vampirearms/knife,
+										/obj/item/melee/vampirearms/tire,
+										/datum/supply_pack/vampire/bloodpack,
+										/obj/item/gun/ballistic/vampire/revolver,
+										/obj/item/vamp/keys/hack)
+
 /datum/controller/subsystem/economy/Initialize(timeofday)
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
 	for(var/A in department_accounts)
