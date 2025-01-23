@@ -152,6 +152,15 @@
 		if(was_signed)
 			playsound(loc, 'sound/items/pen_signing.ogg', 20, TRUE)
 
+/obj/item/mail_delivery_list/examine(mob/user)
+	. = ..()
+	if(!length(letters_associated))
+		. += "This delivery list is empty!"
+		return
+	. += "The following [length(letters_associated) > 1 ? "people are" : "person is"] waiting for their mail:"
+	for(var/obj/item/letter/letter in letters_associated)
+		. += letter.recipient
+
 // The machine printing
 /obj/lettermachine
 	name = "letter machine"
@@ -176,16 +185,23 @@
 	..()
 
 /obj/lettermachine/attackby(obj/item/I, mob/user, params)
+	// Refilling the machine with money to buy letters
 	if(istype(I, /obj/item/stack/dollar))
 		var/obj/item/stack/dollar/cash_money = I
 		money += cash_money.amount
 		say("$[cash_money.amount] inserted!")
 		qdel(cash_money)
 		return
+
+	// Cashing in the signed delivery list
 	if(istype(I, /obj/item/mail_delivery_list))
 		var/obj/item/mail_delivery_list/delivery_list = I
 		if(!delivery_list.amount_of_signatures)
 			say("You need at least one signature to get paid!")
+			return
+		if(!length(delivery_list.letters_associated))
+			say("Delivery list recycled.")
+			qdel(delivery_list)
 			return
 		// This is to ensure people don't game increments with lucky lagspikes
 		var/possible_maximum_payment = SSeconomy.mail_delivery_list_letters * SSeconomy.mail_delivery_signed_letter_reward
@@ -197,44 +213,20 @@
 		var/obj/item/stack/dollar/money = new /obj/item/stack/dollar()
 		money.amount = payment
 		user.put_in_hands(money)
+		return
+
+	// Returning invalid letters
+	if(istype(I, /obj/item/letter))
+		var/obj/item/letter/letter = I
+		if(!letter.associated_delivery_list)
+			var/refund_amount = round(SSeconomy.mail_delivery_list_letters / SSeconomy.mail_delivery_list_cost)
+			qdel(letter)
+			// Pay our employee
+			var/obj/item/stack/dollar/money = new /obj/item/stack/dollar()
+			money.amount = payment
+			user.put_in_hands(money)
+			say("Letter refunded.")
 
 /obj/lettermachine/examine(mob/user)
 	. = ..()
 	. += "[src] contains <b>[money] dollars</b>."
-
-
-
-
-
-
-// None of these below should be in this file
-/obj/item/storage/pill_bottle/estrogen
-	name = "estrogen pill bottle"
-	desc = "There are boobs on the top."
-
-/obj/item/storage/pill_bottle/estrogen/PopulateContents()
-	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/pill/epinephrine(src)
-
-/obj/item/storage/pill_bottle/ephedrine
-	name = "ephedrine pill bottle"
-	desc = "There is opium attention sign on the top."
-
-/obj/item/storage/pill_bottle/ephedrine/PopulateContents()
-	for(var/i in 1 to 10)
-		new /obj/item/reagent_containers/pill/ephedrine(src)
-
-/obj/item/reagent_containers/pill/ephedrine
-	name = "ephedrine pill"
-	desc = "Used to stabilize patients."
-	icon_state = "pill5"
-	list_reagents = list(/datum/reagent/medicine/ephedrine = 15)
-	rename_with_volume = TRUE
-
-/obj/item/storage/pill_bottle/antibirth
-	name = "antibirth pill bottle"
-	desc = "There is crossed sex icon on the top."
-
-/obj/item/storage/pill_bottle/antibirth/PopulateContents()
-	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/pill/iron(src)
