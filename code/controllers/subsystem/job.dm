@@ -567,8 +567,8 @@ SUBSYSTEM_DEF(job)
 				handle_auto_deadmin_roles(M.client, rank)
 
 		to_chat(M, "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
-		var/mob/living/carbon/human/H = living_mob
-		if((iskindred(H) && H.clane))
+		var/mob/living/carbon/human/human = living_mob
+		if((iskindred(human) && human.clane) || iscathayan(human) || isgarou(human))
 			if(job.v_duty && job.v_duty != "")
 				to_chat(M, "<span class='notice'><b>[job.v_duty]</b></span>")
 			if(job.title != "Prince")
@@ -741,11 +741,11 @@ SUBSYSTEM_DEF(job)
 
 	if(latejoin_trackers.len)
 		destination = pick(latejoin_trackers)
-		var/mob/living/carbon/human/H = M
+		var/mob/living/carbon/human/human = M
 		if(H.clane)
 			if(H.clane.violating_appearance)
 				destination = pick(GLOB.masquerade_latejoin)
-		if(isgarou(H))
+		if(isgarou(human))
 			for(var/obj/structure/werewolf_totem/W in GLOB.totems)
 				if(W)
 					if(W.tribe == H.auspice.tribe)
