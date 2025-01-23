@@ -618,6 +618,9 @@
 					var/mob/living/carbon/human/HM = user
 					HM.AdjustHumanity(1, 10)
 					call_dharma("savelife", HM)
+					for(var/mob/living/carbon/human/hun in oviewers(7, user))
+						if(hun != H)
+							call_dharma("watchsave", hun)
 //					if(user.key)
 //						var/datum/preferences/P = GLOB.preferences_datums[ckey(user.key)]
 //						if(P)

@@ -734,6 +734,9 @@
 				if(N.last_damager != src)
 					AdjustHumanity(1, 10)
 					call_dharma("savelife", src)
+					for(var/mob/living/carbon/human/hun in oviewers(7, src))
+						if(hun != target)
+							call_dharma("watchsave", src)
 //			if(key)
 //				var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
 //				if(P)

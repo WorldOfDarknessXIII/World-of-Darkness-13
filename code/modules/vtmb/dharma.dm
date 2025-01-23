@@ -46,14 +46,14 @@
 	desc = "This path respects the justice and staying to your Mortal Nature, Hun. Preventing the grief of things and providing the justified judgement will bring you up, but if you fail to your desires - it's your fall."
 	tenets = list("judgement", "extinguish")
 	tenets_done = list("judgement" = 0, "extinguish" = 0)
-	fails = list("killfirst", "steal", "desire")
+	fails = list("killfirst", "steal")
 
 /datum/dharma/thrashing_dragon
 	name = "Thrashing Dragon (Yang)"
 	desc = "This path encourages to live with the light part of Circle, Yang. Live, love and laugh, save lives, meet your friends and lovers, clean the nature and grow it like a garden. However, killing, griefing and stealing leads you to the opposite."
-	tenets = list("savelife", "meet", "cleangrow")
-	tenets_done = list("savelife" = 0, "meet" = 0, "cleangrow" = 0)
-	fails = list("killfirst", "extinguish")
+	tenets = list("meet", "cleangrow", "watchdie")
+	tenets_done = list("watchsave" = 0, "meet" = 0, "cleangrow" = 0)
+	fails = list("extinguish", "savelife")
 
 /datum/dharma/flame_of_rising_phoenix
 	name = "Flame of the Rising Phoenix (Yang+Hun)"

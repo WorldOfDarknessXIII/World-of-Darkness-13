@@ -59,6 +59,7 @@ SUBSYSTEM_DEF(woddices)
 /mob/living/Initialize()
 	. = ..()
 	attributes = new ()
+	attributes.randomize()
 
 /datum/attributes
 	var/strength = 1
@@ -135,23 +136,23 @@ SUBSYSTEM_DEF(woddices)
 	intelligence = rand(1, 3)
 	wits = rand(1, 3)
 
-	Alertness = rand(0, 3)
-	Athletics = rand(0, 3)
-	Brawl = rand(0, 3)
-	Empathy = rand(0, 3)
-	Intimidation = rand(0, 3)
+	Alertness = rand(0, 4)
+	Athletics = rand(0, 4)
+	Brawl = rand(0, 4)
+	Empathy = rand(0, 4)
+	Intimidation = rand(0, 4)
 
-	Crafts = rand(0, 3)
-	Melee = rand(0, 3)
-	Firearms = rand(0, 3)
-	Drive = rand(0, 3)
-	Security = rand(0, 3)
+	Crafts = rand(0, 4)
+	Melee = rand(0, 4)
+	Firearms = rand(0, 4)
+	Drive = rand(0, 4)
+	Security = rand(0, 4)
 
-	Finance = rand(0, 3)
-	Investigation = rand(0, 3)
-	Medicine = rand(0, 3)
-	Linguistics = rand(0, 3)
-	Occult = rand(0, 3)
+	Finance = rand(0, 4)
+	Investigation = rand(0, 4)
+	Medicine = rand(0, 4)
+	Linguistics = rand(0, 4)
+	Occult = rand(0, 4)
 
 /proc/get_fortitude_dices(mob/living/Living)
 	if(Living.attributes)
@@ -283,7 +284,7 @@ SUBSYSTEM_DEF(woddices)
 	if(Living.attributes)
 		return Living.attributes.strength+Living.attributes.strength_bonus+Living.attributes.strength_reagent
 	else
-		return 3
+		return 4
 
 /proc/get_a_dexterity(mob/living/Living)
 	if(Living.attributes)
