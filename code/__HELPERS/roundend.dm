@@ -515,8 +515,8 @@
 	if(mr_moneybags)
 		parts += "The most affluent crew member at shift end was <b>[mr_moneybags.account_holder] with [mr_moneybags.account_balance]</b> cr!</div>"
 	else
-		parts += "Somehow, nobody made any money this shift! This'll result in some budget cuts...</div>"
-	parts += "Signed letters: [SSeconomy.mail_signed].[SSeconomy.mail_last_recipient ? " The last person to open their letter was: [SSeconomy.mail_last_recipient]!" : ""]"
+		parts += "Somehow, nobody made any money this shift! This'll result in some budget cuts..."
+	parts += "Signed letters: [SSeconomy.mail_signed].[SSeconomy.mail_last_recipient ? " The last person to open their letter was: [SSeconomy.mail_last_recipient]!" : ""]</div>"
 	return parts
 
 /datum/controller/subsystem/ticker/proc/medal_report()
