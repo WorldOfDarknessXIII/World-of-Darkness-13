@@ -513,10 +513,10 @@
 		parts += "An average of [station_vault/total_players] credits were collected.<br>"
 		log_econ("Roundend credit total: [station_vault] credits. Average Credits: [station_vault/total_players]. Letters signed: [SSeconomy.mail_signed]")
 	if(mr_moneybags)
-		parts += "The most affluent crew member at shift end was <b>[mr_moneybags.account_holder] with [mr_moneybags.account_balance]</b> cr!</div>"
+		parts += "The most affluent crew member at shift end was <b>[mr_moneybags.account_holder] with [mr_moneybags.account_balance]</b> cr!"
 	else
 		parts += "Somehow, nobody made any money this shift! This'll result in some budget cuts..."
-	parts += "Signed letters: [SSeconomy.mail_signed].[SSeconomy.mail_last_recipient ? " The last person to open their letter was: [SSeconomy.mail_last_recipient]!" : ""]</div>"
+	parts += "<br>Signed letters: [SSeconomy.mail_signed].[SSeconomy.mail_last_recipient ? " The last person to open their letter was: [SSeconomy.mail_last_recipient]!" : ""]</div>"
 	return parts
 
 /datum/controller/subsystem/ticker/proc/medal_report()
