@@ -348,8 +348,13 @@
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	if(!affecting)
 		affecting = get_bodypart(BODY_ZONE_CHEST)
-	var/armor = run_armor_check(affecting, BASHING, armour_penetration = M.armour_penetration)
-	apply_damage(damage, M.melee_damage_type, affecting, armor, wound_bonus = M.wound_bonus, bare_wound_bonus = M.bare_wound_bonus, sharpness = M.sharpness)
+	var/modifikator = secret_vampireroll(get_a_strength(M)+get_a_brawl(M)+get_potence_dices(M), 6, M)
+	if(modifikator <= 0)
+		M.visible_message("<span class='warning'>[M] fails to attack [src]!</span>", \
+						"<span class='userdanger'>You fail to attack [src]!</span>")
+		return
+	var/armor = run_armor_check(affecting, BASHING, armour_penetration = 0)
+	apply_damage(round(damage*((modifikator+1)/4)), M.melee_damage_type, affecting, armor, wound_bonus = M.wound_bonus, bare_wound_bonus = M.bare_wound_bonus, sharpness = M.sharpness)
 
 
 /mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M)

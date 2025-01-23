@@ -786,7 +786,7 @@
 /mob/living/carbon/human/npc/hobo
 	vampire_faction = "City"
 	bloodquality = BLOOD_QUALITY_LOW
-	old_movement = TRUE
+	old_movement = FALSE
 
 /mob/living/carbon/human/npc/hobo/Initialize()
 	..()

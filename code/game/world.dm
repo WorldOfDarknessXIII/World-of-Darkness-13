@@ -289,10 +289,10 @@ GLOBAL_VAR(restart_counter)
 	if(config)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
-			s += "<a href=\"https://discord.gg/ZzCrYNaFzJ\"><b>[server_name] &#8212; (18+) Werewolf-Friendly</b></a>"
+			s += "<a href=\"https://discord.gg/ZzCrYNaFzJ\"><b>[server_name] &#8212; (18+)</b></a>"
 		hostedby = CONFIG_GET(string/hostedby)
-	s += "<br>Gothic punk roleplaying server set in the World of Darkness."
-	s += "<br>Russian, pretty art, and a goth-thicc atmosphere."
+	s += "<br>A lovely revamped bite from original Vampire: the Masquerade 13 creator."
+	s += "<br>Roleplay server set in World of Darkness universe."
 
 	var/players = GLOB.clients.len
 

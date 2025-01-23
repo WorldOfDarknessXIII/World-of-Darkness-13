@@ -425,7 +425,7 @@
 			H.pixel_w = -16
 			H.pixel_z = -16
 			H.melee_damage_lower = 35
-			H.melee_damage_upper = 55
+			H.melee_damage_upper = 50
 			H.hispo = TRUE
 			H.update_icons()
 			H.remove_movespeed_modifier(/datum/movespeed_modifier/lupusform)

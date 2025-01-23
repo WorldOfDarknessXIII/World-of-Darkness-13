@@ -642,8 +642,8 @@
 	icon_living = "shadow2"
 	maxHealth = 200
 	health = 200
-	melee_damage_lower = 50
-	melee_damage_upper = 50
+	melee_damage_lower = 30
+	melee_damage_upper = 30
 
 /mob/living/simple_animal/hostile/fister
 	name = "fister"
@@ -737,8 +737,8 @@
 	icon_living = "gangrel_m"
 	maxHealth = 600
 	health = 600
-	melee_damage_lower = 55
-	melee_damage_upper = 55
+	melee_damage_lower = 50
+	melee_damage_upper = 50
 	speed = -0.8
 
 /mob/living/simple_animal/hostile/gargoyle
@@ -818,7 +818,7 @@
 	butcher_results = list(/obj/item/stack/human_flesh = 10)
 	harm_intent_damage = 5
 	melee_damage_lower = 35
-	melee_damage_upper = 70
+	melee_damage_upper = 50
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
