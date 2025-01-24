@@ -66,11 +66,10 @@
 /obj/item/letter/proc/check_for_eligible_opener(mob/user)
 	if(!ishuman(user))
 		return
-	var/mob/living/carbon/human/human = user
-	var/datum/component/signature_system/signature_system = human.GetComponent(/datum/component/signature_system)
+	var/datum/component/signature_system/signature_system = recipient.GetComponent(/datum/component/signature_system)
 	if(!signature_system)
 		return
-	var/is_eligible_signer = signature_system.is_eligible_signer(recipient)
+	var/is_eligible_signer = signature_system.is_eligible_signer(user)
 	if(is_eligible_signer)
 		return TRUE
 
