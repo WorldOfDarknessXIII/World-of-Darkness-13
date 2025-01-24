@@ -44,11 +44,10 @@
 	// Nobody is alive: admins are likely spawning stuff before roundstart
 	become_invalid()
 
+// Reference handling with mail_delivery_list
 /obj/item/letter/Destroy()
-	// Reference handling with mail_delivery_list
 	if(associated_delivery_list)
-		var/obj/item/mail_delivery_list/delivery_list = associated_delivery_list
-		delivery_list.letters_associated.Remove(src)
+		associated_delivery_list.remove_letter(src)
 		associated_delivery_list = null
 	return ..()
 
@@ -123,10 +122,13 @@
 // If this object is destroyed, invalidate all letters associated with it and remove the weak references
 /obj/item/mail_delivery_list/Destroy()
 	for(var/obj/item/letter/chosen_letter)
-		chosen_letter.become_invalid()
-		chosen_letter.UnregisterSignal(chosen_letter, COMSIG_PARENT_QDELETING)
-		letters_associated.Remove(chosen_letter)
+		remove_letter(chosen_letter)
 	return ..()
+
+/obj/item/mail_delivery_list/proc/remove_letter(obj/item/letter/letter)
+	letters_associated.Remove(letter)
+	letter.UnregisterSignal(letter, COMSIG_PARENT_QDELETING)
+	letter.become_invalid()
 
 // Signing it, uses the signature_system component
 /obj/item/mail_delivery_list/attackby(obj/item/I, mob/user, params)
