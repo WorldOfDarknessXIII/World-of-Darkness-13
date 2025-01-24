@@ -48,12 +48,10 @@
 /obj/item/letter/Destroy()
 	if(associated_delivery_list)
 		associated_delivery_list.remove_letter(src)
-		associated_delivery_list = null
 	return ..()
 
 // We spawned without a recipient or the mail_delivery_list got destroyed
 /obj/item/letter/proc/become_invalid()
-	SIGNAL_HANDLER
 	associated_delivery_list = null
 
 /obj/item/letter/examine(mob/user)
@@ -88,6 +86,16 @@
 	to_chat(user, "<span class='warning'>This mail was not meant for you! Only its recipient can open it.</span>")
 	return
 
+/obj/item/letter/proc/add_to_delivery_list(obj/item/mail_delivery_list/delivery_list)
+	associated_delivery_list = delivery_list
+	RegisterSignal(delivery_list, COMSIG_PARENT_QDELETING, PROC_REF(remove_from_delivery_list))
+
+/obj/item/letter/proc/remove_from_delivery_list()
+	SIGNAL_HANDLER
+
+	UnregisterSignal(associated_delivery_list, COMSIG_PARENT_QDELETING)
+	associated_delivery_list.remove_letter(src)
+
 // When spawned, spawns a bunch of letters with it TODO: More explanation
 /obj/item/mail_delivery_list
 	name = "delivery list"
@@ -115,8 +123,7 @@
 		new_letter = new /obj/item/letter(get_turf(src))
 
 		// Reference handling
-		new_letter.RegisterSignal(new_letter, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/obj/item/letter, become_invalid))
-		new_letter.associated_delivery_list = src
+		new_letter.add_to_delivery_list(src)
 		letters_associated.Add(new_letter)
 
 // If this object is destroyed, invalidate all letters associated with it and remove the weak references
@@ -127,7 +134,6 @@
 
 /obj/item/mail_delivery_list/proc/remove_letter(obj/item/letter/letter)
 	letters_associated.Remove(letter)
-	letter.UnregisterSignal(letter, COMSIG_PARENT_QDELETING)
 	letter.become_invalid()
 
 // Signing it, uses the signature_system component
