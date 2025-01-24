@@ -47,7 +47,8 @@
 /obj/item/letter/Destroy()
 	// Reference handling with mail_delivery_list
 	if(associated_delivery_list)
-		associated_delivery_list.letters_associated.Remove(src)
+		var/obj/item/mail_delivery_list/delivery_list = associated_delivery_list
+		delivery_list.letters_associated.Remove(src)
 		associated_delivery_list = null
 	return ..()
 
