@@ -343,7 +343,7 @@
 		C.emote("laugh")
 		C.Stun(10)
 		playsound(get_turf(owner), 'code/modules/wod13/sounds/infectious_laughter.ogg', 100, FALSE)
-		for(var/mob/living/L in oviewers(4, src))
+		for(var/mob/living/L in oviewers(4, owner))
 			if(L)
 				L.emote("laugh")
 				L.Stun(20)
