@@ -161,7 +161,7 @@
 // The machine printing
 /obj/lettermachine
 	name = "letter machine"
-	desc = "Work as letterman! Find a job!<br>Insert cash to purchase letters. Right-click it with an empty hand to remove the them."
+	desc = "Work as letterman! Find a job!<br>Insert cash to purchase letters."
 	icon = 'code/modules/wod13/props.dmi'
 	icon_state = "mail"
 	density = TRUE
