@@ -419,6 +419,12 @@
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
 	..()
+/datum/reagent/drug/mushroomhallucinogen/on_mob_end_metabolize(mob/living/L)
+	L.attributes.dexterity_reagent = 0
+	L.attributes.perception_reagent = 0
+	L.attributes.wits_reagent = 0
+
+
 
 /datum/reagent/consumable/garlic //NOTE: having garlic in your blood stops vampires from biting you.
 	name = "Garlic Juice"
