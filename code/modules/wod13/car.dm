@@ -947,7 +947,7 @@ SUBSYSTEM_DEF(carpool)
 		return
 	if(istype(mob, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = mob
-		if(IsUnconscious(driver) || HAS_TRAIT(driver, TRAIT_INCAPACITATED) || HAS_TRAIT(driver, TRAIT_RESTRAINED))
+		if(driver.IsUnconscious() || HAS_TRAIT(driver, TRAIT_INCAPACITATED) || HAS_TRAIT(driver, TRAIT_RESTRAINED))
 			return
 	var/turn_speed = min(abs(speed_in_pixels) / 10, 3)
 	switch(direct)
