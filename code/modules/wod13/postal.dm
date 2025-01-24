@@ -204,10 +204,6 @@
 		if(!delivery_list.amount_of_signatures)
 			say("You need at least one signature to get paid!")
 			return
-		if(!length(delivery_list.letters_associated))
-			say("Delivery list recycled.")
-			qdel(delivery_list)
-			return
 		// This is to ensure people don't game increments with lucky lagspikes
 		var/possible_maximum_payment = SSeconomy.mail_delivery_list_letters * SSeconomy.mail_delivery_signed_letter_reward
 		var/payment = min(delivery_list.amount_of_signatures * SSeconomy.mail_delivery_signed_letter_reward, possible_maximum_payment)
@@ -218,6 +214,11 @@
 		var/obj/item/stack/dollar/money = new /obj/item/stack/dollar()
 		money.amount = payment
 		user.put_in_hands(money)
+
+		// Recycling
+		if(!length(delivery_list.letters_associated))
+			say("[src] has been recycled.")
+			qdel(delivery_list)
 		return
 
 	// Returning invalid letters
