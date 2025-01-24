@@ -228,6 +228,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/vodka/on_mob_life(mob/living/carbon/M)
 	M.radiation = max(M.radiation-2,0)
+	M.attributes.stamina_reagent = 1
+	M.attributes.dexterity_reagent = -1
+	//var/datum/language/russian/R
+	if(M.has_language(/datum/language/russian, TRUE))
+		M.attributes.wits_reagent = 3 // РУССКАЯ СМЕКАЛОЧКА
 	return ..()
 
 /datum/reagent/consumable/ethanol/bilk/on_mob_life(mob/living/carbon/M)
@@ -235,6 +240,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		M.heal_bodypart_damage(brute = 1)
 		. = 1
 	return ..() || .
+
+/datum/reagent/consumable/ethanol/vodka/on_mob_end_metabolize(mob/living/M)
+	M.attributes.stamina_reagent = 0
+	M.attributes.dexterity_reagent = 0
+	M.attributes.wits_reagent = 0
+
 
 /datum/reagent/consumable/ethanol/gin
 	name = "Gin"
