@@ -217,7 +217,7 @@
 
 		// Recycling
 		if(!length(delivery_list.letters_associated))
-			say("[src] has been recycled.")
+			say("[delivery_list] has been recycled.")
 			qdel(delivery_list)
 		return
 
