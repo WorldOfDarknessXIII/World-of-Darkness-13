@@ -943,13 +943,11 @@ SUBSYSTEM_DEF(carpool)
 	last_pos["x"] = clamp(last_pos["x"] + x_add, 1, world.maxx)
 	last_pos["y"] = clamp(last_pos["y"] + y_add, 1, world.maxy)
 
-/obj/vampire_car/relaymove(mob, direct)
+/obj/vampire_car/relaymove(mob/living/carbon/human/driver, direct)
 	if(world.time-impact_delay < 20)
 		return
-	if(istype(mob, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = mob
-		if(driver.IsUnconscious() || HAS_TRAIT(driver, TRAIT_INCAPACITATED) || HAS_TRAIT(driver, TRAIT_RESTRAINED))
-			return
+	if(driver.IsUnconscious() || HAS_TRAIT(driver, TRAIT_INCAPACITATED) || HAS_TRAIT(driver, TRAIT_RESTRAINED))
+		return
 	var/turn_speed = min(abs(speed_in_pixels) / 10, 3)
 	switch(direct)
 		if(NORTH)
