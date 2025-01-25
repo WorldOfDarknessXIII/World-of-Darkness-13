@@ -45,7 +45,6 @@
 	button_icon_state = "bloodcrawler"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	vampiric = TRUE
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/bloodcrawler/BC
 
 /datum/action/vicissitude_blood/Trigger()
 	. = ..()
@@ -56,20 +55,9 @@
 	if(H.bloodpool < 2)
 		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 		return
-	if(!BC)
-		BC = new(owner)
 	H.bloodpool = max(0, H.bloodpool-2)
-	BC.Shapeshift(H)
-	spawn(200)
-		if(BC)
-			var/mob/living/simple_animal/hostile/bloodcrawler/BD = BC.myshape
-			H.bloodpool = min(H.bloodpool+round(BD.collected_blood/2), H.maxbloodpool)
-			if(BD.collected_blood > 1)
-				H.adjustBruteLoss(-5*round(BD.collected_blood/2), TRUE)
-				H.adjustFireLoss(-5*round(BD.collected_blood/2), TRUE)
-			BC.Restore(BC.myshape)
-			NG.Stun(15)
-			NG.do_jitter_animation(30)
+	var/datum/warform/Warform = new
+	Warform.transform(/mob/living/simple_animal/hostile/bloodcrawler, NG, TRUE)
 
 /datum/action/vicissitude_form
 	name = "Vicissitude Beast Form"
@@ -77,7 +65,6 @@
 	button_icon_state = "tzimisce"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	vampiric = TRUE
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/tzimisce/TE
 
 /datum/action/vicissitude_form/Trigger()
 	. = ..()
@@ -88,15 +75,9 @@
 	if(H.bloodpool < 3)
 		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 		return
-	if(!TE)
-		TE = new(owner)
 	H.bloodpool = max(0, H.bloodpool-3)
-	TE.Shapeshift(H)
-	spawn(200)
-		if(TE)
-			TE.Restore(TE.myshape)
-			NG.Stun(2 SECONDS)
-			NG.do_jitter_animation(5 SECONDS)
+	var/datum/warform/Warform = new
+	Warform.transform(/mob/living/simple_animal/hostile/tzimisce_beast, NG, TRUE)
 
 /datum/action/basic_vicissitude
 	name = "Vicissitude Upgrades"

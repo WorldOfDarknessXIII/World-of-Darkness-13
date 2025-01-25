@@ -220,3 +220,89 @@
 			human_form.key = trans.key
 			forceMove(human_form)
 			trans.forceMove(src)
+
+/mob/living/carbon/human
+	var/datum/warform/warform
+
+/mob/living/simple_animal/hostile
+	var/datum/warform/warform
+
+/datum/warform
+	var/mob/living/carbon/human/humanform
+	var/mob/living/simple_animal/hostile/warform
+
+/mob/living/simple_animal/hostile/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(warform)
+		return warform.humanform.adjustBruteLoss(amount, updating_health, forced)
+	else
+		..()
+
+/mob/living/simple_animal/hostile/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(warform)
+		return warform.humanform.adjustFireLoss(amount, updating_health, forced)
+	else
+		..()
+
+/mob/living/simple_animal/hostile/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(warform)
+		return warform.humanform.adjustOxyLoss(amount, updating_health, forced)
+	else
+		..()
+
+/mob/living/simple_animal/hostile/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(warform)
+		return warform.humanform.adjustToxLoss(amount, updating_health, forced)
+	else
+		..()
+
+/mob/living/simple_animal/hostile/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(warform)
+		return warform.humanform.adjustCloneLoss(amount, updating_health, forced)
+	else
+		..()
+
+/mob/living/simple_animal/hostile/adjustStaminaLoss(amount, updating_health = FALSE, forced = FALSE)
+	if(warform)
+		return warform.humanform.adjustStaminaLoss(amount, updating_health, forced)
+	else
+		..()
+
+/datum/warform/proc/transform(var/animal_atom, var/mob/living/carbon/human/owner, var/masquerady = TRUE)
+	humanform = owner
+	owner.invisibility = INVISIBILITY_MAXIMUM
+	warform = new animal_atom(get_turf(owner))
+	warform.attributes = owner.attributes
+	humanform.dna.species.brutemod = initial(humanform.dna.species.brutemod)*(initial(humanform.maxHealth)/initial(warform.maxHealth))
+	humanform.dna.species.burnmod = initial(humanform.dna.species.burnmod)*(initial(humanform.maxHealth)/initial(warform.maxHealth))
+	warform.warform = src
+	warform.anchored = TRUE
+	warform.AIStatus = AI_OFF
+	if(masquerady)
+		warform.my_creator = owner
+	owner.warform = src
+	var/datum/action/end_warform/R = new
+	R.Grant(owner)
+	owner.forceMove(warform)
+
+/datum/warform/proc/end()
+	humanform.forceMove(get_turf(warform))
+	qdel(warform)
+	humanform.dna.species.brutemod = initial(humanform.dna.species.brutemod)
+	humanform.dna.species.burnmod = initial(humanform.dna.species.burnmod)
+	humanform.invisibility = initial(humanform.invisibility)
+	humanform.warform = null
+	for(var/datum/action/end_warform/W in humanform.actions)
+		if(W)
+			W.Remove(humanform)
+	qdel(src)
+
+/datum/action/end_warform
+	name = "Exit Warform"
+	desc = "Exit your current warform."
+	button_icon_state = "bloodcrawler"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+
+/datum/action/end_warform/Trigger()
+	if(istype(owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = owner
+		H.warform.end()

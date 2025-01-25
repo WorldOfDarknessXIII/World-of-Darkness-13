@@ -1,8 +1,8 @@
 /datum/outfit/job/sabbatist
 	name = "Sabbatist"
-	l_pocket = /obj/item/vamp/phone
-	r_pocket = /obj/item/flashlight
-	suit = /obj/item/clothing/suit/vampire/trench
+//	l_pocket = /obj/item/vamp/phone
+//	r_pocket = /obj/item/flashlight
+//	suit = /obj/item/clothing/suit/vampire/trench
 	id = /obj/item/cockclock
 	backpack_contents = list(/obj/item/passport=1, /obj/item/vampire_stake=3, /obj/item/gun/ballistic/vampire/revolver=1, /obj/item/melee/vampirearms/knife=1, /obj/item/vamp/keys/hack=1, /obj/item/melee/vampirearms/katana/kosa=1)
 
@@ -53,6 +53,27 @@
 			landmarkslist += S
 	var/obj/effect/landmark/start/D = pick(landmarkslist)
 	H.forceMove(D.loc)
+	var/list/loadouts = list("Doctor", "Supply Technician", "Street Janitor", "Graveyard Keeper", "Taxi Driver", "Police Officer", "Citizen")
+	spawn()
+		var/loadout_type = input(H, "Choose your Mask:", "Loadout") as anything in loadouts
+		switch(loadout_type)
+			if("Doctor")
+				H.equipOutfit(/datum/outfit/job/vdoctor)
+			if("Supply Technician")
+				H.equipOutfit(/datum/outfit/job/supply)
+			if("Street Janitor")
+				H.equipOutfit(/datum/outfit/job/vjanitor)
+			if("Graveyard Keeper")
+				H.equipOutfit(/datum/outfit/job/graveyard)
+			if("Taxi Driver")
+				H.equipOutfit(/datum/outfit/job/taxi)
+				new /obj/vampire_car/taxi(get_turf(H))
+			if("Police Officer")
+				H.equipOutfit(/datum/outfit/job/police_officer)
+			if("Chantry Archivist")
+				H.equipOutfit(/datum/outfit/job/archivist)
+			if("Citizen")
+				H.equipOutfit(/datum/outfit/job/citizen)
 
 //Commented out code for future sabbat character setup
 /*

@@ -4,6 +4,9 @@
 /mob/living/carbon/human/death()
 	. = ..()
 
+	if(warform)
+		warform.end()
+
 	if(iskindred(src))
 		SSmasquerade.dead_level = min(1000, SSmasquerade.dead_level+50)
 	else
@@ -606,9 +609,9 @@
 */
 	var/list/modifiers = params2list(params)
 	if(ishuman(usr))
+		var/mob/living/carbon/human/HUY = usr
 		if(LAZYACCESS(modifiers, "right"))
 			if(isopenturf(src.loc) || isopenturf(src))
-				var/mob/living/carbon/human/HUY = usr
 				if(Adjacent(usr))
 					if(!HUY.get_active_held_item())
 						var/list/shit = list()
@@ -640,6 +643,14 @@
 						if(!HUY.binocling)
 							HUY.client.pixel_x = 0
 							HUY.client.pixel_y = 0
+		if(HUY.warform)
+			if(istype(src, /obj) || istype(src, /mob))
+				if(Adjacent(HUY.warform.warform))
+					return HUY.warform.warform.ClickOn(src)
+				else
+					return
+			if(!istype(src, /atom/movable/screen/movable/action_button))
+				return
 	..()
 /*
 /atom/movable/screen/disciplines/Initialize()

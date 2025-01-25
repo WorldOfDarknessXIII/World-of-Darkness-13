@@ -376,6 +376,8 @@
 //////////////END HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
 /mob/living/simple_animal/hostile/death(gibbed)
+	if(warform)
+		warform.end()
 	LoseTarget()
 	..(gibbed)
 
@@ -446,9 +448,11 @@
 	if(client)
 		for(var/mob/living/L in newloc)
 			if(L)
-				if(CanAttack(L))
+				if(CanAttack(L) && !warform)
 					ClickOn(L)
 					return
+	if(warform)
+		warform.humanform.forceMove(loc)
 	if(dodging && approaching_target && prob(dodge_prob) && moving_diagonally == 0 && isturf(loc) && isturf(newloc))
 		return dodge(newloc,dir)
 	else

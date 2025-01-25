@@ -93,6 +93,14 @@
 		var/mob/living/carbon/human/H = mob
 		if(H.in_frenzy)
 			return FALSE
+		if(H.warform)
+			H.warform.warform.Move(get_step(H.warform.warform, direct), direct)
+			H.warform.warform.dir = direct
+			H.dir = direct
+			if(H.warform.warform.lying_angle != H.lying_angle)
+				var/matrix/Matrix = matrix()
+				Matrix.Turn(H.lying_angle)
+				animate(H.warform.warform, transform = Matrix, time = 5)
 	if(mob.force_moving)
 		return FALSE
 

@@ -331,7 +331,6 @@
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/wod13/sounds/wolves.ogg'
 	dead_restricted = FALSE
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/animalism/AN
 
 /obj/effect/spectral_wolf
 	name = "Spectral Wolf"
@@ -352,8 +351,6 @@
 
 /datum/discipline/animalism/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
-	if(!AN)
-		AN = new(caster)
 	var/limit = min(2, level) + get_a_charisma(caster)+get_a_empathy(caster)
 	if(length(caster.beastmaster) >= limit)
 		var/mob/living/simple_animal/hostile/beastmaster/B = pick(caster.beastmaster)
@@ -400,19 +397,8 @@
 			caster.beastmaster |= F
 			F.beastmaster = caster
 		if(5)
-			AN.Shapeshift(caster)
-//			caster.dna.species.attack_verb = "slash"
-//			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
-//			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+20
-//			caster.dna.species.punchdamagehigh = caster.dna.species.punchdamagehigh+20
-//			caster.add_movespeed_modifier(/datum/movespeed_modifier/protean3)
-//			caster.remove_overlay(PROTEAN_LAYER)
-//			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
-//			caster.apply_overlay(PROTEAN_LAYER)
-			spawn(20 SECONDS + caster.discipline_time_plus)
-				if(caster && caster.stat != DEAD)
-					AN.Restore(AN.myshape)
-					caster.Stun(1.5 SECONDS)
+			var/datum/warform/Warform = new
+			Warform.transform(/mob/living/simple_animal/hostile/rat_beastform, caster, TRUE)
 
 /datum/discipline/auspex
 	name = "Auspex"
@@ -1136,7 +1122,6 @@
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
 	clane_restricted = TRUE
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/gangrel/GA
 
 /datum/movespeed_modifier/protean2
 	multiplicative_slowdown = -0.15
@@ -1154,8 +1139,6 @@
 	. = ..()
 	var/mod = min(4, level_casting)
 //	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
-	if(!GA)
-		GA = new(caster)
 	switch(mod)
 		if(1)
 			caster.drop_all_held_items()
@@ -1211,7 +1194,8 @@
 //						caster.remove_overlay(PROTEAN_LAYER)
 		if(3)
 			caster.drop_all_held_items()
-			GA.Shapeshift(caster)
+			var/datum/warform/Warform = new
+			Warform.transform(/mob/living/simple_animal/hostile/gangrel, caster, TRUE)
 //			caster.dna.species.attack_verb = "slash"
 //			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
 //			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+20
@@ -1220,13 +1204,13 @@
 //			caster.remove_overlay(PROTEAN_LAYER)
 //			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
 //			caster.apply_overlay(PROTEAN_LAYER)
-			spawn(delay+caster.discipline_time_plus)
-				if(caster && caster.stat != DEAD)
-					GA.Restore(GA.myshape)
-					caster.Stun(15)
-					caster.do_jitter_animation(30)
+//			spawn(delay+caster.discipline_time_plus)
+//				if(caster && caster.stat != DEAD)
+//					GA.Restore(GA.myshape)
+//					caster.Stun(15)
+//					caster.do_jitter_animation(30)
 //					if(caster.dna)
-					caster.playsound_local(caster, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
+//					caster.playsound_local(caster, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
 //						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
 //						caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
 //						caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-20
@@ -1236,10 +1220,11 @@
 		if(4 to 5)
 			caster.drop_all_held_items()
 			if(level_casting == 4)
-				GA.shapeshift_type = /mob/living/simple_animal/hostile/gangrel/better
+				var/datum/warform/Warform = new
+				Warform.transform(/mob/living/simple_animal/hostile/gangrel/best, caster, TRUE)
 			if(level_casting == 5)
-				GA.shapeshift_type = /mob/living/simple_animal/hostile/gangrel/best
-			GA.Shapeshift(caster)
+				var/datum/warform/Warform = new
+				Warform.transform(/mob/living/simple_animal/hostile/crinos_beast, caster, TRUE)
 //			caster.dna.species.attack_verb = "slash"
 //			caster.dna.species.attack_sound = 'sound/weapons/slash.ogg'
 //			caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow+25
@@ -1251,13 +1236,13 @@
 //			caster.remove_overlay(PROTEAN_LAYER)
 //			caster.overlays_standing[PROTEAN_LAYER] = protean_overlay
 //			caster.apply_overlay(PROTEAN_LAYER)
-			spawn(delay+caster.discipline_time_plus)
-				if(caster && caster.stat != DEAD)
-					GA.Restore(GA.myshape)
-					caster.Stun(1 SECONDS)
-					caster.do_jitter_animation(1.5 SECONDS)
+//			spawn(delay+caster.discipline_time_plus)
+//				if(caster && caster.stat != DEAD)
+//					GA.Restore(GA.myshape)
+//					caster.Stun(1 SECONDS)
+//					caster.do_jitter_animation(1.5 SECONDS)
 //					if(caster.dna)
-					caster.playsound_local(caster, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
+//					caster.playsound_local(caster, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
 //						caster.dna.species.attack_verb = initial(caster.dna.species.attack_verb)
 //						caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
 //						caster.dna.species.punchdamagelow = caster.dna.species.punchdamagelow-25

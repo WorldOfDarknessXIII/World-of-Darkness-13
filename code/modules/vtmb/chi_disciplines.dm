@@ -196,7 +196,6 @@
 	delay = 10 SECONDS
 	cost_yin = 1
 	activate_sound = 'code/modules/wod13/sounds/bloodshintai_activate.ogg'
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/bloodcrawler/kuei_jin/bloodcrawler_shapeshift
 
 /datum/movespeed_modifier/blood_fat
 	multiplicative_slowdown = 1
@@ -346,20 +345,8 @@
 				sprayer.spray(sprayed_at_turf, caster)
 				qdel(sprayer)
 		if(3)
-			if(!bloodcrawler_shapeshift)
-				bloodcrawler_shapeshift = new (caster)
-			bloodcrawler_shapeshift.Shapeshift(caster)
-			var/mob/living/simple_animal/hostile/host = bloodcrawler_shapeshift.myshape
-			host.my_creator = null
-			spawn(delay+caster.discipline_time_plus)
-				if(bloodcrawler_shapeshift)
-					var/mob/living/simple_animal/hostile/bloodcrawler/current_form = bloodcrawler_shapeshift.myshape
-					if(current_form.collected_blood > 1)
-						caster.adjustBruteLoss(-5*round(current_form.collected_blood/2), TRUE)
-						caster.adjustFireLoss(-5*round(current_form.collected_blood/2), TRUE)
-					bloodcrawler_shapeshift.Restore(bloodcrawler_shapeshift.myshape)
-					caster.Stun(1.5 SECONDS)
-					caster.do_jitter_animation(3 SECONDS)
+			var/datum/warform/Warform = new
+			Warform.transform(/mob/living/simple_animal/hostile/bloodcrawler/kuei_jin, caster, TRUE)
 		if(4)
 			caster.drop_all_held_items()
 			caster.put_in_active_hand(new /obj/item/gun/magic/blood_shintai(caster))
@@ -1303,7 +1290,6 @@
 	delay = 12 SECONDS
 	cost_yang = 1
 	activate_sound = 'code/modules/wod13/sounds/beastshintai_activate.ogg'
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/werewolf_like/wolflike_shapeshift
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/werewolf_like
 	name = "Crinos Form"
@@ -1341,8 +1327,6 @@
 
 /datum/chi_discipline/beast_shintai/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	if(!wolflike_shapeshift)
-		wolflike_shapeshift = new(caster)
 	var/limit = min(2, level) + get_a_charisma(caster)+get_a_empathy(caster)
 	if(length(caster.beastmaster) >= limit)
 		var/mob/living/simple_animal/hostile/beastmaster/random_beast = pick(caster.beastmaster)
@@ -1385,11 +1369,8 @@
 			caster.beastmaster |= bat
 			bat.beastmaster = caster
 		if(5)
-			wolflike_shapeshift.Shapeshift(caster)
-			spawn(10 SECONDS + caster.discipline_time_plus)
-				if(caster && caster.stat != DEAD)
-					wolflike_shapeshift.Restore(wolflike_shapeshift.myshape)
-					caster.Stun(1.5 SECONDS)
+			var/datum/warform/Warform = new
+			Warform.transform(/mob/living/simple_animal/hostile/crinos_beast, caster, TRUE)
 
 /datum/chi_discipline/smoke_shintai
 	name = "Smoke Shintai"

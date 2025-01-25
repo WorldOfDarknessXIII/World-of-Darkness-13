@@ -133,7 +133,6 @@
 	button_icon_state = "cobra"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	vampiric = TRUE
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/cobra/BC
 
 /datum/action/cobra/Trigger()
 	. = ..()
@@ -144,15 +143,9 @@
 	if(H.bloodpool < 2)
 		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 		return
-	if(!BC)
-		BC = new(owner)
 	H.bloodpool = max(0, H.bloodpool-2)
-	BC.Shapeshift(H)
-	spawn(150)
-		if(BC)
-			BC.Restore(BC.myshape)
-			NG.Stun(15)
-			NG.do_jitter_animation(30)
+	var/datum/warform/Warform = new
+	Warform.transform(/mob/living/simple_animal/hostile/cobra, NG, TRUE)
 
 /mob/living/simple_animal/hostile/cobra
 	name = "Cobra Form"
