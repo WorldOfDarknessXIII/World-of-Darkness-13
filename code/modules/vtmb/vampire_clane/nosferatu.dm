@@ -37,8 +37,3 @@
 	var/obj/item/organ/eyes/night_vision/NV = new()
 	NV.Insert(H, TRUE, FALSE)
 	H.ventcrawler = VENTCRAWLER_ALWAYS
-
-/datum/vampireclane/nosferatu/post_gain(mob/living/carbon/human/H)
-	..()
-	if(H.vampire_faction != FACTION_CAMARILLA && H.vampire_faction != FACTION_ANARCHS && H.vampire_faction != FACTION_SABBAT)
-		H.vampire_faction = FACTION_NOSFERATU

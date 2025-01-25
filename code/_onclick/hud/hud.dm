@@ -44,7 +44,12 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/jump_icon
 	var/atom/movable/screen/blood_icon
 	var/atom/movable/screen/rage_icon
-	var/atom/movable/screen/drinkblood_icon
+	var/atom/movable/screen/chi_pool/chi_icon
+	var/atom/movable/screen/yang_chi/yang_chi_icon
+	var/atom/movable/screen/yin_chi/yin_chi_icon
+	var/atom/movable/screen/imbalance_chi/imbalance_chi_icon
+	var/atom/movable/screen/demon_chi/demon_chi_icon
+	var/atom/movable/screen/drinkblood/drinkblood_icon
 	var/atom/movable/screen/zone_icon
 	var/atom/movable/screen/throw_icon
 	var/atom/movable/screen/module_store_icon

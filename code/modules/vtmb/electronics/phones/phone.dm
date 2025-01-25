@@ -491,7 +491,7 @@
 							var/split_number = display_number_first + " " + display_number_second
 							to_chat(usr, "# [PH.call_type]: [PH.name] , [split_number] at [PH.time]")
 					else
-						to_chat(usr, "Your don't got a call history")
+						to_chat(usr, "You have no call history.") //PSEUDO_M return to fix all this
 				if("Delete Call History")
 					if(phone_history_list.len > 0)
 						to_chat(usr, "Your total amount of history saved is: [phone_history_list.len]")
@@ -508,7 +508,7 @@
 						to_chat(usr, "[number_of_deletions] call history entries were deleted. Remaining: [phone_history_list.len]")
 
 					else
-						to_chat(usr, "Your don't got a call history to delete")
+						to_chat(usr, "You have no call history to delete it.")
 				if("My Number")
 					var/number_first_part = copytext(number, 1, 4)
 					var/number_second_part = copytext(number, 4, 8)

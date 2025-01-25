@@ -61,8 +61,6 @@
 			if(G.master.clane)
 				if(G.master.clane.name != "Caitiff")
 					dat += "Regnant's clan is [G.master.clane], maybe I can try some of it's disciplines..."
-		if(host.vampire_faction == FACTION_CAMARILLA || host.vampire_faction == FACTION_CAMARILLA || host.vampire_faction == FACTION_SABBAT)
-			dat += "I belong to the [host.vampire_faction], I shouldn't disobey their rules.<BR>"
 		if(host.mind.special_role)
 			for(var/datum/antagonist/A in host.mind.antag_datums)
 				if(A.objectives)

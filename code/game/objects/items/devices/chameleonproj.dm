@@ -5,6 +5,12 @@
 //			var/obj/effect/dummy/chameleon/C = loc
 //			C.say("[message]")
 //			return
+		if(say_mod(message) == verb_yell)
+			for(var/mob/living/carbon/human/hum in hearers(5, src))
+				if(hum != src)
+					if(iscathayan(hum))
+						if(hum.mind?.dharma?.Po == "Legalist")
+							hum.mind.dharma.roll_po(src, hum)
 		if(length(GLOB.auspex_list))
 			for(var/mob/living/carbon/human/H in GLOB.auspex_list)
 				if(H)
@@ -38,7 +44,8 @@
 //					playsound(get_turf(src), 'code/modules/wod13/sounds/male_speak.ogg', 75, TRUE)
 
 /obj/item/chameleon
-	name = "Vicissitude Projector"
+	name = "Appearance Projector"
+	desc = "Use on others to save their appearance, and use on yourself to copy it."
 	icon = 'code/modules/wod13/icons.dmi'
 	icon_state = "vicissitude"
 	flags_1 = CONDUCT_1
@@ -98,12 +105,6 @@
 		active_dummy = null
 		to_chat(user, "<span class='notice'>You deactivate \the [src].</span>")
 	else
-		var/mob/living/L = user
-		if(L.bloodpool < 1)
-			to_chat(user, "<span class='warning'>You don't have enough <b>BLOOD</b> to activate \the [src].</span>")
-			user.cancel_camera()
-			return
-		L.bloodpool = max(0, L.bloodpool-1)
 		playsound(get_turf(src), 'code/modules/wod13/sounds/vicissitude.ogg', 100, TRUE, -6)
 		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(user.drop_location())
 		C.activate(user, saved_appearance, src)
@@ -113,7 +114,7 @@
 /obj/item/chameleon/proc/disrupt(delete_dummy = 1)
 	if(active_dummy)
 		for(var/mob/M in active_dummy)
-			to_chat(M, "<span class='danger'>Your Vicissitude Projector deactivates.</span>")
+			to_chat(M, "<span class='danger'>Your Appearance Projector deactivates.</span>")
 		eject_all()
 		if(delete_dummy)
 			qdel(active_dummy)

@@ -743,7 +743,6 @@
 											"Someone, call the ambulance!")
 
 /mob/living/carbon/human/npc/bandit
-	vampire_faction = FACTION_CITY
 	max_stat = 3
 
 /mob/living/carbon/human/npc/bandit/Initialize()
@@ -762,7 +761,6 @@
 	AssignSocialRole(/datum/socialrole/bandit)
 
 /mob/living/carbon/human/npc/walkby
-	vampire_faction = FACTION_CITY
 
 /mob/living/carbon/human/npc/walkby/Initialize()
 	..()
@@ -771,7 +769,6 @@
 	AssignSocialRole(pick(/datum/socialrole/usualmale, /datum/socialrole/usualfemale))
 
 /mob/living/carbon/human/npc/hobo
-	vampire_faction = FACTION_CITY
 	bloodquality = BLOOD_QUALITY_LOW
 	old_movement = TRUE
 
@@ -782,7 +779,6 @@
 	AssignSocialRole(pick(/datum/socialrole/poormale, /datum/socialrole/poorfemale))
 
 /mob/living/carbon/human/npc/business
-	vampire_faction = FACTION_CITY
 	bloodquality = BLOOD_QUALITY_HIGH
 
 /mob/living/carbon/human/npc/business/Initialize()
@@ -982,7 +978,6 @@
 											"Someone, call the ambulance!")
 
 /mob/living/carbon/human/npc/shop
-	vampire_faction = FACTION_CITY
 	staying = TRUE
 	is_talking = TRUE
 
@@ -996,7 +991,6 @@
 	uniforms = list(/obj/item/clothing/under/vampire/bacotell)
 
 /mob/living/carbon/human/npc/bacotell
-	vampire_faction = FACTION_CITY
 	staying = TRUE
 
 /mob/living/carbon/human/npc/bacotell/Initialize()
@@ -1009,7 +1003,6 @@
 	uniforms = list(/obj/item/clothing/under/vampire/bubway)
 
 /mob/living/carbon/human/npc/bubway
-	vampire_faction = FACTION_CITY
 	staying = TRUE
 
 /mob/living/carbon/human/npc/bubway/Initialize()
@@ -1022,7 +1015,6 @@
 	uniforms = list(/obj/item/clothing/under/vampire/gummaguts)
 
 /mob/living/carbon/human/npc/gummaguts
-	vampire_faction = FACTION_CITY
 	staying = TRUE
 
 /mob/living/carbon/human/npc/gummaguts/Initialize()
@@ -1119,7 +1111,6 @@
 											"This is SFPD, stay down!")
 
 /mob/living/carbon/human/npc/police
-	vampire_faction = FACTION_CITY
 	fights_anyway = TRUE
 	max_stat = 4
 
@@ -1241,7 +1232,6 @@
 	)
 
 /mob/living/carbon/human/npc/guard
-	vampire_faction = FACTION_CITY
 	staying = TRUE
 	fights_anyway = TRUE
 	max_stat = 4
@@ -1270,7 +1260,6 @@
 				staying = FALSE
 
 /mob/living/carbon/human/npc/walkby/club
-	vampire_faction = FACTION_CITY
 	staying = TRUE
 
 /datum/socialrole/stripfemale
@@ -1384,7 +1373,6 @@
 											"Help!")
 
 /mob/living/carbon/human/npc/stripper
-	vampire_faction = FACTION_CITY
 	staying = TRUE
 
 /mob/living/carbon/human/npc/stripper/Initialize()
@@ -1406,7 +1394,6 @@
 					ClickOn(P)
 
 /mob/living/carbon/human/npc/incel
-	vampire_faction = FACTION_CITY
 	staying = TRUE
 
 /mob/living/carbon/human/npc/incel/Initialize()
@@ -1436,7 +1423,6 @@
 											"COPS?!!")
 
 /mob/living/carbon/human/npc/illegal
-	vampire_faction = FACTION_CITY
 	staying = TRUE
 	is_talking = TRUE
 

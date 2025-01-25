@@ -39,9 +39,6 @@
 	r_hand = /obj/item/melee/vampirearms/baseball
 	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/vampire_stake=3, /obj/item/flashlight=1, /obj/item/vamp/keys/hack=1, /obj/item/vamp/creditcard=1)
 
-/datum/outfit/job/bruiser/pre_equip(mob/living/carbon/human/H)
-	..()
-	H.vampire_faction = FACTION_ANARCHS
 
 /obj/effect/landmark/start/bruiser
 	name = "Bruiser"

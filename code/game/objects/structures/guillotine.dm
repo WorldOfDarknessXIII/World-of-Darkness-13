@@ -125,42 +125,6 @@
 
 		playsound(src, 'sound/weapons/guillotine.ogg', 100, TRUE)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
-			for(var/mob/living/carbon/human/M in viewers(src, 7))
-				if(M.stat == CONSCIOUS)
-					var/loved = TRUE
-					var/datum/preferences/P1 = GLOB.preferences_datums[ckey(M.key)]
-					if(H in GLOB.masquerade_breakers_list)
-						if(M.vampire_faction == FACTION_SABBAT)
-							to_chat(M, "<span class='userdanger'><b>You feel your interests being ignored</b></span>")
-							loved = FALSE
-						else
-							to_chat(M, "<span class='userhelp'><b>Violator was punished</b></span>")
-							if(P1)
-								P1.add_experience(1)
-					if(H.diablerist)
-						if(M.vampire_faction == FACTION_CAMARILLA)
-							to_chat(M, "<span class='userhelp'><b>Diablerist was punished</b></span>")
-							if(P1)
-								P1.add_experience(1)
-						else if(M.vampire_faction)
-							loved = FALSE
-							to_chat(M, "<span class='userdanger'><b>You feel your interests being ignored</b></span>")
-					if(H.bloodhunted)
-						if(M.vampire_faction == FACTION_CAMARILLA)
-							to_chat(M, "<span class='userhelp'><b>Blood Hunt after [H] is over</b></span>")
-							if(P1)
-								P1.add_experience(1)
-						else if(M.vampire_faction)
-							loved = FALSE
-							to_chat(M, "<span class='userdanger'><b>You feel your interests being ignored</b></span>")
-					if("[H.mind.assigned_role]" == "Prince" || "[H.mind.assigned_role]" == "Sheriff" || "[H.mind.assigned_role]" == "Seneschal" || "[H.mind.assigned_role]" == "Chantry Regent" || "[H.mind.assigned_role]" == "Baron" || "[H.mind.assigned_role]" == "Dealer")
-						if(M.vampire_faction == FACTION_SABBAT)
-							to_chat(M, "<span class='userhelp'><b>Authority increased</b></span>")
-							loved = TRUE
-							if(P1)
-								P1.add_experience(1)
-					if(loved)
-						M.emote("clap")
 			var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
 			head.dismember()
 			log_combat(user, H, "beheaded", src)

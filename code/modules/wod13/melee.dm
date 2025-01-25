@@ -89,6 +89,36 @@
 	cost = 250
 	is_iron = TRUE
 
+/obj/item/melee/vampirearms/katana/fire
+	name = "burning katana"
+	icon_state = "firetana"
+	pixel_w = -8
+	cost = 0
+	item_flags = DROPDEL
+	is_iron = FALSE
+	masquerade_violating = TRUE
+
+/obj/item/melee/vampirearms/katana/fire/afterattack(atom/target, mob/living/carbon/user, proximity)
+	. = ..()
+	if (isliving(target) && proximity)
+		var/mob/living/burnt_mob = target
+		burnt_mob.apply_damage(30, BURN)
+
+/obj/item/melee/vampirearms/katana/blood
+	name = "bloody katana"
+	color = "#bb0000"
+	pixel_w = -8
+	cost = 0
+	item_flags = DROPDEL
+	is_iron = FALSE
+	masquerade_violating = TRUE
+
+/obj/item/melee/vampirearms/katana/blood/afterattack(atom/target, mob/living/carbon/user, proximity)
+	. = ..()
+	if (isliving(target) && proximity)
+		var/mob/living/burnt_mob = target
+		burnt_mob.apply_damage(30, CLONE)
+
 /obj/item/melee/vampirearms/rapier
 	name = "rapier"
 	desc = "A thin, elegant sword, the rapier is a weapon of the duelist, designed for thrusting."
@@ -290,6 +320,7 @@
 	attack_verb_simple = list("beat", "smack")
 	w_class = WEIGHT_CLASS_NORMAL
 	cost = 50
+	is_wood = TRUE
 
 /obj/item/melee/vampirearms/baseball/attack(mob/living/target, mob/living/user)
 	. = ..()
@@ -307,6 +338,7 @@
 	force = 50
 	block_chance = 25
 	masquerade_violating = TRUE
+	is_wood = FALSE
 
 /obj/item/melee/vampirearms/tire
 	name = "tire iron"
@@ -516,6 +548,7 @@
 	armour_penetration = 50
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_SMALL
+	is_wood = TRUE
 
 /obj/item/vampire_stake/attack(mob/living/target, mob/living/user)
 	. = ..()
@@ -604,6 +637,7 @@
 	armour_penetration = 30
 	pixel_w = -8
 	actions_types = list(/datum/action/item_action/eguitar)
+	is_wood = TRUE
 	var/wielded = FALSE
 	var/on = FALSE
 	var/last_solo = 0
@@ -663,6 +697,7 @@
 	attack_verb_simple = list("shove", "bash")
 	max_integrity = 999999
 	material_flags = MATERIAL_NO_EFFECTS
+	is_wood = TRUE
 
 /obj/item/melee/classic_baton/vampire
 	name = "police baton"
@@ -677,6 +712,7 @@
 	block_chance = 10
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_SUITSTORE
 	w_class = WEIGHT_CLASS_NORMAL
+	is_wood = TRUE
 
 
 /obj/item/melee/vampirearms/knife/switchblade
