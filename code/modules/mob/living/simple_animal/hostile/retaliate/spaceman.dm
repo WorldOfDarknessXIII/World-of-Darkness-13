@@ -127,7 +127,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire/Destroy()
 	new /obj/effect/temp_visual/desant_back(loc)
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire/proc/leave()
 	new /obj/effect/temp_visual/desant_back(loc)
@@ -149,7 +149,7 @@
 		if(H)
 			if(H.warrant)
 				V.GiveTarget(H)
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire/Retaliate()
 	for(var/mob/living/carbon/human/H in oviewers(9, src))

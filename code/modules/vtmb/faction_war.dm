@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(factionwar)
 /mob/living/carbon/human/Destroy()
 	if(vampire_faction == FACTION_CAMARILLA)
 		SSfactionwar.camarilla_members -= src
-	..()
+	return ..()
 
 /datum/controller/subsystem/factionwar/proc/adjust_members()
 	camarilla_members = list()

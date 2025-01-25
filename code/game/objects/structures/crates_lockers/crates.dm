@@ -159,7 +159,7 @@
 
 /obj/structure/closet/crate/freezer/Destroy()
 	recursive_organ_check(src)
-	..()
+	return ..()
 
 /obj/structure/closet/crate/freezer/Initialize()
 	. = ..()
