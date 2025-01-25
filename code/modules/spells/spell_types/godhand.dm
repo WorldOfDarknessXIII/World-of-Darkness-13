@@ -132,6 +132,7 @@
 		return
 	M.adjustBruteLoss(-100, TRUE)
 	M.adjustFireLoss(-30, TRUE)
+	M.adjustCloneLoss(-20, TRUE)
 	M.adjustToxLoss(-50, TRUE)
 	M.adjustOxyLoss(-50, TRUE)
 	M.adjustCloneLoss(-45, TRUE)
