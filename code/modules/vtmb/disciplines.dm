@@ -398,7 +398,7 @@
 			F.beastmaster = caster
 		if(5)
 			var/datum/warform/Warform = new
-			Warform.transform(/mob/living/simple_animal/hostile/rat_beastform, caster, TRUE)
+			Warform.transform(/mob/living/simple_animal/hostile/rat_beastform, caster, FALSE)
 
 /datum/discipline/auspex
 	name = "Auspex"
