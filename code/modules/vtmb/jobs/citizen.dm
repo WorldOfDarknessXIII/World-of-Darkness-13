@@ -49,9 +49,6 @@
 			shoes = /obj/item/clothing/shoes/vampire
 		else
 			shoes = /obj/item/clothing/shoes/vampire/heels
-	if(H.clane)
-		if(H.clane.name == "Lasombra")
-			backpack_contents = list(/obj/item/passport =1, /obj/item/vamp/creditcard=1)
 	if(!H.clane)
 		backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
 	if(H.clane && H.clane.name != "Lasombra")

@@ -326,7 +326,7 @@
 	desc = "Summons Spectral Animals over your targets. Violates Masquerade."
 	icon_state = "animalism"
 	cost = 1
-	delay = 8 SECONDS
+	delay = 20 SECONDS
 	ranged = FALSE
 	violates_masquerade = TRUE
 	activate_sound = 'code/modules/wod13/sounds/wolves.ogg'

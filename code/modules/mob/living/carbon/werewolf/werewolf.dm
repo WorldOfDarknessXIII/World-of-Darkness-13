@@ -209,7 +209,7 @@
 	werewolf_armor = 30
 
 /datum/movespeed_modifier/crinosform
-	multiplicative_slowdown = -0.2
+	multiplicative_slowdown = -0.25
 
 /datum/movespeed_modifier/silver_slowdown
 	multiplicative_slowdown = 0.3
