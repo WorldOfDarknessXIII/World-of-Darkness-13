@@ -118,13 +118,16 @@ GLOBAL_VAR(test_log)
 	if(length(focused_tests))
 		tests_to_run = focused_tests
 
-	tests_to_run = sortTim(tests_to_run, /proc/cmp_unit_test_priority)
+	sortTim(tests_to_run, GLOBAL_PROC_REF(cmp_unit_test_priority))
 
 	var/list/test_results = list()
 
+	//Hell code, we're bound to end the round somehow so let's stop if from ending while we work
+	SSticker.delay_end = TRUE
 	for(var/unit_path in tests_to_run)
 		CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
 		RunUnitTest(unit_path, test_results)
+	SSticker.delay_end = FALSE
 
 	var/file_name = "data/unit_tests.json"
 	fdel(file_name)
@@ -132,7 +135,7 @@ GLOBAL_VAR(test_log)
 
 	SSticker.force_ending = TRUE
 	//We have to call this manually because del_text can preceed us, and SSticker doesn't fire in the post game
-	SSticker.standard_reboot()
+	SSticker.declare_completion()
 
 /datum/map_template/unit_tests
 	name = "Unit Tests Zone"
