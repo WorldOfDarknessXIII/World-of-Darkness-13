@@ -391,7 +391,8 @@
 		return
 	if(isliving(target))
 		var/mob/living/L = target
-		L.apply_damage(30, CLONE)
+		L.apply_damage(15, CLONE) //what possessed someone to select 30 agg beforehand?
+		L.apply_damage(15, BRUTE)
 
 /obj/item/melee/vampirearms/knife/gangrel/lasombra
 	name = "shadow tentacle"
