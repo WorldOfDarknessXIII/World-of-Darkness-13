@@ -239,3 +239,59 @@
 									/obj/item/vtm_artifact/weekapaug_thistle)
 		new spawn_artifact(loc)
 	qdel(src)
+
+
+/atom/movable/screen/fullscreen/artcurse
+	icon = 'icons/hud/fullscreen.dmi'
+	icon_state = "hall_nbome"
+	layer = CURSE_LAYER
+	plane = FULLSCREEN_PLANE
+
+/atom/movable/screen/fullscreen/artcurse/Initialize()
+	. = ..()
+	dir = pick(NORTH, EAST, WEST, SOUTH, SOUTHEAST, SOUTHWEST, NORTHEAST, NORTHWEST)
+
+
+/obj/item/vtm_artifact/attack_self(mob/living/user)
+	var/mob/living/carbon/human/H = user
+	var/obj/item/bodypart/arm = H.get_bodypart(pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+	var/obj/item/bodypart/leg = H.get_bodypart(pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+
+	if(user.attributes.Occult < 2)
+		to_chat(user, "<span class='warning'>Твои познания оккультных науках слишком бедны, чтобы понять этот артефакт...</span>")
+		return
+	if(do_mob(user, src, 10 SECONDS))
+		var/result = secret_vampireroll(get_a_occult(user)+get_a_investigation(user)+get_a_intelligence(user), 8, user)
+		switch(result)
+			if(-1)
+
+				user.overlay_fullscreen("curse", /atom/movable/screen/fullscreen/artcurse)
+				user.clear_fullscreen("curse", 8)
+				playsound(get_turf(user), 'code/modules/wod13/sounds/CURSE.ogg', 70, TRUE)
+				to_chat(user, "<span class='warning'>Артефакт рассыпался в прах, ты чувствуешь некое беспокойство...</span>")
+				src.Destroy()
+				spawn( 10 SECONDS)
+					switch(rand(1,4))
+						if(1)
+							arm.force_wound_upwards(/datum/wound/blunt/critical)
+							user.adjustBruteLoss(10, TRUE)
+						if(2)
+							leg.force_wound_upwards(/datum/wound/blunt/critical)
+							user.adjustFireLoss(10, TRUE)
+						if(3)
+							arm.force_wound_upwards(/datum/wound/slash/critical)
+							user.adjustFireLoss(10, TRUE)
+						if(4)
+							leg.force_wound_upwards(/datum/wound/slash/critical)
+							user.adjustBruteLoss(10, TRUE)
+				if(0)
+					to_chat(user, "<span class='warning'>Кажется это просто пустышка с барахолки...</span>")
+			if(1 to 2)
+				to_chat(user, "<span class='warning'>Ты стал на шаг ближе к разгадке этого артефакта </span>")
+
+			if(3 to INFINITY)
+				if(!identified)
+					src.identificate()
+					to_chat(user, "<span class='warning'>Ты раскрыл тайну и мощь этого таинственного талисмана</span>")
+
+
