@@ -226,52 +226,10 @@
 
 /datum/asset/spritesheet/simple/achievements
 	name ="achievements"
-	assets = list(
-		"default" = 'icons/UI_Icons/Achievements/default.png',
-		"basemisc" = 'icons/UI_Icons/Achievements/basemisc.png',
-		"baseboss" = 'icons/UI_Icons/Achievements/baseboss.png',
-		"baseskill" = 'icons/UI_Icons/Achievements/baseskill.png',
-		"bbgum" = 'icons/UI_Icons/Achievements/Boss/bbgum.png',
-		"colossus" = 'icons/UI_Icons/Achievements/Boss/colossus.png',
-		"hierophant" = 'icons/UI_Icons/Achievements/Boss/hierophant.png',
-		"legion" = 'icons/UI_Icons/Achievements/Boss/legion.png',
-		"miner" = 'icons/UI_Icons/Achievements/Boss/miner.png',
-		"swarmer" = 'icons/UI_Icons/Achievements/Boss/swarmer.png',
-		"tendril" = 'icons/UI_Icons/Achievements/Boss/tendril.png',
-		"featofstrength" = 'icons/UI_Icons/Achievements/Misc/featofstrength.png',
-		"helbital" = 'icons/UI_Icons/Achievements/Misc/helbital.png',
-		"jackpot" = 'icons/UI_Icons/Achievements/Misc/jackpot.png',
-		"meteors" = 'icons/UI_Icons/Achievements/Misc/meteors.png',
-		"timewaste" = 'icons/UI_Icons/Achievements/Misc/timewaste.png',
-		"upgrade" = 'icons/UI_Icons/Achievements/Misc/upgrade.png',
-		"clownking" = 'icons/UI_Icons/Achievements/Misc/clownking.png',
-		"clownthanks" = 'icons/UI_Icons/Achievements/Misc/clownthanks.png',
-		"rule8" = 'icons/UI_Icons/Achievements/Misc/rule8.png',
-		"snail" = 'icons/UI_Icons/Achievements/Misc/snail.png',
-		"ascension" = 'icons/UI_Icons/Achievements/Misc/ascension.png',
-		"ashascend" = 'icons/UI_Icons/Achievements/Misc/ashascend.png',
-		"fleshascend" = 'icons/UI_Icons/Achievements/Misc/fleshascend.png',
-		"rustascend" = 'icons/UI_Icons/Achievements/Misc/rustascend.png',
-		"voidascend" = 'icons/UI_Icons/Achievements/Misc/voidascend.png',
-		"mining" = 'icons/UI_Icons/Achievements/Skills/mining.png',
-		"assistant" = 'icons/UI_Icons/Achievements/Mafia/assistant.png',
-		"changeling" = 'icons/UI_Icons/Achievements/Mafia/changeling.png',
-		"chaplain" = 'icons/UI_Icons/Achievements/Mafia/chaplain.png',
-		"clown" = 'icons/UI_Icons/Achievements/Mafia/clown.png',
-		"detective" = 'icons/UI_Icons/Achievements/Mafia/detective.png',
-		"fugitive" = 'icons/UI_Icons/Achievements/Mafia/fugitive.png',
-		"hated" = 'icons/UI_Icons/Achievements/Mafia/hated.png',
-		"hop" = 'icons/UI_Icons/Achievements/Mafia/hop.png',
-		"lawyer" = 'icons/UI_Icons/Achievements/Mafia/lawyer.png',
-		"md" = 'icons/UI_Icons/Achievements/Mafia/md.png',
-		"nightmare" = 'icons/UI_Icons/Achievements/Mafia/nightmare.png',
-		"obsessed" = 'icons/UI_Icons/Achievements/Mafia/obsessed.png',
-		"psychologist" = 'icons/UI_Icons/Achievements/Mafia/psychologist.png',
-		"thoughtfeeder" = 'icons/UI_Icons/Achievements/Mafia/thoughtfeeder.png',
-		"traitor" = 'icons/UI_Icons/Achievements/Mafia/traitor.png',
-		"basemafia" ='icons/UI_Icons/Achievements/basemafia.png',
-		"frenching" = 'icons/UI_Icons/Achievements/Misc/frenchingthebubble.png'
-	)
+
+/datum/asset/spritesheet/simple/achievements/register()
+	InsertAll("", ACHIEVEMENTS_SET)
+	return ..()
 
 /datum/asset/spritesheet/simple/pills
 	name = "pills"

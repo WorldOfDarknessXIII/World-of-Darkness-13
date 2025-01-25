@@ -559,3 +559,6 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define SKILLCHIP_CATEGORY_JOB "job"
 #define SKILLCHIP_CATEGORY_FIREMAN_CARRYING "fireman carrying"
 #define SKILLCHIP_CATEGORY_SYNDICATE "syndicate"
+
+/// Achievements icon set
+#define ACHIEVEMENTS_SET 'icons/ui_icons/achievements/achievements.dmi'

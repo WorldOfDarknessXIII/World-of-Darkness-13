@@ -2,7 +2,7 @@
 	///Name of the achievement, If null it won't show up in the achievement browser. (Handy for inheritance trees)
 	var/name
 	var/desc = "You did it."
-	///Found in UI_Icons/Achievements
+	///The icon state for this award. The icon file is found in ui_icons/achievements.
 	var/icon = "default"
 	var/category = "Normal"
 
@@ -68,6 +68,7 @@
 ///Achievements are one-off awards for usually doing cool things.
 /datum/award/achievement
 	desc = "Achievement for epic people"
+	icon = "" // This should warn contributors that do not declare an icon when contributing new achievements.
 
 /datum/award/achievement/get_metadata_row()
 	. = ..()
