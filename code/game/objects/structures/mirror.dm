@@ -14,6 +14,8 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 	vis_flags = VIS_HIDE
 	var/timerid = null
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
+
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
 	var/unique_number = ""

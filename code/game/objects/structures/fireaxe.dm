@@ -12,6 +12,8 @@
 	var/open = FALSE
 	var/obj/item/fireaxe/fireaxe
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
+
 /obj/structure/fireaxecabinet/Initialize()
 	. = ..()
 	fireaxe = new

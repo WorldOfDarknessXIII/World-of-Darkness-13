@@ -69,6 +69,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	max_integrity = 300
 	armor = list(MELEE = 70, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 0, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
+
 /obj/machinery/requests_console/update_icon_state()
 	if(machine_stat & NOPOWER)
 		set_light(0)

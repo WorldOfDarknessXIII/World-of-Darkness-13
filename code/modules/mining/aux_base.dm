@@ -32,6 +32,8 @@
 	/// If blind drop option is available
 	var/blind_drop_ready = TRUE
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
+
 /obj/machinery/computer/auxiliary_base/Initialize()
 	. = ..()
 	AddComponent(/datum/component/gps, "NT_AUX")

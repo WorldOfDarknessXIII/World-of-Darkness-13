@@ -8,6 +8,8 @@
 	max_integrity = 150
 	var/notices = 0
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
+
 /obj/structure/noticeboard/Initialize(mapload)
 	. = ..()
 

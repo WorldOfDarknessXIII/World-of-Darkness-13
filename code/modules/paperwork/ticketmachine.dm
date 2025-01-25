@@ -21,6 +21,8 @@
 	var/list/ticket_holders = list()
 	var/list/obj/item/ticket_machine_ticket/tickets = list()
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
+
 /obj/machinery/ticket_machine/multitool_act(mob/living/user, obj/item/I)
 	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
 		return

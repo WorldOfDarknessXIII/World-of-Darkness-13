@@ -237,6 +237,8 @@
 	buildstackamount = 1
 	item_chair = /obj/item/chair/stool
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
+
 /obj/structure/chair/stool/narsie_act()
 	return
 
@@ -327,9 +329,6 @@
 		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 
-
-
-
 /obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
 		owner.visible_message("<span class='danger'>[owner] fends off [attack_text] with [src]!</span>")
@@ -364,6 +363,8 @@
 	icon_state = "bar_toppled"
 	inhand_icon_state = "stool_bar"
 	origin_type = /obj/structure/chair/stool/bar
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/item/chair/stool/narsie_act()
 	return //sturdy enough to ignore a god

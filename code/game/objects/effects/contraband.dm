@@ -167,6 +167,8 @@
 	never_random = TRUE
 	random_basetype = /obj/structure/sign/poster
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/random, 32)
+
 /obj/structure/sign/poster/contraband
 	poster_item_name = "contraband poster"
 	poster_item_icon_state = "rolled_poster"
@@ -176,6 +178,8 @@
 	icon_state = "random_contraband"
 	never_random = TRUE
 	random_basetype = /obj/structure/sign/poster/contraband
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
 
 /obj/structure/sign/poster/lacunacoil
 	name = "Lacuna Coil"

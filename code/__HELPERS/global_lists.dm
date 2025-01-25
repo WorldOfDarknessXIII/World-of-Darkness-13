@@ -93,3 +93,42 @@ GLOBAL_LIST_EMPTY(auspices_list)
 			L+= path
 		return L
 
+/**
+ * Checks if that loc and dir has an item on the wall
+**/
+// Wall mounted machinery which are visually on the wall.
+GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
+	/obj/item/radio/intercom,
+	/obj/item/storage/secure/safe,
+	/obj/machinery/airalarm,
+	/obj/machinery/bounty_board,
+	/obj/machinery/button,
+	/obj/machinery/computer/security/telescreen,
+	/obj/machinery/computer/security/telescreen/entertainment,
+	/obj/machinery/defibrillator_mount,
+	/obj/machinery/door_timer,
+	/obj/machinery/embedded_controller/radio/simple_vent_controller,
+	/obj/machinery/firealarm,
+	/obj/machinery/power/apc,
+	/obj/machinery/requests_console,
+	/obj/machinery/status_display,
+	/obj/machinery/ticket_machine,
+	/obj/machinery/turretid,
+	/obj/structure/extinguisher_cabinet,
+	/obj/structure/fireaxecabinet,
+	/obj/structure/mirror,
+	/obj/structure/sign,
+	/obj/structure/sign/picture_frame,
+	/obj/structure/sign/poster/random,
+	/obj/structure/sign/poster/contraband/random,
+	/obj/structure/sign/poster/official/random,
+	)))
+
+// Wall mounted machinery which are visually coming out of the wall.
+// These do not conflict with machinery which are visually placed on the wall.
+GLOBAL_LIST_INIT(WALLITEMS_EXTERIOR, typecacheof(list(
+	/obj/machinery/camera,
+	/obj/machinery/light,
+	/obj/structure/camera_assembly,
+	/obj/structure/light_construct
+	)))

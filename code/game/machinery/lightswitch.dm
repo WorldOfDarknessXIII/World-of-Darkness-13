@@ -9,6 +9,8 @@
 	/// instead of the switch's location.
 	var/area/area = null
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
+
 /obj/machinery/light_switch/Initialize()
 	. = ..()
 	if(istext(area))

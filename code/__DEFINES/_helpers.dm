@@ -11,3 +11,4 @@
 #define span_notice(str) ("<span class='notice'>" + str + "</span>")
 #define span_warning(str) ("<span class='warning'>" + str + "</span>")
 #define span_boldannounce(str) ("<span class='boldannounce'>" + str + "</span>")
+#define span_hear(str) ("<span class='hear'>" + str + "</span>")
