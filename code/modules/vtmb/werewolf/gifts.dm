@@ -299,8 +299,8 @@
 	. = ..()
 	if(allowed_to_proceed)
 		var/mob/living/carbon/C = owner
-		C.obfuscate_level = 3
-		C.alpha = 36
+		C.obfuscate_level = 4
+		C.alpha = 26
 		playsound(get_turf(owner), 'code/modules/wod13/sounds/milky_blur.ogg', 75, FALSE)
 		spawn(200)
 			C.obfuscate_level = 0
@@ -341,7 +341,7 @@
 		C.emote("laugh")
 		C.Stun(10)
 		playsound(get_turf(owner), 'code/modules/wod13/sounds/infectious_laughter.ogg', 100, FALSE)
-		for(var/mob/living/L in oviewers(4, src))
+		for(var/mob/living/L in oviewers(4, owner))
 			if(L)
 				L.emote("laugh")
 				L.Stun(20)
