@@ -98,8 +98,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	var/punchdamagelow = 1
 	///Highest possible punch damage this species can give.
 	var/punchdamagehigh = 10
-	///Damage at which punches from this race will stun
-	var/punchstunthreshold = 20 //yes it should be to the attacked race but it's not useful that way even if it's logical
 	///Base electrocution coefficient.  Basically a multiplier for damage from electrocutions.
 	var/meleemod = 1
 	//For melee damage
@@ -1415,7 +1413,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 
 		if(user.potential >= 5)
 			var/atom/throw_target = get_edge_target_turf(target, user.dir)
-			target.throw_at(throw_target, rand(5, 7), 4, user)
+			target.throw_at(throw_target, rand(5, 7), 4, user, gentle = TRUE) //No stun nor impact damage from throwing people around
 
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey
@@ -1432,14 +1430,17 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
 			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block)
 			log_combat(user, target, "punched")
+		//Punches have a chance (by default 10%, up to 30%) to knock down a target for about 2 seconds depending on physique and dexterity.
+		//Checks if the target is already knocked down to prevent stunlocking.
+		if((target.stat != DEAD) && (!target.IsKnockdown()))
+			//Compare puncher's physique to the greater between the target's physique (robust enough to tank it) or dexterity (rolls with the punches)
+			var/modifier = clamp(user.get_total_physique() - max(target.get_total_physique(), target.get_total_dexterity()), 1, 3)
+			if(storyteller_roll(difficulty = 10 - modifier) == ROLL_SUCCESS)
+				target.visible_message("<span class='danger'>[user] knocks [target] down!</span>", "<span class='userdanger'>You're knocked down by [user]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
+				to_chat(user, "<span class='danger'>You knock [target] down!</span>")
+				target.apply_effect(2 SECONDS, EFFECT_KNOCKDOWN, armor_block)
+				log_combat(user, target, "got a stun punch with their previous punch")
 
-		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
-			target.visible_message("<span class='danger'>[user] knocks [target] down!</span>", \
-							"<span class='userdanger'>You're knocked down by [user]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, "<span class='danger'>You knock [target] down!</span>")
-			var/knockdown_duration = 40 + (target.getStaminaLoss() + (target.getBruteLoss()*0.5))*0.8 //50 total damage = 40 base stun + 40 stun modifier = 80 stun duration, which is the old base duration
-			target.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
-			log_combat(user, target, "got a stun punch with their previous punch")
 
 /datum/species/proc/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return
