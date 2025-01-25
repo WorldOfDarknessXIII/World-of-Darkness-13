@@ -319,7 +319,7 @@ Example config:
 
 		switch (command)
 			if ("map")
-				currentmap = load_map_config("_maps/[data].json")
+				currentmap = load_map_config(data, MAP_DIRECTORY_MAPS)
 				if(currentmap.defaulted)
 					log_config("Failed to load map config for [data]!")
 					currentmap = null

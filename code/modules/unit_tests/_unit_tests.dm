@@ -79,6 +79,7 @@
 #include "heretic_knowledge.dm"
 #include "holidays.dm"
 #include "keybinding_init.dm"
+#include "load_map_security.dm"
 #include "machine_disassembly.dm"
 #include "mapping.dm"
 #include "medical_wounds.dm"
