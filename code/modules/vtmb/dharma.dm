@@ -170,6 +170,9 @@
 	return total
 
 /proc/call_dharma(action, mob/living/carbon/human/cathayan)
+	//disabled due to terrible implementation
+	return
+	/*
 	if (!cathayan?.mind?.dharma)
 		return
 
@@ -197,6 +200,7 @@
 		for(var/i in dharma.tenets)
 			dharma.tenets_done[i] = 0
 		update_dharma(cathayan, 1)
+	*/
 
 /proc/emit_po_call(atom/source, po_type)
 	if(!po_type)
