@@ -1037,7 +1037,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "dA" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/white,
@@ -1353,15 +1353,13 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "eL" = (
-/obj/machinery/airalarm{
-	dir = 1;
+/obj/machinery/airalarm/directional/south{
 	pixel_y = -24
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/bar)
 "eM" = (
-/obj/machinery/airalarm{
-	dir = 1;
+/obj/machinery/airalarm/directional/south{
 	pixel_y = -24
 	},
 /turf/open/floor/plating,
@@ -1445,7 +1443,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/dock)
 "fc" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	pixel_y = 24
 	},
 /turf/open/floor/wood,
@@ -2618,7 +2616,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/power)
 "iv" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -2817,8 +2815,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "iY" = (
-/obj/machinery/airalarm{
-	dir = 1;
+/obj/machinery/airalarm/directional/south{
 	pixel_y = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -3090,7 +3087,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/security)
 "jK" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/tile/red{

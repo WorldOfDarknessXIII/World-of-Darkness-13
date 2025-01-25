@@ -474,7 +474,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /turf/open/floor/plating,
@@ -1112,7 +1112,7 @@
 /obj/structure/bed,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/machinery/light/small{
@@ -1134,7 +1134,8 @@
 	pixel_y = 8
 	},
 /obj/machinery/airalarm/all_access{
-	pixel_y = 22
+	pixel_y = 22;
+	dir = 1
 	},
 /turf/open/floor/carpet,
 /area/shuttle/abandoned/crew)

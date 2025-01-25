@@ -296,8 +296,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/airalarm{
-	dir = 4;
+/obj/machinery/airalarm/directional/west{
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/tile/yellow,
@@ -893,8 +892,7 @@
 "ct" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
-/obj/machinery/airalarm{
-	dir = 4;
+/obj/machinery/airalarm/directional/west{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/dark,
@@ -984,7 +982,7 @@
 	id = "cryopodg2";
 	name = "panic lockdown button"
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -1817,7 +1815,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "ej" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/yellow,
@@ -1953,7 +1951,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
 "ew" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -2163,8 +2161,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/security)
 "eT" = (
-/obj/machinery/airalarm{
-	dir = 4;
+/obj/machinery/airalarm/directional/west{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/dark,
@@ -2365,7 +2362,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "fu" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/red,
@@ -4030,8 +4027,7 @@
 	id = "cryopodg1";
 	name = "panic lockdown button"
 	},
-/obj/machinery/airalarm{
-	dir = 1;
+/obj/machinery/airalarm/directional/south{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -4133,7 +4129,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/dorm)
 "iZ" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -5312,8 +5308,7 @@
 	dir = 1;
 	layer = 2.9
 	},
-/obj/machinery/airalarm{
-	dir = 8;
+/obj/machinery/airalarm/directional/east{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/yellowsiding{
@@ -5790,8 +5785,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/escapepods)
 "mX" = (
-/obj/machinery/airalarm{
-	dir = 8;
+/obj/machinery/airalarm/directional/east{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/green{
