@@ -272,6 +272,8 @@
 	owner.invisibility = INVISIBILITY_MAXIMUM
 	warform = new animal_atom(get_turf(owner))
 	warform.attributes = owner.attributes
+	warform.stop_automated_movement = TRUE
+	warform.wander = FALSE
 	humanform.dna.species.brutemod = initial(humanform.dna.species.brutemod)*(initial(humanform.maxHealth)/initial(warform.maxHealth))
 	humanform.dna.species.burnmod = initial(humanform.dna.species.burnmod)*(initial(humanform.maxHealth)/initial(warform.maxHealth))
 	warform.warform = src

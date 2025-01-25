@@ -68,6 +68,9 @@
  * (if you ask me, this should be at the top of the move so you don't dance around)
  *
  */
+/mob/living/simple_animal/hostile
+	var/last_warform_move = 0
+
 /client/Move(n, direct)
 	if(world.time < move_delay) //do not move anything ahead of this check please
 		return FALSE
@@ -94,6 +97,10 @@
 		if(H.in_frenzy)
 			return FALSE
 		if(H.warform)
+			if(H.warform.warform.last_warform_move > world.time)
+				return FALSE
+			H.warform.warform.last_warform_move = world.time+H.total_multiplicative_slowdown()
+			H.warform.warform.set_glide_size(DELAY_TO_GLIDE_SIZE(H.total_multiplicative_slowdown()))
 			H.warform.warform.Move(get_step(H.warform.warform, direct), direct)
 			H.warform.warform.dir = direct
 			H.dir = direct
