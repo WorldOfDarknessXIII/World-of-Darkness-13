@@ -65,6 +65,8 @@
 	pixel_w = -32
 	pixel_z = -32
 	duration = 3
+	layer = ABOVE_LIGHTING_LAYER
+	plane = ABOVE_LIGHTING_PLANE
 
 /obj/effect/temp_visual/dir_setting/claw_effect
 	icon = 'icons/effects/96x96.dmi'
@@ -72,6 +74,8 @@
 	pixel_w = -32
 	pixel_z = -32
 	duration = 3
+	layer = ABOVE_LIGHTING_LAYER
+	plane = ABOVE_LIGHTING_PLANE
 
 /obj/effect/temp_visual/dir_setting/fall_effect
 	icon = 'icons/effects/64x64.dmi'

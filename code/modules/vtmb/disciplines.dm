@@ -590,7 +590,7 @@
 	if(HAS_TRAIT(caster, TRAIT_MUTE))
 		to_chat(caster, "<span class='warning'>You find yourself unable to speak!</span>")
 		return
-	var/mypower = secret_vampireroll(max(get_a_strength(caster), get_a_manipulation(caster))+get_a_intimidation(caster), 7-level, caster)
+	var/mypower = secret_vampireroll(max(get_a_strength(caster), get_a_manipulation(caster))+get_a_intimidation(caster), 6, caster)
 	if(mypower < 1)
 		to_chat(caster, "<span class='warning'>You fail at dominating!</span>")
 		if(mypower == -1)
@@ -766,7 +766,7 @@
 	//5 - victim starts to attack themself
 	if(target.spell_immunity)
 		return
-	var/mypower = secret_vampireroll(max(get_a_manipulation(caster), get_a_intelligence(caster))+max(get_a_empathy(caster), get_a_intimidation(caster)), 7-level, caster)
+	var/mypower = secret_vampireroll(max(get_a_manipulation(caster), get_a_intelligence(caster))+max(get_a_empathy(caster), get_a_intimidation(caster)), 6, caster)
 	if(mypower < 1)
 		to_chat(caster, "<span class='warning'>You fail at corrupting!</span>")
 		if(mypower == -1)
@@ -936,7 +936,7 @@
 	if(iscathayan(target))
 		if(target.mind.dharma?.Po == "Legalist")
 			target.mind.dharma?.roll_po(caster, target)
-	var/mypower = secret_vampireroll(max(get_a_charisma(caster), get_a_appearance(caster))+get_a_empathy(caster), 7-level, caster)
+	var/mypower = secret_vampireroll(max(get_a_charisma(caster), get_a_appearance(caster))+get_a_empathy(caster), 6, caster)
 	if(mypower < 1)
 		to_chat(caster, "<span class='warning'>You fail at sway!</span>")
 		if(mypower == -1)

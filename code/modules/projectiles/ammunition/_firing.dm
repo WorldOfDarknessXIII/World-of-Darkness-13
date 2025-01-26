@@ -3,11 +3,11 @@
 	var/targloc = get_turf(target)
 	var/actual_spread = 0
 	if(successes == 0)
-		actual_spread = rand(-40, 40)
+		actual_spread = rand(-90, 90)
 	if(successes == 1)
-		actual_spread = rand(-20, 20)
+		actual_spread = rand(-45, 45)
 	if(successes == 2)
-		actual_spread = rand(-10, 10)
+		actual_spread = rand(-15, 15)
 //	if(successes == 3)
 //		actual_spread = rand(-6, 6)
 

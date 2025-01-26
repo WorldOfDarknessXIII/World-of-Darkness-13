@@ -259,7 +259,7 @@
 		var/travel_time = distance * 0.5
 		spawn(travel_time)
 			if(get_dist(loc, adjusted_target) <= 1 && H.potential > 0)
-				H.epic_fall(FALSE, FALSE)
+				H.epic_fall()
 
 
 //		newtonian_move(get_dir(target, src))

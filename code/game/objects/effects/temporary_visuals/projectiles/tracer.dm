@@ -63,6 +63,8 @@
 
 /obj/effect/projectile/tracer/tracer/beam_rifle/vampire
 	icon_state = "bullet"
+	layer = ABOVE_LIGHTING_LAYER
+	plane = ABOVE_LIGHTING_PLANE
 
 /obj/effect/projectile/tracer/tracer/aiming
 	icon_state = "pixelbeam_greyscale"

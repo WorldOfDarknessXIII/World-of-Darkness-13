@@ -7,6 +7,8 @@
 	nodamage = FALSE
 	flag = BULLET
 	reflectable = NONE
+	layer = ABOVE_LIGHTING_LAYER
+	plane = ABOVE_LIGHTING_PLANE
 	ricochets_max = 0
 	hitsound = 'sound/weapons/pierce.ogg'
 	hitsound_wall = "ricochet"

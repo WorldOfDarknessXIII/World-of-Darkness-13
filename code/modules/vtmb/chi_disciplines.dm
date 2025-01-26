@@ -1139,7 +1139,7 @@
 
 /datum/chi_discipline/hellweaving/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
-	var/mypower = secret_vampireroll(max(get_a_strength(caster), get_a_manipulation(caster))+get_a_intimidation(caster), 7-level, caster)
+	var/mypower = secret_vampireroll(max(get_a_strength(caster), get_a_manipulation(caster))+get_a_intimidation(caster), 6, caster)
 	if(mypower < 1)
 		to_chat(caster, "<span class='warning'>You fail at hellweaving!</span>")
 		if(mypower == -1)
@@ -1239,7 +1239,7 @@
 			sound_gender = 'code/modules/wod13/sounds/kiai_female.ogg'
 	caster.emote("scream")
 	playsound(caster.loc, sound_gender, 100, FALSE)
-	var/mypower = secret_vampireroll(max(get_a_strength(caster), get_a_manipulation(caster))+get_a_intimidation(caster), 7-level, caster)
+	var/mypower = secret_vampireroll(max(get_a_strength(caster), get_a_manipulation(caster))+get_a_intimidation(caster), 6, caster)
 	if(mypower < 1)
 		to_chat(caster, "<span class='warning'>You fail at screaming!</span>")
 		if(mypower == -1)

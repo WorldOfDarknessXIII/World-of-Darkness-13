@@ -286,6 +286,8 @@
 			add_hard = 1
 		if(user.zone_selected == BODY_ZONE_PRECISE_EYES || user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 			add_hard = 2
+		if(target == user)
+			add_hard = -6
 		var/successess = secret_vampireroll(used_roll+get_a_firearms(user), 7+add_hard, user)
 		if(successess == -1)
 			target = user
@@ -358,6 +360,8 @@
 				add_hard = 1
 			if(user.zone_selected == BODY_ZONE_PRECISE_EYES || user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 				add_hard = 2
+			if(target == user)
+				add_hard = -5
 			var/successess = secret_vampireroll(used_roll+get_a_firearms(user), 6+add_hard, user)
 			if(successess == -1)
 				target = user

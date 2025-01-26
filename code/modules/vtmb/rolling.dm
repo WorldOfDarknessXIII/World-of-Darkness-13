@@ -34,6 +34,21 @@ SUBSYSTEM_DEF(woddices)
 		if(a)
 			GLOB.vampireroll_numbers -= a
 			qdel(a)
+	if(length(GLOB.vampireroll_numbers))
+		var/atom/a = pick(GLOB.vampireroll_numbers)
+		if(a)
+			GLOB.vampireroll_numbers -= a
+			qdel(a)
+	if(length(GLOB.vampireroll_numbers))
+		var/atom/a = pick(GLOB.vampireroll_numbers)
+		if(a)
+			GLOB.vampireroll_numbers -= a
+			qdel(a)
+	if(length(GLOB.vampireroll_numbers))
+		var/atom/a = pick(GLOB.vampireroll_numbers)
+		if(a)
+			GLOB.vampireroll_numbers -= a
+			qdel(a)
 
 /proc/create_number_on_mob(mob/Mob, what_color, text)
 	var/turf/T = get_turf(Mob)
