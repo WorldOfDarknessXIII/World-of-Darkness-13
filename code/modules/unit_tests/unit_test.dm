@@ -62,7 +62,7 @@ GLOBAL_VAR(test_log)
 /datum/unit_test/proc/Run()
 	TEST_FAIL("Run() called parent or not implemented")
 
-/datum/unit_test/proc/TEST_FAIL(reason = "No reason", file = "OUTDATED_TEST", line = 1)
+/datum/unit_test/proc/Fail(reason = "No reason", file = "OUTDATED_TEST", line = 1)
 	succeeded = FALSE
 
 	if(!istext(reason))
