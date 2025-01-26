@@ -37,7 +37,7 @@
 	GLOB.npc_list += src
 	GLOB.alive_npc_list += src
 	organschecklist = length(get_all_organs())
-	add_movespeed_modifier(/datum/movespeed_modifier/npc)
+//	add_movespeed_modifier(/datum/movespeed_modifier/npc)
 
 /mob/living/carbon/human/npc/death()
 	GLOB.alive_npc_list -= src
