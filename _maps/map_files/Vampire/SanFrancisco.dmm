@@ -3476,7 +3476,7 @@
 "brW" = (/obj/structure/table/wood,/obj/item/reagent_containers/food/drinks/beer/vampire,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/turf/open/floor/carpet/black,/area/vtm/cabinet)
 "brX" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/effect/decal/bordur{dir = 4},/turf/open/floor/plating/vampgrass,/area/vtm/pacificheights)
 "brY" = (/obj/structure/chair/comfy/black,/obj/effect/landmark/start/sheriff,/turf/open/floor/carpet/black,/area/vtm/cabinet)
-"brZ" = (/obj/structure/rack,/obj/item/melee/vampirearms/katana{color = "#ccffff"; cost = 500; desc = "I don't know, but somehow the Prince managed to convince the police that the Sheriff is a big fan of Japanese animation, and this katana is a replica. You can wear it without breaking the masquerade"; force = 50; name = "Sheriff's special"; pixel_y = 9},/turf/open/floor/plating/parquetry,/area/vtm/cabinet)
+"brZ" = (/obj/structure/rack,/obj/item/melee/vampirearms/katana{color = "#ccffff"; cost = 500; desc = "I don't know, but somehow the Prince managed to convince the police that the Sheriff is a big fan of Japanese animation, and this katana is a replica. You can wear it without breaking the masquerade"; force = 60; name = "Sheriff's special"; pixel_y = 9},/turf/open/floor/plating/parquetry,/area/vtm/cabinet)
 "bsa" = (/turf/open/floor/carpet/blue,/area/vtm/interior)
 "bsb" = (/obj/machinery/light/small{dir = 8; pixel_x = 16},/obj/structure/chair/plastic{dir = 8; pixel_y = 4},/turf/open/floor/plating/concrete,/area/vtm/anarch)
 "bsc" = (/obj/structure/clothinghanger,/obj/machinery/light/prince{dir = 1; pixel_y = -7},/turf/open/floor/carpet,/area/vtm/cabinet)
