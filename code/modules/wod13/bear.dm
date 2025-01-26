@@ -10,6 +10,7 @@
 	speak_chance = 0
 	turns_per_move = 5
 	see_in_dark = 6
+	del_on_death = 0
 	butcher_results = list(/obj/item/food/meat/slab = 7)
 	response_help_continuous = "pokes"
 	response_help_simple = "poke"
@@ -26,9 +27,9 @@
 	bloodpool = 1
 	maxbloodpool = 1
 	del_on_death = 1
-	maxHealth = 500
-	health = 500
+	maxHealth = 850
+	health = 850
 	cached_multiplicative_slowdown = 2
 
-	melee_damage_lower = 40
-	melee_damage_upper = 50 //Good luck lol
+	melee_damage_lower = 50
+	melee_damage_upper = 60 //Good luck lol
