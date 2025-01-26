@@ -18,3 +18,7 @@
 #define MESSAGE_TYPE_ADMINLOG "adminlog"
 #define MESSAGE_TYPE_ATTACKLOG "attacklog"
 #define MESSAGE_TYPE_DEBUG "debug"
+
+// Global Narrate
+#define narrate_head(str) ("<div class='narrate_head'><p>" + str + "</p></div>")
+#define narrate_body(str) ("<div class='narrate_body'><p>" + str + "</p></div>")

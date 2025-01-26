@@ -134,14 +134,28 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/msg = input("Message:", text("Enter the text you wish to appear to everyone:")) as text|null
+	var/message_header
+	var/message_body
 
-	if (!msg)
-		return
-	to_chat(world, "[msg]", confidential = TRUE)
-	log_admin("GlobalNarrate: [key_name(usr)] : [msg]")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] Sent a global narrate</span>")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Global Narrate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	if(tgui_alert(usr, "Do you wish to include a header? Headers use a separate paragraph and a bigger font.", "Narrate: Header", list("Yes","No"), timeout = 0) == "Yes")
+		message_header = input(usr, "Enter HEADER message. You can use the string '</p><p>' to write multiple paragraphs. HTML formating should be respected. Writing nothing or cancelling will still let you send a normal message without a header.","Narrate Header")
+
+	message_body = input(usr, "Enter message. You can use the string '</p><p>' to write multiple paragraphs. HTML formating should be respected. Writing nothing or cancelling will cancel the command.","Narrate Header")
+
+	if(!message_body) return
+
+	if(message_header) to_chat(usr, narrate_head(message_header))
+	to_chat(usr, narrate_body(message_body))
+
+	if(tgui_alert(usr, "Please check your chat window for the finished message. Are you SURE you want to send this message?", "Message Confirmation", list("Yes","No"), timeout = 0) == "Yes")
+
+		if(message_header)
+			to_chat(world, narrate_head(message_header))
+			log_admin("GlobalNarrate: [key_name(usr)] : HEADER - [message_header]]")
+		to_chat(world, narrate_body(message_body))
+		log_admin("GlobalNarrate: [key_name(usr)] : BODY - [message_body]")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] Sent a global narrate</span>")
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "Global Narrate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_direct_narrate(mob/M)
 	set category = "Admin.Events"
