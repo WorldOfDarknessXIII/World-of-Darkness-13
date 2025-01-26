@@ -357,10 +357,10 @@
 /obj/mytherceria_trap/disorient/Crossed(atom/movable/AM)
 	..()
 	if(isliving(AM) && owner)
-		if(AM != owner)
-			var/mob/living/L = AM
-			if(!L.client)
-				return
+		var/mob/living/L = AM
+		if(!L.client)
+			return
+		else if(AM != owner)
 			var/list/screens = list(L.hud_used.plane_masters["[FLOOR_PLANE]"], L.hud_used.plane_masters["[GAME_PLANE]"], L.hud_used.plane_masters["[LIGHTING_PLANE]"])
 			var/rotation = 50
 			for(var/whole_screen in screens)
