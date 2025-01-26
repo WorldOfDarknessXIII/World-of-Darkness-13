@@ -4,7 +4,7 @@
 
 Unit tests are automated code to verify that parts of the game work exactly as they should. For example, [a test to make sure that the amputation surgery actually amputates the limb](https://github.com/tgstation/tgstation/blob/e416283f162b86345a8623125ab866839b1ac40d/code/modules/unit_tests/surgeries.dm#L1-L13). These are ran every time a PR is made, and thus are very helpful for preventing bugs from cropping up in your code that would've otherwise gone unnoticed. For example, would you have thought to check [that beach boys would still work the same after editing pizza](https://github.com/tgstation/tgstation/pull/53641#issuecomment-691384934)? If you value your time, probably not.
 
-On their most basic level, when `UNIT_TESTS` is defined, all subtypes of `/datum/unit_test` will have their `Run` proc executed. From here, if `Fail` is called at any point, then the tests will report as failed.
+On their most basic level, when `UNIT_TESTS` is defined, all subtypes of `/datum/unit_test` will have their `Run` proc executed. From here, if `TEST_FAIL` is called at any point, then the tests will report as failed.
 
 ## How do I write one?
 1. Find a relevant file.
@@ -51,11 +51,17 @@ Unit tests should also be just that--testing *units* of code. For example, inste
 
 You can find more information about all of these from their respective doc comments, but for a brief overview:
 
-`/datum/unit_test` - The base for all tests to be ran. Subtypes must override `Run()`. `New()` and `Destroy()` can be used for setup and teardown. To fail, use `Fail(reason)`.
+`/datum/unit_test` - The base for all tests to be ran. Subtypes must override `Run()`. `New()` and `Destroy()` can be used for setup and teardown. To fail, use `TEST_FAIL(reason)`.
 
 `/datum/unit_test/proc/allocate(type, ...)` - Allocates an instance of the provided type with the given arguments. Is automatically destroyed when the test is over. Commonly seen in the form of `var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)`.
 
+`TEST_FAIL(reason)` - Marks a failure at this location, but does not stop the test.
+
 `TEST_ASSERT(assertion, reason)` - Stops the unit test and fails if the assertion is not met. For example: `TEST_ASSERT(powered(), "Machine is not powered")`.
+
+`TEST_ASSERT_NOTNULL(a, message)` - Same as `TEST_ASSERT`, but checks if `!isnull(a)`. For example: `TEST_ASSERT_NOTNULL(myatom, "My atom was never set!")`.
+
+`TEST_ASSERT_NULL(a, message)` - Same as `TEST_ASSERT`, but checks if `isnull(a)`. If not, gives a helpful message showing what `a` was. For example: `TEST_ASSERT_NULL(delme, "Delme was never cleaned up!")`.
 
 `TEST_ASSERT_EQUAL(a, b, message)` - Same as `TEST_ASSERT`, but checks if `a == b`. If not, gives a helpful message showing what both `a` and `b` were. For example: `TEST_ASSERT_EQUAL(2 + 2, 4, "The universe is falling apart before our eyes!")`.
 

@@ -25,10 +25,10 @@
 
 
 	// Check we can load from _maps
-	TEST_ASSERT(!maps_config.defaulted, "Failed to load: _maps/[VALID_TEST_MAP]")
+	TEST_ASSERT(!maps_config.defaulted, "TEST_FAILed to load: _maps/[VALID_TEST_MAP]")
 
 	// Check we can load from data and ensure that our fcopy setup worked
-	TEST_ASSERT(!data_config.defaulted, "Failed to load: data/load_map_security_temp/[VALID_TEST_MAP]")
+	TEST_ASSERT(!data_config.defaulted, "TEST_FAILed to load: data/load_map_security_temp/[VALID_TEST_MAP]")
 
 	// Check we can't load from "bad directory"
 	TEST_ASSERT(bad_config.defaulted, "Loaded from non-whitelisted directory: data/load_map_security_temp/[VALID_TEST_MAP]")
