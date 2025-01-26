@@ -458,18 +458,20 @@
 	var/last_shadow_was = TRUE
 
 /mob/living/carbon/human/proc/update_shadow()
-	if(body_position != LYING_DOWN && !last_shadow_was)
-		last_shadow_was = TRUE
-		if(!overlays_standing[UNDERSHADOW_LAYER])
-			var/mutable_appearance/lying_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "shadow", -UNDERSHADOW_LAYER)
-			lying_overlay.pixel_z = -4
-			lying_overlay.alpha = 64
-			overlays_standing[UNDERSHADOW_LAYER] = lying_overlay
-			apply_overlay(UNDERSHADOW_LAYER)
-	else if(last_shadow_was)
-		last_shadow_was = FALSE
-		if(overlays_standing[UNDERSHADOW_LAYER])
-			remove_overlay(UNDERSHADOW_LAYER)
+	if(body_position != LYING_DOWN)
+		if(!last_shadow_was)
+			last_shadow_was = TRUE
+			if(!overlays_standing[UNDERSHADOW_LAYER])
+				var/mutable_appearance/lying_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "shadow", -UNDERSHADOW_LAYER)
+				lying_overlay.pixel_z = -4
+				lying_overlay.alpha = 64
+				overlays_standing[UNDERSHADOW_LAYER] = lying_overlay
+				apply_overlay(UNDERSHADOW_LAYER)
+	else
+		if(last_shadow_was)
+			last_shadow_was = FALSE
+			if(overlays_standing[UNDERSHADOW_LAYER])
+				remove_overlay(UNDERSHADOW_LAYER)
 
 /mob/living/carbon/human/npc/attack_hand(mob/user)
 	if(user)
