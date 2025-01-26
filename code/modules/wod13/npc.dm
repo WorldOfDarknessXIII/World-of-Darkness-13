@@ -218,17 +218,17 @@
 		"I'm going to scream if you keep it up!",
 		"Don't touch me.")
 	var/list/neutral_phrases = list(
-		"Fuck Off.",
-		"Go on your own way.",
+		"Fuck off.",
+		"Go on your way.",
 		"Not the best time to talk right now, pal.",
 		"Мgmmph...",
 		"Do I know you?",
 		"I don't have much time.")
 	var/list/random_phrases = list(
-		"The visitors again...",
+		"You a foreigner?...",
 		"It seems I've been going around here in circles for the third time, already.",
 		"Watch where you're walkin'!",
-		"Sewer Rat. Go back in the drains where you came from.",
+		"Go back to the drains where you came from.",
 		"Tourists... Pheh.",
 		"Rumors travel fast.")
 	var/list/answer_phrases = list(
