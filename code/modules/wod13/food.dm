@@ -567,9 +567,13 @@
 		new /datum/data/mining_equipment("box of syringes", /obj/item/storage/box/syringes, 300)
 	)
 
-/obj/machinery/mineral/equipment_vendor/fastfood/hospital
+// Govt vendors
+
+/obj/machinery/mineral/equipment_vendor/fastfood/government
 	var/last_card_use_time = 0
-	dispenses_dollars = FALSE // we should probably swap from a vendor system and work on a sort of gameplay loop - tzula
+	dispenses_dollars = FALSE
+
+/obj/machinery/mineral/equipment_vendor/fastfood/government/hospital
 	prize_list = list(
 		new /datum/data/mining_equipment("toxins first aid kit", /obj/item/storage/firstaid/toxin, 50),
 		new /datum/data/mining_equipment("burns first aid kit", /obj/item/storage/firstaid/fire, 50),
@@ -583,12 +587,13 @@
 		new /datum/data/mining_equipment("latex gloves", /obj/item/clothing/gloves/vampire/latex, 50),
 		new /datum/data/mining_equipment("burn ointment", /obj/item/stack/medical/ointment, 50),
 		new /datum/data/mining_equipment("surgery dufflebag", /obj/item/storage/backpack/duffelbag/med/surgery, 50),
-		new /datum/data/mining_equipment("ephedrine pill bottle", /obj/item/storage/pill_bottle/ephedrine, 50)
+		new /datum/data/mining_equipment("ephedrine pill bottle", /obj/item/storage/pill_bottle/ephedrine, 50),
+		new /datum/data/mining_equipment("Medicated Suture", /obj/item/stack/medical/suture/medicated, 50),
+		new /datum/data/mining_equipment("Regenerative Mesh", /obj/item/stack/medical/mesh/advanced, 50),
+		new /datum/data/mining_equipment("Hospital Radio", /obj/item/p25radio, 50)
 	)
 
-/obj/machinery/mineral/equipment_vendor/fastfood/police
-	var/last_card_use_time = 0
-	dispenses_dollars = FALSE
+/obj/machinery/mineral/equipment_vendor/fastfood/government/police
 	prize_list = list(
 		new /datum/data/mining_equipment("handcuffs", /obj/item/restraints/handcuffs, 1),
 		new /datum/data/mining_equipment("white crayon", /obj/item/toy/crayon/white, 1),
@@ -614,7 +619,6 @@
 		new /datum/data/mining_equipment("shotgun",		/obj/item/gun/ballistic/shotgun/vampire, 100),
 		new /datum/data/mining_equipment("IFAK",		/obj/item/storage/firstaid,	100)
 	)
-
 
 /obj/machinery/mineral/equipment_vendor/fastfood/smoking
 	prize_list = list(
