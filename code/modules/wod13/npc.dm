@@ -422,7 +422,7 @@
 	var/getaway = stopturf+1
 	if(!old_movement)
 		getaway = 2
-	if(get_dist(src, CPN.walktarget) <= getaway)
+	if(get_dist(src, walktarget) <= getaway)
 		walk(src,0)
 		walktarget = null
 
@@ -450,7 +450,7 @@
 
 
 /mob/living/carbon/human/toggle_resting()
-	..()
+	. = ..()
 	update_shadow()
 
 
