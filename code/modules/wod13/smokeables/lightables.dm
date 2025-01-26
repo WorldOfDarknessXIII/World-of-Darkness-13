@@ -5,13 +5,13 @@
 /obj/item/storage/box/matches/ms13
 	name = "\improper matchbox"
 	desc = "A hardy box of robust matches, a slogan on the side claims \"Spark Survival Co. Our matches burn for up to 45 seconds!\""
-	icon = 'mojave/icons/objects/tools/lightables_world.dmi'
+	icon = 'code/modules/wod13/smokeables/lightables_world.dmi'
 	icon_state = "matchbox"
 	inventory_state = "matchbox"
 	world_state = "matchbox"
 	component_type = /datum/component/storage/concrete/ms13/matchbox
-	lefthand_file = 'mojave/icons/mob/inhands/misc/lightables_lefthand.dmi'
-	righthand_file = 'mojave/icons/mob/inhands/misc/lightables_righthand.dmi'
+	lefthand_file = 'code/modules/wod13/smokeables/lightables_lefthand.dmi'
+	righthand_file = 'code/modules/wod13/smokeables/lightables_righthand.dmi'
 	inhand_icon_state = "matchbox"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = null
@@ -22,8 +22,6 @@
 	var/is_open = FALSE //whether the box is open or not
 	var/is_randomised = FALSE
 
-/obj/item/storage/box/matches/ms13/randomised
-	is_randomised = TRUE
 
 /obj/item/storage/box/matches/ms13/ComponentInitialize()
 	. = ..()
@@ -31,7 +29,7 @@
 	STR.max_items = max_amount
 	STR.max_combined_w_class = 100
 	STR.set_holdable(list(/obj/item/match/ms13))
-	AddElement(/datum/element/world_icon, null, icon, 'mojave/icons/objects/tools/lightables_inventory.dmi', world_state, inventory_state)
+	AddElement(/datum/element/world_icon, null, icon, 'code/modules/wod13/smokeables/lightables_inventory.dmi', world_state, inventory_state)
 
 /obj/item/storage/box/matches/ms13/PopulateContents()
 	if(!is_randomised)
@@ -82,11 +80,11 @@
 	if(is_open && contents.len && item_flags & IN_INVENTORY)
 		switch(contents.len)
 			if(1 to 6) //I know it can be done easier, but it was bugging out and im outta time
-				add_overlay(image(icon = 'mojave/icons/objects/tools/lightables_inventory.dmi', icon_state = "match_overlay_1"))
+				add_overlay(image(icon = 'code/modules/wod13/smokeables/lightables_inventory.dmi', icon_state = "match_overlay_1"))
 			if(7 to 12)
-				add_overlay(image(icon = 'mojave/icons/objects/tools/lightables_inventory.dmi', icon_state = "match_overlay_2"))
+				add_overlay(image(icon = 'code/modules/wod13/smokeables/lightables_inventory.dmi', icon_state = "match_overlay_2"))
 			if(13 to 20)
-				add_overlay(image(icon = 'mojave/icons/objects/tools/lightables_inventory.dmi', icon_state = "match_overlay_3"))
+				add_overlay(image(icon = 'code/modules/wod13/smokeables/lightables_inventory.dmi', icon_state = "match_overlay_3"))
 
 
 /obj/item/storage/box/matches/ms13/MouseDrop()
@@ -125,7 +123,7 @@
 /obj/item/storage/box/matches/ms13/attack_self(mob/user)
 	if(do_after(user, 0.5 SECONDS, src))
 		if(!is_open)
-			playsound(src, 'mojave/sound/ms13effects/matchboxopen.ogg', 200)
+			playsound(src, 'code/modules/wod13/smokeables/smokesounds/matchboxopen.ogg', 200)
 			is_open = TRUE
 			update_appearance()
 			box_check()
@@ -133,7 +131,7 @@
 			update_icon()
 			return
 		if(is_open)
-			playsound(src, 'mojave/sound/ms13effects/matchboxclose.ogg', 200)
+			playsound(src, 'code/modules/wod13/smokeables/smokesounds/matchboxclose.ogg', 200)
 			is_open = FALSE
 			update_appearance()
 			box_check()
@@ -151,11 +149,11 @@
 
 /obj/item/storage/box/matches/ms13/Exited(atom/movable/gone, direction)
 	. = ..()
-	playsound(src, 'mojave/sound/ms13effects/matchremove.ogg', 200)
+	playsound(src, 'code/modules/wod13/smokeables/smokesounds/matchremove.ogg', 200)
 
 /obj/item/storage/box/matches/ms13/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	playsound(src, 'mojave/sound/ms13effects/matchplace.ogg', 200)
+	playsound(src, 'code/modules/wod13/smokeables/smokesounds/matchplace.ogg', 200)
 
 //Match
 
@@ -163,12 +161,12 @@
 	name = "match"
 	desc = "A robust match, a rare thing in these trying times."
 	icon_state = "match_unlit"
-	icon = 'mojave/icons/objects/tools/lightables_world.dmi'
+	icon = 'code/modules/wod13/smokeables/lightables_world.dmi'
 	icon_state = "match"
 	inventory_state = "match"
 	world_state = "match"
-	lefthand_file = 'mojave/icons/mob/inhands/misc/lightables_lefthand.dmi'
-	righthand_file = 'mojave/icons/mob/inhands/misc/lightables_righthand.dmi'
+	lefthand_file = 'code/modules/wod13/smokeables/lightables_lefthand.dmi'
+	righthand_file = 'code/modules/wod13/smokeables/lightables_righthand.dmi'
 	inhand_icon_state = "match"
 	smoketime = 45 SECONDS
 	grind_results = null
@@ -181,7 +179,7 @@
 
 /obj/item/match/ms13/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/world_icon, null, icon, 'mojave/icons/objects/tools/lightables_inventory.dmi', world_state, inventory_state)
+	AddElement(/datum/element/world_icon, null, icon, 'code/modules/wod13/smokeables/lightables_inventory.dmi', world_state, inventory_state)
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/match/ms13/Initialize(mapload)
@@ -232,7 +230,7 @@
 	if(lit || burnt)
 		return
 
-	playsound(src, 'mojave/sound/ms13effects/matchlight.ogg', 100, TRUE)
+	playsound(src, 'code/modules/wod13/smokeables/smokesounds/matchlight.ogg', 100, TRUE)
 	lit = TRUE
 	set_light_on(TRUE)
 	damtype = BURN
@@ -255,7 +253,7 @@
 
 	lit = FALSE
 	set_light_on(FALSE)
-	playsound(src, 'mojave/sound/ms13effects/smokeables/cigsnuff.ogg', 25, 1)
+	playsound(src, 'code/modules/wod13/smokeables/smokesounds/cigsnuff.ogg', 25, 1)
 	burnt = TRUE
 	damtype = BRUTE
 	force = initial(force)
@@ -273,7 +271,7 @@
 
 /obj/item/match/ms13/attack_self(mob/user)
 	if(lit)
-		playsound(src, 'mojave/sound/ms13effects/smokeables/cigsnuff.ogg', 25, 1)
+		playsound(src, 'code/modules/wod13/smokeables/smokesounds/cigsnuff.ogg', 25, 1)
 		update_appearance()
 		update_overlays()
 		update_icon()
@@ -287,12 +285,12 @@
 	name = "Zippo lighter"
 	desc = "A truly robust zippo lighter, still pristine after everything its gone through."
 	icon_state = "zippo"
-	icon = 'mojave/icons/objects/tools/lightables_world.dmi'
+	icon = 'code/modules/wod13/smokeables/lightables_world.dmi'
 	icon_state = "zippo"
 	inventory_state = "zippo"
 	world_state = "zippo"
-	lefthand_file = 'mojave/icons/mob/inhands/misc/lightables_lefthand.dmi'
-	righthand_file = 'mojave/icons/mob/inhands/misc/lightables_righthand.dmi'
+	lefthand_file = 'code/modules/wod13/smokeables/lightables_lefthand.dmi'
+	righthand_file = 'code/modules/wod13/smokeables/lightables_righthand.dmi'
 	inhand_icon_state = "zippo"
 	slot_flags = null
 	var/max_fuel = 50
@@ -304,7 +302,7 @@
 	var/fuel_start = rand(10, max_fuel)
 	create_reagents(fuel_start)
 	reagents.add_reagent(/datum/reagent/fuel, fuel_start)
-	AddElement(/datum/element/world_icon, null, icon, 'mojave/icons/objects/tools/lightables_inventory.dmi', world_state, inventory_state)
+	AddElement(/datum/element/world_icon, null, icon, 'code/modules/wod13/smokeables/lightables_inventory.dmi', world_state, inventory_state)
 	update_appearance()
 
 /obj/item/lighter/ms13/zippo/examine(mob/user)
@@ -316,7 +314,7 @@
 
 /obj/item/lighter/ms13/zippo/update_overlays()
 	if(lit && item_flags & IN_INVENTORY)
-		var/mutable_appearance/overlay = mutable_appearance('mojave/icons/objects/tools/lightables_inventory.dmi')
+		var/mutable_appearance/overlay = mutable_appearance('code/modules/wod13/smokeables/lightables_inventory.dmi')
 		overlay.icon_state = "zippo_flame"
 		add_overlay(image(icon, icon_state = overlay.icon_state))
 	else
@@ -343,7 +341,7 @@
 
 /obj/item/lighter/ms13/zippo/attack_self()
 	if(!is_open)
-		playsound(src, 'mojave/sound/ms13effects/zippoopen.ogg', 100)
+		playsound(src, 'code/modules/wod13/smokeables/smokesounds/zippoopen.ogg', 100)
 		is_open = TRUE
 		inventory_state = "[initial(inventory_state)]_open"
 		inhand_icon_state = "zippo_open"
@@ -353,7 +351,7 @@
 		update_icon()
 		return
 	if(is_open && get_fuel() > 0 && !lit)
-		playsound(src, 'mojave/sound/ms13effects/zippolight.ogg', 100)
+		playsound(src, 'code/modules/wod13/smokeables/smokesounds/zippolight.ogg', 100)
 		set_lit(TRUE)
 		inhand_icon_state = "zippo_on"
 		world_state = "zippo_on"
@@ -362,7 +360,7 @@
 		update_icon()
 		return
 	if(is_open && lit)
-		playsound(src, 'mojave/sound/ms13effects/zippoclose.ogg', 100)
+		playsound(src, 'code/modules/wod13/smokeables/smokesounds/zippoclose.ogg', 100)
 		set_lit(FALSE)
 		is_open = FALSE
 		inventory_state = initial(inventory_state)
@@ -373,7 +371,7 @@
 		update_icon()
 		return
 	if(is_open)
-		playsound(src, 'mojave/sound/ms13effects/zippoclose.ogg', 100)
+		playsound(src, 'code/modules/wod13/smokeables/smokesounds/zippoclose.ogg', 100)
 		set_lit(FALSE)
 		is_open = FALSE
 		inventory_state = initial(inventory_state)
@@ -384,7 +382,7 @@
 		update_icon()
 		return
 	else
-		playsound(src, 'mojave/sound/ms13effects/zippoempty.ogg', 100)
+		playsound(src, 'code/modules/wod13/smokeables/smokesounds/zippoempty.ogg', 100)
 		update_appearance()
 		update_overlays()
 		update_icon()
@@ -409,7 +407,7 @@
 /obj/item/lighter/ms13/zippo/attack_self_secondary(mob/user)
 	. = ..()
 	if(is_open)
-		playsound(src, 'mojave/sound/ms13effects/zippoclose.ogg', 100)
+		playsound(src, 'code/modules/wod13/smokeables/smokesounds/zippoclose.ogg', 100)
 		set_lit(FALSE)
 		is_open = FALSE
 		inhand_icon_state = "zippo"
@@ -426,12 +424,12 @@
 	name = "universal lighter fluid"
 	desc = "Universal lighter fluid, works in anything that needs a flame."
 	icon_state = "butane"
-	icon = 'mojave/icons/objects/tools/lightables_world.dmi'
+	icon = 'code/modules/wod13/smokeables/lightables_world.dmi'
 	icon_state = "butane"
 	inventory_state = "butane"
 	world_state = "butane"
-	lefthand_file = 'mojave/icons/mob/inhands/misc/lightables_lefthand.dmi'
-	righthand_file = 'mojave/icons/mob/inhands/misc/lightables_righthand.dmi'
+	lefthand_file = 'code/modules/wod13/smokeables/lightables_lefthand.dmi'
+	righthand_file = 'code/modules/wod13/smokeables/lightables_righthand.dmi'
 	inhand_icon_state = "butane"
 	volume = 100 // 2 and half welder refills
 	list_reagents = list(/datum/reagent/fuel = 100)
@@ -440,4 +438,4 @@
 
 /obj/item/reagent_containers/ms13/lighterfluid/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/world_icon, null, icon, 'mojave/icons/objects/tools/lightables_inventory.dmi', world_state, inventory_state)
+	AddElement(/datum/element/world_icon, null, icon, 'code/modules/wod13/smokeables/lightables_inventory.dmi', world_state, inventory_state)
