@@ -137,17 +137,17 @@
 	var/message_header
 	var/message_body
 
-	if(tgui_alert(usr, "Do you wish to include a header? Headers use a separate paragraph and a bigger font.", "Narrate: Header", list("Yes","No"), timeout = 0) == "Yes")
-		message_header = input(usr, "Enter HEADER message. You can use the string '</p><p>' to write multiple paragraphs. HTML formating should be respected. Writing nothing or cancelling will still let you send a normal message without a header.","Narrate Header")
+	if(tgui_alert(usr, "Do you wish to include a header? Headers use a separate paragraph and a bigger font.", "Narrate Header", list("Yes","No"), timeout = 0) == "Yes")
+		message_header = input(usr, "Enter HEADER message. HTML tags like <b></b> to bold etc. will be respected. Writing nothing or cancelling will still let you send a normal message without a header.","Narrate Header")
 
-	message_body = input(usr, "Enter message. You can use the string '</p><p>' to write multiple paragraphs. HTML formating should be respected. Writing nothing or cancelling will cancel the command.","Narrate Header")
+	message_body = input(usr, "Enter message. You can use the string '</p><p>' to write multiple paragraphs. HTML tags like <b></b> to bold etc. will be respected. Writing nothing or cancelling will cancel the command.","Narrate Body")
 
 	if(!message_body) return
 
 	if(message_header) to_chat(usr, narrate_head(message_header))
 	to_chat(usr, narrate_body(message_body))
 
-	if(tgui_alert(usr, "Please check your chat window for the finished message. Are you SURE you want to send this message?", "Message Confirmation", list("Yes","No"), timeout = 0) == "Yes")
+	if(tgui_alert(usr, "Please check your chat window for the finished message. Are you SURE you want to send this message?", "Narrate Confirmation", list("Yes","No"), timeout = 0) == "Yes")
 
 		if(message_header)
 			to_chat(world, narrate_head(message_header))
