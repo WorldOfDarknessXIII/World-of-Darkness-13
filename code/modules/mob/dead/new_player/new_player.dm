@@ -70,8 +70,8 @@
 		output += "<p><a href='byond://?src=[REF(src)];late_join=1'>Join Game!</a></p>"
 		output += "<p>[LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)]</p>"
 
-	if(!IsGuestKey(src.key))
-		output += playerpolls()
+//	if(!IsGuestKey(src.key))
+//		output += playerpolls()
 
 	output += "</center>"
 
