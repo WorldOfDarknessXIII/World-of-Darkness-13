@@ -59,7 +59,7 @@
 	spawn()
 		var/loadout_type = input(H, "Choose the Lord's gift for you:", "Loadout") as anything in loadouts
 		switch(loadout_type)
-			if("Fire Master")
+			if("Fire Fighter")
 				H.equip_to_slot_or_del(new /obj/item/clothing/head/vampire/helmet(H), ITEM_SLOT_HEAD)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/vest(H), ITEM_SLOT_OCLOTHING)
 				H.put_in_r_hand(new /obj/item/vampire_flamethrower(H))
