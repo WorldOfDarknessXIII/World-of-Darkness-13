@@ -853,7 +853,7 @@ SUBSYSTEM_DEF(carpool)
 	var/moved_y = round(cos(used_vector)*used_speed)
 	if(used_speed != 0)
 		var/true_movement_angle = used_vector
-		var/true_speed = get_dist_in_pixels(0, 0, moved_x, moved_y)
+//		var/true_speed = get_dist_in_pixels(0, 0, moved_x, moved_y)
 		if(used_speed < 0)
 			true_movement_angle = SIMPLIFY_DEGREES(used_vector+180)
 		var/turf/check_turf = locate( \
