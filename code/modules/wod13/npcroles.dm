@@ -83,8 +83,8 @@
 		"You need somethin'?",
 		"You've got some balls, that's for sure.",
 		"You know who I work for?",
-		"Get the hell outta here, 'fore I get my gang on yo' ass.",
-		"You need sumn' punk?",
+		"Get the hell outta here, 'fore I get my gang on yo ass.",
+		"you need sumn' punk?",
 		"Get lost, liberal.",
 		"Get outta this side of town.",
 		"Think you scare me? You know who I work for?",
@@ -128,7 +128,7 @@
 		"Fucking FREAK!",
 		"What the hell are you doing!?",
 		"You fucked up!",
-		"Check yo' self, fool!",
+		"Check yo self fool!",
 		"We got shit, shit that'll shut you up for good!"
 	)
 
@@ -234,9 +234,9 @@
 		"Do you need something?",
 		"Can you repeat what you were saying?",
 		"I'm late, don't interrupt me.",
-		"Check the bar if you want somebody to bother...",
+		"Check bar for new company...",
 		"Can't speak right now.",
-		"Goodnight, I guess?",
+		"Good night I guess?",
 		"Guh...",
 		"I dunno what to say.",
 		"That's all, folks."
@@ -246,7 +246,7 @@
 		"I miss my beer...",
 		"Everything okay?",
 		"Hello.",
-		"Haven't I seen you around before?",
+		"Didn't I meet you?",
 		"Something wrong here.",
 		"Oooh, dude..."
 	)
@@ -262,7 +262,7 @@
 	help_phrases = list(
 		"Oh God!",
 		"Go away!!",
-		"What the hell is happening?!",
+		"What the heck is happening?!",
 		"Stop!",
 		"Someone, help!",
 		"Mommy!"
@@ -490,7 +490,7 @@
 											"Drunk...")
 	help_phrases = list("Aaaugh!",
 											"AAAAHHHH!!",
-											"What da' fuck? WHO'RE YOU?!",
+											"Wut de fuck? WHOM'RE YOU?!",
 											"Shit!",
 											"Ass!",
 											"Dick!")
@@ -593,7 +593,7 @@
 											"Drunk...")
 	help_phrases = list("Aaaugh!",
 											"AAAAHHHH!!",
-											"What the fuck? WHO'RE YOU?!",
+											"Wut de fuck? WHOM'RE YOU?!",
 											"Shit!",
 											"Ass!",
 											"Dick!")
@@ -727,7 +727,7 @@
 											"I'm going somewhere important, not like you'd get it.",
 											"Get lost, filthy hobo...",
 											"Get lost, peasant...",
-											"You been to the bar tonight? It's a good place for hobos like you...",
+											"Have you been to the bar tonight? people go there all the time and sit there for the entire night, it's crazy...",
 											"Stop doing that, imbecile.")
 	neutral_phrases = list("Did you ask something?",
 											"Excuse me?",
@@ -1090,18 +1090,18 @@
 
 	male_phrases = list("I see you.",
 											"Looking suspicious...",
-											"Don't try anything stupid.",
-											"Nothing to see here.",
+											"I got some bullets if you got some crime-ass ideas.",
+											"I'm the law.",
 											"Have you seen man in black coat with black hair?")
 	neutral_phrases = list("I see you.",
 											"Looking suspicious...",
-											"Don't try anything stupid.",
-											"Nothing to see here.",
+											"I got some bullets if you got some crime-ass ideas.",
+											"I'm the law.",
 											"Have you seen man in black coat with black hair?")
 	random_phrases = list("I see you.",
 											"Looking suspicious...",
-											"Don't try anything stupid.",
-											"Nothing to see here.",
+											"I got some bullets if you got some crime-ass ideas.",
+											"I'm the law.",
 											"Have you seen man in black coat with black hair?")
 	answer_phrases = list("I'm here to protect you.")
 	help_phrases = list("Lay down!",
@@ -1205,22 +1205,22 @@
 	pockets = list(/obj/item/vamp/keys/npc, /obj/item/stack/dollar/rand)
 
 	neutral_phrases = list(
-		"No loitering.",
-		"I'm kinda, like, a cop, you know.",
-		"I could go for some bearclaws right about now.",
+		"No Loitering.",
+		"I'm kinda like a  cop, you know.",
+		"I could go for some bear claws right about now.",
 		"Like the uniform?",
 		"Hey, catch me later, I'll buy you a beer."
 	)
 	neutral_phrases = list(
-		"No loitering.",
-		"I'm kinda, like, a cop, you know?",
-		"I could go for some bearclaws right about now.",
+		"No Loitering.",
+		"I'm kinda like a  cop, you know.",
+		"I could go for some bear claws right about now.",
 		"Like the uniform?",
 		"Hey, catch me later, I'll buy you a beer."
 	)
 	random_phrases = list(
-		"It's been a real quiet night.",
-		"My brothers and father are security guards, too."
+		"Real quiet night tonight.",
+		"My brothers and father are security guards too."
 	)
 	answer_phrases = list("I need some coffee.")
 	help_phrases = list(
@@ -1337,27 +1337,27 @@
 	uniforms = list(/obj/item/clothing/under/vampire/burlesque)
 	backpacks = list()
 
-	female_phrases = list("No touching~.",
-											"Like what you see?",
+	female_phrases = list("Wanna touch this boobies?",
+											"Do you like my butt?",
 											"Wanna play?",
 											"He-he.",
-											"Want a private dance?...",
+											"Any dance for you...",
 											"Sit and rest.",
 											"Do you like this?",
 											"Ahh...")
-	neutral_phrases = list("No touching~.",
-											"Like what you see?",
+	neutral_phrases = list("Wanna touch this boobies?",
+											"Do you like my butt?",
 											"Wanna play?",
 											"He-he.",
-											"Want a private dance?...",
+											"Any dance for you...",
 											"Sit and rest.",
 											"Do you like this?",
 											"Ahh...")
-	random_phrases = list("No touching~.",
-											"Like what you see?",
+	random_phrases = list("Wanna touch this boobies?",
+											"Do you like my butt?",
 											"Wanna play?",
 											"He-he.",
-											"Want a private dance?...",
+											"Any dance for you...",
 											"Sit and rest.",
 											"Do you like this?",
 											"Ahh...")
@@ -1367,7 +1367,7 @@
 												"Sure you do...")
 	help_phrases = list("Oh God!",
 											"Ahhh!!",
-											"I'm just a stripper!",
+											"I'm just a strip worker!",
 											"Stop!",
 											"Help me!",
 											"Help!")
