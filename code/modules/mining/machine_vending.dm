@@ -206,13 +206,24 @@
 
 /obj/machinery/mineral/equipment_vendor/fastfood/police/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id/police))
-		if(world.time - last_card_use_time >= 2 MINUTES)
+		if(world.time - last_card_use_time >= 1 MINUTES)
 			points = points+15
 			last_card_use_time = world.time
 		else
 			to_chat(user, "<span class='alert'>You've hit your requisitions limit, come back soon.</span>")
 	if(istype(I, /obj/item/stack/dollar))
 		to_chat(user, "<span class='alert'>You can only use a police badge here.</span>")
+		return
+
+/obj/machinery/mineral/equipment_vendor/fastfood/hospital/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/card/id/clinic || /obj/item/card/id/clinic/director))
+		if(world.time - last_card_use_time >= 1 MINUTES)
+			points = points+15
+			last_card_use_time = world.time
+		else
+			to_chat(user, "<span class='alert'>You've hit your requisitions limit, come back soon.</span>")
+	if(istype(I, /obj/item/stack/dollar))
+		to_chat(user, "<span class='alert'>You can only use a medical card here.</span>")
 		return
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/mining_voucher/voucher, mob/redeemer)

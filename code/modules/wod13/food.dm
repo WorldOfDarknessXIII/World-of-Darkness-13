@@ -567,14 +567,16 @@
 		new /datum/data/mining_equipment("box of syringes", /obj/item/storage/box/syringes, 300)
 	)
 
-/obj/machinery/mineral/equipment_vendor/fastfood/hospital // we should probably swap from a vendor system and work on a sort of gameplay loop - tzula
+/obj/machinery/mineral/equipment_vendor/fastfood/hospital
+	var/last_card_use_time = 0
+	dispenses_dollars = FALSE // we should probably swap from a vendor system and work on a sort of gameplay loop - tzula
 	prize_list = list(
 		new /datum/data/mining_equipment("toxins first aid kit", /obj/item/storage/firstaid/toxin, 50),
 		new /datum/data/mining_equipment("burns first aid kit", /obj/item/storage/firstaid/fire, 50),
 		new /datum/data/mining_equipment("standard first aid kit", /obj/item/storage/firstaid/medical, 50),
 		new /datum/data/mining_equipment("respiratory aid kit", /obj/item/storage/firstaid/o2, 50),
 		new /datum/data/mining_equipment("defib batteries", /obj/item/stock_parts/cell, 50),
-		new /datum/data/mining_equipment("potassium iodide pill bottle", /obj/item/defibrillator/compact, 50),
+		new /datum/data/mining_equipment("Compact Defibillator", /obj/item/defibrillator/compact, 50),
 		new /datum/data/mining_equipment("iron pill bottle", /obj/item/storage/pill_bottle/iron, 50),
 		new /datum/data/mining_equipment("bruise pack", /obj/item/stack/medical/bruise_pack, 50),
 		new /datum/data/mining_equipment("surgical apron", /obj/item/clothing/suit/apron/surgical, 50),
