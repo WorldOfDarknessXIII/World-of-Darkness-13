@@ -824,8 +824,10 @@
 
 /mob/living/simple_animal/pet/rat/Life()
 	. = ..()
+	if(!isturf(loc)) // if rat is, for example, in-hand or inside a crate, won't run this self-deletion code
+		return
 	var/delete_me = TRUE
-	for(var/mob/living/carbon/human/H in oviewers(5, src))
+	for(var/mob/living/carbon/human/H in viewers(5, src))
 		if(H)
 			delete_me = FALSE
 	if(delete_me)
