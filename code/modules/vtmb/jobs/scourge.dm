@@ -35,6 +35,7 @@
 	name = "Scourge"
 	jobtype = /datum/job/vamp/agent
 
+	ears = /obj/item/p25radio
 	id = /obj/item/card/id/camarilla
 	uniform = /obj/item/clothing/under/vampire/agent
 	gloves = /obj/item/clothing/gloves/vampire/work
@@ -52,7 +53,6 @@
 
 /datum/outfit/job/agent/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.vampire_faction = "Camarilla"
 
 /obj/effect/landmark/start/camarillaagent
 	name = "Scourge"

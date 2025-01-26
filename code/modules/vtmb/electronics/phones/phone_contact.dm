@@ -38,7 +38,7 @@
 	name = "Primogen Nosferatu"
 
 /datum/phonecontact/nosferatu/check_global_contacts()
-	if(number != GLOB.toreadornumber && name_check != GLOB.toreadorname)
+	if(number != GLOB.nosferatunumber  && name_check != GLOB.nosferatuname )
 		number = GLOB.nosferatunumber
 		name = GLOB.nosferatuname + " - " + name
 		return TRUE

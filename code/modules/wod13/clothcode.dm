@@ -48,7 +48,7 @@
 	icon_state = "nosferatu_f"
 
 /obj/item/clothing/under/vampire/toreador
-	name = "flamboiant outfit"
+	name = "flamboyant outfit"
 	desc = "Some sexy clothes."
 	icon_state = "toreador_m"
 
@@ -736,6 +736,11 @@
 	icon_state = "labcoat"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 90, WOUND = 10)
 
+/obj/item/clothing/suit/vampire/labcoat/director
+	name = "clinic director's labcoat"
+	desc = "Special labcoat for clinic director with Saint John Clinic's emblems."
+	icon_state = "director"
+
 /obj/item/clothing/suit/vampire/fancy_gray
 	name = "fancy gray jacket"
 	desc = "Gray-colored jacket"
@@ -1172,6 +1177,24 @@
 	icon_state = "balaclava"
 	inhand_icon_state = "balaclava"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/clothing/mask/vampire/tragedy
+	name = "tragedy"
+	desc = "The Greek Tragedy mask."
+	icon_state = "tragedy"
+	inhand_icon_state = "tragedy"
+	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/clothing/mask/vampire/comedy
+	name = "comedy"
+	desc = "The Greek Comedy mask."
+	icon_state = "comedy"
+	inhand_icon_state = "comedy"
+	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
 

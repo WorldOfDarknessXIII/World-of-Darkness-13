@@ -3,9 +3,9 @@
 	desc = "The Kiasyd are a bloodline of the Lasombra founded after a mysterious \"accident\" involving the Lasombra Marconius of Strasbourg. The \"accident\", involving faeries and the blood of \"Zeernebooch, a god of the Underworld\", resulted in Marconius gaining several feet in height, turning chalky white and developing large, elongated black eyes."
 	curse = "At a glance they look unsettling or perturbing to most, their appearance closely resembles fae from old folklore. Kiasyd are also in some way connected with changelings and they are vulnerable to cold iron."
 	clane_disciplines = list(
-		/datum/discipline/dominate = 1,
-		/datum/discipline/obtenebration = 2,
-		/datum/discipline/mytherceria = 3
+		/datum/discipline/dominate,
+		/datum/discipline/obtenebration,
+		/datum/discipline/mytherceria
 	)
 	alt_sprite = "kiasyd"
 	no_facial = TRUE
@@ -274,6 +274,16 @@
 				COOLDOWN_START(kiasyd, cold_iron_frenzy, 10 SECONDS)
 				to_chat(L, "<span class='danger'><b>COLD IRON!</b></span>")
 				L.rollfrenzy()
+	if(iscathayan(target) && is_iron)
+		var/mob/living/carbon/human/L = target
+		if(L.max_yang_chi > L.max_yin_chi + 2)
+			to_chat(L, "<span class='danger'><b>COLD METAL!</b></span>")
+			L.adjustBruteLoss(15, TRUE)
+	if(iscathayan(target) && is_wood)
+		var/mob/living/carbon/human/L = target
+		if(L.max_yin_chi > L.max_yang_chi + 2)
+			to_chat(L, "<span class='danger'><b>WOOD!</b></span>")
+			L.adjustBruteLoss(15, TRUE)
 	..()
 
 /datum/discipline/mytherceria/post_gain(mob/living/carbon/human/H)

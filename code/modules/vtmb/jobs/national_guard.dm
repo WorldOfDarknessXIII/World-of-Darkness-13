@@ -1,5 +1,6 @@
 /datum/outfit/job/national_guard
 	name = "National Guard Soldier"
+	ears = /obj/item/p25radio/police/government
 	uniform = /obj/item/clothing/under/vampire/military_fatigues
 	mask = /obj/item/clothing/mask/vampire/balaclava
 	r_pocket = /obj/item/flashlight

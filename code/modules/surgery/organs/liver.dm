@@ -5,7 +5,7 @@
 	name = "liver"
 	icon_state = "liver"
 	illegal = TRUE
-	cost = 800
+	cost = 400
 	w_class = WEIGHT_CLASS_SMALL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LIVER

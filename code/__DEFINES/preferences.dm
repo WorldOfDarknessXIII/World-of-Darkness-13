@@ -82,6 +82,7 @@
 #define EXP_TYPE_COUNCIL        "Camarilla Primogen Council"
 #define EXP_TYPE_POLICE         "Police Force"
 #define EXP_TYPE_SERVICES   "City Services"
+#define EXP_TYPE_CLINIC   "St. John's Clinic"
 #define EXP_TYPE_GIOVANNI   "Giovanni Family"
 #define EXP_TYPE_TZIMISCE   "Tzimisce Mansion"
 #define EXP_TYPE_WAREHOUSE      "Warehouse"
@@ -128,3 +129,10 @@
 
 //recommened client FPS
 #define RECOMMENDED_FPS 40
+
+//public image
+
+#define INFO_KNOWN_UNKNOWN "Unknown"
+#define INFO_KNOWN_CLAN_ONLY "Clan Only"
+#define INFO_KNOWN_FACTION "Faction Only"
+#define INFO_KNOWN_PUBLIC "Famous"

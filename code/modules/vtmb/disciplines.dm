@@ -274,7 +274,7 @@
 			caster.AdjustMasquerade(-1)
 	return TRUE
 
-/datum/discipline/proc/activate(var/mob/living/target, var/mob/living/carbon/human/caster)
+/datum/discipline/proc/activate(mob/living/target, mob/living/carbon/human/caster)
 	if(!target)
 		return
 	if(!caster)
@@ -332,7 +332,7 @@
 				var/datum/action/beastmaster_deaggro/E2 = new()
 				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/rat/R = new(get_turf(caster))
-			R.my_creator = caster
+//			R.my_creator = caster
 			caster.beastmaster |= R
 			R.beastmaster = caster
 		if(2)
@@ -342,7 +342,7 @@
 				var/datum/action/beastmaster_deaggro/E2 = new()
 				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/cat/C = new(get_turf(caster))
-			C.my_creator = caster
+//			C.my_creator = caster
 			caster.beastmaster |= C
 			C.beastmaster = caster
 		if(3)
@@ -352,7 +352,7 @@
 				var/datum/action/beastmaster_deaggro/E2 = new()
 				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/D = new(get_turf(caster))
-			D.my_creator = caster
+//			D.my_creator = caster
 			caster.beastmaster |= D
 			D.beastmaster = caster
 		if(4)
@@ -362,7 +362,7 @@
 				var/datum/action/beastmaster_deaggro/E2 = new()
 				E2.Grant(caster)
 			var/mob/living/simple_animal/hostile/beastmaster/rat/flying/F = new(get_turf(caster))
-			F.my_creator = caster
+//			F.my_creator = caster
 			caster.beastmaster |= F
 			F.beastmaster = caster
 		if(5)
@@ -459,7 +459,11 @@
 		C.name = name
 		C.appearance = appearance
 		C.dir = dir
-		animate(C, pixel_x = rand(-16, 16), pixel_y = rand(-16, 16), alpha = 0, time = 5)
+		if(iscathayan(src))
+			C.color = "#40ffb4"		////WE GIVE IT SANDEVISTAN LOOK YEEEHAAAAW
+			animate(C, pixel_x = rand(-16, 16), pixel_y = rand(-16, 16), color = "#00196e", time = 5)
+		else
+			animate(C, pixel_x = rand(-16, 16), pixel_y = rand(-16, 16), alpha = 0, time = 5)
 		if(CheckEyewitness(src, src, 7, FALSE))
 			AdjustMasquerade(-1)
 
@@ -552,6 +556,9 @@
 
 /datum/discipline/dominate/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
+	if(iscathayan(target))
+		if(target.mind.dharma?.Po == "Legalist")
+			target.mind.dharma?.roll_po(caster, target)
 	if(target.spell_immunity)
 		return
 	var/mypower = caster.get_total_social()
@@ -720,6 +727,9 @@
 
 /datum/discipline/dementation/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
+	if(iscathayan(target))
+		if(target.mind.dharma?.Po == "Legalist")
+			target.mind.dharma?.roll_po(caster, target)
 	//1 - instant laugh
 	//2 - hallucinations and less damage
 	//3 - victim dances
@@ -843,20 +853,68 @@
 	delay = 10 SECONDS
 	activate_sound = 'code/modules/wod13/sounds/obfuscate_activate.ogg'
 	leveldelay = TRUE
+	// if the caster acts overtly, the ability is deactivated
+	COOLDOWN_DECLARE(obfuscate_combat_cooldown)
+	var/static/list/aggressive_signals = list(
+		COMSIG_HUMAN_MELEE_UNARMED_ATTACK,
+		COMSIG_MOB_ITEM_ATTACK,
+		COMSIG_MOB_ATTACK_RANGED,
+	)
+	var/deactivation_timer = null	//separate from the combat cooldown; this is the timer for the ability itself
+	var/active = FALSE // this is used to determine if the ability is active or not
+
+/datum/discipline/obfuscate/check_activated(mob/living/target, mob/living/carbon/human/caster)
+	// check if the caster has acted overtly recently before we go assigning or calculating anything
+	if(!COOLDOWN_FINISHED(src, obfuscate_combat_cooldown))
+		to_chat(caster, span_warning("You have acted overtly too recently to pull the cloak of obfuscation upon yourself; your attempt fails!"))
+		return FALSE
+	. = ..()
 
 /datum/discipline/obfuscate/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
-	for(var/mob/living/carbon/human/npc/NPC in GLOB.npc_list)
+	var/duration = delay*level_casting+caster.discipline_time_plus
+	if(active)	// if they're popping it again while it's already active, extend the duration
+		if(deactivation_timer)	// BYOND is mysterious and the timer may be null, so we check before we try deleting it
+			deltimer(deactivation_timer)
+			deactivation_timer = null
+		deactivation_timer = addtimer(CALLBACK(src, PROC_REF(reveal), caster), duration, TIMER_STOPPABLE)
+		return
+	for(var/mob/living/carbon/human/npc/NPC in GLOB.npc_list)	// ... this iterates over every NPC in the game?
 		if(NPC)
 			if(NPC.danger_source == caster)
 				NPC.danger_source = null
 	caster.alpha = 10
 	caster.obfuscate_level = level_casting
-	spawn((delay*level_casting)+caster.discipline_time_plus)
-		if(caster)
-			if(caster.alpha != 255)
-				caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/obfuscate_deactivate.ogg', 50, FALSE)
-				caster.alpha = 255
+	deactivation_timer = addtimer(CALLBACK(src, PROC_REF(reveal), caster), duration, TIMER_STOPPABLE)
+	handle_signals(TRUE, caster)
+	active = TRUE
+
+/datum/discipline/obfuscate/proc/reveal(mob/living/carbon/human/caster)
+
+	to_chat(caster, "<span class='warning'>Your cloak of obfuscation fades away.</span>")
+	caster.alpha = 255
+	caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/obfuscate_deactivate.ogg', 50, FALSE)
+	handle_signals(FALSE, caster)
+	if(deactivation_timer)
+		deltimer(deactivation_timer)
+		deactivation_timer = null	// just in case
+	active = FALSE
+
+/datum/discipline/obfuscate/proc/on_hostile_action(datum/source, mob/living/carbon/human/caster)
+	SIGNAL_HANDLER
+
+	var/cooldown_length = (60-min(30, level_casting*5)) SECONDS
+	COOLDOWN_START(src, obfuscate_combat_cooldown, cooldown_length)
+	to_chat(source, span_warning("You feel your cloak of obfuscation fly away from you as you act conspicuously."))
+	reveal(source)
+
+/datum/discipline/obfuscate/proc/handle_signals(bool, mob/living/carbon/human/caster) // the bool in this instance indicates if the ability is activating
+	if(bool)
+		for(var/signal in aggressive_signals)
+			RegisterSignal(caster, signal, PROC_REF(on_hostile_action))
+		return
+	for(var/signal in aggressive_signals)
+		UnregisterSignal(caster, signal)
 
 /datum/discipline/presence
 	name = "Presence"
@@ -898,6 +956,9 @@
 
 /datum/discipline/presence/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
+	if(iscathayan(target))
+		if(target.mind.dharma?.Po == "Legalist")
+			target.mind.dharma?.roll_po(caster, target)
 	var/mypower = caster.get_total_social()
 	var/theirpower = target.get_total_mentality()
 	if((theirpower >= mypower) || ((caster.generation - 3) >= target.generation))
@@ -1347,7 +1408,7 @@
 			if(istype(target, /mob/living/carbon/human/npc))
 				var/mob/living/carbon/human/npc/NPC = target
 				NPC.last_attacker = null
-			if(!iskindred(target) || !isgarou(target))
+			if(!iskindred(target) && !isgarou(target) && !iscathayan(target))	//Who tf wrote this with || lmao
 				if(H.stat != DEAD)
 					H.death()
 				switch(level_casting)

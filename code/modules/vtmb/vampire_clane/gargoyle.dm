@@ -3,9 +3,9 @@
 	desc = "The Gargoyles are a vampiric bloodline created by the Tremere as their servitors. Although technically not a Tremere bloodline, the bloodline is largely under their control. In the Final Nights, Gargoyle populations seem to be booming; this is largely because older, free Gargoyles are coming out of hiding to join the Camarilla, because more indentured Gargoyles break free from the clutches of the Tremere, and because the free Gargoyles have also begun to Embrace more mortals on their own."
 	curse = "All Gargoyles, much like the Nosferatu, are hideous to look at, a byproduct of their occult origins (and the varied Kindred stock from which they originate). This means that Gargoyles, just like the Nosferatu, have to hide their existence from common mortals, as their mere appearance is a breach of the Masquerade. In addition, the nature of the bloodline's origin manifests itself in the fact that Gargoyles are highly susceptible to mind control of any source. This weakness is intentional; a flaw placed into all Gargoyles by the Tremere in the hope that it would make them easier to control (and less likely to rebel)."
 	clane_disciplines = list(
-		/datum/discipline/fortitude = 1,
-		/datum/discipline/potence = 2,
-		/datum/discipline/visceratika = 3
+		/datum/discipline/fortitude,
+		/datum/discipline/potence,
+		/datum/discipline/visceratika
 	)
 	alt_sprite = "gargoyle"
 	no_facial = TRUE
@@ -89,20 +89,19 @@
 			spawn(delay+caster.discipline_time_plus)
 				REMOVE_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
 		if(5)
-			caster.gargoyle_pass = TRUE
+			ADD_TRAIT(caster, TRAIT_PASS_THROUGH_WALLS, "visceratika 5")
 			caster.alpha = 10
 			caster.obfuscate_level = 3
 			ADD_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
 			spawn(delay+caster.discipline_time_plus)
 				caster.obfuscate_level = 0
 				caster.alpha = 255
-				caster.gargoyle_pass = FALSE
+				REMOVE_TRAIT(caster, TRAIT_PASS_THROUGH_WALLS, "visceratika 5")
 				REMOVE_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
 
 /turf/closed/Enter(atom/movable/mover, atom/oldloc)
 	if(isliving(mover))
-		var/mob/living/L = mover
-		if(L.gargoyle_pass)
-			if(get_area(L) == get_area(src))
-				return TRUE
+		var/mob/living/moving_mob = mover
+		if(HAS_TRAIT(moving_mob, TRAIT_PASS_THROUGH_WALLS) && (get_area(moving_mob) == get_area(src)))
+			return TRUE
 	return ..()

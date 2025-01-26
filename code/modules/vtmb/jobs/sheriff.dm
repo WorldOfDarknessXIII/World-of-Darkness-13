@@ -48,6 +48,7 @@
 	name = "Sheriff"
 	jobtype = /datum/job/vamp/sheriff
 
+	ears = /obj/item/p25radio
 	id = /obj/item/card/id/sheriff
 	uniform = /obj/item/clothing/under/vampire/sheriff
 	belt = /obj/item/storage/belt/vampire/sheathe/rapier
@@ -68,7 +69,7 @@
 
 /datum/outfit/job/sheriff/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.vampire_faction = "Camarilla"
+	H.ignores_warrant = TRUE
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/sheriff/female
 

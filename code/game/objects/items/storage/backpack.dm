@@ -235,6 +235,17 @@
 	icon_state = "satchel-norm"
 	inhand_icon_state = "satchel-norm"
 	component_type = /datum/component/storage/concrete/vtm/satchel
+	var/icon_hidden = FALSE
+
+/obj/item/storage/backpack/satchel/AltClick(mob/user)
+	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+		return ..()
+	var/mob/living/carbon/human/H = user
+	if(src == H.back && H.w_uniform)
+		icon_hidden = !icon_hidden
+		worn_icon_state = icon_hidden ? "blank" : initial(worn_icon_state)
+		to_chat(H, "<span class='notice'>You [icon_hidden ? "conceal" : "reveal"] your [src].</span>")
+		H.update_inv_back()
 
 /obj/item/storage/backpack/satchel/leather
 	name = "leather satchel"

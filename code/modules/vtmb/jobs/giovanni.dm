@@ -34,12 +34,11 @@
 	suit = /obj/item/clothing/suit/vampire/trench
 	shoes = /obj/item/clothing/shoes/vampire
 	l_pocket = /obj/item/vamp/phone
-	r_pocket = /obj/item/vamp/keys/giovanni
+	r_pocket = /obj/item/vamp/keys/capo
 	backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard/giovanniboss=1)
 
 /datum/outfit/job/giovannielder/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.vampire_faction = "Giovanni"
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/suit/female
 		shoes = /obj/item/clothing/shoes/vampire/heels
@@ -86,7 +85,6 @@
 
 /datum/outfit/job/giovanni/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.vampire_faction = "Giovanni"
 	if(H.gender == FEMALE)
 		uniform = /obj/item/clothing/under/vampire/suit/female
 		shoes = /obj/item/clothing/shoes/vampire/heels

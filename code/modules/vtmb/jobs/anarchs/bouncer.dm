@@ -20,7 +20,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_BRUISER
 	known_contacts = list("Baron")
-	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian")
+	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Tremere", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian", "Ministry")
 
 	v_duty = "You are the enforcer of the Anarchs. The baron is always in need of muscle power. Enforce the Traditions - in the anarch way."
 	minimal_masquerade = 2
@@ -39,9 +39,6 @@
 	r_hand = /obj/item/melee/vampirearms/baseball
 	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/vampire_stake=3, /obj/item/flashlight=1, /obj/item/vamp/keys/hack=1, /obj/item/vamp/creditcard=1)
 
-/datum/outfit/job/bruiser/pre_equip(mob/living/carbon/human/H)
-	..()
-	H.vampire_faction = "Anarch"
 
 /obj/effect/landmark/start/bruiser
 	name = "Bruiser"

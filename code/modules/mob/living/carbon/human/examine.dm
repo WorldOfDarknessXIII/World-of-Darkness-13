@@ -53,6 +53,17 @@
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 
+	//faction, job, etc
+	if(iskindred(user) && iskindred(src) && is_face_visible())
+		var/mob/living/carbon/human/vampire = user
+		var/same_clan = vampire.clane == clane
+		switch(info_known)
+			if(INFO_KNOWN_PUBLIC)
+				. += "<b>You know [p_them()] as a [job] of the [clane] bloodline.</b>"
+			if(INFO_KNOWN_CLAN_ONLY)
+				if(same_clan)
+					. += "<b>You know [p_them()] as a [job]. You are of the same bloodline.</b>"
+
 	//uniform
 	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING) && !(w_uniform.item_flags & EXAMINE_SKIP))
 		//accessory
@@ -424,7 +435,11 @@
 			var/weaver_taint = NONE
 			var/wyld_taint = NONE
 
-			if (iskindred(src)) //vampires are static, and may be Wyrm-tainted depending on behaviour
+			if(iscathayan(src))
+				if(!check_kuei_jin_alive())
+					wyrm_taint++
+
+			if (iskindred(src))
 				var/mob/living/carbon/human/vampire = src
 				weaver_taint++
 
@@ -480,7 +495,6 @@
 			msg += "<span class='notice'><i>[t_He] [t_has] significantly disfiguring scarring, you can look again to take a closer look...</i></span>\n"
 		if(12 to INFINITY)
 			msg += "<span class='notice'><b><i>[t_He] [t_is] just absolutely fucked up, you can look again to take a closer look...</i></b></span>\n"
-
 
 	if (length(msg))
 		. += "<span class='warning'>[msg.Join("")]</span>"
@@ -551,3 +565,4 @@
 			dat += "[new_text]\n" //dat.Join("\n") doesn't work here, for some reason
 	if(dat.len)
 		return dat.Join()
+

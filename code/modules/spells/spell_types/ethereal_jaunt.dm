@@ -82,3 +82,7 @@
 	if (locate(/obj/effect/blessing, .))
 		to_chat(user, "<span class='warning'>Holy energies block your path!</span>")
 		return null
+	var/area/Area = get_area(.)
+	if(Area.wall_rating > 2)
+		to_chat(user, "<span class='warning'><b>THE WALL</b> in this place is too strong!</span>")
+		return null

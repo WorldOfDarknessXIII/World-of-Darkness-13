@@ -4,7 +4,7 @@
 	icon = 'code/modules/wod13/mobs.dmi'
 	icon_state = "zombie"
 	icon_living = "zombie"
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mob_biotypes = MOB_UNDEAD
 	speak_chance = 0
 	stat_attack = HARD_CRIT //braains
 	maxHealth = 50
@@ -87,7 +87,7 @@
 	icon_state = "zombie"
 	icon_living = "zombie"
 	icon_dead = "zombie_dead"
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mob_biotypes = MOB_UNDEAD
 	speak_chance = 0
 	stat_attack = HARD_CRIT //braains
 	maxHealth = 50
@@ -113,7 +113,7 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
 	icon_living = "ghost"
-	mob_biotypes = MOB_SPIRIT
+	mob_biotypes = MOB_UNDEAD
 	speak_chance = 0
 	turns_per_move = 5
 	response_help_continuous = "passes through"

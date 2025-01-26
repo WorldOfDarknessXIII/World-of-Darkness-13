@@ -17,6 +17,7 @@
 			for(var/obj/item/vamp/creditcard/caard in b.contents)
 				if(caard)
 					H.bank_id = caard.account.bank_id
+					caard.account.account_owner = H.true_real_name
 					caard.has_checked = TRUE
 
 //ID
@@ -185,6 +186,7 @@
 /obj/item/card/id/clinic
 	name = "medical badge"
 	id_type_name = "medical badge"
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY)
 	desc = "A badge which shows medical qualification."
 	icon = 'code/modules/wod13/items.dmi'
 	icon_state = "id2"
@@ -194,6 +196,10 @@
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	worn_icon = 'code/modules/wod13/worn.dmi'
 	worn_icon_state = "id2"
+
+/obj/item/card/id/clinic/director
+	name = "clinic director's badge"
+	desc = "A badge which shows not only medical qualification, but also an authority over the clinic."
 
 /obj/item/card/id/archive
 	name = "scholar badge"
@@ -300,8 +306,8 @@
 	worn_icon_state = "id12"
 
 /obj/item/card/id/police
-	name = "police department badge"
-	id_type_name = "police department badge"
+	name = "police officer badge"
+	id_type_name = "police officer badge"
 	desc = "Sponsored by the Government."
 	icon = 'code/modules/wod13/items.dmi'
 	icon_state = "id13"
@@ -313,15 +319,15 @@
 	worn_icon_state = "id13"
 
 /obj/item/card/id/police/sergeant
-	name = "police department badge"
+	name = "police sergeant badge"
 	desc = "Sponsored by the Government. This one seems slightly more worn down than all the others."
 
 /obj/item/card/id/police/chief
-	name = "police department badge"
+	name = "police chief badge"
 	desc = "Sponsored by the Government. This one has a chrome plated finish."
 
 /obj/item/card/id/police/fbi
-	name = "fbi agent badge"
+	name = "fbi special agent badge"
 	desc = "Sponsored by the Government. This one has all the bells and whistles."
 
 /obj/item/card/id/voivode
@@ -377,82 +383,6 @@
 	worn_icon = 'code/modules/wod13/worn.dmi'
 	worn_icon_state = "id15"
 
-/datum/antagonist/ambitious
-	name = "Ambitious"
-	roundend_category = "ambitious"
-	antagpanel_category = "Ambitious"
-	job_rank = ROLE_SYNDICATE
-	antag_moodlet = /datum/mood_event/focused
-	show_to_ghosts = FALSE
-
-/datum/antagonist/ambitious/on_gain()
-	owner.special_role = src
-	var/objectve = rand(1, 4)
-	switch(objectve)
-		if(1)
-			var/list/ambitious = list()
-			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				if(H.stat != DEAD && H.true_real_name != owner.current.true_real_name && H.vampire_faction != "Sabbat")
-					ambitious += H
-			if(length(ambitious))
-				var/datum/objective/blood/blood_objective = new
-				blood_objective.owner = owner
-				var/mob/living/carbon/human/HU = pick(ambitious)
-				blood_objective.owner = owner
-				blood_objective.target_name = HU.true_real_name
-				objectives += blood_objective
-				blood_objective.update_explanation_text()
-			else
-				var/datum/objective/money/money_objective = new
-				money_objective.owner = owner
-				money_objective.amount = rand(500, 5000)
-				objectives += money_objective
-				money_objective.update_explanation_text()
-		if(2)
-			var/datum/objective/money/money_objective = new
-			money_objective.owner = owner
-			money_objective.amount = rand(300, 1000)
-			objectives += money_objective
-			money_objective.update_explanation_text()
-		if(3)
-			var/list/ambitious = list()
-			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				if(H.stat != DEAD && H.true_real_name != owner.current.true_real_name && H.vampire_faction != "Sabbat")
-					ambitious += H
-			if(length(ambitious))
-				var/datum/objective/protect_niga/protect_objective = new
-				protect_objective.owner = owner
-				var/mob/living/carbon/human/HU = pick(ambitious)
-				protect_objective.mine_target = HU
-				objectives += protect_objective
-				protect_objective.update_explanation_text()
-			else
-				var/datum/objective/money/money_objective = new
-				money_objective.owner = owner
-				money_objective.amount = rand(300, 1000)
-				objectives += money_objective
-				money_objective.update_explanation_text()
-		if(4)
-			var/list/available_factions = list("Camarilla", "Anarch", "Sabbat")
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				if(H.vampire_faction == "Camarilla" || H.vampire_faction == "Anarch" || H.vampire_faction == "Sabbat")
-					available_factions -= H.vampire_faction
-			var/datum/objective/become_member/member_objective = new
-			member_objective.owner = owner
-			member_objective.faction = pick(available_factions)
-			objectives += member_objective
-			member_objective.update_explanation_text()
-	return ..()
-
-/datum/antagonist/ambitious/on_removal()
-	..()
-	to_chat(owner.current,"<span class='userdanger'>You don't have ambitions anymore.</span>")
-	owner.special_role = null
-
-/datum/antagonist/ambitious/greet()
-	to_chat(owner.current, "<span class='alertsyndie'>You got some goals that night.</span>")
-	owner.announce_objectives()
 //TZIMISCE ROLES
 
 
