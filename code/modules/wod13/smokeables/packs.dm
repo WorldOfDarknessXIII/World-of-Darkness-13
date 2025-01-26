@@ -1,14 +1,14 @@
-////////////////MOJAVE SUN PACKWATCH 🚬 STORAGE/////////////////
+////////////////IN HONOR OF MOJAVE SUN... LIGHT ONE UP..../////////////////
 
 /obj/item/storage/fancy/ms13/cigarettes
 	name = "\improper cigarette pack"
 	desc = "A unbranded, generic cigarette pack, how the hell did you get this. A label on the packaging reads, \"There is no label, report this to a developer.\""
-	icon = 'mojave/icons/objects/smokeables/smokeables_world.dmi'
+	icon = 'code/modules/wod13/smokeables/smokeables_world.dmi'
 	icon_state = "generic"
 	inventory_state = "generic_pack"
 	world_state = "generic"
-	lefthand_file = 'mojave/icons/mob/inhands/misc/smokeables_lefthand.dmi'
-	righthand_file = 'mojave/icons/mob/inhands/misc/smokeables_righthand.dmi'
+	lefthand_file = 'code/modules/wod13/smokeables/smokeables_lefthand.dmi'
+	righthand_file = 'code/modules/wod13/smokeables/smokeables_righthand.dmi'
 	inhand_icon_state = "lucky"
 	w_class = WEIGHT_CLASS_SMALL
 	gender = PLURAL
@@ -18,14 +18,14 @@
 	folds = FALSE
 	grid_width = 32
 	grid_height = 32
-	freshsound = 'mojave/sound/ms13effects/smokeables/freshpack.ogg'
-	drop_sound = 'mojave/sound/ms13effects/smokeables/packdrop.ogg'
-	pickup_sound = 'mojave/sound/ms13effects/smokeables/packgrab.ogg'
+	freshsound = 'code/modules/wod13/smokeables/smokesounds/freshpack.ogg'
+	drop_sound = 'code/modules/wod13/smokeables/smokesounds/packdrop.ogg'
+	pickup_sound = 'code/modules/wod13/smokeables/smokesounds/packgrab.ogg'
 	var/amount = 8 //the amount spawned in the pack
 	var/max_amount = 8 //the max amount allowed in the pack
 	var/othertype = FALSE
 	var/pack_overlay = "cig"
-	var/is_randomised = FALSE //surely you aint gonna find a whole ass pack in the apocalypse
+	var/is_randomised = FALSE //no idea what this does currently
 
 /obj/item/storage/fancy/ms13/cigarettes/examine(mob/user)
 	. = ..()
@@ -48,7 +48,7 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = max_amount
 	STR.set_holdable(list(/obj/item/ms13/cigarette))
-	AddElement(/datum/element/world_icon, null, icon, 'mojave/icons/objects/smokeables/smokeables_inventory.dmi', world_state, inventory_state)
+	AddElement(/datum/element/world_icon, null, icon, 'code/modules/wod13/smokeables/smokeables_inventory.dmi', world_state, inventory_state)
 
 /obj/item/storage/fancy/ms13/cigarettes/MouseDrop()
 	if(!is_open && (usr.stat != DEAD))
@@ -74,24 +74,24 @@
 
 /obj/item/storage/fancy/ms13/cigarettes/Exited(atom/movable/gone, direction)
 	. = ..()
-	playsound(src, 'mojave/sound/ms13effects/smokeables/cigremove.ogg', 200)
+	playsound(src, 'code/modules/wod13/smokeables/smokesounds/cigremove.ogg', 200)
 
 /obj/item/storage/fancy/ms13/cigarettes/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	playsound(src, 'mojave/sound/ms13effects/smokeables/cigplace.ogg', 200)
+	playsound(src, 'code/modules/wod13/smokeables/smokesounds/cigplace.ogg', 200)
 
 /obj/item/storage/fancy/ms13/cigarettes/update_overlays()
 	. = ..()
 	cut_overlays()
 	if(is_open && contents.len && !othertype)
-		var/mutable_appearance/inserted_overlay = mutable_appearance('mojave/icons/objects/smokeables/smokeables_inventory.dmi')
+		var/mutable_appearance/inserted_overlay = mutable_appearance('code/modules/wod13/smokeables/smokeables_inventory.dmi')
 
 		inserted_overlay.icon_state = "overlay_[pack_overlay]"
 
 		inserted_overlay.icon_state = "[inserted_overlay.icon_state]_[contents.len]"
 		add_overlay(image(icon, icon_state = inserted_overlay.icon_state))
 	if(is_open && contents.len && othertype)
-		var/mutable_appearance/inserted_overlay = mutable_appearance('mojave/icons/objects/smokeables/smokeables_inventory.dmi')
+		var/mutable_appearance/inserted_overlay = mutable_appearance('code/modules/wod13/smokeables/smokeables_inventory.dmi')
 
 		inserted_overlay.icon_state = "overlay_[pack_overlay]"
 		add_overlay(image(icon, icon_state = inserted_overlay.icon_state))
@@ -100,9 +100,9 @@
 	if(do_after(user, 0.5 SECONDS, src))
 		. = ..()
 		if(!is_open)
-			playsound(user, 'mojave/sound/ms13effects/smokeables/packopen.ogg', 100)
+			playsound(user, 'code/modules/wod13/smokeables/smokesounds/packopen.ogg', 100)
 		if(is_open)
-			playsound(user, 'mojave/sound/ms13effects/smokeables/packclose.ogg', 100)
+			playsound(user, 'code/modules/wod13/smokeables/smokesounds/packclose.ogg', 100)
 
 /obj/item/storage/fancy/ms13/cigarettes/attack_hand_secondary(mob/user, list/modifiers)
 	attack_hand(user, modifiers)
@@ -152,10 +152,7 @@
 	inventory_state = "marl_pack"
 	world_state = "marl"
 	inhand_icon_state = "red"
-	spawn_type = /obj/item/ms13/cigarette/marlboro
-
-/obj/item/storage/fancy/ms13/cigarettes/marlboro/random
-	is_randomised = TRUE
+	spawn_type = /obj/item/wod13/cigarette/marlboro
 
 /obj/item/storage/fancy/ms13/cigarettes/winston
 	name = "\improper Winston pack"
@@ -165,9 +162,6 @@
 	world_state = "wins"
 	inhand_icon_state = "red"
 	spawn_type = /obj/item/ms13/cigarette/winston
-
-/obj/item/storage/fancy/ms13/cigarettes/winston/random
-	is_randomised = TRUE
 
 /obj/item/storage/fancy/ms13/cigarettes/luckystrike
 	name = "\improper Lucky Strike pack"
@@ -182,8 +176,6 @@
 	pack_overlay = "lucky"
 	othertype = TRUE
 
-/obj/item/storage/fancy/ms13/cigarettes/luckystrike/random
-	is_randomised = TRUE
 
 /obj/item/storage/fancy/ms13/cigarettes/salem
 	name = "\improper Salem pack"
@@ -193,9 +185,6 @@
 	world_state = "salem"
 	inhand_icon_state = "green"
 	spawn_type = /obj/item/ms13/cigarette/salem
-
-/obj/item/storage/fancy/ms13/cigarettes/salem/random
-	is_randomised = TRUE
 
 /obj/item/storage/fancy/ms13/cigarettes/kools
 	name = "\improper Kools pack"
@@ -228,15 +217,3 @@
 
 /obj/item/storage/fancy/ms13/cigarettes/rollies/empty
 	spawn_type = null
-
-/obj/item/storage/fancy/ms13/cigarettes/rollies/republics
-	name = "\improper Republics pack"
-	desc = "A rustic cardboard cigarette pack with the flag of the New Californian Republic on it. A label on the packaging reads, \"<b>Republics</b>. Taste the freedom, feel the burn.\""
-	icon_state = "repub"
-	inventory_state = "repub_pack"
-	world_state = "repub"
-	inhand_icon_state = "brown"
-	spawn_type = /obj/item/ms13/cigarette/rollie/republic
-
-/obj/item/storage/fancy/ms13/cigarettes/rollies/republics/random
-	is_randomised = TRUE

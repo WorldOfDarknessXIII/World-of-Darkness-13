@@ -1,4 +1,4 @@
-////////////////MOJAVE SUN CIGARETTES 🚬 STORAGE/////////////////
+////////////////IN HONOR OF MOJAVE SUN... LIGHT ONE UP..../////////////////
 
 #define CIGARETTE	3.6
 #define CIGAR	6
@@ -9,14 +9,14 @@
 /obj/item/ms13/cigarette
 	name = "cigarette"
 	desc = "An unbranded cigarette."
-	icon = 'mojave/icons/objects/smokeables/smokeables_world.dmi'
+	icon = 'code/modules/wod13/smokeables/smokeables_world.dmi'
 	icon_state = "cigarette"
 	inventory_state = "cigarette"
 	world_state = "cigarette"
-	worn_icon = 'mojave/icons/objects/smokeables/smokeables_mob.dmi'
+	worn_icon = 'code/modules/wod13/smokeables/smokeables_mob.dmi'
 	worn_icon_state = "cigarette"
-	lefthand_file = 'mojave/icons/mob/inhands/misc/smokeables_lefthand.dmi'
-	righthand_file = 'mojave/icons/mob/inhands/misc/smokeables_righthand.dmi'
+	lefthand_file = 'code/modules/wod13/smokeables/smokeables_lefthand.dmi'
+	righthand_file = 'code/modules/wod13/smokeables/smokeables_righthand.dmi'
 	inhand_icon_state = "cigarette"
 	throw_speed = 0.5
 	w_class = WEIGHT_CLASS_TINY
@@ -53,7 +53,7 @@
 	if(list_reagents)
 		reagents.add_reagent_list(list_reagents)
 	AddComponent(/datum/component/knockoff, 100, null, list(ITEM_SLOT_MASK))
-	AddElement(/datum/element/world_icon, null, icon, 'mojave/icons/objects/smokeables/smokeables_inventory.dmi', world_state, inventory_state)
+	AddElement(/datum/element/world_icon, null, icon, 'code/modules/wod13/smokeables/smokeables_inventory.dmi', world_state, inventory_state)
 
 /obj/item/ms13/cigarette/butt //prespawned ciggie butts
 	name = "cigarette butt"
@@ -66,14 +66,14 @@
 	lit_mutable = "butt_lit"
 	extinguished_mutable = "butt_extinguished"
 	smoketime = 1 SMOKEMINUTE
-	list_reagents = list(/datum/reagent/ms13/nicotine = 4.2)
+	list_reagents = list(/datum/reagent/drug/nicotine = 4.2)
 	smoking_damage = 0.05
 	butt_transform = TRUE //infinite butt dupe glitch real any % wr
 
 /obj/item/ms13/ash
 	name = "ash"
 	desc = "A small pile of ash."
-	icon = 'mojave/icons/objects/smokeables/smokeables_world.dmi'
+	icon = 'code/modules/wod13/smokeables/smokeables_world.dmi'
 	icon_state = "ash"
 	grid_width = 32
 	grid_height = 32
@@ -108,12 +108,12 @@
 		if(smoketime <= 60) //for the scroungers
 			to_chat(M, "<span class='warning'>You desperately light the [name].</span>")
 
-	playsound(src, 'mojave/sound/ms13effects/smokeables/ciglight.ogg', 25, 1)
+	playsound(src, 'code/modules/wod13/smokeables/smokesounds/ciglight.ogg', 25, 1)
 
 /obj/item/ms13/cigarette/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
-	var/mutable_appearance/litty = mutable_appearance('mojave/icons/objects/smokeables/smokeables_mob.dmi', lit_mutable)
-	var/mutable_appearance/extinguished = mutable_appearance('mojave/icons/objects/smokeables/smokeables_mob.dmi', extinguished_mutable)
+	var/mutable_appearance/litty = mutable_appearance('code/modules/wod13/smokeables/smokeables_mob.dmi', lit_mutable)
+	var/mutable_appearance/extinguished = mutable_appearance('code/modules/wod13/smokeables/smokeables_mob.dmi', extinguished_mutable)
 	var/mutable_appearance/litty_ih = mutable_appearance(icon_state = lit_mutable)
 	var/mutable_appearance/extinguished_ih = mutable_appearance(icon_state = extinguished_mutable)
 	if(!isinhands && lit)
@@ -160,14 +160,14 @@
 
 /obj/item/ms13/cigarette/attack_self(mob/user)
 	if(lit)
-		playsound(src, 'mojave/sound/ms13effects/smokeables/cigsnuff.ogg', 25, 1)
+		playsound(src, 'code/modules/wod13/smokeables/smokesounds/cigsnuff.ogg', 25, 1)
 		if(smoketime <= 60)
 			var/obj/item/ash = new /obj/item/ms13/ash(get_turf(src))
 			ash.pixel_x = rand(-10, 2)
 			ash.pixel_y = rand(-10, 2)
 			if(ismob(user))
 				to_chat(user, "<span class='notice'>Your [name] is smoked to ash, nasty.</span>")
-				playsound(src, 'mojave/sound/ms13effects/smokeables/cigsnuff.ogg', 25, 1)
+				playsound(src, 'code/modules/wod13/smokeables/smokesounds/cigsnuff.ogg', 25, 1)
 			qdel(src)
 			return
 		if(smoketime < 120 && !butt_transform)
@@ -211,7 +211,7 @@
 		ash.pixel_y = rand(-10, 2)
 		if(ismob(M))
 			to_chat(M, "<span class='notice'>Your [name] is smoked to ash, nasty.</span>")
-			playsound(src, 'mojave/sound/ms13effects/smokeables/cigsnuff.ogg', 25, 1)
+			playsound(src, 'code/modules/wod13/smokeables/smokesounds/cigsnuff.ogg', 25, 1)
 		qdel(src)
 		return
 	open_flame()
@@ -353,14 +353,14 @@
 /obj/item/ms13/cigarette/salem
 	desc = "A pre-war cigarette, banded with a cyan brand marking. <B><I>Salem</I></B>."
 	inventory_state = "salem"
-	list_reagents = list(/datum/reagent/ms13/nicotine/menthol = 21)
+	list_reagents = list(/datum/reagent/drug/nicotine = 21)
 	nicotine_potency = 0.17 //that menthol KICK
 	smoking_damage = 0.016 //these things fuck you up
 
 /obj/item/ms13/cigarette/kools
 	desc = "A pre-war cigarette, banded with a green brand marking. <B><I>Kools</I></B>."
 	inventory_state = "kool"
-	list_reagents = list(/datum/reagent/ms13/nicotine/menthol = 21)
+	list_reagents = list(/datum/reagent/drug/nicotine = 21)
 	nicotine_potency = 0.17 //that menthol KICK
 	smoking_damage = 0.016 //these things fuck you up
 
@@ -378,7 +378,7 @@
 	world_state = "rollie"
 	worn_icon_state = "rollie"
 	inhand_icon_state = "rollie"
-	list_reagents = list(/datum/reagent/ms13/nicotine = 14) //less potent, 4 minutes of effect, roach is extra 1 minute
+	list_reagents = list(/datum/reagent/drug/nicotine = 14) //less potent, 4 minutes of effect, roach is extra 1 minute
 	nicotine_potency = 0.10 //less potent
 	smoking_damage = 0.005 //organic
 	lit_type = "rollit"
@@ -394,8 +394,4 @@
 	world_state = "roach"
 	worn_icon_state = "roach"
 	inhand_icon_state = "roach"
-	list_reagents = list(/datum/reagent/ms13/nicotine = 2.8)
-
-/obj/item/ms13/cigarette/rollie/republic
-	desc = "A rolled joint, featuring the iconic red star of the <B>NCR</B>."
-	inventory_state = "repub"
+	list_reagents = list(/datum/reagent/drug/nicotine = 2.8)
