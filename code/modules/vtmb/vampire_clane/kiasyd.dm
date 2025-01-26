@@ -354,14 +354,14 @@
 	unique = TRUE
 	icon_state = "rune2"
 
-/obj/mytherceria_trap/disorient/Crossed(atom/movable/AM)
+/obj/mytherceria_trap/disorient/Crossed(atom/movable/target)
 	..()
-	if(isliving(AM) && owner)
-		var/mob/living/L = AM
-		if(!L.client)
+	if(isliving(target) && owner)
+		var/mob/living/livingtarget = target
+		if(!livingtarget.client)
 			return
-		else if(AM != owner)
-			var/list/screens = list(L.hud_used.plane_masters["[FLOOR_PLANE]"], L.hud_used.plane_masters["[GAME_PLANE]"], L.hud_used.plane_masters["[LIGHTING_PLANE]"])
+		else if(target != owner)
+			var/list/screens = list(livingtarget.hud_used.plane_masters["[FLOOR_PLANE]"], livingtarget.hud_used.plane_masters["[GAME_PLANE]"], livingtarget.hud_used.plane_masters["[LIGHTING_PLANE]"])
 			var/rotation = 50
 			for(var/whole_screen in screens)
 				animate(whole_screen, transform = matrix(rotation, MATRIX_ROTATE), time = 0.5 SECONDS, easing = QUAD_EASING, loop = -1)
