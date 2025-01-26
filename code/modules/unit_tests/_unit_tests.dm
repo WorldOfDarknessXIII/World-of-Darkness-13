@@ -99,6 +99,8 @@
 #include "reagent_recipe_collisions.dm"
 #include "resist.dm"
 #include "say.dm"
+#include "screenshot_basic.dm"
+#include "screenshot_humanoids.dm"
 #include "serving_tray.dm"
 #include "siunit.dm"
 #include "spawn_humans.dm"

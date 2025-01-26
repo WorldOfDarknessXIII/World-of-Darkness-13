@@ -42,3 +42,10 @@ Assistant
 			uniform = /obj/item/clothing/under/color/random
 		else
 			uniform = /obj/item/clothing/under/color/jumpskirt/random
+
+/datum/outfit/job/assistant/consistent
+	name = "Assistant - Consistent"
+
+/datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H)
+	..()
+	uniform = /obj/item/clothing/under/color/grey
