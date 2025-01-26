@@ -145,59 +145,56 @@
 
 //Cigarette Packs
 
-/obj/item/storage/fancy/ms13/cigarettes/marlboro
+/obj/item/storage/fancy/cigarettes/marlboro
 	name = "\improper Marlboro pack"
 	desc = "A cool red cigarette packet. A label on the packaging reads, \"<b>Marlboro</b>. Where theres a man, theres a Marlboro.\""
 	icon_state = "marl"
 	inventory_state = "marl_pack"
 	world_state = "marl"
 	inhand_icon_state = "red"
-	spawn_type = /obj/item/wod13/cigarette/marlboro
+	spawn_type = /obj/item/cigarette/marlboro
 
-/obj/item/storage/fancy/ms13/cigarettes/winston
+/obj/item/storage/fancy/cigarettes/winston
 	name = "\improper Winston pack"
 	desc = "A refined red cigarette packet. A label on the packaging reads, \"<b>Winston</b>. Winston tastes good, like a cigarette should!\""
 	icon_state = "wins"
 	inventory_state = "wins_pack"
 	world_state = "wins"
 	inhand_icon_state = "red"
-	spawn_type = /obj/item/ms13/cigarette/winston
+	spawn_type = /obj/item/cigarette/winston
 
-/obj/item/storage/fancy/ms13/cigarettes/luckystrike
+/obj/item/storage/fancy/cigarettes/luckystrike
 	name = "\improper Lucky Strike pack"
 	desc = "A white cigarette packet with a large red circle on it. A label on the packaging reads, \"<b>Lucky Strike</b>. Be Happy - Go Lucky!\""
 	icon_state = "lucky"
 	inventory_state = "lucky_pack"
 	world_state = "lucky"
 	inhand_icon_state = "lucky"
-	spawn_type = /obj/item/ms13/cigarette/lucky
+	spawn_type = /obj/item/cigarette/lucky
 	amount = 7
 	max_amount = 7
 	pack_overlay = "lucky"
 	othertype = TRUE
 
 
-/obj/item/storage/fancy/ms13/cigarettes/salem
+/obj/item/storage/fancy/cigarettes/salem
 	name = "\improper Salem pack"
 	desc = "A refined green cigarette packet. A label on the packaging reads, \"<b>Salem</b>. Refreshes your taste.\""
 	icon_state = "salem"
 	inventory_state = "salem_pack"
 	world_state = "salem"
 	inhand_icon_state = "green"
-	spawn_type = /obj/item/ms13/cigarette/salem
+	spawn_type = /obj/item/cigarette/salem
 
-/obj/item/storage/fancy/ms13/cigarettes/kools
+/obj/item/storage/fancy/cigarettes/kools
 	name = "\improper Kools pack"
 	desc = "A kool green cigarette packet. A label on the packaging reads, \"<b>KOOL</b>. So good, it's got to be KOOL!\""
 	icon_state = "kool"
 	inventory_state = "kool_pack"
 	world_state = "kool"
 	inhand_icon_state = "green"
-	spawn_type = /obj/item/ms13/cigarette/kools
+	spawn_type = /obj/item/cigarette/kools
 	othertype = FALSE
-
-/obj/item/storage/fancy/ms13/cigarettes/kools/random
-	is_randomised = TRUE
 
 //Rollie Packs
 
