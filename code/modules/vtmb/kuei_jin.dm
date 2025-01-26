@@ -464,20 +464,20 @@
 	//this method of feeding targets splat-specific Quintessence sources first
 	if ((iskindred(victim) || isghoul(victim)) && (victim.bloodpool > 0)) //drain vitae bloodpool
 		victim.bloodpool = max(0, victim.bloodpool - 1)
-		kueijin.yin_chi = min(kueijin.yin_chi + 1, kueijin.max_yin_chi)
+		kueijin.yin_chi = min(kueijin.yin_chi + 2, kueijin.max_yin_chi)
 		to_chat(kueijin, "<span class='medradio'>Some bitter <b>Yin</b> Chi enters you...</span>")
 	else if ((isgarou(victim) || iswerewolf(victim)) && has_gnosis) //drain gnosis
 		adjust_gnosis(-1, victim, sound = TRUE)
-		kueijin.yang_chi = min(kueijin.yang_chi + 1, kueijin.max_yang_chi)
+		kueijin.yang_chi = min(kueijin.yang_chi + 2, kueijin.max_yang_chi)
 		to_chat(kueijin, "<span class='engradio'>Some fiery <b>Yang</b> Chi enters you...</span>")
 	else if ((victim.yin_chi > 0) || (victim.yang_chi > 0)) //normally drain chi from humans and simplemobs and kuei-jin
 		if ((prob(50) || victim.yang_chi == 0) && (victim.yin_chi > 0))
 			victim.yin_chi = max(0, victim.yin_chi - 1)
-			kueijin.yin_chi = min(kueijin.yin_chi + 1, kueijin.max_yin_chi)
+			kueijin.yin_chi = min(kueijin.yin_chi + 2, kueijin.max_yin_chi)
 			to_chat(kueijin, "<span class='medradio'>Some <b>Yin</b> Chi enters you...</span>")
 		else if ((victim.yang_chi > 0))
 			victim.yang_chi = max(0, victim.yang_chi - 1)
-			kueijin.yang_chi = min(kueijin.yang_chi + 1, kueijin.max_yang_chi)
+			kueijin.yang_chi = min(kueijin.yang_chi + 2, kueijin.max_yang_chi)
 			to_chat(kueijin, "<span class='engradio'>Some <b>Yang</b> Chi enters you...</span>")
 	else
 		return
@@ -517,7 +517,7 @@
 	var/mob/living/carbon/human/kueijin = usr
 
 	to_chat(usr, "<span class='notify'>You begin to gather <b>Chi</b> from your environment...</span>")
-	if (do_after(kueijin, 15 SECONDS))
+	if (do_after(kueijin, 5 SECONDS))
 		COOLDOWN_START(src, use, cooldown)
 		var/area/draining_area = get_area(kueijin)
 		if(draining_area.yang_chi)
@@ -581,8 +581,8 @@
 		brain.applyOrganDamage(-100)
 
 	var/heal_level = min(kueijin.mind.dharma.level, 4)
-	kueijin.heal_ordered_damage(20 * heal_level, list(OXY, STAMINA, BRUTE, TOX))
-	kueijin.heal_ordered_damage(5 * heal_level, list(BURN, CLONE))
+	kueijin.heal_ordered_damage(35 * heal_level, list(OXY, STAMINA, BRUTE, TOX))
+	kueijin.heal_ordered_damage(5.5 * heal_level, list(BURN, CLONE))
 	kueijin.blood_volume = min(kueijin.blood_volume + 56, 560)
 	kueijin.yin_chi = max(0, kueijin.yin_chi - 1)
 
@@ -640,8 +640,8 @@
 		brain.applyOrganDamage(-100)
 
 	var/heal_level = min(kueijin.mind.dharma.level, 4)
-	kueijin.heal_ordered_damage(10 * heal_level, list(OXY, STAMINA, BRUTE, TOX))
-	kueijin.heal_ordered_damage(2.5 * heal_level, list(BURN, CLONE))
+	kueijin.heal_ordered_damage(5.5 * heal_level, list(OXY, STAMINA, BRUTE, TOX))
+	kueijin.heal_ordered_damage(35 * heal_level, list(BURN, CLONE))
 	kueijin.blood_volume = min(kueijin.blood_volume + 28, 560)
 	kueijin.yang_chi = max(0, kueijin.yang_chi - 1)
 
@@ -664,7 +664,7 @@
 	if(!kueijin.mind?.dharma)
 		return
 
-	var/max_limit = max(10, kueijin.mind.dharma.level * 2)
+	var/max_limit = max(10, kueijin.mind.dharma.level * 4)
 	var/max_yin = input(kueijin, "Enter the maximum of Yin your character has (from 1 to [max_limit - 1]):", "Yin/Yang") as num|null
 	if(max_yin)
 		max_yin = clamp(max_yin, 1, max_limit - 1)
