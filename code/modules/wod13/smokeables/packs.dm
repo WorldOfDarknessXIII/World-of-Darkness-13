@@ -130,10 +130,10 @@
 	if(!is_open)
 		to_chat(user, "<span class='danger'>[src] is closed.</span>")
 		return
-	var/obj/item/ms13/cigarette/cig = locate(/obj/item/ms13/cigarette) in contents
+	var/obj/item/vampire/cigarette/cig = locate(/obj/item/vampire/cigarette) in contents
 	if(cig)
 		if(user && contents.len > 0)
-			var/obj/item/ms13/cigarette/W = cig
+			var/obj/item/vampire/cigarette/W = cig
 			SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, user)
 			user.put_in_hands(W)
 			contents -= W
@@ -152,7 +152,7 @@
 	inventory_state = "marl_pack"
 	world_state = "marl"
 	inhand_icon_state = "red"
-	spawn_type = /obj/item/cigarette/marlboro
+	spawn_type = /obj/item/vampire/cigarette/marlboro
 
 /obj/item/storage/fancy/cigarettes/winston
 	name = "\improper Winston pack"
@@ -161,7 +161,7 @@
 	inventory_state = "wins_pack"
 	world_state = "wins"
 	inhand_icon_state = "red"
-	spawn_type = /obj/item/cigarette/winston
+	spawn_type = /obj/item/vampire/cigarette/winston
 
 /obj/item/storage/fancy/cigarettes/luckystrike
 	name = "\improper Lucky Strike pack"
@@ -170,7 +170,7 @@
 	inventory_state = "lucky_pack"
 	world_state = "lucky"
 	inhand_icon_state = "lucky"
-	spawn_type = /obj/item/cigarette/lucky
+	spawn_type = /obj/item/vampire/cigarette/lucky
 	amount = 7
 	max_amount = 7
 	pack_overlay = "lucky"
@@ -184,7 +184,7 @@
 	inventory_state = "salem_pack"
 	world_state = "salem"
 	inhand_icon_state = "green"
-	spawn_type = /obj/item/cigarette/salem
+	spawn_type = /obj/item/vampire/cigarette/salem
 
 /obj/item/storage/fancy/cigarettes/kools
 	name = "\improper Kools pack"
@@ -193,7 +193,7 @@
 	inventory_state = "kool_pack"
 	world_state = "kool"
 	inhand_icon_state = "green"
-	spawn_type = /obj/item/cigarette/kools
+	spawn_type = /obj/item/vampire/cigarette/kools
 	othertype = FALSE
 
 //Rollie Packs
@@ -205,7 +205,7 @@
 	inventory_state = "custom_pack"
 	world_state = "custom"
 	inhand_icon_state = "brown"
-	spawn_type = /obj/item/ms13/cigarette/rollie
+	spawn_type = /obj/item/vampire/cigarette/rollie
 	othertype = FALSE
 	pack_overlay = "rolled"
 

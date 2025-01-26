@@ -6,7 +6,7 @@
 
 //Base Type
 
-/obj/item/ms13/cigarette
+/obj/item/vampire/cigarette
 	name = "cigarette"
 	desc = "An unbranded cigarette."
 	icon = 'code/modules/wod13/smokeables/smokeables_world.dmi'
@@ -45,7 +45,7 @@
 	var/butt_transform = FALSE //alright butt
 	var/fresh = TRUE //unlit, fresh out the pack
 
-/obj/item/ms13/cigarette/Initialize()
+/obj/item/vampire/cigarette/Initialize()
 	. = ..()
 	update_overlays()
 	update_icon_state()
@@ -55,7 +55,7 @@
 	AddComponent(/datum/component/knockoff, 100, null, list(ITEM_SLOT_MASK))
 	AddElement(/datum/element/world_icon, null, icon, 'code/modules/wod13/smokeables/smokeables_inventory.dmi', world_state, inventory_state)
 
-/obj/item/ms13/cigarette/butt //prespawned ciggie butts
+/obj/item/vampire/cigarette/butt //prespawned ciggie butts
 	name = "cigarette butt"
 	desc = "A used cigarette butt, still holds a little nicotine."
 	icon_state = "butt"
@@ -70,7 +70,7 @@
 	smoking_damage = 0.05
 	butt_transform = TRUE //infinite butt dupe glitch real any % wr
 
-/obj/item/ms13/ash
+/obj/item/vampire/ash
 	name = "ash"
 	desc = "A small pile of ash."
 	icon = 'code/modules/wod13/smokeables/smokeables_world.dmi'
@@ -79,7 +79,7 @@
 	grid_height = 32
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/ms13/cigarette/proc/light() //removes lit and unlit states
+/obj/item/vampire/cigarette/proc/light() //removes lit and unlit states
 	if(lit)
 		return
 
@@ -110,7 +110,7 @@
 
 	playsound(src, 'code/modules/wod13/smokeables/smokesounds/ciglight.ogg', 25, 1)
 
-/obj/item/ms13/cigarette/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/vampire/cigarette/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
 	var/mutable_appearance/litty = mutable_appearance('code/modules/wod13/smokeables/smokeables_mob.dmi', lit_mutable)
 	var/mutable_appearance/extinguished = mutable_appearance('code/modules/wod13/smokeables/smokeables_mob.dmi', extinguished_mutable)
@@ -125,7 +125,7 @@
 	if(isinhands && !lit && !fresh)
 		. += extinguished_ih
 
-/obj/item/ms13/cigarette/extinguish() //removes lit and unlit states
+/obj/item/vampire/cigarette/extinguish() //removes lit and unlit states
 	if(!lit)
 		return
 	hitsound = null
@@ -146,11 +146,11 @@
 		M.update_inv_wear_mask()
 		M.update_inv_hands()
 
-/obj/item/ms13/cigarette/Destroy()
+/obj/item/vampire/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/ms13/cigarette/attackby(obj/item/W, mob/user, params)
+/obj/item/vampire/cigarette/attackby(obj/item/W, mob/user, params)
 	if(!lit && smoketime > 0)
 		var/lighting_text = W.ignition_effect(src, user)
 		if(lighting_text)
@@ -158,11 +158,11 @@
 	else
 		return ..()
 
-/obj/item/ms13/cigarette/attack_self(mob/user)
+/obj/item/vampire/cigarette/attack_self(mob/user)
 	if(lit)
 		playsound(src, 'code/modules/wod13/smokeables/smokesounds/cigsnuff.ogg', 25, 1)
 		if(smoketime <= 60)
-			var/obj/item/ash = new /obj/item/ms13/ash(get_turf(src))
+			var/obj/item/ash = new /obj/item/vampire3/ash(get_turf(src))
 			ash.pixel_x = rand(-10, 2)
 			ash.pixel_y = rand(-10, 2)
 			if(ismob(user))
@@ -200,13 +200,13 @@
 			user.visible_message("<span class='notice'>[user] pinches \the end of [src], putting it out.</span>")
 	. = ..()
 
-/obj/item/ms13/cigarette/process()
+/obj/item/vampire/cigarette/process()
 	var/mob/living/M = loc
 	if(isliving(M))
 		M.IgniteMob()
 	smoketime--
 	if(smoketime < 1)
-		var/obj/item/ash = new /obj/item/ms13/ash(get_turf(src))
+		var/obj/item/ash = new /obj/item/vampire/ash(get_turf(src))
 		ash.pixel_x = rand(-10, 2)
 		ash.pixel_y = rand(-10, 2)
 		if(ismob(M))
@@ -249,7 +249,7 @@
 			if(prob(10) && ismob(M))
 				M.adjustToxLoss(1)
 
-/obj/item/ms13/cigarette/proc/shmoke()
+/obj/item/vampire/cigarette/proc/shmoke()
 	if(iscarbon(loc))
 		var/turf/my_turf = get_turf(loc)
 		my_turf.VapourListTurf(list(/datum/vapours/smoke = 3, /datum/vapours/carbon_air_vapour = 0.2), VAPOUR_ACTIVE_EMITTER_CAP)
@@ -271,7 +271,7 @@
 			if(L && !(L.organ_flags & ORGAN_SYNTHETIC) && L.nicotine < 162) //max 3 cigarette effects stacked
 				L.nicotine += nicotine_potency
 
-/obj/item/ms13/cigarette/update_overlays()
+/obj/item/vampire/cigarette/update_overlays()
 	cut_overlays()
 	if(lit)
 		switch(smoketime) //catchchecks included for icon states
@@ -296,7 +296,7 @@
 				add_overlay(image(icon, icon_state = "[lit_type]_6"))
 	. = ..()
 
-/obj/item/ms13/cigarette/proc/handle_reagents()
+/obj/item/vampire/cigarette/proc/handle_reagents()
 	if(!reagents.total_volume)
 		return
 	reagents.expose_temperature(heat, 0.05)
@@ -312,14 +312,14 @@
 	if(!reagents.trans_to(smoker, to_smoke, methods = INGEST, ignore_stomach = TRUE))
 		reagents.remove_any(to_smoke)
 
-/obj/item/ms13/cigarette/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/vampire/cigarette/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
 		return ..()
 	if(M.on_fire && !lit)
 		light()
 		to_chat(user, "<span class='notice'>[user] lights [src] with [M]'s burning body. What a badass.</span>")
 		return
-	var/obj/item/ms13/cigarette/cig = help_light_cig(M)
+	var/obj/item/vampire/cigarette/cig = help_light_cig(M)
 	if(lit && cig && !user.combat_mode)
 		if(cig.lit)
 			to_chat(user, "<span class='warning'>The [cig.name] is already lit!</span>")
@@ -337,40 +337,40 @@
 	if(istype(mask_item, /obj/item/ms13/cigarette))
 		return mask_item
 
-/obj/item/ms13/cigarette/fire_act(exposed_temperature, exposed_volume)
+/obj/item/vampire/cigarette/fire_act(exposed_temperature, exposed_volume)
 	light()
 
 //Cigarettes Brands
 
-/obj/item/ms13/cigarette/winston
+/obj/item/vampire/cigarette/winston
 	desc = "A pre-war cigarette, banded with a black brand marking. <B><I>Winston</I></B>."
 	inventory_state = "winston"
 
-/obj/item/ms13/cigarette/marlboro
+/obj/item/vampire/cigarette/marlboro
 	desc = "A pre-war cigarette, banded with a red brand marking. <B><I>Marlboro</I></B>."
 	inventory_state = "marl"
 
-/obj/item/ms13/cigarette/salem
+/obj/item/vampire/cigarette/salem
 	desc = "A pre-war cigarette, banded with a cyan brand marking. <B><I>Salem</I></B>."
 	inventory_state = "salem"
 	list_reagents = list(/datum/reagent/drug/nicotine = 21)
 	nicotine_potency = 0.17 //that menthol KICK
 	smoking_damage = 0.016 //these things fuck you up
 
-/obj/item/ms13/cigarette/kools
+/obj/item/vampire/cigarette/kools
 	desc = "A pre-war cigarette, banded with a green brand marking. <B><I>Kools</I></B>."
 	inventory_state = "kool"
 	list_reagents = list(/datum/reagent/drug/nicotine = 21)
 	nicotine_potency = 0.17 //that menthol KICK
 	smoking_damage = 0.016 //these things fuck you up
 
-/obj/item/ms13/cigarette/lucky
+/obj/item/vampire/cigarette/lucky
 	desc = "A pre-war cigarette, featuring a lucky red star on it."
 	inventory_state = "lucky"
 
 //Rollies/Brands
 
-/obj/item/ms13/cigarette/rollie
+/obj/item/vampire/cigarette/rollie
 	name = "rollie"
 	desc = "A rolled joint of paper, filled with dried plant matter."
 	icon_state = "rollie"
@@ -386,7 +386,7 @@
 	butt_name = "roach"
 	butt_desc = "The burnt end of a rollie, really scraping the barrel if you smoke this."
 
-/obj/item/ms13/cigarette/butt/roach
+/obj/item/vampire/cigarette/butt/roach
 	name = "roach"
 	desc = "The burnt end of a rollie, really scraping the barrel if you smoke this."
 	icon_state = "roach"
