@@ -2332,7 +2332,7 @@
 /obj/item/reagent_containers/food/drinks/beer/vampire,
 /obj/item/food/vampire/pizza,
 /obj/item/paper{
-	info = ""Che ti tut ishes, peedor? Tvoy mamu ebal ponyal da huesos."";
+	info = "Che ti tut ishes, peedor? Tvoy mamu ebal ponyal da huesos.";
 	text = null
 	},
 /turf/open/floor/plating/rough,
