@@ -473,7 +473,8 @@
 		qdel(src)
 
 /mob/living/carbon/human/Move(atom/newloc, direct, glide_size_override)
-	..()
+	. = ..()
+	update_shadow()
 	if(celerity_visual)
 		var/obj/effect/celerity/C = new(loc)
 		C.name = name
@@ -2078,7 +2079,7 @@
 
 
 /mob/living/carbon/human/Move(atom/newloc, direct, glide_size_override)
-	..()
+	. = ..()
 	if(temporis_visual)
 		var/obj/effect/temporis/T = new(loc)
 		T.name = name

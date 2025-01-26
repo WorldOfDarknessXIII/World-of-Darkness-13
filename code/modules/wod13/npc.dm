@@ -415,6 +415,17 @@
 		if(a_intent != INTENT_HELP)
 			NPC.Annoy(src)
 
+/mob/living/carbon/human/npc/Move(NewLoc, direct)
+	. = ..()
+	if(CheckMove())
+		walk(src,0)
+	var/getaway = stopturf+1
+	if(!old_movement)
+		getaway = 2
+	if(get_dist(src, CPN.walktarget) <= getaway)
+		walk(src,0)
+		walktarget = null
+
 /mob/living/carbon/Move(NewLoc, direct)
 	if(obfuscate_level < 2)
 		if(alpha < 200)
@@ -425,19 +436,6 @@
 			if(alpha < 200)
 				playsound(loc, 'code/modules/wod13/sounds/obfuscate_deactivate.ogg', 50, FALSE)
 				alpha = 255
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		H.update_shadow()
-	if(istype(src, /mob/living/carbon/human/npc))
-		var/mob/living/carbon/human/npc/CPN = src
-		if(CPN.CheckMove())
-			walk(src,0)
-		var/getaway = CPN.stopturf+1
-		if(!CPN.old_movement)
-			getaway = 2
-		if(get_dist(src, CPN.walktarget) <= getaway)
-			walk(src,0)
-			CPN.walktarget = null
 //		for(var/obj/effect/decal/cleanable/blood/B in NewLoc)
 //			if(B)
 //				if(B.bloodiness)
@@ -455,16 +453,23 @@
 	..()
 	update_shadow()
 
+
+/mob/living/carbon/human
+	var/last_shadow_was = TRUE
+
 /mob/living/carbon/human/proc/update_shadow()
-	if(body_position != LYING_DOWN)
+	if(body_position != LYING_DOWN && !last_shadow_was)
+		last_shadow_was = TRUE
 		if(!overlays_standing[UNDERSHADOW_LAYER])
 			var/mutable_appearance/lying_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "shadow", -UNDERSHADOW_LAYER)
 			lying_overlay.pixel_z = -4
 			lying_overlay.alpha = 64
 			overlays_standing[UNDERSHADOW_LAYER] = lying_overlay
 			apply_overlay(UNDERSHADOW_LAYER)
-	else if(overlays_standing[UNDERSHADOW_LAYER])
-		remove_overlay(UNDERSHADOW_LAYER)
+	else if(last_shadow_was)
+		last_shadow_was = FALSE
+		if(overlays_standing[UNDERSHADOW_LAYER])
+			remove_overlay(UNDERSHADOW_LAYER)
 
 /mob/living/carbon/human/npc/attack_hand(mob/user)
 	if(user)
