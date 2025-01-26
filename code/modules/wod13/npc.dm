@@ -5,6 +5,7 @@
 
 	var/is_talking = FALSE
 	var/last_annoy = 0
+	COOLDOWN_DECLARE(car_dodge)
 	var/hostile = FALSE
 	var/fights_anyway = FALSE
 	var/last_danger_meet = 0
@@ -240,6 +241,15 @@
 																"Help Me!!",
 																"What the hell's going on here?!",
 																"Shoot!!")
+	var/list/car_dodged = list(
+		"ВОУ!",
+		"Смотри куда едешь!",
+		"Святые угодники!",
+		"Чёрт побери!",
+		"Научись водить, скотина!",
+		"Я чуть лежачим полицейским не стал!",
+		"Блять... Сердце..."
+	)
 
 /mob/living/carbon/human/npc/proc/AssignSocialRole(var/datum/socialrole/S, var/dont_random = FALSE)
 	if(!S)

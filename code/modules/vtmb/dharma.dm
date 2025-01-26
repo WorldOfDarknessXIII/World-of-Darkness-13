@@ -193,7 +193,7 @@
 		if(i == action)
 			if(dharma.tenets_done[i] == 0)
 				dharma.tenets_done[i] = 1
-				to_chat(cathayan, "<span class='help'>You find this action helping you on your path ([dharma.get_done_tenets()]/[length(dharma.tenets)]).</span>")
+				to_chat(cathayan, "<span class='nicegreen'>You find this action helping you on your path ([dharma.get_done_tenets()]/[length(dharma.tenets)]).</span>")
 
 	for(var/i in dharma.fails)
 		if(i == action)

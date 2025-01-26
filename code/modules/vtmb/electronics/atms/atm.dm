@@ -93,17 +93,17 @@ var/mob/living/carbon/human/H
 	if(user)
 		owner = user.ckey
 	if(istype(src, /obj/item/vamp/creditcard/prince))
-		account.balance = rand(10000, 15000)
+		account.balance = rand(9000, 10000)
 	else if(istype(src, /obj/item/vamp/creditcard/elder))
-		account.balance = rand(3000, 7000)
+		account.balance = rand(3000, 4000)
 	else if(istype(src, /obj/item/vamp/creditcard/rich))
-		account.balance = rand(1000, 4000)
+		account.balance = rand(1000, 2000)
 	else if(istype(src, /obj/item/vamp/creditcard/giovanniboss))
-		account.balance = rand(8000, 15000)
+		account.balance = rand(5000, 6000)
 	else if(istype(src, /obj/item/vamp/creditcard/seneschal))
-		account.balance = rand(4000, 8000)
+		account.balance = rand(1000, 2000)
 	else
-		account.balance = rand(100, 1000)
+		account.balance = rand(100, 800)
 
 /obj/machinery/vamp/atm/Initialize()
 	..()

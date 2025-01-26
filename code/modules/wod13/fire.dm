@@ -59,7 +59,8 @@ SUBSYSTEM_DEF(die_in_a_fire)
 		if(L)
 			L.fire_stacks += 5
 			L.IgniteMob()
-			L.apply_damage(10*stage, BURN, BODY_ZONE_CHEST)
+			var/fire_resist = L.run_armor_check(BODY_ZONE_CHEST, AGGRAVATED)
+			L.apply_damage((30*stage)-round(((30*stage)/100)*fire_resist), BURN, BODY_ZONE_CHEST)
 	for(var/obj/machinery/light/M in loc)
 		if(M)
 			if(M.status != LIGHT_BROKEN && M.status != LIGHT_EMPTY)
@@ -130,6 +131,8 @@ SUBSYSTEM_DEF(die_in_a_fire)
 		var/mob/living/L = AM
 		L.fire_stacks += 5
 		L.IgniteMob()
+		var/fire_resist = L.run_armor_check(BODY_ZONE_CHEST, AGGRAVATED)
+		L.apply_damage((30*stage)-round(((30*stage)/100)*fire_resist), BURN, BODY_ZONE_CHEST)
 
 /obj/effect/fire/Destroy()
 	. = ..()

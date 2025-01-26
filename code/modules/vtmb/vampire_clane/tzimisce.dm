@@ -686,6 +686,7 @@
 	icon_state = "gangrel_f"
 	icon_living = "gangrel_f"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mob_size = MOB_SIZE_HUGE
 	speak_chance = 0
 	speed = -0.4
 	maxHealth = 400
@@ -792,6 +793,7 @@
 	pixel_w = -16
 	pixel_z = -16
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mob_size = MOB_SIZE_HUGE
 	speak_chance = 0
 	speed = -0.55
 	maxHealth = 575
