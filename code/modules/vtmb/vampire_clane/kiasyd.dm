@@ -167,6 +167,9 @@
 			var/obj/item/clothing/mask/facehugger/kiasyd/K = new (get_turf(caster))
 			K.throw_at(target, 10, 14, caster)
 		if(4)
+			if(!target.client)
+				to_chat(caster,"<span class='danger'>This one has no brains!</span>")
+				return
 			var/list/screens = list(target.hud_used.plane_masters["[FLOOR_PLANE]"], target.hud_used.plane_masters["[GAME_PLANE]"], target.hud_used.plane_masters["[LIGHTING_PLANE]"])
 			var/rotation = 50
 			for(var/whole_screen in screens)
@@ -356,6 +359,8 @@
 	if(isliving(AM) && owner)
 		if(AM != owner)
 			var/mob/living/L = AM
+			if(!L.client)
+				return
 			var/list/screens = list(L.hud_used.plane_masters["[FLOOR_PLANE]"], L.hud_used.plane_masters["[GAME_PLANE]"], L.hud_used.plane_masters["[LIGHTING_PLANE]"])
 			var/rotation = 50
 			for(var/whole_screen in screens)
