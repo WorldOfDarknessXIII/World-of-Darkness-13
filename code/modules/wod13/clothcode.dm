@@ -99,6 +99,7 @@
 	icon_state = "napoleon"
 
 /obj/item/clothing/under/vampire/nazi
+	name = "SS uniform"
 	desc = "Some historical clothes."
 	icon_state = "nazi"
 
@@ -892,8 +893,8 @@
 	armor = list(BASHING = 2, LETHAL = 1, AGGRAVATED = 0, MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 0)
 
 /obj/item/clothing/head/vampire/nazi
-	name = "german bad guy hat"
-	desc = "\"Du wirst immer ein Schwein sein!\""
+	name = "german hat"
+	desc = "Du wirst immer ein Schwein sein!"
 	icon_state = "ss"
 	armor = list(BASHING = 2, LETHAL = 1, AGGRAVATED = 0, MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 0)
 
