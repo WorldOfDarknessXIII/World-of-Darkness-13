@@ -69,6 +69,9 @@
 	game_area = /area/shuttle/escape
 	movement_type = FLOATING //there are chasms, and resetting when they fall in is really lame so lets minimize that
 
+/datum/outfit/medisim
+	name = "Medieval Simulator Outfit"
+
 //everything except arrows
 /datum/outfit/medisim/post_equip(mob/living/carbon/human/H, visualsOnly)
 	var/list/no_drops = list()
