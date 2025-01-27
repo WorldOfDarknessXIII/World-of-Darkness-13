@@ -8,7 +8,7 @@
 	max_items = 50
 	display_numerical_stacking = TRUE
 
-/datum/component/storage/concrete/rped/can_be_inserted(obj/item/I, stop_messages, mob/M)
+/datum/component/storage/concrete/rped/can_be_inserted(obj/item/I, stop_messages, mob/M, worn_check, params, storage_click)
 	. = ..()
 	if(!I.get_part_rating())
 		if (!stop_messages)
@@ -25,7 +25,7 @@
 	max_items = 400
 	display_numerical_stacking = TRUE
 
-/datum/component/storage/concrete/bluespace/rped/can_be_inserted(obj/item/I, stop_messages, mob/M)
+/datum/component/storage/concrete/bluespace/rped/can_be_inserted(obj/item/I, stop_messages, mob/M, worn_check, params, storage_click)
 	. = ..()
 	if(!I.get_part_rating())
 		if (!stop_messages)
