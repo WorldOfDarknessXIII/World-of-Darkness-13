@@ -7,7 +7,7 @@
 	if(warform)
 		warform.end()
 
-	if(iskindred(src))
+	if(iskindred(src) || iscathayan(src) || isgarou(src))
 		SSmasquerade.dead_level = min(1000, SSmasquerade.dead_level+50)
 	else
 		if(istype(get_area(src), /area/vtm))
@@ -15,22 +15,32 @@
 			if(V.zone_type == "masquerade")
 				SSmasquerade.dead_level = max(0, SSmasquerade.dead_level-25)
 
+	if(masquerade <= 0 && !GLOB.canon_event)
+		var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
+		if(P)
+			P.reset_character()
+			P.reason_of_death = "Failed to stay alive after breaking Masquerade completely ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
+
 	if(bloodhunted)
 		SSbloodhunt.hunted -= src
 		bloodhunted = FALSE
 		SSbloodhunt.update_shit()
-	var/witness_count
-	for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, usr))
-		if(NEPIC && NEPIC.stat != DEAD)
-			witness_count++
-		if(witness_count > 1)
-			for(var/obj/item/police_radio/radio in GLOB.police_radios)
-				radio.announce_crime("murder", get_turf(src))
-			for(var/obj/item/p25radio/police/radio in GLOB.p25_radios)
-				if(radio.linked_network == "police")
+	if(istype(get_area(src), /area/vtm))
+		var/area/vtm/V = get_area(src)
+		if(V.zone_type == "masquerade")
+			var/witness_count
+			for(var/mob/living/carbon/human/npc/NEPIC in oviewers(7, usr))
+				if(NEPIC && NEPIC.stat != DEAD)
+					witness_count++
+			if(witness_count > 1)
+				for(var/obj/item/police_radio/radio in GLOB.police_radios)
 					radio.announce_crime("murder", get_turf(src))
+				for(var/obj/item/p25radio/police/radio in GLOB.p25_radios)
+					if(radio.linked_network == "police")
+						radio.announce_crime("murder", get_turf(src))
 	GLOB.masquerade_breakers_list -= src
 	GLOB.sabbatites -= src
+	GLOB.noddists -= src
 
 	//So upon death the corpse is filled with yin chi
 	yin_chi = min(max_yin_chi, yin_chi+yang_chi)
