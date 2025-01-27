@@ -141,24 +141,26 @@
 
 /datum/datacore/proc/get_manifest()
 	var/list/manifest_out = list(
-		"Command",
-		"Security",
-		"Engineering",
-		"Medical",
-		"Science",
-		"Supply",
-		"Service",
-		"Silicon"
+ 		"Camarilla",
+		"Primogen Council",
+		"Tremere",
+		"Anarch",
+		"Giovanni",
+		"Old Clan Tzimisce",
+		"Law Enforcement",
+		"Warehouse",
+		"Triad"
 	)
 	var/list/departments = list(
-		"Command" = GLOB.command_positions,
-		"Security" = GLOB.ss13,
-		"Engineering" = GLOB.ss13,
-		"Medical" = GLOB.ss13,
-		"Science" = GLOB.anarch_positions,
-		"Supply" = GLOB.ss13,
-		"Service" = GLOB.neutral_positions,
-		"Silicon" = GLOB.nonhuman_positions
+		"Camarilla" = GLOB.command_positions,
+		"Primogen Council" = GLOB.camarilla_council_positions,
+		"Tremere" = GLOB.tremere_positions,
+		"Anarch" = GLOB.anarch_positions,
+		"Giovanni" = GLOB.giovanni_positions,
+		"Old Clan Tzimisce" = GLOB.tzimisce_positions,
+		"Law Enforcement" = GLOB.police_positions + GLOB.national_security_positions,
+		"Warehouse" = GLOB.warehouse_positions,
+		"Triad" = GLOB.gang_positions
 	)
 	for(var/datum/data/record/t in GLOB.data_core.general)
 		var/name = t.fields["name"]

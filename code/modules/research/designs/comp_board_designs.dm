@@ -152,14 +152,6 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/board/slot_machine
-	name = "Computer Design (Slot Machine)"
-	desc = "Allows for the construction of circuit boards used to build a new slot machine."
-	id = "slotmachine"
-	build_path = /obj/item/circuitboard/computer/slot_machine
-	category = list("Computer Boards")
-
-
 /datum/design/board/powermonitor
 	name = "Computer Design (Power Monitor)"
 	desc = "Allows for the construction of circuit boards used to build a new power monitor."

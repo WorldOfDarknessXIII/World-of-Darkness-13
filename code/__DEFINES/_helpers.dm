@@ -7,3 +7,6 @@
 //Returns an integer given a hex input, supports negative values "-ff"
 //skips preceding invalid characters
 #define hex2num(X) text2num(X, 16)
+
+#define span_notice(str) ("<span class='notice'>" + str + "</span>")
+#define span_warning(str) ("<span class='warning'>" + str + "</span>")

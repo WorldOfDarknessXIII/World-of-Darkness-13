@@ -288,6 +288,7 @@
 	icon = 'code/modules/wod13/mobs.dmi'
 	bloodpool = 2
 	maxbloodpool = 2
+	mob_size = MOB_SIZE_SMALL
 
 /mob/living/simple_animal/pet/cat/vampire/Initialize()
 	. = ..()

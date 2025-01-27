@@ -228,6 +228,10 @@
 	if(adjusted_jump_range <1)
 		adjusted_jump_range = 1
 
+	// very high override for powers like Jade Shintai 2
+	if(HAS_TRAIT(src, TRAIT_SUPERNATURAL_DEXTERITY))
+		adjusted_jump_range = 11
+
 	var/distance = get_dist(loc, target)
 	var/turf/adjusted_target = target
 	if(distance > adjusted_jump_range)
@@ -714,6 +718,10 @@
 		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = max(see_in_dark, 8)
 
+	if(HAS_TRAIT(src, TRAIT_NIGHT_VISION))
+		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_NV_TRAIT)
+		see_in_dark = max(see_in_dark, 8)
+
 	if(see_override)
 		see_invisible = see_override
 	. = ..()
@@ -908,7 +916,7 @@
 		return
 	if(stat != DEAD)
 		//special death handling for vampires, who don't die until -200 health
-		if (iskindred(src))
+		if (iskindred(src) || iscathayan(src))
 			if(health <= HEALTH_THRESHOLD_VAMPIRE_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 				death()
 				return
