@@ -643,6 +643,9 @@
 	new/obj/structure/fluff/empty_sleeper/syndicate/captain(get_turf(src))
 	return ..()
 
+/datum/outfit/syndicatespace
+	name = "Syndicate Ship Crew Member"
+
 /datum/outfit/syndicatespace/syndicrew
 	name = "Syndicate Ship Crew Member"
 	uniform = /obj/item/clothing/under/syndicate/combat

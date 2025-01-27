@@ -1,3 +1,6 @@
+/datum/outfit/centcom
+	name = "CentCom"
+
 /datum/outfit/centcom/ert
 	name = "ERT Common"
 
