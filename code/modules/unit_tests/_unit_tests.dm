@@ -85,6 +85,7 @@
 #include "emoting.dm"
 #include "heretic_knowledge.dm"
 #include "holidays.dm"
+#include "inhands.dm"
 #include "keybinding_init.dm"
 #include "load_map_security.dm"
 #include "machine_disassembly.dm"
