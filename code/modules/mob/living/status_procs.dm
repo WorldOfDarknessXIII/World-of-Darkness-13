@@ -1,6 +1,6 @@
 //Here are the procs used to modify status effects of a mob.
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness,
-// eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
+// eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHTED trait.
 
 
 ////////////////////////////// STUN ////////////////////////////////////
@@ -424,14 +424,14 @@
 		ADD_TRAIT(src, TRAIT_BLIND, source)
 
 /mob/living/proc/cure_nearsighted(source)
-	REMOVE_TRAIT(src, TRAIT_NEARSIGHT, source)
-	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
+	REMOVE_TRAIT(src, TRAIT_NEARSIGHTED, source)
+	if(!HAS_TRAIT(src, TRAIT_NEARSIGHTED))
 		clear_fullscreen("nearsighted")
 
 /mob/living/proc/become_nearsighted(source)
-	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
+	if(!HAS_TRAIT(src, TRAIT_NEARSIGHTED))
 		overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
-	ADD_TRAIT(src, TRAIT_NEARSIGHT, source)
+	ADD_TRAIT(src, TRAIT_NEARSIGHTED, source)
 
 /mob/living/proc/cure_husk(source)
 	REMOVE_TRAIT(src, TRAIT_HUSK, source)

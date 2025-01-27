@@ -147,7 +147,7 @@ Use this as a guideline
 	value = -1
 	///If this is above 0, it's a positive trait; if it's not, it's a negative one; if it's 0, it's a neutral
 
-	mob_trait = TRAIT_NEARSIGHT
+	mob_trait = TRAIT_NEARSIGHTED
 	///This define is in __DEFINES/traits.dm and is the actual "trait" that the game tracks
 	///You'll need to use "HAS_TRAIT_FROM(src, X, sources)" checks around the code to check this; for instance, the Ageusia trait is checked in taste code
 	///If you need help finding where to put it, the declaration finder on GitHub is the best way to locate it

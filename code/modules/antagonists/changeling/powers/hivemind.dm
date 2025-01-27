@@ -9,7 +9,7 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 	dna_cost = -1
 
 /datum/action/changeling/hivemind_upload/sting_action(mob/living/user)
-	if (HAS_TRAIT(user, CHANGELING_HIVEMIND_MUTE))
+	if (HAS_TRAIT(user, TRAIT_CHANGELING_HIVEMIND_MUTE))
 		to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
 		return
 	..()
@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 /datum/action/changeling/hivemind_download/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
-	if (HAS_TRAIT(user, CHANGELING_HIVEMIND_MUTE))
+	if (HAS_TRAIT(user, TRAIT_CHANGELING_HIVEMIND_MUTE))
 		to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
 		return
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)

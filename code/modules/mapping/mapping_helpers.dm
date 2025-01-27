@@ -480,9 +480,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 //Late init so everything is likely ready and loaded (no warranty)
 /obj/effect/mapping_helpers/trait_injector/LateInitialize()
-	if(!GLOB.trait_name_map)
-		GLOB.trait_name_map = generate_trait_name_map()
-	if(!GLOB.trait_name_map.Find(trait_name))
+	if(!GLOB.global_trait_name_map)
+		GLOB.global_trait_name_map = generate_global_trait_name_map()
+	if(!GLOB.global_trait_name_map.Find(trait_name))
 		CRASH("Wrong trait in [type] - [trait_name] is not a trait")
 	var/turf/target_turf = get_turf(src)
 	var/matches_found = 0

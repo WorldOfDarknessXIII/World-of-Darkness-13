@@ -309,7 +309,7 @@ GENE SCANNER
 			message = ""
 			if(C.is_blind())
 				message += "\n<span class='alert ml-2'>Subject is blind.</span>"
-			if(HAS_TRAIT(C, TRAIT_NEARSIGHT))
+			if(HAS_TRAIT(C, TRAIT_NEARSIGHTED))
 				message += "\n<span class='alert ml-2'>Subject is nearsighted.</span>"
 			if(eyes.damage > 30)
 				message += "\n<span class='alert ml-2'>Subject has severe eye damage.</span>"

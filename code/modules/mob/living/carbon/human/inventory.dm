@@ -219,7 +219,7 @@
 		if(G.tint)
 			update_tint()
 		if(G.vision_correction)
-			if(HAS_TRAIT(src, TRAIT_NEARSIGHT))
+			if(HAS_TRAIT(src, TRAIT_NEARSIGHTED))
 				overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
 		if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
 			update_sight()
