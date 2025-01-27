@@ -40,7 +40,7 @@
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
 
-/obj/item/organ/tongue/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/tongue/Insert(mob/living/carbon/M, special = 0, drop_if_replaced)
 	..()
 	if(say_mod && M.dna && M.dna.species)
 		M.dna.species.say_mod = say_mod
@@ -354,7 +354,7 @@
 	modifies_speech = TRUE
 	organ_flags = ORGAN_UNREMOVABLE
 
-/obj/item/organ/tongue/tied/Insert(mob/living/carbon/M)
+/obj/item/organ/tongue/tied/Insert(mob/living/carbon/M, special, drop_if_replaced)
 	. = ..()
 	M.verb_ask = "signs"
 	M.verb_exclaim = "signs"

@@ -417,10 +417,10 @@
 	name = "fly eyes"
 	desc = "These eyes seem to stare back no matter the direction you look at it from."
 
-/obj/item/organ/eyes/fly/Insert(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/eyes/fly/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced)
 	. = ..()
 	ADD_TRAIT(M, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
 
-/obj/item/organ/eyes/fly/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/eyes/fly/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced)
 	REMOVE_TRAIT(M, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
 	return ..()

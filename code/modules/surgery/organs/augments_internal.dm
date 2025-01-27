@@ -118,7 +118,7 @@
 	. = ..()
 	UnregisterSignal(M, signalCache)
 
-/obj/item/organ/cyberimp/brain/anti_stun/Insert()
+/obj/item/organ/cyberimp/brain/anti_stun/Insert(mob/living/carbon/M, special, drop_if_replaced)
 	. = ..()
 	RegisterSignal(owner, signalCache, PROC_REF(on_signal))
 

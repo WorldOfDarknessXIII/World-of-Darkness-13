@@ -14,7 +14,7 @@
 	if(iscarbon(loc))
 		Insert(loc)
 
-/obj/item/organ/body_egg/Insert(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/body_egg/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced)
 	..()
 	ADD_TRAIT(owner, TRAIT_XENO_HOST, TRAIT_GENERIC)
 	ADD_TRAIT(owner, TRAIT_XENO_IMMUNE, "xeno immune")
