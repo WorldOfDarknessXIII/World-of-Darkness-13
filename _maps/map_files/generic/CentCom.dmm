@@ -1,14 +1,14 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/closed/indestructible/riveted,
-/area/start)
+/area/misc/start)
 "ab" = (
 /obj/effect/landmark/start/new_player,
 /turf/open/floor/plating,
-/area/start)
+/area/misc/start)
 "ac" = (
 /turf/closed/indestructible/splashscreen,
-/area/start)
+/area/misc/start)
 "gt" = (
 /turf/open/space/basic,
 /area/space)
