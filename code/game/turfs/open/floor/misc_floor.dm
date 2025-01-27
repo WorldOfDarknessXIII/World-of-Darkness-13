@@ -127,7 +127,7 @@
 /turf/open/floor/noslip/broken_states()
 	return list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
 
-/turf/open/floor/noslip/setup_burnt_states()
+/turf/open/floor/noslip/burnt_states()
 	return list("noslip-scorched1","noslip-scorched2")
 
 /turf/open/floor/noslip/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)

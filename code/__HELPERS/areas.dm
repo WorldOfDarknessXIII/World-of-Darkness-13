@@ -3,7 +3,7 @@
 GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engine/engineering, \
 															    /area/engine/supermatter, \
 															    /area/engine/atmospherics_engine, \
-															    /area/ai_monitored/turret_protected/ai))
+															    /area/station/ai_monitored/turret_protected/ai))
 
 // Gets an atmos isolated contained space
 // Returns an associative list of turf|dirs pairs

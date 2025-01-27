@@ -1,4 +1,4 @@
-/area/holodeck
+/area/station/holodeck
 	name = "Holodeck"
 	icon_state = "Holodeck"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
@@ -14,7 +14,7 @@
 	Asserts are to avoid the inevitable infinite loops
 */
 
-/area/holodeck/powered(chan)
+/area/station/holodeck/powered(chan)
 	if(!requires_power)
 		return TRUE
 	if(always_unpowered)
@@ -22,21 +22,21 @@
 	if(!linked)
 		return FALSE
 	var/area/A = get_area(linked)
-	ASSERT(!istype(A, /area/holodeck))
+	ASSERT(!istype(A, /area/station/holodeck))
 	return A.powered(chan)
 
-/area/holodeck/addStaticPower(value, powerchannel)
+/area/station/holodeck/addStaticPower(value, powerchannel)
 	if(!linked)
 		return
 	var/area/A = get_area(linked)
-	ASSERT(!istype(A, /area/holodeck))
+	ASSERT(!istype(A, /area/station/holodeck))
 	return ..()
 
-/area/holodeck/use_power(amount, chan)
+/area/station/holodeck/use_power(amount, chan)
 	if(!linked)
 		return FALSE
 	var/area/A = get_area(linked)
-	ASSERT(!istype(A, /area/holodeck))
+	ASSERT(!istype(A, /area/station/holodeck))
 	return ..()
 
 
@@ -45,8 +45,8 @@
 	blow off steam by doing stupid things like laying down, throwing
 	spheres at holes, or bludgeoning people.
 */
-/area/holodeck/rec_center
+/area/station/holodeck/rec_center
 	name = "\improper Recreational Holodeck"
 
-/area/holodeck/rec_center/offstation_one
+/area/station/holodeck/rec_center/offstation_one
 	name = "\improper Recreational Holodeck"

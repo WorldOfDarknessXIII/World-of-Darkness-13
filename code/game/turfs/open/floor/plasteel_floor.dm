@@ -5,7 +5,7 @@
 /turf/open/floor/plasteel/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
-/turf/open/floor/plasteel/setup_burnt_states()
+/turf/open/floor/plasteel/burnt_states()
 	return list("floorscorched1", "floorscorched2")
 
 

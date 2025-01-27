@@ -383,7 +383,7 @@
 
 //OLD AI SAT
 
-/area/tcommsat/oldaisat
+/area/ruin/tcommsat_oldaisat
 	name = "Abandoned Satellite"
 	icon_state = "tcomsatcham"
 

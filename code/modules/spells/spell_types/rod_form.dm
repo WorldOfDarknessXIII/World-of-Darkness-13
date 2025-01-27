@@ -13,7 +13,7 @@
 
 /obj/effect/proc_holder/spell/targeted/rod_form/cast(list/targets,mob/user = usr)
 	var/area/A = get_area(user)
-	if(istype(A, /area/wizard_station))
+	if(istype(A, /area/centcom/wizard_station))
 		to_chat(user, "<span class='warning'>You know better than to trash Wizard Federation property. Best wait until you leave to use [src].</span>")
 		return
 	for(var/mob/living/M in targets)

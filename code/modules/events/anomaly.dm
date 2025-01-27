@@ -17,11 +17,11 @@
 	if(!allowed_areas)
 		//Places that shouldn't explode
 		var/list/safe_area_types = typecacheof(list(
-		/area/ai_monitored/turret_protected/ai,
-		/area/ai_monitored/turret_protected/ai_upload,
+		/area/station/ai_monitored/turret_protected/ai,
+		/area/station/ai_monitored/turret_protected/ai_upload,
 		/area/engine,
 		/area/solar,
-		/area/holodeck,
+		/area/station/holodeck,
 		/area/shuttle,
 		/area/maintenance,
 		/area/science/test_area)

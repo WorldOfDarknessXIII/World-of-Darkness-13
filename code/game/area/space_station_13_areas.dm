@@ -17,9 +17,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /*-----------------------------------------------------------------------------*/
 
-/area/ai_monitored	//stub defined ai_monitored.dm
+/area/station/ai_monitored	//stub defined ai_monitored.dm
 
-/area/ai_monitored/turret_protected
+/area/station/ai_monitored/turret_protected
 
 /area/space
 	icon_state = "space"
@@ -39,7 +39,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "space_near"
 	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
 
-/area/start
+/area/misc/start
 	name = "start area"
 	icon_state = "start"
 	requires_power = FALSE
@@ -47,14 +47,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	has_gravity = STANDARD_GRAVITY
 
 
-/area/testroom
+/area/misc/testroom
 	requires_power = FALSE
 	name = "Test Room"
 	icon_state = "storage"
 
 //EXTRA
 
-/area/asteroid
+/area/centcom/asteroid
 	name = "Asteroid"
 	icon_state = "asteroid"
 	requires_power = FALSE
@@ -64,14 +64,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	flags_1 = CAN_BE_DIRTY_1
 	sound_environment = SOUND_AREA_ASTEROID
 
-/area/asteroid/nearstation
+/area/centcom/asteroid/nearstation
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	ambience_index = AMBIENCE_RUINS
 	always_unpowered = FALSE
 	requires_power = TRUE
 	area_flags = UNIQUE_AREA | BLOBS_ALLOWED
 
-/area/asteroid/nearstation/bomb_site
+/area/centcom/asteroid/nearstation/bomb_site
 	name = "Bomb Testing Asteroid"
 
 //STATION13
@@ -981,7 +981,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "nuke_storage"
 	airlock_wires = /datum/wires/airlock/command
 
-/area/ai_monitored/nuke_storage
+/area/station/ai_monitored/nuke_storage
 	name = "Vault"
 	icon_state = "nuke_storage"
 	airlock_wires = /datum/wires/airlock/command
@@ -1227,18 +1227,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Construction
 
-/area/construction
+/area/station/construction
 	name = "Construction Area"
 	icon_state = "construction"
 	ambience_index = AMBIENCE_ENGI
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
-/area/construction/mining/aux_base
+/area/station/construction/mining/aux_base
 	name = "Auxiliary Base Construction"
 	icon_state = "aux_base_construction"
 	sound_environment = SOUND_AREA_MEDIUM_SOFTFLOOR
 
-/area/construction/storage_wing
+/area/station/construction/storage_wing
 	name = "Storage Wing"
 	icon_state = "storage_wing"
 
@@ -1258,27 +1258,27 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //AI
 
-/area/ai_monitored
+/area/station/ai_monitored
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
-/area/ai_monitored/security/armory
+/area/station/ai_monitored/security/armory
 	name = "Armory"
 	icon_state = "armory"
 	ambience_index = AMBIENCE_DANGER
 	airlock_wires = /datum/wires/airlock/security
 
-/area/ai_monitored/security/armory/upper
+/area/station/ai_monitored/security/armory/upper
 	name = "Upper Armory"
 
-/area/ai_monitored/storage/eva
+/area/station/ai_monitored/storage/eva
 	name = "EVA Storage"
 	icon_state = "eva"
 	ambience_index = AMBIENCE_DANGER
 
-/area/ai_monitored/storage/eva/upper
+/area/station/ai_monitored/storage/eva/upper
 	name = "Upper EVA Storage"
 
-/area/ai_monitored/storage/satellite
+/area/station/ai_monitored/storage/satellite
 	name = "AI Satellite Maint"
 	icon_state = "ai_storage"
 	ambience_index = AMBIENCE_DANGER
@@ -1286,42 +1286,42 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 	//Turret_protected
 
-/area/ai_monitored/turret_protected
+/area/station/ai_monitored/turret_protected
 	ambientsounds = list('sound/ambience/ambimalf.ogg', 'sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg')
 	airlock_wires = /datum/wires/airlock/ai
 
-/area/ai_monitored/turret_protected/ai_upload
+/area/station/ai_monitored/turret_protected/ai_upload
 	name = "AI Upload Chamber"
 	icon_state = "ai_upload"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
-/area/ai_monitored/turret_protected/ai_upload_foyer
+/area/station/ai_monitored/turret_protected/ai_upload_foyer
 	name = "AI Upload Access"
 	icon_state = "ai_upload_foyer"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
-/area/ai_monitored/turret_protected/ai
+/area/station/ai_monitored/turret_protected/ai
 	name = "AI Chamber"
 	icon_state = "ai_chamber"
 
-/area/ai_monitored/turret_protected/aisat
+/area/station/ai_monitored/turret_protected/aisat
 	name = "AI Satellite"
 	icon_state = "ai"
 	sound_environment = SOUND_ENVIRONMENT_ROOM
 
-/area/ai_monitored/turret_protected/aisat/atmos
+/area/station/ai_monitored/turret_protected/aisat/atmos
 	name = "AI Satellite Atmos"
 	icon_state = "ai"
 
-/area/ai_monitored/turret_protected/aisat/foyer
+/area/station/ai_monitored/turret_protected/aisat/foyer
 	name = "AI Satellite Foyer"
 	icon_state = "ai_foyer"
 
-/area/ai_monitored/turret_protected/aisat/service
+/area/station/ai_monitored/turret_protected/aisat/service
 	name = "AI Satellite Service"
 	icon_state = "ai"
 
-/area/ai_monitored/turret_protected/aisat/hallway
+/area/station/ai_monitored/turret_protected/aisat/hallway
 	name = "AI Satellite Hallway"
 	icon_state = "ai"
 
@@ -1330,16 +1330,16 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "ai"
 	airlock_wires = /datum/wires/airlock/ai
 
-/area/ai_monitored/turret_protected/aisat_interior
+/area/station/ai_monitored/turret_protected/aisat_interior
 	name = "AI Satellite Antechamber"
 	icon_state = "ai_interior"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
-/area/ai_monitored/turret_protected/ai_sat_ext_as
+/area/station/ai_monitored/turret_protected/ai_sat_ext_as
 	name = "AI Sat Ext"
 	icon_state = "ai_sat_east"
 
-/area/ai_monitored/turret_protected/ai_sat_ext_ap
+/area/station/ai_monitored/turret_protected/ai_sat_ext_ap
 	name = "AI Sat Ext"
 	icon_state = "ai_sat_west"
 

@@ -2,7 +2,7 @@
 
 	var/list/datum/weakref/localMotionTargets = list()
 	var/detectTime = 0
-	var/area/ai_monitored/area_motion = null
+	var/area/station/ai_monitored/area_motion = null
 	var/alarm_delay = 30 // Don't forget, there's another 3 seconds in queueAlarm()
 
 /obj/machinery/camera/process()
@@ -38,7 +38,7 @@
 	return TRUE
 
 /obj/machinery/camera/Destroy()
-	var/area/ai_monitored/A = get_area(src)
+	var/area/station/ai_monitored/A = get_area(src)
 	localMotionTargets = null
 	if(istype(A))
 		A.motioncameras -= src

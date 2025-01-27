@@ -176,7 +176,7 @@
 	var/obj/effect/mine/pickup/bloodbath/B = new (L)
 	B.mineEffect(L)
 
-/area/shuttle_arena
+/area/shuttle/shuttle_arena
 	name = "arena"
 	has_gravity = STANDARD_GRAVITY
 	requires_power = FALSE

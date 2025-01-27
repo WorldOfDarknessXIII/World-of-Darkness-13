@@ -23,7 +23,7 @@
 /turf/open/floor/plating/broken_states()
 	return list("dirt")
 
-/turf/open/floor/plating/setup_burnt_states()
+/turf/open/floor/plating/burnt_states()
 	return list("panelscorched")
 
 /turf/open/floor/plating/examine(mob/user)

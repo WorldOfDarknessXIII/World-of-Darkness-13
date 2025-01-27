@@ -131,16 +131,16 @@
 /turf/open/floor/proc/break_tile()
 	if(broken)
 		return
-	icon_state = pick(broken_states)
+	icon_state = pick(broken_states())
 	broken = 1
 
 /turf/open/floor/burn_tile()
 	if(broken || burnt)
 		return
-	if(LAZYLEN(burnt_states))
-		icon_state = pick(burnt_states)
+	if(LAZYLEN(burnt_states()))
+		icon_state = pick(burnt_states())
 	else
-		icon_state = pick(broken_states)
+		icon_state = pick(broken_states())
 	burnt = 1
 
 /turf/open/floor/proc/make_plating(force = FALSE)
