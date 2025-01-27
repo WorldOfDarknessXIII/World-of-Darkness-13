@@ -111,6 +111,7 @@
 #include "spawn_humans.dm"
 #include "spawn_mobs.dm"
 #include "species_whitelists.dm"
+#include "spritesheets.dm"
 #include "stomach.dm"
 #include "subsystem_init.dm"
 #include "surgeries.dm"
