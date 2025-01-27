@@ -69,6 +69,12 @@
 #else
 #define TEST_OUTPUT_GREEN(text) (text)
 #endif
+/// Change color to yellow on ANSI terminal output, if enabled with -DANSICOLORS.
+#ifdef ANSICOLORS
+#define TEST_OUTPUT_YELLOW(text) "\x1B\x5B1;33m[text]\x1B\x5B0m"
+#else
+#define TEST_OUTPUT_YELLOW(text) (text)
+#endif
 
 /// A trait source when adding traits through unit tests
 #define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
@@ -88,6 +94,7 @@
 #include "designs.dm"
 #include "emoting.dm"
 #include "focus_only_tests.dm"
+#include "font_awesome_icons.dm"
 #include "heretic_knowledge.dm"
 #include "holidays.dm"
 #include "inhands.dm"
