@@ -26,6 +26,8 @@
 	var/wine_power = 10 //Determines the boozepwr of the wine if distill_reagent is NULL.
 	///Color of the grown object
 	var/filling_color
+	/// Should we pixel offset ourselves at init? for mapping
+	var/offset_at_init = TRUE
 
 
 /obj/item/food/grown/Initialize(mapload, obj/item/seeds/new_seed)
@@ -43,8 +45,9 @@
 		stack_trace("Grown object created without a seed. WTF")
 		return INITIALIZE_HINT_QDEL
 
-	pixel_x = base_pixel_x + rand(-5, 5)
-	pixel_y = base_pixel_y + rand(-5, 5)
+	if(offset_at_init)
+		pixel_x = base_pixel_x + rand(-5, 5)
+		pixel_y = base_pixel_y + rand(-5, 5)
 
 	make_dryable()
 

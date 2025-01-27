@@ -7,6 +7,7 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	resistance_flags = FLAMMABLE
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
+	var/offset_at_init = TRUE // Should we pixel offset ourselves at init? for mapping
 
 /obj/item/grown/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
@@ -19,8 +20,9 @@
 		seed = new seed()
 		seed.adjust_potency(50-seed.potency)
 
-	pixel_x = base_pixel_x + rand(-5, 5)
-	pixel_y = base_pixel_y + rand(-5, 5)
+	if(offset_at_init)
+		pixel_x = base_pixel_x + rand(-5, 5)
+		pixel_y = base_pixel_y + rand(-5, 5)
 
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)
