@@ -9,6 +9,7 @@
 	..()
 
 /datum/discipline/thaumaturgy/post_gain()
+	. = ..()
 	owner.faction |= "Tremere"
 	if(level >= 1)
 		var/datum/action/thaumaturgy/thaumaturgy = new()

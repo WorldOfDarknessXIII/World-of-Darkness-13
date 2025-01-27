@@ -142,13 +142,13 @@
 	. = ..()
 	if(iswerewolf(target) || isgarou(target))
 		owner.playsound_local(owner.loc, 'code/modules/wod13/sounds/vicissitude.ogg', 50, TRUE)
-		//owner.adjustFireLoss(35)		//abusers suffer no more
-		owner.Stun(20)
+		owner.Stun(2 SECONDS)
 		owner.emote("scream")
+
 		target.apply_damage(10*level_casting, BRUTE)
 		target.apply_damage(5*level_casting, CLONE)
 		target.visible_message("<span class='danger'>[target]'s skin writhes like worms, twisting and contorting!</span>", "<span class='userdanger'>Your flesh twists unnaturally!</span>")
-		target.Stun(30)
+		target.Stun(3 SECONDS)
 		target.emote("scream")
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
@@ -238,8 +238,6 @@
 				var/obj/item/bodypart/B = H.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 				if(B)
 					B.drop_limb()
-	//else
-		//target.death() - Removed until a better solution is found to not have insta-kills on player mobs, unsure of side effects for normal vicissitude use but call death above already so should be fine?
 
 /turf
 	var/silented = FALSE

@@ -248,7 +248,7 @@
 	//overrides should take care to still send and receive these signals!
 	var/signal_return = SEND_SIGNAL(src, COMSIG_POWER_PRE_ACTIVATION, target) | SEND_SIGNAL(owner, COMSIG_POWER_PRE_ACTIVATION, target)
 	if (target)
-		signal_return |= SEND_SIGNAL(src, COMSIG_POWER_PRE_ACTIVATION_ON)
+		signal_return |= SEND_SIGNAL(target, COMSIG_POWER_PRE_ACTIVATION_ON)
 	if (signal_return & POWER_CANCEL_ACTIVATION)
 		//feedback is sent by the proc cancelling activation
 		return
@@ -377,6 +377,8 @@
 		owner.playsound_local(owner, deactivate_sound, 50, FALSE)
 
 /datum/discipline_power/proc/try_deactivate(atom/target)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	if (can_deactivate(target))
 		deactivate(target)
 

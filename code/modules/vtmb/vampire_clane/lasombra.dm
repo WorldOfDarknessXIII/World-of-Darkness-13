@@ -20,6 +20,7 @@
 	H.faction |= "Lasombra"
 
 /datum/discipline/obtenebration/post_gain(mob/living/carbon/human/H)
+	. = ..()
 	if(level >= 1)
 		var/datum/action/shadowcontrol/control = new()
 		control.Grant(H)

@@ -291,6 +291,7 @@
 	..()
 
 /datum/discipline/mytherceria/post_gain(mob/living/carbon/human/H)
+	. = ..()
 	if (level >= 3)
 		var/datum/action/mytherceria/U = new()
 		U.Grant(H)

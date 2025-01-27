@@ -114,9 +114,9 @@
 		end_targeting()
 		return
 	//actually try to use the Discipline on the target
-	if (discipline.try_activate(target))
-		end_targeting()
-		return
+	spawn()
+		if (discipline.try_activate(target))
+			end_targeting()
 
 /datum/action/discipline/proc/begin_targeting()
 	var/client/client = owner?.client

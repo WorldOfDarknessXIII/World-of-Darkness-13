@@ -20,6 +20,7 @@
 	H.gain_trauma(T, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/discipline/daimonion/post_gain(mob/living/carbon/human/H)
+	. = ..()
 	if(level >= 3)
 		var/obj/effect/proc_holder/spell/aimed/fireball/baali/S = new(H)
 		H.mind.AddSpell(S)

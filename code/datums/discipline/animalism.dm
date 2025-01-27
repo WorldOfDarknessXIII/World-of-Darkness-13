@@ -96,10 +96,10 @@
 
 /datum/discipline_power/animalism/summon_bat/activate()
 	. = ..()
-	var/mob/living/simple_animal/hostile/beastmaster/rat/flying/F = new(get_turf(owner))
-	F.my_creator = owner
-	owner.beastmaster |= F
-	F.beastmaster = owner
+	var/mob/living/simple_animal/hostile/beastmaster/rat/flying/bat = new(get_turf(owner))
+	bat.my_creator = owner
+	owner.beastmaster |= bat
+	bat.beastmaster = owner
 
 //RAT SHAPESHIFT
 /obj/effect/proc_holder/spell/targeted/shapeshift/animalism

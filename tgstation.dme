@@ -567,6 +567,7 @@
 #include "code\datums\discipline\quietus.dm"
 #include "code\datums\discipline\serpentis.dm"
 #include "code\datums\discipline\thaumaturgy.dm"
+#include "code\datums\discipline\vicissitude.dm"
 #include "code\datums\diseases\_disease.dm"
 #include "code\datums\diseases\_MobProcs.dm"
 #include "code\datums\diseases\anxiety.dm"
