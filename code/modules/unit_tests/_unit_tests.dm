@@ -134,6 +134,7 @@
 #include "teleporters.dm"
 #include "timer_sanity.dm"
 #include "trait_addition_and_removal.dm"
+#include "turf_icons.dm"
 #include "unit_test.dm"
 #include "worn_icons.dm"
 

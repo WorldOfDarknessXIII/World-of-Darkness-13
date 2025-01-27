@@ -22,8 +22,8 @@
 	if(ismob(target.loc))
 		var/mob/M = target.loc
 		if(M.is_holding(target))
-			M.update_held_items()
+			M.update_inv_hands()
 		else
-			M.update_clothing((target.slot_flags|update_flags))
+			M.update_icons()
 			if(update_body)
 				M.update_body()
