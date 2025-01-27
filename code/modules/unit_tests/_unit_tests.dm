@@ -89,6 +89,7 @@
 #include "keybinding_init.dm"
 #include "load_map_security.dm"
 #include "machine_disassembly.dm"
+#include "mapload_space_verification.dm"
 #include "mapping.dm"
 #include "medical_wounds.dm"
 #include "merge_type.dm"
