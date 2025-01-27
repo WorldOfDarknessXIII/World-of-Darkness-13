@@ -519,8 +519,11 @@
 		new /datum/data/mining_equipment("Colt M1911 magazine",		/obj/item/ammo_box/magazine/vamp45acp,	50),
 		new /datum/data/mining_equipment("knife",	/obj/item/melee/vampirearms/knife,	100),
 		new /datum/data/mining_equipment("baseball bat",	/obj/item/melee/vampirearms/baseball,	200),
-		new /datum/data/mining_equipment("real katana",	/obj/item/melee/vampirearms/katana,	1500),
+		new /datum/data/mining_equipment("real katana",	/obj/item/melee/vampirearms/katana,	2000),
 		new /datum/data/mining_equipment("machete", /obj/item/melee/vampirearms/machete, 500),
+		new /datum/data/mining_equipment("brass knuckles",	/obj/item/kastet,	250),
+		new /datum/data/mining_equipment("brass knuckles (spiked)",	/obj/item/kastet/spiked,	500),
+		new /datum/data/mining_equipment("sledgehammer",	/obj/item/melee/vampirearms/sledgehammer,	1500),
 		new /datum/data/mining_equipment("donut",	/obj/item/food/vampire/donut,	10)
 	)
 

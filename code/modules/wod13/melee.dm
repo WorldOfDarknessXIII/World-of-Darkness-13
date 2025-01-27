@@ -8,6 +8,47 @@
 
 /obj/item
 	var/masquerade_violating = FALSE
+	var/attack_diff_override = 0
+
+/obj/item/kastet
+	icon_state = "kastet"
+	name = "brass knuckles"
+	desc = "Lethaly efficient brawl weapon."
+	force = 20
+	attack_diff_override = 4
+	lefthand_file = 'code/modules/wod13/righthand.dmi'
+	righthand_file = 'code/modules/wod13/lefthand.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	cost = 25
+
+/obj/item/kastet/spiked
+	icon_state = "kastet_s"
+	name = "brass knuckles"
+	force = 35
+	attack_diff_override = 5
+	sharpness = SHARP_EDGED
+
+/obj/item/melee/vampirearms/sledgehammer
+	icon_state = "sledgehammer"
+	name = "sledgehammer"
+	desc = "Truly, the weapon of a madman. Who would think to fight sledge with an hammer?"
+	force = 50
+	throwforce = 20
+	w_class = WEIGHT_CLASS_BULKY
+	attack_verb_continuous = list("attacks", "bumps", "squeashes", "tears", "hits", "bonks")
+	attack_verb_simple = list("attack", "bump", "squeash", "tear", "hit", "bonk")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = SHARP_EDGED
+	max_integrity = 200
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 30)
+	resistance_flags = FIRE_PROOF
+	wound_bonus = 25
+	bare_wound_bonus = 20
+	armour_penetration = 0
+	block_chance = 0
+	pixel_w = -8
+	masquerade_violating = FALSE
 
 /obj/item/melee/vampirearms/fireaxe
 	icon = 'code/modules/wod13/48x32weapons.dmi'
@@ -25,7 +66,7 @@
 	max_integrity = 200
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 30)
 	resistance_flags = FIRE_PROOF
-	wound_bonus = -15
+	wound_bonus = 25
 	bare_wound_bonus = 20
 	armour_penetration = 0
 	block_chance = 15

@@ -1542,7 +1542,11 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		add_hard = 1
 	if(user.zone_selected == BODY_ZONE_PRECISE_EYES || user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 		add_hard = 2
-	var/modifikator = secret_vampireroll(get_a_strength(user)+get_a_melee(user)+get_potence_dices(user), 6+add_hard, user)
+	var/modifikator
+	if(I.attack_diff_override > 0)
+		modifikator = secret_vampireroll(get_a_strength(user)+get_a_melee(user)+get_potence_dices(user), I.attack_diff_override, user)
+	else
+		modifikator = secret_vampireroll(get_a_strength(user)+get_a_melee(user)+get_potence_dices(user), 6+add_hard, user)
 	if(modifikator == -1)
 		H = user
 		modifikator = 3

@@ -445,6 +445,23 @@
 		closed = TRUE
 
 /obj/structure/vampdoor/attackby(obj/item/W, mob/living/user, params)
+	if(istype(W, /obj/item/melee/vampirearms/sledgehammer))
+		playsound(get_turf(src), 'code/modules/wod13/sounds/get_bent.ogg', 100, FALSE)
+		var/difficulties = secret_vampireroll(get_a_strength(user)+get_a_melee(user), lockpick_difficulty, user)
+		if(difficulties == -1)
+			user.visible_message("<span class='warning'>[user] fails to break [src] with [W]!</span>", \
+						"<span class='userdanger'>You fail to break [src] with [W]!</span>")
+			user.AdjustKnockdown(60, TRUE)
+			return
+		else if(difficulties > 1)
+			var/obj/item/shield/door/D = new(get_turf(src))
+			D.icon_state = baseicon
+			var/atom/throw_target = get_edge_target_turf(src, user.dir)
+			D.throw_at(throw_target, rand(2, 4), 4, user)
+			qdel(src)
+		else
+			animate(src, pixel_x = 16*sin(get_angle_raw(user.x, user.y, 0, 0, x, y, 0, 0)), pixel_y = 16*cos(get_angle_raw(user.x, user.y, 0, 0, x, y, 0, 0)), time = 5, loop = 1)
+			animate(src, pixel_x = 0, pixel_y = 0)
 	if(istype(W, /obj/item/vamp/keys/hack))
 		if(locked)
 			hacking = TRUE
