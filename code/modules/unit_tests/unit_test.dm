@@ -139,9 +139,11 @@ GLOBAL_VAR(test_log)
 		var/line = fail_reasons[reasonID][3]
 
 		test.log_for_test(text, "error", file, line)
-
+		// Normal log message
+		log_entry += "\tREASON #[reasonID]: [text] at [file]:[line]"
+	var/message = log_entry.Join("\n")
+	log_test(message)
 	test_results[test_path] = list("status" = test.succeeded ? UNIT_TEST_PASSED : UNIT_TEST_FAILED, "message" = message, "name" = test_path)
-
 	qdel(test)
 
 /proc/RunUnitTests()
