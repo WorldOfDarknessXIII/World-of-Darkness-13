@@ -101,12 +101,6 @@
 
 	var/phonevoicetag = 10
 
-	var/hided = FALSE
-	var/additional_hands = FALSE
-	var/additional_wings = FALSE
-	var/additional_centipede = FALSE
-	var/additional_armor = FALSE
-
 	var/unique_body_sprite
 
 	var/image/suckbar

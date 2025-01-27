@@ -2,6 +2,7 @@
 	name = "Vicissitude"
 	desc = "It is widely known as Tzimisce art of flesh and bone shaping. Violates Masquerade."
 	icon_state = "vicissitude"
+	clan_restricted = TRUE
 
 /datum/discipline/vicissitude/New(level)
 	all_powers = subtypesof(/datum/discipline_power/vicissitude)
@@ -9,33 +10,7 @@
 
 /datum/discipline/vicissitude/post_gain()
 	. = ..()
-	H.faction |= "Tzimisce"
-	if (level >= 2)
-		var/obj/item/organ/cyberimp/arm/surgery/surgery_implant = new()
-		surgery_implant.Insert(owner)
-	if(level >= 3)
-		var/datum/action/basic_vicissitude/vicissitude_upgrade = new()
-		vicissitude_upgrade.Grant(owner)
-	if(level >= 4)
-		var/datum/action/vicissitude_form/zulo_form = new()
-		zulo_form.Grant(owner)
-	if(level >= 5)
-		var/datum/action/vicissitude_blood/bloodform = new()
-		bloodform.Grant(owner)
-	if(owner.mind)
-		if(level >= 2)
-			owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_wall)
-			owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_stool)
-			owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_floor)
-			owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_eyes)
-			owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_implant)
-		if(level >= 3)
-			owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_trench)
-			owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_biter)
-			owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_fister)
-			owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_tanker)
-		if(level >= 4)
-			owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_heart)
+	owner.faction |= "Tzimisce"
 
 /datum/discipline_power/vicissitude
 	name = "Vicissitude power name"
@@ -132,22 +107,20 @@
 	playsound(get_turf(owner), 'code/modules/wod13/sounds/vicissitude.ogg', 100, TRUE, -6)
 
 	if (to_original)
-		original_dna.transfer_identity(destination = owner, superficial = TRUE)
+		original_dna.transfer_identity(destination = owner, transfer_SE = TRUE, superficial = TRUE)
 		owner.base_body_mod = original_body_mod
 		owner.clane.alt_sprite = original_alt_sprite
 		owner.clane.alt_sprite_greyscale = original_alt_sprite_greyscale
 		is_shapeshifted = FALSE
 	else
-		//Nosferatu, Cappadocians, Gargoyles, Kiasyd, etc. will revert instead of living without their curse
+		//Nosferatu, Cappadocians, Gargoyles, Kiasyd, etc. will revert instead of being indefinitely without their curse
 		if (original_alt_sprite)
 			addtimer(CALLBACK(src, PROC_REF(revert_to_cursed_form)), 3 MINUTES)
-		impersonating_dna.copy_dna(owner)
+		impersonating_dna.transfer_identity(destination = owner, superficial = TRUE)
 		owner.base_body_mod = impersonating_body_mod
 		owner.clane.alt_sprite = impersonating_alt_sprite
 		owner.clane.alt_sprite_greyscale = impersonating_alt_sprite_greyscale
 		is_shapeshifted = TRUE
-
-	owner.update_body()
 
 /datum/discipline_power/vicissitude/malleable_visage/proc/revert_to_cursed_form()
 	if (!original_alt_sprite)
@@ -162,3 +135,168 @@
 	owner.clane.alt_sprite_greyscale = original_alt_sprite_greyscale
 
 	to_chat(owner, "<span class='warning'>Your cursed appearance reasserts itself!</span>")
+
+//FLESHCRAFTING
+/datum/discipline_power/vicissitude/fleshcrafting
+	name = "Fleshcrafting"
+	desc = "Mold your victim's flesh and soft tissue to your desire."
+
+	level = 2
+	check_flags = DISC_CHECK_CONSCIOUS | DISC_CHECK_CAPABLE | DISC_CHECK_IMMOBILE | DISC_CHECK_FREE_HAND
+	target_type = TARGET_MOB
+	range = 1
+
+	effect_sound = 'code/modules/wod13/sounds/vicissitude.ogg'
+	aggravating = TRUE
+	hostile = TRUE
+	violates_masquerade = TRUE
+
+	cooldown_length = 5 SECONDS
+	grouped_powers = list(/datum/discipline_power/vicissitude/bonecrafting)
+
+/datum/discipline_power/vicissitude/fleshcrafting/activate(mob/living/target)
+	. = ..()
+	if(target.stat >= HARD_CRIT)
+		if(target.stat != DEAD)
+			target.death()
+		new /obj/item/stack/human_flesh/ten(target.loc)
+		new /obj/item/guts(target.loc)
+		qdel(target)
+	else
+		target.emote("scream")
+		target.apply_damage(30, BRUTE, BODY_ZONE_CHEST)
+
+/datum/discipline_power/vicissitude/fleshcrafting/post_gain()
+	. = ..()
+	var/obj/item/organ/cyberimp/arm/surgery/surgery_implant = new()
+	surgery_implant.Insert(owner)
+
+	if (!owner.mind)
+		return
+	owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_wall)
+	owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_stool)
+	owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_floor)
+	owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_eyes)
+	owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_implant)
+
+//BONECRAFTING
+/datum/discipline_power/vicissitude/bonecrafting
+	name = "Bonecrafting"
+	desc = "Mold your victim's flesh and soft tissue to your desire."
+
+	level = 3
+	check_flags = DISC_CHECK_CONSCIOUS | DISC_CHECK_CAPABLE | DISC_CHECK_IMMOBILE | DISC_CHECK_FREE_HAND
+	target_type = TARGET_MOB
+	range = 1
+
+	effect_sound = 'code/modules/wod13/sounds/vicissitude.ogg'
+	aggravating = TRUE
+	hostile = TRUE
+	violates_masquerade = TRUE
+
+	cooldown_length = 5 SECONDS
+	grouped_powers = list(/datum/discipline_power/vicissitude/fleshcrafting)
+
+/datum/discipline_power/vicissitude/bonecrafting/activate(mob/living/target)
+	. = ..()
+	if (target.stat >= HARD_CRIT)
+		if(target.stat != DEAD)
+			target.death()
+		var/obj/item/bodypart/r_arm/r_arm = target.get_bodypart(BODY_ZONE_R_ARM)
+		var/obj/item/bodypart/l_arm/l_arm = target.get_bodypart(BODY_ZONE_L_ARM)
+		var/obj/item/bodypart/r_leg/r_leg = target.get_bodypart(BODY_ZONE_R_LEG)
+		var/obj/item/bodypart/l_leg/l_leg = target.get_bodypart(BODY_ZONE_L_LEG)
+		if(r_arm)
+			r_arm.drop_limb()
+		if(l_arm)
+			l_arm.drop_limb()
+		if(r_leg)
+			r_leg.drop_limb()
+		if(l_leg)
+			l_leg.drop_limb()
+		new /obj/item/stack/human_flesh/ten(target.loc)
+		new /obj/item/guts(target.loc)
+		new /obj/item/spine(target.loc)
+		qdel(target)
+	else
+		target.emote("scream")
+		target.apply_damage(60, BRUTE, BODY_ZONE_CHEST)
+
+/datum/discipline_power/vicissitude/bonecrafting/post_gain()
+	. = ..()
+	var/datum/action/basic_vicissitude/vicissitude_upgrade = new()
+	vicissitude_upgrade.Grant(owner)
+
+	if (!owner.mind)
+		return
+	owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_trench)
+	owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_biter)
+	owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_fister)
+	owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_tanker)
+
+//HORRID FORM
+/datum/discipline_power/vicissitude/horrid_form
+	name = "Horrid Form"
+	desc = "Shift your flesh and bone into that of a hideous monster."
+
+	level = 4
+	check_flags = DISC_CHECK_CONSCIOUS | DISC_CHECK_CAPABLE | DISC_CHECK_IMMOBILE
+	vitae_cost = 2
+	bypass_spending_limits = TRUE
+
+	violates_masquerade = TRUE
+
+	duration_length = 20 SECONDS
+	cooldown_length = 20 SECONDS
+
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/tzimisce/horrid_form_shapeshift
+
+/datum/discipline_power/vicissitude/horrid_form/activate()
+	. = ..()
+	if (!horrid_form_shapeshift)
+		horrid_form_shapeshift = new(owner)
+
+	horrid_form_shapeshift.Shapeshift(owner)
+
+/datum/discipline_power/vicissitude/horrid_form/deactivate()
+	. = ..()
+	horrid_form_shapeshift.Restore(horrid_form_shapeshift.myshape)
+	owner.Stun(2 SECONDS)
+	owner.do_jitter_animation(50)
+
+/datum/discipline_power/vicissitude/horrid_form/post_gain()
+	. = ..()
+	if (!owner.mind)
+		return
+	owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_heart)
+
+//BLOODFORM
+/datum/discipline_power/vicissitude/bloodform
+	name = "Bloodform"
+	desc = "Liquefy into a shifting mass of sentient Vitae."
+
+	level = 5
+	check_flags = DISC_CHECK_CONSCIOUS | DISC_CHECK_CAPABLE | DISC_CHECK_IMMOBILE
+
+	violates_masquerade = TRUE
+
+	duration_length = 20 SECONDS
+	cooldown_length = 20 SECONDS
+
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/bloodcrawler/bloodform_shapeshift
+
+/datum/discipline_power/vicissitude/bloodform/activate()
+	. = ..()
+	if (!bloodform_shapeshift)
+		bloodform_shapeshift = new(owner)
+
+	bloodform_shapeshift.Shapeshift(owner)
+
+/datum/discipline_power/vicissitude/bloodform/deactivate()
+	. = ..()
+	var/mob/living/simple_animal/hostile/bloodcrawler/bloodform = bloodform_shapeshift.myshape
+	owner.adjust_blood_points(round(bloodform.collected_blood / 2))
+	bloodform_shapeshift.Restore(bloodform_shapeshift.myshape)
+	owner.Stun(1.5 SECONDS)
+	owner.do_jitter_animation(30)
+

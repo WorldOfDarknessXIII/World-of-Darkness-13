@@ -124,121 +124,6 @@
 		else
 			ClickOn(src)
 
-/datum/discipline/vicissitude
-	name = "Vicissitude"
-	desc = "It is widely known as Tzimisce art of flesh and bone shaping. Violates Masquerade."
-	icon_state = "vicissitude"
-	/*
-	cost = 1
-	ranged = TRUE
-	delay = 10 SECONDS
-	range_sh = 2
-	violates_masquerade = TRUE
-	clan_restricted = TRUE
-	dead_restricted = FALSE
-	*/
-
-/datum/discipline/vicissitude/activate(mob/living/target, mob/living/carbon/human/owner)
-	. = ..()
-	if(iswerewolf(target) || isgarou(target))
-		owner.playsound_local(owner.loc, 'code/modules/wod13/sounds/vicissitude.ogg', 50, TRUE)
-		owner.Stun(2 SECONDS)
-		owner.emote("scream")
-
-		target.apply_damage(10*level_casting, BRUTE)
-		target.apply_damage(5*level_casting, CLONE)
-		target.visible_message("<span class='danger'>[target]'s skin writhes like worms, twisting and contorting!</span>", "<span class='userdanger'>Your flesh twists unnaturally!</span>")
-		target.Stun(3 SECONDS)
-		target.emote("scream")
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		owner.playsound_local(target.loc, 'code/modules/wod13/sounds/vicissitude.ogg', 50, TRUE)
-		if(target.stat >= UNCONSCIOUS)
-			if(istype(target, /mob/living/carbon/human/npc))
-				var/mob/living/carbon/human/npc/NPC = target
-				NPC.last_attacker = null
-			if(!iskindred(target) && !isgarou(target) && !iscathayan(target))	//Who tf wrote this with || lmao
-				if(H.stat != DEAD)
-					H.death()
-				switch(level_casting)
-					if(1)
-						new /obj/item/stack/human_flesh(target.loc)
-						new /obj/item/guts(target.loc)
-						qdel(target)
-					if(2)
-						new /obj/item/stack/human_flesh/five(target.loc)
-						new /obj/item/guts(target.loc)
-						new /obj/item/spine(target.loc)
-						var/obj/item/bodypart/B = H.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-						if(B)
-							B.drop_limb()
-						qdel(target)
-					if(3)
-						var/obj/item/bodypart/B1 = H.get_bodypart(BODY_ZONE_R_ARM)
-						var/obj/item/bodypart/B2 = H.get_bodypart(BODY_ZONE_L_ARM)
-						var/obj/item/bodypart/B3 = H.get_bodypart(BODY_ZONE_R_LEG)
-						var/obj/item/bodypart/B4 = H.get_bodypart(BODY_ZONE_L_LEG)
-						if(B1)
-							B1.drop_limb()
-						if(B2)
-							B2.drop_limb()
-						if(B3)
-							B3.drop_limb()
-						if(B4)
-							B4.drop_limb()
-						new /obj/item/stack/human_flesh/ten(target.loc)
-						new /obj/item/guts(target.loc)
-						new /obj/item/spine(target.loc)
-						qdel(target)
-					if(4)
-						var/obj/item/bodypart/B1 = H.get_bodypart(BODY_ZONE_R_ARM)
-						var/obj/item/bodypart/B2 = H.get_bodypart(BODY_ZONE_L_ARM)
-						var/obj/item/bodypart/B3 = H.get_bodypart(BODY_ZONE_R_LEG)
-						var/obj/item/bodypart/B4 = H.get_bodypart(BODY_ZONE_L_LEG)
-						var/obj/item/bodypart/CH = H.get_bodypart(BODY_ZONE_CHEST)
-						if(B1)
-							B1.drop_limb()
-						if(B2)
-							B2.drop_limb()
-						if(B3)
-							B3.drop_limb()
-						if(B4)
-							B4.drop_limb()
-						if(CH)
-							CH.dismember()
-						new /obj/item/stack/human_flesh/twenty(target.loc)
-						qdel(target)
-					if(5)
-						var/obj/item/bodypart/B1 = H.get_bodypart(BODY_ZONE_R_ARM)
-						var/obj/item/bodypart/B2 = H.get_bodypart(BODY_ZONE_L_ARM)
-						var/obj/item/bodypart/B3 = H.get_bodypart(BODY_ZONE_R_LEG)
-						var/obj/item/bodypart/B4 = H.get_bodypart(BODY_ZONE_L_LEG)
-						var/obj/item/bodypart/CH = H.get_bodypart(BODY_ZONE_CHEST)
-						var/obj/item/bodypart/HE = H.get_bodypart(BODY_ZONE_HEAD)
-						if(B1)
-							B1.drop_limb()
-						if(B2)
-							B2.drop_limb()
-						if(B3)
-							B3.drop_limb()
-						if(B4)
-							B4.drop_limb()
-						if(CH)
-							CH.dismember()
-						if(HE)
-							HE.dismember()
-						new /obj/item/stack/human_flesh/fifty(target.loc)
-						new /obj/item/guts(target.loc)
-						new /obj/item/spine(target.loc)
-						qdel(target)
-		else
-			target.emote("scream")
-			target.apply_damage(20*level_casting, BRUTE, BODY_ZONE_CHEST)
-			if(prob(5*level_casting))
-				var/obj/item/bodypart/B = H.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-				if(B)
-					B.drop_limb()
-
 /turf
 	var/silented = FALSE
 
@@ -275,10 +160,6 @@
 				M.my_creator = owner
 				owner.beastmaster |= M
 				M.beastmaster = owner
-//				if(target.key)
-//					M.key = target.key
-//				else
-//					M.give_player()
 				target.gib()
 			if(2)
 				if(!length(owner.beastmaster))

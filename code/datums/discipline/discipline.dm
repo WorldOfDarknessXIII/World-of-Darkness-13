@@ -21,6 +21,8 @@
 	var/all_powers = list()
 	///The mob that owns and is using this Discipline.
 	var/mob/living/carbon/human/owner
+	///If this Discipline has been assigned before and post_gain effects have already been applied
+	var/initialized
 
 //TODO: rework this to use proper loadouts instead of a default set every time
 /datum/discipline/New(level)
@@ -40,7 +42,9 @@
 	for (var/datum/discipline_power/power in known_powers)
 		power.owner = owner
 
-	post_gain()
+	if (!initialized)
+		post_gain()
+	initialized = TRUE
 
 /datum/discipline/proc/get_power(power)
 	for (var/datum/discipline_power/found_power in known_powers)

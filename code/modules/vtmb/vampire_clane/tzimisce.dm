@@ -39,163 +39,92 @@
 	die_with_shapeshifted_form = FALSE
 	shapeshift_type = /mob/living/simple_animal/hostile/bloodcrawler
 
-/datum/action/vicissitude_blood
-	name = "Vicissitude Blood Form"
-	desc = "Suck blood from the floor."
-	button_icon_state = "bloodcrawler"
-	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	vampiric = TRUE
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/bloodcrawler/BC
-
-/datum/action/vicissitude_blood/Trigger()
-	. = ..()
-	var/mob/living/carbon/human/NG = owner
-	if(NG.stat > SOFT_CRIT || NG.IsSleeping() || NG.IsUnconscious() || NG.IsParalyzed() || NG.IsKnockdown() || NG.IsStun() || HAS_TRAIT(NG, TRAIT_RESTRAINED) || !isturf(NG.loc))
-		return
-	var/mob/living/carbon/human/H = owner
-	if(H.bloodpool < 2)
-		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
-		return
-	if(!BC)
-		BC = new(owner)
-	H.adjust_blood_points(-2)
-	BC.Shapeshift(H)
-	spawn(20 SECONDS)
-		if(BC)
-			var/mob/living/simple_animal/hostile/bloodcrawler/BD = BC.myshape
-			H.adjust_blood_points(round(BD.collected_blood / 2))
-			if(BD.collected_blood > 1)
-				H.adjustBruteLoss(-5*round(BD.collected_blood/2), TRUE)
-				H.adjustFireLoss(-5*round(BD.collected_blood/2), TRUE)
-			BC.Restore(BC.myshape)
-			NG.Stun(1.5 SECONDS)
-			NG.do_jitter_animation(3 SECONDS)
-
-/datum/action/vicissitude_form
-	name = "Vicissitude Beast Form"
-	desc = "Become a WereTzimisce!"
-	button_icon_state = "tzimisce"
-	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	vampiric = TRUE
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/tzimisce/TE
-
-/datum/action/vicissitude_form/Trigger()
-	. = ..()
-	var/mob/living/carbon/human/NG = owner
-	if(NG.stat > SOFT_CRIT || NG.IsSleeping() || NG.IsUnconscious() || NG.IsParalyzed() || NG.IsKnockdown() || NG.IsStun() || HAS_TRAIT(NG, TRAIT_RESTRAINED) || !isturf(NG.loc))
-		return
-	var/mob/living/carbon/human/H = owner
-	if(H.bloodpool < HARD_CRIT)
-		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
-		return
-	if(!TE)
-		TE = new(owner)
-	H.adjust_blood_points(-3)
-	TE.Shapeshift(H)
-	spawn(20 SECONDS)
-		if(TE)
-			TE.Restore(TE.myshape)
-			NG.Stun(2 SECONDS)
-			NG.do_jitter_animation(5 SECONDS)
-
 /datum/action/basic_vicissitude
-	name = "Vicissitude Upgrades"
+	name = "Vicissitude Upgrade"
 	desc = "Upgrade your body..."
 	button_icon_state = "basic"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	vampiric = TRUE
-	var/used = FALSE
+	var/selected_upgrade
+	var/mutable_appearance/upgrade_overlay
+	var/original_skin_tone
+	var/original_hairstyle
+	var/original_body_mod
 
 /datum/action/basic_vicissitude/Trigger()
 	. = ..()
-	var/mob/living/carbon/human/H = owner
-	if(H.hided)
-		return
-	if(used)
-		return
-	var/upgrade = input(owner, "Choose basic upgrade:", "Vicissitude Upgrades") as null|anything in list("Skin armor", "Centipede legs", "Second pair of arms", "Leather wings")
-	if(upgrade)
-		if(used)
-			return
-		used = TRUE
-		ADD_TRAIT(H, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
-		switch(upgrade)
-			if("Skin armor")
-				H.additional_armor = TRUE
-				H.unique_body_sprite = "tziarmor"
-				H.skin_tone = "albino"
-				H.hairstyle = "Bald"
-				H.base_body_mod = ""
-				H.physiology.armor.melee = H.physiology.armor.melee+20
-				H.physiology.armor.bullet = H.physiology.armor.bullet+20
-				H.update_body()
-				H.update_body_parts()
-				H.update_hair()
-			if("Centipede legs")
-				H.additional_centipede = TRUE
-				H.remove_overlay(PROTEAN_LAYER)
-				var/mutable_appearance/centipede_overlay = mutable_appearance('code/modules/wod13/64x64.dmi', "centipede", -PROTEAN_LAYER)
-				centipede_overlay.pixel_z = -16
-				centipede_overlay.pixel_w = -16
-				H.overlays_standing[PROTEAN_LAYER] = centipede_overlay
-				H.apply_overlay(PROTEAN_LAYER)
-				H.add_movespeed_modifier(/datum/movespeed_modifier/centipede)
-			if("Second pair of arms")
-				H.additional_hands = TRUE
-				var/limbs = H.held_items.len
-				H.change_number_of_hands(limbs+2)
-				H.remove_overlay(PROTEAN_LAYER)
-				var/mutable_appearance/hands2_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "2hands", -PROTEAN_LAYER)
-				hands2_overlay.color = "#[skintone2hex(H.skin_tone)]"
-				H.overlays_standing[PROTEAN_LAYER] = hands2_overlay
-				H.apply_overlay(PROTEAN_LAYER)
-			if("Leather wings")
-				H.additional_wings = TRUE
-				H.dna.species.GiveSpeciesFlight(H)
-
-/*
-/mob/living/carbon/human/proc/switch_masquerade(mob/living/carbon/human/H)
-	if(!additional_hands && !additional_wings && !additional_centipede && !additional_armor)
-		return
-	if(!hided)
-		hided = TRUE
-		REMOVE_TRAIT(H, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
-		if(additional_hands)
-			H.remove_overlay(PROTEAN_LAYER)
-		if(additional_wings)
-			H.dna.species.RemoveSpeciesFlight(H)
-			H.pixel_z = 0
-		if(additional_centipede)
-			H.remove_overlay(PROTEAN_LAYER)
-			H.remove_movespeed_modifier(/datum/movespeed_modifier/centipede)
-		if(additional_armor)
-			H.unique_body_sprite = FALSE
-			H.update_body()
+	if (selected_upgrade)
+		remove_upgrade()
 	else
-		hided = FALSE
-		if(additional_hands || additional_wings || additional_centipede || additional_armor)
-			ADD_TRAIT(H, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
+		give_upgrade()
 
-		if(additional_hands)
-			H.remove_overlay(PROTEAN_LAYER)
-			var/mutable_appearance/hands2_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "2hands", -PROTEAN_LAYER)
-			hands2_overlay.color = "#[skintone2hex(H.skin_tone)]"
-			H.overlays_standing[PROTEAN_LAYER] = hands2_overlay
-			H.apply_overlay(PROTEAN_LAYER)
-		if(additional_wings)
-			H.dna.species.GiveSpeciesFlight(H)
-		if(additional_centipede)
-			H.remove_overlay(PROTEAN_LAYER)
-			var/mutable_appearance/centipede_overlay = mutable_appearance('code/modules/wod13/64x64.dmi', "centipede", -PROTEAN_LAYER)
-			centipede_overlay.pixel_z = -16
-			centipede_overlay.pixel_w = -16
-			H.overlays_standing[PROTEAN_LAYER] = centipede_overlay
-			H.apply_overlay(PROTEAN_LAYER)
-			H.add_movespeed_modifier(/datum/movespeed_modifier/centipede)
-		if(additional_armor)
-			H.unique_body_sprite = "tziarmor"
-			H.update_body()
-*/
+	owner.update_body()
+
+/datum/action/basic_vicissitude/proc/give_upgrade()
+	var/mob/living/carbon/human/user = owner
+	var/upgrade = input(owner, "Choose basic upgrade:", "Vicissitude Upgrades") as null|anything in list("Skin armor", "Centipede legs", "Second pair of arms", "Leather wings")
+	if(!upgrade)
+		return
+	if(selected_upgrade)
+		return
+	selected_upgrade = upgrade
+	ADD_TRAIT(user, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
+	switch (upgrade)
+		if ("Skin armor")
+			user.unique_body_sprite = "tziarmor"
+			original_skin_tone = user.skin_tone
+			user.skin_tone = "albino"
+			original_hairstyle = user.hairstyle
+			user.hairstyle = "Bald"
+			original_body_mod = user.base_body_mod
+			user.base_body_mod = ""
+			user.physiology.armor.melee += 20
+			user.physiology.armor.bullet += 20
+		if ("Centipede legs")
+			user.remove_overlay(PROTEAN_LAYER)
+			upgrade_overlay = mutable_appearance('code/modules/wod13/64x64.dmi', "centipede", -PROTEAN_LAYER)
+			upgrade_overlay.pixel_z = -16
+			upgrade_overlay.pixel_w = -16
+			user.overlays_standing[PROTEAN_LAYER] = upgrade_overlay
+			user.apply_overlay(PROTEAN_LAYER)
+			user.add_movespeed_modifier(/datum/movespeed_modifier/centipede)
+		if ("Second pair of arms")
+			var/limbs = user.held_items.len
+			user.change_number_of_hands(limbs + 2)
+			user.remove_overlay(PROTEAN_LAYER)
+			upgrade_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "2hands", -PROTEAN_LAYER)
+			upgrade_overlay.color = "#[skintone2hex(user.skin_tone)]"
+			user.overlays_standing[PROTEAN_LAYER] = upgrade_overlay
+			user.apply_overlay(PROTEAN_LAYER)
+		if ("Leather wings")
+			user.dna.species.GiveSpeciesFlight(user)
+
+/datum/action/basic_vicissitude/proc/remove_upgrade()
+	var/mob/living/carbon/human/user = owner
+	if (!selected_upgrade)
+		return
+	REMOVE_TRAIT(user, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
+	switch (selected_upgrade)
+		if ("Skin armor")
+			user.unique_body_sprite = null
+			user.skin_tone = original_skin_tone
+			user.hairstyle = original_hairstyle
+			user.base_body_mod = original_body_mod
+			user.physiology.armor.melee -= 20
+			user.physiology.armor.bullet -= 20
+		if ("Centipede legs")
+			user.remove_overlay(PROTEAN_LAYER)
+			QDEL_NULL(upgrade_overlay)
+			user.remove_movespeed_modifier(/datum/movespeed_modifier/centipede)
+		if ("Second pair of arms")
+			var/limbs = user.held_items.len
+			user.change_number_of_hands(limbs - 2)
+			user.remove_overlay(PROTEAN_LAYER)
+			QDEL_NULL(upgrade_overlay)
+		if ("Leather wings")
+			user.dna.species.RemoveSpeciesFlight(user)
+
+	selected_upgrade = null
 
 /datum/vampireclane/tzimisce/post_gain(mob/living/carbon/human/H)
 	..()

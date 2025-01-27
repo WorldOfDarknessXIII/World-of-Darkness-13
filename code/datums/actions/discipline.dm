@@ -60,12 +60,8 @@
 	return .
 
 /datum/action/discipline/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
-	if(owner?.client?.prefs?.old_discipline)
-		button_icon = 'code/modules/wod13/disciplines.dmi'
-		icon_icon = 'code/modules/wod13/disciplines.dmi'
-	else
-		button_icon = 'code/modules/wod13/UI/actions.dmi'
-		icon_icon = 'code/modules/wod13/UI/actions.dmi'
+	button_icon = 'code/modules/wod13/UI/actions.dmi'
+	icon_icon = 'code/modules/wod13/UI/actions.dmi'
 	if(icon_icon && button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))
 		current_button.cut_overlays(TRUE)
 		if(discipline)
