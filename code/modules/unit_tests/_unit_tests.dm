@@ -85,6 +85,7 @@
 #include "create_and_destroy.dm"
 #include "designs.dm"
 #include "emoting.dm"
+#include "focus_only_tests.dm"
 #include "heretic_knowledge.dm"
 #include "holidays.dm"
 #include "inhands.dm"
