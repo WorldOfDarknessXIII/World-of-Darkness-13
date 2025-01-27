@@ -1,7 +1,7 @@
 ///Delete one of every type, sleep a while, then check to see if anything has gone fucky
 /datum/unit_test/create_and_destroy
-	//You absolutely must run last
-	priority = TEST_DEL_WORLD
+	//You absolutely must run after (almost) everything else
+	priority = TEST_CREATE_AND_DESTROY
 
 /datum/unit_test/create_and_destroy/Run()
 	//We'll spawn everything here
@@ -118,8 +118,6 @@
 			for(var/atom/to_kill in to_del)
 				qdel(to_kill)
 
-	//Hell code, we're bound to have ended the round somehow so let's stop if from ending while we work
-	SSticker.delay_end = TRUE
 	// Drastically lower the amount of time it takes to GC, since we don't have clients that can hold it up.
 	SSgarbage.collection_timeout[GC_QUEUE_CHECK] = 10 SECONDS
 	//Prevent the garbage subsystem from harddeling anything, if only to save time
@@ -179,7 +177,6 @@
 		if(fails & BAD_INIT_SLEPT)
 			TEST_FAIL("[path] slept during Initialize()")
 
-	SSticker.delay_end = FALSE
 	//This shouldn't be needed, but let's be polite
 	SSgarbage.collection_timeout[GC_QUEUE_CHECK] = GC_CHECK_QUEUE
 	SSgarbage.collection_timeout[GC_QUEUE_HARDDELETE] = GC_DEL_QUEUE
