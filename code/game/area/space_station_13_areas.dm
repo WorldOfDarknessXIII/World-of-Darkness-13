@@ -49,6 +49,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/misc/testroom
 	requires_power = FALSE
+	has_gravity = STANDARD_GRAVITY
+	// Mobs should be able to see inside the testroom
+	static_lighting = FALSE
+	base_lighting_alpha = 255
 	name = "Test Room"
 	icon_state = "storage"
 
