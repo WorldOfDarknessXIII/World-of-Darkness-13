@@ -73,6 +73,7 @@
 
 #include "achievements.dm"
 #include "anchored_mobs.dm"
+#include "area_contents.dm"
 #include "bespoke_id.dm"
 #include "binary_insert.dm"
 #include "card_mismatch.dm"

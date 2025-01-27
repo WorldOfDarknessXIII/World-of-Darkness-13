@@ -61,6 +61,13 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///the holodeck can load onto this turf if TRUE
 	var/holodeck_compatible = FALSE
 
+#if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
+	/// For the area_contents list unit test
+	/// Allows us to know our area without needing to preassign it
+	/// Sorry for the mess
+	var/area/in_contents_of
+#endif
+
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list("x", "y", "z")
 	if(var_name in banned_edits)
