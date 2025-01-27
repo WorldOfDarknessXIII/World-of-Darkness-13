@@ -17,7 +17,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 
-/turf/open/floor/wood/setup_broken_states()
+/turf/open/floor/wood/broken_states()
 	return list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
 
 /turf/open/floor/wood/examine(mob/user)
@@ -83,7 +83,7 @@
 	var/turfverb = "uproot"
 	tiled_dirt = FALSE
 
-/turf/open/floor/grass/setup_broken_states()
+/turf/open/floor/grass/broken_states()
 	return list("sand")
 
 /turf/open/floor/grass/Initialize()
@@ -131,7 +131,7 @@
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
-/turf/open/floor/grass/snow/setup_broken_states()
+/turf/open/floor/grass/snow/broken_states()
 	return list("snow_dug")
 
 /turf/open/floor/grass/snow/spawniconchange()
@@ -199,7 +199,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 
-/turf/open/floor/carpet/setup_broken_states()
+/turf/open/floor/carpet/broken_states()
 	return list("damaged")
 
 /turf/open/floor/carpet/examine(mob/user)
@@ -399,7 +399,7 @@
 	plane = PLANE_SPACE
 	tiled_dirt = FALSE
 
-/turf/open/floor/fakespace/setup_broken_states()
+/turf/open/floor/fakespace/broken_states()
 	return list("damaged")
 
 /turf/open/floor/fakespace/Initialize()

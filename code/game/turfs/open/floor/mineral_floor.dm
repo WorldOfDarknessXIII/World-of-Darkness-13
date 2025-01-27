@@ -20,7 +20,7 @@
 	. = ..()
 	icons = typelist("icons", icons)
 
-/turf/open/floor/mineral/setup_broken_states()
+/turf/open/floor/mineral/broken_states()
 	return list("[initial(icon_state)]_dam")
 
 /turf/open/floor/mineral/update_icon()
@@ -88,7 +88,7 @@
 	icon_state = "titanium"
 	floor_tile = /obj/item/stack/tile/mineral/titanium
 
-/turf/open/floor/mineral/titanium/setup_broken_states()
+/turf/open/floor/mineral/titanium/broken_states()
 	return list("titanium_dam1","titanium_dam2","titanium_dam3","titanium_dam4","titanium_dam5")
 
 /turf/open/floor/mineral/titanium/rust_heretic_act()
@@ -131,7 +131,7 @@
 	icon_state = "titanium_tiled"
 	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled
 
-/turf/open/floor/mineral/titanium/tiled/setup_broken_states()
+/turf/open/floor/mineral/titanium/tiled/broken_states()
 	return list("titanium_dam1_old","titanium_dam2_old","titanium_dam3_old","titanium_dam4_old","titanium_dam5_old")
 
 /turf/open/floor/mineral/titanium/tiled/airless
@@ -171,7 +171,7 @@
 	icon_state = "plastitanium"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium
 
-/turf/open/floor/mineral/plastitanium/setup_broken_states()
+/turf/open/floor/mineral/plastitanium/broken_states()
 	return list("plastitanium_dam1","plastitanium_dam2","plastitanium_dam3","plastitanium_dam4","plastitanium_dam5")
 
 /turf/open/floor/mineral/plastitanium/rust_heretic_act()

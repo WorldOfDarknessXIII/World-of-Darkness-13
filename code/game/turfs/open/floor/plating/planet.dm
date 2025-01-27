@@ -15,7 +15,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 
-/turf/open/floor/plating/dirt/setup_broken_states()
+/turf/open/floor/plating/dirt/broken_states()
 	return list("dirt")
 
 /turf/open/floor/plating/dirt/dark
@@ -42,7 +42,7 @@
 	slowdown = 1
 	var/floor_variance = 15
 
-/turf/open/floor/plating/dirt/jungle/wasteland/setup_broken_states()
+/turf/open/floor/plating/dirt/jungle/wasteland/broken_states()
 	return list("[initial(icon_state)]0")
 
 /turf/open/floor/plating/dirt/jungle/wasteland/Initialize()
@@ -60,7 +60,7 @@
 	base_icon_state = "junglegrass"
 	smooth_icon = 'icons/turf/floors/junglegrass.dmi'
 
-/turf/open/floor/plating/grass/jungle/setup_broken_states()
+/turf/open/floor/plating/grass/jungle/broken_states()
 	return list("junglegrass")
 
 /turf/closed/mineral/random/jungle

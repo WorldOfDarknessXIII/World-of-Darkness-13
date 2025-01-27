@@ -124,7 +124,7 @@
 	floor_tile = /obj/item/stack/tile/noslip
 	slowdown = -0.3
 
-/turf/open/floor/noslip/setup_broken_states()
+/turf/open/floor/noslip/broken_states()
 	return list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
 
 /turf/open/floor/noslip/setup_burnt_states()
@@ -185,7 +185,7 @@
 	custom_materials = list(/datum/material/plastic=500)
 	floor_tile = /obj/item/stack/tile/plastic
 
-/turf/open/floor/plastic/setup_broken_states()
+/turf/open/floor/plastic/broken_states()
 	return list("plastic-damaged1","plastic-damaged2")
 
 /turf/open/floor/eighties
@@ -194,7 +194,7 @@
 	icon_state = "eighties"
 	floor_tile = /obj/item/stack/tile/eighties
 
-/turf/open/floor/eighties/setup_broken_states()
+/turf/open/floor/eighties/broken_states()
 	return list("eighties_damaged")
 
 /turf/open/floor/plating/rust

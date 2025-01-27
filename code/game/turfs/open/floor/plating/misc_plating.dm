@@ -16,7 +16,7 @@
 	base_icon_state = "alienpod1"
 	tiled_dirt = FALSE
 
-/turf/open/floor/plating/abductor/setup_broken_states()
+/turf/open/floor/plating/abductor/broken_states()
 	return list("alienpod1")
 
 /turf/open/floor/plating/abductor/Initialize()
@@ -140,7 +140,7 @@
 	base_icon_state = "sand"
 	baseturfs = /turf/open/floor/plating/beach/sand
 
-/turf/open/floor/plating/beach/sand/setup_broken_states()
+/turf/open/floor/plating/beach/sand/broken_states()
 	return list("sand")
 
 /turf/open/floor/plating/beach/coastline_t
@@ -150,7 +150,7 @@
 	base_icon_state = "sandwater_t"
 	baseturfs = /turf/open/floor/plating/beach/coastline_t
 
-/turf/open/floor/plating/beach/sand/coastline_t/setup_broken_states()
+/turf/open/floor/plating/beach/sand/coastline_t/broken_states()
 	return list("sandwater_t")
 
 /turf/open/floor/plating/beach/coastline_b //need to make this water subtype.
@@ -163,7 +163,7 @@
 	clawfootstep = FOOTSTEP_LAVA
 	heavyfootstep = FOOTSTEP_LAVA
 
-/turf/open/floor/plating/beach/sand/coastline_b/setup_broken_states()
+/turf/open/floor/plating/beach/sand/coastline_b/broken_states()
 	return list("sandwater_b")
 
 /turf/open/floor/plating/beach/water
@@ -178,14 +178,14 @@
 	clawfootstep = FOOTSTEP_LAVA
 	heavyfootstep = FOOTSTEP_LAVA
 
-/turf/open/floor/plating/beach/water/setup_broken_states()
+/turf/open/floor/plating/beach/water/broken_states()
 	return list("water")
 
 /turf/open/floor/plating/beach/coastline_t/sandwater_inner
 	icon_state = "sandwater_inner"
 	baseturfs = /turf/open/floor/plating/beach/coastline_t/sandwater_inner
 
-/turf/open/floor/plating/beach/water/coastline_t/sandwater_inner/setup_broken_states()
+/turf/open/floor/plating/beach/water/coastline_t/sandwater_inner/broken_states()
 	return list("sandwater_inner")
 
 /turf/open/floor/plating/ironsand
@@ -199,7 +199,7 @@
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
-/turf/open/floor/plating/ironsand/setup_broken_states()
+/turf/open/floor/plating/ironsand/broken_states()
 	return list("ironsand1")
 
 /turf/open/floor/plating/ironsand/Initialize()
@@ -307,7 +307,7 @@
 	layer = HIGH_TURF_LAYER
 	var/smooth_icon = 'icons/turf/floors/grass.dmi'
 
-/turf/open/floor/plating/grass/setup_broken_states()
+/turf/open/floor/plating/grass/broken_states()
 	return list("damaged")
 
 /turf/open/floor/plating/grass/Initialize()
@@ -334,5 +334,5 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 
-/turf/open/floor/plating/sandy_dirt/setup_broken_states()
+/turf/open/floor/plating/sandy_dirt/broken_states()
 	return list("sand_damaged")

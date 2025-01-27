@@ -20,7 +20,7 @@
 
 	var/attachment_holes = TRUE
 
-/turf/open/floor/plating/setup_broken_states()
+/turf/open/floor/plating/broken_states()
 	return list("dirt")
 
 /turf/open/floor/plating/setup_burnt_states()

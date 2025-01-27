@@ -24,7 +24,7 @@
 	/// Whether to change the turf's icon_state to "[base_icon_state]_dug" when its dugged up
 	var/postdig_icon_change = TRUE
 
-/turf/open/floor/plating/asteroid/setup_broken_states()
+/turf/open/floor/plating/asteroid/broken_states()
 	return list("asteroid_dug")
 
 /turf/open/floor/plating/asteroid/Initialize()
@@ -102,7 +102,7 @@
 	floor_variance = 15
 	digResult = /obj/item/stack/ore/glass/basalt
 
-/turf/open/floor/plating/asteroid/basalt/setup_broken_states()
+/turf/open/floor/plating/asteroid/basalt/broken_states()
 	return list("basalt_dug")
 
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath
@@ -159,7 +159,7 @@
 	bullet_bounce_sound = null
 	digResult = /obj/item/stack/sheet/mineral/snow
 
-/turf/open/floor/plating/asteroid/snow/setup_broken_states()
+/turf/open/floor/plating/asteroid/snow/broken_states()
 	return list("snow_dug")
 
 /turf/open/floor/plating/asteroid/snow/burn_tile()
@@ -194,7 +194,7 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
-/turf/open/floor/plating/asteroid/snow/ice/setup_broken_states()
+/turf/open/floor/plating/asteroid/snow/ice/broken_states()
 	return list("snow-ice")
 /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice/icemoon
