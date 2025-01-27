@@ -526,63 +526,64 @@
 
 /obj/machinery/mineral/equipment_vendor/fastfood/illegal
 	prize_list = list(
+		new /datum/data/mining_equipment("lighter",		/obj/item/lighter/greyscale,	10),
+		new /datum/data/mining_equipment("zippo lighter",	/obj/item/lighter,	20),
+		new /datum/data/mining_equipment("cannabis puff",		/obj/item/clothing/mask/cigarette/rollie/cannabis,	40),
+		new /datum/data/mining_equipment("bong",	/obj/item/bong,		50),
+		new /datum/data/mining_equipment("lockpick",	/obj/item/vamp/keys/hack, 50),
+		new /datum/data/mining_equipment("LSD pill bottle",		/obj/item/storage/pill_bottle/lsd,	50),
+		new /datum/data/mining_equipment("knife",	/obj/item/melee/vampirearms/knife,	85),
+		new /datum/data/mining_equipment("switchblade",	/obj/item/melee/vampirearms/knife/switchblade, 85),
+		new /datum/data/mining_equipment("stake",	/obj/item/vampire_stake,	100),
+		new /datum/data/mining_equipment("Surgery dufflebag", /obj/item/storage/backpack/duffelbag/med/surgery, 100),
+		new /datum/data/mining_equipment("snub-nose revolver",	/obj/item/gun/ballistic/vampire/revolver/snub,	100),
+		new /datum/data/mining_equipment("cannabis package",		/obj/item/weedpack,	700),
 		new /datum/data/mining_equipment("morphine syringe",	/obj/item/reagent_containers/syringe/contraband/morphine,	800),
 		new	/datum/data/mining_equipment("meth package",	/obj/item/reagent_containers/food/drinks/meth,	800),
 		new	/datum/data/mining_equipment("cocaine package",	/obj/item/reagent_containers/food/drinks/meth/cocaine,	800),
-		new /datum/data/mining_equipment("LSD pill bottle",		/obj/item/storage/pill_bottle/lsd,	50),
-		new /datum/data/mining_equipment("LSD pill",		/obj/item/reagent_containers/pill/lsd,	10),
-		new /datum/data/mining_equipment("cannabis puff",		/obj/item/clothing/mask/cigarette/rollie/cannabis,	40),
-		new /datum/data/mining_equipment("cannabis package",		/obj/item/weedpack,	700),
-		new /datum/data/mining_equipment("cannabis seed",	/obj/item/weedseed,		10),
-		new /datum/data/mining_equipment("bong",	/obj/item/bong,		50),
-		new /datum/data/mining_equipment("snub-nose revolver",	/obj/item/gun/ballistic/vampire/revolver/snub,	100),
-		new /datum/data/mining_equipment("9mm ammo clip", /obj/item/ammo_box/vampire/c9mm/moonclip, 20),
-		new /datum/data/mining_equipment("bailer",	/obj/item/bailer,		20),
-		new /datum/data/mining_equipment("incendiary 5.56 ammo",	/obj/item/ammo_box/vampire/c556/incendiary,	6000),
-		new /datum/data/mining_equipment("silver 9mm ammo",	/obj/item/ammo_box/vampire/c9mm/silver,	3000),
-		new /datum/data/mining_equipment("silver .45 ACP ammo",	/obj/item/ammo_box/vampire/c45acp/silver,	3000),
-		new /datum/data/mining_equipment("silver .44 ammo",	/obj/item/ammo_box/vampire/c44/silver,	3000),
-		new /datum/data/mining_equipment("silver 5.56 ammo",	/obj/item/ammo_box/vampire/c556/silver,	6000),
-		new /datum/data/mining_equipment("stake",	/obj/item/vampire_stake,	100),
-		new /datum/data/mining_equipment("lockpick",	/obj/item/vamp/keys/hack, 50),
-		new /datum/data/mining_equipment("zippo lighter",	/obj/item/lighter,	20),
-		new /datum/data/mining_equipment("Surgery dufflebag", /obj/item/storage/backpack/duffelbag/med/surgery, 100),
-		new /datum/data/mining_equipment("lighter",		/obj/item/lighter/greyscale,	10),
-		new /datum/data/mining_equipment("knife",	/obj/item/melee/vampirearms/knife,	85),
-		new /datum/data/mining_equipment("switchblade",	/obj/item/melee/vampirearms/knife/switchblade, 85)
+		new /datum/data/mining_equipment("silver 9mm ammo",	/obj/item/ammo_box/vampire/c9mm/silver,	5000),
+		new /datum/data/mining_equipment("silver .45 ACP ammo",	/obj/item/ammo_box/vampire/c45acp/silver,	6000),
+		new /datum/data/mining_equipment("silver .44 ammo",	/obj/item/ammo_box/vampire/c44/silver,	7000),
+		new /datum/data/mining_equipment("silver 5.56 ammo",	/obj/item/ammo_box/vampire/c556/silver,	8000),
+		new /datum/data/mining_equipment("incendiary 5.56 ammo",	/obj/item/ammo_box/vampire/c556/incendiary,	9000)
 	)
 
 /obj/machinery/mineral/equipment_vendor/fastfood/pharmacy
 	prize_list = list(
-		new /datum/data/mining_equipment("ephedrine pill bottle", /obj/item/storage/pill_bottle/ephedrine, 200),
-		new /datum/data/mining_equipment("iron pill bottle", /obj/item/storage/pill_bottle/iron, 150),
-		new /datum/data/mining_equipment("potassium iodide pill bottle", /obj/item/storage/pill_bottle/potassiodide, 100),
 		new /datum/data/mining_equipment("bruise pack", /obj/item/stack/medical/bruise_pack, 100),
 		new /datum/data/mining_equipment("burn ointment", /obj/item/stack/medical/ointment, 100),
+		new /datum/data/mining_equipment("potassium iodide pill bottle", /obj/item/storage/pill_bottle/potassiodide, 100),
 		new /datum/data/mining_equipment("latex gloves", /obj/item/clothing/gloves/vampire/latex, 150),
+		new /datum/data/mining_equipment("iron pill bottle", /obj/item/storage/pill_bottle/iron, 150),
+		new /datum/data/mining_equipment("ephedrine pill bottle", /obj/item/storage/pill_bottle/ephedrine, 200),
 		new /datum/data/mining_equipment("box of syringes", /obj/item/storage/box/syringes, 300)
 	)
 
-/obj/machinery/mineral/equipment_vendor/fastfood/hospital // we should probably swap from a vendor system and work on a sort of gameplay loop - tzula
+/obj/machinery/mineral/equipment_vendor/fastfood/government
+	var/last_card_use_time = 0
+	dispenses_dollars = FALSE
+
+/obj/machinery/mineral/equipment_vendor/fastfood/government/hospital
 	prize_list = list(
 		new /datum/data/mining_equipment("toxins first aid kit", /obj/item/storage/firstaid/toxin, 50),
 		new /datum/data/mining_equipment("burns first aid kit", /obj/item/storage/firstaid/fire, 50),
 		new /datum/data/mining_equipment("standard first aid kit", /obj/item/storage/firstaid/medical, 50),
 		new /datum/data/mining_equipment("respiratory aid kit", /obj/item/storage/firstaid/o2, 50),
-		new /datum/data/mining_equipment("potassium iodide pill bottle", /obj/item/defibrillator/compact, 100),
 		new /datum/data/mining_equipment("defib batteries", /obj/item/stock_parts/cell, 50),
-		new /datum/data/mining_equipment("surgery dufflebag", /obj/item/storage/backpack/duffelbag/med/surgery, 100),
-		new /datum/data/mining_equipment("ephedrine pill bottle", /obj/item/storage/pill_bottle/ephedrine, 200),
-		new /datum/data/mining_equipment("iron pill bottle", /obj/item/storage/pill_bottle/iron, 150),
-		new /datum/data/mining_equipment("bruise pack", /obj/item/stack/medical/bruise_pack, 100),
-		new /datum/data/mining_equipment("surgical apron", /obj/item/clothing/suit/apron/surgical, 100),
-		new /datum/data/mining_equipment("latex gloves", /obj/item/clothing/gloves/vampire/latex, 100),
-		new /datum/data/mining_equipment("burn ointment", /obj/item/stack/medical/ointment, 100)
+		new /datum/data/mining_equipment("Compact Defibillator", /obj/item/defibrillator/compact, 50),
+		new /datum/data/mining_equipment("iron pill bottle", /obj/item/storage/pill_bottle/iron, 50),
+		new /datum/data/mining_equipment("bruise pack", /obj/item/stack/medical/bruise_pack, 50),
+		new /datum/data/mining_equipment("surgical apron", /obj/item/clothing/suit/apron/surgical, 50),
+		new /datum/data/mining_equipment("latex gloves", /obj/item/clothing/gloves/vampire/latex, 50),
+		new /datum/data/mining_equipment("burn ointment", /obj/item/stack/medical/ointment, 50),
+		new /datum/data/mining_equipment("surgery dufflebag", /obj/item/storage/backpack/duffelbag/med/surgery, 50),
+		new /datum/data/mining_equipment("ephedrine pill bottle", /obj/item/storage/pill_bottle/ephedrine, 50),
+		new /datum/data/mining_equipment("Medicated Suture", /obj/item/stack/medical/suture/medicated, 50),
+		new /datum/data/mining_equipment("Regenerative Mesh", /obj/item/stack/medical/mesh/advanced, 50),
+		new /datum/data/mining_equipment("Hospital Radio", /obj/item/p25radio, 50)
 	)
 
-/obj/machinery/mineral/equipment_vendor/fastfood/police
-	var/last_card_use_time = 0
-	dispenses_dollars = FALSE
+/obj/machinery/mineral/equipment_vendor/fastfood/government/police
 	prize_list = list(
 		new /datum/data/mining_equipment("handcuffs", /obj/item/restraints/handcuffs, 1),
 		new /datum/data/mining_equipment("camera", /obj/item/camera, 2),
@@ -595,8 +596,19 @@
 		new /datum/data/mining_equipment("police uniform", /obj/item/clothing/under/vampire/police, 1),
 		new /datum/data/mining_equipment("police hat", /obj/item/clothing/head/vampire/police, 1),
 		new /datum/data/mining_equipment("flashlight", /obj/item/flashlight, 1),
-		new /datum/data/mining_equipment("magnifier", /obj/item/detective_scanner, 4)
-
+		new /datum/data/mining_equipment("magnifier", /obj/item/detective_scanner, 4),
+		new /datum/data/mining_equipment("PD Radio", /obj/item/p25radio/police, 2),
+		new /datum/data/mining_equipment("tape recorder", /obj/item/taperecorder, 2),
+		new /datum/data/mining_equipment("Colt M1911",	/obj/item/gun/ballistic/automatic/vampire/m1911,	100),
+		new /datum/data/mining_equipment("Glock19",	/obj/item/gun/ballistic/automatic/vampire/glock19,	100),
+		new /datum/data/mining_equipment("12ga shotgun shells, buckshot",/obj/item/ammo_box/vampire/c12g/buck,	50),
+		new /datum/data/mining_equipment("Colt M1911 magazine",		/obj/item/ammo_box/magazine/vamp45acp,	50),
+		new /datum/data/mining_equipment("AUG Magazines",			/obj/item/ammo_box/magazine/vampaug,	50),
+		new /datum/data/mining_equipment("AR-15 Magazines",			/obj/item/ammo_box/magazine/vamp556,	50),
+		new /datum/data/mining_equipment("desert eagle magazine",	/obj/item/ammo_box/magazine/m44,	50),
+		new /datum/data/mining_equipment("Glock19 magazine",		/obj/item/ammo_box/magazine/glock9mm,	50),
+		new /datum/data/mining_equipment("shotgun",		/obj/item/gun/ballistic/shotgun/vampire, 100),
+		new /datum/data/mining_equipment("IFAK",		/obj/item/storage/firstaid,	100)
 	)
 
 /obj/machinery/mineral/equipment_vendor/fastfood/smoking
