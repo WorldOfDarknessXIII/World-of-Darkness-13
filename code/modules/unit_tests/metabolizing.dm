@@ -2,7 +2,7 @@
 	// Pause natural mob life so it can be handled entirely by the test
 	SSmobs.pause()
 
-	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 
 	for (var/reagent_type in subtypesof(/datum/reagent))
 		test_reagent(human, reagent_type)
@@ -19,7 +19,7 @@
 /datum/unit_test/on_mob_end_metabolize/Run()
 	SSmobs.pause()
 
-	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/reagent_containers/pill/pill = allocate(/obj/item/reagent_containers/pill)
 	var/datum/reagent/drug/methamphetamine/meth = /datum/reagent/drug/methamphetamine
 
@@ -44,9 +44,9 @@
 /datum/unit_test/addictions/Run()
 	SSmobs.pause()
 
-	var/mob/living/carbon/human/pill_user = allocate(/mob/living/carbon/human)
-	var/mob/living/carbon/human/syringe_user = allocate(/mob/living/carbon/human)
-	var/mob/living/carbon/human/pill_syringe_user = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/pill_user = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/syringe_user = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/pill_syringe_user = allocate(/mob/living/carbon/human/consistent)
 
 	var/obj/item/reagent_containers/pill/pill = allocate(/obj/item/reagent_containers/pill)
 	var/obj/item/reagent_containers/pill/pill_two = allocate(/obj/item/reagent_containers/pill)
