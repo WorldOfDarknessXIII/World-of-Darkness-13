@@ -81,6 +81,7 @@
 #include "combat.dm"
 #include "component_tests.dm"
 #include "confusion.dm"
+#include "container_sanity.dm"
 #include "create_and_destroy.dm"
 #include "designs.dm"
 #include "emoting.dm"
