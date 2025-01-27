@@ -965,9 +965,7 @@
 	pixel_y = -24
 	},
 /obj/effect/spawner/lootdrop/maintenance/two,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "bH" = (
@@ -1236,9 +1234,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
 	},

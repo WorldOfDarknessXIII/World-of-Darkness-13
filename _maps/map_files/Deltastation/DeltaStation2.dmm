@@ -115,9 +115,7 @@
 	dir = 1
 	},
 /obj/structure/table/wood/poker,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "aaq" = (
@@ -2585,9 +2583,7 @@
 "aio" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/random/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -4006,9 +4002,7 @@
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/report_crimes/directional/north,
 /turf/open/floor/carpet,
 /area/vacant_room/office)
 "alt" = (
@@ -4306,9 +4300,7 @@
 /obj/structure/chair/office{
 	dir = 1
 	},
-/obj/structure/sign/poster/official/do_not_question{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/do_not_question/directional/west,
 /turf/open/floor/plasteel/grimy,
 /area/vacant_room/office)
 "ama" = (
@@ -4641,9 +4633,7 @@
 /obj/item/wrench,
 /obj/item/clothing/under/suit/waiter,
 /obj/item/clothing/accessory/waistcoat,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/electronic_marketing_den)
 "amN" = (
@@ -6117,9 +6107,7 @@
 "aqc" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/light/small,
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/south,
 /turf/open/floor/plasteel/grimy,
 /area/vacant_room/office)
 "aqd" = (
@@ -9546,9 +9534,7 @@
 /area/maintenance/port/fore)
 "axR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/wood{
 	icon_state = "wood-broken7"
 	},
@@ -9648,9 +9634,7 @@
 "axZ" = (
 /obj/structure/janitorialcart,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/east,
 /turf/open/floor/plating,
 /area/janitor)
 "aya" = (
@@ -10077,9 +10061,7 @@
 /area/maintenance/port/fore)
 "ayV" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/south,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -10109,9 +10091,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/shoes/jackboots,
 /obj/effect/spawner/lootdrop/costume,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/plasteel/cafeteria,
 /area/maintenance/port/fore)
 "ayY" = (
@@ -10156,9 +10136,7 @@
 	pixel_y = -26
 	},
 /obj/machinery/light/small,
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/west,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -14193,9 +14171,7 @@
 /area/security/prison)
 "aIh" = (
 /obj/structure/bookcase/random,
-/obj/structure/sign/poster/ripped{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/ripped/directional/south,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aIk" = (
@@ -15042,9 +15018,7 @@
 	c_tag = "Atmospherics - Engine Access";
 	name = "atmospherics camera"
 	},
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/west,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -16093,9 +16067,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison/safe)
 "aMe" = (
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/south,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
@@ -16524,9 +16496,7 @@
 "aNb" = (
 /obj/structure/table/wood,
 /obj/item/soap/nanotrasen,
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -17186,9 +17156,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/random/directional/east,
 /turf/open/floor/wood{
 	icon_state = "wood-broken2"
 	},
@@ -17219,9 +17187,7 @@
 /obj/item/toy/crayon/spraycan/lubecan{
 	charges = 5
 	},
-/obj/structure/sign/poster/contraband/clown{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/clown/directional/north,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -17254,9 +17220,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/theatre)
 "aOy" = (
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/random/directional/north,
 /obj/structure/closet/crate/wooden/toy,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -18088,9 +18052,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "aPX" = (
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/abandoned_gambling_den/secondary)
 "aPY" = (
@@ -18117,9 +18079,7 @@
 "aQc" = (
 /obj/machinery/computer/slot_machine,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/random/directional/east,
 /turf/open/floor/wood{
 	icon_state = "wood-broken4"
 	},
@@ -20899,9 +20859,7 @@
 "aVe" = (
 /obj/machinery/computer/slot_machine,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/wood{
 	icon_state = "wood-broken7"
 	},
@@ -20909,9 +20867,7 @@
 "aVf" = (
 /obj/machinery/computer/slot_machine,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den/secondary)
 "aVg" = (
@@ -20952,9 +20908,7 @@
 /obj/item/toy/crayon/spraycan/mimecan{
 	charges = 5
 	},
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/theatre)
 "aVj" = (
@@ -20973,9 +20927,7 @@
 /area/crew_quarters/theatre)
 "aVl" = (
 /obj/structure/dresser,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/theatre)
 "aVm" = (
@@ -22170,9 +22122,7 @@
 /obj/structure/table/wood,
 /obj/item/clothing/mask/fakemoustache,
 /obj/item/cane,
-/obj/structure/sign/poster/random{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/random/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -22197,9 +22147,7 @@
 /area/crew_quarters/bar/atrium)
 "aWY" = (
 /obj/structure/chair/stool/bar,
-/obj/structure/sign/poster/random{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/bar/atrium)
 "aWZ" = (
@@ -25423,9 +25371,7 @@
 /obj/structure/reagent_dispensers/watertank,
 /obj/structure/window/reinforced,
 /obj/item/reagent_containers/glass/bucket,
-/obj/structure/sign/poster/official/nanotrasen_logo{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/west,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/hydroponics)
@@ -28302,9 +28248,7 @@
 	pixel_x = 3;
 	pixel_y = 2
 	},
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/north,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -29950,9 +29894,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "blq" = (
-/obj/structure/sign/poster/official/do_not_question{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/do_not_question/directional/south,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
@@ -30051,9 +29993,7 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/east,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
@@ -30695,9 +30635,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bmZ" = (
-/obj/structure/sign/poster/official/do_not_question{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/do_not_question/directional/south,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
@@ -32511,9 +32449,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bqe" = (
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -33889,9 +33825,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/do_not_question{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/do_not_question/directional/south,
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -33990,9 +33924,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/report_crimes/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -35413,9 +35345,7 @@
 	dir = 4;
 	pixel_x = -12
 	},
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/west,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/hydroponics)
@@ -36068,9 +35998,7 @@
 	},
 /obj/item/watertank,
 /obj/item/grenade/chem_grenade/antiweed,
-/obj/structure/sign/poster/official/ian{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/ian/directional/south,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/hydroponics)
@@ -36458,9 +36386,7 @@
 	name = "maintenance microwave";
 	pixel_y = 5
 	},
-/obj/structure/sign/poster/official/help_others{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/help_others/directional/west,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -37282,9 +37208,7 @@
 /area/engine/storage_shared)
 "bzj" = (
 /obj/machinery/modular_computer/console/preset/civilian,
-/obj/structure/sign/poster/official/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/random/directional/north,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -39198,9 +39122,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/do_not_question{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/do_not_question/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -39748,9 +39670,7 @@
 /area/storage/primary)
 "bDn" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/report_crimes/directional/north,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -40254,9 +40174,7 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Security - Transfer Centre Aft"
 	},
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/south,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -40305,9 +40223,7 @@
 	req_access_txt = "63"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/sign/poster/official/nanotrasen_logo{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/west,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -43362,9 +43278,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "bJg" = (
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/report_crimes/directional/north,
 /obj/machinery/vending/wardrobe/det_wardrobe,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -52758,9 +52672,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/structure/sign/poster/official/help_others{
-	pixel_x = -32;
-	pixel_y = -32
+/obj/structure/sign/poster/official/help_others/directional/south{
+	pixel_x = -32
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -53210,9 +53123,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26
 	},
-/obj/structure/sign/poster/official/ian{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/ian/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -56880,9 +56791,7 @@
 	dir = 8
 	},
 /obj/item/pen,
-/obj/structure/sign/poster/official/enlist{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/enlist/directional/south,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -57061,9 +56970,7 @@
 /area/security/brig)
 "ciK" = (
 /obj/machinery/vending/wardrobe/sec_wardrobe,
-/obj/structure/sign/poster/official/do_not_question{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/do_not_question/directional/south,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -57391,9 +57298,7 @@
 /area/hallway/primary/central)
 "cjy" = (
 /obj/effect/spawner/randomcolavend,
-/obj/structure/sign/poster/official/ian{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/ian/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -57449,9 +57354,7 @@
 /area/crew_quarters/heads/hop)
 "cjD" = (
 /obj/machinery/photocopier,
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/east,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "cjE" = (
@@ -57781,9 +57684,7 @@
 /area/lawoffice)
 "ckg" = (
 /obj/item/kirbyplants/random,
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/report_crimes/directional/south,
 /turf/open/floor/wood,
 /area/lawoffice)
 "ckh" = (
@@ -58580,9 +58481,7 @@
 	name = "Engineering RC";
 	pixel_y = -32
 	},
-/obj/structure/sign/poster/official/do_not_question{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/do_not_question/directional/east,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -60874,9 +60773,7 @@
 "crp" = (
 /obj/structure/table/wood,
 /obj/item/storage/briefcase,
-/obj/structure/sign/poster/official/help_others{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/help_others/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -61580,9 +61477,7 @@
 	dir = 1;
 	pixel_y = -26
 	},
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -64143,9 +64038,7 @@
 /obj/item/crowbar,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/report_crimes/directional/north,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/engine/storage)
@@ -67550,9 +67443,7 @@
 "cEx" = (
 /obj/structure/table,
 /obj/item/storage/secure/briefcase,
-/obj/structure/sign/poster/random{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/random/directional/west,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
@@ -69056,9 +68947,7 @@
 /obj/item/wrench,
 /obj/item/storage/box/lights/mixed,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/random{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/random/directional/south,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/maintenance/port)
@@ -72306,9 +72195,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "cOo" = (
-/obj/structure/sign/poster/official/help_others{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/help_others/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -72409,9 +72296,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/toolbox/electrical,
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/report_crimes/directional/north,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/department/electrical)
@@ -72596,9 +72481,7 @@
 /obj/structure/table,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/structure/sign/poster/official/science{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/science/directional/west,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -75886,9 +75769,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/blobstart,
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -77713,9 +77594,7 @@
 "cYD" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/electrical,
-/obj/structure/sign/poster/official/do_not_question{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/do_not_question/directional/south,
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "cYE" = (
@@ -78303,9 +78182,7 @@
 /obj/machinery/airalarm/directional/north{
 	pixel_y = 23
 	},
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/east,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cZL" = (
@@ -79207,9 +79084,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "dbq" = (
-/obj/structure/sign/poster/official/help_others{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/help_others/directional/west,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -80725,9 +80600,7 @@
 /obj/item/clipboard,
 /obj/item/toy/figure/md,
 /obj/machinery/light/small,
-/obj/structure/sign/poster/official/ian{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/ian/directional/south,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -80854,9 +80727,7 @@
 "deG" = (
 /obj/structure/table/wood,
 /obj/item/storage/pill_bottle/dice,
-/obj/structure/sign/poster/official/help_others{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/help_others/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -80917,9 +80788,7 @@
 /turf/open/floor/carpet,
 /area/medical/psychology)
 "deP" = (
-/obj/structure/sign/poster/official/help_others{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/help_others/directional/north,
 /obj/structure/chair/sofa/left,
 /obj/item/toy/plush/moth{
 	name = "Moffee"
@@ -81469,9 +81338,7 @@
 /area/crew_quarters/abandoned_gambling_den)
 "dgg" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
 "dgi" = (
@@ -82086,9 +81953,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "dhq" = (
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/report_crimes/directional/north,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -82326,9 +82191,7 @@
 "dhP" = (
 /obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/random/directional/east,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dhQ" = (
@@ -83036,9 +82899,7 @@
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "djv" = (
-/obj/structure/sign/poster/official/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/random/directional/north,
 /obj/structure/rack,
 /turf/open/floor/plasteel,
 /area/maintenance/port)
@@ -83083,9 +82944,7 @@
 /turf/closed/wall/r_wall,
 /area/science/genetics)
 "djB" = (
-/obj/structure/sign/poster/official/science{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/science/directional/west,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -83185,9 +83044,7 @@
 /area/science/nanite)
 "djI" = (
 /obj/machinery/computer/nanite_chamber_control,
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -83675,9 +83532,7 @@
 	name = "medbay camera";
 	network = list("ss13","medbay")
 	},
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/south,
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -85082,9 +84937,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/abandoned_gambling_den)
 "doa" = (
@@ -86454,9 +86307,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/abandoned_gambling_den)
 "drt" = (
@@ -86509,9 +86360,7 @@
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
 "drA" = (
-/obj/structure/sign/poster/official/random{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/random/directional/south,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
@@ -86530,9 +86379,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
 "drE" = (
-/obj/structure/sign/poster/official/build{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/build/directional/south,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
@@ -87739,9 +87586,7 @@
 /obj/machinery/computer/nanite_chamber_control{
 	dir = 8
 	},
-/obj/structure/sign/poster/random{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/random/directional/east,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -88542,9 +88387,8 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/safety_eye_protection{
-	pixel_x = -32;
-	pixel_y = -32
+/obj/structure/sign/poster/official/safety_eye_protection/directional/south{
+	pixel_x = -32
 	},
 /turf/open/floor/glass,
 /area/maintenance/space_hut/observatory)
@@ -89254,9 +89098,7 @@
 /area/medical/surgery)
 "dyG" = (
 /obj/structure/closet/secure_closet/medical2,
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -90580,9 +90422,7 @@
 "dBR" = (
 /obj/machinery/light/small,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/south,
 /obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
@@ -91737,9 +91577,7 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dEu" = (
-/obj/structure/sign/poster/official/science{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/science/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -92241,9 +92079,7 @@
 /turf/open/floor/plating,
 /area/security/detectives_office/private_investigators_office)
 "dFw" = (
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/report_crimes/directional/north,
 /obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
@@ -94334,9 +94170,7 @@
 	dir = 4
 	},
 /obj/item/kirbyplants/random,
-/obj/structure/sign/poster/official/do_not_question{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/do_not_question/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -94505,9 +94339,7 @@
 	},
 /obj/item/storage/toolbox/electrical,
 /obj/structure/table/reinforced,
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/report_crimes/directional/south,
 /obj/item/relic,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -95462,9 +95294,7 @@
 "dMd" = (
 /obj/structure/table/wood,
 /obj/item/storage/box/donkpockets,
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/report_crimes/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -98468,9 +98298,7 @@
 	},
 /obj/item/crowbar,
 /obj/item/radio,
-/obj/structure/sign/poster/official/do_not_question{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/do_not_question/directional/south,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -98556,9 +98384,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/help_others{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/help_others/directional/east,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
@@ -99283,9 +99109,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -101182,9 +101006,7 @@
 /area/maintenance/port/aft)
 "dYv" = (
 /obj/structure/bodycontainer/morgue,
-/obj/structure/sign/poster/official/ian{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/ian/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -104531,9 +104353,7 @@
 	},
 /obj/item/clipboard,
 /obj/item/toy/figure/chaplain,
-/obj/structure/sign/poster/official/bless_this_spess{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/bless_this_spess/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -105223,9 +105043,8 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/safety_internals{
-	pixel_x = 32;
-	pixel_y = -32
+/obj/structure/sign/poster/official/safety_internals/directional/south{
+	pixel_x = 32
 	},
 /turf/open/floor/glass,
 /area/maintenance/space_hut/observatory)
@@ -105549,9 +105368,8 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/science{
-	pixel_x = 32;
-	pixel_y = 32
+/obj/structure/sign/poster/official/science/directional/north{
+	pixel_x = 32
 	},
 /turf/open/floor/glass,
 /area/maintenance/space_hut/observatory)
@@ -109076,9 +108894,8 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/bless_this_spess{
-	pixel_x = -32;
-	pixel_y = 32
+/obj/structure/sign/poster/official/bless_this_spess/directional/north{
+	pixel_x = -32
 	},
 /turf/open/floor/glass,
 /area/maintenance/space_hut/observatory)
@@ -109539,9 +109356,7 @@
 	dir = 1;
 	pixel_y = -26
 	},
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/east,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -110065,9 +109880,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "pkY" = (
-/obj/structure/sign/poster/official/help_others{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/help_others/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -110199,9 +110012,7 @@
 /area/tcommsat/server)
 "pAL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -110292,9 +110103,7 @@
 /obj/item/food/grown/onion,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/sign/poster/ripped{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/ripped/directional/north,
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison)
 "pGP" = (
@@ -112223,9 +112032,7 @@
 /obj/structure/bodycontainer/morgue{
 	dir = 2
 	},
-/obj/structure/sign/poster/official/bless_this_spess{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/bless_this_spess/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -112364,9 +112171,7 @@
 /obj/structure/window,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/seeds/tower,
-/obj/structure/sign/poster/official/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/random/directional/north,
 /obj/item/radio/intercom{
 	desc = "Talk through this. It looks like it has been modified to not broadcast.";
 	name = "Prison Intercom (General)";
@@ -112384,9 +112189,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ugx" = (
-/obj/structure/sign/poster/ripped{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/ripped/directional/south,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -112412,9 +112215,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "uiZ" = (
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/report_crimes/directional/west,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},

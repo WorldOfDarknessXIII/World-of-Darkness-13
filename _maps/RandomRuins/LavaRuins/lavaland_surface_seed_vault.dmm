@@ -576,7 +576,7 @@
 /turf/open/floor/plating/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bt" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/genericbush,
 /obj/structure/flora/ausbushes/brflowers,

@@ -2071,9 +2071,7 @@
 /turf/open/floor/carpet/lone,
 /area/vtm/interior/strip)
 "ahc" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/carpet/lone,
 /area/vtm/interior/strip)
 "ahd" = (
@@ -6532,9 +6530,7 @@
 /area/vtm/anarch)
 "awz" = (
 /obj/structure/table/wood,
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/rough,
 /area/vtm/anarch)
 "awA" = (
@@ -8296,9 +8292,7 @@
 /area/vtm/anarch)
 "aCo" = (
 /obj/structure/chair/sofa/corp/right,
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/anarch)
 "aCp" = (
@@ -10168,9 +10162,7 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/theatre)
 "aIy" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/theatre)
 "aIz" = (
@@ -10179,9 +10171,7 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/theatre)
 "aIA" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /obj/structure/stairs/east,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/theatre)
@@ -11431,9 +11421,7 @@
 /turf/open/floor/plating/granite/black,
 /area/vtm/camarilla)
 "aMN" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /obj/item/storage/box/lights/mixed,
 /obj/structure/table,
 /turf/open/floor/plating/parquetry/old,
@@ -13681,9 +13669,7 @@
 /obj/structure/chair/sofa/corp/corner{
 	dir = 4
 	},
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/interior/strip)
 "aUn" = (
@@ -14606,9 +14592,7 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/hotel)
 "aXO" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/hotel)
 "aXP" = (
@@ -14819,9 +14803,7 @@
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/strip)
 "aYC" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/openspace,
 /area/vtm/interior/strip)
 "aYD" = (
@@ -16015,9 +15997,7 @@
 /turf/open/floor/plating/sidewalk,
 /area/vtm/financialdistrict)
 "bcQ" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/sidewalk,
 /area/vtm/financialdistrict)
 "bcR" = (
@@ -23016,9 +22996,7 @@
 /obj/structure/chair/sofa/corp/right{
 	dir = 8
 	},
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/vampplating,
 /area/vtm/interior/strip)
 "bAj" = (
@@ -23170,9 +23148,7 @@
 /turf/open/floor/plating/toilet,
 /area/vtm/interior/strip)
 "bAD" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/toilet,
 /area/vtm/interior/strip)
 "bAE" = (
@@ -23189,9 +23165,7 @@
 /turf/open/floor/plating/vampplating,
 /area/vtm/interior/strip)
 "bAG" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/vampplating,
 /area/vtm/interior/strip)
 "bAH" = (
@@ -26489,8 +26463,7 @@
 /turf/open/floor/plating/vampgrass,
 /area/vtm/pacificheights)
 "bSU" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 1;
+/obj/structure/window/reinforced/tinted/spawner/directional/north{
 	max_integrity = 100000
 	},
 /turf/closed/wall/vampwall/city/low/window,
@@ -27535,8 +27508,7 @@
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/techshop)
 "cvZ" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 4;
+/obj/structure/window/reinforced/tinted/spawner/directional/east{
 	max_integrity = 1000000
 	},
 /turf/closed/wall/vampwall/painted/low/window/reinforced,
@@ -30992,8 +30964,7 @@
 /turf/open/openspace,
 /area/vtm/interior/bianchiBank)
 "eCW" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 8;
+/obj/structure/window/reinforced/tinted/spawner/directional/west{
 	max_integrity = 1000000
 	},
 /turf/closed/wall/vampwall/painted/low/window/reinforced,
@@ -34759,8 +34730,7 @@
 /turf/open/floor/plating/rough,
 /area/vtm/interior/mansion)
 "gIu" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 1;
+/obj/structure/window/reinforced/tinted/spawner/directional/north{
 	max_integrity = 1000000
 	},
 /obj/effect/decal/wallpaper/red/low,
@@ -35148,8 +35118,7 @@
 	},
 /area/vtm/interior/giovanni)
 "gPY" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 1;
+/obj/structure/window/reinforced/tinted/spawner/directional/north{
 	max_integrity = 100000
 	},
 /obj/structure/barricade/wooden/crude,
@@ -35313,8 +35282,7 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/interior/police)
 "gTJ" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 1;
+/obj/structure/window/reinforced/tinted/spawner/directional/north{
 	max_integrity = 1000000
 	},
 /obj/structure/barricade/wooden,
@@ -35481,9 +35449,7 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/jazzclub)
 "gXN" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/anarch)
 "gYk" = (
@@ -37947,9 +37913,7 @@
 	name = "full cream milk"
 	},
 /obj/item/storage/box/ingredients/carnivore,
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/rough,
 /area/vtm/anarch)
 "inC" = (
@@ -40681,8 +40645,7 @@
 /turf/open/floor/plating/concrete,
 /area/vtm/interior)
 "jLL" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 1;
+/obj/structure/window/reinforced/tinted/spawner/directional/north{
 	max_integrity = 1000000
 	},
 /obj/effect/decal/wallpaper/red/low,
@@ -41274,7 +41237,7 @@
 /turf/open/floor/plating/vampdirt,
 /area/vtm/sewer)
 "kfw" = (
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/closed/wall/vampwall/painted/low/window/reinforced,
 /area/vtm/clinic)
 "kfH" = (
@@ -42974,7 +42937,7 @@
 /turf/open/floor/plating/rough,
 /area/vtm/sewer)
 "lgJ" = (
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/structure/barricade/wooden,
 /turf/closed/wall/vampwall/wood/low/window,
 /area/vtm/interior)
@@ -43475,7 +43438,7 @@
 /turf/open/floor/plating/toilet,
 /area/vtm/interior)
 "ltV" = (
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/closed/wall/vampwall/painted/low/window/reinforced,
 /area/vtm/jazzclub)
 "luq" = (
@@ -51554,9 +51517,7 @@
 "qmG" = (
 /obj/structure/chair/office,
 /obj/structure/coclock,
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /mob/living/carbon/human/npc/shop{
 	resistant_to_disciplines = 1
 	},
@@ -51628,7 +51589,7 @@
 /turf/open/floor/plating/parquetry,
 /area/vtm/interior/giovanni)
 "qnZ" = (
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/structure/barricade/wooden/crude,
 /turf/closed/wall/vampwall/wood/low/window,
 /area/vtm/interior)
@@ -52399,8 +52360,7 @@
 /turf/open/floor/plating/toilet,
 /area/vtm/interior/laundromat)
 "qIz" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 1;
+/obj/structure/window/reinforced/tinted/spawner/directional/north{
 	max_integrity = 100000
 	},
 /obj/structure/barricade/wooden/crude,
@@ -53070,8 +53030,7 @@
 /turf/open/floor/plating/toilet,
 /area/vtm/camarilla)
 "qZE" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 4;
+/obj/structure/window/reinforced/tinted/spawner/directional/east{
 	max_integrity = 1000000
 	},
 /turf/closed/wall/vampwall/brick/low/window,
@@ -54436,7 +54395,7 @@
 /turf/open/floor/plating/roofwalk,
 /area/vtm)
 "rQV" = (
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden/crude,
 /turf/closed/wall/vampwall/wood/low/window,
@@ -54761,7 +54720,7 @@
 /obj/structure/chair/sofa/corp/right{
 	dir = 4
 	},
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/open/floor/carpet,
 /area/vtm/interior)
 "rZZ" = (
@@ -54890,7 +54849,7 @@
 "see" = (
 /obj/structure/table/wood,
 /obj/structure/table/wood,
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/open/floor/carpet,
 /area/vtm/interior)
 "seh" = (
@@ -54971,7 +54930,7 @@
 /obj/structure/chair/sofa/corp/left{
 	dir = 8
 	},
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/open/floor/carpet,
 /area/vtm/interior)
 "sgl" = (
@@ -58279,7 +58238,7 @@
 /turf/open/floor/plating/vampplating/stone,
 /area/vtm/interior/bianchiBank)
 "ubX" = (
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/structure/railing{
 	dir = 8;
 	pixel_x = -3
@@ -58303,7 +58262,7 @@
 /turf/open/floor/plating/sidewalk/poor,
 /area/vtm)
 "udb" = (
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/open/floor/carpet/red,
 /area/vtm/interior)
 "udd" = (
@@ -58826,9 +58785,7 @@
 /turf/open/floor/plating/vampdirt,
 /area/vtm)
 "usJ" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
 /obj/structure/curtain/cloth/fancy,
 /turf/open/floor/carpet,
 /area/vtm/interior)
@@ -58938,17 +58895,13 @@
 /area/vtm/interior/laundromat)
 "uwa" = (
 /obj/structure/chair/sofa/corp/right,
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
 /turf/open/floor/carpet,
 /area/vtm/interior)
 "uwc" = (
 /obj/structure/chair/sofa/corp/corner,
 /mob/living/carbon/human/npc/incel,
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
 /turf/open/floor/carpet,
 /area/vtm/interior)
 "uwe" = (
@@ -61613,8 +61566,7 @@
 /turf/open/floor/bronze,
 /area/vtm/interior/giovanni)
 "vXq" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 8;
+/obj/structure/window/reinforced/tinted/spawner/directional/west{
 	max_integrity = 1000000
 	},
 /obj/structure/barricade/wooden/crude,
@@ -64161,8 +64113,7 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/interior/mansion)
 "xmY" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 1;
+/obj/structure/window/reinforced/tinted/spawner/directional/north{
 	max_integrity = 100000
 	},
 /turf/closed/wall/vampwall/rich/low/window/reinforced,

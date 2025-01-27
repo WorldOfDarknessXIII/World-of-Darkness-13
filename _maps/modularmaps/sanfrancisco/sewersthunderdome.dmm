@@ -402,7 +402,7 @@
 /turf/open/floor/plating/rough,
 /area/vtm/sewer)
 "Sc" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/west,
 /obj/effect/decal/cleanable/blood/old{
 	icon_state = "drip4-old"
@@ -415,7 +415,7 @@
 /turf/open/floor/plating/rough,
 /area/vtm/sewer)
 "Ts" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /mob/living/simple_animal/hostile/gangrel,
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/vtm/sewer)
@@ -435,7 +435,7 @@
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/vtm/sewer)
 "Uk" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/blood/footprints{
 	icon_state = "floor1"
 	},

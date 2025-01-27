@@ -254,9 +254,7 @@
 /turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
 "aaP" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -4285,9 +4283,7 @@
 	name = "red bedsheet"
 	},
 /obj/effect/landmark/start/slaver,
-/obj/structure/sign/poster/contraband/syndicate_recruitment{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/syndicate_recruitment/directional/north,
 /turf/open/floor/wood,
 /area/slavers)
 "akS" = (
@@ -7435,9 +7431,7 @@
 	name = "red bedsheet"
 	},
 /obj/effect/landmark/start/slaver,
-/obj/structure/sign/poster/contraband/syndicate_recruitment{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/syndicate_recruitment/directional/north,
 /turf/open/floor/wood,
 /area/slavers)
 "arl" = (
@@ -17414,9 +17408,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/central_command_areas/control)
 "aNW" = (
-/obj/structure/sign/poster/contraband/lusty_xenomorph{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/lusty_xenomorph/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/slavers)
@@ -18869,7 +18861,7 @@
 	name = "Tactical Toilet";
 	opacity = 1
 	},
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/centcom/syndicate_mothership)
 "aUe" = (
@@ -19198,9 +19190,7 @@
 /turf/open/floor/plasteel,
 /area/slavers)
 "aVq" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /turf/open/floor/plasteel/white,
 /area/slavers)
 "aVr" = (
@@ -22103,9 +22093,7 @@
 /obj/structure/chair/sofa/corp/corner{
 	dir = 4
 	},
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/carpet/royalblack,
 /area/centcom/central_command_areas/holding)
 "dvb" = (
@@ -22325,7 +22313,7 @@
 /obj/machinery/shower{
 	pixel_y = 14
 	},
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/machinery/door/window{
 	dir = 4;
 	icon_state = "right";
@@ -24069,7 +24057,7 @@
 /area/centcom/syndicate_mothership/control)
 "gip" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/window/spawner/north,
 /turf/open/indestructible,
 /area/centcom)
@@ -24414,9 +24402,7 @@
 /area/centcom/central_command_areas/holding)
 "gDo" = (
 /obj/structure/table,
-/obj/structure/sign/poster/random{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/random/directional/east,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/holding)
 "gDz" = (
@@ -24734,7 +24720,7 @@
 /obj/structure/toilet{
 	dir = 4
 	},
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/structure/sign/poster/contraband/inteq/inteq_no_sex{
 	pixel_y = 34
 	},
@@ -24761,9 +24747,7 @@
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/control)
 "hgp" = (
-/obj/structure/sign/poster/random{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/random/directional/east,
 /turf/open/floor/carpet/royalblack,
 /area/centcom/central_command_areas/holding)
 "hhs" = (
@@ -25228,9 +25212,7 @@
 "hJs" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/table/reinforced,
-/obj/structure/sign/poster/contraband/space_cola{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/space_cola/directional/west,
 /obj/machinery/chem_dispenser/drinks/fullupgrade{
 	dir = 4
 	},
@@ -26663,9 +26645,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/structure/sign/poster/contraband/revolver{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/revolver/directional/east,
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/holding)
 "jNc" = (
@@ -27365,7 +27345,7 @@
 /area/centcom)
 "kBR" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /turf/open/indestructible,
 /area/centcom)
 "kCk" = (
@@ -28623,7 +28603,7 @@
 /obj/machinery/shower{
 	dir = 8
 	},
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/machinery/door/window/eastright{
 	dir = 8
 	},
@@ -29160,7 +29140,7 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/structure/sign/poster/contraband/inteq/inteq_no_sex{
 	pixel_y = 34
 	},
@@ -31277,7 +31257,7 @@
 	name = "Tactical Toilet";
 	opacity = 1
 	},
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/structure/sign/poster/contraband/inteq/inteq_no_sex{
 	pixel_y = 34
 	},
@@ -35248,7 +35228,7 @@
 /obj/machinery/shower{
 	pixel_y = 14
 	},
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/machinery/door/window{
 	dir = 8;
 	icon_state = "right";
@@ -35731,9 +35711,7 @@
 	req_one_access = null;
 	set_obj_flags = "EMAGGED"
 	},
-/obj/structure/sign/poster/contraband/bountyhunters{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/bountyhunters/directional/north,
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/holding)
 "wNk" = (

@@ -759,9 +759,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ct" = (
-/obj/structure/sign/poster/official/soft_cap_pop_art{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/soft_cap_pop_art/directional/north,
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -2326,9 +2324,7 @@
 /turf/open/floor/engine,
 /area/awaymission/cabin/caves/mountain)
 "gp" = (
-/obj/structure/sign/poster/contraband/pwr_game{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/pwr_game/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine,
 /area/awaymission/cabin/caves/mountain)
@@ -2343,9 +2339,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/structure/sign/poster/official/do_not_question{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/do_not_question/directional/east,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/cabin/caves/mountain)
 "gr" = (
@@ -2480,9 +2474,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/structure/sign/poster/official/space_cops{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/space_cops/directional/north,
 /obj/effect/light_emitter{
 	name = "outdoor light";
 	set_cap = 3;
@@ -2507,9 +2499,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/structure/sign/poster/official/no_erp{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/no_erp/directional/south,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/cabin/caves/mountain)
 "gK" = (
@@ -2715,9 +2705,7 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "hh" = (
-/obj/structure/sign/poster/official/fruit_bowl{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/fruit_bowl/directional/north,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hi" = (
@@ -2733,15 +2721,11 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "hk" = (
-/obj/structure/sign/poster/official/nanotrasen_logo{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/east,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hl" = (
-/obj/structure/sign/poster/official/here_for_your_safety{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/here_for_your_safety/directional/north,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "hm" = (
@@ -2752,9 +2736,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hn" = (
-/obj/structure/sign/poster/official/high_class_martini{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/high_class_martini/directional/north,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ho" = (
@@ -2779,9 +2761,7 @@
 /area/awaymission/cabin)
 "hs" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/contraband/missing_gloves{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/missing_gloves/directional/east,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
@@ -2890,9 +2870,7 @@
 /area/awaymission/cabin)
 "hI" = (
 /obj/effect/landmark/awaystart,
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/report_crimes/directional/south,
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
@@ -4469,9 +4447,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/cabin/caves)
 "lz" = (
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/south,
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "lA" = (

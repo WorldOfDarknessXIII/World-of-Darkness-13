@@ -5072,9 +5072,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "alg" = (
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "alh" = (
@@ -5784,9 +5782,7 @@
 /area/security/brig)
 "amR" = (
 /obj/structure/light_construct,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
 	},
@@ -6082,9 +6078,7 @@
 /area/hallway/primary/fore)
 "anB" = (
 /obj/item/chair/wood,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/random/directional/east,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "anC" = (
@@ -10894,9 +10888,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "azM" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "azN" = (
@@ -10916,9 +10908,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "azP" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "azQ" = (
@@ -11808,9 +11798,7 @@
 /area/security/prison)
 "aBY" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /obj/machinery/door/poddoor/shutters{
 	id = "visitation";
 	name = "Visitation Shutters"
@@ -11820,9 +11808,7 @@
 /area/security/prison)
 "aBZ" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
 /obj/machinery/door/poddoor/shutters{
 	id = "visitation";
 	name = "Visitation Shutters"
@@ -12646,16 +12632,12 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aEx" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aEy" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -55377,9 +55359,7 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "wba" = (
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/random/directional/east,
 /obj/machinery/light/small{
 	brightness = 3;
 	dir = 8
@@ -56777,9 +56757,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/random{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/random/directional/east,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "ybm" = (

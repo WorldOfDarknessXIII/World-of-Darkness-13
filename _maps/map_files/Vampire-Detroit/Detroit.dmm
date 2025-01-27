@@ -795,9 +795,7 @@
 "db" = (
 /obj/structure/barricade/wooden/crude,
 /obj/structure/barricade/wooden/crude,
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
 /turf/closed/wall/vampwall/market/low/window,
 /area/space)
 "dd" = (
@@ -1008,9 +1006,7 @@
 /turf/open/floor/plating/vampcanal,
 /area/space)
 "ed" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/concrete,
 /area/space)
 "ee" = (

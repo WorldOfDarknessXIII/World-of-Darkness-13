@@ -2228,9 +2228,7 @@
 /turf/open/floor/carpet/lone,
 /area/vtm/interior/strip)
 "ahc" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/carpet/lone,
 /area/vtm/interior/strip)
 "ahd" = (
@@ -6982,9 +6980,7 @@
 /area/vtm/anarch)
 "awz" = (
 /obj/structure/table/wood,
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /obj/item/reagent_containers/food/drinks/beer/vampire,
 /turf/open/floor/plating/rough,
 /area/vtm/anarch)
@@ -9213,9 +9209,7 @@
 /area/vtm/anarch)
 "aDH" = (
 /obj/structure/rack,
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /obj/item/clothing/head/vampire/top,
 /turf/open/floor/plating/concrete,
 /area/vtm/anarch)
@@ -10317,9 +10311,7 @@
 /turf/open/floor/plating/concrete,
 /area/vtm/theatre)
 "aHh" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/concrete,
 /area/vtm/theatre)
 "aHi" = (
@@ -10374,9 +10366,7 @@
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/shop)
 "aHp" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/shop)
 "aHq" = (
@@ -10791,9 +10781,7 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/theatre)
 "aIy" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/theatre)
 "aIz" = (
@@ -10802,9 +10790,7 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/theatre)
 "aIA" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /obj/structure/stairs/east,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/theatre)
@@ -11049,9 +11035,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/shop)
 "aJr" = (
@@ -12165,9 +12149,7 @@
 /turf/open/floor/carpet/airless,
 /area/vtm/anarch)
 "aMN" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /obj/item/wire_cutters,
 /obj/item/storage/box/lights/mixed,
 /obj/structure/table,
@@ -14606,9 +14588,7 @@
 	dir = 4;
 	icon_state = "corp_sofacorner"
 	},
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/interior/strip)
 "aUn" = (
@@ -15121,9 +15101,7 @@
 /turf/open/floor/plating/rough,
 /area/vtm/interior/shop)
 "aVQ" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
@@ -15796,9 +15774,7 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/hotel)
 "aXO" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/hotel)
 "aXP" = (
@@ -16059,9 +16035,7 @@
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/strip)
 "aYC" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/openspace,
 /area/vtm/interior/strip)
 "aYD" = (
@@ -17496,9 +17470,7 @@
 /turf/open/floor/plating/sidewalk,
 /area/vtm/financialdistrict)
 "bcQ" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/sidewalk,
 /area/vtm/financialdistrict)
 "bcR" = (
@@ -24969,9 +24941,7 @@
 	dir = 8;
 	icon_state = "corp_sofaend_right"
 	},
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/vampplating,
 /area/vtm/interior/strip)
 "bAj" = (
@@ -25101,9 +25071,7 @@
 /turf/open/floor/plating/toilet,
 /area/vtm/interior/strip)
 "bAD" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/toilet,
 /area/vtm/interior/strip)
 "bAE" = (
@@ -25121,9 +25089,7 @@
 /turf/open/floor/plating/vampplating,
 /area/vtm/interior/strip)
 "bAG" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/vampplating,
 /area/vtm/interior/strip)
 "bAH" = (
@@ -29205,9 +29171,7 @@
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/clinic)
 "gXN" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/anarch)
 "han" = (
@@ -29329,9 +29293,7 @@
 /area/space)
 "inA" = (
 /obj/structure/table/wood,
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/rough,
 /area/vtm/anarch)
 "inC" = (

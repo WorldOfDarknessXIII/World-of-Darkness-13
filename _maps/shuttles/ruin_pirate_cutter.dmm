@@ -453,9 +453,7 @@
 	pixel_x = 8;
 	pixel_y = 3
 	},
-/obj/structure/sign/poster/contraband/red_rum{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/red_rum/directional/east,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/ruin/caravan/pirate)
 "qX" = (

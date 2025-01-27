@@ -1575,9 +1575,7 @@
 /area/vtm/interior/shop)
 "afq" = (
 /obj/structure/table/wood,
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /obj/item/reagent_containers/food/drinks/beer/vampire,
 /turf/open/floor/plating/rough,
 /area/vtm/anarch)
@@ -12207,9 +12205,7 @@
 /area/vtm/cabinet)
 "aMf" = (
 /obj/structure/table/wood,
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/rough,
 /area/vtm/anarch)
 "aMg" = (
@@ -12229,9 +12225,7 @@
 /turf/open/floor/carpet/airless,
 /area/vtm/anarch)
 "aMj" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/anarch)
 "aMk" = (
@@ -12242,9 +12236,7 @@
 /turf/open/floor/plating/sidewalk,
 /area/vtm/fishermanswharf)
 "aMl" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/concrete,
 /area/vtm/theatre)
 "aMm" = (
@@ -12255,9 +12247,7 @@
 /turf/open/floor/plating/toilet,
 /area/vtm/interior/shop)
 "aMn" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/theatre)
 "aMo" = (
@@ -12301,9 +12291,7 @@
 /turf/open/floor/plating/asphalt,
 /area/vtm/clinic)
 "aMt" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/hotel)
 "aMu" = (
@@ -15018,9 +15006,7 @@
 /area/vtm/anarch)
 "aUJ" = (
 /obj/structure/rack,
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /obj/item/clothing/head/vampire/top,
 /turf/open/floor/plating/concrete,
 /area/vtm/anarch)
@@ -17558,9 +17544,7 @@
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/shop)
 "bcY" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/shop)
 "bcZ" = (
@@ -17697,9 +17681,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/shop)
 "bdu" = (
@@ -20154,9 +20136,7 @@
 	icon_state = "corp_sofacorner";
 	dir = 4
 	},
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/interior/strip)
 "blc" = (
@@ -20263,9 +20243,7 @@
 /turf/open/floor/plating/rough,
 /area/vtm/interior/shop)
 "bls" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
@@ -20348,9 +20326,7 @@
 /turf/open/floor/plating/vampplating,
 /area/vtm/interior/strip)
 "blD" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/vampplating,
 /area/vtm/interior/strip)
 "blE" = (
@@ -20572,9 +20548,7 @@
 /turf/open/floor/plating/gummaguts,
 /area/vtm/interior/shop)
 "bmn" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/sidewalk,
 /area/vtm/financialdistrict)
 "bmo" = (
@@ -23582,9 +23556,7 @@
 /turf/open/floor/plating/vampplating,
 /area/vtm/interior/strip)
 "bvM" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/carpet/lone,
 /area/vtm/interior/strip)
 "bvN" = (
@@ -23967,9 +23939,7 @@
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/strip)
 "bwY" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/openspace,
 /area/vtm/interior/strip)
 "bwZ" = (
@@ -24034,9 +24004,7 @@
 /area/vtm/anarch)
 "bxk" = (
 /obj/structure/table/wood,
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/anarch)
 "bxl" = (
