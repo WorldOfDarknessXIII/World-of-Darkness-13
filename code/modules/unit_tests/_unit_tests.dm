@@ -115,6 +115,7 @@
 #include "spritesheets.dm"
 #include "stomach.dm"
 #include "subsystem_init.dm"
+#include "suit_storage_icons.dm"
 #include "surgeries.dm"
 #include "teleporters.dm"
 #include "timer_sanity.dm"
