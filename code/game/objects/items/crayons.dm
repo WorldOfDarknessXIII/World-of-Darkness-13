@@ -383,6 +383,7 @@
 	if(length(text_buffer))
 		drawing = text_buffer[1]
 
+	SEND_SIGNAL(src, COMSIG_MOB_USING_SPAYPRAINT, user, target)
 
 	var/list/turf/affected_turfs = list()
 
@@ -768,6 +769,7 @@
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 		user.visible_message("<span class='notice'>[user] coats [target] with spray paint!</span>", "<span class='notice'>You coat [target] with spray paint.</span>")
+		SEND_SIGNAL(src, COMSIG_MOB_USING_SPAYPRAINT, user, target)
 		return
 
 	. = ..()
