@@ -125,6 +125,7 @@
 #include "teleporters.dm"
 #include "timer_sanity.dm"
 #include "unit_test.dm"
+#include "worn_icons.dm"
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL

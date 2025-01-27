@@ -24,8 +24,6 @@
 		// Same stipulation as space ruins, but they're (ruined) shuttles instead.
 		/area/shuttle/ruin,
 		/area/shuttle/abandoned,
-		// Solars have lattices over space turfs, and are a valid placement for space turfs in a station area.
-		/area/station/solars,
 	))
 
 	// We aren't planetary, so let's check area placements and ensure stuff lines up.
