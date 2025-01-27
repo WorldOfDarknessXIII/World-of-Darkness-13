@@ -69,3 +69,8 @@
 
 /mob/proc/update_inv_ears()
 	return
+
+///Updates the held items overlay(s) & HUD element.
+/mob/proc/update_held_items()
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_HELD_ITEMS)
