@@ -106,6 +106,16 @@ GLOBAL_VAR(test_log)
 
 		log_test("[path_prefix]_[name] was put in data/screenshots_new")
 
+/// Logs a test message. Will use GitHub action syntax found at https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
+/datum/unit_test/proc/log_for_test(text, priority, file, line)
+	var/map_name = SSmapping.config.map_name
+
+	// Need to escape the text to properly support newlines.
+	var/annotation_text = replacetext(text, "%", "%25")
+	annotation_text = replacetext(annotation_text, "\n", "%0A")
+
+	log_world("::[priority] file=[file],line=[line],title=[map_name]: [type]::[annotation_text]")
+
 /proc/RunUnitTest(test_path, list/test_results)
 	var/datum/unit_test/test = new test_path
 
@@ -128,13 +138,7 @@ GLOBAL_VAR(test_log)
 		var/file = fail_reasons[reasonID][2]
 		var/line = fail_reasons[reasonID][3]
 
-		/// Github action annotation.
-		log_world("::error file=[file],line=[line],title=[test_path]::[text]")
-
-		// Normal log message
-		log_entry += "\tREASON #[reasonID]: [text] at [file]:[line]"
-	var/message = log_entry.Join("\n")
-	log_test(message)
+		test.log_for_test(text, "error", file, line)
 
 	test_results[test_path] = list("status" = test.succeeded ? UNIT_TEST_PASSED : UNIT_TEST_FAILED, "message" = message, "name" = test_path)
 
