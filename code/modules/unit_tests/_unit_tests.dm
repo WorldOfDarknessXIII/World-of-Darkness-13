@@ -86,6 +86,8 @@
 /// A trait source when adding traits through unit tests
 #define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
 
+
+// BEGIN_INCLUDE
 #include "achievements.dm"
 #include "anchored_mobs.dm"
 #include "bespoke_id.dm"
@@ -145,6 +147,8 @@
 #include "turf_icons.dm"
 #include "unit_test.dm"
 #include "worn_icons.dm"
+// END_INCLUDE
+
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
