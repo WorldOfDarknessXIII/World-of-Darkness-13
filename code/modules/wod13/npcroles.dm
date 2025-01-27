@@ -833,6 +833,12 @@
 	if(delete_me)
 		death()
 
+/mob/living/simple_animal/pet/rat/will_escape_storage()
+	if(prob(25))
+		return TRUE
+	else
+		return FALSE
+
 /mob/living/simple_animal/hostile/beastmaster/rat
 	name = "rat"
 	desc = "It's a rat."
