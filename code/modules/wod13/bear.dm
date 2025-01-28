@@ -11,8 +11,6 @@
 	response_disarm_simple = "gently push"
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
-	anchored = FALSE
-	footstep_type = FOOTSTEP_MOB_CLAW
 
 	bloodquality = BLOOD_QUALITY_LOW
 	bloodpool = 1
