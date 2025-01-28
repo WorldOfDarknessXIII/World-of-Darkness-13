@@ -11,7 +11,6 @@
 	response_disarm_simple = "gently push"
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
-	can_be_held = FALSE
 	density = FALSE
 	anchored = FALSE
 	footstep_type = FOOTSTEP_MOB_CLAW
