@@ -500,7 +500,7 @@
 	. = ..()
 	icon_state = "vat[rand(1, 3)]"
 
-/obj/machinery/mineral/equipment_vendor/fastfood/america
+/obj/machinery/mineral/equipment_vendor/fastfood/america	//PSEUDO_M make this restricted or remove it completely
 	desc = "Boom! Booom!! BOOOOOOM!!!!"
 	prize_list = list(new /datum/data/mining_equipment("magnum revolver",	/obj/item/gun/ballistic/vampire/revolver,	200),
 		new /datum/data/mining_equipment("Colt M1911",	/obj/item/gun/ballistic/automatic/vampire/m1911,	250),
@@ -524,7 +524,7 @@
 		new /datum/data/mining_equipment("donut",	/obj/item/food/vampire/donut,	10)
 	)
 
-/obj/machinery/mineral/equipment_vendor/fastfood/illegal
+/obj/machinery/mineral/equipment_vendor/fastfood/illegal	// PSEUDO_M make this restricted and only available for triads
 	prize_list = list(
 		new /datum/data/mining_equipment("lighter",		/obj/item/lighter/greyscale,	10),
 		new /datum/data/mining_equipment("zippo lighter",	/obj/item/lighter,	20),
@@ -559,57 +559,6 @@
 		new /datum/data/mining_equipment("box of syringes", /obj/item/storage/box/syringes, 300)
 	)
 
-/obj/machinery/mineral/equipment_vendor/fastfood/government
-	var/last_card_use_time = 0
-	dispenses_dollars = FALSE
-
-/obj/machinery/mineral/equipment_vendor/fastfood/government/hospital
-	prize_list = list(
-		new /datum/data/mining_equipment("toxins first aid kit", /obj/item/storage/firstaid/toxin, 50),
-		new /datum/data/mining_equipment("burns first aid kit", /obj/item/storage/firstaid/fire, 50),
-		new /datum/data/mining_equipment("standard first aid kit", /obj/item/storage/firstaid/medical, 50),
-		new /datum/data/mining_equipment("respiratory aid kit", /obj/item/storage/firstaid/o2, 50),
-		new /datum/data/mining_equipment("defib batteries", /obj/item/stock_parts/cell, 50),
-		new /datum/data/mining_equipment("Compact Defibillator", /obj/item/defibrillator/compact, 50),
-		new /datum/data/mining_equipment("iron pill bottle", /obj/item/storage/pill_bottle/iron, 50),
-		new /datum/data/mining_equipment("bruise pack", /obj/item/stack/medical/bruise_pack, 50),
-		new /datum/data/mining_equipment("surgical apron", /obj/item/clothing/suit/apron/surgical, 50),
-		new /datum/data/mining_equipment("latex gloves", /obj/item/clothing/gloves/vampire/latex, 50),
-		new /datum/data/mining_equipment("burn ointment", /obj/item/stack/medical/ointment, 50),
-		new /datum/data/mining_equipment("surgery dufflebag", /obj/item/storage/backpack/duffelbag/med/surgery, 50),
-		new /datum/data/mining_equipment("ephedrine pill bottle", /obj/item/storage/pill_bottle/ephedrine, 50),
-		new /datum/data/mining_equipment("Medicated Suture", /obj/item/stack/medical/suture/medicated, 50),
-		new /datum/data/mining_equipment("Regenerative Mesh", /obj/item/stack/medical/mesh/advanced, 50),
-		new /datum/data/mining_equipment("Hospital Radio", /obj/item/p25radio, 50)
-	)
-
-/obj/machinery/mineral/equipment_vendor/fastfood/government/police
-	prize_list = list(
-		new /datum/data/mining_equipment("handcuffs", /obj/item/restraints/handcuffs, 1),
-		new /datum/data/mining_equipment("camera", /obj/item/camera, 2),
-		new /datum/data/mining_equipment("tape recorder", /obj/item/taperecorder, 2),
-		new /datum/data/mining_equipment("white crayon", /obj/item/toy/crayon/white, 1),
-		new /datum/data/mining_equipment("evidence box", /obj/item/storage/box/evidence, 1),
-		new /datum/data/mining_equipment("crime scene tape", /obj/item/barrier_tape/police, 1),
-		new /datum/data/mining_equipment("body bags", /obj/item/storage/box/bodybags, 1),
-		new /datum/data/mining_equipment("police vest", /obj/item/clothing/suit/vampire/vest/police, 1),
-		new /datum/data/mining_equipment("police uniform", /obj/item/clothing/under/vampire/police, 1),
-		new /datum/data/mining_equipment("police hat", /obj/item/clothing/head/vampire/police, 1),
-		new /datum/data/mining_equipment("flashlight", /obj/item/flashlight, 1),
-		new /datum/data/mining_equipment("magnifier", /obj/item/detective_scanner, 4),
-		new /datum/data/mining_equipment("PD Radio", /obj/item/p25radio/police, 2),
-		new /datum/data/mining_equipment("tape recorder", /obj/item/taperecorder, 2),
-		new /datum/data/mining_equipment("Colt M1911",	/obj/item/gun/ballistic/automatic/vampire/m1911,	100),
-		new /datum/data/mining_equipment("Glock19",	/obj/item/gun/ballistic/automatic/vampire/glock19,	100),
-		new /datum/data/mining_equipment("12ga shotgun shells, buckshot",/obj/item/ammo_box/vampire/c12g/buck,	50),
-		new /datum/data/mining_equipment("Colt M1911 magazine",		/obj/item/ammo_box/magazine/vamp45acp,	50),
-		new /datum/data/mining_equipment("AUG Magazines",			/obj/item/ammo_box/magazine/vampaug,	50),
-		new /datum/data/mining_equipment("AR-15 Magazines",			/obj/item/ammo_box/magazine/vamp556,	50),
-		new /datum/data/mining_equipment("desert eagle magazine",	/obj/item/ammo_box/magazine/m44,	50),
-		new /datum/data/mining_equipment("Glock19 magazine",		/obj/item/ammo_box/magazine/glock9mm,	50),
-		new /datum/data/mining_equipment("shotgun",		/obj/item/gun/ballistic/shotgun/vampire, 100),
-		new /datum/data/mining_equipment("IFAK",		/obj/item/storage/firstaid,	100)
-	)
 
 /obj/machinery/mineral/equipment_vendor/fastfood/smoking
 	prize_list = list(new /datum/data/mining_equipment("malboro",	/obj/item/storage/fancy/cigarettes/cigpack_robust,	50),

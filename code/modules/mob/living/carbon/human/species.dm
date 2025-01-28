@@ -1434,8 +1434,10 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		//Checks if the target is already knocked down to prevent stunlocking.
 		if((target.stat != DEAD) && (!target.IsKnockdown()))
 			//Compare puncher's physique to the greater between the target's physique (robust enough to tank it) or dexterity (rolls with the punches)
-			var/modifier = clamp(user.get_total_physique() - max(target.get_total_physique(), target.get_total_dexterity()), 1, 3)
-			if(user.storyteller_roll(difficulty = 10 - modifier) == ROLL_SUCCESS)
+			if(
+			target.storyteller_roll(
+			dice = target.get_total_physique() + round(min(target.get_total_athletics(), target.get_total_dexterity()) / 2),
+			difficulty = clamp(user.get_total_physique(), 1, 4) + (user.melee_professional ? rand(1,4) : 0) == ROLL_FAILURE))
 				target.visible_message("<span class='danger'>[user] knocks [target] down!</span>", "<span class='userdanger'>You're knocked down by [user]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
 				to_chat(user, "<span class='danger'>You knock [target] down!</span>")
 				target.apply_effect(2 SECONDS, EFFECT_KNOCKDOWN, armor_block)
