@@ -224,6 +224,10 @@
 	points = requisitioners[user]	//PSEUDO_M come back and redo this, too, but we have other dev priorities atm...
 	return ..()
 
+/obj/machinery/mineral/equipment_vendor/restricted/ui_data(mob/user)
+	. = ..()
+	requisitioners[user] = points	// make sure they actually spend their req points...
+
 /obj/machinery/mineral/equipment_vendor/restricted/hospital
 	jobs_allowed = list(
 		"Doctor" = 150,
