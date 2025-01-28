@@ -836,8 +836,7 @@
 /mob/living/simple_animal/pet/rat/will_escape_storage()
 	if(prob(10))
 		return TRUE
-	else
-		return FALSE
+	return FALSE
 
 /mob/living/simple_animal/hostile/beastmaster/rat
 	name = "rat"
