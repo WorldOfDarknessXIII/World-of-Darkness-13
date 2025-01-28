@@ -10,7 +10,7 @@
  *
  * This grants a specific silver klaive crafting recipe depending on tribe.
  */
-/mob/living/carbon/proc/add_recipe_klaive(datum/source)
+/mob/living/carbon/human/proc/add_recipe_klaive(datum/source)
 	SIGNAL_HANDLER
 
 	if(auspice.tribe == "Glasswalkers")
