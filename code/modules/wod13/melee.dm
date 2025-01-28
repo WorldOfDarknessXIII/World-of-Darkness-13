@@ -720,21 +720,17 @@
 	desc = "A spring-loaded knife. Perfect for stabbing sharks and jets."
 	flags_1 = CONDUCT_1
 	force = 5
-	icon_state = "switchblade0" //sprite by Spefo
-	w_class = WEIGHT_CLASS_TINY
+	icon_state = "switchblade" //sprite by Spefo
+	w_class = WEIGHT_CLASS_NORMAL
 	block_chance = 3
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 6
-	armour_penetration = 0
-	grid_width = 1 GRID_BOXES
-	grid_height = 1 GRID_BOXES
-	sharpness = SHARP_NONE
 	hitsound = 'sound/weapons/genhit.ogg'
 	attack_verb_continuous = list("stubs", "pokes")
 	attack_verb_simple = list("stub", "poke")
 	resistance_flags = FIRE_PROOF
-	var/extended = FALSE
+	var/extended = TRUE
 
 /obj/item/melee/vampirearms/knife/switchblade/attack_self(mob/user)
 	extended = !extended

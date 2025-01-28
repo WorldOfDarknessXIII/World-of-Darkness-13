@@ -97,7 +97,7 @@
 		to_chat(user, "<span class='notice'>You pull the grown weed out of [src].</span>")
 		var/mob/living/carbon/human/H = user
 		var/amount
-		switch(H.storyteller_roll(H.get_total_mentality(), 6, TRUE))
+		switch(storyteller_roll(H.get_total_mentality(), 6, TRUE))
 			if(3 to INFINITY)
 				amount = 4
 			if(2)

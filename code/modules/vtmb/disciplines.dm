@@ -1896,7 +1896,7 @@
 					difficulty_malus = 0
 					if (get_dist(hearer, target) > 3)
 						difficulty_malus += 1
-					if (hearer.storyteller_roll(hearer.get_total_mentality(), base_difficulty + difficulty_malus) == ROLL_SUCCESS)
+					if (storyteller_roll(hearer.get_total_mentality(), base_difficulty + difficulty_malus) == ROLL_SUCCESS)
 						if (masked)
 							to_chat(hearer, "<span class='warning'>[target.name]'s jaw isn't moving to match [target.p_their()] words.</span>")
 						else

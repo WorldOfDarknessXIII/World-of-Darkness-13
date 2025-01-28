@@ -11,10 +11,7 @@
 	var/mob/living/carbon/human/patient
 	var/obj/structure/table/optable/table
 	var/obj/machinery/stasis/sbed
-	var/list/advanced_surgeries = list(
-		/datum/surgery/healing/combo/upgraded/femto,
-		/datum/surgery/advanced/lobotomy,
-	)
+	var/list/advanced_surgeries = list()
 	var/datum/techweb/linked_techweb
 	light_color = LIGHT_COLOR_BLUE
 
