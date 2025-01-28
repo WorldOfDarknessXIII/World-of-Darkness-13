@@ -14,7 +14,6 @@
 
 	bloodpool = 1
 	maxbloodpool = 1
-	del_on_death = 1
 	maxHealth = 850
 	health = 850
 	cached_multiplicative_slowdown = 2
