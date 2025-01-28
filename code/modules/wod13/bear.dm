@@ -24,11 +24,11 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 
 	bloodquality = BLOOD_QUALITY_LOW
-	bloodpool = 1
-	maxbloodpool = 1
+	bloodpool = 8
+	maxbloodpool = 8
 	del_on_death = 1
-	maxHealth = 850
-	health = 850
+	maxHealth = 500
+	health = 500
 	cached_multiplicative_slowdown = 2
 
 	melee_damage_lower = 50
