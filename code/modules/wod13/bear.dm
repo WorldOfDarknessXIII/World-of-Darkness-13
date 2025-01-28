@@ -17,5 +17,5 @@
 	maxHealth = 850
 	health = 850
 
-	melee_damage_lower = 50
-	melee_damage_upper = 60 //Good luck lol
+	melee_damage_lower = 35
+	melee_damage_upper = 40 //Good luck lol
