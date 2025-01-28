@@ -2,9 +2,6 @@
 	name = "bear"
 	desc = "IS THAT A FUCKING BEAR-"
 	icon = 'code/modules/wod13/64x64.dmi'
-	icon_state = "bear"
-	icon_living = "bear"
-	icon_dead = "bear_dead"
 	emote_hear = list("roars.")
 	emote_see = list("shakes its head.", "stomps.")
 	speak_chance = 0
