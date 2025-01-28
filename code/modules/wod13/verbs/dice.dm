@@ -15,14 +15,12 @@
  * * numerical - whether the proc returns number of successes or outcome (botch, failure, success)
  */
 /mob/proc/storyteller_roll(dice = 1, difficulty = 6, numerical = FALSE, roll_header="", show_player=TRUE, roll_viewers = list(src))
-	#ifdef DEBUG
 	show_player = TRUE
-	#endif
 
 	if(show_player)
-		storyteller_roll_pretty(dice, difficulty, numerical, roll_header, roll_viewers)
+		. = storyteller_roll_pretty(dice, difficulty, numerical, roll_header, roll_viewers)
 	else
-		storyteller_roll_basic(dice, difficulty, numerical)
+		. = storyteller_roll_basic(dice, difficulty, numerical)
 
 //DO NOT CALL DIRECTLY
 /mob/proc/storyteller_roll_basic(dice, difficulty, numerical)

@@ -128,21 +128,11 @@
 
 /obj/machinery/mineral/equipment_vendor/ui_data(mob/user)
 	. = list()
-//	var/obj/item/card/id/C
-//	if(isliving(user))
-//		var/mob/living/L = user
-//		C = L.get_idcard(TRUE)
-//	if(C)
 	.["user"] = list()
 	.["user"]["points"] = points
 	.["user"]["name"] = "[user.name]"
-	.["user"]["job"] = "(Use Alt+Click to remove inserted money)"
-//		if(C.registered_account)
-//			.["user"]["name"] = C.registered_account.account_holder
-//			if(C.registered_account.account_job)
-//				.["user"]["job"] = C.registered_account.account_job.title
-//			else
-//				.["user"]["job"] = "No Job"
+	.["user"]["job"] = "[user.mind.assigned_role]"
+
 
 /obj/machinery/mineral/equipment_vendor/ui_act(action, params)
 	. = ..()
@@ -205,6 +195,7 @@
 	return ..()
 
 /obj/machinery/mineral/equipment_vendor/restricted
+	name = "Requisitions"
 	desc = "A requisitions form waiting for any of the employees here to fill out for frivolous and mismanaged goodies."
 	icon = 'code/modules/wod13/props.dmi'
 	icon_state = "menu"
@@ -217,11 +208,12 @@
 	// Assoc list of how many points a given job gets, being boss has its perks
 	var/list/jobs_allowed = list()
 	var/rejection_message = "The quartermaster doesn't seem to know you or want to speak with you."
+	owner_needed = FALSE
 
 /obj/machinery/mineral/equipment_vendor/restricted/interact(mob/user, special_state)
 	if(isnull(user.mind))
 		return
-	var/user_job = mob.mind.assigned_role
+	var/user_job = user.mind.assigned_role
 	if(restricted && !jobs_allowed.Find(user_job) && !isAdminObserver(user))
 		to_chat(user, rejection_message)
 		return
@@ -230,15 +222,19 @@
 		initial_points = jobs_allowed.Find(user_job) ? jobs_allowed[user_job] : 100
 		requisitioners[user] = isAdminObserver(user) ? 99999 : initial_points
 	points = requisitioners[user]	//PSEUDO_M come back and redo this, too, but we have other dev priorities atm...
-	. = ..()
-
+	return ..()
 
 /obj/machinery/mineral/equipment_vendor/restricted/hospital
+	jobs_allowed = list(
+		"Doctor" = 150,
+		"Clinic Director" = 750,
+	)
 	prize_list = list(
 		new /datum/data/mining_equipment("iron pill bottle", /obj/item/storage/pill_bottle/iron, 5),
 		new /datum/data/mining_equipment("surgical apron", /obj/item/clothing/suit/apron/surgical, 5),
 		new /datum/data/mining_equipment("latex gloves", /obj/item/clothing/gloves/vampire/latex, 5),
 		new /datum/data/mining_equipment("burn ointment", /obj/item/stack/medical/ointment, 5),
+		new /datum/data/mining_equipment("saline solution", /obj/item/reagent_containers/glass/bottle/salglu_solution, 5),
 		new /datum/data/mining_equipment("respiratory aid kit", /obj/item/storage/firstaid/o2, 10),
 		new /datum/data/mining_equipment("defib batteries", /obj/item/stock_parts/cell, 10),
 		new /datum/data/mining_equipment("ephedrine pill bottle", /obj/item/storage/pill_bottle/ephedrine, 10),
@@ -254,6 +250,12 @@
 	)
 
 /obj/machinery/mineral/equipment_vendor/restricted/police
+	jobs_allowed = list(
+		"Police Officer" = 200,
+		"Federal Investigator" = 400,
+		"Police Sergeant" = 500,
+		"Police Chief" = 15000,	// don't you love the militirization of the police?
+	)
 	prize_list = list(
 		new /datum/data/mining_equipment("handcuffs", /obj/item/restraints/handcuffs, 1),
 		new /datum/data/mining_equipment("police uniform", /obj/item/clothing/under/vampire/police, 1),
@@ -272,13 +274,20 @@
 		new /datum/data/mining_equipment("AR-15 Magazines",			/obj/item/ammo_box/magazine/vamp556,	10),
 		new /datum/data/mining_equipment("desert eagle magazine",	/obj/item/ammo_box/magazine/m44,	10),
 		new /datum/data/mining_equipment("Glock19 magazine",		/obj/item/ammo_box/magazine/glock9mm,	10),
-		new /datum/data/mining_equipment("IFAK",		/obj/item/storage/firstaid,	15)
-		new /datum/data/mining_equipment("12ga shotgun shells, buckshot",/obj/item/ammo_box/vampire/c12g/buck,	15),
-		new /datum/data/mining_equipment("Glock19",	/obj/item/gun/ballistic/automatic/vampire/glock19,	25),
-		new /datum/data/mining_equipment("Colt M1911",	/obj/item/gun/ballistic/automatic/vampire/m1911,	25),
-		new /datum/data/mining_equipment("PD Radio", /obj/item/p25radio/police, 50),
-		new /datum/data/mining_equipment("shotgun",		/obj/item/gun/ballistic/shotgun/vampire, 50),
-	)
+		new /datum/data/mining_equipment("IFAK",					/obj/item/storage/firstaid,	15),
+		new /datum/data/mining_equipment("12ga buckshot",			/obj/item/ammo_box/vampire/c12g/buck,	15),
+		new /datum/data/mining_equipment("mp5 magazine",			/obj/item/ammo_box/magazine/vamp9mp5, 20),
+		new /datum/data/mining_equipment("Glock19",					/obj/item/gun/ballistic/automatic/vampire/glock19,	25),
+		new /datum/data/mining_equipment("Colt M1911",				/obj/item/gun/ballistic/automatic/vampire/m1911,	25),
+		new /datum/data/mining_equipment("SPAS15 magazine",			/obj/item/ammo_box/magazine/vampautoshot,	30),
+		new /datum/data/mining_equipment("12ga slug",				/obj/item/ammo_box/vampire/c12g,	35),
+		new /datum/data/mining_equipment("PD Radio", 				/obj/item/p25radio/police, 50),
+		new /datum/data/mining_equipment("shotgun",					/obj/item/gun/ballistic/shotgun/vampire, 50),
+		new /datum/data/mining_equipment("submachine gun",			/obj/item/gun/ballistic/automatic/vampire/mp5, 100),
+		new /datum/data/mining_equipment("assault rifle",			/obj/item/gun/ballistic/automatic/vampire/ar15, 125),
+		new /datum/data/mining_equipment("SPAS15",					/obj/item/gun/ballistic/automatic/vampire/autoshotgun, 200),
+		new /datum/data/mining_equipment("sniper rifle",			/obj/item/gun/ballistic/automatic/vampire/sniper, 300),
+	)	//PSEUDO_M todo: add .50 ammo to this list
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/mining_voucher/voucher, mob/redeemer)
 	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator Kit", "Minebot Kit", "Extraction and Rescue Kit", "Crusher Kit", "Mining Conscription Kit")
