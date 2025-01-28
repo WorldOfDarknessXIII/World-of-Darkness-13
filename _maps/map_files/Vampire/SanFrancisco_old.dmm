@@ -2868,7 +2868,7 @@
 "bfP" = (/mob/living/simple_animal/pet/cat/vampire,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
 "bfQ" = (/obj/effect/decal/bordur{dir = 8},/turf/open/floor/plating/sidewalk/rich,/area/vtm/park)
 "bfR" = (/obj/effect/turf_decal/stripes/line{dir = 8},/turf/open/floor/plating/concrete,/area/vtm/theatre)
-"bfS" = (/obj/effect/turf_decal/siding/white{dir = 1},/obj/structure/vampdoor/simple{lock_id = "triad"; lockpick_difficulty = 9; locked = 1},/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
+"bfS" = (/obj/vampire_car/retro/rand,/turf/open/floor/plating/sidewalk,/area/vtm/chinatown)
 "bfT" = (/obj/structure/chinesesign/alt,/obj/structure/fluff/hedge,/turf/open/floor/plating/sidewalkalt,/area/vtm/chinatown)
 "bfU" = (/turf/open/floor/plating/sidewalkalt,/area/vtm/chinatown)
 "bfV" = (/obj/effect/decal/bordur{dir = 8},/turf/open/floor/plating/sidewalk/rich,/area/vtm/chinatown)
@@ -2913,7 +2913,7 @@
 "bgI" = (/obj/structure/trashbag,/obj/effect/decal/trash,/turf/open/floor/plating/sidewalk/old,/area/vtm/financialdistrict)
 "bgJ" = (/obj/effect/decal/bordur,/turf/open/floor/plating/sidewalk,/area/vtm/chinatown)
 "bgK" = (/obj/structure/chinesesign/alt{dir = 1},/obj/effect/decal/bordur,/turf/open/floor/plating/sidewalk,/area/vtm/chinatown)
-"bgL" = (/obj/effect/decal/wallpaper/red,/turf/closed/wall/vampwall/market,/area/vtm/interior/laundromat)
+"bgL" = (/obj/effect/decal/wallpaper/red,/obj/item/target,/turf/closed/wall/vampwall/market,/area/vtm/interior/shop)
 "bgM" = (/obj/structure/chair/sofa/corner{dir = 1},/turf/open/floor/carpet,/area/vtm/interior)
 "bgN" = (/obj/structure/chair/sofa/right{dir = 1},/turf/open/floor/carpet,/area/vtm/interior)
 "bgO" = (/obj/effect/decal/bordur{dir = 1},/turf/open/floor/plating/sidewalk/old,/area/vtm/financialdistrict)
@@ -2927,11 +2927,11 @@
 "bgW" = (/obj/structure/trashbag,/turf/open/floor/plating/sidewalkalt,/area/vtm/chinatown)
 "bgX" = (/obj/structure/chinesesign/alt/alt{dir = 4; pixel_y = 32},/obj/structure/closet/cardboard,/turf/open/floor/plating/sidewalkalt,/area/vtm/chinatown)
 "bgY" = (/obj/structure/chinesesign/alt/alt{dir = 8; pixel_y = 32},/obj/structure/closet/cardboard,/turf/open/floor/plating/sidewalkalt,/area/vtm/chinatown)
-"bgZ" = (/obj/structure/chair/sofa,/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
-"bha" = (/obj/structure/extinguisher_cabinet{pixel_y = 32},/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
-"bhb" = (/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
+"bgZ" = (/obj/structure/fluff/hedge,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"bha" = (/obj/structure/chinesesign/alt/alt{pixel_y = 32},/obj/weapon_showcase,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/shop)
+"bhb" = (/obj/structure/chinesesign/alt/alt{dir = 1; pixel_y = 32},/obj/weapon_showcase,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/shop)
 "bhc" = (/obj/structure/vampstatue,/turf/open/floor/plating/church,/area/vtm/church)
-"bhd" = (/obj/structure/table/wood,/obj/structure/table/wood,/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
+"bhd" = (/obj/effect/decal/carpet,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/shop)
 "bhe" = (/obj/machinery/light{pixel_y = 32},/obj/structure/vampstatue,/turf/open/floor/plating/parquetry/old,/area/vtm/church)
 "bhf" = (/obj/machinery/light{dir = 4},/obj/structure/vampstatue,/turf/open/floor/plating/parquetry/old,/area/vtm/church)
 "bhg" = (/obj/effect/decal/bordur{dir = 8},/obj/structure/lamppost/sidewalk/chinese{dir = 4},/turf/open/floor/plating/sidewalk/rich,/area/vtm/chinatown)
@@ -2948,7 +2948,7 @@
 "bhr" = (/obj/structure/chair/wood/wings{dir = 8},/obj/machinery/light/prince{pixel_y = 32},/turf/open/floor/plating/parquetry,/area/vtm/cabinet)
 "bhs" = (/obj/effect/decal/bordur/corner,/obj/structure/vampfence/corner/rich{dir = 8},/turf/open/floor/plating/sidewalk/old,/area/vtm/park)
 "bht" = (/mob/living/simple_animal/pet/cat/vampire,/turf/open/floor/plating/sidewalkalt,/area/vtm/chinatown)
-"bhu" = (/turf/closed/wall/vampwall/market,/area/vtm/interior/laundromat)
+"bhu" = (/turf/closed/wall/vampwall/market/low/window/reinforced,/area/vtm/interior/shop)
 "bhv" = (/obj/structure/chinesesign/alt{dir = 4},/obj/structure/fluff/hedge,/turf/open/floor/plating/sidewalkalt,/area/vtm/chinatown)
 "bhw" = (/obj/structure/trashbag,/turf/open/floor/plating/sidewalk/poor,/area/vtm/pacificheights)
 "bhx" = (/obj/machinery/light/small{dir = 4; pixel_x = -16},/turf/open/floor/plating/church,/area/vtm/church)
@@ -2958,9 +2958,9 @@
 "bhC" = (/obj/structure/flora/ausbushes,/obj/structure/flora/ausbushes/fullgrass,/obj/effect/landmark/npcwall,/turf/open/floor/plating/vampgrass,/area/vtm/park)
 "bhD" = (/obj/machinery/light/small{dir = 1},/obj/structure/chair/wood{dir = 1},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/shop)
 "bhE" = (/obj/structure/lamppost/sidewalk/chinese{dir = 4},/turf/open/floor/plating/sidewalkalt,/area/vtm/chinatown)
-"bhF" = (/obj/machinery/roulette,/obj/structure/table/wood/poker,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
-"bhG" = (/obj/machinery/computer/slot_machine,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
-"bhH" = (/obj/structure/fluff/hedge,/obj/structure/fluff/hedge,/obj/structure/curtain/cloth/fancy,/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
+"bhF" = (/obj/effect/decal/wallpaper/red,/obj/structure/chinesesign/alt,/turf/closed/wall/vampwall/market,/area/vtm/interior/shop)
+"bhG" = (/obj/effect/decal/wallpaper/red/low,/turf/closed/wall/vampwall/market/low/window/reinforced,/area/vtm/interior/shop)
+"bhH" = (/obj/effect/decal/wallpaper/red,/obj/structure/chinesesign{dir = 1},/turf/closed/wall/vampwall/market,/area/vtm/interior/shop)
 "bhI" = (/obj/machinery/light/small{dir = 4; pixel_x = -16},/obj/structure/closet/secure_closet/freezer,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "bhJ" = (/obj/machinery/light/small{dir = 8; pixel_x = 16},/obj/structure/chair/wood{dir = 1},/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "bhK" = (/obj/structure/urinal{pixel_y = 32},/obj/item/food/urinalcake,/turf/open/floor/plating/toilet,/area/vtm/anarch)
@@ -2975,7 +2975,7 @@
 "bhT" = (/obj/structure/lamppost/sidewalk,/turf/open/floor/plating/sidewalkalt,/area/vtm/pacificheights)
 "bhU" = (/obj/effect/decal/bordur{dir = 4},/turf/open/floor/plating/sidewalkalt,/area/vtm/pacificheights)
 "bhV" = (/obj/structure/trashbag,/turf/open/floor/plating/sidewalk/old,/area/vtm/financialdistrict)
-"bhW" = (/obj/structure/chair/wood{dir = 8},/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
+"bhW" = (/obj/structure/table/wood,/obj/item/target,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
 "bhX" = (/turf/closed/wall/vampwall/rich/old/low/window/reinforced,/area/vtm/church)
 "bhY" = (/obj/effect/landmark/npcbeacon/directed{dir = 1},/turf/open/floor/plating/sidewalk/old,/area/vtm/pacificheights)
 "bhZ" = (/obj/structure/roadsign/parking,/turf/open/floor/plating/sidewalk/old,/area/vtm/pacificheights)
@@ -3021,7 +3021,7 @@
 "biN" = (/obj/structure/lamppost/one{dir = 8},/turf/open/floor/plating/sidewalk,/area/vtm/chinatown)
 "biO" = (/obj/graffiti/anarch,/turf/open/floor/plating/sidewalkalt,/area/vtm/chinatown)
 "biP" = (/obj/structure/chinesesign{dir = 8},/turf/open/floor/plating/sidewalkalt,/area/vtm/chinatown)
-"biQ" = (/obj/effect/turf_decal/siding/white{dir = 1},/obj/structure/vampdoor/simple{lock_id = "triad"; lockpick_difficulty = 9},/turf/open/floor/plating/sidewalkalt,/area/vtm/interior/laundromat)
+"biQ" = (/obj/effect/turf_decal/siding/white{dir = 1},/obj/structure/vampdoor/simple,/turf/open/floor/plating/sidewalkalt,/area/vtm/interior/shop)
 "biR" = (/obj/machinery/light/small{dir = 4; pixel_x = -16},/obj/structure/table/wood,/turf/open/floor/plating/saint,/area/vtm/church)
 "biS" = (/obj/structure/chair/wood{dir = 1},/turf/open/floor/plating/saint,/area/vtm/church)
 "biT" = (/obj/effect/decal/cardboard,/turf/open/floor/plating/saint,/area/vtm/church)
@@ -3139,15 +3139,15 @@
 "blc" = (/obj/effect/decal/bordur{dir = 5},/turf/open/floor/plating/sidewalk,/area/vtm/pacificheights)
 "bld" = (/obj/effect/decal/bordur{dir = 1},/obj/effect/decal/litter,/turf/open/floor/plating/sidewalk,/area/vtm/pacificheights)
 "ble" = (/obj/effect/decal/litter,/obj/structure/fluff/hedge,/turf/open/floor/plating/sidewalkalt,/area/vtm/chinatown)
-"blf" = (/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
+"blf" = (/obj/item/newspaper,/turf/open/floor/plating/sidewalkalt,/area/vtm/chinatown)
 "blg" = (/obj/structure/chinesesign/alt{dir = 1},/turf/open/floor/plating/sidewalkalt,/area/vtm/chinatown)
-"blh" = (/obj/effect/decal/wallpaper/paper/stripe,/obj/machinery/light,/turf/closed/wall/vampwall/old,/area/vtm/interior/laundromat)
+"blh" = (/obj/effect/decal/wallpaper/paper,/turf/closed/wall/vampwall,/area/vtm/interior)
 "bli" = (/obj/effect/turf_decal/siding/white,/obj/structure/vampdoor/npc,/turf/open/floor/plating/sidewalkalt,/area/vtm/interior)
 "blj" = (/obj/structure/chinesesign{dir = 4},/turf/open/floor/plating/sidewalkalt,/area/vtm/chinatown)
 "blk" = (/obj/machinery/light{dir = 1},/obj/structure/vampstatue,/turf/open/floor/plating/parquetry/old,/area/vtm/church)
 "bll" = (/obj/structure/vampdoor/simple,/turf/open/floor/plating/sidewalk/poor,/area/vtm/interior)
 "blm" = (/mob/living/carbon/human/npc/bandit,/obj/machinery/light/small{pixel_y = 32},/turf/open/floor/plating/sidewalk/poor,/area/vtm/interior)
-"bln" = (/obj/effect/decal/wallpaper/paper/stripe,/turf/closed/wall/vampwall/old,/area/vtm/interior/laundromat)
+"bln" = (/obj/effect/decal/litter,/obj/effect/decal/bordur{dir = 1},/turf/open/floor/plating/sidewalk,/area/vtm/chinatown)
 "blo" = (/obj/structure/chinesesign/alt{dir = 8},/obj/effect/decal/bordur{dir = 1},/turf/open/floor/plating/sidewalk,/area/vtm/chinatown)
 "blp" = (/obj/effect/decal/bordur/corner{dir = 4},/turf/open/floor/plating/sidewalkalt,/area/vtm/chinatown)
 "blq" = (/obj/effect/decal/graffiti/large{pixel_x = 12},/turf/open/floor/plating/sidewalk/poor,/area/vtm/interior)
@@ -3203,12 +3203,12 @@
 "bmo" = (/obj/structure/table/wood,/obj/item/clothing/suit/hooded/robes/darkred,/obj/item/clothing/mask/vampire/venetian_mask,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/giovanni)
 "bmr" = (/obj/structure/vampdoor/wood/old{lock_id = "mansion"; lockpick_difficulty = 4},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/mansion)
 "bms" = (/obj/effect/decal/bordur{dir = 8},/obj/structure/lamppost/one{dir = 4},/turf/open/floor/plating/sidewalk,/area/vtm/pacificheights)
-"bmt" = (/turf/closed/wall/vampwall/old,/area/vtm/interior/laundromat)
+"bmt" = (/obj/structure/toilet{dir = 8},/obj/structure/sink{pixel_y = 16},/obj/structure/mirror{pixel_y = 32},/turf/open/floor/plating/toilet,/area/vtm/interior)
 "bmu" = (/obj/effect/gibspawner/human,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/mansion)
 "bmv" = (/obj/machinery/light{pixel_y = 19},/turf/open/floor/carpet/green,/area/vtm/cabinet)
 "bmw" = (/obj/structure/lamppost/one{dir = 1},/turf/open/floor/plating/sidewalk,/area/vtm/financialdistrict)
-"bmx" = (/obj/structure/table,/obj/item/reagent_containers/glass/bowl,/obj/item/reagent_containers/glass/bowl,/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
-"bmy" = (/obj/structure/table/wood,/obj/underplate{pixel_y = 8},/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
+"bmx" = (/obj/structure/trashbag,/obj/effect/decal/litter,/turf/open/floor/plating/sidewalk,/area/vtm/chinatown)
+"bmy" = (/obj/machinery/light/small{dir = 1},/obj/machinery/washing_machine,/turf/open/floor/plating/toilet,/area/vtm/interior)
 "bmz" = (/obj/manholedown,/turf/open/floor/plating/sidewalk,/area/vtm/chinatown)
 "bmA" = (/obj/effect/decal/trash,/turf/open/floor/plating/sidewalk,/area/vtm/chinatown)
 "bmB" = (/obj/structure/trashbag,/obj/effect/decal/trash,/turf/open/floor/plating/sidewalk,/area/vtm/chinatown)
@@ -3232,7 +3232,7 @@
 "bmT" = (/obj/effect/decal/shadow,/obj/machinery/light/prince/broken{pixel_y = 32},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/mansion)
 "bmU" = (/obj/structure/railing{dir = 4},/obj/effect/decal/support,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/mansion)
 "bmV" = (/obj/structure/railing{dir = 8},/obj/effect/decal/support,/obj/machinery/light/prince/broken{pixel_y = 32},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/mansion)
-"bmW" = (/turf/open/floor/plating/vampwood,/area/vtm/interior/laundromat)
+"bmW" = (/obj/structure/coclock,/obj/item/target,/obj/structure/table/wood,/obj/effect/decal/carpet,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/shop)
 "bmX" = (/turf/closed/wall/vampwall/rich,/area/vtm/pacificheights)
 "bna" = (/turf/open/floor/carpet,/area/space)
 "bnb" = (/obj/structure/table/wood,/obj/machinery/light/prince{pixel_y = 32},/turf/open/floor/carpet,/area/vtm/cabinet)
@@ -3271,7 +3271,7 @@
 "bnP" = (/obj/machinery/light{dir = 8},/obj/effect/turf_decal/siding/white{dir = 4},/obj/structure/fluff/hedge,/turf/open/floor/plating/granite/black,/area/vtm/cabinet)
 "bnQ" = (/obj/structure/vampfence/corner/rich,/turf/open/floor/plating/vampgrass,/area/vtm/pacificheights)
 "bnR" = (/obj/effect/decal/bordur{dir = 4},/turf/open/floor/plating/vampgrass,/area/vtm/pacificheights)
-"bnS" = (/obj/structure/chair/wood{dir = 4; pixel_y = 4},/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
+"bnS" = (/obj/effect/decal/carpet,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
 "bnT" = (/obj/structure/table/wood/fancy/green,/turf/open/floor/carpet/green,/area/vtm/cabinet)
 "bnU" = (/obj/structure/table,/turf/open/floor/plating/vampplating,/area/vtm/pacificheights)
 "bnV" = (/obj/effect/decal/litter,/obj/effect/decal/graffiti,/turf/open/floor/plating/sidewalkalt,/area/vtm/pacificheights)
@@ -3496,7 +3496,7 @@
 "bsn" = (/obj/machinery/light/small{dir = 4; pixel_x = -16},/obj/effect/decal/cardboard,/obj/structure/extinguisher_cabinet{pixel_y = 32},/turf/open/floor/plating/rough,/area/vtm/supply)
 "bso" = (/obj/effect/decal/bordur{dir = 4},/obj/structure/railing{dir = 4},/obj/effect/landmark/start/supplytechnician,/obj/effect/decal/graffiti,/turf/open/floor/plating/rough,/area/vtm/supply)
 "bsq" = (/obj/structure/vampfence/rich{dir = 4},/turf/open/floor/plating/vampgrass,/area/vtm/pacificheights)
-"bsr" = (/obj/effect/turf_decal/siding/wood{dir = 10},/obj/structure/closet/cabinet,/obj/item/clothing/under/vampire/prince,/obj/item/clothing/under/vampire/prince/female,/obj/item/clothing/shoes/vampire,/obj/item/clothing/gloves/vampire/latex,/obj/item/clothing/glasses/vampire/sun,/obj/item/clothing/shoes/vampire,/obj/item/clothing/shoes/vampire/heels,/obj/item/clothing/suit/vampire/trench/alt{armor = list("bashing" = 3 "lethal" = 4, "aggravated" = 1,"melee"=50,"bullet"=50,"laser"=50,"energy"=10,"bomb"=40,"bio"=0,"rad"=0,"fire"=40,"acid"=10,"wound"=25); max_integrity = 1000; name = "armored trenchcoat"},/turf/open/floor/carpet/royalblack,/area/vtm/cabinet)
+"bsr" = (/obj/effect/turf_decal/siding/wood{dir = 10},/obj/structure/closet/cabinet,/obj/item/clothing/under/vampire/prince,/obj/item/clothing/under/vampire/prince/female,/obj/item/clothing/shoes/vampire,/obj/item/clothing/gloves/vampire/latex,/obj/item/clothing/glasses/vampire/sun,/obj/item/clothing/shoes/vampire,/obj/item/clothing/shoes/vampire/heels,/obj/item/clothing/suit/vampire/trench/alt{armor = list("melee"=50,"bullet"=50,"laser"=50,"energy"=10,"bomb"=40,"bio"=0,"rad"=0,"fire"=40,"acid"=10,"wound"=25); max_integrity = 1000; name = "armored trenchcoat"},/turf/open/floor/carpet/royalblack,/area/vtm/cabinet)
 "bss" = (/obj/structure/vampfence/rich{dir = 4},/obj/effect/decal/bordur{dir = 8},/obj/structure/vampfence/rich{dir = 4; name = "gates"; pixel_x = -8},/turf/open/floor/plating/vampgrass,/area/vtm/pacificheights)
 "bst" = (/obj/effect/turf_decal/siding/wood,/turf/open/floor/carpet/royalblack,/area/vtm/cabinet)
 "bsu" = (/obj/effect/turf_decal/siding/wood,/obj/machinery/light/prince{dir = 1},/turf/open/floor/carpet/royalblack,/area/vtm/cabinet)
@@ -4414,7 +4414,6 @@
 "bRl" = (/obj/structure/closet/secure_closet/freezer/fridge{req_access = list(0)},/obj/structure/coclock,/turf/open/floor/plating/vampplating/mono,/area/vtm/interior)
 "bRy" = (/obj/machinery/light/warm,/turf/closed/wall/vampwall/metal/reinforced,/area/vtm/interior/wyrm_corrupted)
 "bRK" = (/obj/structure/railing,/obj/structure/lattice,/obj/structure/fluff/hedge{pixel_y = 6},/obj/structure/railing{dir = 1; layer = 2.5; pixel_y = 12},/obj/structure/flora/ausbushes/grassybush{pixel_y = 12},/obj/structure/flora/ausbushes/sparsegrass{pixel_y = 12},/obj/structure/flora/ausbushes/lavendergrass{pixel_y = 13},/obj/item/vtm_artifact/rand,/turf/open/floor/plating/vampwood,/area/vtm/interior/bianchiBank)
-"bRP" = (/obj/effect/turf_decal/siding/white{dir = 1},/obj/structure/vampdoor/simple{lock_id = "triad"; lockpick_difficulty = 11; locked = 1},/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
 "bRR" = (/obj/item/vtm_artifact/rand,/turf/open/floor/plating/sidewalk/poor,/area/vtm)
 "bRS" = (/obj/structure/vampfence/corner,/turf/open/floor/plating/sidewalk/poor,/area/vtm/ghetto)
 "bSr" = (/obj/structure/mirror{pixel_y = 32},/obj/structure/sink{pixel_y = 16},/obj/machinery/light/small{dir = 8; pixel_x = 16},/obj/item/reagent_containers/glass/bucket,/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
@@ -4492,7 +4491,6 @@
 "cgZ" = (/obj/effect/decal/bordur{dir = 6},/turf/open/floor/plating/sidewalk,/area/vtm/fishermanswharf)
 "chK" = (/obj/item/vamp/phone/street{pixel_z = 24},/turf/open/floor/plating/sidewalkalt,/area/vtm/fishermanswharf)
 "chM" = (/obj/effect/decal/bordur,/obj/effect/landmark/npcability,/turf/open/floor/plating/sidewalk,/area/vtm/pacificheights)
-"cif" = (/obj/structure/closet,/obj/item/clothing/under/costume/maid,/obj/item/clothing/under/costume/maid,/obj/item/clothing/under/costume/maid,/obj/item/clothing/under/costume/maid,/obj/item/toy/crayon/spraycan,/obj/item/toy/crayon/spraycan,/obj/item/clothing/head/beret/black,/obj/item/clothing/head/beret,/obj/item/lipstick/random,/obj/item/lipstick/random,/obj/item/lipstick/random,/obj/item/clothing/suit/cheongsam_red,/obj/item/clothing/suit/cheongsam_blue,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "cio" = (/obj/structure/vampfence/rich{dir = 4},/turf/open/floor/plating/sidewalk/poor,/area/vtm/supply)
 "ciL" = (/obj/effect/decal/trash,/turf/open/floor/plating/sidewalk,/area/vtm/interior)
 "ciP" = (/obj/weapon_showcase,/obj/machinery/light/prince{dir = 8},/turf/open/floor/plating/vampcarpet,/area/vtm/interior/bianchiBank)
@@ -4531,7 +4529,6 @@
 "cqh" = (/obj/effect/turf_decal/siding/wideplating/dark{dir = 9},/obj/structure/table/wood,/obj/vampire_computer,/turf/open/floor/plating/vampcarpet,/area/vtm/interior/techshop)
 "cqm" = (/obj/effect/decal/bordur{dir = 6},/turf/open/floor/plating/sidewalkalt,/area/vtm/pacificheights)
 "cqr" = (/obj/structure/chair/comfy/brown{color = "#50C878"},/turf/open/floor/carpet/green,/area/vtm/cabinet)
-"cqx" = (/obj/machinery/light{dir = 1},/obj/item/kirbyplants/random,/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
 "cqE" = (/obj/effect/decal/bordur{dir = 4},/obj/structure/vampfence/rich{dir = 4},/obj/structure/vampfence/rich{dir = 4; name = "gates"; pixel_x = 8},/turf/open/floor/plating/vampgrass,/area/vtm/pacificheights)
 "cqF" = (/obj/structure/closet/cardboard,/turf/open/floor/plating/sidewalk,/area/vtm/chinatown)
 "cqL" = (/obj/structure/table,/obj/item/instrument/violin{name = "violin"},/turf/open/floor/plating/sidewalk/poor,/area/vtm)
@@ -4599,7 +4596,6 @@
 "cCE" = (/obj/structure/roadblock/alt{dir = 4},/turf/open/floor/plating/sidewalk,/area/vtm/financialdistrict)
 "cDl" = (/obj/structure/table/wood/fancy,/obj/item/ammo_box/magazine/vampthompson,/turf/open/floor/carpet,/area/vtm/interior/giovanni)
 "cEf" = (/obj/structure/closet/crate/bin,/turf/open/floor/carpet,/area/vtm/anarch)
-"cEx" = (/obj/effect/turf_decal/siding/white{dir = 1},/obj/structure/vampdoor/simple,/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
 "cED" = (/obj/effect/turf_decal/siding/white{dir = 1},/obj/machinery/light{dir = 8},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/police)
 "cEI" = (/obj/structure/flora/ausbushes/fullgrass,/obj/structure/vampfence/corner/rich{dir = 1},/turf/open/floor/plating/vampdirt,/area/vtm/graveyard)
 "cEL" = (/obj/structure/closet/crate/large,/obj/item/storage/box/lights/bulbs,/obj/item/wire_cutters,/turf/open/floor/plating/rough,/area/vtm/sewer)
@@ -4614,7 +4610,6 @@
 "cGw" = (/obj/structure/table,/obj/item/clothing/neck/stethoscope,/obj/item/clothing/neck/stethoscope,/turf/open/floor/plating/circled,/area/vtm/interior)
 "cGC" = (/obj/structure/flora/ausbushes/sparsegrass{icon_state = "ywflowers_1"},/turf/open/floor/plating/vampgrass,/area/vtm)
 "cHa" = (/obj/effect/landmark/start/prince,/obj/structure/chair/comfy/brown{color = "#FFECD5"},/turf/open/floor/carpet/lone,/area/vtm/cabinet)
-"cHc" = (/obj/machinery/light,/turf/closed/wall/vampwall/market,/area/vtm/interior/laundromat)
 "cHh" = (/obj/graffiti/anarch,/turf/open/floor/plating/sidewalk/rich,/area/vtm/park)
 "cIp" = (/obj/manholedown,/turf/open/floor/plating,/area/vtm/interior)
 "cIt" = (/obj/effect/turf_decal/siding/white{dir = 6},/obj/structure/fluff/hedge,/obj/structure/coclock,/turf/open/floor/plating/granite/black,/area/vtm/cabinet)
@@ -4673,7 +4668,6 @@
 "cVF" = (/obj/structure/clothinghanger,/turf/open/floor/carpet/royalblack,/area/vtm/interior)
 "cVU" = (/obj/structure/toilet{pixel_y = 16},/obj/machinery/light{pixel_y = 32},/turf/open/floor/plating/toilet,/area/vtm/cabinet)
 "cWd" = (/obj/structure/closet/crate,/turf/open/floor/plating/rough,/area/vtm/sewer/nosferatu_town)
-"cWs" = (/obj/structure/sink{dir = 8; pixel_x = 11},/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
 "cWy" = (/obj/effect/turf_decal/siding/white{dir = 8; icon_state = "siding_corner"},/turf/open/floor/plating/vampplating/stone,/area/vtm/interior/bianchiBank)
 "cWH" = (/obj/effect/decal/litter,/obj/structure/trashbag,/obj/structure/trashbag,/turf/open/floor/plating/rough/cave,/area/vtm/interior)
 "cWM" = (/obj/structure/closet/crate,/obj/item/ammo_box/vampire/c12g,/obj/item/ammo_box/vampire/c12g,/obj/item/ammo_box/vampire/c12g,/turf/open/floor/plating/parquetry/old,/area/vtm/graveyard/interior)
@@ -4775,7 +4769,6 @@
 "dsL" = (/turf/open/floor/plating/vampgrass,/area/vtm/forest)
 "dsO" = (/obj/structure/table/wood,/obj/item/storage/fancy/candle_box,/obj/item/candle,/obj/item/candle,/turf/open/floor/plating/concrete,/area/vtm/theatre)
 "dta" = (/obj/structure/railing{dir = 4},/obj/structure/railing{dir = 8; layer = 4; pixel_y = -2},/obj/structure/table/wood/fancy/blue{layer = 3; pixel_y = 5},/obj/item/storage/pill_bottle/lsd{desc = "Wait, where is the statue?!"; pixel_y = 17},/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
-"dtd" = (/obj/effect/turf_decal/siding/white{dir = 1},/obj/structure/vampdoor/simple{lock_id = "triad"; lockpick_difficulty = 9},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "dts" = (/obj/structure/bed/maint,/obj/item/clothing/suit/apron/waders,/turf/open/floor/plating/vampdirt,/area/vtm/interior)
 "dtJ" = (/obj/structure/closet/crate/coffin,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "dtP" = (/obj/structure/table,/obj/item/instrument/eguitar{anchored = 1; pixel_y = 32},/obj/vampire_computer,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
@@ -4808,7 +4801,6 @@
 "dzy" = (/obj/machinery/light/warm{dir = 1; pixel_y = -16},/turf/open/floor/plating/vampplating,/area/vtm/interior/techshop)
 "dzG" = (/obj/structure/closet/crate/large{pixel_x = 15; pixel_y = 11},/turf/open/floor/plating/rough,/area/vtm/sewer)
 "dzX" = (/obj/machinery/light/small{dir = 8; pixel_x = 16},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plating,/area/vtm/interior)
-"dAm" = (/obj/machinery/light{dir = 1},/obj/structure/fluff/hedge,/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
 "dAr" = (/obj/structure/table/wood,/obj/item/flashlight/lamp/green,/turf/closed/wall/vampwall/painted/low,/area/vtm/interior)
 "dAB" = (/obj/structure/holohoop{dir = 8},/turf/open/floor/plating/sidewalk/poor,/area/vtm/ghetto)
 "dAC" = (/obj/structure/closet/cabinet,/obj/item/clothing/suit/vampire/jacket/better{armor = list("melee"=45,"bullet"=45,"laser"=10,"energy"=10,"bomb"=35,"bio"=0,"rad"=0,"fire"=45,"acid"=10,"wound"=35); name = "armored leather jacket"},/turf/open/floor/plating/parquetry/old,/area/vtm/anarch)
@@ -4874,7 +4866,6 @@
 "dOa" = (/obj/structure/table/wood,/obj/item/canvas/twentyfour_twentyfour,/obj/structure/closet/crate/wooden,/obj/item/canvas/twentyfour_twentyfour,/obj/item/canvas/twentyfour_twentyfour,/obj/item/canvas/twentyfour_twentyfour,/obj/item/canvas/twentythree_nineteen,/obj/item/canvas/nineteen_nineteen{pixel_x = 21},/obj/item/canvas/twentythree_nineteen,/obj/item/canvas/twentythree_nineteen,/turf/open/floor/plating/vampcarpet,/area/vtm/interior/techshop)
 "dOf" = (/obj/structure/vampdoor/simple{dir = 8},/turf/open/floor/plating/concrete,/area/vtm/interior)
 "dOH" = (/obj/machinery/light/blacklight{pixel_y = 27},/obj/structure/chair/sofa/corp,/turf/open/floor/mineral/plastitanium,/area/vtm/cabaret)
-"dOL" = (/obj/structure/table,/obj/machinery/griddle,/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
 "dOX" = (/obj/structure/chair/sofa/corner{dir = 1},/turf/open/floor/carpet/green,/area/vtm/jazzclub)
 "dPb" = (/obj/structure/table,/obj/item/vampire_stake,/turf/open/floor/plating/rough/cave,/area/vtm/interior)
 "dPg" = (/turf/open/lava,/area/vtm/interior)
@@ -4941,13 +4932,11 @@
 "dZU" = (/obj/structure/chair/sofa/corp/corner{dir = 1},/turf/open/floor/plating/vampplating/mono,/area/vtm/interior/strip)
 "dZY" = (/obj/structure/railing{dir = 1; pixel_y = 9},/obj/effect/decal/shadow{icon_state = "shadow-alt"; pixel_y = 32},/obj/structure/chair/comfy/brown{dir = 1},/turf/open/floor/plating/rough,/area/vtm/interior)
 "eac" = (/obj/effect/decal/bordur,/obj/effect/decal/bordur{dir = 1},/turf/open/floor/plating/sidewalk,/area/vtm/pacificheights)
-"eag" = (/obj/manholedown,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "eaV" = (/obj/effect/turf_decal/siding/white,/obj/structure/vampdoor/police{color = "#466a72"; lockpick_difficulty = 18},/turf/open/floor/plating/rough,/area/vtm/interior/police)
 "ebh" = (/obj/structure/vampdoor/daughters{dir = 8},/turf/open/floor/bronze,/area/vtm/cabaret)
 "eby" = (/obj/transfer_point_vamp{alpha = 0; density = 0; id = 670},/turf/open/floor/mineral/plastitanium,/area/vtm/prince)
 "ebE" = (/obj/structure/curtain/bounty,/turf/closed/wall/vampwall/market/low/window,/area/vtm/interior/techshop)
 "ebT" = (/obj/item/clothing/under/vampire/archivist{pixel_x = 6; pixel_y = 9},/obj/item/clothing/shoes/vampire/brown{pixel_x = -4; pixel_y = -8},/obj/item/clothing/glasses/vampire/perception,/turf/open/floor/plating/rough,/area/vtm/interior/mansion)
-"ebZ" = (/obj/structure/table,/obj/effect/decal/wallpaper/red/low,/turf/closed/wall/vampwall/market/low,/area/vtm/interior/laundromat)
 "ech" = (/obj/item/reagent_containers/food/drinks/coffee/vampire,/turf/open/floor/plating/concrete,/area/vtm/anarch)
 "ecn" = (/obj/effect/decal/bordur{dir = 1},/obj/structure/fluff/hedge{pixel_y = 6},/turf/open/floor/plating/sidewalk/old,/area/vtm/financialdistrict)
 "ect" = (/obj/effect/landmark/npcbeacon,/obj/effect/decal/crosswalk{dir = 1},/turf/open/floor/plating/asphalt,/area/vtm/fishermanswharf)
@@ -5000,7 +4989,6 @@
 "emR" = (/obj/effect/decal/graffiti,/obj/structure/trashcan,/turf/open/floor/plating/sidewalk/poor,/area/vtm/pacificheights)
 "emY" = (/obj/machinery/light/small{dir = 8; pixel_x = 16},/obj/structure/toilet{dir = 8; pixel_y = 11},/turf/open/floor/plating/toilet,/area/vtm/prince)
 "enw" = (/obj/machinery/light/small{dir = 1},/turf/open/floor/plating/parquetry/old,/area/vtm/anarch)
-"enB" = (/obj/structure/table/wood/poker,/obj/item/toy/cards/deck,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "eoM" = (/obj/structure/railing{dir = 1; pixel_y = 9},/obj/effect/decal/shadow{icon_state = "shadow-alt"; pixel_y = 32},/turf/open/floor/plating/rough,/area/vtm/interior)
 "eoT" = (/obj/structure/table/wood/poker,/obj/item/toy/cards/deck,/turf/open/floor/plating/rough,/area/vtm/interior)
 "eoZ" = (/obj/effect/turf_decal/siding/white,/obj/item/kirbyplants/random,/turf/open/floor/plating/granite/black,/area/vtm/interior)
@@ -5052,7 +5040,6 @@
 "eAQ" = (/obj/effect/decal/bordur{dir = 4},/obj/effect/decal/bordur,/obj/effect/decal/bordur{dir = 9},/turf/open/floor/plating/sidewalk/poor,/area/vtm)
 "eBb" = (/obj/structure/table/wood,/obj/machinery/light/prince/broken{dir = 1},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/mansion)
 "eBj" = (/obj/effect/turf_decal/siding/white,/obj/structure/vampdoor/old{lock_id = "laundromat"; locked = 1; lockpick_difficulty = 11; name = "Laundromat door"},/turf/open/floor/plating/circled,/area/vtm/interior/laundromat)
-"eBm" = (/obj/structure/curtain/cloth/fancy,/turf/open/floor/plasteel/stairs{dir = 1},/area/vtm/interior/laundromat)
 "eBu" = (/obj/structure/table/wood,/turf/closed/wall/vampwall/painted/low,/area/vtm/interior)
 "eBG" = (/obj/effect/turf_decal/weather/dirt{dir = 6},/turf/open/floor/plating/vampgrass,/area/vtm/interior/bianchiBank)
 "eBN" = (/obj/elevator_door,/turf/closed/wall/vampwall/rich,/area/vtm/cabinet)
@@ -5069,7 +5056,6 @@
 "eDN" = (/obj/item/toy/beach_ball,/turf/open/water,/area/vtm/cabinet)
 "eDQ" = (/obj/effect/turf_decal/siding/wood{dir = 6},/turf/open/floor/plating/roofwalk,/area/vtm)
 "eDR" = (/obj/structure/chair/office{dir = 4},/turf/open/floor/plating/vampcarpet,/area/vtm/interior/bianchiBank)
-"eEm" = (/obj/structure/chair/sofa/corner{dir = 4},/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
 "eEn" = (/obj/effect/turf_decal/weather/sand{dir = 10},/obj/effect/turf_decal/weather/sand{dir = 1},/turf/open/floor/plating/vampbeach,/area/vtm)
 "eEp" = (/obj/structure/stairs/north,/turf/open/floor/plating/concrete,/area/vtm/interior)
 "eEz" = (/obj/machinery/light/small{dir = 8; pixel_x = 16},/obj/item/kirbyplants/random,/turf/open/floor/plating/sidewalk/poor,/area/vtm/interior)
@@ -5117,7 +5103,6 @@
 "eKO" = (/obj/effect/decal/graffiti,/turf/open/floor/plating/sidewalk/old,/area/vtm/pacificheights)
 "eKR" = (/obj/effect/decal/graffiti,/turf/open/floor/plating/sidewalk/poor,/area/vtm)
 "eLj" = (/obj/structure/vampdoor/clinic{dir = 4},/turf/open/floor/plating/vampplating/mono,/area/vtm/interior)
-"eLr" = (/obj/machinery/computer/arcade/battle,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "eLz" = (/obj/item/kirbyplants/random,/turf/open/floor/plating/vampplating,/area/vtm/cabinet)
 "eLA" = (/turf/open/floor/plating/sidewalk/old,/area/vtm/sewer)
 "eLC" = (/obj/effect/decal/bordur{dir = 4},/obj/effect/decal/cardboard,/turf/open/floor/plating/sidewalk/rich,/area/vtm/park)
@@ -5226,7 +5211,6 @@
 "fgp" = (/turf/closed/wall/vampwall/rich/old,/area/space)
 "fgw" = (/turf/closed/wall/vampwall/wood/low,/area/vtm/forest)
 "fgF" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/effect/landmark/npcwall,/obj/structure/small_vamprocks,/turf/open/floor/plating/vampgrass,/area/vtm/pacificheights)
-"fgN" = (/obj/structure/mirror{pixel_y = 32},/obj/structure/sink{pixel_y = 16},/obj/structure/toilet{dir = 1},/obj/machinery/light/small{dir = 8; pixel_x = 16},/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
 "fgX" = (/obj/effect/decal/bordur/corner{dir = 1},/turf/open/floor/plating/sidewalk/rich,/area/vtm/pacificheights)
 "fgZ" = (/obj/vampire_car/retro/rand{access = "giovanni"},/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
 "fho" = (/obj/effect/decal/cardboard,/turf/open/floor/plating/vampdirt,/area/vtm/interior)
@@ -5290,7 +5274,6 @@
 "fxv" = (/obj/structure/fluff/hedge,/turf/open/floor/plating/sidewalk/rich,/area/vtm/interior)
 "fxQ" = (/obj/machinery/light/prince/broken{pixel_y = 32},/obj/structure/rack,/obj/item/flashlight,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/mansion)
 "fyp" = (/obj/effect/decal/bordur{dir = 4},/obj/structure/closet/cardboard,/turf/open/floor/plating/vampwood,/area/vtm/hotel)
-"fyu" = (/obj/structure/extinguisher_cabinet{pixel_y = 32},/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
 "fyv" = (/obj/structure/stairs/east,/turf/open/floor/plating/concrete,/area/vtm/interior/police)
 "fyL" = (/obj/effect/turf_decal/siding/wood{dir = 6},/obj/structure/table/wood,/obj/machinery/chem_dispenser/drinks/fullupgrade,/turf/open/floor/plating/parquetry,/area/vtm/camarilla)
 "fyQ" = (/turf/open/floor/plating/rough/cave,/area/vtm/interior)
@@ -5313,7 +5296,6 @@
 "fCf" = (/obj/structure/table,/obj/machinery/light/cold{dir = 4},/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/turf/open/floor/plating/vampplating/mono,/area/vtm/interior/bianchiBank)
 "fCu" = (/obj/effect/decal/bordur{dir = 1},/obj/transfer_point_vamp{id = 44},/turf/open/floor/plating/sidewalk/poor,/area/vtm)
 "fDe" = (/obj/item/weedseed,/turf/open/floor/plating/rough/cave,/area/vtm/forest)
-"fDg" = (/obj/structure/table,/obj/machinery/chem_dispenser/drinks/fullupgrade{dir = 8; pixel_x = 6; pixel_y = 5},/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{dir = 8; pixel_x = 6; pixel_y = 30},/turf/open/floor/carpet/red,/area/vtm/interior/laundromat)
 "fDl" = (/obj/structure/bed/maint{pixel_y = 2},/turf/open/floor/plating/vampgrass,/area/vtm/forest)
 "fDp" = (/turf/open/floor/plating/toilet,/area/vtm/cabaret)
 "fDI" = (/obj/structure/closet/crate,/turf/open/floor/plating/rough/cave,/area/vtm/sewer/nosferatu_town)
@@ -5381,7 +5363,6 @@
 "fRN" = (/obj/effect/turf_decal/siding/white,/obj/structure/vampdoor/npc,/turf/open/floor/plating/rough,/area/vtm/interior)
 "fRQ" = (/obj/structure/vampdoor/anarch{dir = 4},/turf/open/floor/plating/parquetry/old,/area/vtm/anarch)
 "fSf" = (/obj/structure/chair/greyscale,/turf/open/floor/plating/rough,/area/vtm/interior/glasswalker)
-"fSq" = (/obj/structure/curtain/cloth/fancy,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "fSx" = (/obj/structure/table/wood,/obj/item/toy/cards/deck,/turf/open/floor/carpet/royalblack,/area/vtm/camarilla)
 "fSM" = (/obj/effect/turf_decal/stripes/line{dir = 10},/obj/structure/barrels{icon_state = "barrels3"},/turf/open/floor/plating/concrete,/area/vtm/interior/wyrm_corrupted)
 "fSQ" = (/turf/open/water,/area/vtm/interior/mansion)
@@ -5406,7 +5387,6 @@
 "fXF" = (/obj/structure/table/wood/poker,/obj/item/reagent_containers/food/drinks/meth/cocaine,/obj/item/toy/cards/deck/cas/black,/obj/item/toy/cards/deck{pixel_y = 9},/turf/open/floor/plating/roofwalk,/area/vtm/interior/bianchiBank)
 "fXN" = (/obj/effect/decal/bordur{dir = 6},/turf/open/floor/plating/sidewalk,/area/vtm/financialdistrict)
 "fXP" = (/obj/structure/window/reinforced/indestructable{alpha = 0; dir = 1},/obj/structure/window/reinforced/indestructable{alpha = 0; dir = 8},/obj/structure/window/reinforced/indestructable{alpha = 0},/obj/effect/decal/bordur{dir = 8},/obj/structure/window/reinforced/indestructable{alpha = 0; dir = 4},/obj/effect/decal/bordur{dir = 8},/turf/open/floor/plating/rough,/area/vtm/cabinet)
-"fXU" = (/obj/machinery/processor,/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
 "fXV" = (/obj/effect/turf_decal/siding/wood{dir = 4},/obj/structure/railing{dir = 4; layer = 4},/obj/machinery/light/prince{pixel_x = 15},/turf/open/floor/plating/vampcarpet,/area/vtm/pacificheights)
 "fXY" = (/obj/structure/table/wood,/obj/item/vamp/keys{accesslocks = list("triad","laundromat"); name = "Shady Chinatown Keys"},/obj/item/vamp/keys{accesslocks = list("triad","laundromat"); name = "Shady Chinatown Keys"},/obj/item/vamp/keys{accesslocks = list("triad","laundromat"); name = "Shady Chinatown Keys"},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "fYc" = (/obj/structure/disposalpipe/trunk,/turf/open/water,/area/vtm/financialdistrict)
@@ -5500,7 +5480,6 @@
 "grU" = (/obj/machinery/light/small/pink{pixel_y = 32},/obj/structure/bricks,/obj/effect/decal/pallet{pixel_y = -4},/turf/open/floor/plating/concrete,/area/vtm/interior)
 "gsC" = (/obj/machinery/light/prince{pixel_y = 32},/obj/structure/clothinghanger,/turf/open/floor/carpet,/area/vtm/interior/giovanni)
 "gsU" = (/obj/structure/easel,/obj/item/canvas/nineteen_nineteen,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
-"gtb" = (/turf/closed/wall/vampwall/market/low/window/reinforced,/area/vtm/interior/laundromat)
 "gtv" = (/obj/effect/decal/cleanable/feet_trail,/turf/open/floor/plating/toilet,/area/vtm/interior/police)
 "gtP" = (/turf/open/floor/plating/rough,/area/vtm/cabinet)
 "gub" = (/obj/machinery/light/dim{pixel_y = 32},/obj/effect/turf_decal/siding/white{dir = 8},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/police)
@@ -5716,7 +5695,6 @@
 "hiv" = (/obj/structure/vampdoor/archive{dir = 8},/obj/effect/decal/bordur{dir = 8},/turf/open/floor/plating/concrete,/area/vtm/theatre)
 "hiy" = (/obj/effect/decal/pallet,/obj/effect/decal/trash,/turf/open/floor/plating/rough,/area/vtm/sewer)
 "hiE" = (/obj/structure/railing{dir = 8; layer = 4},/obj/structure/flora/ausbushes/sparsegrass,/turf/open/floor/plating/vampgrass,/area/vtm/interior/bianchiBank)
-"hiK" = (/obj/structure/vampdoor/simple{dir = 8},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "hiY" = (/obj/item/paper/fluff,/turf/open/floor/plating/concrete,/area/vtm/anarch)
 "hja" = (/obj/structure/chair/pew/right{dir = 8},/turf/open/floor/plating/sidewalk/rich,/area/vtm/interior)
 "hjs" = (/obj/structure/bricks{pixel_x = -3; pixel_y = 5},/turf/open/floor/plating/sidewalk,/area/vtm/financialdistrict)
@@ -5728,7 +5706,6 @@
 "hki" = (/obj/structure/railing{dir = 4},/obj/structure/closet/cardboard,/turf/open/floor/plating/parquetry/old,/area/vtm/theatre)
 "hkp" = (/obj/machinery/light/small{dir = 4; pixel_x = -16},/turf/open/floor/plating/parquetry,/area/vtm/interior/laundromat)
 "hkB" = (/obj/structure/table,/obj/machinery/button/door{id = 10},/turf/open/floor/plating/vampplating/mono,/area/vtm/interior)
-"hkG" = (/obj/structure/vampdoor/simple{dir = 8; locked = 1; lock_id = "laundromat"; lockpick_difficulty = 9},/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
 "hkO" = (/obj/structure/closet/crate/large,/obj/item/cockclock,/obj/item/cockclock,/turf/open/floor/plating/rough,/area/vtm/interior/mansion)
 "hkY" = (/obj/item/stack/dollar/rand,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/turf/open/floor/plating/vampplating/mono,/area/vtm/interior/bianchiBank)
 "hli" = (/obj/structure/table,/obj/structure/vampfence/rich{dir = 4; layer = 3; pixel_y = -12},/turf/open/floor/plating/vampplating/mono,/area/vtm/interior)
@@ -5906,7 +5883,6 @@
 "hVh" = (/obj/machinery/light/small{dir = 4; pixel_x = -16},/turf/open/floor/plating/parquetry/old,/area/vtm/anarch)
 "hVm" = (/obj/structure/trashbag,/obj/structure/trashbag{pixel_x = -5; pixel_y = -13},/obj/structure/trashbag{pixel_x = -7; pixel_y = 9},/turf/open/floor/plating/rough/cave,/area/vtm/sewer/nosferatu_town)
 "hVz" = (/obj/effect/landmark/npcwall,/obj/item/cigbutt,/turf/open/floor/plating/rough/cave,/area/vtm/sewer)
-"hVD" = (/obj/machinery/light{dir = 1},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "hVO" = (/obj/item/kirbyplants/random,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/vjanitor)
 "hWA" = (/obj/item/kirbyplants/random,/obj/american_flag{pixel_y = 32},/obj/structure/trad{pixel_y = 32},/turf/open/floor/plating/circled,/area/vtm/interior/laundromat)
 "hWY" = (/turf/closed/wall/vampwall/junk,/area/vtm/sewer/nosferatu_town)
@@ -5938,11 +5914,9 @@
 "icP" = (/obj/structure/sink{pixel_y = 16},/obj/structure/mirror{pixel_y = 32},/turf/open/floor/plating/toilet,/area/vtm/interior/giovanni)
 "idk" = (/obj/structure/table/wood,/obj/item/toy/cards/deck/tarot,/turf/closed/wall/vampwall/painted/low,/area/vtm/interior)
 "idl" = (/obj/structure/table/wood/bar,/turf/open/floor/plating/vampwood,/area/vtm/cabaret)
-"idr" = (/obj/structure/fluff/hedge,/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
 "idt" = (/obj/structure/table,/obj/item/reagent_containers/food/drinks/beer/vampire,/obj/item/reagent_containers/food/drinks/beer/vampire{pixel_x = 12; pixel_y = 12},/turf/open/floor/plating/sidewalk/poor,/area/vtm/interior)
 "idw" = (/obj/structure/vampfence/rich{pixel_y = 9},/obj/structure/vamptree/pine,/turf/open/floor/plating/vampgrass,/area/vtm/pacificheights)
 "idA" = (/obj/structure/chair/comfy/beige{dir = 1},/turf/open/floor/carpet/royalblack,/area/vtm/jazzclub)
-"idR" = (/obj/structure/table/wood,/obj/machinery/light{dir = 4},/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
 "idU" = (/obj/structure/railing{dir = 8; layer = 4},/obj/structure/fluff/hedge,/turf/open/floor/plating/sidewalk/poor,/area/vtm)
 "idZ" = (/obj/structure/vampdoor/wood/old{lock_id = "primMalkav"; locked = 1; lockpick_difficulty = 16},/turf/open/floor/carpet/lone,/area/vtm/interior)
 "iee" = (/obj/item/clothing/gloves/vampire/cleaning,/obj/structure/sink{pixel_y = 16},/turf/open/floor/plating/concrete,/area/vtm/anarch)
@@ -6032,7 +6006,6 @@
 "iuJ" = (/obj/structure/toilet{dir = 8; pixel_y = 11},/turf/open/floor/plating/toilet,/area/vtm/interior)
 "iuQ" = (/obj/structure/vamproofwall{color = "#7c7c7c"; dir = 1},/obj/matrix{alpha = 0; opacity = 0},/turf/open/space/basic,/area/space)
 "iuX" = (/obj/item/kirbyplants/random,/obj/effect/turf_decal/siding/white{dir = 5},/turf/open/floor/carpet/black,/area/vtm/interior/bianchiBank)
-"ivm" = (/obj/structure/table/wood/poker,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "ivX" = (/obj/effect/decal/rugs,/obj/structure/vampfence/corner{dir = 1},/turf/open/floor/plating/concrete,/area/vtm/supply)
 "ivY" = (/obj/structure/table/wood,/obj/item/toy/cards/deck/tarot,/obj/item/melee/vampirearms/knife/switchblade,/turf/open/floor/carpet/red,/area/vtm/interior/vjanitor)
 "iwd" = (/obj/effect/turf_decal/weather/dirt{dir = 10},/turf/open/floor/plating/vampdirt,/area/vtm)
@@ -6091,7 +6064,6 @@
 "iIa" = (/obj/effect/decal/bordur,/obj/structure/fluff/hedge{pixel_y = 6},/turf/open/floor/plating/sidewalk,/area/vtm/financialdistrict)
 "iIg" = (/obj/machinery/light{dir = 1},/obj/machinery/vending/boozeomat/all_access,/turf/open/floor/carpet,/area/vtm/anarch)
 "iIk" = (/obj/graffiti/camarilla,/turf/open/floor/plating/sidewalk/old,/area/vtm/financialdistrict)
-"iIM" = (/obj/structure/mirror{pixel_y = 32},/obj/structure/sink{pixel_y = 16},/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
 "iIP" = (/obj/structure/fence,/obj/effect/decal/bordur{dir = 8},/turf/open/floor/plating/concrete,/area/vtm/pacificheights)
 "iJf" = (/obj/structure/table/reinforced,/obj/item/melee/vampirearms/shovel,/turf/open/floor/plating/concrete,/area/vtm/graveyard/interior)
 "iJp" = (/obj/structure/closet/cabinet,/turf/open/floor/plating/parquetry,/area/vtm/interior/giovanni)
@@ -6204,7 +6176,6 @@
 "jaZ" = (/obj/structure/chair/office{dir = 4},/turf/open/floor/plating/rough,/area/vtm/sewer/nosferatu_town)
 "jbb" = (/obj/structure/chair,/turf/open/floor/plating/vampplating/mono,/area/vtm/interior)
 "jbc" = (/obj/effect/decal/shadow{icon_state = "shadow-alt"; pixel_y = 32},/obj/structure/railing{dir = 1; layer = 4; pixel_y = 14},/obj/structure/railing{dir = 8},/obj/structure/window/reinforced/indestructable{alpha = 0; dir = 8},/obj/effect/turf_decal/siding/white{dir = 9},/obj/effect/turf_decal/siding/white{dir = 8},/turf/open/floor/plating/concrete,/area/vtm/interior)
-"jbh" = (/obj/effect/decal/carpet,/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
 "jbi" = (/obj/structure/table/wood/fancy,/turf/open/floor/carpet,/area/vtm/interior/giovanni)
 "jbu" = (/obj/structure/window/reinforced/indestructable{alpha = 0; dir = 4},/obj/effect/turf_decal/siding/white{dir = 10},/obj/structure/window/reinforced/indestructable{alpha = 0},/obj/structure/window/reinforced/indestructable{alpha = 0; dir = 8},/obj/structure/window/reinforced/indestructable{alpha = 0; dir = 1},/turf/open/floor/plating/rough,/area/vtm/financialdistrict)
 "jby" = (/obj/effect/decal/bordur,/obj/structure/roadblock/alt,/turf/open/floor/plating/sidewalk/poor,/area/vtm/ghetto)
@@ -6255,7 +6226,6 @@
 "jjP" = (/obj/graffiti/camarilla,/turf/open/floor/carpet,/area/vtm/theatre)
 "jjR" = (/obj/structure/trashbag,/obj/effect/decal/litter,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plating/bacotell,/area/vtm/interior)
 "jjS" = (/obj/structure/chair/greyscale{dir = 4},/turf/open/floor/plating/rough,/area/vtm/sewer/nosferatu_town)
-"jjY" = (/obj/structure/chair/sofa{dir = 4},/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
 "jjZ" = (/obj/machinery/light/prince{dir = 4},/turf/open/floor/carpet,/area/vtm/interior/giovanni)
 "jkS" = (/obj/fusebox,/turf/open/floor/carpet/royalblack,/area/vtm/jazzclub)
 "jkT" = (/obj/effect/turf_decal/siding/white,/obj/structure/vampdoor/camarilla,/turf/open/floor/plating/sidewalk,/area/vtm/interior)
@@ -6424,7 +6394,6 @@
 "jXD" = (/obj/structure/table/wood,/obj/item/reagent_containers/food/drinks/coffee/vampire/robust,/turf/open/floor/carpet/royalblack,/area/vtm/interior)
 "jXS" = (/obj/structure/window/reinforced/indestructable{alpha = 0},/obj/structure/window/reinforced/indestructable{alpha = 0; dir = 4},/obj/effect/decal/bordur{dir = 4},/obj/effect/decal/bordur,/turf/open/floor/plating/rough,/area/vtm/interior)
 "jXT" = (/obj/structure/table/wood,/obj/item/paper_bin{pixel_y = 6},/obj/item/pen,/turf/open/floor/plating/parquetry,/area/vtm/interior/giovanni)
-"jXU" = (/obj/structure/chair/sofa/left,/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
 "jYa" = (/obj/machinery/light{dir = 4},/turf/open/floor/plating/toilet,/area/vtm/camarilla)
 "jYq" = (/obj/machinery/light/small{dir = 1},/obj/structure/closet,/turf/open/floor/plating/rough,/area/vtm/sewer/nosferatu_town)
 "jYu" = (/obj/effect/decal/trash,/turf/open/floor/plating/concrete,/area/vtm/pacificheights)
@@ -6456,7 +6425,6 @@
 "kdX" = (/obj/structure/chair/sofa/corp{dir = 8},/obj/effect/landmark/start/giovanni,/turf/open/floor/plating/parquetry,/area/vtm/interior/giovanni)
 "kem" = (/obj/machinery/light/dim{dir = 4},/obj/effect/decal/cardboard,/turf/open/floor/plating/concrete,/area/vtm/supply)
 "kep" = (/obj/structure/chair/office,/obj/effect/landmark/start/clerk,/turf/open/floor/carpet/green,/area/vtm/prince)
-"kew" = (/obj/structure/chair/stool/bar,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "key" = (/obj/structure/railing{dir = 4},/obj/structure/railing{dir = 8},/turf/open/floor/plasteel/stairs,/area/vtm/interior)
 "kez" = (/obj/structure/chair/wood{dir = 1},/obj/machinery/light/small{dir = 4; pixel_x = -16},/turf/open/floor/carpet/black,/area/vtm/interior)
 "keF" = (/obj/structure/table/wood,/obj/item/gun/ballistic/shotgun/vampire,/obj/item/ammo_box/vampire/c12g/buck,/turf/open/floor/plating/concrete,/area/vtm/interior/techshop)
@@ -6471,7 +6439,6 @@
 "kgm" = (/obj/structure/table,/obj/structure/table/wood,/obj/effect/decal/wallpaper/paper/darkred,/turf/closed/wall/vampwall/rich/low,/area/vtm/jazzclub)
 "kgt" = (/obj/structure/vampmap,/turf/open/floor/plating/sidewalk/old,/area/vtm/financialdistrict)
 "kgx" = (/obj/structure/vampfence/corner/rich{dir = 4},/turf/open/floor/plating/vampgrass,/area/vtm/forest)
-"kho" = (/obj/structure/table/wood,/obj/structure/mirror{pixel_y = 24},/obj/item/storage/bag/tray,/obj/item/storage/bag/tray,/obj/item/reagent_containers/food/drinks/drinkingglass/martini_glass,/obj/item/reagent_containers/food/drinks/drinkingglass/martini_glass,/obj/item/reagent_containers/food/drinks/drinkingglass/martini_glass,/obj/item/reagent_containers/food/drinks/drinkingglass/martini_glass,/obj/item/storage/box/drinkingglasses,/obj/item/reagent_containers/food/drinks/shaker,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "khD" = (/obj/structure/table/wood,/turf/open/floor/plating/vampplating/stone,/area/vtm/interior/bianchiBank)
 "khE" = (/obj/structure/chair/wood,/obj/effect/decal/carpet,/turf/open/floor/plating/parquetry/old,/area/vtm/forest)
 "khG" = (/obj/structure/railing{pixel_y = -5},/turf/open/floor/plating/vampplating/mono,/area/vtm/camarilla)
@@ -6548,7 +6515,6 @@
 "kwh" = (/obj/effect/decal/bordur,/obj/structure/lamppost/one,/turf/open/floor/plating/vampgrass,/area/vtm/pacificheights)
 "kwj" = (/obj/machinery/light/small{pixel_y = 32},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/police)
 "kwy" = (/obj/effect/bump_teleporter{density = 0; id = 12; mouse_opacity = 0},/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
-"kwK" = (/obj/structure/table,/obj/machinery/microwave{desc = "Cooks and boils stuff, somehow."; pixel_x = -3; pixel_y = 5},/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
 "kwT" = (/obj/structure/railing{dir = 1; pixel_y = 12},/obj/structure/table,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "kwW" = (/turf/open/floor/plating/bacotell,/area/vtm/interior/bianchiBank)
 "kxA" = (/obj/structure/chair/wood/wings{dir = 1},/turf/open/floor/plating/parquetry,/area/vtm/interior/laundromat)
@@ -6585,7 +6551,6 @@
 "kDN" = (/obj/structure/fluff/hedge{pixel_y = 6},/obj/structure/gargoyle{dir = 4},/turf/closed/wall/vampwall/painted/low,/area/vtm/interior/bianchiBank)
 "kEl" = (/obj/structure/chair/wood/wings{dir = 8},/turf/open/floor/carpet/royalblack,/area/vtm/interior)
 "kEm" = (/obj/machinery/light{dir = 1},/obj/structure/table,/obj/machinery/cell_charger{pixel_y = 10},/turf/open/floor/plating/vampplating/mono,/area/vtm/clinic)
-"kEq" = (/obj/structure/table,/obj/structure/table,/obj/item/clothing/suit/apron/chef,/obj/item/clothing/head/chefhat,/obj/item/kitchen/knife/butcher,/obj/item/kitchen/rollingpin,/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
 "kEs" = (/obj/effect/turf_decal/stripes/white/line{dir = 10},/obj/effect/decal/litter,/obj/structure/railing{dir = 4},/obj/effect/decal/shadow,/turf/open/floor/plating/rough,/area/vtm/interior)
 "kEB" = (/obj/effect/decal/bordur{dir = 1},/obj/effect/decal/bordur,/obj/effect/decal/bordur{dir = 4},/turf/open/floor/plating/sidewalk/old,/area/vtm/pacificheights)
 "kEI" = (/obj/structure/fleshwall,/turf/open/floor/plating/vampgrass,/area/vtm/forest)
@@ -6718,7 +6683,7 @@
 "lgJ" = (/obj/structure/window/reinforced/tinted,/obj/structure/barricade/wooden,/turf/closed/wall/vampwall/wood/low/window,/area/vtm/interior)
 "lhf" = (/obj/structure/fleshwall,/obj/structure/fleshwall,/turf/open/floor/plating/vampgrass,/area/vtm/forest)
 "lho" = (/obj/structure/railing{dir = 1; layer = 4; pixel_y = 16},/turf/open/floor/carpet,/area/vtm/pacificheights)
-"lhG" = (/turf/closed/wall/vampwall/rich/low/window/reinforced,/area/space)
+"lhG" = (/obj/matrix{alpha = 0; opacity = 0},/turf/closed/wall/vampwall/rich/old,/area/space)
 "lhI" = (/obj/structure/table,/turf/open/floor/plating/concrete,/area/vtm/interior)
 "lhK" = (/obj/machinery/light{pixel_y = 32},/obj/structure/sink{pixel_y = 16},/obj/item/reagent_containers/glass/bucket,/turf/open/floor/plating/parquetry/old,/area/vtm/anarch)
 "lhT" = (/obj/structure/table/wood,/obj/item/paper_bin{pixel_y = 6},/turf/open/floor/plating/vampplating/stone,/area/vtm/interior/bianchiBank)
@@ -6786,9 +6751,7 @@
 "ltq" = (/obj/structure/table/wood,/obj/item/candle/infinite,/turf/open/floor/plating/parquetry/old,/area/vtm/forest)
 "ltJ" = (/obj/machinery/shower{pixel_y = 13},/obj/effect/decal/stock{dir = 1; pixel_x = -9},/obj/item/soap,/turf/open/floor/plating/toilet,/area/vtm/interior)
 "ltV" = (/obj/structure/window/reinforced/tinted,/turf/closed/wall/vampwall/painted/low/window/reinforced,/area/vtm/jazzclub)
-"luh" = (/obj/structure/chair/sofa/right,/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
 "luq" = (/turf/closed/wall/vampwall/old,/area/vtm/forest)
-"lvd" = (/obj/effect/turf_decal/siding/white{dir = 1},/obj/structure/vampdoor/simple{lock_id = "triad"; lockpick_difficulty = 9; locked = 1},/turf/open/floor/plating/sidewalk,/area/vtm/interior/laundromat)
 "lvE" = (/obj/structure/extinguisher_cabinet{pixel_y = 32},/turf/open/floor/plating/toilet,/area/vtm/interior/police)
 "lvZ" = (/obj/effect/turf_decal/siding/wood{dir = 4},/turf/open/floor/plating/vampcarpet,/area/vtm/pacificheights)
 "lwc" = (/obj/structure/vamprocks,/turf/open/floor/plating/vampgrass,/area/vtm/forest)
@@ -6839,7 +6802,6 @@
 "lGc" = (/obj/structure/chair/plastic{dir = 1},/turf/open/floor/plating/parquetry/old,/area/vtm/anarch)
 "lGf" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plating/rough/cave,/area/vtm/interior)
 "lGo" = (/obj/effect/decal/litter,/obj/effect/decal/cardboard,/turf/open/floor/plating/vampcanalplating,/area/vtm/sewer)
-"lGr" = (/obj/structure/vampdoor/simple{dir = 8; lock_id = "triad"; locked = 1; lockpick_difficulty = 9},/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
 "lGv" = (/obj/structure/vampdoor/graveyard{dir = 8; lockpick_difficulty = 13},/obj/effect/turf_decal/siding/white{dir = 8},/turf/open/floor/plating/sidewalk/old,/area/vtm/graveyard/interior)
 "lGx" = (/obj/structure/flora/ausbushes/brflowers,/turf/open/floor/plating/vampdirt,/area/vtm/graveyard)
 "lGF" = (/obj/effect/turf_decal/siding/white{dir = 4},/turf/open/floor/plating/vampplating,/area/vtm/interior/techshop)
@@ -6905,7 +6867,6 @@
 "lTx" = (/obj/structure/chair/office{dir = 1},/turf/open/floor/plating/concrete,/area/vtm/supply)
 "lTJ" = (/obj/effect/decal/cardboard,/obj/structure/vampfence/corner{dir = 4},/turf/open/floor/plating/concrete,/area/vtm/supply)
 "lTS" = (/obj/machinery/light/small{pixel_y = 32},/obj/effect/decal/litter,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
-"lUb" = (/obj/machinery/computer/slot_machine,/obj/machinery/computer/arcade/battle,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "lUA" = (/obj/machinery/light/small{dir = 1},/turf/open/floor/plating/rough,/area/vtm/anarch)
 "lUC" = (/obj/effect/decal/bordur/corner{dir = 1},/turf/open/water,/area/vtm/forest)
 "lUM" = (/obj/structure/chair/plastic{dir = 1},/turf/open/floor/plating/toilet,/area/vtm/prince)
@@ -6948,7 +6909,6 @@
 "maX" = (/obj/effect/turf_decal/stripes/white/line{dir = 8},/obj/effect/decal/trash,/turf/open/floor/plating/rough,/area/vtm/interior)
 "mbm" = (/obj/effect/decal/bordur{dir = 8},/mob/living/carbon/human/npc/guard,/turf/open/floor/plating/sidewalk/rich,/area/vtm/pacificheights)
 "mbr" = (/obj/structure/fluff/hedge,/obj/effect/turf_decal/siding/white{dir = 9},/turf/open/floor/bronze,/area/vtm/interior/giovanni)
-"mcs" = (/obj/structure/chair/sofa/right{dir = 4},/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
 "mcv" = (/obj/structure/railing{dir = 1; pixel_y = 3},/turf/open/floor/plating/rough,/area/vtm/interior)
 "mcC" = (/obj/structure/closet/crate/large,/turf/open/floor/plating/rough,/area/vtm/interior/mansion)
 "mcK" = (/obj/matrix{alpha = 0; mouse_opacity = 0; opacity = 0},/turf/open/floor/plating/asphalt,/area/vtm/graveyard)
@@ -7081,7 +7041,6 @@
 "mDm" = (/turf/closed/wall/vampwall/rock{density = 0},/area/vtm)
 "mDs" = (/obj/structure/closet/crate/large,/obj/effect/decal/pallet,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "mDF" = (/obj/item/stack/rods/ten,/turf/open/floor/plating/sidewalk/poor,/area/vtm)
-"mDY" = (/obj/structure/closet/secure_closet/freezer,/obj/item/reagent_containers/food/condiment/rice,/obj/item/reagent_containers/food/condiment/rice,/obj/item/reagent_containers/food/condiment/rice,/obj/item/reagent_containers/food/condiment/rice,/obj/item/reagent_containers/food/condiment/rice,/obj/item/storage/fancy/egg_box,/obj/item/storage/fancy/egg_box,/obj/item/storage/fancy/egg_box,/obj/item/reagent_containers/food/condiment/flour,/obj/item/reagent_containers/food/condiment/flour,/obj/item/reagent_containers/food/condiment/flour,/obj/item/food/cheesewheel,/obj/item/food/cheesewheel,/obj/item/food/cheesewheel,/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
 "mDZ" = (/obj/effect/turf_decal/siding/white{dir = 1},/obj/item/kirbyplants/random,/obj/structure/railing{dir = 1; pixel_y = 12},/turf/open/floor/plating/parquetry/old,/area/vtm/anarch)
 "mEU" = (/obj/structure/stairs/north{dir = 2},/turf/open/floor/plating/sidewalk,/area/vtm/cabaret)
 "mEZ" = (/obj/structure/sign/poster/tiamat,/turf/closed/wall/vampwall/rich/old,/area/vtm/cabaret)
@@ -7107,7 +7066,6 @@
 "mJd" = (/obj/machinery/light/small/red{dir = 4; pixel_x = -16},/turf/open/floor/carpet/royalblue,/area/vtm/interior)
 "mJs" = (/turf/open/floor/plating/vampdirt,/area/vtm/interior/glasswalker)
 "mJx" = (/obj/effect/decal/graffiti,/turf/open/floor/plating/sidewalk,/area/vtm/chinatown)
-"mJZ" = (/obj/machinery/mineral/equipment_vendor/fastfood/america,/obj/structure/table,/obj/structure/window/reinforced/indestructable{dir = 1},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "mKs" = (/obj/structure/window/reinforced/indestructable{alpha = 0; dir = 8},/obj/structure/window/reinforced/indestructable{alpha = 0; dir = 4},/obj/structure/window/reinforced/indestructable{alpha = 0; dir = 1},/obj/effect/turf_decal/siding/white,/obj/structure/window/reinforced/indestructable{alpha = 0},/obj/structure/fans/tiny/invisible,/turf/open/floor/plating/rough,/area/vtm/financialdistrict)
 "mKI" = (/turf/open/floor/carpet/royalblue,/area/vtm/interior)
 "mKO" = (/obj/structure/vampdoor{dir = 4},/turf/open/floor/plating/rough,/area/vtm/interior)
@@ -7161,7 +7119,6 @@
 "mWR" = (/obj/structure/table/wood,/obj/item/masquerade_contract,/obj/item/masquerade_contract,/obj/item/masquerade_contract,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/turf/open/floor/carpet/green,/area/vtm/prince)
 "mXa" = (/obj/effect/turf_decal/siding/wideplating/dark{dir = 4},/obj/structure/vampdoor/reinf{dir = 8; lock_id = "old_clan_tzimisce"; locked = 1; lockpick_difficulty = 18},/turf/open/floor/plasteel/dark,/area/vtm/interior)
 "mXE" = (/obj/structure/trashbag,/obj/structure/trashbag{pixel_x = 11},/obj/effect/decal/graffiti,/turf/open/floor/plating/rough/cave,/area/vtm/sewer/nosferatu_town)
-"mXV" = (/obj/structure/fluff/hedge,/obj/structure/curtain/cloth/fancy,/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
 "mYa" = (/obj/structure/chair/wood/wings{dir = 1},/turf/open/floor/plating/parquetry,/area/vtm/interior/giovanni)
 "mYb" = (/obj/structure/closet,/turf/open/floor/plating,/area/vtm/interior)
 "mYc" = (/obj/machinery/light/small{pixel_y = 32},/obj/item/kirbyplants/random,/turf/open/floor/plating/rough,/area/vtm/sewer/nosferatu_town)
@@ -7182,7 +7139,6 @@
 "nbV" = (/obj/effect/decal/pallet,/obj/structure/chair,/turf/open/floor/plating/concrete,/area/vtm)
 "ncf" = (/obj/structure/table/wood,/obj/item/reagent_containers/food/drinks/beer/vampire,/turf/open/floor/carpet/royalblack,/area/vtm/camarilla)
 "ncj" = (/obj/effect/decal/bordur{dir = 8},/obj/effect/landmark/npcability,/turf/open/floor/plating/sidewalk/poor,/area/vtm/ghetto)
-"ncq" = (/obj/machinery/light{dir = 1},/obj/structure/closet/crate/bin,/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
 "ncy" = (/obj/effect/turf_decal/siding/wideplating/dark{dir = 6},/turf/open/floor/carpet/red,/area/vtm/jazzclub)
 "ncE" = (/obj/structure/toilet{dir = 4; pixel_y = 4},/obj/effect/decal/trash,/obj/effect/decal/litter,/turf/open/floor/plating/sidewalk/poor,/area/vtm/interior)
 "ncH" = (/obj/structure/closet/cardboard,/turf/open/floor/plating/sidewalk/rich,/area/vtm/financialdistrict)
@@ -7230,7 +7186,6 @@
 "nmo" = (/obj/effect/decal/bordur,/obj/structure/vampfence/rich{dir = 4},/obj/structure/trashcan{pixel_x = -3; pixel_y = -10},/turf/open/floor/plating/sidewalk/old,/area/vtm/park)
 "nmQ" = (/obj/structure/closet/cardboard,/turf/open/floor/plating/concrete,/area/vtm/interior)
 "nmS" = (/obj/effect/landmark/npcbeacon,/obj/effect/landmark/npcability,/turf/open/floor/plating/sidewalk,/area/vtm/chinatown)
-"nmW" = (/obj/structure/table/wood/poker,/obj/item/dice/d6,/obj/item/dice/d6,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "nnb" = (/obj/effect/turf_decal/weather/dirt{dir = 9},/obj/effect/turf_decal/weather/dirt{dir = 4},/obj/structure/fire_barrel,/turf/open/floor/plating/vampdirt,/area/vtm)
 "nng" = (/obj/effect/decal/wallpaper/red,/turf/closed/wall/vampwall/rich/old,/area/vtm/interior)
 "nnq" = (/obj/effect/turf_decal/siding/white{dir = 9},/turf/open/openspace,/area/vtm/camarilla)
@@ -7339,7 +7294,6 @@
 "nIT" = (/obj/effect/turf_decal/siding/white{dir = 1; icon_state = "siding_corner"},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/police)
 "nJf" = (/obj/structure/table,/obj/item/newspaper,/turf/closed/wall/vampwall/city/low,/area/vtm/interior/laundromat)
 "nJr" = (/obj/effect/decal/bordur{dir = 4},/obj/effect/decal/bordur{dir = 4},/obj/effect/decal/bordur{dir = 10},/turf/open/floor/plating/sidewalk/rich,/area/vtm/pacificheights)
-"nJA" = (/obj/machinery/light/small{dir = 8; pixel_x = 16},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "nKf" = (/obj/structure/fence/corner{dir = 5},/obj/effect/decal/bordur/corner{dir = 1},/turf/open/floor/plating/concrete,/area/vtm/pacificheights)
 "nKx" = (/turf/closed/wall/vampwall/dirtywood,/area/vtm/financialdistrict)
 "nKE" = (/obj/effect/decal/litter,/turf/open/floor/plating/rough,/area/vtm/interior/glasswalker)
@@ -7418,7 +7372,6 @@
 "nZS" = (/obj/structure/stairs/north,/turf/open/floor/plating/rough,/area/vtm/sewer)
 "oap" = (/obj/structure/table/wood,/turf/closed/wall/vampwall/brick/low,/area/vtm/supply)
 "oat" = (/turf/closed/wall/vampwall/wood/low,/area/vtm/interior)
-"oaN" = (/obj/structure/vampdoor/simple{dir = 8},/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
 "oaR" = (/obj/vampire_car/rand,/turf/open/floor/plating/concrete,/area/vtm/pacificheights)
 "oba" = (/obj/effect/turf_decal/siding/white{dir = 6},/obj/structure/table/wood,/turf/open/floor/plating/rough,/area/vtm/anarch)
 "obc" = (/obj/effect/decal/bordur{dir = 8},/obj/structure/barrels{icon_state = "barrel4"},/turf/open/floor/plating/sidewalk,/area/vtm/ghetto)
@@ -7440,7 +7393,6 @@
 "oel" = (/obj/machinery/griddle,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "oen" = (/obj/structure/table,/obj/item/clothing/mask/vampire/balaclava,/turf/open/floor/plating,/area/vtm/interior)
 "oeI" = (/obj/structure/flora/ausbushes/sparsegrass,/turf/closed/wall/vampwall/rock,/area/vtm/forest)
-"ofg" = (/obj/structure/chair/wood,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "ofD" = (/obj/structure/bed,/obj/item/bedsheet/dorms,/turf/open/floor/plating/parquetry/old,/area/vtm/anarch)
 "ofE" = (/obj/effect/turf_decal/weather/dirt{dir = 1},/turf/open/floor/plating/vampocean{density = 0},/area/vtm/interior)
 "ofK" = (/obj/structure/chair,/turf/open/floor/plating/parquetry,/area/vtm/interior)
@@ -7475,7 +7427,7 @@
 "olR" = (/turf/open/floor/plating/vampbeach,/area/vtm)
 "omh" = (/obj/machinery/light/small{pixel_y = 32},/obj/structure/dresser,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "omB" = (/obj/structure/vampdoor/wood{dir = 4; lock_id = "bianchiBank"; locked = 1; lockpick_difficulty = 16; name = "bank management door"},/turf/open/floor/plating/vampplating/stone,/area/vtm/interior/bianchiBank)
-"omD" = (/obj/structure/dresser,/obj/item/instrument/violin/golden,/obj/item/clothing/suit/vampire/trench/alt{armor = list("bashing" = 3 "lethal" = 4, "aggravated" = 1,"melee"=50,"bullet"=50,"laser"=50,"energy"=10,"bomb"=40,"bio"=0,"rad"=0,"fire"=40,"acid"=10,"wound"=25); max_integrity = 1000; name = "armored trenchcoat"},/obj/item/clothing/suit/hooded/robes/purple,/turf/open/floor/carpet/orange,/area/vtm/interior)
+"omD" = (/obj/structure/dresser,/obj/item/instrument/violin/golden,/obj/item/clothing/suit/vampire/trench/alt{armor = list("melee"=50,"bullet"=50,"laser"=50,"energy"=10,"bomb"=40,"bio"=0,"rad"=0,"fire"=40,"acid"=10,"wound"=25); max_integrity = 1000; name = "armored trenchcoat"},/obj/item/clothing/suit/hooded/robes/purple,/turf/open/floor/carpet/orange,/area/vtm/interior)
 "omJ" = (/obj/structure/vampfence/rich,/turf/open/floor/plating/vampgrass,/area/vtm/forest)
 "onj" = (/obj/structure/flora/ausbushes/sparsegrass,/obj/effect/turf_decal/weather/dirt,/turf/open/floor/plating/vampgrass,/area/vtm/ghetto)
 "ono" = (/obj/effect/decal/trash{icon_state = "trash5"},/turf/open/floor/plating/vampdirt,/area/vtm/interior)
@@ -7550,7 +7502,6 @@
 "oCs" = (/obj/graffiti/anarch{pixel_y = -11},/turf/open/floor/plating/sidewalk/poor,/area/vtm/ghetto)
 "oCw" = (/obj/structure/fluff/hedge,/obj/structure/fluff/hedge,/obj/structure/flora/ausbushes/ppflowers,/obj/effect/landmark/npcwall,/turf/open/floor/plating/vampgrass,/area/vtm/park)
 "oCy" = (/obj/structure/table,/obj/item/food/vampire/pizza,/turf/open/floor/plating/sidewalk/poor,/area/vtm/interior/police)
-"oCB" = (/mob/living/carbon/human/npc/shop{resistant_to_disciplines = 1},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "oDl" = (/obj/structure/weightmachine/stacklifter,/obj/effect/turf_decal/stripes/white/line{dir = 10},/obj/effect/turf_decal/stripes/white/line{dir = 5},/obj/machinery/light{pixel_y = 32},/turf/open/floor/plating/rough,/area/vtm/interior)
 "oDs" = (/obj/structure/table,/obj/item/food/vampire/burger,/obj/machinery/light/small{pixel_y = 32},/turf/open/floor/plating/sidewalk/poor,/area/vtm/interior)
 "oDy" = (/obj/effect/decal/painting{pixel_y = 32},/obj/structure/chair/comfy/teal,/obj/effect/landmark/start{name = "Police Chief"},/turf/open/floor/plating/parquetry/rich,/area/vtm/interior/police)
@@ -7726,7 +7677,6 @@
 "pgX" = (/obj/machinery/light/small/red{dir = 8; pixel_x = 16},/turf/open/floor/plating/sidewalk,/area/vtm/cabaret)
 "pgZ" = (/obj/vehicle/ridden/wheelchair{dir = 8},/turf/open/floor/plating/vampbeach,/area/vtm)
 "phc" = (/turf/open/floor/plating/toilet,/area/vtm)
-"phi" = (/obj/fusebox,/obj/structure/chair/wood{dir = 8},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "phk" = (/obj/machinery/light{dir = 1},/obj/structure/chair{dir = 1},/turf/open/floor/plating/concrete,/area/vtm/interior/police)
 "phS" = (/obj/structure/table,/obj/item/drinkable_bloodpack,/obj/item/drinkable_bloodpack,/obj/item/drinkable_bloodpack,/obj/item/drinkable_bloodpack,/obj/item/drinkable_bloodpack,/obj/item/melee/vampirearms/katana,/obj/item/melee/vampirearms/knife,/obj/item/melee/vampirearms/knife,/turf/open/floor/plating/vampplating,/area/vtm/jazzclub)
 "phY" = (/obj/structure/chair/stool/bar,/turf/open/floor/plating/parquetry,/area/vtm/interior/laundromat)
@@ -7794,7 +7744,6 @@
 "pvH" = (/obj/structure/table/wood,/obj/structure/table/wood,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/mansion)
 "pvW" = (/obj/structure/chair/office{dir = 1},/obj/effect/landmark/start/camarillaagent,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "pwb" = (/obj/effect/decal/wallpaper/light,/obj/machinery/defibrillator_mount,/turf/closed/wall/vampwall/painted,/area/vtm/clinic)
-"pwd" = (/obj/structure/closet,/obj/item/clothing/suit/cheongsam_red,/obj/item/clothing/suit/cheongsam_blue,/obj/item/clothing/under/costume/geisha,/obj/item/clothing/under/dress/blacktango,/obj/item/clothing/under/dress/redeveninggown,/obj/item/clothing/suit/changshan_blue,/obj/item/clothing/suit/changshan_red,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "pww" = (/obj/structure/table/wood,/obj/vampire_computer,/turf/open/floor/plating/parquetry/old,/area/vtm/graveyard/interior)
 "pwC" = (/obj/effect/turf_decal/siding/white,/obj/structure/vampdoor/clinic{lock_id = "primToreador"; lockpick_difficulty = 14},/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "pwI" = (/obj/structure/weedshit,/obj/machinery/light/small/pink{pixel_y = 32},/turf/open/floor/plating/parquetry/old,/area/vtm/graveyard/interior)
@@ -7873,7 +7822,6 @@
 "pMF" = (/obj/structure/table/wood,/turf/open/floor/plating/parquetry,/area/vtm/clinic)
 "pMJ" = (/obj/structure/rack,/obj/item/instrument/piano_synth/headphones,/obj/item/instrument/piano_synth/headphones,/obj/item/instrument/piano_synth/headphones,/obj/item/instrument/piano_synth/headphones,/obj/machinery/light{dir = 4; light_color = "#6488EA"},/turf/open/floor/plating/vampplating/mono,/area/vtm/interior/techshop)
 "pMN" = (/obj/structure/table/wood,/obj/vampire_computer,/obj/machinery/light/small{pixel_y = 32},/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
-"pNa" = (/obj/structure/table,/turf/open/floor/carpet/red,/area/vtm/interior/laundromat)
 "pNp" = (/obj/structure/table/wood,/obj/item/storage/crayons,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "pNw" = (/obj/structure/table,/obj/machinery/mineral/equipment_vendor/fastfood/costumes,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
 "pNC" = (/obj/structure/table/wood/fancy/orange,/obj/item/storage/pill_bottle/estrogen{pixel_y = 6},/turf/open/floor/carpet/orange,/area/vtm/interior)
@@ -7910,7 +7858,6 @@
 "pUP" = (/obj/effect/decal/wallpaper/paper/darkred,/turf/closed/wall/vampwall/old,/area/vtm/interior/techshop)
 "pVc" = (/obj/structure/chair/wood{dir = 4; pixel_y = 4},/turf/open/floor/plating/vampdirt,/area/vtm/forest)
 "pVd" = (/obj/effect/decal/bordur{dir = 8},/obj/effect/landmark/npcability,/turf/open/floor/plating/sidewalk,/area/vtm/ghetto)
-"pVx" = (/obj/structure/table/wood,/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
 "pVT" = (/obj/item/storage/pill_bottle/happinesspsych,/obj/structure/mirror{pixel_y = 32},/obj/structure/sink{pixel_y = 16},/turf/open/floor/plating/toilet,/area/vtm/interior)
 "pVY" = (/obj/effect/turf_decal/siding/white{dir = 5},/obj/item/kirbyplants/random,/turf/open/floor/plating/granite/black,/area/vtm/interior)
 "pWj" = (/obj/effect/turf_decal/siding/white/corner{dir = 8},/obj/effect/decal/carpet,/turf/open/floor/carpet,/area/vtm/interior/bianchiBank)
@@ -8000,7 +7947,6 @@
 "qpc" = (/obj/structure/reagent_dispensers/cleaningfluid,/turf/open/floor/plating/concrete,/area/vtm/interior/vjanitor)
 "qpF" = (/obj/structure/railing{dir = 1; layer = 4; pixel_x = -4; pixel_y = 17},/turf/open/floor/plating/vampplating/mono,/area/vtm/camarilla)
 "qpK" = (/obj/structure/table/wood,/obj/item/storage/fancy/cigarettes/cigpack_cannabis,/obj/item/lighter,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
-"qpO" = (/obj/machinery/vending/boozeomat/all_access,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "qpP" = (/turf/open/floor/plating/sidewalk/old,/area/vtm/northbeach)
 "qql" = (/obj/effect/decal/cleanable/dirt,/obj/item/gas_can/full,/obj/effect/decal/cleanable/ash,/turf/open/floor/plating/vampdirt,/area/vtm/sewer)
 "qqm" = (/obj/machinery/shower,/obj/structure/curtain,/turf/open/floor/plating/toilet,/area/vtm/anarch)
@@ -8021,7 +7967,6 @@
 "qtk" = (/obj/structure/table/reinforced,/obj/item/melee/vampirearms/shovel,/obj/item/gun/ballistic/vampire/revolver,/turf/open/floor/plating/concrete,/area/vtm/graveyard/interior)
 "qto" = (/obj/structure/closet/crate/coffin,/obj/effect/turf_decal/siding/wood{dir = 6},/turf/open/floor/plating/vampwood,/area/vtm/theatre)
 "qtS" = (/obj/structure/closet/crate/bin,/turf/open/floor/carpet/green,/area/vtm/jazzclub)
-"qtT" = (/obj/item/kirbyplants/random,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "qtZ" = (/obj/effect/turf_decal/weather/dirt,/obj/effect/decal/pallet{pixel_x = 4; pixel_y = 4},/obj/structure/bed/maint{pixel_x = 21; pixel_y = 7},/turf/open/floor/plating/vampdirt,/area/vtm)
 "quh" = (/obj/effect/turf_decal/siding/white{dir = 4},/turf/open/floor/plating/toilet,/area/vtm/anarch)
 "quX" = (/obj/structure/chair/sofa/corp/left{dir = 8},/turf/open/floor/mineral/plastitanium,/area/vtm/cabaret)
@@ -8178,7 +8123,6 @@
 "qUX" = (/obj/structure/rack/tacobell/vertical,/obj/machinery/light/prince{pixel_y = 32},/turf/closed/wall/vampwall/painted/low,/area/vtm/interior/shop)
 "qVe" = (/obj/structure/vampfence/rich{pixel_y = 6},/turf/open/floor/plating/sidewalkalt,/area/vtm/forest)
 "qVf" = (/obj/effect/turf_decal/siding/white,/obj/structure/vampdoor/anarch{lockpick_difficulty = 13},/turf/open/floor/plating/sidewalk,/area/vtm/interior)
-"qVp" = (/obj/structure/closet/secure_closet/freezer,/obj/item/food/spaghetti/chowmein,/obj/item/food/spaghetti/chowmein,/obj/item/food/spaghetti/chowmein,/obj/item/food/spaghetti/chowmein,/obj/item/food/spaghetti/chowmein,/obj/item/food/meatbun,/obj/item/food/meatbun,/obj/item/food/meatbun,/obj/item/food/salad/ricepork,/obj/item/food/salad/ricepork,/obj/item/food/salad/ricepork,/obj/item/storage/box/donkpockets/donkpocketteriyaki,/obj/item/storage/box/donkpockets/donkpocketteriyaki,/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
 "qVv" = (/obj/structure/closet/cabinet,/obj/item/vampire_stake,/obj/item/clothing/suit/hooded/robes/darkred,/turf/open/floor/plating/parquetry,/area/vtm/interior/giovanni)
 "qVy" = (/obj/item/bailer,/turf/open/floor/plating/concrete,/area/vtm/anarch)
 "qVB" = (/obj/machinery/light/small{dir = 4; pixel_x = -16},/turf/open/floor/plating/concrete,/area/vtm/anarch)
@@ -8229,7 +8173,6 @@
 "rfG" = (/obj/structure/table/wood,/obj/item/flashlight/lamp/green,/turf/open/floor/plating/rough/cave,/area/vtm/interior)
 "rfJ" = (/obj/machinery/computer/stockexchange{density = 0; layer = 5},/turf/closed/wall/vampwall/painted/low,/area/vtm/interior/bianchiBank)
 "rfL" = (/obj/structure/table/wood,/obj/item/flashlight/lantern,/obj/machinery/light/small{dir = 4; pixel_x = -16},/turf/open/floor/plating/parquetry/old,/area/vtm/graveyard/interior)
-"rgd" = (/obj/structure/table/wood,/obj/item/gun/ballistic/automatic/vampire/glock19,/obj/item/ammo_box/magazine/glock9mm,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "rgi" = (/obj/effect/decal/bordur{dir = 8},/obj/effect/decal/bordur{dir = 1},/obj/effect/landmark/npcwall,/turf/open/floor/plating/vampplating/stone,/area/vtm/park)
 "rgB" = (/obj/structure/vampdoor/wood/old{lock_id = "mansion"},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/mansion)
 "rgH" = (/obj/machinery/light{pixel_y = 32},/obj/structure/closet/cardboard,/turf/open/floor/plating/vampplating/mono,/area/vtm/clinic)
@@ -8270,7 +8213,6 @@
 "rqz" = (/obj/machinery/light/blacklight{dir = 4},/obj/structure/chair/sofa/corp{dir = 8},/turf/open/floor/mineral/plastitanium,/area/vtm/cabaret)
 "rqA" = (/obj/effect/turf_decal/siding/white{icon_state = "siding_corner"},/turf/open/floor/plating/concrete,/area/vtm/interior/vjanitor)
 "rrj" = (/obj/machinery/light/small/red{dir = 8; pixel_x = 16},/turf/open/floor/plating/rust,/area/vtm/interior/strip)
-"rro" = (/obj/structure/table,/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
 "rrx" = (/obj/effect/turf_decal/siding/wideplating/dark{dir = 8},/obj/structure/musician/piano{icon_state = "piano"},/turf/open/floor/carpet/red,/area/vtm/jazzclub)
 "rrD" = (/obj/structure/closet,/obj/item/clothing/head/vampire/police,/obj/item/clothing/under/vampire/police,/obj/item/clothing/shoes/vampire/jackboots,/obj/machinery/light{pixel_y = 32},/obj/item/clothing/under/vampire/police,/obj/item/clothing/under/vampire/police,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/police)
 "rrJ" = (/obj/structure/chair/sofa/right,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
@@ -8286,7 +8228,6 @@
 "rtQ" = (/obj/structure/lamppost/sidewalk,/obj/effect/landmark/npcability,/turf/open/floor/plating/sidewalkalt,/area/vtm/pacificheights)
 "ruv" = (/obj/structure/chair{dir = 8},/turf/open/floor/plating/vampplating/mono,/area/vtm/clinic)
 "ruE" = (/turf/closed/wall/vampwall/painted/low/window,/area/vtm/interior)
-"ruI" = (/obj/structure/table/wood,/obj/item/clothing/head/kitty,/obj/item/clothing/head/kitty,/obj/structure/extinguisher_cabinet{pixel_y = 32},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "ruQ" = (/obj/structure/flora/ausbushes/fullgrass,/obj/structure/chair/sofa{dir = 8; pixel_x = 22; pixel_y = 9},/obj/structure/flora/ausbushes/pointybush{pixel_x = 13; pixel_y = -11},/turf/open/floor/plating/vampdirt,/area/vtm/park)
 "ruX" = (/obj/effect/decal/litter,/obj/structure/closet/cardboard,/turf/open/floor/plating/concrete,/area/vtm/supply)
 "rvn" = (/obj/effect/turf_decal/siding/white{dir = 8},/obj/structure/vampdoor/anarch{dir = 4},/turf/open/floor/plating/parquetry/old,/area/vtm/anarch)
@@ -8296,7 +8237,6 @@
 "rvD" = (/obj/structure/table,/obj/vampire_computer{owner = "Doctor"},/turf/closed/wall/vampwall/painted/low,/area/vtm/clinic)
 "rvW" = (/obj/effect/turf_decal/stripes/line{dir = 8},/obj/effect/turf_decal/stripes/line{dir = 1},/obj/structure/railing{dir = 1; layer = 4; pixel_y = 7},/obj/machinery/light/prince{pixel_y = 32},/turf/open/openspace,/area/vtm/interior/giovanni)
 "rvZ" = (/obj/item/clothing/head/vampire/skull,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/mansion)
-"rwh" = (/obj/structure/chair/wood{dir = 1},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "rwi" = (/obj/effect/turf_decal/siding/white/corner{dir = 8},/turf/open/floor/plating/vampplating/stone,/area/vtm/interior/bianchiBank)
 "rwH" = (/obj/effect/bump_teleporter{density = 0; id = 3; mouse_opacity = 0},/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "rwU" = (/obj/structure/table/wood,/obj/item/paper_bin{pixel_y = 6},/obj/item/pen/red,/obj/effect/turf_decal/siding/wideplating/dark{dir = 8},/obj/item/folder/blue,/obj/item/folder/yellow,/obj/item/folder/red,/obj/item/flashlight/lamp,/turf/open/floor/carpet/green,/area/vtm/prince)
@@ -8407,7 +8347,6 @@
 "rTV" = (/obj/effect/decal/rugs,/turf/open/floor/plating/rough,/area/vtm/graveyard/interior)
 "rUd" = (/obj/structure/railing{dir = 1; pixel_y = 8},/obj/machinery/light/warm{dir = 8},/turf/open/floor/plating/concrete,/area/vtm/interior/techshop)
 "rUj" = (/obj/effect/turf_decal/weather/dirt{dir = 4},/turf/open/floor/plating/vampdirt,/area/vtm/park)
-"rUy" = (/obj/structure/stairs/west,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "rUB" = (/obj/structure/chair/plastic,/turf/open/floor/plating/sidewalk,/area/vtm/financialdistrict)
 "rVk" = (/obj/effect/decal/pallet,/obj/structure/table/wood,/obj/item/flashlight/lantern{light_color = "#013220"; pixel_y = 8},/turf/open/floor/plating/vampdirt,/area/vtm/forest)
 "rVl" = (/obj/effect/decal/bordur,/obj/effect/decal/wallpaper,/turf/closed/wall/vampwall/painted,/area/vtm/interior/police)
@@ -8430,7 +8369,6 @@
 "rYk" = (/obj/structure/vampdoor{dir = 4},/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "rYH" = (/obj/item/food/fish/shark,/turf/open/water,/area/vtm/interior/bianchiBank)
 "rYK" = (/obj/structure/railing{dir = 1; layer = 4; pixel_y = 12},/obj/structure/stairs/east,/turf/open/floor/plating/sidewalk/poor,/area/vtm/ghetto)
-"rYN" = (/obj/structure/table,/obj/item/reagent_containers/food/condiment/soysauce,/obj/item/reagent_containers/food/condiment/saltshaker,/obj/item/reagent_containers/food/condiment/peppermill,/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
 "rYR" = (/obj/effect/bump_teleporter{id = 7; id_target = 8},/turf/open/floor/plasteel/stairs/right{dir = 1},/area/vtm/interior)
 "rYX" = (/turf/open/floor/plating/parquetry/old,/area/vtm/interior/vjanitor)
 "rZu" = (/obj/structure/table/wood,/obj/item/flashlight/lantern,/turf/open/floor/plating/parquetry/old,/area/vtm/graveyard/interior)
@@ -8441,7 +8379,6 @@
 "saf" = (/obj/structure/table,/turf/open/floor/carpet/red,/area/vtm/interior)
 "saj" = (/obj/structure/closet/crate,/obj/effect/decal/pallet,/obj/item/stack/rods,/obj/item/stack/rods,/obj/item/stack/rods,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "sal" = (/obj/structure/railing{layer = 4},/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/openspace,/area/vtm/interior/giovanni)
-"say" = (/obj/effect/decal/wallpaper/red,/obj/machinery/light/small,/turf/closed/wall/vampwall/market,/area/vtm/interior/laundromat)
 "sba" = (/obj/item/cigbutt,/turf/open/floor/plating/rough/cave,/area/vtm/sewer)
 "sbg" = (/obj/structure/table,/obj/structure/table/wood,/obj/effect/decal/wallpaper/gold/low,/obj/item/paper_bin{pixel_y = 6},/turf/closed/wall/vampwall/painted/low,/area/vtm/interior/bianchiBank)
 "sby" = (/obj/item/bouquet/sunflower,/obj/structure/flora/ausbushes/brflowers,/turf/open/floor/plating/vampdirt,/area/vtm/graveyard)
@@ -8499,7 +8436,6 @@
 "slk" = (/obj/structure/table/reinforced,/obj/item/melee/vampirearms/shovel,/obj/item/gun/ballistic/shotgun/vampire,/obj/structure/coclock,/turf/open/floor/plating/concrete,/area/vtm/graveyard/interior)
 "slq" = (/obj/effect/turf_decal/siding/white{dir = 1},/obj/structure/vampdoor/shop,/turf/open/floor/plating/sidewalk,/area/vtm/financialdistrict)
 "slC" = (/obj/structure/table/wood,/obj/item/reagent_containers/food/drinks/bottle/vampirewater,/obj/item/reagent_containers/food/drinks/coffee/vampire{pixel_x = 5; pixel_y = 10},/obj/item/reagent_containers/food/drinks/coffee/vampire{pixel_y = 10},/turf/closed/wall/vampwall/painted/low,/area/vtm/interior/bianchiBank)
-"smm" = (/obj/structure/extinguisher_cabinet{pixel_y = 32},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "smn" = (/obj/structure/railing{dir = 1; pixel_y = 16},/obj/structure/chair{dir = 8},/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "smO" = (/obj/effect/turf_decal/siding/white{dir = 1},/obj/structure/railing{dir = 1; layer = 4; pixel_y = 12},/turf/open/floor/plating/vampplating/mono,/area/vtm/clinic)
 "snh" = (/obj/structure/railing,/obj/effect/decal/shadow{pixel_y = -32},/obj/structure/window/reinforced,/obj/structure/curtain/cloth/fancy,/turf/open/floor/plating/vampplating/mono,/area/vtm/camarilla)
@@ -8528,7 +8464,6 @@
 "sqZ" = (/obj/structure/table,/obj/item/melee/vampirearms/knife,/obj/item/melee/vampirearms/knife,/obj/item/melee/vampirearms/knife,/obj/item/melee/vampirearms/baseball,/obj/item/melee/vampirearms/baseball,/obj/item/melee/vampirearms/baseball,/turf/open/floor/plating/concrete,/area/vtm/anarch)
 "sra" = (/obj/structure/chair/sofa{dir = 8},/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "srw" = (/obj/structure/cable/layer1,/turf/open/floor/circuit,/area/vtm/interior/glasswalker)
-"srG" = (/obj/structure/table/wood,/obj/item/clothing/head/rabbitears{pixel_x = 1},/obj/item/clothing/head/rabbitears,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "srK" = (/obj/structure/vampdoor/reinf{lock_id = "primBrujah"; locked = 1; lockpick_difficulty = 14},/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "srP" = (/obj/machinery/light{pixel_y = 32},/obj/structure/chair/sofa/corp{pixel_x = 7; pixel_y = 12},/mob/living/carbon/human/npc/incel,/turf/open/floor/mineral/plastitanium/red,/area/vtm/jazzclub)
 "ssr" = (/obj/structure/vampdoor/strip{dir = 8; lockpick_difficulty = 16},/turf/open/floor/plating/vampcanal,/area/vtm/sewer)
@@ -8544,7 +8479,6 @@
 "suC" = (/obj/structure/lattice/pentex,/obj/structure/closet/crate/large,/turf/open/openspace,/area/vtm/interior/wyrm_corrupted)
 "svp" = (/obj/effect/decal/bordur,/obj/effect/decal/bordur{dir = 8},/turf/open/floor/plating/sidewalk/old,/area/vtm/pacificheights)
 "svz" = (/obj/structure/chair/wood{dir = 4; pixel_y = 4},/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
-"svE" = (/obj/machinery/light/small{dir = 1},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "swl" = (/obj/effect/turf_decal/siding/white{dir = 1},/turf/open/floor/plasteel/stairs/medium,/area/vtm/sewer)
 "swu" = (/obj/structure/chair/wood/wings{dir = 8; pixel_y = 6},/turf/open/floor/plating/parquetry,/area/vtm/interior/giovanni)
 "swy" = (/obj/structure/railing{dir = 1; pixel_y = 12},/obj/structure/fluff/hedge,/turf/open/floor/plating/sidewalk/poor,/area/vtm)
@@ -8760,7 +8694,6 @@
 "tjV" = (/obj/structure/trashbag{pixel_x = 7; pixel_y = 6},/turf/open/floor/plating/rough/cave,/area/vtm/interior)
 "tke" = (/obj/effect/decal/bordur,/obj/effect/decal/bordur{dir = 1},/turf/open/floor/plating/sidewalk/rich,/area/vtm/pacificheights)
 "tkh" = (/obj/structure/railing{dir = 4; layer = 4},/turf/open/floor/plating/vampgrass,/area/vtm/interior/bianchiBank)
-"tkC" = (/obj/effect/decal/wallpaper/red,/obj/machinery/light,/turf/closed/wall/vampwall/market,/area/vtm/interior/laundromat)
 "tkF" = (/obj/structure/chair/sofa/corp/right,/turf/open/floor/carpet/green,/area/vtm/interior)
 "tlc" = (/obj/structure/chair/sofa/corp/right{dir = 1},/turf/open/floor/plating/vampcarpet,/area/vtm/interior/techshop)
 "tlu" = (/obj/structure/chair/sofa/corp/left,/obj/structure/coclock,/obj/machinery/light{pixel_y = 32},/turf/open/floor/carpet/green,/area/vtm/interior)
@@ -8843,7 +8776,6 @@
 "tDB" = (/obj/structure/vampfence/rich{dir = 4; pixel_y = 6},/turf/open/floor/plating/vampgrass,/area/vtm/pacificheights)
 "tDQ" = (/obj/structure/stalagmite,/turf/open/floor/plating/rough/cave,/area/vtm/interior)
 "tDW" = (/obj/structure/lamppost/one{dir = 8},/obj/structure/trafficlight,/obj/effect/landmark/npcability,/turf/open/floor/plating/sidewalk/rich,/area/vtm/financialdistrict)
-"tEw" = (/obj/structure/closet/crate/bin,/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
 "tFa" = (/obj/structure/closet/cardboard,/obj/item/clothing/suit/vampire/noddist,/obj/item/clothing/head/vampire/noddist_mask,/obj/item/vampirebook/noddist,/obj/item/card/id/noddist,/obj/item/clothing/suit/chaplainsuit/holidaypriest,/obj/item/clothing/mask/vampire/venetian_mask/scary,/obj/item/clothing/suit/hooded/robes/black,/turf/open/floor/plating/rough,/area/vtm/sewer)
 "tFe" = (/obj/structure/closet/crate,/turf/open/floor/plating/rough,/area/vtm/interior/vjanitor)
 "tFm" = (/obj/graffiti/camarilla,/turf/open/floor/plating/asphalt,/area/vtm/graveyard)
@@ -9016,7 +8948,6 @@
 "upz" = (/obj/effect/turf_decal/siding/wideplating/dark,/turf/open/floor/plating/vampcarpet,/area/vtm/interior/techshop)
 "upD" = (/obj/structure/railing,/obj/structure/railing{dir = 1; pixel_y = 3},/turf/open/openspace,/area/vtm/interior)
 "uqi" = (/obj/structure/vampipe{icon_state = "piping38"},/turf/open/floor/plating/rough,/area/vtm/sewer)
-"uqk" = (/obj/effect/turf_decal/siding/white{dir = 1},/obj/structure/vampdoor/simple{lock_id = "triad"; lockpick_difficulty = 9; locked = 1},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "uqm" = (/obj/structure/vampdoor/police{lockpick_difficulty = 12},/obj/effect/turf_decal/siding/white{dir = 1},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/police)
 "uqr" = (/obj/machinery/light/small{dir = 1},/obj/structure/rack,/obj/item/stock_parts/cell/high,/obj/item/stock_parts/cell/high,/obj/item/stock_parts/cell/high,/obj/item/stock_parts/cell/high,/obj/item/stock_parts/cell/high,/obj/item/stock_parts/cell/high,/obj/item/stock_parts/cell,/obj/item/stock_parts/cell,/obj/item/stock_parts/cell,/obj/item/stock_parts/cell,/obj/item/stock_parts/cell,/obj/item/stock_parts/cell,/obj/item/stock_parts/cell,/obj/item/stock_parts/cell,/obj/item/stock_parts/cell,/turf/open/floor/plating/gummaguts,/area/vtm/interior/techshop)
 "uqw" = (/obj/structure/table,/obj/item/clothing/suit/vampire/labcoat,/obj/item/clothing/suit/vampire/labcoat,/obj/item/clothing/suit/vampire/labcoat,/turf/open/floor/plating/vampplating/mono,/area/vtm/clinic)
@@ -9042,7 +8973,6 @@
 "uuE" = (/obj/effect/turf_decal/siding/wood{dir = 6},/obj/item/stack/rods,/turf/open/floor/plating/sidewalk/poor,/area/vtm)
 "uuN" = (/obj/structure/chair/office{dir = 4},/turf/open/floor/plating/concrete,/area/vtm/sewer)
 "uuO" = (/obj/manholeup,/turf/open/floor/plating/vampdirt,/area/vtm/pacificheights)
-"uuQ" = (/obj/effect/decal/wallpaper/red/low,/turf/closed/wall/vampwall/market/low/window/reinforced,/area/vtm/interior/laundromat)
 "uuX" = (/turf/open/floor/carpet,/area/vtm/pacificheights)
 "uvc" = (/obj/structure/vampdoor/shop,/obj/effect/turf_decal/siding/white{dir = 1},/turf/open/floor/plating/sidewalk,/area/vtm/interior/shop)
 "uvk" = (/obj/effect/turf_decal/weather/dirt{dir = 9},/mob/living/carbon/human/npc/hobo,/turf/open/floor/plating/vampdirt,/area/vtm)
@@ -9057,7 +8987,6 @@
 "uwE" = (/obj/structure/vampdoor/simple{dir = 4; lock_id = "weedfarm"; locked = 1; lockpick_difficulty = 6},/turf/open/floor/plating/concrete,/area/vtm/interior)
 "uwP" = (/obj/structure/closet/cardboard,/turf/open/floor/plating/vampbeach,/area/vtm/northbeach)
 "uwU" = (/obj/item/arcane_tome{desc = "The great Electrodyne Engineer Nikola Tesla. He struck out against the Ivory Tower with his genius, but was destroyed by the powers that be."; name = "arcane tome of Tesla"},/turf/open/floor/plating/rough/cave,/area/vtm/interior)
-"uxb" = (/obj/structure/closet/secure_closet/freezer,/obj/item/food/meat/slab/chicken,/obj/item/food/meat/slab/chicken,/obj/item/food/meat/slab/chicken,/obj/item/food/meat/slab,/obj/item/food/meat/slab,/obj/item/food/meat/slab,/obj/item/food/meat/slab,/obj/item/food/meat/slab/chicken,/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
 "uxc" = (/obj/effect/turf_decal/weather/dirt,/obj/effect/turf_decal/weather/dirt{dir = 1},/mob/living/carbon/human/npc/hobo,/turf/open/floor/plating/vampdirt,/area/vtm)
 "uxj" = (/obj/structure/closet/crate/freezer/blood,/obj/item/drinkable_bloodpack,/obj/item/drinkable_bloodpack,/obj/item/drinkable_bloodpack,/obj/item/drinkable_bloodpack,/obj/item/drinkable_bloodpack,/obj/item/drinkable_bloodpack,/obj/item/drinkable_bloodpack,/obj/item/organ/ears,/obj/item/organ/eyes,/obj/item/organ/tongue,/obj/item/organ/heart,/obj/item/organ/heart,/obj/item/organ/lungs,/obj/item/organ/stomach,/obj/item/organ/stomach,/turf/open/floor/plating/vampplating/mono,/area/vtm/clinic)
 "uxM" = (/turf/open/floor/plating/concrete,/area/vtm/interior/wyrm_corrupted)
@@ -9403,7 +9332,6 @@
 "vPi" = (/obj/machinery/light/small/red{dir = 8; pixel_x = 16},/turf/open/floor/plating/toilet,/area/vtm/sewer)
 "vPr" = (/obj/effect/landmark/npcability,/obj/structure/roadsign/busstop,/turf/open/floor/plating/sidewalk/rich,/area/vtm/financialdistrict)
 "vPH" = (/obj/vampire_car/rand,/turf/open/floor/plating/sidewalk,/area/vtm/chinatown)
-"vPJ" = (/obj/manholedown,/obj/item/kirbyplants/random,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "vPK" = (/obj/structure/coclock,/obj/structure/table,/turf/open/floor/plating/parquetry/old,/area/vtm/anarch)
 "vPP" = (/obj/effect/decal/litter,/obj/structure/closet/cardboard,/turf/open/floor/plating/sidewalk/poor,/area/vtm/fishermanswharf)
 "vQb" = (/obj/structure/railing{dir = 8},/turf/open/floor/plating/sidewalk/poor,/area/vtm/interior/police)
@@ -9423,7 +9351,7 @@
 "vSB" = (/obj/structure/small_vamprocks,/turf/open/floor/plating/vampgrass,/area/vtm/interior/bianchiBank)
 "vSR" = (/obj/effect/decal/trash{icon_state = "trash8"},/obj/effect/decal/wallpaper/stone,/turf/closed/wall/vampwall/junk/alt,/area/vtm/interior)
 "vTc" = (/obj/structure/table/wood,/obj/item/vamp/keys/hack,/obj/item/vamp/keys/hack,/obj/item/vamp/keys{accesslocks = list("wolftech"); color = "#466a72"; name = "Tech Store keys"},/turf/open/floor/plating/vampcarpet,/area/vtm/interior/techshop)
-"vTe" = (/obj/item/gun/ballistic/automatic/vampire/aug{desc = "A specialty Steyr AUG, a holdover from your days in the SWAT unit. For when the freaks come out to riot, you'll be ready."; masquerade_violating = 1; name = "SFPD Captain's AUG"},/obj/structure/closet/cabinet,/obj/item/ammo_box/vampire/c556,/obj/item/gun/ballistic/vampire/revolver,/obj/item/ammo_box/vampire/c44,/obj/item/storage/box/teargas,/obj/item/melee/classic_baton/telescopic,/obj/item/storage/fancy/hardcase,/obj/item/ammo_box/magazine/vampaug,/obj/item/ammo_box/magazine/vampaug,/turf/open/floor/carpet/blue,/area/vtm/interior/police)
+"vTe" = (/obj/item/gun/ballistic/automatic/vampire/aug{desc = "A specialty Steyr AUG, a holdover from your days in the SWAT unit. For when the freaks come out to riot, you'll be ready."; masquerade_violating = 1; name = "SFPD Captain's AUG"},/obj/structure/closet/cabinet,/obj/item/ammo_box/vampire/c556,/obj/item/ammo_box/magazine/vamp556,/obj/item/ammo_box/magazine/vamp556,/obj/item/gun/ballistic/vampire/revolver,/obj/item/ammo_box/vampire/c44,/obj/item/storage/box/teargas,/obj/item/melee/classic_baton/telescopic,/obj/item/storage/fancy/hardcase,/turf/open/floor/carpet/blue,/area/vtm/interior/police)
 "vTl" = (/obj/item/stack/dollar/hundred,/turf/open/floor/plating/rough/cave,/area/vtm/interior)
 "vTx" = (/obj/structure/reagent_dispensers/water_cooler,/turf/open/floor/plating/concrete,/area/vtm/interior/police)
 "vTQ" = (/obj/structure/railing{dir = 1; pixel_y = 12},/obj/effect/turf_decal/weather/dirt,/obj/structure/vamptree,/turf/open/floor/plating/vampgrass,/area/vtm/interior/bianchiBank)
@@ -9464,7 +9392,6 @@
 "wbH" = (/obj/structure/vampdoor/shop{dir = 4; lock_id = "bankboss"; locked = 1; lockpick_difficulty = 23; name = "bianchi executive office door"},/obj/effect/turf_decal/siding/white{dir = 4},/turf/open/floor/plating/vampplating,/area/vtm/interior/bianchiBank)
 "wch" = (/obj/structure/chair/sofa/corp/right,/turf/open/floor/mineral/plastitanium,/area/vtm/cabaret)
 "wci" = (/obj/effect/decal/bordur{dir = 4},/turf/open/floor/plating/roofwalk,/area/vtm/park)
-"wcv" = (/obj/structure/chair/wood{dir = 8},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "wcx" = (/obj/machinery/light/small{dir = 4; pixel_x = -16},/obj/structure/chair/wood{dir = 4},/obj/effect/landmark/start/camarillaagent,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "wcL" = (/obj/structure/railing{dir = 1; layer = 2.5; pixel_y = 12},/turf/open/floor/plating/parquetry,/area/vtm/interior/bianchiBank)
 "wcQ" = (/obj/structure/table,/obj/effect/decal/cleanable/dirt/dust,/obj/item/clothing/head/helmet/chaplain/cage{pixel_y = 10},/turf/open/floor/carpet/red,/area/vtm/interior)
@@ -9535,7 +9462,6 @@
 "woW" = (/obj/structure/table/wood,/obj/item/gun/ballistic/automatic/vampire/m1911,/obj/item/ammo_box/vampire/c45acp,/obj/item/ammo_box/magazine/vamp45acp,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/laundromat)
 "wpC" = (/obj/effect/decal/graffiti,/turf/open/floor/plating/vampdirt,/area/vtm/financialdistrict)
 "wpM" = (/obj/effect/decal/graffiti,/turf/open/floor/plating/sidewalk/old,/area/vtm/park)
-"wpO" = (/obj/machinery/light/small{dir = 8; pixel_x = 16},/obj/structure/toilet{dir = 8},/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
 "wpX" = (/obj/effect/decal/bordur{dir = 4},/obj/effect/decal/bordur{dir = 1},/obj/effect/decal/shadow{icon_state = "shadow-alt"; pixel_y = 32},/turf/open/floor/plating/roofwalk,/area/vtm)
 "wqe" = (/obj/structure/railing{dir = 1; pixel_y = 12},/obj/effect/turf_decal/siding/white{dir = 1},/obj/effect/turf_decal/siding/white{dir = 8},/obj/structure/fluff/hedge,/turf/open/floor/plating/vampplating/mono,/area/vtm/prince)
 "wqr" = (/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plating/toilet,/area/vtm/interior)
@@ -9637,7 +9563,6 @@
 "wJe" = (/obj/structure/rack,/obj/item/clothing/suit/vampire/jacket,/obj/item/clothing/suit/vampire/jacket,/turf/open/floor/plating/concrete,/area/vtm/anarch)
 "wJo" = (/obj/structure/closet/cardboard,/turf/open/floor/carpet,/area/vtm/hotel)
 "wJs" = (/obj/machinery/washing_machine,/turf/open/floor/plating/toilet,/area/vtm)
-"wKe" = (/obj/structure/chair/sofa/right{dir = 1},/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
 "wKf" = (/obj/effect/turf_decal/siding/white{dir = 8},/obj/structure/vampdoor/simple{dir = 8},/turf/open/floor/plating/parquetry/old,/area/vtm/unionsquare)
 "wKg" = (/obj/effect/decal/bordur,/obj/effect/decal/bordur{dir = 8},/obj/structure/chair/plastic{dir = 4},/turf/open/floor/plating/roofwalk,/area/vtm/park)
 "wKz" = (/obj/fusebox,/turf/open/floor/plating/parquetry/old,/area/vtm/church)
@@ -9802,7 +9727,6 @@
 "xql" = (/obj/effect/decal/bordur,/obj/effect/decal/bordur{dir = 8},/turf/open/floor/plating/sidewalk/rich,/area/vtm/unionsquare)
 "xqn" = (/obj/structure/vampstatue{pixel_x = 16; pixel_y = 16},/obj/effect/landmark/npcwall,/turf/open/floor/plating/concrete,/area/vtm/park)
 "xqp" = (/obj/effect/decal/graffiti,/turf/open/floor/plating/rough,/area/vtm/interior/glasswalker)
-"xqB" = (/obj/structure/chair/sofa{dir = 1},/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
 "xqC" = (/obj/structure/stairs/north,/turf/open/floor/carpet,/area/vtm/interior/bianchiBank)
 "xqK" = (/obj/machinery/light{dir = 4},/mob/living/carbon/human/npc/guard,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
 "xrd" = (/obj/item/flashlight/lantern,/turf/open/floor/plating/concrete,/area/vtm/graveyard/interior)
@@ -9827,7 +9751,6 @@
 "xuA" = (/obj/structure/closet/crate/large,/obj/item/vtm_artifact/rand,/turf/open/floor/plating/rough,/area/vtm/interior/mansion)
 "xvd" = (/obj/structure/railing{pixel_y = -1},/obj/structure/chair/wood{dir = 4},/turf/open/floor/plating/sidewalk/poor,/area/vtm/financialdistrict)
 "xvG" = (/obj/effect/turf_decal/siding/white/corner{dir = 4},/turf/open/floor/plating/vampplating/stone,/area/vtm/interior/bianchiBank)
-"xvL" = (/obj/structure/chair/sofa/left{dir = 1},/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
 "xwq" = (/obj/structure/railing{pixel_y = -1},/obj/structure/table/wood,/turf/open/floor/plating/sidewalk/poor,/area/vtm/financialdistrict)
 "xwt" = (/obj/effect/decal/bordur{dir = 1},/obj/effect/landmark/npcability,/turf/open/floor/plating/sidewalk,/area/vtm/unionsquare)
 "xww" = (/obj/effect/turf_decal/weather/dirt{dir = 8},/turf/open/floor/plating/rough/cave,/area/vtm/interior)
@@ -9876,7 +9799,6 @@
 "xHA" = (/obj/structure/closet/crate/large,/turf/open/floor/plating/vampgrass,/area/vtm/park)
 "xHC" = (/obj/structure/sign/poster/contraband/random,/turf/closed/wall/vampwall/rich/old,/area/vtm/cabaret)
 "xHK" = (/obj/effect/decal/rugs,/obj/structure/lamppost/sidewalk,/turf/open/floor/plating/vampdirt,/area/vtm/graveyard)
-"xHP" = (/obj/structure/table,/obj/underplate/stuff{pixel_y = 8},/turf/open/floor/plating/toilet,/area/vtm/interior/laundromat)
 "xIf" = (/obj/structure/mirror{icon_state = "mirror_broke"; pixel_y = 32},/obj/structure/sink{pixel_y = 12},/turf/open/floor/plating/toilet,/area/vtm/interior/police)
 "xIC" = (/obj/effect/turf_decal/siding/white{dir = 4},/obj/structure/vampdoor/glass{dir = 8},/turf/open/floor/plating/sidewalk/poor,/area/vtm/anarch)
 "xIK" = (/obj/effect/decal/pallet,/obj/structure/closet/crate,/obj/item/reagent_containers/food/drinks/beer/vampire/blue_stripe,/obj/item/reagent_containers/food/drinks/beer/vampire/blue_stripe,/obj/item/reagent_containers/food/drinks/beer/vampire/blue_stripe,/obj/item/reagent_containers/food/drinks/beer/vampire/blue_stripe,/obj/item/reagent_containers/food/drinks/beer/vampire/blue_stripe,/turf/open/floor/plating/concrete,/area/vtm/pacificheights)
@@ -9905,7 +9827,6 @@
 "xMf" = (/obj/structure/vampdoor/wood{lock_id = "banuhaqim"; lockpick_difficulty = 16},/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "xMr" = (/obj/structure/window/reinforced/indestructable{alpha = 0},/obj/structure/window/reinforced/indestructable{alpha = 0; dir = 4},/obj/structure/window/reinforced/indestructable{alpha = 0; dir = 1},/obj/effect/turf_decal/siding/white{dir = 10},/obj/structure/window/reinforced/indestructable{alpha = 0; dir = 8},/turf/open/floor/plating/rough,/area/vtm/financialdistrict)
 "xMy" = (/obj/effect/decal/bordur{dir = 1},/obj/effect/decal/bordur,/turf/open/floor/plating/sidewalk/old,/area/vtm/pacificheights)
-"xNe" = (/obj/structure/curtain/cloth/fancy,/turf/open/floor/plating/concrete,/area/vtm/interior/laundromat)
 "xNm" = (/obj/structure/vampdoor/simple{dir = 8},/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "xNt" = (/turf/open/floor/plating/sidewalk/rich,/area/vtm/interior)
 "xNv" = (/obj/effect/turf_decal/siding/white{dir = 4; icon_state = "siding_corner"},/turf/open/openspace,/area/vtm/camarilla)
@@ -10460,21 +10381,21 @@ aiBaiGwWEwWEwWEwWEwWEwWEwWEwWEbdmbdtbdmbdmbdmbdmbdmbdmbdmbdmbdmbdmbdObdmbdmbdmbd
 aizaizaizaizaizaizaizaizaizaizbdRksbbdRbdSbdRbdRbdRbdRbdRbdRbdRbdRbdTbdmbdmbdmbdVbdWbdXbdYbdWbdWbdWbdWbdWbdWbdWbdWbdWdXUxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAbdZxFAxFAepRdyXbdmbdUbdmkOWfZFbgObgObgObgObgObgOdpwdpwdpwdpwdpwdpwdpwdpwdpwdpwdpwdpwuFZrAOdpwdpwdpwdpwuNCbgObgObgObgObgObgObgObgObgObgObgObgObgObgObgObgObgObgObvaecnbgObgOgaVecnecnbgObgObgOgaVbgObgObgObgObgObgObgObgObgObgObgObgObgObgObgOqbuoJpaGvaGvaGvaGvaGvbedxuzbefbefbefbefbefbefbefbefbefbefbefbefbefbefbefbefbefbefbefbefbefbefbefbefbefePXqFmbdxoXKbdxbdxrGVbefbefbefbefbefbegbefbefbefbefbefbefbefbefbefbefePXbdxbdxoXKbdxbdxrGVbefbefbefbefbefxuzbefbefbefbefbefbeenCfbefbefbefbefbefbefbefbefbefbefbefbefbefbefbefbefbefbefbefbefbefbefaizaizaizaizaizaizaizaizaizaiz
 aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehjrcldxbehbehbehbehbehbehbeidyIjluvbIbdmbdmbdmxKUbelchMbdibdibdibdibdibdibembdibdibdiycsboTboTboTiGnboTboTboTboTboTboTboTboTiGnboTboTgwtkLZgwtboTboTboTiGnboTboTboTboTboTboTboTgwtbIUsHqbdmbdUbdmeGibIVjuKxppqhJqhJqhJqhJeTaeTaeTabereTaeTaeTawWRbeswWReTawWRlqUwWReTabeubevvIjwvfxppqhJqhJqhJqhJqhJqhJgSiqhJqhJqhJqhJqhJgSiqhJqhJqhJqhJqhJqhJqhJxppjuKxppqhJqhJqhJxppvyvxppqhJgSiqhJqhJqhJqhJnUOqhJgSiqhJqhJqhJeuGxppsVQhaxaGpaGpaGpaGpaGpbexeDMsHhbeAbezbezbezbeybezbeBbeCbezbezbezsHhbJasHhbeBbezbezbezbezbezbezbezbeBbezmrbbefbefbefbefbefcsqbezsHhbJasHhbezbeDbeEbIZbeGbezsHhbJasHhbezbeBbezmrbbefbefbefbefbefcsqbezbezbezbeznmSbJayakbeIbezbezbeHsHhbJasHhbezbezbezbezbezbezbezbezbezsHhbJabezbezbezbezbezbezbezbezbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
 aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehldxbehaaBaaDaaDaaDaaDaaDaaBbehldxbekbdmbdmbdmbcMbeJbeKbeLbeLbeLbeLbeMbeLbeLbeKbeLbeMbeLbeNbeLbeLbeKbeKbeLbeObeLbeNbeKbeLbeLbeLbeMbeLbeLqwEbeLaIRaISaISaISaISaISaIRaISaISaISaISaIRhFibePbdmbdUbdmgdgqhJxppbeQigOqhJbeRqhJeTaeTabeSbeTbeTbeTbeUeTawWReTaeNQbeTbeTbeTbeTbeTbeWeTaeTabgDslcslcslcslcbgDjdcjdcjdcjdcgIujdcjLLjLLjdcjLLjLLjdcgIujdcjdcvgbjdcbgDqhJqhJaOpbeYbeZbeZbeYbeZbeZbeYbeXbeYbeZbeZbeYbeZbeZbeYaOpvLfbfawCQaGvaGvaGwaGvaGvbfcbfdbeHbezbezbezbezbezbezbezbezbezbezbezbezbezbfebezbezbezbezbezbffbfgbezbezbezbezbezbezbezbezbezbezbezbezlaYbezbezbfhbfibfjbfkbezbezbezbezbezbezbezbezbezbezbezbezbezbezbezbezbezbeHbezbezbezbezbezbezbezbeznmSbezbfebezbezbezbezbezbezbezbflbezsHhbezbezbezbezbezbezbezbezbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbfmbehaaBaFHatzajDajDaAhaaBbehbehbekbdmbdmbdmbcMbcKbeObeLbeMbeNbeObeKbeLbeKbeLbeLbeLbeLbeLbeLbeObeLbeMbKVbeKbeNbeKbeLbeLbeLbeMbeLbeObeLbeLbeNaIRariarbaJebfnexsaJfaqmaHEardaJgaJfbhSbhUbdmbdUbdmgdgqhJqhJqhJqhJqhJqhJqhJeTaeTabfobfpaNfbfrpCbbebbebbebdfjaNfbfvbfwbfwbfxbfyeTaeTabgDfWopbRoYhqKhbgDsJbuHFscqlARxPMqGbikbrrxgSujqweILsrPbNVgWOqwMursvDCbgDqhJqhJaOpaHnaAJaoyaHoaoyaAJaoyaoyaoyaAJaoyaHoaoyaAJaqgaOpqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsbfzaktaktbfzqVfbfzajsaktbfAbfAajsbezbezbhubhucHcbhubhubhubhucHcbhubhubgLbgLbgLbgLbgLbhubgLbhubfBbfBbfCbfDbfEbfFbfGbfHbfDbfIbfBbfBbgsbjibjibjiihCbjibjibjibgsbezbezbezbezbezajsbfzatNbfzbfzbfzajsbezbezbezbezamCamDamDamDatNamDamDamDamCbezbezatLbfJbfJatNbfJbfJatLbezbfKaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbehaaBajDajDajDajDangaaBbehbehbekbdmbdmbdmbcMbcKbeMbeLbfLbfLbfMbfMbfMbfNbfMbfMbfLbfMbfNbfMbfMbfMbfMbfMbfLbfLbfObfObfMbfLbfNbKWbfMbfObfObfLaJfaoyaoyaoybfPaoyaJfaqmbfuaqmaqmaJfbhSbePbdmbdUbdmgdgqhJrLrqhJqhJuKeqhJqhJeTaeTabfobfwbfwbfwbfQbeqbeqbeqbftbfwbfwbfwaNfbfvbfyeTaeTabgDgXLwoowooxsybgDuRweXEuRwlARvVwnifoFbuQMpJyncyoFbgQEiZBursdQoursvDCbgDqhJqhJaOpaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaOpqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsalOpTKpMNbJtajDaufbfAvkFajSajRajsbezbezbhumDYblffyublfblfblfblfblflGryezhiKyezoCByezbhuhlHbhubfTbfUbfVbfWbfWbfWbfWbfWbfWbfXifIbfYbgsbsQmALqcPhWAitymALhvGbgsbezbezbezbezbezajsamnajDaFIamsalOajsbezbezbezbezamCalOajDatOajDangajDamnamCbezbezatLajDangajDatOajDatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbehaaBajDajDalOajDajDaKKbehbehbekbdmbdmbdmbcMbcKbeMbeLbfMbfMbfNbKXbKYbfMbfLbfLbfMbfMbfMbfLbfMbfObfObfMbfMbfNbfMbfMbfMbfLbfObfObKXbfMbfNbfMaJfaoyaoyaoyaoyaJPaJfaJfbfqaJfaJfaJfbhSbhUbdmbdUbdmgdgqhJqhJqhJqhJqhJqhJqhJlYdeTabfobfxbfwbfwbgcbeqbeqbeqbftbfwbfwbgdbfwbfwbfyeTaeTabgDwoowooizGwoojdcvoHuRwfbYmiZursursursursursursursursursursursdSKbgebgDqhJqhJaOpaBeaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaDraOpqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsamqajDujzalOajDajDbJyajOaQGbgfajsbezbezbhuqVpblfkEqfXUrYNbmxblfdOLbhuyezsayuuQmJZuuQsayyezbhubggbfUbfVbfWbfWbfWbfWbfWbfWghXbiWbfUbgstQcmALmALmALmALmALcgUbgsbezbezvPHbezbezajsajDajDajDajDamqajsjigbghbezbezamCalOajDajDajDajDamEamEamCbezbezatLaqAamEajDajDanhatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbgibgjaaBaombgkbglajDajDaaBbehbehbekbdmbdmbdmbcMbcKbeLbeKbfMbeLbKZbeKbeLbeLbeKbeLbeLbeMbeLbeNbeLbeLbeLbeLbeObeLbeKbeLbeLbeLbeLbeLbKZbeObeLbeLaJfaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaIRbhSbePbdmbdUbdmbgmqhJqhJqhJqhJqhJqhJqhJeTaeTabfobgnaNfbfwbfQbeqbeqbeqbftbfxaNfbfxbgnaNfbfyeTaeTabgDgwBxRjhjMwooaILfbYfbYfbYlARursjdcjdcsVftRrkgmjdcbgDfoovLxvZriCtcYxbgDqhJqhJaOpaoyaAJaoyaAJaoyaoBaBvaoYaoBaoBaoyaAJaoyaAJaoyaOpqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsavuajDajDbJeajDamZajsajOaQGaQHajsbezbezbhuuxbblfrrorrorrorroblfxHPbhujBwqtTyezyezyezvPJnJAbhubggbfUbfVbfWbfWbfWbfWbfWbfWbfXbfUbfUiwGmALpXfsFQfiysXAmALcgebgsbezbezbezbezbfKajsamEamEajDajDamrajsbezbezbezbfKamCavuajDajDajDajDalOaLLamCbezcqFatLalOanqajDajDamratLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbgtaaBapoanOanOajDanhaaBbehbehbekbdmbdmbdmbcMbcKbeKbeLbfMbeMbeKbeLbeLbeLbeKbeLbeLbeLbeLbeLbeLbeMbeLbeLbeNbeNbeLbeLbeLbeKbeLbeKbeKbeLbeNbeNaJfaoyaoyaoyaoyaoyaoyaoyaoyaoyaoybgubhSbhUbdmbdUbdmgdgqhJqhJqhJqhJbgvqhJqhJeTaeTabfobfvbfwbfwbfQbeqbeqbeqbftbgnbfwbfwbfvbfpbfyeTaeTabgDcBrcoWwoowoobgDfbYfbYfbYlARursdSKnNtmAfmAfmAfwrmbgDdOXjRsjRswYUqtSbgDqhJqhJaOpaoyaoyaoyaoyaoyapAaoyavraoyapAaoyaoyaoyaoyaoyaOpqhJbgwwCQaGvaGvaGwaGvaGvbfcbeybezajswqKajDajDajDajDkNQajsapnbfAbfAajsbezbezhkGblfblfblfblfblfblfblfkwKbhurUyyezyezqIXyezyezyezbhubggbfUbfVbfWbfWbfWbfWbfWbfWbfXbfUbjBbgsmALmALmALmALmALmALmALbgsbezbezbezbezcqFajsalOanqajDajDapIajsbezbezbezbezamCamqajDajDajDajDalOalOamCbezcqFatLannannajDajDamqatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbgyaaBbgzanOanOajDajDaqibehbehbekbdmbdmbdmbcMbcKbeKbeLbfMbeLbeLhxKxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAaIRaoyaoyaLbaoyaoyaoyaoyaLbaoyaoyaIRbhSbePbdmbdUbdmgdgqhJqhJqhJqhJqhJqhJqhJeTaeTabfobgnbfvbfwbfQbeqbeqbeqbftbfwbfwbfwbfwbfvbfyeTaeTajdcjdcjdcjdcjdcjdcjdcjdcjdcjdcjdcbgDtUImAfmAfmAfmzMbgDjdcjdcjdcjdcjdcjdciIkqhJaOpaOpaOpaOpaOpaOpbeYbeYbgAbeYbeYaOpaOpaOpaOpaOpaOpqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsamEajDajDajDajDeFAajsajOajOamuajsbezbezbhutEwblfblfblfblfblfblfcWsbhurUysvEyezyezyezsvEyezbhubggbfUbfVbfWbfWbfWbfWbfWbfWbfXbfUbgsbgsnJfuvXbgsdijdijbgsuVUbgsbezbezajsbfAbfAbfAannannajDajDamoajsbezbezbezbezamCalOajDajDajDajDannannamCbezbezatLajDajDajDajDamsatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbgBaaBbgCanOaLOajDajDaqibehbehbekbdmbdmbdmbcMbcKbeLbeMbfMbeMbeLbhRbhSbhSbhSbkabhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSaIRaIRaIRaIRaIRaIRaIRaIRaIRaIRaIRaIRbhSbhUbdmbdUbdmgdgqhJqhJqhJqhJqhJqhJqhJeTaeTabfobgnbfwaNfbfQbeqbeqbeqbftbfvbfwbfwbfwbfwbfyeTaeTalWTeTawpMeTaeTaeTaeTaeTaeTaeTalWTjdcjdcjdcjdcjdcjdcjdceTaeTaeTaeTaeTaitZeTabgEeTadwflWTgJpbgGaOpaCCaqjaqmaEVaqnaOpbgHbgHbgIqhJqhJqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsamYbJKbmhajDajDhCjajsajsajsajsajsbgJbgKbhubgLtkCbgLbfSbgLebZebZebZbgLbgLtkCbgLbRPbgLbgLbgLbhubggbfUbfVbfWbfWbfWbfWbfWgQGbfXbfUviHdcnetqrlsqafmALmALsUabSrbgsbezbezajsanoamtlxUajDajDajDajDamjajsbezbezbezbezamCamoajDajDanKajDajDajDamCbezcqFatLajDajDazDalOalOatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbgiaaBbgMbgNaomajDajDaqibehbehbekbdmbdmbdmbcMbcKbeLbeLbgabeLbeNbhRbhSbhTcqmboTboTboTboTboTxOubgQbgQbgQbgQbgQbgQbgQbgQbgQbhSbhSbhSbhSrtQbhSbhSbhSuIAuIAbhSdlZbhSbhSbhSuIAbhStbMuYkbhUbdmbdUbdmgdgvLfvLfvLfvLfqhJqhJqhJeTaeTabfobfwbfwbfpbfQbeqbeqbeqbftbfwbgnaNfbfwbfwbfyeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTakSZeTakSZeTaeTaeTaeTabgSaOpaqmaqmaqmaqmbAoaOpbgIbgTqhJbgUqhJqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsxgTbJKajDajDajDajDajsbgVbgWbgXbgYbfUbfUbhueEmbgZjXUbhbbhbbhbbhbbhbbhabhbbhbmXVbhbluhbgZjXUbhubggbfUbhgbfWbfWbfWbfWbfWbfWbhhbfUbgsigHsucsucuvXmALmALbgsfvWbgsbezbezajsapfajRajsatOajDanKanLalRajsbhibezbezbezamCanYanYanYamCamDapsamDamCbezbezatLbfJapsbfJbfJbfJatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbehaaBaoPajDajDajDanhaaBbehbehbekbdmbdmbdmbhjbcKbeLbeLbfMbeLbeNbhRbhSbhSbhUbfMbfMbfMbfMbfObfMbgQbhkbhlbhmbhcbhnbhobhpbgQbhSbhSbhSbhSgSLhFibhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhShFigSLbhUbdmbdUbdmgdgqhJqhJqhJqhJqhJbhqqhJeTaeTabfobfwbfwbgnbfsbeqbeqbeqbftbfvbgnbfwbfwaNfbhsbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTlBokYSnmobeTbeWeTabgFaOpaqmeuSardaIYaqmaOphcvqhJqhJqhJqhJqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsbfzaktaktapsbfzbfzajsbgWbfUbhtbfUbfUbfUgtbjjYpVxpVxbhbbhbbhbpVxpVxbhdbhbbhbmXVbhbpVxpVxidRbhubhvbfUbfVbfWbfWbfWbfWbfWbfWbfXbfUbgsbgsbSUnjsbgseBjbgsbgsbgsbgsbezbezajsajsajsajsajsajsajsajsajsajsbezbezbezbezamCapGajRajSanYajDajDatzamCbezbezatLamjajDavEalPalOatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbhwaaBajDajDajDajDajDaaBbehbejbekbdmbdmbdmbcMbcKbeMbeLbfMbeKbeNbhRbhSbhSbhUbfMbgabfMbfMbfMbfMbgQbhxbhmbhmbhmbhnbhnbhybgQdlZbhSbhScqmboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTtSSbdmbdUbdmgdgqhJqhJqhJqhJqhJqhJbhqeTaeTabfoaNfbfwbfvbfQbeqbeqbeqbftbfwbfwaNfbfwbfwbfvbfwbfwbfwbfwbfpbfwbfwbgnbfwaNfbfwbfwbhCbfwbfvbgnbfwbfwbfwbfwbfwbfwfNmjrPjrPijFiLfvQPkkyvwBbfyeTaeTaaOpaqmaqmbhDaqmaqmaOputjqhJqhJqhJqhJqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsgIrfIMiHtajDxZufIpajsbhEbfUbfUbfUbfUbfUgtbmcspVxpVxbhbbhbbhbbhbbhbbhbbhbbhbbhHbhbxvLxqBwKebhubggbfUbfVbfWbfWbfWqwlbfWbfWbfXbfUbggbgsvkswYwccPlRwbgsbezbezbmlbezbezbezbezbezbhLbhMbezbezbezbezbezbfKbezbezbgxamCaoGajOajOlxUajDajDanhamCbezbezatLajDajDajDalRajDatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbhwaaBaaDaaDapsaaDaaDaaBbehbehbekbdmbdmbdmbcMbcKbeLbeLbfObeNbeLbhRbhSbhSbhUbfMbfMbfMbKWbfLbfMbgQmdYbhmbhNbhNbhObhPbhQbgQdlZbhSbkabhUbfMbfMbfMbfMbfLbfMbgabfMbfMmAQumJumJumJkCJumJbHCbdmbdUbdmgdgqhJqhJqhJqhJqhJqhJqhJeTaeTabfobgnbfvbfwbfQbeqbeqbeqbftbfvbgnbfwbfwbfwbfwbfxaNfbfwbfwbfwaNfbfwbfxbgnbfwbfvbfwbfwbfvbfwbfxbfwaNfbfwbfwbfwbfwiYDvfFjrPwCimnDeIDdZEruQbfyeTaeTaaOpaOpaOpaOpaOpaOpaOpbhVbgvqhJqhJqhJqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsekIajDajDajDajDjKtajsbfUbfUbfUbfUbfUbfUbhubhbbhbbhbbnSbmybhWbhbbnSpVxbhWbhbxNebhbbhbbhbbhbbhubggbfUbfVbfWbfWbfWbfWbfWbfWbfXbfUbggbgsgKuwYwwYwwYwbgsbezbezbezbezbezbezbghbezbezbezbezbezbezbezbezbezbezbezbezamCanIajOajOamCajDajDajDamCbezbfKatLaoPajDajDajDanhatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbehaaBajDajDajDajDajDaaBbehbehbekbdmbdmbdmbcMbcKbeLbLabKWbeLbeLbhRbhSbhSbhUbfMbfObfMbgabfMbfMbgQmdYbhmbhNbgQbgQbhXbgQbgQbhSbhSbhSbhUbfMbfObfMbKWbfMbfMbfMbfMbfMmAQumJumJbhYumJbhZbHCbdmbdUbdmgdgqhJqhJdkdqhJqhJqhJqhJeTaeTabfobfpbgnbfwbfQbeqbeqbeqbftbfwbfxbfwbfwbfwbfvbfvbfwbfwbfwbgnbfwbfwbfwbfpbfvbgnbfwbfwbfwbfpbfwbfwbfwbfwbfwbfwbfvwlWxHAwmQlQBtuDtuDhcGkdAbfyeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTasJjaGvaGvaGwaGvaGvbfcbezbezajscutajDajDatOajDamnajsbfUbfUbfUbfUbfUbfUgtbbhbbhbbhbbnSpVxbhWbhbbnSbmybhWbhbmXVcqxbhbbhbcqxbhubggbfUbfVbfWbfWbfWbfWbfWbfWbfXbfUbggbgswYwwYwwYwwYwbgsihCihCihCihCihCbgsbezbezatLaJCaJCaJCaJCaJCatNaJCatLbezbezamCamDamDamDamCamDapsamDamCjEPbezatLajDajDajDajDajDatLbfKbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehqytaaBaoPajDajDajDbiaaaBbehbehbekbdmbdmbdmbcMbcKbeLbLbbfMbeMbeLbhRbhSbhSbhUbfMbfMbfMbfMbfMbfMbgQbhmbhmbhmbgQbibbibbicbgQbhSbhSbhSbhUbfMbfMbfMbgabfMbfMbfMbfMbfOmAQumJumJumJbhYumJbHCbdmbdUbdmgdgqhJdkdxppqhJqhJqhJqhJeTaeTabfobfvbgnaNfbfQbeqbeqbeqbftbfwbfpbfwaNfbfwbfpbfwbfwaNfbfwbfvbgnaNfbfwbgnbfvbfvbfwaNfbfwbgnbfwaNfbfwbfwbgnaNfbfwlEhhUBuKStuDtuDtuDtuDnHDbfyeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTasJjaGvaGvaGwaGvaGvbfcbezbezajsajsajsajsajscuhajsajsbihbfUbfUbfUbfUbfUgtbbhbbhbbhbbhbbhbbhbbhbbhbbhbbhbbhbmXVbhubhubhubhubhubggbfUbfVbfWbfWbfWbfWbfWbfWbfXbfUbggbgshkpmafphYlRwbgsmLjdByomhoelmfMbgsvJAvJAatLalOalPanpajDatOajDangatLbezcqFamCnOnhYJajDxNmaocajDamjamCbezbezatLajDajDajDajDajDatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbiiuDqaaBbijajDaonaomanOaaBbehbehbekbdmbdmbdmbcMbcKbeLbeLbgabeLbeMbhRbhSbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbikbgQbgQbgQbilbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbhYbHCbdmbdUbdmgdgbimkgtbinxppqhJqhJxppwvfeTabfobfwbfvbfxbfQbeqbeqbeqbftbfxbgnbfxbfxbfwbfxbfwbgnbfwbfvbgnbgnbfwbfxbfwbfpbfwbfwbgnbfxbfwbfpbfwbfvbfvbfwbfwbfvlEhjrPpSLdjStuDtuDdVVvMKbhsbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeWeTasJjaGvaGvaGwaGvaGvbfcbezbezbipbiqbiqbiqbiqbfUbggbggbfUbfUbfUbfUbfUbfUbhuidridrncqjbhbhbidridrdAmbhbbhbbhbbhboaNblfiIMwpObhubirbfUbfVbfWbfWbfWbfWbfWbfWbfXbfUbggbgsphYkSLoQlwYwoclyezyezyezyezyezbgsbezbezatLajDajDanKajDajDajDalRatLbezbezamCtCpniipShamCajDajDavEamCbezbezatLajDajDanKajDajDatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbehaaBanqajDaombisaKIaaBbehbehbekbdmbdmbdmbcMbcKbeLbeMbfMbeLbeLbhRbhSbgQbitbiubhObErbiwbixbiybgQbhmbhmbEsbgQbhebibbibbibbiAbibbibbibbiAbibbibbibbiAbibbibbibbiAbibbibbibbiAbgQumJbiBbdmbdUbdmbiCnhhnhhufsnhhnhhnhhbiDwWRyaxbfobfwbfvbgnbfQbeqbeqbeqbiFcddbebbecbiIbebbiJbiKbebbebbiGbebbebbebbebbiJbiKbebbebbiGbebbebbebbebbebbiJbiKbebbebbiGbebbiLiuyqcNhcGqJIcFHwPiylrbfvbfvbfwbfwbfxbgnbgnbfwbfwbfwbfwbfwbfvbfybiMsJjaGvaGvaGwaGvaGvbfcsHhbiNbipbfUbfUbfUbfUbfUbfUbfUbfUbfUbiObfUbfUbiPbhugtbgtbbhubiQbhugtbgtbgtbbhubhubhubhubhubhubhubhubhubfUsbZbfVbfWbfWbfWbfWbfWbfWbfXsbZbggbgsuhDmlxeUnnTnbgsjBwqIXyezrDGeFhbgsbezbezatLaxDaxDatLajDajDajDaCfatLbezbezamCamDamDamDamDajDajDalRamCbezbezatLaxDaxDaxDavvaxDatLbezcqFaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbfmbehaaBaFHatzajDajDaAhaaBbehbehbekbdmbdmbdmbcMbcKbeObeLbeMbeNbeObeKbeLbeKbeLbeLbeLbeLbeLbeLbeObeLbeMbKVbeKbeNbeKbeLbeLbeLbeMbeLbeObeLbeLbeNaIRariarbaJebfnexsaJfaqmaHEardaJgaJfbhSbhUbdmbdUbdmgdgqhJqhJqhJqhJqhJqhJqhJeTaeTabfobfpaNfbfrpCbbebbebbebdfjaNfbfvbfwbfwbfxbfyeTaeTabgDfWopbRoYhqKhbgDsJbuHFscqlARxPMqGbikbrrxgSujqweILsrPbNVgWOqwMursvDCbgDqhJqhJaOpaHnaAJaoyaHoaoyaAJaoyaoyaoyaAJaoyaHoaoyaAJaqgaOpqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsbfzaktaktbfzqVfbfzajsaktbfAbfAajsbezbezbezbezbezbezbezbezbezbezbezaogaDSaDSaDSaDSaDSaDSaDSaogbfBbfBbfCbfDbfEbfFbfGbfHbfDbfIbfBbfBbgsbjibjibjiihCbjibjibjibgsbezbezbezbezbezajsbfzatNbfzbfzbfzajsbezbezbezbezamCamDamDamDatNamDamDamDamCbezbezatLbfJbfJatNbfJbfJatLbezbfKaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbehaaBajDajDajDajDangaaBbehbehbekbdmbdmbdmbcMbcKbeMbeLbfLbfLbfMbfMbfMbfNbfMbfMbfLbfMbfNbfMbfMbfMbfMbfMbfLbfLbfObfObfMbfLbfNbKWbfMbfObfObfLaJfaoyaoyaoybfPaoyaJfaqmbfuaqmaqmaJfbhSbePbdmbdUbdmgdgqhJrLrqhJqhJuKeqhJqhJeTaeTabfobfwbfwbfwbfQbeqbeqbeqbftbfwbfwbfwaNfbfvbfyeTaeTabgDgXLwoowooxsybgDuRweXEuRwlARvVwnifoFbuQMpJyncyoFbgQEiZBursdQoursvDCbgDqhJqhJaOpaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaOpqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsalOpTKpMNbJtajDaufbfAvkFajSajRajsbezbfSbezbezbezbezbezbezbezbezbezaogaqnaALaqmaqmaqmaALaqmaogbfTbfUbfVbfWbfWbfWbfWbfWbfWbfXifIbfYbgsbsQmALqcPhWAitymALhvGbgsbezbezbezbezbezajsamnajDaFIamsalOajsbezbezbezbezamCalOajDatOajDangajDamnamCbezbezatLajDangajDatOajDatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbehaaBajDajDalOajDajDaKKbehbehbekbdmbdmbdmbcMbcKbeMbeLbfMbfMbfNbKXbKYbfMbfLbfLbfMbfMbfMbfLbfMbfObfObfMbfMbfNbfMbfMbfMbfLbfObfObKXbfMbfNbfMaJfaoyaoyaoyaoyaJPaJfaJfbfqaJfaJfaJfbhSbhUbdmbdUbdmgdgqhJqhJqhJqhJqhJqhJqhJlYdeTabfobfxbfwbfwbgcbeqbeqbeqbftbfwbfwbgdbfwbfwbfyeTaeTabgDwoowooizGwoojdcvoHuRwfbYmiZursursursursursursursursursursursdSKbgebgDqhJqhJaOpaBeaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaDraOpqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsamqajDujzalOajDajDbJyajOaQGbgfajsbezbezbezbezbezbezbezbezbezbezbezaogaqmardaqmaAKaqmardaqmaogbggbfUbfVbfWbfWbfWbfWbfWbfWghXbiWbfUbgstQcmALmALmALmALmALcgUbgsbezbezvPHbezbezajsajDajDajDajDamqajsjigbghbezbezamCalOajDajDajDajDamEamEamCbezbezatLaqAamEajDajDanhatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbgibgjaaBaombgkbglajDajDaaBbehbehbekbdmbdmbdmbcMbcKbeLbeKbfMbeLbKZbeKbeLbeLbeKbeLbeLbeMbeLbeNbeLbeLbeLbeLbeObeLbeKbeLbeLbeLbeLbeLbKZbeObeLbeLaJfaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaIRbhSbePbdmbdUbdmbgmqhJqhJqhJqhJqhJqhJqhJeTaeTabfobgnaNfbfwbfQbeqbeqbeqbftbfxaNfbfxbgnaNfbfyeTaeTabgDgwBxRjhjMwooaILfbYfbYfbYlARursjdcjdcsVftRrkgmjdcbgDfoovLxvZriCtcYxbgDqhJqhJaOpaoyaAJaoyaAJaoyaoBaBvaoYaoBaoBaoyaAJaoyaAJaoyaOpqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsavuajDajDbJeajDamZajsajOaQGaQHajsbezbfSbezbezbezbghbezbezbezbezbezaogaqmardardeuSardardaqmaogbggbfUbfVbfWbfWbfWbfWbfWbfWbfXbfUbfUiwGmALpXfsFQfiysXAmALcgebgsbezbezbezbezbfKajsamEamEajDajDamrajsbezbezbezbfKamCavuajDajDajDajDalOaLLamCbezcqFatLalOanqajDajDamratLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbgtaaBapoanOanOajDanhaaBbehbehbekbdmbdmbdmbcMbcKbeKbeLbfMbeMbeKbeLbeLbeLbeKbeLbeLbeLbeLbeLbeLbeMbeLbeLbeNbeNbeLbeLbeLbeKbeLbeKbeKbeLbeNbeNaJfaoyaoyaoyaoyaoyaoyaoyaoyaoyaoybgubhSbhUbdmbdUbdmgdgqhJqhJqhJqhJbgvqhJqhJeTaeTabfobfvbfwbfwbfQbeqbeqbeqbftbgnbfwbfwbfvbfpbfyeTaeTabgDcBrcoWwoowoobgDfbYfbYfbYlARursdSKnNtmAfmAfmAfwrmbgDdOXjRsjRswYUqtSbgDqhJqhJaOpaoyaoyaoyaoyaoyapAaoyavraoyapAaoyaoyaoyaoyaoyaOpqhJbgwwCQaGvaGvaGwaGvaGvbfcbeybezajswqKajDajDajDajDkNQajsapnbfAbfAajsbezbezbezbezbezbezbezbezbezbezbgxaogaqmaqmaqmbhdaqmaqmaqmaogbggbfUbfVbfWbfWbfWbfWbfWbfWbfXbfUbjBbgsmALmALmALmALmALmALmALbgsbezbezbezbezcqFajsalOanqajDajDapIajsbezbezbezbezamCamqajDajDajDajDalOalOamCbezcqFatLannannajDajDamqatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbgyaaBbgzanOanOajDajDaqibehbehbekbdmbdmbdmbcMbcKbeKbeLbfMbeLbeLhxKxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAaIRaoyaoyaLbaoyaoyaoyaoyaLbaoyaoyaIRbhSbePbdmbdUbdmgdgqhJqhJqhJqhJqhJqhJqhJeTaeTabfobgnbfvbfwbfQbeqbeqbeqbftbfwbfwbfwbfwbfvbfyeTaeTajdcjdcjdcjdcjdcjdcjdcjdcjdcjdcjdcbgDtUImAfmAfmAfmzMbgDjdcjdcjdcjdcjdcjdciIkqhJaOpaOpaOpaOpaOpaOpbeYbeYbgAbeYbeYaOpaOpaOpaOpaOpaOpqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsamEajDajDajDajDeFAajsajOajOamuajsbezbezbezbezbezbezbezbezbezbezbezaogaqmarmaqmaqmaqmarmaqmaogbggbfUbfVbfWbfWbfWbfWbfWbfWbfXbfUbgsbgsnJfuvXbgsdijdijbgsuVUbgsbezbezajsbfAbfAbfAannannajDajDamoajsbezbezbezbezamCalOajDajDajDajDannannamCbezbezatLajDajDajDajDamsatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbgBaaBbgCanOaLOajDajDaqibehbehbekbdmbdmbdmbcMbcKbeLbeMbfMbeMbeLbhRbhSbhSbhSbkabhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSaIRaIRaIRaIRaIRaIRaIRaIRaIRaIRaIRaIRbhSbhUbdmbdUbdmgdgqhJqhJqhJqhJqhJqhJqhJeTaeTabfobgnbfwaNfbfQbeqbeqbeqbftbfvbfwbfwbfwbfwbfyeTaeTalWTeTawpMeTaeTaeTaeTaeTaeTaeTalWTjdcjdcjdcjdcjdcjdcjdceTaeTaeTaeTaeTaitZeTabgEeTadwflWTgJpbgGaOpaCCaqjaqmaEVaqnaOpbgHbgHbgIqhJqhJqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsamYbJKbmhajDajDhCjajsajsajsajsajsbgJbgKaogaDSaDSaDSaogaDSaDSaDSaDSaDSaDSaDSaogaBxbgLbgLaDSaogbggbfUbfVbfWbfWbfWbfWbfWgQGbfXbfUviHdcnetqrlsqafmALmALsUabSrbgsbezbezajsanoamtlxUajDajDajDajDamjajsbezbezbezbezamCamoajDajDanKajDajDajDamCbezcqFatLajDajDazDalOalOatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbgiaaBbgMbgNaomajDajDaqibehbehbekbdmbdmbdmbcMbcKbeLbeLbgabeLbeNbhRbhSbhTcqmboTboTboTboTboTxOubgQbgQbgQbgQbgQbgQbgQbgQbgQbhSbhSbhSbhSrtQbhSbhSbhSuIAuIAbhSdlZbhSbhSbhSuIAbhStbMuYkbhUbdmbdUbdmgdgvLfvLfvLfvLfqhJqhJqhJeTaeTabfobfwbfwbfpbfQbeqbeqbeqbftbfwbgnaNfbfwbfwbfyeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTakSZeTakSZeTaeTaeTaeTabgSaOpaqmaqmaqmaqmbAoaOpbgIbgTqhJbgUqhJqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsxgTbJKajDajDajDajDajsbgVbgWbgXbgYbfUbfUaogbgZbgZbgZaogaIsbhabhbbmWbhabhbaIsaDSaoybgZbgZbgZaogbggbfUbhgbfWbfWbfWbfWbfWbfWbhhbfUbgsigHsucsucuvXmALmALbgsfvWbgsbezbezajsapfajRajsatOajDanKanLalRajsbhibezbezbezamCanYanYanYamCamDapsamDamCbezbezatLbfJapsbfJbfJbfJatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbehaaBaoPajDajDajDanhaaBbehbehbekbdmbdmbdmbhjbcKbeLbeLbfMbeLbeNbhRbhSbhSbhUbfMbfMbfMbfMbfObfMbgQbhkbhlbhmbhcbhnbhobhpbgQbhSbhSbhSbhSgSLhFibhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhShFigSLbhUbdmbdUbdmgdgqhJqhJqhJqhJqhJbhqqhJeTaeTabfobfwbfwbgnbfsbeqbeqbeqbftbfvbgnbfwbfwaNfbhsbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTlBokYSnmobeTbeWeTabgFaOpaqmeuSardaIYaqmaOphcvqhJqhJqhJqhJqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsbfzaktaktapsbfzbfzajsbgWbfUbhtbfUbfUbfUaogbgZaoyaoyaogaqmaqmaqmbaMaqmaqmaqmbaNaoyaoyaoyaoybhubhvbfUbfVbfWbfWbfWbfWbfWbfWbfXbfUbgsbgsbSUnjsbgseBjbgsbgsbgsbgsbezbezajsajsajsajsajsajsajsajsajsajsbezbezbezbezamCapGajRajSanYajDajDatzamCbezbezatLamjajDavEalPalOatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbhwaaBajDajDajDajDajDaaBbehbejbekbdmbdmbdmbcMbcKbeMbeLbfMbeKbeNbhRbhSbhSbhUbfMbgabfMbfMbfMbfMbgQbhxbhmbhmbhmbhnbhnbhybgQdlZbhSbhScqmboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTtSSbdmbdUbdmgdgqhJqhJqhJqhJqhJqhJbhqeTaeTabfoaNfbfwbfvbfQbeqbeqbeqbftbfwbfwaNfbfwbfwbfvbfwbfwbfwbfwbfpbfwbfwbgnbfwaNfbfwbfwbhCbfwbfvbgnbfwbfwbfwbfwbfwbfwfNmjrPjrPijFiLfvQPkkyvwBbfyeTaeTaaOpaqmaqmbhDaqmaqmaOputjqhJqhJqhJqhJqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsgIrfIMiHtajDxZufIpajsbhEbfUbfUbfUbfUbfUaogbgZaoyaoybhFbhGbhGbhGbaObhGbhGbhGbhHaoyaoyaoyaoybhubggbfUbfVbfWbfWbfWqwlbfWbfWbfXbfUbggbgsvkswYwccPlRwbgsbezbezbmlbezbezbezbezbezbhLbhMbezbezbezbezbezbfKbezbezbgxamCaoGajOajOlxUajDajDanhamCbezbezatLajDajDajDalRajDatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbhwaaBaaDaaDapsaaDaaDaaBbehbehbekbdmbdmbdmbcMbcKbeLbeLbfObeNbeLbhRbhSbhSbhUbfMbfMbfMbKWbfLbfMbgQmdYbhmbhNbhNbhObhPbhQbgQdlZbhSbkabhUbfMbfMbfMbfMbfLbfMbgabfMbfMmAQumJumJumJkCJumJbHCbdmbdUbdmgdgqhJqhJqhJqhJqhJqhJqhJeTaeTabfobgnbfvbfwbfQbeqbeqbeqbftbfvbgnbfwbfwbfwbfwbfxaNfbfwbfwbfwaNfbfwbfxbgnbfwbfvbfwbfwbfvbfwbfxbfwaNfbfwbfwbfwbfwiYDvfFjrPwCimnDeIDdZEruQbfyeTaeTaaOpaOpaOpaOpaOpaOpaOpbhVbgvqhJqhJqhJqhJqhJwCQaGvaGvaGwaGvaGvbfcbezbezajsekIajDajDajDajDjKtajsbfUbfUbfUbfUbfUbfUaogarbaoyaoyaoAbhWbhWaoybnSaoybhWbhWaoAaoyaoyaoyaqgaogbggbfUbfVbfWbfWbfWbfWbfWbfWbfXbfUbggbgsgKuwYwwYwwYwbgsbezbezbezbezbezbezbghbezbezbezbezbezbezbezbezbezbezbezbezamCanIajOajOamCajDajDajDamCbezbfKatLaoPajDajDajDanhatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbehaaBajDajDajDajDajDaaBbehbehbekbdmbdmbdmbcMbcKbeLbLabKWbeLbeLbhRbhSbhSbhUbfMbfObfMbgabfMbfMbgQmdYbhmbhNbgQbgQbhXbgQbgQbhSbhSbhSbhUbfMbfObfMbKWbfMbfMbfMbfMbfMmAQumJumJbhYumJbhZbHCbdmbdUbdmgdgqhJqhJdkdqhJqhJqhJqhJeTaeTabfobfpbgnbfwbfQbeqbeqbeqbftbfwbfxbfwbfwbfwbfvbfvbfwbfwbfwbgnbfwbfwbfwbfpbfvbgnbfwbfwbfwbfpbfwbfwbfwbfwbfwbfwbfvwlWxHAwmQlQBtuDtuDhcGkdAbfyeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTasJjaGvaGvaGwaGvaGvbfcbezbezajscutajDajDatOajDamnajsbfUbfUbfUbfUbfUbfUaogarbaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoybhubggbfUbfVbfWbfWbfWbfWbfWbfWbfXbfUbggbgswYwwYwwYwwYwbgsihCihCihCihCihCbgsbezbezatLaJCaJCaJCaJCaJCatNaJCatLbezbezamCamDamDamDamCamDapsamDamCjEPbezatLajDajDajDajDajDatLbfKbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehqytaaBaoPajDajDajDbiaaaBbehbehbekbdmbdmbdmbcMbcKbeLbLbbfMbeMbeLbhRbhSbhSbhUbfMbfMbfMbfMbfMbfMbgQbhmbhmbhmbgQbibbibbicbgQbhSbhSbhSbhUbfMbfMbfMbgabfMbfMbfMbfMbfOmAQumJumJumJbhYumJbHCbdmbdUbdmgdgqhJdkdxppqhJqhJqhJqhJeTaeTabfobfvbgnaNfbfQbeqbeqbeqbftbfwbfpbfwaNfbfwbfpbfwbfwaNfbfwbfvbgnaNfbfwbgnbfvbfvbfwaNfbfwbgnbfwaNfbfwbfwbgnaNfbfwlEhhUBuKStuDtuDtuDtuDnHDbfyeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTasJjaGvaGvaGwaGvaGvbfcbezbezajsajsajsajsajscuhajsajsbihbfUbfUbfUbfUbfUaogbgZaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoyaoybhubggbfUbfVbfWbfWbfWbfWbfWbfWbfXbfUbggbgshkpmafphYlRwbgsmLjdByomhoelmfMbgsvJAvJAatLalOalPanpajDatOajDangatLbezcqFamCnOnhYJajDxNmaocajDamjamCbezbezatLajDajDajDajDajDatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbiiuDqaaBbijajDaonaomanOaaBbehbehbekbdmbdmbdmbcMbcKbeLbeLbgabeLbeMbhRbhSbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbikbgQbgQbgQbilbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbgQbhYbHCbdmbdUbdmgdgbimkgtbinxppqhJqhJxppwvfeTabfobfwbfvbfxbfQbeqbeqbeqbftbfxbgnbfxbfxbfwbfxbfwbgnbfwbfvbgnbgnbfwbfxbfwbfpbfwbfwbgnbfxbfwbfpbfwbfvbfvbfwbfwbfvlEhjrPpSLdjStuDtuDdVVvMKbhsbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeTbeWeTasJjaGvaGvaGwaGvaGvbfcbezbezbipbiqbiqbiqbiqbfUbggbggbfUbfUbfUbfUbfUbfUaogbgZaoyapAbnSaoyaoyaoyapAaoyaoyaoyaoyapAaoyaoyapmaogbirbfUbfVbfWbfWbfWbfWbfWbfWbfXbfUbggbgsphYkSLoQlwYwoclyezyezyezyezyezbgsbezbezatLajDajDanKajDajDajDalRatLbezbezamCtCpniipShamCajDajDavEamCbezbezatLajDajDanKajDajDatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbehaaBanqajDaombisaKIaaBbehbehbekbdmbdmbdmbcMbcKbeLbeMbfMbeLbeLbhRbhSbgQbitbiubhObErbiwbixbiybgQbhmbhmbEsbgQbhebibbibbibbiAbibbibbibbiAbibbibbibbiAbibbibbibbiAbibbibbibbiAbgQumJbiBbdmbdUbdmbiCnhhnhhufsnhhnhhnhhbiDwWRyaxbfobfwbfvbgnbfQbeqbeqbeqbiFcddbebbecbiIbebbiJbiKbebbebbiGbebbebbebbebbiJbiKbebbebbiGbebbebbebbebbebbiJbiKbebbebbiGbebbiLiuyqcNhcGqJIcFHwPiylrbfvbfvbfwbfwbfxbgnbgnbfwbfwbfwbfwbfwbfvbfybiMsJjaGvaGvaGwaGvaGvbfcsHhbiNbipbfUbfUbfUbfUbfUbfUbfUbfUbfUbiObfUbfUbiPaogbhubhuaogbiQaogbhubhuaogaogaogaogaogaogaogaogaogaogbfUsbZbfVbfWbfWbfWbfWbfWbfWbfXsbZbggbgsuhDmlxeUnnTnbgsjBwqIXyezrDGeFhbgsbezbezatLaxDaxDatLajDajDajDaCfatLbezbezamCamDamDamDamDajDajDalRamCbezbezatLaxDaxDaxDavvaxDatLbezcqFaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
 aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbehaaBamrajDaomaonaKIaaBbehbehbekbdmbdmbdmbcMbcKbeLbeLbfObeLbeKbhRbhSbgQbiRbhnbiSbhnbiTbhmbhmbgQbjcbhmbhmbgQbibbibbibbibbibbibbibbibbibbibbibbibbibbibbibbibbibbibbibbibbiUbgQumJbHCbdmbdmbdmbdmbdmbdmbdmbdmbdmbdmgdgbiVeTabfoaNfbfwbfpbfQbeqbeqbeqbeqbeqbetbeqbeqbeqbeqbeqbiEbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbftgYkpRdrUjdXDkLMkDjkcWbfwbgnbfwaNfbfwbfwbfwbfwaNfbfwbfwbfwbgnbfyeTasJjaGvaGvaGwaGvaGvbfcbJasHhbipbfUbiWbfUbfUbfUbfUbfUbfUbfUbfUsbZxKGsbZbiqbiqbiqbiqbfUbiqbiqbiqbiqbiXbiYbfUbiZbiZbfUbiZbiZbiWsbZxKGfQlbfWbfWbfWbfWbfWbfWubNxKGbggbgsqMjlWBoqEnTnbgsyezyezyezbgsbgsbgsbezbfKatLazsamtlxUajDajDajDamjatLbezbezamCalOalPamsajDajDajDajDamCbezbezatLapGajRamtajOaQGatLbezcqFaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
 aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehuDqaaBaErajDapbapbaBoaaBbehbehbekbdmbdmbdmbcMbcKbeLbeKbfMbeLbeLbhRbhSbgQbhpbhnbhnbhnbhnbhmbhmbgQbjdbhmmdYbgQbjabhnbjbuhVbhmbhmbjebhmbjebhmbjebhmbjebhmbjebhmbjebhmbibbibbibbgQumJbHCbdmbdmbdmbdmbdmbdmbdmbdmbjfbjfgdgeTaeTabfobfxbfwbfwbfQbeqbeqbeqbeqbetbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqtJlbeqeLCrUjnPGpLejvzjrPjrPkDebfwbfwbfvbfvbfvbgnbfwbfwbfwbfxaNfbfxbgnbfybjgsJjaGvaGvaGwaGvaGvbfcsHhbezbipbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUsbZbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfVbfWbfWbfWbfWbfWbfWbfXsbZbjhbgshkpnsJkxAlRwbgseFhvhHyezeTHclZbgsbezbezatLanIajRatLajDajDatzajDatLbezbezamCanKnhnajDanKajDajDajDamCbezbezatLajOajOalYaQGaQHatLbezbezaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
 aiyaiyaiyaiyaiyaiyaiyaiyaiyaizbehbehbehaaBalOajDanOanOanOaaBbehbehbekbdmbdmbdmbcMbcKbeObeLbfLbeNbeMbhRbhSbgQxngbhnbhnbhnbhnbibbibbjjbibbibmdYbgQbjkbjkbhnuhVbhmbhmbjnbhmbjnbhmbjnbhmbjnbhmbjnbhmbjnbhmbibbhfbgQbgQbgQbjpbdmbdmbdmbdmbdmbdmbdmbdmbjqbdmgdgeTaeTabfobfvaNfbfwbfQbequhcbeqbetbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbeqbftdVVjyyfeThaejrPjrPlEhbfwbgnbfwbfwbgnbfxbfwbfwbgnbfvbfvbfwbfwmHXeTasJjaGvaGvaGwaGvaGvbfcbezbezbfCbjrbfDbfDbfDbfDbfDbfDbjsbfDbfDbfDbfDbfDbfDbfDbjtbfDbfDbfDbfDbfDbfDbfDbfDbjsbfDbfDbfDbfDbfDbfDbfDbfDbjubfWbfWbfWbfWbfWbfWbfXbfUbggbgsqCOdTewYwxevbgstMouroeIqyezugFbgsbgJbgJatLatLatLatLatLatLatLatLatLsCjbgJamCamCaqbaqbamCaqbaqbamCamCsCjbgJatLatLatLatLatLatLatLbgJbgJaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
@@ -10489,19 +10410,19 @@ aoicAklnQaoieQDbHjalOajDalOqZEbkBbehbkCbkDbkEbehbehbehbehbehbkFbJdeyjbdmbdmbdmbc
 aoincEsSclRbsZoajDajDajDalOqZEbkObkPbpzbkQbkQbkQbkQbkQbkQbkQbkQbkQbkRbdmbdmbdmbcMbcKbeLbKZbfMbeLbeLbhRbhShxibhUbfMbgabfMbKXbfMbfObgQbibbibbibbibbibbibbibbgQbhSbhSbhSbhUbfMbKXbKWbfMbfMbfObfMbgabfMmAQumJumJumJumJumJbHCbbIbkTbbIbbIbkSbbIbkUbcKbdmbdmgdgeTaeTabfobfvaNfbgnbfQbeqbeqbiEbftjrPrLWstUwcijrPbfpbfwaNfbfvbfvbfwbfwbfpbfvaNfbfwbgnbfwaNfbfwbfwbfwbfwbfwaNfbfwbgnbfwaNfbfwaNfbfwbfwbfwbfxaNfbfwbfwbfxbfxaNfbfwlBvrgiwDsykTwMFwDsiOkulMbfwbfyeTasJjaGvaGvaGwaGvaGvbfcbezbezbkVbkWbkWbkWbkWbkWbkWbkWbkXbkWbkWbkWbkWbkWbkWbkWbkYbkWbkWbkWbkWbkWbkWbkWbkWbkXbkWbkWbkWbkWbkWbkWbkWbkWbkWbkWbkWbkWbkWbkWbkWbkZbfUbggajsajDajDajDajDajDajDajDajsajOamuajsbfUbjTbeLbeLbfMbfMbfNbfMbfMbfMbfMbfMbfMbfNbfMbfMbfMaTebfNbfMbfMbfObfMbfMaTebfMbfLbfMbfMbfMbfNaTebfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
 aoiaoiaoiaoirtxrZyrGIbTidQZaoibekbdmbdmbdmbdmbdmbdmbdmbdmbdmbdmbdmbdmbdmbdmbdmbcMbcKbeLbeMbLcbLdbeLbhRbhSbhSbhUbfMbfMbfMbKWbfObfMbgQbhmbhmbhmbhmbhmbhmblabgQbhSbhSbhSbhUbfMbfObfObfMbfMbfMbfMbfLbfMmAQumJumJumJkCJumJbHCbdibdibdibdiblEbbIrOqbcKbdmbdmgdgeTaeTabfobfxbfwbfwbfQbeqbeqbeqbftlEhwKgxfHgKQjrPbfxbgnbfwbfwbfwbfwbfwbfvbfwbfwbfwbgnbgnbfxbfpbfvaNfbfwbgnbfwbfwbfwbfwbfxbfxbfwbfwbfwbfwbfwbfvbfwbfwbfwbfpbfwbfwvcXnAjvcIuvIrDOmjSbQWoCwbfwbfyeTasJjaGvaGvaGwaGvaGvbfcsHhbezbipbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUsbZbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUsbZbfUbfUbfUbfUbfUbfUbfUbfUsbZbggajsajDajDajDanKajDamnamjajsanIajRajsbfUbjTbeLbeLbfMbfMbfMbfMbfMbfMbfMmqhbfMbfNbfMbfMbfMbfMbfMbLebfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
 aiyaiyaiyaoigbKaoicauaoiaoiaoidilbdmbdmbdmbdmbdmbdmbdmbdmbdmbdmbdmbdmbdmbdmbdmbcMbcKbeLbeLbKXbeLbeLbhRbhSbhSbhUbfMbfMbfMbgabfMbfMbgQbhmbhmbhmbhNbhmbhmbhmbjjbhSbhSbhStaGxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAxFAbhSbhSbhSbhSbcMbbIbbIbcKbdmbdmgdgeTaeTabfobgnbfwbfxbfQbeqbeqbeqbftjrPjrPjrPjrPjrPbgnbgnbfwaNfbfwbfwbfwbfwbfxaNfbfvbfwbfxbfxbfwbfvbfvbfwbfpbfwbfwbfwbgnbfvbfwbfwbfwaNfbfxbfvbfwbfwaNfbfvbfwbgnbfwvcXnAjlqphyqhyqtZqbQWlBvaNfbfybiMsJjaGvaGvaGwaGvaGvbfcbJanWobipbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUsbZxKGmAnbggbggbfUbggbggbggbggbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUbfUsbZxKGsbZbfUbfUbfUbfUbfUbfUsbZxKGbfUajsajsajsajsajsajsajsajsajsajsajsajsbfUbjTbeLbeLbfMbfMbfMaTebfMbKWbLcbfMbfMbfMbfMbfMbfMbfMbfObfMbfMaTebfMbfMbfMbfNbfMbfObfMbfMbfMbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaoidbLiwykrskQJmvcaoitfubdmbdmbdVbldbdWbdWbdWbdWbdWbdWbdWbeabdmbdmbdmbcMbcKbeLbeNbfMbeLbeKbhRbhSbhSbhUbfMbfMbfMbfMbfLbfMbgQbhNbhNbhNbhNbhmbhmbhmbgQbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhShxibhSbhSbhSbhSbhSbhSbhSbcMbbIbbIbcKbdmbdmgdgeTaeTabfobgnaNfbfpbfQbeqbeqbeqbftbfwbfwbfwaNfbfvbfwbfwbfwbfwbfwaNfbgnbfwbfwbfwbfwbfvbfwbfwbfwbfwbfwbfwbfwbfvbfwbfwbfvbfwbfwbfwbfvbfwbfxbgnbfpbfvbfvbfwbfwbfxbfwulMnAjmFCxqnhyqsCKbQWvcXbfwbfyeTasJjaGvaGvaGwaGvaGvbfcsHhbezbipbggblebggbggbggbfUbggbggbfUbfUbfUblgbmtblnblndtdblnblhblnbmtbljbfUbfUbfUbggbggbggbggbggbggbggbfUbiWbfUbhtbfUbiObfUbfUbfUbfUbfUbfUbjAbjAbfUbfUbfUbfUbfUbfUbfUbjBbfUbfUbfUbjTaNgbeLbfNbfNbfMbfMbgabfMbKXbfMaTebfMbfMbfMbfMbfMbfMbfMbLcbfMbKXaTebfNbfMbfMbfMqHkbfMbfMbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaoimIYeeikrskrskrsxNJbekbdmbdmbmibgPbdibdibdibdibdibdiuvHbcKbdmbdmbdmbcMbcKbeKbeLbfMbeKbeLbhRbhSbhTtaGxFAxFAxFAxFAxFAxFAbgQbgQbgQbgQbgQbgQbgQbgQbgQbhSbhSbhSbhSbhTbkabhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbcMbbIbbIbcKbdmbdmgdgeTaeTabfobfwbfwbfwbfQbeqbeqbeqbftbfwbfwbfvbfvbfwbfvbfwbfwbfwbfwbfwbgnbfwbfwbfwbfvbfvbgnbfwbfwbfwbfwbfwbfwcQAaNfbfwbfpbfwbfwbfwbfxbfvbfvbfwbgnbfwbfwbfwbfwbfwbfwlBvnAjoVIiHAkRkmdqbQWlBvbfwbfyeTasJjaGvaGvaGwaGvaGvbfcbezbezbmtblnblhblnblnbmtblnblhblnblnblnblhblnblnqtTyezyezyezyezqtTbmtbefbefbefbloamCanYanYamCanYanYamCjrvbfUbfUbfUbfUbfUbfUbjMbjNbjNbjNbjNbjNbjNbjNbjNbjNbjNbjNbjNbjNbjNbjNbjNbjNblpbeLbeLaTebfMbfMbfMbfMbfMbfMbfMbfMbfMbfOaTebfMbfMbfMbfMbfMbKWbfMbfMbfMbfMbfMbfMbKWbfMbfMbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaoirLckrskrssSckrsaoibvLbdmbdmdpMeXSbeMbeLbeNbeNbeMbeLblvblwblrblrblrblvblwbeNbeLbfMbeObeLbhRbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSuIAbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbcMbbIbbIbcKbdmbdmgdgeTaeTabfobfwbfwbfxbfQbeqbeqbeqbftbfpaNfbfwbfwbfwbfvbfwbfwbfwaNfbfwbfpbfwbfwbfwbfwbgnbfwbfxaNfbfwbfwaNfbfwbfwbfwbgnbgnbfwaNfbfwbfwbfxbfwbfwbfwbfxbfxbfwbfwbfwbfwlBvcdnsissississisiyWvcXbfwbfyeTasJjaGvaGvaGwaGvaGvbfcbezbezbmtyezyezrgdphibmtbmWbmWfSqyezyezyezsmmyezyezyezyezyezyezyezbmtbezbezbezbezamCajRanoamCblxajSamCbfUbiWbfUbjBbfUbfUbfUbjTbeLbeMbeLbeLaNgbeLbeLbeKbeLbeLbeNbeLbeLbeLbeLbeLbeLbeLblyblzblzblzblzblzblzblzblzblAblzblzblzblzblzblzblzblAblzblzblzblzblzblzblzblzblBbLcbfMbKWbfLaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaoiaoiaoineNaoiaoiaoibekbdmbdmbcMbcKbeObeLbeLbeLbeLbeLblvblwblrblrblrblvblwbeLbeLbfMbeMbeLppAboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTblCboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTisgblDblEbcKbdmbdmgdgeTaeTabfobfwaNfbfvbgcbeqbeqbeqbftbgnbfvbfwbfwaNfbfxbfwaNfbfwbfwbgnbgnbfwaNfbfwaNfbfwbfwbfxbfwbfvbgnbfwbfwbfpbfvbgnbfwbfwbfvbfvbfpbfxaNfbfwbfwbfxbfwaNfbfwbfxaNfulMvcXulMulMlBvvcXulMulMbfwbfyeTasJjaGvaGvaGwaGvaGvbfcbezbezbmtyezeagdBywcvbmtbmWbmWfSqyezivmofgivmyezyezyezbhGkewkewbhGbmtbezbezbezbfKamCajOajOanYajOajOamCbhEbfUbfUbfUbfUbfUbfUbjTbeLbeKbeLbeLbeMbeLbeLbeLbeLbeLbeLbeLsAybeLbeLbeObeNbeLblHblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblHbfMbKXbfNbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aoiaoiaoiaoiangaTSajDavCalOaoibekbdmbdmbcMbcKbeLdYcbKXbKWbfMbfNbcMblKblLbdmbdmbcMblMbeLbeMbfMbeLbeLbeLbeLbeLbeLbeLbeLbeKbeLbeLbeLbeMbeLbeLbeKbeLbeLbeLbeLbeLbeObeLbeKbeLbeKbeKbeLbeLbeLbeLbeKbeLbeLbeLbeKbeKbeLbeLbeLbeObeLbeKbeKbeLbeLbeLbcMbcKbdmbdmgdgeTaeTabfoaNfbfvbgnbfQbeqbeqbeqbftbgnbfwaNfbfvbfxbfpbgnbfwbfvbfvbfwbgnbfxbfxbfwbfpbfwbfxbfpbfvbgnbfvbfvbfwbfwbfvbfvbfwbfwbgnbfwbfwbfwbfxbfwbgnbgnbfwbfwbfvbfvbfwbfwbfwbfwbfwaNfbfwbfwbfwbfwbfyeTasJjaGvaGvaGwaGvaGvbfcbezbezbmtyezyezyezyezbmtbmWbmWfSqyezivmenBnmWyezyezyezyezyezyezyezbmtcqFbezbezbezamCajOajOajPajOajOamCbfUbfUbfUbfUbfUbfUbfUbjTbeLbeLbfMbfNbfMbfMbfMbfMbfMbfMbfLbfMbfMbfNbKXbfMbfMbfMblHblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblHbfMbfNaTebfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aoikypdhTlRbajDajDajDajDalOaPmdqTbdmbdmbcMbcKbeLbeLbLebgabfNbfMbcMbcKbdmbdmbdmbcMbcKbfMbfMbfNbeLbeLbeLbeLbeMbeLbeLbeKbeLbeLbeLbeLbeLbeLbeKbeLbeLbeLbeLbeMbeLbeLbeLbeLbeLbeLbeLbeLbeLbeKbeLbeLbeLbeLbeLbeLbeLbeLbeLbeMbeLbeLbeLbeLbeLbeMbeLbcMbcKbdmbdmgdgwhbblOblPblQblQblQbjIbkruewbkroMoblQblQblQblQblQblQblQblQblQblQblQqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyblRwWRsJjaGvaGvaGwaGvaGvbfcbezbezbmtbmtuqkbmtbmtbmteBmeBmbmtyezrwhrwhrwhyezyezyezeLrkewkewlUbbmtbezbezbezbezamCamDamDamDalmamDamCamDamDbliamDamDamCbefblSbeLaNgbfMbfMbfMbfMqHkbfMbfMbfMbfMaTebfMbfMbKWvuRbfMbfNblHblIblIblUblUblUblUblUblUblUblUblUblUblUblUblUblUblUblUblUblUblUblUblUblIblIblHbfMblVbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aoiqDmsScaoiaoPajDajDajDdQZaPmoqDbdmbdmbcMbcKbeMbeLbfMbfMbfMbfMbcMbcKbdmbdmblLbcMbcKbfMbfLbfMbfMbgabfMbfMbfMbfLbfMbfMbfMbgabfLbfObfMbfMbfMbfMbfMbfMbfMbfMbfObfObfMbfMbfNbfMbfMbfMbgabfObfMbfMbfNbfMbfMbfMbfMbfMbfMbfMbfMbfMbfNaTebfMbeLbeLbcMbcKbdmbdmgdgninwWRblWeTaeTaeTablXwWRninwWRblXeTabjgeTaeTaeTaeTaeTayaxeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTablYeTacwEwvfblZaGvaGvaGwaGvaGvbfcbezbezbmtcifyezsrGkhoruIyezyezbmtyezyezyezyezyezyezyezyezyezyezyezbmtcqFbezbghbezamCalOalPavEajDamjamCamnatOajDajDalOamCbezbmabeLbeLbgabfMbfMbfMbfNbfMbfMbfMbfMbfMbgabfMbfMbKXmLWbfMblHblIblIblUbmbbmcbmdbKEbKEbGCbmdbmebmbbonbmbbKEbKEbGCbmbblUxZJfxQcsSblUblIblIblHbfMbfMbfMbfOaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aoiaoiaoiaoiajDajDajDbJLajDaoikCOblrblrblvblwbeLbeNbfMbfLbfMbfMbcMbcKblLbdmbdmbcMbcKbfMbfMbfNbfMbfNbfLbfLbfLbfMbfMbfNbfMbfMbfMbfMbfMbfMbfNbfMbfMbfObfMbfMbfMbfMbfMbfOaTebfMbfMbfMbLfbfMbfMbfMbfLbfMbfMbfMbfLbfMbKXbfMbfMbfMbfMbfMbfMbeLbeObcMbcKbdmbdmbiCuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetozGuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetbmjbmkaGuaGvaGwaGvaGvbfcbezbezbmtpwdyezyezyezyezyezpNabmtyezpGIbhFivmyezyezyezbhGkewkewbhGbmtcqFbezbezbezamCalRajDajDajDajDamDaoPajDbmhajDaqhamCbezbmabeLbeLbfMbfObfMbfMbfNbfMbfMbfNbfMbfMbfMbfMbfMbfMbfMbfMblHblIblIblUbmbbKEbmdbmebmebmdbmdlkfbKEwaqbmdbmebmebmdbmbblUkInbmmrsUblUblIblIblHbfMbfMbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaoiapsaoiaoiaoiaoiaoikCOblrblrblvblwbeNbeLbfNbfNbfMbfNbcMbcKbdmbdmbdmbcMbcKbfMbfMbfMbfMbfMbfObfMbfMbfMbfMbfMbfOaTebfMbfMbfMbLfbfMbfMbfOaTebfMbfNbfMbfMbfObfMbfMbfMbfMbgabfMbfMbfObfMbfLbfMbfMbfMbfMbLhbfMbfMbfNbfMbfMbfMbfLbeLbeLbcMbcKbdmbdmaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaSYaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaSYaGvaGwaGvaGvbfcbezbezbmtqpOyezyezhVDyezyezfDgbmthVDyezyezyezyezhVDyezyezyezyezyezbmtbezbezbezbezamCaoPajDajDajDajDxNmajDajDajDajDamraqbbezbmabeNbeLbfMbfMbfMbfLbfMbfMbfMbfMbfMbfMbfMbmnbfMbfMbfMbfMblHblIblIblUbmdbmebmdbmdbmebmdbmdblUbmebmebmdblUbmdbmdbmdblUbmdxIMbmdblUblIblIblHbfMbfMbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaoiajDaHYaoibgtemRwIKplDbdmbdmbcMbcKbeLbeLbfMbfMbLibfMbcMblcbdWbdWbdWnjMbcKbfObfObfMbfMbfOaTebfMbfNbfMbfMbfObfMbfMbfMbfMbgabfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfObfMbfMbfNbfMbfNbfMbfMbfMbfMbfLbfMbfMbfMbfLbeLbeKbcMbcKbdmbdmaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaGvaGvaGwaGvaGvbfcbezbfKbmtbmtbmtlvdbmtbmtbmtbmtbmtbmtbmtbmtbmtbmtbmtbmtbmtcExbmtbmtbmtbezbezbezbezamCajDajDajDajDajDamCajDajDajDajDamsaqbbezbmabeLbeLbfMbfMwaIbfMbfMaTebgabfMbfMbfMbfMbfMbfMbfMbfObfMblHblIblIblUblUbmrblUblUgFxbmrblUblUbmdbKEbmdblUblUbmrblUblUblUbmrblUblUblIblIblHbfObfMbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaoibJLalRaoiqenkcAnygoqDblLbdmbcMbcKbeLbeLbfMbfNbKWbgawjLbdibdibdibdibdibhzbfMbfObfLbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMaTebfObfMbfLbfMbfMbfMbfMbfMbfMbfNbfMaTebfMbfMbfMbfMaTebfMbfMbfMbfMbfMbfObfMbfLbfMbfMbfMbfMbeKbeLbmsbeobdmbdmaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGwaGvaGvbfcbiNbezbezbezbezbezbezbhMbhMbezbezbezbezbezbezbezbezbezbmtblffgNbmtbezbfKbezbezbezamCatzajDanKajDamnamCaqAamEajDajDaqPamCbezbmabeLbeLbfMbfMbfLbKWbLcbfMbfMbKXbfMbfMbfMbfMbfMbfMbfMbfMblHblIblIblUbGKbKEbmdbmdbmubmdbmdbKEbKEbmebmdbmdbmdbKElVhbmbpaWbmdlAYblUblIblIblHaTebfMbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaoiaoiaoiaoiqdSscabehwPlbdmblLbcMbcKbeMbeLbKWbfMbfMbfMbfMbfMbfLbfMbfMbfMbfMbfObfObKWaTebfObfMbfLbfMbfMbfMbfMbfMbfMbfNbfMaTebfMbfMbfMbfMbfMbfLbfMbfMbgabfMbfMbfMbfMbfObfObfMbgabfMbfMbfMbKWbfMbgaaTebfMbfObfMbfMbfNbfMbfNbfMbeLbeLbcMqCobdXbdWaGmaGmaGmaGmaGmaGmaGmaGmaGmbewaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmeTVbfbaGuaGvaGwaGvaGvbfcsHhbezbezbezbezbezbezbezbezbezbezbezbezbezbezbezbezbezbmtbmtbmtbmtbezbezbezbezbezamCamCamCamCamCamCamCanqalOajDajDajDaqbbmzbmabeLbeKbfMbfMbfMbKXbfMbfMbKWbfMbfObfMbfMbfMbfMbfMbfMbfMblHblIblIblUbmebmebmdbmdbmdbmdbmdbmebmebmebmdbmdbmdbmebmebmdbKEbKEbmdblUblIblIblHbfMbfMbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
-aiyaiyaiyaiybbIcbCeuRqBvbdibdivmTeaceacblJplHbeLbeMbfMbfMbfMbfLbfNbfNbfMbfNbfMbfLbfMbfMbfObfObfMbfMbfMbfLbfMbfMbgabfMbfMbfMbfMbfObfObfMbgabfMbfMbfMbfMbfNbfMbfNbKWbfMbfMbKWbfMbfMbfMbfMbfMbfLbfMbfMbKWbfMbfMbfMbfMbfMaTebfMbfMbfMaTebeLbeLbcMbOhoAjbbIaGCaGCaGCaGCaGCjjFpBajjFaKBaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGGaGCaGCaGCaGCaGCjjFpBajjFaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCpBakFUaGvaGvaGwaGvaGvbfcbJabezajsbfAbfAbfAbfAajsbfzbfzbfzbfzbfzbfzbfzajsbezbezbezbezbezbezbezbezbezbezbezmJxbMomJxcfnbmBbhMamCalOalOajDajDajDaqbbezbmabeLbeLbfMbfMbgabfMbfMbmCbfMbfMbfMbfMaTebfMbfMbfMbfMbfMblHblIblIblUfXybmDbmDbmDbmDbmDbmdbmebmDbmDbmDbmdbmdbmDbmDbmDbWcbWcfXyblUblIblIblHbfMbfMbfMbfNaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaoidbLiwykrskQJmvcaoitfubdmbdmbdVbldbdWbdWbdWbdWbdWbdWbdWbeabdmbdmbdmbcMbcKbeLbeNbfMbeLbeKbhRbhSbhSbhUbfMbfMbfMbfMbfLbfMbgQbhNbhNbhNbhNbhmbhmbhmbgQbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhShxibhSbhSbhSbhSbhSbhSbhSbcMbbIbbIbcKbdmbdmgdgeTaeTabfobgnaNfbfpbfQbeqbeqbeqbftbfwbfwbfwaNfbfvbfwbfwbfwbfwbfwaNfbgnbfwbfwbfwbfwbfvbfwbfwbfwbfwbfwbfwbfwbfvbfwbfwbfvbfwbfwbfwbfvbfwbfxbgnbfpbfvbfvbfwbfwbfxbfwulMnAjmFCxqnhyqsCKbQWvcXbfwbfyeTasJjaGvaGvaGwaGvaGvbfcsHhbezbipbggblebggbggbggblfbggbggbfUbfUbfUblgajsblhblhbliblhblhblhajsbljbfUbfUbfUbggbggbggbggbggbggbggbfUbiWbfUbhtbfUbiObfUbfUbfUbfUbfUbfUbjAbjAbfUbfUbfUbfUbfUbfUbfUbjBbfUbfUbfUbjTaNgbeLbfNbfNbfMbfMbgabfMbKXbfMaTebfMbfMbfMbfMbfMbfMbfMbLcbfMbKXaTebfNbfMbfMbfMqHkbfMbfMbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaoimIYeeikrskrskrsxNJbekbdmbdmbmibgPbdibdibdibdibdibdiuvHbcKbdmbdmbdmbcMbcKbeKbeLbfMbeKbeLbhRbhSbhTtaGxFAxFAxFAxFAxFAxFAbgQbgQbgQbgQbgQbgQbgQbgQbgQbhSbhSbhSbhSbhTbkabhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbcMbbIbbIbcKbdmbdmgdgeTaeTabfobfwbfwbfwbfQbeqbeqbeqbftbfwbfwbfvbfvbfwbfvbfwbfwbfwbfwbfwbgnbfwbfwbfwbfvbfvbgnbfwbfwbfwbfwbfwbfwcQAaNfbfwbfpbfwbfwbfwbfxbfvbfvbfwbgnbfwbfwbfwbfwbfwbfwlBvnAjoVIiHAkRkmdqbQWlBvbfwbfyeTasJjaGvaGvaGwaGvaGvbfcbezbezatLaJCaJCaJCaJCaJCbliaJCaJCatLblnbefbefajsalOatOajDangajDamnajsbefbefbefbloamCanYanYamCanYanYamCjrvbfUbfUbfUbfUbfUbfUbjMbjNbjNbjNbjNbjNbjNbjNbjNbjNbjNbjNbjNbjNbjNbjNbjNbjNblpbeLbeLaTebfMbfMbfMbfMbfMbfMbfMbfMbfMbfOaTebfMbfMbfMbfMbfMbKWbfMbfMbfMbfMbfMbfMbKWbfMbfMbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaoirLckrskrssSckrsaoibvLbdmbdmdpMeXSbeMbeLbeNbeNbeMbeLblvblwblrblrblrblvblwbeNbeLbfMbeObeLbhRbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSuIAbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbhSbcMbbIbbIbcKbdmbdmgdgeTaeTabfobfwbfwbfxbfQbeqbeqbeqbftbfpaNfbfwbfwbfwbfvbfwbfwbfwaNfbfwbfpbfwbfwbfwbfwbgnbfwbfxaNfbfwbfwaNfbfwbfwbfwbgnbgnbfwaNfbfwbfwbfxbfwbfwbfwbfxbfxbfwbfwbfwbfwlBvcdnsissississisiyWvcXbfwbfyeTasJjaGvaGvaGwaGvaGvbfcbezbezatLalOamqavCalPamoajDalOalOatLbezbezbezajsamrajDajDajDamEamEajsbezbezbezbezamCajRanoamCblxajSamCbfUbiWbfUbjBbfUbfUbfUbjTbeLbeMbeLbeLaNgbeLbeLbeKbeLbeLbeNbeLbeLbeLbeLbeLbeLbeLblyblzblzblzblzblzblzblzblzblAblzblzblzblzblzblzblzblAblzblzblzblzblzblzblzblzblBbLcbfMbKWbfLaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaoiaoiaoineNaoiaoiaoibekbdmbdmbcMbcKbeObeLbeLbeLbeLbeLblvblwblrblrblrblvblwbeLbeLbfMbeMbeLppAboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTblCboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTboTisgblDblEbcKbdmbdmgdgeTaeTabfobfwaNfbfvbgcbeqbeqbeqbftbgnbfvbfwbfwaNfbfxbfwaNfbfwbfwbgnbgnbfwaNfbfwaNfbfwbfwbfxbfwbfvbgnbfwbfwbfpbfvbgnbfwbfwbfvbfvbfpbfxaNfbfwbfwbfxbfwaNfbfwbfxaNfulMvcXulMulMlBvvcXulMulMbfwbfyeTasJjaGvaGvaGwaGvaGvbfcbezbezatLangajDajDajDajDanKajDatOatLbezbezbezajsaErajDajDbmhanqapIajsbezbezbezbfKamCajOajOanYajOajOamCbhEbfUbfUbfUbfUbfUbfUbjTbeLbeKbeLbeLbeMbeLbeLbeLbeLbeLbeLbeLsAybeLbeLbeObeNbeLblHblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblHbfMbKXbfNbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aoiaoiaoiaoiangaTSajDavCalOaoibekbdmbdmbcMbcKbeLdYcbKXbKWbfMbfNbcMblKblLbdmbdmbcMblMbeLbeMbfMbeLbeLbeLbeLbeLbeLbeLbeLbeKbeLbeLbeLbeMbeLbeLbeKbeLbeLbeLbeLbeLbeObeLbeKbeLbeKbeKbeLbeLbeLbeLbeKbeLbeLbeLbeKbeKbeLbeLbeLbeObeLbeKbeKbeLbeLbeLbcMbcKbdmbdmgdgeTaeTabfoaNfbfvbgnbfQbeqbeqbeqbftbgnbfwaNfbfvbfxbfpbgnbfwbfvbfvbfwbgnbfxbfxbfwbfpbfwbfxbfpbfvbgnbfvbfvbfwbfwbfvbfvbfwbfwbgnbfwbfwbfwbfxbfwbgnbgnbfwbfwbfvbfvbfwbfwbfwbfwbfwaNfbfwbfwbfwbfwbfyeTasJjaGvaGvaGwaGvaGvbfcbezbezatLamEamEamEbmhajDaxDaxDaxDatLbezbezbezajsalOajDajDajDannannajscqFbezbezbezamCajOajOajPajOajOamCbfUbfUbfUbfUbfUbfUbfUbjTbeLbeLbfMbfNbfMbfMbfMbfMbfMbfMbfLbfMbfMbfNbKXbfMbfMbfMblHblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblIblHbfMbfNaTebfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aoikypdhTlRbajDajDajDajDalOaPmdqTbdmbdmbcMbcKbeLbeLbLebgabfNbfMbcMbcKbdmbdmbdmbcMbcKbfMbfMbfNbeLbeLbeLbeLbeMbeLbeLbeKbeLbeLbeLbeLbeLbeLbeKbeLbeLbeLbeLbeMbeLbeLbeLbeLbeLbeLbeLbeLbeLbeKbeLbeLbeLbeLbeLbeLbeLbeLbeLbeMbeLbeLbeLbeLbeLbeMbeLbcMbcKbdmbdmgdgwhbblOblPblQblQblQbjIbkruewbkroMoblQblQblQblQblQblQblQblQblQblQblQqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyqJyblRwWRsJjaGvaGvaGwaGvaGvbfcbezbezatLalOalOalOajDajDbJyajSavDatLbezbezbezajsamoajDajDajDajDajDajsbezbezbezbezamCamDamDamDalmamDamCamDamDbliamDamDamCbefblSbeLaNgbfMbfMbfMbfMqHkbfMbfMbfMbfMaTebfMbfMbKWvuRbfMbfNblHblIblIblUblUblUblUblUblUblUblUblUblUblUblUblUblUblUblUblUblUblUblUblUblIblIblHbfMblVbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aoiqDmsScaoiaoPajDajDajDdQZaPmoqDbdmbdmbcMbcKbeMbeLbfMbfMbfMbfMbcMbcKbdmbdmblLbcMbcKbfMbfLbfMbfMbgabfMbfMbfMbfLbfMbfMbfMbgabfLbfObfMbfMbfMbfMbfMbfMbfMbfMbfObfObfMbfMbfNbfMbfMbfMbgabfObfMbfMbfNbfMbfMbfMbfMbfMbfMbfMbfMbfMbfNaTebfMbeLbeLbcMbcKbdmbdmgdgninwWRblWeTaeTaeTablXwWRninwWRblXeTabjgeTaeTaeTaeTaeTayaxeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTaeTablYeTacwEwvfblZaGvaGvaGwaGvaGvbfcbezbezatLannannannajDanLatLajOakNatLbezbezbezajsblhblhaDgblhblhblhajscqFbezbghbezamCalOalPavEajDamjamCamnatOajDajDalOamCbezbmabeLbeLbgabfMbfMbfMbfNbfMbfMbfMbfMbfMbgabfMbfMbKXmLWbfMblHblIblIblUbmbbmcbmdbKEbKEbGCbmdbmebmbbonbmbbKEbKEbGCbmbblUxZJfxQcsSblUblIblIblHbfMbfMbfMbfOaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aoiaoiaoiaoiajDajDajDbJLajDaoikCOblrblrblvblwbeLbeNbfMbfLbfMbfMbcMbcKblLbdmbdmbcMbcKbfMbfMbfNbfMbfNbfLbfLbfLbfMbfMbfNbfMbfMbfMbfMbfMbfMbfNbfMbfMbfObfMbfMbfMbfMbfMbfOaTebfMbfMbfMbLfbfMbfMbfMbfLbfMbfMbfMbfLbfMbKXbfMbfMbfMbfMbfMbfMbeLbeObcMbcKbdmbdmbiCuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetozGuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetuetbmjbmkaGuaGvaGwaGvaGvbfcbezbezatLamjajDanKajDalRatLanIajRatLbmlbezbezajsamnajDajDapWajDamjajscqFbezbezbezamCalRajDajDajDajDamDaoPajDbmhajDaqhamCbezbmabeLbeLbfMbfObfMbfMbfNbfMbfMbfNbfMbfMbfMbfMbfMbfMbfMbfMblHblIblIblUbmbbKEbmdbmebmebmdbmdlkfbKEwaqbmdbmebmebmdbmbblUkInbmmrsUblUblIblIblHbfMbfMbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaoiapsaoiaoiaoiaoiaoikCOblrblrblvblwbeNbeLbfNbfNbfMbfNbcMbcKbdmbdmbdmbcMbcKbfMbfMbfMbfMbfMbfObfMbfMbfMbfMbfMbfOaTebfMbfMbfMbLfbfMbfMbfOaTebfMbfNbfMbfMbfObfMbfMbfMbfMbgabfMbfMbfObfMbfLbfMbfMbfMbfMbLhbfMbfMbfNbfMbfMbfMbfLbeLbeLbcMbcKbdmbdmaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaSYaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaSYaGvaGwaGvaGvbfcbezbezatLatLatLatLatLatLatLatLatLatLbezbezbezajsajDajDajDajDajDanKajsbezbezbezbezamCaoPajDajDajDajDxNmajDajDajDajDamraqbbezbmabeNbeLbfMbfMbfMbfLbfMbfMbfMbfMbfMbfMbfMbmnbfMbfMbfMbfMblHblIblIblUbmdbmebmdbmdbmebmdbmdblUbmebmebmdblUbmdbmdbmdblUbmdxIMbmdblUblIblIblHbfMbfMbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaoiajDaHYaoibgtemRwIKplDbdmbdmbcMbcKbeLbeLbfMbfMbLibfMbcMblcbdWbdWbdWnjMbcKbfObfObfMbfMbfOaTebfMbfNbfMbfMbfObfMbfMbfMbfMbgabfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfObfMbfMbfNbfMbfNbfMbfMbfMbfMbfLbfMbfMbfMbfLbeLbeKbcMbcKbdmbdmaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaHwaGvaGvaGwaGvaGvbfcbezbfKbezbezcqFbezbezbezcqFcqFbezbezbezbezbezajsaoPajDanLajsavvbfAajsbezbezbezbezamCajDajDajDajDajDamCajDajDajDajDamsaqbbezbmabeLbeLbfMbfMwaIbfMbfMaTebgabfMbfMbfMbfMbfMbfMbfMbfObfMblHblIblIblUblUbmrblUblUgFxbmrblUblUbmdbKEbmdblUblUbmrblUblUblUbmrblUblUblIblIblHbfObfMbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaoibJLalRaoiqenkcAnygoqDblLbdmbcMbcKbeLbeLbfMbfNbKWbgawjLbdibdibdibdibdibhzbfMbfObfLbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMaTebfObfMbfLbfMbfMbfMbfMbfMbfMbfNbfMaTebfMbfMbfMbfMaTebfMbfMbfMbfMbfMbfObfMbfLbfMbfMbfMbfMbeKbeLbmsbeobdmbdmaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGvaGwaGvaGvbfcbiNbezbezbezbezbezbezbezbezbezbezbezbezbezbezajsatzajDalOajsajObmtajsbfKbezbezbezamCatzajDanKajDamnamCaqAamEajDajDaqPamCbezbmabeLbeLbfMbfMbfLbKWbLcbfMbfMbKXbfMbfMbfMbfMbfMbfMbfMbfMblHblIblIblUbGKbKEbmdbmdbmubmdbmdbKEbKEbmebmdbmdbmdbKElVhbmbpaWbmdlAYblUblIblIblHaTebfMbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaoiaoiaoiaoiqdSscabehwPlbdmblLbcMbcKbeMbeLbKWbfMbfMbfMbfMbfMbfLbfMbfMbfMbfMbfObfObKWaTebfObfMbfLbfMbfMbfMbfMbfMbfMbfNbfMaTebfMbfMbfMbfMbfMbfLbfMbfMbgabfMbfMbfMbfMbfObfObfMbgabfMbfMbfMbKWbfMbgaaTebfMbfObfMbfMbfNbfMbfNbfMbeLbeLbcMqCobdXbdWaGmaGmaGmaGmaGmaGmaGmaGmaGmbewaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmaGmeTVbfbaGuaGvaGwaGvaGvbfcsHhbezbezbezbezbezbezbezbezbezbezbfKbezbezbmxajsajDalRalOajsanIbmyajsbezbezbezbezamCamCamCamCamCamCamCanqalOajDajDajDaqbbmzbmabeLbeKbfMbfMbfMbKXbfMbfMbKWbfMbfObfMbfMbfMbfMbfMbfMbfMblHblIblIblUbmebmebmdbmdbmdbmdbmdbmebmebmebmdbmdbmdbmebmebmdbKEbKEbmdblUblIblIblHbfMbfMbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
+aiyaiyaiyaiybbIcbCeuRqBvbdibdivmTeaceacblJplHbeLbeMbfMbfMbfMbfLbfNbfNbfMbfNbfMbfLbfMbfMbfObfObfMbfMbfMbfLbfMbfMbgabfMbfMbfMbfMbfObfObfMbgabfMbfMbfMbfMbfNbfMbfNbKWbfMbfMbKWbfMbfMbfMbfMbfMbfLbfMbfMbKWbfMbfMbfMbfMbfMaTebfMbfMbfMaTebeLbeLbcMbOhoAjbbIaGCaGCaGCaGCaGCjjFpBajjFaKBaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGGaGCaGCaGCaGCaGCjjFpBajjFaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCaGCpBakFUaGvaGvaGwaGvaGvbfcbJabezajsbfAbfAbfAbfAajsbfzbfzbfzbfzbfzbfzbfzajsajsajsajsajsajsajsajsbezbezbezbezmJxbMomJxcfnbmBbhMamCalOalOajDajDajDaqbbezbmabeLbeLbfMbfMbgabfMbfMbmCbfMbfMbfMbfMaTebfMbfMbfMbfMbfMblHblIblIblUfXybmDbmDbmDbmDbmDbmdbmebmDbmDbmDbmdbmdbmDbmDbmDbWcbWcfXyblUblIblIblHbfMbfMbfMbfNaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
 aiyaiyaiyaiybbIcbClqqbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbfMbfMbfMbfMbfMbfMbfMbfNbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfNbfMbfNbKWbfMbfMbKWbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbKXbLcbfMbfMbfLbfMbfMbfMbfMbfMaTebfMbfLbfLbgabfMbfMbfMbKWbfMbgabfMbeLbeLwjLbdibdibdiaGXaGXaGXaGXaGXaGXwmUaGXaGXaGXwnLaGXaGXaGXaGXaGXaGXaGXaGXaGXaGXaGXaGXaGXaGXwvAwmUaGXwAhaGCaGCaGCaGCbmwaGCaGCatLaxDatLaxDaxDaxDatLbbIbbIatLaxDaxDatLatMatMatNatMatMatMatMatMatMatMatMatMatMatMatLsMObcKbdmbdmbpQbdmbdmbfcsHhbezajsbmKaQGajQajSajsajDajDangaoranLalPalOajsbhMbmBbmLbmAbezbezbezbezbezbezbezbezbezbezbezbmAbmMamCapVannajDajDamZamCbezbmabeLbeLbfMbfMbfMbfMbfMbfMbfMaTebfMbfMbfMbfNbfMbgabfMbfMblHblIblIblUbmNbmObmNbmNbmNbmPbmQbmRbmSbmTbmUbKJbmRbmVbmNbmNbmNbmObKKblUblIblIblHbfMbfMbfNbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
 aiyaiyaiyaiycbCcbCbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfObfMbfMbfNbfMbfMaTebfMbfMbfMbKXbLcbfMbfMbfLbfMbfMbfMbfMaTebfMbfMbfMaTebfMbfMbfNbfMbfMbfMbfMbfMbfLbfMbfMbfNbfMbfMbfLbfMbfMbfLbfMbfMbKWbfMbfMbeKbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbKSbKSwEjwEjwEjwEjwEjwEjwEjwEjatLanoaxDavAajRamtatLhhebbIatLanQamtatLapSajDajDbnkajDanpamValObJKaocajDajDaDsalOatLbbIbcKbdmbdmbpQbdmbdmbfcbezbezajsaQGaQGajOajOajsajDajDajDajDajDajDamjajsbmAbmAbezbezbezbezbezbezatLaxDaxDaxDatLaxDatLboWtAxamCajDajDajDajDajDaqbboWcnEbeLbeMwaIbfMbfMbfNbfMbfMbfMbfMbfMbfObfMbfMbfMvKdbfMbfMblHblIblIblUbmdbmdwMLwSGxgibnlbmQbmRbnmlIPbnnbmebKLbnobmdtmxbKEbKEbmeblUblIblIblHbfMbfMbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
 aiyaiyaiyaiyaiEbbIbfMbfMvAJbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfNbfMbfMbfMbfMbfMbfMbfNbfMbfMbfObfMbfMbfMbfMbfMbfOaTebfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfMbfNbfMbfMbfMbfMbfMbfMaTebfMbfNbfMbfMbfMbfMbfMbfMbfMbfLbfMbfMbfMbfMaTebfMbfLbfLbeKbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLbeLaNgbeLbeLbeLbeLbeLwEjbbIbbIbbIbbIbbIbbIbbIatLajOajPajOajOajOatLbbXlocatLanIajOaxDajDajDajDajDajDanpalOalObJKajDajDajDajDalOatLbbIbcKbdmbdmbpQbdmbdmbfcbezbezajsbfAajsajRajOlxUajDajDajDajDapRajDanhajsbnxbezbmAbezbezbezbezcqFatLajSanQakBaxDanoatLboWfqKamCajDajDajDajDajDaqbboWkiHbeNbeLbfMbfMbfMbfMbfMbfMbfMbfNbfMbfMbfMbfMbfMbfMbfMbfNblHblIblIblUbmbbmdbmdbmdbKEbKEbmdbmdbmubmebmdbmebmebmdbmdbmebmebmebmeblUblIblIblHbfObfMbfMbfMaizaiyaiyaiyaiyaiyaiyaiyaiyaiy
@@ -11017,17 +10938,17 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaacJbAvbsGbsabsabsabsGbAvacJaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaacJbAvaitaithxraitaitbAvacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJeCypElgeadsLdsLdsLgeageaeDzlXNgDIdsLeCynHReCykEIkOqkOqkOqkOqldYleCldYkOqkOqkOqkOqkEIaamaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaailaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaacJbAvimNioKajDiuoiFqbAvacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJeCyeCygealXNdsLdsLgeageageadsLdsLeCyeCynHReCykEIkOqkOqkOqkOqldYldYldYkOqkOqkUWkOqkEIaamaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaailaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaacJbAvjUwajDajDajDajDbAvacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaailaabeCygeadsLqypqypgeageadsLlKAeCyeCynHRnHReCykEIkOqkSlkOqkUWkOqkOqkOqkOqkOqkSllfckEIaamaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaailaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaacJacJacJacJacJacJailacJacJbAvkOwajDlBEkOIajDbAvacJacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJeCyeCyeCydsLdsLdsLgeagealXNdsLeCynHRluqluqluqkEIkEIkEIkOqkOqkOqkOqkOqkEIkEIkEIkEIlhfaamazyaabaabaabaabaabaabaabaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaailaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaafgpaitaitlXzaitbAvlZnaisbAvacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJeCypEleCyeCylXNdsLgeageageaeCyeCyluqluqrDuluqluqluqkEIkEIkEIkEIeCyhxWeCyeCyeCyeCyeCyaamaamaamaamaamaamaamaamaamaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaailaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaafgpngyniXniXnlrbAvaoGsANbAvacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJeCypEldsLxVtdsLgCAgeafEKxCheCynHRluqtIOvNUwxRepOluqluqluqluqluqluqdsLeCyeCygeapElpElgeageapElpElpElpElgeageaeCyaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaailaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaalhGomDniXniXonWbAvajOavDbAvacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJeCygeadsLdsLdsLdsLgeageaeCyeCynHRluqvNUvNUvNUvNUxbHvNUvNUvNUvNUluqdsLeCyvKJgeaeOMeOMeOMeOMeOMeOMeOMeOMeOMgeaeCyaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaailaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaalhGoVKoZpniXpanbAvaQGbAvlJYacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJeCypElgeadsLdsLdsLgeageaojReCynHRluqluqluqluqluqluqvNUuWyhJsdVRluqdsLdsLgeageaeOMkYTkYTxbseJCoAFnEYnEYeOMgeaeCyaabaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaailaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaalhGpwSpATpNCpNCbAvalYpQwlJYacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJeCyeCygeadsLdsLdsLgeageadsLeCyeCyqxQluqhJshKHxLbluqvNUuWyhJsvNUluqdsLeOMeOMeOMeOMkYTkYTfgwwRNwRNweRtjseOMpEleCyaamaabaabaabaabaabaabaabaabaabaabaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaailaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaafgplJYlJYlJYlJYlJYlJYlJYlJYacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJaabeCypEldsLdsLdsLgeaiFdlBadsLeCyoeIluquJgvNUvNUxbHvNUvNUvNUvNUluqdsLeOMrOIeOMylLkYTkYTkYTkYTkYTkYTkYTeOMpEleJCeCyeCyeCyeCyeCyeCyeCyeCyeCyeCyeCyaabaabaabaabaabaabaabaabaaaaaaaaaaaaaaaailaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaacJacJacJacJailacJacJacJacJacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJaabeCydXtlBadsLdsLgeageadsLdsLlBadsLluqluqluqluqluqqQuluqcbvcbvluqdsLeOMhyDeOMylLkYTwDOfgwhBPiZhtKMkIreOMdsLgeageageageageaeJCgeageageageaeJCeCyeCyeCyeCyeCyeCyeCyeCyaabaaaaaaaaaaaaaaaailaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJeCyeCygeadsLqypdsLgeageadsLlBadsLdsLdsLdsLdsLdsLsIageahnAxSkgeageadsLsSDkYTkYTkYTkYTkYTlbxeJCgeakPnnEYeOMdsLdsLgealKAgeageageageageageageageageageageageageageageaeCyaabaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJeCypElgeadsLqypdsLgeageadsLdsLdsLqypdsLdsLlBadsLlOgtKIdsLdsLdsLlBadsLeOMeOMeOMeOMrzCeOMeOMeOMeOMeOMeOMpZUdsLdsLdsLdsLdsLdsLqypdsLqypdsLdsLdsLdsLdsLdsLdsLdsLdsLgeaeCyaabaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaacJacJacJacJacJacJailacJacJacJacJacJacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaafCeCyeCygeagealBadsLgeageadsLdsLdsLmRRdsLdsLdsLqyplxXdsLdsLqypdsLdsLdsLdsLdsLdsLiqNgeaeXadsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLgeaeCyaabaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaacJbAvkOwajDlBEkOIajDbAvacJacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJeCyeCyeCydsLdsLdsLgeagealXNdsLeCynHRluqluqluqkEIkEIkEIkOqkOqkOqkOqkOqkEIkEIkEIkEIlhfaamazyaabaabaabaabaabaabaabaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaailaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaalhGaitaitlXzaitbAvlZnaisbAvacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJeCypEleCyeCylXNdsLgeageageaeCyeCyluqluqrDuluqluqluqkEIkEIkEIkEIeCyhxWeCyeCyeCyeCyeCyaamaamaamaamaamaamaamaamaamaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaailaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaafgpngyniXniXnlrbAvaoGsANbAvacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJeCypEldsLxVtdsLgCAgeafEKxCheCynHRluqtIOvNUwxRepOluqluqluqluqluqluqdsLeCyeCygeapElpElgeageapElpElpElpElgeageaeCyaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaailaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaafgpomDniXniXonWbAvajOavDbAvacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJeCygeadsLdsLdsLdsLgeageaeCyeCynHRluqvNUvNUvNUvNUxbHvNUvNUvNUvNUluqdsLeCyvKJgeaeOMeOMeOMeOMeOMeOMeOMeOMeOMgeaeCyaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaailaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaafgpoVKoZpniXpanbAvaQGbAvlJYacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJeCypElgeadsLdsLdsLgeageaojReCynHRluqluqluqluqluqluqvNUuWyhJsdVRluqdsLdsLgeageaeOMkYTkYTxbseJCoAFnEYnEYeOMgeaeCyaabaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaailaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaafgppwSpATpNCpNCbAvalYpQwlJYacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJeCyeCygeadsLdsLdsLgeageadsLeCyeCyqxQluqhJshKHxLbluqvNUuWyhJsvNUluqdsLeOMeOMeOMeOMkYTkYTfgwwRNwRNweRtjseOMpEleCyaamaabaabaabaabaabaabaabaabaabaabaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaailaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaafgplJYlJYlJYlJYlJYlJYlJYlJYacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJaabeCypEldsLdsLdsLgeaiFdlBadsLeCyoeIluquJgvNUvNUxbHvNUvNUvNUvNUluqdsLeOMrOIeOMylLkYTkYTkYTkYTkYTkYTkYTeOMpEleJCeCyeCyeCyeCyeCyeCyeCyeCyeCyeCyeCyaabaabaabaabaabaabaabaabaaaaaaaaaaaaaaaailaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaacJacJacJacJailacJacJacJacJacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJaabeCydXtlBadsLdsLgeageadsLdsLlBadsLluqluqluqluqluqqQuluqcbvcbvluqdsLeOMhyDeOMylLkYTwDOfgwhBPiZhtKMkIreOMdsLgeageageageageaeJCgeageageageaeJCeCyeCyeCyeCyeCyeCyeCyeCyaabaaaaaaaaaaaaaaaailaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJeCyeCygeadsLqypdsLgeageadsLlBadsLdsLdsLdsLdsLdsLsIageahnAxSkgeageadsLsSDkYTkYTkYTkYTkYTlbxeJCgeakPnnEYeOMdsLdsLgealKAgeageageageageageageageageageageageageageageaeCyaabaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJeCypElgeadsLqypdsLgeageadsLdsLdsLqypdsLdsLlBadsLlOgtKIdsLdsLdsLlBadsLeOMeOMeOMeOMrzCeOMeOMeOMeOMeOMeOMpZUdsLdsLdsLdsLdsLdsLqypdsLqypdsLdsLdsLdsLdsLdsLdsLdsLdsLgeaeCyaabaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaafCeCyeCygeagealBadsLgeageadsLdsLdsLmRRdsLdsLdsLqyplxXdsLdsLqypdsLdsLdsLdsLdsLdsLiqNgeaeXadsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLgeaeCyaabaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJaabeCyeCygeadsLdsLgeageadsLlBadsLdsLlBadsLdsLdsLgnfdsLdsLqypdsLdsLlBadsLdsLdsLiqNgeaeXadsLlBadsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLdsLlBageaeCyaabaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJacJacJacJacJacJailacJacJacJacJacJacJacJacJailacJacJacJacJacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJaabaabeCypElgeadsLgeageadsLdsLdsLqypdsLdsLdsLdsLlxXdsLdsLdsLdsLdsLdsLdsLdsLdsLbUqlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRbUqdsLdsLdsLqypqypqyppEleCyaabaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaacJeCyeCyeCyeCypEldsLgeagealBadsLdsLqypdsLdsLdsLdsLlxXdsLdsLdsLlOhlPalUCdsLdsLdsLlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRlXRdsLdsLlBadsLdsLdsLpEleCyeCyaabaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

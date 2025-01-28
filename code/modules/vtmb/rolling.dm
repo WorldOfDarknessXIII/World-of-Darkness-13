@@ -349,6 +349,41 @@ SUBSYSTEM_DEF(woddices)
 	else
 		return 3
 
+/proc/get_dice_image(input, diff)
+	var/dat = ""
+	var/span_end = ""
+	if((input >= diff && input != 1) || input == 10)
+		dat += "<span class='nicegreen'>"
+		span_end = "</span>"
+	if(input == 1)
+		dat += "<span class='danger'>"
+		span_end = "</span>"
+	switch(input)
+		if(1)
+			dat += "❶"
+		if(2)
+			dat += "❷"
+		if(3)
+			dat += "❸"
+		if(4)
+			dat += "❹"
+		if(5)
+			dat += "❺"
+		if(6)
+			dat += "❻"
+		if(7)
+			dat += "❼"
+		if(8)
+			dat += "❽"
+		if(9)
+			dat += "❾"
+		if(10)
+			dat += "❿"
+		else
+			dat += "⓿"
+	dat += span_end
+	return dat
+
 /proc/secret_vampireroll(var/dices_num = 1, var/hardness = 1, var/mob/living/rollperformer, var/stealthy = FALSE)
 	if(!dices_num)
 		create_number_on_mob(rollperformer, "#646464", "0")
@@ -359,17 +394,19 @@ SUBSYSTEM_DEF(woddices)
 	dices_num = max(1, dices_num-dices_decap)
 	var/wins = 0
 	var/brokes = 0
+	var/result = ""
 	for(var/i in 1 to dices_num)
 		var/roll = rand(1, 10)
 		if(roll == 1)
 			brokes += 1
-		else if(roll >= hardness)
+		else if(roll >= hardness || roll == 10)
 			wins += 1
+		result += get_dice_image(roll, hardness)
 	wins = wins-brokes
+	to_chat(rollperformer, result)
 	if(wins < 0)
 		if(!stealthy)
 			create_number_on_mob(rollperformer, "#ff0000", "Botch!")
-		to_chat(rollperformer, "<span class='danger'>Botch!</span>")
 		return -1
 	if(wins == 0)
 		if(!stealthy)
@@ -395,10 +432,6 @@ SUBSYSTEM_DEF(woddices)
 	if(wins >= 7)
 		if(!stealthy)
 			create_number_on_mob(rollperformer, "#b200ff", "7+")
-	if(wins)
-		to_chat(rollperformer, "<span class='nicegreen'><b>[wins] successes!</b></span>")
-	else
-		to_chat(rollperformer, "<b>No successes!</b>")
 	return wins
 
 /datum/action/aboutme

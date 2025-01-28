@@ -16,6 +16,7 @@
 	desc = "Lethaly efficient brawl weapon."
 	force = 20
 	attack_diff_override = 4
+	icon = 'code/modules/wod13/weapons.dmi'
 	lefthand_file = 'code/modules/wod13/righthand.dmi'
 	righthand_file = 'code/modules/wod13/lefthand.dmi'
 	worn_icon = 'code/modules/wod13/worn.dmi'
