@@ -340,7 +340,9 @@
 /area/awaymission/moonoutpost19/syndicate)
 "be" = (
 /obj/machinery/vending/cigarette,
-/obj/structure/sign/poster/contraband/smoke/directional/north,
+/obj/structure/sign/poster/contraband/smoke{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/syndicate)
 "bf" = (
@@ -402,7 +404,9 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/space_cube/directional/west,
+/obj/structure/sign/poster/contraband/space_cube{
+	pixel_x = -32
+	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -422,7 +426,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bo" = (
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 23;
 	req_access = null;
 	req_access_txt = "150"
@@ -615,7 +619,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/airalarm/directional/east{
+/obj/machinery/airalarm{
+	dir = 8;
 	pixel_x = 23;
 	req_access = null;
 	req_access_txt = "150"
@@ -782,7 +787,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "bU" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 23;
 	req_access = null;
 	req_access_txt = "150"
@@ -838,7 +843,9 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bZ" = (
-/obj/structure/sign/poster/contraband/syndicate_recruitment/directional/north,
+/obj/structure/sign/poster/contraband/syndicate_recruitment{
+	pixel_y = 32
+	},
 /obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
@@ -888,8 +895,7 @@
 /obj/machinery/airalarm/unlocked{
 	pixel_y = 23;
 	req_access = null;
-	req_access_txt = "150";
-	dir = 1
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel{
 	dir = 8;
@@ -1004,7 +1010,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/hacking_guide/directional/east,
+/obj/structure/sign/poster/contraband/hacking_guide{
+	pixel_x = 32
+	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -1332,7 +1340,8 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cS" = (
-/obj/machinery/airalarm/directional/east{
+/obj/machinery/airalarm{
+	dir = 8;
 	pixel_x = 23;
 	req_access = null;
 	req_access_txt = "150"
@@ -1511,7 +1520,8 @@
 /area/awaymission/moonoutpost19/syndicate)
 "dh" = (
 /obj/structure/chair/wood,
-/obj/machinery/airalarm/directional/west{
+/obj/machinery/airalarm{
+	dir = 4;
 	pixel_x = -23;
 	req_access = null;
 	req_access_txt = "150"
@@ -1540,7 +1550,8 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "dk" = (
-/obj/machinery/airalarm/directional/east{
+/obj/machinery/airalarm{
+	dir = 8;
 	pixel_x = 23;
 	req_access = null;
 	req_access_txt = "150"
@@ -1607,7 +1618,9 @@
 /obj/structure/table/wood,
 /obj/item/pen,
 /obj/item/paper/fluff/awaymissions/moonoutpost19/log/personal_2,
-/obj/structure/sign/poster/contraband/c20r/directional/south,
+/obj/structure/sign/poster/contraband/c20r{
+	pixel_y = -32
+	},
 /turf/open/floor/wood{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -2027,7 +2040,7 @@
 	},
 /obj/structure/alien/weeds,
 /obj/structure/alien/egg/burst,
-/obj/machinery/camera/directional/north{
+/obj/machinery/camera{
 	c_tag = "Xenobiology Containment North";
 	network = list("mo19x")
 	},
@@ -2148,8 +2161,9 @@
 /obj/machinery/light/small/broken{
 	dir = 8
 	},
-/obj/machinery/camera/directional/west{
+/obj/machinery/camera{
 	c_tag = "Xenobiology";
+	dir = 4;
 	network = list("mo19","mo19r")
 	},
 /turf/open/floor/plasteel/white/side{
@@ -2216,7 +2230,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/sign/poster/official/build/directional/north,
+/obj/structure/sign/poster/official/build{
+	pixel_y = 32
+	},
 /obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -2228,8 +2244,7 @@
 	},
 /obj/machinery/airalarm/unlocked{
 	pixel_y = 23;
-	req_access = null;
-	dir = 1
+	req_access = null
 	},
 /obj/structure/cable,
 /turf/open/floor/plating{
@@ -2335,8 +2350,7 @@
 	},
 /obj/machinery/airalarm/unlocked{
 	pixel_y = 23;
-	req_access = null;
-	dir = 1
+	req_access = null
 	},
 /obj/structure/alien/weeds,
 /turf/open/floor/plasteel{
@@ -2569,8 +2583,9 @@
 	dir = 4
 	},
 /obj/structure/alien/weeds,
-/obj/machinery/camera/directional/east{
+/obj/machinery/camera{
 	c_tag = "Xenobiology Containment East";
+	dir = 8;
 	network = list("mo19x")
 	},
 /turf/open/floor/engine,
@@ -2644,8 +2659,7 @@
 	},
 /obj/machinery/airalarm/unlocked{
 	pixel_y = 23;
-	req_access = null;
-	dir = 1
+	req_access = null
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -2662,7 +2676,9 @@
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
-/obj/structure/sign/poster/official/safety_report/directional/north,
+/obj/structure/sign/poster/official/safety_report{
+	pixel_y = 32
+	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -3156,7 +3172,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/unlocked{
-	dir = 4;
+	dir = 8;
 	pixel_x = 23;
 	req_access = null
 	},
@@ -3244,8 +3260,9 @@
 "hb" = (
 /obj/machinery/light/broken,
 /obj/structure/alien/weeds,
-/obj/machinery/camera/directional/south{
+/obj/machinery/camera{
 	c_tag = "Xenobiology Containment South";
+	dir = 1;
 	network = list("mo19x")
 	},
 /turf/open/floor/engine,
@@ -3403,8 +3420,7 @@
 	},
 /obj/machinery/airalarm/unlocked{
 	pixel_y = 23;
-	req_access = null;
-	dir = 1
+	req_access = null
 	},
 /obj/item/paper/fluff/awaymissions/moonoutpost19/log/gerald,
 /turf/open/floor/plasteel/cafeteria{
@@ -3527,8 +3543,9 @@
 	},
 /obj/machinery/light/small/broken,
 /obj/item/paper/fluff/awaymissions/moonoutpost19/research/evacuation,
-/obj/machinery/camera/directional/south{
+/obj/machinery/camera{
 	c_tag = "Research Division";
+	dir = 1;
 	network = list("mo19","mo19r")
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -3558,7 +3575,7 @@
 /obj/item/storage/firstaid/regular,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/unlocked{
-	dir = 4;
+	dir = 8;
 	pixel_x = 23;
 	req_access = null
 	},
@@ -4057,8 +4074,9 @@
 	pixel_y = -32
 	},
 /obj/machinery/light/small/broken,
-/obj/machinery/camera/directional/south{
+/obj/machinery/camera{
 	c_tag = "Research Director's Office";
+	dir = 1;
 	network = list("mo19","mo19r")
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -4419,7 +4437,9 @@
 /area/awaymission/moonoutpost19/arrivals)
 "jw" = (
 /obj/machinery/vending/snack,
-/obj/structure/sign/poster/contraband/eat/directional/north,
+/obj/structure/sign/poster/contraband/eat{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -4526,8 +4546,7 @@
 "jI" = (
 /obj/machinery/airalarm/unlocked{
 	pixel_y = 23;
-	req_access = null;
-	dir = 1
+	req_access = null
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -4652,8 +4671,7 @@
 	},
 /obj/machinery/airalarm/unlocked{
 	pixel_y = 23;
-	req_access = null;
-	dir = 1
+	req_access = null
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -4837,7 +4855,7 @@
 	},
 /obj/machinery/processor,
 /obj/machinery/airalarm/unlocked{
-	dir = 4;
+	dir = 8;
 	pixel_x = 23;
 	req_access = null
 	},
@@ -4878,8 +4896,9 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = -32
 	},
-/obj/machinery/camera/directional/south{
+/obj/machinery/camera{
 	c_tag = "Arrivals North";
+	dir = 1;
 	network = list("mo19")
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -4890,7 +4909,9 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kx" = (
-/obj/structure/sign/poster/official/nanotrasen_logo/directional/south,
+/obj/structure/sign/poster/official/nanotrasen_logo{
+	pixel_y = -32
+	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -5177,8 +5198,9 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26
 	},
-/obj/machinery/camera/directional/east{
+/obj/machinery/camera{
 	c_tag = "Kitchen";
+	dir = 8;
 	network = list("mo19")
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -5281,7 +5303,7 @@
 	},
 /obj/structure/chair/wood,
 /obj/machinery/airalarm/unlocked{
-	dir = 4;
+	dir = 8;
 	pixel_x = 23;
 	req_access = null
 	},
@@ -5332,8 +5354,9 @@
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/camera/directional/east{
+/obj/machinery/camera{
 	c_tag = "Bar";
+	dir = 8;
 	network = list("mo19")
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -5790,7 +5813,9 @@
 /area/awaymission/moonoutpost19/arrivals)
 "mC" = (
 /obj/machinery/vending/cigarette,
-/obj/structure/sign/poster/contraband/smoke/directional/south,
+/obj/structure/sign/poster/contraband/smoke{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "mD" = (
@@ -5880,8 +5905,9 @@
 	pixel_x = 32
 	},
 /obj/item/paper/fluff/awaymissions/moonoutpost19/welcome,
-/obj/machinery/camera/directional/east{
+/obj/machinery/camera{
 	c_tag = "Arrivals South";
+	dir = 8;
 	network = list("mo19")
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -5961,7 +5987,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/unlocked{
-	dir = 4;
+	dir = 8;
 	pixel_x = 23;
 	req_access = null
 	},
@@ -6121,8 +6147,9 @@
 	desc = "Your instincts say you shouldn't be following these.";
 	icon_state = "ltrails_2"
 	},
-/obj/machinery/camera/directional/west{
+/obj/machinery/camera{
 	c_tag = "Dormitories";
+	dir = 4;
 	network = list("mo19")
 	},
 /turf/open/floor/plasteel{
@@ -6206,7 +6233,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "ny" = (
 /obj/machinery/airalarm/unlocked{
-	dir = 4;
+	dir = 8;
 	pixel_x = 23;
 	req_access = null
 	},

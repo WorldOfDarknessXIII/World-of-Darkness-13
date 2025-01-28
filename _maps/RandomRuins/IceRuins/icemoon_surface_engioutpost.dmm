@@ -652,7 +652,9 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "bU" = (
-/obj/structure/sign/poster/official/build/directional/west,
+/obj/structure/sign/poster/official/build{
+	pixel_x = -32
+	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
@@ -687,7 +689,9 @@
 /turf/open/floor/plasteel/icemoon,
 /area/icemoon/surface/outdoors)
 "bZ" = (
-/obj/structure/sign/poster/official/safety_internals/directional/east,
+/obj/structure/sign/poster/official/safety_internals{
+	pixel_x = 32
+	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
@@ -750,7 +754,9 @@
 /turf/open/floor/plasteel/icemoon,
 /area/icemoon/surface/outdoors)
 "cj" = (
-/obj/structure/sign/poster/official/pda_ad/directional/south,
+/obj/structure/sign/poster/official/pda_ad{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel/icemoon,
 /area/icemoon/surface/outdoors)
 "ck" = (
@@ -771,7 +777,9 @@
 	dir = 5;
 	icon_state = "pipe11-2"
 	},
-/obj/structure/sign/poster/contraband/atmosia_independence/directional/west,
+/obj/structure/sign/poster/contraband/atmosia_independence{
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel/icemoon,
 /area/icemoon/surface/outdoors)
 "cn" = (

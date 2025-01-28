@@ -81,7 +81,7 @@
 "ar" = (
 /obj/machinery/camera/xray{
 	c_tag = "Medbay";
-	dir = 6;
+	dir = 9;
 	network = list("fsci");
 	screen_loc = ""
 	},
@@ -627,8 +627,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bP" = (
 /obj/machinery/airalarm/syndicate{
-	pixel_y = 24;
-	dir = 1
+	pixel_y = 24
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -1089,8 +1088,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cX" = (
-/obj/machinery/camera/xray/directional/east{
+/obj/machinery/camera/xray{
 	c_tag = "Conference room";
+	dir = 8;
 	network = list("fsc");
 	screen_loc = ""
 	},

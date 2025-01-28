@@ -1,43 +1,9 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/obj/machinery/computer/shuttle/mining{
-	pixel_y = 32
-	},
-/obj/effect/decal/wallpaper/blue{
-	pixel_y = 32
-	},
-/turf/open/floor/plating/vampplating/mono,
-/area/vtm/elevator)
-"b" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/effect/decal/wallpaper/blue{
-	pixel_y = 32
-	},
-/turf/open/floor/plating/vampplating/mono,
-/area/vtm/elevator)
-"c" = (
-/turf/open/floor/plating/vampplating/mono,
-/area/vtm/elevator)
-"d" = (
-/obj/docking_port/mobile{
-	dir = 8;
-	dwidth = 3;
-	height = 5;
-	id = "mining";
-	name = "elevator";
-	port_direction = 4;
-	width = 7
-	},
-/turf/open/floor/plating/vampplating/mono,
-/area/vtm/elevator)
+"a" = (/obj/machinery/computer/shuttle/mining{pixel_y = 32},/obj/effect/decal/wallpaper/blue{pixel_y = 32},/turf/open/floor/plating/vampplating/mono,/area/vtm/elevator)
+"b" = (/obj/machinery/light{dir = 4},/obj/effect/decal/wallpaper/blue{pixel_y = 32},/turf/open/floor/plating/vampplating/mono,/area/vtm/elevator)
+"c" = (/turf/open/floor/plating/vampplating/mono,/area/vtm/elevator)
+"d" = (/obj/docking_port/mobile{dir = 8; dwidth = 3; height = 5; id = "mining"; name = "elevator"; port_direction = 4; width = 7},/turf/open/floor/plating/vampplating/mono,/area/vtm/elevator)
 
 (1,1,1) = {"
-a
-c
-"}
-(2,1,1) = {"
-b
-d
+ab
+cd
 "}

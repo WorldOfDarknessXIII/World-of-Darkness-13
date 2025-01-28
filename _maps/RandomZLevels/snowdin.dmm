@@ -275,7 +275,9 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/structure/sign/poster/contraband/kudzu/directional/north,
+/obj/structure/sign/poster/contraband/kudzu{
+	pixel_y = 32
+	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
 	},
@@ -787,7 +789,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/kitchen)
 "cf" = (
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 23
 	},
 /obj/structure/spider/stickyweb,
@@ -998,7 +1000,7 @@
 	},
 /area/awaymission/snowdin/post/research)
 "cD" = (
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 23
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1719,7 +1721,9 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/structure/sign/poster/contraband/lusty_xenomorph/directional/east,
+/obj/structure/sign/poster/contraband/lusty_xenomorph{
+	pixel_x = 32
+	},
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /turf/open/floor/carpet,
@@ -1887,7 +1891,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/messhall)
 "ev" = (
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 23
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -2148,7 +2152,7 @@
 "fa" = (
 /obj/structure/table,
 /obj/item/clothing/glasses/hud/health,
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 23
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -2286,7 +2290,9 @@
 /turf/open/floor/carpet,
 /area/awaymission/snowdin/post/dorm)
 "ft" = (
-/obj/structure/sign/poster/official/no_erp/directional/west,
+/obj/structure/sign/poster/official/no_erp{
+	pixel_x = -32
+	},
 /obj/machinery/holopad,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -2632,7 +2638,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/machinery/airalarm/directional/east{
+/obj/machinery/airalarm{
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3667,7 +3674,8 @@
 /area/awaymission/snowdin/post)
 "iz" = (
 /obj/structure/table,
-/obj/machinery/airalarm/directional/west{
+/obj/machinery/airalarm{
+	dir = 4;
 	pixel_x = -23
 	},
 /obj/item/paper_bin,
@@ -3793,7 +3801,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel,
@@ -3902,7 +3910,7 @@
 /area/awaymission/snowdin/post/garage)
 "iX" = (
 /obj/structure/table,
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 23
 	},
 /turf/open/floor/plating,
@@ -4352,7 +4360,8 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "ka" = (
-/obj/machinery/airalarm/directional/west{
+/obj/machinery/airalarm{
+	dir = 4;
 	pixel_x = -23
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -4379,7 +4388,8 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/snowdin/post/messhall)
 "ke" = (
-/obj/machinery/airalarm/directional/west{
+/obj/machinery/airalarm{
+	dir = 4;
 	pixel_x = -23
 	},
 /obj/effect/turf_decal/tile/green{
@@ -4450,7 +4460,9 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
 "km" = (
-/obj/structure/sign/poster/contraband/tools/directional/east,
+/obj/structure/sign/poster/contraband/tools{
+	pixel_x = 32
+	},
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
@@ -4608,7 +4620,7 @@
 /area/awaymission/snowdin/post/custodials)
 "kE" = (
 /obj/structure/table,
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/dark,
@@ -4788,7 +4800,7 @@
 /area/awaymission/snowdin/post/garage)
 "la" = (
 /obj/structure/filingcabinet,
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel,
@@ -5896,7 +5908,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/engineering)
 "nn" = (
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 23
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -6271,7 +6283,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 23
 	},
 /obj/effect/turf_decal/tile/red{
@@ -6700,7 +6712,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/structure/sign/poster/official/do_not_question/directional/south,
+/obj/structure/sign/poster/official/do_not_question{
+	pixel_y = -32
+	},
 /obj/item/wirecutters,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -7489,7 +7503,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/cavern2)
 "rg" = (
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 23
 	},
 /turf/open/floor/engine/cult,
@@ -8549,7 +8563,7 @@
 	},
 /area/awaymission/snowdin/post/cavern1)
 "uy" = (
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 23
 	},
 /turf/open/floor/plating,
@@ -9347,7 +9361,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/mining_dock)
 "wV" = (
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 23
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -12883,7 +12897,7 @@
 	},
 /area/awaymission/snowdin/post/mining_dock)
 "FV" = (
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 23
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -13433,7 +13447,8 @@
 /area/awaymission/snowdin/outside)
 "HJ" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/airalarm/directional/west{
+/obj/machinery/airalarm{
+	dir = 4;
 	pixel_x = -23
 	},
 /turf/open/floor/plasteel,
@@ -13458,7 +13473,8 @@
 /area/awaymission/snowdin/post/mining_main/robotics)
 "HN" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/airalarm/directional/west{
+/obj/machinery/airalarm{
+	dir = 4;
 	pixel_x = -23
 	},
 /turf/open/floor/plating{
@@ -14297,7 +14313,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/mining_dock)
 "Kh" = (
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 23
 	},
 /obj/structure/sign/warning/docking{

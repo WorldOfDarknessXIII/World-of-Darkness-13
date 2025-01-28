@@ -43,7 +43,9 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "au" = (
-/obj/structure/sign/poster/contraband/space_cola/directional/north,
+/obj/structure/sign/poster/contraband/space_cola{
+	pixel_y = 32
+	},
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "av" = (
@@ -91,7 +93,9 @@
 "aN" = (
 /obj/machinery/vending/cigarette/beach,
 /obj/effect/turf_decal/sand,
-/obj/structure/sign/poster/contraband/have_a_puff/directional/west,
+/obj/structure/sign/poster/contraband/have_a_puff{
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "aO" = (
@@ -442,7 +446,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/north,
+/obj/structure/sign/poster/contraband/ambrosia_vulgaris{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/grimy,
 /area/ruin/powered/beach)
 "kd" = (
@@ -779,7 +785,9 @@
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/powered/beach)
 "xg" = (
-/obj/structure/sign/poster/official/cohiba_robusto_ad/directional/west,
+/obj/structure/sign/poster/official/cohiba_robusto_ad{
+	pixel_x = -32
+	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "xE" = (
@@ -1035,7 +1043,9 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "FZ" = (
-/obj/structure/sign/poster/contraband/space_up/directional/west,
+/obj/structure/sign/poster/contraband/space_up{
+	pixel_x = -32
+	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Ga" = (
@@ -1422,7 +1432,9 @@
 /area/ruin/powered/beach)
 "Ut" = (
 /obj/effect/turf_decal/sand,
-/obj/structure/sign/poster/contraband/starkist/directional/north,
+/obj/structure/sign/poster/contraband/starkist{
+	pixel_y = 32
+	},
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "Ux" = (
@@ -1556,7 +1568,9 @@
 /turf/open/floor/carpet/blue,
 /area/ruin/powered/beach)
 "Zq" = (
-/obj/structure/sign/poster/official/high_class_martini/directional/west,
+/obj/structure/sign/poster/official/high_class_martini{
+	pixel_x = -32
+	},
 /obj/effect/mob_spawn/human/bartender/alive{
 	dir = 4
 	},

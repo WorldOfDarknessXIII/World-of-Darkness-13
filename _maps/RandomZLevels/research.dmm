@@ -296,7 +296,8 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/airalarm/directional/west{
+/obj/machinery/airalarm{
+	dir = 4;
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/tile/yellow,
@@ -892,7 +893,8 @@
 "ct" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
-/obj/machinery/airalarm/directional/west{
+/obj/machinery/airalarm{
+	dir = 4;
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/dark,
@@ -982,7 +984,7 @@
 	id = "cryopodg2";
 	name = "panic lockdown button"
 	},
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -1815,7 +1817,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "ej" = (
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/yellow,
@@ -1951,7 +1953,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
 "ew" = (
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -2161,7 +2163,8 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/security)
 "eT" = (
-/obj/machinery/airalarm/directional/west{
+/obj/machinery/airalarm{
+	dir = 4;
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/dark,
@@ -2362,7 +2365,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "fu" = (
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/red,
@@ -4027,7 +4030,8 @@
 	id = "cryopodg1";
 	name = "panic lockdown button"
 	},
-/obj/machinery/airalarm/directional/south{
+/obj/machinery/airalarm{
+	dir = 1;
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -4065,7 +4069,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/research/interior/bathroom)
 "iK" = (
-/obj/structure/window/reinforced/tinted/spawner/directional/south,
+/obj/structure/window/reinforced/tinted,
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/research/interior/bathroom)
 "iL" = (
@@ -4084,7 +4088,9 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/research/interior/bathroom)
 "iO" = (
-/obj/structure/window/reinforced/tinted/spawner/directional/west,
+/obj/structure/window/reinforced/tinted{
+	dir = 8
+	},
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/research/interior/bathroom)
 "iP" = (
@@ -4127,7 +4133,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/dorm)
 "iZ" = (
-/obj/machinery/airalarm/directional/north{
+/obj/machinery/airalarm{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -5306,7 +5312,8 @@
 	dir = 1;
 	layer = 2.9
 	},
-/obj/machinery/airalarm/directional/east{
+/obj/machinery/airalarm{
+	dir = 8;
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/yellowsiding{
@@ -5783,7 +5790,8 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/escapepods)
 "mX" = (
-/obj/machinery/airalarm/directional/east{
+/obj/machinery/airalarm{
+	dir = 8;
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/green{

@@ -606,7 +606,9 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bV" = (
-/obj/structure/sign/poster/ripped/directional/east,
+/obj/structure/sign/poster/ripped{
+	pixel_x = 32
+	},
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bW" = (
@@ -675,7 +677,9 @@
 "cf" = (
 /obj/effect/turf_decal/sand,
 /obj/machinery/vending/cigarette,
-/obj/structure/sign/poster/contraband/smoke/directional/south,
+/obj/structure/sign/poster/contraband/smoke{
+	pixel_y = -32
+	},
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "cg" = (

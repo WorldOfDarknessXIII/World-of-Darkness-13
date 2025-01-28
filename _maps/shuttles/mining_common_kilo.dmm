@@ -108,7 +108,8 @@
 "o" = (
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/airalarm/directional/west{
+/obj/machinery/airalarm{
+	dir = 4;
 	pixel_x = -22
 	},
 /turf/open/floor/mineral/plastitanium,
