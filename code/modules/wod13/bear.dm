@@ -16,7 +16,6 @@
 	maxbloodpool = 1
 	maxHealth = 850
 	health = 850
-	cached_multiplicative_slowdown = 2
 
 	melee_damage_lower = 50
 	melee_damage_upper = 60 //Good luck lol
