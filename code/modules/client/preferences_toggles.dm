@@ -498,12 +498,3 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 		return
 	prefs.asaycolor = initial(prefs.asaycolor)
 	prefs.save_preferences()
-
-/client/verb/toggle_roll_info()
-	set name = "Toggle Roll Info"
-	set category = "Preferences"
-	set desc = "See the results of in-game dice rolls."
-	usr.client.prefs.chat_toggles ^= CHAT_ROLL_INFO
-	to_chat(usr, "You will now [(usr.client.prefs.chat_toggles & CHAT_ROLL_INFO) ? "see the results of all rolls" : "only see the result of frenzy rolls"].")
-	usr.client.prefs.save_preferences()
-	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Show Roll Results", "[usr.client.prefs.chat_toggles & CHAT_ROLL_INFO ? "Yes" : "No"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

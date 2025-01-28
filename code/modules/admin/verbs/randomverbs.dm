@@ -1046,13 +1046,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	message_admins("Mass polymorph started by [who_did_it] is complete.")
 
-/client/proc/roll_dice_vtm()
-	set category = "Admin.Fun"
-	set name = "Roll dice"
-	set desc = "Roll WoD dice at yourself."
-	var/dice_count = input("Input amount of dice to roll:") as num
-	var/difficulty = input("Input roll difficulty:") as num
-	usr.storyteller_roll(dice_count, difficulty)
 
 /client/proc/show_tip()
 	set category = "Admin"
