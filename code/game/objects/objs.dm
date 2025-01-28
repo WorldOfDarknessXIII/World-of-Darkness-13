@@ -198,6 +198,8 @@
 	return
 
 /mob/proc/set_machine(obj/O)
+	if(QDELETED(src) || QDELETED(O))
+		return
 	if(src.machine)
 		unset_machine()
 	src.machine = O

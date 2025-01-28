@@ -134,7 +134,6 @@ SUBSYSTEM_DEF(garbage)
 	if (level == GC_QUEUE_FILTER)
 		delslasttick = 0
 		gcedlasttick = 0
-	var/cut_off_time = world.time - collection_timeout[level] //ignore entries newer then this
 	var/list/queue = queues[level]
 	var/static/lastlevel
 	var/static/count = 0
@@ -146,7 +145,7 @@ SUBSYSTEM_DEF(garbage)
 
 	lastlevel = level
 
-	//We do this rather then for(var/refID in queue) because that sort of for loop copies the whole list.
+	//We do this rather then for(var/list/ref_info in queue) because that sort of for loop copies the whole list.
 	//Normally this isn't expensive, but the gc queue can grow to 40k items, and that gets costly/causes overrun.
 	for (var/i in 1 to length(queue))
 		var/list/L = queue[i]
@@ -156,20 +155,16 @@ SUBSYSTEM_DEF(garbage)
 				return
 			continue
 
-		var/GCd_at_time = L[1]
-		if(GCd_at_time > cut_off_time)
-			break // Everything else is newer, skip them
-		count++
-		var/refID = L[2]
-		var/datum/D
-		D = locate(refID)
+		var/datum/D = L[GC_QUEUE_ITEM_REF]
 
-		if (!D || D.gc_destroyed != GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
+		// 1 from the hard reference in the queue, and 1 from the variable used before this
+		// If that's all we've got, send er off
+		if (refcount(D) == 2)
 			++gcedlasttick
 			++totalgcs
 			pass_counts[level]++
-			#ifdef LEGACY_REFERENCE_TRACKING
-			reference_find_on_fail -= refID	//It's deleted we don't care anymore.
+			#ifdef REFERENCE_TRACKING
+			reference_find_on_fail -= text_ref(D) //It's deleted we don't care anymore.
 			#endif
 			if (MC_TICK_CHECK)
 				return
@@ -226,13 +221,13 @@ SUBSYSTEM_DEF(garbage)
 	if (level > GC_QUEUE_COUNT)
 		HardDelete(D)
 		return
-	var/gctime = world.time
-	var/refid = "\ref[D]"
+	var/queue_time = world.time
 
-	D.gc_destroyed = gctime
+	if (D.gc_destroyed <= 0)
+		D.gc_destroyed = queue_time
+
 	var/list/queue = queues[level]
-
-	queue[++queue.len] = list(gctime, refid) // not += for byond reasons
+	queue[++queue.len] = list(queue_time, D, D.gc_destroyed) // not += for byond reasons
 
 //this is mainly to separate things profile wise.
 /datum/controller/subsystem/garbage/proc/HardDelete(datum/D)
