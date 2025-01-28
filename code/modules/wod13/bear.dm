@@ -4,10 +4,6 @@
 	icon = 'code/modules/wod13/64x64.dmi'
 	emote_hear = list("roars.")
 	emote_see = list("shakes its head.", "stomps.")
-	speak_chance = 0
-	turns_per_move = 5
-	see_in_dark = 6
-	del_on_death = 0
 	butcher_results = list(/obj/item/food/meat/slab = 7)
 	response_help_continuous = "pokes"
 	response_help_simple = "poke"
