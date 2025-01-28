@@ -548,6 +548,7 @@
 					for(var/obj/structure/werewolf_totem/S in GLOB.totems)
 						if(S.tribe == H.auspice.tribe)
 							H.forceMove(get_turf(S))
+							SEND_SIGNAL(H, COMSIG_ADDRECIPE_KLAIVE)
 				if(H.client.prefs.ambitious)
 					if(H.mind)
 						H.mind.add_antag_datum(/datum/antagonist/ambitious)

@@ -1001,6 +1001,8 @@
 ///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
 
+///Called on human initialisation to grant garou klaive crafting recipes
+#define COMSIG_ADDRECIPE_KLAIVE = "addrecipe_klaive"
 
 // Aquarium related signals
 #define COMSIG_AQUARIUM_BEFORE_INSERT_CHECK "aquarium_about_to_be_inserted"
