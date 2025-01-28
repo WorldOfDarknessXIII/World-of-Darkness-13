@@ -12,7 +12,6 @@
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
 
-	bloodquality = BLOOD_QUALITY_LOW
 	bloodpool = 1
 	maxbloodpool = 1
 	del_on_death = 1
