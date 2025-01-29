@@ -63,7 +63,6 @@ will need these:
   - `bin/tgui-dev --no-hot` - Disable hot module replacement (helps when doing
     development on IE8).
 - `bin/tgui-sonar` - Analyze code with SonarQube.
-- `bin/tgui-bench` - Run benchmarks.
 
 > To open a CMD or PowerShell window in any open folder, right click **while
 > holding Shift** on any free space in the folder, then click on either
@@ -82,7 +81,6 @@ will need these:
 - `tools/build/build tgui-sonar` - Analyze code with SonarQube.
 - `tools/build/build tgui-test` - Run unit and integration tests.
 - `tools/build/build tgui-analyze` - Run a bundle analyzer.
-- `tools/build/build tgui-bench` - Run benchmarks.
 - `tools/build/build tgui-clean` - Clean up tgui folder.
 
 > With Juke Build, you can run multiple targets together, e.g.:
