@@ -15,3 +15,7 @@
 #define span_warning(str) ("<span class='warning'>" + str + "</span>")
 #define span_boldannounce(str) ("<span class='boldannounce'>" + str + "</span>")
 #define span_hear(str) ("<span class='hear'>" + str + "</span>")
+
+/// A null statement to guard against EmptyBlock lint without necessitating the use of pass()
+/// Used to avoid proc-call overhead. But use sparingly. Probably pointless in most places.
+#define EMPTY_BLOCK_GUARD ;
