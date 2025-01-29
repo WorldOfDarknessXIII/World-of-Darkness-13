@@ -303,6 +303,728 @@
 	},
 /turf/open/floor/plating/vampbeach,
 /area/vtm/northbeach)
+"abf" = (
+/obj/effect/decal/coastline/corner{
+	icon_state = "coastline_corner";
+	dir = 4
+	},
+/turf/open/floor/plating/vampbeach,
+/area/vtm/northbeach)
+"abg" = (
+/obj/effect/decal/rugs,
+/obj/machinery/shower{
+	dir = 4
+	},
+/obj/structure/curtain,
+/turf/open/floor/plating/toilet,
+/area/vtm/interior)
+"abh" = (
+/obj/structure/table/wood,
+/obj/machinery/microwave,
+/turf/open/floor/plating/concrete,
+/area/vtm/interior)
+"abi" = (
+/obj/structure/table/wood,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating/rough,
+/area/vtm/interior)
+"abj" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating/rough,
+/area/vtm/interior)
+"abk" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plating/concrete,
+/area/vtm/interior)
+"abl" = (
+/obj/structure/chair/wood{
+	icon_state = "wooden_chair";
+	dir = 4
+	},
+/obj/effect/decal/litter,
+/turf/open/floor/plating/concrete,
+/area/vtm/interior)
+"abm" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plating/parquetry/old,
+/area/vtm/interior)
+"abn" = (
+/turf/open/floor/plating/vampdirt,
+/area/vtm/northbeach)
+"abo" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/plating/vampdirt,
+/area/vtm/northbeach)
+"abp" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/plating/vampdirt,
+/area/vtm/northbeach)
+"abq" = (
+/obj/effect/decal/coastline{
+	icon_state = "coastline";
+	dir = 4
+	},
+/turf/open/floor/plating/vampbeach,
+/area/vtm/northbeach)
+"abr" = (
+/turf/open/floor/plating/vampbeach,
+/area/vtm/northbeach)
+"abs" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/plating/vampbeach,
+/area/vtm/northbeach)
+"abt" = (
+/turf/open/floor/plating/vampgrass,
+/area/vtm/northbeach)
+"abu" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/plating/vampgrass,
+/area/vtm/northbeach)
+"abv" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/plating/vampbeach,
+/area/vtm/northbeach)
+"abw" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/plating/vampgrass,
+/area/vtm/northbeach)
+"abx" = (
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 4
+	},
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/ghetto)
+"aby" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plating/vampgrass,
+/area/vtm/northbeach)
+"abz" = (
+/obj/structure/flora/ausbushes,
+/turf/open/floor/plating/vampgrass,
+/area/vtm/northbeach)
+"abA" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = 16
+	},
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/fishermanswharf)
+"abB" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plating/vampbeach,
+/area/vtm/northbeach)
+"abC" = (
+/obj/effect/decal/trash,
+/mob/living/carbon/human/npc/hobo{
+	staying = 1
+	},
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/fishermanswharf)
+"abD" = (
+/turf/closed/wall/vampwall,
+/area/vtm/fishermanswharf)
+"abE" = (
+/obj/machinery/light/small{
+	pixel_y = 32
+	},
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/fishermanswharf)
+"abF" = (
+/obj/structure/fire_barrel,
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/ghetto)
+"abG" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/fishermanswharf)
+"abH" = (
+/obj/structure/vampfence{
+	icon_state = "fence";
+	dir = 8
+	},
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/fishermanswharf)
+"abI" = (
+/obj/effect/decal/bordur,
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/fishermanswharf)
+"abJ" = (
+/turf/open/floor/plating/sidewalk,
+/area/vtm/fishermanswharf)
+"abK" = (
+/obj/structure/lamppost/one,
+/turf/open/floor/plating/sidewalk,
+/area/vtm/fishermanswharf)
+"abL" = (
+/obj/effect/decal/coastline{
+	icon_state = "coastline";
+	dir = 6
+	},
+/turf/open/floor/plating/vampbeach,
+/area/vtm/northbeach)
+"abM" = (
+/obj/effect/decal/coastline/corner,
+/turf/open/floor/plating/vampbeach,
+/area/vtm/northbeach)
+"abN" = (
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 4
+	},
+/obj/structure/roadsign/stop,
+/turf/open/floor/plating/sidewalk,
+/area/vtm/unionsquare)
+"abO" = (
+/obj/effect/decal/bordur,
+/turf/open/floor/plating/sidewalk,
+/area/vtm/fishermanswharf)
+"abP" = (
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 10
+	},
+/turf/open/floor/plating/sidewalk,
+/area/vtm/fishermanswharf)
+"abQ" = (
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 4
+	},
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/fishermanswharf)
+"abR" = (
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 4
+	},
+/turf/open/floor/plating/sidewalk,
+/area/vtm/fishermanswharf)
+"abS" = (
+/turf/open/floor/plating/asphalt,
+/area/vtm/fishermanswharf)
+"abT" = (
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 8
+	},
+/turf/open/floor/plating/sidewalk,
+/area/vtm/fishermanswharf)
+"abU" = (
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/fishermanswharf)
+"abV" = (
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 8
+	},
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/ghetto)
+"abW" = (
+/obj/effect/decal/asphaltline/alt{
+	icon_state = "line_alt";
+	dir = 8
+	},
+/turf/open/floor/plating/asphalt,
+/area/vtm/fishermanswharf)
+"abX" = (
+/obj/structure/lamppost/two{
+	icon_state = "two";
+	dir = 8
+	},
+/turf/open/floor/plating/sidewalk,
+/area/vtm/fishermanswharf)
+"abY" = (
+/obj/structure/vampdoor/simple,
+/obj/effect/turf_decal/siding/white{
+	icon_state = "siding_line";
+	dir = 1
+	},
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/interior)
+"abZ" = (
+/obj/effect/decal/bordur/corner,
+/turf/open/floor/plating/sidewalk,
+/area/vtm/fishermanswharf)
+"aca" = (
+/obj/structure/lamppost/one{
+	icon_state = "one";
+	dir = 4
+	},
+/turf/open/floor/plating/sidewalk,
+/area/vtm/fishermanswharf)
+"acb" = (
+/turf/open/floor/plating/rough,
+/area/vtm/fishermanswharf)
+"acc" = (
+/obj/structure/vampdoor/simple,
+/turf/open/floor/plating/rough,
+/area/vtm/interior)
+"acd" = (
+/obj/effect/decal/bordur/corner{
+	icon_state = "border_corner";
+	dir = 8
+	},
+/turf/open/floor/plating/sidewalk,
+/area/vtm/northbeach)
+"ace" = (
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 8
+	},
+/turf/open/floor/plating/sidewalk,
+/area/vtm/northbeach)
+"acf" = (
+/obj/structure/lamppost/sidewalk,
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/ghetto)
+"acg" = (
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 4
+	},
+/obj/structure/lamppost/three{
+	icon_state = "three";
+	dir = 4
+	},
+/turf/open/floor/plating/sidewalk,
+/area/vtm/fishermanswharf)
+"ach" = (
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 5
+	},
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 10
+	},
+/turf/open/floor/plating/sidewalk,
+/area/vtm/fishermanswharf)
+"aci" = (
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 1
+	},
+/turf/open/floor/plating/sidewalk,
+/area/vtm/fishermanswharf)
+"acj" = (
+/obj/effect/decal/bordur/corner{
+	icon_state = "border_corner";
+	dir = 1
+	},
+/turf/open/floor/plating/sidewalk,
+/area/vtm/fishermanswharf)
+"ack" = (
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 4
+	},
+/obj/effect/decal/litter,
+/turf/open/floor/plating/sidewalk,
+/area/vtm/unionsquare)
+"acl" = (
+/obj/structure/table/wood,
+/obj/effect/decal/litter,
+/obj/item/newspaper,
+/turf/open/floor/plating/concrete,
+/area/vtm/interior)
+"acm" = (
+/obj/effect/turf_decal/siding/wood{
+	icon_state = "siding_wood_line";
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1;
+	icon_state = "railing";
+	pixel_y = 12
+	},
+/turf/open/floor/plating/vampwood,
+/area/vtm/northbeach)
+"acn" = (
+/obj/effect/turf_decal/siding/wood{
+	icon_state = "siding_wood_line";
+	dir = 1
+	},
+/turf/open/floor/plating/vampwood,
+/area/vtm/northbeach)
+"aco" = (
+/obj/structure/lamppost/one{
+	icon_state = "one";
+	dir = 1
+	},
+/turf/open/floor/plating/sidewalk,
+/area/vtm/fishermanswharf)
+"acp" = (
+/obj/effect/turf_decal/siding/wood{
+	icon_state = "siding_wood_line";
+	dir = 8
+	},
+/turf/open/floor/plating/vampwood,
+/area/vtm/northbeach)
+"acq" = (
+/turf/open/floor/plating/vampwood,
+/area/vtm/northbeach)
+"acr" = (
+/turf/closed/wall/vampwall/painted,
+/area/vtm/clinic)
+"acs" = (
+/obj/effect/decal/wallpaper/light,
+/turf/closed/wall/vampwall/painted,
+/area/vtm/clinic)
+"act" = (
+/obj/effect/decal/wallpaper/stone,
+/turf/closed/wall/vampwall/painted,
+/area/vtm/clinic)
+"acu" = (
+/turf/open/floor/plating/vampplating/mono,
+/area/vtm/clinic)
+"acv" = (
+/obj/machinery/light{
+	pixel_y = 32
+	},
+/turf/open/floor/plating/vampplating/mono,
+/area/vtm/clinic)
+"acw" = (
+/turf/open/floor/plasteel/stairs/right{
+	icon_state = "stairs-r";
+	dir = 4
+	},
+/area/vtm/clinic)
+"acx" = (
+/turf/open/floor/plating/asphalt,
+/area/vtm/clinic)
+"acy" = (
+/obj/machinery/light{
+	pixel_y = 32
+	},
+/turf/open/floor/plating/asphalt,
+/area/vtm/clinic)
+"acz" = (
+/obj/effect/turf_decal/siding/wood{
+	icon_state = "siding_wood_line";
+	dir = 10
+	},
+/turf/open/floor/plating/vampwood,
+/area/vtm/northbeach)
+"acA" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/plating/vampwood,
+/area/vtm/northbeach)
+"acB" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/railing,
+/turf/open/floor/plating/vampwood,
+/area/vtm/northbeach)
+"acC" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = -16
+	},
+/turf/open/floor/plating/rough,
+/area/vtm/interior)
+"acD" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = 16
+	},
+/turf/open/floor/plating/rough,
+/area/vtm/interior)
+"acE" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/plating/vampwood,
+/area/vtm/northbeach)
+"acF" = (
+/turf/open/floor/plasteel/stairs/left{
+	icon_state = "stairs-l";
+	dir = 4
+	},
+/area/vtm/clinic)
+"acG" = (
+/turf/closed/wall/vampwall/junk/alt,
+/area/vtm)
+"acH" = (
+/obj/effect/decal/wallpaper/light,
+/turf/closed/wall/vampwall/junk/alt,
+/area/vtm)
+"acI" = (
+/obj/effect/decal/coastline{
+	icon_state = "coastline";
+	dir = 4
+	},
+/obj/effect/decal/shadow,
+/turf/open/floor/plating/vampbeach,
+/area/vtm/northbeach)
+"acJ" = (
+/obj/effect/decal/support,
+/turf/open/floor/plating/vampbeach,
+/area/vtm/northbeach)
+"acK" = (
+/obj/effect/decal/shadow,
+/turf/open/floor/plating/vampbeach,
+/area/vtm/northbeach)
+"acL" = (
+/obj/effect/decal/shadow,
+/turf/open/floor/plating/vampgrass,
+/area/vtm/northbeach)
+"acM" = (
+/obj/effect/decal/shadow,
+/obj/structure/flora/ausbushes,
+/turf/open/floor/plating/vampgrass,
+/area/vtm/northbeach)
+"acN" = (
+/obj/effect/decal/support,
+/turf/open/floor/plating/vampgrass,
+/area/vtm/northbeach)
+"acO" = (
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 1
+	},
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/fishermanswharf)
+"acP" = (
+/obj/effect/decal/wallpaper/paper,
+/turf/closed/wall/vampwall/city,
+/area/vtm/interior)
+"acQ" = (
+/obj/effect/decal/bordur/corner{
+	icon_state = "border_corner";
+	dir = 1
+	},
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/fishermanswharf)
+"acR" = (
+/obj/structure/vampdoor/clinic{
+	icon_state = "shop-1";
+	dir = 4
+	},
+/turf/open/floor/plating/vampplating/mono,
+/area/vtm/clinic)
+"acS" = (
+/obj/effect/turf_decal/siding/white{
+	icon_state = "siding_line";
+	dir = 4
+	},
+/obj/structure/railing{
+	icon_state = "railing";
+	dir = 4
+	},
+/turf/open/floor/plating/vampplating/mono,
+/area/vtm/clinic)
+"acT" = (
+/obj/effect/decal/bordur/corner,
+/turf/open/floor/plating/sidewalk,
+/area/vtm/northbeach)
+"acU" = (
+/obj/effect/decal/bordur,
+/turf/open/floor/plating/sidewalk,
+/area/vtm/northbeach)
+"acV" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plating/vampplating/mono,
+/area/vtm/clinic)
+"acW" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plating/asphalt,
+/area/vtm/clinic)
+"acX" = (
+/obj/structure/vampdoor/clinic,
+/turf/open/floor/plating/vampplating/mono,
+/area/vtm/clinic)
+"acY" = (
+/turf/closed/wall/vampwall/painted/low/window/reinforced,
+/area/vtm/clinic)
+"acZ" = (
+/obj/effect/turf_decal/siding/white{
+	icon_state = "siding_line";
+	dir = 8
+	},
+/obj/structure/vampdoor/npc{
+	icon_state = "wood-1";
+	dir = 8
+	},
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/interior)
+"ada" = (
+/obj/effect/decal/coastline,
+/turf/open/floor/plating/vampbeach,
+/area/vtm/northbeach)
+"adb" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating/vampplating/mono,
+/area/vtm/clinic)
+"adc" = (
+/obj/effect/decal/wallpaper/light/low,
+/turf/closed/wall/vampwall/painted/low/window/reinforced,
+/area/vtm/clinic)
+"add" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating/vampplating/mono,
+/area/vtm/clinic)
+"ade" = (
+/turf/closed/wall/vampwall,
+/area/vtm/northbeach)
+"adf" = (
+/obj/structure/fluff/beach_umbrella,
+/turf/open/floor/plating/vampbeach,
+/area/vtm/northbeach)
+"adg" = (
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 8
+	},
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/fishermanswharf)
+"adh" = (
+/obj/structure/lamppost/three,
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/fishermanswharf)
+"adi" = (
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 6
+	},
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/fishermanswharf)
+"adj" = (
+/obj/effect/landmark/npcbeacon/directed,
+/turf/open/floor/plating/sidewalk,
+/area/vtm/ghetto)
+"adk" = (
+/turf/closed/wall/vampwall/bar,
+/area/vtm/anarch)
+"adl" = (
+/obj/effect/turf_decal/siding/white{
+	icon_state = "siding_line";
+	dir = 4
+	},
+/obj/structure/vampdoor/npc{
+	icon_state = "wood-1";
+	dir = 8
+	},
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/interior)
+"adm" = (
+/obj/effect/decal/wallpaper/red,
+/turf/closed/wall/vampwall/bar,
+/area/vtm/anarch)
+"adn" = (
+/obj/effect/decal/wallpaper/light,
+/turf/closed/wall/vampwall/bar,
+/area/vtm/anarch)
+"ado" = (
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 6
+	},
+/turf/open/floor/plating/sidewalk,
+/area/vtm/ghetto)
+"adp" = (
+/obj/effect/decal/litter,
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/fishermanswharf)
+"adq" = (
+/obj/effect/turf_decal/siding/white{
+	icon_state = "siding_line";
+	dir = 1
+	},
+/turf/open/floor/plating/parquetry,
+/area/vtm/clinic)
+"adr" = (
+/obj/effect/decal/cardboard,
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/fishermanswharf)
+"ads" = (
+/obj/effect/turf_decal/siding/white{
+	icon_state = "siding_line";
+	dir = 1
+	},
+/obj/structure/curtain,
+/turf/open/floor/plating/circled,
+/area/vtm/clinic)
+"adt" = (
+/obj/effect/turf_decal/siding/white{
+	icon_state = "siding_line";
+	dir = 4
+	},
+/obj/structure/vampdoor/simple{
+	icon_state = "cam-1";
+	dir = 8
+	},
+/turf/open/floor/plating/parquetry/old,
+/area/vtm/interior)
+"adu" = (
+/obj/structure/chair/wood{
+	icon_state = "wooden_chair";
+	dir = 4
+	},
+/mob/living/carbon/human/npc/hobo,
+/turf/open/floor/plating/concrete,
+/area/vtm/interior)
+"adv" = (
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 5
+	},
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/ghetto)
+"adw" = (
+/obj/effect/decal/bordur{
+	icon_state = "border";
+	dir = 1
+	},
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/ghetto)
+"adx" = (
+/obj/effect/decal/bordur/corner{
+	icon_state = "border_corner";
+	dir = 1
+	},
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/ghetto)
+"ady" = (
+/obj/effect/decal/asphaltline/alt,
+/turf/open/floor/plating/asphalt,
+/area/vtm/ghetto)
+"adz" = (
+/obj/structure/lamppost/one{
+	icon_state = "one";
+	dir = 4
+	},
+/turf/open/floor/plating/sidewalk,
+/area/vtm/unionsquare)
+"adA" = (
+/obj/structure/lamppost/one{
+	icon_state = "one";
+	dir = 8
+	},
+/turf/open/floor/plating/sidewalk,
+/area/vtm/ghetto)
+"adB" = (
+/obj/structure/vampdoor/simple,
+/obj/effect/turf_decal/siding/white,
 /turf/open/floor/plating/sidewalk/poor,
 /area/vtm/interior)
 "adC" = (
