@@ -41,9 +41,6 @@ jobs:
       - name: Install rust-g
         run: |
           bash tools/ci/install_rust_g.sh
-      - name: Install dreamluau
-        run: |
-          bash tools/ci/install_dreamluau.sh
       - name: Restore BYOND from Cache
         uses: ./.github/actions/restore_or_install_byond
         with:
