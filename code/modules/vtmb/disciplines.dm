@@ -398,7 +398,6 @@
 	if(!HAS_TRAIT(caster, TRAIT_NIGHT_VISION))
 		ADD_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
 		loh = TRUE
-	caster.update_sight()
 	caster.add_client_colour(/datum/client_colour/glass_colour/lightblue)
 	var/shitcasted = FALSE
 	if(level_casting >= 2)
@@ -429,7 +428,6 @@
 			if(loh)
 				REMOVE_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
 			caster.remove_client_colour(/datum/client_colour/glass_colour/lightblue)
-			caster.update_sight()
 
 /datum/discipline/celerity
 	name = "Celerity"
