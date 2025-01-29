@@ -233,7 +233,7 @@
 		else
 			t_prod = new product(output_loc, src)
 		if(parent.myseed.plantname != initial(parent.myseed.plantname))
-			t_prod.name = lowertext(parent.myseed.plantname)
+			t_prod.name = LOWER_TEXT(parent.myseed.plantname)
 		if(productdesc)
 			t_prod.desc = productdesc
 		t_prod.seed.name = parent.myseed.name
@@ -518,7 +518,7 @@
 					to_chat(user, "<span class='warning'>That name is invalid.</span>")
 					return
 				else
-					name = "[lowertext(newplantname)]"
+					name = "[LOWER_TEXT(newplantname)]"
 					plantname = newplantname
 			if("Seed Description")
 				var/newdesc = stripped_input(user, "Write a new description:", name, desc)

@@ -484,7 +484,7 @@
 					to_say = "ATTACK!?!?"
 				else if (Friends[who] >= SLIME_FRIENDSHIP_ATTACK)
 					for (var/mob/living/L in view(7,src)-list(src,who))
-						if (findtext(phrase, lowertext(L.name)))
+						if (findtext(phrase, LOWER_TEXT(L.name)))
 							if (isslime(L))
 								to_say = "NO... [L] slime friend"
 								--Friends[who] //Don't ask a slime to attack its friend

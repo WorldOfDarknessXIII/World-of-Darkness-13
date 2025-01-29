@@ -84,7 +84,7 @@
 	for(var/i = 1, i <= leng, i += length(rawchar))
 		rawchar = newletter = phrase[i]
 		if(rand(1, 3) == 3)
-			var/lowerletter = lowertext(newletter)
+			var/lowerletter = LOWER_TEXT(newletter)
 			if(lowerletter == "o")
 				newletter = "u"
 			else if(lowerletter == "s")
@@ -122,7 +122,7 @@
 	for(var/i = 1, i <= leng, i += length(rawchar))
 		rawchar = newletter = phrase[i]
 		if(rand(1, 2) == 2)
-			var/lowerletter = lowertext(newletter)
+			var/lowerletter = LOWER_TEXT(newletter)
 			if(lowerletter == "o")
 				newletter = "u"
 			else if(lowerletter == "t")

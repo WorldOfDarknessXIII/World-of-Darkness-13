@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sortList(list(
 			var/datum/portrait_picker/tgui  = new(usr)//create the datum
 			tgui.ui_interact(usr)//datum has a tgui component, here we open the window
 			return "ai-portrait" //just take this until they decide
-		return "ai-[lowertext(input)]"
+		return "ai-[LOWER_TEXT(input)]"
 
 GLOBAL_LIST_INIT(security_depts_prefs, sortList(list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY)))
 

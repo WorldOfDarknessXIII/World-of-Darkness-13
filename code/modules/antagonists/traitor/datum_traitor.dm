@@ -290,7 +290,7 @@
 
 	result += objectives_text
 
-	var/special_role_text = lowertext(name)
+	var/special_role_text = LOWER_TEXT(name)
 
 	if (contractor_hub)
 		result += contractor_round_end()

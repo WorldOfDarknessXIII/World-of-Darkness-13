@@ -155,7 +155,7 @@
 					if("Extremely Happy")
 						card.emotion_icon = "extremely-happy"
 					else
-						card.emotion_icon = "[lowertext(newImage)]"
+						card.emotion_icon = "[LOWER_TEXT(newImage)]"
 				card.update_icon()
 
 			if("news")
@@ -355,7 +355,7 @@
 			var/displayName = uppertext(s)
 			dat += "<a href='byond://?src=[REF(src)];software=buy;sub=1;buy=[s]'>[displayName]</a> ([cost]) <br>"
 		else
-			var/displayName = lowertext(s)
+			var/displayName = LOWER_TEXT(s)
 			dat += "[displayName] (Download Complete) <br>"
 	dat += "</p>"
 	return dat

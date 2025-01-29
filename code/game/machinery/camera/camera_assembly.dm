@@ -228,7 +228,7 @@
 		return
 	for(var/i in tempnetwork)
 		tempnetwork -= i
-		tempnetwork += lowertext(i)
+		tempnetwork += LOWER_TEXT(i)
 	state = STATE_FINISHED
 	var/obj/machinery/camera/C = new(loc, src)
 	forceMove(C)

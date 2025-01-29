@@ -234,7 +234,7 @@
 		return FALSE
 
 	if(user.grab_state == GRAB_PASSIVE)
-		to_chat(user, "<span class='warning'>You must have [victim] in an aggressive grab to manipulate [victim.p_their()] [lowertext(name)]!</span>")
+		to_chat(user, "<span class='warning'>You must have [victim] in an aggressive grab to manipulate [victim.p_their()] [LOWER_TEXT(name)]!</span>")
 		return TRUE
 
 	if(user.grab_state >= GRAB_AGGRESSIVE)

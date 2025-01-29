@@ -70,7 +70,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 			if(log_when_erased)
 				log_game("[cultist_name] rune erased by [key_name(user)] with [I.name]")
 				message_admins("[ADMIN_LOOKUPFLW(user)] erased a [cultist_name] rune with [I.name]")
-			to_chat(user, "<span class='notice'>You carefully erase the [lowertext(cultist_name)] rune.</span>")
+			to_chat(user, "<span class='notice'>You carefully erase the [LOWER_TEXT(cultist_name)] rune.</span>")
 			qdel(src)
 	else if(istype(I, /obj/item/nullrod))
 		if(log_when_erased)

@@ -374,7 +374,7 @@
 	if(!current_canvas.painting_name)
 		current_canvas.painting_name = "Untitled Artwork"
 	var/data = current_canvas.get_data_string()
-	var/md5 = md5(lowertext(data))
+	var/md5 = md5(LOWER_TEXT(data))
 	var/list/current = SSpersistence.paintings[persistence_id]
 	if(!current)
 		current = list()
@@ -427,7 +427,7 @@
 		if(!persistence_id || !current_canvas)
 			to_chat(user,"<span class='warning'>This is not a persistent painting.</span>")
 			return
-		var/md5 = md5(lowertext(current_canvas.get_data_string()))
+		var/md5 = md5(LOWER_TEXT(current_canvas.get_data_string()))
 		var/author = current_canvas.author_ckey
 		var/list/current = SSpersistence.paintings[persistence_id]
 		if(current)

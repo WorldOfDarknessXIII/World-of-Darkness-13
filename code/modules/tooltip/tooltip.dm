@@ -111,7 +111,7 @@ Notes:
 	if(istype(user))
 		if(user.client && user.client.tooltips)
 			if(!theme && user.client.prefs && user.client.prefs.UI_style)
-				theme = lowertext(user.client.prefs.UI_style)
+				theme = LOWER_TEXT(user.client.prefs.UI_style)
 			if(!theme)
 				theme = "default"
 			user.client.tooltips.show(tip_src, params,title,content,theme)

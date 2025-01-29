@@ -147,7 +147,7 @@ This file contains the cult dagger and rune list code
 			qdel(S)
 	var/obj/effect/rune/R = new rune_to_scribe(Turf, chosen_keyword)
 	R.add_mob_blood(user)
-	to_chat(user, "<span class='cult'>The [lowertext(R.cultist_name)] rune [R.cultist_desc]</span>")
+	to_chat(user, "<span class='cult'>The [LOWER_TEXT(R.cultist_name)] rune [R.cultist_desc]</span>")
 	SSblackbox.record_feedback("tally", "cult_runes_scribed", 1, R.cultist_name)
 
 /obj/item/melee/cultblade/dagger/proc/check_rune_turf(turf/T, mob/user)

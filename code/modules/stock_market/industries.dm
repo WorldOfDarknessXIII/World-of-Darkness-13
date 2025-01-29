@@ -153,7 +153,7 @@
 			if (90)
 				return "Nonaginta"
 	else
-		return "[latin_number(n - (n % 10))] [lowertext(latin_number(n % 10))]"
+		return "[latin_number(n - (n % 10))] [LOWER_TEXT(latin_number(n % 10))]"
 
 /datum/industry/it/generateProductName(var/company_name)
 	var/list/products = list("generator", "laptop", "keyboard", "memory card", "display", "operating system", "processor", "graphics card", "nanobots", "power supply", "pAI", "mech", "capacitor", "cell")
@@ -174,7 +174,7 @@
 /datum/industry/communications/generateProductName(var/company_name)
 	var/list/products = list("mobile phone", "PDA", "tablet computer", "newscaster", "social network")
 	var/list/prefix = list("the [company_name] ", "the high performance ", "the mobile ", "the portable ", "the professional ", "the extreme ", "the incredible ", "the blazing fast ", "the bleeding edge ", null)
-	var/L = pick("[lowertext(consonant())]Phone ", "Universe ", "Xperience ", "Next ", "Engin Y ", "Cyborg ", "[consonant()]")
+	var/L = pick("[LOWER_TEXT(consonant())]Phone ", "Universe ", "Xperience ", "Next ", "Engin Y ", "Cyborg ", "[consonant()]")
 	var/N = rand(1,99)
 	var/prefix2 = "[L][N][prob(25) ? pick(" Tiny", " Mini", " Micro", " Slim", " Water", " Air", " Fire", " Earth", " Nano", " Pico", " Femto", " Planck") : null]"
 	return "[pick(prefix)][prefix2] [pick(products)]"

@@ -5,4 +5,4 @@
 
 	speech_buffer = list()
 	speech_buffer += speaker
-	speech_buffer += lowertext(raw_message)
+	speech_buffer += LOWER_TEXT(raw_message)
