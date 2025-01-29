@@ -72,11 +72,6 @@ var/list/CMNoir = list(0.3,0.3,0.3,0,\
 	var/aghosted = FALSE
 	var/auspex_ghosted = FALSE
 
-/mob/dead/observer/Login()
-	..()
-//There was observer music here. It's gone now.
-//Also ghost greyscaling, straining for the eyes.
-
 /mob/dead/observer/Initialize()
 	set_invisibility(GLOB.observer_default_invisibility)
 
