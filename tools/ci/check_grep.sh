@@ -60,12 +60,12 @@ if $grep '//' $map_files | $grep -v '//MAP CONVERTED BY dmm2tgm.py THIS HEADER C
 	echo -e "${RED}ERROR: Unexpected commented out line detected in this map file. Please remove it.${NC}"
 	st=1
 fi;
-if grep -P 'Merge Conflict Marker' _maps/**/*.dmm; then
+if grep -P 'Merge Conflict Marker' $map_files; then
     echo "ERROR: Merge conflict markers detected in map, please resolve all merge failures!"
     st=1
 fi;
 # We check for this as well to ensure people aren't actually using this mapping effect in their maps.
-if grep -P '/obj/merge_conflict_marker' _maps/**/*.dmm; then
+if grep -P '/obj/merge_conflict_marker' $map_files; then
     echo "ERROR: Merge conflict markers detected in map, please resolve all merge failures!"
     st=1
 fi;
@@ -114,7 +114,7 @@ if $grep '^\t+ [^ *]' $code_files; then
 fi;
 
 section "unit tests"
-unit_test_files="code/modules/unit_tests/**/**.dm"
+unit_test_files="code/modules/unit_tests/**.dm"
 part "mob/living/carbon/human usage"
 if $grep 'allocate\(/mob/living/carbon/human[,\)]' $unit_test_files ||
 	$grep 'new /mob/living/carbon/human\s?\(' $unit_test_files ||
