@@ -11,5 +11,5 @@ export class WindowsXP extends Component {
         <WinXP data={data} act={act} />
       </Window>
     );
-  };
-};
+  }
+}

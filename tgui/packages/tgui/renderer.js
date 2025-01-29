@@ -18,6 +18,7 @@ export const suspendRenderer = () => {
   suspended = true;
 };
 
+// prettier-ignore
 export const createRenderer = getVNode => () => {
   perf.mark('render/start');
   // Start rendering

@@ -1,6 +1,6 @@
 import { useBackend } from '../../backend';
 import { useLocalState } from '../../backend';
-import { Button, Input, LabeledList, Section, Box, } from '../../components';
+import { Button, Input, LabeledList, Section, Box } from '../../components';
 import { Window } from '../../layouts';
 
 export const AtmMain = (props, context) => {

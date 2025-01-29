@@ -51,7 +51,7 @@ const CargoExpressContent = ({
   beaconzone,
   beaconName,
   message,
-  act
+  act,
 }) => {
   return (
     <Box>
@@ -74,16 +74,16 @@ const CargoExpressContent = ({
 
       {tab === 'catalog' && (
         <>
-        <Section title="Cash">
-          <LabeledList>
-            <LabeledList.Item label="Cash">
-              <AnimatedNumber value={points} />
-            </LabeledList.Item>
-          </LabeledList>
-        </Section>
-        <CargoCatalog express onAddToQueue={(id) => act('add_to_queue', { id })} onRemoveFromQueue={(id) => act('remove_from_queue', { id })} />
-      </>
-    )}
+          <Section title="Cash">
+            <LabeledList>
+              <LabeledList.Item label="Cash">
+                <AnimatedNumber value={points} />
+              </LabeledList.Item>
+            </LabeledList>
+          </Section>
+          <CargoCatalog express onAddToQueue={(id) => act('add_to_queue', { id })} onRemoveFromQueue={(id) => act('remove_from_queue', { id })} />
+        </>
+      )}
       {tab === 'cart' && (
         <Section
           title="Order Queue"
@@ -98,16 +98,16 @@ const CargoExpressContent = ({
                 disabled={!orderQueue.length} />
             </>
           )}>
-            <Section title="Cash">
-              <LabeledList>
-                <LabeledList.Item label="Cash:">
-                  <AnimatedNumber value={points} />
-                </LabeledList.Item>
-                <LabeledList.Item label="Total Order Cost">
-                  <AnimatedNumber value={totalOrderCost} />
-                </LabeledList.Item>
-              </LabeledList>
-            </Section>
+          <Section title="Cash">
+            <LabeledList>
+              <LabeledList.Item label="Cash:">
+                <AnimatedNumber value={points} />
+              </LabeledList.Item>
+              <LabeledList.Item label="Total Order Cost">
+                <AnimatedNumber value={totalOrderCost} />
+              </LabeledList.Item>
+            </LabeledList>
+          </Section>
           {orderQueue.length > 0 ? (
             orderQueue.map((pack, index) => (
               <Box key={index}>

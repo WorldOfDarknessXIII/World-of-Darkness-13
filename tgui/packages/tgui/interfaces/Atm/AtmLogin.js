@@ -9,7 +9,7 @@ export const AtmLogin = (props, context) => {
 
   const {
     account_owner,
-    code
+    code,
   } = data;
 
   const handleLogin = () => {
@@ -25,13 +25,13 @@ export const AtmLogin = (props, context) => {
                 value={entered_code}
                 onInput={(e, value) => setEnteredCode(value)}
                 placeholder="Enter code here"
-                />
+              />
             </LabeledList.Item>
             <LabeledList.Item>
               <Button
                 content="Log In"
                 onClick={handleLogin}
-                />
+              />
             </LabeledList.Item>
           </LabeledList>
         </Section>

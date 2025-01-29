@@ -7,7 +7,7 @@ export class VaultDoor extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      inputCode: ''
+      inputCode: '',
     };
 
     this.handleButtonClick = this.handleButtonClick.bind(this);
@@ -17,7 +17,7 @@ export class VaultDoor extends Component {
 
   handleButtonClick(value) {
     this.setState((prevState) => ({
-      inputCode: prevState.inputCode + value
+      inputCode: prevState.inputCode + value,
     }));
   }
 
