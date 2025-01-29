@@ -7,6 +7,7 @@
 # If a python.exe installed by `python_.ps1` is present, it will be used.
 # Otherwise, this script requires a system `python3` and `pip` to be provided,
 # and will create a standard virtualenv in which to install `requirements.txt`.
+
 set -e
 
 # Convenience variables
