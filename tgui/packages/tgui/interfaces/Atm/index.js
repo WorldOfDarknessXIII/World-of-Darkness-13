@@ -1,5 +1,5 @@
-import { AtmMain } from './AtmMain';
 import { AtmLogin } from './AtmLogin';
+import { AtmMain } from './AtmMain';
 export const AtmScreen = (props) => {
   const { data, act } = props;
   return data.logged_in ? (

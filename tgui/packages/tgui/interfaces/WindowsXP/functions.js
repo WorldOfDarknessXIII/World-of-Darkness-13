@@ -1,13 +1,13 @@
-import icqIcon from '../../assets/WindowsXP/icq.png';
 import notepadIcon from '../../assets/WindowsXP/327(32x32).png';
 import errorIcon from '../../assets/WindowsXP/897(32x32).png';
 import gmailicon from '../../assets/WindowsXP/gmail_icon.png';
+import icqIcon from '../../assets/WindowsXP/icq.png';
 import newsIcon from '../../assets/WindowsXP/news.png';
-import { Notepad } from './Apps/Notepad';
-import { ICQ as Icq } from './Apps/ICQ';
 import { Error } from './Apps/Error';
 import { Gmail } from './Apps/Gmail';
+import { ICQ as Icq } from './Apps/ICQ';
 import { News } from './Apps/News';
+import { Notepad } from './Apps/Notepad';
 
 export const GetIconByName = (name) => {
   switch (name) {

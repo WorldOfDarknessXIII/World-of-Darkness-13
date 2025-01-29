@@ -1,6 +1,6 @@
 import gmail_icon from '../../../assets/WindowsXP/gmail.png';
-import { Icon, Input, TextArea } from '../../../components';
 import { useLocalState } from '../../../backend';
+import { Icon, Input, TextArea } from '../../../components';
 import { XPButton } from '../Components';
 
 export const Gmail = (props) => {

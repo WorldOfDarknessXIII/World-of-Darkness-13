@@ -1,7 +1,7 @@
-import { HeaderButtons } from './Windows/HeaderButtons';
 import logo from '../../assets/WindowsXP/login-xp.jpg';
-import { XPButton, XPInput } from './Components';
 import { useLocalState } from '../../backend';
+import { XPButton, XPInput } from './Components';
+import { HeaderButtons } from './Windows/HeaderButtons';
 
 export const LoginScreen = (props, context) => {
   const { data, act } = props;

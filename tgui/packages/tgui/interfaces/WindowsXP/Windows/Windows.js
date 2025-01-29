@@ -1,5 +1,6 @@
-import { Window } from './Window';
 import { Component } from 'inferno';
+
+import { Window } from './Window';
 
 export class Windows extends Component {
   render() {

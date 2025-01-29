@@ -1,11 +1,12 @@
-import { sortBy, map, filter } from 'common/collections';
+import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
+
 import { useBackend } from '../backend';
-import { AnimatedNumber, Button, Flex, Input, LabeledList, ProgressBar, Section, Table, NumberInput } from '../components';
+import { Button, Flex, LabeledList, NumberInput, ProgressBar, Section } from '../components';
 import { getGasColor, getGasLabel } from '../constants';
+import { formatSiBaseTenUnit, formatSiUnit } from '../format';
 import { Window } from '../layouts';
-import { formatSiUnit, formatSiBaseTenUnit } from '../format';
 
 export const Hypertorus = (props, context) => {
   const { act, data } = useBackend(context);

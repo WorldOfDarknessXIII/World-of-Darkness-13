@@ -2,6 +2,7 @@ import { uniqBy } from 'common/collections';
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { Fragment } from 'inferno';
+
 import { useBackend, useSharedState } from '../backend';
 import { Box, Button, Flex, Icon, Input, NumberInput, ProgressBar, Section, Stack } from '../components';
 import { formatMoney, formatSiUnit } from '../format';

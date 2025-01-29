@@ -1,7 +1,8 @@
-import { useBackend } from '../backend';
-import { Button, LabeledList, Section, Box } from '../components';
-import { Window } from '../layouts';
 import { Component } from 'inferno';
+
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, Section } from '../components';
+import { Window } from '../layouts';
 
 export class VaultDoor extends Component {
   constructor(props, context) {

@@ -1,6 +1,7 @@
 import { classes } from 'common/react';
+
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Grid, Dimmer, Section } from '../components';
+import { Box, Button, Dimmer, Flex, Grid, Section } from '../components';
 import { Window } from '../layouts';
 
 const CallingWindow = (props, context) => {

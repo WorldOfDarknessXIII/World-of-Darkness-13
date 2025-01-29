@@ -1,7 +1,7 @@
-import startButton from '../../assets/WindowsXP/start.png';
-import sound from '../../assets/WindowsXP/690(16x16).png';
-import usb from '../../assets/WindowsXP/394(16x16).png';
 import risk from '../../assets/WindowsXP/229(16x16).png';
+import usb from '../../assets/WindowsXP/394(16x16).png';
+import sound from '../../assets/WindowsXP/690(16x16).png';
+import startButton from '../../assets/WindowsXP/start.png';
 import { GetIconByName } from './functions';
 
 export const Footer = (props) => {

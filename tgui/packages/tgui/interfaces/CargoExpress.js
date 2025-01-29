@@ -1,8 +1,8 @@
 import { useBackend, useSharedState } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, Section, Tabs } from '../components';
 import { Window } from '../layouts';
-import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 import { CargoCatalog } from './Cargo';
+import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 export const CargoExpress = (props, context) => {
   const { act, data } = useBackend(context);

@@ -1,7 +1,8 @@
-import { HeaderButtons } from './HeaderButtons';
 import { Component } from 'inferno';
+
+import { GetAppByName, GetIconByName } from '../functions';
 import { noop } from './constants';
-import { GetIconByName, GetAppByName } from '../functions';
+import { HeaderButtons } from './HeaderButtons';
 
 export class Window extends Component {
   constructor() {

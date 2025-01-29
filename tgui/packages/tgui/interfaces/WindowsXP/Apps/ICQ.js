@@ -1,7 +1,7 @@
-import chess from '../../../assets/WindowsXP/user.png';
 import icq from '../../../assets/WindowsXP/icq.png';
-import { TextArea, Input } from '../../../components';
+import chess from '../../../assets/WindowsXP/user.png';
 import { useLocalState } from '../../../backend';
+import { Input, TextArea } from '../../../components';
 
 export const ICQ = (props, context) => {
   const { app, act } = props;
