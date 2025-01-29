@@ -104,10 +104,11 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 /// Resets the air of our testing room to its default
 /datum/unit_test/proc/restore_atmos()
-	var/area/working_area = run_loc_floor_bottom_left.loc
-	var/list/turf/to_restore = working_area.get_turfs_from_all_zlevels()
+	var/area/working_area = run_loc_floor_bottom_left.loc.contents
+	var/list/turf/to_restore = working_area
 	for(var/turf/open/restore in to_restore)
-		var/datum/gas_mixture/GM = SSair.parse_gas_string(restore.initial_gas_mix, /datum/gas_mixture/turf)
+		var/datum/gas_mixture/GM
+		GM.gases = restore.initial_gas_mix
 		restore.copy_air(GM)
 		restore.temperature = initial(restore.temperature)
 		restore.air_update_turf(update = FALSE, remove = FALSE)
@@ -211,6 +212,10 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/item/hilbertshotel)
 	//this boi spawns turf changing stuff, and it stacks and causes pain. Let's just not
 	returnable_list += typesof(/obj/effect/sliding_puzzle)
+	//these can explode and cause the turf to be destroyed at unexpected moments
+	returnable_list += typesof(/obj/effect/mine)
+	returnable_list += typesof(/obj/effect/spawner/random/contraband/landmine)
+	returnable_list += typesof(/obj/item/minespawner)
 	//Stacks baseturfs, can't be tested here
 	returnable_list += typesof(/obj/effect/temp_visual/lava_warning)
 	//Our system doesn't support it without warning spam from unregister calls on things that never registered
