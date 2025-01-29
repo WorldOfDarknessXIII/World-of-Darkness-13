@@ -63,6 +63,7 @@
 #include "code\__DEFINES\faith.dm"
 #include "code\__DEFINES\fantasy_affixes.dm"
 #include "code\__DEFINES\flags.dm"
+#include "code\__DEFINES\font_awesome_icons.dm"
 #include "code\__DEFINES\food.dm"
 #include "code\__DEFINES\footsteps.dm"
 #include "code\__DEFINES\forensics.dm"

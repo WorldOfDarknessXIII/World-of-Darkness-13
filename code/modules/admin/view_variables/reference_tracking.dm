@@ -167,15 +167,6 @@ GLOBAL_LIST_EMPTY(deletion_failures)
 	if(!running_find_references)
 		find_references_legacy(TRUE)
 
-
-/datum/verb/qdel_then_if_fail_find_references()
-	set category = "Debug"
-	set name = "qdel() then Find References if GC failure"
-	set src in world
-
-	qdel_and_find_ref_if_fail(src, TRUE)
-
-
 /datum/proc/DoSearchVar(potential_container, container_name, recursive_limit = 64)
 	if(usr?.client && !usr.client.running_find_references)
 		return
@@ -217,10 +208,5 @@ GLOBAL_LIST_EMPTY(deletion_failures)
 	#ifndef FIND_REF_NO_CHECK_TICK
 	CHECK_TICK
 	#endif
-
-
-/proc/qdel_and_find_ref_if_fail(datum/thing_to_del, force = FALSE)
-	SSgarbage.reference_find_on_fail[REF(thing_to_del)] = TRUE
-	qdel(thing_to_del, force)
 
 #endif

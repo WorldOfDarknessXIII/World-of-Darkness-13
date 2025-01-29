@@ -47,9 +47,9 @@ SUBSYSTEM_DEF(garbage)
 
 	//Queue
 	var/list/queues
-	#ifdef LEGACY_REFERENCE_TRACKING
+	#ifdef REFERENCE_TRACKING
 	var/list/reference_find_on_fail = list()
-	#ifdef REFERENCE_TRACKING_DEBUG
+	#ifdef REFERENCE_TRACKING
 	//Should we save found refs. Used for unit testing
 	var/should_save_refs = FALSE
 	#endif
@@ -177,13 +177,13 @@ SUBSYSTEM_DEF(garbage)
 				#ifdef REFERENCE_TRACKING
 				D.find_references()
 				#elif defined(LEGACY_REFERENCE_TRACKING)
-				if(reference_find_on_fail[refID])
+				if(reference_find_on_fail[text_ref(D)])
 					D.find_references_legacy()
 				#ifdef GC_FAILURE_HARD_LOOKUP
 				else
 					D.find_references_legacy()
 				#endif
-				reference_find_on_fail -= refID
+				reference_find_on_fail -= text_ref(D)
 				#endif
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
@@ -342,7 +342,7 @@ SUBSYSTEM_DEF(garbage)
 				D.find_references_legacy()
 			if (QDEL_HINT_IFFAIL_FINDREFERENCE)
 				SSgarbage.Queue(D)
-				SSgarbage.reference_find_on_fail[REF(D)] = TRUE
+				SSgarbage.reference_find_on_fail[text_ref(D)] = TRUE
 			#endif
 			else
 				#ifdef TESTING
