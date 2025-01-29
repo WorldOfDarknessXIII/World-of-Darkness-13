@@ -93,6 +93,7 @@
 #include "bespoke_id.dm"
 #include "binary_insert.dm"
 #include "breath.dm"
+#include "can_see.dm"
 #include "card_mismatch.dm"
 #include "chain_pull_through_space.dm"
 #include "client_colours.dm"

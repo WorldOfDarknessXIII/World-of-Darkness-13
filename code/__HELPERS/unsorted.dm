@@ -446,20 +446,24 @@ Turf and target are separate in case you want to teleport some distance from a t
 			processing += A.contents
 			. += A
 
-//Step-towards method of determining whether one atom can see another. Similar to viewers()
+///Step-towards method of determining whether one atom can see another. Similar to viewers()
+///note: this is a line of sight algorithm, view() does not do any sort of raycasting and cannot be emulated by it accurately
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
 	var/turf/current = get_turf(source)
 	var/turf/target_turf = get_turf(target)
-	var/steps = 1
-	if(current != target_turf)
-		current = get_step_towards(current, target_turf)
-		while(current != target_turf)
-			if(steps > length)
-				return FALSE
-			if(IS_OPAQUE_TURF(current))
-				return FALSE
-			current = get_step_towards(current, target_turf)
-			steps++
+	if(get_dist(source, target) > length)
+		return FALSE
+	if(current == target_turf || source.CanReach(target))//they are on the same turf or in reach, source can see the target
+		return TRUE
+	var/list/steps = get_steps_to(source, target)
+	if(isnull(steps) || length(steps) > length)
+		return FALSE
+	for(var/direction in steps)
+		current = get_step(current, direction)
+		if(current == target_turf)
+			break
+		if(IS_OPAQUE_TURF(current))
+			return FALSE
 	return TRUE
 
 
