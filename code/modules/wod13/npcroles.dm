@@ -826,6 +826,8 @@
 	. = ..()
 	if(!isturf(loc)) // if rat is, for example, in-hand or inside a crate, won't run this self-deletion code
 		return
+	if(src.client)
+		return
 	var/delete_me = TRUE
 	for(var/mob/living/carbon/human/H in viewers(5, src))
 		if(H)
