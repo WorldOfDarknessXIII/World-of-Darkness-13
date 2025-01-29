@@ -97,7 +97,7 @@ const isColorClass = (str: unknown): boolean => {
   }
 };
 
-const mapRawPropTo = attrName => (style, value) => {
+const mapRawPropTo = (attrName) => (style, value) => {
   if (typeof value === 'number' || typeof value === 'string') {
     style[attrName] = value;
   }
@@ -123,7 +123,7 @@ const mapDirectionalUnitPropTo = (attrName, unit, dirs) => (style, value) => {
   }
 };
 
-const mapColorPropTo = attrName => (style, value) => {
+const mapColorPropTo = (attrName) => (style, value) => {
   if (isColorCode(value)) {
     style[attrName] = value;
   }
@@ -150,8 +150,7 @@ const styleMapperByPropName = {
   lineHeight: (style, value) => {
     if (typeof value === 'number') {
       style['line-height'] = value;
-    }
-    else if (typeof value === 'string') {
+    } else if (typeof value === 'string') {
       style['line-height'] = unit(value);
     }
   },
@@ -165,28 +164,26 @@ const styleMapperByPropName = {
   nowrap: mapBooleanPropTo('white-space', 'nowrap'),
   // Margins
   m: mapDirectionalUnitPropTo('margin', halfUnit, [
-    'top', 'bottom', 'left', 'right',
+    'top',
+    'bottom',
+    'left',
+    'right',
   ]),
-  mx: mapDirectionalUnitPropTo('margin', halfUnit, [
-    'left', 'right',
-  ]),
-  my: mapDirectionalUnitPropTo('margin', halfUnit, [
-    'top', 'bottom',
-  ]),
+  mx: mapDirectionalUnitPropTo('margin', halfUnit, ['left', 'right']),
+  my: mapDirectionalUnitPropTo('margin', halfUnit, ['top', 'bottom']),
   mt: mapUnitPropTo('margin-top', halfUnit),
   mb: mapUnitPropTo('margin-bottom', halfUnit),
   ml: mapUnitPropTo('margin-left', halfUnit),
   mr: mapUnitPropTo('margin-right', halfUnit),
   // Margins
   p: mapDirectionalUnitPropTo('padding', halfUnit, [
-    'top', 'bottom', 'left', 'right',
+    'top',
+    'bottom',
+    'left',
+    'right',
   ]),
-  px: mapDirectionalUnitPropTo('padding', halfUnit, [
-    'left', 'right',
-  ]),
-  py: mapDirectionalUnitPropTo('padding', halfUnit, [
-    'top', 'bottom',
-  ]),
+  px: mapDirectionalUnitPropTo('padding', halfUnit, ['left', 'right']),
+  py: mapDirectionalUnitPropTo('padding', halfUnit, ['top', 'bottom']),
   pt: mapUnitPropTo('padding-top', halfUnit),
   pb: mapUnitPropTo('padding-bottom', halfUnit),
   pl: mapUnitPropTo('padding-left', halfUnit),
@@ -224,8 +221,7 @@ export const computeBoxProps = (props: BoxProps) => {
     const mapPropToStyle = styleMapperByPropName[propName];
     if (mapPropToStyle) {
       mapPropToStyle(computedStyles, propValue);
-    }
-    else {
+    } else {
       computedProps[propName] = propValue;
     }
   }
@@ -257,19 +253,15 @@ export const computeBoxClassName = (props: BoxProps) => {
 };
 
 export const Box = (props: BoxProps) => {
-  const {
-    as = 'div',
-    className,
-    children,
-    ...rest
-  } = props;
+  const { as = 'div', className, children, ...rest } = props;
   // Render props
   if (typeof children === 'function') {
     return children(computeBoxProps(props));
   }
-  const computedClassName = typeof className === 'string'
-    ? className + ' ' + computeBoxClassName(rest)
-    : computeBoxClassName(rest);
+  const computedClassName =
+    typeof className === 'string'
+      ? className + ' ' + computeBoxClassName(rest)
+      : computeBoxClassName(rest);
   const computedProps = computeBoxProps(rest);
   // Render a wrapper element
   return createVNode(
@@ -278,7 +270,8 @@ export const Box = (props: BoxProps) => {
     computedClassName,
     children,
     ChildFlags.UnknownChildren,
-    computedProps);
+    computedProps
+  );
 };
 
 Box.defaultHooks = pureComponentHooks;

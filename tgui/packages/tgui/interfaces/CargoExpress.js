@@ -11,13 +11,9 @@ export const CargoExpress = (props, context) => {
   const orderQueue = data.order_queue ? JSON.parse(data.order_queue) : [];
 
   return (
-    <Window
-      width={600}
-      height={700}
-      resizable>
+    <Window width={600} height={700} resizable>
       <Window.Content scrollable>
-        <InterfaceLockNoticeBox
-          accessText="a QM-level ID card" />
+        <InterfaceLockNoticeBox accessText="a QM-level ID card" />
         {!data.locked && (
           <CargoExpressContent
             tab={tab}
@@ -81,23 +77,29 @@ const CargoExpressContent = ({
               </LabeledList.Item>
             </LabeledList>
           </Section>
-          <CargoCatalog express onAddToQueue={(id) => act('add_to_queue', { id })} onRemoveFromQueue={(id) => act('remove_from_queue', { id })} />
+          <CargoCatalog
+            express
+            onAddToQueue={(id) => act('add_to_queue', { id })}
+            onRemoveFromQueue={(id) => act('remove_from_queue', { id })}
+          />
         </>
       )}
       {tab === 'cart' && (
         <Section
           title="Order Queue"
-          buttons={(
+          buttons={
             <>
               <Button
                 content="Reset Queue"
-                onClick={() => act('reset_queue')} />
+                onClick={() => act('reset_queue')}
+              />
               <Button
                 content="Finalize Order"
                 onClick={() => act('finalize_order')}
-                disabled={!orderQueue.length} />
+                disabled={!orderQueue.length}
+              />
             </>
-          )}>
+          }>
           <Section title="Cash">
             <LabeledList>
               <LabeledList.Item label="Cash:">
@@ -109,15 +111,9 @@ const CargoExpressContent = ({
             </LabeledList>
           </Section>
           {orderQueue.length > 0 ? (
-            orderQueue.map((pack, index) => (
-              <Box key={index}>
-                {pack}
-              </Box>
-            ))
+            orderQueue.map((pack, index) => <Box key={index}>{pack}</Box>)
           ) : (
-            <Box italic>
-              No items in the queue.
-            </Box>
+            <Box italic>No items in the queue.</Box>
           )}
         </Section>
       )}

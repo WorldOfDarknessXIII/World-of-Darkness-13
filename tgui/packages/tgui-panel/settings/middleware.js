@@ -9,20 +9,18 @@ import { setClientTheme } from '../themes';
 import { loadSettings, updateSettings } from './actions';
 import { selectSettings } from './selectors';
 
-const setGlobalFontSize = fontSize => {
-  document.documentElement.style
-    .setProperty('font-size', fontSize + 'px');
-  document.body.style
-    .setProperty('font-size', fontSize + 'px');
+const setGlobalFontSize = (fontSize) => {
+  document.documentElement.style.setProperty('font-size', fontSize + 'px');
+  document.body.style.setProperty('font-size', fontSize + 'px');
 };
 
-export const settingsMiddleware = store => {
+export const settingsMiddleware = (store) => {
   let initialized = false;
-  return next => action => {
+  return (next) => (action) => {
     const { type, payload } = action;
     if (!initialized) {
       initialized = true;
-      storage.get('panel-settings').then(settings => {
+      storage.get('panel-settings').then((settings) => {
         store.dispatch(loadSettings(settings));
       });
     }

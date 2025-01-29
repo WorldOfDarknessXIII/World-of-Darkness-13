@@ -72,7 +72,7 @@ const setupApp = () => {
   store.subscribe(renderApp);
 
   // Subscribe for bankend updates
-  window.update = msg => store.dispatch(Byond.parseJson(msg));
+  window.update = (msg) => store.dispatch(Byond.parseJson(msg));
 
   // Process the early update queue
   while (true) {
@@ -95,7 +95,7 @@ const setupApp = () => {
   });
 
   // Resize the panel to match the non-browser output
-  Byond.winget('output').then(output => {
+  Byond.winget('output').then((output) => {
     Byond.winset('browseroutput', {
       'size': output.size,
     });
@@ -104,18 +104,21 @@ const setupApp = () => {
   // Enable hot module reloading
   if (module.hot) {
     setupHotReloading();
-    module.hot.accept([
-      './audio',
-      './chat',
-      './game',
-      './Notifications',
-      './Panel',
-      './ping',
-      './settings',
-      './telemetry',
-    ], () => {
-      renderApp();
-    });
+    module.hot.accept(
+      [
+        './audio',
+        './chat',
+        './game',
+        './Notifications',
+        './Panel',
+        './ping',
+        './settings',
+        './telemetry',
+      ],
+      () => {
+        renderApp();
+      }
+    );
   }
 };
 

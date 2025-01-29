@@ -152,7 +152,6 @@ declare global {
     __windowId__: string;
     Byond: ByondType;
   }
-
 }
 
 export {};

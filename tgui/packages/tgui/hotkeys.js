@@ -31,7 +31,7 @@ const keyState = {};
 /**
  * Converts a browser keycode to BYOND keycode.
  */
-const keyCodeToByond = keyCode => {
+const keyCodeToByond = (keyCode) => {
   if (keyCode === 16) return 'Shift';
   if (keyCode === 17) return 'Ctrl';
   if (keyCode === 18) return 'Alt';
@@ -45,7 +45,7 @@ const keyCodeToByond = keyCode => {
   if (keyCode === 40) return 'South';
   if (keyCode === 45) return 'Insert';
   if (keyCode === 46) return 'Delete';
-  if (keyCode >= 48 && keyCode <= 57 || keyCode >= 65 && keyCode <= 90) {
+  if ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90)) {
     return String.fromCharCode(keyCode);
   }
   if (keyCode >= 96 && keyCode <= 105) {
@@ -63,7 +63,7 @@ const keyCodeToByond = keyCode => {
  * Keyboard passthrough logic. This allows you to keep doing things
  * in game while the browser window is focused.
  */
-const handlePassthrough = key => {
+const handlePassthrough = (key) => {
   // In addition to F5, support reloading with Ctrl+R and Ctrl+F5
   if (key.ctrl && (key.code === KEY_F5 || key.code === KEY_R)) {
     location.reload();
@@ -74,9 +74,11 @@ const handlePassthrough = key => {
     return;
   }
   // NOTE: Alt modifier is pretty bad and sticky in IE11.
-  if (key.event.defaultPrevented
-      || key.isModifierKey()
-      || hotKeysAcquired.includes(key.code)) {
+  if (
+    key.event.defaultPrevented ||
+    key.isModifierKey() ||
+    hotKeysAcquired.includes(key.code)
+  ) {
     return;
   }
   const byondKeyCode = keyCodeToByond(key.code);
@@ -109,14 +111,14 @@ const handlePassthrough = key => {
  * Acquires a lock on the hotkey, which prevents it from being
  * passed through to BYOND.
  */
-export const acquireHotKey = keyCode => {
+export const acquireHotKey = (keyCode) => {
   hotKeysAcquired.push(keyCode);
 };
 
 /**
  * Makes the hotkey available to BYOND again.
  */
-export const releaseHotKey = keyCode => {
+export const releaseHotKey = (keyCode) => {
   const index = hotKeysAcquired.indexOf(keyCode);
   if (index >= 0) {
     hotKeysAcquired.splice(index, 1);
@@ -135,7 +137,7 @@ export const releaseHeldKeys = () => {
 
 export const setupHotKeys = () => {
   // Read macros
-  Byond.winget('default.*').then(data => {
+  Byond.winget('default.*').then((data) => {
     // Group each macro by ref
     const groupedByRef = {};
     for (let key of Object.keys(data)) {
@@ -151,9 +153,8 @@ export const setupHotKeys = () => {
     }
     // Insert macros
     const escapedQuotRegex = /\\"/g;
-    const unescape = str => str
-      .substring(1, str.length - 1)
-      .replace(escapedQuotRegex, '"');
+    const unescape = (str) =>
+      str.substring(1, str.length - 1).replace(escapedQuotRegex, '"');
     for (let ref of Object.keys(groupedByRef)) {
       const macro = groupedByRef[ref];
       const byondKeyName = unescape(macro.name);
@@ -165,7 +166,7 @@ export const setupHotKeys = () => {
   globalEvents.on('window-blur', () => {
     releaseHeldKeys();
   });
-  globalEvents.on('key', key => {
+  globalEvents.on('key', (key) => {
     handlePassthrough(key);
   });
 };
