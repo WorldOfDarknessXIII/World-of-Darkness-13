@@ -214,7 +214,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/effect/sliding_puzzle)
 	//these can explode and cause the turf to be destroyed at unexpected moments
 	returnable_list += typesof(/obj/effect/mine)
-	returnable_list += typesof(/obj/effect/spawner/random/contraband/landmine)
 	returnable_list += typesof(/obj/item/minespawner)
 	//Stacks baseturfs, can't be tested here
 	returnable_list += typesof(/obj/effect/temp_visual/lava_warning)
