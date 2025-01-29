@@ -84,7 +84,7 @@ export const RequestKioskContent = (props, context) => {
                   {applicants?.map(
                     (applicant) =>
                       applicant.request_id === request.acc_number && (
-                        <Flex>
+                        <Flex key="applicant">
                           <Flex.Item
                             grow={1}
                             p={0.5}
