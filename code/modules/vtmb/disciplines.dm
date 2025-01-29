@@ -393,12 +393,12 @@
 	. = ..()
 	var/sound/auspexbeat = sound('code/modules/wod13/sounds/auspex.ogg', repeat = TRUE)
 	caster.playsound_local(caster, auspexbeat, 75, 0, channel = CHANNEL_DISCIPLINES, use_reverb = FALSE)
+	caster.add_client_colour(/datum/client_colour/glass_colour/lightblue)
 	ADD_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
 	var/loh = FALSE
 	if(!HAS_TRAIT(caster, TRAIT_NIGHT_VISION))
 		ADD_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
 		loh = TRUE
-	caster.add_client_colour(/datum/client_colour/glass_colour/lightblue)
 	var/shitcasted = FALSE
 	if(level_casting >= 2)
 		var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]
@@ -424,10 +424,10 @@
 			health_hud.remove_hud_from(caster)
 			caster.stop_sound_channel(CHANNEL_DISCIPLINES)
 			caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/auspex_deactivate.ogg', 50, FALSE)
+			caster.remove_client_colour(/datum/client_colour/glass_colour/lightblue)
 			REMOVE_TRAIT(caster, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
 			if(loh)
 				REMOVE_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
-			caster.remove_client_colour(/datum/client_colour/glass_colour/lightblue)
 
 /datum/discipline/celerity
 	name = "Celerity"

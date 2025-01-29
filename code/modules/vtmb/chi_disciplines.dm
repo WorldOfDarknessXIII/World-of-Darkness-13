@@ -1840,8 +1840,8 @@
 		if(1)
 			var/sound/auspexbeat = sound('code/modules/wod13/sounds/auspex.ogg', repeat = TRUE)
 			caster.playsound_local(caster, auspexbeat, 75, 0, channel = CHANNEL_DISCIPLINES, use_reverb = FALSE)
-			ADD_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
 			caster.add_client_colour(/datum/client_colour/glass_colour/lightblue)
+			ADD_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
 			var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]
 			abductor_hud.add_hud_to(caster)
 			caster.auspex_examine = TRUE
@@ -1852,8 +1852,8 @@
 					abductor_hud.remove_hud_from(caster)
 					caster.stop_sound_channel(CHANNEL_DISCIPLINES)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/auspex_deactivate.ogg', 50, FALSE)
-					REMOVE_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
 					caster.remove_client_colour(/datum/client_colour/glass_colour/lightblue)
+					REMOVE_TRAIT(caster, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
 		if(2)
 			var/sound/auspexbeat = sound('code/modules/wod13/sounds/auspex.ogg', repeat = TRUE)
 			caster.playsound_local(caster, auspexbeat, 75, 0, channel = CHANNEL_DISCIPLINES, use_reverb = FALSE)
