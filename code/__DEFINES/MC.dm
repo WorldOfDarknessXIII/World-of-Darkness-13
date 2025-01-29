@@ -61,6 +61,8 @@
 /// It should not be used simply to silence CI.
 #define SS_OK_TO_FAIL_INIT (1 << 7)
 
+#define SS_INIT_NO_NEED (1 << 8)
+
 //! SUBSYSTEM STATES
 #define SS_IDLE 0		/// ain't doing shit.
 #define SS_QUEUED 1		/// queued to run

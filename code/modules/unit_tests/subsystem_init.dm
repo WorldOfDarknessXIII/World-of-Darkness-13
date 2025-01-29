@@ -3,7 +3,7 @@
 
 /datum/unit_test/subsystem_init/Run()
 	for(var/datum/controller/subsystem/subsystem as anything in Master.subsystems)
-		if(subsystem.flags & SS_NO_INIT)
+		if(subsystem.flags & (SS_NO_INIT || SS_INIT_NO_NEED))
 			continue
 		if(subsystem.initialized)
 			continue
