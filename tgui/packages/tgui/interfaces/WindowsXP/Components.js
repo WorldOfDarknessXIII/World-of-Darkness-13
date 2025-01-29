@@ -1,7 +1,6 @@
 import { classes } from '../../../common/react';
 
-
-export const XPButton = props => {
+export const XPButton = (props) => {
   const { onClick, disabled, content } = props;
   return (
     <div
@@ -12,13 +11,13 @@ export const XPButton = props => {
   );
 };
 
-export const XPInput = props => {
+export const XPInput = (props) => {
   const { onInput = (e, value) => {}, placeholder = '', value = '' } = props;
 
   return (
     <input
       className="xp-input"
-      onInput={e => onInput(e, e.target.value)}
+      onInput={(e) => onInput(e, e.target.value)}
       placeholder={placeholder}
       value={value}
     />

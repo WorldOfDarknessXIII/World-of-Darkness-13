@@ -123,7 +123,7 @@
   }
   .footer__window.cover:before {
     display: block;
-    content: "";
+    content: '';
     position: absolute;
     left: -2px;
     top: -2px;
@@ -189,7 +189,7 @@
     );
   }
   .header__button--minimize:before {
-    content: "";
+    content: '';
     position: absolute;
     left: 4px;
     top: 13px;
@@ -210,7 +210,7 @@
     );
   }
   .header__button--maximize:before {
-    content: "";
+    content: '';
     position: absolute;
     display: block;
     left: 4px;
@@ -232,7 +232,7 @@
     );
   }
   .header__button--maximized :before {
-    content: "";
+    content: '';
     position: absolute;
     display: block;
     left: 7px;
@@ -242,7 +242,7 @@
     width: 8px;
   }
   .header__button--maximized :after {
-    content: "";
+    content: '';
     position: absolute;
     display: block;
     left: 4px;
@@ -265,7 +265,7 @@
     );
   }
   .header__button--close:before {
-    content: "";
+    content: '';
     position: absolute;
     left: 9px;
     top: 2px;
@@ -275,7 +275,7 @@
     background-color: white;
   }
   .header__button--close:after {
-    content: "";
+    content: '';
     position: absolute;
     left: 9px;
     top: 2px;
@@ -323,7 +323,7 @@
     overflow: hidden;
   }
   .header__bg:before {
-    content: "";
+    content: '';
     display: block;
     position: absolute;
     left: 0;
@@ -334,7 +334,7 @@
     width: 15px;
   }
   .header__bg:after {
-    content: "";
+    content: '';
     display: block;
     position: absolute;
     right: 0;
@@ -399,12 +399,12 @@
     justify-content: center;
 
     &:before {
-      content: "";
+      content: '';
       display: block;
       flex-grow: 1;
     }
     &:after {
-      content: "";
+      content: '';
       display: block;
       flex-grow: 1;
     }

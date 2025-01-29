@@ -46,7 +46,7 @@ export const ICQ = (props, context) => {
       <div className="chat">
         <div className="chat-footer">
           <div class="messages">
-            {app.messages.map(message => {
+            {app.messages.map((message) => {
               return (
                 <>
                   <b>{message.author}</b>

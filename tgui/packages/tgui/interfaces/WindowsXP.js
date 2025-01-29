@@ -1,6 +1,6 @@
-import { Window } from "../layouts";
-import { WinXP } from "./WindowsXP/index";
-import { useBackend } from "../backend";
+import { Window } from '../layouts';
+import { WinXP } from './WindowsXP/index';
+import { useBackend } from '../backend';
 import { Component } from 'inferno';
 
 export class WindowsXP extends Component {

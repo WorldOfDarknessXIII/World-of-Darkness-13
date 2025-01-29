@@ -6,14 +6,11 @@ import { Button, LabeledList, ProgressBar, Section, Stack, Table } from '../comp
 import { getGasColor, getGasLabel } from '../constants';
 import { NtosWindow } from '../layouts';
 
-const logScale = value => Math.log2(16 + Math.max(0, value)) - 4;
+const logScale = (value) => Math.log2(16 + Math.max(0, value)) - 4;
 
 export const NtosSupermatterMonitor = (props, context) => {
   return (
-    <NtosWindow
-      width={600}
-      height={350}
-      resizable>
+    <NtosWindow width={600} height={350} resizable>
       <NtosWindow.Content scrollable>
         <NtosSupermatterMonitorContent />
       </NtosWindow.Content>
@@ -23,23 +20,16 @@ export const NtosSupermatterMonitor = (props, context) => {
 
 export const NtosSupermatterMonitorContent = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    active,
-    SM_integrity,
-    SM_power,
-    SM_ambienttemp,
-    SM_ambientpressure,
-  } = data;
+  const { active, SM_integrity, SM_power, SM_ambienttemp, SM_ambientpressure } =
+    data;
   if (!active) {
-    return (
-      <SupermatterList />
-    );
+    return <SupermatterList />;
   }
   const gases = flow([
-    gases => gases.filter(gas => gas.amount >= 0.01),
-    sortBy(gas => -gas.amount),
+    (gases) => gases.filter((gas) => gas.amount >= 0.01),
+    sortBy((gas) => -gas.amount),
   ])(data.gases || []);
-  const gasMaxAmount = Math.max(1, ...gases.map(gas => gas.amount));
+  const gasMaxAmount = Math.max(1, ...gases.map((gas) => gas.amount));
   return (
     <Stack>
       <Stack.Item width="270px">
@@ -49,10 +39,11 @@ export const NtosSupermatterMonitorContent = (props, context) => {
               <ProgressBar
                 value={SM_integrity / 100}
                 ranges={{
-                  good: [0.90, Infinity],
-                  average: [0.5, 0.90],
+                  good: [0.9, Infinity],
+                  average: [0.5, 0.9],
                   bad: [-Infinity, 0.5],
-                }} />
+                }}
+              />
             </LabeledList.Item>
             <LabeledList.Item label="Relative EER">
               <ProgressBar
@@ -100,17 +91,16 @@ export const NtosSupermatterMonitorContent = (props, context) => {
       <Stack.Item grow={1} basis={0}>
         <Section
           title="Gases"
-          buttons={(
+          buttons={
             <Button
               icon="arrow-left"
               content="Back"
-              onClick={() => act('PRG_clear')} />
-          )}>
+              onClick={() => act('PRG_clear')}
+            />
+          }>
           <LabeledList>
-            {gases.map(gas => (
-              <LabeledList.Item
-                key={gas.name}
-                label={getGasLabel(gas.name)}>
+            {gases.map((gas) => (
+              <LabeledList.Item key={gas.name} label={getGasLabel(gas.name)}>
                 <ProgressBar
                   color={getGasColor(gas.name)}
                   value={gas.amount}
@@ -133,18 +123,17 @@ const SupermatterList = (props, context) => {
   return (
     <Section
       title="Detected Supermatters"
-      buttons={(
+      buttons={
         <Button
           icon="sync"
           content="Refresh"
-          onClick={() => act('PRG_refresh')} />
-      )}>
+          onClick={() => act('PRG_refresh')}
+        />
+      }>
       <Table>
-        {supermatters.map(sm => (
+        {supermatters.map((sm) => (
           <Table.Row key={sm.uid}>
-            <Table.Cell>
-              {sm.uid + '. ' + sm.area_name}
-            </Table.Cell>
+            <Table.Cell>{sm.uid + '. ' + sm.area_name}</Table.Cell>
             <Table.Cell collapsing color="label">
               Integrity:
             </Table.Cell>
@@ -152,17 +141,21 @@ const SupermatterList = (props, context) => {
               <ProgressBar
                 value={sm.integrity / 100}
                 ranges={{
-                  good: [0.90, Infinity],
-                  average: [0.5, 0.90],
+                  good: [0.9, Infinity],
+                  average: [0.5, 0.9],
                   bad: [-Infinity, 0.5],
-                }} />
+                }}
+              />
             </Table.Cell>
             <Table.Cell collapsing>
               <Button
                 content="Details"
-                onClick={() => act('PRG_set', {
-                  target: sm.uid,
-                })} />
+                onClick={() =>
+                  act('PRG_set', {
+                    target: sm.uid,
+                  })
+                }
+              />
             </Table.Cell>
           </Table.Row>
         ))}

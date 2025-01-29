@@ -1,4 +1,4 @@
-import { Window } from "./Window";
+import { Window } from './Window';
 import { Component } from 'inferno';
 
 export class Windows extends Component {
@@ -6,23 +6,17 @@ export class Windows extends Component {
     const { apps, current_app, act } = this.props;
     return (
       <>
-        {apps.map(app => {
+        {apps.map((app) => {
           return (
-            app.launched === 1 && (app.reference !== current_app
-              && <Window
-                app={app}
-                act={act}
-              />
-            )
+            app.launched === 1 &&
+            app.reference !== current_app && <Window app={app} act={act} />
           );
         })}
-        {apps.map(app => {
+        {apps.map((app) => {
           return (
-            app.launched === 1 && (app.reference === current_app
-              && <Window
-                app={app}
-                act={act}
-                is_Focus />
+            app.launched === 1 &&
+            app.reference === current_app && (
+              <Window app={app} act={act} is_Focus />
             )
           );
         })}
