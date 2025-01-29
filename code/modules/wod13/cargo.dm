@@ -4,7 +4,7 @@
 	desc = "Contains a bailer and some seeds. No trays."
 	cost = 100
 	contains = list(/obj/item/bailer, /obj/item/weedseed, /obj/item/weedseed, /obj/item/weedseed, /obj/item/weedseed, /obj/item/weedseed)
-	crate_name = "hydro supplies"
+	crate_name = "hydro crate"
 
 /datum/supply_pack/vampire/weed_tray
 	name = "Weed Tray"
