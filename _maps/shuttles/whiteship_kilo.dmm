@@ -474,7 +474,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /turf/open/floor/plating,
@@ -965,9 +965,7 @@
 	pixel_y = -24
 	},
 /obj/effect/spawner/lootdrop/maintenance/two,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "bH" = (
@@ -1112,7 +1110,7 @@
 /obj/structure/bed,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/machinery/light/small{
@@ -1134,7 +1132,8 @@
 	pixel_y = 8
 	},
 /obj/machinery/airalarm/all_access{
-	pixel_y = 22
+	pixel_y = 22;
+	dir = 1
 	},
 /turf/open/floor/carpet,
 /area/shuttle/abandoned/crew)
@@ -1235,9 +1234,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
 	},

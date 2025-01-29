@@ -341,7 +341,7 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bm" = (
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/plasteel/airless,
 /area/awaymission/challenge/main)
 "bn" = (

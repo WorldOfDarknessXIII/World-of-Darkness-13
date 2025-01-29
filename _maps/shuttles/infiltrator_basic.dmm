@@ -553,9 +553,7 @@
 /obj/machinery/nuclearbomb/syndicate{
 	anchored = 1
 	},
-/obj/machinery/door/window{
-	dir = 1
-	},
+/obj/machinery/door/window/left/directional/north,
 /turf/open/floor/circuit/red,
 /area/shuttle/syndicate/hallway)
 "bq" = (
@@ -863,8 +861,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/medical)
 "bZ" = (
-/obj/machinery/door/window{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Surgery";
 	req_access_txt = "150"
 	},
@@ -967,8 +964,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/armory)
 "ch" = (
-/obj/machinery/door/window{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Technological Storage";
 	req_access_txt = "150"
 	},

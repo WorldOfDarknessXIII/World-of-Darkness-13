@@ -48,7 +48,8 @@
 	},
 /obj/structure/bed,
 /obj/machinery/airalarm/all_access{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /obj/item/bedsheet,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -170,7 +171,8 @@
 	pixel_y = 6
 	},
 /obj/machinery/airalarm/all_access{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /obj/item/storage/backpack/duffelbag/med/surgery{
 	pixel_y = 4
@@ -231,7 +233,8 @@
 	dir = 1
 	},
 /obj/machinery/airalarm/all_access{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -781,7 +784,8 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /obj/machinery/light/small/built{
 	dir = 1
@@ -832,7 +836,8 @@
 	dir = 1
 	},
 /obj/machinery/airalarm/all_access{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -899,7 +904,7 @@
 	anchored = 1
 	},
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/white/side{
@@ -1523,7 +1528,8 @@
 	pixel_x = 4
 	},
 /obj/machinery/airalarm/all_access{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /obj/item/flashlight/pen{
 	pixel_x = -6;
@@ -1593,7 +1599,8 @@
 	req_access = null
 	},
 /obj/machinery/airalarm/all_access{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/abandoned/medbay)

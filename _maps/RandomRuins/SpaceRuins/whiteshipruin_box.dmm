@@ -256,7 +256,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/whiteship/box)
 "Oj" = (
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/whiteship/box)
 "Ov" = (

@@ -696,7 +696,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/bmpship/midship)
 "cN" = (
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -1205,9 +1205,8 @@
 /turf/open/floor/plating,
 /area/awaymission/bmpship/aft)
 "eF" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/east{
 	base_state = "right";
-	dir = 4;
 	icon_state = "right"
 	},
 /turf/open/floor/plating,
@@ -1237,9 +1236,8 @@
 /turf/open/floor/plating,
 /area/awaymission/bmpship/midship)
 "eJ" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/east{
 	base_state = "right";
-	dir = 4;
 	icon_state = "right"
 	},
 /turf/open/floor/plating,
@@ -1894,9 +1892,6 @@
 "hE" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/awaymission/bmpship/fore)
-"xA" = (
-/turf/closed/mineral/random,
-/area/awaymission/bmpship)
 "ya" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "packerMine"
@@ -2014,9 +2009,9 @@ aa
 aa
 aa
 aa
-xA
-xA
-xA
+gb
+gb
+gb
 aa
 aa
 aa
@@ -2065,9 +2060,9 @@ aa
 aa
 aa
 fS
-xA
-xA
-xA
+gb
+gb
+gb
 aa
 aa
 aa
@@ -2116,10 +2111,10 @@ aa
 aa
 aa
 fS
-xA
-xA
-xA
-xA
+gb
+gb
+gb
+gb
 aa
 aa
 aa
@@ -2168,8 +2163,8 @@ aa
 aa
 aa
 fS
-xA
-xA
+gb
+gb
 fS
 fS
 aa
@@ -2230,9 +2225,9 @@ aa
 aa
 aa
 aa
-xA
-xA
-xA
+gb
+gb
+gb
 aa
 aa
 aa
@@ -2280,11 +2275,11 @@ aa
 aa
 fS
 fS
-xA
-xA
-xA
-xA
-xA
+gb
+gb
+gb
+gb
+gb
 aa
 aa
 aa
@@ -2330,13 +2325,13 @@ aa
 fS
 fS
 fS
-xA
-xA
-xA
-xA
-xA
-xA
-xA
+gb
+gb
+gb
+gb
+gb
+gb
+gb
 aa
 aa
 aa
@@ -2381,14 +2376,14 @@ hn
 fS
 fS
 fS
-xA
-xA
-xA
-xA
-xA
-xA
-xA
-xA
+gb
+gb
+gb
+gb
+gb
+gb
+gb
+gb
 aa
 aa
 aa
@@ -2434,13 +2429,13 @@ fS
 fS
 fS
 fS
-xA
-xA
-xA
-xA
-xA
-xA
-xA
+gb
+gb
+gb
+gb
+gb
+gb
+gb
 aa
 aa
 "}
@@ -2488,10 +2483,10 @@ fS
 fS
 fS
 fS
-xA
-xA
-xA
-xA
+gb
+gb
+gb
+gb
 aa
 aa
 "}
@@ -2540,8 +2535,8 @@ fS
 fS
 fS
 fS
-xA
-xA
+gb
+gb
 fS
 aa
 aa
@@ -3663,8 +3658,8 @@ gb
 fS
 fS
 fS
-xA
-xA
+gb
+gb
 aa
 aa
 "}
@@ -3714,9 +3709,9 @@ fS
 fS
 fS
 fS
-xA
-xA
-xA
+gb
+gb
+gb
 aa
 "}
 (35,1,1) = {"
@@ -3764,10 +3759,10 @@ fS
 fS
 fS
 fS
-xA
-xA
-xA
-xA
+gb
+gb
+gb
+gb
 aa
 "}
 (36,1,1) = {"
@@ -3815,10 +3810,10 @@ aa
 aa
 aa
 aa
-xA
-xA
-xA
-xA
+gb
+gb
+gb
+gb
 aa
 "}
 (37,1,1) = {"
@@ -3867,8 +3862,8 @@ aa
 aa
 aa
 aa
-xA
-xA
+gb
+gb
 aa
 aa
 "}

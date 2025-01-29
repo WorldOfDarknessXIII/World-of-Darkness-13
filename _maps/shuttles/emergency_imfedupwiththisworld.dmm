@@ -107,9 +107,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "s" = (
-/obj/machinery/door/window{
-	dir = 8
-	},
+/obj/machinery/door/window/left/directional/west,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1

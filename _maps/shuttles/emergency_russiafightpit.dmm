@@ -300,7 +300,7 @@
 /area/shuttle/escape)
 "aZ" = (
 /obj/effect/decal/cleanable/shreds,
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "fight pit"
 	},
 /turf/open/floor/engine,

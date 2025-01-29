@@ -113,7 +113,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/solar_control)
 "aQ" = (
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/solar_control)
@@ -225,9 +225,8 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bp" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/east{
 	base_state = "right";
-	dir = 4;
 	icon_state = "right"
 	},
 /turf/open/floor/plasteel,
@@ -248,7 +247,7 @@
 	},
 /area/ruin/space/derelict/solar_control)
 "bt" = (
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bu" = (
@@ -334,9 +333,8 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bJ" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/east{
 	base_state = "right";
-	dir = 4;
 	icon_state = "right"
 	},
 /turf/open/floor/plasteel/airless,
@@ -748,7 +746,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 "dx" = (
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 "dy" = (
@@ -1214,7 +1212,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/bridge)
 "fp" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "Captain's Quarters";
 	req_access_txt = "20"
 	},
@@ -1343,7 +1341,7 @@
 	},
 /area/ruin/space/derelict/singularity_engine)
 "fK" = (
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
@@ -1562,7 +1560,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "gF" = (
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary)
 "gG" = (
@@ -1789,9 +1787,7 @@
 	},
 /area/ruin/space/derelict/hallway/primary)
 "hE" = (
-/obj/machinery/door/window{
-	dir = 8
-	},
+/obj/machinery/door/window/left/directional/west,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/arrival)
 "hF" = (
@@ -2102,8 +2098,7 @@
 	dir = 8;
 	id = "derelict_gun"
 	},
-/obj/machinery/door/window{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	req_access_txt = "25"
 	},
 /obj/structure/closet/crate/coffin,
@@ -2301,9 +2296,7 @@
 	},
 /area/ruin/space/derelict/medical/chapel)
 "jv" = (
-/obj/machinery/door/window{
-	dir = 8
-	},
+/obj/machinery/door/window/left/directional/west,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/medical/chapel)
 "jw" = (
@@ -2395,7 +2388,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/medical/chapel)
 "jM" = (
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/medical/chapel)
@@ -2559,9 +2552,8 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/arrival)
 "kw" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/east{
 	base_state = "right";
-	dir = 4;
 	icon_state = "right"
 	},
 /obj/structure/cable,
@@ -2580,7 +2572,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/arrival)
 "kD" = (
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
 "kI" = (
@@ -2632,7 +2624,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
 "kS" = (
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary/port)
 "kT" = (
@@ -2945,9 +2937,7 @@
 /turf/template_noop,
 /area/ruin/space/derelict/hallway/primary/port)
 "mc" = (
-/obj/machinery/door/window{
-	dir = 8
-	},
+/obj/machinery/door/window/left/directional/west,
 /obj/item/shard{
 	icon_state = "medium"
 	},
@@ -2970,9 +2960,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "mh" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/east{
 	base_state = "right";
-	dir = 4;
 	icon_state = "right"
 	},
 /turf/open/floor/plasteel/airless,
@@ -3482,18 +3471,16 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
 "of" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/east{
 	base_state = "right";
-	dir = 4;
 	icon_state = "right"
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
 "og" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/east{
 	base_state = "right";
-	dir = 4;
 	icon_state = "right"
 	},
 /turf/open/floor/plasteel/airless,

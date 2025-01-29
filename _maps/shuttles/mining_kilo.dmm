@@ -109,8 +109,7 @@
 	pixel_y = 18
 	},
 /obj/structure/table,
-/obj/machinery/airalarm{
-	dir = 8;
+/obj/machinery/airalarm/directional/east{
 	pixel_x = 22
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -175,8 +174,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 1
 	},
-/obj/machinery/airalarm{
-	dir = 4;
+/obj/machinery/airalarm/directional/west{
 	pixel_x = -22
 	},
 /turf/open/floor/mineral/plastitanium,

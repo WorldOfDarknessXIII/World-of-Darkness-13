@@ -563,9 +563,7 @@
 /turf/open/floor/carpet/lone,
 /area/awaymission/academy/headmaster)
 "cv" = (
-/obj/machinery/door/window{
-	dir = 8
-	},
+/obj/machinery/door/window/left/directional/west,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
@@ -574,9 +572,7 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
 "cx" = (
-/obj/machinery/door/window{
-	dir = 4
-	},
+/obj/machinery/door/window/left/directional/east,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
@@ -1642,9 +1638,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/classrooms)
 "gn" = (
-/obj/machinery/door/window{
-	dir = 4
-	},
+/obj/machinery/door/window/left/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -1655,12 +1649,8 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "gp" = (
-/obj/machinery/door/window{
-	dir = 4
-	},
-/obj/machinery/door/window{
-	dir = 8
-	},
+/obj/machinery/door/window/left/directional/east,
+/obj/machinery/door/window/left/directional/west,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "gq" = (
@@ -1711,9 +1701,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/classrooms)
 "gA" = (
-/obj/machinery/door/window{
-	dir = 4
-	},
+/obj/machinery/door/window/left/directional/east,
 /obj/item/ammo_casing,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -2618,12 +2606,12 @@
 /turf/open/floor/grass,
 /area/awaymission/academy/academygate)
 "jZ" = (
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
 "ka" = (
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
 "ke" = (

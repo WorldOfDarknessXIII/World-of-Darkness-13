@@ -909,9 +909,8 @@
 	},
 /area/awaymission/caves/research)
 "cS" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/east{
 	base_state = "right";
-	dir = 4;
 	icon_state = "right"
 	},
 /turf/open/floor/plating{
@@ -920,9 +919,8 @@
 /area/awaymission/caves/research)
 "cT" = (
 /obj/structure/window/reinforced,
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/east{
 	base_state = "right";
-	dir = 4;
 	icon_state = "right"
 	},
 /turf/open/floor/plating{

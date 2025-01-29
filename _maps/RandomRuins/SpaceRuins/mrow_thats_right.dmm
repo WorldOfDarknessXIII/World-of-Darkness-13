@@ -262,7 +262,7 @@
 	id = "meow";
 	name = "kitty protection door"
 	},
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "kitty door";
 	req_access_txt = "200"
 	},

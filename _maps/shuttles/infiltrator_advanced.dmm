@@ -435,7 +435,7 @@
 	pixel_y = 26
 	},
 /obj/machinery/airalarm/syndicate{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/structure/cable,
@@ -944,8 +944,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/airlock)
 "bV" = (
-/obj/machinery/door/window{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Surgery Chamber";
 	req_access_txt = "150"
 	},
@@ -1559,7 +1558,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/syndicate{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -1793,9 +1792,7 @@
 	},
 /obj/effect/turf_decal/stripes/red/line,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/cc64k_ad{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/cc64k_ad/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/armory)
 "dH" = (
@@ -2066,9 +2063,7 @@
 /obj/machinery/nuclearbomb/syndicate{
 	anchored = 1
 	},
-/obj/machinery/door/window{
-	dir = 1
-	},
+/obj/machinery/door/window/left/directional/north,
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
@@ -2112,8 +2107,7 @@
 	dir = 1;
 	name = "Connector to Ship"
 	},
-/obj/machinery/door/window{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Systems Chamber";
 	req_access_txt = "150"
 	},
@@ -2203,7 +2197,8 @@
 	pixel_x = 26
 	},
 /obj/machinery/airalarm/syndicate{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/armory)

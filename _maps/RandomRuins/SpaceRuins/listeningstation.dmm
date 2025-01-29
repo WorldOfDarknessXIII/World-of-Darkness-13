@@ -11,7 +11,8 @@
 "ad" = (
 /obj/machinery/computer/message_monitor,
 /obj/machinery/airalarm/syndicate{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -365,9 +366,7 @@
 /obj/item/food/chocolatebar,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -623,7 +622,8 @@
 /area/ruin/space/has_grav/listeningstation)
 "aU" = (
 /obj/machinery/airalarm/syndicate{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -715,9 +715,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/random/directional/east,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -772,7 +770,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/syndicate{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -881,8 +879,7 @@
 /obj/machinery/syndicatebomb/self_destruct{
 	anchored = 1
 	},
-/obj/machinery/door/window/brigdoor{
-	dir = 8;
+/obj/machinery/door/window/brigdoor/left/directional/west{
 	req_access_txt = "150"
 	},
 /obj/structure/sign/warning/explosives/alt{
