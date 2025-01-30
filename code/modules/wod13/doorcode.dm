@@ -309,12 +309,12 @@
 	)
 	color = "#e8ff29"
 
-/obj/item/vamp/keys/ventrue/wolftech
-	name = "Techy keys"
+/obj/item/vamp/keys/wolftech
+	name = "Tech Store keys"
 	accesslocks = list(
 		"wolftech"
 	)
-	color = "#e8ff29"
+	color = "#466a72"
 
 /obj/item/vamp/keys/triads
 	name = "Rusty keys"
