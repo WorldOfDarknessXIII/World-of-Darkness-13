@@ -1095,15 +1095,5 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	fullscreen = !fullscreen
 
-	if (fullscreen)
-		winset(usr, "mainwindow", "menu=\"\"")
-		winset(usr, "mainwindow","titlebar=false")
-		winset(usr, "mainwindow","can-resize=false")
-		winset(usr, "mainwindow","is-minimized=true")
-		winset(usr, "mainwindow","is-maximized=true")
-		winset(usr, null, "split.size=mainwindow.size")
-	else
-		winset(usr, "mainwindow", "menu=\"menu\"")
-		winset(usr, "mainwindow","titlebar=true")
-		winset(usr, "mainwindow","can-resize=true")
+	winset(src, "mainwindow", "menu=;is-fullscreen=[fullscreen ? "true" : "false"]")
 	fit_viewport()

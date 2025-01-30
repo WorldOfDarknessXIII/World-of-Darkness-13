@@ -5,3 +5,5 @@
 # Format is "version: map" or "version: map;max_required_client_version"
 # Example:
 # 500.1337: runtimestation
+# Lowest supported version
+515.1642: runtimestation
