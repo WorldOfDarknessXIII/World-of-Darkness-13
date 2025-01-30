@@ -7,16 +7,18 @@
     "packages/*"
   ],
   "scripts": {
-    "tgui:build": "webpack",
     "tgui:analyze": "webpack --analyze",
+    "tgui:build": "BROWSERSLIST_IGNORE_OLD_DATA=true webpack",
     "tgui:dev": "node --experimental-modules packages/tgui-dev-server/index.js",
     "tgui:lint": "eslint packages --ext .js,.cjs,.ts,.tsx",
     "tgui:prettier": "prettierx --check .",
     "tgui:sonar": "eslint packages --ext .js,.cjs,.ts,.tsx -c .eslintrc-sonar.yml",
-    "tgui:tsc": "tsc",
     "tgui:test": "jest --watch",
     "tgui:test-simple": "CI=true jest --color",
-    "tgui:test-ci": "CI=true jest --color --collect-coverage"
+    "tgui:test-ci": "CI=true jest --color --collect-coverage",
+    "tgui:tsc": "tsc",
+    "tgui:prettier-fix": "prettier --write .",
+    "tgui:eslint-fix": "eslint --fix packages --ext .js,.cjs,.ts,.jsx,.tsx"
   },
   "dependencies": {
     "@babel/core": "^7.15.0",
