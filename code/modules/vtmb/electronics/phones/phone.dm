@@ -823,13 +823,13 @@
 			for(var/obj/item/police_radio/R in GLOB.police_radios)
 				R.dispatcher_talk(message)
 			for(var/obj/machinery/p25transceiver/P in GLOB.p25_tranceivers)
-				if(P.p25_network == "police" || P.p25_network == "clinc")
+				if(P.p25_network == "police" || P.p25_network == "clinic")
 					var/formatted = ""
 					if (isliving(speaker))
 						formatted = "[icon2html(src, world)]\[<b>DISPATCHER</b>\]: <span class='robot'>[message]</span>"
 					else
 						formatted = "[icon2html(src, world)]\[<b>CALLER</b>\]: <span class='robot'>[message]</span>"
-					P.broadcast_to_network(formatted, P.p25_network, 'sound/effects/radioclick.ogg', 10, TRUE)
+					P.broadcast_to_network(formatted, P.p25_network, 'sound/effects/radioclick.ogg', 10, FALSE)
 
 /obj/item/vamp/phone/clean/Initialize()
 	. = ..()
