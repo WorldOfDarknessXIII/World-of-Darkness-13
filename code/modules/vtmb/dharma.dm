@@ -62,6 +62,21 @@
 	tenets_done = list("savelife" = 0, "protect" = 0)
 	fails = list("killfirst", "steal", "desire", "grief", "torture")
 
+/datum/dharma/the_diamond_serpents
+	name = "The Diamond Serpents (Yin+Hun)"
+	desc = "This path much like that of their Phoenix counterparts are one of the more unorthodox often heretical paths walked. Instead it encourages the Wan Kuei to return back to their former life, and rejoining human society as limiting as it may be. With the aim of doing things better and improving themself, with their time spent in the Yomi as a sobering reminder and chastising past failings. Compared to their counterparts they persist instead of mysteriously disappearing."
+	tenets = list("savelife", "meet", "protect")
+	tenets_done = list("savelife" = 0, "protect" = 0)
+	fails = list("killfirst", "steal", "grief", "torture")
+
+/datum/dharma/face_of_the_gods
+	name = "Face of the Gods (Hun+P'o)"
+	desc = "From the far south of Asia, this Heretical Dharmic Cult seeks to amass a herd of Mortal and immortal followers by granting their wishes and ascending to a godlike state, believing themselves to be cast down gods. As god, tend to your flock and do not fall to your divine fury, for it will send you off the path to godhood, do not be disrespected or give in to base desires. Tend to life, Destroy your enemies and stoke joy and worship from your flock as you chase godhood!"
+	tenets = list("protect", "judgement", "cleangrow")
+	tenets_done = list("protect" = 0, "judgement" = 0, "cleangrow" = 0)
+	fails = list("letpo", "disrespect", "desire")
+
+
 /datum/dharma/proc/on_gain(mob/living/carbon/human/mob)
 	mob.mind.dharma = src
 	initial_skin_color = mob.skin_tone
@@ -170,33 +185,8 @@
 	return total
 
 /proc/call_dharma(action, mob/living/carbon/human/cathayan)
-	if (!cathayan?.mind?.dharma)
+	
 		return
-
-	var/datum/dharma/dharma = cathayan.mind.dharma
-
-	for(var/i in dharma.tenets)
-		if(i == action)
-			if(dharma.tenets_done[i] == 0)
-				dharma.tenets_done[i] = 1
-				to_chat(cathayan, "<span class='help'>You find this action helping you on your path ([dharma.get_done_tenets()]/[length(dharma.tenets)]).</span>")
-
-	for(var/i in dharma.fails)
-		if(i == action)
-			to_chat(cathayan, "<span class='userdanger'>This action is against your path's philosophy.</span>")
-			update_dharma(cathayan, -1)
-
-	var/tenets_needed = length(dharma.tenets)
-	var/tenets_done = 0
-
-	for(var/i in dharma.tenets)
-		if(dharma.tenets_done[i] == 1)
-			tenets_done += 1
-
-	if(tenets_done >= tenets_needed)
-		for(var/i in dharma.tenets)
-			dharma.tenets_done[i] = 0
-		update_dharma(cathayan, 1)
 
 /proc/emit_po_call(atom/source, po_type)
 	if(!po_type)
