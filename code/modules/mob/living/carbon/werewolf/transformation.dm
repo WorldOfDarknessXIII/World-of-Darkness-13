@@ -52,7 +52,7 @@
 			H.remove_overlay(PROTEAN_LAYER)
 			G.punchdamagelow = G.punchdamagelow-15
 			G.punchdamagehigh = G.punchdamagehigh-15
-			H.physique = initial(H.physique)
+			H.physique = H.physique-2
 			H.physiology.armor.melee = H.physiology.armor.melee-15
 			H.physiology.armor.bullet = H.physiology.armor.bullet-15
 			var/matrix/M = matrix()
