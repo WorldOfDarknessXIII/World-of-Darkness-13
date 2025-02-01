@@ -622,7 +622,7 @@
 	desc = "A black hood with red highlights, marked with the emblem of House Tremere."
 	icon_state = "tremere_hood"
 
-/obj/item/clothing/head/hooded/robes/magister
+/obj/item/clothing/suit/hooded/robes/magister
 	name = "magister robes"
 	desc = "A red robe with an ornate golden trim, marked with the emblem of House Tremere."
 	icon_state = "magister_robe"
