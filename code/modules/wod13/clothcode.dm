@@ -611,6 +611,17 @@
 	desc = "The hood of some elegant-looking robes."
 	icon_state = "robes_purple_hood"
 
+/obj/item/clothing/suit/hooded/robes/blue
+	name = "blue robe"
+	desc = "Some watery-looking robes."
+	icon_state = "robes_blue"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/blue
+
+/obj/item/clothing/head/hooded/robes_hood/blue
+	name = "blue hood"
+	desc = "The hood of some watery-looking robes."
+	icon_state = "robes_blue_hood"
+
 /obj/item/clothing/suit/hooded/robes/tremere
 	name = "tremere robes"
 	desc = "Black robes with red highlights, marked with the emblem of House Tremere."
