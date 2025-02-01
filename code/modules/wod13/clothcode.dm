@@ -636,7 +636,7 @@
 /obj/item/clothing/suit/hooded/robes/magister
 	name = "magister robes"
 	desc = "A red robe with an ornate golden trim, marked with the emblem of House Tremere."
-	icon_state = "magister_robes"
+	icon_state = "magister_robe"
 	hoodtype = /obj/item/clothing/head/hooded/robes_hood/magister
 
 /obj/item/clothing/head/hooded/robes_hood/magister
