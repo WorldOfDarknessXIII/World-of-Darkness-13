@@ -22,7 +22,7 @@
 	minimal_masquerade = 3
 	max_generation = 9
 	allowed_species = list("Vampire")
-	allowed_bloodlines = list("Tremere", "Gargoyle")
+	allowed_bloodlines = list("Tremere", "Gargoyle", "Baali")
 	known_contacts = list("Tremere Regent")
 	experience_addition = 6
 
