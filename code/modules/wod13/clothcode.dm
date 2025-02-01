@@ -131,8 +131,6 @@
 
 //GANGSTERS AND BANDITS
 
-//WHY THE FUCK DO WE CALL THEM BANDITS? RUSSAINS ARE SO FUCKING WEIRD ON GOD DUDE - Nick
-
 /obj/item/clothing/under/vampire/larry
 	name = "White tanktop"
 	desc = "Some loosefitting undershirt."
