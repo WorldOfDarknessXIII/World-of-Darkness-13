@@ -41,7 +41,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	illegal = TRUE
-	cost = 175
+	cost = 150
 
 /datum/crafting_recipe/weed_leaf
 	name = "Sort Weed"
@@ -129,6 +129,7 @@
 			wet = TRUE
 			to_chat(user, "<span class='notice'>You fill [src] with water.</span>")
 			playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
+			call_dharma("cleangrow", user)
 		else
 			to_chat(user, "<span class='warning'>[W] is empty!</span>")
 	if(istype(W, /obj/item/weedseed))
@@ -508,7 +509,7 @@ SUBSYSTEM_DEF(smokeweedeveryday)
 				troll_explode = TRUE
 			if(!added_iod)
 				troll_explode = TRUE
-			G.stored_gasoline = max(0, G.stored_gasoline-50)
+			G.stored_gasoline = max(0, G.stored_gasoline-100)
 			playsound(loc, 'code/modules/wod13/sounds/gas_fill.ogg', 25, TRUE)
 			to_chat(user, "You [pick("spill", "add", "blender")] [used_item] in [src].")
 			added_gas = TRUE
@@ -547,7 +548,7 @@ SUBSYSTEM_DEF(smokeweedeveryday)
 	name = "white package"
 	icon_state = "package_cocaine"
 	list_reagents = list(/datum/reagent/drug/methamphetamine/cocaine = 30)
-	cost = 500
+	cost = 300
 
 /obj/item/reagent_containers/drug/methpack
 	name = "\improper elite blood pack (full)"

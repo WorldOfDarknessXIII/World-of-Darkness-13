@@ -25,7 +25,6 @@
 /mob/Login()
 	if(!client)
 		return FALSE
-	client.show_popup_menus = 0 // [ChillRaccoon] - by default every player shouldn't see verb popup menus. Admins can use "Toggle RMB interactions" for change this variable for themselves
 	add_to_player_list()
 	lastKnownIP	= client.address
 	computer_id	= client.computer_id
