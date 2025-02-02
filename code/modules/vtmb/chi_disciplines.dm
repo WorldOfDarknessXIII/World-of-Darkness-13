@@ -204,7 +204,10 @@
 /datum/movespeed_modifier/necroing
 	multiplicative_slowdown = 2
 
-/datum/movespeed_modifier/wall_passing
+/datum/movespeed_modifier/greater_wall_passing
+	multiplicative_slowdown = 2
+
+/datum/movespeed_modifier/lesser_wall_passing
 	multiplicative_slowdown = 5
 
 /datum/movespeed_modifier/blood_slim
@@ -415,17 +418,31 @@
 					caster.pass_flags = initial(caster.pass_flags)
 					REMOVE_TRAIT(caster, TRAIT_SUPERNATURAL_DEXTERITY, "jade shintai 2")
 		if(3)
-			ADD_TRAIT(caster, TRAIT_PASS_THROUGH_WALLS, "jade shintai 3")
+			caster.pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+			ADD_TRAIT(caster, TRAIT_SUPERNATURAL_DEXTERITY, TRAIT_PASS_THROUGH_WALLS, "jade shintai 3")
 			caster.alpha = 128
 			caster.obfuscate_level = 3
-			caster.add_movespeed_modifier(/datum/movespeed_modifier/wall_passing)
+			caster.add_movespeed_modifier(/datum/movespeed_modifier/greater_wall_passing)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
+					caster.pass_flags = initial(caster.pass_flags)
 					caster.obfuscate_level = 0
 					caster.alpha = 255
-					REMOVE_TRAIT(caster, TRAIT_PASS_THROUGH_WALLS, "jade shintai 3")
-					caster.remove_movespeed_modifier(/datum/movespeed_modifier/wall_passing)
+					REMOVE_TRAIT(caster, TRAIT_SUPERNATURAL_DEXTERITY, TRAIT_PASS_THROUGH_WALLS, "jade shintai 3")
+					caster.remove_movespeed_modifier(/datum/movespeed_modifier/greater_wall_passing)
 		if(4)
+			caster.pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+			ADD_TRAIT(caster, TRAIT_SUPERNATURAL_DEXTERITY, TRAIT_PASS_THROUGH_WALLS, "jade shintai 4")
+			caster.alpha = 128
+			caster.obfuscate_level = 3
+			caster.add_movespeed_modifier(/datum/movespeed_modifier/greater_wall_passing)
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.pass_flags = initial(caster.pass_flags)
+					caster.obfuscate_level = 0
+					caster.alpha = 255
+					REMOVE_TRAIT(caster, TRAIT_SUPERNATURAL_DEXTERITY, TRAIT_PASS_THROUGH_WALLS, "jade shintai 4")
+					caster.remove_movespeed_modifier(/datum/movespeed_modifier/greater_wall_passing)
 			caster.dna.species.ToggleFlight(caster)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
@@ -696,6 +713,8 @@
 			ADD_TRAIT(caster, TRAIT_RESISTHEAT, MAGIC_TRAIT)
 			caster.set_fire_stacks(7)
 			caster.IgniteMob()
+			caster.drop_all_held_items()
+			caster.put_in_active_hand(firekatana)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
 					REMOVE_TRAIT(caster, TRAIT_PERMANENTLY_ONFIRE, MAGIC_TRAIT)
@@ -711,6 +730,8 @@
 						caster.dna.species.burnmod = initial(caster.dna.species.burnmod)
 					caster.bodytemperature = BODYTEMP_NORMAL
 					caster.coretemperature = BODYTEMP_NORMAL
+				if(firekatana)
+					qdel(firekatana)
 
 /datum/chi_discipline/ghost_flame_shintai/proc/burning_aura_loop(mob/living/carbon/human/caster, duration)
 	var/loop_started_time = world.time
