@@ -804,7 +804,20 @@
 	var/awakened_force = 70
 	var/awakened_penetration = 40
 	var/aggravate_damage = 20
+	var/parried = FALSE
 
+// This is ass and I wish there was another way
+// This code listens for a signal that is sent when there is a successful automatic weapon parry
+// It sets a variable to true that will cancel the after_attack of klaives
+/obj/item/melee/vampirearms/klaive/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_BLOCK_SUCCESS, PROC_REF(on_klaive_parried))
+
+/obj/item/melee/vampirearms/klaive/proc/on_klaive_parried(datum/source)
+	SIGNAL_HANDLER
+	parried = TRUE
+
+// Klaive descriptions
 /obj/item/melee/vampirearms/klaive/glasswalker
 	name = "glasswalker klaive"
 	icon = 'code/modules/wod13/weapons.dmi'
@@ -827,9 +840,9 @@
 // This lasts for 10 seconds, and while it is active you cannot activate it again to prevent spam
 /obj/item/melee/vampirearms/klaive/attack_self(mob/user)
 	if((isgarou(user) || iscrinos(user)) && !aggravate)
-		Awaken(user)
+		awaken(user)
 
-/obj/item/melee/vampirearms/klaive/proc/Awaken(mob/user)
+/obj/item/melee/vampirearms/klaive/proc/awaken(mob/user)
 	var/mob/living/carbon/wolf = user
 	if(wolf.auspice.gnosis > 0)
 		to_chat(wolf, "You beckon [src]'s spirit, you can feel it answer your call.")
@@ -837,11 +850,11 @@
 		aggravate = TRUE
 		force = awakened_force
 		armour_penetration = awakened_penetration
-		addtimer(CALLBACK(src, PROC_REF(Slumber), wolf), 10)
+		addtimer(CALLBACK(src, PROC_REF(slumber), wolf), 10 SECONDS)
 	else
 		to_chat(user, "You beckon [src]'s spirit, but all that answers is silence and indifference.")
 
-/obj/item/melee/vampirearms/klaive/proc/Slumber(mob/user)
+/obj/item/melee/vampirearms/klaive/proc/slumber(mob/user)
 	aggravate = FALSE
 	force = initial(force)
 	armour_penetration = initial(armour_penetration)
@@ -853,8 +866,14 @@
 /obj/item/melee/vampirearms/klaive/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!proximity)
 		return
+	if(parried)
+		parried = FALSE
+		return
 	if(isgarou(target) || iswerewolf(target))
 		var/mob/living/carbon/wolf = target
+		if(wolf.blocking || wolf.parrying) //TESTING
+			return
+
 		//Chance to remove gnosis from target werewolf
 		if(wolf.auspice.gnosis)
 			if(prob(50))
@@ -872,6 +891,8 @@
 
 	else if(iscarbon(target) || isvampire(target))
 		var/mob/living/carbon/human
+		if(human.blocking || human.parrying)
+			return
 		if(aggravate)
 			human.apply_damage(aggravate_damage, CLONE)
 
@@ -906,23 +927,8 @@
 	throwforce = 20
 	block_chance = 60
 	armour_penetration = 35
-
-/obj/item/melee/vampirearms/klaive/grand/attack_self(mob/user)
-	if((isgarou(user) || iscrinos(user)) && !aggravate)
-		var/mob/living/carbon/wolf = user
-		if(wolf.auspice.gnosis > 0)
-			to_chat(user, "You call [src]'s spirit. It answers in wrathful glee.")
-			adjust_gnosis(-1, wolf)
-			aggravate = TRUE
-			force = 120
-			armour_penetration = 60
-			spawn(10 SECONDS)
-				aggravate = initial(aggravate)
-				force = initial(force)
-				armour_penetration = initial(armour_penetration)
-				to_chat(user, "You manage to put [src]'s spirit to rest once more.")
-		else
-			to_chat(user, "You call [src]'s spirit. You feel an ancient presence's disappointment.")
-//End of fancy adminspawn item
+	awakened_force = 120
+	awakened_penetration = 60
+	aggravate_damage = 30
 
 //End of Garou klaive code

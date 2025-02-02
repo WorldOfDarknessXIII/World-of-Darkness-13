@@ -22,6 +22,8 @@
 	if(auspice.tribe == "Black Spiral Dancers")
 		mind.teach_crafting_recipe(/datum/crafting_recipe/klaive/bsd)
 
+	UnregisterSignal(src, COMSIG_ADDRECIPE_KLAIVE)
+
 /**
  * Called on the COMSIG_COMPONENT_CLEAN_FACE_ACT signal
  */
