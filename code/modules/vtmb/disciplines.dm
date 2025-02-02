@@ -124,9 +124,6 @@
 		else
 			ClickOn(src)
 
-/turf
-	var/silented = FALSE
-
 /datum/discipline/necromancy
 	name = "Necromancy"
 	desc = "Offers control over another, undead reality."

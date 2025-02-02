@@ -30,13 +30,25 @@
 
 	cooldown_length = 10 SECONDS
 
-	//what you see here: mostly sane TG code (dna) then bloat required by our codebase
+	//why is this necessary why isn't transfer_identity working please fix this
 	var/datum/dna/original_dna
+	var/original_name
+	var/original_skintone
+	var/original_hairstyle
+	var/original_facialhair
+	var/original_haircolor
+	var/original_facialhaircolor
 	var/original_body_mod
 	var/original_alt_sprite
 	var/original_alt_sprite_greyscale
 
 	var/datum/dna/impersonating_dna
+	var/impersonating_name
+	var/impersonating_skintone
+	var/impersonating_hairstyle
+	var/impersonating_facialhair
+	var/impersonating_haircolor
+	var/impersonating_facialhaircolor
 	var/impersonating_body_mod
 	var/impersonating_alt_sprite
 	var/impersonating_alt_sprite_greyscale
@@ -74,6 +86,12 @@
 
 	impersonating_dna = new
 	victim.dna.copy_dna(impersonating_dna)
+	impersonating_name = victim.real_name
+	impersonating_skintone = victim.skin_tone
+	impersonating_hairstyle = victim.hairstyle
+	impersonating_facialhair = victim.facial_hairstyle
+	impersonating_haircolor = victim.hair_color
+	impersonating_facialhaircolor = victim.facial_hair_color
 	impersonating_body_mod = victim.base_body_mod
 	if (victim.clane)
 		impersonating_alt_sprite = victim.clane.alt_sprite
@@ -87,11 +105,19 @@
 
 	original_dna = new
 	owner.dna.copy_dna(original_dna)
+	original_name = owner.real_name
+	original_skintone = owner.skin_tone
+	original_hairstyle = owner.hairstyle
+	original_facialhair = owner.facial_hairstyle
+	original_haircolor = owner.hair_color
+	original_facialhaircolor = owner.facial_hair_color
 	original_body_mod = owner.base_body_mod
 	original_alt_sprite = owner.clane?.alt_sprite
 	original_alt_sprite_greyscale = owner.clane?.alt_sprite_greyscale
 
 /datum/discipline_power/vicissitude/malleable_visage/proc/shapeshift(to_original = FALSE, instant = FALSE)
+	if (!impersonating_dna)
+		return
 	if (!instant)
 		var/time_delay = 10 SECONDS
 		if (original_body_mod != impersonating_body_mod)
@@ -108,19 +134,34 @@
 
 	if (to_original)
 		original_dna.transfer_identity(destination = owner, transfer_SE = TRUE, superficial = TRUE)
+		owner.real_name = original_name
+		owner.skin_tone = original_skintone
+		owner.hairstyle = original_hairstyle
+		owner.facial_hairstyle = original_facialhair
+		owner.hair_color = original_haircolor
+		owner.facial_hair_color = original_facialhaircolor
 		owner.base_body_mod = original_body_mod
 		owner.clane.alt_sprite = original_alt_sprite
 		owner.clane.alt_sprite_greyscale = original_alt_sprite_greyscale
 		is_shapeshifted = FALSE
+		QDEL_NULL(impersonating_dna)
 	else
 		//Nosferatu, Cappadocians, Gargoyles, Kiasyd, etc. will revert instead of being indefinitely without their curse
 		if (original_alt_sprite)
-			addtimer(CALLBACK(src, PROC_REF(revert_to_cursed_form)), 3 MINUTES)
+			addtimer(CALLBACK(src, PROC_REF(revert_to_cursed_form)), 5 MINUTES)
 		impersonating_dna.transfer_identity(destination = owner, superficial = TRUE)
+		owner.real_name = impersonating_name
+		owner.skin_tone = impersonating_skintone
+		owner.hairstyle = impersonating_hairstyle
+		owner.facial_hairstyle = impersonating_facialhair
+		owner.hair_color = impersonating_haircolor
+		owner.facial_hair_color = impersonating_facialhaircolor
 		owner.base_body_mod = impersonating_body_mod
 		owner.clane.alt_sprite = impersonating_alt_sprite
 		owner.clane.alt_sprite_greyscale = impersonating_alt_sprite_greyscale
 		is_shapeshifted = TRUE
+
+	owner.update_body()
 
 /datum/discipline_power/vicissitude/malleable_visage/proc/revert_to_cursed_form()
 	if (!original_alt_sprite)
@@ -233,6 +274,105 @@
 	owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_biter)
 	owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_fister)
 	owner.mind.teach_crafting_recipe(/datum/crafting_recipe/tzi_tanker)
+
+/datum/action/basic_vicissitude
+	name = "Vicissitude Upgrade"
+	desc = "Upgrade your body..."
+	button_icon_state = "basic"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	vampiric = TRUE
+	var/selected_upgrade
+	var/mutable_appearance/upgrade_overlay
+	var/original_skin_tone
+	var/original_hairstyle
+	var/original_body_mod
+
+/datum/action/basic_vicissitude/Trigger()
+	. = ..()
+	if (selected_upgrade)
+		remove_upgrade()
+	else
+		give_upgrade()
+
+	owner.update_body()
+
+/datum/action/basic_vicissitude/proc/give_upgrade()
+	var/mob/living/carbon/human/user = owner
+	var/upgrade = input(owner, "Choose basic upgrade:", "Vicissitude Upgrades") as null|anything in list("Skin armor", "Centipede legs", "Second pair of arms", "Leather wings")
+	if(!upgrade)
+		return
+	to_chat(user, "<span class='notice'>You begin molding your flesh and bone into a stronger form...</span>")
+	if (!do_after(user, 10 SECONDS))
+		return
+	if(selected_upgrade)
+		return
+	selected_upgrade = upgrade
+	ADD_TRAIT(user, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
+	switch (upgrade)
+		if ("Skin armor")
+			user.unique_body_sprite = "tziarmor"
+			original_skin_tone = user.skin_tone
+			user.skin_tone = "albino"
+			original_hairstyle = user.hairstyle
+			user.hairstyle = "Bald"
+			original_body_mod = user.base_body_mod
+			user.base_body_mod = ""
+			user.physiology.armor.melee += 20
+			user.physiology.armor.bullet += 20
+		if ("Centipede legs")
+			user.remove_overlay(PROTEAN_LAYER)
+			upgrade_overlay = mutable_appearance('code/modules/wod13/64x64.dmi', "centipede", -PROTEAN_LAYER)
+			upgrade_overlay.pixel_z = -16
+			upgrade_overlay.pixel_w = -16
+			user.overlays_standing[PROTEAN_LAYER] = upgrade_overlay
+			user.apply_overlay(PROTEAN_LAYER)
+			user.add_movespeed_modifier(/datum/movespeed_modifier/centipede)
+		if ("Second pair of arms")
+			var/limbs = user.held_items.len
+			user.change_number_of_hands(limbs + 2)
+			user.remove_overlay(PROTEAN_LAYER)
+			upgrade_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "2hands", -PROTEAN_LAYER)
+			upgrade_overlay.color = "#[skintone2hex(user.skin_tone)]"
+			user.overlays_standing[PROTEAN_LAYER] = upgrade_overlay
+			user.apply_overlay(PROTEAN_LAYER)
+		if ("Leather wings")
+			user.dna.species.GiveSpeciesFlight(user)
+
+	user.do_jitter_animation(10)
+	playsound(get_turf(user), 'code/modules/wod13/sounds/vicissitude.ogg', 100, TRUE, -6)
+
+/datum/action/basic_vicissitude/proc/remove_upgrade()
+	var/mob/living/carbon/human/user = owner
+	if (!selected_upgrade)
+		return
+	to_chat(user, "<span class='notice'>You begin surgically removing your enhancements...</span>")
+	if (!do_after(user, 10 SECONDS))
+		return
+	REMOVE_TRAIT(user, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
+	switch (selected_upgrade)
+		if ("Skin armor")
+			user.unique_body_sprite = null
+			user.skin_tone = original_skin_tone
+			user.hairstyle = original_hairstyle
+			user.base_body_mod = original_body_mod
+			user.physiology.armor.melee -= 20
+			user.physiology.armor.bullet -= 20
+		if ("Centipede legs")
+			user.remove_overlay(PROTEAN_LAYER)
+			QDEL_NULL(upgrade_overlay)
+			user.remove_movespeed_modifier(/datum/movespeed_modifier/centipede)
+		if ("Second pair of arms")
+			var/limbs = user.held_items.len
+			user.change_number_of_hands(limbs - 2)
+			user.remove_overlay(PROTEAN_LAYER)
+			QDEL_NULL(upgrade_overlay)
+		if ("Leather wings")
+			user.dna.species.RemoveSpeciesFlight(user)
+
+	user.do_jitter_animation(10)
+	playsound(get_turf(user), 'code/modules/wod13/sounds/vicissitude.ogg', 100, TRUE, -6)
+
+	selected_upgrade = null
 
 //HORRID FORM
 /datum/discipline_power/vicissitude/horrid_form
