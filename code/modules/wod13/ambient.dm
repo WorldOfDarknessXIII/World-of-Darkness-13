@@ -364,8 +364,8 @@
 	fire_controled = TRUE
 	wall_rating = LOW_WALL_RATING
 
-/area/vtm/interior/wyrm_corrupted
-	name = "Corrupted by Wyrm"
+/area/vtm/interior/pentex_restricted
+	name = "Endron Facility Restricted"
 	icon_state = "graveyard"
 	upper = FALSE
 	zone_type = "battle"
@@ -395,7 +395,7 @@
 	wall_rating = LOW_WALL_RATING
 
 /area/vtm/interior/pentex_facility
-	name = "Pentex Facility"
+	name = "Endron Facility"
 	icon_state = "supply"
 	upper = FALSE
 	zone_type = "battle"
