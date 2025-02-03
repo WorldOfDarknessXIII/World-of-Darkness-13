@@ -552,6 +552,7 @@
 #include "code\datums\components\storage\concrete\stack.dm"
 #include "code\datums\components\storage\concrete\trading_cards.dm"
 #include "code\datums\components\storage\concrete\wallet.dm"
+#include "code\datums\discipline\obtenebration.dm"
 #include "code\datums\discipline\necromancy.dm"
 #include "code\datums\discipline\presence.dm"
 #include "code\datums\discipline\animalism.dm"

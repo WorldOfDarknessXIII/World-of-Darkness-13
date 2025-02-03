@@ -20,27 +20,7 @@
 /obj/effect/proc_holder/spell/targeted/shadowwalk/cast(list/targets,mob/living/user = usr)
 	var/L = user.loc
 
-	//If used in front of a mirror, allows you to teleport through it to other non-broken mirrors
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(locate(/obj/structure/mirror) in L)
-			var/new_mirror = input(user, "Choose the mirror to travel:","Enter Mirror",null) as null|anything in GLOB.las_mirrors
-			if(new_mirror)
-				if(istype(new_mirror, /obj/structure/mirror))
-					var/obj/structure/mirror/M = new_mirror
-					H.adjust_blood_points(-2)
-					H.Stun(1 SECONDS)
-					animate(H, color = "#000000", time = 1 SECONDS)
-					playsound(user.loc, 'code/modules/wod13/sounds/necromancy.ogg', 50, FALSE)
-					spawn(1 SECONDS)
-						H.forceMove(M.loc)
-						H.Stun(1 SECONDS)
-						animate(H, color = initial(H.color), time = 1 SECONDS)
-						playsound(L, 'code/modules/wod13/sounds/necromancy.ogg', 50, FALSE)
-					return
-			//Proceed to normal activation if they didn't select a mirror
-
-	if(istype(user.loc, /obj/effect/dummy/phased_mob/shadow))
+	if(istype(L, /obj/effect/dummy/phased_mob/shadow))
 		var/obj/effect/dummy/phased_mob/shadow/S = L
 		S.end_jaunt(FALSE)
 		return
@@ -90,7 +70,7 @@
 
 
 /obj/effect/dummy/phased_mob/shadow/relaymove(mob/living/user, direction)
-	if(last_go+5 > world.time)
+	if((last_go + 0.5 SECONDS) > world.time)
 		return
 	last_go = world.time
 	var/turf/oldloc = loc
