@@ -1190,7 +1190,7 @@
 
 /obj/flag/usa
 	name = "flag of the USA"
-	desc = "The flag of the United States of America. In god we trust!"
+	desc = "The flag of the United States of America. In God we trust!"
 	icon_state = "flag_usa"
 
 /obj/flag/california
