@@ -394,7 +394,7 @@
 	fire_controled = FALSE
 	wall_rating = LOW_WALL_RATING
 
-/area/vtm/interior/wyrm_corrupted
+/area/vtm/interior/pentex_facility
 	name = "Pentex Facility"
 	icon_state = "supply"
 	upper = FALSE
