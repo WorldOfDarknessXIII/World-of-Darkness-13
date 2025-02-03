@@ -488,6 +488,7 @@
 		new /datum/data/mining_equipment("jester mask",	/obj/item/clothing/mask/vampire/venetian_mask/jester,	50),
 		new /datum/data/mining_equipment("bloody mask",	/obj/item/clothing/mask/vampire/venetian_mask/scary,	30),
 		new /datum/data/mining_equipment("comedy mask", /obj/item/clothing/mask/vampire/comedy,	25),
+		new /datum/data/mining_equipment("tragedy mask", /obj/item/clothing/mask/vampire/tragedy,	25),
 		new /datum/data/mining_equipment("blue wizard hat",	/obj/item/clothing/head/vampire/wizard/blue, 25),
 		new /datum/data/mining_equipment("red wizard hat",	/obj/item/clothing/head/vampire/wizard/red, 25),
 		new /datum/data/mining_equipment("yellow wizard hat",	/obj/item/clothing/head/vampire/wizard/yellow, 25),
@@ -496,8 +497,7 @@
 		new /datum/data/mining_equipment("grey wizard hat",	/obj/item/clothing/head/vampire/wizard/grey, 25),
 		new /datum/data/mining_equipment("white wizard hat",	/obj/item/clothing/head/vampire/wizard/white, 25),
 		new /datum/data/mining_equipment("black wizard hat",	/obj/item/clothing/head/vampire/wizard/black, 25),
-		new /datum/data/mining_equipment("purple wizard hat",	/obj/item/clothing/head/vampire/wizard/purple, 25),
-		new /datum/data/mining_equipment("tragedy mask", /obj/item/clothing/mask/vampire/tragedy,	25)
+		new /datum/data/mining_equipment("purple wizard hat",	/obj/item/clothing/head/vampire/wizard/purple, 25)
 
 	)
 

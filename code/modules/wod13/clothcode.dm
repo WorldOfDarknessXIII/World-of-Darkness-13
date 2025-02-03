@@ -929,47 +929,47 @@
 
 /obj/item/clothing/head/vampire/wizard/blue
 	name = "blue wizard hat"
-	desc = "A watery looking wizard hat"
+	desc = "A watery-looking wizard hat."
 	icon_state = "wizardhat_blue"
 
 /obj/item/clothing/head/vampire/wizard/black
 	name = "black wizard hat"
-	desc = "A sinister looking wizard hat"
+	desc = "A sinister-looking wizard hat."
 	icon_state = "wizardhat_black"
 
 /obj/item/clothing/head/vampire/wizard/darkred
 	name = "dark red wizard hat"
-	desc = "A zealous looking wizard hat"
+	desc = "A zealous-looking wizard hat."
 	icon_state = "wizardhat_darkred"
 
 /obj/item/clothing/head/vampire/wizard/green
 	name = "green wizard hat"
-	desc = "A earthy looking wizard hat"
+	desc = "An earthy looking wizard hat."
 	icon_state = "wizardhat_green"
 
 /obj/item/clothing/head/vampire/wizard/grey
 	name = "grey wizard hat"
-	desc = "A somber looking wizard hat"
+	desc = "A somber-looking wizard hat."
 	icon_state = "wizardhat_grey"
 
 /obj/item/clothing/head/vampire/wizard/purple
 	name = "purple wizard hat"
-	desc = "A elegant looking wizard hat"
+	desc = "An elegant-looking wizard hat."
 	icon_state = "wizardhat_purple"
 
 /obj/item/clothing/head/vampire/wizard/red
 	name = "red wizard hat"
-	desc = "A furious looking wizard hat"
+	desc = "A furious-looking wizard hat."
 	icon_state = "wizardhat_red"
 
 /obj/item/clothing/head/vampire/wizard/white
 	name = "white wizard hat"
-	desc = "A angelic looking wizard hat"
+	desc = "An angelic-looking wizard hat."
 	icon_state = "wizardhat_white"
 
 /obj/item/clothing/head/vampire/wizard/yellow
 	name = "yellow wizard hat"
-	desc = "A happy looking wizard hat"
+	desc = "A happy-looking wizard hat."
 	icon_state = "wizardhat_yellow"
 
 /obj/item/clothing/head/vampire/police
