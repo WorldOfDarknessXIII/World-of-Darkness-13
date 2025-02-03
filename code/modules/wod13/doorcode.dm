@@ -316,6 +316,13 @@
 		"laundromat"
 	)
 
+	/obj/item/vamp/keys/pentex
+	name = "Facility keys"
+	accesslocks = list(
+		"pentex"
+	)
+	color = "#062e03"
+
 /obj/item/vamp/keys/hack
 	name = "\improper lockpick"
 	desc = "These can open some doors. Illegally..."
