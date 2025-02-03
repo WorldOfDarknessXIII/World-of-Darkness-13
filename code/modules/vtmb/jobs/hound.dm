@@ -54,6 +54,6 @@
 /datum/outfit/job/hound/pre_equip(mob/living/carbon/human/H)
 	..()
 
-/obj/effect/landmark/start/camarillaagent
+/obj/effect/landmark/start/hound
 	name = "Hound"
-	icon_state = "Camarilla Agent"
+	icon_state = "Hound"
