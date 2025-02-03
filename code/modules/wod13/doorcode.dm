@@ -316,7 +316,7 @@
 		"laundromat"
 	)
 
-	/obj/item/vamp/keys/pentex
+/obj/item/vamp/keys/pentex
 	name = "Facility keys"
 	accesslocks = list(
 		"pentex"
