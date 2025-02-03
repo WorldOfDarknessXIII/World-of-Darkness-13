@@ -8,9 +8,6 @@
 	selection_color = "#7e7e7e"
 
 	outfit = /datum/outfit/job/dispatcher
-
-	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_ARMORY, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
-	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_POLICE
@@ -21,7 +18,6 @@
 
 	duty = "Report emergencies to the correct emergency service."
 	minimal_masquerade = 0
-	my_contact_is_important = FALSE
 	known_contacts = list("Police Chief")
 
 
