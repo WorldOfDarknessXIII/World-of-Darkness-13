@@ -6,7 +6,7 @@
 	faction = "Vampire"
 	total_positions = 7
 	spawn_positions = 7
-	supervisors = "the Prince"
+	supervisors = "the Sheriff"
 	selection_color = "#bd3327"
 	minimal_player_age = 7
 	exp_requirements = 300
@@ -24,7 +24,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_HOUND
 	bounty_types = CIV_JOB_SEC
-	known_contacts = list("Prince")
+	known_contacts = list("Prince", "Sheriff")
 
 	v_duty = "You are the Prince's enforcer. You report to the Sheriff and uphold the Traditions."
 	minimal_masquerade = 4
