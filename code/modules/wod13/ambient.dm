@@ -364,7 +364,7 @@
 	fire_controled = TRUE
 	wall_rating = LOW_WALL_RATING
 
-/area/vtm/interior/pentex_restricted
+/area/vtm/interior/wyrm_corrupted
 	name = "Endron Facility Restricted"
 	icon_state = "graveyard"
 	upper = FALSE
