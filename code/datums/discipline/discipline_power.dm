@@ -37,7 +37,7 @@
 	var/toggled = FALSE
 	/// If this power can be turned on and off.
 	var/cancelable = FALSE
-	/// If this power's duration is maintained by the caster, or simply casted on something else and then not used again.
+	/// If this power's duration is maintained by the caster, or simply casted on something else and then not used by the caster again.
 	var/fire_and_forget = FALSE
 	/// Amount of time it takes until this Discipline deactivates itself. 0 if instantaneous.
 	var/duration_length = 0

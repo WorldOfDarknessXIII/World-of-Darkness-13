@@ -278,9 +278,6 @@
 											else
 												SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
 												to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
-	if(H.hearing_ghosts)
-		H.adjust_blood_points(-1)
-		to_chat(H, "<span class='warning'>Necromancy Vision reduces your blood points too sustain itself.</span>")
 
 	if(H.clane?.name == "Tzimisce" || H.clane?.name == "Old Clan Tzimisce")
 		var/datum/vampireclane/tzimisce/TZ = H.clane

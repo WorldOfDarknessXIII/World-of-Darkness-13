@@ -228,8 +228,6 @@
 	var/elysium_checks = 0
 	var/bloodhunted = FALSE
 
-	var/hearing_ghosts = FALSE
-
 	var/stakeimmune = FALSE
 
 	var/last_vampire_ambience = 0
