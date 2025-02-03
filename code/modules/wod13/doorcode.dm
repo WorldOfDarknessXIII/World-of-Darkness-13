@@ -321,6 +321,7 @@
 	accesslocks = list(
 		"pentex"
 	)
+	color = "#062e03"
 
 /obj/item/vamp/keys/hack
 	name = "\improper lockpick"
