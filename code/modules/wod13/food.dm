@@ -401,6 +401,10 @@
 		new /datum/data/mining_equipment("female rugged attire",	/obj/item/clothing/under/vampire/gangrel/female,	15),
 		new /datum/data/mining_equipment("yellow sleeveless shirt",	/obj/item/clothing/under/vampire/larry,	15),
 		new /datum/data/mining_equipment("white sleeveless shirt",	/obj/item/clothing/under/vampire/bandit,	15),
+		new /datum/data/mining_equipment("white turtleneck", /obj/item/clothing/under/vampire/turtleneck_white,	15),
+		new /datum/data/mining_equipment("black turtleneck", /obj/item/clothing/under/vampire/turtleneck_black,	15),
+		new /datum/data/mining_equipment("red turtleneck",	/obj/item/clothing/under/vampire/turtleneck_red,	15),
+		new /datum/data/mining_equipment("navy turtleneck",	/obj/item/clothing/under/vampire/turtleneck_navy,	15),
 		new /datum/data/mining_equipment("biker outfit",	/obj/item/clothing/under/vampire/biker,	15),
 		new /datum/data/mining_equipment("burlesque outfit", /obj/item/clothing/under/vampire/burlesque,	15),
 		new /datum/data/mining_equipment("daisy dukes", /obj/item/clothing/under/vampire/burlesque/daisyd,	10),
@@ -457,6 +461,7 @@
 		new /datum/data/mining_equipment("yellow robes",	/obj/item/clothing/suit/hooded/robes/yellow,	40),
 		new /datum/data/mining_equipment("green robes",	/obj/item/clothing/suit/hooded/robes/green,	40),
 		new /datum/data/mining_equipment("red robes",	/obj/item/clothing/suit/hooded/robes/red,	40),
+		new /datum/data/mining_equipment("blue robes", /obj/item/clothing/suit/hooded/robes/blue,	40),
 		new /datum/data/mining_equipment("purple robes",	/obj/item/clothing/suit/hooded/robes/purple,	40)
 	)
 

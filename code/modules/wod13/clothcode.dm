@@ -93,6 +93,22 @@
 	desc = "Some punk clothes."
 	icon_state = "dirty"
 
+/obj/item/clothing/under/vampire/turtleneck_white
+	desc = "A white turtleneck"
+	icon_state = "turtleneck_white"
+
+/obj/item/clothing/under/vampire/turtleneck_black
+	desc = "A black turtleneck"
+	icon_state = "turtleneck_black"
+
+/obj/item/clothing/under/vampire/turtleneck_red
+	desc = "A red turtleneck"
+	icon_state = "turtleneck_red"
+
+/obj/item/clothing/under/vampire/turtleneck_navy
+	desc = "A navy turtleneck"
+	icon_state = "turtleneck_navy"
+
 /obj/item/clothing/under/vampire/napoleon
 	name = "French Admiral suit"
 	desc = "Some oddly historical clothes."
@@ -593,6 +609,39 @@
 	desc = "The hood of some elegant-looking robes."
 	icon_state = "robes_purple_hood"
 
+/obj/item/clothing/suit/hooded/robes/blue
+	name = "blue robe"
+	desc = "Some watery-looking robes."
+	icon_state = "robes_blue"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/blue
+
+/obj/item/clothing/head/hooded/robes_hood/blue
+	name = "blue hood"
+	desc = "The hood of some watery-looking robes."
+	icon_state = "robes_blue_hood"
+
+/obj/item/clothing/suit/hooded/robes/tremere
+	name = "tremere robes"
+	desc = "Black robes with red highlights, marked with the emblem of House Tremere."
+	icon_state = "tremere_robes"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/tremere
+
+/obj/item/clothing/head/hooded/robes_hood/tremere
+	name = "tremere hood"
+	desc = "A black hood with red highlights, marked with the emblem of House Tremere."
+	icon_state = "tremere_hood"
+
+/obj/item/clothing/suit/hooded/robes/magister
+	name = "magister robes"
+	desc = "A red robe with an ornate golden trim, marked with the emblem of House Tremere."
+	icon_state = "magister_robes"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/magister
+
+/obj/item/clothing/head/hooded/robes_hood/magister
+	name = "magister hood"
+	desc = "A red hood with an ornate golden trim, marked with the emblem of House Tremere."
+	icon_state = "magister_hood"
+
 /obj/item/clothing/suit/vampire/coat
 	name = "coat"
 	desc = "Warm and heavy clothing."
@@ -610,10 +659,10 @@
 	icon_state = "winter2"
 
 /obj/item/clothing/suit/vampire/slickbackcoat
-   name = "opulent coat"
-   desc = "Lavish, luxurious, and deeply purple. Slickback Clothing Co. It exudes immense energy."
-   icon_state = "slickbackcoat"
-   armor = list(MELEE = 5, BULLET = 5, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 5)
+	name = "opulent coat"
+	desc = "Lavish, luxurious, and deeply purple. Slickback Clothing Co. It exudes immense energy."
+	icon_state = "slickbackcoat"
+	armor = list(MELEE = 5, BULLET = 5, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 5)
 
 /obj/item/clothing/suit/vampire/jacket
 	name = "leather jacket"
@@ -649,6 +698,12 @@
 	desc = "Best choise for pleasant life... or not."
 	icon_state = "trench3"
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
+
+/obj/item/clothing/suit/vampire/trench/strauss
+	name = "red trenchcoat"
+	desc = "True power lies not in wealth, but in the things it affords you."
+	icon_state = "strauss_coat"
+	armor = list(MELEE = 25, BULLET = 25, LASER = 10, ENERGY = 10, BOMB = 25, BIO = 0, RAD = 0, FIRE = 25, ACID = 10, WOUND = 25)
 
 /obj/item/clothing/suit/vampire/trench/tzi
 	name = "fleshcoat"
