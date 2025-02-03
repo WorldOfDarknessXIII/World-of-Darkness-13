@@ -40,7 +40,7 @@ const taskTgui = new Task('tgui')
   });
 
 const taskDm = new Task('dm')
-  .depends('_maps/map_files/generic/**')
+  .depends('_maps/**')
   .depends('code/**')
   .depends('goon/**')
   .depends('html/**')
