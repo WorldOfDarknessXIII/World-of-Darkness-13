@@ -548,8 +548,6 @@ SUBSYSTEM_DEF(job)
 	if(living_mob.mind)
 		living_mob.mind.assigned_role = rank
 
-	SSfactionwar.adjust_members()
-
 	to_chat(M, "<b>You are the [rank].</b>")
 	if(job)
 		var/new_mob = job.equip(living_mob, null, null, joined_late , null, M.client)//silicons override this proc to return a mob
@@ -569,8 +567,8 @@ SUBSYSTEM_DEF(job)
 				handle_auto_deadmin_roles(M.client, rank)
 
 		to_chat(M, "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
-		var/mob/living/carbon/human/H = living_mob
-		if((iskindred(H) && H.clane))
+		var/mob/living/carbon/human/human = living_mob
+		if((iskindred(human) && human.clane) || iscathayan(human) || isgarou(human))
 			if(job.v_duty && job.v_duty != "")
 				to_chat(M, "<span class='notice'><b>[job.v_duty]</b></span>")
 			if(job.title != "Prince")

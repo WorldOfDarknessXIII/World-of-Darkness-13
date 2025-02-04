@@ -83,8 +83,8 @@
 		"You need somethin'?",
 		"You've got some balls, that's for sure.",
 		"You know who I work for?",
-		"Get the hell outta here, 'fore I get my gang on yo ass.",
-		"you need sumn' punk?",
+		"Get the hell outta here, 'fore I get my gang on yo' ass.",
+		"You need sumn' punk?",
 		"Get lost, liberal.",
 		"Get outta this side of town.",
 		"Think you scare me? You know who I work for?",
@@ -128,7 +128,7 @@
 		"Fucking FREAK!",
 		"What the hell are you doing!?",
 		"You fucked up!",
-		"Check yo self fool!",
+		"Check yo' self, fool!",
 		"We got shit, shit that'll shut you up for good!"
 	)
 
@@ -234,9 +234,9 @@
 		"Do you need something?",
 		"Can you repeat what you were saying?",
 		"I'm late, don't interrupt me.",
-		"Check bar for new company...",
+		"Check the bar if you want somebody to bother...",
 		"Can't speak right now.",
-		"Good night I guess?",
+		"Goodnight, I guess?",
 		"Guh...",
 		"I dunno what to say.",
 		"That's all, folks."
@@ -246,7 +246,7 @@
 		"I miss my beer...",
 		"Everything okay?",
 		"Hello.",
-		"Didn't I meet you?",
+		"Haven't I seen you around before?",
 		"Something wrong here.",
 		"Oooh, dude..."
 	)
@@ -262,7 +262,7 @@
 	help_phrases = list(
 		"Oh God!",
 		"Go away!!",
-		"What the heck is happening?!",
+		"What the hell is happening?!",
 		"Stop!",
 		"Someone, help!",
 		"Mommy!"
@@ -490,7 +490,7 @@
 											"Drunk...")
 	help_phrases = list("Aaaugh!",
 											"AAAAHHHH!!",
-											"Wut de fuck? WHOM'RE YOU?!",
+											"What da' fuck? WHO'RE YOU?!",
 											"Shit!",
 											"Ass!",
 											"Dick!")
@@ -593,7 +593,7 @@
 											"Drunk...")
 	help_phrases = list("Aaaugh!",
 											"AAAAHHHH!!",
-											"Wut de fuck? WHOM'RE YOU?!",
+											"What the fuck? WHO'RE YOU?!",
 											"Shit!",
 											"Ass!",
 											"Dick!")
@@ -727,7 +727,7 @@
 											"I'm going somewhere important, not like you'd get it.",
 											"Get lost, filthy hobo...",
 											"Get lost, peasant...",
-											"Have you been to the bar tonight? people go there all the time and sit there for the entire night, it's crazy...",
+											"You been to the bar tonight? It's a good place for hobos like you...",
 											"Stop doing that, imbecile.")
 	neutral_phrases = list("Did you ask something?",
 											"Excuse me?",
@@ -743,7 +743,6 @@
 											"Someone, call the ambulance!")
 
 /mob/living/carbon/human/npc/bandit
-	vampire_faction = FACTION_CITY
 	max_stat = 3
 
 /mob/living/carbon/human/npc/bandit/Initialize()
@@ -762,7 +761,6 @@
 	AssignSocialRole(/datum/socialrole/bandit)
 
 /mob/living/carbon/human/npc/walkby
-	vampire_faction = FACTION_CITY
 
 /mob/living/carbon/human/npc/walkby/Initialize()
 	..()
@@ -771,7 +769,6 @@
 	AssignSocialRole(pick(/datum/socialrole/usualmale, /datum/socialrole/usualfemale))
 
 /mob/living/carbon/human/npc/hobo
-	vampire_faction = FACTION_CITY
 	bloodquality = BLOOD_QUALITY_LOW
 	old_movement = TRUE
 
@@ -782,7 +779,6 @@
 	AssignSocialRole(pick(/datum/socialrole/poormale, /datum/socialrole/poorfemale))
 
 /mob/living/carbon/human/npc/business
-	vampire_faction = FACTION_CITY
 	bloodquality = BLOOD_QUALITY_HIGH
 
 /mob/living/carbon/human/npc/business/Initialize()
@@ -982,7 +978,6 @@
 											"Someone, call the ambulance!")
 
 /mob/living/carbon/human/npc/shop
-	vampire_faction = FACTION_CITY
 	staying = TRUE
 	is_talking = TRUE
 
@@ -996,7 +991,6 @@
 	uniforms = list(/obj/item/clothing/under/vampire/bacotell)
 
 /mob/living/carbon/human/npc/bacotell
-	vampire_faction = FACTION_CITY
 	staying = TRUE
 
 /mob/living/carbon/human/npc/bacotell/Initialize()
@@ -1009,7 +1003,6 @@
 	uniforms = list(/obj/item/clothing/under/vampire/bubway)
 
 /mob/living/carbon/human/npc/bubway
-	vampire_faction = FACTION_CITY
 	staying = TRUE
 
 /mob/living/carbon/human/npc/bubway/Initialize()
@@ -1022,7 +1015,6 @@
 	uniforms = list(/obj/item/clothing/under/vampire/gummaguts)
 
 /mob/living/carbon/human/npc/gummaguts
-	vampire_faction = FACTION_CITY
 	staying = TRUE
 
 /mob/living/carbon/human/npc/gummaguts/Initialize()
@@ -1098,18 +1090,18 @@
 
 	male_phrases = list("I see you.",
 											"Looking suspicious...",
-											"I got some bullets if you got some crime-ass ideas.",
-											"I'm the law.",
+											"Don't try anything stupid.",
+											"Nothing to see here.",
 											"Have you seen man in black coat with black hair?")
 	neutral_phrases = list("I see you.",
 											"Looking suspicious...",
-											"I got some bullets if you got some crime-ass ideas.",
-											"I'm the law.",
+											"Don't try anything stupid.",
+											"Nothing to see here.",
 											"Have you seen man in black coat with black hair?")
 	random_phrases = list("I see you.",
 											"Looking suspicious...",
-											"I got some bullets if you got some crime-ass ideas.",
-											"I'm the law.",
+											"Don't try anything stupid.",
+											"Nothing to see here.",
 											"Have you seen man in black coat with black hair?")
 	answer_phrases = list("I'm here to protect you.")
 	help_phrases = list("Lay down!",
@@ -1119,7 +1111,6 @@
 											"This is SFPD, stay down!")
 
 /mob/living/carbon/human/npc/police
-	vampire_faction = FACTION_CITY
 	fights_anyway = TRUE
 	max_stat = 4
 
@@ -1214,22 +1205,22 @@
 	pockets = list(/obj/item/vamp/keys/npc, /obj/item/stack/dollar/rand)
 
 	neutral_phrases = list(
-		"No Loitering.",
-		"I'm kinda like a  cop, you know.",
-		"I could go for some bear claws right about now.",
+		"No loitering.",
+		"I'm kinda, like, a cop, you know.",
+		"I could go for some bearclaws right about now.",
 		"Like the uniform?",
 		"Hey, catch me later, I'll buy you a beer."
 	)
 	neutral_phrases = list(
-		"No Loitering.",
-		"I'm kinda like a  cop, you know.",
-		"I could go for some bear claws right about now.",
+		"No loitering.",
+		"I'm kinda, like, a cop, you know?",
+		"I could go for some bearclaws right about now.",
 		"Like the uniform?",
 		"Hey, catch me later, I'll buy you a beer."
 	)
 	random_phrases = list(
-		"Real quiet night tonight.",
-		"My brothers and father are security guards too."
+		"It's been a real quiet night.",
+		"My brothers and father are security guards, too."
 	)
 	answer_phrases = list("I need some coffee.")
 	help_phrases = list(
@@ -1241,7 +1232,6 @@
 	)
 
 /mob/living/carbon/human/npc/guard
-	vampire_faction = FACTION_CITY
 	staying = TRUE
 	fights_anyway = TRUE
 	max_stat = 4
@@ -1270,7 +1260,6 @@
 				staying = FALSE
 
 /mob/living/carbon/human/npc/walkby/club
-	vampire_faction = FACTION_CITY
 	staying = TRUE
 
 /datum/socialrole/stripfemale
@@ -1348,27 +1337,27 @@
 	uniforms = list(/obj/item/clothing/under/vampire/burlesque)
 	backpacks = list()
 
-	female_phrases = list("Wanna touch this boobies?",
-											"Do you like my butt?",
+	female_phrases = list("No touching~.",
+											"Like what you see?",
 											"Wanna play?",
 											"He-he.",
-											"Any dance for you...",
+											"Want a private dance?...",
 											"Sit and rest.",
 											"Do you like this?",
 											"Ahh...")
-	neutral_phrases = list("Wanna touch this boobies?",
-											"Do you like my butt?",
+	neutral_phrases = list("No touching~.",
+											"Like what you see?",
 											"Wanna play?",
 											"He-he.",
-											"Any dance for you...",
+											"Want a private dance?...",
 											"Sit and rest.",
 											"Do you like this?",
 											"Ahh...")
-	random_phrases = list("Wanna touch this boobies?",
-											"Do you like my butt?",
+	random_phrases = list("No touching~.",
+											"Like what you see?",
 											"Wanna play?",
 											"He-he.",
-											"Any dance for you...",
+											"Want a private dance?...",
 											"Sit and rest.",
 											"Do you like this?",
 											"Ahh...")
@@ -1378,13 +1367,12 @@
 												"Sure you do...")
 	help_phrases = list("Oh God!",
 											"Ahhh!!",
-											"I'm just a strip worker!",
+											"I'm just a stripper!",
 											"Stop!",
 											"Help me!",
 											"Help!")
 
 /mob/living/carbon/human/npc/stripper
-	vampire_faction = FACTION_CITY
 	staying = TRUE
 
 /mob/living/carbon/human/npc/stripper/Initialize()
@@ -1406,7 +1394,6 @@
 					ClickOn(P)
 
 /mob/living/carbon/human/npc/incel
-	vampire_faction = FACTION_CITY
 	staying = TRUE
 
 /mob/living/carbon/human/npc/incel/Initialize()
@@ -1436,7 +1423,6 @@
 											"COPS?!!")
 
 /mob/living/carbon/human/npc/illegal
-	vampire_faction = FACTION_CITY
 	staying = TRUE
 	is_talking = TRUE
 

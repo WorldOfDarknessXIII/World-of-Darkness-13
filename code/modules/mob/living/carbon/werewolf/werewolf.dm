@@ -181,7 +181,7 @@
 /mob/living/carbon/werewolf/crinos
 	name = "werewolf"
 	icon_state = "black"
-	mob_size = MOB_SIZE_LARGE
+	mob_size = MOB_SIZE_HUGE
 	butcher_results = list(/obj/item/food/meat/slab = 5)
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	limb_destroyer = 1

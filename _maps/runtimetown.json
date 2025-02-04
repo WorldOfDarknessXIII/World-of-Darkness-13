@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"map_name": "Runtime Town",
+	"map_path": "map_files/Vampire",
+	"map_file": "runtimetown.dmm",
+	"traits": [
+		{
+			"Up": 1,
+			"Baseturf": "/turf/open/floor/plating",
+			"Linkage": "Cross"
+		},
+		{
+			"Down": -1,
+			"Baseturf": "/turf/open/floor/plating",
+			"Linkage": "Cross"
+		}
+	]
+}

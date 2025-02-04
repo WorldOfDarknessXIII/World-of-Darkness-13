@@ -66,7 +66,7 @@
 			if(PLAYER_READY_TO_OBSERVE)
 				output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | [LINKIFY_READY("Not Ready", PLAYER_NOT_READY)] | <b> Observe </b> \]</p>"
 	else
-//		output += "<p><a href='byond://?src=[REF(src)];manifest=1'>View the Kindred Population</a></p>"
+		output += "<p><a href='byond://?src=[REF(src)];manifest=1'>View the Kindred Population</a></p>"
 		output += "<p><a href='byond://?src=[REF(src)];late_join=1'>Join Game!</a></p>"
 		output += "<p>[LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)]</p>"
 
@@ -548,9 +548,14 @@
 					for(var/obj/structure/werewolf_totem/S in GLOB.totems)
 						if(S.tribe == H.auspice.tribe)
 							H.forceMove(get_turf(S))
-				if(H.client.prefs.ambitious)
+				if(iscathayan(H))
 					if(H.mind)
-						H.mind.add_antag_datum(/datum/antagonist/ambitious)
+						H.mind.dharma = new H.client.prefs.dharma_type()
+						H.mind.dharma.level = H.client.prefs.dharma_level
+						H.mind.dharma.Po = H.client.prefs.po_type
+						H.mind.dharma.Hun = H.client.prefs.hun
+						H.mind.dharma.on_gain(H)
+//						H.mind.dharma.initial_skin_color = H.skin_tone
 				GLOB.fucking_joined |= H.client.prefs.real_name
 				var/datum/relationship/R = new ()
 				H.Myself = R
