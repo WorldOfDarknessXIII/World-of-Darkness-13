@@ -124,63 +124,6 @@
 		else
 			ClickOn(src)
 
-/datum/discipline/daimonion
-	name = "Daimonion"
-	desc = "Get a help from the Hell creatures, resist THE FIRE, transform into an imp. Violates Masquerade."
-	icon_state = "daimonion"
-	/*
-	cost = 1
-	ranged = FALSE
-	delay = 150
-	violates_masquerade = TRUE
-	activate_sound = 'code/modules/wod13/sounds/protean_activate.ogg'
-	clan_restricted = TRUE
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/BAT
-	*/
-
-/datum/discipline/daimonion/activate(mob/living/target, mob/living/carbon/human/owner)
-	. = ..()
-	/*
-	var/mod = min(4, level_casting)
-//	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
-	if(!BAT)
-		BAT = new(owner)
-	switch(mod)
-		if(1)
-			owner.physiology.burn_mod *= 1/100
-			owner.color = "#884200"
-			spawn(delay+owner.discipline_time_plus)
-				if(owner)
-					owner.color = initial(owner.color)
-					owner.physiology.burn_mod *= 100
-					owner.playsound_local(owner.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
-		if(2)
-			owner.dna.species.GiveSpeciesFlight(owner)
-			spawn(delay+owner.discipline_time_plus)
-				if(owner)
-					owner.dna.species.RemoveSpeciesFlight(owner)
-					owner.playsound_local(owner.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
-		if(3)
-			owner.drop_all_held_items()
-			owner.put_in_r_hand(new /obj/item/melee/vampirearms/knife/gangrel(owner))
-			owner.put_in_l_hand(new /obj/item/melee/vampirearms/knife/gangrel(owner))
-			spawn(delay+owner.discipline_time_plus)
-				if(owner)
-					for(var/obj/item/melee/vampirearms/knife/gangrel/G in owner)
-						if(G)
-							qdel(G)
-					owner.playsound_local(owner.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
-		if(4 to 5)
-			owner.drop_all_held_items()
-			BAT.Shapeshift(owner)
-			spawn(delay+owner.discipline_time_plus)
-				if(owner && owner.stat != DEAD)
-					BAT.Restore(BAT.myshape)
-					owner.Stun(15)
-					owner.do_jitter_animation(30)
-					owner.playsound_local(owner.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
-	*/
-
 /datum/discipline/valeren
 	name = "Valeren"
 	desc = "Use your third eye in healing or protecting needs."
