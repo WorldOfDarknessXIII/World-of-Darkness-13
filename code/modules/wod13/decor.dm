@@ -1189,7 +1189,7 @@
 	anchored = TRUE
 
 /obj/flag/usa
-	name = "flag of the USA"
+	name = "flag of the United States"
 	desc = "The flag of the United States of America. In God we trust!"
 	icon_state = "flag_usa"
 
@@ -1215,7 +1215,7 @@
 
 /obj/flag/spain
 	name = "flag of Spain"
-	desc = "The flag of the Kingdom of Spain. Plus Ultra!"
+	desc = "The flag of the Kingdom of Spain. Plus ultra!"
 	icon_state = "flag_spain"
 
 /obj/flag/italy
@@ -1227,6 +1227,11 @@
 	name = "flag of Russia"
 	desc = "The flag of the Russian Federation."
 	icon_state = "flag_russia"
+
+/obj/flag/china
+	name = "flag of the Soviet Union"
+	desc = "The flag of the Union of Socialist Soviet Republics. Workers of the world, unite!"
+	icon_state = "flag_soviet"
 
 /obj/flag/china
 	name = "flag of China"
