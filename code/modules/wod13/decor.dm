@@ -1223,12 +1223,17 @@
 	desc = "The flag of the Republic of Italy."
 	icon_state = "flag_italy"
 
+/obj/flag/vatican
+	name = "flag of the Vatican"
+	desc = "The flag of Vatican City."
+	icon_state = "flag_vatican"
+
 /obj/flag/russia
 	name = "flag of Russia"
 	desc = "The flag of the Russian Federation."
 	icon_state = "flag_russia"
 
-/obj/flag/china
+/obj/flag/soviet
 	name = "flag of the Soviet Union"
 	desc = "The flag of the Union of Socialist Soviet Republics. Workers of the world, unite!"
 	icon_state = "flag_soviet"
