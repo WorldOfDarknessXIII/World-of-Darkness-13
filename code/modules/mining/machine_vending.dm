@@ -278,7 +278,7 @@
 		new /datum/data/mining_equipment("AR-15 Magazines",			/obj/item/ammo_box/magazine/vamp556,	10),
 		new /datum/data/mining_equipment("desert eagle magazine",	/obj/item/ammo_box/magazine/m44,	10),
 		new /datum/data/mining_equipment("Glock19 magazine",		/obj/item/ammo_box/magazine/glock9mm,	10),
-		new /datum/data/mining_equipment("IFAK",					/obj/item/storage/firstaid,	15),
+		new /datum/data/mining_equipment("IFAK",					/obj/item/storage/firstaid/ifak,	15),
 		new /datum/data/mining_equipment("12ga buckshot",			/obj/item/ammo_box/vampire/c12g/buck,	15),
 		new /datum/data/mining_equipment("mp5 magazine",			/obj/item/ammo_box/magazine/vamp9mp5, 20),
 		new /datum/data/mining_equipment("Glock19",					/obj/item/gun/ballistic/automatic/vampire/glock19,	25),

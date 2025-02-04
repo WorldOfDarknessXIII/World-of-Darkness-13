@@ -488,7 +488,16 @@
 		new /datum/data/mining_equipment("jester mask",	/obj/item/clothing/mask/vampire/venetian_mask/jester,	50),
 		new /datum/data/mining_equipment("bloody mask",	/obj/item/clothing/mask/vampire/venetian_mask/scary,	30),
 		new /datum/data/mining_equipment("comedy mask", /obj/item/clothing/mask/vampire/comedy,	25),
-		new /datum/data/mining_equipment("tragedy mask", /obj/item/clothing/mask/vampire/tragedy,	25)
+		new /datum/data/mining_equipment("tragedy mask", /obj/item/clothing/mask/vampire/tragedy,	25),
+		new /datum/data/mining_equipment("blue wizard hat",	/obj/item/clothing/head/vampire/wizard/blue, 25),
+		new /datum/data/mining_equipment("red wizard hat",	/obj/item/clothing/head/vampire/wizard/red, 25),
+		new /datum/data/mining_equipment("yellow wizard hat",	/obj/item/clothing/head/vampire/wizard/yellow, 25),
+		new /datum/data/mining_equipment("green wizard hat",	/obj/item/clothing/head/vampire/wizard/green, 25),
+		new /datum/data/mining_equipment("dark red wizard hat",	/obj/item/clothing/head/vampire/wizard/darkred, 25),
+		new /datum/data/mining_equipment("grey wizard hat",	/obj/item/clothing/head/vampire/wizard/grey, 25),
+		new /datum/data/mining_equipment("white wizard hat",	/obj/item/clothing/head/vampire/wizard/white, 25),
+		new /datum/data/mining_equipment("black wizard hat",	/obj/item/clothing/head/vampire/wizard/black, 25),
+		new /datum/data/mining_equipment("purple wizard hat",	/obj/item/clothing/head/vampire/wizard/purple, 25)
 
 	)
 
@@ -533,6 +542,8 @@
 	prize_list = list(
 		new /datum/data/mining_equipment("lighter",		/obj/item/lighter/greyscale,	10),
 		new /datum/data/mining_equipment("zippo lighter",	/obj/item/lighter,	20),
+		new /datum/data/mining_equipment("Bailer", /obj/item/bailer, 20),
+		new /datum/data/mining_equipment("Weed Seed", /obj/item/weedseed, 20),
 		new /datum/data/mining_equipment("cannabis puff",		/obj/item/clothing/mask/cigarette/rollie/cannabis,	40),
 		new /datum/data/mining_equipment("bong",	/obj/item/bong,		50),
 		new /datum/data/mining_equipment("lockpick",	/obj/item/vamp/keys/hack, 50),
