@@ -98,10 +98,10 @@
 /obj/item/vamp/creditcard/LateInitialize()
 	. = ..()
 	var/mob/living/carbon/human/owner = get(loc, /mob/living/carbon/human)
-	///Maybe someone printed a new credit card? I don't fucking know
+	//Maybe someone printed a new credit card? I don't fucking know
 	if(!owner)
 		return
-	///For now, assume only players have bank accounts
+	//For now, assume only players have bank accounts
 	if(!owner.mind)
 		return
 	account.setup_owner(owner)
