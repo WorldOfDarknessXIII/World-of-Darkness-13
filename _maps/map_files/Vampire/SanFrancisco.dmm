@@ -6955,7 +6955,6 @@
 "lIb" = (/obj/item/kirbyplants/dead{desc = "It doesn't look very healthy..."; name = "dead plant"; pixel_y = 7},/turf/open/floor/plating/rough,/area/vtm/interior)
 "lIz" = (/obj/structure/table/wood,/obj/structure/mirror{pixel_y = 24},/obj/item/reagent_containers/glass/rag{pixel_x = 8; pixel_y = 13},/obj/item/reagent_containers/glass/rag{pixel_x = -4; pixel_y = 5},/turf/open/floor/carpet/black,/area/vtm/cabaret)
 "lIN" = (/obj/structure/fluff/hedge{pixel_y = 6},/obj/structure/railing{dir = 4},/obj/structure/flora/ausbushes/ywflowers{pixel_y = 10},/obj/structure/railing{dir = 1; layer = 4; pixel_y = 16},/turf/open/floor/plating/vampwood,/area/vtm/theatre)
->>>>>>> cae9d4c6 (other area fixes)
 "lIP" = (/obj/structure/table/wood,/obj/effect/decal/shadow{pixel_y = -32},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/mansion)
 "lJb" = (/obj/structure/railing{dir = 4},/turf/open/floor/plating/parquetry,/area/vtm)
 "lJt" = (/obj/structure/table,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plating/bacotell,/area/vtm/interior)
