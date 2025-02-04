@@ -5721,11 +5721,6 @@
 "gZh" = (/obj/effect/decal/bordur{dir = 4},/obj/machinery/light{dir = 8},/obj/structure/closet/cardboard,/turf/open/floor/plating/vampwood,/area/vtm/hotel)
 "gZv" = (/obj/effect/decal/rugs,/obj/machinery/light/small{dir = 1},/turf/open/floor/plating/concrete,/area/vtm/graveyard/interior)
 "hae" = (/obj/effect/decal/pallet{pixel_x = 2; pixel_y = 25},/turf/open/floor/plating/vampgrass,/area/vtm/park)
-<<<<<<< HEAD
-"har" = (/obj/effect/landmark/start/hound,/obj/structure/chair/sofa/corp,/turf/open/floor/plating/parquetry,/area/vtm/jazzclub)
-=======
-"har" = (/obj/structure/flora/ausbushes/fullgrass,/obj/effect/landmark/npcwall,/obj/effect/decal/bordur,/turf/open/floor/plating/vampgrass,/area/vtm/park)
->>>>>>> cae9d4c6 (other area fixes)
 "has" = (/obj/structure/flora/ausbushes,/obj/structure/big_vamprocks,/turf/open/floor/plating/vampgrass,/area/vtm/pacificheights)
 "hax" = (/obj/effect/decal/bordur{dir = 4},/obj/effect/landmark/npcbeacon,/obj/effect/landmark/npcability,/turf/open/floor/plating/sidewalk/old,/area/vtm/financialdistrict)
 "haV" = (/obj/structure/table,/obj/item/vtm_artifact/rand,/turf/open/floor/plating/rough,/area/vtm/interior)
