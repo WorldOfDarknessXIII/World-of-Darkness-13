@@ -34,8 +34,7 @@
 /datum/vampireclane/gargoyle/on_gain(mob/living/carbon/human/H)
 	..()
 	H.dna.species.wings_icon = "Gargoyle"
-	H.physiology.armor.melee += 20
-	H.physiology.armor.bullet += 20
+	H.physiology.brute_mod = 0.8
 
 /datum/vampireclane/gargoyle/post_gain(mob/living/carbon/human/H)
 	..()
