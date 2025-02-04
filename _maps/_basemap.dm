@@ -6,7 +6,8 @@
 #ifndef LOWMEMORYMODE
 	#ifdef ALL_MAPS
 //		#include "map_files\debug\runtimestation.dmm"
-		#include "map_files\Vampire\SanFrancisco.dmm"
+//		#include "map_files\Vampire\SanFrancisco.dmm"
+		#include "map_files\Vampire\LongBeachPractice.dmm"
 		#ifdef CIBUILDING
 			#include "templates.dm"
 		#endif

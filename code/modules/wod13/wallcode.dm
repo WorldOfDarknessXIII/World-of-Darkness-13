@@ -404,7 +404,8 @@
 
 /obj/effect/decal/asphalt/Initialize()
 	..()
-	icon_state = "decal[rand(1, 24)]"
+	if(prob(50))
+		icon_state = "decal[rand(1, 24)]"
 	update_icon()
 	if(GLOB.winter)
 		if(istype(get_area(src), /area/vtm))

@@ -146,7 +146,6 @@
 
 
 /turf/open/floor/sepia
-	slowdown = 2
 	icon_state = "sepia"
 	desc = "Time seems to flow very slowly around these tiles."
 	floor_tile = /obj/item/stack/tile/sepia
