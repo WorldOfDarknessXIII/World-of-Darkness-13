@@ -123,12 +123,12 @@
 	else
 		return trinary_result
 
-/mob/proc/roll_to_chat_list(var/list/viewers, var/input)
+/mob/proc/roll_to_chat_list(list/viewers, input)
 	for(var/mob/viewer in viewers)
 		if(viewer.client && viewer.client.prefs && viewer.client.prefs.chat_toggles & CHAT_ROLL_INFO)
 			to_chat(viewer, input)
 
-/mob/proc/get_dice_char(var/input)
+/mob/proc/get_dice_char(input)
 	switch(input)
 		if(1)
 			return "❶"
