@@ -1006,7 +1006,7 @@
 #define COMSIG_AQUARIUM_SURFACE_CHANGED "aquarium_surface_changed"
 #define COMSIG_AQUARIUM_FLUID_CHANGED "aquarium_fluid_changed"
 
-//Signals for the World of Darkness power system
+/* Signals for the World of Darkness power system */
 //Normal signals sent to the power and caster, _ON signals are sent to target
 
 //can_activate() signals
