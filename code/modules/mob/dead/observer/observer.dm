@@ -72,13 +72,6 @@ var/list/CMNoir = list(0.3,0.3,0.3,0,\
 	var/aghosted = FALSE
 	var/auspex_ghosted = FALSE
 
-/mob/dead/observer/Login()
-	..()
-	if(client && !aghosted)
-		animate(client, color = CMNoir, time = 30)
-		client.color = CMNoir
-//There was observer music here. It's gone now.
-
 /mob/dead/observer/Initialize()
 	set_invisibility(GLOB.observer_default_invisibility)
 
@@ -319,7 +312,6 @@ Works together with spawning an observer, noted above.
 		// [ChillRaccoon] - setting mob icons
 		ghost.icon = src.icon // [ChillRaccoon] - We should transfer mob visuals to the ghost
 		ghost.overlays = src.overlays // [ChillRaccoon] - Overlays too, else we will not see wounds, hair, skin, and etc.
-		ghost.color = CMNoir // [ChillRaccoon] - it makes our ghost looks like noir
 		// -------
 		ghost.key = key
 		ghost.client.init_verbs()
