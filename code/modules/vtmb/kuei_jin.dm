@@ -382,9 +382,6 @@
 					H.mind.dharma.roll_po(trigger2, H)
 					COOLDOWN_START(H.mind.dharma, po_call, 5 SECONDS)
 
-				for(var/obj/machinery/computer/slot_machine/slot in view(5, H))
-					if(slot)
-						trigger3 = slot
 				if(trigger3)
 					H.mind.dharma.roll_po(trigger3, H)
 					COOLDOWN_START(H.mind.dharma, po_call, 5 SECONDS)

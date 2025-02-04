@@ -269,12 +269,6 @@
 							return
 						if(last_rage_hit+50 < world.time)
 							last_rage_hit = world.time
-							if(istype(mind?.dharma?.Po_Focus, /obj/machinery/computer/slot_machine))
-								var/obj/machinery/computer/slot_machine/slot = mind?.dharma?.Po_Focus
-								for(var/obj/item/stack/dollar/D in src)
-									if(D)
-										slot.attackby(D, src)
-								slot.spin(src)
 					else
 						step_to(src, mind?.dharma?.Po_Focus, 0)
 						face_atom(mind?.dharma?.Po_Focus)
