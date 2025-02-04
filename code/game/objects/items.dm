@@ -475,7 +475,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, args)
 	if(prob(final_block_chance))
 		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
-		SEND_SIGNAL(src, COMSIG_BLOCK_SUCCESS, args)
+		SEND_SIGNAL(hitby, COMSIG_BLOCK_SUCCESS)
 		return 1
 	return 0
 

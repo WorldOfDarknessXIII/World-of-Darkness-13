@@ -806,7 +806,7 @@
 	var/aggravate_damage = 20
 	var/parried = FALSE
 
-// This is ass and I wish there was another way
+// I wish there was another way
 // This code listens for a signal that is sent when there is a successful automatic weapon parry
 // It sets a variable to true that will cancel the after_attack of klaives
 /obj/item/melee/vampirearms/klaive/Initialize()
@@ -866,12 +866,12 @@
 /obj/item/melee/vampirearms/klaive/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!proximity)
 		return
-	if(parried)
+	if(parried) //This is for automatic item block chance parry, not the parrying intent
 		parried = FALSE
 		return
 	if(isgarou(target) || iswerewolf(target))
 		var/mob/living/carbon/wolf = target
-		if(wolf.blocking || wolf.parrying) //TESTING
+		if(wolf.blocking || wolf.parrying) //This is so a blocked or parried klaive does not deal clone damage
 			return
 
 		//Chance to remove gnosis from target werewolf
@@ -890,8 +890,8 @@
 			wolf.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
 
 	else if(iscarbon(target) || isvampire(target))
-		var/mob/living/carbon/human
-		if(human.blocking || human.parrying)
+		var/mob/living/carbon/human = target
+		if(human.blocking || human.parrying) //This is so a blocked or parried klaive does not deal clone damage
 			return
 		if(aggravate)
 			human.apply_damage(aggravate_damage, CLONE)

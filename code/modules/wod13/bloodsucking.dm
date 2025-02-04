@@ -231,5 +231,5 @@
 			client.images -= suckbar
 		qdel(suckbar)
 		stop_sound_channel(CHANNEL_BLOOD)
-		if(!iskindred(mob))
+		if(!iskindred(mob) && !isgarou(mob) && !iswerewolf(mob))
 			mob.SetSleeping(50)
