@@ -3,26 +3,6 @@
 	. = ..()
 
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(clean_face))
-	RegisterSignal(src, COMSIG_ADDRECIPE_KLAIVE, PROC_REF(add_recipe_klaive))
-
-/**
- * On gaining crafting recipes for garou klaives
- *
- * This grants a specific silver klaive crafting recipe depending on tribe.
- */
-/mob/living/carbon/human/proc/add_recipe_klaive(datum/source)
-	SIGNAL_HANDLER
-
-	if(auspice.tribe == "Glasswalkers")
-		mind.teach_crafting_recipe(/datum/crafting_recipe/klaive/glasswalker)
-
-	if(auspice.tribe == "Wendigo")
-		mind.teach_crafting_recipe(/datum/crafting_recipe/klaive/wendigo)
-
-	if(auspice.tribe == "Black Spiral Dancers")
-		mind.teach_crafting_recipe(/datum/crafting_recipe/klaive/bsd)
-
-	UnregisterSignal(src, COMSIG_ADDRECIPE_KLAIVE)
 
 /**
  * Called on the COMSIG_COMPONENT_CLEAN_FACE_ACT signal

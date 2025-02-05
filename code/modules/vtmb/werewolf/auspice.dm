@@ -74,6 +74,27 @@
 				var/datum/action/A2 = new zalupa()
 				A2.Grant(C.transformator.crinos_form)
 
+	RegisterSignal(src, COMSIG_CHARACTER_GENERATED, PROC_REF(add_recipe_klaive))
+
+/**
+ * On gaining crafting recipes for garou klaives
+ *
+ * This grants a specific silver klaive crafting recipe depending on tribe.
+ */
+/datum/auspice/proc/add_recipe_klaive(datum/source, mob/living/user)
+	SIGNAL_HANDLER
+
+	if(tribe == "Glasswalkers")
+		user.mind.teach_crafting_recipe(/datum/crafting_recipe/klaive/glasswalker)
+
+	if(tribe == "Wendigo")
+		user.mind.teach_crafting_recipe(/datum/crafting_recipe/klaive/wendigo)
+
+	if(tribe == "Black Spiral Dancers")
+		user.mind.teach_crafting_recipe(/datum/crafting_recipe/klaive/bsd)
+
+	UnregisterSignal(src, COMSIG_CHARACTER_GENERATED)
+
 /datum/auspice/ahroun
 	name = "Ahroun"
 	desc = "The Ahroun is the archetype of the werewolf as murderous beast, though they range from unapologetic berserkers to hardened veterans tempering their Rage with discipline. Their high levels of Rage put them on the edge at all times - the Full Moon's blessing is a hair trigger, among other things. Those closer to the waxing moon tend to exult in the glory of the war, while those closer to the waning moon are more viciously pragmatic, ruthless in their bloodthirst. Every Ahroun is a dangerous individual to be around, but when the forces of the Wyrm attack, their packmates are glad to have a Full Moon warrior at the front of the charge."

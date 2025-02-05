@@ -1003,8 +1003,12 @@
 ///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
 
-///Called on human initialisation to grant garou klaive crafting recipes
-#define COMSIG_ADDRECIPE_KLAIVE "addrecipe_klaive"
+///called in new_player.dm at the end of /mob/dead/new_player/proc/create_character(transfer_after)
+#define COMSIG_CHARACTER_GENERATED "character_generated"
+///called in bloodsucking.dm at the end of /mob/living/carbon/human/proc/drinksomeblood
+#define COMSIG_MOB_VAMPIRE_SUCKED "mob_vampire_sucked"
+	///vampire suck resisted
+	#define COMPONENT_RESIST_VAMPIRE_KISS (1<<0)
 
 // Aquarium related signals
 #define COMSIG_AQUARIUM_BEFORE_INSERT_CHECK "aquarium_about_to_be_inserted"

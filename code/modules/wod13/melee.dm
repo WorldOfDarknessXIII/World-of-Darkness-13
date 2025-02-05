@@ -839,11 +839,15 @@
 // This code allows a garou to spend 1 gnosis to buff the klaive and allow it to deal aggravated damage (clone damage) to non-supernatural beings
 // This lasts for 10 seconds, and while it is active you cannot activate it again to prevent spam
 /obj/item/melee/vampirearms/klaive/attack_self(mob/user)
-	if((isgarou(user) || iscrinos(user)) && !aggravate)
+	if(aggravate)
+		to_chat(user, "[src]'s spirit is already awake!")
+		return
+	if((isgarou(user) || iscrinos(user)))
 		awaken(user)
+	else
+		to_chat(user, "[src]'s is just a dead piece of silver.")
 
-/obj/item/melee/vampirearms/klaive/proc/awaken(mob/user)
-	var/mob/living/carbon/wolf = user
+/obj/item/melee/vampirearms/klaive/proc/awaken(mob/living/carbon/wolf)
 	if(wolf.auspice.gnosis > 0)
 		to_chat(wolf, "You beckon [src]'s spirit, you can feel it answer your call.")
 		adjust_gnosis(-1, wolf)
@@ -852,7 +856,7 @@
 		armour_penetration = awakened_penetration
 		addtimer(CALLBACK(src, PROC_REF(slumber), wolf), 10 SECONDS)
 	else
-		to_chat(user, "You beckon [src]'s spirit, but all that answers is silence and indifference.")
+		to_chat(wolf, "You beckon [src]'s spirit, but all that answers is silence and indifference.")
 
 /obj/item/melee/vampirearms/klaive/proc/slumber(mob/user)
 	aggravate = FALSE
@@ -886,7 +890,7 @@
 
 		if(!wolf.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
 			wolf.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
-			spawn(7 SECONDS)
+			spawn(7 SECONDS) // WIZARD - Fuck Spawn, use status effect
 			wolf.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
 
 	else if(iscarbon(target) || isvampire(target))
