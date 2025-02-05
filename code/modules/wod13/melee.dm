@@ -888,10 +888,7 @@
 		else
 			wolf.apply_damage(aggravate_damage + 15, CLONE)
 
-		if(!wolf.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
-			wolf.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
-			spawn(7 SECONDS) // WIZARD - Fuck Spawn, use status effect
-			wolf.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
+		wolf.apply_status_effect(STATUS_EFFECT_SILVER_SLOWDOWN)
 
 	else if(iscarbon(target) || isvampire(target))
 		var/mob/living/carbon/human = target
