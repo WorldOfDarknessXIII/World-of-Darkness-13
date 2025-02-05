@@ -398,16 +398,6 @@
 	icon_state = "graveyard"
 	yin_chi = 2
 
-/area/vtm/interior/wyrm_corrupted
-	name = "Corrupted by the Wyrm"
-	icon_state = "graveyard"
-	zone_type = "battle"
-	music = /datum/vampiremusic/forest
-	fire_controled = FALSE
-	yang_chi = 0
-	yin_chi = 2
-	wall_rating = LOW_WALL_RATING
-
 //MUSIC
 
 /datum/vampiremusic
