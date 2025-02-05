@@ -141,6 +141,11 @@
 	amount_of_bloodpoints = 4
 	vitae = TRUE
 
+/obj/item/drinkable_bloodpack/vitae/elder
+	name = "\improper elder vitae pack (full)"
+	amount_of_bloodpoints = 8
+
+
 /obj/item/blood_hunt
 	name = "Blood Hunt Announcer"
 	desc = "Announce a Blood Hunt to the city."

@@ -38,6 +38,20 @@
 	contains = list(/obj/item/drinkable_bloodpack/elite, /obj/item/drinkable_bloodpack/elite, /obj/item/drinkable_bloodpack/elite, /obj/item/drinkable_bloodpack/elite, /obj/item/drinkable_bloodpack/elite)
 	crate_name = "blood crate"
 
+/datum/supply_pack/vampire/vitaepack
+	name = "Vitae Pack"
+	desc = "Contains 5 vitae packs."
+	cost = 100
+	contains = list(/obj/item/drinkable_bloodpack/vitae, /obj/item/drinkable_bloodpack/vitae, /obj/item/drinkable_bloodpack/vitae, /obj/item/drinkable_bloodpack/vitae, /obj/item/drinkable_bloodpack/vitae)
+	crate_name = "vitae crate"
+
+/datum/supply_pack/vampire/vitaepack_elder
+	name = "Elder Vitae Pack"
+	desc = "Contains 5 elder vitae packs."
+	cost = 300
+	contains = list(/obj/item/drinkable_bloodpack/vitae/elder, /obj/item/drinkable_bloodpack/vitae/elder, /obj/item/drinkable_bloodpack/vitae/elder, /obj/item/drinkable_bloodpack/vitae/elder, /obj/item/drinkable_bloodpack/vitae/elder)
+	crate_name = "vitae crate"
+
 /datum/supply_pack/vampire/weaponstake
 	name = "Weapon (stake)"
 	desc = "Contains 3 usable wooden stakes."
