@@ -29,7 +29,6 @@
 
 /obj/structure/vip_barrier/Initialize()
 	. = ..()
-	GLOB.vip_barriers += src
 
 	//we do this in an initialize so mappers do not have to code as much
 	if(!GLOB.vip_barrier_perms?[protected_zone_id])
