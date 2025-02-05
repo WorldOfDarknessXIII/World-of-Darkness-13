@@ -6476,7 +6476,7 @@
 "jHd" = (/obj/structure/table/wood,/obj/item/flashlight/lantern,/obj/structure/coclock,/turf/open/floor/plating/parquetry/old,/area/vtm/graveyard/interior)
 "jHn" = (/obj/effect/turf_decal/siding/wood,/obj/structure/table/wood,/obj/machinery/chem_dispenser/drinks/beer/fullupgrade,/obj/machinery/light{dir = 1},/turf/open/floor/plating/parquetry,/area/vtm/camarilla)
 "jHr" = (/obj/effect/turf_decal/stripes/white/line{dir = 1},/obj/effect/decal/cardboard,/obj/effect/decal/shadow,/turf/open/floor/plating/rough,/area/vtm/interior)
-"jHT" = (/obj/structure/lattice/pentex,/obj/transfer_point_vamp{dir = 4; icon = 'icons/obj/stairs.dmi'; icon_state = "stairs"; id = 896; name = "stairs"},/turf/open/space/basic,/area/vtm/interior/endron_facility)
+"jHT" = (/obj/structure/lattice/pentex,/obj/transfer_point_vamp{dir = 4; icon = 'icons/obj/stairs.dmi'; icon_state = "stairs"; id = 896; name = "stairs"},/turf/open/floor/plating/vampplating/mono,/area/vtm/interior/endron_facility)
 "jHU" = (/obj/structure/table,/obj/machinery/button/door{id = "supply"},/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/turf/open/floor/plating/concrete,/area/vtm/supply)
 "jHY" = (/obj/structure/bonfire/prelit{burn_icon = "campfire_on"; icon = 'code/modules/wod13/props.dmi'; icon_state = "campfire_off"},/turf/open/floor/plating/vampbeach,/area/vtm/northbeach)
 "jIl" = (/obj/machinery/light{pixel_y = 32},/turf/open/floor/carpet/lone,/area/vtm/interior)
