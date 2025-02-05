@@ -440,7 +440,7 @@ GLOBAL_LIST_EMPTY(p25_radios)
 	var/static/list/restricted_areas = list(
 		/area/vtm/sewer,
 		/area/vtm/sewer/nosferatu_town,
-		/area/vtm/interior/wyrm_corrupted
+		/area/vtm/interior/endron_facility/restricted
 	)
 	var/area/current_area = get_area(A)
 	for(var/restricted_type in restricted_areas)
