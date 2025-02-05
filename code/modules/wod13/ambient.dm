@@ -398,6 +398,11 @@
 	icon_state = "graveyard"
 	yin_chi = 2
 
+/area/vtm/interior/wyrm_corrupted
+	name = "Corrupted by the Wyrm"
+	icon_state = "graveyard"
+	yin_chi = 2
+
 //MUSIC
 
 /datum/vampiremusic
