@@ -24,9 +24,16 @@
 
 	var/stopturf = 1
 
+	var/extra_mags=2
+	var/extra_loaded_rounds=10
 
 	var/obj/item/my_weapon
+
+	var/obj/item/my_backup_weapon
+
 	var/spawned_weapon = FALSE
+
+	var/spawned_backup_weapon = FALSE
 
 	var/ghoulificated = FALSE
 
@@ -37,6 +44,11 @@
 	var/max_stat = 2
 
 	var/list/spotted_bodies = list()
+
+/mob/living/carbon/human/npc/LateInitialize()
+	. = ..()
+	if(my_weapon && istype(my_weapon, /obj/item/gun/ballistic))
+		RegisterSignal(my_weapon, COMSIG_GUN_FIRED, PROC_REF(handle_gun))
 
 /datum/movespeed_modifier/npc
 	multiplicative_slowdown = 2

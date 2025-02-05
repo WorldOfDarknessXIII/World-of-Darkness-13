@@ -30,10 +30,11 @@
 	GLOB.npc_activities += src
 
 /mob/living/carbon/human/npc/Initialize()
-	..()
+	.=..()
 	GLOB.npc_list += src
 	GLOB.alive_npc_list += src
 	add_movespeed_modifier(/datum/movespeed_modifier/npc)
+	return INITIALIZE_HINT_LATELOAD
 
 /mob/living/carbon/human/npc/death()
 	GLOB.alive_npc_list -= src
@@ -110,15 +111,6 @@
 				if(walktarget && !old_movement)
 					if(route_optimisation())
 						forceMove(get_turf(walktarget))
-//		if(prob(5) && !danger_source)
-//			var/activity = rand(1, 3)
-//			switch(activity)
-//				if(1)
-//					StareAction()
-//				if(2)
-//					EmoteAction()
-//				if(3)
-//					SpeechAction()
 
 /mob/living/carbon/human/npc/proc/CreateWay(var/direction)
 	var/turf/location = get_turf(src)
@@ -132,11 +124,8 @@
 			if(istype(A, /obj/effect/landmark/npcwall))
 				return get_step_towards(location, get_turf(src))
 			if(isnpcbeacon(A) && prob(50))
-//				var/opposite_dir = turn(direction, 180)				Nado
 				stopturf = 1
 				return get_step(location, direction)
-//		if(distance == 50)
-//			return location
 
 /mob/living/carbon/human/npc/proc/ChoosePath()
 	if(!old_movement)
@@ -254,9 +243,6 @@
 		less_danger = null
 	if(!staying)
 		lifespan = lifespan+1
-/*	if(lifespan >= 1000)
-		if(route_optimisation())
-			qdel(src)*/
 	if(!walktarget && !staying)
 		stopturf = rand(1, 2)
 		walktarget = ChoosePath()
@@ -267,7 +253,6 @@
 			if(m_intent == MOVE_INTENT_WALK)
 				toggle_move_intent(src)
 			if(!my_weapon && !fights_anyway)
-//				if(last_walkin+5 < world.time)
 				var/reqsteps = round((SShumannpcpool.next_fire-world.time)/total_multiplicative_slowdown())
 				set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
 				walk_away(src, danger_source, reqsteps, total_multiplicative_slowdown())
@@ -287,12 +272,8 @@
 						else
 							ClickOn(danger_source)
 							face_atom(danger_source)
-//				if(last_walkin+5 < world.time)
 							var/reqsteps = round((SShumannpcpool.next_fire-world.time)/total_multiplicative_slowdown())
 							set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
-//						var/plus_turfs = 0
-//						if(istype(my_weapon, /obj/item/gun))
-//							plus_turfs = 3
 							walk_to(src, danger_source, reqsteps, total_multiplicative_slowdown())
 
 			if(isliving(danger_source))
@@ -342,36 +323,44 @@
 				else
 					my_weapon = null
 
-/*
-	if(danger_source)
-		a_intent = INTENT_HARM
-		if(m_intent == MOVE_INTENT_WALK)
-			toggle_move_intent(src)
-			set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
-		walk_away(src,danger_source,9,total_multiplicative_slowdown())
-		if(last_danger_meet+300 <= world.time)
-			danger_source = null
-			a_intent = INTENT_HELP
-		goto Skip
-//			if(!range_weapon && !melee_weapon)
+/mob/living/carbon/human/npc/proc/handle_gun(obj/item/gun/weapon, mob/living/user, atom/target, params, zone_override)
+	SIGNAL_HANDLER
+	if(weapon.loc != src)
+		UnregisterSignal(weapon, COMSIG_GUN_FIRED)
 
-	if(lastgo+total_multiplicative_slowdown() > world.time)
-		goto Skip
-	if(pulledby && last_grab+30 > world.time)
-		goto Skip
-	if(!walktarget)
-		walktarget = ChoosePath()
-		face_atom(walktarget)
-		stopturf = rand(1, 2)
-	if(get_dist(walktarget, src) <= stopturf)
-		walktarget = ChoosePath()
-		face_atom(walktarget)
-		stopturf = rand(1, 2)
-	lastgo = world.time
-	var/walkshit = max(stopturf-1, get_dist(walktarget, src)-2)
-	walk_to(src, walktarget, walkshit, total_multiplicative_slowdown())
-	Skip
-*/
+	if(istype(weapon, /obj/item/gun/ballistic))
+		var/obj/item/gun/ballistic/weapon_ballistic = weapon
 
-//			walk_to(src, walktarget, stopturf, total_multiplicative_slowdown())
-//			walk_to(src, walktarget, stopturf, total_multiplicative_slowdown())
+		if(istype(weapon_ballistic.magazine, /obj/item/ammo_box/magazine/internal))
+			var/obj/item/ammo_box/magazine/internal_mag = weapon_ballistic.magazine
+			if(extra_loaded_rounds)
+				internal_mag.give_round(new internal_mag.ammo_type())
+				extra_loaded_rounds--
+			addtimer(CALLBACK(src, PROC_REF(rack_held_gun), weapon_ballistic), weapon_ballistic.rack_delay)
+
+		else
+			if(!weapon_ballistic.magazine.ammo_count() && extra_mags)
+				extra_mags--
+				weapon_ballistic.eject_magazine_hasty(src, FALSE, new weapon_ballistic.mag_type(src))
+				weapon_ballistic.rack(src)
+				if(!weapon.chambered)
+					weapon_ballistic.chamber_round()
+			check_out_of_ammo(weapon_ballistic)
+
+
+/mob/living/carbon/human/npc/proc/rack_held_gun(obj/item/gun/ballistic/weapon)
+	if(weapon.bolt_locked)
+		weapon.drop_bolt()
+	weapon.rack(src)
+	check_out_of_ammo(weapon)
+
+/mob/living/carbon/human/npc/proc/check_out_of_ammo(obj/item/gun/ballistic/weapon)
+	if(weapon.chambered)
+		return
+
+	drop_all_held_items()
+	my_weapon = null
+	if(my_backup_weapon && !spawned_backup_weapon)
+		my_backup_weapon.forceMove(loc)
+		put_in_active_hand(my_backup_weapon)
+		spawned_backup_weapon = TRUE

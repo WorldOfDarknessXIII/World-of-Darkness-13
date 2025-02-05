@@ -29,7 +29,6 @@
 
 	//if bouncers are KO'd or Sleeping, disable barrier
 	RegisterSignal(target_bouncer, COMSIG_LIVING_STATUS_UNCONSCIOUS, PROC_REF(check_barrier_guarded_with_recheck))
-	RegisterSignal(target_bouncer, COMSIG_LIVING_STATUS_SLEEP, PROC_REF(check_barrier_guarded_with_recheck))
 
 
 //registers barrier with the perms

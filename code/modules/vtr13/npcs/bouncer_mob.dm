@@ -8,11 +8,9 @@
 	var/list/police_block_phrases = list("I HAVE NO POLICE BAN PHRASE")
 	var/list/block_phrases = list("I HAVE NO BLOCK PHRASE")
 
-	vampire_faction = FACTION_CITY
 	staying = TRUE
-	var/away_from_home = TRUE
 	var/walk_home_timer = 30 SECONDS
-	var/warp_home_timer = 1 MINUTES
+	var/warp_home_timer = 40 SECONDS
 
 	var/datum/vip_barrier_perm/linked_perm = null
 
@@ -23,11 +21,10 @@
 	var/is_dominated = FALSE //Whether or not the man is dominated
 	var/is_in_awe = FALSE //Whether or not the man is being hit by presence
 
-	var/start_turf = null //Where the creature spawns so it can return from whence it came
+	var/turf/start_turf = null //Where the creature spawns so it can return from whence it came
 
 
 	//Behavior settings
-	vampire_faction = FACTION_CAMARILLA
 	fights_anyway=TRUE
 
 /mob/living/carbon/human/npc/bouncer/Initialize()
@@ -35,9 +32,13 @@
 
 	my_weapon = new /obj/item/gun/ballistic/shotgun/vampire(src)
 
+	my_backup_weapon = new /obj/item/melee/vampirearms/machete(src)
+
 	AssignSocialRole(/datum/socialrole/bouncer)
 
 	start_turf = get_turf(src)
+
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(yearn_for_home))
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -45,9 +46,12 @@
 /mob/living/carbon/human/npc/bouncer/AssignSocialRole(var/datum/socialrole/bouncer/role, var/dont_random = FALSE)
 	. = ..(role, dont_random)
 
-	if(role && ispath(role, /mob/living/carbon/human/npc/bouncer))
-		denial_phrases = role.denial_phrases
-		entry_phrases = role.entry_phrases
+	if(role && ispath(role, /datum/socialrole/bouncer))
+		var/datum/socialrole/bouncer/social_role = new role()
+		denial_phrases = social_role.denial_phrases
+		entry_phrases = social_role.entry_phrases
+		police_block_phrases = social_role.police_block_phrases
+		block_phrases = social_role.block_phrases
 
 /mob/living/carbon/human/npc/bouncer/LateInitialize()
 	. = ..()
@@ -60,26 +64,21 @@
 	linked_perm.add_bouncer(src)
 
 
-/mob/living/carbon/human/npc/bouncer/Life()
-	if(!away_from_home && loc != initial(loc))
-		away_from_home = TRUE
-		addtimer(CALLBACK(src, PROC_REF(go_home)), walk_home_timer)
-		addtimer(CALLBACK(src, PROC_REF(warp_home)), warp_home_timer)
-
-	if(away_from_home && loc == initial(loc))
-		away_from_home = FALSE
-
-	..()
+/mob/living/carbon/human/npc/bouncer/proc/yearn_for_home()
+	SIGNAL_HANDLER
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	addtimer(CALLBACK(src, PROC_REF(go_home)), walk_home_timer)
+	addtimer(CALLBACK(src, PROC_REF(position_hard_reset)), warp_home_timer)
 
 /mob/living/carbon/human/npc/bouncer/proc/go_home()
-	if(loc == initial(loc))
+	if(start_turf && loc == start_turf.loc)
 		return
 	walk_to(src, start_turf, 1, total_multiplicative_slowdown())
 
-/mob/living/carbon/human/npc/bouncer/proc/warp_home()
-	if(loc == initial(loc))
-		return
-	loc = initial(loc)
+/mob/living/carbon/human/npc/bouncer/proc/position_hard_reset()
+	if(start_turf && loc != start_turf.loc)
+		forceMove(start_turf)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(yearn_for_home))
 
 /mob/living/carbon/human/npc/bouncer/attackby(obj/item/used_item, mob/user, params)
 	if(istype(used_item,/obj/item/card/id/police))
@@ -96,7 +95,7 @@
 	..()
 
 /mob/living/carbon/human/npc/bouncer/proc/can_be_reasoned_with()
-	if(stat == DEAD || IsSleeping() || IsUnconscious() || away_from_home)
+	if(stat == DEAD || IsSleeping() || IsUnconscious() || loc!=initial(loc))
 		return FALSE
 	return TRUE
 
@@ -121,7 +120,7 @@
 
 //Say a phrase, only if something hasn't been said in awhile
 /mob/living/carbon/human/npc/bouncer/proc/speak_seldom(var/phrase, mob/target)
-	if(!i_have_spoken && !away_from_home)
+	if(!i_have_spoken && loc != initial(loc))
 		RealisticSay(phrase)
 		i_have_spoken = TRUE
 		addtimer(CALLBACK(src, PROC_REF(toggle_new_speak)), repeat_delay)
