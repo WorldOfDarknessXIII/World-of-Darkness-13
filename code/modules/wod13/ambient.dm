@@ -315,6 +315,19 @@
 	yin_chi = 2
 	wall_rating = HIGH_WALL_RATING
 
+/area/vtm/chantry
+	name = "Chantry"
+	icon_state = "theatre"
+	ambience_index = AMBIENCE_INTERIOR
+	upper = FALSE
+	music = /datum/vampiremusic/theatre
+	zone_type = "elysium"
+	fire_controled = TRUE
+	yang_chi = 0
+	yin_chi = 2
+	wall_rating = LOW_WALL_RATING
+
+
 /area/vtm/sewer
 	name = "Sewer"
 	icon_state = "sewer"
