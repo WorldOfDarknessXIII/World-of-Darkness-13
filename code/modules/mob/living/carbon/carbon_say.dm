@@ -25,6 +25,8 @@
 		return initial(language.flags) & TONGUELESS_SPEECH
 
 /mob/living/carbon/input_say()
+	if(overlays_standing[SAY_LAYER])
+		return
 	var/mutable_appearance/say_overlay = mutable_appearance('icons/mob/talk.dmi', "default0", -SAY_LAYER)
 	overlays_standing[SAY_LAYER] = say_overlay
 	apply_overlay(SAY_LAYER)
