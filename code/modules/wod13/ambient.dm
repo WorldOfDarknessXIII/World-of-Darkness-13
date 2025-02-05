@@ -364,15 +364,14 @@
 	fire_controled = TRUE
 	wall_rating = LOW_WALL_RATING
 
-/area/vtm/interior/wyrm_corrupted
-	name = "Endron Facility Restricted"
-	icon_state = "graveyard"
-	upper = FALSE
+/area/vtm/interior/endron_facility
+	name = "Endron Facility"
+	icon_state = "supply"
 	zone_type = "battle"
 	music = /datum/vampiremusic/forest
 	fire_controled = FALSE
 	yang_chi = 0
-	yin_chi = 2
+	yin_chi = 1
 	wall_rating = LOW_WALL_RATING
 
 /area/vtm/interior/penumbra
@@ -394,16 +393,10 @@
 	fire_controled = FALSE
 	wall_rating = LOW_WALL_RATING
 
-/area/vtm/interior/pentex_facility
-	name = "Endron Facility"
-	icon_state = "supply"
-	upper = FALSE
-	zone_type = "battle"
-	music = /datum/vampiremusic/forest
-	fire_controled = FALSE
-	yang_chi = 0
+/area/vtm/interior/endron_facility/restricted
+	name = "Endron Facility Restricted"
+	icon_state = "graveyard"
 	yin_chi = 2
-	wall_rating = LOW_WALL_RATING
 
 //MUSIC
 
