@@ -16,7 +16,6 @@
  * * roll header:
  */
 /mob/proc/storyteller_roll(dice = 1, difficulty = 6, numerical = FALSE, roll_header="", show_player=TRUE, roll_viewers = list(src))
-	show_player = TRUE
 
 	if(show_player)
 		. = storyteller_roll_pretty(dice, difficulty, numerical, roll_header, roll_viewers)
