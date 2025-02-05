@@ -323,6 +323,13 @@
 		"laundromat"
 	)
 
+/obj/item/vamp/keys/pentex
+	name = "Facility keys"
+	accesslocks = list(
+		"pentex"
+	)
+	color = "#062e03"
+
 /obj/item/vamp/keys/hack
 	name = "\improper lockpick"
 	desc = "These can open some doors. Illegally..."
@@ -545,6 +552,10 @@
 	icon_state = "wood-1"
 	baseicon = "wood"
 	burnable = TRUE
+
+/obj/structure/vampdoor/wood/strip
+	lock_id = "strip"
+	lockpick_difficulty = 8
 
 /obj/structure/vampdoor/wood/old
 	icon_state = "oldwood-1"

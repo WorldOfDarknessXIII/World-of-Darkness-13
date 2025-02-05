@@ -238,7 +238,7 @@
 	mob_name = "a triad soldier"
 	icon = 'icons/obj/lavaland/spawners.dmi'
 	icon_state = "cryostasis_sleeper"
-	outfit = /datum/outfit/triadsoldier
+	outfit = /datum/outfit/job/triad_soldier
 	roundstart = FALSE
 	death = FALSE
 	random = FALSE
@@ -256,19 +256,6 @@
 	var/my_surname = pick(GLOB.last_names_triad)
 	new_spawn.fully_replace_character_name(null,"[my_name] [my_surname]")
 
-/datum/outfit/triadsoldier
-	name = "triad soldier"
-	uniform = /obj/item/clothing/under/vampire/suit
-	shoes = /obj/item/clothing/shoes/vampire/jackboots
-//	suit = /obj/item/clothing/suit/vampire/vest
-//	belt = /obj/item/melee/classic_baton
-	id = /obj/item/cockclock
-	l_pocket = /obj/item/vamp/phone
-	r_pocket = /obj/item/flashlight
-	l_hand = /obj/item/vamp/keys/triads
-	r_hand = /obj/item/gun/ballistic/automatic/vampire/glock19
-	back = /obj/item/storage/backpack/satchel
-//
 /obj/effect/mob_spawn/human/police
 	name = "a police officer"
 	desc = "A humming sleeper with a silhouetted occupant inside. Its stasis function is broken and it's likely being used as a bed."

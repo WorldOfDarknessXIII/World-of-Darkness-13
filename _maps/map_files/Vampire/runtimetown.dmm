@@ -1,0 +1,340 @@
+"ap" = (/obj/item/vamp/phone/street{pixel_z = 24},/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"av" = (/obj/structure/table,/obj/item/ammo_box/magazine/vamp45acp,/obj/item/ammo_box/magazine/vamp45acp,/obj/item/ammo_box/magazine/vamp45acp,/obj/item/gun/ballistic/automatic/vampire/m1911,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"ba" = (/obj/machinery/mineral/equipment_vendor/fastfood/clothing,/obj/structure/table,/turf/closed/wall/vampwall/brick/low,/area/vtm/interior/shop)
+"bh" = (/obj/structure/chair/greyscale{dir = 8},/turf/open/floor/plating/rough/cave,/area/vtm/pacificheights)
+"bo" = (/obj/structure/table/wood,/obj/item/paper_bin,/obj/item/pen,/turf/closed/wall/vampwall/painted/low,/area/vtm/interior/shop)
+"bp" = (/obj/effect/decal/bordur,/obj/structure/roadsign/crosswalk,/turf/open/floor/plating/sidewalk/poor,/area/vtm/pacificheights)
+"bs" = (/obj/structure/table/wood,/obj/item/vtm_artifact/fae_charm,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"bC" = (/obj/item/reagent_containers/glass/bottle/morphine,/obj/item/reagent_containers/glass/bottle/morphine,/obj/item/reagent_containers/glass/bottle/morphine,/obj/item/reagent_containers/glass/bottle/morphine,/obj/item/reagent_containers/glass/bottle/morphine,/obj/item/reagent_containers/glass/bottle/morphine,/obj/item/storage/box/syringes,/obj/structure/closet/secure_closet/medical2,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"bD" = (/obj/effect/turf_decal/stripes/line{dir = 10},/turf/open/floor/plating/vampdirt,/area/vtm/supply)
+"bE" = (/obj/structure/table/wood,/obj/item/vtm_artifact/mummywrap_fetish,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"bL" = (/obj/structure/table,/obj/item/storage/backpack/duffelbag/med/surgery{pixel_y = 12},/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"bU" = (/obj/structure/table,/obj/machinery/cell_charger{pixel_y = 10},/obj/item/screwdriver{pixel_y = 9},/obj/item/stock_parts/cell/high,/obj/item/defibrillator/compact,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"ch" = (/obj/structure/table/wood,/obj/item/vtm_artifact/galdjum,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"ci" = (/obj/structure/rack/tacobell/horizontal,/obj/underplate/stuff{pixel_y = 8},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"cj" = (/obj/effect/decal/bordur,/turf/open/floor/plating/sidewalk/poor,/area/vtm/pacificheights)
+"cQ" = (/obj/structure/table,/obj/item/storage/firstaid/ifak,/obj/item/storage/firstaid/ifak,/obj/item/storage/firstaid/ifak,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"cT" = (/obj/effect/decal/bordur,/obj/vampire_car/rand/camarilla{dir = 2; locked = 0},/turf/open/floor/plating/sidewalk/poor,/area/vtm/pacificheights)
+"dA" = (/obj/structure/table,/obj/item/storage/firstaid/medical,/obj/machinery/light{pixel_y = 32},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"ee" = (/obj/gummaguts{pixel_x = 32; pixel_y = 38},/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"eg" = (/obj/structure/extinguisher_cabinet{pixel_y = 32},/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"el" = (/obj/structure/rack/bubway/horizontal,/obj/machinery/mineral/equipment_vendor/fastfood/bubway,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"en" = (/obj/item/vamp/keys/camarilla,/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"eG" = (/obj/machinery/light{pixel_y = 32},/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"eJ" = (/obj/effect/decal/trash{icon_state = "trash5"},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"eQ" = (/turf/open/floor/plating/sidewalk,/area/vtm/pacificheights)
+"eR" = (/turf/closed/wall/vampwall/rich/old/low/window/reinforced,/area/vtm/pacificheights)
+"fd" = (/obj/effect/decal/bordur{dir = 1},/obj/item/vamp/keys/clinic,/turf/open/floor/plating/sidewalk/poor,/area/vtm/pacificheights)
+"ff" = (/obj/cargocrate,/turf/open/floor/plating/vampdirt/rails,/area/vtm/supply)
+"fi" = (/obj/effect/decal/pallet,/turf/open/floor/plating/vampdirt,/area/vtm/supply)
+"fn" = (/obj/effect/decal/cardboard,/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"fS" = (/obj/manholedown,/obj/machinery/light/small{dir = 4; pixel_x = -16},/turf/open/floor/plating/vampcanal,/area/vtm/pacificheights)
+"gb" = (/obj/effect/decal/cardboard,/obj/structure/closet/cardboard,/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"gn" = (/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"gF" = (/turf/open/floor/plating/rough,/area/vtm/interior/shop)
+"ht" = (/obj/effect/decal/trash{icon_state = "trash5"},/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"hu" = (/obj/effect/decal/pallet,/obj/item/ammo_box/vampire/arrows,/obj/item/ammo_box/vampire/c12g,/obj/item/ammo_box/vampire/c12g/buck,/obj/item/ammo_box/vampire/c44,/obj/item/ammo_box/vampire/c44/silver,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"hz" = (/obj/structure/table,/obj/lombard/blackmarket,/turf/closed/wall/vampwall/brick/low,/area/vtm/interior/shop)
+"hA" = (/obj/item/kirbyplants/random,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/shop)
+"id" = (/obj/effect/decal/graffiti,/turf/open/floor/plating/rough,/area/vtm/interior/shop)
+"ie" = (/obj/structure/closet/cardboard,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"ik" = (/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"iA" = (/obj/structure/trashbag,/obj/effect/decal/trash{icon_state = "trash8"},/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"iD" = (/turf/closed/wall/vampwall/painted,/area/vtm/interior/shop)
+"iH" = (/turf/open/floor/plating/rough/cave,/area/vtm/pacificheights)
+"iV" = (/obj/vampire_car/track{access = "supply"; locked = 0},/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"je" = (/obj/machinery/button/door{id = "debughouse"; pixel_y = 30},/obj/effect/turf_decal/stripes/corner{dir = 4},/obj/effect/turf_decal/stripes/corner{dir = 1},/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"jf" = (/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plating/vampdirt,/area/vtm/supply)
+"jt" = (/obj/effect/decal/litter,/obj/item/vtm_artifact/rand,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"jW" = (/obj/effect/decal/wallpaper/paper/stripe,/turf/closed/wall/vampwall/market,/area/vtm/interior/shop)
+"kc" = (/obj/structure/roadblock{dir = 8},/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"ki" = (/obj/order{pixel_y = 32},/obj/order3{pixel_x = -10; pixel_y = 12},/obj/order4{pixel_y = 12; pixel_x = 6},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"kn" = (/obj/structure/table,/obj/item/molotov,/obj/item/molotov,/obj/item/molotov,/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"kS" = (/turf/closed/wall/vampwall/market,/area/vtm/interior/shop)
+"lk" = (/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"lN" = (/turf/open/floor/plating/sidewalk/poor,/area/vtm/supply)
+"lP" = (/obj/effect/decal/trash{icon_state = "trash5"},/obj/item/vtm_artifact/rand,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"lU" = (/obj/effect/decal/pallet,/obj/machinery/light{dir = 8},/turf/open/floor/plating/vampdirt,/area/vtm/supply)
+"mb" = (/obj/effect/turf_decal/stripes/corner{dir = 4},/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"mj" = (/obj/structure/vampdoor/anarch{dir = 4},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"mm" = (/obj/structure/table/reinforced,/obj/machinery/mineral/equipment_vendor/restricted/police,/turf/closed/wall/vampwall/brick/low,/area/vtm/interior/shop)
+"mw" = (/obj/manholeup,/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"mW" = (/obj/item/storage/box/syringes,/obj/item/storage/box/masks,/obj/item/storage/box/bodybags,/obj/item/storage/box/medipens,/obj/structure/closet,/obj/machinery/light{pixel_y = 32},/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"nh" = (/obj/weapon_showcase,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/shop)
+"nm" = (/obj/effect/decal/pallet,/obj/item/ammo_box/vampire/c9mm/silver,/obj/item/ammo_box/vampire/c9mm/moonclip,/obj/item/ammo_box/vampire/c9mm,/obj/item/ammo_box/vampire/c45acp/silver,/obj/item/ammo_box/vampire/c45acp,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"nA" = (/obj/structure/trashbag,/obj/effect/decal/cardboard,/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"nD" = (/obj/order1{pixel_y = 12; pixel_x = -10},/obj/order2{pixel_y = 12; pixel_x = 6},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"nY" = (/turf/open/floor/plating/vampcanal,/area/vtm/pacificheights)
+"of" = (/obj/item/storage/firstaid/regular,/obj/item/storage/firstaid/regular,/obj/item/storage/firstaid/regular,/obj/structure/table,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"ok" = (/obj/effect/decal/litter,/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"oK" = (/turf/open/floor/plating/vampbeach,/area/shuttle/arrival)
+"oM" = (/turf/open/floor/plating/sidewalk,/area/vtm/supply)
+"oU" = (/obj/weapon_showcase,/obj/american_flag{pixel_y = 32},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/shop)
+"oW" = (/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"pf" = (/obj/effect/turf_decal/stripes/line{dir = 6},/turf/open/floor/plating/vampdirt,/area/vtm/supply)
+"pt" = (/mob/living/carbon/human/npc/shop,/turf/open/floor/plating/toilet,/area/vtm/interior/shop)
+"pz" = (/obj/vampire_car/rand{locked = 0; dir = 2},/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"pH" = (/obj/effect/decal/trash{icon_state = "trash7"},/obj/item/vtm_artifact/rand,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"qt" = (/obj/machinery/computer/cargo/express{dir = 4},/turf/open/floor/plating/sidewalk/poor,/area/vtm/supply)
+"qN" = (/obj/structure/chair/comfy/shuttle,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"qR" = (/obj/structure/closet/secure_closet/freezer,/obj/machinery/light{dir = 8},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"qT" = (/turf/open/floor/plating/vampdirt,/area/vtm/supply)
+"ri" = (/obj/structure/table/wood,/turf/closed/wall/vampwall/painted/low,/area/vtm/interior/shop)
+"rB" = (/obj/matrix,/turf/open/floor/plating/asphalt,/area/vtm)
+"rI" = (/obj/structure/table/wood,/obj/item/vtm_artifact/saulocept,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"rK" = (/obj/item/storage/pill_bottle/ephedrine,/obj/item/storage/pill_bottle/ephedrine,/obj/item/storage/pill_bottle/ephedrine,/obj/structure/closet/crate/medical,/obj/item/storage/pill_bottle/epinephrine,/obj/item/storage/pill_bottle/epinephrine,/obj/item/storage/pill_bottle/iron,/obj/item/storage/pill_bottle/iron,/obj/item/storage/pill_bottle/iron,/obj/item/storage/pill_bottle/epinephrine,/obj/item/storage/pill_bottle/mutadone,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"rL" = (/obj/structure/vampfence{dir = 8},/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"rN" = (/obj/structure/stairs/north,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"rW" = (/obj/effect/decal/crosswalk,/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"sb" = (/obj/structure/vampdoor/clinic,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"se" = (/turf/closed/wall/vampwall,/area/vtm)
+"sg" = (/obj/structure/table/reinforced,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"sm" = (/obj/effect/decal/bordur{dir = 1},/obj/structure/roadsign/stop,/turf/open/floor/plating/sidewalk/poor,/area/vtm/pacificheights)
+"sw" = (/obj/machinery/light{dir = 4},/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"sy" = (/mob/living/carbon/human/npc/shop,/obj/effect/decal/trash{icon_state = "trash7"},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"sX" = (/obj/bubway{pixel_y = 40},/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"tj" = (/obj/effect/turf_decal/stripes/line{dir = 5},/turf/open/floor/plating/vampdirt,/area/vtm/supply)
+"tu" = (/obj/vampire_car/track/volkswagen{dir = 4; locked = 0},/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"tF" = (/obj/vampire_car/retro/rand{locked = 0},/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"uC" = (/obj/structure/table,/obj/item/ammo_box/magazine/glock45acp,/obj/item/ammo_box/magazine/glock45acp,/obj/item/ammo_box/magazine/glock45acp,/obj/item/gun/ballistic/automatic/vampire/glock21,/obj/machinery/light{dir = 8},/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"uJ" = (/obj/machinery/button/door{id = "debughouse"; pixel_y = 30},/obj/effect/turf_decal/stripes/corner{dir = 1},/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"uL" = (/obj/structure/rack/bubway/horizontal,/obj/underplate/stuff{pixel_y = 8},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"vm" = (/obj/bacotell{pixel_x = 1; pixel_y = 40},/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"vz" = (/obj/structure/vampdoor{dir = 4},/turf/open/floor/plating/vampcanal,/area/vtm/pacificheights)
+"vJ" = (/obj/machinery/light{pixel_y = 32},/turf/open/floor/plating/vampcanal,/area/vtm/pacificheights)
+"wb" = (/obj/structure/table,/obj/item/storage/firstaid/brute,/obj/item/storage/firstaid/brute,/obj/item/storage/firstaid/brute,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"wm" = (/obj/machinery/light{dir = 8},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/shop)
+"wD" = (/obj/effect/landmark/start{jobspawn_override = 1; delete_after_roundstart = 0},/turf/open/floor/plating/vampbeach,/area/shuttle/arrival)
+"wO" = (/obj/effect/decal/trash,/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"wW" = (/obj/effect/landmark/observer_start,/turf/open/floor/plating/vampbeach,/area/shuttle/arrival)
+"xC" = (/obj/effect/decal/litter,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"xE" = (/obj/structure/table,/obj/item/storage/firstaid/advanced,/obj/item/storage/firstaid/advanced,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"xH" = (/obj/structure/table,/obj/lombard,/turf/closed/wall/vampwall/brick/low,/area/vtm/interior/shop)
+"xU" = (/obj/structure/table,/obj/item/ammo_box/magazine/vampthompson,/obj/item/ammo_box/magazine/vampthompson,/obj/item/ammo_box/magazine/vampthompson,/obj/item/gun/ballistic/automatic/vampire/thompson,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"xZ" = (/obj/machinery/light/floor,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"yk" = (/turf/closed/wall/vampwall/brick,/area/vtm/supply)
+"yr" = (/obj/structure/table,/obj/item/storage/firstaid/medical,/obj/item/storage/firstaid/medical,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"yt" = (/turf/open/floor/plating/parquetry/old,/area/vtm/interior/shop)
+"yy" = (/obj/structure/bloodextractor,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"yD" = (/obj/structure/table,/obj/item/storage/firstaid/fire,/obj/item/storage/firstaid/fire,/obj/item/storage/firstaid/fire,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"yE" = (/obj/effect/gibspawner/human,/obj/machinery/light{dir = 8},/turf/open/floor/plating/toilet,/area/vtm/interior/shop)
+"yK" = (/obj/structure/vampdoor,/turf/open/floor/plating/rough/cave,/area/vtm/pacificheights)
+"zc" = (/obj/structure/vampdoor,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"zk" = (/obj/vampire_car/track/ambulance{dir = 4; locked = 0},/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"zv" = (/mob/living/carbon/human/npc/shop,/obj/machinery/light{pixel_y = 32},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"zx" = (/turf/closed/wall/vampwall/market/low/window,/area/vtm/interior/shop)
+"zT" = (/obj/structure/chair/greyscale,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"zX" = (/obj/effect/decal/wallpaper/red,/turf/closed/wall/vampwall/market,/area/vtm/interior/shop)
+"Ao" = (/obj/structure/vampdoor{dir = 8},/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"AE" = (/obj/structure/bookcase/random/adult,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"AX" = (/obj/structure/table/wood,/obj/item/vtm_artifact/weekapaug_thistle,/obj/machinery/light{pixel_y = 32},/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"Bf" = (/obj/structure/trashbag,/obj/effect/decal/trash{icon_state = "trash7"},/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"Bq" = (/obj/effect/decal/bordur,/obj/structure/lamppost/one,/turf/open/floor/plating/sidewalk/poor,/area/vtm/pacificheights)
+"Bt" = (/obj/structure/barrels/rand,/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"BH" = (/obj/structure/table/wood,/obj/item/vtm_artifact/key_of_alamut,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"BL" = (/mob/living/carbon/human/npc/shop,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"BQ" = (/obj/structure/closet/crate/bin,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"BX" = (/obj/structure/table,/turf/closed/wall/vampwall/market/low,/area/vtm/interior/shop)
+"Ca" = (/obj/structure/table,/obj/item/gun/ballistic/automatic/vampire/sniper,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Cg" = (/obj/structure/table/wood,/obj/machinery/mineral/equipment_vendor/fastfood/library,/turf/closed/wall/vampwall/painted/low,/area/vtm/interior/shop)
+"Cr" = (/obj/structure/vampdoor/police/chief,/turf/open/floor/plating/toilet,/area/vtm/interior/shop)
+"Cz" = (/obj/effect/decal/asphaltline{dir = 8},/obj/structure/roadblock{dir = 8},/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"Db" = (/obj/machinery/light{dir = 8},/turf/open/floor/plating/vampdirt,/area/vtm/supply)
+"Df" = (/obj/structure/closet/crate/freezer/blood{name = "vampire blood freezer"},/obj/item/drinkable_bloodpack/vitae,/obj/item/drinkable_bloodpack/vitae,/obj/item/drinkable_bloodpack/vitae,/obj/item/drinkable_bloodpack/vitae,/obj/item/drinkable_bloodpack/vitae,/obj/item/drinkable_bloodpack/vitae,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Dh" = (/obj/effect/decal/bordur,/obj/vampire_car/rand/anarch{dir = 2; locked = 0},/turf/open/floor/plating/sidewalk/poor,/area/vtm/pacificheights)
+"Dp" = (/obj/structure/table,/obj/item/storage/firstaid/o2,/obj/item/storage/firstaid/o2,/obj/item/storage/firstaid/o2,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Dw" = (/obj/order1{pixel_y = 12},/obj/order2{pixel_y = 12},/obj/order3{pixel_x = 16; pixel_y = 12},/obj/order1{pixel_x = -16; pixel_y = 12},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"DF" = (/obj/gummaguts{pixel_x = 16; pixel_y = 38},/obj/structure/closet/secure_closet/freezer,/turf/open/floor/plating/toilet,/area/vtm/interior/shop)
+"DG" = (/obj/machinery/mineral/equipment_vendor/fastfood/gas,/obj/structure/table,/turf/closed/wall/vampwall/brick/low,/area/vtm/interior/shop)
+"DJ" = (/obj/item/vamp/keys/anarch,/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"DM" = (/turf/open/floor/plating/vampdirt/rails,/area/vtm/supply)
+"DN" = (/obj/structure/clothingrack/rand{dir = 8},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"DV" = (/obj/structure/table,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"Et" = (/obj/structure/table/optable,/obj/machinery/defibrillator_mount/loaded{pixel_y = 30},/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Ev" = (/obj/machinery/door/poddoor/shutters/preopen{id = "debughouse"},/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"EF" = (/obj/effect/turf_decal/stripes/line{dir = 9},/turf/open/floor/plating/vampdirt,/area/vtm/supply)
+"EN" = (/obj/effect/landmark/error,/turf/open/floor/plating/rough/cave,/area/vtm/pacificheights)
+"ET" = (/obj/structure/vampdoor/camarilla{dir = 4},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"Fg" = (/turf/closed/wall/vampwall/brick,/area/vtm/interior/shop)
+"Fs" = (/obj/effect/decal/bordur{dir = 1},/turf/open/floor/plating/sidewalk/poor,/area/vtm/pacificheights)
+"FB" = (/obj/effect/decal/stock{icon_state = "stock"; dir = 1},/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"FG" = (/obj/effect/decal/cardboard,/obj/effect/decal/graffiti/large,/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"FO" = (/obj/structure/table,/turf/open/floor/plating/sidewalk/poor,/area/vtm/supply)
+"Gm" = (/obj/structure/vampdoor/prison,/turf/open/floor/plating/rough,/area/vtm/interior/shop)
+"Gt" = (/obj/structure/table,/obj/item/storage/firstaid/toxin,/obj/item/storage/firstaid/toxin,/obj/item/storage/firstaid/toxin,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Gu" = (/turf/closed/wall/vampwall/brick/low/window,/area/vtm/interior/shop)
+"Gw" = (/obj/machinery/light{dir = 8},/turf/open/floor/plating/rough/cave,/area/vtm/pacificheights)
+"Gz" = (/mob/living/carbon/human/npc/shop,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/shop)
+"GB" = (/obj/structure/barrels/rand,/turf/open/floor/plating/vampdirt,/area/vtm/supply)
+"GF" = (/turf/open/floor/plating/sidewalk,/area/vtm)
+"GH" = (/obj/structure/table/reinforced,/turf/closed/wall/vampwall/brick/low,/area/vtm/interior/shop)
+"GM" = (/obj/structure/table,/obj/machinery/microwave{desc = "Cooks and boils stuff, somehow."; pixel_x = -3; pixel_y = 5},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"GO" = (/obj/structure/table,/obj/machinery/button/door{id = "debughouse"; pixel_y = 6},/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"GS" = (/obj/structure/vampdoor/police,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"GX" = (/obj/structure/barrels/rand,/obj/machinery/light{pixel_y = 32},/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"Hg" = (/obj/item/paper{info = "Error room!!"},/turf/open/floor/plating/rough/cave,/area/vtm/pacificheights)
+"Hh" = (/obj/vampire_car/rand{locked = 0},/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"Hp" = (/obj/effect/decal/wallpaper,/turf/closed/wall/vampwall/brick,/area/vtm/interior/shop)
+"HJ" = (/obj/effect/decal/stock,/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"Ig" = (/obj/effect/decal/bordur,/obj/structure/roadblock,/turf/open/floor/plating/sidewalk/poor,/area/vtm/pacificheights)
+"Ip" = (/obj/structure/table,/obj/machinery/mineral/equipment_vendor/fastfood/illegal,/turf/closed/wall/vampwall/brick/low,/area/vtm/interior/shop)
+"Is" = (/obj/effect/turf_decal/stripes/line{dir = 8},/obj/item/supplypod_beacon{anchored = 1},/turf/open/floor/plating/vampdirt/rails,/area/vtm/supply)
+"IO" = (/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plating/vampdirt/rails,/area/vtm/supply)
+"Jo" = (/obj/structure/closet/crate/freezer/blood,/obj/item/drinkable_bloodpack,/obj/item/drinkable_bloodpack,/obj/item/drinkable_bloodpack,/obj/item/drinkable_bloodpack,/obj/item/drinkable_bloodpack,/obj/item/drinkable_bloodpack,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Jv" = (/obj/item/vtm_artifact/rand,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"JG" = (/obj/structure/table,/obj/item/ammo_box/magazine/glock9mm,/obj/item/ammo_box/magazine/glock9mm,/obj/item/ammo_box/magazine/glock9mm,/obj/item/gun/ballistic/automatic/vampire/glock19,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"JJ" = (/obj/structure/vampdoor,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"JP" = (/obj/structure/trashbag,/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"Kt" = (/obj/structure/table/wood,/obj/machinery/mineral/equipment_vendor/fastfood/pharmacy,/turf/closed/wall/vampwall/painted/low,/area/vtm/interior/shop)
+"KB" = (/obj/structure/table,/obj/item/ammo_box/magazine/vamp545,/obj/item/ammo_box/magazine/vamp545,/obj/item/ammo_box/magazine/vamp545,/obj/item/gun/ballistic/automatic/vampire/ak74,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Lk" = (/obj/effect/decal/trash{icon_state = "trash7"},/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"Lw" = (/obj/structure/table,/obj/item/gas_can,/obj/item/gas_can,/obj/item/gas_can,/obj/item/gas_can,/obj/item/gas_can,/obj/item/gas_can,/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"Ly" = (/obj/vampire_car/taxi{dir = 4; locked = 0},/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"LR" = (/obj/structure/cargo_put,/turf/open/floor/plating/vampdirt,/area/vtm/supply)
+"LW" = (/obj/structure/table,/obj/item/restraints/handcuffs,/obj/item/clothing/head/vampire/police,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"Mv" = (/obj/structure/table/wood,/obj/item/vtm_artifact/heart_of_eliza,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"My" = (/obj/machinery/mineral/equipment_vendor/fastfood/costumes,/obj/structure/table,/turf/closed/wall/vampwall/brick/low,/area/vtm/interior/shop)
+"MJ" = (/obj/structure/table,/obj/item/blood_hunt,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"MS" = (/turf/closed/wall/vampwall/rich/old,/area/vtm/pacificheights)
+"Nw" = (/obj/machinery/light{pixel_y = 32},/turf/open/floor/plating/rough,/area/vtm/interior/shop)
+"Nx" = (/obj/structure/railing,/turf/open/floor/plating/vampcanal,/area/vtm/pacificheights)
+"NI" = (/obj/structure/rack/tacobell/horizontal,/obj/machinery/mineral/equipment_vendor/fastfood/bacotell,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"NO" = (/obj/structure/table/wood/fancy/red,/obj/item/storage/bag/books,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"NP" = (/obj/structure/table,/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"NR" = (/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"Od" = (/obj/structure/closet/crate/freezer/blood{name = "blue blood freezer"},/obj/item/drinkable_bloodpack/elite,/obj/item/drinkable_bloodpack/elite,/obj/item/drinkable_bloodpack/elite,/obj/item/drinkable_bloodpack/elite,/obj/item/drinkable_bloodpack/elite,/obj/item/drinkable_bloodpack/elite,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Of" = (/obj/structure/table,/obj/item/gun/ballistic/shotgun/toy/crossbow/vampire,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Oi" = (/turf/closed/wall/vampwall/market/low/window/reinforced,/area/vtm/interior/shop)
+"On" = (/mob/living/carbon/human/npc/shop,/turf/open/floor/plating/rough,/area/vtm/interior/shop)
+"OB" = (/obj/vampire_car/police{locked = 0},/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"OD" = (/obj/structure/table,/obj/item/ammo_box/magazine/vamp9mm,/obj/item/ammo_box/magazine/vamp9mm,/obj/item/ammo_box/magazine/vamp9mm,/obj/item/gun/ballistic/automatic/vampire/uzi,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"OH" = (/obj/effect/decal/bordur,/obj/item/vamp/keys/police,/turf/open/floor/plating/sidewalk/poor,/area/vtm/pacificheights)
+"OL" = (/obj/machinery/light{dir = 8},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"OZ" = (/obj/structure/table,/obj/item/ammo_box/magazine/vampaug,/obj/item/ammo_box/magazine/vampaug,/obj/item/ammo_box/magazine/vampaug,/obj/item/gun/ballistic/automatic/vampire/aug,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Pg" = (/obj/structure/table/reinforced,/obj/machinery/mineral/equipment_vendor/fastfood/america,/obj/structure/window/reinforced/indestructable{dir = 1},/turf/closed/wall/vampwall/market/low,/area/vtm/interior/shop)
+"Ps" = (/obj/structure/table/wood,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"Pu" = (/obj/machinery/computer/operating,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Py" = (/obj/machinery/light{dir = 4},/turf/open/floor/plating/rough/cave,/area/vtm/pacificheights)
+"PO" = (/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"PX" = (/obj/structure/table/reinforced,/obj/item/arcane_tome,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"Qv" = (/obj/machinery/mineral/equipment_vendor/fastfood/smoking,/obj/structure/table,/turf/closed/wall/vampwall/brick/low,/area/vtm/interior/shop)
+"QW" = (/obj/machinery/light{pixel_y = 32},/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"Re" = (/obj/effect/turf_decal/stripes/line,/turf/open/floor/plating/vampdirt,/area/vtm/supply)
+"Ri" = (/obj/machinery/mineral/equipment_vendor/fastfood/products,/obj/structure/table,/turf/closed/wall/vampwall/brick/low,/area/vtm/interior/shop)
+"Rj" = (/obj/structure/table/wood,/obj/item/vtm_artifact/tarulfang,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"Ro" = (/obj/structure/table,/obj/machinery/mineral/equipment_vendor/fastfood/gummaguts,/turf/closed/wall/vampwall/market/low,/area/vtm/interior/shop)
+"RG" = (/obj/structure/vampdoor/prince{dir = 4},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"Sg" = (/obj/structure/chair/office{dir = 8},/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Sp" = (/obj/structure/table,/obj/item/stack/medical/bone_gel,/obj/item/clothing/gloves/vampire/latex,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Sv" = (/obj/effect/decal/bordur,/obj/structure/barrels/rand,/turf/open/floor/plating/sidewalk/poor,/area/vtm/pacificheights)
+"Sw" = (/obj/machinery/light{pixel_y = 32},/obj/effect/decal/trash,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"SF" = (/obj/structure/table/wood,/obj/item/vtm_artifact/bloodstar,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"SG" = (/obj/effect/decal/cleanable/blood/splatter,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"SY" = (/obj/structure/table,/obj/vampire_computer/prince,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Tb" = (/obj/machinery/iv_drip,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Tq" = (/obj/effect/gibspawner/human,/turf/open/floor/plating/toilet,/area/vtm/interior/shop)
+"TL" = (/obj/structure/table,/obj/item/ammo_box/magazine/m44,/obj/item/ammo_box/magazine/m44,/obj/item/ammo_box/magazine/m44,/obj/item/gun/ballistic/automatic/vampire/deagle,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"TO" = (/obj/machinery/recycler/deathtrap,/turf/open/floor/plating/toilet,/area/vtm/interior/shop)
+"TY" = (/obj/structure/foodrack{dir = 4},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"Uc" = (/obj/structure/table/wood,/obj/item/vtm_artifact/daimonori,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"Uu" = (/obj/structure/table,/obj/item/ammo_box/magazine/vamp9mp5,/obj/item/ammo_box/magazine/vamp9mp5,/obj/item/ammo_box/magazine/vamp9mp5,/obj/item/gun/ballistic/automatic/vampire/mp5,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Uw" = (/obj/structure/table,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/obj/item/stack/dollar/hundred,/turf/open/floor/plating/sidewalk/poor,/area/vtm/supply)
+"UJ" = (/obj/structure/trashcan,/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"UK" = (/obj/machinery/light{dir = 4},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/shop)
+"UL" = (/obj/structure/vampdoor/shop,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"UQ" = (/obj/structure/vampdoor/salubri{dir = 4},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/shop)
+"Va" = (/obj/machinery/mineral/equipment_vendor/restricted/hospital,/obj/structure/table/reinforced,/turf/closed/wall/vampwall/brick/low,/area/vtm/interior/shop)
+"Vg" = (/obj/structure/table,/obj/item/melee/vampirearms/tire,/obj/item/melee/vampirearms/tire,/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"Vu" = (/obj/structure/closet/cardboard,/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"Vv" = (/obj/order4{pixel_y = 12},/obj/machinery/griddle,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"VK" = (/obj/structure/cargo_take,/turf/open/floor/plating/vampdirt,/area/vtm/supply)
+"VP" = (/obj/machinery/light{pixel_y = 32},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"VQ" = (/obj/effect/decal/asphaltline{dir = 8},/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"Wl" = (/obj/structure/table,/obj/item/ammo_box/magazine/vamp556,/obj/item/ammo_box/magazine/vamp556,/obj/item/ammo_box/magazine/vamp556,/obj/item/gun/ballistic/automatic/vampire/ar15,/obj/machinery/light{dir = 8},/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Wn" = (/obj/structure/roadblock{dir = 4},/turf/open/floor/plating/vampdirt,/area/vtm/supply)
+"Ws" = (/obj/structure/table,/obj/vampire_computer,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Wz" = (/obj/structure/sink{dir = 4; pixel_x = -12; pixel_y = 2},/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Xf" = (/obj/structure/table,/obj/item/ammo_box/magazine/m50,/obj/item/ammo_box/magazine/m50,/obj/item/ammo_box/magazine/m50,/obj/item/gun/ballistic/automatic/vampire/deagle/c50,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"Xr" = (/obj/machinery/bookbinder,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"Xz" = (/obj/effect/decal/pallet,/obj/item/ammo_box/vampire/c556/silver,/obj/item/ammo_box/vampire/c556/incendiary,/obj/item/ammo_box/vampire/c556,/obj/item/ammo_box/vampire/c545,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
+"XE" = (/obj/structure/fence/door,/turf/open/floor/plating/vampbeach,/area/vtm/pacificheights)
+"Yr" = (/obj/effect/decal/trash,/obj/item/vtm_artifact/rand,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"Ys" = (/turf/open/openspace,/area/vtm/pacificheights)
+"Yz" = (/obj/structure/chair/office{dir = 8},/turf/open/floor/plating/sidewalk/poor,/area/vtm/supply)
+"YA" = (/obj/item/gas_can{anchored = 1; pixel_y = 16},/obj/item/gas_can{anchored = 1},/obj/structure/rack,/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+"YC" = (/mob/living/simple_animal/pet/cat/vampire{bloodpool = 10; health = 228; maxbloodpool = 10; name = "Cain"},/obj/item/vtm_artifact/rand,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"YF" = (/obj/item/clothing/head/cone,/turf/open/floor/plating/vampdirt,/area/vtm/supply)
+"YJ" = (/obj/structure/table,/turf/closed/wall/vampwall/brick/low,/area/vtm/interior/shop)
+"YL" = (/obj/effect/decal/bordur{dir = 1},/obj/structure/roadsign/speedlimit,/turf/open/floor/plating/sidewalk/poor,/area/vtm/pacificheights)
+"YW" = (/obj/structure/table/wood,/obj/item/vtm_artifact/odious_chalice,/turf/open/floor/plating/parquetry/old,/area/vtm/pacificheights)
+"Zw" = (/obj/structure/table,/obj/item/vampire_flamethrower,/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
+"ZT" = (/obj/structure/vampdoor/graveyard{dir = 4; locked = 0},/turf/open/floor/plating/concrete,/area/vtm/interior/shop)
+
+(1,1,1) = {"
+MSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSBtUJiAnAhtJPkSzXzXzXFgHpHpHpFgjWjWjWjWjWjWkSNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRse
+MSSFSwYWrIRjAXsgMSSpEtPumWPODpwbyDGteGyyqNyyMSLkfnokNRNRNRZToWnDkiRGDwVvGMFgoUnhoUytythAkSNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRse
+MSUcJvjtpHYCJvPXMSbLPOTbPOPOPOPOPOcQPOPOSGyyMSXEiDiDiDiDXEkSqRBLoWFgOLBLDVFgwmGzytytytytUQNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRse
+MSbsYrlPJvjtJvgnMSWzPOPOPOPOPOPOPOPOPOPOPOPOAoNRiDAEAEboNRkSkSNIciFguLelFgFgOiPgOikSytytkSNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRse
+MSPschMvBHbEgngnMSbUJoOdDfPOPOrKofyrPOPOPOPOMSNRmjoWBLCgNRvmNRNRNRNRNRNRsXNRNRNRNROinhUKkSNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRse
+MSMSMSMSMSMSzczcMSeReReRMSPOPObCMSxEPOPOMSMSMSNRiDNOXriDNRNRNRNRNRNRNRNRNRNRNRNRNROinhytkSNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRse
+semwFGNRMSKBPOPOUuPOPOPOegPOPOPOPOPOPOPOMSPOMSNREToWoWriNRNRNRNRNRNRNRNRNRNRNRNRNRkSkSkSkSNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRse
+seokNRokMSWlPOPOCaPOPOPOPOPOPOPOPOPOPOswMSMSMSNRiDOLBLKtNRNRNRFgRiYJFgDGYJFgNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRse
+seNRwOgbMSOZPOPOxUPOPOPOPOPOPOPOPOPOPOPOrNrNMSNRiDiDiDiDNRNRNRQvBLxCVPsyYAMyNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRse
+seNRNRBfMSTLPOPOODPOPOPOPOPOPOPOPOPOPOPOPOPOAoNRNRNRNRNRNRNRNRYJieTYoWeJBLbaNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRse
+seNRNRUJMSXfPOPOOfPOPOPOPOPOxZPOPOPOPOPOzTzTMSNRFgGmFgFgNRNRNRFgULFgFgDNDNGuNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRse
+seNRNRUJMSJGPOPOhuPOPOPOPOPOPOPOPOPOPOMJWsSYMSBtFggFNwYJNRNRNRVaBLdAkSkSkSkSNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRse
+sefnNRJPMSuCPOPOPOPOPOPOPOPOPOPOPOPOPOGOSgswMSBtFggFOnIpNRNRNRGHoWoWkSDFTqBXNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRse
+seokNRJPMSavPOnmXzPOPOPOPOPOPOPOPOPOPOPOPOBQMSrLFggFgFFgNRNRNRFgFgsbkSyEptRoNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRse
+serLXErLMSMSJJMSMSEvEvEvMSEvEvEvMSEvEvEvMSMSMSUJFgidOnxHNRNRNRmmzvoWkSTqTOzxNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRse
+seVuNRNRBtGXNRNRmblklklkjelklklkjelklklkuJQWNRNRFggFgFhzNRNRNRGHoWLWkSCrkSkSNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRse
+seVuNRNRNRNRNRNRNRNRoKoKoKoKwWoKoKoKoKNRNRNRNRNRFgFgFgFgNRNRNRFgGSFgFgeeNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRse
+seseNRNRNRNRNRNRNRNRwDwDwDwDwDwDwDwDwDNRNRNRNRNRapapapapNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRsese
+GFseNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRseGF
+seseSvcjBqcjcjcjcjcjbpcjBqcjcjcjcjcjcjcjcjBqcjcjcjcjOHcjcjcjBqcjcTcjDhcjcjcjcjBqcjcjcjcjcjcjcjcjBqcjcjbpcjcjcjcjcjBqcjIgcjcjsese
+rBrBikikHhikikiVikFBikrWtFikikikikikikikikikikikikikOBikikikikikDJikenikikFBikikikikikikikikikikikikikikrWikikFBikikikikkcikrBrB
+rBrBVQVQVQVQVQVQVQVQVQrWVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQrWVQVQVQVQVQVQVQCzVQrBrB
+rBrBikikikikzkikikikikrWikikikikikikikHJiktuikikLyikikikikikikikikikikikikikikikikikikikikikHJikikikikikrWikikikikikikikkcikrBrB
+seseFssmFsFsFsfdFsFsFsFsFsFsYLFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFsFssmFssese
+GFseNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRykykykykLRqTVKqtYzlNlNqTqTqTqTqTqTqTqTqTqTqTqTqTqTqTqTqTqTqTqTqTqT
+seseNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRykoMoMykLRqTVKFOUwUwlNqTqTYFqTqTqTqTqTqTYFqTqTqTqTqTqTqTqTqTqTqTqT
+seNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRykoMoMyklUqTqTqTqTqTqTqTqTWnEFjfjfjfjftjqTqTqTqTqTqTqTqTqTqTqTqTqT
+seNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRykoMoMykDMDMDMffDMDMDMDMDMDMIsDMDMDMDMIODMDMDMDMDMDMDMDMDMDMDMDMDM
+seNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRykoMoMykqTfiGBqTGBGBqTqTqTWnbDReReReRepfqTqTqTqTqTqTqTqTqTqTqTqTqT
+seNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRykoMoMykDbqTqTqTqTqTqTqTqTqTqTqTqTqTqTqTqTqTfifiqTqTqTqTqTqTqTqTGB
+seNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRykoMoMykDMDMffDMDMDMffDMDMDMffDMDMDMDMDMDMDMDMDMffDMDMDMffDMDMDMDM
+seNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRykoMoMykqTGBfifiGBfiqTqTqTqTGBqTGBqTfiqTqTqTqTqTqTqTfiGBGBGBqTqTqT
+"}
+(1,1,2) = {"
+MSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSikikikikikikikikikikikikikikikikikMSeQeQMSikikikikikikikikikikikikikikikikikikikik
+MSiHiHiHMSeQeQeQeQeQeQeQeQeQeQeQeQeQeQeQeQeQMSikikikikikikikikikikikikikikikikikMSeQeQMSikikikikikikikikikikikikikikikikikikikik
+MSGwENPyMSeQeQeQeQeQeQeQeQeQeQeQeQeQeQeQeQeQMSikikikikikikikikikikikikikikikikikMSMSMSMSikikikikikikikikikikikikikikikikikikikik
+MSiHHgbhMSeQeQeQeQeQeQeQeQeQeQeQeQeQeQeQeQeQMSNPikikikikikMSMSMSMSMSMSMSikikikikikikikikikikikMSMSMSMSMSMSMSMSMSMSMSMSMSMSikikik
+MSiHiHiHMSeQeQeQeQeQeQeQeQeQeQeQeQeQeQeQeQeQMSLwikikikikMSMSeQeQeQeQeQMSMSikikikikikikikikikikMSeQeQeQeQeQeQeQeQeQeQeQeQMSikikik
+MSMSMSyKMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSMSVgikikikikMSeQeQeQeQeQeQeQMSikikikikikikikikikikMSeQeQeQeQeQeQeQeQeQeQeQeQMSikikik
+MSfSnYnYvznYnYvJnYnYnYnYnYvJnYnYnYnYnYvJnYnYvzikikikikikMSeQeQeQeQeQeQeQMSikikikMSMSMSMSikikikMSeQeQeQeQeQeQeQeQeQeQeQeQMSikikik
+MSYsYsYsMSNxNxNxNxNxNxNxNxNxNxNxNxNxNxNxnYnYvzikikikikikMSeQeQeQeQeQeQeQMSikikikMSeQeQMSikikikMSeQeQeQeQeQeQeQeQeQeQeQeQMSikikik
+MSYsYsYsMSYsYsYsYsYsYsYsYsYsYsYsYsYsYsYsYsYsMSknikikikikMSeQeQeQeQeQeQeQMSikikikMSeQeQMSikikikMSeQeQeQeQeQeQeQeQeQeQeQeQMSikikik
+MSYsYsYsMSYsYsYsYsYsYsYsYsYsYsYsYsYsYsYsYsYsMSZwpzikpzikMSeQeQeQeQeQeQeQMSikikikMSeQeQMSikikikMSeQeQeQeQeQeQeQeQeQeQeQeQMSikikik
+MSYsYsYsMSYsYsYsYsYsYsYsYsYsYsYsYsYsYsYsYsYsMSNPikikikikMSeQeQeQMSMSMSMSMSikikikMSeQeQMSikikikMSeQeQeQeQeQeQeQeQeQeQeQeQMSikikik
+MSYsYsYsMSYsYsYsYsYsYsYsYsYsYsYsYsYsYsYsYsYsMSikikikikikMSeQeQeQMSikikikikikikikMSeQeQMSikikikMSeQMSMSMSMSMSMSMSMSMSMSMSMSikikik
+MSYsYsYsMSYsYsYsYsYsYsYsYsYsYsYsYsYsYsYsYsYsMSikikikikikMSeQeQeQMSikikikikikikikMSeQeQMSikikikMSeQMSikikikikikikikikikikikikikik
+MSYsYsYsMSYsYsYsYsYsYsYsYsYsYsYsYsYsYsYsYsYsMSikikikikikMSeQeQeQMSikikikikikikikMSeQeQMSikikikMSeQMSikikikikikikikikikikikikikik
+MSMSMSMSMSMSeReRMSMSMSMSeReRMSMSMSMSeReRMSMSMSikikikikikMSMSMSMSMSikikikikikikikMSeQeQMSikikikMSeQMSikikikikikikikikikikikikikik
+ikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikMSeQeQMSikikikMSeQMSikikikMSMSMSMSMSikikikikikik
+ikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikMSeQeQMSikikikMSeQMSikikikMSeQeQeQMSikikikikikik
+ikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikMSeQeQMSikikikMSMSMSikikikMSeQeQeQMSikikikikikik
+ikikikikikikikikikikikikikikMSMSMSMSikikikMSMSMSMSMSMSMSikikikMSMSMSMSMSMSMSMSMSMSeQeQMSikikikikikikikikikMSeQeQeQMSikikikMSMSMS
+ikikikikikikikikikikikikikikMSeQeQMSikikikMSeQeQeQeQeQMSikikikMSeQeQeQeQeQeQeQeQeQeQeQMSikikikikikikikikikMSeQeQeQMSikikikMSeQeQ
+ikikikikikikikikikikikikikikMSeQeQMSikikikMSeQeQeQeQeQMSikikikMSeQeQeQeQeQeQeQeQeQeQeQMSikikikikikikikikikMSeQeQeQMSikikikMSeQeQ
+ikikikikikikikikikikikikikikMSeQeQMSikikikMSMSMSMSeQeQMSikikikMSMSMSMSMSMSMSMSMSMSMSMSMSikikikMSMSMSMSMSMSMSeQeQeQMSikikikMSeQeQ
+ikikikikikikikikikikikikikikMSeQeQMSikikikikikikMSeQeQMSikikikikikikikikikikikikikikikikikikikMSeQeQeQeQeQeQeQeQeQMSikikikMSeQeQ
+ikikikMSMSMSMSMSMSMSMSikikikMSeQeQMSikikikikikikMSeQeQMSikikikikikikikikikikikikikikikikikikikMSeQeQeQeQeQeQeQeQeQMSikikikMSeQeQ
+ikikikMSeQeQeQeQeQeQMSikikikMSeQeQMSikikikikikikMSeQeQMSikikikikikikikikikikikikikikikikikikikMSeQeQeQeQeQeQeQeQeQMSikikikMSeQeQ
+ikikikMSMSMSMSMSeQeQMSikikikMSeQeQMSMSMSMSikikikMSeQeQMSMSMSMSMSMSMSMSMSMSikikikMSMSMSMSikikikMSeQeQeQMSMSMSMSMSMSMSikikikMSeQeQ
+ikikikikikikikMSeQeQMSikikikMSeQeQeQeQikMSikikikMSeQeQeQeQeQeQeQeQeQeQeQMSikikikMSeQeQMSikikikMSeQeQeQMSikikikikikikikikikMSeQeQ
+ikikikikikikikMSeQeQMSikikikMSeQeQeQeQikMSikikikMSeQeQeQeQeQeQeQeQeQeQeQMSikikikMSeQeQMSikikikMSeQeQeQMSikikikikikikikikikMSeQeQ
+ikikikikikikikMSMSMSMSikikikMSMSMSMSMSMSMSikikikMSMSMSMSMSMSMSMSMSMSMSMSMSikikikMSeQeQMSikikikMSeQeQeQMSikikikikikikikikikMSeQeQ
+MSMSMSMSikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikMSeQeQMSikikikMSMSMSMSMSikikikMSMSMSMSMSMSMSeQeQ
+eQeQeQMSikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikMSeQeQMSikikikikikikikikikikikMSeQeQeQeQeQeQeQeQ
+eQeQeQMSikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikikMSeQeQMSikikikikikikikikikikikMSeQeQeQeQeQeQeQeQ
+"}

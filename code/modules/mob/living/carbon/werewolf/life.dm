@@ -78,7 +78,7 @@
 							last_veil_restore = world.time
 
 				if("Black Spiral Dancers")
-					if(istype(get_area(src), /area/vtm/interior/wyrm_corrupted))
+					if(istype(get_area(src), /area/vtm/interior/endron_facility))
 						if((last_veil_restore + 50 SECONDS) <= world.time)
 							adjust_veil(1, src, TRUE)
 							last_veil_restore = world.time

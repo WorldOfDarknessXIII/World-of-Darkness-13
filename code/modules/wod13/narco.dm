@@ -85,6 +85,8 @@
 	. = ..()
 	if(!amount_of_water)
 		. += "<span class='warning'>[src] is empty!</span>"
+	else
+		. += "<span class='notice'>It has [amount_of_water]/10 unit[amount_of_water == 1 ? "" : "s"] of water left.</span>"
 
 /obj/structure/weedshit/attack_hand(mob/user, params)
 	. = ..()
