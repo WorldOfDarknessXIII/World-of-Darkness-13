@@ -1328,7 +1328,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 		var/bypass = FALSE
 		if (check_rights_for(user.client, R_ADMIN))
-			bypass = FALSE
+			bypass = TRUE
 
 		for(var/datum/job/job in sortList(SSjob.occupations, GLOBAL_PROC_REF(cmp_job_display_asc)))
 
