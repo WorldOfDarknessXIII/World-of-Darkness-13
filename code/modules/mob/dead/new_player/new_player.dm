@@ -307,7 +307,7 @@
 /mob/dead/new_player/proc/IsJobUnavailable(rank, latejoin = FALSE)
 	var/bypass = FALSE
 	if (check_rights_for(client, R_ADMIN))
-		bypass = FALSE
+		bypass = TRUE
 	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)
 		return JOB_UNAVAILABLE_GENERIC
