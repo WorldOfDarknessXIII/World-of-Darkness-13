@@ -504,7 +504,7 @@
 	if(istype(ML))
 		ML.pulled(src)
 
-/mob/living/carbon/human/CtrlClick(mob/user)
+/mob/living/CtrlClick(mob/user)
 	if(ishuman(user) && Adjacent(user) && !user.incapacitated())
 		if(world.time < user.next_move)
 			return FALSE

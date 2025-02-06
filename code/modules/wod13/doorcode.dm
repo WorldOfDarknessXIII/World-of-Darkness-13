@@ -41,7 +41,8 @@
 		"prince",
 		"clerk",
 		"archive",
-		"milleniumCommon"
+		"milleniumCommon",
+		"primogen"
 	)
 	color = "#bd3327"
 
@@ -51,7 +52,8 @@
 		"camarilla",
 		"prince",
 		"archive",
-		"milleniumCommon"
+		"milleniumCommon",
+		"primogen"
 	)
 	color = "#bd3327"
 
@@ -61,7 +63,8 @@
 		"camarilla",
 		"clerk",
 		"archive",
-		"milleniumCommon"
+		"milleniumCommon",
+		"primogen"
 	)
 	color = "#bd3327"
 
@@ -108,6 +111,15 @@
 	name = "Archive keys"
 	accesslocks = list(
 		"archive"
+	)
+
+/obj/item/vamp/keys/regent
+	name = "Very archival keys"
+	accesslocks = list(
+		"archive",
+		"milleniumCommon",
+		"primogen",
+		"camarilla"
 	)
 
 /obj/item/vamp/keys/anarch
@@ -239,7 +251,10 @@
 	name = "Really insane keys"
 	accesslocks = list(
 		"primMalkav",
-		"malkav"
+		"malkav",
+		"primogen",
+		"milleniumCommon",
+		"camarilla"
 	)
 	color = "#2c92ff"
 
@@ -265,7 +280,10 @@
 	name = "Really sexy keys"
 	accesslocks = list(
 		"primToreador",
-		"toreador"
+		"toreador",
+		"primogen",
+		"milleniumCommon",
+		"camarilla"
 	)
 	color = "#ff2fc4"
 
@@ -280,7 +298,10 @@
 	name = "Really ugly keys"
 	accesslocks = list(
 		"primNosferatu",
-		"nosferatu"
+		"nosferatu",
+		"primogen",
+		"milleniumCommon",
+		"camarilla"
 	)
 	color = "#367c31"
 
@@ -295,7 +316,10 @@
 	name = "Really punk keys"
 	accesslocks = list(
 		"primBrujah",
-		"brujah"
+		"brujah",
+		"primogen",
+		"milleniumCommon",
+		"camarilla"
 	)
 	color = "#ec8f3e"
 
@@ -312,7 +336,9 @@
 	accesslocks = list(
 		"primVentrue",
 		"ventrue",
-		"milleniumCommon"
+		"milleniumCommon",
+		"primogen",
+		"camarilla"
 	)
 	color = "#e8ff29"
 
