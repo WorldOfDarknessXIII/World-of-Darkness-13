@@ -309,10 +309,26 @@
 
 /obj/machinery/mineral/equipment_vendor/fastfood/AltClick(mob/user)
 	. = ..()
-	if(points && dispenses_dollars)
+	if(points && dispenses_dollars && !creditcard_instance.inside_shop)
 		for(var/i in 1 to points)
 			new /obj/item/stack/dollar(loc)
 		points = 0
+		
+	if(creditcard_instance.inside_shop)
+		points = 0
+		creditcard_instance.inside_shop = FALSE
+		
+		var/type = initial(creditcard_instance.type)
+		var/obj/item/vamp/creditcard/old_card = new type(loc)
+		
+		old_card.owner = creditcard_instance.owner
+		old_card.account = creditcard_instance.account
+		old_card.code = creditcard_instance.code
+		old_card.balance = creditcard_instance.balance
+		old_card.has_checked = creditcard_instance.has_checked
+		old_card.inside_shop = creditcard_instance.inside_shop
+		
+		to_chat(user, "<span class='notice'>You have removed your card from the shop!</span>")
 
 /obj/machinery/mineral/equipment_vendor/fastfood/snacks
 	name = "Snack Vendor"
