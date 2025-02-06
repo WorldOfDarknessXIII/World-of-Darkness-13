@@ -107,7 +107,7 @@
 			return
 		if(get_dist(src, my_owner) > 4)
 			return
-		if(my_owner.stat >= HARD_CRIT)
+		if(my_owner.stat >= UNCONSCIOUS)
 			return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -144,7 +144,7 @@
 			return
 		if(get_dist(src, my_owner) > 4)
 			return
-		if(my_owner.stat >= HARD_CRIT)
+		if(my_owner.stat >= UNCONSCIOUS)
 			return
 
 	switch(action)

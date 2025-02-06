@@ -285,11 +285,10 @@
 /atom/movable/screen/blood/Click()
 	if(iscarbon(usr))
 		var/mob/living/carbon/human/BD = usr
-		BD.update_blood_hud()
 		if(BD.bloodpool > 0)
-			to_chat(BD, "<span class='notice'>You've got [BD.bloodpool]/[BD.maxbloodpool] blood points.</span>")
+			to_chat(BD, "<span class='notice'>You've got [num2text(BD.bloodpool)]/[BD.maxbloodpool] blood points.</span>")
 		else
-			to_chat(BD, "<span class='warning'>You've got [BD.bloodpool]/[BD.maxbloodpool] blood points.</span>")
+			to_chat(BD, "<span class='warning'>You've got [num2text(BD.bloodpool)]/[BD.maxbloodpool] blood points.</span>")
 	..()
 
 /atom/movable/screen/drinkblood
@@ -306,7 +305,6 @@
 /atom/movable/screen/drinkblood/proc/bite()
 	if(ishuman(usr))
 		var/mob/living/carbon/human/BD = usr
-		BD.update_blood_hud()
 		if(world.time < BD.last_drinkblood_use+30)
 			return
 		if(world.time < BD.last_drinkblood_click+10)
@@ -401,10 +399,10 @@
 			if(!istype(BD.loc, /obj/structure/closet/crate/coffin))
 				to_chat(usr, "<span class='warning'>You need to be in a coffin to use that!</span>")
 				return
-		if(BD.bloodpool >= 1+plus)
+		if(BD.bloodpool >= (1+plus))
 			playsound(usr, 'code/modules/wod13/sounds/bloodhealing.ogg', 50, FALSE)
 			BD.last_bloodheal_use = world.time
-			BD.bloodpool = max(0, BD.bloodpool-(1+plus))
+			BD.adjust_blood_points(-(1 + plus))
 			icon_state = "[initial(icon_state)]-on"
 			to_chat(BD, "<span class='notice'>You use blood to heal your wounds.</span>")
 			if(BD.getBruteLoss() + BD.getBruteLoss() >= 25)
@@ -440,8 +438,7 @@
 		else
 			SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to heal your wounds.</span>")
-		BD.update_blood_hud()
-	spawn(15)
+	spawn(1.5 SECONDS)
 		icon_state = initial(icon_state)
 
 /atom/movable/screen/bloodpower
@@ -463,10 +460,10 @@
 		var/plus = 0
 		if(HAS_TRAIT(BD, TRAIT_HUNGRY))
 			plus = 1
-		if(BD.bloodpool >= 3+plus)
+		if(BD.bloodpool >= (3+plus))
 			playsound(usr, 'code/modules/wod13/sounds/bloodhealing.ogg', 50, FALSE)
 			BD.last_bloodpower_use = world.time
-			BD.bloodpool = max(0, BD.bloodpool-(3+plus))
+			BD.adjust_blood_points(-(3 + plus))
 			icon_state = "[initial(icon_state)]-on"
 			to_chat(BD, "<span class='notice'>You use blood to become more powerful.</span>")
 			BD.dna.species.punchdamagehigh = BD.dna.species.punchdamagehigh+5
@@ -474,7 +471,6 @@
 			BD.physiology.armor.bullet = BD.physiology.armor.bullet+15
 			if(!HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
 				ADD_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
-			BD.update_blood_hud()
 			addtimer(CALLBACK(src, PROC_REF(end_bloodpower)), 100+BD.discipline_time_plus+BD.bloodpower_time_plus)
 		else
 			SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
@@ -700,7 +696,6 @@
 */
 /mob/living/carbon/werewolf/Life()
 	. = ..()
-	update_blood_hud()
 	update_rage_hud()
 	update_auspex_hud()
 
@@ -708,7 +703,6 @@
 	if(!iskindred(src) && !iscathayan(src))
 		if(prob(5))
 			adjustCloneLoss(-5, TRUE)
-	update_blood_hud()
 	update_zone_hud()
 	update_rage_hud()
 	update_shadow()
@@ -769,7 +763,10 @@
 /mob/living/proc/update_blood_hud()
 	if(!client || !hud_used)
 		return
-	maxbloodpool = 10+((13-generation)*3)
+	if (iskindred(src))
+		var/mob/living/carbon/human/kindred = src
+		var/datum/species/kindred/kindred_species = kindred.dna.species
+		kindred_species.initialize_generation(src)
 	if(hud_used.blood_icon)
 		var/emm = round((bloodpool/maxbloodpool)*10)
 		if(emm > 10)
@@ -778,6 +775,9 @@
 			hud_used.blood_icon.icon_state = "blood0"
 		else
 			hud_used.blood_icon.icon_state = "blood[emm]"
+
+	//Updates action buttons according to the new bloodpool
+	update_action_buttons_icon()
 
 /mob/living/proc/update_zone_hud()
 	if(!client || !hud_used)

@@ -13,7 +13,7 @@
 	female_clothes = /obj/item/clothing/under/vampire/business
 	restricted_disciplines = list(/datum/discipline/celerity)
 	whitelisted = TRUE
-
+/*
 /datum/discipline/temporis/post_gain(mob/living/carbon/human/H)
 	if(level >= 1)
 		var/datum/action/clock/clocke = new()
@@ -24,6 +24,7 @@
 	if(level >= 5)
 		var/datum/action/clotho/clot = new()
 		clot.Grant(H)
+
 
 /datum/action/clock
 	name = "Check Time"
@@ -80,7 +81,7 @@ var/datum/martial_art/cowalker/style
 	if(H.bloodpool < 1)
 		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 		return
-	H.bloodpool = max(0, H.bloodpool-1)
+	H.adjust_blood_points(-1)
 	playsound(H.loc, 'code/modules/wod13/sounds/temporis.ogg', 50, FALSE)
 	spam_fix = world.time
 	var/mob/living/carbon/human/M = usr
@@ -119,14 +120,15 @@ var/datum/martial_art/cowalker/style
 
 
 /datum/action/clotho/Trigger()
-	if(spam_fix + 15 SECONDS > world.time)
+	if((spam_fix + 15 SECONDS) > world.time)
 		return
 	var/mob/living/carbon/human/H = owner
 	if(H.bloodpool < 3)
 		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 		return
-	H.bloodpool = max(0, H.bloodpool-3)
+	H.adjust_blood_points(-3)
 	playsound(H.loc, 'code/modules/wod13/sounds/temporis.ogg', 50, FALSE)
 	spam_fix = world.time
 	var/mob/living/carbon/human/M = usr
 	clothogift(M)
+*/

@@ -33,7 +33,7 @@
 			if(!M.client)
 				to_chat(user, "You need [M] attention to do that.")
 				return
-			if(M.stat >= HARD_CRIT)
+			if(M.stat >= UNCONSCIOUS)
 				var/datum/preferences/P = GLOB.preferences_datums[ckey(M.key)]
 //				var/extra = FALSE
 //				if(D.diablerist)
@@ -55,7 +55,7 @@
 			if(!M.client)
 				to_chat(user, "You need [M] attention to do that.")
 				return
-			if(M.stat >= HARD_CRIT)
+			if(M.stat >= UNCONSCIOUS)
 				var/datum/preferences/P = GLOB.preferences_datums[ckey(M.key)]
 //				var/extra = FALSE
 //				if(D.diablerist)
@@ -119,13 +119,11 @@
 		icon_state = "blood0"
 		inhand_icon_state = "blood0"
 		name = "\improper drinkable blood pack (empty)"
-		M.bloodpool = min(M.maxbloodpool, M.bloodpool+amount_of_bloodpoints)
+		M.adjust_blood_points(amount_of_bloodpoints)
 		M.adjustBruteLoss(-20, TRUE)
 		M.adjustFireLoss(-20, TRUE)
 		M.update_damage_overlays()
 		M.update_health_hud()
-		if(iskindred(M))
-			M.update_blood_hud()
 		playsound(M.loc,'sound/items/drink.ogg', 50, TRUE)
 		return
 	else

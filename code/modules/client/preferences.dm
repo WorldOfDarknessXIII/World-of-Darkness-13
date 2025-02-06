@@ -635,7 +635,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/list/possible_new_disciplines = subtypesof(/datum/discipline) - discipline_types
 					for (var/discipline_type in possible_new_disciplines)
 						var/datum/discipline/discipline = new discipline_type
-						if (discipline.clane_restricted)
+						if (discipline.clan_restricted)
 							possible_new_disciplines -= discipline_type
 						qdel(discipline)
 					if (possible_new_disciplines.len && (true_experience >= 10))
@@ -1987,7 +1987,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/list/possible_new_disciplines = subtypesof(/datum/discipline) - discipline_types
 					for (var/discipline_type in possible_new_disciplines)
 						var/datum/discipline/discipline = new discipline_type
-						if (discipline.clane_restricted)
+						if (discipline.clan_restricted)
 							possible_new_disciplines -= discipline_type
 						qdel(discipline)
 					var/new_discipline = input(user, "Select your new Discipline", "Discipline Selection") as null|anything in possible_new_disciplines
@@ -2149,7 +2149,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 								var/list/possible_new_disciplines = subtypesof(/datum/discipline) - clane.clane_disciplines
 								for (var/discipline_type in possible_new_disciplines)
 									var/datum/discipline/discipline = new discipline_type
-									if (discipline.clane_restricted)
+									if (discipline.clan_restricted)
 										possible_new_disciplines -= discipline_type
 									qdel(discipline)
 								var/new_discipline = input(user, "Select a Discipline", "Discipline Selection") as null|anything in possible_new_disciplines
@@ -3153,6 +3153,20 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.real_name = character.real_name
 	if(character.clane)
 		character.clane.on_gain(character)
+
+	if(pref_species.name == "Vampire")
+		var/datum/vampireclane/CLN = new clane.type()
+		var/datum/species/kindred/kindred_species = character.dna.species
+		character.clane = CLN
+		character.clane.current_accessory = clane_accessory
+		character.set_blood_points(round(rand(2, character.maxbloodpool)))
+		character.generation = generation
+		kindred_species.initialize_generation(character)
+		character.clane.enlightenment = enlightenment
+	else
+		character.clane = null
+		character.generation = 13
+		character.set_blood_points(character.maxbloodpool)
 
 	if(pref_species.name == "Werewolf")
 		var/datum/auspice/CLN = new auspice.type()
