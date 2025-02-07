@@ -18,7 +18,7 @@
 						/obj/item/seeds/cannabis/death,
 						/obj/item/seeds/cannabis/white,
 						/obj/item/seeds/cannabis/ultimate)
-	reagents_add = list(/datum/reagent/drug/space_drugs = 0.15, /datum/reagent/toxin/lipolicide = 0.35) // gives u the munchies
+	reagents_add = list(/datum/reagent/drug/cannabis = 0.15, /datum/reagent/toxin/lipolicide = 0.35) // gives u the munchies
 
 
 /obj/item/seeds/cannabis/rainbow

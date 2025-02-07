@@ -73,3 +73,6 @@
 	icon = 'icons/obj/terminals_vtm.dmi'
 	icon_state = "keypad"
 	id = 11
+
+/obj/keypad/panic_room
+	id = 12

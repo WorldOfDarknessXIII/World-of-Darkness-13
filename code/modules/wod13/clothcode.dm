@@ -283,7 +283,7 @@
 	name = "suitskirt"
 	icon_state = "prince_f"
 
-/obj/item/clothing/under/vampire/agent
+/obj/item/clothing/under/vampire/hound
 	name = "suit"
 	desc = "Some business clothes."
 	icon_state = "agent"
