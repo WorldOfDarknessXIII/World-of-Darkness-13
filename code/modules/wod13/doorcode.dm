@@ -596,7 +596,7 @@
 /obj/structure/vampdoor/wood/madman
 	locked = TRUE
 	lock_id = "madman"
-	lockpick_difficulty = 8
+	lockpick_difficulty = 10
 
 /obj/structure/vampdoor/glass
 	icon_state = "glass_blue-1"
