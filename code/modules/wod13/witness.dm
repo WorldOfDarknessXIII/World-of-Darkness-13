@@ -55,10 +55,6 @@
 	if(message != "")
 		for(var/obj/item/police_radio/radio in GLOB.police_radios)
 			radio.say(message)
-		for(var/obj/item/p25radio/police/radio in GLOB.p25_radios)
-			if(radio.linked_network == "police")
-				radio.say(message)
-
 
 /obj/item/police_radio/proc/dispatcher_talk(said)
 	say(said)
