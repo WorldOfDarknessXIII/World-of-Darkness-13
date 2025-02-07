@@ -4,7 +4,7 @@
 	protected_zone_id = "giovanni"
 	social_roll_difficulty = 7
 
-/obj/structure/vip_barrier/elysium/check_entry_permission_custom(var/mob/living/carbon/human/entering_mob)
+/obj/structure/vip_barrier/giovanni/check_entry_permission_custom(var/mob/living/carbon/human/entering_mob)
 	if(entering_mob.mind && entering_mob.mind.assigned_role && GLOB.giovanni_positions.Find(entering_mob.mind.assigned_role))
 		return TRUE
 	return FALSE

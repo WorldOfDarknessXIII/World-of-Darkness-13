@@ -5,8 +5,10 @@
 	social_roll_difficulty = 9
 
 
-/obj/structure/vip_barrier/elysium/stripclub
-	protected_zone_id = "elysium_strip"
+/obj/structure/vip_barrier/elysium_2
+	protected_zone_id = "elysium_2"
+
+
 
 /obj/structure/vip_barrier/elysium/theatre
 	protected_zone_id = "elysium_theatre"
