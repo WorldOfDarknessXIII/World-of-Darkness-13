@@ -501,7 +501,7 @@
 					for(var/obj/item/police_radio/radio in GLOB.police_radios)
 						radio.announce_crime("victim", get_turf(src))
 					for(var/obj/machinery/p25transceiver/police/radio in GLOB.p25_tranceivers)
-						if(radio.linked_network == "police")
+						if(radio.p25_network == "police")
 							radio.announce_crime("victim", get_turf(src))
 							break
 
