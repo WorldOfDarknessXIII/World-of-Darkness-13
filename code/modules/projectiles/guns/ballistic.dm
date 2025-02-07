@@ -280,7 +280,7 @@
 	update_icon()
 
 
-/obj/item/gun/ballistic/proc/eject_magazine_hasty(mob/user, display_message = TRUE, obj/item/ammo_box/magazine/tac_load = null)
+/obj/item/gun/ballistic/proc/eject_magazine_npc(mob/user, obj/item/ammo_box/magazine/tac_load = null)
 	if(bolt_type == BOLT_TYPE_OPEN)
 		chambered = null
 	if (magazine.ammo_count())
@@ -289,20 +289,17 @@
 		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
 	magazine.forceMove(drop_location())
 	var/obj/item/ammo_box/magazine/old_mag = magazine
+
 	if (tac_load)
-		if (insert_magazine(user, tac_load, FALSE) && user.client)
-			to_chat(user, "<span class='notice'>You perform a tactical reload on \the [src].</span>")
-		else
-			if(user.client)
-				to_chat(user, "<span class='warning'>You dropped the old [magazine_wording], but the new one doesn't fit. How embarassing.</span>")
-			magazine = null
+		tac_load.forceMove(src)
+		if (bolt_type == BOLT_TYPE_OPEN && !bolt_locked)
+			chamber_round(TRUE)
+		magazine = tac_load
 	else
 		magazine = null
 
 	old_mag.forceMove(get_turf(user))
 	old_mag.update_icon()
-	if (display_message && user.client)
-		to_chat(user, "<span class='notice'>You pull the [magazine_wording] out of \the [src].</span>")
 	update_icon()
 
 /obj/item/gun/ballistic/can_shoot()
@@ -362,10 +359,7 @@
 
 /obj/item/gun/ballistic/proc/handle_attackby_mag_eject_logic(mob/user, obj/item/ammo_box/magazine/ammo_mag)
 	if (tac_reloads)
-		if(user.a_intent == INTENT_HARM)
-			eject_magazine_hasty(user, FALSE, ammo_mag)
-		else
-			eject_magazine(user, FALSE, ammo_mag)
+		eject_magazine(user, FALSE, ammo_mag)
 	else
 		to_chat(user, "<span class='notice'>There's already a [magazine_wording] in \the [src].</span>")
 
@@ -458,10 +452,7 @@
 			playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
 	if(!internal_magazine && magazine)
 		if(!magazine.ammo_count())
-			if(user.a_intent == INTENT_HARM)
-				eject_magazine_hasty(user)
-			else
-				eject_magazine(user)
+			eject_magazine(user)
 			return
 	if(bolt_type == BOLT_TYPE_NO_BOLT)
 		chambered = null

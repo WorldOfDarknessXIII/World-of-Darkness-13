@@ -341,7 +341,7 @@
 		else
 			if(!weapon_ballistic.magazine.ammo_count() && extra_mags)
 				extra_mags--
-				weapon_ballistic.eject_magazine_hasty(src, FALSE, new weapon_ballistic.mag_type(src))
+				weapon_ballistic.eject_magazine_npc(src, new weapon_ballistic.mag_type(src))
 				weapon_ballistic.rack(src)
 				if(!weapon.chambered)
 					weapon_ballistic.chamber_round()

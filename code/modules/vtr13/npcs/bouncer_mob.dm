@@ -9,8 +9,12 @@
 	var/list/block_phrases = list("I HAVE NO BLOCK PHRASE")
 
 	staying = TRUE
-	var/walk_home_timer = 30 SECONDS
-	var/warp_home_timer = 40 SECONDS
+	var/walk_home_timer = 1 MINUTES
+	var/warp_home_timer = 2 MINUTES
+
+	var/return_rechecks_max = 10
+	var/return_rechecks_completed = 0
+	var/recheck_return_timer = 3 MINUTES
 
 	var/datum/vip_barrier_perm/linked_perm = null
 
@@ -22,7 +26,11 @@
 	var/is_in_awe = FALSE //Whether or not the man is being hit by presence
 
 	var/turf/start_turf = null //Where the creature spawns so it can return from whence it came
+	var/our_role = /datum/socialrole/bouncer
 
+
+	var/bouncer_weapon_type = /obj/item/gun/ballistic/shotgun/vampire
+	var/bouncer_backup_weapon_type = /obj/item/melee/vampirearms/machete
 
 	//Behavior settings
 	fights_anyway=TRUE
@@ -30,11 +38,15 @@
 /mob/living/carbon/human/npc/bouncer/Initialize()
 	..()
 
-	my_weapon = new /obj/item/gun/ballistic/shotgun/vampire(src)
 
-	my_backup_weapon = new /obj/item/melee/vampirearms/machete(src)
+	AssignSocialRole(our_role)
 
-	AssignSocialRole(/datum/socialrole/bouncer)
+
+	if(bouncer_weapon_type)
+		my_weapon = new bouncer_weapon_type(src)
+
+	if(bouncer_backup_weapon_type)
+		my_backup_weapon = new bouncer_backup_weapon_type(src)
 
 	start_turf = get_turf(src)
 
@@ -52,6 +64,8 @@
 		entry_phrases = social_role.entry_phrases
 		police_block_phrases = social_role.police_block_phrases
 		block_phrases = social_role.block_phrases
+		bouncer_weapon_type = role.bouncer_weapon_type
+		bouncer_backup_weapon_type = role.bouncer_backup_weapon_type
 
 /mob/living/carbon/human/npc/bouncer/LateInitialize()
 	. = ..()
@@ -71,14 +85,28 @@
 	addtimer(CALLBACK(src, PROC_REF(position_hard_reset)), warp_home_timer)
 
 /mob/living/carbon/human/npc/bouncer/proc/go_home()
-	if(start_turf && loc == start_turf.loc)
-		return
-	walk_to(src, start_turf, 1, total_multiplicative_slowdown())
+	if(stat <= SOFT_CRIT)
+		danger_source = null
+		if(start_turf && loc == start_turf.loc)
+			return
+		walk_to(src, start_turf, 1, total_multiplicative_slowdown())
 
 /mob/living/carbon/human/npc/bouncer/proc/position_hard_reset()
-	if(start_turf && loc != start_turf.loc)
-		forceMove(start_turf)
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(yearn_for_home))
+	if(stat <= SOFT_CRIT)
+		if(start_turf && loc != start_turf.loc)
+			forceMove(start_turf)
+		RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(yearn_for_home))
+		return_rechecks_completed = 0
+	else if(stat >= UNCONSCIOUS)
+		addtimer(CALLBACK(src, PROC_REF(recheck_return_home)), recheck_return_timer)
+
+/mob/living/carbon/human/npc/bouncer/proc/recheck_return_home()
+	if(return_rechecks_completed <= return_rechecks_max)
+		return_rechecks_completed++
+		addtimer(CALLBACK(src, PROC_REF(go_home)), walk_home_timer)
+		addtimer(CALLBACK(src, PROC_REF(position_hard_reset)), warp_home_timer)
+
+
 
 /mob/living/carbon/human/npc/bouncer/attackby(obj/item/used_item, mob/user, params)
 	if(istype(used_item,/obj/item/card/id/police))

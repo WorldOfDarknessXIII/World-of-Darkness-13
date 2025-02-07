@@ -62,6 +62,9 @@
 	if(linked_perm && linked_perm.actively_guarded)
 		entry_allowed = check_entry_permission_base(mover_mob)
 
+	if(!entry_allowed && mover.pulledby && istype(mover.pulledby, /mob/living/carbon/human))
+		entry_allowed = check_entry_permission_base(mover.pulledby)
+
 	if(entry_allowed)
 		SEND_SIGNAL(src, COMSIG_BARRIER_NOTIFY_GUARD_ENTRY, mover_mob)
 	else
@@ -105,14 +108,14 @@
 	. = ..()
 
 
-/obj/structure/vip_barrier/proc/handle_social_bypass(mob/user, used_badge = FALSE)
+/obj/structure/vip_barrier/proc/handle_social_bypass(mob/user, mob/bouncer, used_badge = FALSE)
 	if(check_entry_permission_base(user))
 		to_chat(user, "<span class='notice'>...But you are already allowed entry.</span>")
 		return
 
 	var/mob/living/carbon/human/human_user = user
 
-	if(do_mob(user, src, max(5 SECONDS, social_bypass_time - (human_user.get_total_social() * 2 SECONDS))))
+	if(do_mob(user, bouncer, max(5 SECONDS, social_bypass_time - (human_user.get_total_social() * 2 SECONDS))))
 
 		//handle block list babies
 		if(LAZYFIND(linked_perm.block_list, human_user.name))
@@ -121,7 +124,11 @@
 			else
 				linked_perm.notify_guard_blocked_denial()
 
-		if(storyteller_roll(human_user.get_total_social(), social_roll_difficulty))
+		var/involved_social_roll = social_roll_difficulty
+		if(used_badge)
+			involved_social_roll -= 1
+
+		if(user.storyteller_roll(human_user.get_total_social(), involved_social_roll))
 			to_chat(user, "<span class='notice'>You manage to persuade your way past the guards.</span>")
 			linked_perm.allow_list += human_user.name
 		else

@@ -173,3 +173,6 @@
 		"For the last time, you aren't getting in.",
 		"Nice story, bucko. Now scram."
 	)
+
+	var/bouncer_weapon_type = /obj/item/gun/ballistic/shotgun/vampire
+	var/bouncer_backup_weapon_type = /obj/item/melee/vampirearms/machete
