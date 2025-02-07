@@ -4,7 +4,6 @@
 
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOBREATH), PROC_REF(on_nobreath_trait_gain))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOMETABOLISM), PROC_REF(on_nometabolism_trait_gain))
-	RegisterSignal(src, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_vampire_bite))
 
 /**
  * On gain of TRAIT_NOBREATH
@@ -43,23 +42,3 @@
 			LAZYREMOVE(reagents.addiction_list, R)
 			qdel(R)
 	reagents.end_metabolization(keep_liverless = TRUE)
-
-/**
- * On being bit by a vampire
- *
- * This handles vampire bite stun immunity.
- */
-/mob/living/carbon/proc/on_vampire_bite(datum/source)
-	SIGNAL_HANDLER
-
-	//Vampires are not stunned by another vampire's bite
-	if(iskindred(src))
-		return COMPONENT_RESIST_VAMPIRE_KISS
-
-	//Garou are not stunned by another vampire's bite
-	if(isgarou(src))
-		return COMPONENT_RESIST_VAMPIRE_KISS
-
-	//I hate this because crinos and lupus are not covered in isgarou()
-	if(iswerewolf(src))
-		return COMPONENT_RESIST_VAMPIRE_KISS
