@@ -580,10 +580,28 @@
 	icon_state = "oldwood-1"
 	baseicon = "oldwood"
 
+/obj/structure/vampdoor/wood/giovanni
+	locked = TRUE
+	lock_id = "giovanni"
+	lockpick_difficulty = 8
+
+/obj/structure/vampdoor/wood/giovanni/high_security
+	lockpick_difficulty = 14
+
+/obj/structure/vampdoor/wood/pentex
+	locked = TRUE
+	lock_id = "pentex"
+	lockpick_difficulty = 16
+
+/obj/structure/vampdoor/wood/madman
+	locked = TRUE
+	lock_id = "madman"
+	lockpick_difficulty = 8
+
 /obj/structure/vampdoor/glass
-	icon_state = "glass-1"
+	icon_state = "glass_blue-1"
 	opacity = FALSE
-	baseicon = "glass"
+	baseicon = "glass_blue"
 	glass = TRUE
 	burnable = TRUE
 
@@ -591,6 +609,13 @@
 	lock_id = "clerk"
 	lockpick_difficulty = 12
 	locked = TRUE
+
+/obj/structure/vampdoor/glass/prince
+	icon_state = "glass-1"
+	baseicon = "glass"
+	locked = TRUE
+	lock_id = "prince"
+	lockpick_difficulty = 12
 
 /obj/structure/vampdoor/glass/banu_haqim
 	lock_id = "banu_haqim"
@@ -601,7 +626,10 @@
 	lockpick_difficulty = 12
 	locked = TRUE
 
-/obj/structure/vampdoor/glass/pentex/unlocked
+/obj/structure/vampdoor/glass/pentex/low_security
+	lockpick_difficulty = 4
+
+/obj/structure/vampdoor/glass/pentex/low_security/unlocked
 	locked = FALSE
 
 /obj/structure/vampdoor/glass/clinic
@@ -644,25 +672,6 @@
 	locked = TRUE
 	lock_id = "camarilla"
 	lockpick_difficulty = 8
-
-/obj/structure/vampdoor/clerk
-	icon_state = "shop-1"
-	opacity = FALSE
-	baseicon = "shop"
-	glass = TRUE
-	locked = TRUE
-	lock_id = "clerk"
-	lockpick_difficulty = 10
-
-/obj/structure/vampdoor/prince
-	icon_state = "glass-1"
-	opacity = FALSE
-	baseicon = "glass"
-	glass = TRUE
-	locked = TRUE
-	lock_id = "prince"
-	burnable = TRUE
-	lockpick_difficulty = 10
 
 /obj/structure/vampdoor/daughters
 	icon_state = "wood-1"
@@ -768,14 +777,6 @@
 	locked = TRUE
 	lock_id = "strip"
 	lockpick_difficulty = 4
-
-/obj/structure/vampdoor/giovanni
-	icon_state = "wood-1"
-	baseicon = "wood"
-	locked = TRUE
-	lock_id = "giovanni"
-	burnable = TRUE
-	lockpick_difficulty = 8
 
 /obj/structure/vampdoor/baali
 	icon_state = "oldwood-1"
