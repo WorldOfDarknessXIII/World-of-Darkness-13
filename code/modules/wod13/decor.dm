@@ -747,12 +747,14 @@
 /mob/living/carbon/human/MouseDrop(atom/over_object)
 	. = ..()
 	if(istype(over_object, /obj/structure/bloodextractor))
+		var/obj/structure/bloodextractor/V = over_object
 		if(isnull(src.mind) || !src.mind.active)
-			src.visible_message("<span class='warning'>[src] struggles too much to be hooked to [V], resisting instinctively!\
-			One would thi_N_k _P_erhaps they _C_an't be tapped for blood with that much willful resistance...")
+			visible_message("<span class='warning'>[src] struggles too much to be hooked to [V]!</span>")
+			// Painful to use usr here but we don't have infrastructure for passing in the caller mob
+			if(ismob(usr) && usr.mind)
+				to_chat(usr, "This machine can only be used on active players.")
 			return
 		if(get_dist(src, over_object) < 2)
-			var/obj/structure/bloodextractor/V = over_object
 			if(!buckled)
 				V.visible_message("<span class='warning'>Buckle [src] fist!</span>")
 			if(bloodpool < 2)

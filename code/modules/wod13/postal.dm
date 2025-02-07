@@ -78,7 +78,6 @@
 						/obj/item/stack/dollar/rand,
 						/obj/item/melee/vampirearms/knife,
 						/obj/item/melee/vampirearms/tire,
-						/datum/supply_pack/vampire/bloodpack,
 						/obj/item/gun/ballistic/vampire/revolver,
 						/obj/item/vamp/keys/hack)
 		new IT(user.loc)
