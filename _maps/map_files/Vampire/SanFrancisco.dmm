@@ -7183,7 +7183,7 @@
 "mnS" = (/obj/structure/fluff/hedge,/obj/effect/turf_decal/siding/white{dir = 5},/turf/open/floor/bronze,/area/vtm/interior/giovanni)
 "mnW" = (/obj/effect/decal/pallet,/obj/effect/decal/cardboard,/mob/living/carbon/human/npc/hobo,/turf/open/floor/plating/rough/cave,/area/vtm/sewer)
 "moh" = (/obj/structure/fluff/hedge{pixel_x = 3},/obj/effect/turf_decal/siding/white{dir = 9},/turf/open/floor/bronze,/area/vtm/interior/giovanni)
-"mon" = (/obj/keypad/armory{id = 12},/turf/closed/wall/vampwall/rich,/area/vtm/interior/millennium_tower/f3)
+"mon" = (/obj/keypad/panic_room,/turf/closed/wall/vampwall/rich,/area/vtm/interior/millennium_tower/f3)
 "mop" = (/obj/structure/fluff/hedge,/obj/effect/turf_decal/siding/white{dir = 6},/turf/open/floor/bronze,/area/vtm/interior/giovanni)
 "mot" = (/obj/structure/vampfence/corner/rich,/turf/open/floor/plating/vampgrass,/area/vtm/graveyard)
 "moy" = (/obj/machinery/light/small{pixel_y = 32},/obj/structure/table/wood,/obj/item/melee/vampirearms/baseball,/obj/machinery/camera,/obj/machinery/cell_charger{pixel_y = 10},/turf/open/floor/plating/gummaguts,/area/vtm/interior/techshop)
