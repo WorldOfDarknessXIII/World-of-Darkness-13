@@ -618,7 +618,7 @@
 	lockpick_difficulty = 12
 
 /obj/structure/vampdoor/glass/banu_haqim
-	lock_id = "banu_haqim"
+	lock_id = "banuhaqim"
 	locked = TRUE
 
 /obj/structure/vampdoor/glass/bianchi_bank
