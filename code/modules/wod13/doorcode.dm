@@ -587,6 +587,50 @@
 	glass = TRUE
 	burnable = TRUE
 
+/obj/structure/vampdoor/glass/clerk
+	lock_id = "clerk"
+	lockpick_difficulty = 12
+	locked = TRUE
+
+/obj/structure/vampdoor/glass/banu_haqim
+	lock_id = "banu_haqim"
+	locked = TRUE
+
+/obj/structure/vampdoor/glass/pentex
+	lock_id = "pentex"
+	lockpick_difficulty = 12
+	locked = TRUE
+
+/obj/structure/vampdoor/glass/pentex/unlocked
+	locked = FALSE
+
+/obj/structure/vampdoor/glass/clinic
+	locked = TRUE
+	lock_id = "clinic"
+	lockpick_difficulty = 4
+
+/obj/structure/vampdoor/glass/clinic/high_security
+	lockpick_difficulty = 16
+
+/obj/structure/vampdoor/glass/primogen_toreador
+	lock_id = "primToreador"
+	lockpick_difficulty = 14
+
+/obj/structure/vampdoor/glass/laundromat
+	name = "Laundromat"
+	lock_id = "laundromat"
+	lockpick_difficulty = 7
+
+/obj/structure/vampdoor/glass/nightwolf
+	name = "Nightwolf Tech"
+	lock_id = "wolftech"
+	lockpick_difficulty = 12
+
+/obj/structure/vampdoor/glass/bianchi_bank
+	name = "bianchi executive office door"
+	lock_id = "bankboss"
+	lockpick_difficulty = 23
+
 /obj/structure/vampdoor/shop
 	icon_state = "shop-1"
 	opacity = FALSE
@@ -643,15 +687,6 @@
 	lock_id = "church"
 	burnable = TRUE
 	lockpick_difficulty = 10
-
-/obj/structure/vampdoor/clinic
-	icon_state = "shop-1"
-	opacity = FALSE
-	baseicon = "shop"
-	glass = TRUE
-	locked = TRUE
-	lock_id = "clinic"
-	lockpick_difficulty = 4
 
 /obj/structure/vampdoor/cleaning
 	icon_state = "reinf-1"
