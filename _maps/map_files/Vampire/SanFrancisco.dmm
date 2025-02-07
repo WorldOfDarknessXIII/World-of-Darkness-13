@@ -5918,7 +5918,7 @@
 "hBg" = (/obj/structure/closet/cardboard,/turf/open/floor/plating/vampplating/mono,/area/vtm/interior/millennium_tower/f5)
 "hBk" = (/obj/structure/vampipe{icon_state = "piping35"},/obj/effect/decal/pallet,/turf/open/floor/plating/rough,/area/vtm/sewer)
 "hBr" = (/obj/effect/decal/cleanable/blood,/turf/open/floor/plating/concrete,/area/vtm/sewer)
-"hBt" = (/obj/structure/table,/obj/effect/turf_decal/siding/white{dir = 8},/obj/item/food/vampire/burger,/obj/structure/vampdoor/glass/clinic/high_security,/turf/open/floor/carpet/cyan,/area/vtm/clinic)
+"hBt" = (/obj/structure/table,/obj/effect/turf_decal/siding/white{dir = 8},/obj/item/food/vampire/burger,/turf/open/floor/carpet/cyan,/area/vtm/clinic)
 "hBv" = (/obj/structure/railing{dir = 4},/obj/structure/window/reinforced/indestructable{alpha = 0; dir = 4},/turf/open/floor/plating/rough,/area/vtm/interior/millennium_tower/f5)
 "hBE" = (/mob/living/simple_animal/pet/cat/vampire,/turf/open/floor/plating/sidewalk/old,/area/vtm/fishermanswharf)
 "hBM" = (/obj/structure/railing{dir = 8},/obj/effect/turf_decal/siding/white{dir = 8},/obj/structure/fluff/hedge{pixel_x = 3},/turf/open/floor/plating/granite,/area/vtm/interior/millennium_tower)
