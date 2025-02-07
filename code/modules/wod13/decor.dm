@@ -750,6 +750,7 @@
 		if(isnull(src.mind) || !src.mind.active)
 			src.visible_message("<span class='warning'>[src] struggles too much to be hooked to [V], resisting instinctively!\
 			One would thi_N_k _P_erhaps they _C_an't be tapped for blood with that much willful resistance...")
+			return
 		if(get_dist(src, over_object) < 2)
 			var/obj/structure/bloodextractor/V = over_object
 			if(!buckled)
