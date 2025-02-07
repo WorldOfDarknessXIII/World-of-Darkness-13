@@ -621,16 +621,11 @@
 	lock_id = "banu_haqim"
 	locked = TRUE
 
-/obj/structure/vampdoor/glass/pentex
-	lock_id = "pentex"
-	lockpick_difficulty = 12
+/obj/structure/vampdoor/glass/bianchi_bank
+	name = "bianchi executive office door"
+	lock_id = "bankboss"
+	lockpick_difficulty = 23
 	locked = TRUE
-
-/obj/structure/vampdoor/glass/pentex/low_security
-	lockpick_difficulty = 4
-
-/obj/structure/vampdoor/glass/pentex/low_security/unlocked
-	locked = FALSE
 
 /obj/structure/vampdoor/glass/clinic
 	locked = TRUE
@@ -639,10 +634,6 @@
 
 /obj/structure/vampdoor/glass/clinic/high_security
 	lockpick_difficulty = 16
-
-/obj/structure/vampdoor/glass/primogen_toreador
-	lock_id = "primToreador"
-	lockpick_difficulty = 14
 
 /obj/structure/vampdoor/glass/laundromat
 	name = "Laundromat"
@@ -654,17 +645,20 @@
 	lock_id = "wolftech"
 	lockpick_difficulty = 12
 
-/obj/structure/vampdoor/glass/bianchi_bank
-	name = "bianchi executive office door"
-	lock_id = "bankboss"
-	lockpick_difficulty = 23
+/obj/structure/vampdoor/glass/pentex
+	lock_id = "pentex"
+	lockpick_difficulty = 12
+	locked = TRUE
 
-/obj/structure/vampdoor/shop
-	icon_state = "shop-1"
-	opacity = FALSE
-	baseicon = "shop"
-	glass = TRUE
-	lockpick_difficulty = 10
+/obj/structure/vampdoor/glass/pentex/low_security
+	lockpick_difficulty = 4
+
+/obj/structure/vampdoor/glass/pentex/low_security/unlocked
+	locked = FALSE
+
+/obj/structure/vampdoor/glass/primogen_toreador
+	lock_id = "primToreador"
+	lockpick_difficulty = 14
 
 /obj/structure/vampdoor/camarilla
 	icon_state = "cam-1"
