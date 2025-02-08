@@ -48,7 +48,7 @@ var/mob/living/carbon/human/H
 		GLOB.bank_account_list += src
 
 /obj/item/vamp/creditcard
-	name = "\improper credit card"
+	name = "debit card"
 	desc = "Used to access bank money."
 	icon = 'code/modules/wod13/items.dmi'
 	icon_state = "card1"

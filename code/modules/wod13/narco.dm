@@ -68,7 +68,7 @@
 	bite_consumption = 5
 	tastes = list("cat piss" = 4, "weed" = 2)
 	foodtypes = VEGETABLES
-	food_reagents = list(/datum/reagent/drug/space_drugs = 20, /datum/reagent/toxin/lipolicide = 20)
+	food_reagents = list(/datum/reagent/drug/cannabis = 20, /datum/reagent/toxin/lipolicide = 20)
 	eat_time = 10
 	illegal = TRUE
 	cost = 50
@@ -85,6 +85,8 @@
 	. = ..()
 	if(!amount_of_water)
 		. += "<span class='warning'>[src] is empty!</span>"
+	else
+		. += "<span class='notice'>It has [amount_of_water]/10 unit[amount_of_water == 1 ? "" : "s"] of water left.</span>"
 
 /obj/structure/weedshit/attack_hand(mob/user, params)
 	. = ..()

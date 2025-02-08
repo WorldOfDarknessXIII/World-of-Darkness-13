@@ -54,8 +54,6 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 				call_dharma("judgement", U)
 			if(!(real_name in U.mind?.dharma?.deserving) && U.real_name == lastattacker)
 				call_dharma("killfirst", U)
-	if(client)
-		animate(client, color = CMNoir, time = 10) // [ChillRaccoon] - make life/death transition looks more beauty
 	to_chat(src, "<span class='warning'>You have died. Barring complete bodyloss, you can in most cases be revived by other players. If you do not wish to be brought back, use the \"Do Not Resuscitate\" verb in the ghost tab.</span>")
 
 /mob/living/carbon/human/proc/makeSkeleton()
