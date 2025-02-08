@@ -2,7 +2,7 @@
 	our_role = /datum/socialrole/bouncer/elysium
 	protected_zone_id = "elysium"
 
-/mob/living/carbon/human/npc/bouncer/elysium_2
+/mob/living/carbon/human/npc/bouncer/elysium/elysium_2
 	protected_zone_id = "elysium_2"
 
 /mob/living/carbon/human/npc/bouncer/elysium/stripclub
