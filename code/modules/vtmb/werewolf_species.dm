@@ -109,8 +109,12 @@
 	C.transformator = new(C)
 	C.transformator.human_form = C
 
+	//garou resist vampire bites better than mortals
+	RegisterSignal(src, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
+
 /datum/species/garou/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
+	UnregisterSignal(src, COMSIG_MOB_VAMPIRE_SUCKED)
 	for(var/datum/action/garouinfo/VI in C.actions)
 		if(VI)
 			VI.Remove(C)
@@ -163,3 +167,16 @@
 				SEND_SOUND(C, sound('code/modules/wod13/sounds/rage_decrease.ogg', 0, 0, 75))
 			to_chat(C, "<span class='boldnotice'><b>GNOSIS DECREASES</b></span>")
 	C.update_rage_hud()
+
+/**
+ * On being bit by a vampire
+ *
+ * This handles vampire bite sleep immunity and any future special interactions.
+ */
+/datum/species/garou/proc/on_garou_bitten(/datum/source)
+	SIGNAL HANDLER
+
+	if(isgarou(src) || iswerewolf(src))
+		var/mob/living/carbon/wolf = src
+		adjust_rage(1, src, TRUE)
+		return COMPONENT_RESIST_VAMPIRE_KISS

@@ -65,16 +65,20 @@
 			if(iscrinos(trans))
 				ntransform.Scale(0.75, 0.75)
 			if(ishuman(trans))
+				RegisterSignal(src, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
 				ntransform.Scale(1, 0.75)
 		if("Crinos")
 			if(islupus(trans))
 				ntransform.Scale(1.75, 1.75)
 			if(ishuman(trans))
+				RegisterSignal(src, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
 				ntransform.Scale(1.25, 1.5)
 		if("Homid")
 			if(iscrinos(trans))
+				UnregisterSignal(src, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
 				ntransform.Scale(0.75, 0.5)
 			if(islupus(trans))
+				UnregisterSignal(src, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
 				ntransform.Scale(1, 1.5)
 	if(!transformating)
 		transformating = TRUE
@@ -115,8 +119,6 @@
 					transformating = FALSE
 					animate(trans, transform = null, color = "#FFFFFF", time = 1)
 					lupus_form.update_icons()
-//					if(lupus_form.auspice.base_breed != "Lupus")
-//						adjust_rage(-1, lupus_form)
 			if("Crinos")
 				if(trans == crinos_form)
 					transformating = FALSE
@@ -154,8 +156,6 @@
 					transformating = FALSE
 					animate(trans, transform = null, color = "#FFFFFF", time = 1)
 					crinos_form.update_icons()
-//					if(crinos_form.auspice.base_breed != "Crinos")
-//						adjust_rage(-1, crinos_form)
 			if("Homid")
 				if(trans == human_form)
 					transformating = FALSE
@@ -192,32 +192,3 @@
 					trans.forceMove(src)
 					transformating = FALSE
 					animate(trans, transform = null, color = "#FFFFFF", time = 1)
-//					if(human_form.auspice.base_breed != "Homid")
-//						adjust_rage(-1, human_form)
-
-/obj/werewolf_holder/transformation/proc/fast_trans_gender(mob/trans, form)
-	switch(form)
-		if("Lupus")
-			if(trans == lupus_form)
-				return
-			var/current_loc = get_turf(trans)
-			lupus_form.forceMove(current_loc)
-			lupus_form.key = trans.key
-			forceMove(lupus_form)
-			trans.forceMove(src)
-		if("Crinos")
-			if(trans == crinos_form)
-				return
-			var/current_loc = get_turf(trans)
-			crinos_form.forceMove(current_loc)
-			crinos_form.key = trans.key
-			forceMove(crinos_form)
-			trans.forceMove(src)
-		if("Homid")
-			if(trans == human_form)
-				return
-			var/current_loc = get_turf(trans)
-			human_form.forceMove(current_loc)
-			human_form.key = trans.key
-			forceMove(human_form)
-			trans.forceMove(src)
