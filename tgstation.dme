@@ -3371,6 +3371,7 @@
 #include "code\modules\vtmb\jobs\antags\caitiff.dm"
 #include "code\modules\vtmb\jobs\unaligned\citizen.dm"
 #include "code\modules\vtmb\jobs\warehouse\dealer.dm"
+#include "code\modules\vtmb\jobs\police_force\dispatcher.dm"
 #include "code\modules\vtmb\jobs\clinic\doctor.dm"
 #include "code\modules\vtmb\jobs\national_security\fbi.dm"
 #include "code\modules\vtmb\jobs\giovanni_family\giovanni.dm"
