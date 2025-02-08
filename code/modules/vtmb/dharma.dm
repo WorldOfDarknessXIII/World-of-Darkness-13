@@ -170,33 +170,8 @@
 	return total
 
 /proc/call_dharma(action, mob/living/carbon/human/cathayan)
-	if (!cathayan?.mind?.dharma)
-		return
-
-	var/datum/dharma/dharma = cathayan.mind.dharma
-
-	for(var/i in dharma.tenets)
-		if(i == action)
-			if(dharma.tenets_done[i] == 0)
-				dharma.tenets_done[i] = 1
-				to_chat(cathayan, "<span class='help'>You find this action helping you on your path ([dharma.get_done_tenets()]/[length(dharma.tenets)]).</span>")
-
-	for(var/i in dharma.fails)
-		if(i == action)
-			to_chat(cathayan, "<span class='userdanger'>This action is against your path's philosophy.</span>")
-			update_dharma(cathayan, -1)
-
-	var/tenets_needed = length(dharma.tenets)
-	var/tenets_done = 0
-
-	for(var/i in dharma.tenets)
-		if(dharma.tenets_done[i] == 1)
-			tenets_done += 1
-
-	if(tenets_done >= tenets_needed)
-		for(var/i in dharma.tenets)
-			dharma.tenets_done[i] = 0
-		update_dharma(cathayan, 1)
+	//disabled due to terrible implementation
+	return
 
 /proc/emit_po_call(atom/source, po_type)
 	if(!po_type)
