@@ -240,7 +240,7 @@
 	RegisterSignal(C, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(slip_into_torpor))
 
 	//vampires resist vampire bites better than mortals
-	RegisterSignal(src, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_vampire_bitten))
+	RegisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_vampire_bitten))
 
 /datum/species/kindred/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
