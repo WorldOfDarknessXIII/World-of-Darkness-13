@@ -143,9 +143,10 @@
 #define JOB_POLICE_CHIEF "Police Chief"
 #define JOB_POLICE_SERGEANT "Police Sergeant"
 #define JOB_POLICE "Police Officer"
+#define JOB_DISPATCHER "Emergency Dispatcher"
 
 #define JOB_POLICE_ROLES    /datum/timelock/police_force
-#define JOB_POLICE_ROLES_LIST   list(JOB_POLICE_CHIEF,JOB_POLICE_SERGEANT,JOB_POLICE)
+#define JOB_POLICE_ROLES_LIST   list(JOB_POLICE_CHIEF,JOB_POLICE_SERGEANT,JOB_POLICE,JOB_DISPATCHER)
 
 #define JOB_FBI "Federal Investigator"
 
