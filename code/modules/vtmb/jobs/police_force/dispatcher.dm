@@ -1,6 +1,6 @@
 
 /datum/job/vamp/police_force/dispatcher
-	title = "Emergency Dispatcher"
+	title = JOB_DISPATCHER 
 	faction = "Vampire"
 	total_positions = 2
 	spawn_positions = 2
