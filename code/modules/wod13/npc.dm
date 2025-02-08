@@ -50,6 +50,7 @@
 	if(my_weapon && istype(my_weapon, /obj/item/gun/ballistic))
 		ADD_TRAIT(my_weapon, TRAIT_NODROP, NPC_GUN_TRAIT)
 		RegisterSignal(my_weapon, COMSIG_GUN_FIRED, PROC_REF(handle_gun))
+		RegisterSignal(my_weapon, COMSIG_GUN_EMPTY, PROC_REF(handle_empty_gun))
 
 	if(my_backup_weapon && istype(my_weapon, /obj/item/gun/ballistic))
 		ADD_TRAIT(my_backup_weapon, TRAIT_NODROP, NPC_GUN_TRAIT)

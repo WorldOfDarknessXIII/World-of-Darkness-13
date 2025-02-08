@@ -325,9 +325,6 @@
 
 /mob/living/carbon/human/npc/proc/handle_gun(obj/item/gun/weapon, mob/living/user, atom/target, params, zone_override)
 	SIGNAL_HANDLER
-	if(weapon.loc != src)
-		UnregisterSignal(weapon, COMSIG_GUN_FIRED)
-
 	if(istype(weapon, /obj/item/gun/ballistic))
 		var/obj/item/gun/ballistic/weapon_ballistic = weapon
 
@@ -339,27 +336,25 @@
 			addtimer(CALLBACK(src, PROC_REF(rack_held_gun), weapon_ballistic), weapon_ballistic.rack_delay)
 
 		else
-			if(!weapon_ballistic.magazine.ammo_count() && extra_mags)
-				extra_mags--
-				weapon_ballistic.eject_magazine_npc(src, new weapon_ballistic.mag_type(src))
-				weapon_ballistic.rack(src)
-				if(!weapon.chambered)
-					weapon_ballistic.chamber_round()
-			check_out_of_ammo(weapon_ballistic)
-
+			if(!weapon_ballistic.magazine.ammo_count())
+				if(extra_mags)
+					extra_mags--
+					weapon_ballistic.eject_magazine_npc(src, new weapon_ballistic.mag_type(src))
+					weapon_ballistic.rack(src)
+					if(!weapon.chambered)
+						weapon_ballistic.chamber_round()
 
 /mob/living/carbon/human/npc/proc/rack_held_gun(obj/item/gun/ballistic/weapon)
 	if(weapon.bolt_locked)
 		weapon.drop_bolt()
 	weapon.rack(src)
-	check_out_of_ammo(weapon)
 
-/mob/living/carbon/human/npc/proc/check_out_of_ammo(obj/item/gun/ballistic/weapon)
-	if(weapon.chambered)
-		return
-
-	temporarilyRemoveItemFromInventory(weapon, TRUE)
-	qdel(weapon)
+/mob/living/carbon/human/npc/proc/handle_empty_gun()
+	SIGNAL_HANDLER
+	UnregisterSignal(my_weapon, COMSIG_GUN_FIRED)
+	UnregisterSignal(my_weapon, COMSIG_GUN_EMPTY)
+	temporarilyRemoveItemFromInventory(my_weapon, TRUE)
+	qdel(my_weapon)
 	my_weapon = null
 	if(my_backup_weapon && !spawned_backup_weapon)
 		my_backup_weapon.forceMove(loc)
