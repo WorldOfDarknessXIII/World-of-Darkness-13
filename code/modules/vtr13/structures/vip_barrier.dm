@@ -98,16 +98,6 @@
 /obj/structure/vip_barrier/proc/check_entry_permission_custom(mob/living/carbon/human/entering_mob)
 	return TRUE
 
-
-/obj/structure/vip_barrier/attack_hand(mob/user)
-	if (user.a_intent == INTENT_HELP)
-		to_chat(user, "<span class='notice'>You try to talk your way through.</span>")
-		handle_social_bypass(user)
-		return
-
-	. = ..()
-
-
 /obj/structure/vip_barrier/proc/handle_social_bypass(mob/user, mob/bouncer, used_badge = FALSE)
 	if(check_entry_permission_base(user))
 		to_chat(user, "<span class='notice'>...But you are already allowed entry.</span>")
