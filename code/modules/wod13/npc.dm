@@ -45,6 +45,8 @@
 
 	var/list/spotted_bodies = list()
 
+	var/is_criminal = FALSE
+
 /mob/living/carbon/human/npc/LateInitialize()
 	. = ..()
 	if(my_weapon && istype(my_weapon, /obj/item/gun/ballistic))
@@ -270,6 +272,8 @@
 		"What the fuck?!"
 	)
 
+	var/is_criminal = FALSE
+
 /mob/living/carbon/human/npc/proc/AssignSocialRole(var/datum/socialrole/S, var/dont_random = FALSE)
 	if(!S)
 		return
@@ -282,6 +286,8 @@
 	health = round(initial(health)+(initial(health)/3)*(physique))
 	last_health = health
 	socialrole = new S()
+
+	is_criminal = socialrole.is_criminal
 	if(GLOB.winter && !length(socialrole.suits))
 		socialrole.suits = list(/obj/item/clothing/suit/vampire/coat/winter, /obj/item/clothing/suit/vampire/coat/winter/alt)
 	if(GLOB.winter && !length(socialrole.neck))

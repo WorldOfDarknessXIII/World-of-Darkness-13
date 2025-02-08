@@ -258,7 +258,7 @@
 				walk_away(src, danger_source, reqsteps, total_multiplicative_slowdown())
 			if(my_weapon || fights_anyway)
 				var/obj/item/card/id/id_card = danger_source.get_idcard(FALSE)
-				if(!istype(id_card, /obj/item/card/id/police))
+				if(!istype(id_card, /obj/item/card/id/police) || is_criminal)
 					if(!spawned_weapon && my_weapon)
 						my_weapon.forceMove(loc)
 						drop_all_held_items()

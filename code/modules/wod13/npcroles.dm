@@ -15,6 +15,7 @@
 	preferedgender = MALE
 	male_names = null
 	surnames = null
+	is_criminal = TRUE
 
 	hair_colors = list("040404",	//Black
 											"120b05",	//Dark Brown
@@ -1434,6 +1435,7 @@
 	help_phrases = list("Cops!",
 											"Fuck the police!!",
 											"COPS?!!")
+	is_criminal = TRUE
 
 /mob/living/carbon/human/npc/illegal
 	staying = TRUE
