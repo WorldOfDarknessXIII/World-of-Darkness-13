@@ -1,5 +1,5 @@
 
-/datum/job/vamp/dispatcher
+/datum/job/vamp/police_force/dispatcher
 	title = "Emergency Dispatcher"
 	faction = "Vampire"
 	total_positions = 2
@@ -20,10 +20,12 @@
 	minimal_masquerade = 0
 	known_contacts = list("Police Chief")
 
-
+AddTimelock(/datum/job/vamp/police_force/dispatcher, list(
+	JOB_LIVING_ROLES = 2 HOURS,
+))
 /datum/outfit/job/dispatcher
 	name = "Dispatcher"
-	jobtype = /datum/job/vamp/dispatcher
+	jobtype = /datum/job/vamp/police_force/dispatcher
 	uniform = /obj/item/clothing/under/vampire/office
 	ears = /obj/item/p25radio/police/dispatch
 	shoes = /obj/item/clothing/shoes/vampire/businessblack
