@@ -38,7 +38,8 @@ GLOBAL_LIST_INIT(citizen_positions, list(
 GLOBAL_LIST_INIT(police_positions, list(
     "Police Chief",
     "Police Sergeant",
-    "Police Officer"
+    "Police Officer",
+	"Emergency Dispatcher"
 
 ))
 

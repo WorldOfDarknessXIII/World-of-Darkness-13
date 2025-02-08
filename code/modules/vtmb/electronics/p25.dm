@@ -1,6 +1,7 @@
 // P25 Radio System
 
 GLOBAL_LIST_EMPTY(p25_radios)
+GLOBAL_LIST_EMPTY(p25_tranceivers)
 
 /obj/machinery/p25transceiver
 	name = "P25 transceiver"
@@ -13,6 +14,10 @@ GLOBAL_LIST_EMPTY(p25_radios)
 	var/list/connected_radios = list()
 	var/p25_network = "default"
 	var/list/registered_callsigns = list()
+
+/obj/machinery/p25transceiver/Initialize()
+	. = ..()
+	GLOB.p25_tranceivers += src
 
 /obj/machinery/p25transceiver/ui_interact(mob/user)
 	. = ..()
@@ -209,6 +214,49 @@ GLOBAL_LIST_EMPTY(p25_radios)
 // ==============================
 // Police Transceiver
 // ==============================
+
+/obj/machinery/p25policeportal
+	name = "police P25 linker"
+	desc = "A stationary P25 radio transceiver that handles radio connections."
+	icon = 'icons/obj/radio.dmi'
+	icon_state = "walkietalkie"
+	anchored = TRUE
+	density = TRUE
+	var/obj/machinery/p25transceiver/police/transceiver
+
+/obj/machinery/p25policeportal/LateInitialize()
+	. = ..()
+	for(var/obj/machinery/p25transceiver/P in GLOB.p25_tranceivers)
+		if(P.p25_network == "police")
+			transceiver = P
+			break
+
+/obj/machinery/p25policeportal/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/p25radio))
+		var/obj/item/p25radio/radio = W
+		if(radio.linked_network == transceiver.p25_network)
+			transceiver.unregister_callsign(radio)
+			radio.linked_network = null
+			radio.linked_transceiver = null
+			transceiver.connected_radios -= radio
+			to_chat(user, "<span class='notice'>You unlink [W] from [src].</span>")
+			return
+
+		var/new_callsign = input(user, "Enter a callsign for this radio:", "Register Callsign") as text|null
+		if(!new_callsign)
+			return
+		var/registration_result = transceiver.register_callsign(radio, new_callsign, user)
+		if(registration_result != "Successfully registered callsign [new_callsign]")
+			to_chat(user, "<span class='warning'>[registration_result]</span>")
+			return
+
+		radio.linked_network = transceiver.p25_network
+		radio.linked_transceiver = transceiver
+		transceiver.connected_radios |= radio
+		to_chat(user, "<span class='notice'>You link [W] to [transceiver] with callsign [new_callsign].</span>")
+		playsound(src, 'sound/effects/radioonn.ogg', 25, FALSE)
+	else
+		return ..()
 
 /obj/machinery/p25transceiver/police
 	name = "police P25 transceiver"
