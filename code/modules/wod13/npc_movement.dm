@@ -358,7 +358,8 @@
 	if(weapon.chambered)
 		return
 
-	drop_all_held_items()
+	temporarilyRemoveItemFromInventory(weapon, TRUE)
+	qdel(weapon)
 	my_weapon = null
 	if(my_backup_weapon && !spawned_backup_weapon)
 		my_backup_weapon.forceMove(loc)
