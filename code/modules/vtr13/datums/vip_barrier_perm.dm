@@ -111,6 +111,8 @@
 /datum/vip_barrier_perm/proc/notify_guard_blocked_denial(var/mob/target_mob)
 	if(!linked_bouncers.len)
 		return
+	if(prob(80))
+		return
 	var/mob/living/carbon/human/npc/bouncer/target_bouncer = pick(linked_bouncers)
 	target_bouncer.speak_block_phrase(target_mob)
 
