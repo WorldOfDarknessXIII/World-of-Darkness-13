@@ -667,6 +667,11 @@
 	lock_id = "primToreador"
 	lockpick_difficulty = 14
 
+/obj/structure/vampdoor/glass/police_chief
+	locked = TRUE
+	lock_id = "police_chief"
+	lockpick_difficulty = 21
+
 /obj/structure/vampdoor/camarilla
 	icon_state = "cam-1"
 	baseicon = "cam"
@@ -760,15 +765,6 @@
 	baseicon = "cam"
 	locked = TRUE
 	lock_id = "police_secure"
-	lockpick_difficulty = 21
-
-/obj/structure/vampdoor/police/chief
-	icon_state = "shop-1"
-	opacity = FALSE
-	locked = TRUE
-	baseicon = "shop"
-	glass = TRUE
-	lock_id = "police_chief"
 	lockpick_difficulty = 21
 
 /obj/structure/vampdoor/prison
