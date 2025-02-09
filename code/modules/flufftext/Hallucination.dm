@@ -864,7 +864,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 				person = H
 
 	// Get person to affect if radio hallucination
-	var/is_radio = FALSE //minimally disable radio hallucinations for now
+	var/is_radio = !person || force_radio
 	if (is_radio)
 		var/list/humans = list()
 		for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
@@ -872,6 +872,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		person = pick(humans)
 
 	// Generate message
+	is_radio = FALSE //minimally disable radio hallucinations here. TODO: either make the radio hallucinations match the wod13 radio messages or remove them altogether
 	var/spans = list(person.speech_span)
 	var/chosen = !specific_message ? capitalize(pick(is_radio ? speak_messages : radio_messages)) : specific_message
 	chosen = replacetext(chosen, "%TARGETNAME%", target_name)
