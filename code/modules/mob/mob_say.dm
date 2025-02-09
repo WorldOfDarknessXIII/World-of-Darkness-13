@@ -55,9 +55,9 @@ GLOBAL_LIST_EMPTY(typing_indicator)
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
-	set_typing_indicator(TRUE)
+	set_typing_indicator(TRUE, TRUE)
 	var/message = input("What are you trying to emote? (A maximum of [MAX_BROADCAST_LEN] characters])") as text|null
-	set_typing_indicator(FALSE)
+	set_typing_indicator(FALSE, TRUE)
 
 	if(!message)
 		return
