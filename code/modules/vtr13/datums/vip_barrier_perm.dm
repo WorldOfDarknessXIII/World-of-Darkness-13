@@ -24,13 +24,6 @@
 /datum/vip_barrier_perm/proc/add_bouncer(var/target_bouncer)
 	linked_bouncers += target_bouncer
 
-	//if bouncer is dead we can permanently remove it from the check
-	RegisterSignal(target_bouncer, COMSIG_LIVING_DEATH, PROC_REF(process_dead_bouncer))
-
-	//if bouncers are KO'd or Sleeping, disable barrier
-	RegisterSignal(target_bouncer, COMSIG_LIVING_STATUS_UNCONSCIOUS, PROC_REF(check_barrier_guarded_with_recheck))
-
-
 //registers barrier with the perms
 /datum/vip_barrier_perm/proc/add_barrier(var/target_barrier)
 	linked_barriers += target_barrier
@@ -39,20 +32,13 @@
 
 
 //handles bouncer death
-/datum/vip_barrier_perm/proc/process_dead_bouncer()
-	if(linked_bouncers)
-		for(var/mob/living/carbon/human/npc/bouncer/linked_bouncer in linked_bouncers)
-			if(linked_bouncer.stat == DEAD)
-				linked_bouncers -= linked_bouncer
-				UnregisterSignal(linked_bouncer, COMSIG_LIVING_DEATH)
-				UnregisterSignal(linked_bouncer, COMSIG_LIVING_STATUS_UNCONSCIOUS)
-				UnregisterSignal(linked_bouncer, COMSIG_LIVING_STATUS_SLEEP)
-
-	#ifdef TESTING
-	else
-		log_world("BOUNCERBUGS: [src] processed a dead bouncer but no bouncers are loaded. What?")
-	#endif
-	check_barrier_guarded()
+/datum/vip_barrier_perm/proc/process_dead_bouncer(mob/living/carbon/human/npc/bouncer/dead_bouncer)
+	dead_bouncer.is_guarding = FALSE
+	linked_bouncers -= dead_bouncer
+	if(!linked_bouncers)
+		for(var/obj/effect/vip_barrier/barrier in linked_barriers)
+			UnregisterSignal(barrier, COMSIG_BARRIER_NOTIFY_GUARD_BLOCKED)
+			UnregisterSignal(barrier, COMSIG_BARRIER_NOTIFY_GUARD_ENTRY)
 
 
 
@@ -60,67 +46,56 @@
 	var/barrier_is_guarded = FALSE
 
 	for(var/mob/living/carbon/human/npc/bouncer/linked_bouncer in linked_bouncers)
-		if(linked_bouncer.stat == DEAD)
-			continue
-		if(linked_bouncer.IsSleeping())
-			continue
-		if(linked_bouncer.IsUnconscious())
+		if(!linked_bouncer.is_guarding)
 			continue
 		barrier_is_guarded = TRUE
 		break
 
 	if(!actively_guarded && barrier_is_guarded)
 		actively_guarded = TRUE
-		SEND_SIGNAL(src, COMSIG_VIP_PERM_ACTIVE_GUARD_UPDATE)
+		for(var/obj/effect/vip_barrier/barrier in linked_barriers)
+			barrier.update_icon()
 
 	else if (actively_guarded && !barrier_is_guarded)
 		actively_guarded = FALSE
-		SEND_SIGNAL(src, COMSIG_VIP_PERM_ACTIVE_GUARD_UPDATE)
-
-
-//Have the perms check if the barrier is under active guard, then recheck after the given time.
-//Works in tandem with temporary effects like a bouncer being KO'd
-/datum/vip_barrier_perm/proc/check_barrier_guarded_with_recheck(amount, ignorestun)
-	SIGNAL_HANDLER
-	check_barrier_guarded()
-	addtimer(CALLBACK(src, PROC_REF(check_barrier_guarded)), amount+guard_recheck_lag)
-
+		for(var/obj/effect/vip_barrier/barrier in linked_barriers)
+			barrier.update_icon()
 
 //=============================================================================
 //Procs for communication between barriers and bouncers
-/datum/vip_barrier_perm/proc/notify_guard_entry(var/mob/target_mob)
+/datum/vip_barrier_perm/proc/notify_guard_entry(mob/target_mob)
 	SIGNAL_HANDLER
 	if(!linked_bouncers.len)
 		return
 	var/mob/living/carbon/human/npc/bouncer/target_bouncer = pick(linked_bouncers)
-	target_bouncer.speak_entry_phrase(target_mob)
+	target_bouncer.speak_seldom(pick(target_bouncer.entry_phrases))
 
-/datum/vip_barrier_perm/proc/notify_guard_blocked(var/mob/target_mob)
+/datum/vip_barrier_perm/proc/notify_guard_blocked(mob/target_mob)
 	SIGNAL_HANDLER
-	if(!linked_bouncers.len)
-		return
-	var/mob/living/carbon/human/npc/bouncer/target_bouncer = pick(linked_bouncers)
-	target_bouncer.speak_denial_phrase(target_mob)
-
-/datum/vip_barrier_perm/proc/notify_guard_police_denial(var/mob/target_mob)
 	if(!linked_bouncers.len)
 		return
 	if(prob(80))
 		return
 	var/mob/living/carbon/human/npc/bouncer/target_bouncer = pick(linked_bouncers)
-	target_bouncer.speak_police_block_phrase(target_mob)
+	target_bouncer.speak_seldom(pick(target_bouncer.denial_phrases))
+
+/datum/vip_barrier_perm/proc/notify_guard_police_denial(var/mob/target_mob)
+	if(!linked_bouncers.len)
+		return
+	var/mob/living/carbon/human/npc/bouncer/target_bouncer = pick(linked_bouncers)
+	target_bouncer.speak_seldom(pick(target_bouncer.police_block_phrases))
 
 /datum/vip_barrier_perm/proc/notify_guard_blocked_denial(var/mob/target_mob)
 	if(!linked_bouncers.len)
 		return
 	var/mob/living/carbon/human/npc/bouncer/target_bouncer = pick(linked_bouncers)
-	target_bouncer.speak_block_phrase(target_mob)
+	target_bouncer.speak_seldom(pick(target_bouncer.block_phrases))
 
-/datum/vip_barrier_perm/proc/notify_barrier_social_bypass(mob/user, used_badge)
+/datum/vip_barrier_perm/proc/notify_barrier_social_bypass(mob/user, mob/bouncer, used_badge)
 	if(!linked_barriers.len)
 		return
-	var/obj/structure/vip_barrier/target_barrier = linked_barriers[1]
-	target_barrier.handle_social_bypass(user,used_badge)
+	var/obj/effect/vip_barrier/target_barrier = linked_barriers[1]
+	target_barrier.handle_social_bypass(user, bouncer, used_badge)
 
 
 //=============================================================================

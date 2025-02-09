@@ -323,26 +323,26 @@
 				else
 					my_weapon = null
 
-/mob/living/carbon/human/npc/proc/handle_gun(obj/item/gun/weapon, mob/living/user, atom/target, params, zone_override)
+/mob/living/carbon/human/npc/proc/handle_gun(obj/item/gun/ballistic/weapon, mob/living/user, atom/target, params, zone_override)
 	SIGNAL_HANDLER
-	if(istype(weapon, /obj/item/gun/ballistic))
-		var/obj/item/gun/ballistic/weapon_ballistic = weapon
+	if(!istype(weapon, /obj/item/gun/ballistic))
+		return
 
-		if(istype(weapon_ballistic.magazine, /obj/item/ammo_box/magazine/internal))
-			var/obj/item/ammo_box/magazine/internal_mag = weapon_ballistic.magazine
-			if(extra_loaded_rounds)
-				internal_mag.give_round(new internal_mag.ammo_type())
-				extra_loaded_rounds--
-			addtimer(CALLBACK(src, PROC_REF(rack_held_gun), weapon_ballistic), weapon_ballistic.rack_delay)
+	if(istype(weapon.magazine, /obj/item/ammo_box/magazine/internal))
+		var/obj/item/ammo_box/magazine/internal_mag = weapon.magazine
+		if(extra_loaded_rounds)
+			internal_mag.give_round(new internal_mag.ammo_type())
+			extra_loaded_rounds--
+		addtimer(CALLBACK(src, PROC_REF(rack_held_gun), weapon), weapon.rack_delay)
+		return
 
-		else
-			if(!weapon_ballistic.magazine.ammo_count())
-				if(extra_mags)
-					extra_mags--
-					weapon_ballistic.eject_magazine_npc(src, new weapon_ballistic.mag_type(src))
-					weapon_ballistic.rack(src)
-					if(!weapon.chambered)
-						weapon_ballistic.chamber_round()
+	if(!weapon.magazine.ammo_count())
+		if(extra_mags)
+			extra_mags--
+			weapon.eject_magazine_npc(src, new weapon.mag_type(src))
+			weapon.rack(src)
+			if(!weapon.chambered)
+				weapon.chamber_round()
 
 /mob/living/carbon/human/npc/proc/rack_held_gun(obj/item/gun/ballistic/weapon)
 	if(weapon.bolt_locked)

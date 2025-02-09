@@ -9,16 +9,15 @@
 	var/list/block_phrases = list("I HAVE NO BLOCK PHRASE")
 
 	staying = TRUE
-	var/walk_home_timer = 1 MINUTES
-	var/warp_home_timer = 2 MINUTES
 
-	var/return_rechecks_max = 10
-	var/return_rechecks_completed = 0
-	var/recheck_return_timer = 3 MINUTES
+	var/left_home_at = 0
+	var/walk_home_timer = 2 MINUTES
+	var/warp_home_timer = 30 SECONDS
+
 
 	var/datum/vip_barrier_perm/linked_perm = null
 
-	var/i_have_spoken = FALSE
+	var/message_cooldown = 0
 	var/repeat_delay = 8 SECONDS
 	var/resume_neutral_direction_delay = 4 SECONDS
 
@@ -28,6 +27,7 @@
 	var/turf/start_turf = null //Where the creature spawns so it can return from whence it came
 	var/our_role = /datum/socialrole/bouncer
 
+	var/is_guarding = TRUE
 
 	var/bouncer_weapon_type = /obj/item/gun/ballistic/shotgun/vampire
 	var/bouncer_backup_weapon_type = /obj/item/melee/vampirearms/machete
@@ -36,7 +36,10 @@
 	fights_anyway=TRUE
 
 /mob/living/carbon/human/npc/bouncer/Initialize()
-	..()
+	.=..()
+
+	if(src.type == /mob/living/carbon/human/npc/bouncer)
+		CRASH("Bouncer created using default type, please use a child of this type in mapping.")
 
 
 	AssignSocialRole(our_role)
@@ -51,11 +54,40 @@
 	start_turf = get_turf(src)
 
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(yearn_for_home))
+	RegisterSignal(src, COMSIG_MOB_STATCHANGE, PROC_REF(stat_change_process_is_guarding))
 
-	return INITIALIZE_HINT_LATELOAD
+	if(SSbouncer_barriers.vip_barrier_perms?[protected_zone_id])
+		linked_perm = SSbouncer_barriers.vip_barrier_perms[protected_zone_id]
+		linked_perm.add_bouncer(src)
+	else if(SSbouncer_barriers.initialized)
+		CRASH("A Bouncer was created for vip_barrier_perms that were not loaded!")
+
+/mob/living/carbon/human/npc/bouncer/on_knockedout_trait_gain(datum/source)
+	..()
+	set_is_guarding_false()
+
+/mob/living/carbon/human/npc/bouncer/on_immobilized_trait_gain(datum/source)
+	..()
+	set_is_guarding_false()
+
+/mob/living/carbon/human/npc/bouncer/on_restrained_trait_gain(datum/source)
+	..()
+	set_is_guarding_false()
+
+/mob/living/carbon/human/npc/bouncer/on_knockedout_trait_loss(datum/source)
+	..()
+	set_is_guarding_true()
+
+/mob/living/carbon/human/npc/bouncer/on_immobilized_trait_loss(datum/source)
+	..()
+	set_is_guarding_true()
+
+/mob/living/carbon/human/npc/bouncer/on_restrained_trait_loss(datum/source)
+	..()
+	set_is_guarding_true()
 
 
-/mob/living/carbon/human/npc/bouncer/AssignSocialRole(var/datum/socialrole/bouncer/role, var/dont_random = FALSE)
+/mob/living/carbon/human/npc/bouncer/AssignSocialRole(datum/socialrole/bouncer/role, var/dont_random = FALSE)
 	. = ..(role, dont_random)
 
 	if(role && ispath(role, /datum/socialrole/bouncer))
@@ -67,99 +99,88 @@
 		bouncer_weapon_type = role.bouncer_weapon_type
 		bouncer_backup_weapon_type = role.bouncer_backup_weapon_type
 
-/mob/living/carbon/human/npc/bouncer/LateInitialize()
-	. = ..()
+/mob/living/carbon/human/npc/bouncer/proc/stat_change_process_is_guarding(datum/source, statchange)
+	if(statchange >= HARD_CRIT)
+		is_guarding = FALSE
+		if(statchange == DEAD)
+			linked_perm.process_dead_bouncer(src)
+	else if (!HAS_TRAIT(src, TRAIT_RESTRAINED) && !HAS_TRAIT(src, TRAIT_KNOCKEDOUT) && !HAS_TRAIT(src, TRAIT_IMMOBILIZED))
+		is_guarding = TRUE
+		go_home()
+	else
+		return
+	linked_perm.check_barrier_guarded()
 
-	//ideally this should never happen, but se la vie
-	if(!GLOB.vip_barrier_perms[protected_zone_id])
-		GLOB.vip_barrier_perms[protected_zone_id] = new /datum/vip_barrier_perm(protected_zone_id)
+/mob/living/carbon/human/npc/bouncer/proc/set_is_guarding_true(datum/source)
+	if(stat >= HARD_CRIT)
+		return
+	is_guarding = TRUE
+	go_home()
+	linked_perm.check_barrier_guarded()
 
-	linked_perm = GLOB.vip_barrier_perms[protected_zone_id]
-	linked_perm.add_bouncer(src)
+/mob/living/carbon/human/npc/bouncer/proc/set_is_guarding_false(datum/source)
+	is_guarding = FALSE
+	linked_perm.check_barrier_guarded()
 
 
+//when the bouncer moves, they try to return home after awhile
 /mob/living/carbon/human/npc/bouncer/proc/yearn_for_home()
 	SIGNAL_HANDLER
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
-	addtimer(CALLBACK(src, PROC_REF(go_home)), walk_home_timer)
-	addtimer(CALLBACK(src, PROC_REF(position_hard_reset)), warp_home_timer)
-
-/mob/living/carbon/human/npc/bouncer/proc/go_home()
-	if(stat <= SOFT_CRIT)
-		danger_source = null
-		if(start_turf && loc == start_turf.loc)
-			return
-		walk_to(src, start_turf, 1, total_multiplicative_slowdown())
-
-/mob/living/carbon/human/npc/bouncer/proc/position_hard_reset()
-	if(stat <= SOFT_CRIT)
-		if(start_turf && loc != start_turf.loc)
-			forceMove(start_turf)
-		RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(yearn_for_home))
-		return_rechecks_completed = 0
-	else if(stat >= UNCONSCIOUS)
-		addtimer(CALLBACK(src, PROC_REF(recheck_return_home)), recheck_return_timer)
-
-/mob/living/carbon/human/npc/bouncer/proc/recheck_return_home()
-	if(return_rechecks_completed <= return_rechecks_max)
-		return_rechecks_completed++
+	if((get_turf(src) != start_turf) && !left_home_at)
+		left_home_at = world.time
 		addtimer(CALLBACK(src, PROC_REF(go_home)), walk_home_timer)
+	else if((get_turf(src) == start_turf) && left_home_at)
+		left_home_at = 0
+
+//mob tries to return home if its timer is up.
+/mob/living/carbon/human/npc/bouncer/proc/go_home()
+	if(get_turf(src) == start_turf || !is_guarding)
+		return
+
+	if(left_home_at + walk_home_timer <= world.time)
+		danger_source = null
+		walk_to(src, start_turf, 1, total_multiplicative_slowdown())
 		addtimer(CALLBACK(src, PROC_REF(position_hard_reset)), warp_home_timer)
 
+/mob/living/carbon/human/npc/bouncer/proc/position_hard_reset()
+	if(is_guarding && get_turf(src) != start_turf)
+		danger_source = null
+		forceMove(start_turf)
 
 
-/mob/living/carbon/human/npc/bouncer/attackby(obj/item/used_item, mob/user, params)
-	if(istype(used_item,/obj/item/card/id/police))
-		to_chat(user, "<span class='notice'>You flash your [used_item] as you try to talk your way through.</span>")
-		handle_social_bypass(user, used_badge=TRUE)
-		return
-	..()
 
-/mob/living/carbon/human/npc/bouncer/attack_hand(mob/user)
-	if (user.a_intent == INTENT_HELP)
-		to_chat(user, "<span class='notice'>You try to talk your way through.</span>")
-		handle_social_bypass(user)
-		return
-	..()
+/mob/living/carbon/human/npc/bouncer/examine(mob/user)
+	.=..()
+
+	if(can_be_reasoned_with() && in_range(src, user))
+		var/list/interact_options = list(
+			"Persuade for Entry" = image(icon = 'icons/obj/dice.dmi', icon_state = "d10"))
+
+		var/obj/item/held_item = user.get_active_held_item()
+		if(held_item && istype(held_item,/obj/item/card/id/police))
+			interact_options["Show Badge"] = image(icon = held_item.icon, icon_state = held_item.icon_state)
+		var/picked_option = show_radial_menu(user, src, interact_options, radius = 38, require_near = TRUE)
+		switch(picked_option)
+			if("Persuade for Entry")
+				to_chat(user, "<span class='notice'>You try to talk your way through.</span>")
+				linked_perm.notify_barrier_social_bypass(user, src)
+			if("Show Badge")
+				to_chat(user, "<span class='notice'>You flash your [held_item] as you try to talk your way through.</span>")
+				linked_perm.notify_barrier_social_bypass(user, src, TRUE)
+
 
 /mob/living/carbon/human/npc/bouncer/proc/can_be_reasoned_with()
-	if(stat == DEAD || IsSleeping() || IsUnconscious() || loc!=initial(loc))
+	if(!is_guarding || get_turf(src)!=start_turf)
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/human/npc/bouncer/proc/handle_social_bypass(mob/user, used_badge = FALSE)
-		linked_perm.notify_barrier_social_bypass(user, used_badge)
 
-
-//====================================================================
-//VERBAL CODE
-
-/mob/living/carbon/human/npc/bouncer/proc/speak_entry_phrase(mob/target)
-	speak_seldom(pick(entry_phrases), target)
-
-/mob/living/carbon/human/npc/bouncer/proc/speak_denial_phrase(mob/target)
-	speak_seldom(pick(denial_phrases), target)
-
-/mob/living/carbon/human/npc/bouncer/proc/speak_police_block_phrase(mob/target)
-	speak_seldom(pick(police_block_phrases), target)
-
-/mob/living/carbon/human/npc/bouncer/proc/speak_block_phrase(mob/target)
-	speak_seldom(pick(block_phrases), target)
-
-//Say a phrase, only if something hasn't been said in awhile
 /mob/living/carbon/human/npc/bouncer/proc/speak_seldom(var/phrase, mob/target)
-	if(!i_have_spoken && loc != initial(loc))
+	if(can_be_reasoned_with() && world.time > message_cooldown)
+		message_cooldown = world.time + repeat_delay
 		RealisticSay(phrase)
-		i_have_spoken = TRUE
-		addtimer(CALLBACK(src, PROC_REF(toggle_new_speak)), repeat_delay)
-
 		dir = get_dir(loc, get_turf(target))
 		addtimer(CALLBACK(src, PROC_REF(resume_neutral_direction)), resume_neutral_direction_delay)
 
-/mob/living/carbon/human/npc/bouncer/proc/toggle_new_speak()
-	i_have_spoken = FALSE
-
 /mob/living/carbon/human/npc/bouncer/proc/resume_neutral_direction()
 	dir = initial(dir)
-
-//====================================================================
