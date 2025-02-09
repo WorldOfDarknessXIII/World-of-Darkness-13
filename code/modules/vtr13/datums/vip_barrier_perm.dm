@@ -63,33 +63,33 @@
 
 //=============================================================================
 //Procs for communication between barriers and bouncers
-/datum/vip_barrier_perm/proc/notify_guard_entry(mob/target_mob)
+/datum/vip_barrier_perm/proc/notify_guard_entry(datum/source, mob/target_mob)
 	SIGNAL_HANDLER
 	if(!linked_bouncers.len)
 		return
 	var/mob/living/carbon/human/npc/bouncer/target_bouncer = pick(linked_bouncers)
-	target_bouncer.speak_seldom(pick(target_bouncer.entry_phrases))
+	target_bouncer.speak_seldom(pick(target_bouncer.entry_phrases), target_mob)
 
-/datum/vip_barrier_perm/proc/notify_guard_blocked(mob/target_mob)
+/datum/vip_barrier_perm/proc/notify_guard_blocked(datum/source, mob/target_mob)
 	SIGNAL_HANDLER
 	if(!linked_bouncers.len)
 		return
 	if(prob(80))
 		return
 	var/mob/living/carbon/human/npc/bouncer/target_bouncer = pick(linked_bouncers)
-	target_bouncer.speak_seldom(pick(target_bouncer.denial_phrases))
+	target_bouncer.speak_seldom(pick(target_bouncer.denial_phrases), target_mob)
 
-/datum/vip_barrier_perm/proc/notify_guard_police_denial(var/mob/target_mob)
+/datum/vip_barrier_perm/proc/notify_guard_police_denial(mob/target_mob)
 	if(!linked_bouncers.len)
 		return
 	var/mob/living/carbon/human/npc/bouncer/target_bouncer = pick(linked_bouncers)
-	target_bouncer.speak_seldom(pick(target_bouncer.police_block_phrases))
+	target_bouncer.speak_seldom(pick(target_bouncer.police_block_phrases), target_mob)
 
-/datum/vip_barrier_perm/proc/notify_guard_blocked_denial(var/mob/target_mob)
+/datum/vip_barrier_perm/proc/notify_guard_blocked_denial(mob/target_mob)
 	if(!linked_bouncers.len)
 		return
 	var/mob/living/carbon/human/npc/bouncer/target_bouncer = pick(linked_bouncers)
-	target_bouncer.speak_seldom(pick(target_bouncer.block_phrases))
+	target_bouncer.speak_seldom(pick(target_bouncer.block_phrases), target_mob)
 
 /datum/vip_barrier_perm/proc/notify_barrier_social_bypass(mob/user, mob/bouncer, used_badge)
 	if(!linked_barriers.len)
