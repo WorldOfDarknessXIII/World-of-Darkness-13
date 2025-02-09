@@ -281,6 +281,58 @@
 	icon_state = "tongueplasma"
 	modifies_speech = FALSE
 
+/obj/item/organ/tongue/malkavian
+	name = "tongue"
+	desc = "A fleshy muscle mostly used for telling the truth."
+	icon_state = "tonguenormal"
+	modifies_speech = TRUE
+	var/chattering = FALSE
+	var/phomeme_type = "sans"
+	var/list/phomeme_types = list("sans", "papyrus")
+	var/static/list/languages_possible_skeleton = typecacheof(list(
+		/datum/language/english,
+		/datum/language/espanol,
+		/datum/language/mandarin,
+		/datum/language/beachbum,
+		/datum/language/russian,
+		/datum/language/italian,
+		/datum/language/latin,
+		/datum/language/hebrew,
+		/datum/language/french,
+		/datum/language/arabic,
+		/datum/language/german,
+		/datum/language/hebrew,
+		/datum/language/japanese,
+		/datum/language/cantonese,
+		/datum/language/greek
+	))
+
+/obj/item/organ/tongue/malkavian/Initialize()
+	. = ..()
+
+/obj/item/organ/tongue/malkavian/handle_speech(datum/source, list/speech_args)
+	if (chattering)
+		chatter(speech_args[SPEECH_MESSAGE], phomeme_type, source)
+	speech_args[SPEECH_SPANS] |= SPAN_SANS
+	var/message = speech_args[SPEECH_MESSAGE]
+	// replace some letters to make the font more closely resemble that of vtm: bloodlines' malkavian dialogue
+	// big thanks to Metek for helping me condense this from a bunch of ugly regex replace procs
+	var/list/replacements = list(
+		"a"    = "𝙖",            "A" = "𝘼",
+		"d"    = pick("𝓭","𝓓"), "D" = "𝓓",
+		"e"    = "𝙚",            "E" = "𝙀",
+		"i"    = "𝙞",            "I" = pick("ﾉ", "𝐼"), //rudimentary prob(50) to pick one or the other
+		"l"    = pick("𝙇","𝓵"),  "L" = pick("𝙇","𝓛"),
+		"n"    = "𝙣",            "N" = pick("𝓝","𝙉"),
+		"o"    = "𝙤",            "O" = "𝙊",
+		"s"    = "𝘴",            "S" = "𝙎",
+		"u"    = "𝙪",            "U" = "𝙐",
+		"v"	   = "𝐯",            "V" = "𝓥",
+	)
+	for(var/letter in replacements)
+		message = replacetextEx(message, letter, replacements[letter])
+	speech_args[SPEECH_MESSAGE] = message
+
 /obj/item/organ/tongue/robot
 	name = "robotic voicebox"
 	desc = "A voice synthesizer that can interface with organic lifeforms."
