@@ -11,7 +11,7 @@
 		"arab",
 		"indian",
 		"african1",
-		"african2",)
+		"african2")
 
 	min_age = 18
 	max_age = 45
@@ -148,8 +148,7 @@
 		"arab",
 		"indian",
 		"african1",
-		"african2",
-	)
+		"african2")
 
 	min_age = 18
 	max_age = 85
@@ -291,8 +290,7 @@
 		"arab",
 		"indian",
 		"african1",
-		"african2",
-			)
+		"african2")
 
 	min_age = 18
 	max_age = 85
@@ -429,7 +427,7 @@
 		"arab",
 		"indian",
 		"african1",
-		"african2",)
+		"african2")
 
 	min_age = 45
 	max_age = 85
@@ -533,7 +531,7 @@
 		"arab",
 		"indian",
 		"african1",
-		"african2",)
+		"african2")
 
 	min_age = 45
 	max_age = 85
@@ -635,8 +633,7 @@
 /datum/socialrole/richmale
 	s_tones = list("albino",
 		"caucasian1",
-		"caucasian2",
-)
+		"caucasian2")
 
 	min_age = 18
 	max_age = 85
@@ -709,8 +706,7 @@
 /datum/socialrole/richfemale
 	s_tones = list("albino",
 		"caucasian1",
-		"caucasian2",
-)
+		"caucasian2")
 
 	min_age = 18
 	max_age = 85
@@ -956,7 +952,7 @@
 		"arab",
 		"indian",
 		"african1",
-		"african2",)
+		"african2")
 
 	min_age = 18
 	max_age = 45
@@ -1331,7 +1327,7 @@
 		"arab",
 		"indian",
 		"african1",
-		"african2",)
+		"african2")
 
 	min_age = 18
 	max_age = 30
