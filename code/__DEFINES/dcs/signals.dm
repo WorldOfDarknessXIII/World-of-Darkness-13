@@ -1014,6 +1014,5 @@
 #define COMSIG_AQUARIUM_FLUID_CHANGED "aquarium_fluid_changed"
 
 // Bouncer related signals
-#define COMSIG_VIP_PERM_ACTIVE_GUARD_UPDATE "vip_perm_active_guard_update"
 #define COMSIG_BARRIER_NOTIFY_GUARD_ENTRY "vip_barrier_notify_guard_entry"
 #define COMSIG_BARRIER_NOTIFY_GUARD_BLOCKED "vip_barrier_notify_guard_blocked"
