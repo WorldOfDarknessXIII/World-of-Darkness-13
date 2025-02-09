@@ -3,8 +3,16 @@ GLOBAL_LIST_EMPTY(typing_indicator)
 
 //Say verb
 /mob/verb/say_verb()
+///Used in set_typing_indicator()
+GLOBAL_LIST_EMPTY(typing_indicator)
+
+//Say verb
+/mob/verb/say_verb()
 	set name = "Say"
 	set category = "IC"
+
+	// This is to avoid multiple instancing
+	set_typing_indicator(FALSE)
 
 	// This is to avoid multiple instancing
 	set_typing_indicator(FALSE)
@@ -16,8 +24,15 @@ GLOBAL_LIST_EMPTY(typing_indicator)
 	var/message = input("What are you trying to say? (A maximum of [MAX_BROADCAST_LEN] characters]") as text|null
 	set_typing_indicator(FALSE)
 
+
+	set_typing_indicator(TRUE)
+	var/message = input("What are you trying to say? (A maximum of [MAX_BROADCAST_LEN] characters]") as text|null
+	set_typing_indicator(FALSE)
+
 	if(!message)
 		return
+	message = message_clean(message)
+
 	message = message_clean(message)
 
 	say(message)
@@ -182,6 +197,44 @@ GLOBAL_LIST_EMPTY(typing_indicator)
 		if(!message)
 			return
 	return message
+
+/mob/proc/set_typing_indicator(state, me)
+	if(!GLOB.typing_indicator[bubble_icon])
+		GLOB.typing_indicator[bubble_icon] = image('icons/mob/talk.dmi', null, "[bubble_icon]0", ABOVE_HUD_LAYER)
+		var/image/I = GLOB.typing_indicator[bubble_icon]
+		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+
+	// Don't try to pop a bubble if we are mute
+	if(ishuman(src) && !me)
+		var/mob/living/carbon/human/H = src
+		if(HAS_TRAIT(H, TRAIT_MUTE))
+			overlays -= GLOB.typing_indicator[bubble_icon]
+			typing = FALSE
+			return FALSE
+
+	// TODO: this will need to be adjusted to NPCs in another PR
+	if(!client)
+		return FALSE
+
+	if(stat != CONSCIOUS || is_muzzled())
+		overlays -= GLOB.typing_indicator[bubble_icon]
+		typing = FALSE
+		return FALSE
+
+	if(state && !typing)
+		overlays += GLOB.typing_indicator[bubble_icon]
+		typing = TRUE
+
+	if(!state && typing)
+		overlays -= GLOB.typing_indicator[bubble_icon]
+		typing = FALSE
+
+	return state
+
+/mob/proc/speech_ending_bubble(bubble_state = "", bubble_loc = src, list/bubble_recipients = list())
+	var/image/speech_bubble = image('icons/mob/talk.dmi', bubble_loc, bubble_state, FLY_LAYER)
+	speech_bubble.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay), speech_bubble, bubble_recipients, 2 SECONDS)
 
 /mob/proc/set_typing_indicator(state, me)
 	if(!GLOB.typing_indicator[bubble_icon])
