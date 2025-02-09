@@ -34,3 +34,6 @@
 	var/turf/T = get_turf(A)
 	if(T)
 		remove_blob(T)
+
+/mob/camera/blob/can_z_move(direction, turf/start, turf/destination, z_move_flags = NONE, mob/living/rider)
+	return FALSE
