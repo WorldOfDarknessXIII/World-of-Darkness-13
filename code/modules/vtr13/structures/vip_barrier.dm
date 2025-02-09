@@ -43,7 +43,7 @@
 	RegisterSignal(linked_perm, COMSIG_VIP_PERM_ACTIVE_GUARD_UPDATE, PROC_REF(signal_update_icon))
 
 	//spessman purity means I have to register a signal with myself, pain
-	RegisterSignal(src, COMSIG_BARRIER_TRIGGER_SOUND, PROC_REF(playBlockSound))
+	RegisterSignal(src, COMSIG_BARRIER_NOTIFY_GUARD_BLOCKED, PROC_REF(playBlockSound))
 
 	update_icon()
 
@@ -69,7 +69,6 @@
 		SEND_SIGNAL(src, COMSIG_BARRIER_NOTIFY_GUARD_ENTRY, mover_mob)
 	else
 		SEND_SIGNAL(src, COMSIG_BARRIER_NOTIFY_GUARD_BLOCKED, mover_mob)
-		SEND_SIGNAL(src, COMSIG_BARRIER_TRIGGER_SOUND, mover_mob)
 
 	return entry_allowed
 
@@ -81,7 +80,7 @@
 
 /obj/structure/vip_barrier/proc/playBlockSound(atom/movable/mover)
 	SIGNAL_HANDLER
-	playsound(mover, block_sound, vol = 0.5, falloff_distance = 1, vary = TRUE)
+	playsound(mover, block_sound, vol = 10, falloff_distance = 2, vary = TRUE)
 
 
 //Call this parent after any children run

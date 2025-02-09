@@ -1017,4 +1017,3 @@
 #define COMSIG_VIP_PERM_ACTIVE_GUARD_UPDATE "vip_perm_active_guard_update"
 #define COMSIG_BARRIER_NOTIFY_GUARD_ENTRY "vip_barrier_notify_guard_entry"
 #define COMSIG_BARRIER_NOTIFY_GUARD_BLOCKED "vip_barrier_notify_guard_blocked"
-#define COMSIG_BARRIER_TRIGGER_SOUND "vip_barrier_notify_guard_blocked"
