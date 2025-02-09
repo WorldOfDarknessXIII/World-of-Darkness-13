@@ -18,7 +18,6 @@ GLOBAL_LIST_EMPTY(typing_indicator)
 
 	if(!message)
 		return
-	message = message_clean(message)
 
 	say(message)
 
@@ -38,7 +37,6 @@ GLOBAL_LIST_EMPTY(typing_indicator)
 
 	if(!message)
 		return
-	message = message_clean(message)
 
 	whisper(message)
 
