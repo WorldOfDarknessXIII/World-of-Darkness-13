@@ -30,10 +30,10 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_RESTRAINED), PROC_REF(on_restrained_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_RESTRAINED), PROC_REF(on_restrained_trait_loss))
 
-	RegisterSignal(src, list(
-		SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION),
-		SIGNAL_REMOVETRAIT(TRAIT_CRITICAL_CONDITION),
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(on_critical_trait_gain))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(on_critical_trait_loss))
 
+	RegisterSignal(src, list(
 		SIGNAL_ADDTRAIT(TRAIT_NODEATH),
 		SIGNAL_REMOVETRAIT(TRAIT_NODEATH),
 	), PROC_REF(update_succumb_action))
@@ -72,6 +72,16 @@
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, TRAIT_DEATHCOMA)
 
+/// Called when [TRAIT_CRITICAL_CONDITION] is added to the mob.
+/mob/living/proc/on_critical_trait_gain(datum/source)
+	SIGNAL_HANDLER
+	set_typing_indicator(FALSE)
+	update_succumb_action()
+
+/// Called when [TRAIT_CRITICAL_CONDITION] is removed from the mob.
+/mob/living/proc/on_critical_trait_loss(datum/source)
+	SIGNAL_HANDLER
+	update_succumb_action()
 
 /// Called when [TRAIT_IMMOBILIZED] is added to the mob.
 /mob/living/proc/on_immobilized_trait_gain(datum/source)
@@ -79,6 +89,7 @@
 	mobility_flags &= ~MOBILITY_MOVE
 	if(living_flags & MOVES_ON_ITS_OWN)
 		walk(src, 0) //stop mid walk
+	set_typing_indicator(FALSE)
 
 /// Called when [TRAIT_IMMOBILIZED] is removed from the mob.
 /mob/living/proc/on_immobilized_trait_loss(datum/source)

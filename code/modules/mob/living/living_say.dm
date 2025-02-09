@@ -378,7 +378,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	for(var/mob/M in listening)
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
-	speech_ending_bubble("[bubble_icon][custom_speech_bubble_ending]", src, speech_bubble_recipients)
+	var/image/speech_bubble = image('icons/mob/talk.dmi', src, "[bubble_icon][custom_speech_bubble_ending]", FLY_LAYER)
+	speech_bubble.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay), speech_bubble, speech_bubble_recipients, 2 SECONDS)
 
 /mob/proc/binarycheck()
 	return FALSE
