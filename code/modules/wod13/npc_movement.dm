@@ -354,7 +354,6 @@
 	UnregisterSignal(my_weapon, COMSIG_GUN_FIRED)
 	UnregisterSignal(my_weapon, COMSIG_GUN_EMPTY)
 	temporarilyRemoveItemFromInventory(my_weapon, TRUE)
-	qdel(my_weapon)
 	my_weapon = null
 	if(my_backup_weapon && !spawned_backup_weapon)
 		my_backup_weapon.forceMove(loc)

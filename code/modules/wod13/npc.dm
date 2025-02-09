@@ -49,13 +49,14 @@
 
 /mob/living/carbon/human/npc/LateInitialize()
 	. = ..()
-	if(my_weapon && istype(my_weapon, /obj/item/gun/ballistic))
-		ADD_TRAIT(my_weapon, TRAIT_NODROP, NPC_GUN_TRAIT)
-		RegisterSignal(my_weapon, COMSIG_GUN_FIRED, PROC_REF(handle_gun))
-		RegisterSignal(my_weapon, COMSIG_GUN_EMPTY, PROC_REF(handle_empty_gun))
+	if(my_weapon)
+		my_weapon.register_npc_owned(src)
+		if(istype(my_weapon, /obj/item/gun/ballistic))
+			RegisterSignal(my_weapon, COMSIG_GUN_FIRED, PROC_REF(handle_gun))
+			RegisterSignal(my_weapon, COMSIG_GUN_EMPTY, PROC_REF(handle_empty_gun))
 
-	if(my_backup_weapon && istype(my_weapon, /obj/item/gun/ballistic))
-		ADD_TRAIT(my_backup_weapon, TRAIT_NODROP, NPC_GUN_TRAIT)
+	if(my_backup_weapon)
+		my_backup_weapon.register_npc_owned(src)
 
 /datum/movespeed_modifier/npc
 	multiplicative_slowdown = 2

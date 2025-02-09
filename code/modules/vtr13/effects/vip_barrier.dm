@@ -85,10 +85,10 @@
 
 //Call this parent after any children run
 /obj/effect/vip_barrier/proc/check_entry_permission_base(mob/living/carbon/human/entering_mob)
-	if(LAZYFIND(linked_perm.allow_list, entering_mob.get_face_name()))
+	if(LAZYFIND(linked_perm.allow_list, entering_mob.name))
 		return TRUE
 
-	if(LAZYFIND(linked_perm.block_list, entering_mob.get_face_name()))
+	if(LAZYFIND(linked_perm.block_list, entering_mob.name))
 		return FALSE
 
 	return check_entry_permission_custom(entering_mob)
@@ -108,7 +108,7 @@
 		return
 
 	//handle block list babies
-	if(LAZYFIND(linked_perm.block_list, user.get_face_name()))
+	if(LAZYFIND(linked_perm.block_list, user.name))
 		if(identify_cop(user, used_badge))
 			linked_perm.notify_guard_police_denial(user)
 		else

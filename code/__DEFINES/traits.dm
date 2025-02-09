@@ -532,4 +532,4 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CLOWNOP_TRAIT "clownop"
 
 //trait from /mob/living/carbon/human/npc
-#define NPC_GUN_TRAIT "npc_gun"
+#define NPC_ITEM_TRAIT "npc_item"
