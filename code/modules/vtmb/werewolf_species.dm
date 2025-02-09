@@ -110,11 +110,11 @@
 	C.transformator.human_form = C
 
 	//garou resist vampire bites better than mortals
-	RegisterSignal(src, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
+	RegisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
 
 /datum/species/garou/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
-	UnregisterSignal(src, COMSIG_MOB_VAMPIRE_SUCKED)
+	UnregisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED)
 	for(var/datum/action/garouinfo/VI in C.actions)
 		if(VI)
 			VI.Remove(C)
@@ -173,10 +173,9 @@
  *
  * This handles vampire bite sleep immunity and any future special interactions.
  */
-/datum/species/garou/proc/on_garou_bitten(/datum/source)
-	SIGNAL HANDLER
+/datum/species/garou/proc/on_garou_bitten(/datum/source, mob/living/carbon/being_bitten)
+	SIGNAL_HANDLER
 
-	if(isgarou(src) || iswerewolf(src))
-		var/mob/living/carbon/wolf = src
-		adjust_rage(1, src, TRUE)
+	if(isgarou(being_bitten) || iswerewolf(being_bitten))
+		adjust_rage(1, being_bitten, TRUE)
 		return COMPONENT_RESIST_VAMPIRE_KISS

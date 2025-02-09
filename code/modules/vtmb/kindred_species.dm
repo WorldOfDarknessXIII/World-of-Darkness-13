@@ -244,7 +244,7 @@
 
 /datum/species/kindred/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
-	UnregisterSignal(src, COMSIG_MOB_VAMPIRE_SUCKED)
+	UnregisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED)
 	for(var/datum/action/vampireinfo/VI in C.actions)
 		if(VI)
 			VI.Remove(C)
@@ -892,8 +892,8 @@
  *
  * This handles vampire bite sleep immunity and any future special interactions.
  */
-/datum/species/garou/proc/on_vampire_bitten(/datum/source)
-	SIGNAL HANDLER
+/datum/species/kindred/proc/on_vampire_bitten(/datum/source, mob/living/carbon/being_bitten)
+	SIGNAL_HANDLER
 
-	if(iskindred(src))
+	if(iskindred(being_bitten))
 		return COMPONENT_RESIST_VAMPIRE_KISS

@@ -240,5 +240,5 @@
 			client.images -= suckbar
 		qdel(suckbar)
 		stop_sound_channel(CHANNEL_BLOOD)
-		if(!(SEND_SIGNAL(mob, COMSIG_MOB_VAMPIRE_SUCKED, src) & COMPONENT_RESIST_VAMPIRE_KISS))
+		if(!(SEND_SIGNAL(mob, COMSIG_MOB_VAMPIRE_SUCKED, mob) & COMPONENT_RESIST_VAMPIRE_KISS))
 			mob.SetSleeping(50)

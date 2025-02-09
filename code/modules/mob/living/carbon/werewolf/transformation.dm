@@ -65,20 +65,20 @@
 			if(iscrinos(trans))
 				ntransform.Scale(0.75, 0.75)
 			if(ishuman(trans))
-				RegisterSignal(src, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
+				RegisterSignal(lupus_form, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
 				ntransform.Scale(1, 0.75)
 		if("Crinos")
 			if(islupus(trans))
 				ntransform.Scale(1.75, 1.75)
 			if(ishuman(trans))
-				RegisterSignal(src, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
+				RegisterSignal(crinos_form, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
 				ntransform.Scale(1.25, 1.5)
 		if("Homid")
 			if(iscrinos(trans))
-				UnregisterSignal(src, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
+				UnregisterSignal(crinos_form, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
 				ntransform.Scale(0.75, 0.5)
 			if(islupus(trans))
-				UnregisterSignal(src, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
+				UnregisterSignal(lupus_form, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
 				ntransform.Scale(1, 1.5)
 	if(!transformating)
 		transformating = TRUE
@@ -192,3 +192,16 @@
 					trans.forceMove(src)
 					transformating = FALSE
 					animate(trans, transform = null, color = "#FFFFFF", time = 1)
+
+/**
+ * On being bit by a vampire
+ *
+ * This handles vampire bite sleep immunity and any future special interactions.
+ */
+/obj/werewolf_holder/transformation/proc/on_garou_bitten(/datum/source, mob/living/carbon/being_bitten)
+	SIGNAL_HANDLER
+
+	if(isgarou(being_bitten) || iswerewolf(being_bitten))
+		var/mob/living/carbon/wolf = src
+		adjust_rage(1, src, TRUE)
+		return COMPONENT_RESIST_VAMPIRE_KISS
