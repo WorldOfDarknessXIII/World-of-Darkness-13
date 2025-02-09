@@ -165,6 +165,12 @@
 		"police"
 	)
 
+/obj/item/vamp/keys/dispatch
+	name = "Dispatcher keys"
+	accesslocks = list(
+		"dispatch"
+	)
+
 /obj/item/vamp/keys/police/secure
 	name = "Sergeant Police keys"
 	accesslocks = list(
@@ -175,6 +181,7 @@
 /obj/item/vamp/keys/police/secure/chief
 	name = "Chief of Police keys"
 	accesslocks = list(
+		"dispatch",
 		"police",
 		"police_secure",
 		"police_chief"
@@ -660,6 +667,11 @@
 	lock_id = "primToreador"
 	lockpick_difficulty = 14
 
+/obj/structure/vampdoor/glass/police_chief
+	locked = TRUE
+	lock_id = "police_chief"
+	lockpick_difficulty = 21
+
 /obj/structure/vampdoor/camarilla
 	icon_state = "cam-1"
 	baseicon = "cam"
@@ -734,6 +746,13 @@
 	burnable = TRUE
 	lockpick_difficulty = 4
 
+/obj/structure/vampdoor/dispatch
+	icon_state = "cam-1"
+	baseicon = "cam"
+	locked = TRUE
+	lock_id = "dispatch"
+	lockpick_difficulty = 5
+
 /obj/structure/vampdoor/police
 	icon_state = "cam-1"
 	baseicon = "cam"
@@ -746,15 +765,6 @@
 	baseicon = "cam"
 	locked = TRUE
 	lock_id = "police_secure"
-	lockpick_difficulty = 21
-
-/obj/structure/vampdoor/police/chief
-	icon_state = "shop-1"
-	opacity = FALSE
-	locked = TRUE
-	baseicon = "shop"
-	glass = TRUE
-	lock_id = "police_chief"
 	lockpick_difficulty = 21
 
 /obj/structure/vampdoor/prison

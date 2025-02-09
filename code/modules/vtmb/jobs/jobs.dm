@@ -318,6 +318,19 @@
 	worn_icon = 'code/modules/wod13/worn.dmi'
 	worn_icon_state = "id13"
 
+/obj/item/card/id/government
+	name = "emergency dispatcher badge"
+	id_type_name = "emergency dispatcher badge"
+	desc = "Sponsored by the Government."
+	icon = 'code/modules/wod13/items.dmi'
+	icon_state = "id1"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	worn_icon_state = "id1"
+
 /obj/item/card/id/police/sergeant
 	name = "police sergeant badge"
 	desc = "Sponsored by the Government. This one seems slightly more worn down than all the others."
