@@ -52,6 +52,7 @@
 	melee_damage_upper = 20
 	butcher_results = list(/obj/item/food/meat/slab = 5)
 	layer = LARGE_MOB_LAYER
+
 	var/obj_damage = 30
 	var/wound_bonus = 20
 	var/bare_wound_bonus = 25
@@ -190,6 +191,7 @@
 	melee_damage_upper = 65
 	health = 250
 	maxHealth = 250
+	bubble_icon = "crinos"
 //	speed = -1  doesn't work on carbons
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
