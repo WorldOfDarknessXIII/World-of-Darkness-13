@@ -167,6 +167,9 @@
 			var/obj/item/clothing/mask/facehugger/kiasyd/K = new (get_turf(caster))
 			K.throw_at(target, 10, 14, caster)
 		if(4)
+			if(!target.client)
+				to_chat(caster,"<span class='danger'>This one has no brains!</span>")
+				return
 			var/list/screens = list(target.hud_used.plane_masters["[FLOOR_PLANE]"], target.hud_used.plane_masters["[GAME_PLANE]"], target.hud_used.plane_masters["[LIGHTING_PLANE]"])
 			var/rotation = 50
 			for(var/whole_screen in screens)
@@ -351,12 +354,14 @@
 	unique = TRUE
 	icon_state = "rune2"
 
-/obj/mytherceria_trap/disorient/Crossed(atom/movable/AM)
+/obj/mytherceria_trap/disorient/Crossed(atom/movable/target)
 	..()
-	if(isliving(AM) && owner)
-		if(AM != owner)
-			var/mob/living/L = AM
-			var/list/screens = list(L.hud_used.plane_masters["[FLOOR_PLANE]"], L.hud_used.plane_masters["[GAME_PLANE]"], L.hud_used.plane_masters["[LIGHTING_PLANE]"])
+	if(isliving(target) && owner)
+		var/mob/living/living_target = target
+		if(!living_target.client)
+			return
+		else if(target != owner)
+			var/list/screens = list(living_target.hud_used.plane_masters["[FLOOR_PLANE]"], living_target.hud_used.plane_masters["[GAME_PLANE]"], living_target.hud_used.plane_masters["[LIGHTING_PLANE]"])
 			var/rotation = 50
 			for(var/whole_screen in screens)
 				animate(whole_screen, transform = matrix(rotation, MATRIX_ROTATE), time = 0.5 SECONDS, easing = QUAD_EASING, loop = -1)

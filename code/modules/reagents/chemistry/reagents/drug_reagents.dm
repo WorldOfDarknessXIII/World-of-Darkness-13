@@ -33,6 +33,30 @@
 		M.hallucination += 5
 	..()
 
+/datum/reagent/drug/cannabis
+	name = "Cannabis"
+	description = "A psychoactive drug from the Cannabis plant used for recreational purposes."
+	color = "#059033"
+	overdose_threshold = INFINITY
+	metabolization_rate = 0.125 * REAGENTS_METABOLISM
+
+/datum/reagent/drug/cannabis/on_mob_life(mob/living/carbon/affected_mob)
+	. = ..()
+	affected_mob.set_drugginess(15)
+	if(prob(2))
+		var/smoke_message = pick("You feel relaxed.","You feel calmed.","Your mouth feels dry.","You could use some water.","Your heart beats quickly.","You feel clumsy.","You crave junk food.","You notice you've been moving more slowly.")
+		to_chat(affected_mob, span_notice("[smoke_message]"))
+	if(prob(4))
+		affected_mob.emote(pick("smile","laugh","giggle"))
+	affected_mob.adjust_nutrition(-0.15 * REM) //munchies
+	if(prob(8) && (affected_mob.body_position == LYING_DOWN) && !affected_mob.IsSleeping()) //chance to fall asleep if lying down
+		to_chat(affected_mob, span_warning("You doze off..."))
+		affected_mob.Sleeping(10 SECONDS)
+	if(prob(16) && affected_mob.buckled && (affected_mob.body_position != LYING_DOWN) && !affected_mob.IsParalyzed()) //chance to be couchlocked if sitting
+		to_chat(affected_mob, span_warning("It's too comfy to move..."))
+		affected_mob.Paralyze(5 SECONDS)
+
+
 /datum/reagent/drug/nicotine
 	name = "Nicotine"
 	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."

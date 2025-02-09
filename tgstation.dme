@@ -3371,6 +3371,7 @@
 #include "code\modules\vtmb\jobs\caitiff.dm"
 #include "code\modules\vtmb\jobs\citizen.dm"
 #include "code\modules\vtmb\jobs\dealer.dm"
+#include "code\modules\vtmb\jobs\dispatcher.dm"
 #include "code\modules\vtmb\jobs\doctor.dm"
 #include "code\modules\vtmb\jobs\fbi.dm"
 #include "code\modules\vtmb\jobs\giovanni.dm"
