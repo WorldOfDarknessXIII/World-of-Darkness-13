@@ -578,7 +578,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/input = input(usr, "Please input a new name for Central Command.", "What?", "") as text|null
+	var/input = input(usr, "Please input a new name for the City Council.", "What?", "") as text|null
 	if(!input)
 		return
 	change_command_name(input)
