@@ -1,4 +1,5 @@
 /mob/living/carbon/death(gibbed)
+	set_typing_indicator(FALSE)
 	if(stat == DEAD)
 		return
 
