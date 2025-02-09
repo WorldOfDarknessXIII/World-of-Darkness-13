@@ -892,7 +892,7 @@
  *
  * This handles vampire bite sleep immunity and any future special interactions.
  */
-/datum/species/kindred/proc/on_vampire_bitten(/datum/source, mob/living/carbon/being_bitten)
+/datum/species/kindred/proc/on_vampire_bitten(datum/source, mob/living/carbon/being_bitten)
 	SIGNAL_HANDLER
 
 	if(iskindred(being_bitten))

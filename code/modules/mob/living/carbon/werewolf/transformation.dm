@@ -198,10 +198,9 @@
  *
  * This handles vampire bite sleep immunity and any future special interactions.
  */
-/obj/werewolf_holder/transformation/proc/on_garou_bitten(/datum/source, mob/living/carbon/being_bitten)
+/obj/werewolf_holder/transformation/proc/on_garou_bitten(datum/source, mob/living/carbon/being_bitten)
 	SIGNAL_HANDLER
 
 	if(isgarou(being_bitten) || iswerewolf(being_bitten))
-		var/mob/living/carbon/wolf = src
-		adjust_rage(1, src, TRUE)
+		adjust_rage(1, being_bitten, TRUE)
 		return COMPONENT_RESIST_VAMPIRE_KISS

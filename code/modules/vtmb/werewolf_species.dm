@@ -173,7 +173,7 @@
  *
  * This handles vampire bite sleep immunity and any future special interactions.
  */
-/datum/species/garou/proc/on_garou_bitten(/datum/source, mob/living/carbon/being_bitten)
+/datum/species/garou/proc/on_garou_bitten(datum/source, mob/living/carbon/being_bitten)
 	SIGNAL_HANDLER
 
 	if(isgarou(being_bitten) || iswerewolf(being_bitten))
