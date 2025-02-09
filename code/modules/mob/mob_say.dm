@@ -1,19 +1,69 @@
-//Speech verbs.
-/mob/verb/input_say()
-	set name = "inputSay"
-	set category = null
-	var/message = input("What are you trying to say?") as text|null
-	say_verb(message)
-///Say verb
-/mob/verb/say_verb(message as text|null)
+///Used in set_typing_indicator()
+GLOBAL_LIST_EMPTY(typing_indicator)
+
+//Say verb
+/mob/verb/say_verb()
 	set name = "Say"
 	set category = "IC"
+
+	// This is to avoid multiple instancing
+	set_typing_indicator(FALSE)
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
+
+	set_typing_indicator(TRUE)
+	var/message = input("What are you trying to say? (A maximum of [MAX_BROADCAST_LEN] characters]") as text|null
+	set_typing_indicator(FALSE)
+
 	if(!message)
 		return
+	message = message_clean(message)
+
 	say(message)
+
+//Whisper verb
+/mob/verb/whisper_verb()
+	set name = "Whisper"
+	set category = "IC"
+
+	set_typing_indicator(FALSE)
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		return
+
+	set_typing_indicator(TRUE)
+	var/message = input("What are you trying to whisper? (A maximum of [MAX_BROADCAST_LEN] characters]") as text|null
+	set_typing_indicator(FALSE)
+
+	if(!message)
+		return
+	message = message_clean(message)
+
+	whisper(message)
+
+/mob/proc/whisper(message, datum/language/language=null)
+	say(message, language) //only living mobs actually whisper, everything else just talks
+
+//The me emote verb
+/mob/verb/me_verb()
+	set name = "Me"
+	set category = "IC"
+
+	set_typing_indicator(FALSE, TRUE)
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		return
+
+	set_typing_indicator(TRUE)
+	var/message = input("What are you trying to emote? (A maximum of [MAX_BROADCAST_LEN] characters])") as text|null
+	set_typing_indicator(FALSE)
+
+	if(!message)
+		return
+	message = message_clean(message)
+
+	usr.emote("me", 1, message, TRUE)
 
 /mob/living/verb/flavor_verb()
 	set name = "Flavor Text"
@@ -21,32 +71,6 @@
 	var/flavor = input("Choose your new flavor text:") as text|null
 	if(flavor)
 		flavor_text = trim(copytext_char(sanitize(flavor), 1, 512))
-
-///Whisper verb
-/mob/verb/whisper_verb(message as text)
-	set name = "Whisper"
-	set category = "IC"
-	if(GLOB.say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
-		return
-	whisper(message)
-
-///whisper a message
-/mob/proc/whisper(message, datum/language/language=null)
-	say(message, language) //only living mobs actually whisper, everything else just talks
-
-///The me emote verb
-/mob/verb/me_verb(message as text)
-	set name = "Me"
-	set category = "IC"
-
-	if(GLOB.say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
-		return
-
-	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
-
-	usr.emote("me",1,message,TRUE)
 
 ///Speak as a dead person (ghost etc)
 /mob/proc/say_dead(message)
@@ -64,8 +88,6 @@
 	if(jb)
 		to_chat(src, "<span class='danger'>You have been banned from deadchat.</span>")
 		return
-
-
 
 	if (src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
@@ -160,3 +182,41 @@
 		if(!message)
 			return
 	return message
+
+/mob/proc/set_typing_indicator(state, me)
+	if(!GLOB.typing_indicator[bubble_icon])
+		GLOB.typing_indicator[bubble_icon] = image('icons/mob/talk.dmi', null, "[bubble_icon]0", ABOVE_HUD_LAYER)
+		var/image/I = GLOB.typing_indicator[bubble_icon]
+		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+
+	// Don't try to pop a bubble if we are mute
+	if(ishuman(src) && !me)
+		var/mob/living/carbon/human/H = src
+		if(HAS_TRAIT(H, TRAIT_MUTE))
+			overlays -= GLOB.typing_indicator[bubble_icon]
+			typing = FALSE
+			return FALSE
+
+	// TODO: this will need to be adjusted to NPCs in another PR
+	if(!client)
+		return FALSE
+
+	if(stat != CONSCIOUS || is_muzzled())
+		overlays -= GLOB.typing_indicator[bubble_icon]
+		typing = FALSE
+		return FALSE
+
+	if(state && !typing)
+		overlays += GLOB.typing_indicator[bubble_icon]
+		typing = TRUE
+
+	if(!state && typing)
+		overlays -= GLOB.typing_indicator[bubble_icon]
+		typing = FALSE
+
+	return state
+
+/mob/proc/speech_ending_bubble(bubble_state = "", bubble_loc = src, list/bubble_recipients = list())
+	var/image/speech_bubble = image('icons/mob/talk.dmi', bubble_loc, bubble_state, FLY_LAYER)
+	speech_bubble.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay), speech_bubble, bubble_recipients, 2 SECONDS)

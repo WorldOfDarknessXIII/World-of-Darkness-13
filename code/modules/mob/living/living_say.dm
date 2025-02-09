@@ -367,14 +367,19 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			AM.Hear(rendered, src, message_language, message, , spans, message_mods)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
 
-	//speech bubble
+	// A speech bubble icon flicks at the end of the speech, based on the last character
+	var/message_ending = copytext_char(message, -1)
+	var/custom_speech_bubble_ending = "0"
+	if(message_ending == "?")
+		custom_speech_bubble_ending = "1"
+	if(message_ending == "!")
+		custom_speech_bubble_ending = "2"
+
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in listening)
-		if(M.client && !M.client.prefs.chat_on_map)
+		if(M.client)
 			speech_bubble_recipients.Add(M.client)
-	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
-	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay), I, speech_bubble_recipients, 30)
+	speech_ending_bubble("[bubble_icon][custom_speech_bubble_ending]", src, speech_bubble_recipients)
 
 /mob/proc/binarycheck()
 	return FALSE
