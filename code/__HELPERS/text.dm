@@ -69,7 +69,7 @@
 	return copytext((html_encode(strip_html_simple(t))),1,limit)
 
 /proc/message_clean(message)
-	return trim(copytext_char(sanitize(message), 1, MAX_BROADCAST_LEN))
+	return copytext_char(sanitize(message), 1, MAX_BROADCAST_LEN)
 
 /**
  * Perform a whitespace cleanup on the text, similar to what HTML renderers do

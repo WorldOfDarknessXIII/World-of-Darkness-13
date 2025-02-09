@@ -114,7 +114,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		ic_blocked = TRUE
 
 	if(sanitize)
-		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trim(copytext_char(sanitize(message), 1, MAX_BROADCAST_LEN))
 	if(!message || message == "")
 		return FALSE
 
