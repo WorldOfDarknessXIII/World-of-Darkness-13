@@ -2377,7 +2377,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						lover_text = trim(copytext_char(sanitize(new_text), 1, 512))
 
 				if("flavor_text")
-					var/new_flavor = input(user, "Choose your character's flavor text:", "Character Preference")  as text|null
+					var/new_flavor = input(user, "Choose your character's flavor text:", "Character Preference") as text|null
 					if(new_flavor)
 						flavor_text = trim(copytext_char(sanitize(new_flavor), 1, 512))
 
