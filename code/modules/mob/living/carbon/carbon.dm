@@ -916,7 +916,7 @@
 		return
 	if(stat != DEAD)
 		//special death handling for vampires, who don't die until -200 health
-		if (iskindred(src) || iscathayan(src))
+		if (iskindred(src) || iskuejin(src))
 			if(health <= HEALTH_THRESHOLD_VAMPIRE_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 				death()
 				return

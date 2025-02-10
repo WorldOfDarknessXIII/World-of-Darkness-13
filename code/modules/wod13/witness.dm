@@ -59,10 +59,6 @@
 			if(radio.linked_network == "police")
 				radio.say(message)
 
-
-/obj/item/police_radio/proc/dispatcher_talk(said)
-	say(said)
-
 /obj/item/police_radio/Initialize()
 	. = ..()
 	GLOB.police_radios += src
@@ -104,7 +100,7 @@
 		if (diablerist)
 			holder.icon_state = "diablerie_aura"
 
-	if(iscathayan(src))
+	if(iskuejin(src))
 		var/mob/living/carbon/human/H = src
 		if(!H.check_kuei_jin_alive())
 			holder.color = "#ffffff"

@@ -46,13 +46,13 @@
 		return
 	trans.inspired = FALSE
 	if(ishuman(trans))
-		var/datum/species/garou/G = trans.dna.species
+		var/datum/splat/supernatural/garou/G = trans.dna.species
 		var/mob/living/carbon/human/H = trans
 		if(G.glabro)
 			H.remove_overlay(PROTEAN_LAYER)
 			G.punchdamagelow = G.punchdamagelow-15
 			G.punchdamagehigh = G.punchdamagehigh-15
-			H.physique = H.physique-2
+			H.physique = initial(H.physique)
 			H.physiology.armor.melee = H.physiology.armor.melee-15
 			H.physiology.armor.bullet = H.physiology.armor.bullet-15
 			var/matrix/M = matrix()

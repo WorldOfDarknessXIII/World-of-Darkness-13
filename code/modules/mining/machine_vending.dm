@@ -81,7 +81,7 @@
 	. = ..()
 	if(owner_needed == TRUE)
 		for(var/mob/living/carbon/human/npc/NPC in range(2, src))
-			if(NPC)	//PSEUDO_M come back to fix this
+			if(NPC)
 				my_owner = NPC
 	build_inventory()
 
@@ -177,7 +177,7 @@
 		if(!my_owner)
 			return
 		if(get_dist(src, my_owner) > 4)
-			return	//PSEUDO_M come back and fix this shit...
+			return
 		if(my_owner.stat >= HARD_CRIT)
 			return
 	if(istype(I, /obj/item/mining_voucher))
@@ -221,7 +221,7 @@
 		var/initial_points
 		initial_points = jobs_allowed.Find(user_job) ? jobs_allowed[user_job] : 100
 		requisitioners[user] = isAdminObserver(user) ? 99999 : initial_points
-	points = requisitioners[user]	//PSEUDO_M come back and redo this, too, but we have other dev priorities atm...
+	points = requisitioners[user]
 	return ..()
 
 /obj/machinery/mineral/equipment_vendor/restricted/ui_data(mob/user)

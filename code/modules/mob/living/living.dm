@@ -392,12 +392,12 @@
 		to_chat(src, text="You are unable to succumb to death! This life continues.", type=MESSAGE_TYPE_INFO)
 		return
 	log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!", LOG_ATTACK)
-	if((iskindred(src) || iscathayan(src)) && !HAS_TRAIT(src, TRAIT_TORPOR))
+	if((iskindred(src) || iskuejin(src)) && !HAS_TRAIT(src, TRAIT_TORPOR))
 		adjustOxyLoss(health - HEALTH_THRESHOLD_VAMPIRE_TORPOR)
 		updatehealth()
-	if((iskindred(src) || iscathayan(src)) && HAS_TRAIT(src, TRAIT_TORPOR))
+	if((iskindred(src) || iskuejin(src)) && HAS_TRAIT(src, TRAIT_TORPOR))
 		adjustOxyLoss(health - HEALTH_THRESHOLD_VAMPIRE_DEAD)
-	if(!iskindred(src) && !iscathayan(src))
+	if(!iskindred(src) && !iskuejin(src))
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
 		updatehealth()
 	if(!whispered)
@@ -413,7 +413,7 @@
 				to_chat(src, "<span class='notice'>You have awoken from your Torpor.</span>")
 			else
 				to_chat(src, "<span class='warning'>You have no blood to re-awaken with...</span>")
-		if(iscathayan(src))
+		if(iskuejin(src))
 			if (yang_chi > 0)
 				yang_chi -= 1
 				cure_torpor()
@@ -1996,7 +1996,7 @@
 	return dexterity + additional_dexterity
 
 /mob/living/proc/get_total_social()
-	if(iscathayan(src))
+	if(iskuejin(src))
 		if(mind?.dharma?.animated == "Yin")
 			return max(0, social + additional_social - 2)
 	return social + additional_social

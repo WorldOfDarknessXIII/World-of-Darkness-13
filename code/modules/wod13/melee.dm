@@ -552,25 +552,6 @@
 
 /obj/item/vampire_stake/attack(mob/living/target, mob/living/user)
 	. = ..()
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		return
-	if(isgarou(target) || iswerewolf(target) || isanimal(target))
-		return
-	if(target.IsParalyzed() || target.IsKnockdown() || target.IsStun())
-		return
-	if(!target.IsParalyzed() && iskindred(target) && !target.stakeimmune)
-		if(HAS_TRAIT(target, TRAIT_STAKE_RESISTANT))
-			visible_message("<span class='warning'>[user]'s stake splinters as it touches [target]'s heart!</span>", "<span class='warning'>Your stake splinters as it touches [target]'s heart!</span>")
-			REMOVE_TRAIT(target, TRAIT_STAKE_RESISTANT, MAGIC_TRAIT)
-			qdel(src)
-		else
-			visible_message("<span class='warning'>[user] aims [src] straight to the [target]'s heart!</span>", "<span class='warning'>You aim [src] straight to the [target]'s heart!</span>")
-			if(do_after(user, 20, target))
-				user.do_attack_animation(target)
-				visible_message("<span class='warning'>[user] pierces [target]'s torso!</span>", "<span class='warning'>You pierce [target]'s torso!</span>")
-				target.Paralyze(1200)
-				target.Sleeping(1200)
-				qdel(src)
 
 /obj/item/melee/vampirearms/shovel
 	icon = 'code/modules/wod13/weapons.dmi'

@@ -218,14 +218,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	//[Lucia] TODO: make this good what the fuck is wrong with the previous thing
 	GLOB.roundstart_races = list("human", "kindred", "ghoul")
 	GLOB.selectable_races = list("human", "kindred", "ghoul", "garou", "kuei-jin")
-	/*
-	for(var/I in subtypesof(/datum/species))
-		var/datum/species/S = new I
-		if(S.selectable)
-			GLOB.roundstart_races += S.id
-	if(!GLOB.roundstart_races.len)
-		GLOB.roundstart_races += "kindred"
-	*/
 
 /**
  * Checks if a species is eligible to be picked at roundstart.
@@ -1337,14 +1329,12 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	user.do_cpr(target)
 
 
-/datum/species/proc/grab(mob/living/carbon/human/user, mob/living/target, datum/martial_art/attacker_style)
-	if(ishuman(target))
-		var/mob/living/carbon/human/human = target
-		if(human.check_block())
-			human.visible_message("<span class='warning'>[human] blocks [user]'s grab!</span>", \
-							"<span class='userdanger'>You block [user]'s grab!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, "<span class='warning'>Your grab at [human] was blocked!</span>")
-			return FALSE
+/datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+	if(target.check_block())
+		target.visible_message("<span class='warning'>[target] blocks [user]'s grab!</span>", \
+						"<span class='userdanger'>You block [user]'s grab!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, "<span class='warning'>Your grab at [target] was blocked!</span>")
+		return FALSE
 	if(attacker_style?.grab_act(user,target))
 		return TRUE
 	else
@@ -2132,9 +2122,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			H.dna.species.mutant_bodyparts -= "wings"
 			H.dna.features["wings"] = "None"
 			H.update_body()
-
-/datum/species
-	var/animation_goes_up = FALSE	//
 
 /datum/species/proc/HandleFlight(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)

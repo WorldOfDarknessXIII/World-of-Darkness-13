@@ -94,7 +94,6 @@
 		return FALSE
 	return TRUE
 
-
 /datum/action/proc/IsAvailable()
 	if(!owner)
 		return FALSE

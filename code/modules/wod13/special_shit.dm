@@ -21,71 +21,7 @@
 				to_chat(user, "[H.true_real_name], Masquerade: [H.masquerade], Diablerist: [H.diablerist ? "<b>YES</b>" : "NO"], [get_area_name(H)] X:[TT.x] Y:[TT.y]")
 	else
 		to_chat(user, "No available Masquerade breakers in city...")
-/*
-/obj/item/masquerade_contract/attack(mob/living/M, mob/living/user)
-	. = ..()
-	if(iskindred(M) || isghoul(M))
-		var/mob/living/carbon/human/D = M
-		if(D.diablerist)
-			if(!GLOB.canon_event)
-				to_chat(user, "This is not a canon event!")
-				return
-			if(!M.client)
-				to_chat(user, "You need [M] attention to do that.")
-				return
-			if(M.stat >= HARD_CRIT)
-				var/datum/preferences/P = GLOB.preferences_datums[ckey(M.key)]
-//				var/extra = FALSE
-//				if(D.diablerist)
-//					extra = TRUE
-				M.death()
-				if(P)
-					P.reason_of_death = "Executed to sustain the Traditions ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
-					reset_shit(M)
-				M.ghostize(FALSE)
-				to_chat(user, "<b>Successfully punished Traditions violator and restored the Masquerade.</b>")
-				var/mob/living/carbon/human/HM = user
-				HM.AdjustMasquerade(1)
-				HM.total_contracted += 2
-				return
-		if(M in GLOB.masquerade_breakers_list)
-			if(!GLOB.canon_event)
-				to_chat(user, "This is not a canon event!")
-				return
-			if(!M.client)
-				to_chat(user, "You need [M] attention to do that.")
-				return
-			if(M.stat >= HARD_CRIT)
-				var/datum/preferences/P = GLOB.preferences_datums[ckey(M.key)]
-//				var/extra = FALSE
-//				if(D.diablerist)
-//					extra = TRUE
-				M.death()
-				if(P)
-					P.reason_of_death = "Executed to sustain the Traditions ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
-					reset_shit(M)
-				M.ghostize(FALSE)
-				to_chat(user, "<b>Successfully punished Traditions violator and restored the Masquerade.</b>")
-				var/mob/living/carbon/human/HM = user
-				HM.AdjustMasquerade(1)
-				HM.total_contracted += 1
-//				if(user.key)
-//					if(P)
-//						if(extra)
-//							P.exper = min(calculate_mob_max_exper(user), P.exper+1000)
-//						else
-//							P.exper = min(calculate_mob_max_exper(user), P.exper+500)
-				return
-			else
-				to_chat(user, "Target must be in critical condition or torpor.")
-				return
-		else
-			to_chat(user, "Target must have at least 2 Masquerade violations.")
-			return
-	else
-		to_chat(user, "Target must be kindred or ghoul.")
-		return
-*/
+
 /obj/item/drinkable_bloodpack
 	name = "\improper drinkable blood pack (full)"
 	desc = "Fast way to feed your inner beast."
@@ -108,7 +44,7 @@
 /obj/item/drinkable_bloodpack/attack(mob/living/M, mob/living/user)
 	. = ..()
 	if(!iskindred(M))
-		if(!vitae || iscathayan(M))
+		if(!vitae || iskuejin(M))
 			return
 	if(empty)
 		return

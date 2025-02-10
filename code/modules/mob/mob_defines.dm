@@ -240,3 +240,4 @@
 
 	//imported variables from all around the code
 	var/taxist = FALSE
+	var/list/datum/splat/splats = null

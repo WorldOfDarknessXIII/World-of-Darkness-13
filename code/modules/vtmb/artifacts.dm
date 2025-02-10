@@ -153,19 +153,6 @@
 	if(H.dna)
 		H.dna.species.meleemod = H.dna.species.meleemod-0.5
 
-/obj/item/vtm_artifact/bloodstar
-	true_name = "Bloodstar"
-	true_desc = "Increases Bloodpower duration."
-	icon_state = "bloodstar"
-
-/obj/item/vtm_artifact/bloodstar/get_powers()
-	..()
-	owner.bloodpower_time_plus = 50
-
-/obj/item/vtm_artifact/bloodstar/remove_powers()
-	..()
-	owner.bloodpower_time_plus = 0
-
 /obj/item/vtm_artifact/daimonori
 	true_name = "Daimonori"
 	true_desc = "Increases thaumaturgy damage."

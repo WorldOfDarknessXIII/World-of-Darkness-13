@@ -584,7 +584,7 @@
 
 	point_at(A)
 
-	if(iscathayan(A))
+	if(iskuejin(A))
 		var/mob/living/carbon/human/hum = A
 		if(hum.mind?.dharma?.Po == "Legalist")
 			hum.mind.dharma.roll_po(src, hum)

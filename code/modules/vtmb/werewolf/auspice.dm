@@ -2,10 +2,6 @@
 	var/name = "Loh"
 	var/desc = "Furry ebaka"
 	var/level = 1
-	var/start_rage = 1
-	var/rage = 1
-	var/start_gnosis = 1
-	var/gnosis = 1
 	var/base_breed = "Homid"
 	var/tribe = "Wendigo"
 	var/list/gifts = list()

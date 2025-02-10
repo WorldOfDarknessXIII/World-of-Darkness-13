@@ -170,7 +170,7 @@
 	var/body_position_pixel_y_offset = 0
 
 	//Shitty VtM vars I'm moving here so they're not strewn around the codebase
-	var/bloodquality = 1
+	var/bloodquality = 1	//PSEUDO_M calculate this instead of defining a var
 
 	var/list/drunked_of = list()
 
@@ -205,40 +205,38 @@
 	var/no_fire_delay = FALSE
 
 	var/experience_plus = 0
-	var/discipline_time_plus = 0
-	var/bloodpower_time_plus = 0
-	var/thaum_damage_plus = 0
 
-	var/resistant_to_disciplines = FALSE
-	var/auspex_examine = FALSE
+
+	var/resistant_to_disciplines = FALSE	//PSEUDO_M this should be a flag or signal
+	var/auspex_examine = FALSE	//PSEUDO_M this should be a signal
 
 	var/dancing = FALSE
 
-	var/temporis_visual = FALSE
-	var/temporis_blur = FALSE
+	var/temporis_visual = FALSE	//PSEUDO_M this should be an overlay
+	var/temporis_blur = FALSE	//PSEUDO_M ??
 
-	var/frenzy_chance_boost = 10
+	var/frenzy_chance_boost = 10	//PSEUDO_M_K
 
-	var/last_bloodpool_restore = 0
+	var/last_bloodpool_restore = 0	//PSEUDO_M_K
 
 	var/list/knowscontacts = list()
 
-	var/mysticism_knowledge = FALSE
+	var/mysticism_knowledge = FALSE	//PSEUDO_M_K //should be a signal
 
-	var/thaumaturgy_knowledge = FALSE
+	var/thaumaturgy_knowledge = FALSE	//PSEUDO_M_K //should be a signal
 
-	var/elysium_checks = 0
+	var/elysium_checks = 0	//PSEUDO_M_K
 	var/bloodhunted = FALSE
 
 	var/hearing_ghosts = FALSE
 
-	var/stakeimmune = FALSE
+	var/stakeimmune = FALSE	//PSEUDO_M_K should be a signal
 
 	var/last_vampire_ambience = 0
 	var/wait_for_music = 30
 	var/wasforced
 
-	var/spell_immunity = FALSE
+	var/spell_immunity = FALSE	//PSEUDO_M should be a signal
 
 	var/isfishing = FALSE
 
@@ -247,25 +245,12 @@
 	var/parry_cd = 0
 	var/blocking = FALSE
 	var/last_m_intent = MOVE_INTENT_RUN
-	var/last_bloodheal_use = 0
-	var/last_bloodpower_use = 0
-	var/last_drinkblood_use = 0
-	var/last_bloodheal_click = 0
-	var/last_bloodpower_click = 0
-	var/last_drinkblood_click = 0
-	var/harm_focus = SOUTH
-	var/masquerade_votes = 0
-	var/list/voted_for = list()
+
+	var/harm_focus = SOUTH	//PSEUDO_M there's a more performant way to handle this
 	var/flavor_text
 	var/true_real_name
-	var/died_already = FALSE
+	var/died_already = FALSE	//PSEUDO_M huh?
 
-	var/bloodpool = 5
-	var/maxbloodpool = 5
-	var/generation = 13
-	var/humanity = 7
-	var/masquerade = 5
-	var/last_masquerade_violation = 0
 	var/last_nonraid = 0
 	var/warrant = FALSE
 	var/ignores_warrant = FALSE
@@ -281,7 +266,7 @@
 	///Whether the mob currently has the JUMP button selected
 	var/prepared_to_jump = FALSE
 	///If this mob can strip people from range with a delay of 0.1 seconds. Currently only activated by Mytherceria 2.
-	var/enhanced_strip = FALSE
+	var/enhanced_strip = FALSE //PSEUDO_M what the fuck is this?
 
 	//Kuei Jin stuff
 	var/yang_chi = 2

@@ -72,11 +72,6 @@
 			L.chi_ranged = null
 	. = ..()
 
-//			if(DISCP)
-//				if(DISCP.active)
-//					DISCP.range_activate(src, SH)
-//					SH.face_atom(src)
-//					return
 
 /atom/movable/screen/movable/action_button/Click(location,control,params)
 	if(istype(linked_action, /datum/action/chi_discipline))
@@ -774,7 +769,7 @@
 /obj/projectile/flesh_shintai/fire(setAngle)
 	if(firer)
 		chain = firer.Beam(src, icon_state = "arm")
-		if(iscathayan(firer))
+		if(iskuejin(firer))
 			var/mob/living/carbon/human/H = firer
 			if(H.CheckEyewitness(H, H, 7, FALSE))
 				H.AdjustMasquerade(-1)
@@ -1610,7 +1605,7 @@
 /obj/projectile/storm_shintai/fire(setAngle)
 	if(firer)
 		chain = firer.Beam(src, icon_state="lightning[rand(1,12)]")
-		if(iscathayan(firer))
+		if(iskuejin(firer))
 			var/mob/living/carbon/human/H = firer
 			if(H.CheckEyewitness(H, H, 7, FALSE))
 				H.AdjustMasquerade(-1)
@@ -1882,7 +1877,7 @@
 					to_chat(cursing_mob, "<span class='warning'>You feel bigger hunger than usual.</span>")
 					if(iskindred(cursing_mob))
 						cursing_mob.bloodpool = max(0, cursing_mob.bloodpool-3)
-					else if(iscathayan(cursing_mob))
+					else if(iskuejin(cursing_mob))
 						cursing_mob.yang_chi = max(0, cursing_mob.yang_chi-2)
 						cursing_mob.yin_chi = max(0, cursing_mob.yin_chi-2)
 					else

@@ -7,7 +7,10 @@ SUBSYSTEM_DEF(masquerade)
 	var/total_level = 1000
 	var/dead_level = 0
 	var/last_level = "stable"
-	var/manual_adjustment = 0 
+	var/manual_adjustment = 0
+	// A assoclist of masquerade scores
+	// vamp_in_question : score
+	var/list/scores = list()
 
 /datum/controller/subsystem/masquerade/proc/get_description()
 	switch(total_level)
@@ -56,15 +59,6 @@ SUBSYSTEM_DEF(masquerade)
 						if("breach")
 							to_chat(H, "The Masquerade is about to fall...")
 
-	if(total_level <= 250)
-		for(var/mob/living/carbon/human/H in GLOB.player_list)
-			if(H)
-				if(iskindred(H))
-					if(!H.warrant && !H.ignores_warrant)
-						H.last_nonraid = world.time
-						H.warrant = TRUE
-						SEND_SOUND(H, sound('code/modules/wod13/sounds/humanity_loss.ogg', 0, 0, 75))
-						to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
 //Spotted body -25
 //Blood -5 for each
 //Masquerade violation -50

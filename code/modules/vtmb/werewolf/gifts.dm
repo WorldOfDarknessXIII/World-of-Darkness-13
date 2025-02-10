@@ -442,13 +442,13 @@
 	. = ..()
 	if(allowed_to_proceed)
 		var/mob/living/carbon/human/H = owner
-		var/datum/species/garou/G = H.dna.species
+		var/datum/splat/supernatural/garou/G = H.dna.species
 		playsound(get_turf(owner), 'code/modules/wod13/sounds/transform.ogg', 50, FALSE)
 		if(G.glabro)
 			H.remove_overlay(PROTEAN_LAYER)
 			G.punchdamagelow -= 15
 			G.punchdamagehigh -= 15
-			H.physique = H.physique-2
+			H.physique = initial(H.physique)
 			H.physiology.armor.melee -= 15
 			H.physiology.armor.bullet -= 15
 			var/matrix/M = matrix()

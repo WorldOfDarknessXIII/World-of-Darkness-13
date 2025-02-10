@@ -1,5 +1,5 @@
 /mob/living/carbon/human/proc/check_kuei_jin_alive()
-	if(iscathayan(src))
+	if(iskuejin(src))
 		if(mind?.dharma)
 			if(mind.dharma.animated == "Yang")
 				return TRUE
@@ -13,7 +13,7 @@
 /mob/living/Life()
 	. = ..()
 
-	if(!iscathayan(src))
+	if(!iskuejin(src))
 		if((yang_chi == 0 && max_yang_chi != 0) && (yang_chi == 0 && max_yang_chi != 0))
 			to_chat(src, "<span clas='warning'>Your vital energies seem to disappear...</span>")
 			adjustCloneLoss(5, TRUE)
@@ -34,7 +34,7 @@
 				to_chat(src, "<span clas='warning'>Your vital energies seem to disappear...</span>")
 				adjustCloneLoss(5, TRUE)
 
-	if(!iscathayan(src))
+	if(!iskuejin(src))
 		if (COOLDOWN_FINISHED(src, chi_restore))
 			COOLDOWN_START(src, chi_restore, 30 SECONDS)
 			if(yang_chi < max_yang_chi)
@@ -73,7 +73,7 @@
 /mob/living/proc/update_chi_hud()
 	if(!client || !hud_used)
 		return
-	if(iscathayan(src))
+	if(iskuejin(src))
 		hud_used.yin_chi_icon.icon_state = "yin-[round((yin_chi/max_yin_chi)*12)]"
 		hud_used.yang_chi_icon.icon_state = "yang-[round((yang_chi/max_yang_chi)*12)]"
 		hud_used.demon_chi_icon.icon_state = "demon-[round((demon_chi/max_demon_chi)*12)]"
