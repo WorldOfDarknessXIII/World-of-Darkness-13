@@ -77,6 +77,5 @@ SUBSYSTEM_DEF(bloodhunt)
 			if(iskindred(R))
 				to_chat(R, "<b>The Blood Hunt after <span class='warning'>[H.true_real_name]</span> has been announced! <br> Reason: [reason]</b>")
 				SEND_SOUND(R, sound('code/modules/wod13/sounds/announce.ogg'))
-		SEND_SOUND(world, sound('code/modules/wod13/sounds/announce.ogg'))
 		hunted += H
 		update_shit()
