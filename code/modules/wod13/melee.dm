@@ -376,7 +376,7 @@
 	is_iron = TRUE
 
 obj/item/melee/vampirearms/handsickle
-	name = "Hand Sickle"
+	name = "hand sickle"
 	desc = "Reap what they have sowed."
 	icon = 'code/modules/wod13/weapons.dmi'
 	icon_state = "handsickle"
