@@ -530,6 +530,3 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait from [/datum/antagonist/nukeop/clownop]
 #define CLOWNOP_TRAIT "clownop"
-
-//trait from /mob/living/carbon/human/npc
-#define NPC_ITEM_TRAIT "npc_item"

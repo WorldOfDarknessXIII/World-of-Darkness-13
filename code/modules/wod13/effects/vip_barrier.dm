@@ -4,9 +4,9 @@
 /obj/effect/vip_barrier
 	name = "Basic Check Point"
 	desc = "Not a real checkpoint."
-	icon = 'icons/obj/vtr13/barrier.dmi'
+	icon = 'icons/obj/wod13/barrier.dmi'
 	icon_state = "camarilla_blocking"
-	var/block_sound = "sound/vtr13/bouncer_blocked.ogg"
+	var/block_sound = "sound/wod13/bouncer_blocked.ogg"
 
 	//Social bypass numbers
 	var/social_bypass_allowed = TRUE
