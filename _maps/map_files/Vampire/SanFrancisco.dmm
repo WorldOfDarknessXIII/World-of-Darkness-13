@@ -8838,7 +8838,7 @@
 "srw" = (/obj/structure/cable/layer1,/turf/open/floor/circuit,/area/vtm/interior/glasswalker)
 "srK" = (/obj/structure/vampdoor/reinf{lock_id = "primBrujah"; locked = 1; lockpick_difficulty = 14},/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "srP" = (/obj/machinery/light{pixel_y = 32},/obj/structure/chair/sofa/corp{pixel_x = 7; pixel_y = 12},/mob/living/carbon/human/npc/incel,/turf/open/floor/mineral/plastitanium/red,/area/vtm/jazzclub)
-"ssj" = (/obj/structure/closet,/obj/item/clothing/shoes/vampire,/obj/item/clothing/shoes/vampire,/obj/item/clothing/shoes/vampire,/obj/item/clothing/shoes/vampire,/turf/open/floor/plating/vampplating/mono,/area/vtm/interior/endron_facility)
+"ssj" = (/obj/structure/closet,/obj/item/clothing/under/pentex/pentex_shortsleeve,/obj/item/clothing/under/pentex/pentex_shortsleeve,/obj/item/clothing/under/pentex/pentex_shortsleeve,/obj/item/clothing/under/pentex/pentex_shortsleeve,/turf/open/floor/plating/vampplating/mono,/area/vtm/interior/endron_facility)
 "ssr" = (/obj/structure/vampdoor/strip{dir = 8; lockpick_difficulty = 16},/turf/open/floor/plating/vampcanal,/area/vtm/sewer)
 "sti" = (/obj/structure/vampipe{icon_state = "piping38"},/obj/structure/vampipe{icon_state = "piping41"},/obj/effect/decal/cardboard,/obj/structure/vampdoor,/turf/open/floor/plating/rough,/area/vtm/sewer)
 "stA" = (/obj/machinery/iv_drip,/turf/open/floor/plating/vampcanalplating,/area/vtm/interior/glasswalker)
