@@ -5478,7 +5478,7 @@
 "fVf" = (/obj/structure/vampdoor/camarilla{lockpick_difficulty = 9},/turf/open/floor/plating/vampplating/mono,/area/vtm/interior/millennium_tower)
 "fVm" = (/obj/structure/filingcabinet/chestdrawer/wheeled,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/police)
 "fVI" = (/obj/structure/railing{dir = 8},/obj/structure/table,/obj/item/megaphone,/obj/structure/coclock,/turf/open/floor/plating/rough,/area/vtm/interior)
-"fVX" = (/obj/effect/decal/rugs,/obj/structure/vampdoor/police/chief{lockpick_difficulty = 23},/turf/open/floor/plating/parquetry/old,/area/vtm/interior/police)
+"fVX" = (/obj/effect/decal/rugs,/obj/structure/vampdoor/glass/police_chief,/turf/open/floor/plating/parquetry/old,/area/vtm/interior/police)
 "fWo" = (/obj/structure/table/wood,/obj/structure/reagent_dispensers/beerkeg,/turf/open/floor/plating/parquetry/old,/area/vtm/jazzclub)
 "fWr" = (/obj/machinery/light/small{dir = 4; pixel_x = -16},/obj/structure/chair/comfy/black,/turf/open/floor/plating/parquetry/old,/area/vtm/graveyard/interior)
 "fWz" = (/obj/structure/rack,/turf/open/floor/plating/vampplating,/area/vtm/interior/techshop)
