@@ -177,5 +177,4 @@
 	SIGNAL_HANDLER
 
 	if(isgarou(being_bitten) || iswerewolf(being_bitten))
-		adjust_rage(1, being_bitten, TRUE)
 		return COMPONENT_RESIST_VAMPIRE_KISS

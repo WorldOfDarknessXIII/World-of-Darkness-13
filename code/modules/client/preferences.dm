@@ -3218,8 +3218,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_hair()
 		character.update_body_parts()
 	if(!character_setup)
-//		if(pref_species.name == "Werewolf")
-//			character.transformator.fast_trans_gender(character, character.base_breed)
 		character.roundstart_vampire = TRUE
 		if(character.age < 16)
 			if(!character.ischildren)
