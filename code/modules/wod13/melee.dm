@@ -381,8 +381,8 @@ obj/item/melee/vampirearms/handsickle
 	icon = 'code/modules/wod13/weapons.dmi'
 	icon_state = "handsickle"
 	force = 30
-	wound_bonus = 0
-	bare_wound_bonus = 10
+	wound_bonus = -5
+	bare_wound_bonus = 5
 	throwforce = 15
 	attack_verb_continuous = list("slashes", "cuts", "reaps")
 	attack_verb_simple = list("slash", "cut", "reap")
