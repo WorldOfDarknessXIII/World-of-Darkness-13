@@ -73,7 +73,10 @@ SUBSYSTEM_DEF(bloodhunt)
 	var/mob/living/carbon/human/H = target
 	if(!H.bloodhunted)
 		H.bloodhunted = TRUE
-		to_chat(world, "<b>The Blood Hunt after <span class='warning'>[H.true_real_name]</span> has been announced! <br> Reason: [reason]</b>")
+		for(var/mob/living/carbon/human/R in GLOB.player_list)
+			if(iskindred(R))
+				to_chat(R, "<b>The Blood Hunt after <span class='warning'>[H.true_real_name]</span> has been announced! <br> Reason: [reason]</b>")
+				SEND_SOUND(R, sound('code/modules/wod13/sounds/announce.ogg'))
 		SEND_SOUND(world, sound('code/modules/wod13/sounds/announce.ogg'))
 		hunted += H
 		update_shit()
