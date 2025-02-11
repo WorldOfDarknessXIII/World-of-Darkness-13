@@ -174,8 +174,7 @@
 						SSbloodhunt.update_shit()
 						to_chat(user, "<span class='warning'>You remove [chosen_name] from the Hunted list.</span>")
 						for(var/mob/living/carbon/human/R in GLOB.player_list)
-							if(R)
-								if(iskindred(R))
+							if(iskindred(R) && R.client)
 									to_chat(R, "<b>The Blood Hunt after <span class='green'>[H.true_real_name]</span> is over!</b>")
 									SEND_SOUND(R, sound('code/modules/wod13/sounds/announce.ogg'))
 					else
