@@ -10,10 +10,8 @@
 	. = ..()
 	crinos_form = new()
 	crinos_form.transformator = src
-//	crinos_form.forceMove(src)
 	lupus_form = new()
 	lupus_form.transformator = src
-//	lupus_form.forceMove(src)
 
 /obj/werewolf_holder/transformation/proc/transfer_damage(mob/living/carbon/first, mob/living/carbon/second)
 	second.masquerade = first.masquerade
@@ -65,20 +63,16 @@
 			if(iscrinos(trans))
 				ntransform.Scale(0.75, 0.75)
 			if(ishuman(trans))
-				RegisterSignal(lupus_form, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
 				ntransform.Scale(1, 0.75)
 		if("Crinos")
 			if(islupus(trans))
 				ntransform.Scale(1.75, 1.75)
 			if(ishuman(trans))
-				RegisterSignal(crinos_form, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
 				ntransform.Scale(1.25, 1.5)
 		if("Homid")
 			if(iscrinos(trans))
-				UnregisterSignal(crinos_form, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
 				ntransform.Scale(0.75, 0.5)
 			if(islupus(trans))
-				UnregisterSignal(lupus_form, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
 				ntransform.Scale(1, 1.5)
 	if(!transformating)
 		transformating = TRUE
