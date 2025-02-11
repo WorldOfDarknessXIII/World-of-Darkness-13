@@ -1004,11 +1004,6 @@
 ///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
 
-///called in bloodsucking.dm at the end of /mob/living/carbon/human/proc/drinksomeblood
-#define COMSIG_MOB_VAMPIRE_SUCKED "mob_vampire_sucked"
-	///vampire suck resisted
-	#define COMPONENT_RESIST_VAMPIRE_KISS (1<<0)
-
 // Aquarium related signals
 #define COMSIG_AQUARIUM_BEFORE_INSERT_CHECK "aquarium_about_to_be_inserted"
 #define COMSIG_AQUARIUM_SURFACE_CHANGED "aquarium_surface_changed"
