@@ -91,8 +91,6 @@
 
 #define STATUS_EFFECT_CLOUDSTRUCK /datum/status_effect/cloudstruck //blinds and applies an overlay.
 
-#define STATUS_EFFECT_SILVER_SLOWDOWN /datum/status_effect/silver_slowdown //slows down any mobs with a bane to silver.
-
 /// Makes the mob move randomly.
 /// Read the documentation for /datum/status_effect/confusion for more information.
 #define STATUS_EFFECT_CONFUSION /datum/status_effect/confusion
