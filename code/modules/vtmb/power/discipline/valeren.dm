@@ -8,12 +8,6 @@
 	all_powers = subtypesof(/datum/discipline_power/valeren)
 	..()
 
-/datum/discipline/healer_valeren/post_gain(mob/living/carbon/human/H)
-	. = ..()
-	if(level >= 4)
-		var/obj/effect/proc_holder/spell/targeted/forcewall/salubri/FW = new(H)
-		H.mind.AddSpell(FW)
-
 /datum/discipline_power/valeren
 	name = "Valeren power name"
 	desc = "Valeren power description"
@@ -98,7 +92,7 @@
 
 	level = 4
 
-	cooldown_length = 10 SECONDS
+	cooldown_length = 40 SECONDS
 
 /datum/discipline_power/valeren/shepherds_watch/activate()
 	. = ..()
