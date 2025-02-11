@@ -245,7 +245,9 @@
 	return FALSE
 
 /datum/discipline_power/proc/pre_activation(atom/target)
-	//overrides should take care to still send and receive these signals!
+	SHOULD_CALL_PARENT(FALSE)
+
+	//overrides should take care to still send and receive these signals! copy and paste this!
 	var/signal_return = SEND_SIGNAL(src, COMSIG_POWER_PRE_ACTIVATION, target) | SEND_SIGNAL(owner, COMSIG_POWER_PRE_ACTIVATION, target)
 	if (target)
 		signal_return |= SEND_SIGNAL(target, COMSIG_POWER_PRE_ACTIVATION_ON)

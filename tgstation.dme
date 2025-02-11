@@ -3422,6 +3422,7 @@
 #include "code\modules\vtmb\power\discipline\quietus.dm"
 #include "code\modules\vtmb\power\discipline\serpentis.dm"
 #include "code\modules\vtmb\power\discipline\thaumaturgy.dm"
+#include "code\modules\vtmb\power\discipline\valeren.dm"
 #include "code\modules\vtmb\power\discipline\vicissitude.dm"
 #include "code\modules\vtmb\vampire_clane\baali.dm"
 #include "code\modules\vtmb\vampire_clane\banu_haqim.dm"
