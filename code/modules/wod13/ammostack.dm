@@ -344,15 +344,10 @@
 		if(M.auspice.gnosis)
 			if(prob(50))
 				adjust_gnosis(-1, M)
-		else
-			M.Stun(1 SECONDS)
-			M.Immobilize(1 SECONDS)
-			M.adjustBruteLoss(50, TRUE)
-			M.adjustCloneLoss(20, TRUE)
-		if(!M.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
-			M.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
-			spawn(7 SECONDS)
-			M.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
+
+		M.apply_damage(40, BRUTE)
+		M.apply_damage(20, CLONE)
+		M.apply_status_effect(STATUS_EFFECT_SILVER_SLOWDOWN)
 
 /obj/projectile/beam/beam_rifle/vampire/vamp9mm/silver
 	name = "9mm silver bullet"
@@ -365,14 +360,10 @@
 		if(M.auspice.gnosis)
 			if(prob(50))
 				adjust_gnosis(-1, M)
-		else
-			M.Stun(1 SECONDS)
-			M.adjustBruteLoss(25, TRUE)
-			M.adjustCloneLoss(10, TRUE)
-		if(!M.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
-			M.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
-			spawn(5 SECONDS)
-				M.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
+
+		M.apply_damage(25, BRUTE)
+		M.apply_damage(10, CLONE)
+		M.apply_status_effect(STATUS_EFFECT_SILVER_SLOWDOWN)
 
 /obj/projectile/beam/beam_rifle/vampire/vamp45acp/silver
 	name = ".45 ACP silver bullet"
@@ -385,14 +376,10 @@
 		if(M.auspice.gnosis)
 			if(prob(50))
 				adjust_gnosis(-1, M)
-		else
-			M.Stun(1 SECONDS)
-			M.adjustBruteLoss(30, TRUE)
-			M.adjustCloneLoss(15, TRUE)
-		if(!M.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
-			M.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
-			spawn(5 SECONDS)
-				M.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
+
+		M.apply_damage(30, BRUTE)
+		M.apply_damage(15, CLONE)
+		M.apply_status_effect(STATUS_EFFECT_SILVER_SLOWDOWN)
 
 /obj/projectile/beam/beam_rifle/vampire/vamp44/silver
 	name = ".44 silver bullet"
@@ -407,15 +394,10 @@
 		if(M.auspice.gnosis)
 			if(prob(50))
 				adjust_gnosis(-1, M)
-		else
-			M.Stun(2 SECONDS)
-			M.Immobilize(1 SECONDS)
-			M.adjustBruteLoss(40, TRUE)
-			M.adjustCloneLoss(25, TRUE)
-		if(!M.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
-			M.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
-			spawn(7 SECONDS)
-				M.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
+
+		M.apply_damage(40, BRUTE)
+		M.apply_damage(20, CLONE)
+		M.apply_status_effect(STATUS_EFFECT_SILVER_SLOWDOWN)
 
 /obj/item/ammo_casing/vampire/c9mm/silver
 	name = "9mm silver bullet casing"
