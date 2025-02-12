@@ -84,41 +84,12 @@
 	if(stat == DEAD)
 		return
 	..()
-	if(pulledby)
-		if(prob(25))
-			Aggro(pulledby, TRUE)
-		if(fights_anyway)
-			Aggro(pulledby, TRUE)
 	if(!CheckMove())
 		nutrition = 400
 		if(get_dist(danger_source, src) < 7)
 			last_danger_meet = world.time
 		if(fire_stacks >= 1)
 			resist()
-		if(!staying)
-			if(!walktarget)
-				walktarget = ChoosePath()
-			if(loc == tupik_loc)
-				tupik_steps += 1
-			if(loc != tupik_loc)
-				tupik_loc = loc
-				tupik_steps = 0
-			if(tupik_steps > 3)
-				var/turf/T = get_step(src, pick(NORTH, SOUTH, WEST, EAST))
-				face_atom(T)
-				step_to(src,T,0)
-				if(walktarget && !old_movement)
-					if(route_optimisation())
-						forceMove(get_turf(walktarget))
-//		if(prob(5) && !danger_source)
-//			var/activity = rand(1, 3)
-//			switch(activity)
-//				if(1)
-//					StareAction()
-//				if(2)
-//					EmoteAction()
-//				if(3)
-//					SpeechAction()
 
 /mob/living/carbon/human/npc/proc/CreateWay(var/direction)
 	var/turf/location = get_turf(src)
@@ -199,10 +170,10 @@
 					return pick(north_steps, south_steps, east_steps)
 				else
 					return pick(north_steps, south_steps, west_steps)
-/mob/living/carbon/human/npc/proc/CheckMove()
+/mob/living/carbon/human/npc/proc/CheckMove(var/hardlock = FALSE)
 	if(stat >= HARD_CRIT)
 		return TRUE
-	if(last_grab+15 > world.time)
+	if(last_grab+15 > world.time && !hardlock)
 		return TRUE
 	if(ghoulificated)
 		return TRUE
@@ -222,7 +193,7 @@
 		return TRUE
 	if(is_talking)
 		return TRUE
-	if(pulledby)
+	if(pulledby  && !hardlock)
 		if(HAS_TRAIT(pulledby, TRAIT_CHARMER))
 			return TRUE
 		if(prob(30))
@@ -245,6 +216,13 @@
 /mob/living/carbon/human/npc/proc/handle_automated_movement()
 	if(CheckMove())
 		return
+
+	// If this NPC is under Presence control, we’ll do that logic first
+	if(presence_master && stat < DEAD)
+		handle_presence_movement()
+		// If we *are* actively following/obeying, we might want to return here
+		// so that normal wandering logic doesn't interfere:
+
 	var/fire_danger = FALSE
 	for(var/obj/effect/fire/F in range(7, src))
 		if(F)
@@ -257,10 +235,32 @@
 /*	if(lifespan >= 1000)
 		if(route_optimisation())
 			qdel(src)*/
-	if(!walktarget && !staying)
-		stopturf = rand(1, 2)
-		walktarget = ChoosePath()
-		face_atom(walktarget)
+	if(pulledby)
+		if(prob(25))
+			Aggro(pulledby, TRUE)
+		if(fights_anyway)
+			Aggro(pulledby, TRUE)
+
+	if(!staying && !presence_master)
+		if(!walktarget)
+			stopturf = rand(1, 2)
+			walktarget = ChoosePath()
+			face_atom(walktarget)
+
+	if(!staying && (!presence_master || (presence_master && presence_follow)))
+		if(loc == tupik_loc)
+			tupik_steps += 1
+		if(loc != tupik_loc)
+			tupik_loc = loc
+			tupik_steps = 0
+		if(tupik_steps > 3)
+			var/turf/T = get_step(src, pick(NORTH, SOUTH, WEST, EAST))
+			face_atom(T)
+			step_to(src,T,0)
+			if(walktarget && !old_movement)
+				if(route_optimisation())
+					forceMove(get_turf(walktarget))
+
 	if(isturf(loc))
 		if(danger_source)
 			a_intent = INTENT_HARM
@@ -301,24 +301,28 @@
 					danger_source = null
 					if(my_weapon)
 						if(get_active_held_item() == my_weapon)
+							var/obj/item/weapon = get_active_held_item()
 							drop_all_held_items()
-							my_weapon.forceMove(src)
+							qdel(weapon)
 							spawned_weapon = FALSE
 						else
 							my_weapon = null
-					walktarget = ChoosePath()
+					if(!presence_master)
+						walktarget = ChoosePath()
 					a_intent = INTENT_HELP
 
 			if(last_danger_meet+300 <= world.time)
 				danger_source = null
 				if(my_weapon)
 					if(get_active_held_item() == my_weapon)
+						var/obj/item/weapon = get_active_held_item()
 						drop_all_held_items()
-						my_weapon.forceMove(src)
+						qdel(weapon)
 						spawned_weapon = FALSE
 					else
 						my_weapon = null
-				walktarget = ChoosePath()
+				if(!presence_master)
+					walktarget = ChoosePath()
 				a_intent = INTENT_HELP
 		else if(less_danger)
 			var/reqsteps = round((SShumannpcpool.next_fire-world.time)/total_multiplicative_slowdown())
