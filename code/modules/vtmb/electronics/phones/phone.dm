@@ -782,9 +782,9 @@
 	can_fold = 0
 
 	/// Phone icon states
-	open_state = "streetphone"
-	closed_state = "streetphone"
-	folded_state = "streetphone"
+	open_state = "payphone"
+	closed_state = "payphone"
+	folded_state = "payphone"
 
 /obj/item/vamp/phone/clean
 	desc = "The usual phone of a cleaning company used to communicate with employees"
