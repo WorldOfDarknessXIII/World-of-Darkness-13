@@ -6187,7 +6187,7 @@
 "iuo" = (/obj/machinery/light{pixel_y = 32},/obj/structure/table/wood,/turf/open/floor/plating/parquetry/old,/area/vtm/interior)
 "iuq" = (/obj/structure/chair/comfy/beige,/turf/open/floor/plating/sidewalk/poor,/area/vtm)
 "iuy" = (/obj/structure/roadblock{dir = 1},/turf/open/floor/plating/vampdirt,/area/vtm/park)
-"iuB" = (/obj/structure/bed/maint{pixel_y = 2},/turf/open/floor/plating/vampdirt,/area/vtm/interior)
+"iuB" = (/obj/structure/bed/maint{pixel_y = 2},/obj/item/melee/vampirearms/handsickle,/turf/open/floor/plating/vampdirt,/area/vtm/interior)
 "iuJ" = (/obj/structure/toilet{dir = 8; pixel_y = 11},/turf/open/floor/plating/toilet,/area/vtm/interior)
 "iuQ" = (/obj/structure/vamproofwall{color = "#7c7c7c"; dir = 1},/obj/matrix{alpha = 0; opacity = 0},/turf/open/space/basic,/area/space)
 "iuX" = (/obj/item/kirbyplants/random,/obj/effect/turf_decal/siding/white{dir = 5},/turf/open/floor/carpet/black,/area/vtm/interior/bianchiBank)
