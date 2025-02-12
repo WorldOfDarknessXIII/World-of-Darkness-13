@@ -124,41 +124,6 @@
 		else
 			ClickOn(src)
 
-/datum/discipline/melpominee
-	name = "Melpominee"
-	desc = "Named for the Greek Muse of Tragedy, Melpominee is a unique discipline of the Daughters of Cacophony. It explores the power of the voice, shaking the very soul of those nearby and allowing the vampire to perform sonic feats otherwise impossible."
-	icon_state = "melpominee"
-	/*
-	cost = 1
-	ranged = TRUE
-	delay = 75
-	violates_masquerade = FALSE
-	activate_sound = 'code/modules/wod13/sounds/melpominee.ogg'
-	clan_restricted = TRUE
-	dead_restricted = FALSE
-	*/
-
-/*
-
-/datum/discipline/melpominee/activate(mob/living/target, mob/living/carbon/human/owner)
-	. = ..()
-	switch(level_casting)
-		if(5)
-			playsound(owner.loc, 'code/modules/wod13/sounds/killscream.ogg', 100, FALSE)
-			for(var/mob/living/carbon/human/HU in oviewers(7, owner))
-				if(HU)
-					HU.Stun(20)
-					HU.apply_damage(50, BRUTE, BODY_ZONE_HEAD)
-					HU.remove_overlay(MUTATIONS_LAYER)
-					var/mutable_appearance/song_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "song", -MUTATIONS_LAYER)
-					HU.overlays_standing[MUTATIONS_LAYER] = song_overlay
-					HU.apply_overlay(MUTATIONS_LAYER)
-					spawn(20)
-						if(HU)
-							HU.remove_overlay(MUTATIONS_LAYER)
-	*/
-
-
 /datum/discipline/temporis
 	name = "Temporis"
 	desc = "Temporis is a Discipline unique to the True Brujah. Supposedly a refinement of Celerity, Temporis grants the Cainite the ability to manipulate the flow of time itself."
