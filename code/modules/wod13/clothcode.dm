@@ -376,6 +376,64 @@
 	desc = "A suit for a TRULY REAL business."
 	icon_state = "leather_pants"
 
+
+//PENTEX
+/obj/item/clothing/under/pentex
+	desc = "Some clothes."
+	name = "clothes"
+	icon_state = "error"
+	has_sensor = NO_SENSORS
+	random_sensor = FALSE
+	can_adjust = FALSE
+	icon = 'code/modules/wod13/clothing.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 15)
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	body_worn = TRUE
+	fitted = NO_FEMALE_UNIFORM
+	cost = 10
+
+/obj/item/clothing/under/pentex/pentex_janitor
+	name = "Ardus Enterprises custodian jumpsuit"
+	desc = "An Ardus Enterprises custodian's uniform."
+	icon_state = "pentex_janitor"
+	armor = list(BIO = 100, ACID = 15, RAD = 5)
+
+/obj/item/clothing/under/pentex/pentex_shortsleeve
+	name = "Endron polo-shirt"
+	desc = "An Endron International employee uniform. This one is a nice polo!"
+	icon_state = "pentex_shortsleeve"
+
+/obj/item/clothing/under/pentex/pentex_longleeve
+	name = "Endron shirt"
+	desc = "An Endron International employee uniform. This one has sleeves!"
+	icon_state = "pentex_longsleeve"
+
+/obj/item/clothing/under/pentex/pentex_turtleneck
+	name = "Endron turtleneck"
+	desc = "An Endron International employee uniform. This one is a nice turtleneck!"
+	icon_state = "pentex_turtleneck"
+
+/obj/item/clothing/under/pentex/pentex_suit
+	name = "Endron suit"
+	desc = "A nice suit with a green dress-shirt. This one has an Endron International tag on it!"
+	icon_state = "pentex_suit"
+
+/obj/item/clothing/under/pentex/pentex_suitskirt
+	name = "Endron suitskirt"
+	desc = "A nice suitskirt with a green dress-shirt. This one has an Endron International tag on it!"
+	icon_state = "pentex_suitskirt"
+
+/obj/item/clothing/under/pentex/pentex_executive_suit
+	name = "Endron executive suit"
+	desc = "A  white designer suit with a green dress shirt. This one has an Endron International tag on it!"
+	icon_state = "pentex_executivesuit"
+
+/obj/item/clothing/under/pentex/pentex_executiveskirt
+	name = "Endron executive suitskirt"
+	desc = "A white designer suitskirt with a green dress shirt. This one has an Endron International tag on it!"
+	icon_state = "pentex_executiveskirt"
+
 //SHOES
 
 //SHOES
@@ -842,6 +900,35 @@
 	icon_state = "vestments"
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
 
+//Pentex Overwear
+
+/obj/item/clothing/suit/pentex
+	icon = 'code/modules/wod13/clothing.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	body_parts_covered = CHEST
+	cold_protection = CHEST|GROIN
+	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
+	heat_protection = CHEST|GROIN
+	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
+	max_integrity = 250
+	resistance_flags = NONE
+	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
+	body_worn = TRUE
+	cost = 15
+
+/obj/item/clothing/suit/pentex/pentex_labcoat
+	name = "Endron labcoat"
+	desc = "A crisp white labcoat. This one has the Endron International logo stiched onto the breast!"
+	icon_state = "pentex_closedlabcoat"
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 90, WOUND = 10)
+
+/obj/item/clothing/suit/pentex/pentex_labcoat_alt
+	name = "Endron labcoat"
+	desc = "A crisp white labcoat. This one has a green trim and the Endron International logo stiched onto the breast!"
+	icon_state = "pentex_labcoat_alt"
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 90, WOUND = 10)
+
 //GLASSES
 
 //GLASSES
@@ -1142,6 +1229,32 @@
 	dynamic_hair_suffix = ""
 	dynamic_fhair_suffix = ""
 
+/obj/item/clothing/head/pentex
+	icon = 'code/modules/wod13/clothing.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
+	body_worn = TRUE
+	cost = 10
+
+/obj/item/clothing/head/pentex/pentex_yellowhardhat
+	name = "Endron hardhat"
+	desc = "A yellow hardhat. This one has an Endron International logo on it!"
+	icon_state = "pentex_hardhat_yellow"
+	flags_inv = HIDEHAIR
+
+/obj/item/clothing/head/pentex/pentex_whitehardhat
+	name = "Endron hardhat"
+	desc = "A white hardhat. This one has an Endron International logo on it!"
+	icon_state = "pentex_hardhat_white"
+	flags_inv = HIDEHAIR
+
+/obj/item/clothing/head/pentex/pentex_beret
+	name = "First Team beret"
+	desc = "A black beret with a mysterious golden insigna bearing a spiral."
+	icon_state = "pentex_beret"
+	flags_inv = HIDEHAIR
+
 //GLOVES
 
 //GLOVES
@@ -1276,6 +1389,14 @@
 	desc = "LOADSAMONEY"
 	icon_state = "balaclava"
 	inhand_icon_state = "balaclava"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/clothing/mask/pentex/pentex_balaclava
+	name = "Thick balaclava"
+	desc = "A black balaclava. This one is particularly thick."
+	icon_state = "pentex_balaclava"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL

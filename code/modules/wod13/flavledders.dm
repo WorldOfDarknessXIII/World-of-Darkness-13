@@ -92,6 +92,11 @@
 	layer = ABOVE_LIGHTING_LAYER
 	pixel_w = -8
 
+/obj/transfer_point_vamp/old_clan_tzimisce
+	name = "old clan transfer point"
+	icon_state = "matrix_go"
+	layer = MID_TURF_LAYER
+
 /obj/transfer_point_vamp/umbral/Initialize()
 	. = ..()
 	set_light(2, 1, "#a4a0fb")
