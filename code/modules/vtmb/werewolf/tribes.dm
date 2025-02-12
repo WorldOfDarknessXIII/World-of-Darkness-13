@@ -54,22 +54,52 @@
 
 /datum/action/gift/bloody_feast
 	name = "Bloody Feast"
-	desc = "By eating a grabbed corpse, garou can redeem their lost health and heal the injuries."
+	desc = "By eating a grabbed corpse, garou can recover their lost health and heal their injuries."
 	button_icon_state = "bloody_feast"
-	rage_req = 2
-	gnosis_req = 1
+	rage_req = 1
 
+// This is basically a rage heal that you can use by eating something
 /datum/action/gift/bloody_feast/Trigger()
 	. = ..()
 	if(allowed_to_proceed)
-		var/mob/living/carbon/C = owner
-		if(C.pulling)
-			if(isliving(C.pulling))
-				var/mob/living/L = C.pulling
-				if(L.stat == DEAD)
+		var/mob/living/carbon/wolf = owner
+		if(wolf.pulling)
+			if(isliving(wolf.pulling))
+				var/mob/living/victim = wolf.pulling
+				if(victim.stat == DEAD)
 					playsound(get_turf(owner), 'code/modules/wod13/sounds/bloody_feast.ogg', 50, FALSE)
-					qdel(L)
-					C.revive(full_heal = TRUE, admin_revive = TRUE)
+
+					// Make it messy, this should not be subtle
+					new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
+					victim.add_splatter_floor(victim.loc, null)
+					victim.add_splatter_floor(get_step(victim.loc, victim.dir), null)
+					victim.add_splatter_floor(get_step(wolf.loc, wolf.dir), null)
+					victim.gib(FALSE, FALSE, FALSE)
+
+					wolf.adjustBruteLoss(-40*wolf.auspice.level, TRUE)
+					wolf.adjustFireLoss(-30*wolf.auspice.level, TRUE)
+					wolf.adjustCloneLoss(-10*wolf.auspice.level, TRUE)
+					wolf.adjustToxLoss(-10*wolf.auspice.level, TRUE)
+					wolf.adjustOxyLoss(-20*wolf.auspice.level, TRUE)
+					wolf.bloodpool = min(wolf.bloodpool + wolf.auspice.level, wolf.maxbloodpool)
+					wolf.blood_volume = min(wolf.blood_volume + 56 * wolf.auspice.level, BLOOD_VOLUME_NORMAL)
+					if(ishuman(owner))
+						var/mob/living/carbon/human/homid = owner
+						if(length(homid.all_wounds))
+							var/datum/wound/W = pick(homid.all_wounds)
+							W.remove_wound()
+						if(length(homid.all_wounds))
+							var/datum/wound/W = pick(homid.all_wounds)
+							W.remove_wound()
+						if(length(homid.all_wounds))
+							var/datum/wound/W = pick(homid.all_wounds)
+							W.remove_wound()
+						if(length(homid.all_wounds))
+							var/datum/wound/W = pick(homid.all_wounds)
+							W.remove_wound()
+						if(length(homid.all_wounds))
+							var/datum/wound/W = pick(homid.all_wounds)
+							W.remove_wound()
 
 /datum/action/gift/stinky_fur
 	name = "Stinky Fur"
