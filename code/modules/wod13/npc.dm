@@ -49,8 +49,12 @@
 	var/extra_mags=2
 	var/extra_loaded_rounds=10
 
+	var/has_weapon = FALSE
+
+	var/my_weapon_type = null
 	var/obj/item/my_weapon = null
 
+	var/my_backup_weapon_type = null
 	var/obj/item/my_backup_weapon = null
 
 	var/spawned_weapon = FALSE
@@ -71,21 +75,25 @@
 
 /mob/living/carbon/human/npc/LateInitialize()
 	. = ..()
-	if(!my_weapon && role_weapons_chances.Find(type))
+	if(role_weapons_chances.Find(type))
 		for(var/weapon in role_weapons_chances[type])
 			if(prob(role_weapons_chances[type][weapon]))
 				my_weapon = new weapon(src)
 				break
-	if(my_weapon)
-		my_weapon = new my_weapon(src)
-		my_weapon.register_npc_owned(src)
+
+	if(!my_weapon && my_weapon_type)
+		my_weapon = new my_weapon_type(src)
+		equip_to_appropriate_slot(my_weapon)
 		if(istype(my_weapon, /obj/item/gun/ballistic))
 			RegisterSignal(my_weapon, COMSIG_GUN_FIRED, PROC_REF(handle_gun))
 			RegisterSignal(my_weapon, COMSIG_GUN_EMPTY, PROC_REF(handle_empty_gun))
 
-	if(my_backup_weapon)
-		my_backup_weapon = new my_backup_weapon(src)
-		my_backup_weapon.register_npc_owned(src)
+	if(my_weapon)
+		has_weapon = TRUE
+
+	if(my_backup_weapon_type)
+		my_backup_weapon = new my_backup_weapon_type(src)
+		equip_to_appropriate_slot(my_backup_weapon)
 
 /datum/movespeed_modifier/npc
 	multiplicative_slowdown = 2

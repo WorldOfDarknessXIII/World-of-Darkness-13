@@ -29,8 +29,8 @@
 
 	var/is_guarding = TRUE
 
-	var/bouncer_weapon_type = /obj/item/gun/ballistic/shotgun/vampire
-	var/bouncer_backup_weapon_type = /obj/item/melee/vampirearms/machete
+	my_weapon_type = /obj/item/gun/ballistic/shotgun/vampire
+	my_backup_weapon_type = /obj/item/melee/classic_baton/vampire
 
 	//Behavior settings
 	fights_anyway=TRUE
@@ -43,13 +43,6 @@
 
 
 	AssignSocialRole(our_role)
-
-
-	if(bouncer_weapon_type)
-		my_weapon = new bouncer_weapon_type(src)
-
-	if(bouncer_backup_weapon_type)
-		my_backup_weapon = new bouncer_backup_weapon_type(src)
 
 	start_turf = get_turf(src)
 
@@ -96,8 +89,8 @@
 		entry_phrases = social_role.entry_phrases
 		police_block_phrases = social_role.police_block_phrases
 		block_phrases = social_role.block_phrases
-		bouncer_weapon_type = role.bouncer_weapon_type
-		bouncer_backup_weapon_type = role.bouncer_backup_weapon_type
+		my_weapon_type = role.bouncer_weapon_type
+		my_backup_weapon_type = role.bouncer_backup_weapon_type
 
 /mob/living/carbon/human/npc/bouncer/proc/stat_change_process_is_guarding(datum/source, statchange)
 	if(statchange >= HARD_CRIT)

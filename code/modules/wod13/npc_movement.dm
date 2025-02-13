@@ -252,20 +252,21 @@
 			a_intent = INTENT_HARM
 			if(m_intent == MOVE_INTENT_WALK)
 				toggle_move_intent(src)
-			if(!my_weapon && !fights_anyway)
+			if(!has_weapon && !fights_anyway)
 				var/reqsteps = round((SShumannpcpool.next_fire-world.time)/total_multiplicative_slowdown())
 				set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
 				walk_away(src, danger_source, reqsteps, total_multiplicative_slowdown())
-			if(my_weapon || fights_anyway)
+			if(has_weapon || fights_anyway)
 				var/obj/item/card/id/id_card = danger_source.get_idcard(FALSE)
 				if(!istype(id_card, /obj/item/card/id/police) || is_criminal)
-					if(!spawned_weapon && my_weapon)
+					if(!spawned_weapon && has_weapon)
 						my_weapon.forceMove(loc)
 						drop_all_held_items()
+						temporarilyRemoveItemFromInventory(my_weapon, TRUE)
 						put_in_active_hand(my_weapon)
 						spawned_weapon = TRUE
 					if(spawned_weapon && get_active_held_item() != my_weapon)
-						my_weapon = null
+						has_weapon = FALSE
 					if(danger_source)
 						if(danger_source == src)
 							danger_source = null
@@ -280,25 +281,25 @@
 				var/mob/living/L = danger_source
 				if(L.stat > 2)
 					danger_source = null
-					if(my_weapon)
+					if(has_weapon)
 						if(get_active_held_item() == my_weapon)
 							drop_all_held_items()
 							my_weapon.forceMove(src)
 							spawned_weapon = FALSE
 						else
-							my_weapon = null
+							has_weapon = FALSE
 					walktarget = ChoosePath()
 					a_intent = INTENT_HELP
 
 			if(last_danger_meet+300 <= world.time)
 				danger_source = null
-				if(my_weapon)
+				if(has_weapon)
 					if(get_active_held_item() == my_weapon)
 						drop_all_held_items()
 						my_weapon.forceMove(src)
 						spawned_weapon = FALSE
 					else
-						my_weapon = null
+						has_weapon = FALSE
 				walktarget = ChoosePath()
 				a_intent = INTENT_HELP
 		else if(less_danger)
@@ -314,48 +315,11 @@
 			set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
 			walk_to(src, walktarget, reqsteps, total_multiplicative_slowdown())
 
-		if(my_weapon && !danger_source)
+		if(has_weapon && !danger_source)
 			if(spawned_weapon)
 				if(get_active_held_item() == my_weapon)
 					drop_all_held_items()
 					my_weapon.forceMove(src)
 					spawned_weapon = FALSE
 				else
-					my_weapon = null
-
-/mob/living/carbon/human/npc/proc/handle_gun(obj/item/gun/ballistic/weapon, mob/living/user, atom/target, params, zone_override)
-	SIGNAL_HANDLER
-	if(!istype(weapon, /obj/item/gun/ballistic))
-		return
-
-	if(istype(weapon.magazine, /obj/item/ammo_box/magazine/internal))
-		var/obj/item/ammo_box/magazine/internal_mag = weapon.magazine
-		if(extra_loaded_rounds)
-			internal_mag.give_round(new internal_mag.ammo_type())
-			extra_loaded_rounds--
-		addtimer(CALLBACK(src, PROC_REF(rack_held_gun), weapon), weapon.rack_delay)
-		return
-
-	if(!weapon.magazine.ammo_count())
-		if(extra_mags)
-			extra_mags--
-			weapon.eject_magazine_npc(src, new weapon.mag_type(src))
-			weapon.rack(src)
-			if(!weapon.chambered)
-				weapon.chamber_round()
-
-/mob/living/carbon/human/npc/proc/rack_held_gun(obj/item/gun/ballistic/weapon)
-	if(weapon.bolt_locked)
-		weapon.drop_bolt()
-	weapon.rack(src)
-
-/mob/living/carbon/human/npc/proc/handle_empty_gun()
-	SIGNAL_HANDLER
-	UnregisterSignal(my_weapon, COMSIG_GUN_FIRED)
-	UnregisterSignal(my_weapon, COMSIG_GUN_EMPTY)
-	temporarilyRemoveItemFromInventory(my_weapon, TRUE)
-	my_weapon = null
-	if(my_backup_weapon && !spawned_backup_weapon)
-		my_backup_weapon.forceMove(loc)
-		put_in_active_hand(my_backup_weapon)
-		spawned_backup_weapon = TRUE
+					has_weapon = FALSE

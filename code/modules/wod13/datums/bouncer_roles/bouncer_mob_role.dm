@@ -124,7 +124,7 @@
 	shoes = list(/obj/item/clothing/shoes/vampire/jackboots)
 	uniforms = list(/obj/item/clothing/under/vampire/guard)
 	pockets = list(/obj/item/vamp/keys/npc, /obj/item/stack/dollar/rand)
-
+	backpacks = list()
 
 	//Voice Lines
 	neutral_phrases = list(

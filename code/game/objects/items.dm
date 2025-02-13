@@ -1135,14 +1135,3 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(ismob(loc))
 		var/mob/mob_loc = loc
 		mob_loc.regenerate_icons()
-
-//handle items dropping from the hands of killed npcs
-/obj/item/proc/register_npc_owned(mob/living/carbon/human/npc/npc)
-	ADD_TRAIT(src, TRAIT_NODROP, NPC_ITEM_TRAIT)
-	RegisterSignal(npc, COMSIG_LIVING_DEATH, PROC_REF(handle_drop_on_npc_death))
-
-/obj/item/proc/handle_drop_on_npc_death(mob/living/carbon/human/npc/npc)
-	SIGNAL_HANDLER
-	REMOVE_TRAIT(src, TRAIT_NODROP, NPC_ITEM_TRAIT)
-	UnregisterSignal(npc, COMSIG_LIVING_DEATH)
-	src.forceMove(get_turf(npc))
