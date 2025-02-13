@@ -12,7 +12,7 @@
 #define JOB_UNAVAILABLE_SPECIES_LIMITED 9
 #define JOB_UNAVAILABLE_CLAN 10
 #define JOB_UNAVAILABLE_AGE 11
-#define JOB_UNAVAILABE_TIME_LOCK 12
+#define JOB_UNAVAILABLE_TIME_LOCK 12
 
 #define DEFAULT_RELIGION "Christianity"
 #define DEFAULT_DEITY "Space Jesus"
@@ -73,14 +73,14 @@
 #define JOB_CAMARILLA_AUTHORITIES_ROLES_LIST   list(JOB_SHERIFF, JOB_HOUND, JOB_CLERK, JOB_PRINCE)
 
 
-#define JOB_BRUJAH "Primogen Brujah"
-#define JOB_MALKAVIAN "Primogen Malkavian"
-#define JOB_NOSFERATU "Primogen Nosferatu"
-#define JOB_TOREADOR "Primogen Toreador"
-#define JOB_VENTRUE "Primogen Ventrue"
+#define JOB_PRIMOGEN_BRUJAH "Primogen Brujah"
+#define JOB_PRIMOGEN_MALKAVIAN "Primogen Malkavian"
+#define JOB_PRIMOGEN_NOSFERATU "Primogen Nosferatu"
+#define JOB_PRIMOGEN_TOREADOR "Primogen Toreador"
+#define JOB_PRIMOGEN_VENTRUE "Primogen Ventrue"
 
 #define JOB_CAMARILLA_COUNCIL_ROLES    /datum/timelock/camarilla_council
-#define JOB_CAMARILLA_COUNCIL_ROLES_LIST   list(JOB_BRUJAH, JOB_MALKAVIAN,JOB_NOSFERATU, JOB_TOREADOR, JOB_VENTRUE)
+#define JOB_CAMARILLA_COUNCIL_ROLES_LIST   list(JOB_PRIMOGEN_BRUJAH, JOB_PRIMOGEN_MALKAVIAN,JOB_PRIMOGEN_NOSFERATU, JOB_PRIMOGEN_TOREADOR, JOB_PRIMOGEN_VENTRUE)
 
 
 #define JOB_PRIEST "Priest"
@@ -89,14 +89,14 @@
 #define JOB_CHURCH_ROLES_LIST   list(JOB_PRIEST)
 
 
-#define JOB_GRAVEYARD "Graveyard Keeper"
-#define JOB_STREETJAN "Street Janitor"
-#define JOB_STRIP "Stripper"
+#define JOB_GRAVEYARD_KEEPER "Graveyard Keeper"
+#define JOB_STREET_JANITOR "Street Janitor"
+#define JOB_STRIPPER "Stripper"
 #define JOB_TAXI "Taxi Driver"
 
 
 #define JOB_CITY_SERVICES_ROLES    /datum/timelock/city_services
-#define JOB_CITY_SERVICES_ROLES_LIST   list(JOB_GRAVEYARD,JOB_STREETJAN, JOB_STRIP, JOB_TAXI)
+#define JOB_CITY_SERVICES_ROLES_LIST   list(JOB_GRAVEYARD_KEEPER,JOB_STREET_JANITOR, JOB_STRIPPER, JOB_TAXI)
 
 
 #define JOB_CLINIC_DIRECTOR "Clinic Director"
@@ -142,16 +142,16 @@
 
 #define JOB_POLICE_CHIEF "Police Chief"
 #define JOB_POLICE_SERGEANT "Police Sergeant"
-#define JOB_POLICE "Police Officer"
+#define JOB_POLICE_OFFICER "Police Officer"
 #define JOB_DISPATCHER "Emergency Dispatcher"
 
 #define JOB_POLICE_ROLES    /datum/timelock/police_force
-#define JOB_POLICE_ROLES_LIST   list(JOB_POLICE_CHIEF,JOB_POLICE_SERGEANT,JOB_POLICE,JOB_DISPATCHER)
+#define JOB_POLICE_ROLES_LIST   list(JOB_POLICE_CHIEF,JOB_POLICE_SERGEANT,JOB_POLICE_OFFICER,JOB_DISPATCHER)
 
-#define JOB_FBI "Federal Investigator"
+#define JOB_FBI_AGENT "Federal Investigator"
 
 #define JOB_NATIONAL_SECURITY_ROLES    /datum/timelock/national_security
-#define JOB_NATIONAL_SECURITY_ROLES_LIST   list(JOB_FBI)
+#define JOB_NATIONAL_SECURITY_ROLES_LIST   list(JOB_FBI_AGENT)
 
 #define JOB_VOIVODE "Voivode"
 #define JOB_BOGATYR "Bogatyr"
