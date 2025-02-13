@@ -35,7 +35,7 @@
 	if(isnpc(mob))
 		var/mob/living/carbon/human/npc/NPC = mob
 		NPC.danger_source = null
- 		mob.Stun(30) //NPCs don't get to resist
+		mob.Stun(40) //NPCs don't get to resist
 
 	if(mob.bloodpool <= 1 && mob.maxbloodpool > 1)
 		to_chat(src, "<span class='warning'>You feel small amount of <b>BLOOD</b> in your victim.</span>")
