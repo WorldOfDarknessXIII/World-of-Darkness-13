@@ -16,9 +16,6 @@
 	var/datum/action/cooldown/malk_hivemind/GH = new()
 	GH.Grant(H)
 	GLOB.malkavian_list += H
-	var/obj/item/organ/tongue/newtongue = new /obj/item/organ/tongue/malkavian
-	newtongue.Insert(H, TRUE, FALSE)
-	add_verb(H, list(/obj/item/organ/tongue/malkavian/proc/malkavian_madness))
 
 /datum/discipline/dementation/post_gain(mob/living/carbon/human/H)
 	..()
