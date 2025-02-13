@@ -50,7 +50,7 @@
 	start_blood = 2
 
 /datum/archetype/gunfighter/special_skill(var/mob/living/carbon/human/H)
-	H.no_fire_delay = TRUE
+	ADD_TRAIT(H, TRAIT_GUNFIGHTER, ROUNDSTART_TRAIT)
 
 /datum/archetype/diplomatic
 	name = "Diplomatic"
@@ -68,7 +68,7 @@
 	start_physique = 3
 
 /datum/archetype/masochist/special_skill(var/mob/living/carbon/human/H)
-	ADD_TRAIT(H, TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
+	ADD_TRAIT(H, TRAIT_NOSOFTCRIT, ROUNDSTART_TRAIT)
 
 /datum/archetype/wiseman
 	name = "Wiseman"
