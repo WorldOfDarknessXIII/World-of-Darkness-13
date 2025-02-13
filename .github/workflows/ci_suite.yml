@@ -3,16 +3,19 @@ on:
   push:
     branches:
     - master
+    - ci_update
     - 'project/**'
     - 'gh-readonly-queue/master/**'
     - 'gh-readonly-queue/project/**'
   pull_request:
     branches:
     - master
+    - ci_update
     - 'project/**'
   merge_group:
     branches:
     - master
+    - ci_update
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
