@@ -84,12 +84,13 @@
 	if(!my_weapon && my_weapon_type)
 		my_weapon = new my_weapon_type(src)
 		equip_to_appropriate_slot(my_weapon)
-		if(istype(my_weapon, /obj/item/gun/ballistic))
-			RegisterSignal(my_weapon, COMSIG_GUN_FIRED, PROC_REF(handle_gun))
-			RegisterSignal(my_weapon, COMSIG_GUN_EMPTY, PROC_REF(handle_empty_gun))
+
 
 	if(my_weapon)
 		has_weapon = TRUE
+		if(istype(my_weapon, /obj/item/gun/ballistic))
+			RegisterSignal(my_weapon, COMSIG_GUN_FIRED, PROC_REF(handle_gun))
+			RegisterSignal(my_weapon, COMSIG_GUN_EMPTY, PROC_REF(handle_empty_gun))
 
 	if(my_backup_weapon_type)
 		my_backup_weapon = new my_backup_weapon_type(src)
