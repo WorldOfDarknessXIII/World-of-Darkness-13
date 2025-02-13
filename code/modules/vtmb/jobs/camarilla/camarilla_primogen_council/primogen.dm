@@ -1,5 +1,5 @@
 /datum/job/vamp/camarilla/primogen_malkavian
-	title = JOB_MALKAVIAN
+	title = JOB_PRIMOGEN_MALKAVIAN
 	department_head = list("Justicar")
 	faction = "Vampire"
 	total_positions = 1
@@ -56,7 +56,7 @@ AddTimelock(/datum/job/vamp/camarilla/primogen_malkavian, list(
 		shoes = /obj/item/clothing/shoes/vampire/heels
 
 /datum/job/vamp/camarilla/primogen_nosferatu
-	title = JOB_NOSFERATU
+	title = JOB_PRIMOGEN_NOSFERATU
 	department_head = list("Justicar")
 	faction = "Vampire"
 	total_positions = 1
@@ -108,7 +108,7 @@ AddTimelock(/datum/job/vamp/camarilla/primogen_nosferatu, list(
 		shoes = /obj/item/clothing/shoes/vampire/heels
 
 /datum/job/vamp/camarilla/primogen_ventrue
-	title = JOB_VENTRUE
+	title = JOB_PRIMOGEN_VENTRUE
 	department_head = list("Justicar")
 	faction = "Vampire"
 	total_positions = 1
@@ -160,7 +160,7 @@ AddTimelock(/datum/job/vamp/camarilla/primogen_ventrue, list(
 ))
 
 /datum/job/vamp/camarilla/primogen_toreador
-	title = JOB_TOREADOR
+	title = JOB_PRIMOGEN_TOREADOR
 	department_head = list("Justicar")
 	faction = "Vampire"
 	total_positions = 1
@@ -213,7 +213,7 @@ AddTimelock(/datum/job/vamp/camarilla/primogen_toreador, list(
 
 
 /datum/job/vamp/camarilla/primogen_brujah
-	title = JOB_BRUJAH
+	title = JOB_PRIMOGEN_BRUJAH
 	department_head = list("Justicar")
 	faction = "Vampire"
 	total_positions = 1
