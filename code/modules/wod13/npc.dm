@@ -500,9 +500,10 @@
 				if(witness_count > 1)
 					for(var/obj/item/police_radio/radio in GLOB.police_radios)
 						radio.announce_crime("victim", get_turf(src))
-					for(var/obj/item/p25radio/police/radio in GLOB.p25_radios)
-						if(radio.linked_network == "police")
+					for(var/obj/machinery/p25transceiver/police/radio in GLOB.p25_tranceivers)
+						if(radio.p25_network == "police")
 							radio.announce_crime("victim", get_turf(src))
+							break
 
 /mob/living/carbon/human/npc/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	. = ..()

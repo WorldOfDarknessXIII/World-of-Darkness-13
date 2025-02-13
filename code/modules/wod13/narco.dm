@@ -17,7 +17,7 @@
 
 /obj/structure/weedshit/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Alt-click to secure the [src] to the ground.</span>"
+	. += "<span class='notice'>Alt-click to [anchored ? "un" : ""]secure [src] [anchored ? "from" : "to"] the ground.</span>"
 	if(!wet)
 		. += "<span class='warning'>[src] is dry!</span>"
 	if(growth_stage == 5)
@@ -113,13 +113,16 @@
 	update_weed_icon()
 
 /obj/structure/weedshit/AltClick(mob/user)
+	if(!user.Adjacent(src))
+		return
+	to_chat(user, "<span class='notice'>You start [anchored ? "unsecuring" : "securing"] [src] [anchored ? "from" : "to"] the ground.</span>")
 	if(do_after(user, 15))
 		if(anchored)
-			to_chat(user, "<span class='notice'>You unsecure the [src] from the ground.</span>")
+			to_chat(user, "<span class='notice'>You unsecure [src] from the ground.</span>")
 			anchored = FALSE
 			return
 		else
-			to_chat(user, "<span class='notice'>You secure the [src] to the ground.</span>")
+			to_chat(user, "<span class='notice'>You secure [src] to the ground.</span>")
 			anchored = TRUE
 			return
 
@@ -271,7 +274,7 @@ SUBSYSTEM_DEF(smokeweedeveryday)
 	playsound(src, 'code/modules/wod13/sounds/heatdam.ogg', 50, TRUE)
 	if(!do_after(user, 40, src))
 		return
-	to_chat(hit_mob, "<span class='notice'>You finish taking a hit from the [src].</span>")
+	to_chat(hit_mob, "<span class='notice'>You finish taking a hit from [src].</span>")
 	if(reagents.total_volume)
 		reagents.trans_to(hit_mob, reagent_transfer_per_use, methods = VAPOR)
 		bong_hits--
@@ -425,7 +428,7 @@ SUBSYSTEM_DEF(smokeweedeveryday)
 
 /obj/structure/methlab/movable/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Alt-click to secure the [src] to the ground.</span>"
+	. += "<span class='notice'>Alt-click to [anchored ? "un" : ""]secure [src] [anchored ? "from" : "to"] the ground.</span>"
 
 	if(health == 20)
 		. += "<span class='notice'>[src] is in good condition.</span>"
@@ -440,20 +443,23 @@ SUBSYSTEM_DEF(smokeweedeveryday)
 		. += "<span class='warning'>[src] is about to fall apart!</span>"
 
 /obj/structure/methlab/AltClick(mob/user)
+	if(!user.Adjacent(src))
+		return
+	to_chat(user, "<span class='notice'>You start [anchored ? "unsecuring" : "securing"] [src] [anchored ? "from" : "to"] the ground.</span>")
 	if(do_after(user, 15))
 		if(anchored)
-			to_chat(user, "<span class='notice'>You unsecure the [src] from the ground.</span>")
+			to_chat(user, "<span class='notice'>You unsecure [src] from the ground.</span>")
 			anchored = FALSE
 			return
 		else
-			to_chat(user, "<span class='notice'>You secure the [src] to the ground.</span>")
+			to_chat(user, "<span class='notice'>You secure [src] to the ground.</span>")
 			anchored = TRUE
 			return
 
 /obj/structure/methlab/movable/attackby(obj/item/used_item, mob/user, params)
 	if(..(used_item, user, params))
 		if(health <= 0)
-			to_chat(user, "<span class='warning'>The [src] is too damaged to use!</span>")
+			to_chat(user, "<span class='warning'>[src] is too damaged to use!</span>")
 			return
 		return TRUE
 
