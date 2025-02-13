@@ -417,7 +417,7 @@
 			if(EMERGENCY_ESCAPED_OR_ENDGAMED)
 				if(!M.onCentCom() && !M.onSyndieBase())
 					parts += "<div class='panel stationborder'>"
-					parts += "<span class='marooned'>You managed to survive, but were marooned off [station_name()]...</span>"
+					parts += "<span class='marooned'>You managed to survive, but were quarantined in [station_name()]...</span>"
 				else
 					parts += "<div class='panel greenborder'>"
 					parts += "<span class='greentext'>You managed to survive the events of [station_name()] as [M.real_name].</span>"
@@ -495,25 +495,22 @@
 	var/list/parts = list()
 	parts += "<span class='header'>City Economic Summary:</span>"
 	///This is the richest account on station at roundend.
-	var/datum/bank_account/mr_moneybags
+	var/datum/vtm_bank_account/mr_moneybags
 	///This is the station's total wealth at the end of the round.
 	var/station_vault = 0
 	///How many players joined the round.
 	var/total_players = GLOB.joined_player_list.len
-	var/list/typecache_bank = typecacheof(list(/datum/bank_account/department, /datum/bank_account/remote))
-	for(var/i in SSeconomy.bank_accounts_by_id)
-		var/datum/bank_account/current_acc = SSeconomy.bank_accounts_by_id[i]
-		if(typecache_bank[current_acc.type])
-			continue
-		station_vault += current_acc.account_balance
-		if(!mr_moneybags || mr_moneybags.account_balance < current_acc.account_balance)
-			mr_moneybags = current_acc
+	for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
+		if(account && account.account_owner)
+			station_vault += account.balance
+			if(!mr_moneybags || mr_moneybags.balance < account.balance)
+				mr_moneybags = account
 	parts += "<div class='panel stationborder'>There were [station_vault] dollars collected by people this shift.<br>"
 	if(total_players > 0)
 		parts += "An average of [station_vault/total_players] dollars were collected.<br>"
-		log_econ("Roundend credit total: [station_vault] credits. Average Credits: [station_vault/total_players]")
+		log_econ("Roundend credit total: [station_vault] dollars. Average cash amount: [station_vault/total_players]")
 	if(mr_moneybags)
-		parts += "The most affluent crew member at night's end was <b>[mr_moneybags.account_holder] with [mr_moneybags.account_balance]</b> dollars!</div>"
+		parts += "The most affluent crew member at night's end was <b>[mr_moneybags.account_owner] with [mr_moneybags.balance]</b> dollars!</div>"
 	else
 		parts += "Somehow, nobody made any money this shift! This'll result in some budget cuts...</div>"
 	return parts
