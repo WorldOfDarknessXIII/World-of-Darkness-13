@@ -1,6 +1,6 @@
 
 /datum/job/vamp/city_services/graveyard
-	title = JOB_GRAVEYARD
+	title = JOB_GRAVEYARD_KEEPER
 	department_head = list("Seneschal")
 	faction = "Vampire"
 	total_positions = 6
