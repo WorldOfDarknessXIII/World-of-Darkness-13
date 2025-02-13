@@ -34,8 +34,8 @@
 	playsound_local(src, heartbeat, 75, 0, channel = CHANNEL_BLOOD, use_reverb = FALSE)
 	if(isnpc(mob))
 		var/mob/living/carbon/human/npc/NPC = mob
-		mob.Stun(40) //NPCs don't get to resist
 		NPC.danger_source = null
+		mob.Stun(40) //NPCs don't get to resist
 
 	if(mob.bloodpool <= 1 && mob.maxbloodpool > 1)
 		to_chat(src, "<span class='warning'>You feel small amount of <b>BLOOD</b> in your victim.</span>")
