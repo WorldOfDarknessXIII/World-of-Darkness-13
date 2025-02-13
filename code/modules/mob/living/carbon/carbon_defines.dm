@@ -11,6 +11,7 @@
 	num_hands = 0 //Populated on init through list/bodyparts
 	usable_hands = 0 //Populated on init through list/bodyparts
 	mobility_flags = MOBILITY_FLAGS_CARBON_DEFAULT
+	var/species_language_holder = /datum/language_holder
 	///List of [/obj/item/organ] in the mob. They don't go in the contents for some reason I don't want to know.
 	var/list/internal_organs = list()
 	///Same as [above][/mob/living/carbon/var/internal_organs], but stores "slot ID" - "organ" pairs for easy access.
