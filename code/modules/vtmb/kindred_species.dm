@@ -242,8 +242,12 @@
 	//vampires don't die while in crit, they just slip into torpor after 2 minutes of being critted
 	RegisterSignal(C, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(slip_into_torpor))
 
+	//vampires resist vampire bites better than mortals
+	RegisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_vampire_bitten))
+
 /datum/species/kindred/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
+	UnregisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED)
 	for(var/datum/action/vampireinfo/VI in C.actions)
 		if(VI)
 			VI.Remove(C)
@@ -885,3 +889,14 @@
 
 	//nothing found
 	return FALSE
+
+/**
+ * On being bit by a vampire
+ *
+ * This handles vampire bite sleep immunity and any future special interactions.
+ */
+/datum/species/kindred/proc/on_vampire_bitten(datum/source, mob/living/carbon/being_bitten)
+	SIGNAL_HANDLER
+
+	if(iskindred(being_bitten))
+		return COMPONENT_RESIST_VAMPIRE_KISS

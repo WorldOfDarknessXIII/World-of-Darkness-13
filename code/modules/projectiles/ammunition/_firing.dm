@@ -69,9 +69,10 @@
 			if(witness_count > 1)
 				for(var/obj/item/police_radio/P in GLOB.police_radios)
 					P.announce_crime("shooting", get_turf(user))
-				for(var/obj/item/p25radio/police/P in GLOB.p25_radios)
-					if(P.linked_network == "police")
-						P.announce_crime("shooting", get_turf(user))
+				for(var/obj/machinery/p25transceiver/police/radio in GLOB.p25_tranceivers)
+					if(radio.p25_network == "police")
+						radio.announce_crime("shooting", get_turf(src))
+						break
 		var/atom/A = new firing_effect_type(get_turf(src), firing_dir)
 		var/atom/movable/shit = new(A.loc)
 		if(ishuman(user))
