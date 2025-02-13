@@ -84,6 +84,13 @@
 	bare_wound_bonus = 5
 	wound_bonus = -5
 
+/obj/projectile/beam/beam_rifle/vampire/vamp762mm
+	name = "7.62mm bullet"
+	damage = 65
+	armour_penetration = 35
+	bare_wound_bonus = -5
+	wound_bonus = 5
+
 /obj/projectile/beam/beam_rifle/vampire/vamp12g
 	name = "12g shotgun slug"
 	damage = 70
@@ -192,6 +199,14 @@
 	icon_state = "545"
 	base_iconstate = "545"
 
+/obj/item/ammo_casing/vampire/c762mm
+	name = "7.62mm bullet casing"
+	desc = "A 7.62mm bullet casing."
+	caliber = CALIBER_A762
+	projectile_type = /obj/projectile/beam/beam_rifle/vampire/vamp762mm
+	icon_state = "762"
+	base_iconstate = "762"
+
 /obj/item/ammo_casing/vampire/c556mm/incendiary
 	projectile_type = /obj/projectile/beam/beam_rifle/vampire/vamp556mm/incendiary
 
@@ -298,6 +313,12 @@
 	name = "incendiary ammo box (5.56)"
 	icon_state = "incendiary"
 	ammo_type = /obj/item/ammo_casing/vampire/c556mm/incendiary
+
+/obj/item/ammo_box/vampire/c762
+	name = "ammo box (7.62)"
+	icon_state = "762box"
+	ammo_type = /obj/item/ammo_casing/vampire/c762mm
+	max_ammo = 60
 
 /obj/item/ammo_box/vampire/c12g
 	name = "ammo box (12g)"

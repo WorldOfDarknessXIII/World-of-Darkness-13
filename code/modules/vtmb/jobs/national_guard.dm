@@ -1,17 +1,115 @@
 /datum/outfit/job/national_guard
-	name = "National Guard Soldier"
+	name = "National Guard Rifleman"
 	ears = /obj/item/p25radio/police/government
 	uniform = /obj/item/clothing/under/vampire/military_fatigues
 	mask = /obj/item/clothing/mask/vampire/balaclava
 	r_pocket = /obj/item/flashlight
 	l_pocket = /obj/item/ammo_box/magazine/vampaug
+	id = /obj/item/card/id/police/national_guard
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	belt = /obj/item/gun/ballistic/automatic/vampire/aug
 	suit = /obj/item/clothing/suit/vampire/vest/army
 	head = /obj/item/clothing/head/vampire/army
 	backpack_contents = list(
 		/obj/item/ammo_box/magazine/vampaug = 3,
-		/obj/item/radio/military = 1
+		/obj/item/radio/military = 1,
+		/obj/item/ammo_box/vampire/c556 = 1,
+		/obj/item/storage/firstaid/ifak = 1,
+		/obj/item/restraints/handcuffs = 2,
+		/obj/item/grenade/smokebomb = 2
+		)
+
+/datum/outfit/job/national_guard/ammo_carrier
+	name = "National Guard Ammo Carrier"
+	suit = /obj/item/clothing/suit/vampire/vest/army/lightmid
+	backpack_contents = list(
+		/obj/item/ammo_box/magazine/vampaug = 3,
+		/obj/item/radio/military = 1,
+		/obj/item/ammo_box/vampire/c556 = 2,
+		/obj/item/ammo_box/vampire/c12g/buck = 1,
+		/obj/item/storage/firstaid/ifak = 1,
+		/obj/item/ammo_box/c9mm = 1,
+		/obj/item/ammo_box/vampire/c762 = 1
+		)
+
+/datum/outfit/job/national_guard/medic
+	name = "National Guard Medic"
+	suit = /obj/item/clothing/suit/vampire/vest/army/light
+	l_pocket = /obj/item/ammo_box/magazine/vamp9mp5
+	belt = /obj/item/defibrillator/compact/combat
+	backpack_contents = list(
+		/obj/item/ammo_box/magazine/vamp9mp5 = 3,
+		/obj/item/ammo_box/c9mm = 1,
+		/obj/item/radio/military = 1,
+		/obj/item/storage/firstaid/medical = 1,
+		/obj/item/storage/firstaid/tactical = 1,
+		/obj/item/gun/ballistic/automatic/vampire/mp5 = 1
+		)
+
+/datum/outfit/job/national_guard/flamer
+	name = "National Guard Flametrooper"
+	suit = /obj/item/clothing/suit/vampire/vest/army/heavy
+	mask = /obj/item/clothing/mask/vampire/gasmask/ng
+	head = /obj/item/clothing/head/vampire/army
+	belt = /obj/item/vampire_flamethrower
+	backpack_contents = list(
+		/obj/item/gun/ballistic/automatic/vampire/mp5 = 1,
+		/obj/item/ammo_box/magazine/vamp9mp5 = 2,
+		/obj/item/ammo_box/c9mm = 1,
+		/obj/item/radio/military = 1,
+		/obj/item/gas_can = 2,
+		/obj/item/storage/firstaid/ifak = 1,
+		/obj/item/grenade/smokebomb = 2
+		)
+
+/datum/outfit/job/national_guard/breacher
+	name = "National Guard Breacher"
+	suit = /obj/item/clothing/suit/vampire/vest/eod
+	mask = /obj/item/clothing/mask/vampire/gasmask/ng
+	head = /obj/item/clothing/head/vampire/eod
+	l_pocket = /obj/item/grenade/smokebomb
+	belt = /obj/item/gun/ballistic/automatic/vampire/autoshotgun
+	backpack_contents = list(
+		/obj/item/ammo_box/vampire/c12g = 1,
+		/obj/item/ammo_box/magazine/vampautoshot = 3,
+		/obj/item/storage/firstaid/ifak = 1,
+		/obj/item/grenade/smokebomb = 3,
+		/obj/item/grenade/flashbang = 2,
+		/obj/item/grenade/chem_grenade/incendiary = 2,
+		/obj/item/radio/military = 1,
+		)
+
+/datum/outfit/job/national_guard/sniper
+	name = "National Guard Marksman"
+	suit = /obj/item/clothing/suit/vampire/vest/army/lightmid
+	belt = /obj/item/gun/ballistic/automatic/vampire/sniper/ng
+	l_pocket = 	/obj/item/ammo_box/magazine/glock9mm
+	backpack_contents = list(
+		/obj/item/ammo_box/magazine/internal/vampire/sniper/ng = 3,
+		/obj/item/radio/military = 1,
+		/obj/item/ammo_box/vampire/c556 = 1,
+		/obj/item/storage/firstaid/ifak = 1,
+		/obj/item/restraints/handcuffs = 1,
+		/obj/item/grenade/smokebomb = 2,
+		/obj/item/gun/ballistic/automatic/vampire/glock19 = 1,
+		/obj/item/ammo_box/magazine/glock9mm = 2,
+		/obj/item/binoculars = 1,
+		/obj/item/ammo_box/vampire/c762 = 1
+		)
+
+/datum/outfit/job/national_guard/squad_lead
+	name = "National Guard Squad Leader"
+	mask = null
+	backpack_contents = list(
+		/obj/item/ammo_box/magazine/vampaug = 3,
+		/obj/item/radio/military = 1,
+		/obj/item/ammo_box/vampire/c556 = 1,
+		/obj/item/storage/firstaid/ifak = 1,
+		/obj/item/restraints/handcuffs = 2,
+		/obj/item/grenade/smokebomb = 2,
+		/obj/item/gun/ballistic/vampire/deagle = 1,
+		/obj/item/ammo_box/magazine/m44 = 2,
+		/obj/item/binoculars = 1
 		)
 
 /datum/antagonist/national_guard/proc/equip_national_guard()
@@ -49,31 +147,6 @@
 	var/obj/effect/landmark/start/D = pick(landmarkslist)
 	H.forceMove(D.loc)
 
-/datum/antagonist/national_guard/proc/offer_loadout()
-	var/list/loadouts = list(
-		"Flamethrower",
-		"EOD",
-		"Medic",
-		"Sniper",
-		"Ammo Carrier"
-	)
-	var/loadout_type = input(owner.current, "Choose your loadout:", "Loadout Selection") in loadouts
-	switch(loadout_type)
-		if("Flamethrower")
-			owner.current.put_in_r_hand(new /obj/item/vampire_flamethrower(owner.current))
-			owner.current.put_in_l_hand(new /obj/item/gas_can/full(owner.current))
-		if("EOD")
-			owner.current.put_in_r_hand(new /obj/item/clothing/suit/vampire/eod(owner.current))
-			owner.current.put_in_l_hand(new /obj/item/clothing/head/vampire/eod(owner.current))
-		if("Medic")
-			owner.current.put_in_r_hand(new /obj/item/storage/firstaid/tactical(owner.current))
-		if("Sniper")
-			owner.current.put_in_r_hand(new /obj/item/gun/ballistic/automatic/vampire/sniper(owner.current))
-			owner.current.put_in_l_hand(new /obj/item/ammo_box/vampire/c556(owner.current))
-		if("Ammo Carrier")
-			owner.current.put_in_r_hand(new /obj/item/ammo_box/vampire/c556/incendiary(owner.current))
-			owner.current.put_in_l_hand(new /obj/item/ammo_box/vampire/c556/incendiary(owner.current))
-
 /obj/effect/landmark/start/national_guard
 	name = "National Guard"
 	delete_after_roundstart = FALSE
@@ -83,8 +156,8 @@
 	roundend_category = "national guard"
 	antagpanel_category = "National Guard"
 	job_rank = ROLE_NATIONAL_GUARD
-	antag_hud_type = ANTAG_HUD_OPS
-	antag_hud_name = "synd"
+	antag_hud_type = ANTAG_HUD_NATIONAL
+	antag_hud_name = "hud_private"
 	antag_moodlet = /datum/mood_event/focused
 	show_to_ghosts = TRUE
 	var/always_new_team = FALSE
@@ -96,15 +169,41 @@
 	name = "National Guard Sergeant"
 	always_new_team = TRUE
 	var/title
+	national_guard_outfit = /datum/outfit/job/national_guard/squad_lead
+	antag_hud_name = "hud_sergeant"
+
+/datum/antagonist/national_guard/sniper
+	name = "National Guard Marksman"
+	national_guard_outfit = /datum/outfit/job/national_guard/sniper
+	antag_hud_name = "hud_corporal"
+
+/datum/antagonist/national_guard/flamer
+	name = "National Guard Flame Trooper"
+	national_guard_outfit = /datum/outfit/job/national_guard/flamer
+	antag_hud_name = "hud_corporal"
+
+/datum/antagonist/national_guard/medic
+	name = "National Guard Medic"
+	national_guard_outfit = /datum/outfit/job/national_guard/medic
+	antag_hud_name = "hud_private"
+
+/datum/antagonist/national_guard/ammo_carrier
+	name = "National Guard Ammo Carrier"
+	national_guard_outfit = /datum/outfit/job/national_guard/ammo_carrier
+	antag_hud_name = "hud_private"
+
+/datum/antagonist/national_guard/breacher
+	name = "National Guard Breacher"
+	national_guard_outfit = /datum/outfit/job/national_guard/breacher
+	antag_hud_name = "hud_corporal"
 
 /datum/antagonist/national_guard/on_gain()
 	randomize_appearance()
 	forge_objectives()
-	add_antag_hud(ANTAG_HUD_OPS, "synd", owner.current)
+	add_antag_hud(ANTAG_HUD_NATIONAL, "hud_private", owner.current)
 	owner.special_role = src
 	equip_national_guard()
 	give_alias()
-	offer_loadout()
 	return ..()
 
 /datum/antagonist/national_guard/on_removal()
@@ -372,13 +471,13 @@
 	weight = 5
 	cost = 35
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
-	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
+	var/list/operative_cap = list(5,5,6,6,7,7,8,9,9,9)
 	var/datum/team/national_guard/national_guard_team
 	flags = HIGHLANDER_RULESET
 
 /datum/dynamic_ruleset/midround/from_ghosts/national_guard/acceptable(population=0, threat=0)
 	indice_pop = min(operative_cap.len, round(living_players.len/5)+1)
-	required_candidates = max(5, operative_cap[indice_pop])
+	required_candidates = max(9, operative_cap[indice_pop])
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/national_guard/ready(forced = FALSE)
@@ -389,10 +488,22 @@
 /datum/dynamic_ruleset/midround/from_ghosts/national_guard/finish_setup(mob/new_character, index)
 	new_character.mind.special_role = "National Guard"
 	new_character.mind.assigned_role = "National Guard"
-	if (index == 1) // Our first guy is the leader
-		var/datum/antagonist/national_guard/sergeant/new_role = new
-		national_guard_team = new_role.national_guard_team
-		new_character.mind.add_antag_datum(new_role)
-	else
-		return ..()
+	var/datum/antagonist/national_guard/new_role
+	switch (index)
+    	if(1)   //Our first guy is the leader
+			new_role = new /datum/antagonist/national_guard/sergeant()
+		if(2) // Marksman
+			new_role = new /datum/antagonist/national_guard/sniper()
+		if(3) // Flamer
+			new_role = new /datum/antagonist/national_guard/flamer()
+		if(4) // Medic
+			new_role = new /datum/antagonist/national_guard/medic()
+		if(5)// Breacher
+			new_role = new /datum/antagonist/national_guard/breacher()
+		if(6) // Ammo Carrier
+			new_role = new /datum/antagonist/national_guard/carrier()
+		else
+			return ..()
+	national_guard_team = new_role.national_guard_team
+	new_character.mind.add_antag_datum(new_role)
 

@@ -343,6 +343,10 @@
 	name = "fbi special agent badge"
 	desc = "Sponsored by the Government. This one has all the bells and whistles."
 
+/obj/item/card/id/police/national_guard
+	name = "national guard ID"
+	desc = "Sponsored by the Government. This one is dried in oil and blood."
+
 /obj/item/card/id/voivode
 	name = "ancient badge"
 	id_type_name ="ancient badge"

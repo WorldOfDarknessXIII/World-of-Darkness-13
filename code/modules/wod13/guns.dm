@@ -496,6 +496,11 @@
 	max_ammo = 5
 	multiload = TRUE
 
+/obj/item/ammo_box/magazine/internal/vampire/sniper/ng
+	ammo_type = /obj/item/ammo_casing/vampire/c762mm
+	caliber = CALIBER_A762
+	max_ammo = 8
+
 /obj/item/gun/ballistic/automatic/vampire/sniper
 	name = "sniper rifle"
 	desc = "A long ranged weapon that does significant damage. No, you can't quickscope."
@@ -526,6 +531,17 @@
 	actions_types = list()
 	masquerade_violating = TRUE
 	cost = 250
+
+/obj/item/gun/ballistic/automatic/vampire/sniper/ng
+	name = "military sniper rifle"
+	desc = "A long ranged weapon that does significant damage. This one is a military variant, set in 7.62, larger magazine capacity and has a longer barrel."
+	icon_state = "sniper_ng"
+	inhand_icon_state = "sniper_ng"
+	worn_icon_state = "sniper_ng"
+	mag_type = /obj/item/ammo_box/magazine/internal/vampire/sniper/ng
+	fire_delay = 60
+	projectile_damage_multiplier = 2.5
+	cost = 3500
 
 /obj/item/ammo_box/magazine/internal/vampshotgun
 	name = "shotgun internal magazine"
