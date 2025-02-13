@@ -10,8 +10,10 @@
 	attack_verb_simple = list("lick", "slobber", "slap", "french", "tongue")
 	var/list/languages_possible
 	var/say_mod = null
+
 	/// Whether the owner of this tongue can taste anything. Being set to FALSE will mean no taste feedback will be provided.
 	var/sense_of_taste = TRUE
+
 	var/taste_sensitivity = 15 // lower is more sensitive.
 	var/modifies_speech = FALSE
 	var/static/list/languages_possible_base = typecacheof(list(
@@ -278,47 +280,6 @@
 	desc = "Like animated skeletons, Plasmamen vibrate their teeth in order to produce speech."
 	icon_state = "tongueplasma"
 	modifies_speech = FALSE
-
-/obj/item/organ/tongue/malkavian
-	name = "tongue"
-	desc = "A fleshy muscle mostly used for telling the truth."
-	icon_state = "tonguenormal"
-	modifies_speech = TRUE
-	var/use_madness_font = FALSE
-
-/obj/item/organ/tongue/malkavian/proc/malkavian_madness()
-	set name = "Toggle Madness Font"
-	set category = "Malkavian"
-	set desc = "Toggle whether to use the Malkavian font in chat."
-	var/mob/living/carbon/human/H = src
-	var/obj/item/organ/tongue/malkavian/malkavian_tongue = H.getorgan(/obj/item/organ/tongue/malkavian)
-	malkavian_tongue.use_madness_font = !malkavian_tongue.use_madness_font
-	if(malkavian_tongue.use_madness_font)
-		to_chat(H, "<span class='hypnophrase'>Your Speech will Now Use the Madness Font</span>")
-	else
-		to_chat(H, "<span class='hypnophrase'>Your Speech will No Longer Use the Madness Font</span>")
-
-/obj/item/organ/tongue/malkavian/handle_speech(datum/source, list/speech_args)
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(src.use_madness_font)
-		speech_args[SPEECH_SPANS] |= SPAN_SANS
-		// replace some letters to make the font more closely resemble that of vtm: bloodlines' malkavian dialogue
-		// big thanks to Metek for helping me condense this from a bunch of ugly regex replace procs
-		var/list/replacements = list(
-			"a"    = "𝙖",            "A" = "𝘼",
-			"d"    = pick("𝓭","𝓓"), "D" = "𝓓",
-			"e"    = "𝙚",            "E" = "𝙀",
-			"i"    = "𝙞",            "I" = pick("ﾉ", "𝐼"), //rudimentary prob(50) to pick one or the other
-			"l"    = pick("𝙇","l"),  "L" = pick("𝙇","𝓛"),
-			"n"    = "𝙣",            "N" = pick("𝓝","𝙉"),
-			"o"    = "𝙤",            "O" = "𝙊",
-			"s"    = "𝘴",            "S" = "𝙎",
-			"u"    = "𝙪",            "U" = "𝙐",
-			"v"	   = "𝐯",            "V" = "𝓥",
-		)
-		for(var/letter in replacements)
-			message = replacetextEx(message, letter, replacements[letter])
-	speech_args[SPEECH_MESSAGE] = message
 
 /obj/item/organ/tongue/robot
 	name = "robotic voicebox"
