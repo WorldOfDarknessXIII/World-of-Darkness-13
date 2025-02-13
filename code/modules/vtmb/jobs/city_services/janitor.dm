@@ -1,6 +1,6 @@
 
 /datum/job/vamp/city_services/vjanitor
-	title = JOB_STREETJAN
+	title = JOB_STREET_JANITOR
 	department_head = list("Prince")
 	faction = "Vampire"
 	total_positions = 6
