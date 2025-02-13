@@ -745,22 +745,11 @@
 
 /mob/living/carbon/human/npc/bandit
 	max_stat = 3
+	my_backup_weapon = /obj/item/melee/vampirearms/knife
 
 /mob/living/carbon/human/npc/bandit/Initialize()
 	.=..()
-	if(prob(33))
 		base_body_mod = "f"
-	if(prob(33))
-		my_weapon = new /obj/item/gun/ballistic/automatic/vampire/deagle(src)
-		my_backup_weapon = new /obj/item/melee/vampirearms/knife(src)
-	else
-		if(prob(50))
-			my_weapon = new /obj/item/gun/ballistic/vampire/revolver/snub(src)
-			my_backup_weapon = new /obj/item/melee/vampirearms/knife(src)
-		if(prob(50))
-			my_weapon = new /obj/item/melee/vampirearms/baseball(src)
-		else
-			my_weapon = new /obj/item/melee/vampirearms/knife(src)
 	AssignSocialRole(/datum/socialrole/bandit)
 
 /mob/living/carbon/human/npc/walkby
@@ -1130,11 +1119,6 @@
 	.=..()
 	if(prob(66))
 		base_body_mod = "f"
-	if(prob(66))
-		my_weapon = new /obj/item/gun/ballistic/vampire/revolver(src)
-	else
-		my_weapon = new /obj/item/gun/ballistic/automatic/vampire/ar15(src)
-	my_backup_weapon = new /obj/item/melee/classic_baton/vampire(src)
 	AssignSocialRole(/datum/socialrole/police)
 
 /mob/living/carbon/human/npc/police/Life()
@@ -1248,13 +1232,13 @@
 	staying = TRUE
 	fights_anyway = TRUE
 	max_stat = 4
+	my_weapon = /obj/item/gun/ballistic/automatic/vampire/m1911
+	my_backup_weapon = /obj/item/melee/classic_baton/vampire
 
 /mob/living/carbon/human/npc/guard/Initialize()
 	.=..()
 	if(prob(66))
 		base_body_mod = "f"
-	my_weapon = new /obj/item/gun/ballistic/automatic/vampire/m1911(src)
-	my_backup_weapon = new /obj/item/melee/classic_baton/vampire(src)
 	AssignSocialRole(/datum/socialrole/guard)
 
 /mob/living/carbon/human/npc/walkby/club/Life()
