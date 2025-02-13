@@ -1,14 +1,17 @@
 
 /datum/socialrole/bandit
-	s_tones = list("caucasian3",
-								"latino",
-								"mediterranean",
-								"asian1",
-								"asian2",
-								"arab",
-								"indian",
-								"african1",
-								"african2")
+	s_tones = list("albino",
+		"caucasian1",
+		"caucasian2",
+		"caucasian3",
+		"latino",
+		"mediterranean",
+		"asian1",
+		"asian2",
+		"arab",
+		"indian",
+		"african1",
+		"african2")
 
 	min_age = 18
 	max_age = 45
@@ -137,8 +140,15 @@
 		"albino",
 		"caucasian1",
 		"caucasian2",
-		"caucasian3"
-	)
+		"caucasian3",
+		"latino",
+		"mediterranean",
+		"asian1",
+		"asian2",
+		"arab",
+		"indian",
+		"african1",
+		"african2")
 
 	min_age = 18
 	max_age = 85
@@ -270,9 +280,17 @@
 
 /datum/socialrole/usualfemale
 	s_tones = list("albino",
-								"caucasian1",
-								"caucasian2",
-								"caucasian3")
+		"caucasian1",
+		"caucasian2",
+		"caucasian3",
+		"latino",
+		"mediterranean",
+		"asian1",
+		"asian2",
+		"arab",
+		"indian",
+		"african1",
+		"african2")
 
 	min_age = 18
 	max_age = 85
@@ -398,12 +416,18 @@
 	)
 
 /datum/socialrole/poormale
-	s_tones = list(
-		"albino",
+	s_tones = list("albino",
 		"caucasian1",
 		"caucasian2",
-		"caucasian3"
-	)
+		"caucasian3",
+		"latino",
+		"mediterranean",
+		"asian1",
+		"asian2",
+		"arab",
+		"indian",
+		"african1",
+		"african2")
 
 	min_age = 45
 	max_age = 85
@@ -497,9 +521,17 @@
 
 /datum/socialrole/poorfemale
 	s_tones = list("albino",
-								"caucasian1",
-								"caucasian2",
-								"caucasian3")
+		"caucasian1",
+		"caucasian2",
+		"caucasian3",
+		"latino",
+		"mediterranean",
+		"asian1",
+		"asian2",
+		"arab",
+		"indian",
+		"african1",
+		"african2")
 
 	min_age = 45
 	max_age = 85
@@ -599,7 +631,9 @@
 											"Dick!")
 
 /datum/socialrole/richmale
-	s_tones = list("albino")
+	s_tones = list("albino",
+		"caucasian1",
+		"caucasian2")
 
 	min_age = 18
 	max_age = 85
@@ -670,7 +704,9 @@
 											"Someone, call the cops!")
 
 /datum/socialrole/richfemale
-	s_tones = list("albino")
+	s_tones = list("albino",
+		"caucasian1",
+		"caucasian2")
 
 	min_age = 18
 	max_age = 85
@@ -906,9 +942,17 @@
 
 /datum/socialrole/shop
 	s_tones = list("albino",
-								"caucasian1",
-								"caucasian2",
-								"caucasian3")
+		"caucasian1",
+		"caucasian2",
+		"caucasian3",
+		"latino",
+		"mediterranean",
+		"asian1",
+		"asian2",
+		"arab",
+		"indian",
+		"african1",
+		"african2")
 
 	min_age = 18
 	max_age = 45
@@ -1101,17 +1145,17 @@
 											"Looking suspicious...",
 											"Don't try anything stupid.",
 											"Nothing to see here.",
-											"Have you seen man in black coat with black hair?")
+											"Have you seen a man in black coat with black hair?")
 	neutral_phrases = list("I see you.",
 											"Looking suspicious...",
 											"Don't try anything stupid.",
 											"Nothing to see here.",
-											"Have you seen man in black coat with black hair?")
+											"Have you seen a man in black coat with black hair?")
 	random_phrases = list("I see you.",
 											"Looking suspicious...",
 											"Don't try anything stupid.",
 											"Nothing to see here.",
-											"Have you seen man in black coat with black hair?")
+											"Have you seen a man in black coat with black hair?")
 	answer_phrases = list("I'm here to protect you.")
 	help_phrases = list("Lay down!",
 											"Stop right there!!",
@@ -1273,9 +1317,17 @@
 
 /datum/socialrole/stripfemale
 	s_tones = list("albino",
-								"caucasian1",
-								"caucasian2",
-								"caucasian3")
+		"caucasian1",
+		"caucasian2",
+		"caucasian3",
+		"latino",
+		"mediterranean",
+		"asian1",
+		"asian2",
+		"arab",
+		"indian",
+		"african1",
+		"african2")
 
 	min_age = 18
 	max_age = 30
