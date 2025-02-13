@@ -14,7 +14,7 @@
 /datum/supply_pack/vampire/methlab
 	name = "Lab Equipment"
 	desc = "Contains lab equipment."
-	cost = 10000
+	cost = 2000
 	contains = list(/obj/structure/methlab/movable)
 
 /datum/supply_pack/vampire/fixing
