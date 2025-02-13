@@ -13,9 +13,12 @@
  * * dice - number of 10-sided dice to roll.
  * * difficulty - the number that a dice must come up as to count as a success.
  * * numerical - whether the proc returns number of successes or outcome (botch, failure, success)
+ * * roll header:
  */
 /mob/proc/storyteller_roll(dice = 1, difficulty = 6, numerical = FALSE, roll_header="", show_player=TRUE, roll_viewers = list(src))
+	#ifdef DEBUG
 	show_player = TRUE
+	#endif
 
 	if(show_player)
 		. = storyteller_roll_pretty(dice, difficulty, numerical, roll_header, roll_viewers)
@@ -60,12 +63,13 @@
 	var/had_success = FALSE
 	var/list/success_list = new()
 	var/list/fail_list = new()
+	var/roll_log = ""
 	if(roll_header && roll_header != "")
-		roll_to_chat_list(roll_viewers, "<h2>[roll_header]</h2>")
-	roll_to_chat_list(roll_viewers, "<h2>Difficulty: [difficulty]</h2>")
+		roll_log += "<h2>[roll_header]</h2><br>"
+	roll_log += "<h2>Difficulty: [difficulty]</h2><br>"
 
 	if (dice < 1)
-		roll_to_chat_list(roll_viewers, "<h2>Your Roll: <span style='color:DarkRed'>Auto Failure!</span></h2>")
+		roll_log += "<h2>Your Roll: <span style='color:DarkRed'>Auto Failure!</span></h2><br>"
 		if (numerical)
 			return 0
 		else
@@ -89,7 +93,7 @@
 			if (!had_success)
 				had_success = TRUE
 
-	var/roll_log = "<h2>Your Roll:"
+	roll_log += "<h2>Your Roll:"
 	if(success_list)
 		roll_log += "<span style='color:green'>"
 
@@ -121,12 +125,12 @@
 	else
 		return trinary_result
 
-/mob/proc/roll_to_chat_list(var/list/viewers, var/input)
+/mob/proc/roll_to_chat_list(list/viewers, input)
 	for(var/mob/viewer in viewers)
-		if(viewer.client.prefs.chat_toggles & CHAT_ROLL_INFO)
+		if(viewer.client && viewer.client.prefs && viewer.client.prefs.chat_toggles & CHAT_ROLL_INFO)
 			to_chat(viewer, input)
 
-/mob/proc/get_dice_char(var/input)
+/mob/proc/get_dice_char(input)
 	switch(input)
 		if(1)
 			return "❶"
