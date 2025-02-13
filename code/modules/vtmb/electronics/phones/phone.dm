@@ -776,15 +776,16 @@
 /obj/item/vamp/phone/street
 	desc = "An ordinary street payphone"
 	icon = 'code/modules/wod13/props.dmi'
+	onflooricon = 'code/modules/wod13/props.dmi'
 	icon_state = "payphone"
 	anchored = TRUE
 	number = "1447"
 	can_fold = 0
 
 	/// Phone icon states
-	open_state = "streetphone"
-	closed_state = "streetphone"
-	folded_state = "streetphone"
+	open_state = "payphone"
+	closed_state = "payphone"
+	folded_state = "payphone"
 
 /obj/item/vamp/phone/clean
 	desc = "The usual phone of a cleaning company used to communicate with employees"
