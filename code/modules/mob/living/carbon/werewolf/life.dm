@@ -1,5 +1,4 @@
 /mob/living/carbon/werewolf/Life()
-	update_icons()
 	update_rage_hud()
 	return..()
 
