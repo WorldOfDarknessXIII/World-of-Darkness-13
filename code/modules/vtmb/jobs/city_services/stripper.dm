@@ -1,6 +1,6 @@
 
 /datum/job/vamp/city_services/strip
-	title = JOB_STRIP
+	title = JOB_STRIPPER
 	faction = "Vampire"
 	total_positions = 4
 	spawn_positions = 4
