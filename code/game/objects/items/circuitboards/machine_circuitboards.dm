@@ -1,5 +1,5 @@
 //Command
-
+/*
 /obj/item/circuitboard/machine/bsa/back
 	name = "Bluespace Artillery Generator (Machine Board)"
 	icon_state = "command"
@@ -31,7 +31,7 @@
 	req_components = list(
 		/obj/item/stock_parts/capacitor/super = 5,
 		/obj/item/stock_parts/manipulator/pico = 5,
-		/obj/item/stack/cable_coil = 2)
+		/obj/item/stack/cable_coil = 2) */
 
 //Engineering
 
