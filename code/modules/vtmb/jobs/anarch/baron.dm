@@ -1,6 +1,6 @@
 
 /datum/job/vamp/anarch/barkeeper
-	title = JOB_BARKEEPER
+	title = JOB_BARON
 	department_head = list("Justicar")
 	faction = "Vampire"
 	total_positions = 1
