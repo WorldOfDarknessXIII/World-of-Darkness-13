@@ -1,5 +1,27 @@
+#define BANDIT_TYPE_NPC /mob/living/carbon/human/npc/bandit
+#define POLICE_TYPE_NPC /mob/living/carbon/human/npc/police
+
 /mob/living/carbon/human/npc
 	name = "Loh ebanii"
+	/// Until we do a full NPC refactor (see: rewriting every single bit of code)
+	/// use this to determine NPC weapons and their chances to spawn with them -- assuming you want the NPC to do that
+	/// Otherwise just set it under the NPC's type as
+	/// my_weapon = type_path
+	/// my_backup_weapon = type_path
+	/// This only determines my_weapon, you set my_backup_weapon yourself
+	/// The last entry in the list for a type of NPC should always have 100 as the index
+	var/static/list/role_weapons_chances = list(
+		BANDIT_TYPE_NPC = list(
+			 /obj/item/melee/vampirearms/baseball = 33,
+			 /obj/item/gun/ballistic/automatic/vampire/deagle = 33,
+			 /obj/item/gun/ballistic/vampire/revolver/snub = 33,
+			 /obj/item/melee/vampirearms/baseball = 100,
+		),
+		POLICE_TYPE_NPC = list(
+			/obj/item/gun/ballistic/vampire/revolver = 66,
+			/obj/item/gun/ballistic/automatic/vampire/ar15 = 100,
+		)
+	)
 	a_intent = INTENT_HELP
 	var/datum/socialrole/socialrole
 
@@ -27,9 +49,9 @@
 	var/extra_mags=2
 	var/extra_loaded_rounds=10
 
-	var/obj/item/my_weapon
+	var/obj/item/my_weapon = null
 
-	var/obj/item/my_backup_weapon
+	var/obj/item/my_backup_weapon = null
 
 	var/spawned_weapon = FALSE
 
@@ -49,13 +71,20 @@
 
 /mob/living/carbon/human/npc/LateInitialize()
 	. = ..()
+	if(!my_weapon && role_weapons_chances.Find(type))
+		for(var/weapon in role_weapons_chances[type])
+			if(prob(role_weapons_chances[type][weapon]))
+				my_weapon = new weapon(src)
+				break
 	if(my_weapon)
+		my_weapon = new my_weapon(src)
 		my_weapon.register_npc_owned(src)
 		if(istype(my_weapon, /obj/item/gun/ballistic))
 			RegisterSignal(my_weapon, COMSIG_GUN_FIRED, PROC_REF(handle_gun))
 			RegisterSignal(my_weapon, COMSIG_GUN_EMPTY, PROC_REF(handle_empty_gun))
 
 	if(my_backup_weapon)
+		my_backup_weapon = new my_backup_weapon(src)
 		my_backup_weapon.register_npc_owned(src)
 
 /datum/movespeed_modifier/npc
