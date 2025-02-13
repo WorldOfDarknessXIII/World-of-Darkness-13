@@ -1,6 +1,6 @@
 
 /datum/job/vamp/police_force/police_officer
-	title = JOB_POLICE
+	title = JOB_POLICE_OFFICER
 	department_head = list("Police Department")
 	faction = "Vampire"
 	total_positions = 5
