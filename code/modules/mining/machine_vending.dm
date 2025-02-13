@@ -11,7 +11,9 @@
 	var/mob/living/carbon/human/npc/my_owner
 	var/owner_needed = TRUE
 	var/obj/item/card/id/inserted_id
+	var/obj/item/vamp/creditcard/creditcard_instance = new /obj/item/vamp/creditcard()
 	var/points = 0
+
 	var/list/prize_list = list( //if you add something to this, please, for the love of god, sort it by price/type. use tabs and not spaces.
 		new /datum/data/mining_equipment("1 Marker Beacon",				/obj/item/stack/marker_beacon,										10),
 		new /datum/data/mining_equipment("10 Marker Beacons",			/obj/item/stack/marker_beacon/ten,									100),
@@ -132,7 +134,8 @@
 	.["user"]["points"] = points
 	.["user"]["name"] = "[user.name]"
 	.["user"]["job"] = "[user.mind.assigned_role]"
-
+	if(creditcard_instance.inside_shop)
+		.["user"]["job"] = "(Your card is activated! Use Alt+Click to remove the card.)"
 
 /obj/machinery/mineral/equipment_vendor/ui_act(action, params)
 	. = ..()
@@ -163,10 +166,14 @@
 				flick(icon_deny, src)
 				return
 			if(prize.cost > points)
-				to_chat(usr, "<span class='alert'>Error: Insufficient points for [prize.equipment_name]!</span>")
+				to_chat(usr, "<span class='alert'>Error: Insufficient money for [prize.equipment_name]!</span>")
 				flick(icon_deny, src)
 				return
-			points -= prize.cost
+			if(creditcard_instance.inside_shop)
+				points -= prize.cost
+				creditcard_instance.account.balance -= prize.cost
+			else
+				points -= prize.cost
 			to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
 			new prize.equipment_path(loc)
 			SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
@@ -183,16 +190,39 @@
 	if(istype(I, /obj/item/mining_voucher))
 		RedeemVoucher(I, user)
 		return
-	if(istype(I, /obj/item/stack/dollar))
+	if(istype(I, /obj/item/stack/dollar) && !creditcard_instance.inside_shop)
 		var/obj/item/stack/dollar/D = I
 		points = points+D.amount
 		qdel(D)
 		return
+
+	if(istype(I, /obj/item/vamp/creditcard) && !creditcard_instance.inside_shop)
+		var/obj/item/vamp/creditcard/C = I
+		
+		var/input_code = input(user, "Enter your code:", "Card Insertion") as text
+		if(input_code == C.account.code)
+			if(!C.inside_shop)
+				points = C.account.balance
+				C.inside_shop = TRUE
+				creditcard_instance = C
+				qdel(C)
+				to_chat(user, "<span class='notice'>Card inserted successfully!</span>")
+
 	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
 		return
 	if(default_deconstruction_crowbar(I))
 		return
 	return ..()
+
+/obj/machinery/mineral/equipment_vendor/fastfood/illegal/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/vamp/creditcard))
+		to_chat(user, "<span class='alert'>They don't accept card here.</span>")
+		return
+	if(istype(I, /obj/item/stack/dollar))
+		var/obj/item/stack/dollar/D = I
+		points = points+D.amount
+		qdel(D)
+		return
 
 /obj/machinery/mineral/equipment_vendor/restricted
 	name = "Requisitions"

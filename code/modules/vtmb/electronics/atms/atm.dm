@@ -67,6 +67,7 @@ var/mob/living/carbon/human/H
 	var/code
 	var/balance = 0
 	var/has_checked = FALSE
+	var/inside_shop = FALSE
 
 /obj/item/vamp/creditcard/prince
 	icon_state = "card2"
