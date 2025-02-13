@@ -78,6 +78,7 @@
 		for(var/weapon in role_weapons_chances[type])
 			if(prob(role_weapons_chances[type][weapon]))
 				my_weapon = new weapon(src)
+				equip_to_appropriate_slot(my_weapon)
 				break
 
 	if(!my_weapon && my_weapon_type)
