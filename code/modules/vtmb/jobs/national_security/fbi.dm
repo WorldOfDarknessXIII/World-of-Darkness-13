@@ -1,6 +1,6 @@
 
 /datum/job/vamp/national_security/fbi
-	title = JOB_FBI
+	title = JOB_FBI_AGENT
 	department_head = list("Federal Bureau of Investigation")
 	faction = "Vampire"
 	total_positions = 2
