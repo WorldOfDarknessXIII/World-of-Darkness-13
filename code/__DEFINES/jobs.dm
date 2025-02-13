@@ -112,14 +112,14 @@
 #define JOB_GANG_ROLES    /datum/timelock/gang
 #define JOB_GANG_ROLES_LIST   list(JOB_TRIAD_GANGSTER)
 
-#define JOB_BARKEEPER "Baron"
+#define JOB_BARON "Baron"
 #define JOB_EMISSARY "Emissary"
 #define JOB_BRUISER "Bruiser"
 #define JOB_SWEEPER "Sweeper"
 
 
 #define JOB_ANARCH_ROLES    /datum/timelock/anarch
-#define JOB_ANARCH_ROLES_LIST   list(JOB_BARKEEPER,JOB_EMISSARY,JOB_BRUISER,JOB_SWEEPER)
+#define JOB_ANARCH_ROLES_LIST   list(JOB_BARON,JOB_EMISSARY,JOB_BRUISER,JOB_SWEEPER)
 
 #define JOB_DEALER "Dealer"
 #define JOB_SUPPLY "Supply Technician"
