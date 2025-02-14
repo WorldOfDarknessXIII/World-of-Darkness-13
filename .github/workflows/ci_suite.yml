@@ -3,22 +3,16 @@ on:
   push:
     branches:
     - master
-    - ci_update
     - 'project/**'
     - 'gh-readonly-queue/master/**'
     - 'gh-readonly-queue/project/**'
   pull_request:
     branches:
     - master
-    - ci_update
     - 'project/**'
   merge_group:
     branches:
     - master
-    - ci_update
-  workflow_dispatch:
-permissions:
-  contents: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -28,7 +22,7 @@ jobs:
   start_gate:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Start Gate
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Mandatory Empty Step
         run: exit 0
@@ -36,7 +30,7 @@ jobs:
   run_linters:
     name: Run Linters
     needs: start_gate
-    runs-on: self-hosted
+    runs-on: ubuntu-22.04
     timeout-minutes: 5
 
     steps:
@@ -85,8 +79,6 @@ jobs:
         uses: actions/setup-dotnet@v4.2.0
         with:
           dotnet-version: 9.x
-        env:
-          DOTNET_INSTALL_DIR: '/usr/share/dotnet'
       - name: Install OpenDream
         uses: robinraju/release-downloader@v1.11
         with:
@@ -152,7 +144,7 @@ jobs:
   compile_all_maps:
     name: Compile Maps
     needs: collect_data
-    runs-on: self-hosted
+    runs-on: ubuntu-22.04
     timeout-minutes: 5
 
     steps:
@@ -176,7 +168,7 @@ jobs:
   collect_data:
     name: Collect data for other tasks
     needs: start_gate
-    runs-on: self-hosted
+    runs-on: ubuntu-22.04
     timeout-minutes: 5
     outputs:
       maps: ${{ steps.map_finder.outputs.maps }}
@@ -238,7 +230,7 @@ jobs:
     needs: [ collect_data, run_all_tests, run_alternate_tests ]
     name: Compare Screenshot Tests
     timeout-minutes: 15
-    runs-on: self-hosted
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - name: Setup directory
@@ -274,7 +266,7 @@ jobs:
   test_windows:
     name: Windows Build
     needs: [collect_data]
-    runs-on: self-hosted
+    runs-on: windows-latest
     timeout-minutes: 5
 
     steps:
@@ -300,7 +292,7 @@ jobs:
     if: always() && !cancelled()
     name: Completion Gate
     needs: [ test_windows, compare_screenshots, compile_all_maps, run_all_tests, run_alternate_tests, run_linters ]
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Decide whether the needed jobs succeeded or failed
         uses: re-actors/alls-green@release/v1
