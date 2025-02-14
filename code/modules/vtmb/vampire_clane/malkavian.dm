@@ -53,7 +53,7 @@
 	button_icon_state = "malk_speech"
 	check_flags = AB_CHECK_CONSCIOUS
 	vampiric = TRUE
-	cooldown_time = 5 SECONDS
+	cooldown_time = 300 SECONDS
 	///clane datum
 	var/datum/vampireclane/malkavian/clane_datum
 
