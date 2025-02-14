@@ -146,6 +146,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 				)
 				for(var/letter in replacements)
 					message = replacetextEx(message, letter, replacements[letter])
+				spans |= SPAN_SANS
 
 	var/list/message_mods = list()
 	var/original_message = message
