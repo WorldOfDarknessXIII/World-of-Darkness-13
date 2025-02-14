@@ -490,7 +490,7 @@
 	new_character.mind.assigned_role = "National Guard"
 	var/datum/antagonist/national_guard/new_role
 	switch (index)
-    	if(1)   //Our first guy is the leader
+		if(1)   //Our first guy is the leader
 			new_role = new /datum/antagonist/national_guard/sergeant()
 		if(2) // Marksman
 			new_role = new /datum/antagonist/national_guard/sniper()
@@ -501,7 +501,7 @@
 		if(5)// Breacher
 			new_role = new /datum/antagonist/national_guard/breacher()
 		if(6) // Ammo Carrier
-			new_role = new /datum/antagonist/national_guard/carrier()
+			new_role = new /datum/antagonist/national_guard/ammo_carrier()
 		else
 			return ..()
 	national_guard_team = new_role.national_guard_team
