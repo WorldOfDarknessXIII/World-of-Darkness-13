@@ -22,6 +22,12 @@ export SPACEMAN_DMM_VERSION=suite-1.9
 # Extools git tag
 export EXTOOLS_VERSION=v0.0.7
 
+#dreamluau repo
+export DREAMLUAU_REPO="tgstation/dreamluau"
+
+#dreamluau git tag
+export DREAMLUAU_VERSION=0.1.2
+
 # Python version for mapmerge and other tools
 export PYTHON_VERSION=3.9.0
 
