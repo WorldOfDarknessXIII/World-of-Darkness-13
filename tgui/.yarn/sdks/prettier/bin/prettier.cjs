@@ -11,10 +11,10 @@ const absRequire = createRequire(absPnpApiPath);
 
 if (existsSync(absPnpApiPath)) {
   if (!process.versions.pnp) {
-    // Setup the environment to be able to require eslint/bin/eslint.js
+    // Setup the environment to be able to require prettier/bin/prettier.cjs
     require(absPnpApiPath).setup();
   }
 }
 
-// Defer to the real eslint/bin/eslint.js your application uses
-module.exports = absRequire(`eslint/bin/eslint.js`);
+// Defer to the real prettier/bin/prettier.cjs your application uses
+module.exports = absRequire(`prettier/bin/prettier.cjs`);
