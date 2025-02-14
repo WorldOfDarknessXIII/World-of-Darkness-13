@@ -10715,31 +10715,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inferno-shared@npm:7.4.11":
-  version: 7.4.11
-  resolution: "inferno-shared@npm:7.4.11"
-  checksum: 10c0/af9ed654fa4427f6a7aa868100d15dcae0a883c31495c24bf53e258b6b204d4b3fdb18976528fd27ad4d30fde5519bd6bcbf1f061bb9a6f6a0ae7f2338dda20c
-  languageName: node
-  linkType: hard
-
-"inferno-vnode-flags@npm:7.4.11":
-  version: 7.4.11
-  resolution: "inferno-vnode-flags@npm:7.4.11"
-  checksum: 10c0/58f2283a658ad971141c597b5d52328826d7ca9e8522e185740e5ea2aeafd8f93002d7b1f69ee4be7353da878259572b477ae5c78188222744433e0497000c65
-  languageName: node
-  linkType: hard
-
-"inferno@npm:^7.4.7":
-  version: 7.4.11
-  resolution: "inferno@npm:7.4.11"
-  dependencies:
-    inferno-shared: "npm:7.4.11"
-    inferno-vnode-flags: "npm:7.4.11"
-    opencollective-postinstall: "npm:^2.0.3"
-  checksum: 10c0/2c6091046f91f3c3cbf855d0c25f668d453be623f89b5ace36961a2b535604d78349a06836852be79f94638a2223c83ea8553d35af3d4b70a5dd7fef870f127c
-  languageName: node
-  linkType: hard
-
 "inflight@npm:^1.0.4":
   version: 1.0.6
   resolution: "inflight@npm:1.0.6"
@@ -14368,15 +14343,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"opencollective-postinstall@npm:^2.0.3":
-  version: 2.0.3
-  resolution: "opencollective-postinstall@npm:2.0.3"
-  bin:
-    opencollective-postinstall: index.js
-  checksum: 10c0/8a0104a218bc1afaae943f0af378461eeb2836f9848bad872bbd067ec5d1d9791636f307454ab77d0746f10341366f295384656a340ebdb87a2585058e8567e5
-  languageName: node
-  linkType: hard
-
 "opener@npm:^1.5.2":
   version: 1.5.2
   resolution: "opener@npm:1.5.2"
@@ -17310,18 +17276,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"schema-utils@npm:^4.3.0":
-  version: 4.3.0
-  resolution: "schema-utils@npm:4.3.0"
-  dependencies:
-    "@types/json-schema": "npm:^7.0.9"
-    ajv: "npm:^8.9.0"
-    ajv-formats: "npm:^2.1.1"
-    ajv-keywords: "npm:^5.1.0"
-  checksum: 10c0/c23f0fa73ef71a01d4a2bb7af4c91e0d356ec640e071aa2d06ea5e67f042962bb7ac7c29a60a295bb0125878801bc3209197a2b8a833dd25bd38e37c3ed21427
-  languageName: node
-  linkType: hard
-
 "secure-json-parse@npm:^2.7.0":
   version: 2.7.0
   resolution: "secure-json-parse@npm:2.7.0"
@@ -17431,7 +17385,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"serialize-javascript@npm:^6.0.1, serialize-javascript@npm:^6.0.2":
+"serialize-javascript@npm:^6.0.1":
   version: 6.0.2
   resolution: "serialize-javascript@npm:6.0.2"
   dependencies:
@@ -18681,28 +18635,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"terser-webpack-plugin@npm:^5.1.1":
-  version: 5.3.11
-  resolution: "terser-webpack-plugin@npm:5.3.11"
-  dependencies:
-    "@jridgewell/trace-mapping": "npm:^0.3.25"
-    jest-worker: "npm:^27.4.5"
-    schema-utils: "npm:^4.3.0"
-    serialize-javascript: "npm:^6.0.2"
-    terser: "npm:^5.31.1"
-  peerDependencies:
-    webpack: ^5.1.0
-  peerDependenciesMeta:
-    "@swc/core":
-      optional: true
-    esbuild:
-      optional: true
-    uglify-js:
-      optional: true
-  checksum: 10c0/4794274f445dc589f4c113c75a55ce51364ccf09bfe8a545cdb462e3f752bf300ea91f072fa28bbed291bbae03274da06fe4eca180e784fb8a43646aa7dbcaef
-  languageName: node
-  linkType: hard
-
 "terser-webpack-plugin@npm:^5.3.10":
   version: 5.3.10
   resolution: "terser-webpack-plugin@npm:5.3.10"
@@ -18752,20 +18684,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"terser@npm:^5.31.1":
-  version: 5.39.0
-  resolution: "terser@npm:5.39.0"
-  dependencies:
-    "@jridgewell/source-map": "npm:^0.3.3"
-    acorn: "npm:^8.8.2"
-    commander: "npm:^2.20.0"
-    source-map-support: "npm:~0.5.20"
-  bin:
-    terser: bin/terser
-  checksum: 10c0/83326545ea1aecd6261030568b6191ccfa4cb6aa61d9ea41746a52479f50017a78b77e4725fbbc207c5df841ffa66a773c5ac33636e95c7ab94fe7e0379ae5c7
-  languageName: node
-  linkType: hard
-
 "test-exclude@npm:^6.0.0":
   version: 6.0.0
   resolution: "test-exclude@npm:6.0.0"
@@ -18805,17 +18723,17 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     tgui: "workspace:*"
-    tgui-core: "npm:^1.7.2"
+    tgui-core: "npm:^1.7.4"
   languageName: unknown
   linkType: soft
 
-"tgui-core@npm:^1.7.2":
-  version: 1.7.2
-  resolution: "tgui-core@npm:1.7.2"
+"tgui-core@npm:^1.7.4":
+  version: 1.7.4
+  resolution: "tgui-core@npm:1.7.4"
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 10c0/401102042d4d0ede4f8658160124cd523c4ffc44492e0f7d0500d25e0b8a085be2b6f829c89b81eb706c369af16d6d57375704337d7bcc813480caa749c258d4
+  checksum: 10c0/06b9d8702d6ae170383b28725bf6308cd320499367ea8ea1f9dd5039ab371cfe34419a7d3d1e0e2b86884326e8d4ab116e5601208d2f85d215b7c464fd32fdbf
   languageName: node
   linkType: hard
 
@@ -18843,7 +18761,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     tgui: "workspace:*"
-    tgui-core: "npm:^1.7.2"
+    tgui-core: "npm:^1.7.4"
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
   languageName: unknown
@@ -18870,7 +18788,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     tgui: "workspace:*"
-    tgui-core: "npm:^1.7.2"
+    tgui-core: "npm:^1.7.4"
     tgui-polyfill: "workspace:*"
   languageName: unknown
   linkType: soft
@@ -18886,9 +18804,7 @@ __metadata:
     "@types/webpack-env": "npm:^1.18.5"
     "@typescript-eslint/parser": "npm:^8.13.0"
     "@typescript-eslint/utils": "npm:^8.13.0"
-    common: "workspace:*"
     css-loader: "npm:^7.1.2"
-    cssnano: "npm:^4.1.10"
     esbuild-loader: "npm:^4.2.2"
     eslint: "npm:^8.57.0"
     eslint-config-prettier: "npm:^9.1.0"
@@ -18897,7 +18813,6 @@ __metadata:
     eslint-plugin-sonarjs: "npm:^0.25.0"
     eslint-plugin-unused-imports: "npm:^3.1.0"
     file-loader: "npm:^6.2.0"
-    inferno: "npm:^7.4.7"
     jest: "npm:^29.7.0"
     jest-circus: "npm:^29.7.0"
     jest-environment-jsdom: "npm:^29.7.0"
@@ -18908,7 +18823,6 @@ __metadata:
     sass-loader: "npm:^16.0.3"
     style-loader: "npm:^4.0.0"
     swc-loader: "npm:^0.2.6"
-    terser-webpack-plugin: "npm:^5.1.1"
     typescript: "npm:^5.6.3"
     url-loader: "npm:^4.1.1"
     webpack: "npm:^5.96.1"
@@ -18936,7 +18850,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     react-popper: "npm:^2.3.0"
-    tgui-core: "npm:^1.7.2"
+    tgui-core: "npm:^1.7.4"
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
   languageName: unknown
