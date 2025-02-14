@@ -124,30 +124,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
 		return
 
-	//malky mad speech filter toggle
-	if(src.type == /mob/living/carbon/human)
-		var/mob/living/carbon/human/vampy = src
-		if(vampy.clane?.type == /datum/vampireclane/malkavian)
-			var/datum/vampireclane/malkavian/malky = vampy.clane
-			if(malky.is_mad_speech)
-				// replace some letters to make the font more closely resemble that of vtm: bloodlines' malkavian dialogue
-				// big thanks to Metek for helping me condense this from a bunch of ugly regex replace procs
-				var/list/replacements = list(
-					"a"    = "𝙖",            "A" = "𝘼",
-					"d"    = pick("𝓭","𝓓"), "D" = "𝓓",
-					"e"    = "𝙚",            "E" = "𝙀",
-					"i"    = "𝙞",            "I" = pick("ﾉ", "𝐼"), //rudimentary prob(50) to pick one or the other
-					"l"    = pick("𝙇","l"),  "L" = pick("𝙇","𝓛"),
-					"n"    = "𝙣",            "N" = pick("𝓝","𝙉"),
-					"o"    = "𝙤",            "O" = "𝙊",
-					"s"    = "𝘴",            "S" = "𝙎",
-					"u"    = "𝙪",            "U" = "𝙐",
-					"v"	   = "𝐯",            "V" = "𝓥",
-				)
-				for(var/letter in replacements)
-					message = replacetextEx(message, letter, replacements[letter])
-				spans |= SPAN_SANS
-
 	var/list/message_mods = list()
 	var/original_message = message
 	message = get_message_mods(message, message_mods)

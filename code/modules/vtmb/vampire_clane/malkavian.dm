@@ -10,8 +10,6 @@
 	male_clothes = /obj/item/clothing/under/vampire/malkavian
 	female_clothes = /obj/item/clothing/under/vampire/malkavian/female
 	clan_keys = /obj/item/vamp/keys/malkav
-	///malkavian is mad speech?
-	var/is_mad_speech = FALSE
 
 /datum/vampireclane/malkavian/post_gain(mob/living/carbon/human/malky)
 	. = ..()
@@ -19,7 +17,6 @@
 	var/datum/action/cooldown/malk_speech/malk_font = new()
 	hivemind.Grant(malky)
 	malk_font.Grant(malky)
-	malk_font.link_with_datum(src)
 	GLOB.malkavian_list += malky
 
 /datum/discipline/dementation/post_gain(mob/living/carbon/human/H)
@@ -59,15 +56,23 @@
 
 /datum/action/cooldown/malk_speech/Trigger()
 	. = ..()
-	if(!clane_datum)
-		to_chat(H, span_warning("No clane datum that is linked, yell at coders!"))
-
-	clane_datum.is_mad_speech = !clane_datum.is_mad_speech
-	StartCooldown()
-	if(clane_datum.is_mad_speech)
-		to_chat(owner, "<span class='hypnophrase'>Your Speech will Now Use the Madness Font</span>")
-	else
-		to_chat(owner, "<span class='hypnophrase'>Your Speech will No Longer Use the Madness Font</span>")
-
-/datum/action/cooldown/malk_speech/proc/link_with_datum(datum/vampireclane/malkavian/malky)
-	clane_datum = malky
+	var/mad_speak = input(owner, "What revelations do we wish to convey?") as null|text
+	if(mad_speak)
+		StartCooldown()
+		// replace some letters to make the font more closely resemble that of vtm: bloodlines' malkavian dialogue
+		// big thanks to Metek for helping me condense this from a bunch of ugly regex replace procs
+		var/list/replacements = list(
+			"a"    = "𝙖",            "A" = "𝘼",
+			"d"    = pick("𝓭","𝓓"), "D" = "𝓓",
+			"e"    = "𝙚",            "E" = "𝙀",
+			"i"    = "𝙞",            "I" = pick("ﾉ", "𝐼"), //rudimentary prob(50) to pick one or the other
+			"l"    = pick("𝙇","l"),  "L" = pick("𝙇","𝓛"),
+			"n"    = "𝙣",            "N" = pick("𝓝","𝙉"),
+			"o"    = "𝙤",            "O" = "𝙊",
+			"s"    = "𝘴",            "S" = "𝙎",
+			"u"    = "𝙪",            "U" = "𝙐",
+			"v"	   = "𝐯",            "V" = "𝓥",
+		)
+		for(var/letter in replacements)
+			mad_speak = replacetextEx(mad_speak, letter, replacements[letter])
+		owner.say(mad_speak, spans = list(SPAN_SANS))
