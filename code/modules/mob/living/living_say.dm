@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	//malky mad speech filter toggle
 	if(src.type == /mob/living/carbon/human)
 		var/mob/living/carbon/human/vampy = src
-		if(vampy?.clane.type == /datum/vampireclane/malkavian)
+		if(vampy.clane?.type == /datum/vampireclane/malkavian)
 			var/datum/vampireclane/malkavian/malky = vampy.clane
 			if(malky.is_mad_speech)
 				// replace some letters to make the font more closely resemble that of vtm: bloodlines' malkavian dialogue
