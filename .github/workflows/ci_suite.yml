@@ -85,6 +85,8 @@ jobs:
         uses: actions/setup-dotnet@v4.2.0
         with:
           dotnet-version: 9.x
+        env:
+          DOTNET_INSTALL_DIR: '/usr/share/dotnet'
       - name: Install OpenDream
         uses: robinraju/release-downloader@v1.11
         with:
