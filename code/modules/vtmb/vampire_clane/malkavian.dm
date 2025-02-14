@@ -63,6 +63,7 @@
 		to_chat(H, span_warning("No clane datum that is linked, yell at coders!"))
 
 	clane_datum.is_mad_speech = !clane_datum.is_mad_speech
+	StartCooldown()
 	if(clane_datum.is_mad_speech)
 		to_chat(owner, "<span class='hypnophrase'>Your Speech will Now Use the Madness Font</span>")
 	else
