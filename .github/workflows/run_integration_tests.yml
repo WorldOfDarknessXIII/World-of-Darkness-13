@@ -16,6 +16,9 @@ on:
       max_required_byond_client:
         required: true
         type: string
+  workflow_dispatch:
+permissions:
+  contents: read
 
 jobs:
   run_integration_tests:
