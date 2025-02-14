@@ -749,7 +749,7 @@
 	armor = list(MELEE = 70, BULLET = 70, LASER = 10, ENERGY = 10, BOMB = 60, BIO = 0, RAD = 0, FIRE = 50, ACID = 10, WOUND = 30)
 
 /obj/item/clothing/suit/vampire/vest/army
-    name = "heavy military vest"
+	name = "heavy military vest"
 	desc = "Army equipment. Provides great protection against blunt force but less against ballistics."
 	icon_state = "army"
 	w_class = WEIGHT_CLASS_BULKY
@@ -758,21 +758,21 @@
 	masquerade_violating = TRUE
 
 /obj/item/clothing/suit/vampire/vest/army/light
-    name = "light military vest"
+	name = "light military vest"
 	desc = "Army equipment. Provides basic protection, mainly used by those unlikely to be at the frontline."
 	icon_state = "army_light"
 	w_class = WEIGHT_CLASS_BULKY
 	armor = list(MELEE = 55, BULLET = 55, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 0, RAD = 0, FIRE = 45, ACID = 10, WOUND = 25)
 
 /obj/item/clothing/suit/vampire/vest/army/lightmedium
-    name = "specialist military vest"
+	name = "specialist military vest"
 	desc = "Army equipment. Provides great ballistic protection but less so against melee."
 	icon_state = "army_lightmedium"
 	w_class = WEIGHT_CLASS_BULKY
 	armor = list(MELEE = 50, BULLET = 75, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 0, RAD = 0, FIRE = 45, ACID = 10, WOUND = 25)
 
 /obj/item/clothing/suit/vampire/vest/army/medium
-    name = "military vest"
+	name = "military vest"
 	desc = "Army equipment. The standard for most vests."
 	icon_state = "army_medium"
 	w_class = WEIGHT_CLASS_BULKY
