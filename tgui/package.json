@@ -22,10 +22,6 @@
     "tgui:eslint-fix": "eslint --fix packages --ext .js,.cjs,.ts,.jsx,.tsx"
   },
   "dependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/eslint-parser": "^7.12.1",
-    "@babel/plugin-transform-jscript": "^7.12.1",
-    "@babel/preset-env": "^7.12.11",
     "@swc/core": "^1.9.1",
     "@swc/jest": "^0.2.37",
     "@types/jest": "^29.5.14",
@@ -33,9 +29,6 @@
     "@types/webpack-env": "^1.18.5",
     "@typescript-eslint/parser": "^8.13.0",
     "@typescript-eslint/utils": "^8.13.0",
-    "babel-loader": "^8.2.2",
-    "babel-plugin-inferno": "^6.1.1",
-    "babel-plugin-transform-remove-console": "^6.9.4",
     "common": "workspace:*",
     "css-loader": "^7.1.2",
     "cssnano": "^4.1.10",
