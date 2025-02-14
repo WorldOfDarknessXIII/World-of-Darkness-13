@@ -749,12 +749,34 @@
 	armor = list(MELEE = 70, BULLET = 70, LASER = 10, ENERGY = 10, BOMB = 60, BIO = 0, RAD = 0, FIRE = 50, ACID = 10, WOUND = 30)
 
 /obj/item/clothing/suit/vampire/vest/army
-	desc = "Army equipment. Provides great protection against blunt force."
+    name = "heavy military vest"
+	desc = "Army equipment. Provides great protection against blunt force but less against ballistics."
 	icon_state = "army"
 	w_class = WEIGHT_CLASS_BULKY
-	armor = list(MELEE = 70, BULLET = 70, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 0, RAD = 0, FIRE = 45, ACID = 10, WOUND = 25)
+	armor = list(MELEE = 80, BULLET = 55, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 0, RAD = 0, FIRE = 45, ACID = 10, WOUND = 25)
 //	clothing_traits = list(TRAIT_UNMASQUERADE)
 	masquerade_violating = TRUE
+
+/obj/item/clothing/suit/vampire/vest/army/light
+    name = "light military vest"
+	desc = "Army equipment. Provides basic protection, mainly used by those unlikely to be at the frontline."
+	icon_state = "army_light"
+	w_class = WEIGHT_CLASS_BULKY
+	armor = list(MELEE = 55, BULLET = 55, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 0, RAD = 0, FIRE = 45, ACID = 10, WOUND = 25)
+
+/obj/item/clothing/suit/vampire/vest/army/lightmedium
+    name = "specialist military vest"
+	desc = "Army equipment. Provides great ballistic protection but less so against melee."
+	icon_state = "army_lightmedium"
+	w_class = WEIGHT_CLASS_BULKY
+	armor = list(MELEE = 50, BULLET = 75, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 0, RAD = 0, FIRE = 45, ACID = 10, WOUND = 25)
+
+/obj/item/clothing/suit/vampire/vest/army/medium
+    name = "military vest"
+	desc = "Army equipment. The standard for most vests."
+	icon_state = "army_medium"
+	w_class = WEIGHT_CLASS_BULKY
+	armor = list(MELEE = 70, BULLET = 70, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 0, RAD = 0, FIRE = 45, ACID = 10, WOUND = 25)
 
 /obj/item/clothing/suit/vampire/eod
 	name = "EOD suit"
@@ -1336,6 +1358,15 @@
 	flags_inv = HIDEFACE
 	flags_cover = NONE
 	visor_flags_inv = HIDEFACE
+
+/obj/item/clothing/mask/vampire/gasmask
+	name = "gas mask"
+	desc = "Mmmmph mmmmph!"
+	icon_state = "gasmask"
+	inhand_icon_state = "gasmask"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/storage/belt/holster/detective/vampire
 	name = "holster"
