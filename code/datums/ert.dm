@@ -35,17 +35,6 @@
 	mission = "Leave no witnesses."
 	polldesc = "an elite Nanotrasen Strike Team"
 
-/datum/ert/centcom_official
-	code = "Green"
-	teamsize = 1
-	opendoors = FALSE
-	leader_role = /datum/antagonist/official
-	roles = list(/datum/antagonist/official)
-	rename_team = "CentCom Officials"
-	polldesc = "a CentCom Official"
-
-/datum/ert/centcom_official/New()
-	mission = "Conduct a routine performance review of [station_name()] and its Captain."
 
 /datum/ert/inquisition
 	roles = list(/datum/antagonist/ert/chaplain/inquisitor, /datum/antagonist/ert/security/inquisitor, /datum/antagonist/ert/medic/inquisitor)

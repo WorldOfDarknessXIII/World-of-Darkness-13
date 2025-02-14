@@ -8,7 +8,6 @@ SUBSYSTEM_DEF(machines)
 	var/list/powernets = list()
 
 /datum/controller/subsystem/machines/Initialize()
-	makepowernets()
 	fire()
 	return ..()
 
@@ -38,15 +37,6 @@ SUBSYSTEM_DEF(machines)
 				thing.datum_flags &= ~DF_ISPROCESSING
 		if (MC_TICK_CHECK)
 			return
-
-/datum/controller/subsystem/machines/proc/setup_template_powernets(list/cables)
-	var/obj/structure/cable/PC
-	for(var/A in 1 to cables.len)
-		PC = cables[A]
-		if(!PC.powernet)
-			var/datum/powernet/NewPN = new()
-			NewPN.add_cable(PC)
-			propagate_network(PC,PC.powernet)
 
 /datum/controller/subsystem/machines/Recover()
 	if (istype(SSmachines.processing))

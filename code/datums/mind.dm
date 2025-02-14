@@ -295,40 +295,9 @@
 	objectives, uplinks, powers etc are all handled.
 */
 
-/datum/mind/proc/remove_changeling()
-	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
-	if(C)
-		remove_antag_datum(/datum/antagonist/changeling)
-		special_role = null
 
 /datum/mind/proc/remove_traitor()
 	remove_antag_datum(/datum/antagonist/traitor)
-
-/datum/mind/proc/remove_brother()
-	if(src in SSticker.mode.brothers)
-		remove_antag_datum(/datum/antagonist/brother)
-
-/datum/mind/proc/remove_nukeop()
-	var/datum/antagonist/nukeop/nuke = has_antag_datum(/datum/antagonist/nukeop,TRUE)
-	if(nuke)
-		remove_antag_datum(nuke.type)
-		special_role = null
-
-/datum/mind/proc/remove_wizard()
-	remove_antag_datum(/datum/antagonist/wizard)
-	special_role = null
-
-/datum/mind/proc/remove_cultist()
-	if(src in SSticker.mode.cult)
-		SSticker.mode.remove_cultist(src, 0, 0)
-	special_role = null
-	remove_antag_equip()
-
-/datum/mind/proc/remove_rev()
-	var/datum/antagonist/rev/rev = has_antag_datum(/datum/antagonist/rev)
-	if(rev)
-		remove_antag_datum(rev.type)
-		special_role = null
 
 
 /datum/mind/proc/remove_antag_equip()
@@ -338,100 +307,9 @@
 		if(O)
 			O.unlock_code = null
 
-/datum/mind/proc/remove_all_antag() //For the Lazy amongst us.
-	remove_changeling()
-	remove_traitor()
-	remove_nukeop()
-	remove_wizard()
-	remove_cultist()
-	remove_rev()
-
-/datum/mind/proc/equip_traitor(employer = "The Syndicate", silent = FALSE, datum/antagonist/uplink_owner)
-	if(!current)
-		return
-	var/mob/living/carbon/human/traitor_mob = current
-	if (!istype(traitor_mob))
-		return
-
-	var/list/all_contents = traitor_mob.GetAllContents()
-	var/obj/item/pda/PDA = locate() in all_contents
-	var/obj/item/radio/R = locate() in all_contents
-	var/obj/item/pen/P
-
-	if (PDA) // Prioritize PDA pen, otherwise the pocket protector pens will be chosen, which causes numerous ahelps about missing uplink
-		P = locate() in PDA
-	if (!P) // If we couldn't find a pen in the PDA, or we didn't even have a PDA, do it the old way
-		P = locate() in all_contents
-
-	var/obj/item/uplink_loc
-	var/implant = FALSE
-
-	if(traitor_mob.client && traitor_mob.client.prefs)
-		switch(traitor_mob.client.prefs.uplink_spawn_loc)
-			if(UPLINK_PDA)
-				uplink_loc = PDA
-				if(!uplink_loc)
-					uplink_loc = R
-				if(!uplink_loc)
-					uplink_loc = P
-			if(UPLINK_RADIO)
-				uplink_loc = R
-				if(!uplink_loc)
-					uplink_loc = PDA
-				if(!uplink_loc)
-					uplink_loc = P
-			if(UPLINK_PEN)
-				uplink_loc = P
-			if(UPLINK_IMPLANT)
-				implant = TRUE
-
-	if(!uplink_loc) // We've looked everywhere, let's just implant you
-		implant = TRUE
-
-	if (!implant)
-		. = uplink_loc
-		var/datum/component/uplink/U = uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
-		if(!U)
-			CRASH("Uplink creation failed.")
-		U.setup_unlock_code()
-		if(!silent)
-			if(uplink_loc == R)
-				to_chat(traitor_mob, "<span class='boldnotice'>[employer] has cunningly disguised a Syndicate Uplink as your [R.name]. Simply dial the frequency [format_frequency(U.unlock_code)] to unlock its hidden features.</span>")
-			else if(uplink_loc == PDA)
-				to_chat(traitor_mob, "<span class='boldnotice'>[employer] has cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[U.unlock_code]\" into the ringtone select to unlock its hidden features.</span>")
-			else if(uplink_loc == P)
-				to_chat(traitor_mob, "<span class='boldnotice'>[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [english_list(U.unlock_code)] from its starting position to unlock its hidden features.</span>")
-
-		if(uplink_owner)
-			uplink_owner.antag_memory += U.unlock_note + "<br>"
-		else
-			traitor_mob.mind.store_memory(U.unlock_note)
-	else
-		var/obj/item/implant/uplink/starting/I = new(traitor_mob)
-		I.implant(traitor_mob, null, silent = TRUE)
-		if(!silent)
-			to_chat(traitor_mob, "<span class='boldnotice'>[employer] has cunningly implanted you with a Syndicate Uplink (although uplink implants cost valuable TC, so you will have slightly less). Simply trigger the uplink to access it.</span>")
-		return I
-
-
-
 //Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
 
 /datum/mind/proc/enslave_mind_to_creator(mob/living/creator)
-	if(iscultist(creator))
-		SSticker.mode.add_cultist(src)
-
-	else if(is_revolutionary(creator))
-		var/datum/antagonist/rev/converter = creator.mind.has_antag_datum(/datum/antagonist/rev,TRUE)
-		converter.add_revolutionary(src,FALSE)
-
-	else if(is_nuclear_operative(creator))
-		var/datum/antagonist/nukeop/converter = creator.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
-		var/datum/antagonist/nukeop/N = new()
-		N.send_to_spawnpoint = FALSE
-		N.nukeop_outfit = null
-		add_antag_datum(N,converter.nuke_team)
-
 
 	enslaved_to = creator
 
@@ -596,23 +474,6 @@
 			return
 		objective.completed = !objective.completed
 		log_admin("[key_name(usr)] toggled the win state for [current]'s objective: [objective.explanation_text]")
-
-	else if (href_list["silicon"])
-		switch(href_list["silicon"])
-			if("unemag")
-				var/mob/living/silicon/robot/R = current
-				if (istype(R))
-					R.SetEmagged(0)
-					message_admins("[key_name_admin(usr)] has unemag'ed [R].")
-					log_admin("[key_name(usr)] has unemag'ed [R].")
-
-			if("unemagcyborgs")
-				if(isAI(current))
-					var/mob/living/silicon/ai/ai = current
-					for (var/mob/living/silicon/robot/R in ai.connected_robots)
-						R.SetEmagged(0)
-					message_admins("[key_name_admin(usr)] has unemag'ed [ai]'s Cyborgs.")
-					log_admin("[key_name(usr)] has unemag'ed [ai]'s Cyborgs.")
 
 	else if (href_list["common"])
 		switch(href_list["common"])

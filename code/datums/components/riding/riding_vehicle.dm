@@ -104,27 +104,6 @@
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
 
 
-/datum/component/riding/vehicle/lavaboat
-	ride_check_flags = NONE // not sure
-	keytype = /obj/item/oar
-	var/allowed_turf = /turf/open/lava
-
-/datum/component/riding/vehicle/lavaboat/handle_specials()
-	. = ..()
-	allowed_turf_typecache = typecacheof(allowed_turf)
-
-/datum/component/riding/vehicle/lavaboat/dragonboat
-	vehicle_move_delay = 1
-
-/datum/component/riding/vehicle/lavaboat/dragonboat/handle_specials()
-	. = ..()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 2), TEXT_SOUTH = list(1, 2), TEXT_EAST = list(1, 2), TEXT_WEST = list( 1, 2)))
-
-/datum/component/riding/vehicle/lavaboat/dragonboat
-	vehicle_move_delay = 1
-	keytype = null
-
-
 /datum/component/riding/vehicle/janicart
 	keytype = /obj/item/key/janitor
 
@@ -235,19 +214,3 @@
 	var/delay_multiplier = 6.7 // magic number from wheelchair code
 	vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / clamp(user.usable_hands, 1, 2)
 	return ..()
-
-/datum/component/riding/vehicle/wheelchair/motorized/driver_move(obj/vehicle/vehicle_parent, mob/living/user, direction)
-	var/speed = 1 // Should never be under 1
-	var/delay_multiplier = 6.7 // magic number from wheelchair code
-
-	var/obj/vehicle/ridden/wheelchair/motorized/our_chair = parent
-	for(var/obj/item/stock_parts/manipulator/M in our_chair.contents)
-		speed += M.rating
-	vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / speed
-	return ..()
-
-/datum/component/riding/vehicle/wheelchair/motorized/handle_ride(mob/user, direction)
-	. = ..()
-	var/obj/vehicle/ridden/wheelchair/motorized/our_chair = parent
-	if(istype(our_chair) && our_chair.power_cell)
-		our_chair.power_cell.use(our_chair.power_usage / max(our_chair.power_efficiency, 1) * 0.05)

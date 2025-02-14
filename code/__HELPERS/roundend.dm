@@ -16,42 +16,14 @@
 		var/count_only = TRUE //Count by name only or full info
 
 		mob_data["name"] = M.name
-		if(M.mind)
-			count_only = FALSE
-			mob_data["ckey"] = M.mind.key
-			if(M.stat != DEAD && !isbrain(M) && !iscameramob(M))
-				num_survivors++
-				if(EMERGENCY_ESCAPED_OR_ENDGAMED && (M.onCentCom() || M.onSyndieBase()))
-					num_escapees++
-					escape_status = "escapees"
-					if(shuttle_areas[get_area(M)])
-						num_shuttle_escapees++
-			if(isliving(M))
-				var/mob/living/L = M
-				mob_data["location"] = get_area(L)
-				mob_data["health"] = L.health
-				if(ishuman(L))
-					var/mob/living/carbon/human/H = L
-					category = "humans"
-					if(H.mind)
-						mob_data["job"] = H.mind.assigned_role
-					else
-						mob_data["job"] = "Unknown"
-					mob_data["species"] = H.dna.species.name
-				else
-					category = "others"
-					mob_data["typepath"] = M.type
 		//Ghosts don't care about minds, but we want to retain ckey data etc
 		if(isobserver(M))
 			count_only = FALSE
-			escape_status = "ghosts"
 			if(!M.mind)
 				mob_data["ckey"] = M.key
-			category = null //ghosts are one list deep
 		//All other mindless stuff just gets counts by name
 
 	SSblackbox.record_feedback("nested tally", "round_end_stats", GLOB.joined_player_list.len, list("players", "total"))
-	SSblackbox.record_feedback("nested tally", "round_end_stats", GLOB.joined_player_list.len - num_survivors, list("players", "dead"))
 
 /datum/controller/subsystem/ticker/proc/gather_antag_data()
 	var/team_gid = 1
@@ -81,75 +53,6 @@
 				var/result = O.check_completion() ? "SUCCESS" : "FAIL"
 				antag_info["objectives"] += list(list("objective_type"=O.type,"text"=O.explanation_text,"result"=result))
 		SSblackbox.record_feedback("associative", "antagonists", 1, antag_info)
-
-/datum/controller/subsystem/ticker/proc/record_nuke_disk_location()
-	var/obj/item/disk/nuclear/N = locate() in GLOB.poi_list
-	if(N)
-		var/list/data = list()
-		var/turf/T = get_turf(N)
-		if(T)
-			data["x"] = T.x
-			data["y"] = T.y
-			data["z"] = T.z
-		var/atom/outer = get_atom_on_turf(N,/mob/living)
-		if(outer != N)
-			if(isliving(outer))
-				var/mob/living/L = outer
-				data["holder"] = L.real_name
-			else
-				data["holder"] = outer.name
-
-		SSblackbox.record_feedback("associative", "roundend_nukedisk", 1 , data)
-
-/datum/controller/subsystem/ticker/proc/gather_newscaster()
-	var/json_file = file("[GLOB.log_directory]/newscaster.json")
-	var/list/file_data = list()
-	var/pos = 1
-	for(var/V in GLOB.news_network.network_channels)
-		var/datum/newscaster/feed_channel/channel = V
-		if(!istype(channel))
-			stack_trace("Non-channel in newscaster channel list")
-			continue
-		file_data["[pos]"] = list("channel name" = "[channel.channel_name]", "author" = "[channel.author]", "censored" = channel.censored ? 1 : 0, "author censored" = channel.authorCensor ? 1 : 0, "messages" = list())
-		for(var/M in channel.messages)
-			var/datum/newscaster/feed_message/message = M
-			if(!istype(message))
-				stack_trace("Non-message in newscaster channel messages list")
-				continue
-			var/list/comment_data = list()
-			for(var/C in message.comments)
-				var/datum/newscaster/feed_comment/comment = C
-				if(!istype(comment))
-					stack_trace("Non-message in newscaster message comments list")
-					continue
-				comment_data += list(list("author" = "[comment.author]", "time stamp" = "[comment.time_stamp]", "body" = "[comment.body]"))
-			file_data["[pos]"]["messages"] += list(list("author" = "[message.author]", "time stamp" = "[message.time_stamp]", "censored" = message.bodyCensor ? 1 : 0, "author censored" = message.authorCensor ? 1 : 0, "photo file" = "[message.photo_file]", "photo caption" = "[message.caption]", "body" = "[message.body]", "comments" = comment_data))
-		pos++
-	if(GLOB.news_network.wanted_issue.active)
-		file_data["wanted"] = list("author" = "[GLOB.news_network.wanted_issue.scannedUser]", "criminal" = "[GLOB.news_network.wanted_issue.criminal]", "description" = "[GLOB.news_network.wanted_issue.body]", "photo file" = "[GLOB.news_network.wanted_issue.photo_file]")
-	WRITE_FILE(json_file, json_encode(file_data))
-
-///Handles random hardcore point rewarding if it applies.
-/datum/controller/subsystem/ticker/proc/HandleRandomHardcoreScore(client/player_client)
-	if(!ishuman(player_client.mob))
-		return FALSE
-	var/mob/living/carbon/human/human_mob = player_client.mob
-	if(!human_mob.hardcore_survival_score) ///no score no glory
-		return FALSE
-
-	if(human_mob.mind && (human_mob.mind.special_role || length(human_mob.mind.antag_datums) > 0))
-		var/didthegamerwin = TRUE
-		for(var/a in human_mob.mind.antag_datums)
-			var/datum/antagonist/antag_datum = a
-			for(var/i in antag_datum.objectives)
-				var/datum/objective/objective_datum = i
-				if(!objective_datum.check_completion())
-					didthegamerwin = FALSE
-		if(!didthegamerwin)
-			return FALSE
-		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
-	else if(human_mob.onCentCom())
-		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
 
 
 /datum/controller/subsystem/ticker/proc/declare_completion()
@@ -224,10 +127,7 @@
 
 /datum/controller/subsystem/ticker/proc/standard_reboot()
 	if(ready_for_reboot)
-		if(mode.station_was_nuked)
-			Reboot("Station destroyed by Nuclear Device.", "nuke")
-		else
-			Reboot("Round ended.", "proper completion")
+		Reboot("Round ended.", "proper completion")
 	else
 		CRASH("Attempted standard reboot without ticker roundend completion")
 
@@ -240,23 +140,11 @@
 
 	CHECK_TICK
 
-	//AI laws
-	parts += law_report()
 
 	CHECK_TICK
 
 	//Antagonists
 	parts += antag_report()
-
-	parts += hardcore_random_report()
-
-	CHECK_TICK
-	//Medals
-	parts += medal_report()
-	//Station Goals
-	parts += goal_report()
-	//Economy & Money
-	parts += market_report()
 
 	listclearnulls(parts)
 

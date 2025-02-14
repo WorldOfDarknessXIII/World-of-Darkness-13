@@ -124,22 +124,6 @@ SUBSYSTEM_DEF(ticker)
 		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
 
 
-	if(!GLOB.syndicate_code_phrase)
-		GLOB.syndicate_code_phrase	= generate_code_phrase(return_list=TRUE)
-
-		var/codewords = jointext(GLOB.syndicate_code_phrase, "|")
-		var/regex/codeword_match = new("([codewords])", "ig")
-
-		GLOB.syndicate_code_phrase_regex = codeword_match
-
-	if(!GLOB.syndicate_code_response)
-		GLOB.syndicate_code_response = generate_code_phrase(return_list=TRUE)
-
-		var/codewords = jointext(GLOB.syndicate_code_response, "|")
-		var/regex/codeword_match = new("([codewords])", "ig")
-
-		GLOB.syndicate_code_response_regex = codeword_match
-
 	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 	gametime_offset = 23 HOURS
 	if(CONFIG_GET(flag/randomize_shift_time))
@@ -313,8 +297,6 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = FALSE
 	mode.post_setup()
-	GLOB.start_state = new /datum/station_state()
-	GLOB.start_state.count()
 
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]

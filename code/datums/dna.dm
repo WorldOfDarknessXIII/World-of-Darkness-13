@@ -118,49 +118,6 @@
 			. += random_string(DNA_BLOCK_SIZE,GLOB.hex_characters)
 	return .
 
-/datum/dna/proc/generate_dna_blocks()
-	var/bonus
-	if(species?.inert_mutation)
-		bonus = GET_INITIALIZED_MUTATION(species.inert_mutation)
-	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations + bonus
-	if(!LAZYLEN(mutations_temp))
-		return
-	mutation_index.Cut()
-	default_mutation_genes.Cut()
-	shuffle_inplace(mutations_temp)
-	mutation_index[RACEMUT] = create_sequence(RACEMUT, FALSE)
-	default_mutation_genes[RACEMUT] = mutation_index[RACEMUT]
-	for(var/i in 2 to DNA_MUTATION_BLOCKS)
-		var/datum/mutation/human/M = mutations_temp[i]
-		mutation_index[M.type] = create_sequence(M.type, FALSE, M.difficulty)
-		default_mutation_genes[M.type] = mutation_index[M.type]
-	shuffle_inplace(mutation_index)
-
-//Used to generate original gene sequences for every mutation
-/proc/generate_gene_sequence(length=4)
-	var/static/list/active_sequences = list("AT","TA","GC","CG")
-	var/sequence
-	for(var/i in 1 to length*DNA_SEQUENCE_LENGTH)
-		sequence += pick(active_sequences)
-	return sequence
-
-//Used to create a chipped gene sequence
-/proc/create_sequence(mutation, active, difficulty)
-	if(!difficulty)
-		var/datum/mutation/human/A = GET_INITIALIZED_MUTATION(mutation) //leaves the possibility to change difficulty mid-round
-		if(!A)
-			return
-		difficulty = A.difficulty
-	difficulty += rand(-2,4)
-	var/sequence = GET_SEQUENCE(mutation)
-	if(active)
-		return sequence
-	while(difficulty)
-		var/randnum = rand(1, length_char(sequence))
-		sequence = copytext_char(sequence, 1, randnum) + "X" + copytext_char(sequence, randnum + 1)
-		difficulty--
-	return sequence
-
 /datum/dna/proc/generate_unique_enzymes()
 	. = ""
 	if(istype(holder))
@@ -487,75 +444,10 @@
 		return 0
 	return getleftblocks(istring, blocknumber, blocksize) + replacement + getrightblocks(istring, blocknumber, blocksize)
 
-/datum/dna/proc/mutation_in_sequence(mutation)
-	if(!mutation)
-		return
-	if(istype(mutation, /datum/mutation/human))
-		var/datum/mutation/human/HM = mutation
-		if(HM.type in mutation_index)
-			return TRUE
-	else if(mutation in mutation_index)
-		return TRUE
-
-
-/mob/living/carbon/proc/randmut(list/candidates, difficulty = 2)
-	if(!has_dna())
-		return
-	var/mutation = pick(candidates)
-	. = dna.add_mutation(mutation)
-
-/mob/living/carbon/proc/easy_randmut(quality = POSITIVE + NEGATIVE + MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, exclude_monkey = TRUE, resilient = NONE)
-	if(!has_dna())
-		return
-	var/list/mutations = list()
-	if(quality & POSITIVE)
-		mutations += GLOB.good_mutations
-	if(quality & NEGATIVE)
-		mutations += GLOB.bad_mutations
-	if(quality & MINOR_NEGATIVE)
-		mutations += GLOB.not_good_mutations
-	var/list/possible = list()
-	for(var/datum/mutation/human/A in mutations)
-		if((!sequence || dna.mutation_in_sequence(A.type)) && !dna.get_mutation(A.type))
-			possible += A.type
-	if(exclude_monkey)
-		possible.Remove(RACEMUT)
-	if(LAZYLEN(possible))
-		var/mutation = pick(possible)
-		. = dna.activate_mutation(mutation)
-		if(scrambled)
-			var/datum/mutation/human/HM = dna.get_mutation(mutation)
-			if(HM)
-				HM.scrambled = TRUE
-				if(HM.quality & resilient)
-					HM.mutadone_proof = TRUE
-		return TRUE
-
-/mob/living/carbon/proc/randmuti()
-	if(!has_dna())
-		return
-	var/num = rand(1, DNA_UNI_IDENTITY_BLOCKS)
-	var/newdna = setblock(dna.uni_identity, num, random_string(DNA_BLOCK_SIZE, GLOB.hex_characters))
-	dna.uni_identity = newdna
-	updateappearance(mutations_overlay_update=1)
-
-/mob/living/carbon/proc/clean_dna()
-	if(!has_dna())
-		return
-	dna.remove_all_mutations()
-
-/mob/living/carbon/proc/clean_randmut(list/candidates, difficulty = 2)
-	clean_dna()
-	randmut(candidates, difficulty)
 
 /proc/scramble_dna(mob/living/carbon/M, ui=FALSE, se=FALSE, probability)
 	if(!M.has_dna())
 		return FALSE
-	if(se)
-		for(var/i=1, i<=DNA_MUTATION_BLOCKS, i++)
-			if(prob(probability))
-				M.dna.generate_dna_blocks()
-		M.domutcheck()
 	if(ui)
 		for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
 			if(prob(probability))
@@ -579,91 +471,3 @@
 	if(value > values)
 		value = values
 	return value
-
-/////////////////////////// DNA HELPER-PROCS
-
-/mob/living/carbon/human/proc/something_horrible(ignore_stability)
-	if(!has_dna()) //shouldn't ever happen anyway so it's just in really weird cases
-		return
-	if(!ignore_stability && (dna.stability > 0))
-		return
-	var/instability = -dna.stability
-	dna.remove_all_mutations()
-	dna.stability = 100
-	if(prob(max(70-instability,0)))
-		switch(rand(0,10)) //not complete and utter death
-			if(0)
-				monkeyize()
-			if(1)
-				gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
-				new/obj/vehicle/ridden/wheelchair(get_turf(src)) //don't buckle, because I can't imagine to plethora of things to go through that could otherwise break
-				to_chat(src, "<span class='warning'>My flesh turned into a wheelchair and I can't feel my legs.</span>")
-			if(2)
-				corgize()
-			if(3)
-				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
-			if(4)
-				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>") //you thought
-				physiology.damage_resistance = -20000
-			if(5)
-				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
-				reagents.add_reagent(/datum/reagent/aslimetoxin, 10)
-			if(6)
-				apply_status_effect(STATUS_EFFECT_GO_AWAY)
-			if(7)
-				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
-				ForceContractDisease(new/datum/disease/decloning()) //slow acting, non-viral clone damage based GBS
-			if(8)
-				var/list/elligible_organs = list()
-				for(var/obj/item/organ/O in internal_organs) //make sure we dont get an implant or cavity item
-					elligible_organs += O
-				vomit(20, TRUE)
-				if(elligible_organs.len)
-					var/obj/item/organ/O = pick(elligible_organs)
-					O.Remove(src)
-					visible_message("<span class='danger'>[src] vomits up their [O.name]!</span>", "<span class='danger'>You vomit up your [O.name]</span>") //no "vomit up your heart"
-					O.forceMove(drop_location())
-					if(prob(20))
-						O.animate_atom_living()
-			if(9 to 10)
-				ForceContractDisease(new/datum/disease/gastrolosis())
-				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
-	else
-		switch(rand(0,5))
-			if(0)
-				gib()
-			if(1)
-				dust()
-
-			if(2)
-				death()
-				petrify(INFINITY)
-			if(3)
-				if(prob(95))
-					var/obj/item/bodypart/BP = get_bodypart(pick(BODY_ZONE_CHEST,BODY_ZONE_HEAD))
-					if(BP)
-						BP.dismember()
-					else
-						gib()
-				else
-					set_species(/datum/species/dullahan)
-			if(4)
-				visible_message("<span class='warning'>[src]'s skin melts off!</span>", "<span class='boldwarning'>Your skin melts off!</span>")
-				spawn_gibs()
-				set_species(/datum/species/skeleton)
-				if(prob(90))
-					addtimer(CALLBACK(src, PROC_REF(death)), 30)
-			if(5)
-				to_chat(src, "<span class='phobia'>LOOK UP!</span>")
-				addtimer(CALLBACK(src, PROC_REF(something_horrible_mindmelt)), 30)
-
-
-/mob/living/carbon/human/proc/something_horrible_mindmelt()
-	if(!is_blind())
-		var/obj/item/organ/eyes/eyes = locate(/obj/item/organ/eyes) in internal_organs
-		if(!eyes)
-			return
-		eyes.Remove(src)
-		qdel(eyes)
-		visible_message("<span class='notice'>[src] looks up and their eyes melt away!</span>", "<span class>='userdanger'>I understand now.</span>")
-		addtimer(CALLBACK(src, PROC_REF(adjustOrganLoss), ORGAN_SLOT_BRAIN, 200), 20)

@@ -118,12 +118,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 //	healthdoll = null
 	wanted_lvl = null
 //	internals = null
-	spacesuit = null
-	lingchemdisplay = null
-	lingstingdisplay = null
-	blobpwrdisplay = null
-	alien_plasma_display = null
-	alien_queen_finder = null
 	combo_display = null
 
 	QDEL_LIST_ASSOC_VAL(plane_masters)

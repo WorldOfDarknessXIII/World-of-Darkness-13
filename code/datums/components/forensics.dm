@@ -73,13 +73,7 @@
 
 /datum/component/forensics/proc/add_fingerprint(mob/living/M, ignoregloves = FALSE)
 	if(!isliving(M))
-		if(!iscameramob(M))
-			return
-		if(isaicamera(M))
-			var/mob/camera/ai_eye/ai_camera = M
-			if(!ai_camera.ai)
-				return
-			M = ai_camera.ai
+		return
 	add_hiddenprint(M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -145,15 +139,9 @@
 	return TRUE
 
 /datum/component/forensics/proc/add_hiddenprint(mob/M)
-	if(!isliving(M))
-		if(!iscameramob(M))
-			return
-		if(isaicamera(M))
-			var/mob/camera/ai_eye/ai_camera = M
-			if(!ai_camera.ai)
-				return
-			M = ai_camera.ai
 	if(!M.key)
+		return
+	if(!isliving(M))
 		return
 	var/hasgloves = ""
 	if(ishuman(M))

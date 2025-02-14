@@ -397,14 +397,6 @@
 	pull_icon.hud = src
 	static_inventory += pull_icon
 
-	lingchemdisplay = new /atom/movable/screen/ling/chems()
-	lingchemdisplay.hud = src
-	infodisplay += lingchemdisplay
-
-	lingstingdisplay = new /atom/movable/screen/ling/sting()
-	lingstingdisplay.hud = src
-	infodisplay += lingstingdisplay
-
 	zone_select =  new /atom/movable/screen/zone_sel()
 	zone_select.icon = 'code/modules/wod13/UI/buttons64.dmi'
 	zone_select.hud = src

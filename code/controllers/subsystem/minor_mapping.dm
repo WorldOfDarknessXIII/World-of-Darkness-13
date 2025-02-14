@@ -1,4 +1,3 @@
-#define PROB_MOUSE_SPAWN 98
 
 SUBSYSTEM_DEF(minor_mapping)
 	name = "Minor Mapping"
@@ -6,7 +5,6 @@ SUBSYSTEM_DEF(minor_mapping)
 	flags = SS_NO_FIRE
 
 /datum/controller/subsystem/minor_mapping/Initialize(timeofday)
-	trigger_migration(CONFIG_GET(number/mice_roundstart))
 	place_satchels()
 	return ..()
 
