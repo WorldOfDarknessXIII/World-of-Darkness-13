@@ -283,8 +283,6 @@ SUBSYSTEM_DEF(ticker)
 	collect_minds()
 	equip_characters()
 
-	GLOB.data_core.manifest()
-
 	transfer_characters()	//transfer keys to the new mobs
 
 	for(var/I in round_start_events)

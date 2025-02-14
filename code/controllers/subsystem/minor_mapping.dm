@@ -10,24 +10,6 @@ SUBSYSTEM_DEF(minor_mapping)
 	place_satchels()
 	return ..()
 
-/datum/controller/subsystem/minor_mapping/proc/trigger_migration(num_mice=10)
-	var/list/exposed_wires = find_exposed_wires()
-
-	var/mob/living/simple_animal/mouse/mouse
-	var/turf/proposed_turf
-
-	while((num_mice > 0) && exposed_wires.len)
-		proposed_turf = pick_n_take(exposed_wires)
-		if(prob(PROB_MOUSE_SPAWN))
-			if(!mouse)
-				mouse = new(proposed_turf)
-			else
-				mouse.forceMove(proposed_turf)
-		else
-			mouse = new /mob/living/simple_animal/hostile/regalrat/controlled(proposed_turf)
-		if(mouse.environment_air_is_safe())
-			num_mice -= 1
-			mouse = null
 
 /datum/controller/subsystem/minor_mapping/proc/place_satchels(amount=10)
 	var/list/turfs = find_satchel_suitable_turfs()

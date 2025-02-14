@@ -169,7 +169,6 @@ SUBSYSTEM_DEF(statpanels)
 	for(var/ss in Master.subsystems)
 		var/datum/controller/subsystem/sub_system = ss
 		mc_data[++mc_data.len] = list("\[[sub_system.state_letter()]][sub_system.name]", sub_system.stat_entry(), "\ref[sub_system]")
-	mc_data[++mc_data.len] = list("Camera Net", "Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]", "\ref[GLOB.cameranet]")
 	mc_data_encoded = url_encode(json_encode(mc_data))
 
 /atom/proc/remove_from_cache()

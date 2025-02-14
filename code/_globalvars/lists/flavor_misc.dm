@@ -93,59 +93,6 @@ GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list(
 
 GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list("ghost")) //stores the ghost forms that support hair and other such things
 
-GLOBAL_LIST_INIT(ai_core_display_screens, sortList(list(
-	":thinking:",
-	"Alien",
-	"Angel",
-	"Banned",
-	"Bliss",
-	"Blue",
-	"Clown",
-	"Database",
-	"Dorf",
-	"Firewall",
-	"Fuzzy",
-	"Gentoo",
-	"Glitchman",
-	"Gondola",
-	"Goon",
-	"Hades",
-	"HAL 9000",
-	"Heartline",
-	"Helios",
-	"House",
-	"Inverted",
-	"Matrix",
-	"Monochrome",
-	"Murica",
-	"Nanotrasen",
-	"Not Malf",
-	"Portrait",
-	"President",
-	"Random",
-	"Rainbow",
-	"Red",
-	"Red October",
-	"Static",
-	"Syndicat Meow",
-	"Text",
-	"Too Deep",
-	"Triumvirate",
-	"Triumvirate-M",
-	"Weird")))
-
-/proc/resolve_ai_icon(input)
-	if(!input || !(input in GLOB.ai_core_display_screens))
-		return "ai"
-	else
-		if(input == "Random")
-			input = pick(GLOB.ai_core_display_screens - "Random")
-		if(input == "Portrait")
-			var/datum/portrait_picker/tgui  = new(usr)//create the datum
-			tgui.ui_interact(usr)//datum has a tgui component, here we open the window
-			return "ai-portrait" //just take this until they decide
-		return "ai-[lowertext(input)]"
-
 GLOBAL_LIST_INIT(security_depts_prefs, sortList(list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY)))
 
 	//Backpacks

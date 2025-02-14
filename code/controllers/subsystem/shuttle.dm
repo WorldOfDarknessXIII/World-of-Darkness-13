@@ -320,18 +320,6 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/callShuttle = TRUE
 
-	for(var/thing in GLOB.shuttle_caller_list)
-		if(isAI(thing))
-			var/mob/living/silicon/ai/AI = thing
-			if(AI.deployed_shell && !AI.deployed_shell.client)
-				continue
-			if(AI.stat || !AI.client)
-				continue
-		else if(istype(thing, /obj/machinery/computer/communications))
-			var/obj/machinery/computer/communications/C = thing
-			if(C.machine_stat & BROKEN)
-				continue
-
 		var/turf/T = get_turf(thing)
 		if(T && is_station_level(T.z))
 			callShuttle = FALSE
@@ -560,9 +548,6 @@ SUBSYSTEM_DEF(shuttle)
 		requestlist = SSshuttle.requestlist
 	if (istype(SSshuttle.orderhistory))
 		orderhistory = SSshuttle.orderhistory
-
-	if (istype(SSshuttle.shuttle_loan))
-		shuttle_loan = SSshuttle.shuttle_loan
 
 	if (istype(SSshuttle.shuttle_purchase_requirements_met))
 		shuttle_purchase_requirements_met = SSshuttle.shuttle_purchase_requirements_met

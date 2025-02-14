@@ -6,24 +6,13 @@
 
 /datum/controller/subsystem/ticker/proc/gather_roundend_feedback()
 	gather_antag_data()
-	record_nuke_disk_location()
 	var/json_file = file("[GLOB.log_directory]/round_end_data.json")
 	// All but npcs sublists and ghost category contain only mobs with minds
-	var/list/file_data = list("escapees" = list("humans" = list(), "silicons" = list(), "others" = list(), "npcs" = list()), "abandoned" = list("humans" = list(), "silicons" = list(), "others" = list(), "npcs" = list()), "ghosts" = list(), "additional data" = list())
-	var/num_survivors = 0 //Count of non-brain non-camera mobs with mind that are alive
-	var/num_escapees = 0 //Above and on centcom z
-	var/num_shuttle_escapees = 0 //Above and on escape shuttle
-	var/list/area/shuttle_areas
-	if(SSshuttle?.emergency)
-		shuttle_areas = SSshuttle.emergency.shuttle_areas
-
 	for(var/mob/M in GLOB.mob_list)
 		var/list/mob_data = list()
 		if(isnewplayer(M))
 			continue
 
-		var/escape_status = "abandoned" //default to abandoned
-		var/category = "npcs" //Default to simple count only bracket
 		var/count_only = TRUE //Count by name only or full info
 
 		mob_data["name"] = M.name
@@ -49,15 +38,6 @@
 					else
 						mob_data["job"] = "Unknown"
 					mob_data["species"] = H.dna.species.name
-				else if(issilicon(L))
-					category = "silicons"
-					if(isAI(L))
-						mob_data["module"] = "AI"
-					else if(ispAI(L))
-						mob_data["module"] = "pAI"
-					else if(iscyborg(L))
-						var/mob/living/silicon/robot/R = L
-						mob_data["module"] = R.model.name
 				else
 					category = "others"
 					mob_data["typepath"] = M.type
@@ -69,39 +49,9 @@
 				mob_data["ckey"] = M.key
 			category = null //ghosts are one list deep
 		//All other mindless stuff just gets counts by name
-		if(count_only)
-			var/list/npc_nest = file_data["[escape_status]"]["npcs"]
-			var/name_to_use = initial(M.name)
-			if(ishuman(M))
-				name_to_use = "Unknown Human" //Monkeymen and other mindless corpses
-			if(npc_nest.Find(name_to_use))
-				file_data["[escape_status]"]["npcs"][name_to_use] += 1
-			else
-				file_data["[escape_status]"]["npcs"][name_to_use] = 1
-		else
-			//Mobs with minds and ghosts get detailed data
-			if(category)
-				var/pos = length(file_data["[escape_status]"]["[category]"]) + 1
-				file_data["[escape_status]"]["[category]"]["[pos]"] = mob_data
-			else
-				var/pos = length(file_data["[escape_status]"]) + 1
-				file_data["[escape_status]"]["[pos]"] = mob_data
 
-	var/datum/station_state/end_state = new /datum/station_state()
-	end_state.count()
-	var/station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
-	file_data["additional data"]["station integrity"] = station_integrity
-	WRITE_FILE(json_file, json_encode(file_data))
-
-	SSblackbox.record_feedback("nested tally", "round_end_stats", num_survivors, list("survivors", "total"))
-	SSblackbox.record_feedback("nested tally", "round_end_stats", num_escapees, list("escapees", "total"))
 	SSblackbox.record_feedback("nested tally", "round_end_stats", GLOB.joined_player_list.len, list("players", "total"))
 	SSblackbox.record_feedback("nested tally", "round_end_stats", GLOB.joined_player_list.len - num_survivors, list("players", "dead"))
-	. = list()
-	.[POPCOUNT_SURVIVORS] = num_survivors
-	.[POPCOUNT_ESCAPEES] = num_escapees
-	.[POPCOUNT_SHUTTLE_ESCAPEES] = num_shuttle_escapees
-	.["station_integrity"] = station_integrity
 
 /datum/controller/subsystem/ticker/proc/gather_antag_data()
 	var/team_gid = 1
@@ -213,18 +163,6 @@
 		cb.InvokeAsync()
 	LAZYCLEARLIST(round_end_events)
 
-	var/speed_round = FALSE
-	if(world.time - SSticker.round_start_time <= 300 SECONDS)
-		speed_round = TRUE
-
-	for(var/client/C in GLOB.clients)
-		if(!C.credits)
-			C.RollCredits()
-		C.playtitlemusic(40)
-		if(speed_round)
-			C.give_award(/datum/award/achievement/misc/speed_round, C.mob)
-		HandleRandomHardcoreScore(C)
-
 	var/popcount = gather_roundend_feedback()
 	display_report(popcount)
 
@@ -248,7 +186,6 @@
 
 	CHECK_TICK
 
-	handle_hearts()
 	set_observer_default_invisibility(0, "<span class='warning'>The round is over! You are now visible to the living.</span>")
 
 	CHECK_TICK
@@ -445,108 +382,6 @@
 		give_show_report_button(C)
 		CHECK_TICK
 
-/datum/controller/subsystem/ticker/proc/law_report()
-	var/list/parts = list()
-	var/borg_spacer = FALSE //inserts an extra linebreak to seperate AIs from independent borgs, and then multiple independent borgs.
-	//Silicon laws report
-	for (var/i in GLOB.ai_list)
-		var/mob/living/silicon/ai/aiPlayer = i
-		if(aiPlayer.mind)
-			parts += "<b>[aiPlayer.name]</b> (Played by: <b>[aiPlayer.mind.key]</b>)'s laws [aiPlayer.stat != DEAD ? "at the end of the round" : "when it was <span class='redtext'>deactivated</span>"] were:"
-			parts += aiPlayer.laws.get_law_list(include_zeroth=TRUE)
-
-		parts += "<b>Total law changes: [aiPlayer.law_change_counter]</b>"
-
-		if (aiPlayer.connected_robots.len)
-			var/borg_num = aiPlayer.connected_robots.len
-			parts += "<br><b>[aiPlayer.real_name]</b>'s minions were:"
-			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
-				borg_num--
-				if(robo.mind)
-					parts += "<b>[robo.name]</b> (Played by: <b>[robo.mind.key]</b>)[robo.stat == DEAD ? " <span class='redtext'>(Deactivated)</span>" : ""][borg_num ?", ":""]"
-		if(!borg_spacer)
-			borg_spacer = TRUE
-
-	for (var/mob/living/silicon/robot/robo in GLOB.silicon_mobs)
-		if (!robo.connected_ai && robo.mind)
-			parts += "[borg_spacer?"<br>":""]<b>[robo.name]</b> (Played by: <b>[robo.mind.key]</b>) [(robo.stat != DEAD)? "<span class='greentext'>survived</span> as an AI-less borg!" : "was <span class='redtext'>unable to survive</span> the rigors of being a cyborg without an AI."] Its laws were:"
-
-			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
-				parts += robo.laws.get_law_list(include_zeroth=TRUE)
-
-			if(!borg_spacer)
-				borg_spacer = TRUE
-
-	if(parts.len)
-		return "<div class='panel stationborder'>[parts.Join("<br>")]</div>"
-	else
-		return ""
-
-/datum/controller/subsystem/ticker/proc/goal_report()
-	var/list/parts = list()
-	if(mode.station_goals.len)
-		for(var/V in mode.station_goals)
-			var/datum/station_goal/G = V
-			parts += G.get_result()
-		return "<div class='panel stationborder'><ul>[parts.Join()]</ul></div>"
-
-///Generate a report for how much money is on station, as well as the richest crewmember on the station.
-/datum/controller/subsystem/ticker/proc/market_report()
-	var/list/parts = list()
-	parts += "<span class='header'>Station Economic Summary:</span>"
-	///This is the richest account on station at roundend.
-	var/datum/bank_account/mr_moneybags
-	///This is the station's total wealth at the end of the round.
-	var/station_vault = 0
-	///How many players joined the round.
-	var/total_players = GLOB.joined_player_list.len
-	var/list/typecache_bank = typecacheof(list(/datum/bank_account/department, /datum/bank_account/remote))
-	for(var/i in SSeconomy.bank_accounts_by_id)
-		var/datum/bank_account/current_acc = SSeconomy.bank_accounts_by_id[i]
-		if(typecache_bank[current_acc.type])
-			continue
-		station_vault += current_acc.account_balance
-		if(!mr_moneybags || mr_moneybags.account_balance < current_acc.account_balance)
-			mr_moneybags = current_acc
-	parts += "<div class='panel stationborder'>There were [station_vault] credits collected by crew this shift.<br>"
-	if(total_players > 0)
-		parts += "An average of [station_vault/total_players] credits were collected.<br>"
-		log_econ("Roundend credit total: [station_vault] credits. Average Credits: [station_vault/total_players]")
-	if(mr_moneybags)
-		parts += "The most affluent crew member at shift end was <b>[mr_moneybags.account_holder] with [mr_moneybags.account_balance]</b> cr!</div>"
-	else
-		parts += "Somehow, nobody made any money this shift! This'll result in some budget cuts...</div>"
-	return parts
-
-/datum/controller/subsystem/ticker/proc/medal_report()
-	if(GLOB.commendations.len)
-		var/list/parts = list()
-		parts += "<span class='header'>Medal Commendations:</span>"
-		for (var/com in GLOB.commendations)
-			parts += com
-		return "<div class='panel stationborder'>[parts.Join("<br>")]</div>"
-	return ""
-
-///Generate a report for all players who made it out alive with a hardcore random character and prints their final score
-/datum/controller/subsystem/ticker/proc/hardcore_random_report()
-	. = list()
-	var/list/hardcores = list()
-	for(var/i in GLOB.player_list)
-		if(!ishuman(i))
-			continue
-		var/mob/living/carbon/human/human_player = i
-		if(!human_player.hardcore_survival_score || !human_player.onCentCom() || human_player.stat == DEAD) ///gotta escape nerd
-			continue
-		if(!human_player.mind)
-			continue
-		hardcores += human_player
-	if(!length(hardcores))
-		return
-	. += "<div class='panel stationborder'><span class='header'>The following people made it out as a random hardcore character:</span>"
-	. += "<ul class='playerlist'>"
-	for(var/mob/living/carbon/human/human_player in hardcores)
-		. += "<li>[printplayer(human_player.mind)] with a hardcore random score of [round(human_player.hardcore_survival_score)]</li>"
-	. += "</ul></div>"
 
 /datum/controller/subsystem/ticker/proc/antag_report()
 	var/list/result = list()

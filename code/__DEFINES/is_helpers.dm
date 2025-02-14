@@ -242,5 +242,4 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 
 GLOBAL_LIST_INIT(book_types, typecacheof(list(
 	/obj/item/book,
-	/obj/item/spellbook,
 	/obj/item/storage/book)))

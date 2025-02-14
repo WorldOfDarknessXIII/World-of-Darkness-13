@@ -207,10 +207,6 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 	var/drinks = strings(ION_FILE, "iondrinks")
 	var/locations = strings(LOCATIONS_FILE, "locations")
 
-	var/list/names = list()
-	for(var/datum/data/record/t in GLOB.data_core.general)//Picks from crew manifest.
-		names += t.fields["name"]
-
 	var/maxwords = words//Extra var to check for duplicates.
 
 	for(words,words>0,words--)//Randomly picks from one of the choices below.

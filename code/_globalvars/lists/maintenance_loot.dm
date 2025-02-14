@@ -26,14 +26,12 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/trash/plate = 1,
 		/obj/item/trash/pistachios = 1,
 
-		/obj/item/poster/random_contraband = 1,
 		/obj/item/folder/yellow = 1,
 		/obj/item/hand_labeler = 1,
 		/obj/item/pen = 1,
 		/obj/item/paper = 1,
 		/obj/item/paper/crumpled = 1,
 		/obj/item/photo/old = 1,
-		/obj/item/disk/data = 1,
 		/obj/item/stack/sheet/cardboard = 1,
 		/obj/item/storage/box = 1,
 
@@ -56,14 +54,6 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/reagent_containers/pill/maintenance = 1,
 		/obj/item/toy/eightball = 1,
 		) = 8,
-
-	list(//tier 1 stock parts
-		/obj/item/stock_parts/capacitor = 1,
-		/obj/item/stock_parts/scanning_module = 1,
-		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stock_parts/matter_bin = 1,
-		) = 1,
 	))
 
 
@@ -150,107 +140,6 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/clothing/head/hardhat/red = 1,
 		/obj/item/flashlight/flare = 1,
 		) = 1,
-	))
-
-
-
-GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
-	list(//tools
-		/obj/item/weldingtool/mini = 1,
-		/obj/item/multitool = 1,
-		/obj/item/hatchet = 1,
-		/obj/item/roller = 1,
-		/obj/item/restraints/legcuffs/bola = 1,
-		/obj/item/restraints/handcuffs/cable = 1,
-		/obj/item/spear = 1,
-		/obj/item/shield/riot/buckler = 1,
-		/obj/item/grenade/iedcasing/spawned = 1,
-		/obj/item/melee/baton/cattleprod = 1,
-		/obj/item/throwing_star = 1,
-		/obj/item/pen/fountain = 1,
-		) = 8,
-
-	list(//equipment
-		/obj/item/clothing/head/welding = 1,
-		/obj/item/clothing/glasses/welding = 1,
-		/obj/item/clothing/glasses/hud/health = 1,
-		/obj/item/clothing/glasses/hud/diagnostic = 1,
-		/obj/item/storage/belt/utility = 1,
-		/obj/item/storage/belt/medical = 1,
-
-		/obj/item/clothing/suit/armor/vest/old  = 1,
-		/obj/item/clothing/head/helmet/old = 1,
-		/obj/item/clothing/mask/muzzle = 1,
-		/obj/item/clothing/ears/earmuffs = 1,
-		/obj/item/clothing/gloves/color/black = 1,
-		) = 8,
-
-	list(//strange objects
-		/obj/item/relic = 5,
-		) = 8,
-
-	list(//construction and crafting
-		/obj/item/stock_parts/cell/high = 1,
-		/obj/item/stack/sheet/mineral/wood/fifty = 1,
-		/obj/item/beacon = 1,
-		/obj/item/weaponcrafting/receiver = 1,
-		/obj/item/paper/fluff/stations/soap = 1, //recipes count as crafting.
-		/obj/item/plaque = 1,
-		) = 8,
-
-	list(//medical and chemicals
-		list(//basic healing items
-			/obj/item/stack/medical/suture = 1,
-			/obj/item/stack/medical/mesh = 1,
-			/obj/item/stack/medical/gauze = 1,
-			) = 1,
-		list(//medical chems
-			/obj/item/reagent_containers/glass/bottle/multiver = 1,
-			/obj/item/reagent_containers/syringe/convermol = 1,
-			) = 1,
-		list(//drinks
-			/obj/item/reagent_containers/food/drinks/bottle/vodka = 1,
-			/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 1,
-			) = 1,
-		list(//sprayers
-			/obj/item/reagent_containers/spray = 1,
-			/obj/item/watertank = 1,
-			/obj/item/watertank/janitor = 1,
-			) = 1,
-		) = 8,
-
-	list(//food
-		/obj/item/food/canned/peaches/maint = 1,
-		/obj/item/storage/box/gum/happiness = 1,
-		/obj/item/storage/box/donkpockets = 1,
-		list(//Donk Varieties
-			/obj/item/storage/box/donkpockets/donkpocketspicy = 1,
-			/obj/item/storage/box/donkpockets/donkpocketteriyaki = 1,
-			/obj/item/storage/box/donkpockets/donkpocketpizza = 1,
-			/obj/item/storage/box/donkpockets/donkpocketberry = 1,
-			/obj/item/storage/box/donkpockets/donkpockethonk = 1,
-			) = 1,
-		/obj/item/food/monkeycube = 1,
-		) = 8,
-
-	list(//fakeout items, keep this list at low relative weight
-		/obj/item/dice/d20 = 1,	//To balance out the stealth die of fates in oddities
-		/obj/item/clothing/shoes/jackboots = 1,
-		) = 1,
-))
-
-GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
-		/obj/effect/rune/teleport = 1,
-		/obj/item/clothing/gloves/color/yellow = 1,
-		/obj/item/clothing/head/helmet/abductor = 1,
-		/obj/item/clothing/head/helmet/justice =1,
-		/obj/item/clothing/suit/space/hardsuit/carp = 1,
-		/obj/item/book/granter/crafting_recipe/pipegun_prime =1,
-		/obj/item/dice/d20/fate/stealth/one_use = 1,	//Looks like a d20, keep the d20 in the uncommon pool.
-		/obj/item/dice/d20/fate/stealth/cursed = 1, 	//Only rolls 1
-		/obj/item/clothing/shoes/jackboots/fast = 1,
-		/obj/item/clothing/suit/armor/reactive/table = 1,
-		/obj/item/storage/box/donkpockets/donkpocketgondola = 1
 	))
 
 //Maintenance loot spawner pools

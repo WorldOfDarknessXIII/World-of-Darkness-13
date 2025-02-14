@@ -472,11 +472,6 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	if(!holder ||!check_rights(R_FUN))
 		return
 
-
-	if(!GLOB.the_gateway)
-		if(alert("There's no home gateway on the station. You sure you want to continue ?", "Uh oh", "Yes", "No") != "Yes")
-			return
-
 	var/list/possible_options = GLOB.potentialRandomZlevels + "Custom"
 	var/away_name
 	var/datum/space_level/away_level

@@ -36,19 +36,6 @@
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				SEND_SOUND(M, s)
 
-/proc/print_command_report(text = "", title = null, announce=TRUE)
-	if(!title)
-		title = "Classified [command_name()] Update"
-
-	if(announce)
-		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg')
-
-	var/datum/comm_message/M  = new
-	M.title = title
-	M.content =  text
-
-	SScommunications.send_message(M)
-
 /proc/minor_announce(message, title = "Attention:", alert, html_encode = TRUE)
 	if(!message)
 		return

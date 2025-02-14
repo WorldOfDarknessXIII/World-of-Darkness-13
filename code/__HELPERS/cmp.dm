@@ -17,11 +17,6 @@
 	return sorttext(a.name, b.name)
 
 GLOBAL_VAR_INIT(cmp_field, "name")
-/proc/cmp_records_asc(datum/data/record/a, datum/data/record/b)
-	return sorttext(b.fields[GLOB.cmp_field], a.fields[GLOB.cmp_field])
-
-/proc/cmp_records_dsc(datum/data/record/a, datum/data/record/b)
-	return sorttext(a.fields[GLOB.cmp_field], b.fields[GLOB.cmp_field])
 
 // Datum cmp with vars is always slower than a specialist cmp proc, use your judgement.
 /proc/cmp_datum_numeric_asc(datum/a, datum/b, variable)
@@ -89,9 +84,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	else
 		return A.layer - B.layer
 
-/proc/cmp_advdisease_resistance_asc(datum/disease/advance/A, datum/disease/advance/B)
-	return A.totalResistance() - B.totalResistance()
-
 /proc/cmp_quirk_asc(datum/quirk/A, datum/quirk/B)
 	var/a_sign = SIGN(initial(A.value) * -1)
 	var/b_sign = SIGN(initial(B.value) * -1)
@@ -118,12 +110,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_typepaths_asc(A, B)
 	return sorttext("[B]","[A]")
-
-/proc/cmp_pdaname_asc(obj/item/pda/A, obj/item/pda/B)
-	return sorttext(B.owner, A.owner)
-
-/proc/cmp_pdajob_asc(obj/item/pda/A, obj/item/pda/B)
-	return sorttext(B.ownjob, A.ownjob)
 
 /proc/cmp_num_string_asc(A, B)
 	return text2num(A) - text2num(B)
