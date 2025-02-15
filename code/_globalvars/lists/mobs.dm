@@ -8,8 +8,6 @@ GLOBAL_LIST_EMPTY(stealthminID)						//reference list with IDs that store ckeys,
 
 GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 	/turf/open/lava,
-	/turf/open/chasm,
-	/turf/open/space,
 	/turf/open/openspace)))
 
 

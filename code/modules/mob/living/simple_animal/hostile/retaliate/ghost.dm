@@ -29,7 +29,6 @@
 	minbodytemp = 0
 	maxbodytemp = 1500
 	is_flying_animal = TRUE
-	pressure_resistance = 300
 	gold_core_spawnable = NO_SPAWN //too spooky for science
 	light_system = MOVABLE_LIGHT
 	light_range = 1 // same glowing as visible player ghosts

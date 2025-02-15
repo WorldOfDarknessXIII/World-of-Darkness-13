@@ -762,10 +762,6 @@
 		else
 			species_color = ""
 
-		if(!dropping_limb && H.dna.check_mutation(HULK))
-			mutation_color = "00aa00"
-		else
-			mutation_color = ""
 
 		dmg_overlay_type = S.damage_overlay_type
 

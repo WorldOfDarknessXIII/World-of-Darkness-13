@@ -131,7 +131,6 @@
 	minbodytemp = 0
 	maxbodytemp = 1500
 	faction = list("Lasombra")
-	pressure_resistance = 200
 	bloodpool = 1
 	maxbloodpool = 1
 

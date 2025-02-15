@@ -15,7 +15,6 @@
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 80, ACID = 50)
 	max_integrity = 250
 	integrity_failure = 0.4
-	pressure_resistance = 7 * ONE_ATMOSPHERE
 	req_access = list()
 
 	var/valve_open = FALSE

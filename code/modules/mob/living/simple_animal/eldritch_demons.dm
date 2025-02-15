@@ -26,7 +26,6 @@
 	maxbodytemp = INFINITY
 	healable = 0
 	movement_type = GROUND
-	pressure_resistance = 100
 	del_on_death = TRUE
 	deathmessage = "implodes into itself"
 	faction = list("heretics")

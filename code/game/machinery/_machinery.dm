@@ -86,7 +86,6 @@
 	desc = "Some kind of machine."
 	verb_say = "beeps"
 	verb_yell = "blares"
-	pressure_resistance = 15
 	pass_flags_self = PASSMACHINE
 	max_integrity = 200
 	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
@@ -162,6 +161,41 @@
 /obj/machinery/proc/end_processing()
 	var/datum/controller/subsystem/processing/subsystem = locate(subsystem_type) in Master.subsystems
 	STOP_PROCESSING(subsystem, src)
+
+/obj/machinery/proc/addStaticPower(value, powerchannel)
+	var/area/A = get_area(src)
+	if(!A)
+		return
+	A.addStaticPower(value, powerchannel)
+
+/obj/machinery/proc/removeStaticPower(value, powerchannel)
+	addStaticPower(-value, powerchannel)
+
+/**
+ * Called whenever the power settings of the containing area change
+ *
+ * by default, check equipment channel & set flag, can override if needed
+ *
+ * Returns TRUE if the NOPOWER flag was toggled
+ */
+/obj/machinery/proc/power_change()
+	SIGNAL_HANDLER
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(machine_stat & BROKEN)
+		return
+	if(powered(power_channel))
+		if(machine_stat & NOPOWER)
+			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_RESTORED)
+			. = TRUE
+		set_machine_stat(machine_stat & ~NOPOWER)
+	else
+		if(!(machine_stat & NOPOWER))
+			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_LOST)
+			. = TRUE
+		set_machine_stat(machine_stat | NOPOWER)
+	update_icon()
+
 
 /obj/machinery/LateInitialize()
 	. = ..()

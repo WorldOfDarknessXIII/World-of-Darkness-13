@@ -128,13 +128,6 @@
 		phantom_owner.clear_alert("embeddedobject")
 		SEND_SIGNAL(phantom_owner, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
-	if(!special)
-		if(phantom_owner.dna)
-			for(var/X in phantom_owner.dna.mutations) //some mutations require having specific limbs to be kept.
-				var/datum/mutation/human/MT = X
-				if(MT.limb_req && MT.limb_req == body_zone)
-					phantom_owner.dna.force_lose(MT)
-
 		for(var/X in phantom_owner.internal_organs) //internal organs inside the dismembered limb are dropped.
 			var/obj/item/organ/O = X
 			var/org_zone = check_zone(O.zone)

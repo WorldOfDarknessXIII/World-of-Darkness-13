@@ -156,7 +156,6 @@
 	minbodytemp = 0
 	maxbodytemp = 1500
 	faction = list("Tremere")
-	pressure_resistance = 200
 	bloodpool = 1
 	maxbloodpool = 1
 

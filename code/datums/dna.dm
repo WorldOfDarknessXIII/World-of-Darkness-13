@@ -60,33 +60,6 @@
 	new_dna.real_name = real_name
 	new_dna.mutations = mutations.Copy()
 
-//See mutation.dm for what 'class' does. 'time' is time till it removes itself in decimals. 0 for no timer
-/datum/dna/proc/add_mutation(mutation, class = MUT_OTHER, time)
-	var/mutation_type = mutation
-	if(istype(mutation, /datum/mutation/human))
-		var/datum/mutation/human/HM = mutation
-		mutation_type = HM.type
-	if(get_mutation(mutation_type))
-		return
-	return force_give(new mutation_type (class, time, copymut = mutation))
-
-/datum/dna/proc/remove_mutation(mutation_type)
-	return force_lose(get_mutation(mutation_type))
-
-/datum/dna/proc/check_mutation(mutation_type)
-	return get_mutation(mutation_type)
-
-/datum/dna/proc/remove_all_mutations(list/classes = list(MUT_NORMAL, MUT_EXTRA, MUT_OTHER), mutadone = FALSE)
-	remove_mutation_group(mutations, classes, mutadone)
-	scrambled = FALSE
-
-/datum/dna/proc/remove_mutation_group(list/group, list/classes = list(MUT_NORMAL, MUT_EXTRA, MUT_OTHER), mutadone = FALSE)
-	if(!group)
-		return
-	for(var/datum/mutation/human/HM in group)
-		if((HM.class in classes) && !(HM.mutadone_proof && mutadone))
-			force_lose(HM)
-
 /datum/dna/proc/generate_uni_identity()
 	. = ""
 	var/list/L = new /list(DNA_UNI_IDENTITY_BLOCKS)
@@ -153,61 +126,11 @@
 		if(DNA_HAIRSTYLE_BLOCK)
 			setblock(uni_identity, blocknumber, construct_block(GLOB.hairstyles_list.Find(H.hairstyle), GLOB.hairstyles_list.len))
 
-//Please use add_mutation or activate_mutation instead
-/datum/dna/proc/force_give(datum/mutation/human/HM)
-	if(holder && HM)
-		if(HM.class == MUT_NORMAL)
-			set_se(1, HM)
-		. = HM.on_acquiring(holder)
-		if(.)
-			qdel(HM)
-		update_instability()
-
-//Use remove_mutation instead
-/datum/dna/proc/force_lose(datum/mutation/human/HM)
-	if(holder && (HM in mutations))
-		set_se(0, HM)
-		. = HM.on_losing(holder)
-		update_instability(FALSE)
-		return
-
-/**
- * Checks if two DNAs are practically the same by comparing their most defining features
- *
- * Arguments:
- * * target_dna The DNA that we are comparing to
- */
 /datum/dna/proc/is_same_as(datum/dna/target_dna)
 	if(uni_identity == target_dna.uni_identity && mutation_index == target_dna.mutation_index && real_name == target_dna.real_name)
 		if(species.type == target_dna.species.type && compare_list(features, target_dna.features) && blood_type == target_dna.blood_type)
 			return TRUE
 	return FALSE
-
-/datum/dna/proc/update_instability(alert=TRUE)
-	stability = 100
-	for(var/datum/mutation/human/M in mutations)
-		if(M.class == MUT_EXTRA)
-			stability -= M.instability * GET_MUTATION_STABILIZER(M)
-	if(holder)
-		var/message
-		if(alert)
-			switch(stability)
-				if(70 to 90)
-					message = "<span class='warning'>You shiver.</span>"
-				if(60 to 69)
-					message = "<span class='warning'>You feel cold.</span>"
-				if(40 to 59)
-					message = "<span class='warning'>You feel sick.</span>"
-				if(20 to 39)
-					message = "<span class='warning'>It feels like your skin is moving.</span>"
-				if(1 to 19)
-					message = "<span class='warning'>You can feel your cells burning.</span>"
-				if(-INFINITY to 0)
-					message = "<span class='boldwarning'>You can feel your DNA exploding, we need to do something fast!</span>"
-		if(stability <= 0)
-			holder.apply_status_effect(STATUS_EFFECT_DNA_MELT)
-		if(message)
-			to_chat(holder, message)
 
 //used to update dna UI, UE, and dna.real_name.
 /datum/dna/proc/update_dna_identity()
@@ -219,27 +142,10 @@
 		blood_type = newblood_type
 	unique_enzymes = generate_unique_enzymes()
 	uni_identity = generate_uni_identity()
-	if(!skip_index) //I hate this
-		generate_dna_blocks()
 	features = random_features()
 
 
 /datum/dna/stored //subtype used by brain mob's stored_dna
-
-/datum/dna/stored/add_mutation(mutation_name) //no mutation changes on stored dna.
-	return
-
-/datum/dna/stored/remove_mutation(mutation_name)
-	return
-
-/datum/dna/stored/check_mutation(mutation_name)
-	return
-
-/datum/dna/stored/remove_all_mutations(list/classes, mutadone = FALSE)
-	return
-
-/datum/dna/stored/remove_mutation_group(list/group)
-	return
 
 /////////////////////////// DNA MOB-PROCS //////////////////////
 
@@ -280,7 +186,6 @@
 		update_body()
 		update_hair()
 		update_body_parts()
-		update_mutations_overlay()// no lizard with human hulk overlay please.
 
 
 /mob/proc/has_dna()
@@ -311,13 +216,6 @@
 		dna.uni_identity = ui
 		updateappearance(icon_update=0)
 
-	if(LAZYLEN(mutation_index))
-		dna.mutation_index = mutation_index.Copy()
-		if(LAZYLEN(default_mutation_genes))
-			dna.default_mutation_genes = default_mutation_genes.Copy()
-		else
-			dna.default_mutation_genes = mutation_index.Copy()
-		domutcheck()
 
 	if(mrace || newfeatures || ui)
 		update_body()
@@ -367,64 +265,6 @@
 		if(mutations_overlay_update)
 			update_mutations_overlay()
 
-
-/mob/proc/domutcheck()
-	return
-
-/mob/living/carbon/domutcheck()
-	if(!has_dna())
-		return
-
-	for(var/mutation in dna.mutation_index)
-		dna.check_block(mutation)
-
-	update_mutations_overlay()
-
-/datum/dna/proc/check_block(mutation)
-	var/datum/mutation/human/HM = get_mutation(mutation)
-	if(check_block_string(mutation))
-		if(!HM)
-			. = add_mutation(mutation, MUT_NORMAL)
-		return
-	return force_lose(HM)
-
-//Return the active mutation of a type if there is one
-/datum/dna/proc/get_mutation(A)
-	for(var/datum/mutation/human/HM in mutations)
-		if(HM.type == A)
-			return HM
-
-/datum/dna/proc/check_block_string(mutation)
-	if((LAZYLEN(mutation_index) > DNA_MUTATION_BLOCKS) || !(mutation in mutation_index))
-		return FALSE
-	return is_gene_active(mutation)
-
-/datum/dna/proc/is_gene_active(mutation)
-	return (mutation_index[mutation] == GET_SEQUENCE(mutation))
-
-/datum/dna/proc/set_se(on=TRUE, datum/mutation/human/HM)
-	if(!HM || !(HM.type in mutation_index) || (LAZYLEN(mutation_index) < DNA_MUTATION_BLOCKS))
-		return
-	. = TRUE
-	if(on)
-		mutation_index[HM.type] = GET_SEQUENCE(HM.type)
-		default_mutation_genes[HM.type] = mutation_index[HM.type]
-	else if(GET_SEQUENCE(HM.type) == mutation_index[HM.type])
-		mutation_index[HM.type] = create_sequence(HM.type, FALSE, HM.difficulty)
-		default_mutation_genes[HM.type] = mutation_index[HM.type]
-
-
-/datum/dna/proc/activate_mutation(mutation) //note that this returns a boolean and not a new mob
-	if(!mutation)
-		return FALSE
-	var/mutation_type = mutation
-	if(istype(mutation, /datum/mutation/human))
-		var/datum/mutation/human/M = mutation
-		mutation_type = M.type
-	if(!mutation_in_sequence(mutation_type)) //cant activate what we dont have, use add_mutation
-		return FALSE
-	add_mutation(mutation, MUT_NORMAL)
-	return TRUE
 
 /////////////////////////// DNA HELPER-PROCS //////////////////////////////
 

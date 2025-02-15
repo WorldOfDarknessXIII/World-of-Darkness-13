@@ -5,7 +5,6 @@
 	icon_state = "barrel"
 	density = TRUE
 	anchored = FALSE
-	pressure_resistance = 2 * ONE_ATMOSPHERE
 	max_integrity = 300
 	var/open = FALSE
 	var/speed_multiplier = 1 //How fast it distills. Defaults to 100% (1.0). Lower is better.

@@ -50,7 +50,6 @@
 	zone_select.update_icon()
 	static_inventory += zone_select
 
-	using = new /atom/movable/screen/area_creator
 	using.icon = ui_style
 	using.hud = src
 	static_inventory += using

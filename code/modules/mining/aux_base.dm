@@ -319,7 +319,6 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "miningbeacon"
 	var/obj/docking_port/stationary/Mport //Linked docking port for the mining shuttle
-	pressure_resistance = 200 //So it does not get blown into lava.
 	var/anti_spam_cd = 0 //The linking process might be a bit intensive, so this here to prevent over use.
 	var/console_range = 15 //Wifi range of the beacon to find the aux base console
 

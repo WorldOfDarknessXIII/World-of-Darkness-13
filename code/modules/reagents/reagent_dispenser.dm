@@ -5,7 +5,6 @@
 	icon_state = "water"
 	density = TRUE
 	anchored = FALSE
-	pressure_resistance = 2*ONE_ATMOSPHERE
 	max_integrity = 300
 	///In units, how much the dispenser can hold
 	var/tank_volume = 1000

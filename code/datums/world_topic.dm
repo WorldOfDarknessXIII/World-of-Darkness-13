@@ -86,26 +86,7 @@
 /datum/world_topic/ahelp_relay/Run(list/input)
 	relay_msg_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b></span>")
 
-/datum/world_topic/comms_console
-	keyword = "Comms_Console"
-	require_comms_key = TRUE
 
-/datum/world_topic/comms_console/Run(list/input)
-	// Reject comms messages from other servers that are not on our configured network,
-	// if this has been configured. (See CROSS_COMMS_NETWORK in comms.txt)
-	var/configured_network = CONFIG_GET(string/cross_comms_network)
-	if (configured_network && configured_network != input["network"])
-		return
-
-	minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
-	for(var/obj/machinery/computer/communications/CM in GLOB.machines)
-		CM.override_cooldown()
-
-/datum/world_topic/news_report
-	keyword = "News_Report"
-	require_comms_key = TRUE
-
-/datum/world_topic/news_report/Run(list/input)
 	minor_announce(input["message"], "Breaking Update From [input["message_sender"]]")
 
 /datum/world_topic/adminmsg

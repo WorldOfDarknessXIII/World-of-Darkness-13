@@ -75,8 +75,6 @@
 	//List of datums orbiting this atom
 	var/datum/component/orbiter/orbiters
 
-	/// Radiation insulation types
-	var/rad_insulation = RAD_NO_INSULATION
 
 	/// The icon state intended to be used for the acid component. Used to override the default acid overlay icon state.
 	var/custom_acid_overlay = null
@@ -337,75 +335,6 @@
  * Used in gamemode to identify mobs who have escaped and for some other areas of the code
  * who don't want atoms where they shouldn't be
  */
-/atom/proc/onCentCom()
-	var/turf/T = get_turf(src)
-	if(!T)
-		return FALSE
-
-	if(is_reserved_level(T.z))
-		for(var/A in SSshuttle.mobile)
-			var/obj/docking_port/mobile/M = A
-			if(M.launch_status == ENDGAME_TRANSIT)
-				for(var/place in M.shuttle_areas)
-					var/area/shuttle/shuttle_area = place
-					if(T in shuttle_area)
-						return TRUE
-
-	if(!is_centcom_level(T.z))//if not, don't bother
-		return FALSE
-
-	//Check for centcom itself
-	if(istype(T.loc, /area/centcom))
-		return TRUE
-
-	//Check for centcom shuttles
-	for(var/A in SSshuttle.mobile)
-		var/obj/docking_port/mobile/M = A
-		if(M.launch_status == ENDGAME_LAUNCHED)
-			for(var/place in M.shuttle_areas)
-				var/area/shuttle/shuttle_area = place
-				if(T in shuttle_area)
-					return TRUE
-
-/**
- * Is the atom in any of the centcom syndicate areas
- *
- * Either in the syndie base on centcom, or any of their shuttles
- *
- * Also used in gamemode code for win conditions
- */
-/atom/proc/onSyndieBase()
-	var/turf/T = get_turf(src)
-	if(!T)
-		return FALSE
-
-	if(!is_centcom_level(T.z))//if not, don't bother
-		return FALSE
-
-	if(istype(T.loc, /area/shuttle/syndicate) || istype(T.loc, /area/syndicate_mothership) || istype(T.loc, /area/shuttle/assault_pod))
-		return TRUE
-
-	return FALSE
-
-/**
- * Is the atom in an away mission
- *
- * Must be in the away mission z-level to return TRUE
- *
- * Also used in gamemode code for win conditions
- */
-/atom/proc/onAwayMission()
-	var/turf/T = get_turf(src)
-	if(!T)
-		return FALSE
-
-	if(is_away_level(T.z))
-		return TRUE
-
-	return FALSE
-
-
-
 ///This atom has been hit by a hulkified mob in hulk mode (user)
 /atom/proc/attack_hulk(mob/living/carbon/human/user)
 	SEND_SIGNAL(src, COMSIG_ATOM_HULK_ATTACK, user)
@@ -440,26 +369,6 @@
 					M.forceMove(src)
 				SEND_SIGNAL(M, COMSIG_ATOM_USED_IN_CRAFT, src)
 		parts_list.Cut()
-
-///Take air from the passed in gas mixture datum
-/atom/proc/assume_air(datum/gas_mixture/giver)
-	qdel(giver)
-	return null
-
-///Remove air from this atom
-/atom/proc/remove_air(amount)
-	return null
-
-///Return the current air environment in this atom
-/atom/proc/return_air()
-	if(loc)
-		return loc.return_air()
-	else
-		return null
-
-///Return the air if we can analyze it
-/atom/proc/return_analyzable_air()
-	return null
 
 ///Check if this atoms eye is still alive (probably)
 /atom/proc/check_eye(mob/user)
@@ -708,16 +617,6 @@
 	contents_explosion(severity, target)
 	SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
 
-/**
- * React to a hit by a blob objecd
- *
- * default behaviour is to send the [COMSIG_ATOM_BLOB_ACT] signal
- */
-/atom/proc/blob_act(obj/structure/blob/B)
-	var/blob_act_result = SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
-	if (blob_act_result & COMPONENT_CANCEL_BLOB_ACT)
-		return FALSE
-	return TRUE
 
 /atom/proc/fire_act(exposed_temperature, exposed_volume)
 	SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
@@ -768,12 +667,6 @@
 		blood_dna["UNKNOWN DNA"] = "X*"
 	return blood_dna
 
-/mob/living/carbon/alien/get_blood_dna_list()
-	return list("UNKNOWN DNA" = "X*")
-
-/mob/living/silicon/get_blood_dna_list()
-	return
-
 ///to add a mob's dna info into an object's blood_dna list.
 /atom/proc/transfer_mob_blood_dna(mob/living/L)
 	// Returns 0 if we have that blood already
@@ -794,29 +687,11 @@
 	return add_blood_DNA(blood_dna)
 
 ///Is this atom in space
-/atom/proc/isinspace()
-	if(isspaceturf(get_turf(src)))
-		return TRUE
-	else
-		return FALSE
-
 ///Used for making a sound when a mob involuntarily falls into the ground.
 /atom/proc/handle_fall(mob/faller)
 	return
 
 ///Respond to the singularity eating this atom
-/atom/proc/singularity_act()
-	return
-
-/**
- * Respond to the singularity pulling on us
- *
- * Default behaviour is to send [COMSIG_ATOM_SING_PULL] and return
- */
-/atom/proc/singularity_pull(obj/singularity/S, current_size)
-	SEND_SIGNAL(src, COMSIG_ATOM_SING_PULL, S, current_size)
-
-
 /**
  * Respond to acid being used on our atom
  *
@@ -831,40 +706,6 @@
  *
  * Default behaviour is to send [COMSIG_ATOM_EMAG_ACT] and return
  */
-/atom/proc/emag_act(mob/user, obj/item/card/emag/E)
-	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, user, E)
-
-/**
- * Respond to a radioactive wave hitting this atom
- *
- * Default behaviour is to send [COMSIG_ATOM_RAD_ACT] and return
- */
-/atom/proc/rad_act(strength)
-	SEND_SIGNAL(src, COMSIG_ATOM_RAD_ACT, strength)
-
-/**
- * Respond to narsie eating our atom
- *
- * Default behaviour is to send [COMSIG_ATOM_NARSIE_ACT] and return
- */
-/atom/proc/narsie_act()
-	SEND_SIGNAL(src, COMSIG_ATOM_NARSIE_ACT)
-
-
-///Return the values you get when an RCD eats you?
-/atom/proc/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	return FALSE
-
-
-/**
- * Respond to an RCD acting on our item
- *
- * Default behaviour is to send [COMSIG_ATOM_RCD_ACT] and return FALSE
- */
-/atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	SEND_SIGNAL(src, COMSIG_ATOM_RCD_ACT, user, the_rcd, passed_mode)
-	return FALSE
-
 /**
  * Respond to an electric bolt action on our item
  *
@@ -1579,123 +1420,6 @@
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, AM, levels)
 
 /// Sets the custom materials for an item.
-/atom/proc/set_custom_materials(list/materials, multiplier = 1)
-	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
-		for(var/i in custom_materials)
-			var/datum/material/custom_material = GET_MATERIAL_REF(i)
-			custom_material.on_removed(src, custom_materials[i], material_flags) //Remove the current materials
-
-	if(!length(materials))
-		custom_materials = null
-		return
-
-	if(!(material_flags & MATERIAL_NO_EFFECTS))
-		for(var/x in materials)
-			var/datum/material/custom_material = GET_MATERIAL_REF(x)
-			custom_material.on_applied(src, materials[x] * multiplier * material_modifier, material_flags)
-
-	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
-
-/**
- * Returns the material composition of the atom.
- *
- * Used when recycling items, specifically to turn alloys back into their component mats.
- *
- * Exists because I'd need to add a way to un-alloy alloys or otherwise deal
- * with people converting the entire stations material supply into alloys.
- *
- * Arguments:
- * - flags: A set of flags determining how exactly the materials are broken down.
- */
-/atom/proc/get_material_composition(breakdown_flags=NONE)
-	. = list()
-	if(!(breakdown_flags & BREAKDOWN_INCLUDE_ALCHEMY) && HAS_TRAIT(src, TRAIT_MAT_TRANSMUTED))
-		return
-
-	var/list/cached_materials = custom_materials
-	for(var/mat in cached_materials)
-		var/datum/material/material = GET_MATERIAL_REF(mat)
-		var/list/material_comp = material.return_composition(cached_materials[mat], breakdown_flags)
-		for(var/comp_mat in material_comp)
-			.[comp_mat] += material_comp[comp_mat]
-
-/**
- * Fetches a list of all of the materials this object has of the desired type
- *
- * Arguments:
- * - [mat_type][/datum/material]: The type of material we are checking for
- * - exact: Whether to search for the _exact_ material type
- * - mat_amount: The minimum required amount of material
- */
-/atom/proc/has_material_type(datum/material/mat_type, exact=FALSE, mat_amount=0)
-	var/list/cached_materials = custom_materials
-	if(!length(cached_materials))
-		return null
-
-	. = list()
-	for(var/m in cached_materials)
-		if(cached_materials[m] < mat_amount)
-			continue
-		var/datum/material/material = GET_MATERIAL_REF(m)
-		if(exact ? material.type != m : !istype(material, mat_type))
-			continue
-		.[material] = cached_materials[m]
-
-/**
- * Fetches a list of all of the materials this object has with the desired material category.
- *
- * Arguments:
- * - category: The category to check for
- * - any_flags: Any bitflags that must be present for the category
- * - all_flags: All bitflags that must be present for the category
- * - no_flags: Any bitflags that must not be present for the category
- * - mat_amount: The minimum amount of materials that must be present
- */
-/atom/proc/has_material_category(category, any_flags=0, all_flags=0, no_flags=0, mat_amount=0)
-	var/list/cached_materials = custom_materials
-	if(!length(cached_materials))
-		return null
-
-	. = list()
-	for(var/m in cached_materials)
-		if(cached_materials[m] < mat_amount)
-			continue
-		var/datum/material/material = GET_MATERIAL_REF(m)
-		var/category_flags = material?.categories[category]
-		if(isnull(category_flags))
-			continue
-		if(any_flags && !(category_flags & any_flags))
-			continue
-		if(all_flags && (all_flags != (category_flags & all_flags)))
-			continue
-		if(no_flags && (category_flags & no_flags))
-			continue
-		.[material] = cached_materials[m]
-
-/**
- * Gets the most common material in the object.
- */
-/atom/proc/get_master_material()
-	var/list/cached_materials = custom_materials
-	if(!length(cached_materials))
-		return null
-
-	var/most_common_material = null
-	var/max_amount = 0
-	for(var/m in cached_materials)
-		if(cached_materials[m] > max_amount)
-			most_common_material = m
-			max_amount = cached_materials[m]
-
-	if(most_common_material)
-		return GET_MATERIAL_REF(most_common_material)
-
-/**
- * Gets the total amount of materials in this atom.
- */
-/atom/proc/get_custom_material_amount()
-	return isnull(custom_materials) ? 0 : counterlist_sum(custom_materials)
-
 ///Setter for the `base_pixel_x` variable to append behavior related to its changing.
 /atom/proc/set_base_pixel_x(new_value)
 	if(base_pixel_x == new_value)
@@ -1769,9 +1493,6 @@
  *
  * Override this if you want custom behaviour in whatever gets hit by the rust
  */
-/atom/proc/rust_heretic_act()
-	return
-
 /**
  * Used to set something as 'open' if it's being used as a supplypod
  *

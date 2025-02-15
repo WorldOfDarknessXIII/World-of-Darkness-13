@@ -621,7 +621,6 @@
 	minbodytemp = 0
 	maxbodytemp = 1500
 	faction = list("Tzimisce")
-	pressure_resistance = 200
 	bloodquality = BLOOD_QUALITY_LOW
 	bloodpool = 2
 	maxbloodpool = 2

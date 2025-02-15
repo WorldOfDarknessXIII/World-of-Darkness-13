@@ -42,7 +42,6 @@
 	maxbodytemp = 1500
 	faction = list("carp")
 	is_flying_animal = TRUE
-	pressure_resistance = 200
 	gold_core_spawnable = HOSTILE_SPAWN
 
 	var/random_color = TRUE //if the carp uses random coloring

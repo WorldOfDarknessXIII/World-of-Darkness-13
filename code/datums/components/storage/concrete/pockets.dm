@@ -22,17 +22,6 @@
 	max_w_class = WEIGHT_CLASS_TINY
 	attack_hand_interact = FALSE
 
-/datum/component/storage/concrete/pockets/small/fedora/Initialize()
-	. = ..()
-	var/static/list/exception_cache = typecacheof(list(
-		/obj/item/katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana,
-		/obj/item/energy_katana, /obj/item/gun/ballistic/automatic/tommygun
-		))
-	exception_hold = exception_cache
-
-/datum/component/storage/concrete/pockets/small/fedora/detective
-	attack_hand_interact = TRUE // so the detectives would discover pockets in their hats
-
 /datum/component/storage/concrete/pockets/chefhat
 	attack_hand_interact = TRUE
 	max_items = 1
@@ -57,29 +46,6 @@
 	attack_hand_interact = FALSE
 	quickdraw = TRUE
 	silent = TRUE
-
-/datum/component/storage/concrete/pockets/shoes/Initialize()
-	. = ..()
-	set_holdable(list(
-		/obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
-		/obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
-		/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper,
-		/obj/item/implanter, /obj/item/screwdriver, /obj/item/weldingtool/mini,
-		/obj/item/firing_pin
-		),
-		list(/obj/item/screwdriver/power)
-		)
-
-/datum/component/storage/concrete/pockets/shoes/clown/Initialize()
-	. = ..()
-	set_holdable(list(
-		/obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
-		/obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
-		/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper,
-		/obj/item/implanter, /obj/item/screwdriver, /obj/item/weldingtool/mini,
-		/obj/item/firing_pin, /obj/item/bikehorn),
-		list(/obj/item/screwdriver/power)
-		)
 
 /datum/component/storage/concrete/pockets/pocketprotector
 	max_items = 3
@@ -112,12 +78,3 @@
 					  /obj/item/reagent_containers/food/drinks/drinkingglass,
 					  /obj/item/ammo_box/a762))
 
-
-/datum/component/storage/concrete/pockets/void_cloak
-	quickdraw = TRUE
-	max_items = 3
-
-/datum/component/storage/concrete/pockets/void_cloak/Initialize()
-	. = ..()
-	var/static/list/exception_cache = typecacheof(list(/obj/item/living_heart,/obj/item/forbidden_book))
-	exception_hold = exception_cache

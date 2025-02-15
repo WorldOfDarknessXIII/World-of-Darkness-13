@@ -9,7 +9,6 @@
 	throw_range = 1
 	throw_speed = 1
 	layer = MOB_LAYER
-	pressure_resistance = 2
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/item/documents/nanotrasen

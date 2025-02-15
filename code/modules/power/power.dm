@@ -152,39 +152,7 @@
 	local_apc.add_load(amount)
 	return amount
 
-/obj/machinery/proc/addStaticPower(value, powerchannel)
-	var/area/A = get_area(src)
-	if(!A)
-		return
-	A.addStaticPower(value, powerchannel)
 
-/obj/machinery/proc/removeStaticPower(value, powerchannel)
-	addStaticPower(-value, powerchannel)
-
-/**
- * Called whenever the power settings of the containing area change
- *
- * by default, check equipment channel & set flag, can override if needed
- *
- * Returns TRUE if the NOPOWER flag was toggled
- */
-/obj/machinery/proc/power_change()
-	SIGNAL_HANDLER
-	SHOULD_CALL_PARENT(TRUE)
-
-	if(machine_stat & BROKEN)
-		return
-	if(powered(power_channel))
-		if(machine_stat & NOPOWER)
-			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_RESTORED)
-			. = TRUE
-		set_machine_stat(machine_stat & ~NOPOWER)
-	else
-		if(!(machine_stat & NOPOWER))
-			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_LOST)
-			. = TRUE
-		set_machine_stat(machine_stat | NOPOWER)
-	update_icon()
 
 // connect the machine to a powernet if a node cable or a terminal is present on the turf
 /obj/machinery/power/proc/connect_to_network()
