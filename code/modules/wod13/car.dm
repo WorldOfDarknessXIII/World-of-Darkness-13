@@ -658,14 +658,12 @@ SUBSYSTEM_DEF(carpool)
 	icon_state = "limo"
 	max_passengers = 6
 	dir = WEST
-	beep_sound = 'code/modules/wod13/sounds/migalka.ogg'
 	baggage_limit = 45
 
 /obj/vampire_car/limousine/giovanni
 	icon_state = "giolimo"
 	max_passengers = 6
 	dir = WEST
-	beep_sound = 'code/modules/wod13/sounds/migalka.ogg'
 	access = "giovanni"
 	baggage_limit = 45
 	baggage_max = WEIGHT_CLASS_BULKY
@@ -674,7 +672,6 @@ SUBSYSTEM_DEF(carpool)
 	icon_state = "limo"
 	max_passengers = 6
 	dir = WEST
-	beep_sound = 'code/modules/wod13/sounds/migalka.ogg'
 	access = "camarilla"
 	baggage_limit = 45
 
