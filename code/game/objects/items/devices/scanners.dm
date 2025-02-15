@@ -32,10 +32,6 @@ GENE SCANNER
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
-/obj/item/t_scanner/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins to emit terahertz-rays into [user.p_their()] brain with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	return TOXLOSS
-
 /obj/item/t_scanner/proc/toggle_on()
 	on = !on
 	icon_state = copytext_char(icon_state, 1, -1) + "[on]"
@@ -91,10 +87,6 @@ GENE SCANNER
 	var/scanmode = SCANMODE_HEALTH
 	var/advanced = FALSE
 	custom_price = PAYCHECK_HARD
-
-/obj/item/healthanalyzer/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")
-	return BRUTELOSS
 
 /obj/item/healthanalyzer/attack_self(mob/user)
 	scanmode = (scanmode + 1) % 3

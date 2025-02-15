@@ -116,10 +116,6 @@
 	grind_results = list(/datum/reagent/medicine/c2/libital = 10)
 	merge_type = /obj/item/stack/medical/bruise_pack
 
-/obj/item/stack/medical/bruise_pack/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is bludgeoning [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	return (BRUTELOSS)
-
 /obj/item/stack/medical/gauze
 	name = "medical gauze"
 	desc = "A roll of elastic cloth, perfect for stabilizing all kinds of wounds, from cuts and burns, to broken bones. "
@@ -183,10 +179,6 @@
 		use(2)
 	else
 		return ..()
-
-/obj/item/stack/medical/gauze/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] begins tightening [src] around [user.p_their()] neck! It looks like [user.p_they()] forgot how to use medical supplies!</span>")
-	return OXYLOSS
 
 /obj/item/stack/medical/gauze/improvised
 	name = "improvised gauze"
@@ -257,10 +249,6 @@
 	sanitization = 0.25
 	grind_results = list(/datum/reagent/medicine/c2/lenturi = 10)
 	merge_type = /obj/item/stack/medical/ointment
-
-/obj/item/stack/medical/ointment/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] is squeezing [src] into [user.p_their()] mouth! [user.p_do(TRUE)]n't [user.p_they()] know that stuff is toxic?</span>")
-	return TOXLOSS
 
 /obj/item/stack/medical/mesh
 	name = "regenerative mesh"
@@ -375,29 +363,6 @@
 /obj/item/stack/medical/bone_gel/attack(mob/living/M, mob/user)
 	to_chat(user, "<span class='warning'>Bone gel can only be used on fractured limbs!</span>")
 	return
-
-/obj/item/stack/medical/bone_gel/suicide_act(mob/user)
-	if(!iscarbon(user))
-		return
-	var/mob/living/carbon/C = user
-	C.visible_message("<span class='suicide'>[C] is squirting all of [src] into [C.p_their()] mouth! That's not proper procedure! It looks like [C.p_theyre()] trying to commit suicide!</span>")
-	if(!do_after(C, 2 SECONDS))
-		C.visible_message("<span class='suicide'>[C] screws up like an idiot and still dies anyway!</span>")
-		return (BRUTELOSS)
-
-	C.emote("scream")
-	for(var/i in C.bodyparts)
-		var/obj/item/bodypart/bone = i
-		var/datum/wound/blunt/severe/oof_ouch = new
-		oof_ouch.apply_wound(bone)
-		var/datum/wound/blunt/critical/oof_OUCH = new
-		oof_OUCH.apply_wound(bone)
-
-	for(var/i in C.bodyparts)
-		var/obj/item/bodypart/bone = i
-		bone.receive_damage(brute=60)
-	use(1)
-	return (BRUTELOSS)
 
 /obj/item/stack/medical/poultice
 	name = "mourning poultices"

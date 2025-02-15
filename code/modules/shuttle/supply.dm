@@ -1,34 +1,13 @@
 GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/mob/living,
-		/obj/structure/blob,
 		/obj/effect/rune,
-		/obj/structure/spider/spiderling,
-		/obj/item/disk/nuclear,
-		/obj/machinery/nuclearbomb,
 		/obj/item/beacon,
-		/obj/narsie,
-		/obj/tear_in_reality,
-		/obj/machinery/teleport/station,
-		/obj/machinery/teleport/hub,
-		/obj/machinery/quantumpad,
 		/obj/effect/mob_spawn,
-		/obj/effect/hierophant,
 		/obj/structure/receiving_pad,
-		/obj/item/warp_cube,
-		/obj/machinery/rnd/production, //print tracking beacons, send shuttle
-		/obj/machinery/autolathe, //same
-		/obj/projectile/beam/wormhole,
-		/obj/effect/portal,
 		/obj/item/shared_storage,
 		/obj/structure/extraction_point,
-		/obj/machinery/syndicatebomb,
-		/obj/item/hilbertshotel,
 		/obj/item/swapper,
 		/obj/docking_port,
-		/obj/machinery/launchpad,
-		/obj/machinery/disposal,
-		/obj/structure/disposalpipe,
-		/obj/item/hilbertshotel,
 		/obj/machinery/camera,
 		/obj/item/gps,
 		/obj/structure/checkoutmachine
@@ -68,7 +47,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	for(var/place in areaInstances)
 		var/area/shuttle/shuttle_area = place
 		for(var/trf in shuttle_area)
-	var/turf/T = trf
+			var/turf/T = trf
 			for(var/a in T.GetAllContents())
 				if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types) && !istype(a, /obj/docking_port))
 					return FALSE

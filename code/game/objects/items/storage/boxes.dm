@@ -37,34 +37,12 @@
 	. = ..()
 	update_icon()
 
-/obj/item/storage/box/suicide_act(mob/living/carbon/user)
-	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
-	if(myhead)
-		user.visible_message("<span class='suicide'>[user] puts [user.p_their()] head into \the [src], and begins closing it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-		myhead.dismember()
-		myhead.forceMove(src)//force your enemies to kill themselves with your head collection box!
-		playsound(user, "desecration-01.ogg", 50, TRUE, -1)
-		return BRUTELOSS
-	user.visible_message("<span class='suicide'>[user] beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	return BRUTELOSS
-
 /obj/item/storage/box/update_overlays()
 	. = ..()
 	if(illustration)
 		. += illustration
 
-/obj/item/storage/box/attack_self(mob/user)
-	..()
 
-	if(!		return
-	if(contents.len)
-		to_chat(user, "<span class='warning'>You can't fold this box with items still inside!</span>")
-		return
-	if(!ispath(		return
-
-	to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
-	var/obj/item/I = new 	qdel(src)
-	user.put_in_hands(I)
 
 /obj/item/storage/box/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/package_wrap))
@@ -494,29 +472,3 @@
 		return FALSE
 	return TRUE
 
-
-	var/static/items_inside = list(
-		/obj/item/slimecross/stabilized/grey=1,\
-		/obj/item/slimecross/stabilized/orange=1,\
-		/obj/item/slimecross/stabilized/purple=1,\
-		/obj/item/slimecross/stabilized/blue=1,\
-		/obj/item/slimecross/stabilized/metal=1,\
-		/obj/item/slimecross/stabilized/yellow=1,\
-		/obj/item/slimecross/stabilized/darkpurple=1,\
-		/obj/item/slimecross/stabilized/darkblue=1,\
-		/obj/item/slimecross/stabilized/silver=1,\
-		/obj/item/slimecross/stabilized/bluespace=1,\
-		/obj/item/slimecross/stabilized/sepia=1,\
-		/obj/item/slimecross/stabilized/cerulean=1,\
-		/obj/item/slimecross/stabilized/pyrite=1,\
-		/obj/item/slimecross/stabilized/red=1,\
-		/obj/item/slimecross/stabilized/green=1,\
-		/obj/item/slimecross/stabilized/pink=1,\
-		/obj/item/slimecross/stabilized/gold=1,\
-		/obj/item/slimecross/stabilized/oil=1,\
-		/obj/item/slimecross/stabilized/black=1,\
-		/obj/item/slimecross/stabilized/lightpink=1,\
-		/obj/item/slimecross/stabilized/adamantine=1,\
-		/obj/item/slimecross/stabilized/rainbow=1,\
-		)
-	generate_items_inside(items_inside,src)

@@ -186,17 +186,6 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
 
-/obj/item/toy/spinningtoy/suicide_act(mob/living/carbon/human/user)
-	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
-	if(!myhead)
-		user.visible_message("<span class='suicide'>[user] tries consuming [src]... but [user.p_they()] [user.p_have()] no mouth!</span>") // and i must scream
-		return SHAME
-	user.visible_message("<span class='suicide'>[user] consumes [src]! It looks like [user.p_theyre()] trying to commit suicicide!</span>")
-	playsound(user, 'sound/items/eatfood.ogg', 50, TRUE)
-	user.adjust_nutrition(50) // mmmm delicious
-	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), (3SECONDS))
-	return MANUAL_SUICIDE
-
 /**
  * Internal function used in the toy singularity suicide
  *
@@ -654,11 +643,6 @@
 	if(card_attack_verb_simple)
 		card_attack_verb_simple = string_list(card_attack_verb_simple)
 
-
-/obj/item/toy/cards/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!</span>")
-	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
-	return BRUTELOSS
 
 /obj/item/toy/cards/proc/apply_card_vars(obj/item/toy/cards/newobj, obj/item/toy/cards/sourceobj) // Applies variables for supporting multiple types of card deck
 	if(!istype(sourceobj))

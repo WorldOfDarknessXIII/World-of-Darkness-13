@@ -250,11 +250,6 @@
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
-/obj/item/chair/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins hitting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src,hitsound,50,TRUE)
-	return BRUTELOSS
-
 /obj/item/chair/attack_self(mob/user)
 	plant(user)
 

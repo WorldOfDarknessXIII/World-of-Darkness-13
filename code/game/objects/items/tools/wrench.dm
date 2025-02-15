@@ -21,11 +21,6 @@
 	toolspeed = 1
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 30)
 
-/obj/item/wrench/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
-	return (BRUTELOSS)
-
 /obj/item/wrench/abductor
 	name = "alien wrench"
 	desc = "A polarized wrench. It causes anything placed between the jaws to turn."
@@ -50,25 +45,6 @@
 	. = ..()
 	if(suicider)
 		. += "<span class='notice'>For some reason, it reminds you of [suicider].</span>"
-
-/obj/item/wrench/medical/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] is praying to the medical wrench to take [user.p_their()] soul. It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	user.Stun(100, ignore_canstun = TRUE)// Stun stops them from wandering off
-	user.set_light_color(COLOR_VERY_SOFT_YELLOW)
-	user.set_light(2)
-	user.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
-	playsound(loc, 'sound/effects/pray.ogg', 50, TRUE, -1)
-
-	// Let the sound effect finish playing
-	add_fingerprint(user)
-	sleep(20)
-	if(!user)
-		return
-	for(var/obj/item/W in user)
-		user.dropItemToGround(W)
-	suicider = user.real_name
-	user.dust()
-	return OXYLOSS
 
 /obj/item/wrench/cyborg
 	name = "hydraulic wrench"

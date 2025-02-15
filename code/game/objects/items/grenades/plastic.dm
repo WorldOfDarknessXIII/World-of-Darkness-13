@@ -143,15 +143,6 @@
 			message_say = "FOR THE FEDERATION!"
 	M.say(message_say, forced="C4 suicide")
 
-/obj/item/grenade/c4/suicide_act(mob/living/user)
-	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_VERBOSEJMP(user)]")
-	log_game("[key_name(user)] suicided with [src] at [AREACOORD(user)]")
-	user.visible_message("<span class='suicide'>[user] activates [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
-	shout_syndicate_crap(user)
-	explosion(user,0,2,0) //Cheap explosion imitation because putting detonate() here causes runtimes
-	user.gib(1, 1)
-	qdel(src)
-
 // X4 is an upgraded directional variant of c4 which is relatively safe to be standing next to. And much less safe to be standing on the other side of.
 // C4 is intended to be used for infiltration, and destroying tech. X4 is intended to be used for heavy breaching and tight spaces.
 // Intended to replace C4 for nukeops, and to be a randomdrop in surplus/random traitor purchases.

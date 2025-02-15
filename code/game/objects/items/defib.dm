@@ -381,13 +381,6 @@
 	busy = FALSE
 	update_icon()
 
-/obj/item/shockpaddles/suicide_act(mob/user)
-	user.visible_message("<span class='danger'>[user] is putting the live paddles on [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	if(req_defib)
-		defib.deductcharge(revivecost)
-	playsound(src, 'sound/machines/defib_zap.ogg', 50, TRUE, -1)
-	return (OXYLOSS)
-
 /obj/item/shockpaddles/update_icon_state()
 	icon_state = "[base_icon_state][wielded]"
 	inhand_icon_state = icon_state

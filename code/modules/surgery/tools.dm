@@ -105,13 +105,6 @@
 	wound_bonus = 10
 	bare_wound_bonus = 10
 
-/obj/item/surgicaldrill/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] rams [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon, gib), null, null, TRUE, TRUE), 25)
-	user.SpinAnimation(3, 10)
-	playsound(user, 'sound/machines/juicer.ogg', 20, TRUE)
-	return (MANUAL_SUICIDE)
-
 /obj/item/surgicaldrill/augment
 	desc = "Effectively a small power drill contained within your arm. May or may not pierce the heavens."
 	hitsound = 'sound/weapons/circsawhit.ogg'
@@ -150,11 +143,6 @@
 /obj/item/scalpel/augment
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
 	toolspeed = 0.5
-
-/obj/item/scalpel/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	return (BRUTELOSS)
-
 
 /obj/item/circular_saw
 	name = "circular saw"
@@ -402,18 +390,6 @@
 		else
 			limb_snip_candidate.dismember()
 		user.visible_message("<span class='danger'>[src] violently slams shut, amputating [patient]'s [candidate_name].</span>", "<span class='notice'>You amputate [patient]'s [candidate_name] with [src].</span>")
-
-/obj/item/shears/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] is pinching [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	var/timer = 1 SECONDS
-	for(var/obj/item/bodypart/thing in user.bodyparts)
-		if(thing.body_part == CHEST)
-			continue
-		addtimer(CALLBACK(thing, TYPE_PROC_REF(/obj/item/bodypart, dismember)), timer)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), user, 'sound/weapons/bladeslice.ogg', 70), timer)
-		timer += 1 SECONDS
-	sleep(timer)
-	return BRUTELOSS
 
 /obj/item/bonesetter
 	name = "bonesetter"

@@ -281,9 +281,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
  * Arguments:
  * * user: The mob that is suiciding
  */
-/obj/item/proc/suicide_act(mob/user)
-	return
-
 /obj/item/verb/move_to_top()
 	set name = "Move To Top"
 	set category = "Object"

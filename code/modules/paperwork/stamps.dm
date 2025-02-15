@@ -11,10 +11,6 @@
 	attack_verb_continuous = list("stamps")
 	attack_verb_simple = list("stamp")
 
-/obj/item/stamp/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] stamps 'VOID' on [user.p_their()] forehead, then promptly falls over, dead.</span>")
-	return (OXYLOSS)
-
 /obj/item/stamp/qm
 	name = "quartermaster's rubber stamp"
 	icon_state = "stamp-qm"

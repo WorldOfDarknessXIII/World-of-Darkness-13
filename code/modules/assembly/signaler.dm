@@ -22,14 +22,6 @@
 	/// String containing the last piece of logging data relating to when this signaller has received a signal.
 	var/last_receive_signal_log
 
-/obj/item/assembly/signaler/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] eats \the [src]! If it is signaled, [user.p_they()] will die!</span>")
-	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
-	moveToNullspace()
-	suicider = user.mind
-	suicide_mob = REF(user)
-	return MANUAL_SUICIDE_NONLETHAL
-
 /obj/item/assembly/signaler/proc/manual_suicide(datum/mind/suicidee)
 	var/mob/living/user = suicidee.current
 	if(!istype(user))
