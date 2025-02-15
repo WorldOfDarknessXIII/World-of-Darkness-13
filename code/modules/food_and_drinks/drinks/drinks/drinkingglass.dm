@@ -7,7 +7,6 @@
 	fill_icon_state = "collinsglass"
 	amount_per_transfer_from_this = 10
 	volume = 50
-	custom_materials = list(/datum/material/glass=500)
 	max_integrity = 20
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
@@ -71,7 +70,6 @@
 	gulp_size = 15
 	amount_per_transfer_from_this = 15
 	volume = 15
-	custom_materials = list(/datum/material/glass=100)
 	custom_price = PAYCHECK_ASSISTANT * 0.4
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change(datum/reagents/holder, ...)
@@ -109,7 +107,6 @@
 	icon_state = "martini_glass"
 	amount_per_transfer_from_this = 15
 	volume = 15
-	custom_materials = list(/datum/material/glass=70)
 	custom_price = PAYCHECK_ASSISTANT * 0.3
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/whiskey_shot
@@ -119,7 +116,6 @@
 	fill_icon_state = "whiskeyshot"
 	icon_state = "whiskey_shot"
 	volume = 30
-	custom_materials = list(/datum/material/glass=100)
 	custom_price = PAYCHECK_ASSISTANT * 0.5
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine_glass
@@ -129,7 +125,6 @@
 	fill_icon_state = "wineglass"
 	icon_state = "wine_glass"
 	volume = 50
-	custom_materials = list(/datum/material/glass=500)
 	custom_price = PAYCHECK_ASSISTANT * 0.6
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/pint
@@ -139,7 +134,6 @@
 	fill_icon_state = "pint"
 	icon_state = "pint"
 	volume = 90
-	custom_materials = list(/datum/material/glass=1000)
 	custom_price = PAYCHECK_MINIMAL
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/soda

@@ -195,15 +195,6 @@
 	..()
 	. = 1
 
-/datum/reagent/consumable/virus_food
-	name = "Virus Food"
-	description = "A mixture of water and milk. Virus cells can use this mixture to reproduce."
-	nutriment_factor = 2 * REAGENTS_METABOLISM
-	color = "#899613" // rgb: 137, 150, 19
-	taste_description = "watery milk"
-
-	// Compost for EVERYTHING
-
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
 	description = "A salty sauce made from the soy plant."
@@ -247,7 +238,6 @@
 			heating = 20 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
 				heating = rand(20,25)
-	M.adjust_bodytemperature(heating)
 	..()
 
 /datum/reagent/consumable/frostoil
@@ -281,7 +271,6 @@
 				M.emote("shiver")
 			if(isslime(M))
 				cooling = -rand(20,25)
-	M.adjust_bodytemperature(cooling, 50)
 	..()
 
 /datum/reagent/consumable/frostoil/expose_turf(turf/exposed_turf, reac_volume)
@@ -483,21 +472,6 @@
 	color = "#3E4A00" // rgb: 62, 74, 0
 	taste_description = "your imprisonment"
 
-/datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/M)
-	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal())
-	..()
-
-/datum/reagent/consumable/hell_ramen
-	name = "Hell Ramen"
-	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
-	nutriment_factor = 5 * REAGENTS_METABOLISM
-	color = "#302000" // rgb: 48, 32, 0
-	taste_description = "wet and cheap noodles on fire"
-
-/datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/carbon/target_mob)
-	target_mob.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT)
-	..()
-
 /datum/reagent/consumable/flour
 	name = "Flour"
 	description = "This is what you rub all over yourself to pretend to be a ghost."
@@ -602,151 +576,8 @@
 	color = "#DFDFDF"
 	taste_description = "mayonnaise"
 
-/datum/reagent/consumable/mold // yeah, ok, togopal, I guess you could call that a condiment
-	name = "Mold"
-	description = "This condiment will make any food break the mold. Or your stomach."
-	color ="#708a88"
-	taste_description = "rancid fungus"
-
-/datum/reagent/consumable/tearjuice
-	name = "Tear Juice"
-	description = "A blinding substance extracted from certain onions."
-	color = "#c0c9a0"
-	taste_description = "bitterness"
-
-/datum/reagent/consumable/tearjuice/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-	. = ..()
-	if(!(methods & INGEST) || !((methods & (TOUCH|PATCH|VAPOR)) && (exposed_mob.is_mouth_covered() || exposed_mob.is_eyes_covered())))
-		return
-
-	if(!exposed_mob.getorganslot(ORGAN_SLOT_EYES))	//can't blind somebody with no eyes
-		to_chat(exposed_mob, "<span class='notice'>Your eye sockets feel wet.</span>")
-	else
-		if(!exposed_mob.eye_blurry)
-			to_chat(exposed_mob, "<span class='warning'>Tears well up in your eyes!</span>")
-		exposed_mob.blind_eyes(2)
-		exposed_mob.blur_eyes(5)
-
-/datum/reagent/consumable/tearjuice/on_mob_life(mob/living/carbon/M)
-	..()
-	if(M.eye_blurry)	//Don't worsen vision if it was otherwise fine
-		M.blur_eyes(4)
-		if(prob(10))
-			to_chat(M, "<span class='warning'>Your eyes sting!</span>")
-			M.blind_eyes(2)
 
 
-/datum/reagent/consumable/nutriment/stabilized
-	name = "Stabilized Nutriment"
-	description = "A bioengineered protien-nutrient structure designed to decompose in high saturation. In layman's terms, it won't get you fat."
-	reagent_state = SOLID
-	nutriment_factor = 15 * REAGENTS_METABOLISM
-	color = "#664330" // rgb: 102, 67, 48
-
-/datum/reagent/consumable/nutriment/stabilized/on_mob_life(mob/living/carbon/M)
-	if(M.nutrition > NUTRITION_LEVEL_FULL - 25)
-		M.adjust_nutrition(-3*nutriment_factor)
-	..()
-
-////Lavaland Flora Reagents////
-
-
-/datum/reagent/consumable/entpoly
-	name = "Entropic Polypnium"
-	description = "An ichor, derived from a certain mushroom, makes for a bad time."
-	color = "#1d043d"
-	taste_description = "bitter mushroom"
-
-/datum/reagent/consumable/entpoly/on_mob_life(mob/living/carbon/M)
-	if(current_cycle >= 10)
-		M.Unconscious(40, 0)
-		. = 1
-	if(prob(20))
-		M.losebreath += 4
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM, 150)
-		M.adjustToxLoss(3*REM,0)
-		M.adjustStaminaLoss(10*REM,0)
-		M.blur_eyes(5)
-		. = TRUE
-	..()
-
-
-/datum/reagent/consumable/tinlux
-	name = "Tinea Luxor"
-	description = "A stimulating ichor which causes luminescent fungi to grow on the skin. "
-	color = "#b5a213"
-	taste_description = "tingling mushroom"
-	//Lazy list of mobs affected by the luminosity of this reagent.
-	var/list/mobs_affected
-
-/datum/reagent/consumable/tinlux/expose_mob(mob/living/exposed_mob)
-	. = ..()
-	add_reagent_light(exposed_mob)
-
-/datum/reagent/consumable/tinlux/on_mob_end_metabolize(mob/living/M)
-	remove_reagent_light(M)
-
-/datum/reagent/consumable/tinlux/proc/on_living_holder_deletion(mob/living/source)
-	SIGNAL_HANDLER
-	remove_reagent_light(source)
-
-/datum/reagent/consumable/tinlux/proc/add_reagent_light(mob/living/living_holder)
-	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = living_holder.mob_light(2)
-	LAZYSET(mobs_affected, living_holder, mob_light_obj)
-	RegisterSignal(living_holder, COMSIG_PARENT_QDELETING, PROC_REF(on_living_holder_deletion))
-
-/datum/reagent/consumable/tinlux/proc/remove_reagent_light(mob/living/living_holder)
-	UnregisterSignal(living_holder, COMSIG_PARENT_QDELETING)
-	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = LAZYACCESS(mobs_affected, living_holder)
-	LAZYREMOVE(mobs_affected, living_holder)
-	if(mob_light_obj)
-		qdel(mob_light_obj)
-
-
-/datum/reagent/consumable/vitfro
-	name = "Vitrium Froth"
-	description = "A bubbly paste that heals wounds of the skin."
-	color = "#d3a308"
-	nutriment_factor = 3 * REAGENTS_METABOLISM
-	taste_description = "fruity mushroom"
-
-/datum/reagent/consumable/vitfro/on_mob_life(mob/living/carbon/M)
-	if(prob(80))
-		M.adjustBruteLoss(-1*REM, 0)
-		M.adjustFireLoss(-1*REM, 0)
-		. = TRUE
-	..()
-
-/datum/reagent/consumable/clownstears
-	name = "Clown's Tears"
-	description = "The sorrow and melancholy of a thousand bereaved clowns, forever denied their Honkmechs."
-	nutriment_factor = 5 * REAGENTS_METABOLISM
-	color = "#eef442" // rgb: 238, 244, 66
-	taste_description = "mournful honking"
-
-
-/datum/reagent/consumable/liquidelectricity
-	name = "Liquid Electricity"
-	description = "The blood of Ethereals, and the stuff that keeps them going. Great for them, horrid for anyone else."
-	nutriment_factor = 5 * REAGENTS_METABOLISM
-	color = "#97ee63"
-	taste_description = "pure electricity"
-
-/datum/reagent/consumable/liquidelectricity/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
-	. = ..()
-	if(!(methods & (INGEST|INJECT|PATCH)) || !iscarbon(exposed_mob))
-		return
-
-	var/mob/living/carbon/exposed_carbon = exposed_mob
-	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.getorganslot(ORGAN_SLOT_STOMACH)
-	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * REM * 20)
-
-/datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M)
-	if(prob(25) && !isethereal(M)) //lmao at the newbs who eat energy bars
-		M.electrocute_act(rand(10,15), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
-		playsound(M, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	return ..()
 
 /datum/reagent/consumable/astrotame
 	name = "Astrotame"

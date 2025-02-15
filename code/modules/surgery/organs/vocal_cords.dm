@@ -354,7 +354,6 @@
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.adjust_bodytemperature(50 * power_multiplier)
 	*/
 
 	//COLD
@@ -363,7 +362,6 @@
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.adjust_bodytemperature(-50 * power_multiplier)
 	*/
 
 	//REPULSE

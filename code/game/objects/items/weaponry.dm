@@ -81,151 +81,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.visible_message("<span class='suicide'>[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(BRUTELOSS)
 
-/obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
-	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
-	flags_1 = CONDUCT_1
-	item_flags = DROPDEL //WOW BRO YOU LOST AN ARM, GUESS WHAT YOU DONT GET YOUR SWORD ANYMORE //I CANT BELIEVE SPOOKYDONUT WOULD BREAK THE REQUIREMENTS
-	slot_flags = null
-	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
-	light_range = 3
-	attack_verb_continuous = list("brutalizes", "eviscerates", "disembowels", "hacks", "carves", "cleaves") //ONLY THE MOST VISCERAL ATTACK VERBS
-	attack_verb_simple = list("brutalize", "eviscerate", "disembowel", "hack", "carve", "cleave")
-	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
-	var/obj/item/disk/nuclear/nuke_disk //OUR STORED NUKE DISK
-
-/obj/item/claymore/highlander/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
-	START_PROCESSING(SSobj, src)
-
-/obj/item/claymore/highlander/Destroy()
-	if(nuke_disk)
-		nuke_disk.forceMove(get_turf(src))
-		nuke_disk.visible_message("<span class='warning'>The nuke disk is vulnerable!</span>")
-		nuke_disk = null
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/claymore/highlander/process()
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		loc.layer = LARGE_MOB_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
-		ADD_TRAIT(H, TRAIT_NOBLEED, HIGHLANDER) //AND WE WON'T BLEED OUT LIKE COWARDS
-	else
-		if(!(flags_1 & ADMIN_SPAWNED_1))
-			qdel(src)
-
-
-/obj/item/claymore/highlander/pickup(mob/living/user)
-	. = ..()
-	to_chat(user, "<span class='notice'>The power of Scotland protects you! You are shielded from all stuns and knockdowns.</span>")
-	user.add_stun_absorption("highlander", INFINITY, 1, " is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
-	user.ignore_slowdown(HIGHLANDER)
-
-/obj/item/claymore/highlander/dropped(mob/living/user)
-	. = ..()
-	user.unignore_slowdown(HIGHLANDER)
-
-/obj/item/claymore/highlander/examine(mob/user)
-	. = ..()
-	. += "It has [!notches ? "nothing" : "[notches] notches"] scratched into the blade."
-	if(nuke_disk)
-		. += "<span class='boldwarning'>It's holding the nuke disk!</span>"
-
-/obj/item/claymore/highlander/attack(mob/living/target, mob/living/user)
-	. = ..()
-	if(!QDELETED(target) && target.stat == DEAD && target.mind && target.mind.special_role == "highlander")
-		user.fully_heal(admin_revive = FALSE) //STEAL THE LIFE OF OUR FALLEN FOES
-		add_notch(user)
-		target.visible_message("<span class='warning'>[target] crumbles to dust beneath [user]'s blows!</span>", "<span class='userdanger'>As you fall, your body crumbles to dust!</span>")
-		target.dust()
-
-/obj/item/claymore/highlander/attack_self(mob/living/user)
-	var/closest_victim
-	var/closest_distance = 255
-	for(var/mob/living/carbon/human/scot in GLOB.player_list - user)
-		if(scot.mind.special_role == "highlander" && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
-			closest_victim = scot
-	for(var/mob/living/silicon/robot/siliscot in GLOB.player_list - user)
-		if(siliscot.mind.special_role == "highlander" && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
-			closest_victim = siliscot
-
-	if(!closest_victim)
-		to_chat(user, "<span class='warning'>[src] thrums for a moment and falls dark. Perhaps there's nobody nearby.</span>")
-		return
-	to_chat(user, "<span class='danger'>[src] thrums and points to the [dir2text(get_dir(user, closest_victim))].</span>")
-
-/obj/item/claymore/highlander/IsReflect()
-	return 1 //YOU THINK YOUR PUNY LASERS CAN STOP ME?
-
-/obj/item/claymore/highlander/proc/add_notch(mob/living/user) //DYNAMIC CLAYMORE PROGRESSION SYSTEM - THIS IS THE FUTURE
-	notches++
-	force++
-	var/new_name = name
-	switch(notches)
-		if(1)
-			to_chat(user, "<span class='notice'>Your first kill - hopefully one of many. You scratch a notch into [src]'s blade.</span>")
-			to_chat(user, "<span class='warning'>You feel your fallen foe's soul entering your blade, restoring your wounds!</span>")
-			new_name = "notched claymore"
-		if(2)
-			to_chat(user, "<span class='notice'>Another falls before you. Another soul fuses with your own. Another notch in the blade.</span>")
-			new_name = "double-notched claymore"
-			add_atom_colour(rgb(255, 235, 235), ADMIN_COLOUR_PRIORITY)
-		if(3)
-			to_chat(user, "<span class='notice'>You're beginning to</span> <span class='danger'><b>relish</b> the <b>thrill</b> of <b>battle.</b></span>")
-			new_name = "triple-notched claymore"
-			add_atom_colour(rgb(255, 215, 215), ADMIN_COLOUR_PRIORITY)
-		if(4)
-			to_chat(user, "<span class='notice'>You've lost count of</span> <span class='boldannounce'>how many you've killed.</span>")
-			new_name = "many-notched claymore"
-			add_atom_colour(rgb(255, 195, 195), ADMIN_COLOUR_PRIORITY)
-		if(5)
-			to_chat(user, "<span class='boldannounce'>Five voices now echo in your mind, cheering the slaughter.</span>")
-			new_name = "battle-tested claymore"
-			add_atom_colour(rgb(255, 175, 175), ADMIN_COLOUR_PRIORITY)
-		if(6)
-			to_chat(user, "<span class='boldannounce'>Is this what the vikings felt like? Visions of glory fill your head as you slay your sixth foe.</span>")
-			new_name = "battle-scarred claymore"
-			add_atom_colour(rgb(255, 155, 155), ADMIN_COLOUR_PRIORITY)
-		if(7)
-			to_chat(user, "<span class='boldannounce'>Kill. Butcher. <i>Conquer.</i></span>")
-			new_name = "vicious claymore"
-			add_atom_colour(rgb(255, 135, 135), ADMIN_COLOUR_PRIORITY)
-		if(8)
-			to_chat(user, "<span class='userdanger'>IT NEVER GETS OLD. THE <i>SCREAMING</i>. THE <i>BLOOD</i> AS IT <i>SPRAYS</i> ACROSS YOUR <i>FACE.</i></span>")
-			new_name = "bloodthirsty claymore"
-			add_atom_colour(rgb(255, 115, 115), ADMIN_COLOUR_PRIORITY)
-		if(9)
-			to_chat(user, "<span class='userdanger'>ANOTHER ONE FALLS TO YOUR BLOWS. ANOTHER WEAKLING UNFIT TO LIVE.</span>")
-			new_name = "gore-stained claymore"
-			add_atom_colour(rgb(255, 95, 95), ADMIN_COLOUR_PRIORITY)
-		if(10)
-			user.visible_message("<span class='warning'>[user]'s eyes light up with a vengeful fire!</span>", \
-			"<span class='userdanger'>YOU FEEL THE POWER OF VALHALLA FLOWING THROUGH YOU! <i>THERE CAN BE ONLY ONE!!!</i></span>")
-			user.update_icons()
-			new_name = "GORE-DRENCHED CLAYMORE OF [pick("THE WHIMSICAL SLAUGHTER", "A THOUSAND SLAUGHTERED CATTLE", "GLORY AND VALHALLA", "ANNIHILATION", "OBLITERATION")]"
-			icon_state = "claymore_gold"
-			inhand_icon_state = "cultblade"
-			remove_atom_colour(ADMIN_COLOUR_PRIORITY)
-
-	name = new_name
-	playsound(user, 'sound/items/screwdriver2.ogg', 50, TRUE)
-
-/obj/item/claymore/highlander/robot //BLOODTHIRSTY BORGS NOW COME IN PLAID
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "claymore_cyborg"
-	var/mob/living/silicon/robot/robot
-
-/obj/item/claymore/highlander/robot/Initialize()
-	var/obj/item/robot_model/kiltkit = loc
-	robot = kiltkit.loc
-	if(!istype(robot))
-		qdel(src)
-	return ..()
-
-/obj/item/claymore/highlander/robot/process()
-	loc.layer = LARGE_MOB_LAYER
-
 /obj/item/katana
 	name = "katana"
 	desc = "Woefully underpowered in D20."
@@ -275,7 +130,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 9
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=75)
 	attack_verb_continuous = list("hits", "bludgeons", "whacks", "bonks")
 	attack_verb_simple = list("hit", "bludgeon", "whack", "bonk")
 
@@ -322,7 +176,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_POINTY
-	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/throwing_star/stamina
@@ -351,7 +204,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 6
-	custom_materials = list(/datum/material/iron=12000)
 	hitsound = 'sound/weapons/genhit.ogg'
 	attack_verb_continuous = list("stubs", "pokes")
 	attack_verb_simple = list("stub", "poke")
@@ -416,7 +268,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 5
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=50)
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "discipline", "thrash")
 
@@ -616,7 +467,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 12
 	attack_verb_continuous = list("beats", "smacks")
 	attack_verb_simple = list("beat", "smack")
-	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3.5)
 	w_class = WEIGHT_CLASS_HUGE
 	var/homerun_ready = 0
 	var/homerun_able = 0

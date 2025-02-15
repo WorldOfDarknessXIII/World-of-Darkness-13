@@ -6,9 +6,7 @@
 	density = TRUE
 	anchored = FALSE
 	max_integrity = 100
-	CanAtmosPass = ATMOS_PASS_DENSITY
 	material_modifier = 0.5
-	material_flags = MATERIAL_AFFECT_STATISTICS
 	/// Beauty component mood modifier
 	var/impressiveness = 15
 	/// Art component subtype added to this statue
@@ -64,7 +62,6 @@
 /obj/structure/statue/uranium
 	max_integrity = 300
 	light_range = 2
-	custom_materials = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT*5)
 	impressiveness = 25 // radiation makes an impression
 	abstract_type = /obj/structure/statue/uranium
 
@@ -84,7 +81,6 @@
 	max_integrity = 200
 	impressiveness = 20
 	desc = "This statue is suitably made from plasma."
-	custom_materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/plasma
 
 /obj/structure/statue/plasma/scientist
@@ -119,12 +115,6 @@
 	else
 		return ..()
 
-/obj/structure/statue/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature > 300
-
-/obj/structure/statue/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	PlasmaBurn(exposed_temperature)
-
 /obj/structure/statue/plasma/proc/PlasmaBurn(temperature)
 	if(QDELETED(src))
 		return
@@ -143,7 +133,6 @@
 	max_integrity = 300
 	impressiveness = 25
 	desc = "This is a highly valuable statue made from gold."
-	custom_materials = list(/datum/material/gold=MINERAL_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/gold
 
 /obj/structure/statue/gold/hos
@@ -172,7 +161,6 @@
 	max_integrity = 300
 	impressiveness = 25
 	desc = "This is a valuable statue made from silver."
-	custom_materials = list(/datum/material/silver=MINERAL_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/silver
 
 /obj/structure/statue/silver/md
@@ -201,7 +189,6 @@
 	max_integrity = 1000
 	impressiveness = 50
 	desc = "This is a very expensive diamond statue."
-	custom_materials = list(/datum/material/diamond=MINERAL_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/diamond
 
 /obj/structure/statue/diamond/captain
@@ -222,7 +209,6 @@
 	max_integrity = 300
 	impressiveness = 50
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
-	custom_materials = list(/datum/material/bananium=MINERAL_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/bananium
 
 /obj/structure/statue/bananium/clown
@@ -234,7 +220,6 @@
 /obj/structure/statue/sandstone
 	max_integrity = 50
 	impressiveness = 15
-	custom_materials = list(/datum/material/sandstone=MINERAL_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/sandstone
 
 /obj/structure/statue/sandstone/assistant
@@ -253,7 +238,6 @@
 
 /obj/structure/statue/snow
 	max_integrity = 50
-	custom_materials = list(/datum/material/snow=MINERAL_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/snow
 
 /obj/structure/statue/snow/snowman
@@ -269,7 +253,6 @@
 ///////////////////////////////bronze///////////////////////////////////
 
 /obj/structure/statue/bronze
-	custom_materials = list(/datum/material/bronze=MINERAL_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/bronze
 
 /obj/structure/statue/bronze/marx
@@ -284,7 +267,6 @@
 	name = "Elder Atmosian"
 	desc = "A statue of an Elder Atmosian, capable of bending the laws of thermodynamics to their will."
 	icon_state = "eng"
-	custom_materials = list(/datum/material/metalhydrogen = MINERAL_MATERIAL_AMOUNT*10)
 	max_integrity = 1000
 	impressiveness = 100
 	abstract_type = /obj/structure/statue/elder_atmosian //This one is uncarvable
@@ -304,7 +286,6 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=75)
 	attack_verb_continuous = list("stabs")
 	attack_verb_simple = list("stab")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -417,7 +398,6 @@ Moving interrupts
 	desc = "ready for sculpting."
 	icon = 'icons/obj/statue.dmi'
 	icon_state = "block"
-	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_ADD_PREFIX
 	density = TRUE
 	material_modifier = 0.5 //50% effectiveness of materials
 
@@ -540,7 +520,6 @@ Moving interrupts
 	icon_state = "base"
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | KEEP_TOGETHER //Added keep together in case targets has weird layering
-	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	/// primary statue overlay
 	var/mutable_appearance/content_ma
 	var/static/list/greyscale_with_value_bump = list(0,0,0, 0,0,0, 0,0,1, 0,0,-0.05)

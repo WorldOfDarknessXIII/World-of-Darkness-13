@@ -52,24 +52,11 @@
 		/obj/item/wrench,
 		/obj/item/multitool,
 		/obj/item/flashlight,
-		/obj/item/stack/cable_coil,
 		/obj/item/t_scanner,
-		/obj/item/analyzer,
-		/obj/item/geiger_counter,
 		/obj/item/extinguisher/mini,
 		/obj/item/radio,
 		/obj/item/clothing/gloves,
-		/obj/item/holosign_creator/atmos,
-		/obj/item/holosign_creator/engineering,
-		/obj/item/forcefield_projector,
 		/obj/item/assembly/signaler,
-		/obj/item/lightreplacer,
-		/obj/item/construction/rcd,
-		/obj/item/pipe_dispenser,
-		/obj/item/inducer,
-		/obj/item/plunger,
-		/obj/item/airlock_painter,
-		/obj/item/pipe_painter
 		))
 
 /obj/item/storage/belt/utility/chief
@@ -84,7 +71,6 @@
 	new /obj/item/crowbar/power(src)
 	new /obj/item/weldingtool/experimental(src)//This can be changed if this is too much
 	new /obj/item/multitool(src)
-	new /obj/item/stack/cable_coil(src)
 	new /obj/item/extinguisher/mini(src)
 	new /obj/item/analyzer(src)
 	//much roomier now that we've managed to remove two tools
@@ -96,7 +82,6 @@
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
-	new /obj/item/stack/cable_coil(src)
 
 /obj/item/storage/belt/utility/full/engi/PopulateContents()
 	new /obj/item/screwdriver(src)
@@ -105,7 +90,6 @@
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
-	new /obj/item/stack/cable_coil(src)
 
 
 /obj/item/storage/belt/utility/atmostech/PopulateContents()
@@ -117,14 +101,12 @@
 	new /obj/item/t_scanner(src)
 	new /obj/item/extinguisher/mini(src)
 
-/obj/item/storage/belt/utility/syndicate/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
 	new /obj/item/wrench/combat(src)
 	new /obj/item/weldingtool/largetank(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
-	new /obj/item/inducer/syndicate(src)
 
 /obj/item/storage/belt/medical
 	name = "medical belt"
@@ -157,7 +139,6 @@
 		/obj/item/sensor_device,
 		/obj/item/radio,
 		/obj/item/clothing/gloves/,
-		/obj/item/lazarus_injector,
 		/obj/item/bikehorn/rubberducky,
 		/obj/item/clothing/mask/surgical,
 		/obj/item/clothing/mask/breath,
@@ -171,22 +152,12 @@
 		/obj/item/cautery,
 		/obj/item/hemostat,
 		/obj/item/blood_filter,
-		/obj/item/geiger_counter,
 		/obj/item/clothing/neck/stethoscope,
 		/obj/item/stamp,
 		/obj/item/clothing/glasses,
 		/obj/item/wrench/medical,
 		/obj/item/clothing/mask/muzzle,
 		/obj/item/reagent_containers/blood,
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/gun/syringe/syndicate,
-		/obj/item/implantcase,
-		/obj/item/implant,
-		/obj/item/implanter,
-		/obj/item/pinpointer/crew,
-		/obj/item/holosign_creator/medical,
-		/obj/item/construction/plumbing,
-		/obj/item/plunger,
 		/obj/item/reagent_containers/spray,
 		/obj/item/shears,
 		/obj/item/stack/sticky_tape //surgical tape
@@ -194,7 +165,6 @@
 
 /obj/item/storage/belt/medical/paramedic/PopulateContents()
 	new /obj/item/sensor_device(src)
-	new /obj/item/pinpointer/crew/prox(src)
 	new /obj/item/stack/medical/gauze/twelve(src)
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/stack/medical/bone_gel(src)
@@ -225,14 +195,12 @@
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/ammo_box,
-		/obj/item/food/donut,
 		/obj/item/kitchen/knife/combat,
 		/obj/item/flashlight/seclite,
 		/obj/item/melee/classic_baton/telescopic,
 		/obj/item/radio,
 		/obj/item/clothing/gloves,
 		/obj/item/restraints/legcuffs/bola,
-		/obj/item/holosign_creator/security
 		))
 
 /obj/item/storage/belt/security/full/PopulateContents()
@@ -240,7 +208,6 @@
 	new /obj/item/restraints/handcuffs(src)
 	new /obj/item/grenade/flashbang(src)
 	new /obj/item/assembly/flash/handheld(src)
-	new /obj/item/melee/baton/loaded(src)
 	update_icon()
 
 /obj/item/storage/belt/security/webbing
@@ -279,18 +246,9 @@
 		/obj/item/wrench,
 		/obj/item/multitool,
 		/obj/item/flashlight,
-		/obj/item/stack/cable_coil,
-		/obj/item/analyzer,
 		/obj/item/extinguisher/mini,
 		/obj/item/radio,
 		/obj/item/clothing/gloves,
-		/obj/item/resonator,
-		/obj/item/mining_scanner,
-		/obj/item/pickaxe,
-		/obj/item/shovel,
-		/obj/item/stack/sheet/animalhide,
-		/obj/item/stack/sheet/sinew,
-		/obj/item/stack/sheet/bone,
 		/obj/item/lighter,
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/reagent_containers/food/drinks/bottle,
@@ -299,22 +257,13 @@
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/gps,
 		/obj/item/storage/bag/ore,
-		/obj/item/survivalcapsule,
-		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/reagent_containers/pill,
 		/obj/item/storage/pill_bottle,
-		/obj/item/stack/ore,
 		/obj/item/reagent_containers/food/drinks,
-		/obj/item/organ/regenerative_core,
-		/obj/item/wormhole_jaunter,
-		/obj/item/stack/marker_beacon,
 		/obj/item/key/lasso,
-		/obj/item/skeleton_key
 		))
 
 
-/obj/item/storage/belt/mining/vendor
-	contents = newlist(/obj/item/survivalcapsule)
 
 /obj/item/storage/belt/mining/alt
 	icon_state = "explorer2"
@@ -333,28 +282,6 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 5
 
-/obj/item/storage/belt/soulstone
-	name = "soul stone belt"
-	desc = "Designed for ease of access to the shards during a fight, as to not let a single enemy spirit slip away."
-	icon_state = "soulstonebelt"
-	inhand_icon_state = "soulstonebelt"
-	worn_icon_state = "soulstonebelt"
-
-/obj/item/storage/belt/soulstone/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.set_holdable(list(
-		/obj/item/soulstone
-		))
-
-/obj/item/storage/belt/soulstone/full/PopulateContents()
-	for(var/i in 1 to 6)
-		new /obj/item/soulstone(src)
-
-/obj/item/storage/belt/soulstone/full/chappy/PopulateContents()
-	for(var/i in 1 to 6)
-		new /obj/item/soulstone/anybody/chaplain(src)
 
 /obj/item/storage/belt/champion
 	name = "championship belt"
@@ -362,7 +289,6 @@
 	icon_state = "championbelt"
 	inhand_icon_state = "championbelt"
 	worn_icon_state = "championbelt"
-	custom_materials = list(/datum/material/gold=400)
 
 /obj/item/storage/belt/champion/ComponentInitialize()
 	. = ..()
@@ -381,7 +307,6 @@
 
 /obj/item/storage/belt/military
 	name = "chest rig"
-	desc = "A set of tactical webbing worn by Syndicate boarding parties."
 	icon_state = "militarywebbing"
 	inhand_icon_state = "militarywebbing"
 	worn_icon_state = "militarywebbing"
@@ -426,8 +351,6 @@
 		/obj/item/food/cubannachos,
 		/obj/item/food/nugget,
 		/obj/item/food/spaghetti/pastatomato,
-		/obj/item/food/rofflewaffles,
-		/obj/item/food/donkpocket,
 		/obj/item/reagent_containers/food/drinks/soda_cans/cola,
 		/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind,
 		/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb,
@@ -453,7 +376,6 @@
 	new /obj/item/crowbar/abductor(src)
 	new /obj/item/wirecutters/abductor(src)
 	new /obj/item/multitool/abductor(src)
-	new /obj/item/stack/cable_coil(src)
 
 /obj/item/storage/belt/military/army
 	name = "army belt"
@@ -495,52 +417,16 @@
 		/obj/item/multitool,
 		/obj/item/reagent_containers/food/drinks/bottle/molotov,
 		/obj/item/grenade/c4,
-		/obj/item/food/grown/cherry_bomb,
-		/obj/item/food/grown/firelemon
 		))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
 	var/static/items_inside = list(
 		/obj/item/grenade/flashbang = 1,
 		/obj/item/grenade/smokebomb = 4,
-		/obj/item/grenade/empgrenade = 1,
-		/obj/item/grenade/empgrenade = 1,
-		/obj/item/grenade/frag = 10,
-		/obj/item/grenade/gluon = 4,
-		/obj/item/grenade/chem_grenade/incendiary = 2,
-		/obj/item/grenade/chem_grenade/facid = 1,
-		/obj/item/grenade/syndieminibomb = 2,
 		/obj/item/screwdriver = 1,
 		/obj/item/multitool = 1)
 	generate_items_inside(items_inside,src)
 
-
-/obj/item/storage/belt/wands
-	name = "wand belt"
-	desc = "A belt designed to hold various rods of power. A veritable fanny pack of exotic magic."
-	icon_state = "soulstonebelt"
-	inhand_icon_state = "soulstonebelt"
-	worn_icon_state = "soulstonebelt"
-
-/obj/item/storage/belt/wands/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.set_holdable(list(
-		/obj/item/gun/magic/wand
-		))
-
-/obj/item/storage/belt/wands/full/PopulateContents()
-	new /obj/item/gun/magic/wand/death(src)
-	new /obj/item/gun/magic/wand/resurrection(src)
-	new /obj/item/gun/magic/wand/polymorph(src)
-	new /obj/item/gun/magic/wand/teleport(src)
-	new /obj/item/gun/magic/wand/door(src)
-	new /obj/item/gun/magic/wand/fireball(src)
-
-	for(var/obj/item/gun/magic/wand/W in contents) //All wands in this pack come in the best possible condition
-		W.max_charges = initial(W.max_charges)
-		W.charges = W.max_charges
 
 /obj/item/storage/belt/janitor
 	name = "janibelt"
@@ -555,13 +441,9 @@
 	STR.max_items = 6
 	STR.max_w_class = WEIGHT_CLASS_NORMAL // Set to this so the  light replacer can fit.
 	STR.set_holdable(list(
-		/obj/item/grenade/chem_grenade,
-		/obj/item/lightreplacer,
 		/obj/item/flashlight,
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
-		/obj/item/holosign_creator,
-		/obj/item/forcefield_projector,
 		/obj/item/key/janitor,
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
@@ -571,10 +453,7 @@
 		))
 
 /obj/item/storage/belt/janitor/full/PopulateContents()
-	new /obj/item/lightreplacer(src)
 	new /obj/item/reagent_containers/spray/cleaner(src)
-	new /obj/item/soap/nanotrasen(src)
-	new /obj/item/holosign_creator(src)
 	new /obj/item/melee/flyswatter(src)
 
 /obj/item/storage/belt/bandolier
@@ -733,16 +612,8 @@
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/reagent_containers/spray/plantbgone,
-		/obj/item/plant_analyzer,
-		/obj/item/seeds,
 		/obj/item/reagent_containers/glass/bottle,
 		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/cultivator,
-		/obj/item/reagent_containers/spray/pestspray,
 		/obj/item/hatchet,
-		/obj/item/graft,
-		/obj/item/secateurs,
-		/obj/item/geneshears,
-		/obj/item/shovel/spade,
 		/obj/item/gun/energy/floragun
 		))

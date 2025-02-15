@@ -4,9 +4,6 @@
 	name = "\proper space"
 	intact = 0
 
-	temperature = TCMB
-	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
-	heat_capacity = 700000
 
 	var/destination_z
 	var/destination_x
@@ -205,9 +202,6 @@
 
 
 /turf/open/space/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
-	return
-
-/turf/open/space/singularity_act()
 	return
 
 /turf/open/space/can_have_cabling()

@@ -183,7 +183,6 @@
 		M.adjustFireLoss(-2*REM, FALSE)
 	else
 		M.adjustFireLoss(-1.25*REM, FALSE)
-	M.adjust_bodytemperature(rand(-25,-5) * (TEMPERATURE_DAMAGE_COEFFICIENT*REM), 50)
 	if(ishuman(M))
 		var/mob/living/carbon/human/humi = M
 		humi.adjust_coretemperature(rand(-25,-5) * (TEMPERATURE_DAMAGE_COEFFICIENT*REM), 50)
@@ -197,13 +196,11 @@
 	if(!(methods & VAPOR))
 		return
 
-	exposed_mob.adjust_bodytemperature(-reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
 	exposed_mob.adjust_fire_stacks(-reac_volume / 2)
 	if(reac_volume >= metabolization_rate)
 		exposed_mob.extinguish_mob()
 
 /datum/reagent/medicine/c2/hercuri/overdose_process(mob/living/carbon/M)
-	M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT*REM,50) //chilly chilly
 	if(ishuman(M))
 		var/mob/living/carbon/human/humi = M
 		humi.adjust_coretemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT*REM,50)

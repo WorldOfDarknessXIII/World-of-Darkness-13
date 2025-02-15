@@ -1,6 +1,5 @@
 /obj/item/shrapnel // frag grenades
 	name = "shrapnel shard"
-	custom_materials = list(/datum/material/iron=50)
 	armour_penetration = -20
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
@@ -86,6 +85,5 @@
 
 /obj/item/shrapnel/capmine
 	name = "\improper AP shrapnel shard"
-	custom_materials = list(/datum/material/iron=50)
 	armour_penetration = -30
 

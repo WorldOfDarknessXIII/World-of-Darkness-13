@@ -209,7 +209,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			if(worn)
 				if(istype(worn, /obj/item/pda))
-					var/obj/item/pda/PDA = worn
+					var
 					PDA.id = id
 					id.forceMove(PDA)
 				else if(istype(worn, /obj/item/storage/wallet))

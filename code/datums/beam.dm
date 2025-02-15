@@ -142,11 +142,6 @@
 	owner = null
 	return ..()
 
-/obj/effect/ebeam/singularity_pull()
-	return
-/obj/effect/ebeam/singularity_act()
-	return
-
 /**
  * This is what you use to start a beam. Example: origin.Beam(target, args). **Store the return of this proc if you don't set maxdist or time, you need it to delete the beam.**
  *

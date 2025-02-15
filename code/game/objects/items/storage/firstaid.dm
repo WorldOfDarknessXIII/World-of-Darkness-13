@@ -69,7 +69,6 @@
 //	STR.max_combined_w_class = 24
 	STR.set_holdable(list(
 		/obj/item/healthanalyzer,
-		/obj/item/dnainjector,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/reagent_containers/glass/bottle,
@@ -87,7 +86,6 @@
 		/obj/item/sensor_device,
 		/obj/item/radio,
 		/obj/item/clothing/gloves/,
-		/obj/item/lazarus_injector,
 		/obj/item/bikehorn/rubberducky,
 		/obj/item/clothing/mask/surgical,
 		/obj/item/clothing/mask/breath,
@@ -102,20 +100,12 @@
 		/obj/item/hemostat,
 		/obj/item/blood_filter,
 		/obj/item/shears,
-		/obj/item/geiger_counter,
 		/obj/item/clothing/neck/stethoscope,
 		/obj/item/stamp,
 		/obj/item/clothing/glasses,
 		/obj/item/wrench/medical,
 		/obj/item/clothing/mask/muzzle,
 		/obj/item/reagent_containers/blood,
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/gun/syringe/syndicate,
-		/obj/item/implantcase,
-		/obj/item/implant,
-		/obj/item/implanter,
-		/obj/item/pinpointer/crew,
-		/obj/item/holosign_creator/medical,
 		/obj/item/stack/sticky_tape //surgical tape
 		))
 
@@ -306,34 +296,6 @@
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
-
-//medibot assembly
-/obj/item/storage/firstaid/attackby(obj/item/bodypart/S, mob/user, params)
-	if((!istype(S, /obj/item/bodypart/l_arm/robot)) && (!istype(S, /obj/item/bodypart/r_arm/robot)))
-		return ..()
-
-	//Making a medibot!
-	if(contents.len >= 1)
-		to_chat(user, "<span class='warning'>You need to empty [src] out first!</span>")
-		return
-
-	var/obj/item/bot_assembly/medbot/A = new
-	if (istype(src, /obj/item/storage/firstaid/fire))
-		A.set_skin("ointment")
-	else if (istype(src, /obj/item/storage/firstaid/toxin))
-		A.set_skin("tox")
-	else if (istype(src, /obj/item/storage/firstaid/o2))
-		A.set_skin("o2")
-	else if (istype(src, /obj/item/storage/firstaid/brute))
-		A.set_skin("brute")
-	else if (istype(src, /obj/item/storage/firstaid/advanced))
-		A.set_skin("advanced")
-	user.put_in_hands(A)
-	to_chat(user, "<span class='notice'>You add [S] to [src].</span>")
-	A.robot_arm = S.type
-	A.firstaid = type
-	qdel(S)
-	qdel(src)
 
 /*
  * Pill Bottles
@@ -641,16 +603,10 @@
 		if(units)
 			to_chat(user, "<span class='notice'>You transfer [units] units of the solution to [src].</span>")
 			return
-	if(istype(I, /obj/item/plunger))
-		to_chat(user, "<span class='notice'>You start furiously plunging [name].</span>")
-		if(do_after(user, 10, target = src))
-			to_chat(user, "<span class='notice'>You finish plunging the [name].</span>")
-			reagents.clear_reagents()
-		return
+
 	return ..()
 
 /obj/item/storage/organbox/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is putting [user.p_theyre()] head inside the [src], it looks like [user.p_theyre()] trying to commit suicide!</span>")
-	user.adjust_bodytemperature(-300)
 	user.apply_status_effect(/datum/status_effect/freon)
 	return (OXYLOSS)

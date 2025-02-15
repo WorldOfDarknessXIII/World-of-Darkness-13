@@ -227,7 +227,6 @@
 	if(ishuman(targets[1]))
 		var/mob/living/carbon/human/humi = targets[1]
 		humi.adjust_coretemperature(-200)
-	target.adjust_bodytemperature(-200)
 
 /**
  * cure_blidness: Cures Abyssal Gaze blindness from the target

@@ -273,13 +273,6 @@
 	return FALSE
 
 
-/mob/living/attack_hulk(mob/living/carbon/human/user)
-	..()
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, "<span class='warning'>You don't want to hurt [src]!</span>")
-		return FALSE
-	return TRUE
-
 /mob/living/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return
@@ -320,39 +313,6 @@
 		O.emp_act(severity)
 
 ///Logs, gibs and returns point values of whatever mob is unfortunate enough to get eaten.
-/mob/living/singularity_act()
-	investigate_log("([key_name(src)]) has been consumed by the singularity.", INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
-	gib()
-	return 20
-
-/mob/living/narsie_act()
-	if(status_flags & GODMODE || QDELETED(src))
-		return
-
-	if(GLOB.cult_narsie && GLOB.cult_narsie.souls_needed[src])
-		GLOB.cult_narsie.souls_needed -= src
-		GLOB.cult_narsie.souls += 1
-		if((GLOB.cult_narsie.souls == GLOB.cult_narsie.soul_goal) && (GLOB.cult_narsie.resolved == FALSE))
-			GLOB.cult_narsie.resolved = TRUE
-			sound_to_playing_players('sound/machines/alarm.ogg')
-			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper), 1), 120)
-			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(ending_helper)), 270)
-	if(client)
-		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, cultoverride = TRUE)
-	else
-		switch(rand(1, 4))
-			if(1)
-				new /mob/living/simple_animal/hostile/construct/juggernaut/hostile(get_turf(src))
-			if(2)
-				new /mob/living/simple_animal/hostile/construct/wraith/hostile(get_turf(src))
-			if(3)
-				new /mob/living/simple_animal/hostile/construct/artificer/hostile(get_turf(src))
-			if(4)
-				new /mob/living/simple_animal/hostile/construct/proteon/hostile(get_turf(src))
-	spawn_dust()
-	gib()
-	return TRUE
-
 //called when the mob receives a bright flash
 /mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash)
 	if(HAS_TRAIT(src, TRAIT_NOFLASH))

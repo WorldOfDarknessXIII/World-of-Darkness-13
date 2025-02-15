@@ -11,13 +11,11 @@
 	throw_speed = 2
 	throw_range = 7
 	w_class = WEIGHT_CLASS_BULKY
-	custom_materials = list(/datum/material/iron = 500)
 	attack_verb_continuous = list("robusts")
 	attack_verb_simple = list("robust")
 	hitsound = 'sound/weapons/smash.ogg'
 	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
 	pickup_sound =  'sound/items/handling/toolbox_pickup.ogg'
-	material_flags = MATERIAL_COLOR
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 	wound_bonus = 5
@@ -45,7 +43,6 @@
 	name = "emergency toolbox"
 	icon_state = "red"
 	inhand_icon_state = "toolbox_red"
-	material_flags = NONE
 
 /obj/item/storage/toolbox/emergency/PopulateContents()
 	new /obj/item/crowbar/red(src)
@@ -64,13 +61,11 @@
 	name = "rusty red toolbox"
 	icon_state = "toolbox_red_old"
 	has_latches = FALSE
-	material_flags = NONE
 
 /obj/item/storage/toolbox/mechanical
 	name = "mechanical toolbox"
 	icon_state = "blue"
 	inhand_icon_state = "toolbox_blue"
-	material_flags = NONE
 	/// If FALSE, someone with a ensouled soulstone can sacrifice a spirit to change the sprite of this toolbox.
 	var/has_soul = FALSE
 
@@ -134,7 +129,6 @@
 	name = "electrical toolbox"
 	icon_state = "yellow"
 	inhand_icon_state = "toolbox_yellow"
-	material_flags = NONE
 
 /obj/item/storage/toolbox/electrical/PopulateContents()
 	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
@@ -155,7 +149,6 @@
 	inhand_icon_state = "toolbox_syndi"
 	force = 15
 	throwforce = 18
-	material_flags = NONE
 
 /obj/item/storage/toolbox/syndicate/ComponentInitialize()
 	. = ..()
@@ -175,7 +168,6 @@
 	name = "mechanical toolbox"
 	icon_state = "blue"
 	inhand_icon_state = "toolbox_blue"
-	material_flags = NONE
 
 /obj/item/storage/toolbox/drone/PopulateContents()
 	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
@@ -193,7 +185,6 @@
 	icon_state = "green"
 	inhand_icon_state = "artistic_toolbox"
 	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
-	material_flags = NONE
 
 /obj/item/storage/toolbox/artistic/ComponentInitialize()
 	. = ..()
@@ -319,7 +310,6 @@
 
 /obj/item/storage/toolbox/haunted
 	name = "old toolbox"
-	custom_materials = list(/datum/material/hauntium = 500)
 
 
 

@@ -94,13 +94,11 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/hand)
 
 /obj/vehicle/ridden/wheelchair/gold
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
 	desc = "Damn, he's been through a lot."
 	icon_state = "gold_wheelchair"
 	overlay_icon = "gold_wheelchair_overlay"
 	max_integrity = 200
 	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 0, BOMB = 20, BIO = 0, RAD = 0, FIRE = 30, ACID = 40)
-	custom_materials = list(/datum/material/gold = 10000)
 	foldabletype = /obj/item/wheelchair/gold
 
 /obj/item/wheelchair
@@ -113,7 +111,6 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 8 //Force is same as a chair
-	custom_materials = list(/datum/material/iron = 10000)
 	var/unfolded_type = /obj/vehicle/ridden/wheelchair
 
 /obj/item/wheelchair/gold

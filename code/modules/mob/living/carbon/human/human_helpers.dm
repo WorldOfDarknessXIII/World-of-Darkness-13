@@ -12,7 +12,7 @@
 	if(id)
 		. = id.assignment
 	else
-		var/obj/item/pda/pda = wear_id
+		var
 		if(istype(pda))
 			. = pda.ownjob
 		else
@@ -26,7 +26,7 @@
 	var/obj/item/card/id/id = get_idcard(FALSE)
 	if(id)
 		return id.registered_name
-	var/obj/item/pda/pda = wear_id
+	var
 	if(istype(pda))
 		return pda.owner
 	return if_no_id

@@ -141,9 +141,6 @@
 	wound_bonus = -40
 	bare_wound_bonus = 70
 
-/obj/projectile/beam/emitter/singularity_pull()
-	return //don't want the emitters to miss
-
 /obj/projectile/beam/emitter/hitscan
 	hitscan = TRUE
 	muzzle_type = /obj/effect/projectile/muzzle/laser/emitter

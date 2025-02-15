@@ -94,7 +94,6 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/M = target
-		M.adjust_bodytemperature(((100-blocked)/100)*(temperature - M.bodytemperature))
 
 // .357 (Syndie Revolver)
 

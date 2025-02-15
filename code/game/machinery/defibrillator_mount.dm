@@ -208,7 +208,6 @@
 	desc = "A frame for a defibrillator mount. Once placed, it can be removed with a wrench."
 	icon = 'icons/obj/machines/defib_mount.dmi'
 	icon_state = "defibrillator_mount"
-	custom_materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
 	w_class = WEIGHT_CLASS_BULKY
 	result_path = /obj/machinery/defibrillator_mount
 	pixel_shift = -28
@@ -217,5 +216,4 @@
 	name = "unhooked PENLITE defibrillator mount"
 	desc = "A frame for a PENLITE defibrillator mount. Unlike the normal mount, it can passively recharge the unit inside."
 	icon_state = "penlite_mount"
-	custom_materials = list(/datum/material/iron = 300, /datum/material/glass = 100, /datum/material/silver = 50)
 	result_path = /obj/machinery/defibrillator_mount/charging

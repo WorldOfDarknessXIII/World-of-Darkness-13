@@ -133,12 +133,6 @@
 /atom/movable/lighting_object/ex_act(severity)
 	return
 
-/atom/movable/lighting_object/singularity_act()
-	return
-
-/atom/movable/lighting_object/singularity_pull()
-	return
-
 /atom/movable/lighting_object/blob_act()
 	return
 

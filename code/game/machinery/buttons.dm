@@ -33,13 +33,6 @@
 
 	src.check_access(null)
 
-	if(req_access.len || req_one_access.len)
-		board = new(src)
-		if(req_access.len)
-			board.accesses = req_access
-		else
-			board.one_access = 1
-			board.accesses = req_one_access
 
 	setup_device()
 
@@ -57,8 +50,6 @@
 		return
 	if(device)
 		. += "button-device"
-	if(board)
-		. += "button-board"
 
 /obj/machinery/button/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_SCREWDRIVER)
@@ -70,33 +61,6 @@
 			flick("[skin]-denied", src)
 		return
 
-	if(panel_open)
-		if(!device && istype(W, /obj/item/assembly))
-			if(!user.transferItemToLoc(W, src))
-				to_chat(user, "<span class='warning'>\The [W] is stuck to you!</span>")
-				return
-			device = W
-			to_chat(user, "<span class='notice'>You add [W] to the button.</span>")
-
-		if(!board && istype(W, /obj/item/electronics/airlock))
-			if(!user.transferItemToLoc(W, src))
-				to_chat(user, "<span class='warning'>\The [W] is stuck to you!</span>")
-				return
-			board = W
-			if(board.one_access)
-				req_one_access = board.accesses
-			else
-				req_access = board.accesses
-			to_chat(user, "<span class='notice'>You add [W] to the button.</span>")
-
-		if(!device && !board && W.tool_behaviour == TOOL_WRENCH)
-			to_chat(user, "<span class='notice'>You start unsecuring the button frame...</span>")
-			W.play_tool_sound(src)
-			if(W.use_tool(src, user, 40))
-				to_chat(user, "<span class='notice'>You unsecure the button frame.</span>")
-				transfer_fingerprints_to(new /obj/item/wallframe/button(get_turf(src)))
-				playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-				qdel(src)
 
 		update_icon()
 		return
@@ -105,15 +69,6 @@
 		return attack_hand(user)
 	else
 		return ..()
-
-/obj/machinery/button/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
-		return
-	req_access = list()
-	req_one_access = list()
-	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	obj_flags |= EMAGGED
-
 
 /obj/machinery/button/proc/setup_device()
 	if(id && istype(device, /obj/item/assembly/control))
@@ -133,26 +88,6 @@
 	if(!initialized_button)
 		setup_device()
 	add_fingerprint(user)
-	if(panel_open)
-		if(device || board)
-			if(device)
-				device.forceMove(drop_location())
-				device = null
-			if(board)
-				board.forceMove(drop_location())
-				req_access = list()
-				req_one_access = list()
-				board = null
-			update_icon()
-			to_chat(user, "<span class='notice'>You remove electronics from the button frame.</span>")
-
-		else
-			if(skin == "doorctrl")
-				skin = "launcher"
-			else
-				skin = "doorctrl"
-			to_chat(user, "<span class='notice'>You change the button frame's front panel.</span>")
-		return
 
 	if((machine_stat & (NOPOWER|BROKEN)))
 		return
@@ -196,90 +131,12 @@
 			device = C
 	..()
 
-/obj/machinery/button/door/incinerator_vent_toxmix
-	name = "combustion chamber vent control"
-	id = INCINERATOR_TOXMIX_VENT
-	req_access = list(ACCESS_TOXINS)
-
-/obj/machinery/button/door/incinerator_vent_atmos_main
-	name = "turbine vent control"
-	id = INCINERATOR_ATMOS_MAINVENT
-	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
-
-/obj/machinery/button/door/incinerator_vent_atmos_aux
-	name = "combustion chamber vent control"
-	id = INCINERATOR_ATMOS_AUXVENT
-	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
-
-/obj/machinery/button/door/atmos_test_room_mainvent_1
-	name = "test chamber 1 vent control"
-	id = TEST_ROOM_ATMOS_MAINVENT_1
-	req_one_access = list(ACCESS_ATMOSPHERICS)
-
-/obj/machinery/button/door/atmos_test_room_mainvent_2
-	name = "test chamber 2 vent control"
-	id = TEST_ROOM_ATMOS_MAINVENT_2
-	req_one_access = list(ACCESS_ATMOSPHERICS)
-
-/obj/machinery/button/door/incinerator_vent_syndicatelava_main
-	name = "turbine vent control"
-	id = INCINERATOR_SYNDICATELAVA_MAINVENT
-	req_access = list(ACCESS_SYNDICATE)
-
-/obj/machinery/button/door/incinerator_vent_syndicatelava_aux
-	name = "combustion chamber vent control"
-	id = INCINERATOR_SYNDICATELAVA_AUXVENT
-	req_access = list(ACCESS_SYNDICATE)
-
-/obj/machinery/button/massdriver
-	name = "mass driver button"
-	desc = "A remote control switch for a mass driver."
-	icon_state = "launcher"
-	skin = "launcher"
-	device_type = /obj/item/assembly/control/massdriver
-
-/obj/machinery/button/massdriver/indestructible
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-
-/obj/machinery/button/ignition
-	name = "ignition switch"
-	desc = "A remote control switch for a mounted igniter."
-	icon_state = "launcher"
-	skin = "launcher"
-	device_type = /obj/item/assembly/control/igniter
-
-/obj/machinery/button/ignition/indestructible
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-
-/obj/machinery/button/ignition/incinerator
-	name = "combustion chamber ignition switch"
-	desc = "A remote control switch for the combustion chamber's igniter."
-
-/obj/machinery/button/ignition/incinerator/toxmix
-	id = INCINERATOR_TOXMIX_IGNITER
-
-/obj/machinery/button/ignition/incinerator/atmos
-	id = INCINERATOR_ATMOS_IGNITER
-
-/obj/machinery/button/ignition/incinerator/syndicatelava
-	id = INCINERATOR_SYNDICATELAVA_IGNITER
-
-/obj/machinery/button/flasher
-	name = "flasher button"
-	desc = "A remote control switch for a mounted flasher."
-	icon_state = "launcher"
-	skin = "launcher"
-	device_type = /obj/item/assembly/control/flasher
-
 /obj/machinery/button/curtain
 	name = "curtain button"
 	desc = "A remote control switch for a mechanical curtain."
 	icon_state = "launcher"
 	skin = "launcher"
 	device_type = /obj/item/assembly/control/curtain
-
-/obj/machinery/button/flasher/indestructible
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/button/crematorium
 	name = "crematorium igniter"
@@ -293,12 +150,6 @@
 /obj/machinery/button/crematorium/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/item/wallframe/button
-	name = "button frame"
-	desc = "Used for building buttons."
-	icon_state = "button"
-	result_path = /obj/machinery/button
-	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 
 /obj/machinery/button/elevator
 	name = "elevator button"

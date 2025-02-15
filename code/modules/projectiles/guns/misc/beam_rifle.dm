@@ -20,7 +20,6 @@
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 	slot_flags = ITEM_SLOT_BACK
 	force = 15
-	custom_materials = null
 	recoil = 4
 	ammo_x_offset = 3
 	ammo_y_offset = 3

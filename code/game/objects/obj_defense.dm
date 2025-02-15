@@ -83,16 +83,6 @@
 /obj/proc/hulk_damage()
 	return 150 //the damage hulks do on punches to this object, is affected by melee armor
 
-/obj/attack_hulk(mob/living/carbon/human/user)
-	..()
-	user.visible_message("<span class='danger'>[user] smashes [src]!</span>", "<span class='danger'>You smash [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-	if(density)
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-	else
-		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
-	take_damage(hulk_damage(), BRUTE, MELEE, 0, get_dir(src, user))
-	return TRUE
-
 /obj/blob_act(obj/structure/blob/B)
 	if (!..())
 		return
@@ -129,13 +119,6 @@
 /obj/proc/collision_damage(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	var/amt = max(0, ((force - (move_resist * MOVE_FORCE_CRUSH_RATIO)) / (move_resist * MOVE_FORCE_CRUSH_RATIO)) * 10)
 	take_damage(amt, BRUTE)
-
-
-/obj/singularity_act()
-	SSexplosions.high_mov_atom += src
-	if(src && !QDELETED(src))
-		qdel(src)
-	return 2
 
 
 ///// ACID

@@ -45,13 +45,10 @@
 	on = FALSE
 
 /turf/open/floor/circuit/airless
-	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/circuit/telecomms
-	initial_gas_mix = TCOMMS_ATMOS
 
 /turf/open/floor/circuit/telecomms/normal_temp
-	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
 /turf/open/floor/circuit/telecomms/mainframe
 	name = "mainframe base"
@@ -75,10 +72,8 @@
 	floor_tile = /obj/item/stack/tile/circuit/green/anim
 
 /turf/open/floor/circuit/green/airless
-	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/circuit/green/telecomms
-	initial_gas_mix = TCOMMS_ATMOS
 
 /turf/open/floor/circuit/green/telecomms/mainframe
 	name = "mainframe base"
@@ -99,10 +94,8 @@
 	floor_tile = /obj/item/stack/tile/circuit/red/anim
 
 /turf/open/floor/circuit/red/airless
-	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/circuit/red/telecomms
-	initial_gas_mix = TCOMMS_ATMOS
 
 /turf/open/floor/pod
 	name = "pod floor"
@@ -161,11 +154,9 @@
 
 /turf/open/floor/bronze/lavaland
 	planetary_atmos = TRUE
-	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/floor/bronze/icemoon
 	planetary_atmos = TRUE
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
 /turf/open/floor/white
 	name = "white floor"
@@ -180,9 +171,6 @@
 	name = "plastic floor"
 	desc = "Cheap, lightweight flooring. Melts easily."
 	icon_state = "plastic"
-	thermal_conductivity = 0.1
-	heat_capacity = 900
-	custom_materials = list(/datum/material/plastic=500)
 	floor_tile = /obj/item/stack/tile/plastic
 
 /turf/open/floor/plastic/setup_broken_states()
@@ -203,7 +191,6 @@
 	icon_state = "plating_rust"
 
 /turf/open/floor/plating/rust/plasma
-	initial_gas_mix = "plasma=104;TEMP=293.15"
 
 /turf/open/floor/plating/rust/rust_heretic_act()
 	return

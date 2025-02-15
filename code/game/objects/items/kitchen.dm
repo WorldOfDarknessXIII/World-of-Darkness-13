@@ -24,7 +24,6 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=80)
 	flags_1 = CONDUCT_1
 	attack_verb_continuous = list("attacks", "stabs", "pokes")
 	attack_verb_simple = list("attack", "stab", "poke")
@@ -63,7 +62,6 @@
 	force = 0
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
-	custom_materials = list(/datum/material/plastic=80)
 	custom_price = PAYCHECK_PRISONER * 2
 	var/break_chance = 25
 
@@ -86,7 +84,6 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throw_speed = 3
 	throw_range = 6
-	custom_materials = list(/datum/material/iron=12000)
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
@@ -120,7 +117,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	throw_range = 5
-	custom_materials = list(/datum/material/plastic = 100)
 	attack_verb_continuous = list("prods", "whiffs", "scratches", "pokes")
 	attack_verb_simple = list("prod", "whiff", "scratch", "poke")
 	sharpness = SHARP_EDGED
@@ -174,7 +170,6 @@
 	flags_1 = CONDUCT_1
 	force = 15
 	throwforce = 10
-	custom_materials = list(/datum/material/iron=18000)
 	attack_verb_continuous = list("cleaves", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("cleave", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	w_class = WEIGHT_CLASS_NORMAL
@@ -220,7 +215,6 @@
 	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
 	force = 15
 	throwforce = 15
-	custom_materials = null
 
 /obj/item/kitchen/knife/combat/cyborg
 	name = "cyborg knife"
@@ -241,7 +235,6 @@
 	attack_verb_continuous = list("shanks", "shivs")
 	attack_verb_simple = list("shank", "shiv")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
-	custom_materials = list(/datum/material/glass=400)
 
 /obj/item/kitchen/knife/shiv/carrot
 	name = "carrot shiv"
@@ -249,7 +242,6 @@
 	inhand_icon_state = "carrotshiv"
 	icon = 'icons/obj/kitchen.dmi'
 	desc = "Unlike other carrots, you should probably keep this far away from your eyes."
-	custom_materials = null
 
 /obj/item/kitchen/knife/shiv/carrot/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] forcefully drives \the [src] into [user.p_their()] eye! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -264,7 +256,6 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1.5)
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
@@ -288,7 +279,6 @@
 	attack_verb_simple = list("whack", "spoon", "tap")
 	attack_verb_continuous = list("whacks", "spoons", "taps")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 30)
-	custom_materials = list(/datum/material/iron=120)
 	custom_price = PAYCHECK_PRISONER * 5
 	tool_behaviour = TOOL_MINING
 	toolspeed = 25 // Literally 25 times worse than the base pickaxe
@@ -297,7 +287,6 @@
 	name = "plastic spoon"
 	icon_state = "plastic_spoon"
 	force = 0
-	custom_materials = list(/datum/material/plastic=120)
 	custom_price = PAYCHECK_PRISONER * 2
 	toolspeed = 75 // The plastic spoon takes 5 minutes to dig through a single mineral turf... It's one, continuous, breakable, do_after...
 

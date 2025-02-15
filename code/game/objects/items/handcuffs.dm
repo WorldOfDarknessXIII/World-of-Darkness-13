@@ -37,7 +37,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=500)
 	breakouttime = 1 MINUTES
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	custom_price = PAYCHECK_HARD * 0.35
@@ -105,7 +104,6 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "sinewcuff"
 	inhand_icon_state = "sinewcuff"
-	custom_materials = null
 	color = null
 
 /obj/item/restraints/handcuffs/cable
@@ -116,7 +114,6 @@
 	color = "#ff0000"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_materials = list(/datum/material/iron=150, /datum/material/glass=75)
 	breakouttime = 30 SECONDS
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	cuffsound = 'sound/weapons/cablecuff.ogg'
@@ -189,7 +186,6 @@
 	icon_state = "cuff"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	custom_materials = null
 	breakouttime = 45 SECONDS
 	trashtype = /obj/item/restraints/handcuffs/cable/zipties/used
 	color = null

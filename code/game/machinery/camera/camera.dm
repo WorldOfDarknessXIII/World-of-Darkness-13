@@ -1,5 +1,3 @@
-#define CAMERA_UPGRADE_XRAY 1
-#define CAMERA_UPGRADE_EMP_PROOF 2
 #define CAMERA_UPGRADE_MOTION 4
 
 /obj/machinery/camera
@@ -41,40 +39,11 @@
 
 	var/internal_light = TRUE //Whether it can light up when an AI views it
 
-/obj/machinery/camera/preset/toxins //Bomb test site in space
-	name = "Hardened Bomb-Test Camera"
-	desc = "A specially-reinforced camera with a long lasting battery, used to monitor the bomb testing site. An external light is attached to the top."
-	c_tag = "Bomb Testing Site"
-	network = list("rd","toxins")
-	use_power = NO_POWER_USE //Test site is an unpowered area
-	invuln = TRUE
-	light_range = 10
-	start_active = TRUE
-
 /obj/machinery/camera/Initialize(mapload, obj/structure/camera_assembly/CA)
 	. = ..()
 	for(var/i in network)
 		network -= i
 		network += lowertext(i)
-	if(CA)
-		assembly = CA
-		if(assembly.xray_module)
-			upgradeXRay()
-		else if(assembly.malf_xray_firmware_present) //if it was secretly upgraded via the MALF AI Upgrade Camera Network ability
-			upgradeXRay(TRUE)
-
-		if(assembly.emp_module)
-			upgradeEmpProof()
-		else if(assembly.malf_xray_firmware_present) //if it was secretly upgraded via the MALF AI Upgrade Camera Network ability
-			upgradeEmpProof(TRUE)
-
-		if(assembly.proxy_module)
-			upgradeMotion()
-	else
-		assembly = new(src)
-		assembly.state = 4 //STATE_FINISHED
-	GLOB.cameranet.cameras += src
-	GLOB.cameranet.addCamera(src)
 	if (isturf(loc))
 		myarea = get_area(src)
 		LAZYADD(myarea.cameras, src)
@@ -84,15 +53,6 @@
 	else //this is handled by toggle_camera, so no need to update it twice.
 		update_icon()
 
-/obj/machinery/camera/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	for(var/i in network)
-		network -= i
-		network += "[port.id]_[i]"
-
-/obj/machinery/proc/create_prox_monitor()
-	if(!proximity_monitor)
-		proximity_monitor = new(src, 1)
-
 /obj/machinery/camera/proc/set_area_motion(area/A)
 	area_motion = A
 	create_prox_monitor()
@@ -100,16 +60,9 @@
 /obj/machinery/camera/Destroy()
 	if(can_use())
 		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
-	GLOB.cameranet.cameras -= src
 	if(isarea(myarea))
 		LAZYREMOVE(myarea.cameras, src)
 	QDEL_NULL(assembly)
-	if(bug)
-		bug.bugged_cameras -= src.c_tag
-		if(bug.current == src)
-			bug.current = null
-		bug = null
-	cancelCameraAlarm()
 	return ..()
 
 /obj/machinery/camera/examine(mob/user)
@@ -144,7 +97,6 @@
 		if(prob(150/severity))
 			update_icon()
 			network = list()
-			GLOB.cameranet.removeCamera(src)
 			set_machine_stat(machine_stat | EMPED)
 			set_light(0)
 			emped = emped+1  //Increase the number of consecutive EMP's
@@ -166,8 +118,6 @@
 	network = previous_network
 	set_machine_stat(machine_stat & ~EMPED)
 	update_icon()
-	if(can_use())
-		GLOB.cameranet.addCamera(src)
 	emped = 0 //Resets the consecutive EMP count
 	addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 100)
 
@@ -178,92 +128,13 @@
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
 	src.view_range = num
-	GLOB.cameranet.updateVisibility(src, 0)
 
 /obj/machinery/camera/proc/shock(mob/living/user)
 	if(!istype(user))
 		return
 	user.electrocute_act(10, src)
 
-/obj/machinery/camera/singularity_pull(S, current_size)
-	if (status && current_size >= STAGE_FIVE) // If the singulo is strong enough to pull anchored objects and the camera is still active, turn off the camera as it gets ripped off the wall.
-		toggle_cam(null, 0)
-	..()
-
 // Construction/Deconstruction
-/obj/machinery/camera/screwdriver_act(mob/living/user, obj/item/I)
-	if(..())
-		return TRUE
-	panel_open = !panel_open
-	to_chat(user, "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
-	I.play_tool_sound(src)
-	update_icon()
-	return TRUE
-
-/obj/machinery/camera/crowbar_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(!panel_open)
-		return
-	var/list/droppable_parts = list()
-	if(assembly.xray_module)
-		droppable_parts += assembly.xray_module
-	if(assembly.emp_module)
-		droppable_parts += assembly.emp_module
-	if(assembly.proxy_module)
-		droppable_parts += assembly.proxy_module
-	if(!droppable_parts.len)
-		return
-	var/obj/item/choice = input(user, "Select a part to remove:", src) as null|obj in sortNames(droppable_parts)
-	if(!choice || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return
-	to_chat(user, "<span class='notice'>You remove [choice] from [src].</span>")
-	if(choice == assembly.xray_module)
-		assembly.drop_upgrade(assembly.xray_module)
-		removeXRay()
-	if(choice == assembly.emp_module)
-		assembly.drop_upgrade(assembly.emp_module)
-		removeEmpProof()
-	if(choice == assembly.proxy_module)
-		assembly.drop_upgrade(assembly.proxy_module)
-		removeMotion()
-	I.play_tool_sound(src)
-	return TRUE
-
-/obj/machinery/camera/wirecutter_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(!panel_open)
-		return
-	toggle_cam(user, 1)
-	obj_integrity = max_integrity //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
-	set_machine_stat(machine_stat & ~BROKEN)
-	I.play_tool_sound(src)
-	return TRUE
-
-/obj/machinery/camera/multitool_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(!panel_open)
-		return
-
-	setViewRange((view_range == initial(view_range)) ? short_range : initial(view_range))
-	to_chat(user, "<span class='notice'>You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus.</span>")
-	return TRUE
-
-/obj/machinery/camera/welder_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(!panel_open)
-		return
-
-	if(!I.tool_start_check(user, amount=0))
-		return TRUE
-
-	to_chat(user, "<span class='notice'>You start to weld [src]...</span>")
-	if(I.use_tool(src, user, 100, volume=50))
-		user.visible_message("<span class='warning'>[user] unwelds [src], leaving it as just a frame bolted to the wall.</span>",
-			"<span class='warning'>You unweld [src], leaving it as just a frame bolted to the wall</span>")
-		deconstruct(TRUE)
-
-	return TRUE
-
 /obj/machinery/camera/attackby(obj/item/I, mob/living/user, params)
 	// UPGRADES
 	if(panel_open)
@@ -302,7 +173,7 @@
 	if((istype(I, /obj/item/paper) || istype(I, /obj/item/pda)) && isliving(user))
 		var/mob/living/U = user
 		var/obj/item/paper/X = null
-		var/obj/item/pda/P = null
+		var
 
 		var/itemname = ""
 		var/info = ""
@@ -361,21 +232,6 @@
 		triggerCameraAlarm()
 		toggle_cam(null, 0)
 
-/obj/machinery/camera/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(disassembled)
-			if(!assembly)
-				assembly = new()
-			assembly.forceMove(drop_location())
-			assembly.state = 1
-			assembly.setDir(dir)
-			assembly = null
-		else
-			var/obj/item/I = new /obj/item/wallframe/camera (loc)
-			I.obj_integrity = I.max_integrity * 0.5
-			new /obj/item/stack/cable_coil(loc, 2)
-	qdel(src)
-
 /obj/machinery/camera/update_icon_state() //TO-DO: Make panel open states, xray camera, and indicator lights overlays instead.
 	var/xray_module
 	if(isXRay(TRUE))
@@ -427,16 +283,6 @@
 			O.reset_perspective(null)
 			to_chat(O, "<span class='warning'>The screen bursts into static!</span>")
 
-/obj/machinery/camera/proc/triggerCameraAlarm()
-	alarm_on = TRUE
-	for(var/mob/living/silicon/S in GLOB.silicon_mobs)
-		S.triggerAlarm("Camera", get_area(src), list(src), src)
-
-/obj/machinery/camera/proc/cancelCameraAlarm()
-	alarm_on = FALSE
-	for(var/mob/living/silicon/S in GLOB.silicon_mobs)
-		S.cancelAlarm("Camera", get_area(src), src)
-
 /obj/machinery/camera/proc/can_use()
 	if(!status)
 		return FALSE
@@ -452,16 +298,6 @@
 	else
 		see = get_hear(view_range, pos)
 	return see
-
-/obj/machinery/camera/proc/Togglelight(on=0)
-	for(var/mob/living/silicon/ai/A in GLOB.ai_list)
-		for(var/obj/machinery/camera/cam in A.lit_cameras)
-			if(cam == src)
-				return
-	if(on)
-		set_light(AI_CAMERA_LUMINOSITY)
-	else
-		set_light(0)
 
 /obj/machinery/camera/get_remote_view_fullscreens(mob/user)
 	if(view_range == short_range) //unfocused

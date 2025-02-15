@@ -7,7 +7,6 @@
 	throw_speed = 3
 	throw_range = 7
 	force = 4
-	custom_materials = list(/datum/material/iron=2000)
 	clumsy_check = FALSE
 	fire_sound = 'sound/items/syringeproj.ogg'
 	var/load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'

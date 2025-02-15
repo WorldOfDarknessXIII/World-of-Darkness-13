@@ -505,12 +505,6 @@
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-/mob/living/simple_animal/pet/dog/corgi/ian/narsie_act()
-	playsound(src, 'sound/magic/demon_dies.ogg', 75, TRUE)
-	var/mob/living/simple_animal/pet/dog/corgi/narsie/N = new(loc)
-	N.setDir(dir)
-	gib()
-
 /mob/living/simple_animal/pet/dog/corgi/narsie
 	name = "Nars-Ian"
 	desc = "Ia! Ia!"
@@ -539,10 +533,6 @@
 	speak_emote = list("growls", "barks ominously")
 	emote_hear = list("barks echoingly!", "woofs hauntingly!", "yaps in an eldritch manner.", "mutters something unspeakable.")
 	emote_see = list("communes with the unnameable.", "ponders devouring some souls.", "shakes.")
-
-/mob/living/simple_animal/pet/dog/corgi/narsie/narsie_act()
-	adjustBruteLoss(-maxHealth)
-
 
 /mob/living/simple_animal/pet/dog/corgi/regenerate_icons()
 	..()

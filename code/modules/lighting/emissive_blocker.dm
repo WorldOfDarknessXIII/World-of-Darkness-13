@@ -26,12 +26,6 @@
 /atom/movable/emissive_blocker/ex_act(severity)
 	return FALSE
 
-/atom/movable/emissive_blocker/singularity_act()
-	return
-
-/atom/movable/emissive_blocker/singularity_pull()
-	return
-
 /atom/movable/emissive_blocker/blob_act()
 	return
 

@@ -66,24 +66,6 @@
 					var/datum/admins/D = GLOB.admin_datums[ckey]
 					dat += "[ckey] - [D.rank.name]<br>"
 				holder << browse(dat, "window=showadmins;size=600x500")
-		//Buttons for debug.
-		if("maint_access_engiebrig")
-			if(!is_debugger)
-				return
-			for(var/obj/machinery/door/airlock/maintenance/M in GLOB.machines)
-				M.check_access()
-				if (ACCESS_MAINT_TUNNELS in M.req_access)
-					M.req_access = list()
-					M.req_one_access = list(ACCESS_BRIG,ACCESS_ENGINE)
-			message_admins("[key_name_admin(holder)] made all maint doors engineering and brig access-only.")
-		if("maint_access_brig")
-			if(!is_debugger)
-				return
-			for(var/obj/machinery/door/airlock/maintenance/M in GLOB.machines)
-				M.check_access()
-				if (ACCESS_MAINT_TUNNELS in M.req_access)
-					M.req_access = list(ACCESS_BRIG)
-			message_admins("[key_name_admin(holder)] made all maint doors brig access-only.")
 		if("infinite_sec")
 			if(!is_debugger)
 				return
@@ -93,14 +75,6 @@
 			J.total_positions = -1
 			J.spawn_positions = -1
 			message_admins("[key_name_admin(holder)] has removed the cap on security officers.")
-		//Buttons for helpful stuff. This is where people land in the tgui
-		if("clear_virus")
-			var/choice = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
-			if(choice == "Yes")
-				message_admins("[key_name_admin(holder)] has cured all diseases.")
-				for(var/thing in SSdisease.active_diseases)
-					var/datum/disease/D = thing
-					D.cure(0)
 		if("list_bombers")
 			var/dat = "<B>Bombing List</B><HR>"
 			for(var/l in GLOB.bombers)
@@ -151,26 +125,6 @@
 					dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
 			dat += "</table>"
 			holder << browse(dat, "window=fingerprints;size=440x410")
-		if("ctfbutton")
-			toggle_id_ctf(holder, "centcom")
-		if("tdomereset")
-			var/delete_mobs = alert("Clear all mobs?","Confirm","Yes","No","Cancel")
-			if(delete_mobs == "Cancel")
-				return
-
-			log_admin("[key_name(holder)] reset the thunderdome to default with delete_mobs==[delete_mobs].", 1)
-			message_admins("<span class='adminnotice'>[key_name_admin(holder)] reset the thunderdome to default with delete_mobs==[delete_mobs].</span>")
-
-			var/area/thunderdome = GLOB.areas_by_type[/area/tdome/arena]
-			if(delete_mobs == "Yes")
-				for(var/mob/living/mob in thunderdome)
-					qdel(mob) //Clear mobs
-			for(var/obj/obj in thunderdome)
-				if(!istype(obj, /obj/machinery/camera) && !istype(obj, /obj/effect/abstract/proximity_checker))
-					qdel(obj) //Clear objects
-
-			var/area/template = GLOB.areas_by_type[/area/tdome/arena_source]
-			template.copy_contents_to(thunderdome)
 		if("set_name")
 			var/new_name = input(holder, "Please input a new name for the station.", "What?", "") as text|null
 			if(!new_name)
@@ -185,58 +139,17 @@
 			log_admin("[key_name(holder)] reset the station name.")
 			message_admins("<span class='adminnotice'>[key_name_admin(holder)] reset the station name.</span>")
 			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
-		if("night_shift_set")
-			var/val = alert(holder, "What do you want to set night shift to? This will override the automatic system until set to automatic again.", "Night Shift", "On", "Off", "Automatic")
-			switch(val)
-				if("Automatic")
-					if(CONFIG_GET(flag/enable_night_shifts))
-						SSnightshift.can_fire = TRUE
-						SSnightshift.fire()
-					else
-						SSnightshift.update_nightshift(FALSE, TRUE)
-				if("On")
-					SSnightshift.can_fire = FALSE
-					SSnightshift.update_nightshift(TRUE, TRUE)
-				if("Off")
-					SSnightshift.can_fire = FALSE
-					SSnightshift.update_nightshift(FALSE, TRUE)
 		if("moveferry")
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Send CentCom Ferry"))
 			if(!SSshuttle.toggleShuttle("ferry","ferry_home","ferry_away"))
 				message_admins("[key_name_admin(holder)] moved the CentCom ferry")
 				log_admin("[key_name(holder)] moved the CentCom ferry")
-		if("togglearrivals")
-			var/obj/docking_port/mobile/arrivals/A = SSshuttle.arrivals
-			if(A)
-				var/new_perma = !A.perma_docked
-				A.perma_docked = new_perma
-				SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Permadock Arrivals Shuttle", "[new_perma ? "Enabled" : "Disabled"]"))
-				message_admins("[key_name_admin(holder)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
-				log_admin("[key_name(holder)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
-			else
-				to_chat(holder, "<span class='admin'>There is no arrivals shuttle.</span>", confidential = TRUE)
 		if("movelaborshuttle")
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Send Labor Shuttle"))
 			if(!SSshuttle.toggleShuttle("laborcamp","laborcamp_home","laborcamp_away"))
 				message_admins("[key_name_admin(holder)] moved labor shuttle")
 				log_admin("[key_name(holder)] moved the labor shuttle")
 		//!fun! buttons.
-		if("virus")
-			if(!is_funmin)
-				return
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Virus Outbreak"))
-			switch(alert("Do you want this to be a random disease or do you have something in mind?",,"Make Your Own","Random","Choose"))
-				if("Make Your Own")
-					AdminCreateVirus(holder)
-				if("Random")
-					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
-					E = DC.runEvent()
-				if("Choose")
-					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in sortList(typesof(/datum/disease), GLOBAL_PROC_REF(cmp_typepaths_asc))
-					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
-					var/datum/round_event/disease_outbreak/DO = DC.runEvent()
-					DO.virus_type = virus
-					E = DO
 		if("allspecies")
 			if(!is_funmin)
 				return
@@ -369,7 +282,7 @@
 
 			var/list/settings = list(
 				"mainsettings" = list(
-					"typepath" = list("desc" = "Path to spawn", "type" = "datum", "path" = "/mob/living", "subtypesonly" = TRUE, "value" = /mob/living/simple_animal/hostile/poison/bees),
+					"typepath" = list("desc" = "Path to spawn", "type" = "datum", "path" = "/mob/living", "subtypesonly" = TRUE, "value" = /mob/living/simple_animal/hostile),
 					"humanoutfit" = list("desc" = "Outfit if human", "type" = "datum", "path" = "/datum/outfit", "subtypesonly" = TRUE, "value" = /datum/outfit),
 					"amount" = list("desc" = "Number per portal", "type" = "number", "value" = 1),
 					"portalnum" = list("desc" = "Number of total portals", "type" = "number", "value" = 10),

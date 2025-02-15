@@ -12,8 +12,6 @@
 	var/can_rotate = TRUE
 	var/framebuildstacktype = /obj/item/stack/sheet/metal
 	var/framebuildstackamount = 5
-	var/buildstacktype = /obj/item/stack/sheet/metal
-	var/buildstackamount = 0
 	var/list/allowed_projectile_typecache = list(/obj/projectile/beam)
 	var/rotation_angle = -1
 
@@ -180,8 +178,6 @@
 	desc = "An angled mirror for reflecting laser beams."
 	density = TRUE
 	finished = TRUE
-	buildstacktype = /obj/item/stack/sheet/glass
-	buildstackamount = 5
 
 /obj/structure/reflector/single/anchored
 	anchored = TRUE
@@ -206,8 +202,6 @@
 	desc = "A double sided angled mirror for reflecting laser beams."
 	density = TRUE
 	finished = TRUE
-	buildstacktype = /obj/item/stack/sheet/rglass
-	buildstackamount = 10
 
 /obj/structure/reflector/double/anchored
 	anchored = TRUE
@@ -230,8 +224,6 @@
 	desc = "A box with an internal set of mirrors that reflects all laser beams in a single direction."
 	density = TRUE
 	finished = TRUE
-	buildstacktype = /obj/item/stack/sheet/mineral/diamond
-	buildstackamount = 1
 
 /obj/structure/reflector/box/anchored
 	anchored = TRUE

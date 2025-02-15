@@ -32,7 +32,6 @@
 	toolspeed = 1
 	wound_bonus = 10
 	bare_wound_bonus = 15
-	custom_materials = list(/datum/material/iron=70, /datum/material/glass=30)
 	///Whether the welding tool is on or off.
 	var/welding = FALSE
 	var/status = TRUE 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
@@ -313,7 +312,6 @@
 	desc = "A slightly larger welder with a larger tank."
 	icon_state = "indwelder"
 	max_fuel = 40
-	custom_materials = list(/datum/material/glass=60)
 
 /obj/item/weldingtool/largetank/flamethrower_screwdriver()
 	return
@@ -337,7 +335,6 @@
 	icon_state = "miniwelder"
 	max_fuel = 10
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron=30, /datum/material/glass=10)
 	change_icons = FALSE
 
 /obj/item/weldingtool/mini/flamethrower_screwdriver()
@@ -364,7 +361,6 @@
 	icon_state = "upindwelder"
 	inhand_icon_state = "upindwelder"
 	max_fuel = 80
-	custom_materials = list(/datum/material/iron=70, /datum/material/glass=120)
 
 /obj/item/weldingtool/experimental
 	name = "experimental welding tool"
@@ -372,7 +368,6 @@
 	icon_state = "exwelder"
 	inhand_icon_state = "exwelder"
 	max_fuel = 40
-	custom_materials = list(/datum/material/iron=70, /datum/material/glass=120)
 	change_icons = 0
 	can_off_process = 1
 	light_range = 1

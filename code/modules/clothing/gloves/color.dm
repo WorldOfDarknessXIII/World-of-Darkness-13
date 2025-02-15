@@ -215,7 +215,6 @@
 	siemens_coefficient = 0.8
 	permeability_coefficient = 0.3
 	clothing_traits = list(TRAIT_QUICK_BUILD)
-	custom_materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
 
 /obj/item/clothing/gloves/color/white
 	name = "white gloves"

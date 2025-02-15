@@ -167,7 +167,6 @@
 	force = 1
 	throwforce = 1
 	amount_per_transfer_from_this = 5
-	custom_materials = list(/datum/material/iron=100)
 	possible_transfer_amounts = list()
 	volume = 5
 	flags_1 = CONDUCT_1
@@ -183,7 +182,6 @@
 	force = 14
 	throwforce = 10
 	amount_per_transfer_from_this = 20
-	custom_materials = list(/datum/material/gold=1000)
 	volume = 150
 
 /obj/item/reagent_containers/food/drinks/trophy/silver_cup
@@ -194,7 +192,6 @@
 	force = 10
 	throwforce = 8
 	amount_per_transfer_from_this = 15
-	custom_materials = list(/datum/material/silver=800)
 	volume = 100
 
 
@@ -206,7 +203,6 @@
 	force = 5
 	throwforce = 4
 	amount_per_transfer_from_this = 10
-	custom_materials = list(/datum/material/iron=400)
 	volume = 25
 
 ///////////////////////////////////////////////Drinks
@@ -279,7 +275,6 @@
 	icon_state = "smallbottle"
 	inhand_icon_state = "bottle"
 	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
-	custom_materials = list(/datum/material/plastic=1000)
 	volume = 50
 	amount_per_transfer_from_this = 10
 	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
@@ -392,7 +387,6 @@
 /obj/item/reagent_containers/food/drinks/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
-	custom_materials = list(/datum/material/plastic=3000)
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 10
@@ -537,7 +531,6 @@
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	inhand_icon_state = "colocup"
-	custom_materials = list(/datum/material/plastic = 1000)
 	possible_transfer_amounts = list(5, 10, 15, 20)
 	volume = 20
 	amount_per_transfer_from_this = 5
@@ -561,7 +554,6 @@
 	name = "shaker"
 	desc = "A metal shaker to mix drinks in."
 	icon_state = "shaker"
-	custom_materials = list(/datum/material/iron=1500)
 	amount_per_transfer_from_this = 10
 	volume = 100
 	isGlass = FALSE
@@ -571,7 +563,6 @@
 	desc = "Every good spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
 	custom_price = PAYCHECK_HARD * 2
 	icon_state = "flask"
-	custom_materials = list(/datum/material/iron=250)
 	volume = 60
 	isGlass = FALSE
 
@@ -579,7 +570,6 @@
 	name = "captain's flask"
 	desc = "A gold flask belonging to the captain."
 	icon_state = "flask_gold"
-	custom_materials = list(/datum/material/gold=500)
 
 /obj/item/reagent_containers/food/drinks/flask/det
 	name = "detective's flask"

@@ -1,14 +1,11 @@
 
 /turf/open/floor/plating/airless
-	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/plating/lowpressure
-	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	baseturfs = /turf/open/floor/plating/lowpressure
 
 /turf/open/floor/plating/icemoon
 	icon_state = "plating"
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
 /turf/open/floor/plating/abductor
 	name = "alien floor"
@@ -48,7 +45,6 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	desc = "The ground is covered in volcanic ash."
 	baseturfs = /turf/open/floor/plating/ashplanet/wateryrock //I assume this will be a chasm eventually, once this becomes an actual surface
-	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	attachment_holes = FALSE
 	footstep = FOOTSTEP_SAND
@@ -218,8 +214,6 @@
 	icon = 'icons/turf/floors/ice_turf.dmi'
 	icon_state = "ice_turf-0"
 	base_icon_state = "ice_turf-0"
-	initial_gas_mix = FROZEN_ATMOS
-	temperature = 180
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/floor/plating/ice
 	slowdown = 1
@@ -251,7 +245,6 @@
 	return
 
 /turf/open/floor/plating/ice/icemoon
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	slowdown = 0
 
 /turf/open/floor/plating/snowed
@@ -260,8 +253,6 @@
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snowplating"
 	base_icon_state = "snowplating"
-	initial_gas_mix = FROZEN_ATMOS
-	temperature = 180
 	attachment_holes = FALSE
 	planetary_atmos = TRUE
 	footstep = FOOTSTEP_SAND
@@ -270,10 +261,8 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/plating/snowed/cavern
-	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
 
 /turf/open/floor/plating/snowed/icemoon
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
 /turf/open/floor/plating/snowed/smoothed
 	icon = 'icons/turf/floors/snow_turf.dmi'
@@ -285,10 +274,8 @@
 	planetary_atmos = TRUE
 
 /turf/open/floor/plating/snowed/temperatre
-	temperature = 255.37
 
 /turf/open/floor/plating/snowed/smoothed/icemoon
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
 /turf/open/floor/plating/grass
 	name = "grass"
@@ -319,7 +306,6 @@
 		icon = smooth_icon
 
 /turf/open/floor/plating/grass/lavaland
-	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/floor/plating/sandy_dirt
 	gender = PLURAL

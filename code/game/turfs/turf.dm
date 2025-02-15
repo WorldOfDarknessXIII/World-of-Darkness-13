@@ -105,9 +105,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
 		add_overlay(/obj/effect/fullbright)
 
-	if(requires_activation)
-		CALCULATE_ADJACENT_TURFS(src, KILL_EXCITED)
-
 	if (light_power && light_range)
 		update_light()
 
@@ -122,15 +119,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if (opacity)
 		directional_opacity = ALL_CARDINALS
 
-	// apply materials properly from the default custom_materials value
-	set_custom_materials(custom_materials)
 
 	ComponentInitialize()
 
 	return INITIALIZE_HINT_NORMAL
-
-/turf/proc/Initalize_Atmos(times_fired)
-	CALCULATE_ADJACENT_TURFS(src, NORMAL_TURF)
 
 /turf/Destroy(force)
 	. = QDEL_HINT_IWILLGC
@@ -249,37 +241,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	target.zImpact(A, levels, src)
 	return TRUE
 
-/turf/proc/handleRCL(obj/item/rcl/C, mob/user)
-	if(C.loaded)
-		for(var/obj/structure/pipe_cleaner/LC in src)
-			if(!LC.d1 || !LC.d2)
-				LC.handlecable(C, user)
-				return
-		C.loaded.place_turf(src, user)
-		if(C.wiring_gui_menu)
-			C.wiringGuiUpdate(user)
-		C.is_empty(user)
 
-/turf/attackby(obj/item/C, mob/user, params)
-	if(..())
-		return TRUE
-	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/coil = C
-		coil.place_turf(src, user)
-		return TRUE
-	else if(can_have_cabling() && istype(C, /obj/item/stack/pipe_cleaner_coil))
-		var/obj/item/stack/pipe_cleaner_coil/coil = C
-		for(var/obj/structure/pipe_cleaner/LC in src)
-			if(!LC.d1 || !LC.d2)
-				LC.attackby(C, user)
-				return
-		coil.place_turf(src, user)
-		return TRUE
-
-	else if(istype(C, /obj/item/rcl))
-		handleRCL(C, user)
-
-	return FALSE
 
 //There's a lot of QDELETED() calls here if someone can figure out how to optimize this but not runtime when something gets deleted by a Bump/CanPass/Cross call, lemme know or go ahead and fix this mess - kevinz000
 /turf/Enter(atom/movable/mover, atom/oldloc)
@@ -334,10 +296,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/open/Entered(atom/movable/AM)
 	..()
 	//melting
-	if(isobj(AM) && air && air.temperature > T0C)
-		var/obj/O = AM
-		if(O.obj_flags & FROZEN)
-			O.make_unfrozen()
 	if(!AM.zfalling)
 		zFall(AM)
 
@@ -405,8 +363,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(L && (L.flags_1 & INITIALIZED_1))
 		qdel(L)
 
-/turf/proc/Bless()
-	new /obj/effect/blessing(src)
 
 /turf/storage_contents_dump_act(datum/component/storage/src_object, mob/user)
 	. = ..()
@@ -441,32 +397,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return FALSE
 	return abs(x - T.x) + abs(y - T.y)
 
-////////////////////////////////////////////////////
 
-/turf/singularity_act()
-	if(intact)
-		for(var/obj/O in contents) //this is for deleting things like wires contained in the turf
-			if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
-				O.singularity_act()
-	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-	return(2)
 
-/turf/proc/can_have_cabling()
-	return TRUE
-
-/turf/proc/can_lay_cable()
-	return can_have_cabling() & !intact
-
-/turf/proc/visibilityChanged()
-	GLOB.cameranet.updateVisibility(src)
-	// The cameranet usually handles this for us, but if we've just been
-	// recreated we should make sure we have the cameranet vis_contents.
-	var/datum/camerachunk/C = GLOB.cameranet.chunkGenerated(x, y, z)
-	if(C)
-		if(C.obscuredTurfs[src])
-			vis_contents += GLOB.cameranet.vis_contents_objects
-		else
-			vis_contents -= GLOB.cameranet.vis_contents_objects
 
 /turf/proc/burn_tile()
 
@@ -489,14 +421,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 				SSexplosions.low_mov_atom += movable_thing
 
 
-/turf/narsie_act(force, ignore_mobs, probability = 20)
-	. = (prob(probability) || force)
-	for(var/I in src)
-		var/atom/A = I
-		if(ignore_mobs && ismob(A))
-			continue
-		if(ismob(A) || .)
-			A.narsie_act()
 
 /turf/proc/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = icon

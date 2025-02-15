@@ -102,9 +102,6 @@
 	for(var/i in 1 to rand(2,6))
 		new /obj/effect/spawner/lootdrop/maintenance(src)
 
-/obj/structure/closet/crate/trashcart/Initialize()
-	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 15)
 
 /obj/structure/closet/crate/trashcart/filled
 
@@ -195,16 +192,6 @@
 	name = "surplus prosthetic limbs"
 	desc = "A crate containing an assortment of cheap prosthetic limbs."
 
-/obj/structure/closet/crate/freezer/surplus_limbs/PopulateContents()
-	. = ..()
-	new /obj/item/bodypart/l_arm/robot/surplus(src)
-	new /obj/item/bodypart/l_arm/robot/surplus(src)
-	new /obj/item/bodypart/r_arm/robot/surplus(src)
-	new /obj/item/bodypart/r_arm/robot/surplus(src)
-	new /obj/item/bodypart/l_leg/robot/surplus(src)
-	new /obj/item/bodypart/l_leg/robot/surplus(src)
-	new /obj/item/bodypart/r_leg/robot/surplus(src)
-	new /obj/item/bodypart/r_leg/robot/surplus(src)
 
 /obj/structure/closet/crate/freezer/surplus_limbs/organs
 	name = "organ freezer"

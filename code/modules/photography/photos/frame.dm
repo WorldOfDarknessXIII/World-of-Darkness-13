@@ -4,7 +4,6 @@
 	name = "picture frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/decals.dmi'
-	custom_materials = list(/datum/material/wood = 2000)
 	flags_1 = 0
 	icon_state = "frame-overlay"
 	result_path = /obj/structure/sign/picture_frame
@@ -64,7 +63,6 @@
 	desc = "Every time you look it makes you laugh."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "frame-overlay"
-	custom_materials = list(/datum/material/wood = 2000)
 	var/obj/item/photo/framed
 	var/persistence_id
 	var/can_decon = TRUE

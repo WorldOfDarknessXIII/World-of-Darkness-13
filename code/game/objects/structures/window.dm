@@ -10,8 +10,6 @@
 	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 100)
-	CanAtmosPass = ATMOS_PASS_PROC
-	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	pass_flags_self = PASSGLASS
 	set_dir_on_move = FALSE
 	var/state = WINDOW_OUT_OF_FRAME
@@ -86,16 +84,6 @@
 			return TRUE
 	return FALSE
 
-/obj/structure/window/narsie_act()
-	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
-
-/obj/structure/window/singularity_pull(S, current_size)
-	..()
-	if(anchored && current_size >= STAGE_TWO)
-		set_anchored(FALSE)
-	if(current_size >= STAGE_FIVE)
-		deconstruct(FALSE)
-
 /obj/structure/window/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(.)
@@ -131,11 +119,6 @@
 	playsound(src, knocksound, 50, TRUE)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-
-/obj/structure/window/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	if(!can_be_reached(user))
-		return
-	. = ..()
 
 /obj/structure/window/attack_hand(mob/user)
 	. = ..()
@@ -330,12 +313,6 @@
 		crack_overlay = mutable_appearance('code/modules/wod13/32x48.dmi', "damage[ratio]", -(layer+0.1))
 		. += crack_overlay
 
-/obj/structure/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature > T0C + heat_resistance
-
-/obj/structure/window/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	take_damage(round(air.return_volume() / 100), BURN, 0, 0)
-
 /obj/structure/window/get_dumping_location(obj/item/storage/source,mob/user)
 	return null
 
@@ -374,7 +351,6 @@
 	damage_deflection = 11
 	state = RWINDOW_SECURE
 	glass_type = /obj/item/stack/sheet/rglass
-	rad_insulation = RAD_HEAVY_INSULATION
 	receive_ricochet_chance_mod = 1.1
 
 //this is shitcode but all of construction is shitcode and needs a refactor, it works for now
@@ -467,7 +443,6 @@
 	max_integrity = 200
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/plasmaglass
-	rad_insulation = RAD_NO_INSULATION
 
 /obj/structure/window/plasma/ComponentInitialize()
 	. = ..()
@@ -698,9 +673,6 @@
 	glass_amount = 2
 	receive_ricochet_chance_mod = 1.2
 
-/obj/structure/window/shuttle/narsie_act()
-	add_atom_colour("#3C3434", FIXED_COLOUR_PRIORITY)
-
 /obj/structure/window/shuttle/tinted
 	opacity = TRUE
 
@@ -726,7 +698,6 @@
 	damage_deflection = 21 //The same as reinforced plasma windows.3
 	glass_type = /obj/item/stack/sheet/plastitaniumglass
 	glass_amount = 2
-	rad_insulation = RAD_HEAVY_INSULATION
 
 /obj/structure/window/plasma/reinforced/plastitanium/unanchored
 	anchored = FALSE
@@ -749,7 +720,6 @@
 	glass_type = /obj/item/stack/sheet/paperframes
 	heat_resistance = 233
 	decon_speed = 10
-	CanAtmosPass = ATMOS_PASS_YES
 	resistance_flags = FLAMMABLE
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	knocksound = "pageturn"

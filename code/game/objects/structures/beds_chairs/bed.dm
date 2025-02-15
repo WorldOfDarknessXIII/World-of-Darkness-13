@@ -18,8 +18,6 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	integrity_failure = 0.35
-	var/buildstacktype = /obj/item/stack/sheet/metal
-	var/buildstackamount = 2
 	var/bolts = TRUE
 
 /obj/structure/bed/examine(mob/user)
@@ -52,7 +50,6 @@
 	icon_state = "down"
 	anchored = FALSE
 	resistance_flags = NONE
-	var/foldabletype = /obj/item/roller
 
 /obj/structure/bed/roller/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/roller/robo))
@@ -83,8 +80,7 @@
 		if(has_buckled_mobs())
 			return FALSE
 		usr.visible_message("<span class='notice'>[usr] collapses \the [src.name].</span>", "<span class='notice'>You collapse \the [src.name].</span>")
-		var/obj/structure/bed/roller/B = new foldabletype(get_turf(src))
-		usr.put_in_hands(B)
+		var/obj/structure/bed/roller/B = new 		usr.put_in_hands(B)
 		qdel(src)
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M)
@@ -169,8 +165,6 @@
 	icon_state = "dogbed"
 	desc = "A comfy-looking dog bed. You can even strap your pet in, in case the gravity turns off."
 	anchored = FALSE
-	buildstacktype = /obj/item/stack/sheet/mineral/wood
-	buildstackamount = 10
 	var/owned = FALSE
 
 /obj/structure/bed/dogbed/ian

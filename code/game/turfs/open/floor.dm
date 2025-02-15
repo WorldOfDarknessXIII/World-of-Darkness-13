@@ -15,8 +15,6 @@
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
 	canSmoothWith = list(SMOOTH_GROUP_OPEN_FLOOR, SMOOTH_GROUP_TURF_OPEN)
 
-	thermal_conductivity = 0.04
-	heat_capacity = 10000
 	intact = TRUE
 	tiled_dirt = TRUE
 
@@ -205,31 +203,6 @@
 		return null
 	return new floor_tile(src)
 
-/turf/open/floor/singularity_pull(S, current_size)
-	..()
-	var/sheer = FALSE
-	switch(current_size)
-		if(STAGE_THREE)
-			if(prob(30))
-				sheer = TRUE
-		if(STAGE_FOUR)
-			if(prob(50))
-				sheer = TRUE
-		if(STAGE_FIVE to INFINITY)
-			if(prob(70))
-				sheer = TRUE
-			else if(prob(50) && (/turf/open/space in baseturfs))
-				ReplaceWithLattice()
-	if(sheer)
-		if(has_tile())
-			remove_tile(null, TRUE, TRUE, TRUE)
-
-
-/turf/open/floor/narsie_act(force, ignore_mobs, probability = 20)
-	. = ..()
-	if(.)
-		ChangeTurf(/turf/open/floor/engine/cult, flags = CHANGETURF_INHERIT_AIR)
-
 /turf/open/floor/acid_melt()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -331,7 +304,6 @@
 /turf/open/floor/material
 	name = "floor"
 	icon_state = "materialfloor"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	floor_tile = /obj/item/stack/tile/material
 
 /turf/open/floor/material/has_tile()

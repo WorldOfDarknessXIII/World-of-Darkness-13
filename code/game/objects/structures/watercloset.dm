@@ -9,8 +9,6 @@
 	var/cistern = 0			//if the cistern bit is open
 	var/w_items = 0			//the combined w_class of all the items in the cistern
 	var/mob/living/swirlie = null	//the mob being given a swirlie
-	var/buildstacktype = /obj/item/stack/sheet/metal //they're metal now, shut up
-	var/buildstackamount = 1
 
 /obj/structure/toilet/Initialize()
 	. = ..()
@@ -143,8 +141,6 @@
 		contents += secret
 
 /obj/structure/toilet/greyscale
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
-	buildstacktype = null
 
 /obj/structure/urinal
 	name = "urinal"
@@ -235,7 +231,6 @@
 /obj/item/bikehorn/rubberducky/plasticducky
 	name = "plastic ducky"
 	desc = "It's a cheap plastic knockoff of a loveable bathtime toy."
-	custom_materials = list(/datum/material/plastic = 1000)
 
 /obj/item/bikehorn/rubberducky
 	name = "rubber ducky"
@@ -256,9 +251,7 @@
 	///What kind of reagent is produced by this sink by default? (We now have actual plumbing, Arcane, August 2020)
 	var/dispensedreagent = /datum/reagent/water
 	///Material to drop when broken or deconstructed.
-	var/buildstacktype = /obj/item/stack/sheet/metal
 	///Number of sheets of material to drop when broken or deconstructed.
-	var/buildstackamount = 1
 	///Does the sink have a water recycler to recollect it's water supply?
 	var/has_water_reclaimer = TRUE
 	///Has the water reclamation begun?
@@ -446,8 +439,6 @@
 
 /obj/structure/sink/greyscale
 	icon_state = "sink_greyscale"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
-	buildstacktype = null
 
 /obj/structure/sinkframe
 	name = "sink frame"
@@ -455,7 +446,6 @@
 	icon_state = "sink_frame"
 	desc = "A sink frame, that needs a water recycler to finish construction."
 	anchored = FALSE
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 /obj/structure/sinkframe/ComponentInitialize()
 	. = ..()

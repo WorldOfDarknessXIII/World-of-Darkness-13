@@ -99,11 +99,6 @@
 /obj/structure/grille/hulk_damage()
 	return 60
 
-/obj/structure/grille/attack_hulk(mob/living/carbon/human/user)
-	if(shock(user, 70))
-		return
-	. = ..()
-
 /obj/structure/grille/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
@@ -244,12 +239,6 @@
 		else
 			return FALSE
 	return FALSE
-
-/obj/structure/grille/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature > T0C + 1500 && !broken
-
-/obj/structure/grille/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	take_damage(1, BURN, 0, 0)
 
 /obj/structure/grille/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(isobj(AM))

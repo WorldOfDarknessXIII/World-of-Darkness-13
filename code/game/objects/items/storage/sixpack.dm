@@ -6,7 +6,6 @@
 	inhand_icon_state = "cola"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	custom_materials = list(/datum/material/plastic = 1200)
 	max_integrity = 500
 
 /obj/item/storage/cans/suicide_act(mob/living/carbon/user)

@@ -423,7 +423,6 @@
 	throwforce = 10
 	icon_state = "material_tile"
 	turf_type = /turf/open/floor/material
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	merge_type = /obj/item/stack/tile/material
 
 /obj/item/stack/tile/material/place_tile(turf/open/T)

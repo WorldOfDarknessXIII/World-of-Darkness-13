@@ -11,7 +11,6 @@
 	throw_speed = 2
 	throw_range = 7
 	force = 10
-	custom_materials = list(/datum/material/iron = 90)
 	attack_verb_continuous = list("slams", "whacks", "bashes", "thunks", "batters", "bludgeons", "thrashes")
 	attack_verb_simple = list("slam", "whack", "bash", "thunk", "batter", "bludgeon", "thrash")
 	dog_fashion = /datum/dog_fashion/back
@@ -39,7 +38,6 @@
 	throwforce = 2
 	w_class = WEIGHT_CLASS_SMALL
 	force = 3
-	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 40)
 	max_water = 30
 	sprite_name = "miniFE"
 	dog_fashion = null

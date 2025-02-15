@@ -60,12 +60,6 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
 
-/obj/effect/countdown/singularity_pull()
-	return
-
-/obj/effect/countdown/singularity_act()
-	return
-
 /obj/effect/countdown/syndicatebomb
 	name = "syndicate bomb countdown"
 

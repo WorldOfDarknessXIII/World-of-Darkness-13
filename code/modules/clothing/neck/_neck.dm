@@ -263,7 +263,6 @@
 	icon_state = "beads"
 	color = "#ffffff"
 	custom_price = PAYCHECK_ASSISTANT * 0.2
-	custom_materials = (list(/datum/material/plastic = 500))
 
 /obj/item/clothing/neck/beads/Initialize()
 	. = ..()

@@ -10,7 +10,6 @@
 	var/next_beep = 0 //Prevents spamming of the construction sound
 	max_integrity = 200
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
-	rad_insulation = RAD_VERY_LIGHT_INSULATION
 
 /obj/structure/girder/examine(mob/user)
 	. = ..()
@@ -309,10 +308,6 @@
 		new remains(loc)
 	qdel(src)
 
-/obj/structure/girder/narsie_act()
-	new /obj/structure/girder/cult(loc)
-	qdel(src)
-
 /obj/structure/girder/displaced
 	name = "displaced girder"
 	icon_state = "displaced"
@@ -374,9 +369,6 @@
 
 	else
 		return ..()
-
-/obj/structure/girder/cult/narsie_act()
-	return
 
 /obj/structure/girder/cult/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

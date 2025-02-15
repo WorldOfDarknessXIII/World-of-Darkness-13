@@ -24,12 +24,9 @@
 	layer = TABLE_LAYER
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
-	var/buildstack = /obj/item/stack/sheet/metal
 	var/busy = FALSE
-	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/deconstruction_ready = 1
-	custom_materials = list(/datum/material/iron = 2000)
 	max_integrity = 100
 	integrity_failure = 0.33
 	smoothing_flags = SMOOTH_BITMASK
@@ -39,7 +36,6 @@
 /obj/structure/table/Initialize(mapload, _buildstack)
 	. = ..()
 	if(_buildstack)
-		buildstack = _buildstack
 	AddElement(/datum/element/climbable)
 
 /obj/structure/table/examine(mob/user)
@@ -53,11 +49,6 @@
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH(src)
 		QUEUE_SMOOTH_NEIGHBORS(src)
-
-/obj/structure/table/narsie_act()
-	var/atom/A = loc
-	qdel(src)
-	new /obj/structure/table/wood(A)
 
 /obj/structure/table/attack_paw(mob/user)
 	return attack_hand(user)
@@ -273,8 +264,6 @@
 	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
 	icon_state = "table_greyscale-0"
 	base_icon_state = "table_greyscale"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
-	buildstack = null //No buildstack, so generate from mat datums
 
 ///Table on wheels
 /obj/structure/table/rolling
@@ -319,7 +308,6 @@
 	icon = 'icons/obj/smooth_structures/glass_table.dmi'
 	icon_state = "glass_table-0"
 	base_icon_state = "glass_table"
-	buildstack = /obj/item/stack/sheet/glass
 	smoothing_groups = list(SMOOTH_GROUP_GLASS_TABLES)
 	canSmoothWith = list(SMOOTH_GROUP_GLASS_TABLES)
 	max_integrity = 70
@@ -384,11 +372,6 @@
 				debris -= AM
 	qdel(src)
 
-/obj/structure/table/glass/narsie_act()
-	color = NARSIE_WINDOW_COLOUR
-	for(var/obj/item/shard/S in debris)
-		S.color = NARSIE_WINDOW_COLOUR
-
 /*
  * Wooden tables
  */
@@ -401,15 +384,10 @@
 	base_icon_state = "wood_table"
 	frame = /obj/structure/table_frame/wood
 	framestack = /obj/item/stack/sheet/mineral/wood
-	buildstack = /obj/item/stack/sheet/mineral/wood
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
 	smoothing_groups = list(SMOOTH_GROUP_WOOD_TABLES) //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = list(SMOOTH_GROUP_WOOD_TABLES)
-
-/obj/structure/table/wood/narsie_act(total_override = TRUE)
-	if(!total_override)
-		..()
 
 /obj/structure/table/wood/poker //No specialties, Just a mapping object.
 	name = "gambling table"
@@ -417,10 +395,6 @@
 	icon = 'icons/obj/smooth_structures/poker_table.dmi'
 	icon_state = "poker_table-0"
 	base_icon_state = "poker_table"
-	buildstack = /obj/item/stack/tile/carpet
-
-/obj/structure/table/wood/poker/narsie_act()
-	..(FALSE)
 
 /obj/structure/table/wood/fancy
 	name = "fancy table"
@@ -430,7 +404,6 @@
 	base_icon_state = "fancy_table"
 	frame = /obj/structure/table_frame
 	framestack = /obj/item/stack/rods
-	buildstack = /obj/item/stack/tile/carpet
 	smoothing_groups = list(SMOOTH_GROUP_FANCY_WOOD_TABLES) //Don't smooth with SMOOTH_GROUP_TABLES or SMOOTH_GROUP_WOOD_TABLES
 	canSmoothWith = list(SMOOTH_GROUP_FANCY_WOOD_TABLES)
 	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
@@ -446,55 +419,46 @@
 /obj/structure/table/wood/fancy/black
 	icon_state = "fancy_table_black"
 	base_icon_state = "fancy_table_black"
-	buildstack = /obj/item/stack/tile/carpet/black
 	smooth_icon = 'icons/obj/smooth_structures/fancy_table_black.dmi'
 
 /obj/structure/table/wood/fancy/blue
 	icon_state = "fancy_table_blue"
 	base_icon_state = "fancy_table_blue"
-	buildstack = /obj/item/stack/tile/carpet/blue
 	smooth_icon = 'icons/obj/smooth_structures/fancy_table_blue.dmi'
 
 /obj/structure/table/wood/fancy/cyan
 	icon_state = "fancy_table_cyan"
 	base_icon_state = "fancy_table_cyan"
-	buildstack = /obj/item/stack/tile/carpet/cyan
 	smooth_icon = 'icons/obj/smooth_structures/fancy_table_cyan.dmi'
 
 /obj/structure/table/wood/fancy/green
 	icon_state = "fancy_table_green"
 	base_icon_state = "fancy_table_green"
-	buildstack = /obj/item/stack/tile/carpet/green
 	smooth_icon = 'icons/obj/smooth_structures/fancy_table_green.dmi'
 
 /obj/structure/table/wood/fancy/orange
 	icon_state = "fancy_table_orange"
 	base_icon_state = "fancy_table_orange"
-	buildstack = /obj/item/stack/tile/carpet/orange
 	smooth_icon = 'icons/obj/smooth_structures/fancy_table_orange.dmi'
 
 /obj/structure/table/wood/fancy/purple
 	icon_state = "fancy_table_purple"
 	base_icon_state = "fancy_table_purple"
-	buildstack = /obj/item/stack/tile/carpet/purple
 	smooth_icon = 'icons/obj/smooth_structures/fancy_table_purple.dmi'
 
 /obj/structure/table/wood/fancy/red
 	icon_state = "fancy_table_red"
 	base_icon_state = "fancy_table_red"
-	buildstack = /obj/item/stack/tile/carpet/red
 	smooth_icon = 'icons/obj/smooth_structures/fancy_table_red.dmi'
 
 /obj/structure/table/wood/fancy/royalblack
 	icon_state = "fancy_table_royalblack"
 	base_icon_state = "fancy_table_royalblack"
-	buildstack = /obj/item/stack/tile/carpet/royalblack
 	smooth_icon = 'icons/obj/smooth_structures/fancy_table_royalblack.dmi'
 
 /obj/structure/table/wood/fancy/royalblue
 	icon_state = "fancy_table_royalblue"
 	base_icon_state = "fancy_table_royalblue"
-	buildstack = /obj/item/stack/tile/carpet/royalblue
 	smooth_icon = 'icons/obj/smooth_structures/fancy_table_royalblue.dmi'
 
 /*
@@ -507,7 +471,6 @@
 	icon_state = "reinforced_table-0"
 	base_icon_state = "reinforced_table"
 	deconstruction_ready = 0
-	buildstack = /obj/item/stack/sheet/plasteel
 	max_integrity = 200
 	integrity_failure = 0.25
 	armor = list(MELEE = 10, BULLET = 30, LASER = 30, ENERGY = 100, BOMB = 20, BIO = 0, RAD = 0, FIRE = 80, ACID = 70)
@@ -543,7 +506,6 @@
 	icon_state = "brass_table-0"
 	base_icon_state = "brass_table"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	buildstack = /obj/item/stack/tile/bronze
 	smoothing_groups = list(SMOOTH_GROUP_BRONZE_TABLES) //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = list(SMOOTH_GROUP_BRONZE_TABLES)
 
@@ -560,7 +522,6 @@
 	desc = "Used for advanced medical procedures."
 	icon = 'code/modules/wod13/props.dmi'
 	icon_state = "surgeonchair"
-	buildstack = /obj/item/stack/sheet/mineral/silver
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
@@ -695,7 +656,6 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "rack_parts"
 	flags_1 = CONDUCT_1
-	custom_materials = list(/datum/material/iron=2000)
 	var/building = FALSE
 
 /obj/item/rack_parts/attackby(obj/item/W, mob/user, params)

@@ -512,10 +512,6 @@
 			if(EXPLODE_LIGHT)
 				SSexplosions.low_mov_atom += thing
 
-/obj/structure/closet/singularity_act()
-	dump_contents()
-	..()
-
 /obj/structure/closet/AllowDrop()
 	return TRUE
 

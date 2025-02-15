@@ -336,9 +336,6 @@
  * who don't want atoms where they shouldn't be
  */
 ///This atom has been hit by a hulkified mob in hulk mode (user)
-/atom/proc/attack_hulk(mob/living/carbon/human/user)
-	SEND_SIGNAL(src, COMSIG_ATOM_HULK_ATTACK, user)
-
 /**
  * Ensure a list of atoms/reagents exists inside this atom
  *
@@ -699,11 +696,6 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_ACID_ACT, acidpwr, acid_volume)
 	return FALSE
 
-/**
- * Respond to an emag being used on our atom
- *
- * Default behaviour is to send [COMSIG_ATOM_EMAG_ACT] and return
- */
 /**
  * Respond to an electric bolt action on our item
  *

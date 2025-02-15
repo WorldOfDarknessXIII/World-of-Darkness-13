@@ -4,7 +4,6 @@
 	opacity = FALSE
 	density = FALSE
 	layer = SIGN_LAYER
-	custom_materials = list(/datum/material/plastic = 2000)
 	max_integrity = 100
 	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	///Determines if a sign is unwrenchable.
@@ -32,7 +31,6 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/plastic = 2000)
 	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	resistance_flags = FLAMMABLE
 	max_integrity = 100

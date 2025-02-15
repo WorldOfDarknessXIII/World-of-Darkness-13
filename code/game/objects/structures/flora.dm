@@ -406,7 +406,6 @@
 	name = "plastic potted plant"
 	desc = "A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch."
 	icon_state = "plant-26"
-	custom_materials = (list(/datum/material/plastic = 8000))
 	trimmable = FALSE
 
 /obj/item/kirbyplants/fullysynthetic/Initialize()

@@ -5,8 +5,6 @@
 	icon_state = "pewmiddle"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
-	buildstacktype = /obj/item/stack/sheet/mineral/wood
-	buildstackamount = 3
 	item_chair = null
 
 /obj/structure/chair/pew/left

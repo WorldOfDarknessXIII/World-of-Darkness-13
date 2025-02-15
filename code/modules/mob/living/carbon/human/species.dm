@@ -1280,35 +1280,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
 	return FALSE
 
-/datum/species/proc/handle_mutations_and_radiation(mob/living/carbon/human/H)
-	if(HAS_TRAIT(H, TRAIT_RADIMMUNE))
-		H.radiation = 0
-		return TRUE
-
-	. = FALSE
-	var/radiation = H.radiation
-
-	if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
-		if(!H.IsParalyzed())
-			H.emote("collapse")
-		H.Paralyze(RAD_MOB_KNOCKDOWN_AMOUNT)
-		to_chat(H, "<span class='danger'>You feel weak.</span>")
-
-	if(radiation > RAD_MOB_VOMIT && prob(RAD_MOB_VOMIT_PROB))
-		H.vomit(10, TRUE)
-
-	if(radiation > RAD_MOB_MUTATE)
-		if(prob(1))
-			to_chat(H, "<span class='danger'>You mutate!</span>")
-			H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
-			H.emote("gasp")
-			H.domutcheck()
-
-	if(radiation > RAD_MOB_HAIRLOSS)
-		if(prob(15) && !(H.hairstyle == "Bald") && (HAIR in species_traits))
-			to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
-			addtimer(CALLBACK(src, PROC_REF(go_bald), H), 50)
-
 /datum/species/proc/go_bald(mob/living/carbon/human/H)
 	if(QDELETED(H))	//may be called from a timer
 		return
@@ -1783,7 +1754,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		else
 			area_skin_change = (1 - thermal_protection) * area_skin_change
 
-		humi.adjust_bodytemperature(area_skin_change)
 
 	// Core to skin temp transfer, when not on fire
 	if(!humi.on_fire)
@@ -1798,7 +1768,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		else
 			core_skin_change = max(core_skin_change, core_skin_diff)
 
-		humi.adjust_bodytemperature(core_skin_change)
 
 
 /**
@@ -2004,9 +1973,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT && !no_protection)
 			return
 		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
-			H.adjust_bodytemperature(11)
 		else
-			H.adjust_bodytemperature(BODYTEMP_HEATING_MAX + (H.fire_stacks * 12))
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
 
 /datum/species/proc/CanIgniteMob(mob/living/carbon/human/H)

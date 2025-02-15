@@ -22,7 +22,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron=10)
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	var/colour = "black"	//what colour the ink is!
 	var/degrees = 0
@@ -82,7 +81,6 @@
 	icon_state = "pen-charcoal"
 	colour = "dimgray"
 	font = CHARCOAL_FONT
-	custom_materials = null
 	grind_results = list(/datum/reagent/ash = 5, /datum/reagent/cellulose = 10)
 
 /datum/crafting_recipe/charcoal_stylus
@@ -100,7 +98,6 @@
 	throwforce = 5
 	throw_speed = 4
 	colour = "crimson"
-	custom_materials = list(/datum/material/gold = 750)
 	sharpness = SHARP_EDGED
 	resistance_flags = FIRE_PROOF
 	unique_reskin = list("Oak" = "pen-fountain-o",
@@ -283,7 +280,6 @@
 	worn_icon_state = "pen"
 	force = 3
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron=10, /datum/material/diamond=100, /datum/material/titanium = 10)
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	tool_behaviour = TOOL_MINING //For the classic "digging out of prison with a spoon but you're in space so this analogy doesn't work" situation.
 	toolspeed = 10 //You will never willingly choose to use one of these over a shovel.

@@ -272,21 +272,13 @@ Turf and target are separate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/camera/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/silicon/pai/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/silicon/robot/M in sortmob)
-		moblist.Add(M)
 	for(var/mob/living/carbon/human/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/living/brain/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/carbon/alien/M in sortmob)
-		moblist.Add(M)
 	for(var/mob/dead/observer/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/dead/new_player/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/simple_animal/slime/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/living/simple_animal/M in sortmob)
 		moblist.Add(M)
@@ -1350,24 +1342,14 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 /proc/get_random_food()
 	var/list/blocked = list(/obj/item/food/bread,
 		/obj/item/food/breadslice,
-		/obj/item/food/cake,
-		/obj/item/food/cakeslice,
-		/obj/item/food/pie,
-		/obj/item/food/pieslice,
 		/obj/item/food/kebab,
 		/obj/item/food/pizza,
 		/obj/item/food/pizzaslice,
-		/obj/item/food/salad,
 		/obj/item/food/meat,
 		/obj/item/food/meat/slab,
-		/obj/item/food/soup,
-		/obj/item/food/grown,
-		/obj/item/food/grown/mushroom,
 		/obj/item/food/deepfryholder,
 		/obj/item/food/clothing,
 		/obj/item/food/meat/slab/human/mutant,
-		/obj/item/food/grown/nettle,
-		/obj/item/food/grown/shell
 		)
 
 	return pick(subtypesof(/obj/item/food) - blocked)

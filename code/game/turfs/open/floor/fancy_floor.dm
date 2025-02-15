@@ -63,10 +63,8 @@
 	return make_plating(force_plating)
 
 /turf/open/floor/wood/cold
-	temperature = 255.37
 
 /turf/open/floor/wood/airless
-	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/grass
 	name = "grass patch"
@@ -123,7 +121,6 @@
 	ore_type = /obj/item/stack/sheet/mineral/snow
 	planetary_atmos = TRUE
 	floor_tile = null
-	initial_gas_mix = FROZEN_ATMOS
 	slowdown = 2
 	bullet_sizzle = TRUE
 	footstep = FOOTSTEP_SAND
@@ -149,7 +146,6 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
 	ore_type = /obj/item/stack/ore/glass/basalt
-	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	slowdown = 0
 
 /turf/open/floor/grass/snow/basalt/spawniconchange()
@@ -327,43 +323,24 @@
 
 //*****Airless versions of all of the above.*****
 /turf/open/floor/carpet/airless
-	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/carpet/black/airless
-	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/carpet/blue/airless
-	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/carpet/cyan/airless
-	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/carpet/green/airless
-	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/carpet/orange/airless
-	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/carpet/purple/airless
-	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/carpet/red/airless
-	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/carpet/royalblack/airless
-	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/carpet/royalblue/airless
-	initial_gas_mix = AIRLESS_ATMOS
-
-/turf/open/floor/carpet/narsie_act(force, ignore_mobs, probability = 20)
-	. = (prob(probability) || force)
-	for(var/I in src)
-		var/atom/A = I
-		if(ignore_mobs && ismob(A))
-			continue
-		if(ismob(A) || .)
-			A.narsie_act()
 
 /turf/open/floor/carpet/break_tile()
 	broken = TRUE

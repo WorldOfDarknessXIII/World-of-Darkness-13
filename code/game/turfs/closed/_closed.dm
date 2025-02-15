@@ -4,7 +4,6 @@
 	density = TRUE
 	blocks_air = TRUE
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
-	rad_insulation = RAD_MEDIUM_INSULATION
 	pass_flags_self = PASSCLOSEDTURF
 
 /turf/closed/AfterChange()
@@ -32,9 +31,6 @@
 /turf/closed/indestructible/Melt()
 	to_be_destroyed = FALSE
 	return src
-
-/turf/closed/indestructible/singularity_act()
-	return
 
 /turf/closed/indestructible/oldshuttle
 	name = "strange shuttle wall"

@@ -15,8 +15,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	if(turf_type)
 		var/turf/newT = ChangeTurf(turf_type, baseturf_type, flags)
-		SSair.remove_from_active(newT)
-		CALCULATE_ADJACENT_TURFS(newT, KILL_EXCITED)
 
 /turf/proc/copyTurf(turf/T)
 	if(T.type != type)
@@ -37,17 +35,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(T.dir != dir)
 		T.setDir(dir)
 	return T
-
-/turf/open/copyTurf(turf/T, copy_air = FALSE)
-	. = ..()
-	if (isopenturf(T))
-		var/datum/component/wet_floor/slip = GetComponent(/datum/component/wet_floor)
-		if(slip)
-			var/datum/component/wet_floor/WF = T.AddComponent(/datum/component/wet_floor)
-			WF.InheritComponent(slip)
-		if (copy_air)
-			var/turf/open/openTurf = T
-			openTurf.air.copy_from(air)
 
 //wrapper for ChangeTurf()s that you want to prevent/affect without overriding ChangeTurf() itself
 /turf/proc/TerraformTurf(path, new_baseturf, flags)

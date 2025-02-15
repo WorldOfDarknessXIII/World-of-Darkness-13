@@ -696,7 +696,6 @@
 	attack_verb_continuous = list("shoves", "bashes")
 	attack_verb_simple = list("shove", "bash")
 	max_integrity = 999999
-	material_flags = MATERIAL_NO_EFFECTS
 	is_wood = TRUE
 
 /obj/item/melee/classic_baton/vampire

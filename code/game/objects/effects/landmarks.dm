@@ -7,14 +7,6 @@
 	invisibility = INVISIBILITY_ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/effect/landmark/singularity_act()
-	return
-
-/obj/effect/landmark/singularity_pull()
-	return
-
-INITIALIZE_IMMEDIATE(/obj/effect/landmark)
-
 /obj/effect/landmark/Initialize()
 	. = ..()
 	GLOB.landmarks_list += src

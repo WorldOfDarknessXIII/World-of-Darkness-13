@@ -350,10 +350,6 @@
 	name = "Derelict Aft Solar Array"
 	icon_state = "yellow"
 
-/area/ruin/space/derelict/singularity_engine
-	name = "Derelict Singularity Engine"
-	icon_state = "engine"
-
 /area/ruin/space/derelict/gravity_generator
 	name = "Derelict Gravity Generator Room"
 	icon_state = "red"
