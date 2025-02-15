@@ -5,6 +5,15 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOBREATH), PROC_REF(on_nobreath_trait_gain))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOMETABOLISM), PROC_REF(on_nometabolism_trait_gain))
 
+	// Vision traits gain and removal
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_THERMAL_VISION), PROC_REF(on_thermal_vision_gain))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_XRAY_VISION), PROC_REF(on_xray_vision_gain))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NIGHT_VISION), PROC_REF(on_night_vision_gain))
+
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_THERMAL_VISION), PROC_REF(on_thermal_vision_loss))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_XRAY_VISION), PROC_REF(on_xray_vision_loss))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_NIGHT_VISION), PROC_REF(on_night_vision_loss))
+
 /**
  * On gain of TRAIT_NOBREATH
  *
@@ -42,3 +51,35 @@
 			LAZYREMOVE(reagents.addiction_list, R)
 			qdel(R)
 	reagents.end_metabolization(keep_liverless = TRUE)
+
+
+/*
+Handles vision trait updates:
+	TRAIT_THERMAL_VISION
+	TRAIT_XRAY_VISION
+	TRAIT_NIGHT_VISION
+*/
+
+/mob/living/carbon/proc/on_thermal_vision_gain()
+	ADD_TRAIT(src, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
+	update_sight()
+
+/mob/living/carbon/proc/on_thermal_vision_loss()
+	REMOVE_TRAIT(src, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
+	update_sight()
+
+/mob/living/carbon/proc/on_xray_vision_gain()
+	ADD_TRAIT(src, TRAIT_XRAY_VISION, TRAIT_GENERIC)
+	update_sight()
+
+/mob/living/carbon/proc/on_xray_vision_loss()
+	REMOVE_TRAIT(src, TRAIT_XRAY_VISION, TRAIT_GENERIC)
+	update_sight()
+
+/mob/living/carbon/proc/on_night_vision_gain()
+	ADD_TRAIT(src, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
+	update_sight()
+
+/mob/living/carbon/proc/on_night_vision_loss()
+	REMOVE_TRAIT(src, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
+	update_sight()

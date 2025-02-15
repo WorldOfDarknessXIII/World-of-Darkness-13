@@ -400,11 +400,9 @@
 /datum/status_effect/duskndawn/on_apply()
 	. = ..()
 	ADD_TRAIT(owner,TRAIT_XRAY_VISION,type)
-	owner.update_sight()
 
 /datum/status_effect/duskndawn/on_remove()
 	REMOVE_TRAIT(owner,TRAIT_XRAY_VISION,type)
-	owner.update_sight()
 	return ..()
 
 /datum/status_effect/marshal
