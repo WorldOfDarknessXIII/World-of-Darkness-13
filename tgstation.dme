@@ -2422,7 +2422,6 @@
 #include "code\modules\mob\living\carbon\werewolf\life.dm"
 #include "code\modules\mob\living\carbon\werewolf\lupus.dm"
 #include "code\modules\mob\living\carbon\werewolf\status_procs.dm"
-#include "code\modules\mob\living\carbon\werewolf\transformation.dm"
 #include "code\modules\mob\living\carbon\werewolf\werewolf.dm"
 #include "code\modules\mob\living\carbon\werewolf\werewolf_defense.dm"
 #include "code\modules\mob\living\carbon\werewolf\werewolf_update_icons.dm"
