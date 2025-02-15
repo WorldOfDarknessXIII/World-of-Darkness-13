@@ -56,7 +56,9 @@
 
 /datum/action/cooldown/malk_speech/Trigger()
 	. = ..()
-	var/mad_speak = input(owner, "What revelations do we wish to convey?") as null|text
+	var/mad_speak = FALSE
+	if(IsAvailable())
+		var/mad_speak = input(owner, "What revelations do we wish to convey?") as null|text
 	if(CHAT_FILTER_CHECK(mad_speak))
 		//before we inadvertently obfuscate the message to pass filters, filter it first.
 		//as funny as malkavians saying "amogus" would be, the filter also includes slurs... how unfortunate.
