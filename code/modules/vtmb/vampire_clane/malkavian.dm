@@ -33,6 +33,9 @@
 
 /datum/action/cooldown/malk_hivemind/Trigger()
 	. = ..()
+	if(!IsAvailable())
+		return
+
 	var/new_thought = input(owner, "Have any thoughts about this, buddy?") as null|text
 	if(new_thought)
 		StartCooldown()
