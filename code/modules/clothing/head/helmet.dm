@@ -381,6 +381,16 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
+/obj/item/clothing/head/helmet/deer_skull
+	name = "deer skull"
+	desc = "A meticulously well preserved hollow deer skull.area"
+	icon_state = "deer_skull"
+	inhand_icon_state = "deer_skull"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	armor = list(MELEE = 35, BULLET = 25, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	strip_delay = 100
+
 //monkey sentience caps
 
 /obj/item/clothing/head/helmet/monkey_sentience
