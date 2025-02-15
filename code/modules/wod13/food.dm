@@ -403,6 +403,7 @@
 		new /datum/data/mining_equipment("pentagram skirt",	/obj/item/clothing/under/vampire/baali/female,	20),
 		new /datum/data/mining_equipment("punk outfit",	/obj/item/clothing/under/vampire/emo,	20),
 		new /datum/data/mining_equipment("red hipster outfit",	/obj/item/clothing/under/vampire/red,	20),
+		new /datum/data/mining_equipment("messy shirt",	/obj/item/clothing/under/vampire/bouncer,	15),
 		new /datum/data/mining_equipment("blue overals",	/obj/item/clothing/under/vampire/mechanic,	20),
 		new /datum/data/mining_equipment("black grunge outfit",	/obj/item/clothing/under/vampire/black,	20),
 		new /datum/data/mining_equipment("gimp outfit",	/obj/item/clothing/under/vampire/nosferatu,	15),
