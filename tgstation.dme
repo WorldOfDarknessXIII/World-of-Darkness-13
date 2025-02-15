@@ -146,6 +146,7 @@
 #include "code\__DEFINES\research\anomalies.dm"
 #include "code\__DEFINES\wod13\status_effects.dm"
 #include "code\__DEFINES\wod13\status_effects_debuffs.dm"
+#include "code\__DEFINES\wod13\signals_kindred.dm"
 #include "code\__HELPERS\_lists.dm"
 #include "code\__HELPERS\_logging.dm"
 #include "code\__HELPERS\_string_lists.dm"
