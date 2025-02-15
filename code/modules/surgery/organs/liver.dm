@@ -114,11 +114,6 @@
 /obj/item/organ/liver/get_availability(datum/species/S)
 	return !(TRAIT_NOMETABOLISM in S.inherent_traits)
 
-/obj/item/organ/liver/plasmaman
-	name = "reagent processing crystal"
-	icon_state = "liver-p"
-	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
-
 /obj/item/organ/liver/alien
 	name = "alien liver" // doesnt matter for actual aliens because they dont take toxin damage
 	icon_state = "liver-x" // Same sprite as fly-person liver.

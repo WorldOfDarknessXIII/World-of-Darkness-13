@@ -72,9 +72,6 @@
 /mob/living/proc/handle_breathing(times_fired)
 	return
 
-/mob/living/proc/handle_diseases()
-	return
-
 /mob/living/proc/handle_wounds()
 	return
 
@@ -82,13 +79,6 @@
 	return
 
 // Base mob environment handler for body temperature
-/mob/living/proc/handle_environment(datum/gas_mixture/environment)
-	var/loc_temp = get_temperature(environment)
-
-	if(loc_temp < bodytemperature) // it is cold here
-		if(!on_fire) // do not reduce body temp when on fire
-	else // this is a hot place
-
 /mob/living/proc/handle_fire()
 	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
 		set_fire_stacks(min(0, fire_stacks + 1)) //So we dry ourselves back to default, nonflammable.

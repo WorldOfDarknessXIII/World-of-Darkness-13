@@ -50,20 +50,6 @@
 			to_chat(src, "<span class='userdanger'>With our egg laid, our death approaches rapidly...</span>")
 			addtimer(CALLBACK(src, PROC_REF(death)), 100)
 
-/obj/item/organ/body_egg/changeling_egg
-	name = "changeling egg"
-	desc = "Twitching and disgusting."
-	var/datum/mind/origin
-	var/time
-
-/obj/item/organ/body_egg/changeling_egg/egg_process()
-	// Changeling eggs grow in dead people
-	time++
-	if(time >= EGG_INCUBATION_TIME)
-		Pop()
-		Remove(owner)
-		qdel(src)
-
 /obj/item/organ/body_egg/changeling_egg/proc/Pop()
 	var/mob/living/carbon/human/species/monkey/M = new(owner)
 

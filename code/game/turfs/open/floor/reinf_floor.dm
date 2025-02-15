@@ -92,9 +92,6 @@
 /turf/open/floor/engine/co2
 	name = "\improper CO2 floor"
 
-/turf/open/floor/engine/plasma
-	name = "plasma floor"
-
 /turf/open/floor/engine/o2
 	name = "\improper O2 floor"
 

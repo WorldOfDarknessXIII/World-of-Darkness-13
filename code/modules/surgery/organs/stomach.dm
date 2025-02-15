@@ -182,13 +182,6 @@
 		reagents.remove_reagent(milk.type, milk.metabolization_rate)
 	return ..()
 
-/obj/item/organ/stomach/bone/plasmaman
-	name = "digestive crystal"
-	icon_state = "stomach-p"
-	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
-	metabolism_efficiency = 0.12
-	milk_burn_healing = 0
-
 /obj/item/organ/stomach/ethereal
 	name = "biological battery"
 	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.

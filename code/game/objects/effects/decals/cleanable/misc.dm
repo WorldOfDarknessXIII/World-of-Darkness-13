@@ -55,9 +55,6 @@
 /obj/effect/decal/cleanable/glass/ex_act()
 	qdel(src)
 
-/obj/effect/decal/cleanable/glass/plasma
-	icon_state = "plasmatiny"
-
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
 	desc = "Someone should clean that up."
@@ -209,11 +206,6 @@
 	name = "crusty dried vomit"
 	desc = "You try not to look at the chunks, and fail."
 
-/obj/effect/decal/cleanable/vomit/old/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
-	icon_state += "-old"
-
-
 /obj/effect/decal/cleanable/chem_pile
 	name = "chemical pile"
 	desc = "A pile of chemicals. You can't quite tell what's inside it."
@@ -258,13 +250,6 @@
 /obj/effect/decal/cleanable/glitter/blue
 	name = "blue glitter"
 	icon_state = "freon"
-
-/obj/effect/decal/cleanable/plasma
-	name = "stabilized plasma"
-	desc = "A puddle of stabilized plasma."
-	icon_state = "flour"
-	icon = 'icons/effects/tomatodecal.dmi'
-	color = "#2D2D2D"
 
 /obj/effect/decal/cleanable/insectguts
 	name = "insect guts"

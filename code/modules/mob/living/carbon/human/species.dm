@@ -1670,9 +1670,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
  * * environment (required) The environment gas mix
  * * humi (required)(type: /mob/living/carbon/human) The mob we will target
  */
-/datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/humi)
-	handle_environment_pressure(environment, humi)
-
 /**
  * Body temperature handler for species
  *
@@ -1681,23 +1678,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
  * vars:
  * * humi (required)(type: /mob/living/carbon/human) The mob we will target
  */
-/datum/species/proc/handle_body_temperature(mob/living/carbon/human/humi)
-	//when in a cryo unit we suspend all natural body regulation
-	if(istype(humi.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		return
-
-	//Only stabilise core temp when alive and not in statis
-	if(humi.stat < DEAD && !IS_IN_STASIS(humi))
-		body_temperature_core(humi)
-
-	//These do run in statis
-	body_temperature_skin(humi)
-	body_temperature_alerts(humi)
-
-	//Do not cause more damage in statis
-	if(!IS_IN_STASIS(humi))
-		body_temperature_damage(humi)
-
 /**
  * Used to stabilize the core temperature back to normal on living mobs
  *
@@ -1705,10 +1685,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
  * vars:
  * * humi (required) The mob we will stabilize
  */
-/datum/species/proc/body_temperature_core(mob/living/carbon/human/humi)
-	var/natural_change = get_temp_change_amount(humi.get_body_temp_normal() - humi.coretemperature, 0.12)
-	humi.adjust_coretemperature(humi.metabolism_efficiency * natural_change)
-
 /**
  * Used to normalize the skin temperature on living mobs
  *
@@ -1717,157 +1693,16 @@ GLOBAL_LIST_EMPTY(selectable_races)
  * vars:
  * * humi (required) The mob we will targeting
  */
-/datum/species/proc/body_temperature_skin(mob/living/carbon/human/humi)
-
-	// change the core based on the skin temp
-	var/skin_core_diff = humi.bodytemperature - humi.coretemperature
-	// change rate of 0.08 to be slightly below area to skin change rate and still have a solid curve
-	var/skin_core_change = get_temp_change_amount(skin_core_diff, 0.08)
-
-	humi.adjust_coretemperature(skin_core_change)
-
-	// get the enviroment details of where the mob is standing
-	var/turf/T = get_turf(humi)
-	var/datum/gas_mixture/environment = T.return_air()
-	if(!environment) // if there is no environment (nullspace) drop out here.
-		return
-
-	// Get the temperature of the environment for area
-	var/area_temp = humi.get_temperature(environment)
-
-	// Get the insulation value based on the area's temp
-	var/thermal_protection = humi.get_insulation_protection(area_temp)
-
-	// Changes to the skin temperature based on the area
-	var/area_skin_diff = area_temp - humi.bodytemperature
-	if(!humi.on_fire || area_skin_diff > 0)
-		// change rate of 0.1 as area temp has large impact on the surface
-		var/area_skin_change = get_temp_change_amount(area_skin_diff, 0.1)
-
-		// We need to apply the thermal protection of the clothing when applying area to surface change
-		// If the core bodytemp goes over the normal body temp you are overheating and becom sweaty
-		// This will cause the insulation value of any clothing to reduced in effect (70% normal rating)
-		// we add 10 degree over normal body temp before triggering as thick insulation raises body temp
-		if(humi.get_body_temp_normal(apply_change=FALSE) + 10 < humi.coretemperature)
-			// we are overheating and sweaty insulation is not as good reducing thermal protection
-			area_skin_change = (1 - (thermal_protection * 0.7)) * area_skin_change
-		else
-			area_skin_change = (1 - thermal_protection) * area_skin_change
-
-
-	// Core to skin temp transfer, when not on fire
-	if(!humi.on_fire)
-		// Get the changes to the skin from the core temp
-		var/core_skin_diff = humi.coretemperature - humi.bodytemperature
-		// change rate of 0.09 to reflect temp back to the skin at the slight higher rate then core to skin
-		var/core_skin_change = (1 + thermal_protection) * get_temp_change_amount(core_skin_diff, 0.09)
-
-		// We do not want to over shoot after using protection
-		if(core_skin_diff > 0)
-			core_skin_change = min(core_skin_change, core_skin_diff)
-		else
-			core_skin_change = max(core_skin_change, core_skin_diff)
-
-
-
 /**
  * Used to set alerts and debuffs based on body temperature
  * vars:
  * * humi (required) The mob we will targeting
  */
-/datum/species/proc/body_temperature_alerts(mob/living/carbon/human/humi)
-	// Body temperature is too hot, and we do not have resist traits
-	if(humi.bodytemperature > bodytemp_heat_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTHEAT))
-		// Clear cold mood and apply hot mood
-		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "cold")
-		SEND_SIGNAL(humi, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
-
-		//Remove any slowdown from the cold.
-		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
-		// display alerts based on how hot it is
-		switch(humi.bodytemperature)
-			if(0 to 460)
-				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 1)
-			if(461 to 700)
-				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 2)
-			else
-				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 3)
-
-	// Body temperature is too cold, and we do not have resist traits
-	else if(humi.bodytemperature < bodytemp_cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD))
-		// clear any hot moods and apply cold mood
-		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "hot")
-		SEND_SIGNAL(humi, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
-		// Apply cold slow down
-		humi.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((bodytemp_cold_damage_limit - humi.bodytemperature) / COLD_SLOWDOWN_FACTOR))
-		// Display alerts based how cold it is
-		if(humi.bodytemperature >= 201 && humi.bodytemperature <= bodytemp_cold_damage_limit)
-			humi.throw_alert("temp", /atom/movable/screen/alert/cold, 1)
-		else if(humi.bodytemperature >= 120 && humi.bodytemperature < 201)
-			humi.throw_alert("temp", /atom/movable/screen/alert/cold, 2)
-		else
-			humi.throw_alert("temp", /atom/movable/screen/alert/cold, 3)
-
-	// We are not to hot or cold, remove status and moods
-	else
-		humi.clear_alert("temp")
-		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
-		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "cold")
-		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "hot")
-
 /**
  * Used to apply wounds and damage based on core/body temp
  * vars:
  * * humi (required) The mob we will targeting
  */
-/datum/species/proc/body_temperature_damage(mob/living/carbon/human/humi)
-
-	//If the body temp is above the wound limit start adding exposure stacks
-	if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT)
-		humi.heat_exposure_stacks = min(humi.heat_exposure_stacks + 1, 40)
-	else //When below the wound limit, reduce the exposure stacks fast.
-		humi.heat_exposure_stacks = max(humi.heat_exposure_stacks - 4, 0)
-
-	//when exposure stacks are greater then 10 + rand20 try to apply wounds and reset stacks
-	if(humi.heat_exposure_stacks > (10 + rand(0, 20)))
-		apply_burn_wounds(humi)
-		humi.heat_exposure_stacks = 0
-
-	// Body temperature is too hot, and we do not have resist traits
-	// Apply some burn damage to the body
-	if(humi.coretemperature > bodytemp_heat_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTHEAT))
-		var/firemodifier = humi.fire_stacks / 50
-		if (!humi.on_fire) // We are not on fire, reduce the modifier
-			firemodifier = min(firemodifier, 0)
-
-		// this can go below 5 at log 2.5
-		var/burn_damage = max(log(2 - firemodifier, (humi.coretemperature - humi.get_body_temp_normal(apply_change=FALSE))) - 5,0)
-
-		// Apply species and physiology modifiers to heat damage
-		burn_damage = burn_damage * heatmod * humi.physiology.heat_mod
-
-		// 40% for level 3 damage on humans to scream in pain
-		if (humi.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4)
-			humi.emote("scream")
-
-		// Apply the damage to all body parts
-		humi.apply_damage(burn_damage, BURN, spread_damage = TRUE)
-
-	// Apply some burn / brute damage to the body (Dependent if the person is hulk or not)
-	var/is_hulk = HAS_TRAIT(humi, TRAIT_HULK)
-
-	var/cold_damage_limit = bodytemp_cold_damage_limit + (is_hulk ? BODYTEMP_HULK_COLD_DAMAGE_LIMIT_MODIFIER : 0)
-
-	if(humi.coretemperature < cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD))
-		var/damage_type = is_hulk ? BRUTE : BURN
-		var/damage_mod = coldmod * humi.physiology.cold_mod * (is_hulk ? HULK_COLD_DAMAGE_MOD : 1)
-		if(humi.bodytemperature >= 201 && humi.bodytemperature <= bodytemp_cold_damage_limit)
-			humi.apply_damage(COLD_DAMAGE_LEVEL_1 * damage_mod, damage_type)
-		else if(humi.bodytemperature >= 120 && humi.bodytemperature < 201)
-			humi.apply_damage(COLD_DAMAGE_LEVEL_2 * damage_mod, damage_type)
-		else
-			humi.apply_damage(COLD_DAMAGE_LEVEL_3 * damage_mod, damage_type)
-
 /**
  * Used to apply burn wounds on random limbs
  *

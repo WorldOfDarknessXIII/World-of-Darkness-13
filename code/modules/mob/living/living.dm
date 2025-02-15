@@ -1102,18 +1102,6 @@
 	animate(src, pixel_x = pixel_x_diff, pixel_y = pixel_y_diff , time = 2, loop = 6, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 	animate(pixel_x = -pixel_x_diff , pixel_y = -pixel_y_diff , time = 2, flags = ANIMATION_RELATIVE)
 
-/mob/living/proc/get_temperature(datum/gas_mixture/environment)
-	var/loc_temp = environment ? environment.temperature : T0C
-	if(isobj(loc))
-		var/obj/oloc = loc
-		var/obj_temp = oloc.return_temperature()
-		if(obj_temp != null)
-			loc_temp = obj_temp
-	else if(isspaceturf(get_turf(src)))
-		var/turf/heat_turf = get_turf(src)
-		loc_temp = heat_turf.temperature
-	return loc_temp
-
 /mob/living/cancel_camera()
 	..()
 	cameraFollow = null
@@ -1433,15 +1421,6 @@
 	mob_pickup(user)
 	return TRUE
 
-/mob/living/proc/get_static_viruses() //used when creating blood and other infective objects
-	if(!LAZYLEN(diseases))
-		return
-	var/list/datum/disease/result = list()
-	for(var/datum/disease/D in diseases)
-		var/static_virus = D.Copy()
-		result += static_virus
-	return result
-
 /mob/living/reset_perspective(atom/A)
 	if(..())
 		update_sight()
@@ -1574,9 +1553,6 @@
  * * key_name (str) The unique key for this change, if it already exist it will be overridden
  * * amount (int) The amount of change from the base body temperature
  */
-/mob/living/proc/add_body_temperature_change(key_name, amount)
-	body_temp_changes["[key_name]"] = amount
-
 /**
  * remove_body_temperature_change Removes the modifications to the body temperature
  *
@@ -1585,9 +1561,6 @@
  * arguments:
  * * key_name (str) The unique key for this change that will be removed
  */
-/mob/living/proc/remove_body_temperature_change(key_name)
-	body_temp_changes -= key_name
-
 /**
  * get_body_temp_normal_change Returns the aggregate change to body temperature
  *

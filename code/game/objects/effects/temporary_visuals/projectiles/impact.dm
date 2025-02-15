@@ -22,10 +22,6 @@
 	name = "pulse impact"
 	icon_state = "impact_u_laser"
 
-/obj/effect/projectile/impact/plasma_cutter
-	name = "plasma impact"
-	icon_state = "impact_plasmacutter"
-
 /obj/effect/projectile/impact/stun
 	name = "stun impact"
 	icon_state = "impact_stun"

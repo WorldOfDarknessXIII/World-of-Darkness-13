@@ -133,27 +133,6 @@
 /mob/living/carbon/werewolf/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) // beepsky won't hunt aliums
 	return -10
 
-/mob/living/carbon/werewolf/handle_environment(datum/gas_mixture/environment)
-	// Run base mob body temperature proc before taking damage
-	// this balances body temp to the environment and natural stabilization
-	. = ..()
-
-	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
-		//Body temperature is too hot.
-		throw_alert("alien_fire", /atom/movable/screen/alert/alien_fire)
-		switch(bodytemperature)
-			if(360 to 400)
-				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
-			if(400 to 460)
-				apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
-			if(460 to INFINITY)
-				if(on_fire)
-					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
-				else
-					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
-	else
-		clear_alert("alien_fire")
-
 /mob/living/carbon/werewolf/reagent_check(datum/reagent/R) //can metabolize all reagents
 	return 0
 

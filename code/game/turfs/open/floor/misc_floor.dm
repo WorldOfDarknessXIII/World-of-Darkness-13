@@ -190,8 +190,6 @@
 	desc = "Corrupted steel."
 	icon_state = "plating_rust"
 
-/turf/open/floor/plating/rust/plasma
-
 /turf/open/floor/plating/rust/rust_heretic_act()
 	return
 

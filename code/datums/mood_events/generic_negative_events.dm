@@ -19,10 +19,6 @@
 	mood_change = -1
 	timeout = 2 MINUTES
 
-/datum/mood_event/cold
-	description = "<span class='warning'>It's way too cold in here.</span>\n"
-	mood_change = -5
-
 /datum/mood_event/hot
 	description = "<span class='warning'>It's getting hot in here.</span>\n"
 	mood_change = -5

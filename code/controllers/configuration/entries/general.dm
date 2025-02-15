@@ -65,8 +65,6 @@
 
 /datum/config_entry/flag/log_mecha	// log mech data
 
-/datum/config_entry/flag/log_virus	// log virology data
-
 /datum/config_entry/flag/log_cloning // log cloning actions.
 
 /datum/config_entry/flag/log_vote	// log voting

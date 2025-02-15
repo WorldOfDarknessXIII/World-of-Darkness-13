@@ -83,13 +83,6 @@
 			lun.check_breath(breath,src)
 
 /// Environment handlers for species
-/mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
-	// If we are in a cryo bed do not process life functions
-	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		return
-
-	dna.species.handle_environment(environment, src)
-
 /**
  * Adjust the core temperature of a mob
  *
@@ -98,9 +91,6 @@
  * * min_temp (optional) The minimum body temperature after adjustment
  * * max_temp (optional) The maximum body temperature after adjustment
  */
-/mob/living/carbon/human/proc/adjust_coretemperature(amount, min_temp=0, max_temp=INFINITY)
-	coretemperature = clamp(coretemperature + amount, min_temp, max_temp)
-
 /**
  * get_body_temperature Returns the body temperature with any modifications applied
  *

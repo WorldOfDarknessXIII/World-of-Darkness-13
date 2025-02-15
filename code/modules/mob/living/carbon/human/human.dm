@@ -1093,9 +1093,6 @@
 /mob/living/carbon/human/species/golem/adamantine
 	race = /datum/species/golem/adamantine
 
-/mob/living/carbon/human/species/golem/plasma
-	race = /datum/species/golem/plasma
-
 /mob/living/carbon/human/species/golem/diamond
 	race = /datum/species/golem/diamond
 
@@ -1188,9 +1185,6 @@
 
 /mob/living/carbon/human/species/mush
 	race = /datum/species/mush
-
-/mob/living/carbon/human/species/plasma
-	race = /datum/species/plasmaman
 
 /mob/living/carbon/human/species/pod
 	race = /datum/species/pod

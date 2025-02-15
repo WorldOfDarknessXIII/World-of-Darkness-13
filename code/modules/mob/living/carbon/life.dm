@@ -307,10 +307,6 @@
 	return TRUE
 
 //Fourth and final link in a breath chain
-/mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)
-	// The air you breathe out should match your body temperature
-	breath.temperature = bodytemperature
-
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	if(internal)
 		if(internal.loc != src)
@@ -352,15 +348,6 @@
 			var/obj/item/organ/O = V
 			O.on_death() //Needed so organs decay while inside the body.
 
-/mob/living/carbon/handle_diseases()
-	for(var/thing in diseases)
-		var/datum/disease/D = thing
-		if(prob(D.infectivity))
-			D.spread()
-
-		if(stat != DEAD || D.process_dead)
-			D.stage_act()
-
 /mob/living/carbon/handle_wounds()
 	for(var/thing in all_wounds)
 		var/datum/wound/W = thing
@@ -368,17 +355,6 @@
 			W.handle_process()
 
 //todo generalize this and move hud out
-/mob/living/carbon/proc/handle_changeling()
-	if(mind && hud_used?.lingchemdisplay)
-		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling)
-			changeling.regenerate()
-			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(changeling.chem_charges)]</font></div>")
-		else
-			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
-
-
 /*
 Alcohol Poisoning Chart
 Note that all higher effects of alcohol poisoning will inherit effects for smaller amounts (i.e. light poisoning inherts from slight poisoning)
@@ -542,67 +518,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			adjustToxLoss(2) //Let's be honest you shouldn't be alive by now
 
 /// Base carbon environment handler, adds natural stabilization
-/mob/living/carbon/handle_environment(datum/gas_mixture/environment)
-	var/areatemp = get_temperature(environment)
-
-	if(stat != DEAD) // If you are dead your body does not stabilize naturally
-		natural_bodytemperature_stabilization(environment)
-
-	if(!on_fire || areatemp > bodytemperature) // If we are not on fire or the area is hotter
-
 /**
  * Used to stabilize the body temperature back to normal on living mobs
  *
  * vars:
  * * environment The environment gas mix
  */
-/mob/living/carbon/proc/natural_bodytemperature_stabilization(datum/gas_mixture/environment)
-	var/areatemp = get_temperature(environment)
-	var/body_temperature_difference = get_body_temp_normal() - bodytemperature
-	var/natural_change = 0
-
-	// We are very cold, increate body temperature
-	if(bodytemperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
-		natural_change = max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), \
-			BODYTEMP_AUTORECOVERY_MINIMUM)
-
-	// we are cold, reduce the minimum increment and do not jump over the difference
-	else if(bodytemperature > BODYTEMP_COLD_DAMAGE_LIMIT && bodytemperature < get_body_temp_normal())
-		natural_change = max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
-			min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM / 4))
-
-	// We are hot, reduce the minimum increment and do not jump below the difference
-	else if(bodytemperature > get_body_temp_normal() && bodytemperature <= BODYTEMP_HEAT_DAMAGE_LIMIT)
-		natural_change = min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
-			max(body_temperature_difference, -(BODYTEMP_AUTORECOVERY_MINIMUM / 4)))
-
-	// We are very hot, reduce the body temperature
-	else if(bodytemperature >= BODYTEMP_HEAT_DAMAGE_LIMIT)
-		natural_change = min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)
-
-	var/thermal_protection = 1 - get_insulation_protection(areatemp) // invert the protection
-	if(areatemp > bodytemperature) // It is hot here
-		if(bodytemperature < get_body_temp_normal())
-			// Our bodytemp is below normal we are cold, insulation helps us retain body heat
-			// and will reduce the heat we lose to the environment
-			natural_change = (thermal_protection + 1) * natural_change
-		else
-			// Our bodytemp is above normal and sweating, insulation hinders out ability to reduce heat
-			// but will reduce the amount of heat we get from the environment
-			natural_change = (1 / (thermal_protection + 1)) * natural_change
-	else // It is cold here
-		if(!on_fire) // If on fire ignore ignore local temperature in cold areas
-			if(bodytemperature < get_body_temp_normal())
-				// Our bodytemp is below normal, insulation helps us retain body heat
-				// and will reduce the heat we lose to the environment
-				natural_change = (thermal_protection + 1) * natural_change
-			else
-				// Our bodytemp is above normal and sweating, insulation hinders out ability to reduce heat
-				// but will reduce the amount of heat we get from the environment
-				natural_change = (1 / (thermal_protection + 1)) * natural_change
-
-	// Apply the natural stabilization changes
-
 /**
  * Get the insulation that is appropriate to the temperature you're being exposed to.
  * All clothing, natural insulation, and traits are combined returning a single value.
@@ -611,19 +532,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
  *
  * return the percentage of protection as a value from 0 - 1
 **/
-/mob/living/carbon/proc/get_insulation_protection(temperature)
-	return (temperature > bodytemperature) ? get_heat_protection(temperature) : get_cold_protection(temperature)
-
 /// This returns the percentage of protection from heat as a value from 0 - 1
 /// temperature is the temperature you're being exposed to
-/mob/living/carbon/proc/get_heat_protection(temperature)
-	return heat_protection
-
 /// This returns the percentage of protection from cold as a value from 0 - 1
 /// temperature is the temperature you're being exposed to
-/mob/living/carbon/proc/get_cold_protection(temperature)
-	return cold_protection
-
 /**
  * Have two mobs share body heat between each other.
  * Account for the insulation and max temperature change range for the mob
@@ -631,12 +543,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
  * vars:
  * * M The mob/living/carbon that is sharing body heat
  */
-/mob/living/carbon/proc/share_bodytemperature(mob/living/carbon/M)
-	var/temp_diff = bodytemperature - M.bodytemperature
-	if(temp_diff > 0) // you are warm share the heat of life
-
-	else // they are warmer leech from them
-
 /**
  * Adjust the body temperature of a mob
  * expanded for carbon mobs allowing the use of insulation and change steps

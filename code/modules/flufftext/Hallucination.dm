@@ -146,13 +146,6 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 #define FAKE_FLOOD_EXPAND_TIME 20
 #define FAKE_FLOOD_MAX_RADIUS 10
 
-/obj/effect/plasma_image_holder
-	icon_state = "nothing"
-	anchored = TRUE
-	layer = FLY_LAYER
-	plane = GAME_PLANE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
 /*
 /datum/hallucination/fake_flood
 	//Plasma starts flooding from the nearby vent

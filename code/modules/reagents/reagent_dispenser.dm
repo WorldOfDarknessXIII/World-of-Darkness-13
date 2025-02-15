@@ -197,15 +197,6 @@
 		qdel(src)
 
 
-/obj/structure/reagent_dispensers/virusfood
-	name = "virus food dispenser"
-	desc = "A dispenser of low-potency virus mutagenic."
-	icon_state = "virus_food"
-	anchored = TRUE
-	density = FALSE
-	reagent_id = /datum/reagent/consumable/virus_food
-
-
 /obj/structure/reagent_dispensers/cooking_oil
 	name = "vat of cooking oil"
 	desc = "A huge metal vat with a tap on the front. Filled with cooking oil for use in frying food."

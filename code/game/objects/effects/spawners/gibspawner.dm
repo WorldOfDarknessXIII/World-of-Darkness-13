@@ -10,54 +10,6 @@
 	var/list/gibamounts = list() //amount to spawn for each gib decal type we'll spawn.
 	var/list/gibdirections = list() //of lists of possible directions to spread each gib decal type towards.
 
-/obj/effect/gibspawner/Initialize(mapload, mob/living/source_mob, list/datum/disease/diseases)
-	. = ..()
-
-	if(gibtypes.len != gibamounts.len)
-		stack_trace("Gib list amount length mismatch!")
-		return
-	if(gibamounts.len != gibdirections.len)
-		stack_trace("Gib list dir length mismatch!")
-		return
-
-	var/obj/effect/decal/cleanable/blood/gibs/gib = null
-
-	if(sound_to_play && isnum(sound_vol))
-		playsound(src, sound_to_play, sound_vol, TRUE)
-
-	if(sparks)
-		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		s.set_up(2, 1, loc)
-		s.start()
-
-
-	var/list/dna_to_add //find the dna to pass to the spawned gibs. do note this can be null if the mob doesn't have blood. add_blood_DNA() has built in null handling.
-	if(source_mob)
-		dna_to_add = source_mob.get_blood_dna_list() //ez pz
-	else if(gib_mob_type)
-		var/mob/living/temp_mob = new gib_mob_type(src) //generate a fake mob so that we pull the right type of DNA for the gibs.
-		dna_to_add = temp_mob.get_blood_dna_list()
-		qdel(temp_mob)
-	else
-		dna_to_add = list("Non-human DNA" = random_blood_type()) //else, generate a random bloodtype for it.
-
-
-	for(var/i = 1, i<= gibtypes.len, i++)
-		if(gibamounts[i])
-			for(var/j = 1, j<= gibamounts[i], j++)
-				var/gibType = gibtypes[i]
-				gib = new gibType(loc, diseases)
-
-				gib.add_blood_DNA(dna_to_add)
-
-				var/list/directions = gibdirections[i]
-				if(isturf(loc))
-					if(directions.len)
-						gib.streak(directions, mapload)
-
-	return INITIALIZE_HINT_QDEL
-
-
 /obj/effect/gibspawner/generic
 	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs, /obj/effect/decal/cleanable/blood/gibs, /obj/effect/decal/cleanable/blood/gibs/core)
 	gibamounts = list(2, 2, 1)

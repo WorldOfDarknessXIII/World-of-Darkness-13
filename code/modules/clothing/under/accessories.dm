@@ -208,23 +208,6 @@
 	name = "medal of exceptional heroism"
 	desc = "An extremely rare golden medal awarded only by CentCom. To receive such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
 
-/obj/item/clothing/accessory/medal/plasma
-	name = "plasma medal"
-	desc = "An eccentric medal made of plasma."
-	icon_state = "plasma"
-	medaltype = "medal-plasma"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = -10, ACID = 0) //It's made of plasma. Of course it's flammable.
-
-/obj/item/clothing/accessory/medal/plasma/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
-
-/obj/item/clothing/accessory/medal/plasma/nobel_science
-	name = "nobel sciences award"
-	desc = "A plasma medal which represents significant contributions to the field of science or engineering."
-
-
-
 ////////////
 //Armbands//
 ////////////

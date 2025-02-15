@@ -19,10 +19,6 @@
 //		if(V.zone_type == "masquerade")
 //			SSmasquerade.total_level = min(1000, SSmasquerade.total_level+0.5)
 
-/obj/effect/decal/cleanable/blood/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
-	pixel_x = rand(-8,8) //MOJAVE SUN EDIT - Blood Sprites
-	pixel_y = rand(-8,8) //MOJAVE SUN EDIT - Blood Sprites
 //	if(istype(get_area(src), /area/vtm))
 //		var/area/vtm/V = get_area(src)
 //		if(V.zone_type == "masquerade")
@@ -75,10 +71,6 @@
 	bloodiness = 0
 	icon_state = "floor1-old"
 
-/obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
-	add_blood_DNA(list("Non-human DNA" = random_blood_type())) // Needs to happen before ..()
-	. = ..()
-
 /obj/effect/decal/cleanable/blood/splatter
 	icon_state = "floor1" //MOJAVE SUN EDIT - Blood Sprites
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7","splatter1","splatter2","splatter3","splatter4","splatter5","splatter6") //MOJAVE SUN EDIT - Blood Sprites
@@ -113,13 +105,6 @@
 	mergeable_decal = FALSE
 	dryname = "rotting gibs"
 	drydesc = "They look bloody and gruesome while some terrible smell fills the air."
-
-/obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
-	reagents.add_reagent(/datum/reagent/liquidgibs, 5)
-	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, PROC_REF(on_pipe_eject))
-	if(mapload) //Don't rot at roundstart for the love of god
-		return
 
 /obj/effect/decal/cleanable/blood/gibs/dry()
 	. = ..()
@@ -188,13 +173,6 @@
 	bloodiness = 0
 	dryname = "old rotting gibs"
 	drydesc = "Space Jesus, why didn't anyone clean this up? They smell terrible."
-
-/obj/effect/decal/cleanable/blood/gibs/old/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
-	setDir(pick(1,2,4,8))
-	icon_state += "-old"
-	add_blood_DNA(list("Non-human DNA" = random_blood_type()))
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 10)
 
 /obj/effect/decal/cleanable/blood/drip
 	name = "drips of blood"

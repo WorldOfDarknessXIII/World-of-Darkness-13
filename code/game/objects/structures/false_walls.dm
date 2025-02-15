@@ -225,37 +225,6 @@
 	canSmoothWith = list(SMOOTH_GROUP_DIAMOND_WALLS)
 	max_integrity = 800
 
-/obj/structure/falsewall/plasma
-	name = "plasma wall"
-	desc = "A wall with plasma plating. This is definitely a bad idea."
-	icon = 'icons/turf/walls/plasma_wall.dmi'
-	icon_state = "plasma_wall-0"
-	base_icon_state = "plasma_wall"
-	mineral = /obj/item/stack/sheet/mineral/plasma
-	walltype = /turf/closed/wall/mineral/plasma
-	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASMA_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_PLASMA_WALLS)
-
-/obj/structure/falsewall/plasma/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
-
-/obj/structure/falsewall/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.get_temperature() > 300)
-		var/turf/T = get_turf(src)
-		message_admins("Plasma falsewall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
-		log_game("Plasma falsewall ignited by [key_name(user)] in [AREACOORD(T)]")
-		burnbabyburn()
-	else
-		return ..()
-
-/obj/structure/falsewall/plasma/proc/burnbabyburn(user)
-	playsound(src, 'sound/items/welder.ogg', 100, TRUE)
-	atmos_spawn_air("plasma=400;TEMP=1000")
-	new /obj/structure/girder/displaced(loc)
-	qdel(src)
-
 /obj/structure/falsewall/bananium
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"

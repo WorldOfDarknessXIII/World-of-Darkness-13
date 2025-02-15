@@ -202,27 +202,6 @@
 	qdel(mob_occupant)
 	addtimer(CALLBACK(src, PROC_REF(make_meat), skin, allmeat, meat_produced, gibtype, diseases), gibtime)
 
-/obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/food/meat/slab/allmeat, meat_produced, gibtype, list/datum/disease/diseases)
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)
-	operating = FALSE
-	var/turf/T = get_turf(src)
-	var/list/turf/nearby_turfs = RANGE_TURFS(3,T) - T
-	if(skin)
-		skin.forceMove(loc)
-		skin.throw_at(pick(nearby_turfs),meat_produced,3)
-	for (var/i=1 to meat_produced)
-		var/obj/item/meatslab = allmeat[i]
-		meatslab.forceMove(loc)
-		meatslab.throw_at(pick(nearby_turfs),i,3)
-		for (var/turfs=1 to meat_produced)
-			var/turf/gibturf = pick(nearby_turfs)
-			if (!gibturf.density && (src in view(gibturf)))
-				new gibtype(gibturf,i,diseases)
-
-	pixel_x = base_pixel_x //return to its spot after shaking
-	operating = FALSE
-	update_icon()
-
 //auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber
 	var/input_dir = NORTH

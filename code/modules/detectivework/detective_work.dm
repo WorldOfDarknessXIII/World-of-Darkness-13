@@ -69,33 +69,6 @@
 	if(length(dna))
 		. = AddComponent(/datum/component/forensics, null, null, dna)
 
-/obj/item/clothing/gloves/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
-	. = ..()
-	transfer_blood = rand(2, 4)
-
-/turf/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
-	var/obj/effect/decal/cleanable/blood/splatter/B = locate() in src
-	if(!B)
-		B = new /obj/effect/decal/cleanable/blood/splatter(src, diseases)
-	B.add_blood_DNA(blood_dna) //give blood info to the blood decal.
-	return TRUE //we bloodied the floor
-
-/mob/living/carbon/human/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
-	if(wear_suit)
-		wear_suit.add_blood_DNA(blood_dna)
-		update_inv_wear_suit()
-	else if(w_uniform)
-		w_uniform.add_blood_DNA(blood_dna)
-		update_inv_w_uniform()
-	if(gloves)
-		var/obj/item/clothing/gloves/G = gloves
-		G.add_blood_DNA(blood_dna)
-	else if(length(blood_dna))
-		AddComponent(/datum/component/forensics, null, null, blood_dna)
-		blood_in_hands = rand(2, 4)
-	update_inv_gloves()	//handles bloody hands overlays and updating
-	return TRUE
-
 /atom/proc/transfer_fingerprints_to(atom/A)
 	A.add_fingerprint_list(return_fingerprints())
 	A.add_hiddenprint_list(return_hiddenprints())
