@@ -198,9 +198,8 @@
 	icon_state = "fightgloves"
 	inhand_icon_state = "fightgloves"
 	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+
 	heat_protection = HANDS
-	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 
 /obj/item/clothing/gloves/krav_maga/combatglovesplus

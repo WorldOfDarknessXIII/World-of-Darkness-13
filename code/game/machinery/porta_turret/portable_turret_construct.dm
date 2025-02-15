@@ -186,8 +186,6 @@
 			new /obj/item/assembly/prox_sensor(loc)
 			build_step = PTURRET_GUN_EQUIPPED
 
-/obj/machinery/porta_turret_construct/attack_ai()
-	return
 
 /obj/machinery/porta_turret_construct/Destroy()
 	if(installed_gun)

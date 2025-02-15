@@ -77,10 +77,6 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		close()
 	add_fingerprint(user)
 
-/obj/structure/bodycontainer/attack_robot(mob/user)
-	if(!user.Adjacent(src))
-		return
-	return attack_hand(user)
 
 /obj/structure/bodycontainer/attackby(obj/P, mob/user, params)
 	add_fingerprint(user)
@@ -214,9 +210,6 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	dir = SOUTH
 	var/id = 1
 
-/obj/structure/bodycontainer/crematorium/attack_robot(mob/user) //Borgs can't use crematoriums without help
-	to_chat(user, "<span class='warning'>[src] is locked against you.</span>")
-	return
 
 /obj/structure/bodycontainer/crematorium/Destroy()
 	GLOB.crematoriums.Remove(src)

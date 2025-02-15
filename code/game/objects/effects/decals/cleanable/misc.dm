@@ -204,24 +204,6 @@
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
 	beauty = -150
 
-/obj/effect/decal/cleanable/vomit/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(isflyperson(H))
-			playsound(get_turf(src), 'sound/items/drink.ogg', 50, TRUE) //slurp
-			H.visible_message("<span class='alert'>[H] extends a small proboscis into the vomit pool, sucking it with a slurping sound.</span>")
-			if(reagents)
-				for(var/datum/reagent/R in reagents.reagent_list)
-					if (istype(R, /datum/reagent/consumable))
-						var/datum/reagent/consumable/nutri_check = R
-						if(nutri_check.nutriment_factor >0)
-							H.adjust_nutrition(nutri_check.nutriment_factor * nutri_check.volume)
-							reagents.remove_reagent(nutri_check.type,nutri_check.volume)
-			reagents.trans_to(H, reagents.total_volume, transfered_by = user)
-			qdel(src)
 
 /obj/effect/decal/cleanable/vomit/old
 	name = "crusty dried vomit"
@@ -230,7 +212,6 @@
 /obj/effect/decal/cleanable/vomit/old/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	icon_state += "-old"
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 10)
 
 
 /obj/effect/decal/cleanable/chem_pile

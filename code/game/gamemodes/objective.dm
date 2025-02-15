@@ -50,23 +50,6 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 	update_explanation_text()
 
-/datum/objective/proc/considered_escaped(datum/mind/M)
-	if(!considered_alive(M))
-		return FALSE
-	if(considered_exiled(M))
-		return FALSE
-	if(M.force_escaped)
-		return TRUE
-	if(SSticker.force_ending || SSticker.mode.station_was_nuked) // Just let them win.
-		return TRUE
-	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
-		return FALSE
-	var/area/current_area = get_area(M.current)
-	if(!current_area || istype(current_area, /area/shuttle/escape/brig)) // Fails if they are in the shuttle brig
-		return FALSE
-	var/turf/current_turf = get_turf(M.current)
-	return current_turf.onCentCom() || current_turf.onSyndieBase()
-
 /datum/objective/proc/check_completion()
 	return completed
 

@@ -85,16 +85,6 @@
 	creator = null
 	. = ..()
 
-/obj/effect/temp_visual/resonance/proc/check_pressure(turf/proj_turf)
-	if(!proj_turf)
-		proj_turf = get_turf(src)
-	resonance_damage = initial(resonance_damage)
-	if(lavaland_equipment_pressure_check(proj_turf))
-		name = "strong [initial(name)]"
-		resonance_damage *= 3
-	else
-		name = initial(name)
-	resonance_damage *= damage_multiplier
 
 /obj/effect/temp_visual/resonance/proc/burst()
 	rupturing = TRUE

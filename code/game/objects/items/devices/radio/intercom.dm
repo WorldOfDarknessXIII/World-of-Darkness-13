@@ -65,8 +65,6 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
-/obj/item/radio/intercom/attack_ai(mob/user)
-	interact(user)
 
 /obj/item/radio/intercom/attack_hand(mob/user)
 	. = ..()

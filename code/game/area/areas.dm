@@ -71,8 +71,7 @@
 
 	var/list/power_usage
 
-	/// Wire assignment for airlocks in this area
-	var/airlock_wires = /datum/wires/airlock
+
 
 	///This datum, if set, allows terrain generation behavior to be ran on Initialize()
 	var/datum/map_generator/map_generator

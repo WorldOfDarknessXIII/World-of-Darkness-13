@@ -134,12 +134,6 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
-	if (!istype(user))
-		return
-	if (!can_use())
-		return
-	user.switchCamera(src)
 
 /proc/camera_sort(list/L)
 	var/obj/machinery/camera/a

@@ -104,8 +104,6 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 			visible_message("<span class='warning'>[src] emits an acrid smell!</span>")
 
 
-/obj/machinery/deepfryer/attack_ai(mob/user)
-	return
 
 /obj/machinery/deepfryer/attack_hand(mob/user)
 	if(frying)

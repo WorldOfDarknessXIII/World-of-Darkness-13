@@ -84,32 +84,6 @@
 	var/syringe_count = syringes.len
 	. += "[initial(icon_state)]_[syringe_count ? clamp(syringe_count, 1, initial(max_syringes)) : "empty"]"
 
-/obj/item/gun/syringe/rapidsyringe
-	name = "rapid syringe gun"
-	desc = "A modification of the syringe gun design, using a rotating cylinder to store up to six syringes."
-	icon_state = "rapidsyringegun"
-	max_syringes = 6
-
-/obj/item/gun/syringe/syndicate
-	name = "dart pistol"
-	desc = "A small spring-loaded sidearm that functions identically to a syringe gun."
-	icon_state = "syringe_pistol"
-	inhand_icon_state = "gun" //Smaller inhand
-	w_class = WEIGHT_CLASS_SMALL
-	force = 2 //Also very weak because it's smaller
-	suppressed = TRUE //Softer fire sound
-	can_unsuppress = FALSE //Permanently silenced
-	syringes = list(new /obj/item/reagent_containers/syringe())
-
-/obj/item/gun/syringe/dna
-	name = "modified syringe gun"
-	desc = "A syringe gun that has been modified to fit DNA injectors instead of normal syringes."
-
-/obj/item/gun/syringe/dna/Initialize()
-	. = ..()
-	chambered = new /obj/item/ammo_casing/dnainjector(src)
-
-/obj/item/gun/syringe/dna/attackby(obj/item/A, mob/user, params, show_msg = TRUE)
 	if(istype(A, /obj/item/dnainjector))
 		var/obj/item/dnainjector/D = A
 		if(D.used)

@@ -181,27 +181,6 @@
 		return TRUE
 
 
-/mob/living/attack_slime(mob/living/simple_animal/slime/M)
-	if(!SSticker.HasRoundStarted())
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if(M.buckled)
-		if(M in buckled_mobs)
-			M.Feedstop()
-		return // can't attack while eating!
-
-	if(HAS_TRAIT(src, TRAIT_PACIFISM))
-		to_chat(M, "<span class='warning'>You don't want to hurt anyone!</span>")
-		return FALSE
-
-	if (stat != DEAD)
-		log_combat(M, src, "attacked")
-		M.do_attack_animation(src)
-		visible_message("<span class='danger'>\The [M.name] glomps [src]!</span>", \
-						"<span class='userdanger'>\The [M.name] glomps you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, M)
-		to_chat(M, "<span class='danger'>You glomp [src]!</span>")
-		return TRUE
 
 /mob/living/attack_animal(mob/living/simple_animal/M)
 	M.face_atom(src)
@@ -293,25 +272,6 @@
 				to_chat(L, "<span class='warning'>Your bite misses [src]!</span>")
 	return FALSE
 
-/mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
-	switch(M.a_intent)
-		if ("help")
-			visible_message("<span class='notice'>[M] caresses [src] with its scythe-like arm.</span>", \
-							"<span class='notice'>[M] caresses you with its scythe-like arm.</span>", null, null, M)
-			to_chat(M, "<span class='notice'>You caress [src] with your scythe-like arm.</span>")
-			return FALSE
-		if ("grab")
-			grabbedby(M)
-			return FALSE
-		if("harm")
-			if(HAS_TRAIT(M, TRAIT_PACIFISM))
-				to_chat(M, "<span class='warning'>You don't want to hurt anyone!</span>")
-				return FALSE
-			M.do_attack_animation(src)
-			return TRUE
-		if("disarm")
-			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-			return TRUE
 
 /mob/living/attack_hulk(mob/living/carbon/human/user)
 	..()

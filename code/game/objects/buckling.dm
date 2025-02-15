@@ -39,16 +39,6 @@
 	return mouse_buckle_handling(carried_mob, user)
 
 //literally just the above extension of attack_hand(), but for silicons instead (with an adjacency check, since attack_robot() being called doesn't mean that you're adjacent to something)
-/atom/movable/attack_robot(mob/living/user)
-	. = ..()
-	if(.)
-		return
-	if(Adjacent(user) && can_buckle && has_buckled_mobs())
-		if(buckled_mobs.len > 1)
-			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sortNames(buckled_mobs)
-			return user_unbuckle_mob(unbuckled,user)
-		else
-			return user_unbuckle_mob(buckled_mobs[1], user)
 
 /atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()

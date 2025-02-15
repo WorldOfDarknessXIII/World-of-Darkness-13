@@ -54,14 +54,6 @@
 		return TRUE
 
 
-/mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
-		var/obj/item/clothing/CS = wear_suit
-		var/obj/item/clothing/CH = head
-		if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
-			return ONE_ATMOSPHERE
-	return pressure
-
 
 /mob/living/carbon/human/handle_traits()
 	if (getOrganLoss(ORGAN_SLOT_BRAIN) >= 60)

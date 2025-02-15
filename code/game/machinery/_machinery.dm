@@ -473,26 +473,7 @@
 	var/damage = damage_deflection / 10
 	arm.receive_damage(brute=damage, wound_bonus = CANT_WOUND)
 
-/obj/machinery/attack_robot(mob/user)
-	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !isAdminGhostAI(user))
-		return FALSE
-	if(Adjacent(user) && can_buckle && has_buckled_mobs()) //so that borgs (but not AIs, sadly (perhaps in a future PR?)) can unbuckle people from machines
-		if(buckled_mobs.len > 1)
-			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sortNames(buckled_mobs)
-			if(user_unbuckle_mob(unbuckled,user))
-				return TRUE
-		else
-			if(user_unbuckle_mob(buckled_mobs[1],user))
-				return TRUE
-	return _try_interact(user)
 
-/obj/machinery/attack_ai(mob/user)
-	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !isAdminGhostAI(user))
-		return FALSE
-	if(iscyborg(user))// For some reason attack_robot doesn't work
-		return attack_robot(user)
-	else
-		return _try_interact(user)
 
 /obj/machinery/_try_interact(mob/user)
 	if((interaction_flags_machine & INTERACT_MACHINE_WIRES_IF_OPEN) && panel_open && (attempt_wire_interaction(user) == WIRE_INTERACTION_BLOCK))

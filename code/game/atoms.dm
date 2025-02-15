@@ -443,8 +443,6 @@
  */
 /atom/proc/emp_act(severity)
 	var/protection = SEND_SIGNAL(src, COMSIG_ATOM_EMP_ACT, severity)
-	if(!(protection & EMP_PROTECT_WIRES) && istype(wires))
-		wires.emp_pulse()
 	return protection // Pass the protection value collected here upwards
 
 /**
@@ -1479,13 +1477,6 @@
 	var/area/A = get_area(T)
 	if(A.has_gravity) // Areas which always has gravity
 		return A.has_gravity
-	else
-		// There's a gravity generator on our z level
-		if(GLOB.gravity_generators["[T.z]"])
-			var/max_grav = 0
-			for(var/obj/machinery/gravity_generator/main/G in GLOB.gravity_generators["[T.z]"])
-				max_grav = max(G.setting,max_grav)
-			return max_grav
 	return SSmapping.level_trait(T.z, ZTRAIT_GRAVITY)
 
 /**

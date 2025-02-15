@@ -931,9 +931,6 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
  * * value_in_kpa - Value that should be converted to readable text in kPa
  * * maxdecimals - maximum number of decimals that are displayed, defaults to 1 in proc/siunit()
  */
-/proc/siunit_pressure(value_in_kpa, maxdecimals)
-	var/pressure_adj = value_in_kpa * 1000 //to adjust for using kPa instead of Pa
-	return siunit(pressure_adj, "Pa", maxdecimals)
 
 /// Slightly expensive proc to scramble a message using equal probabilities of character replacement from a list. DOES NOT SUPPORT HTML!
 /proc/scramble_message_replace_chars(original, replaceprob = 25, list/replacementchars = list("$", "@", "!", "#", "%", "^", "&", "*"), replace_letters_only = FALSE, replace_whitespace = FALSE)

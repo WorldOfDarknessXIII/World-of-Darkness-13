@@ -179,11 +179,6 @@
 	else
 		alarm(user)
 
-/obj/machinery/firealarm/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/firealarm/attack_robot(mob/user)
-	return attack_hand(user)
 
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)

@@ -58,8 +58,6 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/sign/barsign/attack_ai(mob/user)
-	return attack_hand(user)
 
 /obj/structure/sign/barsign/attack_hand(mob/user)
 	. = ..()

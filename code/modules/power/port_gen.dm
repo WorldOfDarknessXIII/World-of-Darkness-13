@@ -221,8 +221,6 @@
 	obj_flags |= EMAGGED
 	emp_act(EMP_HEAVY)
 
-/obj/machinery/power/port_gen/pacman/attack_ai(mob/user)
-	interact(user)
 
 /obj/machinery/power/port_gen/pacman/attack_paw(mob/user)
 	interact(user)

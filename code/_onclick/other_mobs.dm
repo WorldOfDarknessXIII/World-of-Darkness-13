@@ -124,11 +124,6 @@
 /mob/living/carbon/alien/UnarmedAttack(atom/A)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
-	A.attack_alien(src)
-
-/atom/proc/attack_alien(mob/living/carbon/alien/user)
-	attack_paw(user)
-	return
 
 
 // Babby aliens
@@ -141,31 +136,6 @@
 	return
 
 
-/*
-	Slimes
-	Nothing happening here
-*/
-/mob/living/simple_animal/slime/UnarmedAttack(atom/A)
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-		return
-	if(isturf(A))
-		return ..()
-	A.attack_slime(src)
-
-/atom/proc/attack_slime(mob/user)
-	return
-
-
-/*
-	Drones
-*/
-/mob/living/simple_animal/drone/UnarmedAttack(atom/A)
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-		return
-	A.attack_drone(src)
-
-/atom/proc/attack_drone(mob/living/simple_animal/drone/user)
-	attack_hand(user) //defaults to attack_hand. Override it when you don't want drones to do same stuff as humans.
 
 
 /*

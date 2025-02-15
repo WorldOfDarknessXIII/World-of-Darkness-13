@@ -179,10 +179,6 @@
 	return try_to_activate_door(user)
 
 
-/obj/machinery/door/attack_tk(mob/user)
-	if(requiresID() && !allowed(null))
-		return
-	return ..()
 
 
 /obj/machinery/door/proc/try_to_activate_door(mob/user)
@@ -307,7 +303,6 @@
 	update_icon()
 	set_opacity(0)
 	operating = FALSE
-	air_update_turf(TRUE, FALSE)
 	update_freelook_sight()
 	if(autoclose)
 		autoclose_in(DOOR_CLOSE_WAIT)
@@ -375,9 +370,6 @@
 		//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
 		L.add_splatter_floor(location)
 		log_combat(src, L, "crushed")
-	for(var/obj/vehicle/sealed/mecha/M in get_turf(src))
-		M.take_damage(DOOR_CRUSH_DAMAGE)
-		log_combat(src, M, "crushed")
 
 /obj/machinery/door/proc/autoclose()
 	if(!QDELETED(src) && !density && !operating && !locked && !welded && autoclose)

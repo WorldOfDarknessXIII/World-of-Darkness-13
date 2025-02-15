@@ -382,9 +382,6 @@
 /obj/structure/closet/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/closet/attack_robot(mob/user)
-	if(user.Adjacent(src))
-		return attack_hand(user)
 
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user)

@@ -14,11 +14,6 @@
 		return FALSE
 	return ..()
 
-/obj/machinery/computer/shuttle/ferry/attack_ai()
-	return allow_silicons ? ..() : FALSE
-
-/obj/machinery/computer/shuttle/ferry/attack_robot()
-	return allow_silicons ? ..() : FALSE
 
 /obj/machinery/computer/shuttle/ferry/request
 	name = "ferry console"

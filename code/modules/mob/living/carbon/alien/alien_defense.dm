@@ -13,41 +13,6 @@
 As such, they can either help or harm other aliens. Help works like the human help command while harm is a simple nibble.
 In all, this is a lot like the monkey code. /N
 */
-/mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M)
-	if(isturf(loc) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-
-	switch(M.a_intent)
-
-		if ("help")
-			if(M == src && check_self_for_injuries())
-				return
-			set_resting(FALSE)
-			AdjustStun(-60)
-			AdjustKnockdown(-60)
-			AdjustImmobilized(-60)
-			AdjustParalyzed(-60)
-			AdjustUnconscious(-60)
-			AdjustSleeping(-100)
-			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
-
-		if ("grab")
-			grabbedby(M)
-
-		else
-			if(health > 0)
-				M.do_attack_animation(src, ATTACK_EFFECT_BITE)
-				playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
-				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-								"<span class='userdanger'>[M.name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, M)
-				to_chat(M, "<span class='danger'>You bite [src]!</span>")
-				adjustBruteLoss(1)
-				log_combat(M, src, "attacked")
-				updatehealth()
-			else
-				to_chat(M, "<span class='warning'>[name] is too injured for that.</span>")
-
 
 /mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L)
 	return attack_alien(L)
@@ -97,14 +62,6 @@ In all, this is a lot like the monkey code. /N
 			if(STAMINA)
 				adjustStaminaLoss(damage)
 
-/mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M)
-	if(..()) //successful slime attack
-		var/damage = rand(5, 35)
-		if(M.is_adult)
-			damage = rand(10, 40)
-		adjustBruteLoss(damage)
-		log_combat(M, src, "attacked")
-		updatehealth()
 
 /mob/living/carbon/alien/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))

@@ -670,21 +670,6 @@
 		. += "<span class='notice'>Alt-click [src] to [ secondsElectrified ? "un-electrify" : "permanently electrify"] it.</span>"
 		. += "<span class='notice'>Ctrl-Shift-click [src] to [ emergency ? "disable" : "enable"] emergency access.</span>"
 
-/obj/machinery/door/airlock/attack_ai(mob/user)
-	if(!canAIControl(user))
-		if(canAIHack())
-			hack(user)
-			return
-		else
-			to_chat(user, "<span class='warning'>Airlock AI control has been blocked with a firewall. Unable to hack.</span>")
-	if(obj_flags & EMAGGED)
-		to_chat(user, "<span class='warning'>Unable to interface: Airlock is unresponsive.</span>")
-		return
-	if(detonated)
-		to_chat(user, "<span class='warning'>Unable to interface. Airlock control panel damaged.</span>")
-		return
-
-	ui_interact(user)
 
 /obj/machinery/door/airlock/proc/hack(mob/user)
 	set waitfor = 0
@@ -1256,30 +1241,6 @@
 		loseMainPower()
 		loseBackupPower()
 
-/obj/machinery/door/airlock/attack_alien(mob/living/carbon/alien/humanoid/user)
-	if(isElectrified() && shock(user, 100)) //Mmm, fried xeno!
-		add_fingerprint(user)
-		return
-	if(!density) //Already open
-		return ..()
-	if(locked || welded || seal) //Extremely generic, as aliens only understand the basics of how airlocks work.
-		if(user.a_intent == INTENT_HARM)
-			return ..()
-		to_chat(user, "<span class='warning'>[src] refuses to budge!</span>")
-		return
-	add_fingerprint(user)
-	user.visible_message("<span class='warning'>[user] begins prying open [src].</span>",\
-						"<span class='noticealien'>You begin digging your claws into [src] with all your might!</span>",\
-						"<span class='warning'>You hear groaning metal...</span>")
-	var/time_to_open = 5 //half a second
-	if(hasPower())
-		time_to_open = 5 SECONDS //Powered airlocks take longer to open, and are loud.
-		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
-
-
-	if(do_after(user, time_to_open, src))
-		if(density && !open(2)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
-			to_chat(user, "<span class='warning'>Despite your efforts, [src] managed to resist your attempts to open it!</span>")
 
 /obj/machinery/door/airlock/hostile_lockdown(mob/origin)
 	// Must be powered and have working AI wire.

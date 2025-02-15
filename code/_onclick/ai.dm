@@ -93,8 +93,6 @@
 /mob/living/silicon/ai/RangedAttack(atom/A)
 	A.attack_ai(src)
 
-/atom/proc/attack_ai(mob/user)
-	return
 
 /*
 	Since the AI handles shift, ctrl, and alt-click differently

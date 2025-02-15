@@ -100,9 +100,6 @@
 
 	if(loc)
 		//Restore air flow if we were blocking it (movables with ATMOS_PASS_PROC will need to do this manually if necessary)
-		if(((CanAtmosPass == ATMOS_PASS_DENSITY && density) || CanAtmosPass == ATMOS_PASS_NO) && isturf(loc))
-			CanAtmosPass = ATMOS_PASS_YES
-			air_update_turf(TRUE, FALSE)
 		loc.handle_atom_del(src)
 
 	if(opacity)
@@ -638,19 +635,6 @@
 
 	return FALSE
 
-
-/// Only moves the object if it's under no gravity
-/atom/movable/proc/newtonian_move(direction)
-	if(!isturf(loc) || Process_Spacemove(0))
-		inertia_dir = 0
-		return FALSE
-
-	inertia_dir = direction
-	if(!direction)
-		return TRUE
-	inertia_last_loc = loc
-	SSspacedrift.processing[src] = src
-	return TRUE
 
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	set waitfor = FALSE

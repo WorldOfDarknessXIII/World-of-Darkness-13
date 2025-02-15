@@ -99,11 +99,6 @@
 			else
 				step_towards(I, src)
 
-/obj/machinery/dish_drive/attack_ai(mob/living/user)
-	if(machine_stat)
-		return
-	to_chat(user, "<span class='notice'>You send a disposal transmission signal to [src].</span>")
-	do_the_dishes(TRUE)
 
 /obj/machinery/dish_drive/AltClick(mob/living/user)
 	if(user.canUseTopic(src, !issilicon(user)))

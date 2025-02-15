@@ -447,25 +447,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(!user.put_in_active_hand(src, FALSE, FALSE))
 		user.dropItemToGround(src)
 
-/obj/item/attack_alien(mob/user)
-	var/mob/living/carbon/alien/A = user
 
-	if(!user.can_hold_items(src))
-		if(src in A.contents) // To stop Aliens having items stuck in their pockets
-			A.dropItemToGround(src)
-		to_chat(user, "<span class='warning'>Your claws aren't capable of such fine manipulation!</span>")
-		return
-	attack_paw(A)
-
-/obj/item/attack_ai(mob/user)
-	if(istype(src.loc, /obj/item/robot_model))
-		//If the item is part of a cyborg module, equip it
-		if(!iscyborg(user))
-			return
-		var/mob/living/silicon/robot/R = user
-		if(!R.low_power_mode) //can't equip modules with an empty cell.
-			R.activate_module(src)
-			R.hud_used.update_robot_modules_display()
 
 /obj/item/proc/GetDeconstructableContents()
 	return GetAllContents() - src

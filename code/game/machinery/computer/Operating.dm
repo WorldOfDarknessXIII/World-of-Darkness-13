@@ -47,11 +47,7 @@
 		if(table)
 			table.computer = src
 			break
-		else
-			sbed = locate(/obj/machinery/stasis) in get_step(src, direction)
-			if(sbed)
-				sbed.op_computer = src
-				break
+
 
 /obj/machinery/computer/operating/ui_state(mob/user)
 	return GLOB.not_incapacitated_state
@@ -80,15 +76,8 @@
 		data["patient"] = list()
 		patient = table.patient
 	else
-		if(sbed)
-			data["table"] = sbed
-			if(!ishuman(sbed.occupant))
-				return data
-			data["patient"] = list()
-			patient = sbed.occupant
-		else
-			data["patient"] = null
-			return data
+		data["patient"] = null
+		return data
 	switch(patient.stat)
 		if(CONSCIOUS)
 			data["patient"]["stat"] = "Conscious"
@@ -139,10 +128,6 @@
 	. = ..()
 	if(.)
 		return
-	switch(action)
-		if("sync")
-			sync_surgeries()
-			. = TRUE
 	. = TRUE
 
 #undef MENU_OPERATION

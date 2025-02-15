@@ -873,8 +873,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/attack_paw(mob/user)
 	dust_mob(user, cause = "monkey attack")
 
-/obj/machinery/power/supermatter_crystal/attack_alien(mob/user)
-	dust_mob(user, cause = "alien attack")
 
 /obj/machinery/power/supermatter_crystal/attack_animal(mob/living/simple_animal/S)
 	var/murder
@@ -887,12 +885,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	"<span class='userdanger'>You unwisely touch [src], and your vision glows brightly as your body crumbles to dust. Oops.</span>", \
 	"simple animal attack")
 
-/obj/machinery/power/supermatter_crystal/attack_robot(mob/user)
-	if(Adjacent(user))
-		dust_mob(user, cause = "cyborg attack")
 
-/obj/machinery/power/supermatter_crystal/attack_ai(mob/user)
-	return
 
 /obj/machinery/power/supermatter_crystal/attack_hand(mob/living/user)
 	. = ..()

@@ -117,8 +117,6 @@
 	else
 		return ..()
 
-/obj/machinery/navbeacon/attack_ai(mob/user)
-	interact(user, 1)
 
 /obj/machinery/navbeacon/attack_paw()
 	return

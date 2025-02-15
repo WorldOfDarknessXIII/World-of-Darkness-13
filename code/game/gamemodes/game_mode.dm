@@ -237,7 +237,6 @@
 				message_admins("The roundtype ([config_tag]) has no antagonists, continuous round has been defaulted to on and midround_antag has been defaulted to off.")
 				continuous[config_tag] = TRUE
 				midround_antag[config_tag] = FALSE
-				SSshuttle.clearHostileEnvironment(src)
 				return FALSE
 
 
@@ -422,7 +421,6 @@
 								<i>The following positions have been reopened on our behalf:<br><br>\
 								[reopened_job_report_positions]</i>"
 
-			print_command_report(suicide_command_report, "Central Command Personnel Update")
 
 //////////////////////////
 //Reports player logouts//
@@ -504,26 +502,6 @@
 
 	return max(0, enemy_minimum_age - C.player_age)
 
-/datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)
-	SSticker.mode.remove_cultist(newborgie, 0, 0)
-	var/datum/antagonist/rev/rev = newborgie.has_antag_datum(/datum/antagonist/rev)
-	if(rev)
-		rev.remove_revolutionary(TRUE)
-
-/datum/game_mode/proc/generate_station_goals()
-	var/list/possible = list()
-	for(var/T in subtypesof(/datum/station_goal))
-		var/datum/station_goal/G = T
-		if(config_tag in initial(G.gamemode_blacklist))
-			continue
-		possible += T
-	var/goal_weights = 0
-	while(possible.len && goal_weights < STATION_GOAL_BUDGET)
-		var/datum/station_goal/picked = pick_n_take(possible)
-		goal_weights += initial(picked.weight)
-		station_goals += new picked
-
-
 /datum/game_mode/proc/generate_report() //Generates a small text blurb for the gamemode in centcom report
 	return "Gamemode report for [name] not set.  Contact a coder."
 
@@ -542,11 +520,6 @@
 	SSticker.mode_result = "undefined"
 	if(station_was_nuked)
 		SSticker.news_report = STATION_DESTROYED_NUKE
-	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
-		SSticker.news_report = STATION_EVACUATED
-		if(SSshuttle.emergency.is_hijacked())
-			SSticker.news_report = SHUTTLE_HIJACK
-
 /// Mode specific admin panel.
 /datum/game_mode/proc/admin_panel()
 	return

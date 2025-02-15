@@ -66,24 +66,6 @@
 	. = ..()
 	. += "Intent: [a_intent]"
 	. += "Move Mode: [m_intent]"
-	if (internal)
-		if (!internal.air_contents)
-			qdel(internal)
-		else
-			. += ""
-			. += "Internal Atmosphere Info: [internal.name]"
-			. += "Tank Pressure: [internal.air_contents.return_pressure()]"
-			. += "Distribution Pressure: [internal.distribute_pressure]"
-	if(istype(wear_suit, /obj/item/clothing/suit/space))
-		var/obj/item/clothing/suit/space/S = wear_suit
-		. += "Thermal Regulator: [S.thermal_on ? "on" : "off"]"
-		. += "Cell Charge: [S.cell ? "[round(S.cell.percent(), 0.1)]%" : "!invalid!"]"
-	if(mind)
-		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling)
-			. += ""
-			. += "Chemical Storage: [changeling.chem_charges]/[changeling.chem_storage]"
-			. += "Absorbed DNA: [changeling.absorbedcount]"
 
 /mob/living/carbon/human/show_inv(mob/user)
 	user.set_machine(src)

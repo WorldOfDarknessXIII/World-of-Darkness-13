@@ -9,7 +9,7 @@
 	///The type of cleaning required to clean the decal, CLEAN_TYPE_LIGHT_DECAL can be cleaned with mops and soap, CLEAN_TYPE_HARD_DECAL can be cleaned by soap, see __DEFINES/cleaning.dm for the others
 	var/clean_type = CLEAN_TYPE_LIGHT_DECAL
 
-/obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
+/obj/effect/decal/cleanable/Initialize(mapload)
 	. = ..()
 	if(istype(get_area(src), /area/vtm))
 		var/area/vtm/V = get_area(src)
@@ -23,14 +23,6 @@
 			if(C != src && C.type == type && !QDELETED(C))
 				if (replace_decal(C))
 					return INITIALIZE_HINT_QDEL
-
-	if(LAZYLEN(diseases))
-		var/list/datum/disease/diseases_to_add = list()
-		for(var/datum/disease/D in diseases)
-			if(D.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
-				diseases_to_add += D
-		if(LAZYLEN(diseases_to_add))
-			AddComponent(/datum/component/infective, diseases_to_add)
 
 	AddComponent(/datum/component/beauty, beauty)
 

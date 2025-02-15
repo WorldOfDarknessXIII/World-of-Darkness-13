@@ -93,8 +93,6 @@
 /obj/item/powersink/attack_paw()
 	return
 
-/obj/item/powersink/attack_ai()
-	return
 
 /obj/item/powersink/attack_hand(mob/user)
 	. = ..()

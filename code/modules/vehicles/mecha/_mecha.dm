@@ -774,32 +774,6 @@
 //////////// AI piloting ////////////
 /////////////////////////////////////
 
-/obj/vehicle/sealed/mecha/attack_ai(mob/living/silicon/ai/user)
-	if(!isAI(user))
-		return
-	//Allows the Malf to scan a mech's status and loadout, helping it to decide if it is a worthy chariot.
-	if(user.can_dominate_mechs)
-		examine(user) //Get diagnostic information!
-		for(var/obj/item/mecha_parts/mecha_tracking/B in trackers)
-			to_chat(user, "<span class='danger'>Warning: Tracking Beacon detected. Enter at your own risk. Beacon Data:</span>")
-			to_chat(user, "[B.get_mecha_info()]")
-			break
-		//Nothing like a big, red link to make the player feel powerful!
-		to_chat(user, "<a href='?src=[REF(user)];ai_take_control=[REF(src)]'><span class='userdanger'>ASSUME DIRECT CONTROL?</span></a><br>")
-	else
-		examine(user)
-		if(length(return_drivers()) > 0)
-			to_chat(user, "<span class='warning'>This exosuit has a pilot and cannot be controlled.</span>")
-			return
-		var/can_control_mech = 0
-		for(var/obj/item/mecha_parts/mecha_tracking/ai_control/A in trackers)
-			can_control_mech = 1
-			to_chat(user, "<span class='notice'>[icon2html(src, user)] Status of [name]:</span>\n[A.get_mecha_info()]")
-			break
-		if(!can_control_mech)
-			to_chat(user, "<span class='warning'>You cannot control exosuits without AI control beacons installed.</span>")
-			return
-		to_chat(user, "<a href='?src=[REF(user)];ai_take_control=[REF(src)]'><span class='boldnotice'>Take control of exosuit?</span></a><br>")
 
 /obj/vehicle/sealed/mecha/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	. = ..()

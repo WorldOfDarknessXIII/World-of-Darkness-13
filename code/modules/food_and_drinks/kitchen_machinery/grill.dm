@@ -115,8 +115,6 @@
 		new /obj/item/stack/rods(loc, 5)
 	..()
 
-/obj/machinery/grill/attack_ai(mob/user)
-	return
 
 /obj/machinery/grill/attack_hand(mob/user)
 	if(grilled_item)

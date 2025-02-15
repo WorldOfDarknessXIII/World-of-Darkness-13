@@ -334,20 +334,6 @@ Possible to do for anyone motivated enough:
 		HC.Disconnect(src)
 
 //do not allow AIs to answer calls or people will use it to meta the AI sattelite
-/obj/machinery/holopad/attack_ai(mob/living/silicon/ai/user)
-	if (!istype(user))
-		return
-	if (!on_network)
-		return
-	/*There are pretty much only three ways to interact here.
-	I don't need to check for client since they're clicking on an object.
-	This may change in the future but for now will suffice.*/
-	if(user.eyeobj.loc != src.loc)//Set client eye on the object if it's not already.
-		user.eyeobj.setLoc(get_turf(src))
-	else if(!LAZYLEN(masters) || !masters[user])//If there is no hologram, possibly make one.
-		activate_holo(user)
-	else//If there is a hologram, remove it.
-		clear_holo(user)
 
 /obj/machinery/holopad/process()
 	if(LAZYLEN(masters))

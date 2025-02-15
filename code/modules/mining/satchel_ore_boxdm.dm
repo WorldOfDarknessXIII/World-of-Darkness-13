@@ -41,9 +41,6 @@
 	if(Adjacent(user))
 		ui_interact(user)
 
-/obj/structure/ore_box/attack_robot(mob/user)
-	if(Adjacent(user))
-		ui_interact(user)
 
 /obj/structure/ore_box/proc/dump_box_contents()
 	var/drop = drop_location()

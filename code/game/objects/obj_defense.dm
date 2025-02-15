@@ -102,14 +102,7 @@
 			return
 	take_damage(400, BRUTE, MELEE, 0, get_dir(src, B))
 
-/obj/proc/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, armor_penetration = 0) //used by attack_alien, attack_animal, and attack_slime
-	user.do_attack_animation(src)
-	user.changeNext_move(CLICK_CD_MELEE)
-	return take_damage(damage_amount, damage_type, damage_flag, sound_effect, get_dir(src, user), armor_penetration)
 
-/obj/attack_alien(mob/living/carbon/alien/humanoid/user)
-	if(attack_generic(user, 60, BRUTE, MELEE, 0))
-		playsound(src.loc, 'sound/weapons/slash.ogg', 100, TRUE)
 
 /obj/attack_animal(mob/living/simple_animal/M)
 	if(!M.melee_damage_upper && !M.obj_damage)
@@ -136,11 +129,6 @@
 /obj/proc/collision_damage(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	var/amt = max(0, ((force - (move_resist * MOVE_FORCE_CRUSH_RATIO)) / (move_resist * MOVE_FORCE_CRUSH_RATIO)) * 10)
 	take_damage(amt, BRUTE)
-
-/obj/attack_slime(mob/living/simple_animal/slime/user)
-	if(!user.is_adult)
-		return
-	attack_generic(user, rand(10, 15), BRUTE, MELEE, 1)
 
 
 /obj/singularity_act()

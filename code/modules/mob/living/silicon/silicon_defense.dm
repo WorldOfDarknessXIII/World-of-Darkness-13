@@ -5,25 +5,6 @@
 /mob/living/silicon/get_ear_protection()//no ears
 	return 2
 
-/mob/living/silicon/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(..()) //if harm or disarm intent
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		if (prob(90))
-			log_combat(M, src, "attacked")
-			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
-			visible_message("<span class='danger'>[M] slashes at [src]!</span>", \
-							"<span class='userdanger'>[M] slashes at you!</span>", null, null, M)
-			to_chat(M, "<span class='danger'>You slash at [src]!</span>")
-			if(prob(8))
-				flash_act(affect_silicon = 1)
-			log_combat(M, src, "attacked")
-			adjustBruteLoss(damage)
-			updatehealth()
-		else
-			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, TRUE, -1)
-			visible_message("<span class='danger'>[M]'s swipe misses [src]!</span>", \
-							"<span class='danger'>You avoid [M]'s swipe!</span>", null, null, M)
-			to_chat(M, "<span class='warning'>Your swipe misses [src]!</span>")
 
 /mob/living/silicon/attack_animal(mob/living/simple_animal/M)
 	. = ..()

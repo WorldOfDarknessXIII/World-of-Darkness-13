@@ -30,11 +30,6 @@
 			active_apc.remote_control = null
 			active_apc = null
 
-/obj/machinery/computer/apc_control/attack_ai(mob/user)
-	if(!isAdminGhostAI(user))
-		to_chat(user,"<span class='warning'>[src] does not support AI control.</span>") //You already have APC access, cheater!
-		return
-	..()
 
 /obj/machinery/computer/apc_control/proc/check_apc(obj/machinery/power/apc/APC)
 	return APC.z == z && !APC.malfhack && !APC.aidisabled && !(APC.obj_flags & EMAGGED) && !APC.machine_stat && !istype(APC.area, /area/ai_monitored) && !(APC.area.area_flags & NO_ALERTS)

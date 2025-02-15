@@ -297,11 +297,6 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/bot/attack_ai(mob/user)
-	if(!topic_denied(user))
-		interact(user)
-	else
-		to_chat(user, "<span class='warning'>[src]'s interface is not responding!</span>")
 
 /mob/living/simple_animal/bot/interact(mob/user)
 	show_controls(user)

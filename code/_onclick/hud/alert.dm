@@ -202,15 +202,7 @@
 	desc = "You're freezing cold! Get somewhere warmer and take off any insulating clothing like a space suit."
 	icon_state = "cold"
 
-/atom/movable/screen/alert/lowpressure
-	name = "Low Pressure"
-	desc = "The air around you is hazardously thin. A space suit would protect you."
-	icon_state = "lowpressure"
 
-/atom/movable/screen/alert/highpressure
-	name = "High Pressure"
-	desc = "The air around you is hazardously thick. A fire suit would protect you."
-	icon_state = "highpressure"
 
 /atom/movable/screen/alert/blind
 	name = "Blind"

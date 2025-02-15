@@ -928,11 +928,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	obj_flags |= EMAGGED
 	locked = FALSE
 
-/obj/machinery/turretid/attack_ai(mob/user)
-	if(!ailock || isAdminGhostAI(user))
-		return attack_hand(user)
-	else
-		to_chat(user, "<span class='warning'>There seems to be a firewall preventing you from accessing this device!</span>")
 
 /obj/machinery/turretid/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

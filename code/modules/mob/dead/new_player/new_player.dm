@@ -355,16 +355,6 @@
 //		alert(src, "Global Masquerade level is too low!")
 //		return FALSE
 
-	var/arrivals_docked = TRUE
-	if(SSshuttle.arrivals)
-		close_spawn_windows()	//In case we get held up
-		if(SSshuttle.arrivals.damaged && CONFIG_GET(flag/arrivals_shuttle_require_safe_latejoin))
-			src << alert("The arrivals shuttle is currently malfunctioning! You cannot join.")
-			return FALSE
-
-		if(CONFIG_GET(flag/arrivals_shuttle_require_undocked))
-			SSshuttle.arrivals.RequireUndocked(src)
-		arrivals_docked = SSshuttle.arrivals.mode != SHUTTLE_CALL
 
 	//Remove the player from the join queue if he was in one and reset the timer
 	SSticker.queued_players -= src
@@ -408,12 +398,6 @@
 		humanc.increment_scar_slot()
 		humanc.load_persistent_scars()
 
-		if(GLOB.summon_guns_triggered)
-			give_guns(humanc)
-		if(GLOB.summon_magic_triggered)
-			give_magic(humanc)
-		if(GLOB.curse_of_madness_triggered)
-			give_madness(humanc, GLOB.curse_of_madness_triggered)
 
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CREWMEMBER_JOINED, humanc, rank)
 

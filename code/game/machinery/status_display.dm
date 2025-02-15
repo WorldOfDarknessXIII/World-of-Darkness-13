@@ -330,20 +330,6 @@
 	GLOB.ai_status_displays.Remove(src)
 	. = ..()
 
-/obj/machinery/status_display/ai/attack_ai(mob/living/silicon/ai/user)
-	if(!isAI(user))
-		return
-	var/list/choices = list()
-	for(var/emotion_const in emotion_map)
-		var/icon_state = emotion_map[emotion_const]
-		choices[emotion_const] = image(icon = 'icons/obj/status_display.dmi', icon_state = icon_state)
-
-	var/emotion_result = show_radial_menu(user, src, choices, tooltips = TRUE)
-	for(var/_emote in typesof(/datum/emote/ai/emotion_display))
-		var/datum/emote/ai/emotion_display/emote = _emote
-		if(initial(emote.emotion) == emotion_result)
-			user.emote(initial(emote.key))
-			break
 
 /obj/machinery/status_display/ai/process()
 	if(machine_stat & NOPOWER)

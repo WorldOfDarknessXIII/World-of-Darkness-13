@@ -81,9 +81,6 @@
 		var/datum/action/A = V
 		A.Remove(user)
 	actions.Cut()
-	for(var/V in eyeobj.visibleCameraChunks)
-		var/datum/camerachunk/C = V
-		C.remove(eyeobj)
 	if(user.client)
 		user.reset_perspective(null)
 		if(eyeobj.visible_icon && user.client)
@@ -114,11 +111,6 @@
 
 /obj/machinery/computer/camera_advanced/proc/can_use(mob/living/user)
 	return can_interact(user)
-
-/obj/machinery/computer/camera_advanced/abductor/can_use(mob/user)
-	if(!isabductor(user))
-		return FALSE
-	return ..()
 
 /obj/machinery/computer/camera_advanced/attack_hand(mob/user)
 	. = ..()
@@ -163,11 +155,7 @@
 		give_eye_control(L)
 		eyeobj.setLoc(eyeobj.loc)
 
-/obj/machinery/computer/camera_advanced/attack_robot(mob/user)
-	return attack_hand(user)
 
-/obj/machinery/computer/camera_advanced/attack_ai(mob/user)
-	return //AIs would need to disable their own camera procs to use the console safely. Bugs happen otherwise.
 
 /obj/machinery/computer/camera_advanced/proc/give_eye_control(mob/user)
 	GrantActions(user)
