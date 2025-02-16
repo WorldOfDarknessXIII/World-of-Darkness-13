@@ -8,20 +8,22 @@
 	id = /obj/item/card/id/police/national_guard
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	belt = /obj/item/gun/ballistic/automatic/vampire/aug
-	suit = /obj/item/clothing/suit/vampire/vest/army
+	suit = /obj/item/clothing/suit/vampire/vest/army/medium
 	head = /obj/item/clothing/head/vampire/army
+	gloves = /obj/item/clothing/gloves/vampire/work
 	backpack_contents = list(
 		/obj/item/ammo_box/magazine/vampaug = 3,
 		/obj/item/radio/military = 1,
 		/obj/item/ammo_box/vampire/c556 = 1,
 		/obj/item/storage/firstaid/ifak = 1,
 		/obj/item/restraints/handcuffs = 2,
-		/obj/item/grenade/smokebomb = 2
+		/obj/item/grenade/smokebomb = 2,
+		/obj/item/clothing/mask/vampire/gasmask = 1
 		)
 
 /datum/outfit/job/national_guard/ammo_carrier
 	name = "National Guard Ammo Carrier"
-	suit = /obj/item/clothing/suit/vampire/vest/army/lightmid
+	suit = /obj/item/clothing/suit/vampire/vest/army/lightmedium
 	backpack_contents = list(
 		/obj/item/ammo_box/magazine/vampaug = 3,
 		/obj/item/radio/military = 1,
@@ -29,7 +31,8 @@
 		/obj/item/ammo_box/vampire/c12g/buck = 1,
 		/obj/item/storage/firstaid/ifak = 1,
 		/obj/item/ammo_box/c9mm = 1,
-		/obj/item/ammo_box/vampire/c762 = 1
+		/obj/item/ammo_box/vampire/c762 = 1,
+		/obj/item/clothing/mask/vampire/gasmask = 1
 		)
 
 /datum/outfit/job/national_guard/medic
@@ -43,13 +46,14 @@
 		/obj/item/radio/military = 1,
 		/obj/item/storage/firstaid/medical = 1,
 		/obj/item/storage/firstaid/tactical = 1,
+		/obj/item/clothing/mask/vampire/gasmask = 1,
 		/obj/item/gun/ballistic/automatic/vampire/mp5 = 1
 		)
 
 /datum/outfit/job/national_guard/flamer
 	name = "National Guard Flametrooper"
-	suit = /obj/item/clothing/suit/vampire/vest/army/heavy
-	mask = /obj/item/clothing/mask/vampire/gasmask/ng
+	suit = /obj/item/clothing/suit/vampire/vest/army
+	mask = /obj/item/clothing/mask/vampire/gasmask
 	head = /obj/item/clothing/head/vampire/army
 	belt = /obj/item/vampire_flamethrower
 	backpack_contents = list(
@@ -65,7 +69,7 @@
 /datum/outfit/job/national_guard/breacher
 	name = "National Guard Breacher"
 	suit = /obj/item/clothing/suit/vampire/vest/eod
-	mask = /obj/item/clothing/mask/vampire/gasmask/ng
+	mask = /obj/item/clothing/mask/vampire/gasmask
 	head = /obj/item/clothing/head/vampire/eod
 	l_pocket = /obj/item/grenade/smokebomb
 	belt = /obj/item/gun/ballistic/automatic/vampire/autoshotgun
@@ -81,7 +85,7 @@
 
 /datum/outfit/job/national_guard/sniper
 	name = "National Guard Marksman"
-	suit = /obj/item/clothing/suit/vampire/vest/army/lightmid
+	suit = /obj/item/clothing/suit/vampire/vest/army/lightmedium
 	belt = /obj/item/gun/ballistic/automatic/vampire/sniper/ng
 	l_pocket = 	/obj/item/ammo_box/magazine/glock9mm
 	backpack_contents = list(
@@ -107,8 +111,8 @@
 		/obj/item/storage/firstaid/ifak = 1,
 		/obj/item/restraints/handcuffs = 2,
 		/obj/item/grenade/smokebomb = 2,
-		/obj/item/gun/ballistic/vampire/deagle = 1,
-		/obj/item/ammo_box/magazine/m44 = 2,
+		/obj/item/gun/ballistic/automatic/vampire/glock21 = 1,
+		/obj/item/ammo_box/magazine/glock45acp = 2,
 		/obj/item/binoculars = 1
 		)
 
