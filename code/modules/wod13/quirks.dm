@@ -765,3 +765,20 @@ Dancer
 
 #undef SHORT
 #undef TALL
+
+/datum/quirk/kinfolk
+	name = "Kinfolk"
+	desc = "You feel a kinship with Garou. You will be expected to roleplay some level of spiritual or emotional connection to Garou. <b>Certain roles will not work with this trait.</b>"
+	value = 0
+	mob_trait = TRAIT_KINFOLK
+	allowed_species = list("Human") //They can be ghoul'd during the round, however it'd be reckless to let someone just play a Ghoul Kinfolk main off the bat.
+	
+/datum/quirk/kinfolk/post_add()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H.mind.assigned_role == ("Police Chief"))
+		to_chat(H, "<span class='danger'>What's this doohickey about animal people?! You don't have anything to do with this 'kinfolk' nonsense, and your soul is nothing but American through-and-through.</span>")
+		H.remove_quirk(/datum/quirk/kinfolk)
+	else if (H.mind.assigned_role == ("La Famiglia"))
+		to_chat(H, "<span class='danger'>You have Dunsirn blood in you, whether or not you actually have the last name, and worse you like wolves, pick your clan or tribe, because you know for a fact the Family doesn't like split loyalties.</span>")
+	else
+		to_chat(H, "<span class='notice'>You are a kinfolk. You could have been born into a Garou tribe, were introduced to a Garou tribe, or have yet to learn what Garou are. You are immune to delirium, but you should avoid picking fights with a werewolf if you are yet to be introduced to their society.</span>")
