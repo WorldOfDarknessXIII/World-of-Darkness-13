@@ -34,6 +34,14 @@
 	accesslocks = list("camarilla")
 	color = "#bd3327"
 
+/obj/item/vamp/keys/camarilla/harpy
+	name = "Harpy's Keys"
+	accesslocks = list(
+		"camarilla",
+		"milleniumCommon"
+	)
+	color = "#bd3327"
+
 /obj/item/vamp/keys/prince
 	name = "Prince's keys"
 	accesslocks = list(
@@ -111,6 +119,14 @@
 	name = "Archive keys"
 	accesslocks = list(
 		"archive"
+	)
+
+/obj/item/vamp/keys/archive/keepers
+	name = "Keeper of Elysium's keys"
+	accesslocks = list(
+		"archive",
+		"milleniumCommon",
+		"camarilla"
 	)
 
 /obj/item/vamp/keys/regent

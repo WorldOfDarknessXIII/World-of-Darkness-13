@@ -438,3 +438,29 @@
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	worn_icon = 'code/modules/wod13/worn.dmi'
 	worn_icon_state = "rubyBadge"
+
+/obj/item/card/id/keeper
+	name = "keeper's badge"
+	id_type_name = "keeper badge"
+	desc = "This badge entitles you to enforce the peace at Elysium."
+	icon = 'code/modules/wod13/items.dmi'
+	icon_state = "topazBadge"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	worn_icon_state = "topazBadge"
+
+/obj/item/card/id/harpy
+	name = "harpy's badge"
+	id_type_name = "harpy badge"
+	desc = "This badge entitles you to spread rumours and traffic in information."
+	icon = 'code/modules/wod13/items.dmi'
+	icon_state = "amethystBadge"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	worn_icon_state = "amethystBadge"
