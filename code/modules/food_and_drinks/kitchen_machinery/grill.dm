@@ -103,19 +103,6 @@
 		grilled_item = null
 	. = ..()
 
-/obj/machinery/grill/wrench_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(default_unfasten_wrench(user, I) != CANT_UNFASTEN)
-		return TRUE
-
-/obj/machinery/grill/deconstruct(disassembled = TRUE)
-	finish_grill()
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal(loc, 5)
-		new /obj/item/stack/rods(loc, 5)
-	..()
-
-
 /obj/machinery/grill/attack_hand(mob/user)
 	if(grilled_item)
 		to_chat(user, "<span class='notice'>You take out [grilled_item] from [src].</span>")

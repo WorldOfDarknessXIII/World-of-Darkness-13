@@ -163,10 +163,6 @@
 		return sheets.on_attack_floor(user, params)
 	return FALSE
 
-/turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
-	if(intact && pry_tile(I, user))
-		return TRUE
-
 /turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
 		return
@@ -300,14 +296,6 @@
 			new_furnish.setDir(user.dir)
 			return TRUE
 	return FALSE
-
-/turf/open/floor/material
-	name = "floor"
-	icon_state = "materialfloor"
-	floor_tile = /obj/item/stack/tile/material
-
-/turf/open/floor/material/has_tile()
-	return LAZYLEN(custom_materials)
 
 /turf/open/floor/material/spawn_tile()
 	. = ..()

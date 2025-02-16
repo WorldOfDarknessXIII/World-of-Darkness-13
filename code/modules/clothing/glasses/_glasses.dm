@@ -153,35 +153,6 @@
 	icon_state = "monocle"
 	inhand_icon_state = "headset" // lol
 
-/obj/item/clothing/glasses/material
-	name = "optical material scanner"
-	desc = "Very confusing glasses."
-	icon_state = "material"
-	inhand_icon_state = "glasses"
-	vision_flags = SEE_OBJS
-	glass_colour_type = /datum/client_colour/glass_colour/lightblue
-
-/obj/item/clothing/glasses/material/mining
-	name = "optical material scanner"
-	desc = "Used by miners to detect ores deep within the rock."
-	icon_state = "material"
-	inhand_icon_state = "glasses"
-	darkness_view = 0
-
-/obj/item/clothing/glasses/material/mining/gar
-	name = "gar material scanner"
-	icon_state = "garm"
-	inhand_icon_state = "garm"
-	desc = "Do the impossible, see the invisible!"
-	force = 10
-	throwforce = 20
-	throw_speed = 4
-	attack_verb_continuous = list("slices")
-	attack_verb_simple = list("slice")
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = SHARP_EDGED
-	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
-
 /obj/item/clothing/glasses/regular
 	name = "prescription glasses"
 	desc = "Made by Nerd. Co."

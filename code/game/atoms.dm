@@ -80,7 +80,7 @@
 	var/custom_acid_overlay = null
 
 	///The custom materials this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
-	///The list referenced by this var can be shared by multiple objects and should not be directly modified. Instead, use [set_custom_materials][/atom/proc/set_custom_materials].
+
 	var/list/custom_materials
 	///Bitfield for how the atom handles materials.
 	var/material_flags = NONE
@@ -233,7 +233,7 @@
 		SET_BITFLAG_LIST(canSmoothWith)
 
 	// apply materials properly from the default custom_materials value
-	set_custom_materials(custom_materials)
+
 
 	ComponentInitialize()
 	InitializeAIController()
@@ -1170,13 +1170,7 @@
 ///
 
 ///Crowbar act
-/atom/proc/crowbar_act(mob/living/user, obj/item/I)
-	return
-
 ///Multitool act
-/atom/proc/multitool_act(mob/living/user, obj/item/I)
-	return
-
 ///Check if the multitool has an item in it's data buffer
 /atom/proc/multitool_check_buffer(user, obj/item/I, silent = FALSE)
 	if(!istype(I, /obj/item/multitool))
@@ -1186,25 +1180,10 @@
 	return TRUE
 
 ///Screwdriver act
-/atom/proc/screwdriver_act(mob/living/user, obj/item/I)
-	return
-
 ///Wrench act
-/atom/proc/wrench_act(mob/living/user, obj/item/I)
-	return
-
 ///Wirecutter act
-/atom/proc/wirecutter_act(mob/living/user, obj/item/I)
-	return
-
 ///Welder act
-/atom/proc/welder_act(mob/living/user, obj/item/I)
-	return
-
 ///Analyzer act
-/atom/proc/analyzer_act(mob/living/user, obj/item/I)
-	return
-
 ///Generate a tag for this atom
 /atom/proc/GenerateTag()
 	return

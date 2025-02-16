@@ -216,10 +216,6 @@
 /obj/machinery/process()//If you dont use process or power why are you here
 	return PROCESS_KILL
 
-/obj/machinery/proc/process_atmos()//If you dont use process why are you here
-	return PROCESS_KILL
-
-
 ///Called when we want to change the value of the machine_stat variable. Holds bitflags.
 /obj/machinery/proc/set_machine_stat(new_value)
 	if(new_value == machine_stat)
@@ -467,13 +463,6 @@
 	if((interaction_flags_machine & INTERACT_MACHINE_WIRES_IF_OPEN) && panel_open && (attempt_wire_interaction(user) == WIRE_INTERACTION_BLOCK))
 		return TRUE
 	return ..()
-
-/obj/machinery/CheckParts(list/parts_list)
-	..()
-	RefreshParts()
-
-/obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
-	return
 
 /obj/machinery/proc/default_pry_open(obj/item/I)
 	. = !(state_open || panel_open || is_operational || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR

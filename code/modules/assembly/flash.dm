@@ -295,9 +295,6 @@
 
 /obj/item/assembly/flash/cyborg/attackby(obj/item/W, mob/user, params)
 	return
-/obj/item/assembly/flash/cyborg/screwdriver_act(mob/living/user, obj/item/I)
-	return
-
 /obj/item/assembly/flash/memorizer
 	name = "memorizer"
 	desc = "If you see this, you're not likely to remember it any time soon."

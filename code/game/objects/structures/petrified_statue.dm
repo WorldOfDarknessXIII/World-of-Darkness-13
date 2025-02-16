@@ -67,14 +67,6 @@
 		petrified_mob = null
 	return ..()
 
-/obj/structure/statue/petrified/deconstruct(disassembled = TRUE)
-	if(!disassembled)
-		if(petrified_mob)
-			petrified_mob.dust()
-	visible_message("<span class='danger'>[src] shatters!.</span>")
-	qdel(src)
-
-
 /mob/proc/petrify(statue_timer)
 
 /mob/living/carbon/human/petrify(statue_timer, clane_type)

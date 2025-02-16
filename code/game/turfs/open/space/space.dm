@@ -76,11 +76,6 @@
 		var/turf/T = locate(destination_x, destination_y, destination_z)
 		user.forceMove(T)
 
-/turf/open/space/Initalize_Atmos(times_fired)
-	return
-
-/turf/open/space/TakeTemperature(temp)
-
 /turf/open/space/RemoveLattice()
 	return
 
@@ -88,13 +83,7 @@
 	..()
 	atmos_overlay_types = null
 
-/turf/open/space/Assimilate_Air()
-	return
-
 //IT SHOULD RETURN NULL YOU MONKEY, WHY IN TARNATION WHAT THE FUCKING FUCK
-/turf/open/space/remove_air(amount)
-	return null
-
 /turf/open/space/proc/update_starlight()
 	if(CONFIG_GET(flag/starlight))
 		for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm

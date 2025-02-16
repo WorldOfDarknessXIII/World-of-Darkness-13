@@ -126,28 +126,10 @@
 		qdel(P)
 	to_chat(user,"<span class='notice'>You shred the current votes.</span>")
 
-/obj/structure/votebox/wrench_act(mob/living/user, obj/item/I)
-	. = ..()
-	default_unfasten_wrench(user, I, 40)
-	return TRUE
-
-/obj/structure/votebox/crowbar_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(voting_active)
-		to_chat(user,"<span class='warning'>You can only retrieve votes if maintenance mode is active!</span>")
-		return FALSE
-	dump_contents()
-	to_chat(user,"<span class='notice'>You open vote retrieval hatch and dump all the votes.</span>")
-	return TRUE
-
 /obj/structure/votebox/dump_contents()
 	var/atom/droppoint = drop_location()
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(droppoint)
-
-/obj/structure/votebox/deconstruct(disassembled)
-	dump_contents()
-	. = ..()
 
 /obj/structure/votebox/proc/raffle(mob/user)
 	var/list/options = list()

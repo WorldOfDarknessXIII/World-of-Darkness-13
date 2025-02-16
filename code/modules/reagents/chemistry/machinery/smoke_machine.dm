@@ -49,25 +49,6 @@
 	else
 		icon_state = "smoke1"
 
-/obj/machinery/smoke_machine/RefreshParts()
-	var/new_volume = REAGENTS_BASE_VOLUME
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		new_volume += REAGENTS_BASE_VOLUME * B.rating
-	if(!reagents)
-		create_reagents(new_volume)
-	reagents.maximum_volume = new_volume
-	if(new_volume < reagents.total_volume)
-		reagents.expose(loc, TOUCH) // if someone manages to downgrade it without deconstructing
-		reagents.clear_reagents()
-	efficiency = 9
-	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		efficiency += C.rating
-	max_range = 1
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		max_range += M.rating
-	max_range = max(3, max_range)
-
-
 /obj/machinery/smoke_machine/on_set_is_operational(old_value)
 	if(old_value) //Turned off
 		end_processing()
@@ -104,11 +85,6 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
-	return ..()
-
-/obj/machinery/smoke_machine/deconstruct()
-	reagents.expose(loc, TOUCH)
-	reagents.clear_reagents()
 	return ..()
 
 /obj/machinery/smoke_machine/ui_interact(mob/user, datum/tgui/ui)

@@ -15,11 +15,6 @@
 		return
 	return ..()
 
-/obj/structure/loom/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I, 5)
-	return TRUE
-
 ///Handles the weaving.
 /obj/structure/loom/proc/weave(obj/item/stack/sheet/cotton/W, mob/user)
 	if(!istype(W))

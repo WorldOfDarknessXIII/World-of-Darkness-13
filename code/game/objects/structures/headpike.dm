@@ -43,17 +43,6 @@
 	deconstruct(TRUE)
 	return ..()
 
-/obj/structure/headpike/deconstruct(disassembled)
-	if(!disassembled)
-		return ..()
-	if(victim)
-		victim.forceMove(drop_location())
-		victim = null
-	if(spear)
-		spear.forceMove(drop_location())
-		spear = null
-	return ..()
-
 /obj/structure/headpike/Initialize()
 	. = ..()
 	pixel_x = rand(-8, 8)

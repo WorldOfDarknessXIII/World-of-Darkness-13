@@ -49,9 +49,6 @@
 						else
 							log_combat(user, GM, "swirlied (oxy)")
 							GM.adjustOxyLoss(5)
-					if(was_alive && swirlie.stat == DEAD && swirlie.client)
-						swirlie.client.give_award(/datum/award/achievement/misc/swirlie, swirlie) // just like space high school all over again!
-					swirlie = null
 				else
 					playsound(src.loc, 'sound/effects/bang.ogg', 25, TRUE)
 					GM.visible_message("<span class='danger'>[user] slams [GM.name] into [src]!</span>", "<span class='userdanger'>[user] slams you into [src]!</span>")
@@ -78,16 +75,6 @@
 
 /obj/structure/toilet/update_icon_state()
 	icon_state = "toilet[open][cistern]"
-
-/obj/structure/toilet/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(buildstacktype)
-			new buildstacktype(loc,buildstackamount)
-		else
-			for(var/i in custom_materials)
-				var/datum/material/M = i
-				new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
-	..()
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user, params)
 	add_fingerprint(user)
@@ -200,19 +187,6 @@
 		to_chat(user, "<span class='notice'>You place [I] into the drain enclosure.</span>")
 	else
 		return ..()
-
-/obj/structure/urinal/screwdriver_act(mob/living/user, obj/item/I)
-	if(..())
-		return TRUE
-	to_chat(user, "<span class='notice'>You start to [exposed ? "screw the cap back into place" : "unscrew the cap to the drain protector"]...</span>")
-	playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, TRUE)
-	if(I.use_tool(src, user, 20))
-		user.visible_message("<span class='notice'>[user] [exposed ? "screws the cap back into place" : "unscrew the cap to the drain protector"]!</span>",
-			"<span class='notice'>You [exposed ? "screw the cap back into place" : "unscrew the cap on the drain"]!</span>",
-			"<span class='hear'>You hear metal and squishing noises.</span>")
-		exposed = !exposed
-	return TRUE
-
 
 /obj/item/food/urinalcake
 	name = "urinal cake"
@@ -408,25 +382,12 @@
 	else
 		return ..()
 
-/obj/structure/sink/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
-		drop_materials()
-	..()
-
 /obj/structure/sink/process(delta_time)
 	if(has_water_reclaimer && reagents.total_volume < reagents.maximum_volume)
 		reagents.add_reagent(dispensedreagent, reclaim_rate * delta_time)
 	else
 		reclaiming = FALSE
 		return PROCESS_KILL
-
-/obj/structure/sink/proc/drop_materials()
-	if(buildstacktype)
-		new buildstacktype(loc,buildstackamount)
-	else
-		for(var/i in custom_materials)
-			var/datum/material/M = i
-			new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
 
 /obj/structure/sink/proc/begin_reclamation()
 	if(!reclaiming)
@@ -461,7 +422,7 @@
 		qdel(I)
 		var/obj/structure/sink/greyscale/new_sink = new /obj/structure/sink/greyscale(loc)
 		new_sink.has_water_reclaimer = TRUE
-		new_sink.set_custom_materials(custom_materials)
+
 		new_sink.setDir(dir)
 		qdel(src)
 		return
@@ -606,9 +567,6 @@
 	. = ..()
 	icon_state = "puddle"
 
-/obj/structure/water_source/puddle/deconstruct(disassembled = TRUE)
-	qdel(src)
-
 //End legacy sink
 
 
@@ -656,37 +614,12 @@
 	else
 		return ..()
 
-/obj/structure/curtain/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I, 50)
-	return TRUE
-
-/obj/structure/curtain/wirecutter_act(mob/living/user, obj/item/I)
-	..()
-	if(anchored)
-		return TRUE
-
-	user.visible_message("<span class='warning'>[user] cuts apart [src].</span>",
-		"<span class='notice'>You start to cut apart [src].</span>", "<span class='hear'>You hear cutting.</span>")
-	if(I.use_tool(src, user, 50, volume=100) && !anchored)
-		to_chat(user, "<span class='notice'>You cut apart [src].</span>")
-		deconstruct()
-
-	return TRUE
-
-
 /obj/structure/curtain/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
 	playsound(loc, 'sound/effects/curtain.ogg', 50, TRUE)
 	toggle()
-
-/obj/structure/curtain/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/cloth (loc, 2)
-	new /obj/item/stack/sheet/plastic (loc, 2)
-	new /obj/item/stack/rods (loc, 1)
-	qdel(src)
 
 /obj/structure/curtain/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -710,11 +643,6 @@
 	color = null
 	alpha = 255
 	opaque_closed = TRUE
-
-/obj/structure/curtain/cloth/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/cloth (loc, 4)
-	new /obj/item/stack/rods (loc, 1)
-	qdel(src)
 
 /obj/structure/curtain/cloth/fancy/mechanical/luxurious
 	icon_type = "bounty"

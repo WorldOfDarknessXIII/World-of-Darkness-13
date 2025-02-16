@@ -37,7 +37,7 @@
 		return
 	for(var/i in P.mobs_seen) //Any ghosts in the pic? its a haunted photo ooooo~
 		if(isobserver(i))
-			set_custom_materials(list(/datum/material/hauntium = 1000))
+
 			break
 
 /obj/item/photo/update_icon_state()

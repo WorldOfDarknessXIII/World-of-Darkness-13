@@ -64,16 +64,6 @@
 				INVOKE_ASYNC(src, PROC_REF(merge), S)
 	var/list/temp_recipes = get_main_recipes()
 	recipes = temp_recipes.Copy()
-	if(material_type)
-		var/datum/material/M = GET_MATERIAL_REF(material_type) //First/main material
-		for(var/i in M.categories)
-			switch(i)
-				if(MAT_CATEGORY_BASE_RECIPES)
-					var/list/temp = SSmaterials.base_stack_recipes.Copy()
-					recipes += temp
-				if(MAT_CATEGORY_RIGID)
-					var/list/temp = SSmaterials.rigid_stack_recipes.Copy()
-					recipes += temp
 	update_weight()
 	update_icon()
 
@@ -83,22 +73,11 @@
  * - [mats][/list]: The value to set the mats per unit to.
  * - multiplier: The amount to multiply the mats per unit by. Defaults to 1.
  */
-/obj/item/stack/proc/set_mats_per_unit(list/mats, multiplier=1)
-	mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(mats, multiplier)
-	update_custom_materials()
-
 /** Updates the custom materials list of this stack.
  */
-/obj/item/stack/proc/update_custom_materials()
-	set_custom_materials(mats_per_unit, amount, is_update=TRUE)
-
 /**
  * Override to make things like metalgen accurately set custom materials
  */
-/obj/item/stack/set_custom_materials(list/materials, multiplier=1, is_update=FALSE)
-	return is_update ? ..() : set_mats_per_unit(materials, multiplier/(amount || 1))
-
-
 /obj/item/stack/on_grind()
 	. = ..()
 	for(var/i in 1 to length(grind_results)) //This should only call if it's ground, so no need to check if grind_results exists
@@ -278,7 +257,7 @@
 					var/obj/item/stack/crafted_stack = O
 					crafted_stack.set_mats_per_unit(mats_per_unit, recipe.req_amount / recipe.res_amount)
 				else
-					O.set_custom_materials(mats_per_unit, recipe.req_amount / recipe.res_amount)
+
 
 			if(QDELETED(O))
 				return //It's a stack and has already been merged

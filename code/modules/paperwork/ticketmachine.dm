@@ -21,28 +21,6 @@
 	var/list/ticket_holders = list()
 	var/list/obj/item/ticket_machine_ticket/tickets = list()
 
-/obj/machinery/ticket_machine/multitool_act(mob/living/user, obj/item/I)
-	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
-		return
-	var/obj/item/multitool/M = I
-	M.buffer = src
-	to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
-	return TRUE
-
-/obj/machinery/ticket_machine/emag_act(mob/user) //Emag the ticket machine to dispense burning tickets, as well as randomize its number to destroy the HoP's mind.
-	if(obj_flags & EMAGGED)
-		return
-	to_chat(user, "<span class='warning'>You overload [src]'s bureaucratic logic circuitry to its MAXIMUM setting.</span>")
-	ticket_number = rand(0,max_number)
-	current_number = ticket_number
-	obj_flags |= EMAGGED
-	if(tickets.len)
-		for(var/obj/item/ticket_machine_ticket/ticket in tickets)
-			ticket.audible_message("<span class='notice'>\the [ticket] disperses!</span>")
-			qdel(ticket)
-		tickets.Cut()
-	update_icon()
-
 /obj/machinery/ticket_machine/Initialize()
 	. = ..()
 	update_icon()
@@ -73,18 +51,6 @@
 	if(device)
 		var/obj/item/assembly/control/ticket_machine/ours = device
 		ours.id = id
-
-/obj/machinery/button/ticket_machine/multitool_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(I.tool_behaviour == TOOL_MULTITOOL)
-		var/obj/item/multitool/M = I
-		if(M.buffer && !istype(M.buffer, /obj/machinery/ticket_machine))
-			return
-		var/obj/item/assembly/control/ticket_machine/controller = device
-		controller.linked = M.buffer
-		id = null
-		controller.id = null
-		to_chat(user, "<span class='warning'>You've linked [src] to [controller.linked].</span>")
 
 /obj/item/assembly/control/ticket_machine
 	name = "ticket machine controller"

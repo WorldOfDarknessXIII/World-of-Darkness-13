@@ -12,20 +12,6 @@
 /obj/vehicle/ridden/scooter/proc/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter)
 
-/obj/vehicle/ridden/scooter/wrench_act(mob/living/user, obj/item/I)
-	..()
-	to_chat(user, "<span class='notice'>You begin to remove the handlebars...</span>")
-	if(I.use_tool(src, user, 40, volume=50))
-		var/obj/vehicle/ridden/scooter/skateboard/improvised/S = new(drop_location())
-		new /obj/item/stack/rods(drop_location(), 2)
-		to_chat(user, "<span class='notice'>You remove the handlebars from [src].</span>")
-		if(has_buckled_mobs())
-			var/mob/living/carbon/H = buckled_mobs[1]
-			unbuckle_mob(H)
-			S.buckle_mob(H)
-		qdel(src)
-	return TRUE
-
 /obj/vehicle/ridden/scooter/Moved()
 	. = ..()
 	for(var/m in buckled_mobs)
@@ -204,17 +190,6 @@
 	else
 		return ..()
 
-/obj/item/scooter_frame/wrench_act(mob/living/user, obj/item/I)
-	..()
-	to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
-	new /obj/item/stack/rods(drop_location(), 10)
-	I.play_tool_sound(src)
-	qdel(src)
-	return TRUE
-
-/obj/vehicle/ridden/scooter/skateboard/wrench_act(mob/living/user, obj/item/I)
-	return
-
 /obj/vehicle/ridden/scooter/skateboard/improvised/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/rods))
 		if(!I.tool_start_check(user, amount=2))
@@ -230,20 +205,6 @@
 			qdel(src)
 	else
 		return ..()
-
-/obj/vehicle/ridden/scooter/skateboard/improvised/screwdriver_act(mob/living/user, obj/item/I)
-	if(..())
-		return TRUE
-	to_chat(user, "<span class='notice'>You begin to deconstruct and remove the wheels on [src]...</span>")
-	if(I.use_tool(src, user, 20, volume=50))
-		to_chat(user, "<span class='notice'>You deconstruct the wheels on [src].</span>")
-		new /obj/item/stack/sheet/metal(drop_location(), 5)
-		new /obj/item/scooter_frame(drop_location())
-		if(has_buckled_mobs())
-			var/mob/living/carbon/H = buckled_mobs[1]
-			unbuckle_mob(H)
-		qdel(src)
-	return TRUE
 
 //Wheelys
 /obj/vehicle/ridden/scooter/skateboard/wheelys

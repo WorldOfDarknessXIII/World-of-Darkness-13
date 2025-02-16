@@ -52,13 +52,6 @@
 /obj/structure/chair/proc/RemoveFromLatejoin()
 	SSjob.latejoin_trackers -= src	//These may be here due to the arrivals shuttle
 
-/obj/structure/chair/deconstruct()
-	// If we have materials, and don't have the NOCONSTRUCT flag
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(buildstacktype)
-			new buildstacktype(loc,buildstackamount)
-	..()
-
 /obj/structure/chair/attack_paw(mob/user)
 	return attack_hand(user)
 
@@ -219,7 +212,7 @@
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
 		var/obj/item/C = new item_chair(loc)
-		C.set_custom_materials(custom_materials)
+
 		TransferComponents(C)
 		usr.put_in_hands(C)
 		qdel(src)
@@ -268,7 +261,7 @@
 
 	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
-	C.set_custom_materials(custom_materials)
+
 	TransferComponents(C)
 	C.setDir(dir)
 	qdel(src)

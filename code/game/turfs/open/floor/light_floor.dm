@@ -88,25 +88,6 @@
 	set_light(0)
 	return ..()
 
-/turf/open/floor/light/screwdriver_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(!can_modify_colour)
-		return
-	on = !on
-	update_icon()
-
-/turf/open/floor/light/multitool_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(.)
-		return
-	if(!can_modify_colour)
-		return FALSE
-	var/choice = show_radial_menu(user,src, lighttile_designs, custom_check = CALLBACK(src, PROC_REF(check_menu), user, I), radius = 36, require_near = TRUE)
-	if(!choice)
-		return FALSE
-	currentcolor = choice
-	update_icon()
-
 /turf/open/floor/light/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return

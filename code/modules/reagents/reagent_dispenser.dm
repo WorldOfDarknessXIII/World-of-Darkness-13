@@ -54,13 +54,6 @@
 	chem_splash(loc, 5, list(reagents))
 	qdel(src)
 
-/obj/structure/reagent_dispensers/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!disassembled)
-			boom()
-	else
-		qdel(src)
-
 /obj/structure/reagent_dispensers/watertank
 	name = "water tank"
 	desc = "A water tank."
@@ -218,11 +211,6 @@
 	icon_state = "water_stationary"
 	desc = "A stationary, plumbed, water tank."
 	can_be_tanked = FALSE
-
-/obj/structure/reagent_dispensers/plumbed/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I)
-	return TRUE
 
 /obj/structure/reagent_dispensers/plumbed/ComponentInitialize()
 	AddComponent(/datum/component/plumbing/simple_supply)

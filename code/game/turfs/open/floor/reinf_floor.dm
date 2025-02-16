@@ -32,20 +32,6 @@
 /turf/open/floor/engine/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
 
-/turf/open/floor/engine/crowbar_act(mob/living/user, obj/item/I)
-	return
-
-/turf/open/floor/engine/wrench_act(mob/living/user, obj/item/I)
-	..()
-	to_chat(user, "<span class='notice'>You begin removing rods...</span>")
-	if(I.use_tool(src, user, 30, volume=80))
-		if(!istype(src, /turf/open/floor/engine))
-			return TRUE
-		if(floor_tile)
-			new floor_tile(src, 2)
-		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-	return TRUE
-
 /turf/open/floor/engine/acid_act(acidpwr, acid_volume)
 	acidpwr = min(acidpwr, 50) //we reduce the power so reinf floor never get melted.
 	return ..()

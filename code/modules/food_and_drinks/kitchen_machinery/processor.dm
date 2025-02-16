@@ -16,12 +16,6 @@
 	var/rating_amount = 1
 	var/list/processor_contents
 
-/obj/machinery/processor/RefreshParts()
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		rating_amount = B.rating
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		rating_speed = M.rating
-
 /obj/machinery/processor/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
@@ -34,7 +28,7 @@
 		for(var/i in 1 to cached_multiplier)
 			var/atom/processed_food = new recipe.output(drop_location())
 			if(cached_mats)
-				processed_food.set_custom_materials(cached_mats, 1 / cached_multiplier)
+
 
 	if(isliving(what))
 		var/mob/living/themob = what

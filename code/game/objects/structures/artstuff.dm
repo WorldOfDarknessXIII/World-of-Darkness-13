@@ -276,16 +276,6 @@
 		current_canvas.ui_interact(user)
 		. += "<span class='notice'>Use wirecutters to remove the painting.</span>"
 
-/obj/structure/sign/painting/wirecutter_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(current_canvas)
-		current_canvas.forceMove(drop_location())
-		current_canvas = null
-		to_chat(user, "<span class='notice'>You remove the painting from the frame.</span>")
-		update_icon()
-		update_name_and_desc()
-		return TRUE
-
 /obj/structure/sign/painting/proc/frame_canvas(mob/user,obj/item/canvas/new_canvas)
 	if(user.transferItemToLoc(new_canvas,src))
 		current_canvas = new_canvas

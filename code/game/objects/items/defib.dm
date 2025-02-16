@@ -76,11 +76,6 @@
 	if(!safety)
 		. += "[initial(icon_state)]-emagged"
 
-/obj/item/defibrillator/CheckParts(list/parts_list)
-	..()
-	cell = locate(/obj/item/stock_parts/cell) in contents
-	update_power()
-
 /obj/item/defibrillator/ui_action_click()
 	toggle_paddles()
 
@@ -137,14 +132,6 @@
 			update_power()
 	else
 		return ..()
-
-/obj/item/defibrillator/emag_act(mob/user)
-	if(safety)
-		safety = FALSE
-		to_chat(user, "<span class='warning'>You silently disable [src]'s safety protocols with the cryptographic sequencer.</span>")
-	else
-		safety = TRUE
-		to_chat(user, "<span class='notice'>You silently enable [src]'s safety protocols with the cryptographic sequencer.</span>")
 
 /obj/item/defibrillator/emp_act(severity)
 	. = ..()

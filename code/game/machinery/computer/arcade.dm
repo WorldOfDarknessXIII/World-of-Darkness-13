@@ -83,12 +83,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		prizes *= 2
 	for(var/i = 0, i < prizes, i++)
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
-		if(prob(0.0001)) //1 in a million
-			new /obj/item/gun/energy/pulse/prize(src)
-			visible_message("<span class='notice'>[src] dispenses.. woah, a gun! Way past cool.</span>", "<span class='notice'>You hear a chime and a shot.</span>")
-			user.client.give_award(/datum/award/achievement/misc/pulse, user)
-			return
-
 		var/prizeselect
 		if(prize_override)
 			prizeselect = pickweight(prize_override)
@@ -141,7 +135,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	name = "arcade machine"
 	desc = "Does not support Pinball."
 	icon_state = "arcade"
-	circuit = /obj/item/circuitboard/computer/arcade/battle
 
 	var/enemy_name = "Space Villain"
 	///Enemy health/attack points
@@ -541,7 +534,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			playsound(loc, 'sound/arcade/win.ogg', 50, TRUE)
 
 			if(obj_flags & EMAGGED)
-				new /obj/effect/spawner/newbomb/timer/syndicate(loc)
 				new /obj/item/clothing/head/collectable/petehat(loc)
 				message_admins("[ADMIN_LOOKUPFLW(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")
@@ -598,32 +590,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	msg += "\t<span class='info'>poisonous -> light attack, light attack, light attack</span>"
 	msg += "\t<span class='info'>chonker -> power attack, power attack, power attack</span>"
 	return msg
-
-/obj/machinery/computer/arcade/battle/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
-		return
-
-	to_chat(user, "<span class='warning'>A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!</span>")
-	temp = "<br><center><h2>If you die in the game, you die for real!<center><h2>"
-	max_passive = 6
-	bomb_cooldown = 18
-	var/gamerSkill = 0
-	if(usr?.mind)
-		gamerSkill = usr.mind.get_skill_level(/datum/skill/gaming)
-	enemy_setup(gamerSkill)
-	enemy_hp += 100 //extra HP just to make cuban pete even more bullshit
-	player_hp += 30 //the player will also get a few extra HP in order to have a fucking chance
-
-	screen_setup(user)
-	gameover = FALSE
-
-	obj_flags |= EMAGGED
-
-	enemy_name = "Cuban Pete"
-	name = "Outbomb Cuban Pete"
-
-	updateUsrDialog()
-
 
 // *** THE ORION TRAIL ** //
 
@@ -696,15 +662,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 /obj/machinery/computer/arcade/orion_trail/Destroy()
 	QDEL_NULL(Radio)
 	return ..()
-
-/obj/machinery/computer/arcade/orion_trail/kobayashi
-	name = "Kobayashi Maru control computer"
-	desc = "A test for cadets"
-	icon = 'icons/obj/machines/particle_accelerator.dmi'
-	icon_state = "control_boxp"
-	events = list("Raiders" = 3, "Interstellar Flux" = 1, "Illness" = 3, "Breakdown" = 2, "Malfunction" = 2, "Collision" = 1, "Spaceport" = 2)
-	prize_override = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1)
-	settlers = list("Kirk","Worf","Gene")
 
 /obj/machinery/computer/arcade/orion_trail/Reset()
 	// Sets up the main trail
@@ -1476,15 +1433,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 
-/obj/machinery/computer/arcade/orion_trail/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
-		return
-	to_chat(user, "<span class='notice'>You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode.</span>")
-	name = "The Orion Trail: Realism Edition"
-	desc = "Learn how our ancestors got to Orion, and try not to die in the process!"
-	newgame()
-	obj_flags |= EMAGGED
-
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/orion
 	name = "spaceport security"
 	desc = "Premier corporate security forces for all spaceports found along the Orion Trail."
@@ -1530,41 +1478,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	visible_message("<span class='userdanger'>[src] explodes!</span>")
 	explosion(loc, 2,4,8, flame_range = 16)
 	qdel(src)
-
-// ** AMPUTATION ** //
-
-/obj/machinery/computer/arcade/amputation
-	name = "Mediborg's Amputation Adventure"
-	desc = "A picture of a blood-soaked medical cyborg flashes on the screen. The mediborg has a speech bubble that says, \"Put your hand in the machine if you aren't a <b>coward!</b>\""
-	icon_state = "arcade"
-	circuit = /obj/item/circuitboard/computer/arcade/amputation
-
-/obj/machinery/computer/arcade/amputation/attack_hand(mob/user)
-	if(!iscarbon(user))
-		return
-	var/mob/living/carbon/c_user = user
-	if(!c_user.get_bodypart(BODY_ZONE_L_ARM) && !c_user.get_bodypart(BODY_ZONE_R_ARM))
-		return
-	to_chat(c_user, "<span class='warning'>You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it...</span>")
-	if(do_after(c_user, 50, target = src))
-		to_chat(c_user, "<span class='userdanger'>The guillotine drops on your arm, and the machine sucks it in!</span>")
-		playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
-		var/which_hand = BODY_ZONE_L_ARM
-		if(!(c_user.active_hand_index % 2))
-			which_hand = BODY_ZONE_R_ARM
-		var/obj/item/bodypart/chopchop = c_user.get_bodypart(which_hand)
-		chopchop.dismember()
-		qdel(chopchop)
-		user.mind?.adjust_experience(/datum/skill/gaming, 100)
-		playsound(loc, 'sound/arcade/win.ogg', 50, TRUE)
-		prizevend(user, rand(3,5))
-	else
-		to_chat(c_user, "<span class='notice'>You (wisely) decide against putting your hand in the machine.</span>")
-
-/obj/machinery/computer/arcade/amputation/festive //dispenses wrapped gifts instead of arcade prizes, also known as the ancap christmas tree
-	name = "Mediborg's Festive Amputation Adventure"
-	desc = "A picture of a blood-soaked medical cyborg wearing a Santa hat flashes on the screen. The mediborg has a speech bubble that says, \"Put your hand in the machine if you aren't a <b>coward!</b>\""
-	prize_override = list(/obj/item/a_gift/anything = 1)
 
 #undef ORION_TRAIL_WINTURN
 #undef ORION_TRAIL_RAIDERS

@@ -74,35 +74,6 @@
 	else
 		return ..()
 
-/obj/machinery/shower/multitool_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(. || !can_toggle_refill)
-		return
-
-	can_refill = !can_refill
-	to_chat(user, "<span class=notice>You [can_refill ? "en" : "dis"]able the shower's water recycler.</span>")
-	playsound(src, 'sound/machines/click.ogg', 20, TRUE)
-	return TRUE
-
-
-/obj/machinery/shower/wrench_act(mob/living/user, obj/item/I)
-	..()
-	to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>")
-	if(I.use_tool(src, user, 50))
-		switch(current_temperature)
-			if(SHOWER_NORMAL)
-				current_temperature = SHOWER_FREEZING
-			if(SHOWER_FREEZING)
-				current_temperature = SHOWER_BOILING
-			if(SHOWER_BOILING)
-				current_temperature = SHOWER_NORMAL
-		user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I] to [current_temperature] temperature.</span>")
-		user.log_message("has wrenched a shower at [AREACOORD(src)] to [current_temperature].", LOG_ATTACK)
-		add_hiddenprint(user)
-	handle_mist()
-	return TRUE
-
-
 /obj/machinery/shower/update_overlays()
 	. = ..()
 	if(on)
@@ -163,10 +134,6 @@
 	update_icon()
 	if(reagents.total_volume == reagents.maximum_volume)
 		return PROCESS_KILL
-
-/obj/machinery/shower/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal(drop_location(), 3)
-	qdel(src)
 
 /obj/machinery/shower/proc/check_heat(mob/living/L)
 	var/mob/living/carbon/C = L

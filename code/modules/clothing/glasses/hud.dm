@@ -34,13 +34,6 @@
 	obj_flags |= EMAGGED
 	desc = "[desc] The display is flickering slightly."
 
-/obj/item/clothing/glasses/hud/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
-		return
-	obj_flags |= EMAGGED
-	to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
-	desc = "[desc] The display is flickering slightly."
-
 /obj/item/clothing/glasses/hud/health
 	name = "health scanner HUD"
 	desc = "A heads-up display that scans the humanoids in view and provides accurate data about their health status."

@@ -24,11 +24,6 @@
 	. = ..()
 	. += "<span class='notice'>There's a few <b>screws</b> and a <b>small crack</b> visible.</span>"
 
-/turf/open/floor/wood/screwdriver_act(mob/living/user, obj/item/I)
-	if(..())
-		return TRUE
-	return pry_tile(I, user) ? TRUE : FALSE
-
 /turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
 		return
@@ -135,9 +130,6 @@
 	return
 
 /turf/open/floor/grass/snow/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
-	return
-
-/turf/open/floor/grass/snow/crowbar_act(mob/living/user, obj/item/I)
 	return
 
 /turf/open/floor/grass/snow/basalt //By your powers combined, I am captain planet

@@ -49,9 +49,6 @@
 
 /obj/machinery/computer/cargo/express/take_damage(damage_amount, damage_type = BRUTE, damage_flag =0, sound_effect =1)
 	return
-/obj/machinery/computer/cargo/express/deconstruct(disassembled = TRUE)
-	return
-
 /obj/machinery/computer/cargo/express/attackby(obj/item/W, mob/living/user, params)
 	if(W.GetID() && allowed(user))
 		locked = !locked
@@ -77,20 +74,6 @@
 		else
 			to_chat(user, "<span class='alert'>[src] is already linked to [sb].</span>")
 	..()
-
-/obj/machinery/computer/cargo/express/emag_act(mob/living/user)
-	if(obj_flags & EMAGGED)
-		return
-	if(user)
-		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
-		"<span class='notice'>You change the routing protocols, allowing the Supply Pod to land anywhere on the station.</span>")
-	obj_flags |= EMAGGED
-	contraband = TRUE
-	// This also sets this on the circuit board
-	var/obj/item/circuitboard/computer/cargo/board = circuit
-	board.obj_flags |= EMAGGED
-	board.contraband = TRUE
-	packin_up()
 
 /obj/machinery/computer/cargo/express/proc/packin_up() // oh shit, I'm sorry
 	meme_pack_data = list() // sorry for what?

@@ -89,9 +89,6 @@
 	if(CheckEyewitness(src, src, 5, FALSE))
 		adjust_veil(-1)
 
-/mob/living/carbon/werewolf/check_breath(datum/gas_mixture/breath)
-	return
-
 /mob/living/carbon/werewolf/handle_status_effects()
 	..()
 	//natural reduction of movement delay due to stun.

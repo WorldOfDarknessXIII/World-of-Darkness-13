@@ -188,10 +188,6 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	obj_flags &= ~BEING_SHOCKED
 
 ///the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
-/obj/proc/deconstruct(disassembled = TRUE)
-	SEND_SIGNAL(src, COMSIG_OBJ_DECONSTRUCT, disassembled)
-	qdel(src)
-
 ///called after the obj takes damage and integrity is below integrity_failure level
 /obj/proc/obj_break(damage_flag)
 	return

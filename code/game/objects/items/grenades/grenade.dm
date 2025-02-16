@@ -36,12 +36,6 @@
 	var/shrapnel_radius
 	var/shrapnel_initialized
 
-/obj/item/grenade/deconstruct(disassembled = TRUE)
-	if(!disassembled)
-		detonate()
-	if(!QDELETED(src))
-		qdel(src)
-
 /obj/item/grenade/proc/botch_check(mob/living/carbon/human/user)
 	var/clumsy = HAS_TRAIT(user, TRAIT_CLUMSY)
 	if(clumsy && (clumsy_check == GRENADE_CLUMSY_FUMBLE))

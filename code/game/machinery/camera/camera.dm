@@ -62,7 +62,6 @@
 		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
 	if(isarea(myarea))
 		LAZYREMOVE(myarea.cameras, src)
-	QDEL_NULL(assembly)
 	return ..()
 
 /obj/machinery/camera/examine(mob/user)
@@ -133,90 +132,6 @@
 	if(!istype(user))
 		return
 	user.electrocute_act(10, src)
-
-// Construction/Deconstruction
-/obj/machinery/camera/attackby(obj/item/I, mob/living/user, params)
-	// UPGRADES
-	if(panel_open)
-		if(I.tool_behaviour == TOOL_ANALYZER)
-			if(!isXRay(TRUE)) //don't reveal it was already upgraded if was done via MALF AI Upgrade Camera Network ability
-				if(!user.temporarilyRemoveItemFromInventory(I))
-					return
-				upgradeXRay(FALSE, TRUE)
-				to_chat(user, "<span class='notice'>You attach [I] into [assembly]'s inner circuits.</span>")
-				qdel(I)
-			else
-				to_chat(user, "<span class='warning'>[src] already has that upgrade!</span>")
-			return
-
-		else if(istype(I, /obj/item/stack/sheet/mineral/plasma))
-			if(!isEmpProof(TRUE)) //don't reveal it was already upgraded if was done via MALF AI Upgrade Camera Network ability
-				if(I.use_tool(src, user, 0, amount=1))
-					upgradeEmpProof(FALSE, TRUE)
-					to_chat(user, "<span class='notice'>You attach [I] into [assembly]'s inner circuits.</span>")
-			else
-				to_chat(user, "<span class='warning'>[src] already has that upgrade!</span>")
-			return
-
-		else if(istype(I, /obj/item/assembly/prox_sensor))
-			if(!isMotion())
-				if(!user.temporarilyRemoveItemFromInventory(I))
-					return
-				upgradeMotion()
-				to_chat(user, "<span class='notice'>You attach [I] into [assembly]'s inner circuits.</span>")
-				qdel(I)
-			else
-				to_chat(user, "<span class='warning'>[src] already has that upgrade!</span>")
-			return
-
-	// OTHER
-	if((istype(I, /obj/item/paper) || istype(I, /obj/item/pda)) && isliving(user))
-		var/mob/living/U = user
-		var/obj/item/paper/X = null
-		var
-
-		var/itemname = ""
-		var/info = ""
-		if(istype(I, /obj/item/paper))
-			X = I
-			itemname = X.name
-			info = X.info
-		else
-			P = I
-			itemname = P.name
-			info = P.notehtml
-		to_chat(U, "<span class='notice'>You hold \the [itemname] up to the camera...</span>")
-		U.changeNext_move(CLICK_CD_MELEE)
-		for(var/mob/O in GLOB.player_list)
-			if(isAI(O))
-				var/mob/living/silicon/ai/AI = O
-				if(AI.control_disabled || (AI.stat == DEAD))
-					continue
-				if(U.name == "Unknown")
-					to_chat(AI, "<span class='name'>[U]</span> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
-				else
-					to_chat(AI, "<b><a href='?src=[REF(AI)];track=[html_encode(U.name)]'>[U]</a></b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
-				AI.last_paper_seen = "<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
-			else if (O.client.eye == src)
-				to_chat(O, "<span class='name'>[U]</span> holds \a [itemname] up to one of the cameras ...")
-				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
-		return
-
-	else if(istype(I, /obj/item/camera_bug))
-		if(!can_use())
-			to_chat(user, "<span class='notice'>Camera non-functional.</span>")
-			return
-		if(bug)
-			to_chat(user, "<span class='notice'>Camera bug removed.</span>")
-			bug.bugged_cameras -= src.c_tag
-			bug = null
-		else
-			to_chat(user, "<span class='notice'>Camera bugged.</span>")
-			bug = I
-			bug.bugged_cameras[src.c_tag] = src
-		return
-
-	return ..()
 
 
 /obj/machinery/camera/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)

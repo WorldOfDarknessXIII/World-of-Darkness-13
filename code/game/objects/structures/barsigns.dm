@@ -46,11 +46,6 @@
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		broken = TRUE
 
-/obj/structure/sign/barsign/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal(drop_location(), 2)
-	new /obj/item/stack/cable_coil(drop_location(), 2)
-	qdel(src)
-
 /obj/structure/sign/barsign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
@@ -109,15 +104,6 @@
 		return
 	set_sign(new /datum/barsign/hiddensigns/empbarsign)
 	broken = TRUE
-
-/obj/structure/sign/barsign/emag_act(mob/user)
-	if(broken)
-		to_chat(user, "<span class='warning'>Nothing interesting happens!</span>")
-		return
-	to_chat(user, "<span class='notice'>You load an illegal barsign into the memory buffer...</span>")
-	sleep(10 SECONDS)
-	chosen_sign = set_sign(new /datum/barsign/hiddensigns/syndibarsign)
-
 
 /obj/structure/sign/barsign/proc/pick_sign(mob/user)
 	var/picked_name = input(user, "Available Signage", "Bar Sign", name) as null|anything in sortList(get_bar_names())

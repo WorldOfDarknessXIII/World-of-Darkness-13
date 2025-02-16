@@ -348,11 +348,6 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		state_open = FALSE //close the door
 		update_icon()
 
-/obj/machinery/washing_machine/deconstruct(disassembled = TRUE)
-	if (!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal(drop_location(), 2)
-	qdel(src)
-
 /obj/machinery/washing_machine/open_machine(drop = 1)
 	..()
 	density = TRUE //because machinery/open_machine() sets it to 0

@@ -152,19 +152,6 @@
 	if(framed)
 		. += framed
 
-/obj/structure/sign/picture_frame/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		var/obj/item/wallframe/picture/F = new /obj/item/wallframe/picture(loc)
-		if(framed)
-			F.displayed = framed
-			framed = null
-		if(contents.len)
-			var/obj/item/I = pick(contents)
-			I.forceMove(F)
-		F.update_icon()
-	qdel(src)
-
-
 /obj/structure/sign/picture_frame/showroom
 	name = "distinguished crew display"
 	desc = "A photo frame to commemorate crewmembers that distinguished themselves in the line of duty. WARNING: unauthorized tampering will be severely punished."

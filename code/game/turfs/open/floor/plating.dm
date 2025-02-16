@@ -82,16 +82,6 @@
 			broken = FALSE
 
 
-/turf/open/floor/plating/welder_act(mob/living/user, obj/item/I)
-	..()
-	if((broken || burnt) && I.use_tool(src, user, 0, volume=80))
-		to_chat(user, "<span class='danger'>You fix some dents on the broken plating.</span>")
-		icon_state = base_icon_state
-		burnt = FALSE
-		broken = FALSE
-
-	return TRUE
-
 /turf/open/floor/plating/rust_heretic_act()
 	if(prob(70))
 		new /obj/effect/temp_visual/glowing_rune(src)

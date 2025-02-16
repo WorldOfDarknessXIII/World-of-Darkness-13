@@ -58,10 +58,8 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_GHOST, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	if(user.client)
-		if(user.gas_scan && atmosanalyzer_scan(user, src))
-			return TRUE
-		else if(user.client.prefs.inquisitive_ghost)
-			user.examinate(src)
+	else if(user.client.prefs.inquisitive_ghost)
+		user.examinate(src)
 	return FALSE
 
 /mob/living/attack_ghost(mob/dead/observer/user)

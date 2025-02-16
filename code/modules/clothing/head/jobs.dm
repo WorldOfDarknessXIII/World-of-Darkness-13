@@ -180,30 +180,6 @@
 	dog_fashion = null
 	var/mode = DRILL_DEFAULT
 
-/obj/item/clothing/head/warden/drill/screwdriver_act(mob/living/carbon/human/user, obj/item/I)
-	if(..())
-		return TRUE
-	switch(mode)
-		if(DRILL_DEFAULT)
-			to_chat(user, "<span class='notice'>You set the voice circuit to the middle position.</span>")
-			mode = DRILL_SHOUTING
-		if(DRILL_SHOUTING)
-			to_chat(user, "<span class='notice'>You set the voice circuit to the last position.</span>")
-			mode = DRILL_YELLING
-		if(DRILL_YELLING)
-			to_chat(user, "<span class='notice'>You set the voice circuit to the first position.</span>")
-			mode = DRILL_DEFAULT
-		if(DRILL_CANADIAN)
-			to_chat(user, "<span class='danger'>You adjust voice circuit but nothing happens, probably because it's broken.</span>")
-	return TRUE
-
-/obj/item/clothing/head/warden/drill/wirecutter_act(mob/living/user, obj/item/I)
-	..()
-	if(mode != DRILL_CANADIAN)
-		to_chat(user, "<span class='danger'>You broke the voice circuit!</span>")
-		mode = DRILL_CANADIAN
-	return TRUE
-
 /obj/item/clothing/head/warden/drill/equipped(mob/M, slot)
 	. = ..()
 	if (slot == ITEM_SLOT_HEAD)

@@ -24,15 +24,6 @@
 	AddComponent(/datum/component/plumbing/simple_demand)
 
 
-/obj/machinery/medipen_refiller/RefreshParts()
-	var/new_volume = 100
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		new_volume += 100 * B.rating
-	if(!reagents)
-		create_reagents(new_volume, TRANSPARENT)
-	reagents.maximum_volume = new_volume
-	return TRUE
-
 ///  handles the messages and animation, calls refill to end the animation
 /obj/machinery/medipen_refiller/attackby(obj/item/I, mob/user, params)
 	if(busy)
@@ -71,21 +62,6 @@
 		to_chat(user, "<span class='notice'>You finish plunging the [name].</span>")
 		reagents.expose(get_turf(src), TOUCH)
 		reagents.clear_reagents()
-
-/obj/machinery/medipen_refiller/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I)
-	return TRUE
-
-/obj/machinery/medipen_refiller/crowbar_act(mob/user, obj/item/I)
-	..()
-	default_deconstruction_crowbar(I)
-	return TRUE
-
-/obj/machinery/medipen_refiller/screwdriver_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(!.)
-		return default_deconstruction_screwdriver(user, "medipen_refiller_open", "medipen_refiller", I)
 
 /// refills the medipen
 /obj/machinery/medipen_refiller/proc/refill(obj/item/reagent_containers/hypospray/medipen/P, mob/user)

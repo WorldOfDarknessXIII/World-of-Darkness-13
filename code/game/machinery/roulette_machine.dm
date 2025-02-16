@@ -363,21 +363,6 @@
 		if("red")
 			set_light(2,2, COLOR_SOFT_RED)
 
-/obj/machinery/roulette/welder_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(machine_stat & MAINT)
-		to_chat(user, "<span class='notice'>You start re-attaching the top section of [src]...</span>")
-		if(I.use_tool(src, user, 30, volume=50))
-			to_chat(user, "<span class='notice'>You re-attach the top section of [src].</span>")
-			set_machine_stat(machine_stat & ~MAINT)
-			icon_state = "idle"
-	else
-		to_chat(user, "<span class='notice'>You start welding the top section from [src]...</span>")
-		if(I.use_tool(src, user, 30, volume=50))
-			to_chat(user, "<span class='notice'>You removed the top section of [src].</span>")
-			set_machine_stat(machine_stat | MAINT)
-			icon_state = "open"
-
 /obj/machinery/roulette/proc/shock(mob/user, prb)
 	if(!on)		// unpowered, no shock
 		return FALSE

@@ -31,10 +31,6 @@
 			for(var/i in 1 to amount)
 				load(new typekey(src))
 
-/obj/machinery/smartfridge/RefreshParts()
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		max_n_of_items = 1500 * B.rating
-
 /obj/machinery/smartfridge/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
@@ -271,7 +267,6 @@
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
 	..()
 
-/obj/machinery/smartfridge/drying_rack/RefreshParts()
 /obj/machinery/smartfridge/drying_rack/default_deconstruction_screwdriver()
 /obj/machinery/smartfridge/drying_rack/exchange_parts()
 /obj/machinery/smartfridge/drying_rack/spawn_frame()
@@ -435,11 +430,6 @@
 	if(isorgan(O))
 		var/obj/item/organ/organ = O
 		organ.organ_flags |= ORGAN_FROZEN
-
-/obj/machinery/smartfridge/organ/RefreshParts()
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		max_n_of_items = 20 * B.rating
-		repair_rate = max(0, STANDARD_ORGAN_HEALING * (B.rating - 1) * 0.5)
 
 /obj/machinery/smartfridge/organ/process(delta_time)
 	for(var/organ in contents)

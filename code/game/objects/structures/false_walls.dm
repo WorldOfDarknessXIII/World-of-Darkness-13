@@ -108,15 +108,6 @@
 		playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 	deconstruct(disassembled)
 
-/obj/structure/falsewall/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(disassembled)
-			new girder_type(loc)
-		if(mineral_amount)
-			for(var/i in 1 to mineral_amount)
-				new mineral(loc)
-	qdel(src)
-
 /obj/structure/falsewall/get_dumping_location(obj/item/storage/source,mob/user)
 	return null
 

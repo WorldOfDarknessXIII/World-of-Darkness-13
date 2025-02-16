@@ -312,17 +312,6 @@
 /**
  * Emagging causes a deadly, unremovable syndicate toolbox to be attached to the machine
  */
-/obj/structure/training_machine/emag_act(mob/user)
-	. = ..()
-	if (obj_flags & EMAGGED)
-		return
-	obj_flags |= EMAGGED
-	remove_attached_item(throwing = TRUE) //Toss out the old attached item!
-	attach_item(new /obj/item/storage/toolbox/syndicate(src))
-	to_chat(user, "<span class='warning'>You override the training machine's safety protocols, and activate its realistic combat feature. A toolbox pops out of a slot on the top.</span>")
-	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-	add_overlay("evil_trainer")
-
 /obj/structure/training_machine/examine(mob/user)
 	. = ..()
 	var/has_buckled_mob = has_buckled_mobs()

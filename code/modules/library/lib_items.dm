@@ -160,16 +160,6 @@
 			update_icon()
 
 
-/obj/structure/bookcase/deconstruct(disassembled = TRUE)
-	var/atom/Tsec = drop_location()
-	new /obj/item/stack/sheet/mineral/wood(Tsec, 4)
-	for(var/obj/item/I in contents)
-		if(!isbook(I))
-			continue
-		I.forceMove(Tsec)
-	return ..()
-
-
 /obj/structure/bookcase/update_icon_state()
 	if(state == BOOKCASE_UNANCHORED || state == BOOKCASE_ANCHORED)
 		icon_state = "bookempty"

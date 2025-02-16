@@ -190,9 +190,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isvehicle(A) (istype(A, /obj/vehicle))
 
-#define ismecha(A) (istype(A, /obj/vehicle/sealed/mecha))
-
-#define ismedicalmecha(A) (istype(A, /obj/vehicle/sealed/mecha/medical))
 
 #define ismopable(A) (A && (A.layer <= HIGH_SIGIL_LAYER)) //If something can be cleaned by floor-cleaning devices such as mops or clean bots
 
@@ -217,23 +214,9 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define issignaler(O) (istype(O, /obj/item/assembly/signaler))
 
-GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
-	/obj/item/stack/sheet/glass,
-	/obj/item/stack/sheet/rglass,
-	/obj/item/stack/sheet/plasmaglass,
-	/obj/item/stack/sheet/plasmarglass,
-	/obj/item/stack/sheet/titaniumglass,
-	/obj/item/stack/sheet/plastitaniumglass)))
-
 #define is_glass_sheet(O) (is_type_in_typecache(O, GLOB.glass_sheet_types))
 
 #define iseffect(O) (istype(O, /obj/effect))
-
-#define isholoeffect(O) (istype(O, /obj/effect/holodeck_effect))
-
-#define isblobmonster(O) (istype(O, /mob/living/simple_animal/hostile/blob))
-
-#define isshuttleturf(T) (length(T.baseturfs) && (/turf/baseturf_skipover/shuttle in T.baseturfs))
 
 #define isProbablyWallMounted(O) (O.pixel_x > 20 || O.pixel_x < -20 || O.pixel_y > 20 || O.pixel_y < -20)
 #define isbook(O) (is_type_in_typecache(O, GLOB.book_types))

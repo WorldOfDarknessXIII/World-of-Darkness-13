@@ -112,11 +112,6 @@
 	else
 		return ..()
 
-/obj/machinery/iv_drip/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal(loc)
-	qdel(src)
-
 /obj/machinery/iv_drip/process(delta_time)
 	if(!attached)
 		return PROCESS_KILL

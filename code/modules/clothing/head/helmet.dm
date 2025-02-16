@@ -514,23 +514,6 @@
 		return
 	return ..()
 
-/obj/item/clothing/head/helmet/screwdriver_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(can_flashlight && attached_light) //if it has a light but can_flashlight is false, the light is permanently attached.
-		I.play_tool_sound(src)
-		to_chat(user, "<span class='notice'>You unscrew [attached_light] from [src].</span>")
-		attached_light.forceMove(drop_location())
-		if(Adjacent(user) && !issilicon(user))
-			user.put_in_hands(attached_light)
-
-		var/obj/item/flashlight/removed_light = set_attached_light(null)
-		update_helmlight()
-		removed_light.update_brightness(user)
-		update_icon()
-		user.update_inv_head()
-		QDEL_NULL(alight)
-		return TRUE
-
 /obj/item/clothing/head/helmet/proc/toggle_helmlight()
 	set name = "Toggle Helmetlight"
 	set category = "Object"

@@ -165,6 +165,3 @@
 	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT | FRUIT | PINEAPPLE
 
 
-
-	i_kill_you(I, user)
-	. = ..()

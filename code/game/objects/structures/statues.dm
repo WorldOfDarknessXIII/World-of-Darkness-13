@@ -46,16 +46,6 @@
 			return
 	return ..()
 
-/obj/structure/statue/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		var/amount_mod = disassembled ? 0 : -2
-		for(var/mat in custom_materials)
-			var/datum/material/custom_material = GET_MATERIAL_REF(mat)
-			var/amount = max(0,round(custom_materials[mat]/MINERAL_MATERIAL_AMOUNT) + amount_mod)
-			if(amount > 0)
-				new custom_material.sheet_type(drop_location(),amount)
-	qdel(src)
-
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////
 ////////////////////////uranium///////////////////////////////////
 
@@ -406,12 +396,12 @@ Moving interrupts
 /obj/structure/carving_block/proc/create_statue()
 	if(current_preset_type)
 		var/obj/structure/statue/preset_statue = new current_preset_type(get_turf(src))
-		preset_statue.set_custom_materials(custom_materials)
+
 		qdel(src)
 	else if(current_target)
 		var/obj/structure/statue/custom/new_statue = new(get_turf(src))
 		new_statue.set_visuals(current_target)
-		new_statue.set_custom_materials(custom_materials)
+
 		var/mutable_appearance/ma = current_target
 		new_statue.name = "statue of [ma.name]"
 		new_statue.desc = "statue depicting [ma.name]"

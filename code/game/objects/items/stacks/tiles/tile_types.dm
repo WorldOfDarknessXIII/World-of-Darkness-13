@@ -416,20 +416,6 @@
 	turf_type = /turf/open/floor/plastic
 	merge_type = /obj/item/stack/tile/plastic
 
-/obj/item/stack/tile/material
-	name = "floor tile"
-	singular_name = "floor tile"
-	desc = "The ground you walk on."
-	throwforce = 10
-	icon_state = "material_tile"
-	turf_type = /turf/open/floor/material
-	merge_type = /obj/item/stack/tile/material
-
-/obj/item/stack/tile/material/place_tile(turf/open/T)
-	. = ..()
-	var/turf/open/floor/material/F = .
-	F?.set_custom_materials(mats_per_unit)
-
 /obj/item/stack/tile/eighties
 	name = "retro tile"
 	singular_name = "retro floor tile"

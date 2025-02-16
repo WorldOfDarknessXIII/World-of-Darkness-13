@@ -81,8 +81,6 @@
 /turf/open/lava/GetTemperature()
 	. = 5000
 
-/turf/open/lava/TakeTemperature(temp)
-
 /turf/open/lava/attackby(obj/item/C, mob/user, params)
 	..()
 	if(istype(C, /obj/item/stack/rods/lava))

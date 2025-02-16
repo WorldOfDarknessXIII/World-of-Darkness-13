@@ -28,15 +28,6 @@
 	if(isnum(variant))
 		variant = rand(1,3)
 
-/obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
-		return
-	if(default_deconstruction_crowbar(I, ignore_panel = TRUE))
-		return
-	variant = rand(1,3)
-	RegisterSignal(src, COMSIG_ATOM_EXPOSE_REAGENT, PROC_REF(on_expose_reagent))
-
 /obj/machinery/griddle/proc/on_expose_reagent(atom/parent_atom, datum/reagent/exposing_reagent, reac_volume)
 	SIGNAL_HANDLER
 
@@ -52,11 +43,6 @@
 			break
 	visible_message("<span class='notice'>[exposing_reagent] begins to cook on [src].</span>")
 	return NONE
-
-/obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
-	. = ..()
-	return default_deconstruction_crowbar(I, ignore_panel = TRUE)
-
 
 /obj/machinery/griddle/attackby(obj/item/I, mob/user, params)
 	if(griddled_objects.len >= max_items)

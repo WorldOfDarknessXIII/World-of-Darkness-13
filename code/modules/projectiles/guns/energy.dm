@@ -55,7 +55,7 @@
 	return ..()
 
 /obj/item/gun/energy/handle_atom_del(atom/A)
-		update_icon()
+	update_icon()
 	return ..()
 
 /obj/item/gun/energy/process(delta_time)
@@ -78,7 +78,7 @@
 	return !(charge) ? (cell.charge >= shot.e_cost) : FALSE
 
 /obj/item/gun/energy/recharge_newshot(no_cyborg_drain)
-	if (!ammo_type
+	if (!ammo_type)
 		return
 	if(!chambered)
 		var/obj/item/ammo_casing/energy/AC = ammo_type[select]

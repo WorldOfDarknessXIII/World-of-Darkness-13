@@ -38,13 +38,6 @@
 			if(I.w_class < WEIGHT_CLASS_NORMAL) //there probably shouldn't be anything placed ontop of filing cabinets in a map that isn't meant to go in them
 				I.forceMove(src)
 
-/obj/structure/filingcabinet/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal(loc, 2)
-		for(var/obj/item/I in src)
-			I.forceMove(loc)
-	qdel(src)
-
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/user, params)
 	if(P.tool_behaviour == TOOL_WRENCH && user.a_intent != INTENT_HELP)
 		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")

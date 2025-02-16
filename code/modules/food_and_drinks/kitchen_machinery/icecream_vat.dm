@@ -275,11 +275,6 @@
 	add_ice_cream("mob")
 	name = "[M.name] icecream"
 
-/obj/machinery/icecream_vat/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal(loc, 4)
-	qdel(src)
-
 /obj/machinery/icecream_vat/AltClick(mob/living/user)
 	. = ..()
 	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))

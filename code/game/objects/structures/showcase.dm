@@ -106,7 +106,6 @@
 
 
 
-//Deconstructing
 //Showcases can be any sprite, so it makes sense that they can't be constructed.
 //However if a player wants to move an existing showcase or remove one, this is for that.
 

@@ -112,36 +112,6 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 			reflection.alpha_icon_state = "mirror_mask_broken"
 			reflection.update_mirror_filters()
 
-/obj/structure/mirror/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!disassembled)
-			new /obj/item/shard( src.loc )
-	var/obj/effect/reflection/reflection = ref.resolve()
-	if(istype(reflection))
-		qdel(reflection)
-		ref = null
-	qdel(src)
-
-/obj/structure/mirror/welder_act(mob/living/user, obj/item/I)
-	..()
-	if(user.a_intent == INTENT_HARM)
-		return FALSE
-
-	if(!broken)
-		return TRUE
-
-	if(!I.tool_start_check(user, amount=0))
-		return TRUE
-
-	to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-	if(I.use_tool(src, user, 10, volume=50))
-		to_chat(user, "<span class='notice'>You repair [src].</span>")
-		broken = 0
-		icon_state = initial(icon_state)
-		desc = initial(desc)
-
-	return TRUE
-
 /obj/structure/mirror/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)

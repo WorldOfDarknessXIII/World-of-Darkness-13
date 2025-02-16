@@ -568,46 +568,6 @@
 			user.visible_message("<span class='notice'>[user] cleans \the [src] of any fouling.</span>", "<span class='notice'>You clean \the [src], removing any fouling, preventing misfire.</span>")
 			return TRUE
 
-/obj/item/gun/ballistic/wrench_act(mob/living/user, obj/item/I)
-	if(!user.is_holding(src))
-		to_chat(user, "<span class='notice'>You need to hold [src] to modify it.</span>")
-		return TRUE
-
-	if(!can_modify_ammo)
-		return
-
-	if(bolt_type == BOLT_TYPE_STANDARD)
-		if(get_ammo())
-			to_chat(user, "<span class='notice'>You can't get at the internals while the gun has a bullet in it!</span>")
-			return
-
-		else if(!bolt_locked)
-			to_chat(user, "<span class='notice'>You can't get at the internals while the bolt is down!</span>")
-			return
-
-	to_chat(user, "<span class='notice'>You begin to tinker with [src]...</span>")
-	I.play_tool_sound(src)
-	if(!I.use_tool(src, user, 3 SECONDS))
-		return TRUE
-
-	if(blow_up(user))
-		user.visible_message("<span class='danger'>\The [src] goes off!</span>", "<span class='danger'>\The [src] goes off in your face!</span>")
-		return
-
-	if(magazine.caliber == initial_caliber)
-		magazine.caliber = alternative_caliber
-		if(alternative_ammo_misfires)
-			can_misfire = TRUE
-		fire_sound = alternative_fire_sound
-		to_chat(user, "<span class='notice'>You modify [src]. Now it will fire [alternative_caliber] rounds.</span>")
-	else
-		magazine.caliber = initial_caliber
-		if(alternative_ammo_misfires)
-			can_misfire = FALSE
-		fire_sound = initial_fire_sound
-		to_chat(user, "<span class='notice'>You reset [src]. Now it will fire [initial_caliber] rounds.</span>")
-
-
 ///used for sawing guns, causes the gun to fire without the input of the user
 /obj/item/gun/ballistic/proc/blow_up(mob/user)
 	. = FALSE

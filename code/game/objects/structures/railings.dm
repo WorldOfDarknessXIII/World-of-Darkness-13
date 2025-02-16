@@ -43,33 +43,7 @@
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
 
-/obj/structure/railing/wirecutter_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(!anchored)
-		to_chat(user, "<span class='warning'>You cut apart the railing.</span>")
-		I.play_tool_sound(src, 100)
-		deconstruct()
-		return TRUE
-
-/obj/structure/railing/deconstruct(disassembled)
-	. = ..()
-	if(!loc) //quick check if it's qdeleted already.
-		return
-	if(!(flags_1 & NODECONSTRUCT_1))
-		var/obj/item/stack/rods/rod = new /obj/item/stack/rods(drop_location(), 3)
-		transfer_fingerprints_to(rod)
-		qdel(src)
 ///Implements behaviour that makes it possible to unanchor the railing.
-/obj/structure/railing/wrench_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(flags_1&NODECONSTRUCT_1)
-		return
-	to_chat(user, "<span class='notice'>You begin to [anchored ? "unfasten the railing from":"fasten the railing to"] the floor...</span>")
-	if(I.use_tool(src, user, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_anchored), anchored)))
-		set_anchored(!anchored)
-		to_chat(user, "<span class='notice'>You [anchored ? "fasten the railing to":"unfasten the railing from"] the floor.</span>")
-	return TRUE
-
 /obj/structure/railing/CanPass(atom/movable/mover, turf/target)
 	. = ..()
 	if(get_dir(loc, target) & dir)

@@ -51,15 +51,6 @@
 	else
 		set_light(brightness_on)
 
-/obj/machinery/computer/screwdriver_act(mob/living/user, obj/item/I)
-	if(..())
-		return TRUE
-	if(circuit && !(flags_1&NODECONSTRUCT_1))
-		to_chat(user, "<span class='notice'>You start to disconnect the monitor...</span>")
-		if(I.use_tool(src, user, time_to_screwdrive, volume=50))
-			deconstruct(TRUE, user)
-	return TRUE
-
 /obj/machinery/computer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
@@ -88,34 +79,6 @@
 			if(2)
 				if(prob(10))
 					obj_break(ENERGY)
-
-/obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
-	on_deconstruction()
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(circuit) //no circuit, no computer frame
-			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
-			A.setDir(dir)
-			A.circuit = circuit
-			// Circuit removal code is handled in /obj/machinery/Exited()
-			circuit.forceMove(A)
-			A.set_anchored(TRUE)
-			if(machine_stat & BROKEN)
-				if(user)
-					to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
-				else
-					playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
-				new /obj/item/shard(drop_location())
-				new /obj/item/shard(drop_location())
-				A.state = 3
-				A.icon_state = "3"
-			else
-				if(user)
-					to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
-				A.state = 4
-				A.icon_state = "4"
-		for(var/obj/C in src)
-			C.forceMove(loc)
-	qdel(src)
 
 /obj/machinery/computer/AltClick(mob/user)
 	. = ..()

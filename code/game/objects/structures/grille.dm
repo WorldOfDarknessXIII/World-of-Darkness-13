@@ -201,15 +201,6 @@
 			playsound(src, 'sound/items/welder.ogg', 80, TRUE)
 
 
-/obj/structure/grille/deconstruct(disassembled = TRUE)
-	if(!loc) //if already qdel'd somehow, we do nothing
-		return
-	if(!(flags_1&NODECONSTRUCT_1))
-		var/obj/R = new rods_type(drop_location(), rods_amount)
-		transfer_fingerprints_to(R)
-		qdel(src)
-	..()
-
 /obj/structure/grille/obj_break()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		new broken_type(src.loc)

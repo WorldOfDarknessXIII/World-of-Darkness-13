@@ -239,11 +239,6 @@
 	else
 		return open(user)
 
-/obj/structure/closet/deconstruct(disassembled = TRUE)
-	if(ispath(material_drop) && material_drop_amount && !(flags_1 & NODECONSTRUCT_1))
-		new material_drop(loc, material_drop_amount)
-	qdel(src)
-
 /obj/structure/closet/obj_break(damage_flag)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		bust_open()
@@ -468,17 +463,6 @@
 			to_chat(user, "<span class='alert'>Access Denied.</span>")
 	else if(secure && broken)
 		to_chat(user, "<span class='warning'>\The [src] is broken!</span>")
-
-/obj/structure/closet/emag_act(mob/user)
-	if(secure && !broken)
-		if(user)
-			user.visible_message("<span class='warning'>Sparks fly from [src]!</span>",
-							"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",
-							"<span class='hear'>You hear a faint electrical spark.</span>")
-		playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		broken = TRUE
-		locked = FALSE
-		update_icon()
 
 /obj/structure/closet/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))

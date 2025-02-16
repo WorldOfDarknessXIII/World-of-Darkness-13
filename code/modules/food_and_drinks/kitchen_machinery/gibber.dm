@@ -20,16 +20,6 @@
 	. = ..()
 	add_overlay("grjam")
 
-/obj/machinery/gibber/RefreshParts()
-	gibtime = 40
-	meat_produced = 0
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		meat_produced += B.rating
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		gibtime -= 5 * M.rating
-		if(M.rating >= 2)
-			ignore_clothing = TRUE
-
 /obj/machinery/gibber/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
@@ -182,7 +172,7 @@
 	for (var/i=1 to meat_produced)
 		var/obj/item/food/meat/slab/newmeat = new typeofmeat
 		newmeat.name = "[sourcename] [newmeat.name]"
-		newmeat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, occupant) = 4 * MINERAL_MATERIAL_AMOUNT))
+
 		if(istype(newmeat))
 			newmeat.subjectname = sourcename
 			newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, sourcenutriment / meat_produced) // Thehehe. Fat guys go first

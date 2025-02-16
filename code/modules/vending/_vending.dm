@@ -221,19 +221,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 /obj/machinery/vending/can_speak()
 	return !shut_up
 
-/obj/machinery/vending/RefreshParts()         //Better would be to make constructable child
-	if(!component_parts)
-		return
-
-	product_records = list()
-	hidden_records = list()
-	coin_records = list()
-	build_inventory(products, product_records, start_empty = TRUE)
-	build_inventory(contraband, hidden_records, start_empty = TRUE)
-	build_inventory(premium, coin_records, start_empty = TRUE)
-	for(var/obj/item/vending_refill/VR in component_parts)
-		restock(VR)
-
 /obj/machinery/vending/deconstruct(disassembled = TRUE)
 	if(!refill_canister) //the non constructable vendors drop metal instead of a machine frame.
 		if(!(flags_1 & NODECONSTRUCT_1))
@@ -408,32 +395,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 	for(var/R in recordlist)
 		var/datum/data/vending_product/record = R
 		.[record.product_path] += record.amount
-
-/obj/machinery/vending/crowbar_act(mob/living/user, obj/item/I)
-	if(!component_parts)
-		return FALSE
-	default_deconstruction_crowbar(I)
-	return TRUE
-
-/obj/machinery/vending/wrench_act(mob/living/user, obj/item/I)
-	..()
-	if(panel_open)
-		default_unfasten_wrench(user, I, time = 60)
-		unbuckle_all_mobs(TRUE)
-	return TRUE
-
-/obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/I)
-	if(..())
-		return TRUE
-	if(anchored)
-		default_deconstruction_screwdriver(user, icon_state, icon_state, I)
-		cut_overlays()
-		if(panel_open)
-			add_overlay("[initial(icon_state)]-panel")
-		updateUsrDialog()
-	else
-		to_chat(user, "<span class='warning'>You must first secure [src].</span>")
-	return TRUE
 
 /obj/machinery/vending/attackby(obj/item/I, mob/user, params)
 	if(panel_open && is_wire_tool(I))
@@ -704,12 +665,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/on_deconstruction()
 	update_canister()
 	. = ..()
-
-/obj/machinery/vending/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
-		return
-	obj_flags |= EMAGGED
-	to_chat(user, "<span class='notice'>You short out the product lock on [src].</span>")
 
 /obj/machinery/vending/_try_interact(mob/user)
 	if(seconds_electrified && !(machine_stat & NOPOWER))
@@ -1160,9 +1115,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return
 
 	return ..()
-
-/obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/I)
-	return FALSE
 
 /obj/machinery/vending/custom/Destroy()
 	unbuckle_all_mobs(TRUE)

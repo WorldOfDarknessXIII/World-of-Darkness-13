@@ -17,11 +17,6 @@
 	var/proj_pass_rate = 50 //How many projectiles will pass the cover. Lower means stronger cover
 	var/bar_material = METAL
 
-/obj/structure/barricade/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		make_debris()
-	qdel(src)
-
 /obj/structure/barricade/proc/make_debris()
 	return
 

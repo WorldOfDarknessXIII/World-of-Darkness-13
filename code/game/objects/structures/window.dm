@@ -226,17 +226,6 @@
 			playsound(src, 'sound/items/Welder.ogg', 100, TRUE)
 
 
-/obj/structure/window/deconstruct(disassembled = TRUE)
-	if(QDELETED(src))
-		return
-	if(!disassembled)
-		playsound(src, breaksound, 70, TRUE)
-		if(!(flags_1 & NODECONSTRUCT_1))
-			for(var/obj/item/shard/debris in spawnDebris(drop_location()))
-				transfer_fingerprints_to(debris) // transfer fingerprints to shards only
-	qdel(src)
-	update_nearby_icons()
-
 /obj/structure/window/proc/spawnDebris(location)
 	. = list()
 	. += new /obj/item/shard(location)

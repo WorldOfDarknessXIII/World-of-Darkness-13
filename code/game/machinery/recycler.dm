@@ -18,38 +18,9 @@
 	var/item_recycle_sound = 'sound/items/welder.ogg'
 
 /obj/machinery/recycler/Initialize()
-	AddComponent(/datum/component/butchering/recycler, 1, amount_produced,amount_produced/5)
-	var/list/allowed_materials = list(/datum/material/iron,
-									/datum/material/glass,
-									/datum/material/silver,
-									/datum/material/plasma,
-									/datum/material/gold,
-									/datum/material/diamond,
-									/datum/material/plastic,
-									/datum/material/uranium,
-									/datum/material/bananium,
-									/datum/material/titanium,
-									/datum/material/bluespace
-									)
-	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
 	. = ..()
 	update_icon()
 	req_one_access = get_all_accesses() + get_all_centcom_access()
-
-/obj/machinery/recycler/RefreshParts()
-	var/amt_made = 0
-	var/mat_mod = 0
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		mat_mod = 2 * B.rating
-	mat_mod *= 50000
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		amt_made = 12.5 * M.rating //% of materials salvaged
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	materials.max_amount = mat_mod
-	amount_produced = min(50, amt_made) + 50
-	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering/recycler)
-	butchering.effectiveness = amount_produced
-	butchering.bonus_modifier = amount_produced/5
 
 /obj/machinery/recycler/examine(mob/user)
 	. = ..()
@@ -72,16 +43,6 @@
 	if(default_deconstruction_crowbar(I))
 		return
 	return ..()
-
-/obj/machinery/recycler/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
-		return
-	obj_flags |= EMAGGED
-	if(safety_mode)
-		safety_mode = FALSE
-		update_icon()
-	playsound(src, "sparks", 75, TRUE, SILENCED_SOUND_EXTRARANGE)
-	to_chat(user, "<span class='notice'>You use the cryptographic sequencer on [src].</span>")
 
 /obj/machinery/recycler/update_icon_state()
 	..()

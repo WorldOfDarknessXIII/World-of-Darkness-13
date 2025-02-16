@@ -35,63 +35,6 @@
 		return
 	user.examinate(src)
 
-/obj/structure/plaque/wrench_act(mob/living/user, obj/item/wrench/I)
-	. = ..()
-	user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
-		"<span class='notice'>You start unfastening [src].</span>")
-	I.play_tool_sound(src)
-	if(!I.use_tool(src, user, 4 SECONDS))
-		return TRUE
-	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-	user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
-		"<span class='notice'>You unfasten [src].</span>")
-	var/obj/item/plaque/unwrenched_plaque = new (get_turf(user))
-	if(engraved) //If it's still just a basic unengraved plaque, we can (and should) skip some of the below variable transfers.
-		unwrenched_plaque.name = name //Copy over the plaque structure variables to the plaque item we're creating when we unwrench it.
-		unwrenched_plaque.desc = desc
-		unwrenched_plaque.engraved = engraved
-	unwrenched_plaque.icon_state = icon_state
-	unwrenched_plaque.obj_integrity = obj_integrity
-	unwrenched_plaque.setDir(dir)
-	qdel(src) //The plaque structure on the wall goes poof and only the plaque item from unwrenching remains.
-	return TRUE
-
-/obj/structure/plaque/welder_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(user.a_intent == INTENT_HARM)
-		return FALSE
-	if(obj_integrity == max_integrity)
-		to_chat(user, "<span class='warning'>This plaque is already in perfect condition.</span>")
-		return TRUE
-	if(!I.tool_start_check(user, amount=0))
-		return TRUE
-	user.visible_message("<span class='notice'>[user] starts repairing [src]...</span>", \
-		"<span class='notice'>You start repairing [src].</span>")
-	if(!I.use_tool(src, user, 4 SECONDS, volume = 50))
-		return TRUE
-	user.visible_message("<span class='notice'>[user] finishes repairing [src].</span>", \
-			"<span class='notice'>You finish repairing [src].</span>")
-	obj_integrity = max_integrity
-	return TRUE
-
-/obj/item/plaque/welder_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(user.a_intent == INTENT_HARM)
-		return FALSE
-	if(obj_integrity == max_integrity)
-		to_chat(user, "<span class='warning'>This plaque is already in perfect condition.</span>")
-		return TRUE
-	if(!I.tool_start_check(user, amount=0))
-		return TRUE
-	user.visible_message("<span class='notice'>[user] starts repairing [src]...</span>", \
-		"<span class='notice'>You start repairing [src].</span>")
-	if(!I.use_tool(src, user, 4 SECONDS, volume = 50))
-		return TRUE
-	user.visible_message("<span class='notice'>[user] finishes repairing [src].</span>", \
-		"<span class='notice'>You finish repairing [src].</span>")
-	obj_integrity = max_integrity
-	return TRUE
-
 /obj/structure/plaque/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/pen/fountain))
 		if(engraved)

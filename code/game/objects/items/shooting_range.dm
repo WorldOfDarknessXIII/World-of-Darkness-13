@@ -11,15 +11,6 @@
 /obj/item/target/Initialize()
 	. = ..()
 
-/obj/item/target/welder_act(mob/living/user, obj/item/I)
-	..()
-	if(I.use_tool(src, user, 0, volume=40))
-		for (var/bullethole in bullethole_overlays)
-			cut_overlay(bullethole)
-		bullethole_overlays = null
-		to_chat(user, "<span class='notice'>You slice off [src]'s uneven chunks of aluminium and scorch marks.</span>")
-	return TRUE
-
 /obj/item/target/syndicate
 	icon_state = "target_s"
 	desc = "A shooting target that looks like syndicate scum."
