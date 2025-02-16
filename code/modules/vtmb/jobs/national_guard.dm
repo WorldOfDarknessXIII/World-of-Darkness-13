@@ -97,6 +97,7 @@
 		/obj/item/grenade/smokebomb = 2,
 		/obj/item/gun/ballistic/automatic/vampire/glock19 = 1,
 		/obj/item/ammo_box/magazine/glock9mm = 2,
+		/obj/item/clothing/mask/vampire/gasmask = 1,
 		/obj/item/binoculars = 1,
 		/obj/item/ammo_box/vampire/c762 = 1
 		)
@@ -113,6 +114,7 @@
 		/obj/item/grenade/smokebomb = 2,
 		/obj/item/gun/ballistic/automatic/vampire/glock21 = 1,
 		/obj/item/ammo_box/magazine/glock45acp = 2,
+		/obj/item/clothing/mask/vampire/gasmask = 1,
 		/obj/item/binoculars = 1
 		)
 
