@@ -89,9 +89,6 @@
 		to_chat(user, "<span class='warning'>You are unable to fit your [name] into the [J.name].</span>")
 		return
 
-/obj/item/mop/cyborg
-	insertable = FALSE
-
 /obj/item/mop/advanced
 	desc = "The most advanced tool in a custodian's arsenal, complete with a condenser for self-wetting! Just think of all the viscera you will clean up with this!"
 	name = "advanced mop"

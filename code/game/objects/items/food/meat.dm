@@ -343,15 +343,6 @@
 		visible_message("<span class='notice'>[src] fails to expand!</span>")
 	qdel(src)
 
-/obj/item/food/monkeycube/proc/finish_suicide(mob/living/M) ///internal proc called by a monkeycube's suicide_act using a timer and callback. takes as argument the mob/living who activated the suicide
-	if(QDELETED(M) || QDELETED(src))
-		return
-	if((src.loc != M)) //how the hell did you manage this
-		to_chat(M, "<span class='warning'>Something happened to [src]...</span>")
-		return
-	Expand()
-	M.visible_message("<span class='danger'>[M]'s torso bursts open as a primate emerges!</span>")
-	M.gib(null, TRUE, null, TRUE)
 
 /obj/item/food/monkeycube/syndicate
 	faction = list("neutral", ROLE_SYNDICATE)

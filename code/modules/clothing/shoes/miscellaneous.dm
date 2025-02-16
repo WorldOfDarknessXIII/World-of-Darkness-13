@@ -211,11 +211,6 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
-/obj/item/clothing/shoes/cyborg
-	name = "cyborg boots"
-	desc = "Shoes for a cyborg costume."
-	icon_state = "boots"
-
 /obj/item/clothing/shoes/laceup
 	name = "laceup shoes"
 	desc = "The height of fashion, and they're pre-polished!"

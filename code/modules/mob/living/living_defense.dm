@@ -280,10 +280,6 @@
 
 //Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
 
-/mob/living/acid_act(acidpwr, acid_volume)
-	take_bodypart_damage(acidpwr * min(1, acid_volume * 0.1))
-	return TRUE
-
 ///As the name suggests, this should be called to apply electric shocks.
 /mob/living/proc/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	SEND_SIGNAL(src, COMSIG_LIVING_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, flags)

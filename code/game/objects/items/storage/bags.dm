@@ -60,9 +60,6 @@
 		else
 			icon_state = "[initial(icon_state)]"
 
-/obj/item/storage/bag/trash/cyborg
-	insertable = FALSE
-
 /obj/item/storage/bag/trash/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	if(insertable)
 		J.put_in_cart(src, user)

@@ -77,16 +77,6 @@
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	return !(charge) ? (cell.charge >= shot.e_cost) : FALSE
 
-/obj/item/gun/energy/recharge_newshot(no_cyborg_drain)
-	if (!ammo_type)
-		return
-	if(!chambered)
-		var/obj/item/ammo_casing/energy/AC = ammo_type[select]
-		if(charge >= AC.e_cost) //if there's enough power in the cell cell...
-			chambered = AC //...prepare a new shot based on the current ammo type selected
-			if(!chambered.BB)
-				chambered.newshot()
-
 /obj/item/gun/energy/process_chamber()
 	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
 		var/obj/item/ammo_casing/energy/shot = chambered

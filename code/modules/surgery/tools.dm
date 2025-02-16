@@ -195,13 +195,6 @@
 	AddComponent(/datum/component/surgery_initiator, null)
 
 
-/obj/item/organ_storage //allows medical cyborgs to manipulate organs without hands
-	name = "organ storage bag"
-	desc = "A container for holding body parts."
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "evidenceobj"
-	item_flags = SURGICAL_TOOL
-
 /obj/item/organ_storage/afterattack(obj/item/I, mob/user, proximity)
 	. = ..()
 	if(!proximity)
@@ -240,14 +233,6 @@
 	else
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 	return
-
-/obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
-	name = "\improper Surgical Processor"
-	desc = "A device for scanning and initiating surgeries from a disk or operating computer."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "spectrometer"
-	item_flags = NOBLUDGEON
-	var/list/advanced_surgeries = list()
 
 /obj/item/surgical_processor/afterattack(obj/item/O, mob/user, proximity)
 	. = ..()

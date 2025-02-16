@@ -447,20 +447,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/is_transition_turf()
 	return
 
-/turf/acid_act(acidpwr, acid_volume)
-	. = ..()
-	if((acidpwr <= 0) || (acid_volume <= 0))
-		return FALSE
-
-	AddComponent(/datum/component/acid, acidpwr, acid_volume)
-	for(var/obj/O in src)
-		if(intact && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
-			continue
-
-		O.acid_act(acidpwr, acid_volume)
-
-	return . || TRUE
-
 /turf/proc/acid_melt()
 	return
 

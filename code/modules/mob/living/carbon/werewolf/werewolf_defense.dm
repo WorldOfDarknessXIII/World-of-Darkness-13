@@ -72,9 +72,6 @@
 /mob/living/carbon/werewolf/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
 	return 0
 
-/mob/living/carbon/werewolf/acid_act(acidpwr, acid_volume)
-	return FALSE//aliens are immune to acid.
-
 /mob/living/carbon/werewolf/attack_hand(mob/living/carbon/human/M)
 	if(..())
 		switch(M.a_intent)

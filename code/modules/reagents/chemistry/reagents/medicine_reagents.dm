@@ -928,13 +928,6 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
-	name = "Restorative Nanites"
-	description = "Miniature medical robots that swiftly restore bodily damage."
-	reagent_state = SOLID
-	color = "#555555"
-	overdose_threshold = 30
-
 /datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-5*REM, 0) //A ton of healing - this is a 50 telecrystal investment.
 	M.adjustFireLoss(-5*REM, 0)

@@ -126,14 +126,6 @@
 GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "acid"))
 
 ///the obj's reaction when touched by acid
-/obj/acid_act(acidpwr, acid_volume)
-	. = ..()
-	if((resistance_flags & UNACIDABLE) || (acid_volume <= 0) || acidpwr <= 0)
-		return FALSE
-
-	AddComponent(/datum/component/acid, acidpwr, acid_volume)
-	return TRUE
-
 ///called when the obj is destroyed by acid.
 /obj/proc/acid_melt()
 	deconstruct(FALSE)

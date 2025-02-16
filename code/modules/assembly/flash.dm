@@ -283,18 +283,6 @@
 		to_chat(aggressor, "<span class='warning'>This mind seems resistant to the flash!</span>")
 
 
-/obj/item/assembly/flash/cyborg
-
-/obj/item/assembly/flash/cyborg/attack(mob/living/M, mob/user)
-	..()
-	new /obj/effect/temp_visual/borgflash(get_turf(src))
-
-/obj/item/assembly/flash/cyborg/attack_self(mob/user)
-	..()
-	new /obj/effect/temp_visual/borgflash(get_turf(src))
-
-/obj/item/assembly/flash/cyborg/attackby(obj/item/W, mob/user, params)
-	return
 /obj/item/assembly/flash/memorizer
 	name = "memorizer"
 	desc = "If you see this, you're not likely to remember it any time soon."

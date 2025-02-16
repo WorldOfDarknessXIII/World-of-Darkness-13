@@ -311,19 +311,6 @@
 /obj/item/weldingtool/largetank/flamethrower_screwdriver()
 	return
 
-/obj/item/weldingtool/largetank/cyborg
-	name = "integrated welding tool"
-	desc = "An advanced welder designed to be used in robotic systems. Custom framework doubles the speed of welding."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "indwelder_cyborg"
-	toolspeed = 0.5
-
-/obj/item/weldingtool/largetank/cyborg/cyborg_unequip(mob/user)
-	if(!isOn())
-		return
-	switched_on(user)
-
-
 /obj/item/weldingtool/mini
 	name = "emergency welding tool"
 	desc = "A miniature welder used during emergencies."

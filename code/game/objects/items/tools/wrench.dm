@@ -46,13 +46,6 @@
 	if(suicider)
 		. += "<span class='notice'>For some reason, it reminds you of [suicider].</span>"
 
-/obj/item/wrench/cyborg
-	name = "hydraulic wrench"
-	desc = "An advanced robotic wrench, powered by internal hydraulics. Twice as fast as the handheld version."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "wrench_cyborg"
-	toolspeed = 0.5
-
 /obj/item/wrench/combat
 	name = "combat wrench"
 	desc = "It's like a normal wrench but edgier. Can be found on the battlefield."

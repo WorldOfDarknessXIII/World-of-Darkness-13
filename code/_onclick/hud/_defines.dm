@@ -127,22 +127,6 @@
 #define ui_drone_storage "CENTER-2:14,SOUTH:5"
 #define ui_drone_head "CENTER-3:14,SOUTH:5"
 
-//Cyborgs
-#define ui_borg_health "EAST-1:28,CENTER-1:15"
-#define ui_borg_pull "EAST-2:26,SOUTH+1:7"
-#define ui_borg_radio "EAST-1:28,SOUTH+1:7"
-#define ui_borg_intents "EAST-2:26,SOUTH:5"
-#define ui_borg_lamp "CENTER-3:16, SOUTH:5"
-#define ui_borg_tablet "CENTER-4:16, SOUTH:5"
-#define ui_inv1 "CENTER-2:16,SOUTH:5"
-#define ui_inv2 "CENTER-1  :16,SOUTH:5"
-#define ui_inv3 "CENTER  :16,SOUTH:5"
-#define ui_borg_module "CENTER+1:16,SOUTH:5"
-#define ui_borg_store "CENTER+2:16,SOUTH:5"
-#define ui_borg_camera "CENTER+3:21,SOUTH:5"
-#define ui_borg_alerts "CENTER+4:21,SOUTH:5"
-#define ui_borg_language_menu "CENTER+4:21,SOUTH+1:5"
-
 //Aliens
 #define ui_alien_health "EAST,CENTER-1:15"
 #define ui_alienplasmadisplay "EAST,CENTER-2:15"

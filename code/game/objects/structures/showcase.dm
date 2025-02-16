@@ -49,13 +49,6 @@
 	name = "opened cryogenic pod"
 	desc = "A cryogenic pod that has recently discharged its occupant. The pod appears non-functional."
 
-/obj/structure/showcase/cyborg/old
-	name = "Cyborg Statue"
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze."
-	icon = 'icons/mob/robots.dmi'
-	icon_state = "robot_old"
-	density = FALSE
-
 /obj/structure/showcase/mecha/marauder
 	name = "combat mech exhibit"
 	desc = "A stand with an empty old Nanotrasen Corporation combat mech bolted to it. It is described as the premier unit used to defend corporate interests and employees."

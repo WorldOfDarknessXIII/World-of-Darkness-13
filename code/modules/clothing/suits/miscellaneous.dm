@@ -61,16 +61,6 @@
 	inhand_icon_state = "hgpirate"
 
 
-/obj/item/clothing/suit/cyborg_suit
-	name = "cyborg suit"
-	desc = "Suit for a cyborg costume."
-	icon_state = "death"
-	inhand_icon_state = "death"
-	flags_1 = CONDUCT_1
-	fire_resist = T0C+5200
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-
-
 /obj/item/clothing/suit/justice
 	name = "justice suit"
 	desc = "this pretty much looks ridiculous" //Needs no fixing

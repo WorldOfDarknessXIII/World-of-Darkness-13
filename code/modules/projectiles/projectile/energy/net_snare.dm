@@ -68,24 +68,6 @@
 	new /obj/item/restraints/legcuffs/beartrap/energy(loc)
 	..()
 
-/obj/projectile/energy/trap/cyborg
-	name = "Energy Bola"
-	icon_state = "e_snare"
-	nodamage = TRUE
-	paralyze = 0
-	hitsound = 'sound/weapons/taserhit.ogg'
-	range = 10
-
-/obj/projectile/energy/trap/cyborg/on_hit(atom/target, blocked = FALSE)
-	if(!ismob(target) || blocked >= 100)
-		do_sparks(1, TRUE, src)
-		qdel(src)
-	if(iscarbon(target))
-		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(target))
-		B.Crossed(target)
-	QDEL_IN(src, 10)
-	..()
-
 /obj/projectile/energy/trap/cyborg/on_range()
 	do_sparks(1, TRUE, src)
 	qdel(src)

@@ -121,36 +121,6 @@
 	toxLethality = LIVER_DEFAULT_TOX_LETHALITY * 2.5 // rejects its owner early after too much punishment
 	toxTolerance = 15 // complete toxin immunity like xenos have would be too powerful
 
-/obj/item/organ/liver/cybernetic
-	name = "basic cybernetic liver"
-	icon_state = "liver-c"
-	desc = "A very basic device designed to mimic the functions of a human liver. Handles toxins slightly worse than an organic liver."
-	organ_flags = ORGAN_SYNTHETIC
-	toxTolerance = 2
-	toxLethality = 0.011
-	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
-
-	var/emp_vulnerability = 80	//Chance of permanent effects if emp-ed.
-
-/obj/item/organ/liver/cybernetic/tier2
-	name = "cybernetic liver"
-	icon_state = "liver-c-u"
-	desc = "An electronic device designed to mimic the functions of a human liver. Handles toxins slightly better than an organic liver."
-	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
-	toxTolerance = 5 //can shrug off up to 5u of toxins
-	toxLethality = 0.008 //20% less damage than a normal liver
-	emp_vulnerability = 40
-
-/obj/item/organ/liver/cybernetic/tier3
-	name = "upgraded cybernetic liver"
-	icon_state = "liver-c-u2"
-	desc = "An upgraded version of the cybernetic liver, designed to improve further upon organic livers. It is resistant to alcohol poisoning and is very robust at filtering toxins."
-	alcohol_tolerance = 0.001
-	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
-	toxTolerance = 10 //can shrug off up to 10u of toxins
-	toxLethality = 0.008 //20% less damage than a normal liver
-	emp_vulnerability = 20
-
 /obj/item/organ/liver/cybernetic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)

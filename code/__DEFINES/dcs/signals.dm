@@ -110,8 +110,6 @@
 #define COMSIG_ATOM_BLOB_ACT "atom_blob_act"
 	/// if returned, forces nothing to happen when the atom is attacked by a blob
 	#define COMPONENT_CANCEL_BLOB_ACT (1<<0)
-///from base of atom/acid_act(): (acidpwr, acid_volume)
-#define COMSIG_ATOM_ACID_ACT "atom_acid_act"
 ///from base of atom/emag_act(): (/mob/user)
 #define COMSIG_ATOM_EMAG_ACT "atom_emag_act"
 ///from base of atom/rad_act(intensity)

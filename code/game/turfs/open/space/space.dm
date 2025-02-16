@@ -203,9 +203,6 @@
 		return TRUE
 
 
-/turf/open/space/acid_act(acidpwr, acid_volume)
-	return FALSE
-
 /turf/open/space/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/space.dmi'
 	underlay_appearance.icon_state = SPACE_ICON_STATE

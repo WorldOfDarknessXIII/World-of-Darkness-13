@@ -228,46 +228,6 @@
 	volume = 30
 	list_reagents = list(/datum/reagent/lube/superlube = 30)
 
-/obj/item/reagent_containers/spray/waterflower/cyborg
-	reagent_flags = NONE
-	volume = 100
-	list_reagents = list(/datum/reagent/water = 100)
-	var/generate_amount = 5
-	var/generate_type = /datum/reagent/water
-	var/last_generate = 0
-	var/generate_delay = 10	//deciseconds
-	can_fill_from_container = FALSE
-
-/obj/item/reagent_containers/spray/waterflower/cyborg/hacked
-	name = "nova flower"
-	desc = "This doesn't look safe at all..."
-	list_reagents = list(/datum/reagent/clf3 = 3)
-	volume = 3
-	generate_type = /datum/reagent/clf3
-	generate_amount = 1
-	generate_delay = 40		//deciseconds
-
-/obj/item/reagent_containers/spray/waterflower/cyborg/Initialize()
-	. = ..()
-	START_PROCESSING(SSfastprocess, src)
-
-/obj/item/reagent_containers/spray/waterflower/cyborg/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
-	return ..()
-
-/obj/item/reagent_containers/spray/waterflower/cyborg/process()
-	if(world.time < last_generate + generate_delay)
-		return
-	last_generate = world.time
-	generate_reagents()
-
-/obj/item/reagent_containers/spray/waterflower/cyborg/empty()
-	to_chat(usr, "<span class='warning'>You can not empty this!</span>")
-	return
-
-/obj/item/reagent_containers/spray/waterflower/cyborg/proc/generate_reagents()
-	reagents.add_reagent(generate_type, generate_amount)
-
 //chemsprayer
 /obj/item/reagent_containers/spray/chemsprayer
 	name = "chem sprayer"

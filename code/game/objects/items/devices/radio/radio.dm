@@ -67,7 +67,6 @@
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
-// Used for cyborg override
 /obj/item/radio/proc/resetChannels()
 	channels = list()
 	translate_binary = FALSE

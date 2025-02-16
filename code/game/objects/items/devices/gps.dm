@@ -31,15 +31,6 @@
 	gpstag = "MINE0"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
 
-/obj/item/gps/cyborg
-	icon_state = "gps-b"
-	gpstag = "BORG0"
-	desc = "A mining cyborg internal positioning system. Used as a recovery beacon for damaged cyborg assets, or a collaboration tool for mining teams."
-
-/obj/item/gps/cyborg/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
-
 /obj/item/gps/mining/internal
 	icon_state = "gps-m"
 	gpstag = "MINER"

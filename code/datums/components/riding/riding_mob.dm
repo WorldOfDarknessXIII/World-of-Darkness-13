@@ -45,7 +45,6 @@
 	living_parent.log_message("is now being ridden by [rider]", LOG_ATTACK, color="pink")
 	rider.log_message("started riding [living_parent]", LOG_ATTACK, color="pink")
 
-// this applies to humans and most creatures, but is replaced again for cyborgs
 /datum/component/riding/creature/ride_check(mob/living/rider)
 	var/mob/living/living_parent = parent
 
@@ -89,7 +88,6 @@
 	last_move_diagonal = ((direction & (direction - 1)) && (living_parent.loc == next))
 	COOLDOWN_START(src, vehicle_move_cooldown, (last_move_diagonal? 2 : 1) * vehicle_move_delay)
 
-/// Yeets the rider off, used for animals and cyborgs, redefined for humans who shove their piggyback rider off
 /datum/component/riding/creature/proc/force_dismount(mob/living/rider, gentle = FALSE)
 	var/atom/movable/movable_parent = parent
 	movable_parent.unbuckle_mob(rider)
@@ -110,7 +108,6 @@
 		"<span class='warning'>You're thrown violently from [movable_parent]!</span>")
 		rider.throw_at(target, 14, 5, movable_parent, gentle = FALSE)
 
-/// If we're a cyborg or animal and we spin, we yeet whoever's on us off us
 /datum/component/riding/creature/proc/check_emote(mob/living/user, datum/emote/emote)
 	if((!iscyborg(user) && !isanimal(user)) || !istype(emote, /datum/emote/spin))
 		return

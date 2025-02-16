@@ -14,9 +14,6 @@
 /obj/effect/fire_act(exposed_temperature, exposed_volume)
 	return
 
-/obj/effect/acid_act()
-	return FALSE
-
 /obj/effect/blob_act(obj/structure/blob/B)
 	return
 

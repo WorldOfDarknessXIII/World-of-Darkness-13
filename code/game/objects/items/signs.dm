@@ -11,13 +11,6 @@
 	var/label = ""
 	COOLDOWN_DECLARE(picket_sign_cooldown)
 
-/obj/item/picket_sign/cyborg
-	name = "metallic nano-sign"
-	desc = "A high tech picket sign used by silicons that can reprogram its surface at will. Probably hurts to get hit by, too."
-	force = 13
-	resistance_flags = NONE
-	actions_types = list(/datum/action/item_action/nano_picket_sign)
-
 /obj/item/picket_sign/proc/retext(mob/user)
 	if(!user.is_literate())
 		to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")

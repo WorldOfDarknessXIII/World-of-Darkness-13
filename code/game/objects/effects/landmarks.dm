@@ -181,10 +181,6 @@
 	name = "Chaplain"
 	icon_state = "Chaplain"
 
-/obj/effect/landmark/start/cyborg
-	name = "Cyborg"
-	icon_state = "Cyborg"
-
 /obj/effect/landmark/start/ai
 	name = "AI"
 	icon_state = "AI"

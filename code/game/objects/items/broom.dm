@@ -106,9 +106,6 @@
 	J.mybroom=src
 	J.update_icon()
 
-/obj/item/pushbroom/cyborg
-	name = "robotic push broom"
-
 /obj/item/pushbroom/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	to_chat(user, "<span class='notice'>You cannot place your [src] into the [J]</span>")
 	return FALSE

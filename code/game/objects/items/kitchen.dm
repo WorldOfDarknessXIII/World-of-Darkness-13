@@ -205,12 +205,6 @@
 	force = 15
 	throwforce = 15
 
-/obj/item/kitchen/knife/combat/cyborg
-	name = "cyborg knife"
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "knife_cyborg"
-	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
-
 /obj/item/kitchen/knife/shiv
 	name = "glass shiv"
 	icon = 'icons/obj/shards.dmi'
