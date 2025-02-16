@@ -240,3 +240,6 @@
 
 	//imported variables from all around the code
 	var/taxist = FALSE
+
+	///Is the mob currently typing?
+	var/typing = FALSE

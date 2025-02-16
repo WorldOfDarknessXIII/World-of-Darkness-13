@@ -1887,7 +1887,7 @@
 					if ((victim.wear_mask?.flags_inv & HIDEFACE) || (victim.head?.flags_inv & HIDEFACE))
 						masked = TRUE
 						base_difficulty += 2
-					if (victim.overlays_standing[SAY_LAYER]) //ugly way to check for if the victim is currently typing
+					if (victim.typing)
 						base_difficulty += 2
 
 				for (var/mob/living/hearer in (view(7, target) - caster - target))

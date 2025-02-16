@@ -149,6 +149,8 @@
 	///AI controller that controls this atom. type on init, then turned into an instance during runtime
 	var/datum/ai_controller/ai_controller
 
+	///What icon the atom uses for speech bubbles
+	var/bubble_icon = "default"
 /**
  * Called when an atom is created in byond (built in engine proc)
  *
