@@ -371,7 +371,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(reason_of_death != "None")
 				dat += "<center><b>Last death</b>: [reason_of_death]</center>"
 
-			dat += "<center><h2>[make_font_cool("OCCUPATION CHOISES")]</h2>"
+			dat += "<center><h2>[make_font_cool("OCCUPATION CHOICES")]</h2>"
 			dat += "<a href='?_src_=prefs;preference=job;task=menu'>Set Occupation Preferences</a><br></center>"
 			if(CONFIG_GET(flag/roundstart_traits))
 				dat += "<center><h2>[make_font_cool("QUIRK SETUP")]</h2>"
