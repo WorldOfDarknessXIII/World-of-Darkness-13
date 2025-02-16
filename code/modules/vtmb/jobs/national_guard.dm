@@ -10,7 +10,7 @@
 	belt = /obj/item/gun/ballistic/automatic/vampire/aug
 	suit = /obj/item/clothing/suit/vampire/vest/army/medium
 	head = /obj/item/clothing/head/vampire/army
-	gloves = /obj/item/clothing/gloves/vampire/work
+	gloves = /obj/item/clothing/gloves/krav_maga/combatglovesplus
 	backpack_contents = list(
 		/obj/item/ammo_box/magazine/vampaug = 3,
 		/obj/item/radio/military = 1,
@@ -191,12 +191,10 @@
 /datum/antagonist/national_guard/medic
 	name = "National Guard Medic"
 	national_guard_outfit = /datum/outfit/job/national_guard/medic
-	antag_hud_name = "hud_private"
 
 /datum/antagonist/national_guard/ammo_carrier
 	name = "National Guard Ammo Carrier"
 	national_guard_outfit = /datum/outfit/job/national_guard/ammo_carrier
-	antag_hud_name = "hud_private"
 
 /datum/antagonist/national_guard/breacher
 	name = "National Guard Breacher"
