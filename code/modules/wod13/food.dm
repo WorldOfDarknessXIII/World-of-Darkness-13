@@ -589,7 +589,8 @@
 /obj/machinery/mineral/equipment_vendor/fastfood/gas
 	prize_list = list(new /datum/data/mining_equipment("full gas can",	/obj/item/gas_can/full,	250),
 		new /datum/data/mining_equipment("tire iron",		/obj/item/melee/vampirearms/tire,	50),
-		new /datum/data/mining_equipment("Spray Paint",		/obj/item/toy/crayon/spraycan,		25)
+		new /datum/data/mining_equipment("Spray Paint",		/obj/item/toy/crayon/spraycan,		25),
+		new /datum/data/mining_equipment("Hair Spray",		/obj/item/dyespray,		10),
 	)
 
 /obj/machinery/mineral/equipment_vendor/fastfood/library
