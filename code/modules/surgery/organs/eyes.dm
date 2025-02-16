@@ -2,8 +2,6 @@
 	name = BODY_ZONE_PRECISE_EYES
 	icon_state = "eyeballs"
 	desc = "I see you!"
-	illegal = TRUE
-	cost = 100
 	zone = BODY_ZONE_PRECISE_EYES
 	slot = ORGAN_SLOT_EYES
 	gender = PLURAL
@@ -32,6 +30,10 @@
 	var/lighting_alpha
 	var/no_glasses
 	var/damaged	= FALSE	//damaged indicates that our eyes are undergoing some level of negative effect
+
+/obj/item/organ/eyes/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling/organ, 100, "organ", TRUE, -1, 0)
 
 /obj/item/organ/eyes/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE, initialising)
 	. = ..()

@@ -408,7 +408,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	full_w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/copper = 2) //2 copper per cable in the coil
 	usesound = 'sound/items/deconstruct.ogg'
-	cost = 1
 	source = /datum/robot_energy_storage/wire
 	var/cable_color = "yellow"
 	var/obj/structure/cable/target_type = /obj/structure/cable
