@@ -799,7 +799,7 @@
 	contains = list(/obj/machinery/portable_atmospherics/scrubber/huge/movable/cargo)
 	crate_name = "huge portable scrubber crate"
 	crate_type = /obj/structure/closet/crate/large
-
+/*
 /datum/supply_pack/engineering/bsa
 	name = "Bluespace Artillery Parts"
 	desc = "The pride of Nanotrasen Naval Command. The legendary Bluespace Artillery Cannon is a devastating feat of human engineering and testament to wartime determination. Highly advanced research is required for proper construction. "
@@ -843,7 +843,6 @@
 					)
 	crate_name= "dna samplers crate"
 
-
 /datum/supply_pack/engineering/shield_sat
 	name = "Shield Generator Satellite"
 	desc = "Protect the very existence of this station with these Anti-Meteor defenses. Contains three Shield Generator Satellites."
@@ -857,7 +856,6 @@
 					)
 	crate_name= "shield sat crate"
 
-
 /datum/supply_pack/engineering/shield_sat_control
 	name = "Shield System Control Board"
 	desc = "A control system for the Shield Generator Satellite system."
@@ -865,7 +863,8 @@
 	special = TRUE
 	access_view = ACCESS_HEADS
 	contains = list(/obj/item/circuitboard/computer/sat_control)
-	crate_name= "shield control board crate"
+	crate_name= "shield control board crate"*/
+
 
 
 //////////////////////////////////////////////////////////////////////////////

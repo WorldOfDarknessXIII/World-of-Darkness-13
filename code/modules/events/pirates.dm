@@ -136,7 +136,7 @@
 			return
 		toggle_on(user)
 		update_icon()
-		send_notification()
+//		send_notification()   //Hey, you might want to consider something else for this. - Glasswalker machine notification turned off.
 	else
 		dump_loot(user)
 
