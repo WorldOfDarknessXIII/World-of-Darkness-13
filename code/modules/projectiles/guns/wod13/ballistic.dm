@@ -279,6 +279,29 @@
 		to_chat(user, "<span class='notice'>You pull the [magazine_wording] out of \the [src].</span>")
 	update_icon()
 
+
+/obj/item/gun/ballistic/proc/eject_magazine_npc(mob/user, obj/item/ammo_box/magazine/tac_load = null)
+	if(bolt_type == BOLT_TYPE_OPEN)
+		chambered = null
+	if (magazine.ammo_count())
+		playsound(src, load_sound, load_sound_volume, load_sound_vary)
+	else
+		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+	magazine.forceMove(drop_location())
+	var/obj/item/ammo_box/magazine/old_mag = magazine
+
+	if (tac_load)
+		tac_load.forceMove(src)
+		if (bolt_type == BOLT_TYPE_OPEN && !bolt_locked)
+			chamber_round(TRUE)
+		magazine = tac_load
+	else
+		magazine = null
+
+	old_mag.forceMove(get_turf(user))
+	old_mag.update_icon()
+	update_icon()
+
 /obj/item/gun/ballistic/can_shoot()
 	return chambered
 
@@ -287,14 +310,11 @@
 	if (.)
 		return
 	if (!internal_magazine && istype(A, /obj/item/ammo_box/magazine))
-		var/obj/item/ammo_box/magazine/AM = A
+		var/obj/item/ammo_box/magazine/ammo_mag = A
 		if (!magazine)
-			insert_magazine(user, AM)
+			insert_magazine(user, ammo_mag)
 		else
-			if (tac_reloads)
-				eject_magazine(user, FALSE, AM)
-			else
-				to_chat(user, "<span class='notice'>There's already a [magazine_wording] in \the [src].</span>")
+			handle_attackby_mag_eject_logic(user, ammo_mag)
 		return
 	if (istype(A, /obj/item/ammo_casing) || istype(A, /obj/item/ammo_box))
 		if (bolt_type == BOLT_TYPE_NO_BOLT || internal_magazine)
@@ -334,6 +354,15 @@
 			return
 
 	return FALSE
+
+
+
+/obj/item/gun/ballistic/proc/handle_attackby_mag_eject_logic(mob/user, obj/item/ammo_box/magazine/ammo_mag)
+	if (tac_reloads)
+		eject_magazine(user, FALSE, ammo_mag)
+	else
+		to_chat(user, "<span class='notice'>There's already a [magazine_wording] in \the [src].</span>")
+
 
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 
@@ -617,7 +646,6 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		if(AC.BB)
 			process_fire(user, user, FALSE)
 			. = TRUE
-
 
 /obj/item/suppressor
 	name = "suppressor"
