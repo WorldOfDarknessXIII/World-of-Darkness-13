@@ -447,9 +447,6 @@
 			if(moving_diagonally == SECOND_DIAG_STEP)
 				if(!. && set_dir_on_move)
 					setDir(first_step_dir)
-				else if (!inertia_moving)
-					inertia_next_move = world.time + inertia_move_delay
-					newtonian_move(direct)
 			moving_diagonally = 0
 			return
 

@@ -7,7 +7,6 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	layer = BELOW_OBJ_LAYER
-	circuit = /obj/item/circuitboard/machine/griddle
 	processing_flags = START_PROCESSING_MANUALLY
 	resistance_flags = FIRE_PROOF
 

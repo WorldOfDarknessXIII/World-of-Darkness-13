@@ -618,7 +618,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 	icon_state = "arcade"
-	circuit = /obj/item/circuitboard/computer/arcade/orion_trail
 	var/busy = FALSE //prevent clickspam that allowed people to ~speedrun~ the game.
 	var/engine = 0
 	var/hull = 0

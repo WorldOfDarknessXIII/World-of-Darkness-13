@@ -7,8 +7,6 @@
 	transfer_prints = TRUE
 	strip_delay = 40
 	equip_delay_other = 20
-	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	custom_price = PAYCHECK_ASSISTANT * 1.5
 	undyeable = TRUE
 
@@ -18,10 +16,6 @@
 	icon_state = "leather"
 	inhand_icon_state = "ggloves"
 	permeability_coefficient = 0.9
-	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	heat_protection = HANDS
-	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 70, ACID = 30)
 
@@ -33,10 +27,6 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	strip_delay = 80
-	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	heat_protection = HANDS
-	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 50)
 
@@ -49,9 +39,6 @@
 	strip_delay = 40
 	equip_delay_other = 20
 	body_parts_covered = ARMS
-	cold_protection = ARMS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	armor = list(MELEE = 15, BULLET = 25, LASER = 15, ENERGY = 15, BOMB = 20, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
 

@@ -53,23 +53,6 @@
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
 
-/obj/item/storage/backpack/holding
-	name = "bag of holding"
-	desc = "A backpack that opens into a localized pocket of bluespace."
-	icon_state = "holdingpack"
-	inhand_icon_state = "holdingpack"
-	resistance_flags = FIRE_PROOF
-	item_flags = NO_MAT_REDEMPTION
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 60, ACID = 50)
-	component_type = /datum/component/storage/concrete/bluespace/bag_of_holding
-
-/obj/item/storage/backpack/holding/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.allow_big_nesting = TRUE
-	STR.max_w_class = WEIGHT_CLASS_GIGANTIC
-	STR.max_combined_w_class = 35
-
 /obj/item/storage/backpack/santabag
 	name = "Santa's Gift Bag"
 	desc = "Space Santa uses this to deliver presents to all the nice children in space in Christmas! Wow, it's pretty big!"
@@ -307,40 +290,6 @@
 	desc = "An exclusive satchel for Nanotrasen officers."
 	icon_state = "satchel-cap"
 	inhand_icon_state = "satchel-cap"
-
-/obj/item/storage/backpack/satchel/flat
-	name = "smuggler's satchel"
-	desc = "A very slim satchel that can easily fit into tight spaces."
-	icon_state = "satchel-flat"
-	inhand_icon_state = "satchel-flat"
-	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
-
-/obj/item/storage/backpack/satchel/flat/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, INVISIBILITY_OBSERVER, use_anchor = TRUE)
-
-/obj/item/storage/backpack/satchel/flat/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 15
-	STR.set_holdable(null, list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks)
-
-/obj/item/storage/backpack/satchel/flat/PopulateContents()
-	var/datum/supply_pack/costumes_toys/randomised/contraband/C = new
-	for(var/i in 1 to 2)
-		var/ctype = pick(C.contains)
-		new ctype(src)
-
-	qdel(C)
-
-/obj/item/storage/backpack/satchel/flat/with_tools/PopulateContents()
-	new /obj/item/stack/tile/plasteel(src)
-	new /obj/item/crowbar(src)
-
-	..()
-
-/obj/item/storage/backpack/satchel/flat/empty/PopulateContents()
-	return
 
 /obj/item/storage/backpack/duffelbag
 	name = "duffel bag"

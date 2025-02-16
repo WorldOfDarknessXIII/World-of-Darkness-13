@@ -5,7 +5,6 @@
 	desc = "Used to access the various cameras on the station."
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
-	circuit = /obj/item/circuitboard/computer/security
 	light_color = COLOR_SOFT_RED
 
 	var/list/network = list("ss13")
@@ -219,31 +218,26 @@
 	icon_screen = "mining"
 	icon_keyboard = "mining_key"
 	network = list("mine", "auxbase")
-	circuit = /obj/item/circuitboard/computer/mining
 
 /obj/machinery/computer/security/research
 	name = "research camera console"
 	desc = "Used to access the various cameras in science."
 	network = list("rd")
-	circuit = /obj/item/circuitboard/computer/research
 
 /obj/machinery/computer/security/hos
 	name = "\improper Head of Security's camera console"
 	desc = "A custom security console with added access to the labor camp network."
 	network = list("ss13", "labor")
-	circuit = null
 
 /obj/machinery/computer/security/labor
 	name = "labor camp monitoring"
 	desc = "Used to access the various cameras on the labor camp."
 	network = list("labor")
-	circuit = null
 
 /obj/machinery/computer/security/qm
 	name = "\improper Quartermaster's camera console"
 	desc = "A console with access to the mining, auxiliary base and vault camera networks."
 	network = list("mine", "auxbase", "vault")
-	circuit = null
 
 // TELESCREENS
 
@@ -255,7 +249,6 @@
 	layer = SIGN_LAYER
 	network = list("thunder")
 	density = FALSE
-	circuit = null
 	light_power = 0
 
 /obj/machinery/computer/security/telescreen/update_icon_state()
@@ -270,7 +263,6 @@
 	icon_state = "entertainment_blank"
 	network = list("thunder")
 	density = FALSE
-	circuit = null
 	interaction_flags_atom = NONE  // interact() is called by BigClick()
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"

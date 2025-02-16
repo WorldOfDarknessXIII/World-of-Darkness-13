@@ -224,7 +224,6 @@
 	icon_state = "red_mech_suit"
 	inhand_icon_state = "red_mech_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	fitted = NO_FEMALE_UNIFORM
 	alternate_worn_layer = GLOVES_LAYER //covers hands but gloves can go over it. This is how these things work in my head.
 	can_adjust = FALSE

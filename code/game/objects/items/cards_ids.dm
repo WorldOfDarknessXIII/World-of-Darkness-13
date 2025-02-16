@@ -113,27 +113,6 @@
 			if(NAMEOF(src, assignment),NAMEOF(src, registered_name),NAMEOF(src, registered_age))
 				update_label()
 
-/obj/item/card/id/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/holochip))
-		insert_money(W, user)
-		return
-	else if(istype(W, /obj/item/stack/spacecash))
-		insert_money(W, user, TRUE)
-		return
-	else if(istype(W, /obj/item/coin))
-		insert_money(W, user, TRUE)
-		return
-	else if(istype(W, /obj/item/storage/bag/money))
-		var/obj/item/storage/bag/money/money_bag = W
-		var/list/money_contained = money_bag.contents
-
-		var/money_added = mass_insert_money(money_contained, user)
-
-		if (money_added)
-			to_chat(user, "<span class='notice'>You stuff the contents into the card! They disappear in a puff of bluespace smoke, adding [money_added] worth of credits to the linked account.</span>")
-		return
-	else
-		return ..()
 
 /obj/item/card/id/proc/insert_money(obj/item/I, mob/user, physical_currency)
 	if(!registered_account)

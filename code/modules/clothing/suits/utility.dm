@@ -23,10 +23,6 @@
 	armor = list(MELEE = 15, BULLET = 5, LASER = 20, ENERGY = 20, BOMB = 20, BIO = 10, RAD = 20, FIRE = 100, ACID = 50)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	strip_delay = 60
 	equip_delay_other = 60
 	resistance_flags = FIRE_PROOF
@@ -47,7 +43,6 @@
 	desc = "An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame."
 	icon_state = "atmos_firesuit"
 	inhand_icon_state = "firesuit_atmos"
-	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
 /*
  * Bomb protection
@@ -61,10 +56,6 @@
 	flags_inv = HIDEFACE|HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	dynamic_hair_suffix = ""
 	dynamic_fhair_suffix = ""
-	cold_protection = HEAD
-	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
-	heat_protection = HEAD
-	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 70
 	equip_delay_other = 70
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
@@ -84,10 +75,6 @@
 	slowdown = 2
 	armor = list(MELEE = 20, BULLET = 0, LASER = 20,ENERGY = 30, BOMB = 100, BIO = 0, RAD = 0, FIRE = 80, ACID = 50)
 	flags_inv = HIDEJUMPSUIT
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	strip_delay = 70
 	equip_delay_other = 70
 	resistance_flags = NONE

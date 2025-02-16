@@ -63,8 +63,6 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 45)
-	cold_protection = CHEST|GROIN|LEGS|ARMS
-	heat_protection = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/suit/det_suit/Initialize()
 	. = ..()
@@ -167,8 +165,6 @@
 	body_parts_covered = CHEST|ARMS
 	allowed = list(/obj/item/tank/internals, /obj/item/melee/curator_whip)
 	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 45)
-	cold_protection = CHEST|ARMS
-	heat_protection = CHEST|ARMS
 
 
 //Robotocist

@@ -240,8 +240,6 @@
 	icon_state = "carp_casual"
 	inhand_icon_state = "labcoat"
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
-	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT	//Space carp like space, so you should too
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/gun/ballistic/rifle/boltaction/harpoon)
 	hoodtype = /obj/item/clothing/head/hooded/carp_hood
 
@@ -250,8 +248,6 @@
 	desc = "A hood attached to a carp costume."
 	icon_state = "carp_casual"
 	body_parts_covered = HEAD
-	cold_protection = HEAD
-	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/head/hooded/carp_hood/equipped(mob/living/carbon/human/user, slot)
@@ -387,8 +383,6 @@
 	inhand_icon_state = "brownjsuit"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/radio)
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
-	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/jacket/leather
@@ -397,7 +391,6 @@
 	icon_state = "leatherjacket"
 	inhand_icon_state = "hostrench"
 	resistance_flags = NONE
-	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver, /obj/item/gun/ballistic/revolver/detective, /obj/item/radio)
 	species_exception = list(/datum/species/golem/bone) //bad to the bone
 
@@ -406,7 +399,6 @@
 	desc = "That's a damn fine coat."
 	icon_state = "leathercoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	cold_protection = CHEST|GROIN|ARMS|LEGS
 
 /obj/item/clothing/suit/jacket/puffer
 	name = "puffer jacket"
@@ -422,7 +414,6 @@
 	icon_state = "puffervest"
 	inhand_icon_state = "armor"
 	body_parts_covered = CHEST|GROIN
-	cold_protection = CHEST|GROIN
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 30, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/suit/jacket/miljacket
@@ -547,8 +538,6 @@
 	icon_state = "coatwinter"
 	inhand_icon_state = "coatwinter"
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
-	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
 
@@ -557,8 +546,6 @@
 	desc = "A hood attached to a heavy winter jacket."
 	icon_state = "winterhood"
 	body_parts_covered = HEAD
-	cold_protection = HEAD
-	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
 

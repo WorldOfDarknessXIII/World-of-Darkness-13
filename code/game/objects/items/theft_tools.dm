@@ -1,4 +1,3 @@
-//Items for nuke theft, supermatter theft traitor objective
 
 
 // STEALING THE NUKE
@@ -99,171 +98,27 @@
 	<li>???</li>\
 	</ul>"
 
-// STEALING SUPERMATTER
-
-/obj/item/paper/guides/antag/supermatter_sliver
-	info = "How to safely extract a supermatter sliver:<br>\
-	<ul>\
-	<li>Approach an active supermatter crystal with radiation shielded personal protective equipment. DO NOT MAKE PHYSICAL CONTACT.</li>\
-	<li>Use a supermatter scalpel (provided) to slice off a sliver of the crystal.</li>\
-	<li>Use supermatter extraction tongs (also provided) to safely pick up the sliver you sliced off.</li>\
-	<li>Physical contact of any object with the sliver will dust the object, as well as yourself.</li>\
-	<li>Use the tongs to place the sliver into the provided container, which will take some time to seal.</li>\
-	<li>Get the hell out before the crystal delaminates.</li>\
-	<li>???</li>\
-	</ul>"
-
-/obj/item/nuke_core/supermatter_sliver
-	name = "supermatter sliver"
-	desc = "A tiny, highly volatile sliver of a supermatter crystal. Do not handle without protection!"
-	icon_state = "supermatter_sliver"
-	inhand_icon_state = "supermattersliver"
-	pulseicon = "supermatter_sliver_pulse"
 
 
-/obj/item/nuke_core/supermatter_sliver/attack_tk(mob/user) // no TK dusting memes
-	return
 
 
-/obj/item/nuke_core/supermatter_sliver/can_be_pulled(user) // no drag memes
-	return FALSE
 
-/obj/item/nuke_core/supermatter_sliver/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/hemostat/supermatter))
-		var/obj/item/hemostat/supermatter/tongs = W
-		if (tongs.sliver)
-			to_chat(user, "<span class='warning'>\The [tongs] is already holding a supermatter sliver!</span>")
-			return FALSE
-		forceMove(tongs)
-		tongs.sliver = src
-		tongs.update_icon()
-		to_chat(user, "<span class='notice'>You carefully pick up [src] with [tongs].</span>")
-	else if(istype(W, /obj/item/scalpel/supermatter) || istype(W, /obj/item/nuke_core_container/supermatter/)) // we don't want it to dust
-		return
-	else
-		to_chat(user, "<span class='notice'>As it touches \the [src], both \the [src] and \the [W] burst into dust!</span>")
-		radiation_pulse(user, 100)
-		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
-		qdel(W)
-		qdel(src)
 
-/obj/item/nuke_core/supermatter_sliver/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(!isliving(hit_atom))
-		return ..()
-	var/mob/living/victim = hit_atom
-	if(victim.incorporeal_move || victim.status_flags & GODMODE) //try to keep this in sync with supermatter's consume fail conditions
-		return ..()
-	if(throwingdatum?.thrower)
-		var/mob/user = throwingdatum.thrower
-		log_combat(throwingdatum?.thrower, hit_atom, "consumed", src)
-		message_admins("[src] has consumed [key_name_admin(victim)] [ADMIN_JMP(src)], thrown by [key_name_admin(user)].")
-		investigate_log("has consumed [key_name(victim)], thrown by [key_name(user)]", INVESTIGATE_SUPERMATTER)
-	else
-		message_admins("[src] has consumed [key_name_admin(victim)] [ADMIN_JMP(src)] via throw impact.")
-		investigate_log("has consumed [key_name(victim)] via throw impact.", INVESTIGATE_SUPERMATTER)
-	victim.visible_message("<span class='danger'>As [victim] is hit by [src], both flash into dust and silence fills the room...</span>",\
-		"<span class='userdanger'>You're hit by [src] and everything suddenly goes silent.\n[src] flashes into dust, and soon as you can register this, you do as well.</span>",\
-		"<span class='hear'>Everything suddenly goes silent.</span>")
-	victim.dust()
-	radiation_pulse(src, 500, 2)
-	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
-	qdel(src)
 
-/obj/item/nuke_core/supermatter_sliver/pickup(mob/living/user)
-	..()
-	if(!isliving(user) || user.status_flags & GODMODE) //try to keep this in sync with supermatter's consume fail conditions
-		return FALSE
-	user.visible_message("<span class='danger'>[user] reaches out and tries to pick up [src]. [user.p_their()] body starts to glow and bursts into flames before flashing into dust!</span>",\
-			"<span class='userdanger'>You reach for [src] with your hands. That was dumb.</span>",\
-			"<span class='hear'>Everything suddenly goes silent.</span>")
-	radiation_pulse(user, 500, 2)
-	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
-	user.dust()
 
-/obj/item/nuke_core_container/supermatter
-	name = "supermatter bin"
-	desc = "A tiny receptacle that releases an inert hyper-noblium mix upon sealing, allowing a sliver of a supermatter crystal to be safely stored."
-	var/obj/item/nuke_core/supermatter_sliver/sliver
 
-/obj/item/nuke_core_container/supermatter/Destroy()
-	QDEL_NULL(sliver)
-	return ..()
 
-/obj/item/nuke_core_container/supermatter/load(obj/item/hemostat/supermatter/T, mob/user)
-	if(!istype(T) || !T.sliver)
-		return FALSE
-	T.sliver.forceMove(src)
-	sliver = T.sliver
-	T.sliver = null
-	T.icon_state = "supermatter_tongs"
-	icon_state = "core_container_loaded"
-	to_chat(user, "<span class='warning'>Container is sealing...</span>")
-	addtimer(CALLBACK(src, PROC_REF(seal)), 50)
-	return TRUE
 
-/obj/item/nuke_core_container/supermatter/seal()
-	if(istype(sliver))
-		STOP_PROCESSING(SSobj, sliver)
-		icon_state = "core_container_sealed"
-		playsound(src, 'sound/items/Deconstruct.ogg', 60, TRUE)
-		if(ismob(loc))
-			to_chat(loc, "<span class='warning'>[src] is permanently sealed, [sliver] is safely contained.</span>")
 
-/obj/item/nuke_core_container/supermatter/attackby(obj/item/hemostat/supermatter/tongs, mob/user)
-	if(istype(tongs))
-		//try to load shard into core
-		load(tongs, user)
-	else
-		return ..()
 
-/obj/item/scalpel/supermatter
-	name = "supermatter scalpel"
-	desc = "A scalpel with a fragile tip of condensed hyper-noblium gas, searingly cold to the touch, that can safely shave a sliver off a supermatter crystal."
-	icon = 'icons/obj/nuke_tools.dmi'
-	icon_state = "supermatter_scalpel"
-	toolspeed = 0.5
-	damtype = BURN
-	usesound = 'sound/weapons/bladeslice.ogg'
-	var/usesLeft
 
-/obj/item/scalpel/supermatter/Initialize()
-	. = ..()
-	usesLeft = rand(2, 4)
 
-/obj/item/hemostat/supermatter
-	name = "supermatter extraction tongs"
-	desc = "A pair of tongs made from condensed hyper-noblium gas, searingly cold to the touch, that can safely grip a supermatter sliver."
-	icon = 'icons/obj/nuke_tools.dmi'
-	icon_state = "supermatter_tongs"
-	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	inhand_icon_state = "supermatter_tongs"
-	toolspeed = 0.75
-	damtype = BURN
-	var/obj/item/nuke_core/supermatter_sliver/sliver
 
-/obj/item/hemostat/supermatter/Destroy()
-	QDEL_NULL(sliver)
-	return ..()
 
-/obj/item/hemostat/supermatter/update_icon_state()
-	icon_state = "supermatter_tongs[sliver ? "_loaded" : null]"
-	inhand_icon_state = "supermatter_tongs[sliver ? "_loaded" : null]"
 
-/obj/item/hemostat/supermatter/afterattack(atom/O, mob/user, proximity)
-	. = ..()
-	if(!sliver)
-		return
-	if(proximity && ismovable(O) && O != sliver)
-		Consume(O, user)
 
-/obj/item/hemostat/supermatter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum) // no instakill supermatter javelins
-	if(sliver)
-		sliver.forceMove(loc)
-		visible_message("<span class='notice'>\The [sliver] falls out of \the [src] as it hits the ground.</span>")
-		sliver = null
-		update_icon()
-	return ..()
+
+
 
 /obj/item/hemostat/supermatter/proc/Consume(atom/movable/AM, mob/living/user)
 	if(ismob(AM))

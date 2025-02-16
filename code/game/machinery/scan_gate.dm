@@ -25,7 +25,6 @@
 	icon_state = "scangate"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
-	circuit = /obj/item/circuitboard/machine/scanner_gate
 
 	var/scanline_timer
 	var/next_beep = 0 //avoids spam

@@ -6,7 +6,6 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "mining"
 	density = TRUE
-	circuit = /obj/item/circuitboard/machine/mining_equipment_vendor
 	var/icon_deny = "mining-deny"
 	var/mob/living/carbon/human/npc/my_owner
 	var/owner_needed = TRUE
@@ -333,7 +332,6 @@
 
 /obj/machinery/mineral/equipment_vendor/golem
 	name = "golem ship equipment vendor"
-	circuit = /obj/item/circuitboard/machine/mining_equipment_vendor/golem
 
 /obj/machinery/mineral/equipment_vendor/golem/Initialize()
 	desc += "\nIt seems a few selections have been added."

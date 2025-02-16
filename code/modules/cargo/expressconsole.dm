@@ -10,7 +10,6 @@
 	name = "Cargo Computer" //was named express supply console
 	desc = "A computer used by the cargo staff to order supplies via a train."
 	icon_screen = "supply_express"
-	circuit = /obj/item/circuitboard/computer/cargo/express
 	blockade_warning = "Bluespace instability detected. Delivery impossible."
 	req_access = list(ACCESS_QM)
 	is_express = TRUE

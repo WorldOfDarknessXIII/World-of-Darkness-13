@@ -121,8 +121,6 @@
 	inhand_icon_state = "ushankadown"
 	flags_inv = HIDEEARS|HIDEHAIR
 	var/earflaps = TRUE
-	cold_protection = HEAD
-	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
 	dog_fashion = /datum/dog_fashion/head/ushanka
 

@@ -155,10 +155,6 @@
 	icon_state = "winterboots"
 	inhand_icon_state = "winterboots"
 	permeability_coefficient = 0.15
-	cold_protection = FEET|LEGS
-	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
-	heat_protection = FEET|LEGS
-	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	lace_time = 8 SECONDS
 
@@ -194,10 +190,6 @@
 	desc = "A pair of boots worn by the followers of Nar'Sie."
 	icon_state = "cult"
 	inhand_icon_state = "cult"
-	cold_protection = FEET
-	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
-	heat_protection = FEET
-	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	lace_time = 10 SECONDS
 
 /obj/item/clothing/shoes/cult/alt

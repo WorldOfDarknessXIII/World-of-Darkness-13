@@ -42,7 +42,6 @@
 
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
-	heat_protection = 0.5 // minor heat insulation
 
 	var/leaping = FALSE
 	gib_type = /obj/effect/decal/cleanable/blood/gibs

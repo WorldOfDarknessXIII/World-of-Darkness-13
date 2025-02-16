@@ -517,10 +517,6 @@
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 
 	body_parts_covered = CHEST
-	cold_protection = CHEST|GROIN
-	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
-	heat_protection = CHEST|GROIN
-	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	max_integrity = 250
 	resistance_flags = NONE
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
@@ -536,8 +532,6 @@
 	icon_state = "heisenberg"
 	inhand_icon_state = "heisenberg"
 	body_parts_covered = CHEST | GROIN | ARMS
-	cold_protection = CHEST | GROIN | ARMS
-	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	armor = list(MELEE = 0, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 50, BIO = 0, RAD = 0, FIRE = 50, ACID = 100, WOUND = 10)
 	hoodtype = /obj/item/clothing/head/hooded/heisenberg_hood
 	body_worn = TRUE
@@ -550,8 +544,6 @@
 	worn_icon = 'code/modules/wod13/worn.dmi'
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	body_parts_covered = HEAD
-	cold_protection = HEAD
-	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR | HIDEEARS
 	armor = list(MELEE = 0, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 50, BIO = 0, RAD = 0, FIRE = 50, ACID = 100, WOUND = 10)
 	body_worn = TRUE
@@ -567,7 +559,6 @@
 	inhand_icon_state = "robes"
 	flags_inv = HIDEJUMPSUIT
 	body_parts_covered = CHEST | GROIN | LEGS | ARMS
-	cold_protection = CHEST | GROIN | LEGS | ARMS
 	hoodtype = /obj/item/clothing/head/hooded/robes_hood
 	body_worn = TRUE
 
@@ -579,7 +570,6 @@
 	worn_icon = 'code/modules/wod13/worn.dmi'
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	body_parts_covered = HEAD
-	cold_protection = HEAD
 	flags_inv = HIDEHAIR | HIDEEARS
 	body_worn = TRUE
 
@@ -821,8 +811,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	flags_inv = HIDEJUMPSUIT
 	clothing_flags = THICKMATERIAL
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 2
 	w_class = WEIGHT_CLASS_BULKY
 	armor = list(MELEE = 90, BULLET = 90, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 0, RAD = 0, FIRE = 70, ACID = 90, WOUND = 50)
@@ -836,8 +824,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	flags_inv = HIDEJUMPSUIT
 	clothing_flags = THICKMATERIAL
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 1
 	w_class = WEIGHT_CLASS_BULKY
 	armor = list(MELEE = 75, BULLET = 75, LASER = 15, ENERGY = 15, BOMB = 20, BIO = 0, RAD = 0, FIRE = 55, ACID = 70, WOUND = 35)
@@ -907,10 +893,6 @@
 	worn_icon = 'code/modules/wod13/worn.dmi'
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	body_parts_covered = CHEST
-	cold_protection = CHEST|GROIN
-	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
-	heat_protection = CHEST|GROIN
-	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	max_integrity = 250
 	resistance_flags = NONE
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
@@ -1274,8 +1256,6 @@
 	desc = "Looks dangerous. Provides some kind of protection."
 	icon_state = "leather"
 	transfer_prints = TRUE
-	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	resistance_flags = NONE
 	armor = list(MELEE = 15, BULLET = 15, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 30)
 
@@ -1284,10 +1264,6 @@
 	desc = "Provides fire protection for working in extreme environments."
 	icon_state = "work"
 	permeability_coefficient = 0.9
-	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	heat_protection = HANDS
-	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	armor = list(MELEE = 30, BULLET = 15, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 30)
 
@@ -1296,10 +1272,6 @@
 	desc = "Standard issue FBI workgloves tailored for investigators. Made out of latex outer lining and padded for acid and fire protection."
 	icon_state = "work"
 	permeability_coefficient = 0.5
-	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	heat_protection = HANDS
-	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	armor = list(MELEE = 30, BULLET = 20, LASER = 5, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 70, ACID = 70)
 

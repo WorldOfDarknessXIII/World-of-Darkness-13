@@ -2,7 +2,6 @@
 	name = "supply console"
 	desc = "Used to order supplies, approve requests, and control the shuttle."
 	icon_screen = "supply"
-	circuit = /obj/item/circuitboard/computer/cargo
 	light_color = COLOR_BRIGHT_ORANGE
 
 	///Can the supply console send the shuttle back and forth? Used in the UI backend.
@@ -30,7 +29,6 @@
 	name = "supply request console"
 	desc = "Used to request supplies from cargo."
 	icon_screen = "request"
-	circuit = /obj/item/circuitboard/computer/cargo/request
 	can_send = FALSE
 	can_approve_requests = FALSE
 	requestonly = TRUE

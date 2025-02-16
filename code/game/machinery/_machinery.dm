@@ -135,7 +135,6 @@
 	GLOB.machines += src
 
 	if(ispath(circuit, /obj/item/circuitboard))
-		circuit = new circuit(src)
 		circuit.apply_default_parts(src)
 
 	if(processing_flags & START_PROCESSING_ON_INIT)
@@ -270,7 +269,6 @@
 
 	// We'll have dropped the occupant, circuit and component parts as part of this.
 	set_occupant(null)
-	circuit = null
 	LAZYCLEARLIST(component_parts)
 
 /**
@@ -386,9 +384,7 @@
 				return FALSE
 
 		if(!Adjacent(user)) // Next make sure we are next to the machine unless we have telekinesis
-			var/mob/living/carbon/H = L
-			if(!(istype(H) && H.has_dna() && H.dna.check_mutation(TK)))
-				return FALSE
+			return FALSE
 
 		if(L.incapacitated()) // Finally make sure we aren't incapacitated
 			return FALSE
@@ -459,10 +455,6 @@
 		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>", null, null, COMBAT_MESSAGE_RANGE)
 		take_damage(4, BRUTE, MELEE, 1)
 
-/obj/machinery/_try_interact(mob/user)
-	if((interaction_flags_machine & INTERACT_MACHINE_WIRES_IF_OPEN) && panel_open && (attempt_wire_interaction(user) == WIRE_INTERACTION_BLOCK))
-		return TRUE
-	return ..()
 
 /obj/machinery/proc/default_pry_open(obj/item/I)
 	. = !(state_open || panel_open || is_operational || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
@@ -471,11 +463,6 @@
 		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
 
-/obj/machinery/proc/default_deconstruction_crowbar(obj/item/I, ignore_panel = 0)
-	. = (panel_open || ignore_panel) && !(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_CROWBAR
-	if(.)
-		I.play_tool_sound(src, 50)
-		deconstruct(TRUE)
 
 /obj/machinery/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -495,27 +482,6 @@
  * Arguments:
  * * disassembled - If FALSE, the machine was destroyed instead of disassembled and the frame spawns at reduced integrity.
  */
-/obj/machinery/proc/spawn_frame(disassembled)
-	var/obj/structure/frame/machine/new_frame = new /obj/structure/frame/machine(loc)
-
-	new_frame.state = 2
-
-	// If the new frame shouldn't be able to fit here due to the turf being blocked, spawn the frame deconstructed.
-	if(isturf(loc))
-		var/turf/machine_turf = loc
-		// We're spawning a frame before this machine is qdeleted, so we want to ignore it. We've also just spawned a new frame, so ignore that too.
-		if(machine_turf.is_blocked_turf(TRUE, source_atom = new_frame, ignore_atoms = list(src)))
-			new_frame.deconstruct(disassembled)
-			return
-
-	new_frame.icon_state = "box_1"
-	. = new_frame
-	new_frame.set_anchored(anchored)
-	if(!disassembled)
-		new_frame.obj_integrity = new_frame.max_integrity * 0.5 //the frame is already half broken
-	transfer_fingerprints_to(new_frame)
-
-
 /obj/machinery/obj_break(damage_flag)
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
@@ -537,7 +503,6 @@
 
 	// The circuit should also be in component parts, so don't early return.
 	if(A == circuit)
-		circuit = null
 	if((A in component_parts) && !QDELETED(src))
 		component_parts.Remove(A)
 		// It would be unusual for a component_part to be qdel'd ordinarily.
@@ -711,7 +676,6 @@
 		set_occupant(null)
 	if(AM == circuit)
 		LAZYREMOVE(component_parts, AM)
-		circuit = null
 
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/AM)	// Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
 	var/md5 = md5(AM.name)										// Oh, and it's deterministic too. A specific item will always drop from the same slot.

@@ -16,7 +16,6 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	netspeed = 40
-	circuit = /obj/item/circuitboard/machine/telecomms/bus
 	var/change_frequency = 0
 
 /obj/machinery/telecomms/bus/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)

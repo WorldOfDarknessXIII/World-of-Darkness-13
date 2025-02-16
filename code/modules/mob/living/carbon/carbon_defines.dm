@@ -88,9 +88,7 @@
 	var/stam_regen_start_time = 0
 
 	/// Protection (insulation) from the heat, Value 0-1 corresponding to the percentage of protection
-	var/heat_protection = 0 // No heat protection
 	/// Protection (insulation) from the cold, Value 0-1 corresponding to the percentage of protection
-	var/cold_protection = 0 // No cold protection
 
 	/// Timer id of any transformation
 	var/transformation_timer

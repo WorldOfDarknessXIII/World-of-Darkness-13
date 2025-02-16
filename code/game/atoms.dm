@@ -503,12 +503,6 @@
 	if(desc)
 		. += desc
 
-	if(custom_materials)
-		var/list/materials_list = list()
-		for(var/i in custom_materials)
-			var/datum/material/M = i
-			materials_list += "[M.name]"
-		. += "<u>It is made out of [english_list(materials_list)]</u>."
 	if(reagents)
 		if(reagents.flags & TRANSPARENT)
 			. += "It contains:"
@@ -989,10 +983,6 @@
 		usr.client.cmd_admin_explosion(src)
 	if(href_list[VV_HK_TRIGGER_EMP] && check_rights(R_FUN))
 		usr.client.cmd_admin_emp(src)
-	if(href_list[VV_HK_RADIATE] && check_rights(R_FUN))
-		var/strength = input(usr, "Choose the radiation strength.", "Choose the strength.") as num|null
-		if(!isnull(strength))
-			AddComponent(/datum/component/radioactive, strength, src)
 
 
 	if(href_list[VV_HK_ADD_AI])

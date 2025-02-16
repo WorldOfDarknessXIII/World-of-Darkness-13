@@ -15,7 +15,6 @@
 	idle_power_usage = 30
 	netspeed = 5
 	long_range_link = 1
-	circuit = /obj/item/circuitboard/machine/telecomms/relay
 	var/broadcasting = 1
 	var/receiving = 1
 

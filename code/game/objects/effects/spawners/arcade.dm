@@ -11,7 +11,6 @@
 		/obj/item/circuitboard/computer/arcade/battle = 49,
 		/obj/item/circuitboard/computer/arcade/orion_trail = 49,
 		/obj/item/circuitboard/computer/arcade/amputation = 2)
-	var/obj/item/circuitboard/circuit = pickweight(gameodds)
 	var/new_build_path = initial(circuit.build_path)
 
 	if(!ispath(new_build_path))

@@ -55,7 +55,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	max_integrity = 300
 	integrity_failure = 0.33
 	armor = list(MELEE = 20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70)
-	circuit = /obj/item/circuitboard/machine/vendor
 	payment_department = ACCOUNT_SRV
 	light_power = 0.5
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
@@ -182,7 +181,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 /obj/machinery/vending/Initialize(mapload)
 	var/build_inv = FALSE
 	if(!refill_canister)
-		circuit = null
 		build_inv = TRUE
 	. = ..()
 	wires = new /datum/wires/vending(src)

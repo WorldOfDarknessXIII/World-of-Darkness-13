@@ -17,7 +17,6 @@
 	idle_power_usage = 80
 	long_range_link = TRUE
 	netspeed = 40
-	circuit = /obj/item/circuitboard/machine/telecomms/hub
 
 /obj/machinery/telecomms/hub/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	if(!is_freq_listening(signal))

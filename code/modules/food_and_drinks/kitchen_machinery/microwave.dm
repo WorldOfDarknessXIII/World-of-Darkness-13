@@ -10,7 +10,6 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
-	circuit = /obj/item/circuitboard/machine/microwave
 	pass_flags = PASSTABLE
 	light_color = LIGHT_COLOR_YELLOW
 	light_power = 3

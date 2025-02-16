@@ -13,7 +13,6 @@
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
-	circuit = /obj/item/circuitboard/machine/telecomms/receiver
 
 /obj/machinery/telecomms/receiver/receive_signal(datum/signal/subspace/signal)
 	if(!on || !istype(signal) || !check_receive_level(signal) || signal.transmission_method != TRANSMISSION_SUBSPACE)

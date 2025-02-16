@@ -7,7 +7,6 @@
 	icon_state = "grinder-o0"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
 	density = TRUE
-	circuit = /obj/item/circuitboard/machine/recycler
 	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob
 	var/icon_name = "grinder-o"
 	var/bloody = FALSE
@@ -112,22 +111,6 @@
 			var/atom/movable/content = i
 			content.moveToNullspace()
 			qdel(content)
-
-/obj/machinery/recycler/proc/recycle_item(obj/item/I)
-
-	var/obj/item/grown/log/L = I
-	if(istype(L))
-		var/seed_modifier = 0
-		if(L.seed)
-			seed_modifier = round(L.seed.potency / 25)
-		new L.plank_type(loc, 1 + seed_modifier)
-	else
-		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-		var/material_amount = materials.get_item_material_amount(I, BREAKDOWN_FLAGS_RECYCLER)
-		if(!material_amount)
-			return
-		materials.insert_item(I, material_amount, multiplier = (amount_produced / 100), breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
-		materials.retrieve_all()
 
 
 /obj/machinery/recycler/proc/emergency_stop()

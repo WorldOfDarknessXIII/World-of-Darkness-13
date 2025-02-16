@@ -6,7 +6,6 @@
 	desc = "Monitors patient vitals and displays surgery steps. Can be loaded with surgery disks to perform experimental procedures. Automatically syncs to stasis beds within its line of sight for surgical tech advancement."
 	icon_screen = "crew"
 	icon_keyboard = "med_key"
-	circuit = /obj/item/circuitboard/computer/operating
 
 	var/mob/living/carbon/human/patient
 	var/obj/structure/table/optable/table

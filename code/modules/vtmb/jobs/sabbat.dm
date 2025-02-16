@@ -168,13 +168,6 @@
 /datum/antagonist/sabbatist/on_gain()
 	add_antag_hud(ANTAG_HUD_REV, "rev", owner.current)
 	owner.special_role = src
-	var/datum/objective/custom/custom_objective = new
-	custom_objective.owner = owner
-	custom_objective.explanation_text = "Sow chaos, maim, butcher and kill. When you're done The Ivory Tower should be but a distant memory."
-	objectives += custom_objective
-	var/datum/objective/survive/survive_objective = new
-	survive_objective.owner = owner
-	objectives += survive_objective
 	owner.current.playsound_local(get_turf(owner.current), 'code/modules/wod13/sounds/evil_start.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	return ..()
 

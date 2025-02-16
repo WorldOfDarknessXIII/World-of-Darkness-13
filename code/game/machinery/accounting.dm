@@ -3,7 +3,6 @@
 	desc = "A machine that allows heads of staff to create a new bank account after inserting an ID."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger"
-	circuit = /obj/item/circuitboard/machine/accounting
 	pass_flags = PASSTABLE
 	req_one_access = list(ACCESS_HEADS, ACCESS_CHANGE_IDS)
 	var/obj/item/card/id/inserted_id

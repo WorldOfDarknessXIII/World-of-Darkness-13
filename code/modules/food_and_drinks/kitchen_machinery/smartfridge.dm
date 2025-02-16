@@ -11,7 +11,6 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
-	circuit = /obj/item/circuitboard/machine/smartfridge
 
 	var/base_build_path = /obj/machinery/smartfridge ///What path boards used to construct it should build into when dropped. Needed so we don't accidentally have them build variants with items preloaded in them.
 	var/max_n_of_items = 1500
@@ -258,7 +257,6 @@
 	var/list/old_parts = component_parts.Copy()
 
 	component_parts = null
-	circuit = null
 
 	QDEL_LIST(old_parts)
 	RefreshParts()
@@ -269,11 +267,6 @@
 
 /obj/machinery/smartfridge/drying_rack/default_deconstruction_screwdriver()
 /obj/machinery/smartfridge/drying_rack/exchange_parts()
-/obj/machinery/smartfridge/drying_rack/spawn_frame()
-
-/obj/machinery/smartfridge/drying_rack/default_deconstruction_crowbar(obj/item/crowbar/C, ignore_panel = 1)
-	..()
-
 /obj/machinery/smartfridge/drying_rack/ui_data(mob/user)
 	. = ..()
 	.["isdryer"] = TRUE

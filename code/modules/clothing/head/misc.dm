@@ -290,8 +290,6 @@
 	desc = "On the first day of christmas my employer gave to me!"
 	icon_state = "santahatnorm"
 	inhand_icon_state = "that"
-	cold_protection = HEAD
-	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	dog_fashion = /datum/dog_fashion/head/santa
 
 /obj/item/clothing/head/jester

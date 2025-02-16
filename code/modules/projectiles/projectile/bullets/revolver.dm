@@ -60,18 +60,6 @@
 	embed_falloff_tile = -15
 
 
-	. = ..()
-	var/mob/living/carbon/M = target
-	if(!istype(M))
-		return
-	var/obj/item/implant/tracking/c38/imp
-	for(var/obj/item/implant/tracking/c38/TI in M.implants) //checks if the target already contains a tracking implant
-		imp = TI
-		return
-	if(!imp)
-		imp = new /obj/item/implant/tracking/c38(M)
-		imp.implant(M)
-
 /obj/projectile/bullet/c38/hotshot //similar to incendiary bullets, but do not leave a flaming trail
 	name = ".38 Hot Shot bullet"
 	damage = 20
@@ -89,11 +77,6 @@
 	damage = 20
 	var/temperature = 100
 	ricochets_max = 0
-
-/obj/projectile/bullet/c38/iceblox/on_hit(atom/target, blocked = FALSE)
-	. = ..()
-	if(isliving(target))
-		var/mob/living/M = target
 
 // .357 (Syndie Revolver)
 
