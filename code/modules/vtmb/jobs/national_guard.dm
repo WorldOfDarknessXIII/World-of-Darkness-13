@@ -68,7 +68,7 @@
 
 /datum/outfit/job/national_guard/breacher
 	name = "National Guard Breacher"
-	suit = /obj/item/clothing/suit/vampire/vest/eod
+	suit = /obj/item/clothing/suit/vampire/eod
 	mask = /obj/item/clothing/mask/vampire/gasmask
 	head = /obj/item/clothing/head/vampire/eod
 	l_pocket = /obj/item/grenade/smokebomb
