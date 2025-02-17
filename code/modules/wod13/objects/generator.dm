@@ -1,4 +1,3 @@
-
 /obj/generator
 	name = "generator"
 	desc = "Power the controlled area with pure electricity."
