@@ -53,7 +53,8 @@
 		"prince",
 		"archive",
 		"milleniumCommon",
-		"primogen"
+		"primogen",
+		"clerk"
 	)
 	color = "#bd3327"
 
