@@ -81,6 +81,7 @@
 		/obj/item/grenade/flashbang = 2,
 		/obj/item/grenade/chem_grenade/incendiary = 2,
 		/obj/item/radio/military = 1,
+		/obj/item/vamp/keys/hack = 2
 		)
 
 /datum/outfit/job/national_guard/sniper
