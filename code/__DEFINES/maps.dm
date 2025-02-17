@@ -41,7 +41,6 @@ require only minor tweaks.
 
 // boolean - weather types that occur on the level
 #define ZTRAIT_SNOWSTORM "Weather_Snowstorm"
-#define ZTRAIT_ASHSTORM "Weather_Ashstorm"
 #define ZTRAIT_ACIDRAIN "Weather_Acidrain"
 #define ZTRAIT_VOIDSTORM "Weather_Voidstorm"
 
@@ -71,12 +70,7 @@ require only minor tweaks.
 #define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE)
 #define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE)
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
-#define ZTRAITS_LAVALAND list(\
-	ZTRAIT_MINING = TRUE, \
-	ZTRAIT_ASHSTORM = TRUE, \
-	ZTRAIT_LAVA_RUINS = TRUE, \
-	ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
-	ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface)
+
 
 #define DL_NAME "name"
 #define DL_TRAITS "traits"

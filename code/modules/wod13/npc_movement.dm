@@ -30,10 +30,11 @@
 	GLOB.npc_activities += src
 
 /mob/living/carbon/human/npc/Initialize()
-	..()
+	.=..()
 	GLOB.npc_list += src
 	GLOB.alive_npc_list += src
 	add_movespeed_modifier(/datum/movespeed_modifier/npc)
+	return INITIALIZE_HINT_LATELOAD
 
 /mob/living/carbon/human/npc/death()
 	GLOB.alive_npc_list -= src
@@ -110,15 +111,6 @@
 				if(walktarget && !old_movement)
 					if(route_optimisation())
 						forceMove(get_turf(walktarget))
-//		if(prob(5) && !danger_source)
-//			var/activity = rand(1, 3)
-//			switch(activity)
-//				if(1)
-//					StareAction()
-//				if(2)
-//					EmoteAction()
-//				if(3)
-//					SpeechAction()
 
 /mob/living/carbon/human/npc/proc/CreateWay(var/direction)
 	var/turf/location = get_turf(src)
@@ -132,11 +124,8 @@
 			if(istype(A, /obj/effect/landmark/npcwall))
 				return get_step_towards(location, get_turf(src))
 			if(isnpcbeacon(A) && prob(50))
-//				var/opposite_dir = turn(direction, 180)				Nado
 				stopturf = 1
 				return get_step(location, direction)
-//		if(distance == 50)
-//			return location
 
 /mob/living/carbon/human/npc/proc/ChoosePath()
 	if(!old_movement)
@@ -254,9 +243,6 @@
 		less_danger = null
 	if(!staying)
 		lifespan = lifespan+1
-/*	if(lifespan >= 1000)
-		if(route_optimisation())
-			qdel(src)*/
 	if(!walktarget && !staying)
 		stopturf = rand(1, 2)
 		walktarget = ChoosePath()
@@ -266,58 +252,54 @@
 			a_intent = INTENT_HARM
 			if(m_intent == MOVE_INTENT_WALK)
 				toggle_move_intent(src)
-			if(!my_weapon && !fights_anyway)
-//				if(last_walkin+5 < world.time)
+			if(!has_weapon && !fights_anyway)
 				var/reqsteps = round((SShumannpcpool.next_fire-world.time)/total_multiplicative_slowdown())
 				set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
 				walk_away(src, danger_source, reqsteps, total_multiplicative_slowdown())
-			if(my_weapon || fights_anyway)
+			if(has_weapon || fights_anyway)
 				var/obj/item/card/id/id_card = danger_source.get_idcard(FALSE)
-				if(!istype(id_card, /obj/item/card/id/police))
-					if(!spawned_weapon && my_weapon)
+				if(!istype(id_card, /obj/item/card/id/police) || is_criminal)
+					if(!spawned_weapon && has_weapon)
 						my_weapon.forceMove(loc)
 						drop_all_held_items()
+						temporarilyRemoveItemFromInventory(my_weapon, TRUE)
 						put_in_active_hand(my_weapon)
 						spawned_weapon = TRUE
 					if(spawned_weapon && get_active_held_item() != my_weapon)
-						my_weapon = null
+						has_weapon = FALSE
 					if(danger_source)
 						if(danger_source == src)
 							danger_source = null
 						else
 							ClickOn(danger_source)
 							face_atom(danger_source)
-//				if(last_walkin+5 < world.time)
 							var/reqsteps = round((SShumannpcpool.next_fire-world.time)/total_multiplicative_slowdown())
 							set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
-//						var/plus_turfs = 0
-//						if(istype(my_weapon, /obj/item/gun))
-//							plus_turfs = 3
 							walk_to(src, danger_source, reqsteps, total_multiplicative_slowdown())
 
 			if(isliving(danger_source))
 				var/mob/living/L = danger_source
 				if(L.stat > 2)
 					danger_source = null
-					if(my_weapon)
+					if(has_weapon)
 						if(get_active_held_item() == my_weapon)
 							drop_all_held_items()
 							my_weapon.forceMove(src)
 							spawned_weapon = FALSE
 						else
-							my_weapon = null
+							has_weapon = FALSE
 					walktarget = ChoosePath()
 					a_intent = INTENT_HELP
 
 			if(last_danger_meet+300 <= world.time)
 				danger_source = null
-				if(my_weapon)
+				if(has_weapon)
 					if(get_active_held_item() == my_weapon)
 						drop_all_held_items()
 						my_weapon.forceMove(src)
 						spawned_weapon = FALSE
 					else
-						my_weapon = null
+						has_weapon = FALSE
 				walktarget = ChoosePath()
 				a_intent = INTENT_HELP
 		else if(less_danger)
@@ -333,45 +315,11 @@
 			set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
 			walk_to(src, walktarget, reqsteps, total_multiplicative_slowdown())
 
-		if(my_weapon && !danger_source)
+		if(has_weapon && !danger_source)
 			if(spawned_weapon)
 				if(get_active_held_item() == my_weapon)
 					drop_all_held_items()
 					my_weapon.forceMove(src)
 					spawned_weapon = FALSE
 				else
-					my_weapon = null
-
-/*
-	if(danger_source)
-		a_intent = INTENT_HARM
-		if(m_intent == MOVE_INTENT_WALK)
-			toggle_move_intent(src)
-			set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
-		walk_away(src,danger_source,9,total_multiplicative_slowdown())
-		if(last_danger_meet+300 <= world.time)
-			danger_source = null
-			a_intent = INTENT_HELP
-		goto Skip
-//			if(!range_weapon && !melee_weapon)
-
-	if(lastgo+total_multiplicative_slowdown() > world.time)
-		goto Skip
-	if(pulledby && last_grab+30 > world.time)
-		goto Skip
-	if(!walktarget)
-		walktarget = ChoosePath()
-		face_atom(walktarget)
-		stopturf = rand(1, 2)
-	if(get_dist(walktarget, src) <= stopturf)
-		walktarget = ChoosePath()
-		face_atom(walktarget)
-		stopturf = rand(1, 2)
-	lastgo = world.time
-	var/walkshit = max(stopturf-1, get_dist(walktarget, src)-2)
-	walk_to(src, walktarget, walkshit, total_multiplicative_slowdown())
-	Skip
-*/
-
-//			walk_to(src, walktarget, stopturf, total_multiplicative_slowdown())
-//			walk_to(src, walktarget, stopturf, total_multiplicative_slowdown())
+					has_weapon = FALSE
