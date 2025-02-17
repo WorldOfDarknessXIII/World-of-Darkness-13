@@ -125,10 +125,14 @@
 	if(used_badge)
 		involved_social_roll -= 1
 
-	if(user.storyteller_roll(user.get_total_social(), involved_social_roll) == ROLL_SUCCESS)
-		to_chat(user, "<span class='notice'>You manage to persuade your way past the guards.</span>")
-		linked_perm.allow_list += user.get_face_name()
-		return
+	var/result = user.storyteller_roll(
+		dice = ATTRIBUTE_SOCIAL(user),
+		difficulty = involved_social_roll)
+	switch(result)
+		if (ROLL_SUCCESS)
+			to_chat(user, "<span class='notice'>You manage to persuade your way past the guards.</span>")
+			linked_perm.allow_list += user.get_face_name()
+			return
 
 	to_chat(user, "<span class='notice'>The guards turn you away, taking note of you as they do.</span>")
 	linked_perm.block_list += user.name
