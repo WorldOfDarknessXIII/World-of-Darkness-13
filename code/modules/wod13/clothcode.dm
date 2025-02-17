@@ -11,7 +11,10 @@
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	body_worn = TRUE
 	fitted = NO_FEMALE_UNIFORM
-	cost = 10
+
+/obj/item/clothing/under/vampire/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 10, "undersuit", FALSE)
 
 /obj/item/clothing/under/vampire/brujah
 	name = "Punk attire"
@@ -450,7 +453,10 @@
 	can_be_tied = FALSE
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	body_worn = TRUE
-	cost = 5
+
+/obj/item/clothing/shoes/vampire/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 5, "shoes", FALSE)
 
 /obj/item/clothing/shoes/vampire/brown
 	icon_state = "shoes_brown"
@@ -525,7 +531,10 @@
 	resistance_flags = NONE
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
 	body_worn = TRUE
-	cost = 15
+
+/obj/item/clothing/suit/vampire/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 15, "suit", FALSE)
 
 /obj/item/clothing/suit/hooded/heisenberg
 	name = "chemical costume"
@@ -980,7 +989,10 @@
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
 	body_worn = TRUE
-	cost = 10
+
+/obj/item/clothing/head/vampire/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 10, "headwear", FALSE)
 
 /obj/item/clothing/head/vampire/bandana
 	name = "bandana"
