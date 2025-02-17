@@ -495,7 +495,9 @@
 	var/list/parts = list()
 	parts += "<span class='header'>City Economic Summary:</span>"
 	///This is the richest account on station at roundend.
-	var/datum/vtm_bank_account/mr_moneybags
+	var/datum/vtm_bank_account/mr_moneybags = GLOB.bank_account_list[1]
+	if(!istype(mr_moneybags))
+		CRASH("A bank account wasn't found in GLOB.bank_account_list for determining the richest player at round-end.")
 	///This is the station's total wealth at the end of the round.
 	var/station_vault = 0
 	///How many players joined the round.
