@@ -420,7 +420,7 @@
 	music = /datum/vampiremusic/prince
 	wall_rating = HIGH_WALL_RATING
 
-area/vtm/sewer/old_clan_sanctum
+/area/vtm/sewer/old_clan_sanctum
 	name = "Old Clan Tzimisce Sanctum"
 	icon_state = "old_clan_sanctum"
 	zone_type = "elysium"

@@ -776,15 +776,16 @@
 /obj/item/vamp/phone/street
 	desc = "An ordinary street payphone"
 	icon = 'code/modules/wod13/props.dmi'
+	onflooricon = 'code/modules/wod13/props.dmi'
 	icon_state = "payphone"
 	anchored = TRUE
 	number = "1447"
 	can_fold = 0
 
 	/// Phone icon states
-	open_state = "streetphone"
-	closed_state = "streetphone"
-	folded_state = "streetphone"
+	open_state = "payphone"
+	closed_state = "payphone"
+	folded_state = "payphone"
 
 /obj/item/vamp/phone/clean
 	desc = "The usual phone of a cleaning company used to communicate with employees"
@@ -812,40 +813,9 @@
 	var/obj/machinery/p25transceiver/police_transciever
 
 /obj/item/vamp/phone/emergency/Initialize()
-	..()
+	. = ..()
 	GLOB.phone_numbers_list += number
 	GLOB.phones_list += src
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/item/vamp/phone/emergency/LateInitialize()
-	. = ..()
-	for(var/obj/machinery/p25transceiver/transciever in GLOB.p25_tranceivers)
-		if(transciever.p25_network == "police")
-			police_transciever = transciever
-		if(transciever.p25_network == "clinic")
-			clinic_transciever = transciever
-
-/obj/item/vamp/phone/emergency/handle_hearing(datum/source, list/hearing_args)
-	. = ..()
-	var/speaker = hearing_args[HEARING_SPEAKER]
-	var/message = hearing_args[HEARING_MESSAGE]
-	var/raw_message = hearing_args[HEARING_RAW_MESSAGE]
-	if(speaker && online)
-		do_dispatch_talk(clinic_transciever, speaker, message, raw_message)
-		do_dispatch_talk(police_transciever, speaker, message, raw_message)
-
-/obj/item/vamp/phone/emergency/proc/do_dispatch_talk(obj/machinery/p25transceiver/transciever, speaker, message, raw_message)
-	var/formatted = ""
-	if(ishuman(speaker))
-		var/mob/living/carbon/human/person = speaker
-		if(person.job == "Emergency Dispatcher")
-			formatted = "[icon2html(src, world)]\[<b>DISPATCHER</b>\]: <span class='robot'>[message]</span>"
-		else
-			formatted = "[icon2html(src, world)]\[<b>UNKNOWN</b>\]: <span class='robot'>[raw_message]</span>"
-	else
-		formatted = "[icon2html(src, world)]\[<b>CALLER</b>\]: <span class='robot'>[message]</span>"
-	transciever.broadcast_to_network(formatted, transciever.p25_network, 'sound/effects/radioclick.ogg', 10, FALSE)
-
 
 /obj/item/vamp/phone/clean/Initialize()
 	. = ..()

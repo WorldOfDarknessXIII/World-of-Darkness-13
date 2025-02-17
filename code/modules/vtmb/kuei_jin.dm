@@ -256,8 +256,12 @@
 	var/datum/action/reanimate_yin/YN = new()
 	YN.Grant(C)
 
+	//Kuei-jin resist vampire bites better than mortals
+	RegisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_kuei_jin_bitten))
+
 /datum/species/kuei_jin/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
+	UnregisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED)
 	for(var/datum/action/kueijininfo/VI in C.actions)
 		if(VI)
 			VI.Remove(C)
@@ -678,3 +682,14 @@
 		kueijin.mind.dharma.Hun = max_hun
 		kueijin.max_demon_chi = max_limit - max_hun
 		kueijin.demon_chi = min(kueijin.demon_chi, kueijin.max_demon_chi)
+
+/**
+ * On being bit by a vampire
+ *
+ * This handles vampire bite sleep immunity and any future special interactions.
+ */
+/datum/species/kuei_jin/proc/on_kuei_jin_bitten(datum/source, mob/living/carbon/being_bitten)
+	SIGNAL_HANDLER
+
+	if(iscathayan(being_bitten))
+		return COMPONENT_RESIST_VAMPIRE_KISS

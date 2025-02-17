@@ -151,9 +151,10 @@
 /obj/item/gun/proc/can_shoot()
 	return TRUE
 
-/obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
+/obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user)
 	to_chat(user, "<span class='danger'>*click*</span>")
 	playsound(src, dry_fire_sound, 30, TRUE)
+	SEND_SIGNAL(src, COMSIG_GUN_EMPTY)
 
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
@@ -322,13 +323,13 @@
 	var/randomized_bonus_spread = rand(0, bonus_spread)
 
 	var/real_fire_delay = fire_delay
-	if(user.no_fire_delay)
-		real_fire_delay = 0
+	if(HAS_TRAIT(user, TRAIT_GUNFIGHTER))
+		real_fire_delay /= 2
 
 	if(burst_size > 1)
 		firing_burst = TRUE
 		for(var/i = 1 to burst_size)
-			addtimer(CALLBACK(src, PROC_REF(process_burst), user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, i), real_fire_delay * (i - 1))
+			addtimer(CALLBACK(src, PROC_REF(process_burst), user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, i), max(1, real_fire_delay * (i - 1)))
 	else
 		if(chambered)
 			if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
