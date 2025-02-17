@@ -375,7 +375,7 @@
 	resistance_flags = FIRE_PROOF
 	is_iron = TRUE
 
-obj/item/melee/vampirearms/handsickle
+/obj/item/melee/vampirearms/handsickle
 	name = "hand sickle"
 	desc = "Reap what they have sowed."
 	icon = 'code/modules/wod13/weapons.dmi'
