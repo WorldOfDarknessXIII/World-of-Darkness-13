@@ -49,13 +49,13 @@
 			return ROLL_FAILURE
 
 	// Calculates successes, failures, and botches from the dice pool
-	for(var/d in gather_dice_pool(dice))
-		if (d == 1)
+	for(var/roll in gather_dice_pool(dice))
+		if (roll == 1)
 			successes--
 			if (!had_one)
 				had_one = TRUE
 			continue
-		else if (d >= difficulty)
+		else if (roll >= difficulty)
 			successes++
 			if (!had_success)
 				had_success = TRUE
@@ -90,18 +90,18 @@
 		else
 			return ROLL_FAILURE
 
-	for(var/d in gather_dice_pool(dice))
-		if (d == 1)
+	for(var/roll in gather_dice_pool(dice))
+		if (roll == 1)
 			successes--
-			fail_list.Add(d)
+			fail_list.Add(roll)
 			if (!had_one)
 				had_one = TRUE
 			continue
-		else if (d < difficulty)
-			fail_list.Add(d)
-		else if (d >= difficulty)
+		else if (roll < difficulty)
+			fail_list.Add(roll)
+		else if (roll >= difficulty)
 			successes++
-			success_list.Add(d)
+			success_list.Add(roll)
 			if (!had_success)
 				had_success = TRUE
 
