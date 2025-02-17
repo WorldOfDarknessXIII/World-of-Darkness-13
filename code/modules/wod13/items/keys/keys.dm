@@ -15,6 +15,7 @@
 	)
 	var/roundstart_fix = FALSE
 
+//===========================VAMPIRE KEYS===========================
 /obj/item/vamp/keys/camarilla
 	name = "Camarilla keys"
 	accesslocks = list("camarilla")
@@ -31,6 +32,7 @@
 		"primogen"
 	)
 	color = "#bd3327"
+
 
 /obj/item/vamp/keys/sheriff
 	name = "Sheriff's keys"
@@ -60,37 +62,6 @@
 		"milleniumCommon",
 		"clerk",
 		"camarilla"
-	)
-
-/obj/item/vamp/keys/graveyard
-	name = "Graveyard keys"
-	accesslocks = list(
-		"graveyard"
-	)
-
-/obj/item/vamp/keys/clinic
-	name = "Clinic keys"
-	accesslocks = list(
-		"clinic"
-	)
-
-/obj/item/vamp/keys/clinics_director
-	name = "Clinic director keys"
-	accesslocks = list(
-		"clinic",
-		"director"
-	)
-
-/obj/item/vamp/keys/cleaning
-	name = "Cleaning keys"
-	accesslocks = list(
-		"cleaning"
-	)
-
-/obj/item/vamp/keys/church
-	name = "Church keys"
-	accesslocks = list(
-		"church"
 	)
 
 /obj/item/vamp/keys/archive
@@ -123,48 +94,6 @@
 	)
 	color = "#434343"
 
-/obj/item/vamp/keys/supply
-	name = "Supply keys"
-	accesslocks = list(
-		"supply"
-	)
-	color = "#434343"
-
-/obj/item/vamp/keys/police
-	name = "Police keys"
-	accesslocks = list(
-		"police"
-	)
-
-/obj/item/vamp/keys/dispatch
-	name = "Dispatcher keys"
-	accesslocks = list(
-		"dispatch"
-	)
-
-/obj/item/vamp/keys/police/secure
-	name = "Sergeant Police keys"
-	accesslocks = list(
-		"police",
-		"police_secure"
-	)
-
-/obj/item/vamp/keys/police/secure/chief
-	name = "Chief of Police keys"
-	accesslocks = list(
-		"dispatch",
-		"police",
-		"police_secure",
-		"police_chief"
-	)
-
-
-/obj/item/vamp/keys/strip
-	name = "Strip keys"
-	accesslocks = list(
-		"strip"
-	)
-
 /obj/item/vamp/keys/giovanni
 	name = "Mafia keys"
 	accesslocks = list(
@@ -180,12 +109,6 @@
 		"giovanni"
 	)
 
-/obj/item/vamp/keys/taxi
-	name = "Taxi keys"
-	accesslocks = list(
-		"taxi"
-	)
-	color = "#fffb8b"
 
 /obj/item/vamp/keys/baali
 	name = "Satanic keys"
@@ -313,6 +236,51 @@
 	)
 	color = "#e8ff29"
 
+//===========================CLINIC KEYS===========================
+/obj/item/vamp/keys/clinic
+	name = "Clinic keys"
+	accesslocks = list(
+		"clinic"
+	)
+
+/obj/item/vamp/keys/clinics_director
+	name = "Clinic director keys"
+	accesslocks = list(
+		"clinic",
+		"director"
+	)
+
+//===========================POLICE KEYS===========================
+/obj/item/vamp/keys/police
+	name = "Police keys"
+	accesslocks = list(
+		"police"
+	)
+
+/obj/item/vamp/keys/dispatch
+	name = "Dispatcher keys"
+	accesslocks = list(
+		"dispatch"
+	)
+
+/obj/item/vamp/keys/police/secure
+	name = "Sergeant Police keys"
+	accesslocks = list(
+		"police",
+		"police_secure"
+	)
+
+/obj/item/vamp/keys/police/secure/chief
+	name = "Chief of Police keys"
+	accesslocks = list(
+		"dispatch",
+		"police",
+		"police_secure",
+		"police_chief"
+	)
+
+//===========================MISC KEYS===========================
+
 /obj/item/vamp/keys/triads
 	name = "Rusty keys"
 	accesslocks = list(
@@ -327,3 +295,40 @@
 	)
 	color = "#062e03"
 
+/obj/item/vamp/keys/graveyard
+	name = "Graveyard keys"
+	accesslocks = list(
+		"graveyard"
+	)
+
+/obj/item/vamp/keys/cleaning
+	name = "Cleaning keys"
+	accesslocks = list(
+		"cleaning"
+	)
+
+/obj/item/vamp/keys/church
+	name = "Church keys"
+	accesslocks = list(
+		"church"
+	)
+
+/obj/item/vamp/keys/supply
+	name = "Supply keys"
+	accesslocks = list(
+		"supply"
+	)
+	color = "#434343"
+
+/obj/item/vamp/keys/strip
+	name = "Strip keys"
+	accesslocks = list(
+		"strip"
+	)
+
+/obj/item/vamp/keys/taxi
+	name = "Taxi keys"
+	accesslocks = list(
+		"taxi"
+	)
+	color = "#fffb8b"
