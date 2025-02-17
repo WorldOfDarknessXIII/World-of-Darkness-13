@@ -18768,10 +18768,6 @@
 	name = "hideout keys";
 	pixel_x = -2
 	},
-/obj/item/drinkable_bloodpack/vitae{
-	amount_of_bloodpoints = 40;
-	pixel_x = -3
-	},
 /obj/item/clothing/shoes/vampire{
 	max_integrity = 1000;
 	slowdown = -0.3
@@ -43647,10 +43643,6 @@
 	pixel_x = 2;
 	pixel_y = 4
 	},
-/obj/item/drinkable_bloodpack/vitae{
-	amount_of_bloodpoints = 40;
-	pixel_x = -3
-	},
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/interior/bianchiBank)
 "les" = (
@@ -45100,10 +45092,6 @@
 	name = "Elder vitae pack (full)";
 	pixel_x = 2;
 	pixel_y = 4
-	},
-/obj/item/drinkable_bloodpack/vitae{
-	amount_of_bloodpoints = 40;
-	pixel_x = -3
 	},
 /obj/structure/closet/mini_fridge,
 /obj/item/drinkable_bloodpack,
@@ -62453,14 +62441,6 @@
 /obj/structure/table/wood/poker,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/interior/laundromat)
-"vbl" = (
-/obj/effect/decal/cardboard,
-/obj/item/drinkable_bloodpack/vitae{
-	amount_of_bloodpoints = 40;
-	pixel_x = -3
-	},
-/turf/open/floor/plating/sidewalk/poor,
-/area/vtm/ghetto)
 "vbm" = (
 /obj/machinery/light/small/red{
 	dir = 1
@@ -67080,13 +67060,6 @@
 /obj/effect/decal/litter,
 /turf/open/floor/plating/rough/cave,
 /area/vtm/sewer)
-"xpW" = (
-/obj/item/drinkable_bloodpack/vitae{
-	amount_of_bloodpoints = 40;
-	pixel_x = -3
-	},
-/turf/open/floor/plating/vampgrass,
-/area/vtm/pacificheights)
 "xpZ" = (
 /obj/machinery/light/small{
 	pixel_y = 32
@@ -150669,7 +150642,7 @@ bfM
 bfM
 bfM
 bfM
-xpW
+bfM
 bfM
 bfL
 bfM
@@ -187895,7 +187868,7 @@ bfO
 bfM
 bfM
 bfM
-xpW
+bfM
 bfM
 bfM
 bfM
@@ -195669,7 +195642,7 @@ aiD
 aiD
 aiD
 aiz
-vbl
+ajW
 uYf
 akd
 abY
@@ -197408,7 +197381,7 @@ bfM
 bfM
 bfM
 bfM
-xpW
+bfM
 bfM
 bfM
 beL
