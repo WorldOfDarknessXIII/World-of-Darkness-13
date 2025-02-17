@@ -19,12 +19,7 @@
  * * target - The mob who we will apply the gradient and gradient color to.
  */
 
-/obj/item/dyespray/proc/dye(mob/target)
-	if(!ishuman(target))
-		return
-
-	var/mob/living/carbon/human/human_target = target
-
+/obj/item/dyespray/proc/dye(mob/living/carbon/human/human_target)
 	var/new_grad_style = input(usr, "Choose a color pattern:", "Character Preference")  as null|anything in GLOB.gradients_list
 	if(!new_grad_style)
 		return
@@ -36,7 +31,7 @@
 	human_target.grad_style = new_grad_style
 	human_target.grad_color = sanitize_hexcolor(new_grad_color)
 	to_chat(human_target, "<span class='notice'>You start applying the hair dye...</span>")
-	if(!do_after(usr, 3 SECONDS, target))
+	if(!do_after(usr, 3 SECONDS, human_target))
 		return
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
 	human_target.update_hair()
