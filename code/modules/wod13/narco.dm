@@ -100,7 +100,7 @@
 		var/mob/living/carbon/H = user
 		var/amount
 		var/result = H.storyteller_roll(
-			dice = ATTRIBUTE_MENTALITY(H),
+			dice = attribute_mentality(H),
 			difficulty = 6,
 			numerical = TRUE,
 			)

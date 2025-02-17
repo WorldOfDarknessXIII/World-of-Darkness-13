@@ -1897,7 +1897,7 @@
 					if (get_dist(hearer, target) > 3)
 						difficulty_malus += 1
 					var/result = hearer.storyteller_roll(
-						dice = ATTRIBUTE_MENTALITY(hearer),
+						dice = attribute_mentality(hearer),
 						difficulty = base_difficulty + difficulty_malus,
 						)
 					switch(result)

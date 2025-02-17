@@ -1,10 +1,10 @@
 // Macros for obtaining stats specifically in storyteller rolls
-#define ATTRIBUTE_MENTALITY(T) T.get_total_mentality()
-#define ATTRIBUTE_PHYSIQUE(T) T.get_total_physique()
-#define ATTRIBUTE_SOCIAL(T) T.get_total_social()
-#define ATTRIBUTE_DEXTERITY(T) T.get_total_dexterity()
-#define ATTRIBUTE_LOCKPICKING(T) T.get_total_lockpicking()
-#define ATTRIBUTE_ATHLETICS(T)	T.get_total_athletics()
+#define attribute_mentality(T) T.get_total_mentality()
+#define attribute_physique(T) T.get_total_physique()
+#define attribute_social(T) T.get_total_social()
+#define attribute_dexterity(T) T.get_total_dexterity()
+#define attribute_lockpicking(T) T.get_total_lockpicking()
+#define attribute_athletics(T)	T.get_total_athletics()
 
 // Flat outcomes
 #define ROLL_BOTCH -1

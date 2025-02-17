@@ -126,7 +126,7 @@
 		involved_social_roll -= 1
 
 	var/result = user.storyteller_roll(
-		dice = ATTRIBUTE_SOCIAL(user),
+		dice = attribute_social(user),
 		difficulty = involved_social_roll,
 		)
 	switch(result)

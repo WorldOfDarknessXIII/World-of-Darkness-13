@@ -1437,8 +1437,8 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		if((target.stat != DEAD) && (!target.IsKnockdown()))
 			// Compare attacker's physique to the greater between the defender's physique (robust enough to tank it) or dexterity (rolls with the punches)
 			var/result = target.storyteller_roll(
-				dice = ATTRIBUTE_PHYSIQUE(target) + round(max(ATTRIBUTE_ATHLETICS(target), ATTRIBUTE_DEXTERITY(target)) / 2),
-				difficulty = clamp(ATTRIBUTE_PHYSIQUE(user), 1, 4) + (user.melee_professional ? rand(1,4) : 0),
+				dice = attribute_physique(target) + round(max(attribute_athletics(target), attribute_dexterity(target)) / 2),
+				difficulty = clamp(attribute_physique(user), 1, 4) + (user.melee_professional ? rand(1,4) : 0),
 				)
 			switch(result)
 				if (ROLL_FAILURE)

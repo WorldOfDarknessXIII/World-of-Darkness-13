@@ -27,8 +27,9 @@
 	else
 		. = storyteller_roll_basic(dice, difficulty, numerical)
 
-// Collects all the rolls into a dice pool list
+/// Collects all the rolls into a dice pool list
 /mob/proc/gather_dice_pool(dice)
+	RETURN_TYPE(/list)
 	var/list/dice_pool = list()
 	for (var/i in 1 to dice)
 		var/roll = rand(1, 10)
