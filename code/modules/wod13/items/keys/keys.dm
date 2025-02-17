@@ -41,7 +41,8 @@
 		"prince",
 		"archive",
 		"milleniumCommon",
-		"primogen"
+		"primogen",
+		"clerk"
 	)
 	color = "#bd3327"
 
@@ -287,6 +288,13 @@
 		"triad",
 		"laundromat"
 	)
+
+/obj/item/vamp/keys/techstore
+	name = "Tech Store keys"
+	accesslocks = list(
+		"wolftech"
+	)
+	color = "#466a72"
 
 /obj/item/vamp/keys/pentex
 	name = "Facility keys"
