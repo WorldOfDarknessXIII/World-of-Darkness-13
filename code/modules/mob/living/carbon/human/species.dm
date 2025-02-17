@@ -1438,7 +1438,8 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			// Compare attacker's physique to the greater between the defender's physique (robust enough to tank it) or dexterity (rolls with the punches)
 			var/result = target.storyteller_roll(
 				dice = ATTRIBUTE_PHYSIQUE(target) + round(max(ATTRIBUTE_ATHLETICS(target), ATTRIBUTE_DEXTERITY(target)) / 2),
-				difficulty = clamp(ATTRIBUTE_PHYSIQUE(user), 1, 4) + (user.melee_professional ? rand(1,4) : 0))
+				difficulty = clamp(ATTRIBUTE_PHYSIQUE(user), 1, 4) + (user.melee_professional ? rand(1,4) : 0),
+				)
 			switch(result)
 				if (ROLL_FAILURE)
 					target.visible_message("<span class='danger'>[user] knocks [target] down!</span>", "<span class='userdanger'>You're knocked down by [user]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)

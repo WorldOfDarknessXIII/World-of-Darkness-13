@@ -127,7 +127,8 @@
 
 	var/result = user.storyteller_roll(
 		dice = ATTRIBUTE_SOCIAL(user),
-		difficulty = involved_social_roll)
+		difficulty = involved_social_roll,
+		)
 	switch(result)
 		if (ROLL_SUCCESS)
 			to_chat(user, "<span class='notice'>You manage to persuade your way past the guards.</span>")

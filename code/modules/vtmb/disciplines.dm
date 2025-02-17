@@ -1898,7 +1898,8 @@
 						difficulty_malus += 1
 					var/result = hearer.storyteller_roll(
 						dice = ATTRIBUTE_MENTALITY(hearer),
-						difficulty = base_difficulty + difficulty_malus)
+						difficulty = base_difficulty + difficulty_malus,
+						)
 					switch(result)
 						if (ROLL_SUCCESS)
 							if (masked)

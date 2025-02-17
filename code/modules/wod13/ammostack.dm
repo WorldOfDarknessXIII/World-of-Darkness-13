@@ -97,7 +97,8 @@
 		var/mob/living/carbon/hit_person = target
 		var/result = hit_person.storyteller_roll(
 			dice = ATTRIBUTE_PHYSIQUE(hit_person) + min(ATTRIBUTE_DEXTERITY(hit_person), ATTRIBUTE_ATHLETICS(hit_person)),
-			difficulty = 3 + (!isnull(firer) ? rand(1,2) : 0))
+			difficulty = 3 + (!isnull(firer) ? rand(1,2) : 0),
+			)
 		switch(result)
 			if (ROLL_FAILURE)
 				hit_person.Knockdown(20)

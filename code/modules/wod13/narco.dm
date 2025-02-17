@@ -102,7 +102,8 @@
 		var/result = H.storyteller_roll(
 			dice = ATTRIBUTE_MENTALITY(H),
 			difficulty = 6,
-			numerical = TRUE)
+			numerical = TRUE,
+			)
 		switch(result)
 			if(3 to INFINITY)
 				amount = 4
