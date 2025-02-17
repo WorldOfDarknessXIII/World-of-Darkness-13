@@ -95,12 +95,13 @@
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/hit_person = target
-		if(hit_person.storyteller_roll(
-			dice = hit_person.get_total_physique() + min(hit_person.get_total_dexterity(), hit_person.get_total_athletics()),
-			difficulty = 3 + (!isnull(firer) ? rand(1,2) : 0)
-		) == ROLL_FAILURE)
-			hit_person.Knockdown(20)
-			to_chat(hit_person, "<span class='danger'>The force of a projectile sends you sprawling!</span>")
+		var/result = hit_person.storyteller_roll(
+			dice = ATTRIBUTE_PHYSIQUE(hit_person) + min(ATTRIBUTE_DEXTERITY(hit_person), ATTRIBUTE_ATHLETICS(hit_person)),
+			difficulty = 3 + (!isnull(firer) ? rand(1,2) : 0))
+		switch(result)
+			if (ROLL_FAILURE)
+				hit_person.Knockdown(20)
+				to_chat(hit_person, "<span class='danger'>The force of a projectile sends you sprawling!</span>")
 
 
 /obj/projectile/beam/beam_rifle/vampire/shotpellet

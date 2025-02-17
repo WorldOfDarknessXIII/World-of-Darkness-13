@@ -97,9 +97,13 @@
 	if(growth_stage == 4)
 		growth_stage = 1
 		to_chat(user, "<span class='notice'>You pull the grown weed out of [src].</span>")
-		var/mob/living/carbon/human/H = user
+		var/mob/living/carbon/H = user
 		var/amount
-		switch(storyteller_roll(H.get_total_mentality(), 6, TRUE))
+		var/result = H.storyteller_roll(
+			dice = ATTRIBUTE_MENTALITY(H),
+			difficulty = 6,
+			numerical = TRUE)
+		switch(result)
 			if(3 to INFINITY)
 				amount = 4
 			if(2)

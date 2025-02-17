@@ -381,7 +381,8 @@
 								message_admins("[ADMIN_LOOKUPFLW(H)] has turned [ADMIN_LOOKUPFLW(BLOODBONDED)] into an Abomination through an admin setting the force_abomination var.")
 								log_game("[key_name(H)] has turned [key_name(BLOODBONDED)] into an Abomination through an admin setting the force_abomination var.")
 							else
-								switch(storyteller_roll(BLOODBONDED.auspice.level))
+								var/result = BLOODBONDED.storyteller_roll(dice = BLOODBONDED.auspice.level)
+								switch(result)
 									if (ROLL_BOTCH)
 										to_chat(H, "<span class='danger'>Something terrible is happening.</span>")
 										to_chat(BLOODBONDED, "<span class='userdanger'>Gaia has forsaken you.</span>")

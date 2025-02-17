@@ -1896,11 +1896,15 @@
 					difficulty_malus = 0
 					if (get_dist(hearer, target) > 3)
 						difficulty_malus += 1
-					if (storyteller_roll(hearer.get_total_mentality(), base_difficulty + difficulty_malus) == ROLL_SUCCESS)
-						if (masked)
-							to_chat(hearer, "<span class='warning'>[target.name]'s jaw isn't moving to match [target.p_their()] words.</span>")
-						else
-							to_chat(hearer, "<span class='warning'>[target.name]'s lips aren't moving to match [target.p_their()] words.</span>")
+					var/result = hearer.storyteller_roll(
+						dice = ATTRIBUTE_MENTALITY(hearer),
+						difficulty = base_difficulty + difficulty_malus)
+					switch(result)
+						if (ROLL_SUCCESS)
+							if (masked)
+								to_chat(hearer, "<span class='warning'>[target.name]'s jaw isn't moving to match [target.p_their()] words.</span>")
+							else
+								to_chat(hearer, "<span class='warning'>[target.name]'s lips aren't moving to match [target.p_their()] words.</span>")
 		if(2)
 			target = input(caster, "Who will you project your voice to?") as null|mob in (GLOB.player_list - caster)
 			if(target)
