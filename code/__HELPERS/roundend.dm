@@ -503,7 +503,7 @@
 	for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
 		if(account && account.account_owner)
 			station_vault += account.balance
-			if(!mr_moneybags || mr_moneybags.balance < account.balance)
+			if(mr_moneybags.balance < account.balance)
 				mr_moneybags = account
 	parts += "<div class='panel stationborder'>There were [station_vault] dollars collected by people this shift.<br>"
 	if(total_players > 0)
