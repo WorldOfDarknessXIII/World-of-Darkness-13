@@ -988,7 +988,7 @@
 
 /obj/police_department
 	name = "San Francisco Police Department"
-	desc = "Stop right there you criminal scum! Nobody can break the law in my watch!!"
+	desc = "Stop right there you criminal scum! Nobody can break the law on my watch!!"
 	icon = 'code/modules/wod13/props.dmi'
 	icon_state = "police"
 	plane = GAME_PLANE
