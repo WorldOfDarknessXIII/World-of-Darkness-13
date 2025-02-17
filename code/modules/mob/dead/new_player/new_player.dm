@@ -290,8 +290,8 @@
 			return "[jobtitle] is unavailable."
 		if(JOB_UNAVAILABLE_BANNED)
 			return "You are currently banned from [jobtitle]."
-		if(JOB_UNAVAILABLE_TIME_LOCK )
-			return "You do not have enough hours in some roles for [jobtitle]."
+		if(JOB_UNAVAILABLE_PLAYTIME)
+			return "You do not have enough relevant playtime for [jobtitle]."
 		if(JOB_UNAVAILABLE_ACCOUNTAGE)
 			return "Your account is not old enough for [jobtitle]."
 		if(JOB_UNAVAILABLE_SLOTFULL)
@@ -321,8 +321,8 @@
 		return JOB_UNAVAILABLE_GENERIC
 	if(!job.player_old_enough(client) && !bypass)
 		return JOB_UNAVAILABLE_ACCOUNTAGE
-	if(!job.can_play_role(client) && !bypass )
-		return JOB_UNAVAILABLE_TIME_LOCK 
+	if(job.required_playtime_remaining(client) && !bypass)
+		return JOB_UNAVAILABLE_PLAYTIME
 	if(latejoin && !job.special_check_latejoin(client))
 		return JOB_UNAVAILABLE_GENERIC
 	if((client.prefs.generation > job.minimal_generation) && !bypass)

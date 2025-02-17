@@ -99,7 +99,7 @@ SUBSYSTEM_DEF(job)
 			return FALSE
 		if(!job.player_old_enough(player.client) && !bypass)
 			return FALSE
-		if(job.can_play_role(player.client) && !bypass)
+		if(job.required_playtime_remaining(player.client) && !bypass)
 			return FALSE
 		if((player.client.prefs.generation > job.minimal_generation) && !bypass)
 			return FALSE
@@ -136,8 +136,9 @@ SUBSYSTEM_DEF(job)
 		if(!job.player_old_enough(player.client) && !bypass)
 			JobDebug("FOC player not old enough, Player: [player]")
 			continue
-		if(!job.can_play_role(player.client) && !bypass)
-			JobDebug("FOC player don't got enough hours(TIMELOCK), Player: [player], Job:[job.title]")
+		if(job.required_playtime_remaining(player.client) && !bypass)
+			JobDebug("FOC player not enough xp, Player: [player]")
+			continue
 		if((player.client.prefs.generation > job.minimal_generation) && !bypass)
 			JobDebug("FOC player not enough generation, Player: [player]")
 			continue
@@ -194,8 +195,9 @@ SUBSYSTEM_DEF(job)
 			JobDebug("GRJ player not old enough, Player: [player]")
 			continue
 
-		if(!job.can_play_role(player.client))
-			JobDebug("GRJ player not enough playtime (TIMELOCK), Player: [player], Job:[job.title]")
+		if(job.required_playtime_remaining(player.client))
+			JobDebug("GRJ player not enough xp, Player: [player]")
+			continue
 
 		if(player.client.prefs.generation > job.minimal_generation)
 			JobDebug("GRJ player not enough generation, Player: [player]")
@@ -403,8 +405,10 @@ SUBSYSTEM_DEF(job)
 					JobDebug("DO player not old enough, Player: [player], Job:[job.title]")
 					continue
 
-				if(!job.can_play_role(player.client) && !bypass)
-					JobDebug("DO player not enough playtime (TIMELOCK), Player: [player], Job:[job.title]")
+				if(job.required_playtime_remaining(player.client) && !bypass)
+					JobDebug("DO player not enough xp, Player: [player], Job:[job.title]")
+					continue
+
 				if((player.client.prefs.generation > job.minimal_generation) && !bypass)
 					JobDebug("DO player not enough generation, Player: [player]")
 					continue

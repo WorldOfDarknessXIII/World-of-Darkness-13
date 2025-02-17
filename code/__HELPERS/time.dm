@@ -27,17 +27,6 @@
 	else
 		SSticker.gametime_offset = CEILING(SSticker.gametime_offset, 3600)
 
-/proc/deciseconds_to_time_text(deciseconds)
-    var/total_seconds = round(deciseconds / 10)
-    var/total_minutes = total_seconds / 60
-    var/hours = total_minutes / 60
-    var/minutes = total_minutes % 60
-
-    return "[round(hours)]:[minutes < 10 ? "0[minutes]" : minutes] Hours"
-
-/proc/duration2text_custom(deciseconds)
-    return deciseconds_to_time_text(deciseconds)
-
 //returns timestamp in a sql and a not-quite-compliant ISO 8601 friendly format
 /proc/SQLtime(timevar)
 	return time2text(timevar || world.timeofday, "YYYY-MM-DD hh:mm:ss")

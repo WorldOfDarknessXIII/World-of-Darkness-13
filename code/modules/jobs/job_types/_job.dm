@@ -91,17 +91,9 @@
 	var/duty
 	var/v_duty
 
-
-	var/list/minimum_playtimes
-
-	var/minimum_playtime_as_job = 1 HOURS
-
 /datum/job/New()
 	. = ..()
 	var/list/jobs_changes = GetMapChanges()
-
-	minimum_playtimes = setup_requirements(list())
-
 	if(!jobs_changes)
 		return
 	if(isnum(jobs_changes["additional_access"]))
@@ -355,67 +347,3 @@
 	if(CONFIG_GET(flag/security_has_maint_access))
 		return list(ACCESS_MAINT_TUNNELS)
 	return list()
-
-/datum/timelock
-	var/name
-	var/time_required
-	var/roles
-
-/datum/timelock/New(name, time_required, list/roles)
-	. = ..()
-	if(name) src.name = name
-	if(time_required) src.time_required = time_required
-	if(roles) src.roles = roles
-
-/datum/job/proc/setup_requirements(list/L)
-	var/list/to_return = list()
-	for(var/PT in L)
-		if(ispath(PT))
-			LAZYADD(to_return, new PT(time_required = L[PT]))
-		else
-			LAZYADD(to_return, TIMELOCK_JOB(PT, L[PT]))
-
-	return to_return
-
-/datum/timelock/proc/can_play(client/C)
-	if(islist(roles))
-		var/total = 0
-		for(var/role_required in roles)
-			total += get_job_playtime(C, role_required)
-
-		return total >= time_required
-	else
-		return get_job_playtime(C, roles) >= time_required
-
-/datum/timelock/proc/get_role_requirement(client/C)
-	if(islist(roles))
-		var/total = 0
-		for(var/role_required in roles)
-			total += get_job_playtime(C, role_required)
-
-		return time_required - total
-	else
-		return time_required - get_job_playtime(C, roles)
-
-/datum/job/proc/can_play_role(client/client)
-
-
-	if(get_job_playtime(client, title) > minimum_playtime_as_job)
-		return TRUE
-
-	for(var/prereq in minimum_playtimes)
-		var/datum/timelock/T = prereq
-		if(!T.can_play(client))
-			return FALSE
-
-	return TRUE
-
-/datum/job/proc/get_role_requirements(client/C)
-	var/list/return_requirements = list()
-	for(var/prereq in minimum_playtimes)
-		var/datum/timelock/T = prereq
-		var/time_required = T.get_role_requirement(C)
-		if(time_required > 0)
-			return_requirements[T] = time_required
-
-	return return_requirements
