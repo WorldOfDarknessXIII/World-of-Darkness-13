@@ -24,3 +24,48 @@
 					RealisticSay(pick(socialrole.help_phrases))
 			else
 				RealisticSay(pick(socialrole.help_phrases))
+
+/mob/living/carbon/human/npc/proc/handle_gun(obj/item/gun/ballistic/weapon, mob/living/user, atom/target, params, zone_override)
+	SIGNAL_HANDLER
+	if(weapon.loc != src)
+		UnregisterSignal(weapon, COMSIG_GUN_FIRED)
+		UnregisterSignal(weapon, COMSIG_GUN_EMPTY)
+		return
+
+	if(!istype(weapon, /obj/item/gun/ballistic))
+		return
+
+	if(istype(weapon.magazine, /obj/item/ammo_box/magazine/internal))
+		var/obj/item/ammo_box/magazine/internal_mag = weapon.magazine
+		if(extra_loaded_rounds)
+			internal_mag.give_round(new internal_mag.ammo_type())
+			extra_loaded_rounds--
+		addtimer(CALLBACK(src, PROC_REF(rack_held_gun), weapon), weapon.rack_delay)
+		return
+
+	if(!weapon.magazine.ammo_count() && extra_mags)
+		extra_mags--
+		weapon.eject_magazine_npc(src, new weapon.mag_type(src))
+		weapon.rack(src)
+		if(!weapon.chambered)
+			weapon.chamber_round()
+
+/mob/living/carbon/human/npc/proc/rack_held_gun(obj/item/gun/ballistic/weapon)
+	if(weapon.bolt_locked)
+		weapon.drop_bolt()
+	weapon.rack(src)
+
+/mob/living/carbon/human/npc/proc/handle_empty_gun()
+	SIGNAL_HANDLER
+	UnregisterSignal(my_weapon, COMSIG_GUN_FIRED)
+	UnregisterSignal(my_weapon, COMSIG_GUN_EMPTY)
+	if(my_weapon.loc != src)
+		return
+
+	temporarilyRemoveItemFromInventory(my_weapon, TRUE)
+	equip_to_appropriate_slot(my_weapon)
+	has_weapon = FALSE
+	if(my_backup_weapon && !spawned_backup_weapon)
+		my_backup_weapon.forceMove(loc)
+		put_in_active_hand(my_backup_weapon)
+		spawned_backup_weapon = TRUE
