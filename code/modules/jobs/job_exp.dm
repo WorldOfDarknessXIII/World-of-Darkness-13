@@ -223,10 +223,3 @@ GLOBAL_PROTECT(exp_to_update)
 		prefs.db_flags = 0	//This PROBABLY won't happen, but better safe than sorry.
 	qdel(flags_read)
 	return TRUE
-
-//This one is used for the timelock
-client/proc/get_time_living()
-	if(!prefs.exp || !prefs.exp[EXP_TYPE_LIVING])
-		return 0
-	var/exp_living = text2num(prefs.exp[EXP_TYPE_LIVING]) MINUTES_TO_DECISECOND
-	return exp_living

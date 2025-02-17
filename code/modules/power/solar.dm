@@ -4,8 +4,8 @@
 /obj/machinery/power/solar
 	name = "solar panel"
 	desc = "A solar panel. Generates electricity when in contact with sunlight."
-	icon = 'goon/icons/obj/power.dmi'
-	icon_state = "sp_base"
+	icon = 'icons/obj/power.dmi'
+	icon_state = "smes"
 	density = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
@@ -205,7 +205,7 @@
 /obj/item/solar_assembly
 	name = "solar panel assembly"
 	desc = "A solar panel assembly kit, allows constructions of a solar panel, or with a tracking circuit board, a solar tracker."
-	icon = 'goon/icons/obj/power.dmi'
+	icon = 'icons/obj/power.dmi'
 	icon_state = "sp_base"
 	inhand_icon_state = "electropack"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
