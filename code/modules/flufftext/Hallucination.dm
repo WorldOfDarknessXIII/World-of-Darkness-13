@@ -815,9 +815,42 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/radio_messages = list("[pick_list_replacements(HAL_LINES_FILE, "people")] - [pick_list_replacements(HAL_LINES_FILE, "accusations")]!",\
 		"Help!",\
 		"[pick_list_replacements(HAL_LINES_FILE, "threat")] [pick_list_replacements(HAL_LINES_FILE, "location")][prob(50)?"!":"!!"]",\
-		"[pick("Where did the Malkavian go?", "Put the Malkavian under arrest!")]",\
-		"Let's get out of here!",\
-		"The Prince is [pick("a traitor", "dead")]!!")
+		"[pick("Where did [target.first_name()] go?", "[target.first_name()]...")]",\
+		"Bone round in melody and word layed in rain.",\
+		"Cemetery runoff congealing at the door.",\
+		"Maggots love you. Trust me.",\
+		"Mast lay shrouded and the moon is melting.",\
+		"Try the corpse in the oven with peppers and fur.",\
+		"Souls draped in rotten tatters and Father dances in the dark.",\
+		"Make the tallow from the fat of a hangman.",\
+		"I smell a rancid grave.",\
+		"You're in for it now.",\
+		"Rustling robes of the Reaper.",\
+		"All are blind whose eyes are closed.",\
+		"Look at it, bent like a calf for the butcher.",\
+		"The drove is a terrible mistress.",\
+		"Whishes and words sprout from the same seed.",\
+		"A dark light from your death.",\
+		"Hemlock for the deceivers.",\
+		"I cast a crooked shadow.",\
+		"I have two mouths to lick from.",\
+		"Deep in the Atlantic, the Ark, dreaming, sleeping.",\
+		"Can't see, can't see! Where have my eyes gone to?",\
+		"Heloise said you. Cranberry sauce. Hotel foxtrot.",\
+		"Stop doing that. Mother shan't be too pleased. None too pleased.",\
+		"It's a tangle of asps.",\
+		"Those lips bleed a putrid poison.",\
+		"Sealed with the kiss of swine.",\
+		"Rat tails, cat tails, coat tails, all tales.",\
+		"A trick with two tongues.",\
+		"It's not fair! I wanted to.",\
+		"Pennies for your eyes in its pockets.",\
+		"Why is it troubled?",\
+		"Ask about the free arsenic.",\
+		"Blood brings the vicious beast.",\
+		"I see daggers hang on his breath.",\
+		"The very thought falls to the flame.",\
+		)
 
 	var/mob/living/carbon/person = null
 	var/datum/language/understood_language = target.get_random_understood_language()
@@ -839,6 +872,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		person = pick(humans)
 
 	// Generate message
+	is_radio = FALSE //minimally disable radio hallucinations here. TODO: either make the radio hallucinations match the wod13 radio messages or remove them altogether
 	var/spans = list(person.speech_span)
 	var/chosen = !specific_message ? capitalize(pick(is_radio ? speak_messages : radio_messages)) : specific_message
 	chosen = replacetext(chosen, "%TARGETNAME%", target_name)
