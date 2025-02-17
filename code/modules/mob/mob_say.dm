@@ -13,10 +13,10 @@ GLOBAL_LIST_EMPTY(typing_indicator)
 		return
 
 	set_typing_indicator(TRUE)
-	var/message = input("What are you trying to say? (A maximum of [MAX_BROADCAST_LEN] characters]") as text|null
+	var/message = input("What are you trying to say?") as text|null
 	set_typing_indicator(FALSE)
 
-	if(!message)
+	if(!message || message_max_length_check(message))
 		return
 
 	say(message)
@@ -32,10 +32,10 @@ GLOBAL_LIST_EMPTY(typing_indicator)
 		return
 
 	set_typing_indicator(TRUE)
-	var/message = input("What are you trying to whisper? (A maximum of [MAX_BROADCAST_LEN] characters]") as text|null
+	var/message = input("What are you trying to whisper?") as text|null
 	set_typing_indicator(FALSE)
 
-	if(!message)
+	if(!message || message_max_length_check(message))
 		return
 
 	whisper(message)
@@ -54,14 +54,19 @@ GLOBAL_LIST_EMPTY(typing_indicator)
 		return
 
 	set_typing_indicator(TRUE, TRUE)
-	var/message = input("What are you trying to emote? (A maximum of [MAX_BROADCAST_LEN] characters])") as text|null
+	var/message = input("What are you trying to emote?") as text|null
 	set_typing_indicator(FALSE, TRUE)
 
-	if(!message)
+	if(!message || message_max_length_check(message))
 		return
 	message = message_clean(message)
 
 	usr.emote("me", 1, message, TRUE)
+
+/mob/proc/message_max_length_check(message)
+	if(length(message) > MAX_BROADCAST_LEN && client)
+		to_chat(src, span_warning("Your message was too long to be sent. The message:<br>[message]"))
+		return TRUE
 
 /mob/living/verb/flavor_verb()
 	set name = "Flavor Text"
