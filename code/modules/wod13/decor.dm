@@ -987,7 +987,7 @@
 	icon_state = "billiard[rand(1, 3)]"
 
 /obj/police_department
-	name = "San Francisco Police Demartment"
+	name = "San Francisco Police Department"
 	desc = "Stop right there you criminal scum! Nobody can break the law in my watch!!"
 	icon = 'code/modules/wod13/props.dmi'
 	icon_state = "police"
