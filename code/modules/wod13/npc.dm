@@ -1,5 +1,26 @@
+#define BANDIT_TYPE_NPC /mob/living/carbon/human/npc/bandit
+#define POLICE_TYPE_NPC /mob/living/carbon/human/npc/police
+
 /mob/living/carbon/human/npc
 	name = "Loh ebanii"
+	/// Until we do a full NPC refactor (see: rewriting every single bit of code)
+	/// use this to determine NPC weapons and their chances to spawn with them -- assuming you want the NPC to do that
+	/// Otherwise just set it under the NPC's type as
+	/// my_weapon = type_path
+	/// my_backup_weapon = type_path
+	/// This only determines my_weapon, you set my_backup_weapon yourself
+	/// The last entry in the list for a type of NPC should always have 100 as the index
+	var/static/list/role_weapons_chances = list(
+		BANDIT_TYPE_NPC = list(
+			 /obj/item/gun/ballistic/automatic/vampire/deagle = 33,
+			 /obj/item/gun/ballistic/vampire/revolver/snub = 33,
+			 /obj/item/melee/vampirearms/baseball = 100,
+		),
+		POLICE_TYPE_NPC = list(
+			/obj/item/gun/ballistic/vampire/revolver = 66,
+			/obj/item/gun/ballistic/automatic/vampire/ar15 = 100,
+		)
+	)
 	a_intent = INTENT_HELP
 	var/datum/socialrole/socialrole
 
@@ -24,9 +45,20 @@
 
 	var/stopturf = 1
 
+	var/extra_mags=2
+	var/extra_loaded_rounds=10
 
-	var/obj/item/my_weapon
+	var/has_weapon = FALSE
+
+	var/my_weapon_type = null
+	var/obj/item/my_weapon = null
+
+	var/my_backup_weapon_type = null
+	var/obj/item/my_backup_weapon = null
+
 	var/spawned_weapon = FALSE
+
+	var/spawned_backup_weapon = FALSE
 
 	var/ghoulificated = FALSE
 
@@ -37,6 +69,32 @@
 	var/max_stat = 2
 
 	var/list/spotted_bodies = list()
+
+	var/is_criminal = FALSE
+
+/mob/living/carbon/human/npc/LateInitialize()
+	. = ..()
+	if(role_weapons_chances.Find(type))
+		for(var/weapon in role_weapons_chances[type])
+			if(prob(role_weapons_chances[type][weapon]))
+				my_weapon = new weapon(src)
+				equip_to_appropriate_slot(my_weapon)
+				break
+
+	if(!my_weapon && my_weapon_type)
+		my_weapon = new my_weapon_type(src)
+		equip_to_appropriate_slot(my_weapon)
+
+
+	if(my_weapon)
+		has_weapon = TRUE
+		if(istype(my_weapon, /obj/item/gun/ballistic))
+			RegisterSignal(my_weapon, COMSIG_GUN_FIRED, PROC_REF(handle_gun))
+			RegisterSignal(my_weapon, COMSIG_GUN_EMPTY, PROC_REF(handle_empty_gun))
+
+	if(my_backup_weapon_type)
+		my_backup_weapon = new my_backup_weapon_type(src)
+		equip_to_appropriate_slot(my_backup_weapon)
 
 /datum/movespeed_modifier/npc
 	multiplicative_slowdown = 2
@@ -253,6 +311,8 @@
 		"What the fuck?!"
 	)
 
+	var/is_criminal = FALSE
+
 /mob/living/carbon/human/npc/proc/AssignSocialRole(var/datum/socialrole/S, var/dont_random = FALSE)
 	if(!S)
 		return
@@ -265,6 +325,8 @@
 	health = round(initial(health)+(initial(health)/3)*(physique))
 	last_health = health
 	socialrole = new S()
+
+	is_criminal = socialrole.is_criminal
 	if(GLOB.winter && !length(socialrole.suits))
 		socialrole.suits = list(/obj/item/clothing/suit/vampire/coat/winter, /obj/item/clothing/suit/vampire/coat/winter/alt)
 	if(GLOB.winter && !length(socialrole.neck))
