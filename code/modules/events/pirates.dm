@@ -90,7 +90,7 @@
 
 	priority_announce("Unidentified armed ship detected near the station.")
 
-//Shuttle equipment
+//Shuttle equipment - GLASSWALKERS USE THIS.
 
 /obj/machinery/shuttle_scrambler
 	name = "Data Siphon"
@@ -136,7 +136,6 @@
 			return
 		toggle_on(user)
 		update_icon()
-//		send_notification()   //Hey, you might want to consider something else for this. - Glasswalker machine notification turned off.
 	else
 		dump_loot(user)
 
