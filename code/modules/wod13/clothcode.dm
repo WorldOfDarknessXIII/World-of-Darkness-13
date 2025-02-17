@@ -781,6 +781,12 @@
 	desc = "Durable, lightweight vest designed to protect against most threats efficiently."
 	icon_state = "vest"
 	armor = list(MELEE = 55, BULLET = 55, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 0, RAD = 0, FIRE = 45, ACID = 10, WOUND = 25)
+	allowed = list(
+		/obj/item/card/id,
+		/obj/item/flashlight,
+		/obj/item/melee/classic_baton/vampire,
+		/obj/item/restraints/handcuffs
+	)
 
 /obj/item/clothing/suit/vampire/vest/medieval
 	name = "medieval vest"
