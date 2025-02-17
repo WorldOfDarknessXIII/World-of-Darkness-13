@@ -384,18 +384,18 @@
 								var/result = BLOODBONDED.storyteller_roll(dice = BLOODBONDED.auspice.level)
 								switch(result)
 									if (ROLL_BOTCH)
-										to_chat(H, "<span class='danger'>Something terrible is happening.</span>")
-										to_chat(BLOODBONDED, "<span class='userdanger'>Gaia has forsaken you.</span>")
+										to_chat(H, span_danger("Something terrible is happening."))
+										to_chat(BLOODBONDED, span_userdanger("Gaia has forsaken you."))
 										message_admins("[ADMIN_LOOKUPFLW(H)] has turned [ADMIN_LOOKUPFLW(BLOODBONDED)] into an Abomination.")
 										log_game("[key_name(H)] has turned [key_name(BLOODBONDED)] into an Abomination.")
 									if (ROLL_FAILURE)
-										BLOODBONDED.visible_message("<span class='warning'>[BLOODBONDED.name] convulses in sheer agony!</span>")
+										BLOODBONDED.visible_message(span_warning("[BLOODBONDED.name] convulses in sheer agony!"))
 										BLOODBONDED.Shake(15, 15, 5 SECONDS)
 										playsound(BLOODBONDED.loc, 'code/modules/wod13/sounds/vicissitude.ogg', 100, TRUE)
 										BLOODBONDED.can_be_embraced = FALSE
 										return
 									if (ROLL_SUCCESS)
-										to_chat(H, "<span class='notice'>[BLOODBONDED.name] does not respond to your Vitae...</span>")
+										to_chat(H, span_notice("[BLOODBONDED.name] does not respond to your Vitae..."))
 										BLOODBONDED.can_be_embraced = FALSE
 										return
 

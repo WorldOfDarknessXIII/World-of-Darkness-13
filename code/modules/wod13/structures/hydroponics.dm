@@ -30,10 +30,10 @@
 	if(growth_stage == 5)
 		growth_stage = 0
 		health = 3
-		to_chat(user, "<span class='notice'>You rip the rotten weed out of [src].</span>")
+		to_chat(user, span_notice("You rip the rotten weed out of [src]."))
 	if(growth_stage == 4)
 		growth_stage = 1
-		to_chat(user, "<span class='notice'>You pull the grown weed out of [src].</span>")
+		to_chat(user, span_notice("You pull the grown weed out of [src]."))
 		var/mob/living/carbon/H = user
 		var/amount
 		var/result = H.storyteller_roll(

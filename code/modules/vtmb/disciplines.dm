@@ -1903,9 +1903,9 @@
 					switch(result)
 						if (ROLL_SUCCESS)
 							if (masked)
-								to_chat(hearer, "<span class='warning'>[target.name]'s jaw isn't moving to match [target.p_their()] words.</span>")
+								to_chat(hearer, span_warning("[target.name]'s jaw isn't moving to match [target.p_their()] words."))
 							else
-								to_chat(hearer, "<span class='warning'>[target.name]'s lips aren't moving to match [target.p_their()] words.</span>")
+								to_chat(hearer, span_warning("[target.name]'s lips aren't moving to match [target.p_their()] words."))
 		if(2)
 			target = input(caster, "Who will you project your voice to?") as null|mob in (GLOB.player_list - caster)
 			if(target)
