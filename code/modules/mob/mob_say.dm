@@ -8,7 +8,6 @@
 /mob/verb/say_verb(message as text|null)
 	set name = "Say"
 	set category = "IC"
-	winset(src.client, "map", "focus=true")
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
@@ -21,20 +20,7 @@
 	set category = "IC"
 	var/flavor = input("Choose your new flavor text:") as text|null
 	if(flavor)
-		var/pattern = "<img"
-		var/pos = findtext(flavor, pattern)
-		if(pos)
-			to_chat(src, "Embedding images is not allowed.")
-			return
-		pattern = "<picture"
-		pos = findtext(flavor, pattern)
-		if(pos)
-			to_chat(src, "Embedding images is not allowed.")
-			return
-		if(length(flavor) > 3 * 512)
-			to_chat(src, "Too long...")
-		else
-			flavor_text = sanitize_text(flavor)
+		flavor_text = trim(copytext_char(sanitize(flavor), 1, 512))
 
 ///Whisper verb
 /mob/verb/whisper_verb(message as text)

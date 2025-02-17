@@ -11,7 +11,8 @@
 	head = /obj/item/clothing/head/vampire/army
 	backpack_contents = list(
 		/obj/item/ammo_box/magazine/vampaug = 3,
-		/obj/item/radio/military = 1
+		/obj/item/radio/military = 1,
+		/obj/item/gun/ballistic/automatic/vampire/beretta=1
 		)
 
 /datum/antagonist/national_guard/proc/equip_national_guard()

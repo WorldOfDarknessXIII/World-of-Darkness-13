@@ -137,7 +137,7 @@
 "BX" = (/obj/structure/table,/turf/closed/wall/vampwall/market/low,/area/vtm/interior/shop)
 "Ca" = (/obj/structure/table,/obj/item/gun/ballistic/automatic/vampire/sniper,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
 "Cg" = (/obj/structure/table/wood,/obj/machinery/mineral/equipment_vendor/fastfood/library,/turf/closed/wall/vampwall/painted/low,/area/vtm/interior/shop)
-"Cr" = (/obj/structure/vampdoor/police/chief,/turf/open/floor/plating/toilet,/area/vtm/interior/shop)
+"Cr" = (/obj/structure/vampdoor/glass/police_chief,/turf/open/floor/plating/toilet,/area/vtm/interior/shop)
 "Cz" = (/obj/effect/decal/asphaltline{dir = 8},/obj/structure/roadblock{dir = 8},/turf/open/floor/plating/asphalt,/area/vtm/pacificheights)
 "Db" = (/obj/machinery/light{dir = 8},/turf/open/floor/plating/vampdirt,/area/vtm/supply)
 "Df" = (/obj/structure/closet/crate/freezer/blood{name = "vampire blood freezer"},/obj/item/drinkable_bloodpack/vitae,/obj/item/drinkable_bloodpack/vitae,/obj/item/drinkable_bloodpack/vitae,/obj/item/drinkable_bloodpack/vitae,/obj/item/drinkable_bloodpack/vitae,/obj/item/drinkable_bloodpack/vitae,/turf/open/floor/plating/rough,/area/vtm/pacificheights)
