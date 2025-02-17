@@ -510,7 +510,7 @@
 		parts += "An average of [station_vault/total_players] dollars were collected.<br>"
 		log_econ("Roundend credit total: [station_vault] dollars. Average cash amount: [station_vault/total_players]")
 	if(mr_moneybags)
-		parts += "The most affluent crew member at night's end was <b>[mr_moneybags.account_owner] with [mr_moneybags.balance]</b> dollars!</div>"
+		parts += "The most affluent person at the night's end was <b>[mr_moneybags.account_owner] with [mr_moneybags.balance]</b> dollars!</div>"
 	else
 		parts += "Somehow, nobody made any money this shift! This'll result in some budget cuts...</div>"
 	return parts
