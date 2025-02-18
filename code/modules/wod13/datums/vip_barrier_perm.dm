@@ -29,6 +29,7 @@
 	linked_barriers += target_barrier
 	RegisterSignal(target_barrier, COMSIG_BARRIER_NOTIFY_GUARD_BLOCKED, PROC_REF(notify_guard_blocked))
 	RegisterSignal(target_barrier, COMSIG_BARRIER_NOTIFY_GUARD_ENTRY, PROC_REF(notify_guard_entry))
+	RegisterSignal(target_barrier, COMSIG_BARRIER_NOTIFY_GUARD_MASKED, PROC_REF(notify_guard_masked_denial))
 
 
 //handles bouncer death
@@ -79,6 +80,13 @@
 	var/mob/living/carbon/human/npc/bouncer/target_bouncer = pick(linked_bouncers)
 	target_bouncer.speak_seldom(pick(target_bouncer.denial_phrases), target_mob)
 
+/datum/vip_barrier_perm/proc/notify_guard_masked_denial(mob/target_mob)
+	SIGNAL_HANDLER
+	if(!linked_bouncers.len)
+		return
+	var/mob/living/carbon/human/npc/bouncer/target_bouncer = pick(linked_bouncers)
+	target_bouncer.speak_seldom(pick(target_bouncer.unmask_phrases), target_mob)
+
 /datum/vip_barrier_perm/proc/notify_guard_police_denial(mob/target_mob)
 	if(!linked_bouncers.len)
 		return
@@ -91,12 +99,19 @@
 	var/mob/living/carbon/human/npc/bouncer/target_bouncer = pick(linked_bouncers)
 	target_bouncer.speak_seldom(pick(target_bouncer.block_phrases), target_mob)
 
+
+
 /datum/vip_barrier_perm/proc/notify_barrier_social_bypass(mob/user, mob/bouncer, used_badge)
 	if(!linked_barriers.len)
 		return
 	var/obj/effect/vip_barrier/target_barrier = linked_barriers[1]
 	target_barrier.handle_social_bypass(user, bouncer, used_badge)
 
+/datum/vip_barrier_perm/proc/notify_barrier_unmask_bypass(mob/user, mob/bouncer)
+	if(!linked_barriers.len)
+		return
+	var/obj/effect/vip_barrier/target_barrier = linked_barriers[1]
+	target_barrier.handle_unmask_bypass(user, bouncer)
 
 //=============================================================================
 

@@ -7,6 +7,7 @@
 	var/list/entry_phrases = list("I HAVE NO ENTRY PHRASE")
 	var/list/police_block_phrases = list("I HAVE NO POLICE BAN PHRASE")
 	var/list/block_phrases = list("I HAVE NO BLOCK PHRASE")
+	var/list/unmask_phrases = list("I HAVE NO UNMASK PHRASE")
 
 	staying = TRUE
 
@@ -89,8 +90,9 @@
 		entry_phrases = social_role.entry_phrases
 		police_block_phrases = social_role.police_block_phrases
 		block_phrases = social_role.block_phrases
-		my_weapon_type = role.bouncer_weapon_type
-		my_backup_weapon_type = role.bouncer_backup_weapon_type
+		unmask_phrases = social_role.unmask_phrases
+		my_weapon_type = social_role.bouncer_weapon_type
+		my_backup_weapon_type = social_role.bouncer_backup_weapon_type
 
 /mob/living/carbon/human/npc/bouncer/proc/stat_change_process_is_guarding(datum/source, statchange)
 	if(statchange >= HARD_CRIT)
@@ -143,23 +145,35 @@
 
 
 /mob/living/carbon/human/npc/bouncer/examine(mob/user)
-	.=..()
+	
 
-	if(can_be_reasoned_with() && in_range(src, user))
+	if(istype(user, /mob/living/carbon/human) && user.stat != DEAD && can_be_reasoned_with() && in_range(src, user))
 		var/list/interact_options = list(
 			"Persuade for Entry" = image(icon = 'icons/obj/dice.dmi', icon_state = "d10"))
 
 		var/obj/item/held_item = user.get_active_held_item()
 		if(held_item && istype(held_item,/obj/item/card/id/police))
 			interact_options["Show Badge"] = image(icon = held_item.icon, icon_state = held_item.icon_state)
+
+		var/mob/living/carbon/human/user_human = user
+		if(user_human?.wear_mask?.flags_inv&HIDEFACE || user_human?.head?.flags_inv&HIDEFACE)
+			interact_options["Show Face"] = image(icon = 'code/modules/wod13/clothing.dmi', icon_state = "balaclava")
+
 		var/picked_option = show_radial_menu(user, src, interact_options, radius = 38, require_near = TRUE)
 		switch(picked_option)
 			if("Persuade for Entry")
 				to_chat(user, "<span class='notice'>You try to talk your way through.</span>")
-				linked_perm.notify_barrier_social_bypass(user, src)
+				linked_perm.notify_barrier_social_bypass(user_human, src)
+				return
 			if("Show Badge")
 				to_chat(user, "<span class='notice'>You flash your [held_item] as you try to talk your way through.</span>")
-				linked_perm.notify_barrier_social_bypass(user, src, TRUE)
+				linked_perm.notify_barrier_social_bypass(user_human, src, TRUE)
+				return
+			if("Show Face")
+				to_chat(user, "<span class='notice'>You discretely show [src] your face...</span>")
+				linked_perm.notify_barrier_unmask_bypass(user_human, src)
+				return
+	.=..()
 
 
 /mob/living/carbon/human/npc/bouncer/proc/can_be_reasoned_with()
