@@ -6,16 +6,12 @@
 
 import { classes } from 'common/react';
 
-export const Tooltip = props => {
-  const {
-    content,
-    overrideLong = false,
-    position = 'bottom',
-  } = props;
+export const Tooltip = (props) => {
+  const { content, overrideLong = false, position = 'bottom' } = props;
   // Empirically calculated length of the string,
   // at which tooltip text starts to overflow.
-  const long = typeof content === 'string' 
-  && (content.length > 35 && !overrideLong);
+  const long =
+    typeof content === 'string' && content.length > 35 && !overrideLong;
   return (
     <div
       className={classes([
@@ -23,6 +19,7 @@ export const Tooltip = props => {
         long && 'Tooltip--long',
         position && 'Tooltip--' + position,
       ])}
-      data-tooltip={content} />
+      data-tooltip={content}
+    />
   );
 };

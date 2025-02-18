@@ -1,5 +1,11 @@
 import { useBackend } from '../backend';
-import { Button, Dropdown, Knob, LabeledControls, Section } from '../components';
+import {
+  Button,
+  Dropdown,
+  Knob,
+  LabeledControls,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 export const Aquarium = (props, context) => {
@@ -13,10 +19,7 @@ export const Aquarium = (props, context) => {
     contents,
   } = data;
   return (
-    <Window
-      width={450}
-      height={400}
-      resizable>
+    <Window width={450} height={400} resizable>
       <Window.Content>
         <Section title="Aquarium Controls">
           <LabeledControls>
@@ -30,27 +33,32 @@ export const Aquarium = (props, context) => {
                 maxValue={maxTemperature}
                 step={1}
                 stepPixelSize={1}
-                onDrag={(e, value) => act('temperature', {
-                  temperature: value,
-                })} />
+                onDrag={(e, value) =>
+                  act('temperature', {
+                    temperature: value,
+                  })
+                }
+              />
             </LabeledControls.Item>
             <LabeledControls.Item label="Fluid">
-              {fluidTypes.map(f => (
+              {fluidTypes.map((f) => (
                 <Button
                   key={f}
                   content={f}
                   selected={fluid_type === f}
-                  onClick={() => act('fluid', { fluid: f })} />
+                  onClick={() => act('fluid', { fluid: f })}
+                />
               ))}
             </LabeledControls.Item>
           </LabeledControls>
         </Section>
         <Section title="Contents">
-          {contents.map(movable => (
+          {contents.map((movable) => (
             <Button
               key={movable.ref}
               content={movable.name}
-              onClick={() => act('remove', { ref: movable.ref })} />
+              onClick={() => act('remove', { ref: movable.ref })}
+            />
           ))}
         </Section>
       </Window.Content>

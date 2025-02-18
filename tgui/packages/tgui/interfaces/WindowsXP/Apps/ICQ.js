@@ -22,7 +22,8 @@ export const ICQ = (props, context) => {
             act('icq_login_user', { username: username, ref: app.reference });
             setUsername('');
           }}
-          className="login-button">
+          className="login-button"
+        >
           <div className="visitor-text">Login</div>
         </button>
       </div>
@@ -46,7 +47,7 @@ export const ICQ = (props, context) => {
       <div className="chat">
         <div className="chat-footer">
           <div class="messages">
-            {app.messages.map(message => {
+            {app.messages.map((message) => {
               return (
                 <>
                   <b>{message.author}</b>
@@ -67,7 +68,8 @@ export const ICQ = (props, context) => {
               act('send_message', { ref: app.reference, message: message });
               setMessage('');
             }}
-            className="send-button">
+            className="send-button"
+          >
             <b style={{ color: 'black' }}>Send</b>
           </div>
         </div>

@@ -5,8 +5,8 @@ import { useLocalState } from '../../backend';
 
 export const LoginScreen = (props, context) => {
   const { data, act } = props;
-  const [name, setName] = useLocalState(context, "login_username", "");
-  const [password, setPassword] = useLocalState(context, "login_pass", "");
+  const [name, setName] = useLocalState(context, 'login_username', '');
+  const [password, setPassword] = useLocalState(context, 'login_pass', '');
 
   return (
     <div className="login-screen">
@@ -19,7 +19,8 @@ export const LoginScreen = (props, context) => {
           top: '200px',
           display: 'flex',
           background: '#0831d9',
-        }}>
+        }}
+      >
         <div
           className={'header__bg'}
           style={{
@@ -50,20 +51,22 @@ export const LoginScreen = (props, context) => {
             <div className="login-footer">
               <div className="login-row">
                 <div>User name:</div>
-                <XPInput
-                  value={name}
-                  onInput={(e, value) => setName(value)}
-                />
+                <XPInput value={name} onInput={(e, value) => setName(value)} />
               </div>
               <div className="login-row">
                 <div>Password:</div>
                 <XPInput
                   value={password}
-                  onInput={(e, value) => setPassword(value)} />
+                  onInput={(e, value) => setPassword(value)}
+                />
               </div>
               <div className="login-buttons">
-                <XPButton content="OK"
-                  onClick={() => act("login", { password: password, username: name })} />
+                <XPButton
+                  content="OK"
+                  onClick={() =>
+                    act('login', { password: password, username: name })
+                  }
+                />
                 <XPButton content="Cancel" disabled />
                 <XPButton content="Shut Down..." disabled />
                 <XPButton content="Options <<" disabled />
