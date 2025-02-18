@@ -355,6 +355,16 @@
 	yin_chi = 0
 	wall_rating = LOW_WALL_RATING	//for werewolves in future
 
+/area/vtm/wendigo
+	name = "Wendigo Caern"
+	icon_state = "wendigo"
+	upper = TRUE
+	zone_type = "battle"
+	music = /datum/vampiremusic/forest
+	yang_chi = 2
+	yin_chi = 0
+	wall_rating = LOW_WALL_RATING	//for werewolves in future
+
 /area/vtm/interior/glasswalker
 	name = "Glasswalker's Lab"
 	icon_state = "supply"
