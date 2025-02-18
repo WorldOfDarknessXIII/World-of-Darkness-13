@@ -90,8 +90,7 @@
 					if(trans.stat == DEAD || !trans.client) // [ChillRaccoon] - preventing non-player transform issues
 						animate(trans, transform = null, color = "#FFFFFF")
 						return
-					trans.dropItemToGround(trans.get_active_held_item())
-					trans.dropItemToGround(trans.get_inactive_held_item())
+					trans.drop_all_held_items()
 					trans.extinguish_mob()
 					var/current_loc = get_turf(trans)
 					lupus_form.color = "#000000"
@@ -123,8 +122,7 @@
 					if(trans.stat == DEAD || !trans.client) // [ChillRaccoon] - preventing non-player transform issues
 						animate(trans, transform = null, color = "#FFFFFF")
 						return
-					trans.dropItemToGround(trans.get_active_held_item())
-					trans.dropItemToGround(trans.get_inactive_held_item())
+					trans.drop_all_held_items()
 					trans.extinguish_mob()
 					var/current_loc = get_turf(trans)
 					crinos_form.color = "#000000"
@@ -157,8 +155,7 @@
 					if(trans.stat == DEAD || !trans.client) // [ChillRaccoon] - preventing non-player transform issues
 						animate(trans, transform = null, color = "#FFFFFF")
 						return
-					trans.dropItemToGround(trans.get_active_held_item())
-					trans.dropItemToGround(trans.get_inactive_held_item())
+					trans.drop_all_held_items()
 					trans.extinguish_mob()
 					var/current_loc = get_turf(trans)
 					human_form.color = "#000000"
