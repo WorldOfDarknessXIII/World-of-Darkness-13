@@ -781,7 +781,7 @@
 
 /mob/living/carbon/human/npc/bandit
 	max_stat = 3
-	my_backup_weapon = /obj/item/melee/vampirearms/knife
+	my_backup_weapon_type = /obj/item/melee/vampirearms/knife
 
 /mob/living/carbon/human/npc/bandit/Initialize()
 	. = ..()
