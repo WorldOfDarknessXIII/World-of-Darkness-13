@@ -4,7 +4,13 @@
  * @license MIT
  */
 
-import { changeSettingsTab, loadSettings, openChatSettings, toggleSettings, updateSettings } from './actions';
+import {
+  changeSettingsTab,
+  loadSettings,
+  openChatSettings,
+  toggleSettings,
+  updateSettings,
+} from './actions';
 import { SETTINGS_TABS } from './constants';
 
 const initialState = {

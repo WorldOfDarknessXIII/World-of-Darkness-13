@@ -1,6 +1,6 @@
-import { Window } from "../layouts";
-import { WinXP } from "./WindowsXP/index";
-import { useBackend } from "../backend";
+import { Window } from '../layouts';
+import { WinXP } from './WindowsXP/index';
+import { useBackend } from '../backend';
 import { Component } from 'inferno';
 
 export class WindowsXP extends Component {
@@ -11,5 +11,5 @@ export class WindowsXP extends Component {
         <WinXP data={data} act={act} />
       </Window>
     );
-  };
-};
+  }
+}

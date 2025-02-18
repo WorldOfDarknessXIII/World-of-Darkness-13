@@ -7,11 +7,7 @@ export const PortraitPicker = (props, context) => {
   const { act, data } = useBackend(context);
   const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 0);
   const [listIndex, setListIndex] = useLocalState(context, 'listIndex', 0);
-  const {
-    library,
-    library_secure,
-    library_private,
-  } = data;
+  const { library, library_secure, library_private } = data;
   const TABS = [
     {
       name: 'Common Portraits',
@@ -27,13 +23,9 @@ export const PortraitPicker = (props, context) => {
     },
   ];
   const tab2list = TABS[tabIndex].list;
-  const current_portrait = tab2list[listIndex]["title"];
+  const current_portrait = tab2list[listIndex]['title'];
   return (
-    <Window
-      theme="ntos"
-      title="Portrait Picker"
-      width={400}
-      height={406}>
+    <Window theme="ntos" title="Portrait Picker" width={400} height={406}>
       <Window.Content>
         <Flex height="100%" direction="column">
           <Flex.Item mb={1}>
@@ -46,7 +38,8 @@ export const PortraitPicker = (props, context) => {
                     onClick={() => {
                       setListIndex(0);
                       setTabIndex(i);
-                    }}>
+                    }}
+                  >
                     {tabObj.name}
                   </Tabs.Tab>
                 ))}
@@ -59,7 +52,8 @@ export const PortraitPicker = (props, context) => {
                 height="100%"
                 align="center"
                 justify="center"
-                direction="column">
+                direction="column"
+              >
                 <Flex.Item>
                   <img
                     src={resolveAsset(current_portrait)}
@@ -68,7 +62,8 @@ export const PortraitPicker = (props, context) => {
                     style={{
                       'vertical-align': 'middle',
                       '-ms-interpolation-mode': 'nearest-neighbor',
-                    }} />
+                    }}
+                  />
                 </Flex.Item>
                 <Flex.Item className="Section__titleText">
                   {current_portrait}
@@ -92,31 +87,33 @@ export const PortraitPicker = (props, context) => {
                       <Button
                         disabled={listIndex === 0}
                         icon="chevron-left"
-                        onClick={() => setListIndex(listIndex-1)}
+                        onClick={() => setListIndex(listIndex - 1)}
                       />
                     </Flex.Item>
                     <Flex.Item grow={3}>
                       <Button
                         icon="check"
                         content="Select Portrait"
-                        onClick={() => act("select", {
-                          tab: tabIndex+1,
-                          selected: listIndex+1,
-                        })}
+                        onClick={() =>
+                          act('select', {
+                            tab: tabIndex + 1,
+                            selected: listIndex + 1,
+                          })
+                        }
                       />
                     </Flex.Item>
                     <Flex.Item grow={1}>
                       <Button
                         icon="chevron-right"
-                        disabled={listIndex === tab2list.length-1}
-                        onClick={() => setListIndex(listIndex+1)}
+                        disabled={listIndex === tab2list.length - 1}
+                        onClick={() => setListIndex(listIndex + 1)}
                       />
                     </Flex.Item>
                     <Flex.Item>
                       <Button
                         icon="angle-double-right"
-                        disabled={listIndex === tab2list.length-1}
-                        onClick={() => setListIndex(tab2list.length-1)}
+                        disabled={listIndex === tab2list.length - 1}
+                        onClick={() => setListIndex(tab2list.length - 1)}
                       />
                     </Flex.Item>
                   </Flex>
@@ -125,18 +122,17 @@ export const PortraitPicker = (props, context) => {
             </Flex>
             <Flex.Item mt={1}>
               <NoticeBox info>
-                Only the 23x23 or 24x24 canvas size art can be
-                displayed. Make sure you read the warning below
-                before embracing the wide wonderful world of
-                artistic expression!
+                Only the 23x23 or 24x24 canvas size art can be displayed. Make
+                sure you read the warning below before embracing the wide
+                wonderful world of artistic expression!
               </NoticeBox>
             </Flex.Item>
             <Flex.Item>
               <NoticeBox danger>
                 WARNING: While Central Command loves art as much as you do,
                 choosing erotic art will lead to severe consequences.
-                Additionally, Central Command reserves the right to request
-                you change your display portrait, for any reason.
+                Additionally, Central Command reserves the right to request you
+                change your display portrait, for any reason.
               </NoticeBox>
             </Flex.Item>
           </Flex.Item>

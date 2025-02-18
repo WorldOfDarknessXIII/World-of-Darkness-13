@@ -9,7 +9,7 @@
  */
 export const captureExternalLinks = () => {
   // Subscribe to all document clicks
-  document.addEventListener('click', e => {
+  document.addEventListener('click', (e) => {
     const tagName = String(e.target.tagName).toLowerCase();
     const hrefAttr = e.target.getAttribute('href') || '';
     // Must be a link
@@ -17,8 +17,8 @@ export const captureExternalLinks = () => {
       return;
     }
     // Leave BYOND links alone
-    const isByondLink = hrefAttr.charAt(0) === '?'
-      || hrefAttr.startsWith('byond://');
+    const isByondLink =
+      hrefAttr.charAt(0) === '?' || hrefAttr.startsWith('byond://');
     if (isByondLink) {
       return;
     }

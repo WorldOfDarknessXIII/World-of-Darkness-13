@@ -19,7 +19,7 @@ import { resumeRenderer, suspendRenderer } from './renderer';
 
 const logger = createLogger('backend');
 
-export const backendUpdate = state => ({
+export const backendUpdate = (state) => ({
   type: 'backend/update',
   payload: state,
 });
@@ -71,8 +71,7 @@ export const backendReducer = (state = initialState, action) => {
         const value = payload.shared[key];
         if (value === '') {
           shared[key] = undefined;
-        }
-        else {
+        } else {
           shared[key] = JSON.parse(value);
         }
       }
@@ -124,11 +123,11 @@ export const backendReducer = (state = initialState, action) => {
   return state;
 };
 
-export const backendMiddleware = store => {
+export const backendMiddleware = (store) => {
   let fancyState;
   let suspendInterval;
 
-  return next => action => {
+  return (next) => (action) => {
     const { suspended } = selectBackend(store.getState());
     const { type, payload } = action;
 
@@ -153,9 +152,10 @@ export const backendMiddleware = store => {
       logger.log(`suspending (${window.__windowId__})`);
       // Keep sending suspend messages until it succeeds.
       // It may fail multiple times due to topic rate limiting.
-      const suspendFn = () => sendMessage({
-        type: 'suspend',
-      });
+      const suspendFn = () =>
+        sendMessage({
+          type: 'suspend',
+        });
       suspendFn();
       suspendInterval = setInterval(suspendFn, 2000);
     }
@@ -209,8 +209,10 @@ export const backendMiddleware = store => {
         });
         perf.mark('resume/finish');
         if (process.env.NODE_ENV !== 'production') {
-          logger.log('visible in',
-            perf.measure('render/finish', 'resume/finish'));
+          logger.log(
+            'visible in',
+            perf.measure('render/finish', 'resume/finish'),
+          );
         }
       });
     }
@@ -244,9 +246,8 @@ export const sendMessage = (message = {}) => {
  */
 export const sendAct = (action, payload = {}) => {
   // Validate that payload is an object
-  const isObject = typeof payload === 'object'
-    && payload !== null
-    && !Array.isArray(payload);
+  const isObject =
+    typeof payload === 'object' && payload !== null && !Array.isArray(payload);
   if (!isObject) {
     logger.error(`Payload for act() must be an object, got this:`, payload);
     return;
@@ -292,7 +293,7 @@ export const sendAct = (action, payload = {}) => {
  *
  * @return {BackendState}
  */
-export const selectBackend = state => state.backend || {};
+export const selectBackend = (state) => state.backend || {};
 
 /**
  * A React hook (sort of) for getting tgui state and related functions.
@@ -304,7 +305,7 @@ export const selectBackend = state => state.backend || {};
  *   act: sendAct,
  * }}
  */
-export const useBackend = context => {
+export const useBackend = (context) => {
   const { store } = context;
   const state = selectBackend(store.getState());
   return {
@@ -330,17 +331,16 @@ export const useLocalState = (context, key, initialState) => {
   const { store } = context;
   const state = selectBackend(store.getState());
   const sharedStates = state.shared ?? {};
-  const sharedState = (key in sharedStates)
-    ? sharedStates[key]
-    : initialState;
+  const sharedState = key in sharedStates ? sharedStates[key] : initialState;
   return [
     sharedState,
-    nextState => {
-      store.dispatch(backendSetSharedState(key, (
-        typeof nextState === 'function'
-          ? nextState(sharedState)
-          : nextState
-      )));
+    (nextState) => {
+      store.dispatch(
+        backendSetSharedState(
+          key,
+          typeof nextState === 'function' ? nextState(sharedState) : nextState,
+        ),
+      );
     },
   ];
 };
@@ -363,20 +363,19 @@ export const useSharedState = (context, key, initialState) => {
   const { store } = context;
   const state = selectBackend(store.getState());
   const sharedStates = state.shared ?? {};
-  const sharedState = (key in sharedStates)
-    ? sharedStates[key]
-    : initialState;
+  const sharedState = key in sharedStates ? sharedStates[key] : initialState;
   return [
     sharedState,
-    nextState => {
+    (nextState) => {
       sendMessage({
         type: 'setSharedState',
         key,
-        value: JSON.stringify(
-          typeof nextState === 'function'
-            ? nextState(sharedState)
-            : nextState
-        ) || '',
+        value:
+          JSON.stringify(
+            typeof nextState === 'function'
+              ? nextState(sharedState)
+              : nextState,
+          ) || '',
       });
     },
   ];
