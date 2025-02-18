@@ -46,39 +46,32 @@
 			message_admins("[ADMIN_LOOKUPFLW(src)] is attempting to Diablerize [ADMIN_LOOKUPFLW(mob)]")
 			log_attack("[key_name(src)] is attempting to Diablerize [key_name(mob)].")
 			if(mob.key)
-				var/vse_taki = FALSE
+				var/can_diablerize = FALSE
 				if(clane)
-					var/salubri_allowed = FALSE
-					var/mob/living/carbon/human/H = mob
-					if(H.clane)
-						if(H.clane.name == "Salubri")
-							salubri_allowed = TRUE
-					if(clane.name != "Banu Haqim" && clane.name != "Caitiff")
-						if(!salubri_allowed)
-							if(!mind.special_role)
-								to_chat(src, "<span class='warning'>You find the idea of drinking your own <b>KIND's</b> blood disgusting!</span>")
-								last_drinkblood_use = 0
-								if(client)
-									client.images -= suckbar
-								qdel(suckbar)
-								stop_sound_channel(CHANNEL_BLOOD)
-								return
-							else
-								vse_taki = TRUE
-						else
-							vse_taki = TRUE
-					else
-						vse_taki = TRUE
+					var/list/clane_diablerists = list("Banu Haqim", "Caitiff", "Baali") //Members of these clanes can diablerize any time
+					if(clane_diablerists.Find(clane.name))
+						can_diablerize = TRUE
+					else if(mind.special_role) //Special roles such as Sabbat can diablerize
+						can_diablerize = TRUE
+					else if(ishuman(H))
+						var/mob/living/carbon/human/target = mob
+						if(target.clane && (target.clane.name == "Salubri")) //Salubri can be diablerized
+							can_diablerize = TRUE
+					if(!can_diablerize)
+						to_chat(src, "<span class='warning'>You find the idea of drinking your own <b>KIND's</b> blood disgusting!</span>")
+						last_drinkblood_use = 0
+						if(client)
+							client.images -= suckbar
+						qdel(suckbar)
+						stop_sound_channel(CHANNEL_BLOOD)
+						return
 
 				if(!GLOB.canon_event)
 					to_chat(src, "<span class='warning'>It's not a canon event!</span>")
 					return
 
-				if(vse_taki)
+				if(can_diablerize)
 					to_chat(src, "<span class='userdanger'><b>YOU TRY TO COMMIT DIABLERIE ON [mob].</b></span>")
-				else
-					to_chat(src, "<span class='warning'>You find the idea of drinking your own <b>KIND</b> disgusting!</span>")
-					return
 			else
 				to_chat(src, "<span class='warning'>You need [mob]'s attention to do that...</span>")
 				return
