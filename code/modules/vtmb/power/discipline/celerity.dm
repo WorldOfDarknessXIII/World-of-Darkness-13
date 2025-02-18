@@ -31,20 +31,26 @@
 		if(owner.CheckEyewitness(owner, owner, 7, FALSE))
 			owner.AdjustMasquerade(-1)
 
+/datum/discipline_power/celerity/proc/temporis_explode(datum/source, datum/discipline_power/power, atom/target)
+	SIGNAL_HANDLER
+
+	if (!istype(power, /datum/discipline_power/temporis/patience_of_the_norns) && !istype(power, /datum/discipline_power/temporis/clothos_gift))
+		return
+
+	to_chat(owner, "<span class='userdanger'>You try to use Temporis, but your active Celerity accelerates your temporal field out of your control!</span>")
+	INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "scream")
+	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon/human, gib)), 3 SECONDS)
+
+	return POWER_CANCEL_ACTIVATION
+
 /datum/discipline_power/celerity/activate()
 	. = ..()
-	if (owner.temporis_visual || owner.temporis_blur) //sorry guys, no using two time powers at once
-		to_chat(owner, "<span class='userdanger'>Your active Temporis causes Celerity to wrench your body's temporal field apart!</span>")
-		owner.emote("scream")
-		addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon, gib)), 3 SECONDS, TIMER_UNIQUE)
-		return FALSE
-
-	owner.celerity_visual = TRUE
+	RegisterSignal(owner, COMSIG_POWER_PRE_ACTIVATION, PROC_REF(temporis_explode))
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(celerity_visual))
 
 /datum/discipline_power/celerity/deactivate()
 	. = ..()
-	owner.celerity_visual = FALSE
+	UnregisterSignal(owner, COMSIG_POWER_PRE_ACTIVATION)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
 /obj/effect/celerity

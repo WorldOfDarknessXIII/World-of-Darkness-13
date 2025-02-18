@@ -88,14 +88,8 @@
 				to_chat(user, "<I># No forensic traces found #</I>") // Don't display this to the holder user
 			return
 
-/datum/movespeed_modifier/temporis5
-	multiplicative_slowdown = -2.5
-
 /datum/movespeed_modifier/wing
 	multiplicative_slowdown = -0.25
-
-/datum/movespeed_modifier/temporis
-	multiplicative_slowdown = 7.5
 
 /mob/living/carbon/human/proc/walk_to_caster(mob/living/step_to)
 	walk(src, 0)
@@ -123,78 +117,3 @@
 				ClickOn(src)
 		else
 			ClickOn(src)
-
-/datum/discipline/temporis
-	name = "Temporis"
-	desc = "Temporis is a Discipline unique to the True Brujah. Supposedly a refinement of Celerity, Temporis grants the Cainite the ability to manipulate the flow of time itself."
-	icon_state = "temporis"
-	/*
-	cost = 1
-	ranged = TRUE
-	delay = 50
-	violates_masquerade = FALSE
-	activate_sound = 'code/modules/wod13/sounds/temporis.ogg'
-	clan_restricted = TRUE
-	dead_restricted = FALSE
-	var/current_cycle = 0
-	var/datum/component/temporis_target
-
-
-#define TEMPORIS_ATTACK_SPEED_MODIFIER 0.25
-
-/obj/effect/temporis
-	name = "Za Warudo"
-	desc = "..."
-	anchored = 1
-
-/obj/effect/temporis/Initialize()
-	. = ..()
-	spawn(5)
-		qdel(src)
-
-/mob/living/carbon/human/Move(atom/newloc, direct, glide_size_override)
-	..()
-	if(temporis_visual)
-		var/obj/effect/temporis/T = new(loc)
-		T.name = name
-		T.appearance = appearance
-		T.dir = dir
-		animate(T, pixel_x = rand(-32,32), pixel_y = rand(-32,32), alpha = 255, time = 10)
-		if(CheckEyewitness(src, src, 7, FALSE))
-			AdjustMasquerade(-1)
-	else if(temporis_blur)
-		var/obj/effect/temporis/T = new(loc)
-		T.name = name
-		T.appearance = appearance
-		T.dir = dir
-		animate(T, pixel_x = rand(-32,32), pixel_y = rand(-32,32), alpha = 155, time = 5)
-		if(CheckEyewitness(src, src, 7, FALSE))
-			AdjustMasquerade(-1)
-
-/datum/discipline/temporis/activate(mob/living/target, mob/living/carbon/human/owner)
-	. = ..()
-	if (owner.celerity_visual) //no using two time powers at once
-		to_chat(owner, "<span class='userdanger'>You try to manipulate your temporal field, but Celerity causes it to slip out of your grasp!</span>")
-		owner.emote("scream")
-		spawn(3 SECONDS)
-			owner.gib()
-		return
-	switch(level_casting)
-		if(1)
-			to_chat(owner, "<b>[SScity_time.timeofnight]</b>")
-			owner.adjust_blood_points(1)
-		if(2)
-			target.AddComponent(/datum/component/dejavu, rewinds = 4, interval = 2 SECONDS)
-		if(3)
-			to_chat(target, "<span class='userdanger'><b>Slow down.</b></span>")
-			target.add_movespeed_modifier(/datum/movespeed_modifier/temporis)
-			spawn(10 SECONDS)
-				if(target)
-					target.remove_movespeed_modifier(/datum/movespeed_modifier/temporis)
-		if(4)
-			to_chat(owner, "<b>Use the second Temporis button at the bottom of the screen to cast this level of Temporis.</b>")
-			owner.adjust_blood_points(1)
-		if(5)
-			to_chat(owner, "<b>Use the third Temporis button at the bottom of the screen to cast this level of Temporis.</b>")
-			owner.adjust_blood_points(1)
-	*/

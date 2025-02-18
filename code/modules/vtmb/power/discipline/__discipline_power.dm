@@ -182,9 +182,9 @@
 /datum/discipline_power/proc/can_activate(atom/target, alert = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/signal_return = SEND_SIGNAL(src, COMSIG_POWER_TRY_ACTIVATE, target) | SEND_SIGNAL(owner, COMSIG_POWER_TRY_ACTIVATE, target)
+	var/signal_return = SEND_SIGNAL(src, COMSIG_POWER_TRY_ACTIVATE, src, target) | SEND_SIGNAL(owner, COMSIG_POWER_TRY_ACTIVATE, src, target)
 	if (target)
-		signal_return |= SEND_SIGNAL(target, COMSIG_POWER_TRY_ACTIVATE_ON)
+		signal_return |= SEND_SIGNAL(target, COMSIG_POWER_TRY_ACTIVATE_ON, src)
 	if (signal_return & POWER_PREVENT_ACTIVATE)
 		//feedback is sent by the proc preventing activation
 		return FALSE
@@ -248,9 +248,9 @@
 	SHOULD_CALL_PARENT(FALSE)
 
 	//overrides should take care to still send and receive these signals! copy and paste this!
-	var/signal_return = SEND_SIGNAL(src, COMSIG_POWER_PRE_ACTIVATION, target) | SEND_SIGNAL(owner, COMSIG_POWER_PRE_ACTIVATION, target)
+	var/signal_return = SEND_SIGNAL(src, COMSIG_POWER_PRE_ACTIVATION, src, target) | SEND_SIGNAL(owner, COMSIG_POWER_PRE_ACTIVATION, src, target)
 	if (target)
-		signal_return |= SEND_SIGNAL(target, COMSIG_POWER_PRE_ACTIVATION_ON)
+		signal_return |= SEND_SIGNAL(target, COMSIG_POWER_PRE_ACTIVATION_ON, src)
 	if (signal_return & POWER_CANCEL_ACTIVATION)
 		//feedback is sent by the proc cancelling activation
 		return
@@ -266,10 +266,10 @@
 	if(!discipline?.owner)
 		return FALSE
 
-	SEND_SIGNAL(src, COMSIG_POWER_ACTIVATE, target)
-	SEND_SIGNAL(owner, COMSIG_POWER_ACTIVATE, target)
+	SEND_SIGNAL(src, COMSIG_POWER_ACTIVATE, src, target)
+	SEND_SIGNAL(owner, COMSIG_POWER_ACTIVATE, src, target)
 	if (target)
-		SEND_SIGNAL(target, COMSIG_POWER_ACTIVATE_ON)
+		SEND_SIGNAL(target, COMSIG_POWER_ACTIVATE_ON, src)
 
 	//make it active if it can only have one active instance at a time
 	if (!fire_and_forget && (duration_length != 0))
@@ -344,9 +344,9 @@
 /datum/discipline_power/proc/can_deactivate(atom/target)
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/signal_return = SEND_SIGNAL(src, COMSIG_POWER_TRY_DEACTIVATE, target) | SEND_SIGNAL(owner, COMSIG_POWER_TRY_DEACTIVATE, target)
+	var/signal_return = SEND_SIGNAL(src, COMSIG_POWER_TRY_DEACTIVATE, src, target) | SEND_SIGNAL(owner, COMSIG_POWER_TRY_DEACTIVATE, src, target)
 	if (target)
-		signal_return |= SEND_SIGNAL(target, COMSIG_POWER_TRY_DEACTIVATE_ON)
+		signal_return |= SEND_SIGNAL(target, COMSIG_POWER_TRY_DEACTIVATE_ON, src)
 	if (signal_return & POWER_PREVENT_DEACTIVATE)
 		//feedback is sent by the proc cancelling activation
 		return FALSE
@@ -363,10 +363,10 @@
 /datum/discipline_power/proc/deactivate(atom/target)
 	SHOULD_CALL_PARENT(TRUE)
 
-	SEND_SIGNAL(src, COMSIG_POWER_DEACTIVATE, target)
-	SEND_SIGNAL(owner, COMSIG_POWER_DEACTIVATE, target)
+	SEND_SIGNAL(src, COMSIG_POWER_DEACTIVATE, src, target)
+	SEND_SIGNAL(owner, COMSIG_POWER_DEACTIVATE, src, target)
 	if (target)
-		SEND_SIGNAL(target, COMSIG_POWER_DEACTIVATE_ON)
+		SEND_SIGNAL(target, COMSIG_POWER_DEACTIVATE_ON, src)
 
 	if (!fire_and_forget && (duration_length != 0))
 		active = FALSE
@@ -389,6 +389,8 @@
 
 /datum/discipline_power/proc/refresh(atom/target)
 	if (!active)
+		return
+	if (!owner)
 		return
 
 	var/repeat = FALSE
