@@ -52,7 +52,7 @@
 					var/mob/living/carbon/human/npc/NPC = L.pulling
 					NPC.on_kidnap(L)
 					if(NPC.CheckMove())
-						if(!storyteller_roll(L.get_total_physique() + min(L.get_total_dexterity(), L.get_total_athletics()), NPC.get_total_physique() + min(NPC.get_total_dexterity(), NPC.get_total_athletics())))
+						if(!storyteller_roll(L.get_total_physique() + L.get_total_athletics(), min(NPC.get_total_physique() + min(NPC.get_total_dexterity(), NPC.get_total_athletics()),7)))
 							NPC.Aggro(L, TRUE)
 							L.visible_message("<span class='danger'>[NPC.name] resists going down with [src].</span>", "<span class='danger'>[NPC.name] resists going down, breaking your descent.</span>", null, COMBAT_MESSAGE_RANGE, NPC)
 							return
