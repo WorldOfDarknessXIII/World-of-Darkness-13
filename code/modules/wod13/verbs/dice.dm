@@ -12,10 +12,12 @@
  * Arguments:
  * * dice - number of 10-sided dice to roll.
  * * difficulty - the number that a dice must come up as to count as a success.
- * * numerical - whether the proc returns number of successes or outcome (botch, failure, success)
- * * roll header:
+ * * numerical - whether the proc returns number of successes or outcome (botch, failure, success).
+ * * roll_header - pretty header displayed to the player.
+ * * show_player - whether the roll displays to the player.
+ * * roll_viewers - players who can see the roll result.
  */
-/mob/proc/storyteller_roll(dice = 1, difficulty = 6, numerical = FALSE, roll_header="", show_player=TRUE, roll_viewers = list(src))
+/mob/proc/storyteller_roll(dice = 1, difficulty = 6, numerical = FALSE, roll_header = "", show_player = TRUE, roll_viewers = list(src))
 	#ifdef DEBUG
 	show_player = TRUE
 	#endif
@@ -25,27 +27,41 @@
 	else
 		. = storyteller_roll_basic(dice, difficulty, numerical)
 
+/// Collects all the rolls into a dice pool list
+/mob/proc/gather_dice_pool(dice)
+	RETURN_TYPE(/list)
+	var/list/dice_pool = list()
+	for (var/i in 1 to dice)
+		var/roll = rand(1, 10)
+		dice_pool.Add(roll)
+	return dice_pool
+
 //DO NOT CALL DIRECTLY
 /mob/proc/storyteller_roll_basic(dice, difficulty, numerical)
 	var/successes = 0
 	var/had_one = FALSE
 	var/had_success = FALSE
+
+	// Automatic fail if there's somehow less than one die
 	if (dice < 1)
 		if (numerical)
 			return 0
 		else
 			return ROLL_FAILURE
-	for (var/i in 1 to dice)
-		var/roll = rand(1, 10)
+
+	// Calculates successes, failures, and botches from the dice pool
+	for(var/roll in gather_dice_pool(dice))
 		if (roll == 1)
 			successes--
 			if (!had_one)
 				had_one = TRUE
 			continue
-		if (roll >= difficulty)
+		else if (roll >= difficulty)
 			successes++
 			if (!had_success)
 				had_success = TRUE
+
+	// Return number of successes if numerical check, otherwise flat outcome
 	if (numerical)
 		return successes
 	else
@@ -75,19 +91,16 @@
 		else
 			return ROLL_FAILURE
 
-	for (var/i in 1 to dice)
-		var/roll = rand(1, 10)
-
+	for(var/roll in gather_dice_pool(dice))
 		if (roll == 1)
 			successes--
 			fail_list.Add(roll)
 			if (!had_one)
 				had_one = TRUE
 			continue
-
-		if (roll < difficulty)
+		else if (roll < difficulty)
 			fail_list.Add(roll)
-		else
+		else if (roll >= difficulty)
 			successes++
 			success_list.Add(roll)
 			if (!had_success)
