@@ -20405,13 +20405,6 @@
 	},
 /turf/open/floor/plating/vampgrass,
 /area/vtm/pacificheights)
-"bsr" = (
-/obj/structure/chair/pew/left{
-	name = "sauna bench";
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/vtm/interior/millennium_tower/f3)
 "bss" = (
 /obj/structure/vampfence/rich{
 	dir = 4
@@ -20965,12 +20958,15 @@
 /turf/open/floor/plating/parquetry/rich,
 /area/vtm/interior/millennium_tower/f4)
 "bui" = (
-/obj/machinery/space_heater{
-	anchored = 1;
-	panel_open = 1;
-	name = "sauna heater"
+/obj/structure/curtain,
+/obj/machinery/shower{
+	pixel_y = 9
 	},
-/turf/open/floor/wood,
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 1;
+	name = "shower drain"
+	},
+/turf/open/floor/plating/toilet,
 /area/vtm/interior/millennium_tower/f3)
 "buj" = (
 /obj/effect/decal/bordur{
@@ -21519,13 +21515,6 @@
 "bvR" = (
 /turf/open/floor/carpet,
 /area/vtm/interior/millennium_tower/f4)
-"bvS" = (
-/obj/structure/chair/pew/right{
-	dir = 8;
-	name = "sauna bench"
-	},
-/turf/open/floor/wood,
-/area/vtm/interior/millennium_tower/f3)
 "bvT" = (
 /turf/open/floor/plating/parquetry,
 /area/vtm/interior/giovanni)
@@ -21640,12 +21629,6 @@
 /obj/effect/decal/wallpaper/paper/darkgreen,
 /turf/closed/wall/vampwall/rich,
 /area/vtm/interior/millennium_tower/f4)
-"bwn" = (
-/obj/effect/decal/wallpaper/gold/low,
-/turf/closed/wall/vampwall/rich/low/window/reinforced{
-	CanAtmosPass = -2
-	},
-/area/vtm/interior/millennium_tower/f3)
 "bwo" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
@@ -29251,12 +29234,8 @@
 /turf/open/floor/plating/sidewalkalt,
 /area/vtm/chinatown)
 "dxK" = (
-/obj/structure/vampdoor/glass/prince{
-	CanAtmosPass = -2;
-	CanAtmosPassVertical = 0;
-	name = "sauna"
-	},
-/turf/open/floor/plasteel/stairs,
+/obj/structure/vampdoor/simple,
+/turf/open/floor/plating/toilet,
 /area/vtm/interior/millennium_tower/f3)
 "dxO" = (
 /obj/structure/table,
@@ -31946,12 +31925,8 @@
 /turf/open/floor/plating/sidewalk,
 /area/vtm/chinatown)
 "eQn" = (
-/obj/structure/closet/mini_fridge{
-	name = "mini-fridge"
-	},
-/obj/item/drinkable_bloodpack,
-/obj/item/drinkable_bloodpack,
-/turf/open/floor/wood,
+/obj/structure/toilet,
+/turf/open/floor/plating/toilet,
 /area/vtm/interior/millennium_tower/f3)
 "eQo" = (
 /obj/effect/decal/litter,
@@ -43229,13 +43204,6 @@
 /obj/structure/curtain/bounty,
 /turf/closed/wall/vampwall/rich/low/window/reinforced,
 /area/vtm/interior)
-"kIK" = (
-/obj/structure/chair/pew/left{
-	dir = 8;
-	name = "sauna bench"
-	},
-/turf/open/floor/wood,
-/area/vtm/interior/millennium_tower/f3)
 "kIY" = (
 /obj/structure/table/optable,
 /turf/open/floor/plating/circled,
@@ -46905,16 +46873,6 @@
 /obj/structure/sign/poster/redlady,
 /turf/closed/wall/vampwall/rich/old,
 /area/vtm/cabaret)
-"mLd" = (
-/obj/structure/chair/pew{
-	dir = 8;
-	name = "sauna bench"
-	},
-/obj/machinery/light/warm{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/vtm/interior/millennium_tower/f3)
 "mLj" = (
 /obj/item/reagent_containers/food/drinks/beer/vampire{
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer=0);
@@ -47878,7 +47836,7 @@
 /turf/open/floor/plating/sandy_dirt,
 /area/vtm/interior/bianchiBank)
 "nnV" = (
-/turf/open/floor/wood,
+/turf/open/floor/plating/toilet,
 /area/vtm/interior/millennium_tower/f3)
 "nog" = (
 /obj/effect/decal/trash,
@@ -57193,10 +57151,6 @@
 	},
 /turf/closed/wall/vampwall/painted/low,
 /area/vtm/interior/bianchiBank)
-"slU" = (
-/obj/effect/turf_decal/siding/wood,
-/turf/open/floor/carpet/black,
-/area/vtm/interior/millennium_tower/f3)
 "smn" = (
 /obj/structure/railing{
 	dir = 1;
@@ -58801,16 +58755,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/vtm/interior)
-"tbw" = (
-/obj/structure/chair/pew{
-	dir = 4;
-	name = "sauna bench"
-	},
-/obj/machinery/light/warm{
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/vtm/interior/millennium_tower/f3)
 "tbB" = (
 /obj/effect/decal/litter,
 /obj/machinery/light/small{
@@ -59947,11 +59891,11 @@
 /turf/open/floor/plating/rough/cave,
 /area/vtm/interior/glasswalker)
 "tJe" = (
-/obj/structure/chair/pew/right{
-	dir = 4;
-	name = "sauna bench"
+/obj/machinery/light/prince{
+	dir = 1;
+	pixel_y = -7
 	},
-/turf/open/floor/wood,
+/turf/open/floor/plating/toilet,
 /area/vtm/interior/millennium_tower/f3)
 "tJj" = (
 /obj/machinery/light/small{
@@ -67845,6 +67789,15 @@
 	},
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/interior/endron_facility)
+"xMR" = (
+/obj/structure/mirror{
+	pixel_y = 32
+	},
+/obj/structure/sink{
+	pixel_y = 16
+	},
+/turf/open/floor/plating/toilet,
+/area/vtm/interior/millennium_tower/f3)
 "xNm" = (
 /obj/structure/vampdoor/simple{
 	dir = 8
@@ -168892,12 +168845,12 @@ bvQ
 rTv
 rTv
 rTv
-bwn
+fru
 bui
 tJe
-tbw
-bsr
 ain
+aiy
+aiy
 aiy
 aiy
 pyj
@@ -169149,12 +169102,12 @@ udS
 rTv
 rTv
 rTv
-bwn
-nnV
-nnV
-nnV
+fru
+xMR
 nnV
 ain
+aiy
+aiy
 aiy
 aiy
 pyj
@@ -169405,13 +169358,13 @@ ain
 njo
 pTz
 rTv
-slU
+rTv
 dxK
 nnV
 nnV
-nnV
-nnV
 ain
+aiy
+aiy
 aiy
 aiy
 pyj
@@ -169663,12 +169616,12 @@ jnN
 rAV
 rTv
 rTv
-bwn
+fru
 eQn
-kIK
-mLd
-bvS
+tJe
 ain
+aiy
+aiy
 aiy
 aiy
 pyj
@@ -169924,8 +169877,8 @@ fru
 fru
 fru
 fru
-fru
-fru
+aiy
+aiy
 aiy
 aiy
 pyj
@@ -170944,10 +170897,10 @@ dPg
 dPg
 adB
 aiy
-aim
 fru
 fru
-aim
+fru
+fru
 aim
 aiy
 pyj
@@ -235844,7 +235797,7 @@ aiA
 aiA
 aiA
 fbC
-bxU
+egX
 bxU
 bxU
 bxU
