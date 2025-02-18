@@ -50,24 +50,12 @@
 			if(L.pulling)
 				if(istype(L.pulling, /mob/living/carbon/human/npc))
 					var/mob/living/carbon/human/npc/NPC = L.pulling
-					var/witness_count
-					for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, user))
-						if(NEPIC && NEPIC.stat != DEAD)
-							NEPIC.Aggro(L)
-							witness_count++
-					if(witness_count > 1)
-						SEND_SOUND(user, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
-						to_chat(user, "<span class='userdanger'><b>SUSPICIOUS ACTION (kidnapping)</b></span>")
-						for(var/obj/item/police_radio/radio in GLOB.police_radios)
-							radio.announce_crime("victim", get_turf(src))
-						for(var/obj/machinery/p25transceiver/police/radio in GLOB.p25_tranceivers)
-							if(radio.p25_network == "police")
-								radio.announce_crime("victim", get_turf(src))
-								break
+					NPC.on_kidnap(L)
 					if(NPC.CheckMove())
-						NPC.Aggro(L, TRUE)
-						L.visible_message("<span class='danger'>[NPC.name] resists going down with [src].</span>", "<span class='danger'>[NPC.name] resists going down, breaking your descent.</span>", null, COMBAT_MESSAGE_RANGE, NPC)
-						return
+						if(!storyteller_roll(L.get_total_physique() + min(L.get_total_dexterity(), L.get_total_athletics()), NPC.get_total_physique() + min(NPC.get_total_dexterity(), NPC.get_total_athletics())))
+							NPC.Aggro(L, TRUE)
+							L.visible_message("<span class='danger'>[NPC.name] resists going down with [src].</span>", "<span class='danger'>[NPC.name] resists going down, breaking your descent.</span>", null, COMBAT_MESSAGE_RANGE, NPC)
+							return
 				L.pulling.forceMove(destination)
 			user.forceMove(destination)
 			playsound(src, 'code/modules/wod13/sounds/manhole.ogg', 50, TRUE)
