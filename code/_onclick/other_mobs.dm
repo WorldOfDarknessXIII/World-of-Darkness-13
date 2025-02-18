@@ -205,7 +205,7 @@
 		if(a_intent == INTENT_HARM)
 			if(istype(A, /mob/living))
 				var/mob/living/target = A
-				target.adjustCloneLoss(2)
+				target.adjustCloneLoss(7)
 				if(src.tox_damage_plus)
 					target.adjustToxLoss(src.tox_damage_plus)
 					to_chat(src, "<span class='notice'>Your toxic claws seep into [target]'s flesh!</span>")
