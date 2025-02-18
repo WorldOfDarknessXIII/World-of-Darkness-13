@@ -137,7 +137,7 @@
  * buckled_mob - The mob to be unbuckled
  * force - TRUE if we should ignore buckled_mob.can_buckle_to
  */
-/atom/movable/proc/unbuckle_mob(mob/living/buckled_mob, force = FALSE)
+/atom/movable/proc/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	if(!isliving(buckled_mob))
 		CRASH("Non-living [buckled_mob] thing called unbuckle_mob() for source.")
 	if(buckled_mob.buckled != src)
@@ -153,10 +153,19 @@
 	if(anchored)
 		REMOVE_TRAIT(buckled_mob, TRAIT_NO_FLOATING_ANIM, BUCKLED_TRAIT)
 	if(!length(buckled_mobs))
-		UnregisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, PROC_REF(on_set_anchored))
+		UnregisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob, force)
 
+	if(can_fall)
+		var/turf/location = buckled_mob.loc
+		if(istype(location) && !buckled_mob.currently_z_moving)
+			location.zFall(buckled_mob)
+
 	post_unbuckle_mob(.)
+
+	if(!QDELETED(buckled_mob) && !buckled_mob.currently_z_moving && isturf(buckled_mob.loc)) // In the case they unbuckled to a flying movable midflight.
+		var/turf/pitfall = buckled_mob.loc
+		pitfall?.zFall(buckled_mob)
 
 /atom/movable/proc/on_set_anchored(atom/movable/source, anchorvalue)
 	SIGNAL_HANDLER
