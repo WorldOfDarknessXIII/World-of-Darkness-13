@@ -77,8 +77,7 @@
 /datum/discipline_power/protean/feral_claws/deactivate()
 	. = ..()
 	for(var/obj/item/melee/vampirearms/knife/gangrel/G in owner.contents)
-		if(G)
-			qdel(G)
+		qdel(G)
 	owner.remove_client_colour(/datum/client_colour/glass_colour/red)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/protean2)
 
@@ -183,4 +182,3 @@
 	GA.Restore(GA.myshape)
 	owner.Stun(1 SECONDS)
 	owner.do_jitter_animation(15)
-

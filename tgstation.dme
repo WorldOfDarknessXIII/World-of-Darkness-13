@@ -3413,6 +3413,7 @@
 #include "code\modules\vtmb\power\discipline\dominate.dm"
 #include "code\modules\vtmb\power\discipline\fortitude.dm"
 #include "code\modules\vtmb\power\discipline\melpominee.dm"
+#include "code\modules\vtmb\power\discipline\mytherceria.dm"
 #include "code\modules\vtmb\power\discipline\necromancy.dm"
 #include "code\modules\vtmb\power\discipline\obfuscate.dm"
 #include "code\modules\vtmb\power\discipline\obtenebration.dm"
