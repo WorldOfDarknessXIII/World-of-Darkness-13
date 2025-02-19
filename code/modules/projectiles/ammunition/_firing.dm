@@ -17,15 +17,12 @@
 		SEND_SIGNAL(src, COMSIG_PELLET_CLOUD_INIT, target, user, fired_from, randomspread, spread, zone_override, params, distro)
 
 	if(click_cooldown_override)
-		if(click_cooldown_override > CLICK_CD_RAPID)
-			if(user.no_fire_delay)
-				user.changeNext_move(max(CLICK_CD_RAPID, round(click_cooldown_override/2)))
-			else
-				user.changeNext_move(click_cooldown_override)
+		if((click_cooldown_override > CLICK_CD_RAPID) && HAS_TRAIT(user, TRAIT_GUNFIGHTER))
+			user.changeNext_move(max(CLICK_CD_RAPID, round(click_cooldown_override/2)))
 		else
 			user.changeNext_move(click_cooldown_override)
 	else
-		if(user.no_fire_delay)
+		if(HAS_TRAIT(user, TRAIT_GUNFIGHTER))
 			user.changeNext_move(CLICK_CD_RAPID)
 		else
 			user.changeNext_move(CLICK_CD_RANGE)
@@ -69,9 +66,10 @@
 			if(witness_count > 1)
 				for(var/obj/item/police_radio/P in GLOB.police_radios)
 					P.announce_crime("shooting", get_turf(user))
-				for(var/obj/item/p25radio/police/P in GLOB.p25_radios)
-					if(P.linked_network == "police")
-						P.announce_crime("shooting", get_turf(user))
+				for(var/obj/machinery/p25transceiver/police/radio in GLOB.p25_tranceivers)
+					if(radio.p25_network == "police")
+						radio.announce_crime("shooting", get_turf(src))
+						break
 		var/atom/A = new firing_effect_type(get_turf(src), firing_dir)
 		var/atom/movable/shit = new(A.loc)
 		if(ishuman(user))

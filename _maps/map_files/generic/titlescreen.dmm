@@ -1,0 +1,21 @@
+"a" = (/turf/closed/indestructible/riveted,/area/start)
+"z" = (/obj/effect/landmark/start/new_player,/turf/open/floor/plating,/area/start)
+"L" = (/turf/closed/indestructible/splashscreen,/area/start)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaa
+aaaaaaazaaaaaaa
+aaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaa
+Laaaaaaaaaaaaaa
+"}

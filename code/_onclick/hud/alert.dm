@@ -164,7 +164,7 @@
 
 /atom/movable/screen/alert/fat
 	name = "Fat"
-	desc = "You ate too much food, lardass. Run around the station and lose some weight."
+	desc = "You ate too much food. Run around the city and lose some weight."
 	icon_state = "fat"
 
 /atom/movable/screen/alert/hungry
@@ -569,20 +569,19 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/emptycell
 	name = "Out of Power"
-	desc = "Unit's power cell has no charge remaining. No modules available until power cell is recharged. \
-Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
+	desc = "Unit's power cell has no charge remaining. No modules available until power cell is recharged."
 	icon_state = "emptycell"
 
 /atom/movable/screen/alert/lowcell
 	name = "Low Charge"
-	desc = "Unit's power cell is running low. Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
+	desc = "Unit's power cell is running low. Find a charging station."
 	icon_state = "lowcell"
 
 //Ethereal
 
 /atom/movable/screen/alert/etherealcharge
 	name = "Low Blood Charge"
-	desc = "Your blood's electric charge is running low, find a source of charge for your blood. Use a recharging station found in robotics or the dormitory bathrooms, or eat some Ethereal-friendly food."
+	desc = "Your blood's electric charge is running low, find a source of charge for your blood. Use a recharging station."
 	icon_state = "etherealcharge"
 
 /atom/movable/screen/alert/ethereal_overcharge

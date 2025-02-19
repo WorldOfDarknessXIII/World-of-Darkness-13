@@ -192,12 +192,15 @@
 						dat += "Their number is [host.Myself.Lover.phone_number].<BR>"
 					if(host.Myself.Lover.lover_text)
 						dat += "[host.Myself.Lover.lover_text]<BR>"
-		var/obj/keypad/armory/K = find_keypad(/obj/keypad/armory)
-		if(K && (host.mind.assigned_role == "Prince" || host.mind.assigned_role == "Sheriff"))
-			dat += "<b>The pincode for the armory keypad is: [K.pincode]</b><BR>"
+		var/obj/keypad/armory/armory = find_keypad(/obj/keypad/armory)
+		if(armory && (host.mind.assigned_role == "Prince" || host.mind.assigned_role == "Sheriff" || host.mind.assigned_role == "Seneschal"))
+			dat += "The pincode for the armory keypad is<b>: [armory.pincode]</b><BR>"
+		var/obj/keypad/panic_room/panic = find_keypad(/obj/keypad/panic_room)
+		if(panic && (host.mind.assigned_role == "Prince" || host.mind.assigned_role == "Sheriff" || host.mind.assigned_role == "Seneschal"))
+			dat += "The pincode for the panic room keypad is<b>: [panic.pincode]</b><BR>"
 		var/obj/structure/vaultdoor/pincode/bank/bankdoor = find_door_pin(/obj/structure/vaultdoor/pincode/bank)
 		if(bankdoor && (host.mind.assigned_role == "Capo"))
-			dat += "<b>The pincode for the bank vault is: [bankdoor.pincode]</b><BR>"
+			dat += "The pincode for the bank vault is <b>: [bankdoor.pincode]</b><BR>"
 		if(bankdoor && (host.mind.assigned_role == "La Squadra"))
 			if(prob(50))
 				dat += "<b>The pincode for the bank vault is: [bankdoor.pincode]</b><BR>"
@@ -250,8 +253,12 @@
 	//vampires don't die while in crit, they just slip into torpor after 2 minutes of being critted
 	RegisterSignal(vampire, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(slip_into_torpor))
 
+	//vampires resist vampire bites better than mortals
+	RegisterSignal(vampire, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_vampire_bitten))
+
 /datum/species/kindred/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
+	UnregisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED)
 	for(var/datum/action/vampireinfo/vampire_info_action in C.actions)
 		vampire_info_action.Remove(C)
 	for(var/datum/action/action in C.actions)
@@ -912,6 +919,18 @@
 
 	//nothing found
 	return FALSE
+
+/**
+ * On being bit by a vampire
+ *
+ * This handles vampire bite sleep immunity and any future special interactions.
+ */
+/datum/species/kindred/proc/on_vampire_bitten(datum/source, mob/living/carbon/being_bitten)
+	SIGNAL_HANDLER
+
+	if(iskindred(being_bitten))
+		return COMPONENT_RESIST_VAMPIRE_KISS
+
 
 /datum/species/kindred/proc/initialize_generation(mob/living/carbon/human/vampire)
 	if (iskindred(vampire) && vampire.generation)

@@ -23,8 +23,9 @@
 	var/stat_allowed = CONSCIOUS
 	var/sound //Sound to play when emote is called
 	var/vary = FALSE	//used for the honk borg emote
-	var/only_forced_audio = FALSE //can only code call this event instead of the player.
 	var/cooldown = 0.8 SECONDS
+	///How often we can do this audio cooldown
+	var/audio_cooldown = 10 SECONDS
 
 /datum/emote/New()
 	if (ispath(mob_type_allowed_typecache))
@@ -50,28 +51,18 @@
 
 	msg = replace_pronoun(user, msg)
 
-	if(isliving(user))
-		var/mob/living/L = user
-		for(var/obj/item/implant/I in L.implants)
-			I.trigger(key, L)
-
 	if(!msg)
 		return
 
 	user.log_message(msg, LOG_EMOTE)
-	// var/dchatmsg = "<b>[user]</b> [msg]"
 
 	var/tmp_sound = get_sound(user)
-	if(tmp_sound && (!only_forced_audio || !intentional))
+	if(tmp_sound)
+		if(TIMER_COOLDOWN_CHECK(user, COOLDOWN_MOB_AUDIO))
+			return
+		TIMER_COOLDOWN_START(user, type, audio_cooldown)
+		S_TIMER_COOLDOWN_START(user, COOLDOWN_MOB_AUDIO, 10 SECONDS)
 		playsound(user, tmp_sound, 50, vary)
-	/* // [ChillRaccoon] - ghosts shouldn't see emotes if they arent see emoting object
-	for(var/mob/M in GLOB.dead_mob_list)
-		if(!M.client || isnewplayer(M))
-			continue
-		var/T = get_turf(user)
-		if(M.stat == DEAD && M.client && user.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
-			M.show_message("[FOLLOW_LINK(M, user)] [dchatmsg]")
-	*/
 
 	if(emote_type == EMOTE_AUDIBLE)
 		user.audible_message(msg, audible_message_flags = EMOTE_MESSAGE)

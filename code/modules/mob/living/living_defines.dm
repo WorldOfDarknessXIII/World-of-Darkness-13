@@ -202,8 +202,6 @@
 	var/last_taste_time
 	var/last_taste_text
 
-	var/no_fire_delay = FALSE
-
 	var/experience_plus = 0
 	var/discipline_time_plus = 0
 	var/bloodpower_time_plus = 0

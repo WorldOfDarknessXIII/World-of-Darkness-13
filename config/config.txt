@@ -237,7 +237,7 @@ CHECK_RANDOMIZER
 FORUMURL https://discord.gg/WU92NG2Me8
 
 ## Wiki address
-WIKIURL https://discord.gg/WU92NG2Me8
+WIKIURL https://wiki.wod13.org
 
 ## Rules address
 RULESURL https://discord.gg/WU92NG2Me8

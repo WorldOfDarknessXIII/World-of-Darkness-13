@@ -93,6 +93,22 @@
 	desc = "Some punk clothes."
 	icon_state = "dirty"
 
+/obj/item/clothing/under/vampire/turtleneck_white
+	desc = "A white turtleneck"
+	icon_state = "turtleneck_white"
+
+/obj/item/clothing/under/vampire/turtleneck_black
+	desc = "A black turtleneck"
+	icon_state = "turtleneck_black"
+
+/obj/item/clothing/under/vampire/turtleneck_red
+	desc = "A red turtleneck"
+	icon_state = "turtleneck_red"
+
+/obj/item/clothing/under/vampire/turtleneck_navy
+	desc = "A navy turtleneck"
+	icon_state = "turtleneck_navy"
+
 /obj/item/clothing/under/vampire/napoleon
 	name = "French Admiral suit"
 	desc = "Some oddly historical clothes."
@@ -267,7 +283,7 @@
 	name = "suitskirt"
 	icon_state = "prince_f"
 
-/obj/item/clothing/under/vampire/agent
+/obj/item/clothing/under/vampire/hound
 	name = "suit"
 	desc = "Some business clothes."
 	icon_state = "agent"
@@ -359,6 +375,64 @@
 	name = "Leather pants"
 	desc = "A suit for a TRULY REAL business."
 	icon_state = "leather_pants"
+
+
+//PENTEX
+/obj/item/clothing/under/pentex
+	desc = "Some clothes."
+	name = "clothes"
+	icon_state = "error"
+	has_sensor = NO_SENSORS
+	random_sensor = FALSE
+	can_adjust = FALSE
+	icon = 'code/modules/wod13/clothing.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 15)
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	body_worn = TRUE
+	fitted = NO_FEMALE_UNIFORM
+	cost = 10
+
+/obj/item/clothing/under/pentex/pentex_janitor
+	name = "Ardus Enterprises custodian jumpsuit"
+	desc = "An Ardus Enterprises custodian's uniform."
+	icon_state = "pentex_janitor"
+	armor = list(BIO = 100, ACID = 15, RAD = 5)
+
+/obj/item/clothing/under/pentex/pentex_shortsleeve
+	name = "Endron polo-shirt"
+	desc = "An Endron International employee uniform. This one is a nice polo!"
+	icon_state = "pentex_shortsleeve"
+
+/obj/item/clothing/under/pentex/pentex_longleeve
+	name = "Endron shirt"
+	desc = "An Endron International employee uniform. This one has sleeves!"
+	icon_state = "pentex_longsleeve"
+
+/obj/item/clothing/under/pentex/pentex_turtleneck
+	name = "Endron turtleneck"
+	desc = "An Endron International employee uniform. This one is a nice turtleneck!"
+	icon_state = "pentex_turtleneck"
+
+/obj/item/clothing/under/pentex/pentex_suit
+	name = "Endron suit"
+	desc = "A nice suit with a green dress-shirt. This one has an Endron International tag on it!"
+	icon_state = "pentex_suit"
+
+/obj/item/clothing/under/pentex/pentex_suitskirt
+	name = "Endron suitskirt"
+	desc = "A nice suitskirt with a green dress-shirt. This one has an Endron International tag on it!"
+	icon_state = "pentex_suitskirt"
+
+/obj/item/clothing/under/pentex/pentex_executive_suit
+	name = "Endron executive suit"
+	desc = "A  white designer suit with a green dress shirt. This one has an Endron International tag on it!"
+	icon_state = "pentex_executivesuit"
+
+/obj/item/clothing/under/pentex/pentex_executiveskirt
+	name = "Endron executive suitskirt"
+	desc = "A white designer suitskirt with a green dress shirt. This one has an Endron International tag on it!"
+	icon_state = "pentex_executiveskirt"
 
 //SHOES
 
@@ -593,6 +667,39 @@
 	desc = "The hood of some elegant-looking robes."
 	icon_state = "robes_purple_hood"
 
+/obj/item/clothing/suit/hooded/robes/blue
+	name = "blue robe"
+	desc = "Some watery-looking robes."
+	icon_state = "robes_blue"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/blue
+
+/obj/item/clothing/head/hooded/robes_hood/blue
+	name = "blue hood"
+	desc = "The hood of some watery-looking robes."
+	icon_state = "robes_blue_hood"
+
+/obj/item/clothing/suit/hooded/robes/tremere
+	name = "tremere robes"
+	desc = "Black robes with red highlights, marked with the emblem of House Tremere."
+	icon_state = "tremere_robes"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/tremere
+
+/obj/item/clothing/head/hooded/robes_hood/tremere
+	name = "tremere hood"
+	desc = "A black hood with red highlights, marked with the emblem of House Tremere."
+	icon_state = "tremere_hood"
+
+/obj/item/clothing/suit/hooded/robes/magister
+	name = "magister robes"
+	desc = "A red robe with an ornate golden trim, marked with the emblem of House Tremere."
+	icon_state = "magister_robes"
+	hoodtype = /obj/item/clothing/head/hooded/robes_hood/magister
+
+/obj/item/clothing/head/hooded/robes_hood/magister
+	name = "magister hood"
+	desc = "A red hood with an ornate golden trim, marked with the emblem of House Tremere."
+	icon_state = "magister_hood"
+
 /obj/item/clothing/suit/vampire/coat
 	name = "coat"
 	desc = "Warm and heavy clothing."
@@ -610,10 +717,10 @@
 	icon_state = "winter2"
 
 /obj/item/clothing/suit/vampire/slickbackcoat
-   name = "opulent coat"
-   desc = "Lavish, luxurious, and deeply purple. Slickback Clothing Co. It exudes immense energy."
-   icon_state = "slickbackcoat"
-   armor = list(MELEE = 5, BULLET = 5, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 5)
+	name = "opulent coat"
+	desc = "Lavish, luxurious, and deeply purple. Slickback Clothing Co. It exudes immense energy."
+	icon_state = "slickbackcoat"
+	armor = list(MELEE = 5, BULLET = 5, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 5)
 
 /obj/item/clothing/suit/vampire/jacket
 	name = "leather jacket"
@@ -650,6 +757,12 @@
 	icon_state = "trench3"
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
 
+/obj/item/clothing/suit/vampire/trench/strauss
+	name = "red trenchcoat"
+	desc = "True power lies not in wealth, but in the things it affords you."
+	icon_state = "strauss_coat"
+	armor = list(MELEE = 25, BULLET = 25, LASER = 10, ENERGY = 10, BOMB = 25, BIO = 0, RAD = 0, FIRE = 25, ACID = 10, WOUND = 25)
+
 /obj/item/clothing/suit/vampire/trench/tzi
 	name = "fleshcoat"
 	desc = "HUMAN LEATHER JACKET."
@@ -668,6 +781,12 @@
 	desc = "Durable, lightweight vest designed to protect against most threats efficiently."
 	icon_state = "vest"
 	armor = list(MELEE = 55, BULLET = 55, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 0, RAD = 0, FIRE = 45, ACID = 10, WOUND = 25)
+	allowed = list(
+		/obj/item/card/id,
+		/obj/item/flashlight,
+		/obj/item/melee/classic_baton/vampire,
+		/obj/item/restraints/handcuffs
+	)
 
 /obj/item/clothing/suit/vampire/vest/medieval
 	name = "medieval vest"
@@ -787,6 +906,35 @@
 	icon_state = "vestments"
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
 
+//Pentex Overwear
+
+/obj/item/clothing/suit/pentex
+	icon = 'code/modules/wod13/clothing.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	body_parts_covered = CHEST
+	cold_protection = CHEST|GROIN
+	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
+	heat_protection = CHEST|GROIN
+	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
+	max_integrity = 250
+	resistance_flags = NONE
+	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
+	body_worn = TRUE
+	cost = 15
+
+/obj/item/clothing/suit/pentex/pentex_labcoat
+	name = "Endron labcoat"
+	desc = "A crisp white labcoat. This one has the Endron International logo stiched onto the breast!"
+	icon_state = "pentex_closedlabcoat"
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 90, WOUND = 10)
+
+/obj/item/clothing/suit/pentex/pentex_labcoat_alt
+	name = "Endron labcoat"
+	desc = "A crisp white labcoat. This one has a green trim and the Endron International logo stiched onto the breast!"
+	icon_state = "pentex_labcoat_alt"
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 90, WOUND = 10)
+
 //GLASSES
 
 //GLASSES
@@ -871,6 +1019,51 @@
 
 /obj/item/clothing/head/vampire/beanie/homeless
 	icon_state = "hat_homeless"
+
+/obj/item/clothing/head/vampire/wizard/blue
+	name = "blue wizard hat"
+	desc = "A watery-looking wizard hat."
+	icon_state = "wizardhat_blue"
+
+/obj/item/clothing/head/vampire/wizard/black
+	name = "black wizard hat"
+	desc = "A sinister-looking wizard hat."
+	icon_state = "wizardhat_black"
+
+/obj/item/clothing/head/vampire/wizard/darkred
+	name = "dark red wizard hat"
+	desc = "A zealous-looking wizard hat."
+	icon_state = "wizardhat_darkred"
+
+/obj/item/clothing/head/vampire/wizard/green
+	name = "green wizard hat"
+	desc = "An earthy looking wizard hat."
+	icon_state = "wizardhat_green"
+
+/obj/item/clothing/head/vampire/wizard/grey
+	name = "grey wizard hat"
+	desc = "A somber-looking wizard hat."
+	icon_state = "wizardhat_grey"
+
+/obj/item/clothing/head/vampire/wizard/purple
+	name = "purple wizard hat"
+	desc = "An elegant-looking wizard hat."
+	icon_state = "wizardhat_purple"
+
+/obj/item/clothing/head/vampire/wizard/red
+	name = "red wizard hat"
+	desc = "A furious-looking wizard hat."
+	icon_state = "wizardhat_red"
+
+/obj/item/clothing/head/vampire/wizard/white
+	name = "white wizard hat"
+	desc = "An angelic-looking wizard hat."
+	icon_state = "wizardhat_white"
+
+/obj/item/clothing/head/vampire/wizard/yellow
+	name = "yellow wizard hat"
+	desc = "A happy-looking wizard hat."
+	icon_state = "wizardhat_yellow"
 
 /obj/item/clothing/head/vampire/police
 	name = "police hat"
@@ -1042,6 +1235,32 @@
 	dynamic_hair_suffix = ""
 	dynamic_fhair_suffix = ""
 
+/obj/item/clothing/head/pentex
+	icon = 'code/modules/wod13/clothing.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
+	body_worn = TRUE
+	cost = 10
+
+/obj/item/clothing/head/pentex/pentex_yellowhardhat
+	name = "Endron hardhat"
+	desc = "A yellow hardhat. This one has an Endron International logo on it!"
+	icon_state = "pentex_hardhat_yellow"
+	flags_inv = HIDEHAIR
+
+/obj/item/clothing/head/pentex/pentex_whitehardhat
+	name = "Endron hardhat"
+	desc = "A white hardhat. This one has an Endron International logo on it!"
+	icon_state = "pentex_hardhat_white"
+	flags_inv = HIDEHAIR
+
+/obj/item/clothing/head/pentex/pentex_beret
+	name = "First Team beret"
+	desc = "A black beret with a mysterious golden insigna bearing a spiral."
+	icon_state = "pentex_beret"
+	flags_inv = HIDEHAIR
+
 //GLOVES
 
 //GLOVES
@@ -1176,6 +1395,14 @@
 	desc = "LOADSAMONEY"
 	icon_state = "balaclava"
 	inhand_icon_state = "balaclava"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/clothing/mask/pentex/pentex_balaclava
+	name = "Thick balaclava"
+	desc = "A black balaclava. This one is particularly thick."
+	icon_state = "pentex_balaclava"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL

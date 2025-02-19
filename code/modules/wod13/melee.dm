@@ -375,6 +375,26 @@
 	resistance_flags = FIRE_PROOF
 	is_iron = TRUE
 
+/obj/item/melee/vampirearms/handsickle
+	name = "hand sickle"
+	desc = "Reap what they have sowed."
+	icon = 'code/modules/wod13/weapons.dmi'
+	icon_state = "handsickle"
+	force = 30
+	wound_bonus = -5
+	bare_wound_bonus = 5
+	throwforce = 15
+	attack_verb_continuous = list("slashes", "cuts", "reaps")
+	attack_verb_simple = list("slash", "cut", "reap")
+	hitsound = 'sound/weapons/slash.ogg'
+	armour_penetration = 40
+	block_chance = 0
+	sharpness = SHARP_EDGED
+	w_class = WEIGHT_CLASS_NORMAL
+	slot_flags = ITEM_SLOT_BELT
+	resistance_flags = FIRE_PROOF
+	is_iron = TRUE
+
 /obj/item/melee/vampirearms/knife/gangrel
 	name = "claws"
 	icon_state = "gangrel"
