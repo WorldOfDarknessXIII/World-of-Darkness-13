@@ -26,7 +26,7 @@ Tremere have powers to identificate any existing artifact.
 As a Prince, your objectives are to rule Camarilla and the City. Follow all Six Traditions of Kindred and decide how to fight global dangers. Don't forget to call on the Primogens if you need some help.
 As a Sheriff, your objectives are to protect Masquerade in the City. Speak with Camarilla's agents and decide the best technique to liquidate Masquerade breaches and breachers.
 As a Seneschal, your objectives are to help Prince make any business in the City. You are his right hand man, and he expects you to deal with matters beneath him.
-As a Camarilla Agent, your objectives are to enforce the Traditions and the Camarilla's rule of the city.
+As a Hound, your objectives are to enforce the Traditions and the Camarilla's rule of the city.
 As a Janitor, your objectives are to liquidate Masquerade breaches. Clean up streets and don't let any pale bloodless corpses be found by mortal eyes.
 As a Doctor, your objectives are to heal Kine for proper feeding. You can also sell blood bags to other kindred.
 As a Graveyard Keeper, your objectives are to protect City from a Shadowlands Masquerade breach. There is no more room in Hell, so walking dead are rising up. Kill 'em all...

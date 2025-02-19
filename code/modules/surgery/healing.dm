@@ -214,9 +214,9 @@
 	missinghpbonus = 10
 
 /datum/surgery_step/heal/combo/upgraded/femto
-	brutehealing = 1
-	burnhealing = 1
-	missinghpbonus = 2.5
+	brutehealing = 5
+	burnhealing = 5
+	missinghpbonus = 12.5
 
 /datum/surgery_step/heal/combo/upgraded/femto/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='warning'>You screwed up!</span>",

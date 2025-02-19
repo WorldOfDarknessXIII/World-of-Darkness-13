@@ -370,7 +370,6 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 					message_admins("[key_name_admin(usr)] re-entered corpse")
 				ghost.can_reenter_corpse = TRUE //force re-entering even when otherwise not possible
 				ghost.client.show_popup_menus = 0
-				ghost.client.color = CMNoir
 				ghost.reenter_corpse()
 
 				SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin Reenter") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

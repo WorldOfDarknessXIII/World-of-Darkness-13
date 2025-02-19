@@ -1,10 +1,32 @@
+#define BANDIT_TYPE_NPC /mob/living/carbon/human/npc/bandit
+#define POLICE_TYPE_NPC /mob/living/carbon/human/npc/police
+
 /mob/living/carbon/human/npc
 	name = "Loh ebanii"
+	/// Until we do a full NPC refactor (see: rewriting every single bit of code)
+	/// use this to determine NPC weapons and their chances to spawn with them -- assuming you want the NPC to do that
+	/// Otherwise just set it under the NPC's type as
+	/// my_weapon = type_path
+	/// my_backup_weapon = type_path
+	/// This only determines my_weapon, you set my_backup_weapon yourself
+	/// The last entry in the list for a type of NPC should always have 100 as the index
+	var/static/list/role_weapons_chances = list(
+		BANDIT_TYPE_NPC = list(
+			 /obj/item/gun/ballistic/automatic/vampire/deagle = 33,
+			 /obj/item/gun/ballistic/vampire/revolver/snub = 33,
+			 /obj/item/melee/vampirearms/baseball = 100,
+		),
+		POLICE_TYPE_NPC = list(
+			/obj/item/gun/ballistic/vampire/revolver = 66,
+			/obj/item/gun/ballistic/automatic/vampire/ar15 = 100,
+		)
+	)
 	a_intent = INTENT_HELP
 	var/datum/socialrole/socialrole
 
 	var/is_talking = FALSE
 	var/last_annoy = 0
+	COOLDOWN_DECLARE(car_dodge)
 	var/hostile = FALSE
 	var/fights_anyway = FALSE
 	var/last_danger_meet = 0
@@ -23,9 +45,20 @@
 
 	var/stopturf = 1
 
+	var/extra_mags=2
+	var/extra_loaded_rounds=10
 
-	var/obj/item/my_weapon
+	var/has_weapon = FALSE
+
+	var/my_weapon_type = null
+	var/obj/item/my_weapon = null
+
+	var/my_backup_weapon_type = null
+	var/obj/item/my_backup_weapon = null
+
 	var/spawned_weapon = FALSE
+
+	var/spawned_backup_weapon = FALSE
 
 	var/ghoulificated = FALSE
 
@@ -37,156 +70,182 @@
 
 	var/list/spotted_bodies = list()
 
+	var/is_criminal = FALSE
+
+/mob/living/carbon/human/npc/LateInitialize()
+	. = ..()
+	if(role_weapons_chances.Find(type))
+		for(var/weapon in role_weapons_chances[type])
+			if(prob(role_weapons_chances[type][weapon]))
+				my_weapon = new weapon(src)
+				equip_to_appropriate_slot(my_weapon)
+				break
+
+	if(!my_weapon && my_weapon_type)
+		my_weapon = new my_weapon_type(src)
+		equip_to_appropriate_slot(my_weapon)
+
+
+	if(my_weapon)
+		has_weapon = TRUE
+		if(istype(my_weapon, /obj/item/gun/ballistic))
+			RegisterSignal(my_weapon, COMSIG_GUN_FIRED, PROC_REF(handle_gun))
+			RegisterSignal(my_weapon, COMSIG_GUN_EMPTY, PROC_REF(handle_empty_gun))
+
+	if(my_backup_weapon_type)
+		my_backup_weapon = new my_backup_weapon_type(src)
+		equip_to_appropriate_slot(my_backup_weapon)
+
 /datum/movespeed_modifier/npc
 	multiplicative_slowdown = 2
 
 /datum/socialrole
 	//For randomizing
 	var/list/s_tones = list("albino",
-													"caucasian1",
-													"caucasian2",
-													"caucasian3",
-													"latino",
-													"mediterranean",
-													"asian1",
-													"asian2",
-													"arab",
-													"indian",
-													"african1",
-													"african2")
+		"caucasian1",
+		"caucasian2",
+		"caucasian3",
+		"latino",
+		"mediterranean",
+		"asian1",
+		"asian2",
+		"arab",
+		"indian",
+		"african1",
+		"african2")
 	var/min_age = 18
 	var/max_age = 85
 	var/preferedgender
 	var/list/male_names = list("Jack",
-															"Robert",
-															"Cornelius",
-															"Tyler")
+		"Robert",
+		"Cornelius",
+		"Tyler")
 	var/list/female_names = list("Marla")
 	var/list/surnames = list("Durden",
-														"Polson",
-														"Singer")
+		"Polson",
+		"Singer")
 
 	//Hair shit
 	var/list/hair_colors = list("040404",	//Black
-															"120b05",	//Dark Brown
-															"342414",	//Brown
-															"554433",	//Light Brown
-															"695c3b",	//Dark Blond
-															"ad924e",	//Blond
-															"dac07f",	//Light Blond
-															"802400",	//Ginger
-															"a5380e",	//Ginger alt
-															"ffeace",	//Albino
-															"650b0b",	//Punk Red
-															"14350e",	//Punk Green
-															"080918")	//Punk Blue
+		"120b05",	//Dark Brown
+		"342414",	//Brown
+		"554433",	//Light Brown
+		"695c3b",	//Dark Blond
+		"ad924e",	//Blond
+		"dac07f",	//Light Blond
+		"802400",	//Ginger
+		"a5380e",	//Ginger alt
+		"ffeace",	//Albino
+		"650b0b",	//Punk Red
+		"14350e",	//Punk Green
+		"080918")	//Punk Blue
 
 	var/list/male_hair = list("Bald",
-														"Afro",
-														"Afro 2",
-														"Afro (Large)",
-														"Balding Hair",
-														"Bedhead",
-														"Bedhead 2",
-														"Bedhead 3",
-														"Boddicker",
-														"Bowlcut",
-														"Bowlcut 2",
-														"Business Hair",
-														"Business Hair 2",
-														"Business Hair 3",
-														"Business Hair 4",
-														"Bun (Manbun)",
-														"Buzzcut",
-														"Comet",
-														"CIA",
-														"Coffee House",
-														"Combover",
-														"Crewcut",
-														"Father",
-														"Flat Top",
-														"Gelled Back",
-														"Joestar",
-														"Keanu Hair",
-														"Mohawk",
-														"Mohawk (Shaved)",
-														"Mohawk (Unshaven)",
-														"Oxton",
-														"Pompadour",
-														"Ronin",
-														"Shaved")
+		"Afro",
+		"Afro 2",
+		"Afro (Large)",
+		"Balding Hair",
+		"Bedhead",
+		"Bedhead 2",
+		"Bedhead 3",
+		"Boddicker",
+		"Bowlcut",
+		"Bowlcut 2",
+		"Business Hair",
+		"Business Hair 2",
+		"Business Hair 3",
+		"Business Hair 4",
+		"Bun (Manbun)",
+		"Buzzcut",
+		"Comet",
+		"CIA",
+		"Coffee House",
+		"Combover",
+		"Crewcut",
+		"Father",
+		"Flat Top",
+		"Gelled Back",
+		"Joestar",
+		"Keanu Hair",
+		"Mohawk",
+		"Mohawk (Shaved)",
+		"Mohawk (Unshaven)",
+		"Oxton",
+		"Pompadour",
+		"Ronin",
+		"Shaved")
 	var/list/male_facial = list("Beard (Abraham Lincoln)",
-															"Beard (Chinstrap)",
-															"Beard (Dwarf)",
-															"Beard (Full)",
-															"Beard (Cropped Fullbeard)",
-															"Beard (Goatee)",
-															"Beard (Hipster)",
-															"Beard (Neckbeard)",
-															"Beard (Very Long)",
-															"Beard (Martial Artist)",
-															"Beard (Moonshiner)",
-															"Beard (Long)",
-															"Beard (Volaju)",
-															"Beard (Three o Clock Shadow)",
-															"Beard (Five o Clock Shadow)",
-															"Beard (Seven o Clock Shadow)",
-															"Moustache (Fu Manchu)",
-															"Moustache (Hulk Hogan)",
-															"Moustache (Watson)",
-															"Sideburns (Elvis)",
-															"Sideburns (Mutton Chops)",
-															"Sideburns",
-															"Shaved")
+		"Beard (Chinstrap)",
+		"Beard (Dwarf)",
+		"Beard (Full)",
+		"Beard (Cropped Fullbeard)",
+		"Beard (Goatee)",
+		"Beard (Hipster)",
+		"Beard (Neckbeard)",
+		"Beard (Very Long)",
+		"Beard (Martial Artist)",
+		"Beard (Moonshiner)",
+		"Beard (Long)",
+		"Beard (Volaju)",
+		"Beard (Three o Clock Shadow)",
+		"Beard (Five o Clock Shadow)",
+		"Beard (Seven o Clock Shadow)",
+		"Moustache (Fu Manchu)",
+		"Moustache (Hulk Hogan)",
+		"Moustache (Watson)",
+		"Sideburns (Elvis)",
+		"Sideburns (Mutton Chops)",
+		"Sideburns",
+		"Shaved")
 	var/list/female_hair = list("Ahoge",
-															"Long Bedhead",
-															"Beehive",
-															"Beehive 2",
-															"Bob Hair",
-															"Bob Hair 2",
-															"Bob Hair 3",
-															"Bob Hair 4",
-															"Bobcurl",
-															"Braided",
-															"Braided Front",
-															"Braid (Short)",
-															"Braid (Low)",
-															"Bun Head",
-															"Bun Head 2",
-															"Bun Head 3",
-															"Bun (Large)",
-															"Bun (Tight)",
-															"Double Bun",
-															"Emo",
-															"Emo Fringe",
-															"Feather",
-															"Gentle",
-															"Long Hair 1",
-															"Long Hair 2",
-															"Long Hair 3",
-															"Long Over Eye",
-															"Long Emo",
-															"Long Fringe",
-															"Ponytail",
-															"Ponytail 2",
-															"Ponytail 3",
-															"Ponytail 4",
-															"Ponytail 5",
-															"Ponytail 6",
-															"Ponytail 7",
-															"Ponytail (High)",
-															"Ponytail (Short)",
-															"Ponytail (Long)",
-															"Ponytail (Country)",
-															"Ponytail (Fringe)",
-															"Poofy",
-															"Short Hair Rosa",
-															"Shoulder-length Hair",
-															"Volaju")
+		"Long Bedhead",
+		"Beehive",
+		"Beehive 2",
+		"Bob Hair",
+		"Bob Hair 2",
+		"Bob Hair 3",
+		"Bob Hair 4",
+		"Bobcurl",
+		"Braided",
+		"Braided Front",
+		"Braid (Short)",
+		"Braid (Low)",
+		"Bun Head",
+		"Bun Head 2",
+		"Bun Head 3",
+		"Bun (Large)",
+		"Bun (Tight)",
+		"Double Bun",
+		"Emo",
+		"Emo Fringe",
+		"Feather",
+		"Gentle",
+		"Long Hair 1",
+		"Long Hair 2",
+		"Long Hair 3",
+		"Long Over Eye",
+		"Long Emo",
+		"Long Fringe",
+		"Ponytail",
+		"Ponytail 2",
+		"Ponytail 3",
+		"Ponytail 4",
+		"Ponytail 5",
+		"Ponytail 6",
+		"Ponytail 7",
+		"Ponytail (High)",
+		"Ponytail (Short)",
+		"Ponytail (Long)",
+		"Ponytail (Country)",
+		"Ponytail (Fringe)",
+		"Poofy",
+		"Short Hair Rosa",
+		"Shoulder-length Hair",
+		"Volaju")
 
 	//For equiping with random
 	var/list/backpacks = list(/obj/item/storage/backpack/satchel,
-														/obj/item/storage/backpack/satchel/leather)
+		/obj/item/storage/backpack/satchel/leather)
 	var/list/shoes = list()
 	var/list/uniforms = list()
 	var/list/belts = list()
@@ -208,34 +267,51 @@
 	var/obj/item/gun/range_weapon
 
 	//For reaction
-	var/list/male_phrases = list("My wife is waiting for me at home...",
-																"Sorry, pal, not today.",
-																"Go find yourself someone at the bar, I'm busy.")
-	var/list/female_phrases = list("Buy yourself a watch.",
-																	"I'm going to scream if you keep it up!",
-																	"Don't touch me.")
-	var/list/neutral_phrases = list("Fuck Off.",
-																	"Go on your own way.",
-																	"Not the best time to talk right now, pal.",
-																	"Мgmmph...",
-																	"Do I know you?",
-																	"I don't have much time.")
-	var/list/random_phrases = list("The visitors again...",
-																	"It seems I've been going around here in circles for the third time, already.",
-																	"Watch where you're walkin'!",
-																	"Sewer Rat. Go back in the drains where you came from.",
-																	"Tourists... Pheh.",
-																	"Rumors travel fast.")
-	var/list/answer_phrases = list("I agree.",
-																	"Yes-yes...",
-																	"Exactly.",
-																	"Maybe.",
-																	"Exactly.",
-																	"Affirmative..")
-	var/list/help_phrases = list("Help!",
-																"Help Me!!",
-																"What the hell's going on here?!",
-																"Shoot!!")
+	var/list/male_phrases = list(
+		"My wife is waiting for me at home...",
+		"Sorry, pal, not today.",
+		"Go find yourself someone at the bar, I'm busy.")
+	var/list/female_phrases = list(
+		"Buy yourself a watch.",
+		"I'm going to scream if you keep it up!",
+		"Don't touch me.")
+	var/list/neutral_phrases = list(
+		"Fuck off.",
+		"Go on your way.",
+		"Not the best time to talk right now, pal.",
+		"Мgmmph...",
+		"Do I know you?",
+		"I don't have much time.")
+	var/list/random_phrases = list(
+		"You a foreigner?...",
+		"It seems I've been going around here in circles for the third time, already.",
+		"Watch where you're walkin'!",
+		"Go back to the drains where you came from.",
+		"Tourists... Pheh.",
+		"Rumors travel fast.")
+	var/list/answer_phrases = list(
+		"I agree.",
+		"Yes-yes...",
+		"Exactly.",
+		"Maybe.",
+		"Exactly.",
+		"Affirmative..")
+	var/list/help_phrases = list(
+		"Help!",
+		"Help Me!!",
+		"What the hell's going on here?!",
+		"Shoot!!")
+	var/list/car_dodged = list(
+		"WOAH!",
+		"Watch where you're going!",
+		"Holy shit!",
+		"Watch it!",
+		"Learn to drive!",
+		"You almost ran me over!",
+		"What the fuck?!"
+	)
+
+	var/is_criminal = FALSE
 
 /mob/living/carbon/human/npc/proc/AssignSocialRole(var/datum/socialrole/S, var/dont_random = FALSE)
 	if(!S)
@@ -249,6 +325,8 @@
 	health = round(initial(health)+(initial(health)/3)*(physique))
 	last_health = health
 	socialrole = new S()
+
+	is_criminal = socialrole.is_criminal
 	if(GLOB.winter && !length(socialrole.suits))
 		socialrole.suits = list(/obj/item/clothing/suit/vampire/coat/winter, /obj/item/clothing/suit/vampire/coat/winter/alt)
 	if(GLOB.winter && !length(socialrole.neck))
@@ -484,9 +562,10 @@
 				if(witness_count > 1)
 					for(var/obj/item/police_radio/radio in GLOB.police_radios)
 						radio.announce_crime("victim", get_turf(src))
-					for(var/obj/item/p25radio/police/radio in GLOB.p25_radios)
-						if(radio.linked_network == "police")
+					for(var/obj/machinery/p25transceiver/police/radio in GLOB.p25_tranceivers)
+						if(radio.p25_network == "police")
 							radio.announce_crime("victim", get_turf(src))
+							break
 
 /mob/living/carbon/human/npc/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	. = ..()

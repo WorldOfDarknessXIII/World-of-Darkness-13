@@ -166,6 +166,10 @@
 			<label class='inputlabel radio'>Server
 			<input type='radio' id='server' name='radioban' value='server'[role == "Server" ? " checked" : ""][edit_id ? " disabled" : ""]>
 			<div class='inputbox'></div></label>
+			<br>
+			<label class='inputlabel radio'>Role
+			<input type='radio' id='role' name='radioban' value='role'[role == "Server" ? "" : " checked"][edit_id ? " disabled" : ""]>
+			<div class='inputbox'></div></label>
 		</div>
 		<div class='column right'>
 			Severity

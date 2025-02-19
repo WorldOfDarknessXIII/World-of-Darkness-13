@@ -41,3 +41,7 @@
 	l_hand = /obj/item/vamp/keys/police
 	r_hand = /obj/item/police_radio
 	backpack_contents = list(/obj/item/card/id/police/sergeant=1, /obj/item/passport=1, /obj/item/implant/radio=1, /obj/item/camera/detective=1, /obj/item/camera_film=1, /obj/item/taperecorder=1, /obj/item/tape=1, /obj/item/vamp/creditcard=1, /obj/item/ammo_box/vampire/c45acp=1, /obj/item/storage/firstaid/ifak=1)
+
+/datum/outfit/job/fbi/post_equip(mob/living/carbon/human/agent)
+	..()
+	agent.ignores_warrant = TRUE

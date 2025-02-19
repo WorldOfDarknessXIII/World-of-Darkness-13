@@ -54,7 +54,7 @@ SUBSYSTEM_DEF(job_scaling)
 	scaling_rules["Street Janitor"] = list(10, 30, 4) // 1 slot per 10 players over 30 players, up to 4 extra slots (10 max since 6 is the base)
 
 //vampire jobs
-	scaling_rules["Scourge"] = list(10, 30, 3) // 1 slot per 10 players over 30 players, up to 3 extra slots (10 max since 7 is the base)
+	scaling_rules["Hound"] = list(10, 30, 3) // 1 slot per 10 players over 30 players, up to 3 extra slots (10 max since 7 is the base)
 	scaling_rules["Bruiser"] = list(10, 30, 3) // 1 slot per 10 players over 30 players, up to 3 extra slots (10 max since 7 is the base)
 
 	message_admins("Job Scaling: Rules initialized")

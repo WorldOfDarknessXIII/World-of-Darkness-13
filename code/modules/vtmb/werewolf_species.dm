@@ -109,8 +109,16 @@
 	C.transformator = new(C)
 	C.transformator.human_form = C
 
+	//garou resist vampire bites better than mortals
+	RegisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
+	RegisterSignal(C.transformator.lupus_form, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
+	RegisterSignal(C.transformator.crinos_form, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
+
 /datum/species/garou/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
+	UnregisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED)
+	UnregisterSignal(C.transformator.lupus_form, COMSIG_MOB_VAMPIRE_SUCKED)
+	UnregisterSignal(C.transformator.crinos_form, COMSIG_MOB_VAMPIRE_SUCKED)
 	for(var/datum/action/garouinfo/VI in C.actions)
 		if(VI)
 			VI.Remove(C)
@@ -136,19 +144,6 @@
 			to_chat(C, "<span class='userdanger'><b>RAGE DECREASES</b></span>")
 	C.update_rage_hud()
 
-	if(amount && sound)
-		if(prob(20))
-			C.emote("growl")
-			if(iscrinos(C))
-				playsound(get_turf(C), 'code/modules/wod13/sounds/crinos_growl.ogg', 75, FALSE)
-			if(islupus(C))
-				playsound(get_turf(C), 'code/modules/wod13/sounds/lupus_growl.ogg', 75, FALSE)
-			if(isgarou(C))
-				if(C.gender == FEMALE)
-					playsound(get_turf(C), 'code/modules/wod13/sounds/female_growl.ogg', 75, FALSE)
-				else
-					playsound(get_turf(C), 'code/modules/wod13/sounds/male_growl.ogg', 75, FALSE)
-
 /proc/adjust_gnosis(var/amount, var/mob/living/carbon/C, var/sound = TRUE)
 	if(amount > 0)
 		if(C.auspice.gnosis < C.auspice.start_gnosis)
@@ -163,3 +158,14 @@
 				SEND_SOUND(C, sound('code/modules/wod13/sounds/rage_decrease.ogg', 0, 0, 75))
 			to_chat(C, "<span class='boldnotice'><b>GNOSIS DECREASES</b></span>")
 	C.update_rage_hud()
+
+/**
+ * On being bit by a vampire
+ *
+ * This handles vampire bite sleep immunity and any future special interactions.
+ */
+/datum/species/garou/proc/on_garou_bitten(datum/source, mob/living/carbon/being_bitten)
+	SIGNAL_HANDLER
+
+	if(isgarou(being_bitten) || iswerewolf(being_bitten))
+		return COMPONENT_RESIST_VAMPIRE_KISS

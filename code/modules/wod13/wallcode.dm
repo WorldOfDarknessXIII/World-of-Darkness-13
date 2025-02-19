@@ -1149,14 +1149,7 @@
 	barefootstep = FOOTSTEP_WATER
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	density = FALSE
-
-/turf/open/floor/plating/vampocean/Enter(atom/movable/mover, atom/oldloc)
-	if(isliving(mover))
-		var/mob/living/swimmer = mover
-		if(!HAS_TRAIT(swimmer, TRAIT_SUPERNATURAL_DEXTERITY))
-			return FALSE
-	. = ..()
+	density = TRUE
 
 /turf/open/floor/plating/vampocean/Initialize()
 	..()

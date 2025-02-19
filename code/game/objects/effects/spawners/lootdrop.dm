@@ -420,8 +420,7 @@
 				/obj/item/circuitboard/machine/mining_equipment_vendor,
 				/obj/item/circuitboard/machine/microwave,
 				/obj/item/circuitboard/machine/chem_dispenser/drinks,
-				/obj/item/circuitboard/machine/chem_dispenser/drinks/beer,
-				/obj/item/circuitboard/computer/slot_machine
+				/obj/item/circuitboard/machine/chem_dispenser/drinks/beer
 				)
 
 /obj/effect/spawner/lootdrop/techstorage/rnd

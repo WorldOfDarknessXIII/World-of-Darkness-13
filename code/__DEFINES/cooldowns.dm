@@ -36,6 +36,9 @@
 #define COOLDOWN_MECHA_MELEE_ATTACK "mecha_melee"
 #define COOLDOWN_MECHA_SMOKE "mecha_smoke"
 
+///Used to check when doing audible emotes, like screaming
+#define COOLDOWN_MOB_AUDIO "mob_audio_cooldown"
+
 //TIMER COOLDOWN MACROS
 
 #define COMSIG_CD_STOP(cd_index) "cooldown_[cd_index]"

@@ -51,6 +51,9 @@
 				frenzy_hardness = min(10, frenzy_hardness+1)
 
 /mob/living/carbon/proc/enter_frenzymod()
+	if (in_frenzy)
+		return
+
 	SEND_SOUND(src, sound('code/modules/wod13/sounds/frenzy.ogg', 0, 0, 50))
 	in_frenzy = TRUE
 	add_client_colour(/datum/client_colour/glass_colour/red)
@@ -58,6 +61,9 @@
 	GLOB.frenzy_list += src
 
 /mob/living/carbon/proc/exit_frenzymod()
+	if (!in_frenzy)
+		return
+
 	in_frenzy = FALSE
 	mind?.dharma?.Po_combat = FALSE
 	remove_client_colour(/datum/client_colour/glass_colour/red)

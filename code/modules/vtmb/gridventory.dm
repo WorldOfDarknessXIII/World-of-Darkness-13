@@ -909,6 +909,10 @@ VENTORY!
 	grid_width = 2 GRID_BOXES
 	grid_height = 1 GRID_BOXES
 
+/obj/item/melee/vampirearms/handsickle
+	grid_width = 2 GRID_BOXES
+	grid_height = 1 GRID_BOXES
+
 /obj/item/melee/vampirearms/chainsaw
 	grid_width = 8 GRID_BOXES
 	grid_height = 4 GRID_BOXES
@@ -943,7 +947,7 @@ VENTORY!
 
 /obj/item/ammo_box/magazine/glock9mm
 	grid_width = 1 GRID_BOXES
-	grid_height = 1 GRID_BOXES
+	grid_height = 2 GRID_BOXES
 
 /obj/item/gun/ballistic/automatic/vampire/glock19
 	grid_width = 2 GRID_BOXES
@@ -1005,11 +1009,23 @@ VENTORY!
 	grid_width = 2 GRID_BOXES
 	grid_height = 1 GRID_BOXES
 
+/obj/item/ammo_box/magazine/semi9mm
+	grid_width = 1 GRID_BOXES
+	grid_height = 2 GRID_BOXES
+
+/obj/item/gun/ballistic/automatic/vampire/beretta
+	grid_width = 2 GRID_BOXES
+	grid_height = 1 GRID_BOXES
+
 /obj/item/ammo_box/magazine/vamp556
 	grid_width = 1 GRID_BOXES
 	grid_height = 2 GRID_BOXES
 
 /obj/item/gun/ballistic/automatic/vampire/ar15
+	grid_width = 8 GRID_BOXES
+	grid_height = 2 GRID_BOXES
+
+/obj/item/gun/ballistic/automatic/vampire/huntrifle
 	grid_width = 8 GRID_BOXES
 	grid_height = 2 GRID_BOXES
 

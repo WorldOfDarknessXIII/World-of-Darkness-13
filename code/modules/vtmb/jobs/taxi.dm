@@ -38,7 +38,7 @@
 	shoes = /obj/item/clothing/shoes/vampire
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/vamp/keys/taxi
-	backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1, /obj/item/melee/vampirearms/tire=1)
 
 /datum/outfit/job/taxi/pre_equip(mob/living/carbon/human/H)
 	..()

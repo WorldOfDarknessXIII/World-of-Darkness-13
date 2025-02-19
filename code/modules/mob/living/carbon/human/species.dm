@@ -32,6 +32,11 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	///The alpha used by the hair. 255 is completely solid, 0 is invisible.
 	var/hair_alpha = 255
 
+	///The gradient style used for the mob's hair.
+	var/grad_style
+	///The gradient color used to color the gradient.
+	var/grad_color
+
 	///Does the species use skintones or not? As of now only used by humans.
 	var/use_skintones = FALSE
 	///If your race bleeds something other than bog standard blood, change this to reagent id. For example, ethereals bleed liquid electricity.
@@ -98,8 +103,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	var/punchdamagelow = 1
 	///Highest possible punch damage this species can give.
 	var/punchdamagehigh = 10
-	///Damage at which punches from this race will stun
-	var/punchstunthreshold = 20 //yes it should be to the attacked race but it's not useful that way even if it's logical
 	///Base electrocution coefficient.  Basically a multiplier for damage from electrocutions.
 	var/meleemod = 1
 	//For melee damage
@@ -577,6 +580,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 
 	if(!hair_hidden || dynamic_hair_suffix)
 		var/mutable_appearance/hair_overlay = mutable_appearance(layer = -HAIR_LAYER)
+		var/mutable_appearance/gradient_overlay = mutable_appearance(layer = -HAIR_LAYER)
 		if(!hair_hidden && !H.getorgan(/obj/item/organ/brain)) //Applies the debrained overlay if there is no brain
 			if(!(NOBLOOD in species_traits))
 				hair_overlay.icon = 'icons/mob/human_face.dmi'
@@ -617,6 +621,16 @@ GLOBAL_LIST_EMPTY(selectable_races)
 							hair_overlay.color = "#" + hair_color
 					else
 						hair_overlay.color = "#" + H.hair_color
+	//Gradients
+					grad_style = H.grad_style
+					grad_color = H.grad_color
+					if(grad_style)
+						var/datum/sprite_accessory/gradient = GLOB.gradients_list[grad_style]
+						var/icon/temp = icon(gradient.icon, gradient.icon_state)
+						var/icon/temp_hair = icon(hair_file, hair_state)
+						temp.Blend(temp_hair, ICON_ADD)
+						gradient_overlay.icon = temp
+						gradient_overlay.color = "#" + grad_color
 				else
 					hair_overlay.color = forced_colour
 				hair_overlay.alpha = hair_alpha
@@ -625,6 +639,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 					hair_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
 		if(hair_overlay.icon)
 			standing += hair_overlay
+			standing += gradient_overlay
 
 	if(standing.len)
 		H.overlays_standing[HAIR_LAYER] = standing
@@ -1339,12 +1354,14 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	user.do_cpr(target)
 
 
-/datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(target.check_block())
-		target.visible_message("<span class='warning'>[target] blocks [user]'s grab!</span>", \
-						"<span class='userdanger'>You block [user]'s grab!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, "<span class='warning'>Your grab at [target] was blocked!</span>")
-		return FALSE
+/datum/species/proc/grab(mob/living/carbon/human/user, mob/living/target, datum/martial_art/attacker_style)
+	if(ishuman(target))
+		var/mob/living/carbon/human/human = target
+		if(human.check_block())
+			human.visible_message("<span class='warning'>[human] blocks [user]'s grab!</span>", \
+							"<span class='userdanger'>You block [user]'s grab!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, "<span class='warning'>Your grab at [human] was blocked!</span>")
+			return FALSE
 	if(attacker_style?.grab_act(user,target))
 		return TRUE
 	else
@@ -1415,7 +1432,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 
 		if(user.potential >= 5)
 			var/atom/throw_target = get_edge_target_turf(target, user.dir)
-			target.throw_at(throw_target, rand(5, 7), 4, user)
+			target.throw_at(throw_target, rand(5, 7), 4, user, gentle = TRUE) //No stun nor impact damage from throwing people around
 
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey
@@ -1432,14 +1449,19 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
 			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block)
 			log_combat(user, target, "punched")
+		//Punches have a chance (by default 10%, up to 30%) to knock down a target for about 2 seconds depending on physique and dexterity.
+		//Checks if the target is already knocked down to prevent stunlocking.
+		if((target.stat != DEAD) && (!target.IsKnockdown()))
+			//Compare puncher's physique to the greater between the target's physique (robust enough to tank it) or dexterity (rolls with the punches)
+			if(
+			target.storyteller_roll(
+			dice = target.get_total_physique() + round(min(target.get_total_athletics(), target.get_total_dexterity()) / 2),
+			difficulty = clamp(user.get_total_physique(), 1, 4) + (user.melee_professional ? rand(1,4) : 0) == ROLL_FAILURE))
+				target.visible_message("<span class='danger'>[user] knocks [target] down!</span>", "<span class='userdanger'>You're knocked down by [user]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
+				to_chat(user, "<span class='danger'>You knock [target] down!</span>")
+				target.apply_effect(2 SECONDS, EFFECT_KNOCKDOWN, armor_block)
+				log_combat(user, target, "got a stun punch with their previous punch")
 
-		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
-			target.visible_message("<span class='danger'>[user] knocks [target] down!</span>", \
-							"<span class='userdanger'>You're knocked down by [user]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, "<span class='danger'>You knock [target] down!</span>")
-			var/knockdown_duration = 40 + (target.getStaminaLoss() + (target.getBruteLoss()*0.5))*0.8 //50 total damage = 40 base stun + 40 stun modifier = 80 stun duration, which is the old base duration
-			target.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
-			log_combat(user, target, "got a stun punch with their previous punch")
 
 /datum/species/proc/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return

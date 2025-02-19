@@ -1,20 +1,24 @@
 
 /datum/socialrole/bandit
-	s_tones = list("caucasian3",
-								"latino",
-								"mediterranean",
-								"asian1",
-								"asian2",
-								"arab",
-								"indian",
-								"african1",
-								"african2")
+	s_tones = list("albino",
+		"caucasian1",
+		"caucasian2",
+		"caucasian3",
+		"latino",
+		"mediterranean",
+		"asian1",
+		"asian2",
+		"arab",
+		"indian",
+		"african1",
+		"african2")
 
 	min_age = 18
 	max_age = 45
 	preferedgender = MALE
 	male_names = null
 	surnames = null
+	is_criminal = TRUE
 
 	hair_colors = list("040404",	//Black
 											"120b05",	//Dark Brown
@@ -83,8 +87,8 @@
 		"You need somethin'?",
 		"You've got some balls, that's for sure.",
 		"You know who I work for?",
-		"Get the hell outta here, 'fore I get my gang on yo ass.",
-		"you need sumn' punk?",
+		"Get the hell outta here, 'fore I get my gang on yo' ass.",
+		"You need sumn' punk?",
 		"Get lost, liberal.",
 		"Get outta this side of town.",
 		"Think you scare me? You know who I work for?",
@@ -128,7 +132,7 @@
 		"Fucking FREAK!",
 		"What the hell are you doing!?",
 		"You fucked up!",
-		"Check yo self fool!",
+		"Check yo' self, fool!",
 		"We got shit, shit that'll shut you up for good!"
 	)
 
@@ -137,8 +141,15 @@
 		"albino",
 		"caucasian1",
 		"caucasian2",
-		"caucasian3"
-	)
+		"caucasian3",
+		"latino",
+		"mediterranean",
+		"asian1",
+		"asian2",
+		"arab",
+		"indian",
+		"african1",
+		"african2")
 
 	min_age = 18
 	max_age = 85
@@ -234,9 +245,9 @@
 		"Do you need something?",
 		"Can you repeat what you were saying?",
 		"I'm late, don't interrupt me.",
-		"Check bar for new company...",
+		"Check the bar if you want somebody to bother...",
 		"Can't speak right now.",
-		"Good night I guess?",
+		"Goodnight, I guess?",
 		"Guh...",
 		"I dunno what to say.",
 		"That's all, folks."
@@ -246,7 +257,7 @@
 		"I miss my beer...",
 		"Everything okay?",
 		"Hello.",
-		"Didn't I meet you?",
+		"Haven't I seen you around before?",
 		"Something wrong here.",
 		"Oooh, dude..."
 	)
@@ -262,7 +273,7 @@
 	help_phrases = list(
 		"Oh God!",
 		"Go away!!",
-		"What the heck is happening?!",
+		"What the hell is happening?!",
 		"Stop!",
 		"Someone, help!",
 		"Mommy!"
@@ -270,9 +281,17 @@
 
 /datum/socialrole/usualfemale
 	s_tones = list("albino",
-								"caucasian1",
-								"caucasian2",
-								"caucasian3")
+		"caucasian1",
+		"caucasian2",
+		"caucasian3",
+		"latino",
+		"mediterranean",
+		"asian1",
+		"asian2",
+		"arab",
+		"indian",
+		"african1",
+		"african2")
 
 	min_age = 18
 	max_age = 85
@@ -398,12 +417,18 @@
 	)
 
 /datum/socialrole/poormale
-	s_tones = list(
-		"albino",
+	s_tones = list("albino",
 		"caucasian1",
 		"caucasian2",
-		"caucasian3"
-	)
+		"caucasian3",
+		"latino",
+		"mediterranean",
+		"asian1",
+		"asian2",
+		"arab",
+		"indian",
+		"african1",
+		"african2")
 
 	min_age = 45
 	max_age = 85
@@ -490,16 +515,24 @@
 											"Drunk...")
 	help_phrases = list("Aaaugh!",
 											"AAAAHHHH!!",
-											"Wut de fuck? WHOM'RE YOU?!",
+											"What da' fuck? WHO'RE YOU?!",
 											"Shit!",
 											"Ass!",
 											"Dick!")
 
 /datum/socialrole/poorfemale
 	s_tones = list("albino",
-								"caucasian1",
-								"caucasian2",
-								"caucasian3")
+		"caucasian1",
+		"caucasian2",
+		"caucasian3",
+		"latino",
+		"mediterranean",
+		"asian1",
+		"asian2",
+		"arab",
+		"indian",
+		"african1",
+		"african2")
 
 	min_age = 45
 	max_age = 85
@@ -593,13 +626,15 @@
 											"Drunk...")
 	help_phrases = list("Aaaugh!",
 											"AAAAHHHH!!",
-											"Wut de fuck? WHOM'RE YOU?!",
+											"What the fuck? WHO'RE YOU?!",
 											"Shit!",
 											"Ass!",
 											"Dick!")
 
 /datum/socialrole/richmale
-	s_tones = list("albino")
+	s_tones = list("albino",
+		"caucasian1",
+		"caucasian2")
 
 	min_age = 18
 	max_age = 85
@@ -670,7 +705,9 @@
 											"Someone, call the cops!")
 
 /datum/socialrole/richfemale
-	s_tones = list("albino")
+	s_tones = list("albino",
+		"caucasian1",
+		"caucasian2")
 
 	min_age = 18
 	max_age = 85
@@ -727,7 +764,7 @@
 											"I'm going somewhere important, not like you'd get it.",
 											"Get lost, filthy hobo...",
 											"Get lost, peasant...",
-											"Have you been to the bar tonight? people go there all the time and sit there for the entire night, it's crazy...",
+											"You been to the bar tonight? It's a good place for hobos like you...",
 											"Stop doing that, imbecile.")
 	neutral_phrases = list("Did you ask something?",
 											"Excuse me?",
@@ -744,26 +781,18 @@
 
 /mob/living/carbon/human/npc/bandit
 	max_stat = 3
+	my_backup_weapon = /obj/item/melee/vampirearms/knife
 
 /mob/living/carbon/human/npc/bandit/Initialize()
-	..()
-	if(prob(33))
+	. = ..()
+	if(prob(50))
 		base_body_mod = "f"
-	if(prob(33))
-		my_weapon = new /obj/item/gun/ballistic/automatic/vampire/deagle(src)
-	else
-		if(prob(50))
-			my_weapon = new /obj/item/gun/ballistic/vampire/revolver/snub(src)
-		if(prob(50))
-			my_weapon = new /obj/item/melee/vampirearms/baseball(src)
-		else
-			my_weapon = new /obj/item/melee/vampirearms/knife(src)
 	AssignSocialRole(/datum/socialrole/bandit)
 
 /mob/living/carbon/human/npc/walkby
 
 /mob/living/carbon/human/npc/walkby/Initialize()
-	..()
+	. = ..()
 	if(prob(50))
 		base_body_mod = pick("s", "f")
 	AssignSocialRole(pick(/datum/socialrole/usualmale, /datum/socialrole/usualfemale))
@@ -773,7 +802,7 @@
 	old_movement = TRUE
 
 /mob/living/carbon/human/npc/hobo/Initialize()
-	..()
+	. = ..()
 	if(prob(33))
 		base_body_mod = "s"
 	AssignSocialRole(pick(/datum/socialrole/poormale, /datum/socialrole/poorfemale))
@@ -782,7 +811,7 @@
 	bloodquality = BLOOD_QUALITY_HIGH
 
 /mob/living/carbon/human/npc/business/Initialize()
-	..()
+	. = ..()
 	if(prob(66))
 		base_body_mod = "s"
 	AssignSocialRole(pick(/datum/socialrole/richmale, /datum/socialrole/richfemale))
@@ -824,12 +853,21 @@
 
 /mob/living/simple_animal/pet/rat/Life()
 	. = ..()
+	if(!isturf(loc)) // if rat is, for example, in-hand or inside a crate, won't run this self-deletion code
+		return
+	if(client)
+		return
 	var/delete_me = TRUE
-	for(var/mob/living/carbon/human/H in oviewers(5, src))
+	for(var/mob/living/carbon/human/H in viewers(5, src))
 		if(H)
 			delete_me = FALSE
 	if(delete_me)
 		death()
+
+/mob/living/simple_animal/pet/rat/will_escape_storage()
+	if(prob(10))
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/hostile/beastmaster/rat
 	name = "rat"
@@ -897,9 +935,17 @@
 
 /datum/socialrole/shop
 	s_tones = list("albino",
-								"caucasian1",
-								"caucasian2",
-								"caucasian3")
+		"caucasian1",
+		"caucasian2",
+		"caucasian3",
+		"latino",
+		"mediterranean",
+		"asian1",
+		"asian2",
+		"arab",
+		"indian",
+		"african1",
+		"african2")
 
 	min_age = 18
 	max_age = 45
@@ -982,7 +1028,7 @@
 	is_talking = TRUE
 
 /mob/living/carbon/human/npc/shop/Initialize()
-	..()
+	. = ..()
 	if(prob(66))
 		base_body_mod = "f"
 	AssignSocialRole(/datum/socialrole/shop)
@@ -994,7 +1040,7 @@
 	staying = TRUE
 
 /mob/living/carbon/human/npc/bacotell/Initialize()
-	..()
+	. = ..()
 	if(prob(66))
 		base_body_mod = "f"
 	AssignSocialRole(/datum/socialrole/shop/bacotell)
@@ -1006,7 +1052,7 @@
 	staying = TRUE
 
 /mob/living/carbon/human/npc/bubway/Initialize()
-	..()
+	. = ..()
 	if(prob(66))
 		base_body_mod = "f"
 	AssignSocialRole(/datum/socialrole/shop/bubway)
@@ -1018,7 +1064,7 @@
 	staying = TRUE
 
 /mob/living/carbon/human/npc/gummaguts/Initialize()
-	..()
+	. = ..()
 	if(prob(66))
 		base_body_mod = "f"
 	AssignSocialRole(/datum/socialrole/shop/gummaguts)
@@ -1090,19 +1136,19 @@
 
 	male_phrases = list("I see you.",
 											"Looking suspicious...",
-											"I got some bullets if you got some crime-ass ideas.",
-											"I'm the law.",
-											"Have you seen man in black coat with black hair?")
+											"Don't try anything stupid.",
+											"Nothing to see here.",
+											"Have you seen a man in black coat with black hair?")
 	neutral_phrases = list("I see you.",
 											"Looking suspicious...",
-											"I got some bullets if you got some crime-ass ideas.",
-											"I'm the law.",
-											"Have you seen man in black coat with black hair?")
+											"Don't try anything stupid.",
+											"Nothing to see here.",
+											"Have you seen a man in black coat with black hair?")
 	random_phrases = list("I see you.",
 											"Looking suspicious...",
-											"I got some bullets if you got some crime-ass ideas.",
-											"I'm the law.",
-											"Have you seen man in black coat with black hair?")
+											"Don't try anything stupid.",
+											"Nothing to see here.",
+											"Have you seen a man in black coat with black hair?")
 	answer_phrases = list("I'm here to protect you.")
 	help_phrases = list("Lay down!",
 											"Stop right there!!",
@@ -1113,15 +1159,12 @@
 /mob/living/carbon/human/npc/police
 	fights_anyway = TRUE
 	max_stat = 4
+	my_backup_weapon_type = /obj/item/melee/classic_baton/vampire
 
 /mob/living/carbon/human/npc/police/Initialize()
-	..()
+	. = ..()
 	if(prob(66))
 		base_body_mod = "f"
-	if(prob(66))
-		my_weapon = new /obj/item/gun/ballistic/vampire/revolver(src)
-	else
-		my_weapon = new /obj/item/gun/ballistic/automatic/vampire/ar15(src)
 	AssignSocialRole(/datum/socialrole/police)
 
 /mob/living/carbon/human/npc/police/Life()
@@ -1205,22 +1248,22 @@
 	pockets = list(/obj/item/vamp/keys/npc, /obj/item/stack/dollar/rand)
 
 	neutral_phrases = list(
-		"No Loitering.",
-		"I'm kinda like a  cop, you know.",
-		"I could go for some bear claws right about now.",
+		"No loitering.",
+		"I'm kinda, like, a cop, you know.",
+		"I could go for some bearclaws right about now.",
 		"Like the uniform?",
 		"Hey, catch me later, I'll buy you a beer."
 	)
 	neutral_phrases = list(
-		"No Loitering.",
-		"I'm kinda like a  cop, you know.",
-		"I could go for some bear claws right about now.",
+		"No loitering.",
+		"I'm kinda, like, a cop, you know?",
+		"I could go for some bearclaws right about now.",
 		"Like the uniform?",
 		"Hey, catch me later, I'll buy you a beer."
 	)
 	random_phrases = list(
-		"Real quiet night tonight.",
-		"My brothers and father are security guards too."
+		"It's been a real quiet night.",
+		"My brothers and father are security guards, too."
 	)
 	answer_phrases = list("I need some coffee.")
 	help_phrases = list(
@@ -1235,12 +1278,13 @@
 	staying = TRUE
 	fights_anyway = TRUE
 	max_stat = 4
+	my_weapon_type = /obj/item/gun/ballistic/automatic/vampire/m1911
+	my_backup_weapon_type = /obj/item/melee/classic_baton/vampire
 
 /mob/living/carbon/human/npc/guard/Initialize()
-	..()
+	. = ..()
 	if(prob(66))
 		base_body_mod = "f"
-	my_weapon = new /obj/item/gun/ballistic/automatic/vampire/m1911(src)
 	AssignSocialRole(/datum/socialrole/guard)
 
 /mob/living/carbon/human/npc/walkby/club/Life()
@@ -1264,9 +1308,17 @@
 
 /datum/socialrole/stripfemale
 	s_tones = list("albino",
-								"caucasian1",
-								"caucasian2",
-								"caucasian3")
+		"caucasian1",
+		"caucasian2",
+		"caucasian3",
+		"latino",
+		"mediterranean",
+		"asian1",
+		"asian2",
+		"arab",
+		"indian",
+		"african1",
+		"african2")
 
 	min_age = 18
 	max_age = 30
@@ -1337,27 +1389,27 @@
 	uniforms = list(/obj/item/clothing/under/vampire/burlesque)
 	backpacks = list()
 
-	female_phrases = list("Wanna touch this boobies?",
-											"Do you like my butt?",
+	female_phrases = list("No touching~.",
+											"Like what you see?",
 											"Wanna play?",
 											"He-he.",
-											"Any dance for you...",
+											"Want a private dance?...",
 											"Sit and rest.",
 											"Do you like this?",
 											"Ahh...")
-	neutral_phrases = list("Wanna touch this boobies?",
-											"Do you like my butt?",
+	neutral_phrases = list("No touching~.",
+											"Like what you see?",
 											"Wanna play?",
 											"He-he.",
-											"Any dance for you...",
+											"Want a private dance?...",
 											"Sit and rest.",
 											"Do you like this?",
 											"Ahh...")
-	random_phrases = list("Wanna touch this boobies?",
-											"Do you like my butt?",
+	random_phrases = list("No touching~.",
+											"Like what you see?",
 											"Wanna play?",
 											"He-he.",
-											"Any dance for you...",
+											"Want a private dance?...",
 											"Sit and rest.",
 											"Do you like this?",
 											"Ahh...")
@@ -1367,7 +1419,7 @@
 												"Sure you do...")
 	help_phrases = list("Oh God!",
 											"Ahhh!!",
-											"I'm just a strip worker!",
+											"I'm just a stripper!",
 											"Stop!",
 											"Help me!",
 											"Help!")
@@ -1376,7 +1428,7 @@
 	staying = TRUE
 
 /mob/living/carbon/human/npc/stripper/Initialize()
-	..()
+	. = ..()
 	base_body_mod = "s"
 	AssignSocialRole(/datum/socialrole/stripfemale)
 	underwear = "Nude"
@@ -1397,7 +1449,7 @@
 	staying = TRUE
 
 /mob/living/carbon/human/npc/incel/Initialize()
-	..()
+	. = ..()
 	if(prob(50))
 		base_body_mod = "f"
 	AssignSocialRole(/datum/socialrole/usualmale)
@@ -1421,11 +1473,12 @@
 	help_phrases = list("Cops!",
 											"Fuck the police!!",
 											"COPS?!!")
+	is_criminal = TRUE
 
 /mob/living/carbon/human/npc/illegal
 	staying = TRUE
 	is_talking = TRUE
 
 /mob/living/carbon/human/npc/illegal/Initialize()
-	..()
+	. = ..()
 	AssignSocialRole(/datum/socialrole/shop/illegal)
