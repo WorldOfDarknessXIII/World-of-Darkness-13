@@ -856,11 +856,13 @@
 	// if the caster acts overtly, the ability is deactivated
 	COOLDOWN_DECLARE(obfuscate_combat_cooldown)
 	var/static/list/aggressive_signals = list(
-		COMSIG_MOB_LIVING_ATTACK_HAND,
+		COMSIG_MOB_ATTACK_HAND,
+		COMSIG_MOB_ATTACKED_HAND,
 		COMSIG_MOB_MELEE_SWING,
 		COMSIG_MOB_FIRED_GUN,
 		COMSIG_MOB_THREW_MOVABLE,
-		COMSIG_MOB_ATTACKING_MELEE
+		COMSIG_MOB_ATTACKING_MELEE,
+		COMSIG_MOB_ATTACKED_BY_MELEE,
 	)
 	var/deactivation_timer = null	//separate from the combat cooldown; this is the timer for the ability itself
 	var/active = FALSE // this is used to determine if the ability is active or not
