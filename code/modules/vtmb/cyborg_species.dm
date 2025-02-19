@@ -3,6 +3,7 @@
 	id = "cyborg"
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,HAS_BONE)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LIMBATTACHMENT, TRAIT_VIRUSIMMUNE, TRAIT_NOBLEED, TRAIT_NOHUNGER)
 	mutant_bodyparts = list("wings" = "None")
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/durathread
