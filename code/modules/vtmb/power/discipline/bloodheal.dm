@@ -102,9 +102,8 @@
 	if (repeat)
 		COOLDOWN_START(src, duration, duration_length)
 		activate()
-		return
-
-	try_deactivate()
+	else
+		addtimer(CALLBACK(src, PROC_REF(refresh)), duration_length)
 
 /datum/discipline_power/bloodheal/proc/adjust_vitae_cost(no_waste = FALSE)
 	vitae_cost = initial(vitae_cost)
