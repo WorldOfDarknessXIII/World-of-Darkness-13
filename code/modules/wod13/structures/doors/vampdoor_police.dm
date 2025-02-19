@@ -1,4 +1,3 @@
-
 /obj/structure/vampdoor/dispatch
 	icon_state = "cam-1"
 	baseicon = "cam"
