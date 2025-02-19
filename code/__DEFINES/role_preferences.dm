@@ -8,6 +8,7 @@
 //then you MUST update the database!
 #define ROLE_NATIONAL_GUARD		"National Guard"
 #define ROLE_SWAT				"Swat Officer"
+#define ROLE_BLACKSUIT			"Man In Black"
 #define ROLE_SYNDICATE			"Syndicate"
 #define ROLE_TRAITOR			"Traitor"
 #define ROLE_OPERATIVE			"Operative"
