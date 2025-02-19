@@ -1503,6 +1503,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		to_chat(M, "<span class='warning'>You attempt to touch [H]!</span>")
 		return
 	SEND_SIGNAL(M, COMSIG_MOB_ATTACK_HAND, M, H, attacker_style)
+	SEND_SIGNAL(H, COMSIG_MOB_ATTACKED_HAND, M, H, attacker_style)
 	switch(M.a_intent)
 		if("help")
 			help(M, H, attacker_style)
