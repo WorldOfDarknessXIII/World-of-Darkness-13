@@ -72,29 +72,56 @@
 
 	var/is_criminal = FALSE
 
+	var/list/drop_on_death_list = null
+
 /mob/living/carbon/human/npc/LateInitialize()
 	. = ..()
 	if(role_weapons_chances.Find(type))
 		for(var/weapon in role_weapons_chances[type])
 			if(prob(role_weapons_chances[type][weapon]))
 				my_weapon = new weapon(src)
-				equip_to_appropriate_slot(my_weapon)
 				break
-
 	if(!my_weapon && my_weapon_type)
 		my_weapon = new my_weapon_type(src)
-		equip_to_appropriate_slot(my_weapon)
+		
 
 
 	if(my_weapon)
 		has_weapon = TRUE
+		equip_to_appropriate_slot(my_weapon)
 		if(istype(my_weapon, /obj/item/gun/ballistic))
 			RegisterSignal(my_weapon, COMSIG_GUN_FIRED, PROC_REF(handle_gun))
 			RegisterSignal(my_weapon, COMSIG_GUN_EMPTY, PROC_REF(handle_empty_gun))
+		register_sticky_item(my_weapon)
 
 	if(my_backup_weapon_type)
 		my_backup_weapon = new my_backup_weapon_type(src)
 		equip_to_appropriate_slot(my_backup_weapon)
+		register_sticky_item(my_backup_weapon)
+
+//====================Sticky Item Handling====================
+/mob/living/carbon/human/npc/proc/register_sticky_item(obj/item/my_item)
+	ADD_TRAIT(my_item, TRAIT_NODROP, NPC_ITEM_TRAIT)
+	if(!drop_on_death_list?.len)
+		drop_on_death_list = list()
+	drop_on_death_list += my_item
+
+/mob/living/carbon/human/npc/death(gibbed)
+	. = ..()
+	if(drop_on_death_list?.len)
+		for(var/obj/item/dropping_item in drop_on_death_list)
+			drop_on_death_list -= dropping_item
+			if(HAS_TRAIT_FROM(dropping_item, TRAIT_NODROP, NPC_ITEM_TRAIT))
+				REMOVE_TRAIT(dropping_item, TRAIT_NODROP, NPC_ITEM_TRAIT)
+			dropItemToGround(dropping_item, TRUE)
+
+//If an npc's item has TRAIT_NODROP, we NEVER drop it, even if it is forced.
+/mob/living/carbon/human/npc/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
+	if(I && HAS_TRAIT(I, TRAIT_NODROP))
+		return FALSE
+	. = ..() 
+//============================================================
+
 
 /datum/movespeed_modifier/npc
 	multiplicative_slowdown = 2
@@ -569,14 +596,13 @@
 
 /mob/living/carbon/human/npc/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(throwingdatum)
-		if(throwingdatum.thrower)
-			Aggro(throwingdatum.thrower, TRUE)
+	if(throwingdatum?.thrower && (AM.throwforce > 5 || (AM.throwforce && src.health < src.maxHealth)))
+		Aggro(throwingdatum.thrower, TRUE)
 
 /mob/living/carbon/human/npc/attackby(obj/item/W, mob/living/user, params)
 	. = ..()
 	if(user)
-		if(W.force)
+		if(W.force > 5 || (W.force && src.health < src.maxHealth))
 			for(var/mob/living/carbon/human/npc/NEPIC in oviewers(7, src))
 				NEPIC.Aggro(user)
 			Aggro(user, TRUE)

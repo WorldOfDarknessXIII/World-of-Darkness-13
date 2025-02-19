@@ -260,11 +260,7 @@
 				var/obj/item/card/id/id_card = danger_source.get_idcard(FALSE)
 				if(!istype(id_card, /obj/item/card/id/police) || is_criminal)
 					if(!spawned_weapon && has_weapon)
-						my_weapon.forceMove(loc)
-						drop_all_held_items()
-						temporarilyRemoveItemFromInventory(my_weapon, TRUE)
-						put_in_active_hand(my_weapon)
-						spawned_weapon = TRUE
+						npc_draw_weapon()
 					if(spawned_weapon && get_active_held_item() != my_weapon)
 						has_weapon = FALSE
 					if(danger_source)
@@ -283,9 +279,7 @@
 					danger_source = null
 					if(has_weapon)
 						if(get_active_held_item() == my_weapon)
-							drop_all_held_items()
-							my_weapon.forceMove(src)
-							spawned_weapon = FALSE
+							npc_stow_weapon()
 						else
 							has_weapon = FALSE
 					walktarget = ChoosePath()
@@ -295,9 +289,7 @@
 				danger_source = null
 				if(has_weapon)
 					if(get_active_held_item() == my_weapon)
-						drop_all_held_items()
-						my_weapon.forceMove(src)
-						spawned_weapon = FALSE
+						npc_stow_weapon()
 					else
 						has_weapon = FALSE
 				walktarget = ChoosePath()
@@ -318,8 +310,6 @@
 		if(has_weapon && !danger_source)
 			if(spawned_weapon)
 				if(get_active_held_item() == my_weapon)
-					drop_all_held_items()
-					my_weapon.forceMove(src)
-					spawned_weapon = FALSE
+					npc_stow_weapon()
 				else
 					has_weapon = FALSE
