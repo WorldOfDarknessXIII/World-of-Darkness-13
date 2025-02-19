@@ -49,9 +49,8 @@
 /datum/discipline_power/obfuscate/unseen_presence/activate()
 	. = ..()
 	for(var/mob/living/carbon/human/npc/NPC in GLOB.npc_list)
-		if(NPC)
-			if(NPC.danger_source == owner)
-				NPC.danger_source = null
+		if (NPC.danger_source == owner)
+			NPC.danger_source = null
 	owner.alpha = 10
 	owner.obfuscate_level = 2
 
@@ -93,9 +92,8 @@
 /datum/discipline_power/obfuscate/mask_of_a_thousand_faces/activate()
 	. = ..()
 	for(var/mob/living/carbon/human/npc/NPC in GLOB.npc_list)
-		if(NPC)
-			if(NPC.danger_source == owner)
-				NPC.danger_source = null
+		if (NPC.danger_source == owner)
+			NPC.danger_source = null
 	owner.alpha = 10
 	owner.obfuscate_level = 4
 
@@ -115,9 +113,8 @@
 /datum/discipline_power/obfuscate/cloak_the_gathering/activate()
 	. = ..()
 	for(var/mob/living/carbon/human/npc/NPC in GLOB.npc_list)
-		if(NPC)
-			if(NPC.danger_source == owner)
-				NPC.danger_source = null
+		if (NPC.danger_source == owner)
+			NPC.danger_source = null
 	owner.alpha = 10
 	owner.obfuscate_level = 5
 
