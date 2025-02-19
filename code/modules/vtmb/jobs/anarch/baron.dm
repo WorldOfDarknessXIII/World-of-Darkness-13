@@ -22,7 +22,11 @@
 	my_contact_is_important = TRUE
 	known_contacts = list(
 		"Prince",
-		"Dealer"
+		"Sheriff",
+		"Dealer",
+		"Bouncer",
+		"Emissary",
+		"Sweeper"
 	)
 
 	v_duty = "You lead the Anarchs in the City. A Camarilla faction that values freedom and individuality. While not a fan of the traditions, you still respect the Masquerade."
