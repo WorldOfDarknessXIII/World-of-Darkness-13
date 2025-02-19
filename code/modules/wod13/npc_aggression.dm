@@ -59,13 +59,32 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(my_weapon, COMSIG_GUN_FIRED)
 	UnregisterSignal(my_weapon, COMSIG_GUN_EMPTY)
-	if(my_weapon.loc != src)
-		return
-
-	temporarilyRemoveItemFromInventory(my_weapon, TRUE)
-	equip_to_appropriate_slot(my_weapon)
-	has_weapon = FALSE
+	npc_stow_weapon()
 	if(my_backup_weapon && !spawned_backup_weapon)
-		my_backup_weapon.forceMove(loc)
-		put_in_active_hand(my_backup_weapon)
+		npc_draw_backup_weapon()
+		my_weapon = my_backup_weapon
 		spawned_backup_weapon = TRUE
+
+/mob/living/carbon/human/npc/proc/npc_stow_weapon()
+	if(my_weapon)
+		REMOVE_TRAIT(my_weapon, TRAIT_NODROP, NPC_ITEM_TRAIT)
+		temporarilyRemoveItemFromInventory(my_weapon, TRUE)
+		equip_to_appropriate_slot(my_weapon)
+		ADD_TRAIT(my_weapon, TRAIT_NODROP, NPC_ITEM_TRAIT)
+		spawned_weapon = FALSE
+
+/mob/living/carbon/human/npc/proc/npc_draw_weapon()
+	if(my_weapon)
+		REMOVE_TRAIT(my_weapon, TRAIT_NODROP, NPC_ITEM_TRAIT)
+		temporarilyRemoveItemFromInventory(my_weapon, TRUE)
+		put_in_active_hand(my_weapon)
+		ADD_TRAIT(my_weapon, TRAIT_NODROP, NPC_ITEM_TRAIT)
+		spawned_weapon = TRUE
+
+/mob/living/carbon/human/npc/proc/npc_draw_backup_weapon()
+	if(my_backup_weapon)
+		REMOVE_TRAIT(my_backup_weapon, TRAIT_NODROP, NPC_ITEM_TRAIT)
+		temporarilyRemoveItemFromInventory(my_backup_weapon, TRUE)
+		put_in_active_hand(my_backup_weapon)
+		ADD_TRAIT(my_backup_weapon, TRAIT_NODROP, NPC_ITEM_TRAIT)
+		spawned_weapon = TRUE

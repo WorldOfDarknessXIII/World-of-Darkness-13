@@ -15054,6 +15054,8 @@
 	},
 /obj/structure/table,
 /obj/item/gun/ballistic/automatic/vampire/sniper,
+/obj/item/ammo_box/vampire/c50,
+/obj/item/ammo_box/vampire/c50,
 /turf/open/floor/plating/vampplating,
 /area/vtm/interior/millennium_tower/f2)
 "bam" = (
@@ -18482,10 +18484,6 @@
 "blU" = (
 /turf/closed/wall/vampwall/rich/old,
 /area/vtm/interior/mansion)
-"blV" = (
-/obj/item/gun/ballistic/automatic/vampire/sniper,
-/turf/open/floor/plating/vampgrass,
-/area/vtm/pacificheights)
 "blW" = (
 /obj/structure/roadsign/warningpedestrian,
 /turf/open/floor/plating/sidewalk/old,
@@ -25458,6 +25456,7 @@
 /obj/item/gun/ballistic/automatic/vampire/sniper,
 /obj/item/clothing/head/fedora,
 /obj/structure/closet/cabinet,
+/obj/item/ammo_box/vampire/c50,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/interior)
 "bJf" = (
@@ -35425,7 +35424,6 @@
 /area/vtm/park)
 "gJt" = (
 /obj/item/gun/ballistic/automatic/vampire/sniper,
-/obj/item/ammo_box/vampire/c556,
 /obj/item/gun/ballistic/shotgun/vampire,
 /obj/item/ammo_box/vampire/c12g,
 /obj/item/ammo_box/vampire/c12g,
@@ -35434,6 +35432,8 @@
 	},
 /obj/item/flashlight/seclite,
 /obj/item/flashlight/seclite,
+/obj/item/ammo_box/vampire/c50,
+/obj/item/ammo_box/vampire/c50,
 /turf/open/floor/plating/vampplating,
 /area/vtm/jazzclub)
 "gJE" = (
@@ -37716,7 +37716,7 @@
 /area/vtm/interior/techshop)
 "hOi" = (
 /obj/structure/chair/sofa/corp/corner,
-/obj/item/ammo_box/vampire/c556,
+/obj/item/ammo_box/vampire/c50,
 /turf/open/floor/carpet,
 /area/vtm/interior/bianchiBank)
 "hOs" = (
@@ -40425,9 +40425,9 @@
 /area/vtm/interior/laundromat)
 "jeI" = (
 /obj/structure/rack,
-/obj/item/ammo_box/vampire/c556,
 /obj/item/gun/ballistic/automatic/vampire/sniper,
 /obj/effect/decal/graffiti,
+/obj/item/ammo_box/vampire/c50,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/anarch)
 "jeW" = (
@@ -196855,7 +196855,7 @@ bfM
 bfM
 bKX
 bfN
-blV
+bfM
 bfM
 bfM
 bfM
