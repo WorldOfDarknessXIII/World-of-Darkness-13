@@ -390,6 +390,9 @@
 #define COMSIG_MOB_APPLY_DAMGE	"mob_apply_damage"
 ///from base of /mob/throw_item(): (atom/target)
 #define COMSIG_MOB_THROW "mob_throw"
+///from base of /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE, quickstart = TRUE)
+//SEND_SIGNAL(thrower, COMSIG_MOB_THREW_MOVABLE, target, TT)
+#define COMSIG_MOB_THREW_MOVABLE "mob_threw_movable"
 ///from base of TYPE_VERB_REF(/mob, examinate)(): (atom/target)
 #define COMSIG_MOB_EXAMINATE "mob_examinate"
 ///from /mob/living/handle_eye_contact(): (mob/living/other_mob)
@@ -987,8 +990,20 @@
 #define COMSIG_ITEM_AFTERATTACK "item_afterattack"
 ///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
 #define COMSIG_ITEM_ATTACK_QDELETED "item_attack_qdeleted"
+///from base of /mob/proc/melee_swing()
+#define COMSIG_MOB_MELEE_SWING "mob_melee_swing"
+///from base of /mob/living/attackby(obj/item/I, mob/living/user, params)
+///	SEND_SIGNAL(src, COMSIG_MOB_ATTACKED_BY_MELEE, /*attacker =*/user, /*item =*/I, /*params =*/params)
+#define COMSIG_MOB_ATTACKED_BY_MELEE "mob_attacked_by_melee"
+///	SEND_SIGNAL(user, COMSIG_MOB_ATTACKING_MELEE, /*target =*/src, /*item =*/I, params)
+#define COMSIG_MOB_ATTACKING_MELEE "mob_attacking_melee"
 ///from base of atom/attack_hand(): (mob/user)
 #define COMSIG_MOB_ATTACK_HAND "mob_attack_hand"
+///from base of /mob/living/attack_hand(mob/living/carbon/human/user)
+///SEND_SIGNAL(user, COMSIG_MOB_LIVING_ATTACK_HAND, /*target =*/src)
+#define COMSIG_MOB_LIVING_ATTACK_HAND "mob_living_attack_hand"
+///SEND_SIGNAL(src, COMSIG_MOB_ATTACKED_HAND, /*attacker =*/user)
+#define COMSIG_MOB_ATTACKED_HAND "mob_attacked_hand"
 ///from base of /obj/item/attack(): (mob/M, mob/user)
 #define COMSIG_MOB_ITEM_ATTACK "mob_item_attack"
 ///from base of obj/item/afterattack(): (atom/target, mob/user, proximity_flag, click_parameters)

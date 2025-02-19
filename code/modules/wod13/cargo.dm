@@ -24,20 +24,6 @@
 	contains = list(/obj/item/wire_cutters, /obj/item/storage/box/lights/mixed)
 	crate_name = "weapon crate"
 
-/datum/supply_pack/vampire/bloodpack
-	name = "Blood Pack"
-	desc = "Contains 5 default blood packs."
-	cost = 100
-	contains = list(/obj/item/drinkable_bloodpack, /obj/item/drinkable_bloodpack, /obj/item/drinkable_bloodpack, /obj/item/drinkable_bloodpack, /obj/item/drinkable_bloodpack)
-	crate_name = "blood crate"
-
-/datum/supply_pack/vampire/bloodpack_elite
-	name = "Elite Blood Pack"
-	desc = "Contains 5 elite blood packs."
-	cost = 300
-	contains = list(/obj/item/drinkable_bloodpack/elite, /obj/item/drinkable_bloodpack/elite, /obj/item/drinkable_bloodpack/elite, /obj/item/drinkable_bloodpack/elite, /obj/item/drinkable_bloodpack/elite)
-	crate_name = "blood crate"
-
 /datum/supply_pack/vampire/weaponstake
 	name = "Weapon (stake)"
 	desc = "Contains 3 usable wooden stakes."
@@ -306,6 +292,19 @@
 	desc = "Contains a box of silver 5.56 ammunition."
 	cost = 3000
 	contains = list(/obj/item/ammo_box/vampire/c556/silver)
+
+/datum/supply_pack/vampire/ammo50
+	name = "Ammo (.50)"
+	desc = "Contains a box of .50 ammunition."
+	cost = 2500
+	contains = list(/obj/item/ammo_box/vampire/c50)
+	crate_name = "ammo crate"
+
+/datum/supply_pack/vampire/ammo556
+	name = "Ammo (5.56)"
+	desc = "Contains a box of 5.56 ammunition."
+	cost = 1500
+	contains = list(/obj/item/ammo_box/vampire/c556)
 	crate_name = "ammo crate"
 
 /datum/supply_pack/vampire/ammo556/incendiart
