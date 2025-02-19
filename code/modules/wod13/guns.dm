@@ -568,8 +568,8 @@
 /obj/item/ammo_box/magazine/internal/vampire/sniper
 	name = "sniper rifle internal magazine"
 	desc = "Oh god, this shouldn't be here"
-	ammo_type = /obj/item/ammo_casing/vampire/c556mm
-	caliber = CALIBER_556
+	ammo_type = /obj/item/ammo_casing/vampire/c50
+	caliber = CALIBER_50
 	max_ammo = 5
 	multiload = TRUE
 
@@ -599,7 +599,7 @@
 	zoom_amt = 10 //Long range, enough to see in front of you, but no tiles behind you.
 	zoom_out_amt = 5
 	slot_flags = ITEM_SLOT_BACK
-	projectile_damage_multiplier = 1.5
+	projectile_damage_multiplier = 2 //140 damage. Nice.
 	actions_types = list()
 	masquerade_violating = TRUE
 	cost = 250
