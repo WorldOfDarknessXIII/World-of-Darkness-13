@@ -3407,6 +3407,7 @@
 #include "code\modules\vtmb\power\discipline\animalism.dm"
 #include "code\modules\vtmb\power\discipline\auspex.dm"
 #include "code\modules\vtmb\power\discipline\celerity.dm"
+#include "code\modules\vtmb\power\discipline\bloodheal.dm"
 #include "code\modules\vtmb\power\discipline\daimonion.dm"
 #include "code\modules\vtmb\power\discipline\dementation.dm"
 #include "code\modules\vtmb\power\discipline\dominate.dm"

@@ -10,6 +10,8 @@
 	var/clan_restricted = FALSE
 	///The root type of the powers this Discipline uses.
 	var/power_type = /datum/discipline_power
+	///If this Discipline can be selected at all, or has special handling.
+	var/selectable = TRUE
 
 	/* BACKEND */
 	///What rank, or how many dots the caster has in this Discipline.
@@ -18,8 +20,6 @@
 	var/level_casting = 1
 	///The power that is currently in use.
 	var/datum/discipline_power/current_power
-	///The Discipline powers that are currently equipped, with one per index. Sublist of known_powers.
-	var/list/datum/discipline_power/equipped_powers = list()
 	///All Discipline powers under this Discipline that the owner knows. Derived from all_powers.
 	var/list/datum/discipline_power/known_powers = list()
 	///The typepaths of possible powers for every rank in this Discipline.
@@ -29,7 +29,7 @@
 	///If this Discipline has been assigned before and post_gain effects have already been applied.
 	var/initialized
 
-//TODO: rework this to use proper loadouts instead of a default set every time
+//TODO: rework this and set_level to use proper loadouts instead of a default set every time
 /datum/discipline/New(level)
 	all_powers = subtypesof(power_type)
 
@@ -41,8 +41,29 @@
 		var/type_to_create = all_powers[i]
 		var/datum/discipline_power/new_power = new type_to_create(src)
 		known_powers += new_power
-		equipped_powers += new_power
-	current_power = equipped_powers[1]
+	current_power = known_powers[1]
+
+/datum/discipline/proc/set_level(level)
+	if (level == src.level)
+		return
+
+	var/list/datum/discipline_power/new_known_powers = list()
+	for (var/i in 1 to level)
+		if (length(known_powers) >= level)
+			new_known_powers.Add(known_powers[i])
+		else
+			var/adding_power_type = all_powers[i]
+			var/datum/discipline_power/new_power = new adding_power_type
+			new_known_powers.Add(new_power)
+			new_power.post_gain()
+
+	//delete orphaned powers
+	var/list/datum/discipline_power/leftover_powers = known_powers - new_known_powers
+	if (length(leftover_powers))
+		QDEL_LIST(leftover_powers)
+
+	known_powers = new_known_powers
+	src.level = level
 
 /datum/discipline/proc/assign(mob/owner)
 	src.owner = owner

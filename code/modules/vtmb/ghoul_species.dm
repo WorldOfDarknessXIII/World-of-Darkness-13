@@ -138,23 +138,23 @@
 /datum/species/ghoul/on_species_gain(mob/living/carbon/human/C)
 	..()
 	C.update_body(0)
-	C.last_experience = world.time+3000
+	C.last_experience = world.time + 5 MINUTES
 	var/datum/action/ghoulinfo/infor = new()
 	infor.host = C
 	infor.Grant(C)
-	var/datum/action/blood_heal/bloodheal = new()
-	bloodheal.Grant(C)
 	C.generation = 13
+
+	var/datum/discipline/bloodheal/giving_bloodheal = new(1) //poor ghoulies can only spend 1 blood per turn
+	C.give_discipline(giving_bloodheal)
 
 /datum/species/ghoul/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
 	for(var/datum/action/A in C.actions)
-		if(A)
-			if(A.vampiric)
-				A.Remove(C)
+		if(A.vampiric)
+			A.Remove(C)
 	for(var/datum/action/ghoulinfo/infor in C.actions)
-		if(infor)
-			infor.Remove(C)
+		infor.Remove(C)
+	QDEL_LIST(disciplines)
 
 /datum/action/take_vitae
 	name = "Take Vitae"

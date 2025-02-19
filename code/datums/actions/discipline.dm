@@ -46,6 +46,7 @@
 	var/datum/discipline_power/power = discipline.current_power
 	if (power.active) //deactivation logic
 		if (power.cancelable || power.toggled)
+			to_chat(owner, "<span class='warning'>You deactivate [power].</span>")
 			power.try_deactivate()
 		else
 			to_chat(owner, "<span class='warning'>[power] is already active!</span>")
@@ -76,7 +77,7 @@
 
 /datum/action/discipline/proc/switch_level()
 	SEND_SOUND(owner, sound('code/modules/wod13/sounds/highlight.ogg', 0, 0, 50))
-	if (discipline.equipped_powers.len >= (discipline.level_casting + 1))
+	if (discipline.known_powers.len >= (discipline.level_casting + 1))
 		discipline.level_casting++
 	else
 		discipline.level_casting = 1
@@ -84,7 +85,7 @@
 	if (targeting)
 		end_targeting()
 
-	discipline.current_power = discipline.equipped_powers[discipline.level_casting]
+	discipline.current_power = discipline.known_powers[discipline.level_casting]
 	if (button)
 		ApplyIcon(button, TRUE)
 

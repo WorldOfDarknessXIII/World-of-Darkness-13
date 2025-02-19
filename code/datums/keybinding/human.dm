@@ -92,10 +92,6 @@
 		if(world.time < (BD.last_drinkblood_click + 1 SECONDS))
 			return
 		BD.last_drinkblood_click = world.time
-//		if(BD.bloodpool >= BD.maxbloodpool)
-//			SEND_SOUND(BD, sound('code/modules/wod13/need_blood.ogg'))
-//			to_chat(BD, "<span class='warning'>You're full of <b>BLOOD</b>.</span>")
-//			return
 		if(BD.grab_state > GRAB_PASSIVE)
 			if(ishuman(BD.pulling))
 				var/mob/living/carbon/human/PB = BD.pulling

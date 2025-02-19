@@ -219,15 +219,19 @@
 	vampire.update_body()
 	vampire.last_experience = world.time + 5 MINUTES
 
+	initialize_generation(vampire)
+
 	var/datum/action/vampireinfo/infor = new()
 	infor.host = vampire
 	infor.Grant(vampire)
 	var/datum/action/give_vitae/vitae = new()
 	vitae.Grant(vampire)
-	var/datum/action/blood_heal/bloodheal = new()
-	bloodheal.Grant(vampire)
+
+	//give basic vitae powers
 	var/datum/action/blood_power/bloodpower = new()
 	bloodpower.Grant(vampire)
+	var/datum/discipline/bloodheal/giving_bloodheal = new(clamp(spend_blood_per_turn, 1, 10))
+	vampire.give_discipline(giving_bloodheal)
 
 	add_verb(vampire, /mob/living/carbon/human/verb/teach_discipline)
 
@@ -246,96 +250,14 @@
 	//vampires don't die while in crit, they just slip into torpor after 2 minutes of being critted
 	RegisterSignal(vampire, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(slip_into_torpor))
 
-	initialize_generation(vampire)
-
 /datum/species/kindred/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
-	for(var/datum/action/vampireinfo/VI in C.actions)
-		if(VI)
-			VI.Remove(C)
-	for(var/datum/action/A in C.actions)
-		if(A)
-			if(A.vampiric)
-				A.Remove(C)
-
-/datum/action/blood_heal
-	name = "Blood Heal"
-	desc = "Use vitae in your blood to heal your wounds."
-	button_icon_state = "bloodheal"
-	button_icon = 'code/modules/wod13/UI/actions.dmi'
-	background_icon_state = "discipline"
-	icon_icon = 'code/modules/wod13/UI/actions.dmi'
-	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	vampiric = TRUE
-	var/last_heal = 0
-	var/level = 1
-
-/datum/action/blood_heal/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
-	if(owner)
-		if(owner.client)
-			if(owner.client.prefs)
-				if(owner.client.prefs.old_discipline)
-					button_icon = 'code/modules/wod13/disciplines.dmi'
-					icon_icon = 'code/modules/wod13/disciplines.dmi'
-				else
-					button_icon = 'code/modules/wod13/UI/actions.dmi'
-					icon_icon = 'code/modules/wod13/UI/actions.dmi'
-	. = ..()
-
-/datum/action/blood_heal/Trigger()
-	if(istype(owner, /mob/living/carbon/human))
-		if (HAS_TRAIT(owner, TRAIT_TORPOR))
-			return
-
-		var/mob/living/carbon/human/H = owner
-		level = max(1, 13-H.generation)
-		if(HAS_TRAIT(H, TRAIT_COFFIN_THERAPY))
-			if(!istype(H.loc, /obj/structure/closet/crate/coffin))
-				to_chat(usr, "<span class='warning'>You need to be in a coffin to use that!</span>")
-				return
-		if(H.bloodpool < 1)
-			to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
-			SEND_SOUND(H, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
-			return
-		if((last_heal + 3 SECONDS) >= world.time)
-			return
-		last_heal = world.time
-		H.adjust_blood_points(-1)
-		SEND_SOUND(H, sound('code/modules/wod13/sounds/bloodhealing.ogg', 0, 0, 50))
-		H.heal_overall_damage(15*min(4, level), 10*min(4, level), 20*min(4, level))
-		H.adjustBruteLoss(-15*min(4, level), TRUE)
-		H.adjustFireLoss(-10*min(4, level), TRUE)
-		H.adjustOxyLoss(-20*min(4, level), TRUE)
-		H.adjustToxLoss(-20*min(4, level), TRUE)
-		button.color = "#970000"
-		animate(button, color = "#ffffff", time = 20, loop = 1)
-		if(length(H.all_wounds))
-			var/datum/wound/W = pick(H.all_wounds)
-			W.remove_wound()
-		if(length(H.all_wounds))
-			var/datum/wound/W = pick(H.all_wounds)
-			W.remove_wound()
-		if(length(H.all_wounds))
-			var/datum/wound/W = pick(H.all_wounds)
-			W.remove_wound()
-		if(length(H.all_wounds))
-			var/datum/wound/W = pick(H.all_wounds)
-			W.remove_wound()
-		if(length(H.all_wounds))
-			var/datum/wound/W = pick(H.all_wounds)
-			W.remove_wound()
-		H.adjustCloneLoss(-5, TRUE)
-		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
-		if(eyes)
-			H.adjust_blindness(-2)
-			H.adjust_blurriness(-2)
-			eyes.applyOrganDamage(-5)
-		var/obj/item/organ/brain/brain = H.getorganslot(ORGAN_SLOT_BRAIN)
-		if(brain)
-			brain.applyOrganDamage(-100)
-		H.update_damage_overlays()
-		H.update_health_hud()
-		H.visible_message("<span class='warning'>Some of [H]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
+	for(var/datum/action/vampireinfo/vampire_info_action in C.actions)
+		vampire_info_action.Remove(C)
+	for(var/datum/action/action in C.actions)
+		if(action.vampiric)
+			action.Remove(C)
+	QDEL_LIST(disciplines)
 
 /datum/action/blood_power
 	name = "Blood Power"
@@ -803,7 +725,7 @@
  * * source - The Kindred whose organ has been removed.
  * * organ - The organ which has been removed.
  */
-/datum/species/kindred/proc/lose_organ(var/mob/living/carbon/human/source, var/obj/item/organ/organ)
+/datum/species/kindred/proc/lose_organ(mob/living/carbon/human/source, obj/item/organ/organ)
 	SIGNAL_HANDLER
 
 	if (istype(organ, /obj/item/organ/heart))
@@ -811,7 +733,7 @@
 			if (!source.getorganslot(ORGAN_SLOT_HEART))
 				source.death()
 
-/datum/species/kindred/proc/slip_into_torpor(var/mob/living/carbon/human/source)
+/datum/species/kindred/proc/slip_into_torpor(mob/living/carbon/human/source)
 	SIGNAL_HANDLER
 
 	to_chat(source, "<span class='warning'>You can feel yourself slipping into Torpor. You can use succumb to immediately sleep...</span>")
@@ -860,7 +782,7 @@
 		to_chat(teacher, "<span class='warning'>You need to have fed your student your blood to teach them Disciplines!</span>")
 		return
 
-	var/possible_disciplines = teacher_prefs.discipline_types - student_prefs.discipline_types
+	var/possible_disciplines = teacher_prefs.discipline_types - student_prefs.discipline_types - /datum/discipline/bloodheal
 	var/teaching_discipline = input(teacher, "What Discipline do you want to teach [student.name]?", "Discipline Selection") as null|anything in possible_disciplines
 
 	if (teaching_discipline)
@@ -990,6 +912,7 @@
 
 	//nothing found
 	return FALSE
+
 /datum/species/kindred/proc/initialize_generation(mob/living/carbon/human/vampire)
 	if (iskindred(vampire) && vampire.generation)
 		var/old_max_bloodpool = vampire.maxbloodpool
@@ -1030,13 +953,19 @@
 			if (12)
 				vampire.maxbloodpool = 11
 				spend_blood_per_turn = 1
-			else
+			else //no thinblood support just yet
 				vampire.maxbloodpool = 10
 				spend_blood_per_turn = 1
 
 		//forces blood_volume into line with new blood potency
 		if (old_max_bloodpool != vampire.maxbloodpool)
-			vampire.set_blood_points(vampire.bloodpool)
+			var/old_bloodpool = vampire.bloodpool
+			vampire.update_blood_values()
+			vampire.set_blood_points(old_bloodpool)
+
+			var/datum/discipline/bloodheal/bloodheal = get_discipline(/datum/discipline/bloodheal)
+			if (bloodheal)
+				bloodheal.set_level(clamp(spend_blood_per_turn, 1, 10))
 
 /datum/species/kindred/proc/can_spend_blood(mob/living/carbon/human/vampire, amount)
 	if ((spent_blood_turn + amount) > spend_blood_per_turn)
