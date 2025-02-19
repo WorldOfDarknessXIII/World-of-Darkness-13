@@ -614,3 +614,10 @@
 		new /datum/data/mining_equipment("fountain pen",	/obj/item/pen/fountain,  15),
 		new /datum/data/mining_equipment("folder",	/obj/item/folder,  5)
 	)
+
+/obj/machinery/mineral/equipment_vendor/fastfood/blood
+	required_access = list(ACCESS_SURGERY)
+	prize_list = list(
+		new /datum/data/mining_equipment("drinkable blood pack (full)",	/obj/item/drinkable_bloodpack,  50),
+		new /datum/data/mining_equipment("elite blood pack (full)",	/obj/item/drinkable_bloodpack/elite,  200)
+	)
