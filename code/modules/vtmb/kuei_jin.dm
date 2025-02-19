@@ -464,7 +464,7 @@
 
 	//this method of feeding targets splat-specific Quintessence sources first
 	if ((iskindred(victim) || isghoul(victim)) && (victim.bloodpool > 0)) //drain vitae bloodpool
-		victim.bloodpool = max(0, victim.bloodpool - 1)
+		victim.adjust_blood_points(-1)
 		kueijin.yin_chi = min(kueijin.yin_chi + 1, kueijin.max_yin_chi)
 		to_chat(kueijin, "<span class='medradio'>Some bitter <b>Yin</b> Chi enters you...</span>")
 	else if ((isgarou(victim) || iswerewolf(victim)) && has_gnosis) //drain gnosis
