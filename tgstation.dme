@@ -3343,7 +3343,6 @@
 #include "code\modules\vtmb\artifacts.dm"
 #include "code\modules\vtmb\chi_disciplines.dm"
 #include "code\modules\vtmb\dharma.dm"
-#include "code\modules\vtmb\disciplines.dm"
 #include "code\modules\vtmb\faith.dm"
 #include "code\modules\vtmb\frenzy.dm"
 #include "code\modules\vtmb\ghoul_species.dm"

@@ -2237,6 +2237,9 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			to_chat(H, "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>")
 			H.set_resting(FALSE, TRUE)
 
+/datum/movespeed_modifier/wing
+	multiplicative_slowdown = -0.25
+
 /**
  * The human species version of [/mob/living/carbon/proc/get_biological_state]. Depends on the HAS_FLESH and HAS_BONE species traits, having bones lets you have bone wounds, having flesh lets you have burn, slash, and piercing wounds
  */

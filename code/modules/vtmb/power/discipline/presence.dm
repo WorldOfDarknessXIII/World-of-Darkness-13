@@ -63,6 +63,13 @@
 	to_chat(target, "<span class='userlove'><b>COME HERE</b></span>")
 	owner.say("COME HERE!!")
 
+/mob/living/carbon/human/proc/walk_to_caster(mob/living/step_to)
+	walk(src, 0)
+	if(!CheckFrenzyMove())
+		set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
+		step_to(src, step_to, 0)
+		face_atom(step_to)
+
 //DREAD GAZE
 /datum/discipline_power/presence/dread_gaze
 	name = "Dread Gaze"
@@ -111,11 +118,18 @@
 	. = ..()
 	to_chat(target, "<span class='userlove'><b>FEAR ME</b></span>")
 	owner.say("FEAR ME!!")
-	var/datum/cb = CALLBACK(target, /mob/living/carbon/human/proc/step_away_caster, owner)
+	var/datum/cb = CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, step_away_caster), owner)
 	for(var/i in 1 to 30)
 		addtimer(cb, (i - 1) * target.total_multiplicative_slowdown())
 	target.emote("scream")
 	target.do_jitter_animation(3 SECONDS)
+
+/mob/living/carbon/human/proc/step_away_caster(mob/living/step_from)
+	walk(src, 0)
+	if(!CheckFrenzyMove())
+		set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
+		step_away(src, step_from, 99)
+		face_atom(step_from)
 
 //MAJESTY
 /datum/discipline_power/presence/majesty
