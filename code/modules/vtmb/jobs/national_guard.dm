@@ -90,9 +90,7 @@
 	belt = /obj/item/gun/ballistic/automatic/vampire/sniper/ng
 	l_pocket = 	/obj/item/ammo_box/magazine/glock9mm
 	backpack_contents = list(
-		/obj/item/ammo_box/magazine/internal/vampire/sniper/ng = 3,
 		/obj/item/radio/military = 1,
-		/obj/item/ammo_box/vampire/c556 = 1,
 		/obj/item/storage/firstaid/ifak = 1,
 		/obj/item/restraints/handcuffs = 1,
 		/obj/item/grenade/smokebomb = 2,
@@ -100,7 +98,7 @@
 		/obj/item/ammo_box/magazine/glock9mm = 2,
 		/obj/item/clothing/mask/vampire/gasmask = 1,
 		/obj/item/binoculars = 1,
-		/obj/item/ammo_box/vampire/c762 = 1
+		/obj/item/ammo_casing/vampire/c556mm = 5
 		)
 
 /datum/outfit/job/national_guard/squad_lead
