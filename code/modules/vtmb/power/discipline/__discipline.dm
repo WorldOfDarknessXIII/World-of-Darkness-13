@@ -53,7 +53,7 @@
 			new_known_powers.Add(known_powers[i])
 		else
 			var/adding_power_type = all_powers[i]
-			var/datum/discipline_power/new_power = new adding_power_type
+			var/datum/discipline_power/new_power = new adding_power_type(src)
 			new_known_powers.Add(new_power)
 			new_power.post_gain()
 

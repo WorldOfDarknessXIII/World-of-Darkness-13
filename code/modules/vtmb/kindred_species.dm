@@ -963,9 +963,10 @@
 			vampire.update_blood_values()
 			vampire.set_blood_points(old_bloodpool)
 
-			var/datum/discipline/bloodheal/bloodheal = get_discipline(/datum/discipline/bloodheal)
-			if (bloodheal)
-				bloodheal.set_level(clamp(spend_blood_per_turn, 1, 10))
+		//adjust to new generational levels
+		var/datum/discipline/bloodheal/bloodheal = get_discipline(/datum/discipline/bloodheal)
+		if (bloodheal)
+			bloodheal.set_level(clamp(spend_blood_per_turn, 1, 10))
 
 /datum/species/kindred/proc/can_spend_blood(mob/living/carbon/human/vampire, amount)
 	if ((spent_blood_turn + amount) > spend_blood_per_turn)
