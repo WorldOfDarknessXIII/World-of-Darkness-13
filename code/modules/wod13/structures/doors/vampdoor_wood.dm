@@ -1,4 +1,3 @@
-
 /obj/structure/vampdoor/wood
 	icon_state = "wood-1"
 	baseicon = "wood"
