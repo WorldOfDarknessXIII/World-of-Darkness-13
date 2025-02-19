@@ -1,4 +1,3 @@
-
 /obj/item/vamp/keys
 	name = "\improper keys"
 	desc = "Those can open some doors."
