@@ -578,7 +578,7 @@
 	client.crew_manifest_delay = world.time + (1 SECONDS)
 
 	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'></head><body>"
-	dat += "<h4>Kindred population</h4>"
+	dat += "<h4>City population</h4>"
 	dat += GLOB.data_core.get_manifest_html()
 
 	src << browse(dat, "window=manifest;size=387x420;can_close=1")
