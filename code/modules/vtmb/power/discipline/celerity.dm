@@ -2,10 +2,7 @@
 	name = "Celerity"
 	desc = "Boosts your speed. Violates Masquerade."
 	icon_state = "celerity"
-
-/datum/discipline/celerity/New(level)
-	all_powers = subtypesof(/datum/discipline_power/celerity)
-	..()
+	power_type = /datum/discipline_power/celerity
 
 /datum/discipline_power/celerity
 	name = "Celerity power name"

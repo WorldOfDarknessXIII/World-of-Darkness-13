@@ -3,10 +3,7 @@
 	desc = "Opens the secrets of blood magic and how you use it, allows to steal other's blood. Violates Masquerade."
 	icon_state = "thaumaturgy"
 	clan_restricted = TRUE
-
-/datum/discipline/thaumaturgy/New(level)
-	all_powers = subtypesof(/datum/discipline_power/thaumaturgy)
-	..()
+	power_type = /datum/discipline_power/thaumaturgy
 
 /datum/discipline/thaumaturgy/post_gain()
 	. = ..()

@@ -2,10 +2,7 @@
 	name = "Temporis"
 	desc = "Temporis is a Discipline unique to the True Brujah. Supposedly a refinement of Celerity, Temporis grants the Cainite the ability to manipulate the flow of time itself."
 	icon_state = "temporis"
-
-/datum/discipline/temporis/New(level)
-	all_powers = subtypesof(/datum/discipline_power/temporis)
-	..()
+	power_type = /datum/discipline_power/temporis
 
 /datum/discipline_power/temporis
 	name = "Temporis power name"

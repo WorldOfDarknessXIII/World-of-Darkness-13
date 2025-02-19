@@ -2,10 +2,7 @@
 	name = "Animalism"
 	desc = "Summons spectral animals over your targets. Violates Masquerade."
 	icon_state = "animalism"
-
-/datum/discipline/animalism/New(level)
-	all_powers = subtypesof(/datum/discipline_power/animalism)
-	..()
+	power_type = /datum/discipline_power/animalism
 
 /datum/discipline_power/animalism
 	name = "Animalism power name"

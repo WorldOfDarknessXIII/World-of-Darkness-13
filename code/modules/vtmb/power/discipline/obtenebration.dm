@@ -3,10 +3,7 @@
 	desc = "Controls the darkness around you."
 	icon_state = "obtenebration"
 	clan_restricted = TRUE
-
-/datum/discipline/obtenebration/New(level)
-	all_powers = subtypesof(/datum/discipline_power/obtenebration)
-	..()
+	power_type = /datum/discipline_power/obtenebration
 
 /datum/discipline_power/obtenebration
 	name = "Obtenebration power name"

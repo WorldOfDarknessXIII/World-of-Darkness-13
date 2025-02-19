@@ -2,10 +2,7 @@
 	name = "Auspex"
 	desc = "Allows to see entities, auras and their health through walls."
 	icon_state = "auspex"
-
-/datum/discipline/auspex/New(level)
-	all_powers = subtypesof(/datum/discipline_power/auspex)
-	..()
+	power_type = /datum/discipline_power/auspex
 
 /datum/discipline_power/auspex
 	name = "Auspex power name"

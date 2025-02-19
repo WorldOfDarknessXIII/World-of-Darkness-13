@@ -3,10 +3,7 @@
 	desc = "The Discipline of Visceratika is the exclusive possession of the Gargoyle bloodline and is an extension of their natural affinity for stone, earth, and things made thereof."
 	icon_state = "visceratika"
 	clan_restricted = TRUE
-
-/datum/discipline/visceratika/New(level)
-	all_powers = subtypesof(/datum/discipline_power/visceratika)
-	..()
+	power_type = /datum/discipline_power/visceratika
 
 /datum/discipline_power/visceratika
 	name = "Visceratika power name"

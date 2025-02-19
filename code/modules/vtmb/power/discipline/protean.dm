@@ -3,10 +3,7 @@
 	desc = "Lets your beast out, making you stronger and faster. Violates Masquerade."
 	icon_state = "protean"
 	clan_restricted = TRUE
-
-/datum/discipline/protean/New(level)
-	all_powers = subtypesof(/datum/discipline_power/protean)
-	..()
+	power_type = /datum/discipline_power/protean
 
 /datum/discipline_power/protean
 	name = "Protean power name"

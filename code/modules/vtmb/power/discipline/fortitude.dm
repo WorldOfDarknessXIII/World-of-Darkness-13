@@ -2,10 +2,7 @@
 	name = "Fortitude"
 	desc = "Boosts armor."
 	icon_state = "fortitude"
-
-/datum/discipline/fortitude/New(level)
-	all_powers = subtypesof(/datum/discipline_power/fortitude)
-	..()
+	power_type = /datum/discipline_power/fortitude
 
 /datum/discipline_power/fortitude
 	name = "Fortitude power name"

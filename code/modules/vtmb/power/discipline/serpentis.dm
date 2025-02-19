@@ -3,10 +3,7 @@
 	desc = "Act like a cobra, get the powers to stun targets with your gaze and your tongue, praise the mummy traditions and spread them to your childe. Violates Masquerade."
 	icon_state = "serpentis"
 	clan_restricted = TRUE
-
-/datum/discipline/serpentis/New(level)
-	all_powers = subtypesof(/datum/discipline_power/serpentis)
-	..()
+	power_type = /datum/discipline_power/serpentis
 
 /datum/discipline_power/serpentis
 	name = "Serpentis power name"

@@ -2,10 +2,7 @@
 	name = "Dominate"
 	desc = "Supresses will of your targets and forces them to obey you, if their will is not more powerful than yours."
 	icon_state = "dominate"
-
-/datum/discipline/dominate/New(level)
-	all_powers = subtypesof(/datum/discipline_power/dominate)
-	..()
+	power_type = /datum/discipline_power/dominate
 
 /datum/discipline/dominate/post_gain()
 	. = ..()

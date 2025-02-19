@@ -3,10 +3,7 @@
 	desc = "Make a poison out of nowhere and forces all beings in range to mute, poison your touch, poison your weapon, poison your spit and make it acid. Violates Masquerade."
 	icon_state = "quietus"
 	clan_restricted = TRUE
-
-/datum/discipline/quietus/New(level)
-	all_powers = subtypesof(/datum/discipline_power/quietus)
-	..()
+	power_type = /datum/discipline_power/quietus
 
 /datum/discipline_power/quietus
 	name = "Quietus power name"

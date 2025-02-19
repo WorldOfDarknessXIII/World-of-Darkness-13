@@ -3,10 +3,7 @@
 	desc = "Named for the Greek Muse of Tragedy, Melpominee is a unique discipline of the Daughters of Cacophony. It explores the power of the voice, shaking the very soul of those nearby and allowing the vampire to perform sonic feats otherwise impossible."
 	icon_state = "melpominee"
 	clan_restricted = TRUE
-
-/datum/discipline/melpominee/New(level)
-	all_powers = subtypesof(/datum/discipline_power/melpominee)
-	..()
+	power_type = /datum/discipline_power/melpominee
 
 /datum/discipline_power/melpominee
 	name = "Melpominee power name"

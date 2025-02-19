@@ -3,10 +3,7 @@
 	desc = "Makes all humans in radius mentally ill for a moment, supressing their defending ability."
 	icon_state = "dementation"
 	clan_restricted = TRUE
-
-/datum/discipline/dementation/New(level)
-	all_powers = subtypesof(/datum/discipline_power/dementation)
-	..()
+	power_type = /datum/discipline_power/dementation
 
 /datum/discipline/dementation/post_gain()
 	. = ..()

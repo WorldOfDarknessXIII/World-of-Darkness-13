@@ -2,10 +2,7 @@
 	name = "Presence"
 	desc = "Makes targets in radius more vulnerable to damages."
 	icon_state = "presence"
-
-/datum/discipline/presence/New(level)
-	all_powers = subtypesof(/datum/discipline_power/presence)
-	..()
+	power_type = /datum/discipline_power/presence
 
 /datum/discipline_power/presence
 	name = "Presence power name"

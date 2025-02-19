@@ -3,10 +3,7 @@
 	desc = "Offers control over another, undead reality."
 	icon_state = "necromancy"
 	clan_restricted = TRUE
-
-/datum/discipline/necromancy/New(level)
-	all_powers = subtypesof(/datum/discipline_power/necromancy)
-	..()
+	power_type = /datum/discipline_power/necromancy
 
 /datum/discipline/necromancy/post_gain()
 	. = ..()

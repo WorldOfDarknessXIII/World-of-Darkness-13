@@ -3,10 +3,7 @@
 	desc = "It is widely known as Tzimisce art of flesh and bone shaping. Violates Masquerade."
 	icon_state = "vicissitude"
 	clan_restricted = TRUE
-
-/datum/discipline/vicissitude/New(level)
-	all_powers = subtypesof(/datum/discipline_power/vicissitude)
-	..()
+	power_type = /datum/discipline_power/vicissitude
 
 /datum/discipline/vicissitude/post_gain()
 	. = ..()

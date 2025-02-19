@@ -3,10 +3,7 @@
 	desc = "Use your third eye in healing or protecting needs."
 	icon_state = "valeren"
 	clan_restricted = TRUE
-
-/datum/discipline/valeren/New(level)
-	all_powers = subtypesof(/datum/discipline_power/valeren)
-	..()
+	power_type = /datum/discipline_power/valeren
 
 /datum/discipline_power/valeren
 	name = "Valeren power name"

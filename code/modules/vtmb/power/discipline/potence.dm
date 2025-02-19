@@ -2,10 +2,7 @@
 	name = "Potence"
 	desc = "Boosts melee and unarmed damage."
 	icon_state = "potence"
-
-/datum/discipline/potence/New(level)
-	all_powers = subtypesof(/datum/discipline_power/potence)
-	..()
+	power_type = /datum/discipline_power/potence
 
 /datum/discipline_power/potence
 	name = "Potence power name"

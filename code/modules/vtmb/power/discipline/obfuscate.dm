@@ -2,10 +2,7 @@
 	name = "Obfuscate"
 	desc = "Makes you less noticable for living and un-living beings."
 	icon_state = "obfuscate"
-
-/datum/discipline/obfuscate/New(level)
-	all_powers = subtypesof(/datum/discipline_power/obfuscate)
-	..()
+	power_type = /datum/discipline_power/obfuscate
 
 /datum/discipline_power/obfuscate
 	name = "Obfuscate power name"

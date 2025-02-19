@@ -3,10 +3,7 @@
 	desc = "Get a help from the Hell creatures, resist THE FIRE, transform into an imp. Violates Masquerade."
 	icon_state = "daimonion"
 	clan_restricted = TRUE
-
-/datum/discipline/daimonion/New(level)
-	all_powers = subtypesof(/datum/discipline_power/daimonion)
-	..()
+	power_type = /datum/discipline_power/daimonion
 
 /datum/discipline_power/daimonion
 	name = "Daimonion power name"

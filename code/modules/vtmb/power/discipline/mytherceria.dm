@@ -3,10 +3,7 @@
 	desc = "Mytherceria is a Discipline that manifests in faerie-blooded vampires such as the Kiasyd and Maeghar. It grants the vampire mystical senses, the ability to steal knowledge, and other powers attributed to fae."
 	icon_state = "mytherceria"
 	clan_restricted = TRUE
-
-/datum/discipline/mytherceria/New(level)
-	all_powers = subtypesof(/datum/discipline_power/mytherceria)
-	..()
+	power_type = /datum/discipline_power/mytherceria
 
 /datum/discipline_power/mytherceria
 	name = "Mytherceria power name"
