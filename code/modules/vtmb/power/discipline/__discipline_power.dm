@@ -320,8 +320,7 @@
 		owner.adjust_blood_points(-vitae_cost)
 
 	to_chat(owner, "<span class='warning'>You cast [name][target ? " on [target]!" : "."]")
-	//TODO: rewrite this to be sane
-	log_attack("[key_name(owner)] casted [name], level [discipline.level_casting] of the Discipline [discipline.name][!target_type ? "." : " on [key_name(discipline.owner)]"]")
+	log_combat(owner, target ? target : owner, "casted the power [src.name] of the Discipline [discipline.name] on")
 
 	return TRUE
 
