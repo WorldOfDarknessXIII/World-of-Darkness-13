@@ -225,8 +225,6 @@
 
 /mob/living/attack_hand(mob/living/carbon/human/user)
 	. = ..()
-	SEND_SIGNAL(user, COMSIG_MOB_LIVING_ATTACK_HAND, src)
-	SEND_SIGNAL(src, COMSIG_MOB_ATTACKED_HAND, user)
 	if (user.apply_martial_art(src))
 		return TRUE
 
