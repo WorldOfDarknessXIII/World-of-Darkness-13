@@ -14,6 +14,42 @@
 	deactivate_sound = 'code/modules/wod13/sounds/obfuscate_deactivate.ogg'
 
 	toggled = TRUE
+	COOLDOWN_DECLARE(obfuscate_combat_cooldown)
+	var/static/list/aggressive_signals = list(
+		COMSIG_MOB_ATTACK_HAND,
+		COMSIG_MOB_ATTACKED_HAND,
+		COMSIG_MOB_MELEE_SWING,
+		COMSIG_MOB_FIRED_GUN,
+		COMSIG_MOB_THREW_MOVABLE,
+		COMSIG_MOB_ATTACKING_MELEE,
+		COMSIG_MOB_ATTACKED_BY_MELEE,
+	)
+
+/datum/discipline_power/obfuscate/activate()
+	RegisterSignal(owner, aggressive_signals, PROC_REF(on_combat_signal))
+	. = ..()
+
+/datum/discipline_power/obfuscate/proc/on_combat_signal(datum/source)
+	SIGNAL_HANDLER
+	to_chat(owner, span_danger("The concept of your obfuscation is disrupted by such a conspicuous act! You're exposed!"))
+	COOLDOWN_START(src, obfuscate_combat_cooldown, (65 - ( level * 5)) SECONDS)
+	deactivate()
+	RegisterSignal(src, COMSIG_POWER_TRY_ACTIVATE, PROC_REF(on_try_activate))
+
+/datum/discipline_power/obfuscate/proc/on_try_activate(datum/source, datum/target)
+	SIGNAL_HANDLER
+
+	if (COOLDOWN_FINISHED(src, obfuscate_combat_cooldown))
+		UnregisterSignal(src, COMSIG_POWER_TRY_ACTIVATE)
+		return NONE
+	to_chat(owner, span_warning("You're still too exposed to activate your cloak of obfuscation!"))
+	return POWER_PREVENT_ACTIVATE
+
+
+/datum/discipline_power/obfuscate/deactivate()
+	. = ..()
+	UnregisterSignal(owner, aggressive_signals)
+
 
 //CLOAK OF SHADOWS
 /datum/discipline_power/obfuscate/cloak_of_shadows
