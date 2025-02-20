@@ -90,12 +90,8 @@
 					if(trans.stat == DEAD || !trans.client) // [ChillRaccoon] - preventing non-player transform issues
 						animate(trans, transform = null, color = "#FFFFFF")
 						return
-					var/items = trans.get_contents()
-					for(var/obj/item/item_worn in items)
-						if(item_worn)
-							if(!ismob(item_worn.loc))
-								continue
-							trans.dropItemToGround(item_worn, TRUE)
+					trans.drop_all_held_items()
+					trans.extinguish_mob()
 					var/current_loc = get_turf(trans)
 					lupus_form.color = "#000000"
 					lupus_form.forceMove(current_loc)
@@ -126,12 +122,8 @@
 					if(trans.stat == DEAD || !trans.client) // [ChillRaccoon] - preventing non-player transform issues
 						animate(trans, transform = null, color = "#FFFFFF")
 						return
-					var/items = trans.get_contents()
-					for(var/obj/item/item_worn in items)
-						if(item_worn)
-							if(!ismob(item_worn.loc))
-								continue
-							trans.dropItemToGround(item_worn, TRUE)
+					trans.drop_all_held_items()
+					trans.extinguish_mob()
 					var/current_loc = get_turf(trans)
 					crinos_form.color = "#000000"
 					crinos_form.forceMove(current_loc)
@@ -163,12 +155,8 @@
 					if(trans.stat == DEAD || !trans.client) // [ChillRaccoon] - preventing non-player transform issues
 						animate(trans, transform = null, color = "#FFFFFF")
 						return
-					var/items = trans.get_contents()
-					for(var/obj/item/item_worn in items)
-						if(item_worn)
-							if(!ismob(item_worn.loc))
-								continue
-							trans.dropItemToGround(item_worn, TRUE)
+					trans.drop_all_held_items()
+					trans.extinguish_mob()
 					var/current_loc = get_turf(trans)
 					human_form.color = "#000000"
 					human_form.forceMove(current_loc)
