@@ -13,9 +13,6 @@ on:
   merge_group:
     branches:
     - master
-  workflow_dispatch:
-permissions:
-  contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
