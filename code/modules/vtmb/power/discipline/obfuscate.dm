@@ -34,6 +34,7 @@
 	to_chat(owner, span_danger("The concept of your obfuscation is disrupted by such a conspicuous act! You're exposed!"))
 	COOLDOWN_START(src, obfuscate_combat_cooldown, (65 - ( level * 5)) SECONDS)
 	deactivate()
+	active = FALSE
 	RegisterSignal(src, COMSIG_POWER_TRY_ACTIVATE, PROC_REF(on_try_activate))
 
 /datum/discipline_power/obfuscate/proc/on_try_activate(datum/source, datum/target)
