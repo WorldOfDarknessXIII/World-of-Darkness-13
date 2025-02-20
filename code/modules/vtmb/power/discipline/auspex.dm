@@ -70,7 +70,7 @@
 /datum/discipline_power/auspex/the_spirits_touch/deactivate()
 	. = ..()
 	var/datum/atom_hud/health_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	health_hud.add_hud_to(owner)
+	health_hud.remove_hud_from(owner)
 
 //TELEPATHY
 /datum/discipline_power/auspex/telepathy
