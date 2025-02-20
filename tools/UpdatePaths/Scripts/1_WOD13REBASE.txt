@@ -12,14 +12,14 @@
 /mob/living/basic/pet/cat/vampire : /mob/living/basic/pet/cat{@OLD}
 /obj/effect/mob_spawn/human/@SUBTYPES : /obj/effect/mob_spawn/ghost_role/human/@SUBTYPES{@OLD}
 /obj/structure/flora/bush/@SUBTYPES : /obj/structure/flora/bush/style_random{@OLD}
-/obj/item/reagent_containers/food/drinks/@SUBTYPES : /obj/item/reagent_containers/cup/@SUBTYPES{@OLD}
 /obj/structure/mopbucket : /obj/structure/mop_bucket{@OLD}
 /obj/item/storage/medkit/medical : /obj/item/storage/medkit{@OLD}
 /obj/machinery/atmospherics/components/unary/tank/air : @DELETE
-/obj/structure/fluff : /obj/structure/hedge{@OLD}
+/obj/structure/fluff/@SUBTYPES : /obj/structure/hedge{@OLD}
 /obj/machinery/computer/order_console/mining/fastfood/illegal : @DELETE
 /obj/item/kitchen/knife/hunting : /obj/item/knife/hunting{@OLD}
 /obj/item/trash/plate : /obj/item/plate_shard{@OLD}
 /obj/structure/janitorialcart : /obj/structure/mop_bucket/janitorialcart{@OLD}
 /obj/item/computer_hardware/network_card : @DELETE
 /obj/structure/closet/crate/freezer/fridge : /obj/structure/closet/secure_closet/freezer/fridge{@OLD}
+
