@@ -90,3 +90,26 @@
 	while(books_to_load > 0 && prob(ref_book_prob))
 		books_to_load--
 		new /obj/item/book/manual/random(src)
+
+// TODO: UPDATE THIS JOB CHECK AFTER TIMELOCKS ARE IN
+/obj/structure/bookcase/random/regent
+	var/animation_delay = 2 SECONDS
+
+/obj/structure/bookcase/random/regent/attack_hand(mob/living/carbon/human/human)
+	. = ..()
+	if(human.job != "Chantry Regent" || !density)
+		return
+	to_chat(human, span_notice("You activate the hidden bookshelf."))
+	fade_out()
+
+/obj/structure/bookcase/random/regent/proc/fade_out()
+	animate(src, alpha = 0, time = animation_delay)
+	density = FALSE
+	addtimer(CALLBACK(src, PROC_REF(fade_in)), animation_delay * 3)
+
+/obj/structure/bookcase/random/regent/proc/fade_in()
+	animate(src, alpha = 255, time = animation_delay)
+	addtimer(CALLBACK(src, PROC_REF(fade_in_finish)), animation_delay)
+
+/obj/structure/bookcase/random/regent/proc/fade_in_finish()
+	density = TRUE
