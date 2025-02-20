@@ -107,6 +107,9 @@
 	/// Can other carbons be shoved into this one to make it fall?
 	var/can_be_shoved_into = FALSE
 
+	bloodpool = 10
+	maxbloodpool = 10
+
 	//imported from other areas around the code
 	var/last_moon_look = 0
 	var/last_rage_from_attack = 0

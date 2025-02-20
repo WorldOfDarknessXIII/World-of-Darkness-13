@@ -119,7 +119,7 @@
 
 	var/stun_absorption = null ///converted to a list of stun absorption sources this mob has when one is added
 
-	var/blood_volume = 0 ///how much blood the mob has
+	var/blood_volume = BLOOD_VOLUME_NORMAL ///how much blood the mob has
 	var/obj/effect/proc_holder/ranged_ability ///Any ranged ability the mob has, as a click override
 
 	var/see_override = 0 ///0 for no override, sets see_invisible = see_override in silicon & carbon life process via update_sight()
@@ -254,8 +254,8 @@
 	var/true_real_name
 	var/died_already = FALSE
 
-	var/bloodpool = 10
-	var/maxbloodpool = 10
+	var/bloodpool = 5
+	var/maxbloodpool = 5
 	var/blood_per_point = 0
 	var/generation = 13
 	var/humanity = 7

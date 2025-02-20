@@ -215,6 +215,8 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
+	bloodpool = 1
+	maxbloodpool = 1
 	maxHealth = 15
 	health = 15
 	butcher_results = list(/obj/item/food/meat/slab/mouse = 1)
