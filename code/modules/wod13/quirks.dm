@@ -144,6 +144,33 @@ Dancer
 	lose_text = "<span class='notice'>You don't feel dumb anymore.</span>"
 	allowed_species = list("Vampire", "Human", "Ghoul", "Kuei-Jin")
 
+/datum/quirk/cold_aura
+	name = "Deathly Aura"
+	desc = "Even if your heart beats, you show cold to matters of the soul."
+	mob_trait = TRAIT_COLD_AURA
+	value = 2
+	gain_text = "<span class='warning'>You feel like you're standing in the shade.</span>"
+	lose_text = "<span class='notice'>You feel a subtle warmth.</span>"
+	allowed_species = list("Human", "Ghoul")
+
+/datum/quirk/warm_aura
+	name = "Lively Aura"
+	desc = "You don't SEEM dead enough to readings, fooling a few forms of detection as to whether or not you're a walking corpse."
+	mob_trait = TRAIT_WARM_AURA
+	value = 3
+	gain_text = "<span class='warning'>You feel your heart beat, for a moment.</span>"
+	lose_text = "<span class='notice'>You feel a subtle chill.</span>"
+	allowed_species = list("Kuei-jin", "Vampire")
+
+/datum/quirk/blush_of_health
+	name = "Blush of Health"
+	desc = "You're a little more lively than others. Makes you look less dead to onlookers."
+	mob_trait = TRAIT_BLUSH_OF_HEALTH
+	value = 3
+	gain_text = "<span class='warning'>You feel your heart beat, thumping irregularly in your chest.</span>"
+	lose_text = "<span class='notice'>You feel your pulse slow to a crawl, stilling.</span>"
+	allowed_species = list("Vampire")
+
 /datum/quirk/coffin_therapy
 	name = "Coffin Therapy"
 	desc = "Your wounds heal only in a coffin."
@@ -171,163 +198,49 @@ Dancer
 	lose_text = "<span class='notice'>You don't feel extra <b>HUNGRY</b> anymore.</span>"
 	allowed_species = list("Vampire", "Ghoul")
 
-//Removed after changes to death consequences.
-/*
-/datum/quirk/phoenix
-	name = "Phoenix"
-	desc = "You don't loose gained experience after the Final Death."
-	mob_trait = TRAIT_PHOENIX
-	value = 5
-	gain_text = "<span class='notice'>You feel like you can burn without permanent consequences.</span>"
-	lose_text = "<span class='warning'>You don't feel like you can burn without consequences anymore.</span>"
-	allowed_species = list("Vampire")
-*/
+/datum/quirk/debtor
+	name = "Debtor"
+	desc = "You have loans to pay off. Halve your starting money."
+	mob_trait = TRAIT_DEBTOR
+	value = -1
+	gain_text = "<span class='warning'>You feel poorer.</span>"
+	lose_text = "<span class='notice'>You feel hope for your future finances.</span>"
 
-/*
-/datum/quirk/acrobatic
-	name = "Acrobatic"
-	desc = "You know a couple of acrobatic moves."
-	value = 3
-	mob_trait = TRAIT_ACROBATIC
-	gain_text = "<span class='notice'>You feel like you can jump higher.</span>"
-	lose_text = "<span class='warning'>Now you aren't as agile as you were.</span>"
+/datum/quirk/messy_eater
+	name = "Messy Eater"
+	desc = "Blood doesn't make it in around your fangs correctly. Create bloodstains when you feed, and reduce your blood intake."
+	mob_trait = TRAIT_MESSY_EATER
+	value = -2
+	gain_text = "<span class='warning'>Your fangs feel awkward in your mouth.</span>"
+	lose_text = "<span class='notice'>You fangs feel comfortable in your mouth.</span>"
+	allowed_species = list("Vampire","Kuei-jin")
 
-/datum/quirk/acrobatic/on_spawn()
-	var/mob/living/carbon/H = quirk_holder
-	var/datum/action/acrobate/DA = new()
-	DA.Grant(H)
+/datum/quirk/animal_repulsion
+	name = "Animal Repulsion"
+	desc = "Ever heard of animal magnetism? You've got the opposite of that. Only literal. Animals hate you!"
+	mob_trait = TRAIT_ANIMAL_REPULSION
+	value = -3
+	gain_text = "<span class='warning'>You can feel hostile eyes watching you.</span>"
+	lose_text = "<span class='notice'>Cats walk by you unphased.</span>"
+	allowed_species = list("Vampire","Ghoul","Human","Kuei-jin")
 
-/datum/action/acrobate
-	name = "Dodge"
-	desc = "Jump over something and dodge a projectile."
-	button_icon_state = "acrobate"
-	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	var/last_acrobate = 0
+/datum/quirk/illegal_identity
+	name = "Illegal Identity"
+	desc = "Illegal immigrant? Died legally? Born a wolf? The cops aren't happy."
+	mob_trait = TRAIT_ILLEGAL_IDENTITY
+	value = 0
+	gain_text = "<span class='warning'>You feel legally unprepared.</span>"
+	lose_text = "<span class='notice'>You feel bureaucratically legitimate.</span>"
 
-/datum/action/acrobate/Trigger()
-	var/mob/living/carbon/H = owner
-	if(last_acrobate+15 > world.time)
-		return
-	last_acrobate = world.time
+/datum/quirk/potent_blood
+	name = "Potent Blood"
+	desc = "There's some spark of vital life in your veins. Vampires gain extra blood points for feeding off of you."
+	mob_trait = TRAIT_POTENT_BLOOD
+	value = -2
+	gain_text = "<span class='warning'>Vim runs through you.</span>"
+	lose_text = "<span class='notice'>You feel subtly enervated.</span>"
+	allowed_species = list("Ghoul","Human")
 
-	if(H.stat >= SOFT_CRIT || H.IsSleeping() || H.IsUnconscious() || H.IsParalyzed() || H.IsKnockdown() || H.IsStun() || HAS_TRAIT(H, TRAIT_RESTRAINED) || !isturf(H.loc))
-		return
-
-	if(!isturf(owner.loc))
-		return
-
-	if(owner.pulledby)
-		return
-
-	if(istype(get_step(owner, owner.dir), /turf/open/floor/plating/umbra))
-		return
-
-	if(istype(get_step(get_step(owner, owner.dir), owner.dir), /turf/open/floor/plating/umbra))
-		return
-
-	if(isclosedturf(get_step(owner, owner.dir)))
-		return
-
-	if(isclosedturf(get_step(get_step(owner, owner.dir), owner.dir)))
-		return
-
-	if(isclosedturf(get_step(get_step(get_step(owner, owner.dir), owner.dir), owner.dir)))
-		for(var/atom/movable/A in get_step(owner, owner.dir))
-			if(istype(A, /obj/structure/vampdoor))
-				return
-			if(istype(A, /obj/matrix))
-				return
-			if(istype(A, /obj/structure/window))
-				return
-			if(istype(A, /turf/open/floor/plating/vampocean))
-				return
-			if(istype(A, /obj/elevator_door))
-				return
-			if(istype(A, /obj/machinery/door/poddoor/shutters))
-				return
-
-		for(var/atom/movable/A in get_step(get_step(owner, owner.dir), owner.dir))
-			if(istype(A, /obj/structure/vampdoor))
-				return
-			if(istype(A, /obj/matrix))
-				return
-			if(istype(A, /obj/structure/window))
-				return
-			if(istype(A, /turf/open/floor/plating/vampocean))
-				return
-			if(istype(A, /obj/elevator_door))
-				return
-			if(istype(A, /obj/machinery/door/poddoor/shutters))
-				return
-
-		var/turf/open/LO = get_step(get_step(owner, owner.dir), owner.dir)
-		if(H.dancing)
-			return
-		H.Immobilize(2, TRUE)
-		animate(H, pixel_z = 32, time = 2)
-		spawn(2)
-			H.forceMove(LO)
-			animate(H, pixel_z = 0, time = 2)
-			spawn(2)
-				if(H.potential > 0)
-					H.epic_fall()
-	else if(isopenturf(get_step(get_step(get_step(owner, owner.dir), owner.dir), owner.dir)))
-		for(var/atom/movable/A in get_step(owner, owner.dir))
-			if(istype(A, /obj/structure/vampdoor))
-				return
-			if(istype(A, /obj/matrix))
-				return
-			if(istype(A, /obj/structure/window))
-				return
-			if(istype(A, /turf/open/floor/plating/vampocean))
-				return
-			if(istype(A, /obj/elevator_door))
-				return
-			if(istype(A, /obj/machinery/door/poddoor/shutters))
-				return
-
-		for(var/atom/movable/A in get_step(get_step(owner, owner.dir), owner.dir))
-			if(istype(A, /obj/structure/vampdoor))
-				return
-			if(istype(A, /obj/matrix))
-				return
-			if(istype(A, /obj/structure/window))
-				return
-			if(istype(A, /turf/open/floor/plating/vampocean))
-				return
-			if(istype(A, /obj/elevator_door))
-				return
-			if(istype(A, /obj/machinery/door/poddoor/shutters))
-				return
-
-		for(var/atom/movable/A in get_step(get_step(get_step(owner, owner.dir), owner.dir), owner.dir))
-			if(istype(A, /obj/structure/vampdoor))
-				return
-			if(istype(A, /obj/matrix))
-				return
-			if(istype(A, /obj/structure/window))
-				return
-			if(istype(A, /turf/open/floor/plating/vampocean))
-				return
-			if(istype(A, /obj/elevator_door))
-				return
-			if(istype(A, /obj/machinery/door/poddoor/shutters))
-				return
-
-		var/turf/open/LO = get_step(get_step(get_step(owner, owner.dir), owner.dir), owner.dir)
-		if(H.dancing)
-			return
-		H.Immobilize(2, TRUE)
-		animate(H, pixel_z = 32, time = 2)
-		spawn(2)
-			H.forceMove(LO)
-			animate(H, pixel_z = 0, time = 2)
-			spawn(2)
-				if(H.potential > 0)
-					H.epic_fall()
-				else if(iscrinos(H))
-					H.epic_fall()
-*/
 /datum/action/fly_upper
 	name = "Fly Up"
 	desc = "Fly to the upper level."

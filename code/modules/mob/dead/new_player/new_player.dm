@@ -566,6 +566,8 @@
 				R.friend_text = H.client.prefs.friend_text
 				R.enemy_text = H.client.prefs.enemy_text
 				R.lover_text = H.client.prefs.lover_text
+				if(HAS_TRAIT(H,TRAIT_POTENT_BLOOD))
+					H.bloodquality = 4
 				R.publish()
 		new_character = null
 		qdel(src)

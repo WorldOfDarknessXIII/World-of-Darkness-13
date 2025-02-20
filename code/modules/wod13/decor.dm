@@ -763,7 +763,10 @@
 				return
 			V.last_extracted = world.time
 			if(!iskindred(src))
-				new /obj/item/drinkable_bloodpack(get_step(V, SOUTH))
+				if(HAS_TRAIT(src,TRAIT_POTENT_BLOOD))
+					new /obj/item/drinkable_bloodpack/elite(get_step(V, SOUTH))
+				else
+					new /obj/item/drinkable_bloodpack(get_step(V, SOUTH))
 				bloodpool = max(0, bloodpool-2)
 			else
 				new /obj/item/drinkable_bloodpack/vitae(get_step(V, SOUTH))

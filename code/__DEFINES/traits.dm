@@ -1,5 +1,6 @@
 #define SIGNAL_ADDTRAIT(trait_ref) "addtrait [trait_ref]"
 #define SIGNAL_REMOVETRAIT(trait_ref) "removetrait [trait_ref]"
+#define NPC_ITEM_TRAIT "npc_item"
 
 // trait accessor defines
 #define ADD_TRAIT(target, trait, source) \
@@ -248,7 +249,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 
 
-//#define TRAIT_ACROBATIC			"acrobatic"
 #define TRAIT_DANCER			"dancer"
 #define TRAIT_EXP_DRIVER		"experienced_driver"
 #define TRAIT_BONE_KEY			"bone_key"
@@ -260,7 +260,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RUBICON			"rubicon"
 #define TRAIT_HUNGRY			"hungry"
 #define TRAIT_STAKE_RESISTANT	"stake_resistant"
-//#define TRAIT_PHOENIX			"phoenix"
+#define TRAIT_COLD_AURA			"cold_aura"
+#define TRAIT_WARM_AURA			"warm_aura"
+#define TRAIT_BLUSH_OF_HEALTH	"blush_of_health"
+#define TRAIT_POTENT_BLOOD		"potent_blood"
+#define TRAIT_CAN_EAT			"can_eat" // this is for kindred. not normal people. normal people do not need this flag.
+#define TRAIT_MESSY_EATER		"messy_eater"
+#define TRAIT_DEBTOR			"debtor"
+#define TRAIT_ANIMAL_REPULSION	"animal_repulsion"
+#define TRAIT_ILLEGAL_IDENTITY	"illegal_identity"
 #define TRAIT_LAZY				"lazy"
 #define TRAIT_HOMOSEXUAL		"homosexual"
 #define TRAIT_HUNTED			"hunted"

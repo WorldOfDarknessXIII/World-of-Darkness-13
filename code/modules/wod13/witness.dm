@@ -81,8 +81,12 @@
 	if (client)
 		if(a_intent == INTENT_HARM)
 			holder.color = "#ff0000"
-		else
+		if(a_intent == INTENT_GRAB)
+			holder.color = "#ffff00"
+		if(a_intent == INTENT_DISARM)
 			holder.color = "#0000ff"
+		else
+			holder.color = "#00ff00"
 	else if (isnpc(src))
 		var/mob/living/carbon/human/npc/N = src
 		if (N.danger_source)
@@ -90,9 +94,17 @@
 		else
 			holder.color = "#0000ff"
 
-	if (iskindred(src))
+	if (iskindred(src) || HAS_TRAIT(src, TRAIT_COLD_AURA))
 		//pale aura for vampires
-		holder.color = "#ffffff"
+		if(!HAS_TRAIT(src, TRAIT_WARM_AURA))
+			if(a_intent == INTENT_HARM)
+				holder.color = "#ff7777"
+			if(a_intent == INTENT_GRAB)
+				holder.color = "#ffff77"
+			if(a_intent == INTENT_DISARM)
+				holder.color = "#7777ff"
+			else
+				holder.color = "#77ff77"
 		//only Baali can get antifrenzy through selling their soul, so this gives them the unholy halo (MAKE THIS BETTER)
 		if (antifrenzy)
 			holder.icon = 'icons/effects/32x64.dmi'

@@ -1,3 +1,5 @@
+//Generic starting inventory items.
+
 /obj/item/cockclock
 	name = "\improper wrist watch"
 	desc = "A portable device to check time."
@@ -18,8 +20,8 @@
 	to_chat(user, "<b>[SScity_time.timeofnight]</b>")
 
 /obj/item/passport
-	name = "\improper fake passport"
-	desc = "Just some book with words, none of real identity here."
+	name = "\improper passport"
+	desc = "A book with someone's license, photo, and identifying information. Don't lose it!"
 	icon = 'code/modules/wod13/items.dmi'
 	worn_icon = 'code/modules/wod13/worn.dmi'
 	icon_state = "passport1"
@@ -39,3 +41,6 @@
 		clozed = TRUE
 		icon_state = "passport1"
 		to_chat(user, "<span class='notice'>You close [src].</span>")
+
+/obj/item/passport/fake
+	desc = "A book with a license, photo, and identifying information."

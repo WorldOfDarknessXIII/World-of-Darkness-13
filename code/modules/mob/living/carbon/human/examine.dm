@@ -277,6 +277,12 @@
 	var/apparent_blood_volume = bloodpool
 	if(skin_tone == "albino")
 		apparent_blood_volume -= 3
+	if(HAS_TRAIT(user, TRAIT_COLD_AURA))
+		apparent_blood_volume -= 1
+	if(HAS_TRAIT(user, TRAIT_WARM_AURA))
+		apparent_blood_volume += 1
+	if(HAS_TRAIT(user, TRAIT_BLUSH_OF_HEALTH))
+		apparent_blood_volume += 5
 	if((apparent_blood_volume >= round(maxbloodpool * 0.5)) && (apparent_blood_volume < maxbloodpool))
 		msg += "[t_He] [t_has] pale skin.\n"
 	else if((apparent_blood_volume >= 1) && (apparent_blood_volume < round(maxbloodpool/2)))
