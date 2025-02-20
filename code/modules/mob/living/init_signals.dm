@@ -30,6 +30,15 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_RESTRAINED), PROC_REF(on_restrained_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_RESTRAINED), PROC_REF(on_restrained_trait_loss))
 
+	// Vision traits gain and removal
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_THERMAL_VISION), PROC_REF(on_thermal_vision_gain))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_XRAY_VISION), PROC_REF(on_xray_vision_gain))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NIGHT_VISION), PROC_REF(on_night_vision_gain))
+
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_THERMAL_VISION), PROC_REF(on_thermal_vision_loss))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_XRAY_VISION), PROC_REF(on_xray_vision_loss))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_NIGHT_VISION), PROC_REF(on_night_vision_loss))
+
 	RegisterSignal(src, list(
 		SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION),
 		SIGNAL_REMOVETRAIT(TRAIT_CRITICAL_CONDITION),
@@ -217,3 +226,34 @@
 /mob/living/proc/on_skittish_trait_loss(datum/source)
 	SIGNAL_HANDLER
 	RemoveElement(/datum/element/skittish)
+
+/*
+Handles vision trait updates:
+	TRAIT_THERMAL_VISION
+	TRAIT_XRAY_VISION
+	TRAIT_NIGHT_VISION
+*/
+
+/mob/living/proc/on_thermal_vision_gain()
+	SIGNAL_HANDLER
+	update_sight()
+
+/mob/living/proc/on_thermal_vision_loss()
+	SIGNAL_HANDLER
+	update_sight()
+
+/mob/living/proc/on_xray_vision_gain()
+	SIGNAL_HANDLER
+	update_sight()
+
+/mob/living/proc/on_xray_vision_loss()
+	SIGNAL_HANDLER
+	update_sight()
+
+/mob/living/proc/on_night_vision_gain()
+	SIGNAL_HANDLER
+	update_sight()
+
+/mob/living/proc/on_night_vision_loss()
+	SIGNAL_HANDLER
+	update_sight()

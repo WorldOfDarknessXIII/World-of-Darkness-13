@@ -45,11 +45,11 @@
 
 /datum/discipline_power/visceratika/scry_the_hearthstone/activate()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_THERMAL_VISION, "Visceratika Scry the Hearthstone")
+	ADD_TRAIT(owner, TRAIT_THERMAL_VISION, "scry-the-hearthstone")
 
 /datum/discipline_power/visceratika/scry_the_hearthstone/deactivate()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, "Visceratika Scry the Hearthstone")
+	REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, "scry-the-hearthstone")
 
 //BOND WITH THE MOUNTAIN
 /datum/discipline_power/visceratika/bond_with_the_mountain

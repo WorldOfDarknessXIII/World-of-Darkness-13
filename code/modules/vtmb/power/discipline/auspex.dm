@@ -35,13 +35,13 @@
 
 /datum/discipline_power/auspex/heightened_senses/activate()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
-	ADD_TRAIT(owner, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
+	ADD_TRAIT(owner, TRAIT_THERMAL_VISION, "auspex-heightened")
+	ADD_TRAIT(owner, TRAIT_NIGHT_VISION, "auspex-heightened")
 
 /datum/discipline_power/auspex/heightened_senses/deactivate()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
-	REMOVE_TRAIT(owner, TRAIT_NIGHT_VISION, TRAIT_GENERIC)
+	REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, "auspex-heightened")
+	REMOVE_TRAIT(owner, TRAIT_NIGHT_VISION, "auspex-heightened")
 
 //AURA PERCEPTION
 /datum/discipline_power/auspex/aura_perception
