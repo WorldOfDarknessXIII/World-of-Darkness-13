@@ -11633,7 +11633,7 @@
 	},
 /obj/structure/curtain/cloth/fancy,
 /turf/open/floor/plating/vampwood,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "aOr" = (
 /obj/effect/decal/bordur{
 	dir = 4
@@ -16715,7 +16715,7 @@
 "bgF" = (
 /obj/structure/chair/wood/wings,
 /turf/open/floor/carpet,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "bgG" = (
 /obj/structure/trashcan,
 /turf/open/floor/plating/sidewalk/old,
@@ -16775,7 +16775,7 @@
 	pixel_y = 12
 	},
 /turf/open/floor/carpet,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "bgU" = (
 /obj/structure/fluff/hedge{
 	pixel_x = 3
@@ -16791,7 +16791,7 @@
 	pixel_y = 13
 	},
 /turf/open/floor/plating/parquetry,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "bgV" = (
 /obj/structure/trashcan,
 /turf/open/floor/plating/sidewalkalt,
@@ -18406,7 +18406,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/vampwood,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "bmr" = (
 /obj/structure/vampdoor/wood/old{
 	lock_id = "mansion";
@@ -25922,7 +25922,7 @@
 "bOT" = (
 /obj/structure/curtain/cloth/fancy,
 /turf/open/floor/plasteel/stairs/old,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "bOU" = (
 /obj/structure/table/wood,
 /obj/item/clothing/mask/vampire/balaclava,
@@ -26042,7 +26042,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/vampwood,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "bSr" = (
 /obj/structure/mirror{
 	pixel_y = 32
@@ -28942,7 +28942,7 @@
 "drU" = (
 /obj/structure/vampdoor/wood/theatre/unlocked,
 /turf/open/floor/plating/toilet,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "dsl" = (
 /obj/machinery/light{
 	dir = 1
@@ -31140,7 +31140,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/vampwood,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "ezs" = (
 /obj/effect/decal/shadow,
 /obj/structure/lattice/catwalk,
@@ -32510,7 +32510,7 @@
 /area/vtm/chinatown)
 "fdk" = (
 /turf/open/floor/plating/parquetry,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "fdm" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 4
@@ -33003,7 +33003,7 @@
 "fsJ" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/plating/parquetry,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "fsK" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -33349,7 +33349,7 @@
 /obj/structure/chair/wood/wings,
 /obj/structure/chair/wood/wings,
 /turf/open/floor/carpet,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "fDR" = (
 /obj/effect/landmark/npcbeacon,
 /obj/effect/landmark/npcactivity,
@@ -34512,7 +34512,7 @@
 	pixel_x = 16
 	},
 /turf/open/floor/plating/toilet,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "ghr" = (
 /obj/effect/decal/rugs,
 /obj/fusebox,
@@ -35129,7 +35129,7 @@
 /area/vtm/interior/millennium_tower/f5)
 "gyq" = (
 /turf/open/floor/plating/vampwood,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "gyJ" = (
 /obj/structure/vampdoor/daughters,
 /turf/open/floor/plating/parquetry,
@@ -35585,7 +35585,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/parquetry/old,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "gJE" = (
 /obj/machinery/light/small/pink{
 	pixel_y = 32
@@ -35955,7 +35955,7 @@
 	pixel_y = -17
 	},
 /turf/open/floor/plating/parquetry/old,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "gQS" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -36130,7 +36130,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plating/toilet,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "gUl" = (
 /obj/structure/vampipe{
 	icon_state = "piping31"
@@ -40604,7 +40604,7 @@
 "jdg" = (
 /obj/effect/decal/trash,
 /turf/closed/wall/vampwall/city,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "jdy" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 1
@@ -41541,7 +41541,7 @@
 	pixel_y = 12
 	},
 /turf/open/floor/plating/vampwood,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "jBk" = (
 /obj/machinery/light{
 	dir = 1
@@ -41952,7 +41952,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/vampwood,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "jNx" = (
 /obj/structure/railing{
 	dir = 4;
@@ -42432,7 +42432,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/sidewalk/old,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "kdh" = (
 /obj/machinery/light{
 	dir = 4
@@ -45856,7 +45856,7 @@
 /obj/item/lipstick/random,
 /obj/item/lipstick/random,
 /turf/open/floor/plating/parquetry,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "lWP" = (
 /obj/structure/railing{
 	dir = 1;
@@ -47222,7 +47222,7 @@
 "mGi" = (
 /obj/structure/chair/stool/bar,
 /turf/open/floor/plating/parquetry,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "mGC" = (
 /obj/structure/closet/crate/wooden,
 /obj/item/reagent_containers/food/drinks/bottle/wine/unlabeled,
@@ -47893,7 +47893,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/vampwood,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "naj" = (
 /obj/structure/chair,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -48427,7 +48427,7 @@
 /obj/item/clothing/under/costume/lobster,
 /obj/item/restraints/handcuffs,
 /turf/open/floor/plating/parquetry,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "noI" = (
 /obj/structure/vampdoor/camarilla{
 	lockpick_difficulty = 9
@@ -50038,7 +50038,7 @@
 "ohb" = (
 /obj/effect/decal/graffiti,
 /turf/open/floor/plating/toilet,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "ohh" = (
 /obj/structure/chair/wood/wings{
 	dir = 4
@@ -50201,7 +50201,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/parquetry/old,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "oly" = (
 /obj/effect/gibspawner/human,
 /turf/open/floor/plating/rough/cave,
@@ -50516,7 +50516,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plating/toilet,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "owi" = (
 /obj/structure/closet/cardboard,
 /turf/open/floor/plating/sidewalk/poor,
@@ -50701,7 +50701,7 @@
 "oAw" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/plating/toilet,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "oAF" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
@@ -52603,7 +52603,7 @@
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/mop,
 /turf/open/floor/plating/toilet,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "pyA" = (
 /obj/machinery/shower{
 	dir = 8;
@@ -52700,7 +52700,7 @@
 	pixel_x = -16
 	},
 /turf/open/floor/plating/toilet,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "pBw" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 8
@@ -55419,7 +55419,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plating/parquetry,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "qSy" = (
 /mob/living/simple_animal/hostile/ghost/hostile,
 /obj/machinery/griddle,
@@ -56209,7 +56209,7 @@
 	},
 /obj/structure/table/wood,
 /turf/open/floor/plating/parquetry/old,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "rmQ" = (
 /obj/structure/railing{
 	pixel_y = -6
@@ -56562,7 +56562,7 @@
 	pixel_y = -17
 	},
 /turf/open/floor/plating/parquetry,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "rxV" = (
 /obj/effect/decal/bordur{
 	dir = 1
@@ -57431,7 +57431,7 @@
 "rVe" = (
 /obj/structure/table/wood,
 /turf/open/floor/plating/parquetry/old,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "rVk" = (
 /obj/effect/decal/pallet,
 /obj/structure/table/wood,
@@ -58226,7 +58226,7 @@
 /obj/effect/turf_decal/siding/white,
 /obj/structure/vampdoor/wood/theatre/unlocked,
 /turf/open/floor/plating/toilet,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "spr" = (
 /obj/structure/vampdoor/npc,
 /turf/open/floor/plating/sidewalk/poor,
@@ -59172,7 +59172,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/vampwood,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "sOi" = (
 /obj/machinery/light{
 	pixel_y = 32
@@ -59830,7 +59830,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plating/parquetry/old,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "tey" = (
 /obj/structure/railing{
 	layer = 4
@@ -60445,7 +60445,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/parquetry/old,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "tsL" = (
 /obj/structure/werewolf_totem/wendigo,
 /turf/open/floor/plating/vampdirt,
@@ -60629,7 +60629,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plating/parquetry,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "tzV" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
@@ -61941,7 +61941,7 @@
 	pixel_y = 13
 	},
 /turf/open/floor/plating/parquetry/old,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "ujo" = (
 /obj/structure/railing{
 	dir = 8;
@@ -62307,7 +62307,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plating/parquetry/old,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "uuN" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -62752,7 +62752,7 @@
 "uHi" = (
 /obj/fusebox,
 /turf/open/floor/plating/parquetry/old,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "uHl" = (
 /obj/item/toy/crayon/spraycan,
 /turf/open/floor/plating/sidewalk,
@@ -63776,7 +63776,7 @@
 	},
 /obj/structure/vampdoor/wood/theatre,
 /turf/open/floor/plating/vampwood,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "vhH" = (
 /obj/structure/table/wood,
 /obj/item/clothing/under/suit/black,
@@ -64011,7 +64011,7 @@
 "vnG" = (
 /obj/structure/closet/cardboard,
 /turf/open/floor/plating/vampwood,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "voa" = (
 /obj/structure/vampdoor/wood{
 	dir = 4
@@ -66252,7 +66252,7 @@
 /area/vtm/financialdistrict)
 "wvF" = (
 /turf/open/floor/plating/toilet,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "wvM" = (
 /obj/structure/vampfence/corner/rich{
 	dir = 1;
@@ -66612,7 +66612,7 @@
 /area/vtm/interior/strip_elysium)
 "wCW" = (
 /turf/open/floor/plating/parquetry/old,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "wDb" = (
 /obj/structure/closet/crate/freezer/fridge,
 /obj/item/drinkable_bloodpack/elite,
@@ -66949,7 +66949,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/parquetry/old,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "wKf" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 8
@@ -66993,7 +66993,7 @@
 "wLc" = (
 /obj/structure/guillotine,
 /turf/open/floor/plating/vampwood,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "wLn" = (
 /obj/structure/table/wood,
 /obj/item/paper{
@@ -70275,7 +70275,7 @@
 /area/vtm/interior)
 "ylr" = (
 /turf/closed/wall/vampwall/city,
-/area/vtm/theatre)
+/area/vtm/interior/theatre)
 "yls" = (
 /obj/effect/decal/wallpaper/gold/alt,
 /turf/closed/wall/vampwall/rich,
