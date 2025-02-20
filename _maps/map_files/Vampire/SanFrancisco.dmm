@@ -54833,13 +54833,6 @@
 	},
 /turf/closed/wall/vampwall/old,
 /area/vtm/interior/old_clan_tzimisce_manor)
-"qDi" = (
-/obj/structure/table/wood/fancy/red,
-/obj/item/candle/infinite{
-	pixel_y = 6
-	},
-/turf/open/floor/carpet/lone,
-/area/vtm/interior/chantry/basement)
 "qDm" = (
 /obj/structure/toilet{
 	dir = 4;
@@ -114032,7 +114025,7 @@ aaa
 aaa
 aab
 afA
-qDi
+fhK
 nQm
 dnT
 jXH
