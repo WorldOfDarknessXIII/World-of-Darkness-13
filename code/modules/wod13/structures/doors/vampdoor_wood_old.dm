@@ -2,6 +2,11 @@
 	icon_state = "oldwood-1"
 	baseicon = "oldwood"
 
+/obj/structure/vampdoor/wood/old/chantry
+	lock_id = "chantry"
+	lockpick_difficulty = 12
+	locked = TRUE
+
 //Change type to of objects below to be a child of wood/old post mapping freeze:
 /obj/structure/vampdoor/baali
 	icon_state = "oldwood-1"
