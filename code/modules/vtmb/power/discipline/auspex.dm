@@ -21,6 +21,11 @@
 	owner.add_client_colour(/datum/client_colour/glass_colour/lightblue)
 	owner.update_sight()
 
+/datum/discipline_power/auspex/deactivate()
+	. = ..()
+	owner.remove_client_colour(/datum/client_colour/glass_colour/lightblue)
+	owner.update_sight()
+
 //HEIGHTENED SENSES
 /datum/discipline_power/auspex/heightened_senses
 	name = "Heightened Senses"
