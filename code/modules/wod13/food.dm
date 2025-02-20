@@ -616,7 +616,7 @@
 	)
 
 /obj/machinery/mineral/equipment_vendor/fastfood/blood
-	required_access = list(ACCESS_SURGERY)
+	req_access = list(ACCESS_SURGERY)
 	prize_list = list(
 		new /datum/data/mining_equipment("drinkable blood pack (full)",	/obj/item/drinkable_bloodpack,  50),
 		new /datum/data/mining_equipment("elite blood pack (full)",	/obj/item/drinkable_bloodpack/elite,  200)

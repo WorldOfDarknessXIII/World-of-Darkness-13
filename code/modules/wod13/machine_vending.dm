@@ -12,8 +12,6 @@
 	var/owner_needed = TRUE
 	var/obj/item/card/id/inserted_id
 	var/points = 0
-	///Does this vendor need a badge or an identification card?
-	var/list/required_access = list()
 	var/list/prize_list = list( //if you add something to this, please, for the love of god, sort it by price/type. use tabs and not spaces.
 		new /datum/data/mining_equipment("1 Marker Beacon",				/obj/item/stack/marker_beacon,										10),
 		new /datum/data/mining_equipment("10 Marker Beacons",			/obj/item/stack/marker_beacon/ten,									100),
@@ -159,7 +157,7 @@
 //				to_chat(usr, "<span class='alert'>Error: An ID is required!</span>")
 //				flick(icon_deny, src)
 //				return
-			if(required_access && !allowed(usr))
+			if(req_access && !allowed(usr))
 				to_chat(usr, span_warning("This shop does not sell its products for you."))
 				return
 			var/datum/data/mining_equipment/prize = locate(params["ref"]) in prize_list
