@@ -107,7 +107,7 @@
 			return
 		if(get_dist(src, my_owner) > 4)
 			return
-		if(my_owner.stat >= HARD_CRIT)
+		if(my_owner.stat >= UNCONSCIOUS)
 			return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -144,7 +144,7 @@
 			return
 		if(get_dist(src, my_owner) > 4)
 			return
-		if(my_owner.stat >= HARD_CRIT)
+		if(my_owner.stat >= UNCONSCIOUS)
 			return
 
 	switch(action)
@@ -250,6 +250,8 @@
 		new /datum/data/mining_equipment("bruise pack", /obj/item/stack/medical/bruise_pack, 20),
 		new /datum/data/mining_equipment("Compact Defibillator", /obj/item/defibrillator/compact, 25),
 		new /datum/data/mining_equipment("surgery dufflebag", /obj/item/storage/backpack/duffelbag/med/surgery, 50),
+		new /datum/data/mining_equipment("high quality blood pack", /obj/item/drinkable_bloodpack/elite, 200),
+		new /datum/data/mining_equipment("blood pack", /obj/item/drinkable_bloodpack, 50),
 		new /datum/data/mining_equipment("Hospital Radio", /obj/item/p25radio, 50)
 	)
 

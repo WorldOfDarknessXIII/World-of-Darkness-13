@@ -1203,14 +1203,13 @@
 		return
 	client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
 	var/shootahell = FALSE
-	var/discipliner = FALSE
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(istype(H.get_active_held_item(), /obj/item/gun))
 			shootahell = TRUE
 	if(examine_cursor_icon && client.keys_held["Shift"]) //mouse shit is hardcoded, make this non hard-coded once we make mouse modifiers bindable
 		client.mouse_pointer_icon = examine_cursor_icon
-	else if(discipliner)
+	else if(discipline_targeting)
 		client.mouse_pointer_icon = discipline_cursor_icon
 	else if(shootahell)
 		client.mouse_pointer_icon = pvp_cursor_icon

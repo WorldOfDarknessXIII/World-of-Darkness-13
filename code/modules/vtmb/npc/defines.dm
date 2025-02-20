@@ -15,7 +15,7 @@
 	RegisterSignal(my_parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 /datum/component/npc_controller/proc/check_move()	//Can we call the movement?
-	if(my_parent.stat >= HARD_CRIT)
+	if(my_parent.stat >= UNCONSCIOUS)
 		return FALSE
 	if(my_parent.key)
 		return FALSE

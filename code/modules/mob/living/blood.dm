@@ -29,7 +29,7 @@
 			if(satiety > 80)
 				nutrition_ratio *= 1.25
 			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR)
-			blood_volume = min(BLOOD_VOLUME_NORMAL, blood_volume + 0.5 * nutrition_ratio)
+			adjust_blood_volume(0.5 * nutrition_ratio)
 
 		//Effects of bloodloss
 		var/word = pick("dizzy","woozy","faint")
@@ -71,33 +71,14 @@
 			bleed(temp_bleed)
 			bleed_warn(temp_bleed)
 
+	update_blood_values()
+
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt)
 	if(NOBLOOD in dna.species.species_traits || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		return
 	if(!blood_volume)
 		return
-	if(!iskindred(src))
-		blood_volume = max(blood_volume - amt, 0)
-
-	var/timing = 100
-	if(blood_volume >= BLOOD_VOLUME_SURVIVE)
-		timing = 10
-	if(blood_volume >= BLOOD_VOLUME_BAD)
-		timing = 25
-	if(blood_volume >= BLOOD_VOLUME_OKAY)
-		timing = 50
-	if(blood_volume >= BLOOD_VOLUME_SAFE)
-		timing = 100
-
-	if(iskindred(src))
-		timing = 100
-		if(!bloodpool)
-			return
-
-	if(last_bloodpool_restore+timing <= world.time)
-		last_bloodpool_restore = world.time
-		bloodpool = max(0, bloodpool-1)
 
 	//Blood loss still happens in locker, floor stays clean
 	if(isturf(loc) && prob(sqrt(amt)*BLOOD_DRIP_RATE_MOD))
@@ -190,10 +171,10 @@
 		return ..()
 
 /mob/living/proc/restore_blood()
-	blood_volume = initial(blood_volume)
+	set_blood_volume(initial(blood_volume))
 
 /mob/living/carbon/restore_blood()
-	blood_volume = BLOOD_VOLUME_NORMAL
+	set_blood_volume(BLOOD_VOLUME_NORMAL)
 	for(var/i in bodyparts)
 		var/obj/item/bodypart/BP = i
 		BP.generic_bleedstacks = 0
@@ -216,7 +197,7 @@
 	if(!blood_id)
 		return FALSE
 
-	blood_volume -= amount
+	adjust_blood_volume(-amount)
 
 	var/list/blood_data = get_blood_data(blood_id)
 
@@ -234,7 +215,7 @@
 					C.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5)
 					return TRUE
 
-			C.blood_volume = min(C.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAX_LETHAL)
+			C.adjust_blood_volume(round(amount, 0.1))
 			return TRUE
 
 	AM.reagents.add_reagent(blood_id, amount, blood_data, bodytemperature)
@@ -391,3 +372,70 @@
 	var/obj/effect/decal/cleanable/oil/B = locate() in T.contents
 	if(!B)
 		B = new(T)
+
+/****************************************************
+	VAMPIRE: THE MASQUERADE BLOOD POOL HANDLING
+****************************************************/
+
+/mob/living/proc/can_adjust_blood_points(amount)
+	blood_per_point = initial(blood_volume) / maxbloodpool
+
+	if (amount == 0)
+		return TRUE
+	else if (amount > 0)
+		if ((blood_volume + blood_per_point * amount) > initial(blood_volume))
+			return FALSE
+		if ((bloodpool + amount) > maxbloodpool)
+			return FALSE
+	else
+		if ((blood_volume + blood_per_point * amount) < 0)
+			return FALSE
+		if ((bloodpool + amount) < 0)
+			return FALSE
+	return TRUE
+
+/mob/living/proc/try_adjust_blood_points(amount)
+	if (can_adjust_blood_points(amount))
+		adjust_blood_points(amount)
+		return TRUE
+	else
+		return FALSE
+
+/mob/living/proc/adjust_blood_points(points)
+	blood_per_point = initial(blood_volume) / maxbloodpool
+	blood_volume = clamp(blood_volume + points * blood_per_point, 0, initial(blood_volume))
+
+	update_blood_values()
+
+/mob/living/proc/set_blood_points(points)
+	adjust_blood_points(points - bloodpool)
+
+/mob/living/proc/adjust_blood_volume(gain)
+	blood_per_point = initial(blood_volume) / maxbloodpool
+
+	var/factor = blood_per_point / BLOOD_POINT_NORMAL
+	gain *= factor
+	blood_volume = clamp(blood_volume + gain, 0, initial(blood_volume))
+
+	update_blood_values()
+
+/mob/living/proc/update_blood_values()
+	blood_per_point = initial(blood_volume) / maxbloodpool
+
+	blood_volume = clamp(blood_volume, 0, initial(blood_volume))
+	bloodpool = clamp(blood_volume / blood_per_point, 0, maxbloodpool)
+
+	update_blood_hud()
+
+/mob/living/proc/set_blood_volume(volume)
+	adjust_blood_volume(volume - blood_volume)
+
+/mob/living/proc/blood_points_per_units(units)
+	blood_per_point = initial(blood_volume) / maxbloodpool
+
+	return (units / blood_per_point)
+
+/mob/living/proc/transfer_blood_points(mob/living/to_mob, amount)
+	var/points_to_transfer = clamp(amount, 0, bloodpool)
+	adjust_blood_points(-points_to_transfer)
+	to_mob.adjust_blood_points(points_to_transfer)

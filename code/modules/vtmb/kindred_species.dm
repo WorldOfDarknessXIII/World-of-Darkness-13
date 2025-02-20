@@ -30,10 +30,15 @@
 	punchdamagelow = 10
 	punchdamagehigh = 20
 	dust_anim = "dust-h"
+
+	//splat variables
+	var/spend_blood_per_turn = 1
+	var/spent_blood_turn = 0
 	var/datum/vampireclane/clane
 	var/list/datum/discipline/disciplines = list()
-	selectable = TRUE
 	COOLDOWN_DECLARE(torpor_timer)
+
+	selectable = TRUE
 
 /datum/action/vampireinfo
 	name = "About Me"
@@ -212,49 +217,54 @@
 		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
 		onclose(host, "vampire", src)
 
-/datum/species/kindred/on_species_gain(mob/living/carbon/human/C)
+/datum/species/kindred/on_species_gain(mob/living/carbon/human/vampire)
 	. = ..()
-	C.update_body(0)
-	C.last_experience = world.time + 5 MINUTES
-	var/datum/action/vampireinfo/infor = new()
-	infor.host = C
-	infor.Grant(C)
-	var/datum/action/give_vitae/vitae = new()
-	vitae.Grant(C)
-	var/datum/action/blood_heal/bloodheal = new()
-	bloodheal.Grant(C)
-	var/datum/action/blood_power/bloodpower = new()
-	bloodpower.Grant(C)
-	add_verb(C, /mob/living/carbon/human/verb/teach_discipline)
+	vampire.update_body()
+	vampire.last_experience = world.time + 5 MINUTES
 
-	C.yang_chi = 0
-	C.max_yang_chi = 0
-	C.yin_chi = 6
-	C.max_yin_chi = 6
+	initialize_generation(vampire)
+
+	var/datum/action/vampireinfo/infor = new()
+	infor.host = vampire
+	infor.Grant(vampire)
+	var/datum/action/give_vitae/vitae = new()
+	vitae.Grant(vampire)
+
+	//give basic vitae powers
+	var/datum/action/blood_power/bloodpower = new()
+	bloodpower.Grant(vampire)
+	var/datum/discipline/bloodheal/giving_bloodheal = new(clamp(spend_blood_per_turn, 1, 10))
+	vampire.give_discipline(giving_bloodheal)
+
+	add_verb(vampire, /mob/living/carbon/human/verb/teach_discipline)
+
+	vampire.yang_chi = 0
+	vampire.max_yang_chi = 0
+	vampire.yin_chi = 6
+	vampire.max_yin_chi = 6
 
 	//vampires go to -200 damage before dying
-	for (var/obj/item/bodypart/bodypart in C.bodyparts)
+	for (var/obj/item/bodypart/bodypart in vampire.bodyparts)
 		bodypart.max_damage *= 1.5
 
 	//vampires die instantly upon having their heart removed
-	RegisterSignal(C, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(lose_organ))
+	RegisterSignal(vampire, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(lose_organ))
 
 	//vampires don't die while in crit, they just slip into torpor after 2 minutes of being critted
-	RegisterSignal(C, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(slip_into_torpor))
+	RegisterSignal(vampire, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(slip_into_torpor))
 
 	//vampires resist vampire bites better than mortals
-	RegisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_vampire_bitten))
+	RegisterSignal(vampire, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_vampire_bitten))
 
 /datum/species/kindred/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED)
-	for(var/datum/action/vampireinfo/VI in C.actions)
-		if(VI)
-			VI.Remove(C)
-	for(var/datum/action/A in C.actions)
-		if(A)
-			if(A.vampiric)
-				A.Remove(C)
+	for(var/datum/action/vampireinfo/vampire_info_action in C.actions)
+		vampire_info_action.Remove(C)
+	for(var/datum/action/action in C.actions)
+		if(action.vampiric)
+			action.Remove(C)
+	QDEL_LIST(disciplines)
 
 /datum/action/blood_power
 	name = "Blood Power"
@@ -283,28 +293,25 @@
 		if (HAS_TRAIT(owner, TRAIT_TORPOR))
 			return
 		var/mob/living/carbon/human/BD = usr
-		if(world.time < BD.last_bloodpower_use+110)
+		if(world.time < (BD.last_bloodpower_use + 11 SECONDS))
 			return
 		var/plus = 0
 		if(HAS_TRAIT(BD, TRAIT_HUNGRY))
 			plus = 1
-		if(BD.bloodpool >= 2+plus)
+		if(BD.bloodpool >= (2 + plus))
 			playsound(usr, 'code/modules/wod13/sounds/bloodhealing.ogg', 50, FALSE)
 			button.color = "#970000"
 			animate(button, color = "#ffffff", time = 20, loop = 1)
 			BD.last_bloodpower_use = world.time
-			BD.bloodpool = max(0, BD.bloodpool-(2+plus))
+			BD.adjust_blood_points(-(2 + plus))
 			to_chat(BD, "<span class='notice'>You use blood to become more powerful.</span>")
 			BD.dna.species.punchdamagehigh = BD.dna.species.punchdamagehigh+5
 			BD.physiology.armor.melee = BD.physiology.armor.melee+15
 			BD.physiology.armor.bullet = BD.physiology.armor.bullet+15
-			BD.dexterity = BD.dexterity+2
-			BD.athletics = BD.athletics+2
-			BD.lockpicking = BD.lockpicking+2
+			BD.dexterity += 2
 			if(!HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
 				ADD_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
-			BD.update_blood_hud()
-			spawn(100+BD.discipline_time_plus+BD.bloodpower_time_plus)
+			spawn(10 SECONDS + BD.discipline_time_plus + BD.bloodpower_time_plus)
 				end_bloodpower()
 		else
 			SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
@@ -320,9 +327,7 @@
 			BD.physiology.armor.bullet = BD.physiology.armor.bullet-15
 			if(HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
 				REMOVE_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
-		BD.dexterity = BD.dexterity-2
-		BD.athletics = BD.athletics-2
-		BD.lockpicking = BD.lockpicking-2
+		BD.dexterity = BD.dexterity - 2
 
 /datum/action/give_vitae
 	name = "Give Vitae"
@@ -335,15 +340,20 @@
 /datum/action/give_vitae/Trigger()
 	if(istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner
-		if(H.bloodpool < 2)
+		var/blood_points = clamp(H.blood_points_per_units(BLOOD_POINT_NORMAL), 1, H.bloodpool)
+		if(!H.can_adjust_blood_points(-blood_points))
 			to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 			return
+
+		//give blood to simplemob
 		if(istype(H.pulling, /mob/living/simple_animal))
 			var/mob/living/L = H.pulling
-			L.bloodpool = min(L.maxbloodpool, L.bloodpool+2)
-			H.bloodpool = max(0, H.bloodpool-2)
-			L.adjustBruteLoss(-25)
-			L.adjustFireLoss(-25)
+			L.adjust_blood_points(blood_points)
+			H.adjust_blood_points(-blood_points)
+			L.adjustBruteLoss(-25 * blood_points)
+			L.adjustFireLoss(-25 * blood_points)
+
+		//give blood to human
 		if(istype(H.pulling, /mob/living/carbon/human))
 			var/mob/living/carbon/human/BLOODBONDED = H.pulling
 			if(iscathayan(BLOODBONDED))
@@ -352,30 +362,42 @@
 			if(!BLOODBONDED.client && !istype(H.pulling, /mob/living/carbon/human/npc))
 				to_chat(owner, "<span class='warning'>You need [BLOODBONDED]'s attention to do that!</span>")
 				return
+
+			//initial handling for Embracing
 			if(BLOODBONDED.stat == DEAD)
 				if(!BLOODBONDED.key)
 					to_chat(owner, "<span class='warning'>You need [BLOODBONDED]'s mind to Embrace!</span>")
 					return
 				message_admins("[ADMIN_LOOKUPFLW(H)] is Embracing [ADMIN_LOOKUPFLW(BLOODBONDED)]!")
+
+			//prevent activating multiple times to give blood faster
 			if(giving)
 				return
 			giving = TRUE
-			owner.visible_message("<span class='warning'>[owner] tries to feed [BLOODBONDED] with their own blood!</span>", "<span class='notice'>You started to feed [BLOODBONDED] with your own blood.</span>")
+
+			//main giving blood action
+			owner.visible_message("<span class='warning'>[owner] tries to feed [BLOODBONDED] with their own blood!</span>", "<span class='notice'>You begin to feed [BLOODBONDED] with your own blood.</span>")
 			if(do_mob(owner, BLOODBONDED, 10 SECONDS))
-				H.bloodpool = max(0, H.bloodpool-2)
+				H.adjust_blood_points(-blood_points)
 				giving = FALSE
 
+				//update the faction war faction of whoever's been fed this vitae
 				var/new_master = FALSE
 				BLOODBONDED.drunked_of |= "[H.dna.real_name]"
 
+				//Embrace whoever's been fed this blood
 				if(BLOODBONDED.stat == DEAD && !iskindred(BLOODBONDED))
 					if (!BLOODBONDED.can_be_embraced)
 						to_chat(H, "<span class='notice'>[BLOODBONDED.name] doesn't respond to your Vitae.</span>")
 						return
 
 					if((BLOODBONDED.timeofdeath + 5 MINUTES) > world.time)
-						if (BLOODBONDED.auspice?.level) //here be Abominations
-							if (BLOODBONDED.auspice.force_abomination)
+						//handle attempted werewolf Embraces, try to create an Abomination
+						if (BLOODBONDED.auspice?.level)
+							message_admins("[ADMIN_LOOKUPFLW(H)] is trying to turn [ADMIN_LOOKUPFLW(BLOODBONDED)] into an Abomination.")
+							log_game("[key_name(H)] is trying to turn [key_name(BLOODBONDED)] into an Abomination.")
+
+							if (BLOODBONDED.auspice.force_abomination) //an admin has set the variable to guarantee success
 								to_chat(H, "<span class='danger'>Something terrible is happening.</span>")
 								to_chat(BLOODBONDED, "<span class='userdanger'>Gaia has forsaken you.</span>")
 								message_admins("[ADMIN_LOOKUPFLW(H)] has turned [ADMIN_LOOKUPFLW(BLOODBONDED)] into an Abomination through an admin setting the force_abomination var.")
@@ -404,7 +426,7 @@
 						var/save_data_v = FALSE
 						if(BLOODBONDED.revive(full_heal = TRUE, admin_revive = TRUE))
 							BLOODBONDED.grab_ghost(force = TRUE)
-							to_chat(BLOODBONDED, "<span class='userdanger'>You rise with a start, you're alive! Or not... You feel your soul going somewhere, as you realize you are embraced by a vampire...</span>")
+							to_chat(BLOODBONDED, "<span class='userdanger'>You're awake again. What just happened? Why is your heart not beating?</span>")
 							var/response_v = input(BLOODBONDED, "Do you wish to keep being a vampire on your save slot?(Yes will be a permanent choice and you can't go back!)") in list("Yes", "No")
 							if(response_v == "Yes")
 								save_data_v = TRUE
@@ -496,32 +518,38 @@
 						to_chat(owner, "<span class='notice'>[BLOODBONDED] is totally <b>DEAD</b>!</span>")
 						giving = FALSE
 						return
+				//blood bond people who've been fed this blood
 				else
-					if(BLOODBONDED.has_status_effect(STATUS_EFFECT_INLOVE))
+					if (BLOODBONDED.has_status_effect(STATUS_EFFECT_INLOVE))
 						BLOODBONDED.remove_status_effect(STATUS_EFFECT_INLOVE)
 					BLOODBONDED.apply_status_effect(STATUS_EFFECT_INLOVE, owner)
-					to_chat(owner, "<span class='notice'>You successfuly fed [BLOODBONDED] with vitae.</span>")
-					to_chat(BLOODBONDED, "<span class='userlove'>You feel good when you drink this <b>BLOOD</b>...</span>")
+					to_chat(owner, "<span class='notice'>You successfuly fed [BLOODBONDED] your Vitae.</span>")
+					to_chat(BLOODBONDED, "<span class='userlove'>[owner]'s blood tastes HEAVENLY...</span>")
 
 					message_admins("[ADMIN_LOOKUPFLW(H)] has bloodbonded [ADMIN_LOOKUPFLW(BLOODBONDED)].")
 					log_game("[key_name(H)] has bloodbonded [key_name(BLOODBONDED)].")
 
+					//transfer reagents in your blood to the bloodbonded
 					if(H.reagents)
 						if(length(H.reagents.reagent_list))
 							H.reagents.trans_to(BLOODBONDED, min(10, H.reagents.total_volume), transfered_by = H, methods = VAMPIRE)
-					BLOODBONDED.adjustBruteLoss(-25, TRUE)
+
+					//heal the bloodbonded and increase their bloodpool
+					BLOODBONDED.adjustBruteLoss(-25 * blood_points, TRUE)
 					if(length(BLOODBONDED.all_wounds))
 						var/datum/wound/W = pick(BLOODBONDED.all_wounds)
 						W.remove_wound()
-					BLOODBONDED.adjustFireLoss(-25, TRUE)
-					BLOODBONDED.bloodpool = min(BLOODBONDED.maxbloodpool, BLOODBONDED.bloodpool+2)
+					BLOODBONDED.adjustFireLoss(-25 * blood_points, TRUE)
+					BLOODBONDED.adjust_blood_points(blood_points)
 					giving = FALSE
 
+					//cancel Torpor of a vampire who's able to wake up from Torpor
 					if (iskindred(BLOODBONDED))
 						var/datum/species/kindred/species = BLOODBONDED.dna.species
 						if (HAS_TRAIT(BLOODBONDED, TRAIT_TORPOR) && COOLDOWN_FINISHED(species, torpor_timer))
 							BLOODBONDED.untorpor()
 
+					//if ghouling an NPC, offer ghosts to play as them
 					if(!isghoul(H.pulling) && istype(H.pulling, /mob/living/carbon/human/npc))
 						var/mob/living/carbon/human/npc/NPC = H.pulling
 						if(NPC.ghoulificate(owner))
@@ -530,17 +558,21 @@
 //								var/datum/hud/human/HU = NPC.hud_used
 //								HU.create_ghoulic()
 							NPC.roundstart_vampire = FALSE
-					if(BLOODBONDED.mind)
-						if(BLOODBONDED.mind.enslaved_to != owner)
-							BLOODBONDED.mind.enslave_mind_to_creator(owner)
-							to_chat(BLOODBONDED, "<span class='userdanger'><b>AS PRECIOUS VITAE ENTER YOUR MOUTH, YOU NOW ARE IN THE BLOODBOND OF [H]. SERVE YOUR REGNANT CORRECTLY, OR YOUR ACTIONS WILL NOT BE TOLERATED.</b></span>")
-							new_master = TRUE
+
+					//apply the blood bond and enslave whoever's being fed the blood
+					if(BLOODBONDED.mind?.enslaved_to != owner)
+						BLOODBONDED.mind.enslave_mind_to_creator(owner)
+						to_chat(BLOODBONDED, "<span class='userdanger'><b>AS PRECIOUS VITAE ENTER YOUR MOUTH, YOU NOW ARE IN THE BLOODBOND OF [H]. SERVE YOUR REGNANT CORRECTLY, OR YOUR ACTIONS WILL NOT BE TOLERATED.</b></span>")
+						new_master = TRUE
+
+					//update a ghoul's last feeding and master
 					if(isghoul(BLOODBONDED))
 						var/datum/species/ghoul/G = BLOODBONDED.dna.species
 						G.master = owner
 						G.last_vitae = world.time
 						if(new_master)
 							G.changed_master = TRUE
+					//turn a human who's been fed blood into a new ghoul
 					else if(!iskindred(BLOODBONDED) && !isnpc(BLOODBONDED))
 						var/save_data_g = FALSE
 						BLOODBONDED.set_species(/datum/species/ghoul)
@@ -595,23 +627,23 @@
 	if((dna.species.id == "kindred") || (dna.species.id == "ghoul")) //only splats that have Disciplines qualify
 		var/list/datum/discipline/adding_disciplines = list()
 
-		if (discipline_pref) //initialise character's own disciplines
+		if (discipline_pref) //initialise player's own disciplines
 			for (var/i in 1 to client.prefs.discipline_types.len)
 				var/type_to_create = client.prefs.discipline_types[i]
-				var/datum/discipline/discipline = new type_to_create
+				var/level = client.prefs.discipline_levels[i]
+				var/datum/discipline/discipline = new type_to_create(level)
 
 				//prevent Disciplines from being used if not whitelisted for them
-				if (discipline.clane_restricted)
+				if (discipline.clan_restricted)
 					if (!can_access_discipline(src, type_to_create))
 						qdel(discipline)
 						continue
 
-				discipline.level = client.prefs.discipline_levels[i]
 				adding_disciplines += discipline
 		else if (disciplines.len) //initialise given disciplines
 			for (var/i in 1 to disciplines.len)
 				var/type_to_create = disciplines[i]
-				var/datum/discipline/discipline = new type_to_create
+				var/datum/discipline/discipline = new type_to_create(1)
 				adding_disciplines += discipline
 
 		for (var/datum/discipline/discipline in adding_disciplines)
@@ -641,10 +673,8 @@
  */
 /mob/living/carbon/human/proc/give_discipline(datum/discipline/discipline)
 	if (discipline.level > 0)
-		var/datum/action/discipline/action = new
-		action.discipline = discipline
+		var/datum/action/discipline/action = new(discipline)
 		action.Grant(src)
-	discipline.post_gain(src)
 	var/datum/species/kindred/species = dna.species
 	species.disciplines += discipline
 
@@ -702,7 +732,7 @@
  * * source - The Kindred whose organ has been removed.
  * * organ - The organ which has been removed.
  */
-/datum/species/kindred/proc/lose_organ(var/mob/living/carbon/human/source, var/obj/item/organ/organ)
+/datum/species/kindred/proc/lose_organ(mob/living/carbon/human/source, obj/item/organ/organ)
 	SIGNAL_HANDLER
 
 	if (istype(organ, /obj/item/organ/heart))
@@ -710,7 +740,7 @@
 			if (!source.getorganslot(ORGAN_SLOT_HEART))
 				source.death()
 
-/datum/species/kindred/proc/slip_into_torpor(var/mob/living/carbon/human/source)
+/datum/species/kindred/proc/slip_into_torpor(mob/living/carbon/human/source)
 	SIGNAL_HANDLER
 
 	to_chat(source, "<span class='warning'>You can feel yourself slipping into Torpor. You can use succumb to immediately sleep...</span>")
@@ -759,7 +789,7 @@
 		to_chat(teacher, "<span class='warning'>You need to have fed your student your blood to teach them Disciplines!</span>")
 		return
 
-	var/possible_disciplines = teacher_prefs.discipline_types - student_prefs.discipline_types
+	var/possible_disciplines = teacher_prefs.discipline_types - student_prefs.discipline_types - /datum/discipline/bloodheal
 	var/teaching_discipline = input(teacher, "What Discipline do you want to teach [student.name]?", "Discipline Selection") as null|anything in possible_disciplines
 
 	if (teaching_discipline)
@@ -767,7 +797,7 @@
 		var/datum/discipline/giving_discipline = new teaching_discipline
 
 		//if a Discipline is clan-restricted, it must be checked if the student has access to at least one Clan with that Discipline
-		if (giving_discipline.clane_restricted)
+		if (giving_discipline.clan_restricted)
 			if (!can_access_discipline(student, teaching_discipline))
 				to_chat(teacher, "<span class='warning'>Your student is not whitelisted for any Clans with this Discipline, so they cannot learn it.</span>")
 				qdel(giving_discipline)
@@ -779,7 +809,7 @@
 			qdel(giving_discipline)
 			return
 
-		var/restricted = giving_discipline.clane_restricted
+		var/restricted = giving_discipline.clan_restricted
 		if (restricted)
 			if (alert(teacher, "Are you sure you want to teach [student] [giving_discipline], one of your Clan's most tightly guarded secrets? This will cost 10 experience points.", "Confirmation", "Yes", "No") != "Yes")
 				qdel(giving_discipline)
@@ -805,7 +835,7 @@
 			return
 
 		visible_message("<span class='notice'>[teacher] begins mentoring [student] in [giving_discipline].</span>")
-		if (do_after(teacher, 30 SECONDS, student))
+		if (do_mob(teacher, student, 30 SECONDS))
 			teacher_prefs.true_experience -= 10
 
 			student_prefs.discipline_types += teaching_discipline
@@ -862,7 +892,7 @@
 
 	//make sure it's actually restricted and this check is necessary
 	var/datum/discipline/discipline_object_checking = new discipline_checking
-	if (!discipline_object_checking.clane_restricted)
+	if (!discipline_object_checking.clan_restricted)
 		qdel(discipline_object_checking)
 		return TRUE
 	qdel(discipline_object_checking)
@@ -900,3 +930,81 @@
 
 	if(iskindred(being_bitten))
 		return COMPONENT_RESIST_VAMPIRE_KISS
+
+
+/datum/species/kindred/proc/initialize_generation(mob/living/carbon/human/vampire)
+	if (iskindred(vampire) && vampire.generation)
+		var/old_max_bloodpool = vampire.maxbloodpool
+		switch(vampire.generation)
+			if (1)
+				vampire.maxbloodpool = 1000
+				spend_blood_per_turn = 1000
+			if (2)
+				vampire.maxbloodpool = 150
+				spend_blood_per_turn = 30
+			if (3)
+				vampire.maxbloodpool = 100
+				spend_blood_per_turn = 20
+			if (4)
+				vampire.maxbloodpool = 50
+				spend_blood_per_turn = 10
+			if (5)
+				vampire.maxbloodpool = 40
+				spend_blood_per_turn = 8
+			if (6)
+				vampire.maxbloodpool = 30
+				spend_blood_per_turn = 6
+			if (7)
+				vampire.maxbloodpool = 20
+				spend_blood_per_turn = 4
+			if (8)
+				vampire.maxbloodpool = 15
+				spend_blood_per_turn = 3
+			if (9)
+				vampire.maxbloodpool = 14
+				spend_blood_per_turn = 2
+			if (10)
+				vampire.maxbloodpool = 13
+				spend_blood_per_turn = 1
+			if (11)
+				vampire.maxbloodpool = 12
+				spend_blood_per_turn = 1
+			if (12)
+				vampire.maxbloodpool = 11
+				spend_blood_per_turn = 1
+			else //no thinblood support just yet
+				vampire.maxbloodpool = 10
+				spend_blood_per_turn = 1
+
+		//forces blood_volume into line with new blood potency
+		if (old_max_bloodpool != vampire.maxbloodpool)
+			var/old_bloodpool = vampire.bloodpool
+			vampire.update_blood_values()
+			vampire.set_blood_points(old_bloodpool)
+
+		//adjust to new generational levels
+		var/datum/discipline/bloodheal/bloodheal = get_discipline(/datum/discipline/bloodheal)
+		if (bloodheal)
+			bloodheal.set_level(clamp(spend_blood_per_turn, 1, 10))
+
+/datum/species/kindred/proc/can_spend_blood(mob/living/carbon/human/vampire, amount)
+	if ((spent_blood_turn + amount) > spend_blood_per_turn)
+		return FALSE
+	if (!vampire.can_adjust_blood_points(-amount))
+		return FALSE
+	return TRUE
+
+/datum/species/kindred/proc/spend_blood(mob/living/carbon/human/vampire, amount)
+	spent_blood_turn += amount
+	vampire.adjust_blood_points(-amount)
+	//one decisecond shorter than a turn to allow powers to refresh on a full turn basis
+	addtimer(CALLBACK(src, PROC_REF(refresh_spent_blood), amount), DURATION_TURN - 1)
+
+/datum/species/kindred/proc/try_spend_blood(mob/living/carbon/human/vampire, amount)
+	if (can_spend_blood(vampire, amount))
+		spend_blood(vampire, amount)
+		return TRUE
+	return FALSE
+
+/datum/species/kindred/proc/refresh_spent_blood(amount)
+	spent_blood_turn -= amount

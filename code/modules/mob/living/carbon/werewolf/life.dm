@@ -18,14 +18,6 @@
 		if(stat != DEAD)
 			var/gaining_rage = TRUE
 			for(var/obj/structure/werewolf_totem/W in GLOB.totems)
-				if(W)
-					if(W.totem_health)
-						if(W.tribe == auspice.tribe)
-							if(get_area(W) == get_area(src) && client)
-								gaining_rage = FALSE
-								if(last_gnosis_buff+300 < world.time)
-									last_gnosis_buff = world.time
-									adjust_gnosis(1, src, TRUE)
 			if(iscrinos(src))
 				if(auspice.base_breed == "Crinos")
 					gaining_rage = FALSE

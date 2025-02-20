@@ -105,7 +105,7 @@ Slimecrossing Weapons
 	var/mob/living/M = loc
 	if(istype(M) && M.blood_volume >= 20)
 		charges++
-		M.blood_volume -= 20
+		M.adjust_blood_volume(-20)
 	if(charges == 1)
 		recharge_newshot()
 	return TRUE
