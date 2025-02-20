@@ -712,6 +712,9 @@
 /obj/item/bodypart/proc/is_organic_limb()
 	return (status == BODYPART_ORGANIC)
 
+/obj/item/bodypart/proc/is_organic_looking()
+	return (status != BODYPART_ROBOTIC)
+
 //we inform the bodypart of the changes that happened to the owner, or give it the informations from a source mob.
 /obj/item/bodypart/proc/update_limb(dropping_limb, mob/living/carbon/source)
 	var/mob/living/carbon/C
@@ -744,7 +747,7 @@
 		species_id = S.limbs_id
 		species_flags_list = H.dna.species.species_traits
 
-		if(S.use_skintones)
+		if(S.use_skintones && is_organic_looking())
 			skin_tone = H.skin_tone
 			should_draw_greyscale = TRUE
 		else
@@ -826,7 +829,7 @@
 	if((body_zone != BODY_ZONE_HEAD && body_zone != BODY_ZONE_CHEST))
 		should_draw_gender = FALSE
 
-	if(is_organic_limb())
+	if(is_organic_looking())
 		if(should_draw_greyscale)
 			limb.icon = 'icons/mob/human_parts_greyscale.dmi'
 			if(should_draw_gender)

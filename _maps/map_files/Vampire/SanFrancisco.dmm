@@ -61025,6 +61025,11 @@
 	},
 /turf/open/openspace,
 /area/vtm/interior)
+"upN" = (
+/obj/effect/decal/asphaltline,
+/obj/effect/landmark/start/blacksuit,
+/turf/open/floor/plating/asphalt,
+/area/vtm/pacificheights)
 "uqi" = (
 /obj/structure/vampipe{
 	icon_state = "piping38"
@@ -173271,7 +173276,7 @@ bwT
 bwX
 bpQ
 bpQ
-bpQ
+upN
 bpQ
 bpQ
 bpQ
