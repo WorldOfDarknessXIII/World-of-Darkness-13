@@ -57113,6 +57113,10 @@
 /obj/item/storage/box/drinkingglasses,
 /obj/item/reagent_containers/food/drinks/shaker,
 /obj/structure/table/wood,
+/obj/item/reagent_containers/glass/rag{
+	pixel_x = -4;
+	pixel_y = 5
+	},
 /turf/open/floor/carpet/red,
 /area/vtm/jazzclub)
 "rMS" = (
