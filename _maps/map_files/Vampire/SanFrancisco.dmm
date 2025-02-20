@@ -14907,7 +14907,10 @@
 /area/vtm/interior/millennium_tower/f3)
 "bak" = (
 /obj/structure/table,
-/obj/item/gun/ballistic/automatic/vampire/aug,
+/obj/item/ammo_box/vampire/c12g,
+/obj/item/ammo_box/vampire/c12g,
+/obj/item/gun/ballistic/shotgun/vampire,
+/obj/item/gun/ballistic/shotgun/vampire,
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/interior/millennium_tower/f2)
 "bal" = (
@@ -14918,6 +14921,9 @@
 /obj/item/gun/ballistic/automatic/vampire/sniper,
 /obj/item/ammo_box/vampire/c50,
 /obj/item/ammo_box/vampire/c50,
+/obj/item/ammo_box/vampire/c50,
+/obj/item/ammo_box/vampire/c50,
+/obj/item/gun/ballistic/automatic/vampire/sniper,
 /turf/open/floor/plating/vampplating,
 /area/vtm/interior/millennium_tower/f2)
 "bam" = (
@@ -15118,7 +15124,8 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/ammo_box/vampire/c556/incendiary,
+/obj/item/storage/box/handcuffs,
+/obj/item/storage/box/handcuffs,
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/interior/millennium_tower/f2)
 "baX" = (
@@ -15266,6 +15273,8 @@
 "bbu" = (
 /obj/structure/table,
 /obj/item/ammo_box/vampire/c556,
+/obj/item/ammo_box/vampire/c556,
+/obj/item/ammo_box/vampire/c556,
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/interior/millennium_tower/f2)
 "bbv" = (
@@ -15278,6 +15287,7 @@
 "bbw" = (
 /obj/structure/table,
 /obj/item/ammo_box/vampire/c556/silver,
+/obj/item/ammo_box/vampire/c556/incendiary,
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/interior/millennium_tower/f2)
 "bby" = (
@@ -30875,6 +30885,12 @@
 	},
 /turf/open/floor/carpet/purple,
 /area/vtm/interior/millennium_tower/ventrue)
+"ere" = (
+/obj/structure/table,
+/obj/item/flashlight/seclite,
+/obj/item/flashlight/seclite,
+/turf/open/floor/plating/vampplating,
+/area/vtm/interior/millennium_tower/f2)
 "erV" = (
 /obj/structure/sink{
 	pixel_y = 16
@@ -37291,6 +37307,18 @@
 /obj/effect/decal/wallpaper/blue,
 /turf/closed/wall/vampwall/painted,
 /area/vtm/clinic)
+"hvk" = (
+/obj/structure/table,
+/obj/item/drinkable_bloodpack,
+/obj/item/drinkable_bloodpack,
+/obj/item/drinkable_bloodpack,
+/obj/item/drinkable_bloodpack,
+/obj/item/drinkable_bloodpack,
+/obj/item/melee/vampirearms/katana,
+/obj/item/melee/vampirearms/knife,
+/obj/item/melee/vampirearms/knife,
+/turf/open/floor/plating/vampplating/mono,
+/area/vtm/interior/millennium_tower/f2)
 "hvp" = (
 /obj/structure/chair/sofa/corp{
 	dir = 8
@@ -37755,6 +37783,19 @@
 /obj/structure/table/wood/fancy,
 /turf/open/floor/plating/vampcanal,
 /area/vtm/interior/millennium_tower/f5)
+"hIn" = (
+/obj/structure/table,
+/obj/item/gun/ballistic/automatic/vampire/mp5,
+/obj/item/ammo_box/magazine/vamp9mp5,
+/obj/item/ammo_box/magazine/vamp9mp5,
+/obj/item/gun/ballistic/automatic/vampire/mp5,
+/obj/item/ammo_box/magazine/vamp9mp5,
+/obj/item/ammo_box/magazine/vamp9mp5,
+/obj/item/ammo_box/vampire/c9mm,
+/obj/item/ammo_box/vampire/c9mm,
+/obj/item/ammo_box/vampire/c9mm,
+/turf/open/floor/plating/vampplating,
+/area/vtm/interior/millennium_tower/f2)
 "hIq" = (
 /obj/structure/rack,
 /obj/item/stack/circuit_stack/full,
@@ -58772,6 +58813,12 @@
 	name = "advancedflooring"
 	},
 /area/vtm/interior/endron_facility)
+"sDJ" = (
+/obj/structure/table,
+/obj/item/gun/ballistic/automatic/vampire/aug,
+/obj/item/gun/ballistic/automatic/vampire/aug,
+/turf/open/floor/plating/vampplating/mono,
+/area/vtm/interior/millennium_tower/f2)
 "sDW" = (
 /obj/structure/railing{
 	dir = 4
@@ -65188,6 +65235,15 @@
 	},
 /turf/closed/wall/vampwall/painted/low,
 /area/vtm/interior/bianchiBank)
+"vUq" = (
+/obj/structure/table,
+/obj/item/ammo_box/vampire/c45acp,
+/obj/item/ammo_box/magazine/vamp45acp,
+/obj/item/ammo_box/magazine/vamp45acp,
+/obj/item/gun/ballistic/automatic/vampire/m1911,
+/obj/item/gun/ballistic/automatic/vampire/m1911,
+/turf/open/floor/plating/vampplating/mono,
+/area/vtm/interior/millennium_tower/f2)
 "vUs" = (
 /obj/structure/closet/cardboard,
 /turf/open/floor/plating/vampplating,
@@ -69997,6 +70053,15 @@
 /obj/structure/table/reinforced/ctf,
 /turf/closed/wall/vampwall/low,
 /area/vtm/interior)
+"yhq" = (
+/obj/structure/table,
+/obj/item/gun/ballistic/automatic/vampire/m1911,
+/obj/item/ammo_box/magazine/vamp45acp,
+/obj/item/gun/ballistic/automatic/vampire/m1911,
+/obj/item/ammo_box/magazine/vamp45acp,
+/obj/item/ammo_box/vampire/c45acp,
+/turf/open/floor/plating/vampplating,
+/area/vtm/interior/millennium_tower/f2)
 "yhv" = (
 /obj/transfer_point_vamp{
 	icon = 'icons/obj/stairs.dmi';
@@ -229019,7 +229084,7 @@ aiA
 aiA
 aiA
 aMb
-bak
+sDJ
 bak
 fbC
 fbC
@@ -229277,11 +229342,11 @@ aiA
 aiA
 aMb
 hkB
-bxo
+buq
 gyL
 baW
-bbu
-bbu
+ere
+hvk
 bbw
 aMb
 bxN
@@ -229538,7 +229603,7 @@ buq
 buq
 buq
 buq
-bxo
+buq
 bbu
 aMb
 bxN
@@ -230050,9 +230115,9 @@ aMb
 bam
 buq
 buq
-buq
-buq
-buq
+hIn
+vUq
+yhq
 bcf
 aMb
 bxN
