@@ -171,11 +171,12 @@
 	if(.)
 		return
 
+	if(processing_order)
+		to_chat(usr, span_warning("An order is already being finalized. Please wait."))
+		return
+
 	switch(action)
 		if("add_to_queue")
-			if(processing_order)
-				to_chat(usr, span_warning("An order is already being finalized. Please wait."))
-				return
 			var/id = text2path(params["id"])
 			var/datum/supply_pack/vampire/pack = supply_packs[id]
 			if(!istype(pack))
@@ -183,7 +184,6 @@
 			order_queue += list(pack)
 			to_chat(usr, "Added [pack.name] to the order queue.")
 			return TRUE
-
 		if("remove_from_queue")
 			var/id = text2path(params["id"])
 			var/datum/supply_pack/vampire/pack = supply_packs[id]
