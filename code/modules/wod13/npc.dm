@@ -348,8 +348,6 @@
 	mentality = rand(1, max_stat)
 	lockpicking = rand(1, max_stat)
 	blood = rand(1, 2)
-	maxHealth = round(initial(maxHealth)+(initial(maxHealth)/3)*(physique))
-	health = round(initial(health)+(initial(health)/3)*(physique))
 	last_health = health
 	socialrole = new S()
 
@@ -464,11 +462,11 @@
 		return
 	if(is_talking)
 		return
-	if(stat >= HARD_CRIT)
+	if(stat >= UNCONSCIOUS)
 		return
 	is_talking = TRUE
 	var/delay = round(length_char(message)/2)
-	spawn(5)
+	spawn(0.5 SECONDS)
 		remove_overlay(SAY_LAYER)
 		var/mutable_appearance/say_overlay = mutable_appearance('icons/mob/talk.dmi', "default0", -SAY_LAYER)
 		overlays_standing[SAY_LAYER] = say_overlay
@@ -487,7 +485,7 @@
 		return
 	if(danger_source)
 		return
-	if(stat >= HARD_CRIT)
+	if(stat >= UNCONSCIOUS)
 		return
 	if(world.time <= last_annoy+50)
 		return
@@ -675,6 +673,6 @@
 		if(mind)
 			if(mind.enslaved_to != owner)
 				mind.enslave_mind_to_creator(owner)
-				to_chat(src, "<span class='userdanger'><b>AS PRECIOUS VITAE ENTER YOUR MOUTH, YOU NOW ARE IN THE BLOODBOND OF [owner]. SERVE YOUR REGNANT CORRECTLY, OR YOUR ACTIONS WILL NOT BE TOLERATED.</b></span>")
+				to_chat(src, "<span class='userdanger'><b>AS PRECIOUS VITAE ENTERS YOUR MOUTH, YOU NOW ARE IN THE BLOODBOND OF [owner]. SERVE YOUR REGNANT CORRECTLY, OR YOUR ACTIONS WILL NOT BE TOLERATED.</b></span>")
 				return TRUE
 	return FALSE

@@ -185,21 +185,3 @@
 	P.pixel_x = rand(-projectile_location_spread_amount, projectile_location_spread_amount)
 	P.pixel_y = rand(-projectile_location_spread_amount, projectile_location_spread_amount)
 	P.preparePixelProjectile(target, user, null, current_angle)
-
-/obj/effect/proc_holder/spell/aimed/fireball/baali
-	name = "Infernal Fireball"
-	desc = "This spell fires an explosive fireball at a target."
-	school = "evocation"
-	charge_max = 60
-	clothes_req = FALSE
-	invocation = "FR BRTH"
-	invocation_type = INVOCATION_WHISPER
-	range = 20
-	cooldown_min = 20 //10 deciseconds reduction per rank
-	projectile_type = /obj/projectile/magic/aoe/fireball/baali
-	base_icon_state = "infernaball"
-	action_icon_state = "infernaball0"
-	sound = 'sound/magic/fireball.ogg'
-	active_msg = "You prepare to cast your fireball spell!"
-	deactive_msg = "You extinguish your fireball... for now."
-	active = FALSE

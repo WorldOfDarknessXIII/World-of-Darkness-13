@@ -16,37 +16,8 @@
 /datum/vampireclane/baali/on_gain(mob/living/carbon/human/H)
 	..()
 	H.faction |= "Baali"
-	var/datum/brain_trauma/mild/phobia/security/T = new()
-	H.gain_trauma(T, TRAUMA_RESILIENCE_ABSOLUTE)
-
-/datum/discipline/daimonion/post_gain(mob/living/carbon/human/H)
-	if(level >= 3)
-		var/obj/effect/proc_holder/spell/aimed/fireball/baali/S = new(H)
-		H.mind.AddSpell(S)
-	if(level >= 5)
-		var/datum/action/antifrenzy/A = new()
-		A.Grant(H)
-
-/datum/action/antifrenzy
-	name = "Resist Beast"
-	desc = "Resist Frenzy and Rotshreck by signing a contract with Demons."
-	button_icon_state = "resist"
-	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	vampiric = TRUE
-	var/used = FALSE
-
-/datum/action/antifrenzy/Trigger()
-	var/mob/living/carbon/human/NG = owner
-	if(NG.stat > 1 || NG.IsSleeping() || NG.IsUnconscious() || NG.IsParalyzed() || NG.IsKnockdown() || NG.IsStun() || HAS_TRAIT(NG, TRAIT_RESTRAINED) || !isturf(NG.loc))
-		return
-	if(used)
-		to_chat(owner, "<span class='warning'>You've already signed this contract!</span>")
-		return
-	used = TRUE
-	var/mob/living/carbon/human/H = owner
-	H.antifrenzy = TRUE
-	SEND_SOUND(owner, sound('sound/magic/curse.ogg', 0, 0, 50))
-	to_chat(owner, "<span class='warning'>You feel control over your Beast, but at what cost...</span>")
+	var/datum/brain_trauma/mild/phobia/security/religious_trauma = new()
+	H.gain_trauma(religious_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /mob/living/simple_animal/hostile/baali_guard
 	name = "Infernal Creature"

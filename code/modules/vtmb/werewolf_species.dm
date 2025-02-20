@@ -9,10 +9,11 @@
 	limbs_id = "human"
 	wings_icon = "Dragon"
 	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
-	brutemod = 0.75
+	brutemod = 1
 	heatmod = 1
 	burnmod = 1
 	dust_anim = "dust-h"
+
 	whitelisted = TRUE
 	selectable = TRUE
 	var/glabro = FALSE
@@ -98,7 +99,7 @@
 	. = ..()
 //	ADD_TRAIT(C, TRAIT_NOBLEED, HIGHLANDER)
 	C.update_body(0)
-	C.last_experience = world.time+3000
+	C.last_experience = world.time + 5 MINUTES
 	var/datum/action/garouinfo/infor = new()
 	infor.host = C
 	infor.Grant(C)

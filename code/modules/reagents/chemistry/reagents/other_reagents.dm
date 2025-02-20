@@ -37,7 +37,7 @@
 			if(!data || !(data["blood_type"] in get_safe_blood(exposed_carbon.dna.blood_type)))
 				exposed_carbon.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 			else
-				exposed_carbon.blood_volume = min(exposed_carbon.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+				exposed_carbon.set_blood_volume(round(reac_volume, 0.1))
 
 
 /datum/reagent/blood/on_new(list/data)
@@ -206,7 +206,7 @@
 /datum/reagent/water/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	if(M.blood_volume)
-		M.blood_volume += 0.1 // water is good for you!
+		M.adjust_blood_volume(0.1) // water is good for you!
 
 ///For weird backwards situations where water manages to get added to trays nutrients, as opposed to being snowflaked away like usual.
 /datum/reagent/water/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
@@ -247,7 +247,7 @@
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M)
 	if(M.blood_volume)
-		M.blood_volume += 0.1 // water is good for you!
+		M.adjust_blood_volume(0.1) // water is good for you!
 	if(!data)
 		data = list("misc" = 1)
 	data["misc"]++
@@ -347,7 +347,7 @@
 		M.adjustBruteLoss(-2, 0)
 		M.adjustFireLoss(-2, 0)
 		if(ishuman(M) && M.blood_volume < BLOOD_VOLUME_NORMAL)
-			M.blood_volume += 3
+			M.adjust_blood_volume(3)
 	else  // Will deal about 90 damage when 50 units are thrown
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
 		M.adjustToxLoss(2, 0)
@@ -925,7 +925,7 @@
 
 /datum/reagent/iron/on_mob_life(mob/living/carbon/C)
 	if(C.blood_volume < BLOOD_VOLUME_NORMAL)
-		C.blood_volume += 0.5
+		C.adjust_blood_volume(0.5)
 	..()
 
 /datum/reagent/gold
@@ -1270,7 +1270,7 @@
 	M.drowsyness += 2
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.blood_volume = max(H.blood_volume - 10, 0)
+		H.adjust_blood_volume(-10)
 	if(prob(20))
 		M.losebreath += 2
 		M.set_confusion(min(M.get_confusion() + 2, 5))
@@ -2376,7 +2376,7 @@
 		M.adjustBruteLoss(-2, FALSE)
 		M.adjustFireLoss(-2, FALSE)
 		if(ishuman(M) && M.blood_volume < BLOOD_VOLUME_NORMAL)
-			M.blood_volume += 3
+			M.adjust_blood_volume(3)
 	else
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
 		M.adjustToxLoss(2, FALSE)

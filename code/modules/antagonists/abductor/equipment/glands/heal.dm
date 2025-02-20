@@ -67,7 +67,7 @@
 		replace_blood()
 		return
 	if(owner.blood_volume < BLOOD_VOLUME_OKAY)
-		owner.blood_volume = BLOOD_VOLUME_NORMAL
+		owner.set_blood_volume(BLOOD_VOLUME_NORMAL)
 		to_chat(owner, "<span class='warning'>You feel your blood pulsing within you.</span>")
 		return
 
@@ -194,7 +194,7 @@
 	owner.Stun(15)
 	owner.adjustToxLoss(-15, TRUE, TRUE)
 
-	owner.blood_volume = min(BLOOD_VOLUME_NORMAL, owner.blood_volume + 20)
+	owner.adjust_blood_volume(20)
 	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
 		keep_going = TRUE
 

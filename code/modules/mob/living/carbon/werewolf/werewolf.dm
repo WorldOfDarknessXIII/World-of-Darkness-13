@@ -1,25 +1,3 @@
-/mob/living/carbon/werewolf/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	. = ..()
-	if(message)
-//		if(istype(loc, /obj/effect/dummy/chameleon))
-//			var/obj/effect/dummy/chameleon/C = loc
-//			C.say("[message]")
-//			return
-		if(length(GLOB.auspex_list))
-			for(var/mob/living/carbon/human/H in GLOB.auspex_list)
-				if(H)
-					to_chat(H, "<span class='scream_away'><b>[name]</b> says, \"[message]\"</span>")
-//		var/ending = copytext_char(message, -1)
-//		var/list/message_mods = list()
-//		message = get_message_mods(message, message_mods)
-//		if(message_mods[WHISPER_MODE] != MODE_WHISPER)
-//			if(ending == "?")
-//				playsound(get_turf(src), 'code/modules/wod13/sounds/wolf_ask.ogg', 75, TRUE)
-//			else if(ending == "!")
-//				playsound(get_turf(src), 'code/modules/wod13/sounds/wolf_yell.ogg', 100, TRUE)
-//			else
-//				playsound(get_turf(src), 'code/modules/wod13/sounds/wolf_speak.ogg', 75, TRUE)
-
 /mob/living/carbon/werewolf
 	name = "werewolf"
 	icon = 'code/modules/wod13/werewolf.dmi'
@@ -188,8 +166,6 @@
 	hud_type = /datum/hud/werewolf
 	melee_damage_lower = 35
 	melee_damage_upper = 65
-	health = 250
-	maxHealth = 250
 //	speed = -1  doesn't work on carbons
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
@@ -204,12 +180,12 @@
 		/obj/item/bodypart/r_arm,
 		/obj/item/bodypart/r_leg,
 		/obj/item/bodypart/l_leg,
-		)
+	)
 
 	werewolf_armor = 30
 
 /datum/movespeed_modifier/crinosform
-	multiplicative_slowdown = -0.2
+	multiplicative_slowdown = -0.25
 
 /datum/movespeed_modifier/silver_slowdown
 	multiplicative_slowdown = 0.3

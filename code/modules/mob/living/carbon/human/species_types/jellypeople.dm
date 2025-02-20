@@ -36,13 +36,13 @@
 	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
 		return
 	if(!H.blood_volume)
-		H.blood_volume += 5
+		H.adjust_blood_volume(5)
 		H.adjustBruteLoss(5)
 		to_chat(H, "<span class='danger'>You feel empty!</span>")
 
 	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
-			H.blood_volume += 3
+			H.adjust_blood_volume(3)
 			H.adjust_nutrition(-2.5)
 	if(H.blood_volume < BLOOD_VOLUME_OKAY)
 		if(prob(5))
@@ -64,7 +64,7 @@
 	consumed_limb.drop_limb()
 	to_chat(H, "<span class='userdanger'>Your [consumed_limb] is drawn back into your body, unable to maintain its shape!</span>")
 	qdel(consumed_limb)
-	H.blood_volume += 20
+	H.adjust_blood_volume(20)
 
 /datum/action/innate/regenerate_limbs
 	name = "Regenerate Limbs"
@@ -93,15 +93,15 @@
 	to_chat(H, "<span class='notice'>You focus intently on your missing [limbs_to_heal.len >= 2 ? "limbs" : "limb"]...</span>")
 	if(H.blood_volume >= 40*limbs_to_heal.len+BLOOD_VOLUME_OKAY)
 		H.regenerate_limbs()
-		H.blood_volume -= 40*limbs_to_heal.len
+		H.adjust_blood_volume(-40 * limbs_to_heal.len)
 		to_chat(H, "<span class='notice'>...and after a moment you finish reforming!</span>")
 		return
 	else if(H.blood_volume >= 40)//We can partially heal some limbs
-		while(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
+		while(H.blood_volume >= (BLOOD_VOLUME_OKAY + 40))
 			var/healed_limb = pick(limbs_to_heal)
 			H.regenerate_limb(healed_limb)
 			limbs_to_heal -= healed_limb
-			H.blood_volume -= 40
+			H.adjust_blood_volume(-40)
 		to_chat(H, "<span class='warning'>...but there is not enough of you to fix everything! You must attain more mass to heal completely!</span>")
 		return
 	to_chat(H, "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to heal!</span>")
@@ -131,7 +131,7 @@
 	bodies -= C // This means that the other bodies maintain a link
 	// so if someone mindswapped into them, they'd still be shared.
 	bodies = null
-	C.blood_volume = min(C.blood_volume, BLOOD_VOLUME_NORMAL)
+	C.update_blood_values()
 	..()
 
 /datum/species/jelly/slime/on_species_gain(mob/living/carbon/C, datum/species/old_species)
@@ -171,7 +171,7 @@
 		if(prob(5))
 			to_chat(H, "<span class='notice'>You feel very bloated!</span>")
 	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
-		H.blood_volume += 3
+		H.adjust_blood_volume(3)
 		H.adjust_nutrition(-2.5)
 
 	..()
