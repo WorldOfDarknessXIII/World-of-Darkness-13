@@ -153,10 +153,10 @@ LINEN BINS
 	inhand_icon_state = "sheetcmo"
 	dream_messages = list("authority", "a silvery ID", "healing", "life", "surgery", "a cat", "the chief medical officer")
 
-/obj/item/bedsheet/hos
+/obj/item/bedsheet/red
 	name = "red bedsheet"
-	icon_state = "sheethos"
-	inhand_icon_state = "sheethos"
+	icon_state = "red"
+	inhand_icon_state = "red"
 
 /obj/item/bedsheet/hop
 	name = "head of personnel's bedsheet"

@@ -1893,7 +1893,7 @@
 /area/vtm/interior/chantry/basement)
 "agw" = (
 /obj/structure/bed,
-/obj/item/bedsheet/hos,
+/obj/item/bedsheet/red,
 /obj/effect/landmark/start/archivist,
 /turf/open/floor/carpet/lone,
 /area/vtm/interior/chantry/basement)
@@ -49540,7 +49540,7 @@
 /area/vtm/unionsquare)
 "nQm" = (
 /obj/structure/bed,
-/obj/item/bedsheet/hos,
+/obj/item/bedsheet/red,
 /obj/effect/landmark/start/regent,
 /turf/open/floor/carpet/lone,
 /area/vtm/interior/chantry/basement)
@@ -68552,7 +68552,7 @@
 	pixel_x = 16
 	},
 /obj/structure/bed,
-/obj/item/bedsheet/hos,
+/obj/item/bedsheet/red,
 /obj/effect/landmark/start/archivist,
 /turf/open/floor/carpet/lone,
 /area/vtm/interior/chantry/basement)
