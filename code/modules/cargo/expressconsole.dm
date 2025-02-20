@@ -172,14 +172,9 @@
 		return
 
 	switch(action)
-//		if("LZCargo")
-//			usingBeacon = FALSE
-//			if (beacon)
-//				beacon.update_status(SP_UNREADY) //ready light on beacon will turn off
-
 		if("add_to_queue")
 			if(processing_order)
-				to_chat(usr, "An order is already being finalized. Please wait.")
+				to_chat(usr, span_warning("An order is already being finalized. Please wait."))
 				return
 			var/id = text2path(params["id"])
 			var/datum/supply_pack/vampire/pack = supply_packs[id]
