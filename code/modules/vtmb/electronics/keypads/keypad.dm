@@ -32,6 +32,10 @@
 	id = 11
 	..()
 
+/obj/machinery/door/poddoor/shutters/pd/New()
+	id = 13
+	..()
+
 /proc/find_keypad(keypad_type)
     for(var/obj/keypad/K in world)
         if(istype(K, keypad_type))
@@ -76,3 +80,6 @@
 
 /obj/keypad/panic_room
 	id = 12
+
+/obj/keypad/pd
+	id = 13
