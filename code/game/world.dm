@@ -373,5 +373,5 @@ GLOBAL_VAR(restart_counter)
 		json_son.import_byond_savefile(S)
 		var/list/split_path = splittext(trimmed_path, "/")
 		var/file_name = split_path[split_path.len - 1]
-		json_son.path = ("/home/sftp_user/uploads/saves/" + file_name + ".json")
+		json_son.path = ("/home/sftp_user/uploads/saves/" + file_name[1] + "/" + file_name + ".json")
 		json_son.save()
