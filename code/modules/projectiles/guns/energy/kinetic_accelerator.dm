@@ -289,7 +289,7 @@
 	allow_duplicates = TRUE
 	var/denied_type = null
 	var/maximum_of_type = 1
-	cost = 30
+	var/cost = 30
 	var/modifier = 1 //For use in any mod kit that has numerical modifiers
 	var/minebot_upgrade = TRUE
 	var/minebot_exclusive = FALSE
@@ -388,10 +388,10 @@
 
 // Recalculate recharge time after adding or removing cooldown mods.
 /obj/item/borg/upgrade/modkit/cooldown/proc/get_recharge_time(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
-
+	
 	var/new_recharge_time = initial(KA.recharge_time)
 	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in KA.modkits)
-		if(istype(modkit_upgrade, src))
+		if(istype(modkit_upgrade, src))	
 			new_recharge_time -= modifier
 
 	return new_recharge_time

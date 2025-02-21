@@ -20,6 +20,7 @@
 	/// The type of uplink to be given on equip.
 	var/uplink_type = /obj/item/uplink/nuclear
 
+	id_trim = /datum/id_trim/chameleon/operative
 
 /datum/outfit/syndicate/plasmaman
 	name = "Syndicate Operative - Basic (Plasmaman)"
@@ -31,6 +32,7 @@
 	name = "Syndicate Leader - Basic"
 	command_radio = TRUE
 
+	id_trim = /datum/id_trim/chameleon/operative/nuke_leader
 
 /datum/outfit/syndicate/leader/plasmaman
 	name = "Syndicate Leader - Basic (Plasmaman)"

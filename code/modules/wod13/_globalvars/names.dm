@@ -1,3 +1,6 @@
 GLOBAL_LIST_INIT(first_names_male_triad, world.file2list("strings/names/first_male_triad.txt"))
 GLOBAL_LIST_INIT(first_names_female_triad, world.file2list("strings/names/first_female_triad.txt"))
 GLOBAL_LIST_INIT(last_names_triad, world.file2list("strings/names/last_triad.txt"))
+GLOBAL_LIST_INIT(bahari_quotes, world.file2list("strings/quotes/bahari.txt"))
+GLOBAL_LIST_INIT(noddist_quotes, world.file2list("strings/quotes/noddist.txt"))
+GLOBAL_LIST_INIT(quran_quotes, world.file2list("strings/quotes/islam.txt"))

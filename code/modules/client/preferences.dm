@@ -555,6 +555,3 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	unlock_content = !!byond_member
 	if(unlock_content)
 		max_save_slots = 8
-
-/datum/preferences/proc/add_experience(amount)
-	true_experience = clamp(true_experience + amount, 0, 1000)

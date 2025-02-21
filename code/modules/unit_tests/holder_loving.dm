@@ -8,7 +8,7 @@
 
 	//put wrench in bag & equip bag on human
 	tool.AddComponent(/datum/component/holderloving, bag)
-	bag.atom_storage.attempt_insert(tool, person, FALSE, STORAGE_NOT_LOCKED, messages = FALSE)
+	bag.atom_storage.attempt_insert(tool, person, override,  force, messages = FALSE)
 	person.equip_to_slot_if_possible(bag, ITEM_SLOT_BACK)
 
 	//Test 1: Should be able to move wrench from bag to hand

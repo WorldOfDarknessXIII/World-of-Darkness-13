@@ -353,13 +353,13 @@
 
 /datum/reagent/consumable/ethanol/rum/aged/on_mob_metabolize(mob/living/drinker)
 	. = ..()
-	drinker.add_blocked_language(subtypesof(/datum/language) - /datum/language/english, LANGUAGE_DRINK)
-	drinker.grant_language(/datum/language/english, source = LANGUAGE_DRINK)
+	drinker.add_blocked_language(subtypesof(/datum/language) - /datum/language/piratespeak, LANGUAGE_DRINK)
+	drinker.grant_language(/datum/language/piratespeak, source = LANGUAGE_DRINK)
 
 /datum/reagent/consumable/ethanol/rum/aged/on_mob_end_metabolize(mob/living/drinker)
 	if(!QDELING(drinker))
 		drinker.remove_blocked_language(subtypesof(/datum/language), LANGUAGE_DRINK)
-		drinker.remove_language(/datum/language/english, source = LANGUAGE_DRINK)
+		drinker.remove_language(/datum/language/piratespeak, source = LANGUAGE_DRINK)
 	return ..()
 
 /datum/reagent/consumable/ethanol/tequila

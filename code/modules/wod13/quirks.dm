@@ -236,6 +236,7 @@ Dancer
 ///Very similar to squish, but for dwarves and shorties
 /datum/element/dwarfism
 	element_flags = ELEMENT_COMPLEX_DETACH|ELEMENT_BESPOKE
+	id_arg_index = 2
 	var/comsig
 	var/list/attached_targets = list()
 

@@ -15,14 +15,15 @@
 	speak_chance = 0
 	turns_per_move = 3
 	see_in_dark = 6
+	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	minbodytemp = 200
 	maxbodytemp = 400
 	unsuitable_atmos_damage = 1
-	animal_species = /mob/living/basic/pet/cat
-	childtype = list(/mob/living/basic/pet/cat/kitten)
+	animal_species = /mob/living/simple_animal/pet/cat
+	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
 	butcher_results = list(/obj/item/food/meat/slab = 1, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1, /obj/item/stack/sheet/animalhide/cat = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -31,15 +32,17 @@
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
-	turns_since_scan = 0
+	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
 	///Limits how often cats can spam chasing mice.
-	emote_cooldown = 0
+	var/emote_cooldown = 0
 	///Can this cat catch special mice?
-	inept_hunter = FALSE
+	var/inept_hunter = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	can_be_held = TRUE
 	held_state = "cat2"
+	pet_bonus = TRUE
+	pet_bonus_emote = "purrs!"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 	bloodpool = 1

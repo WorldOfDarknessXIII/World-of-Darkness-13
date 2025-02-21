@@ -21,6 +21,7 @@
 	attacked_sound = 'sound/items/bikehorn.ogg'
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	basic_mob_flags = DEL_ON_DEATH
+	initial_language_holder = /datum/language_holder/clown
 	habitable_atmos = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	minimum_survivable_temperature = T0C
 	maximum_survivable_temperature = (T0C + 100)
@@ -30,6 +31,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/clown
 	speed = 1.4 //roughly close to simpleanimal clowns
 	///list of stuff we drop on death
+	var/list/loot = list(/obj/effect/mob_spawn/corpse/human/clown)
 	///blackboard emote list
 	var/list/emotes = list(
 		BB_EMOTE_SAY = list("HONK", "Honk!", "Welcome to clown planet!"),
@@ -48,6 +50,9 @@
 	//im not putting dynamic humans or whatever its called here because this is the base path of nonhuman clownstrosities
 	if(waddles)
 		AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
+	if(length(loot))
+		loot = string_list(loot)
+		AddElement(/datum/element/death_drops, loot)
 
 /mob/living/basic/clown/proc/retaliate_callback(mob/living/attacker)
 	if (!istype(attacker))
@@ -76,6 +81,10 @@
 		BB_EMOTE_HEAR = list("bubbles", "oozes"),
 	)
 	waddles = FALSE
+	loot = list(
+		/obj/effect/spawner/foam_starter/small,
+		/obj/item/clothing/mask/gas/clown_hat,
+	)
 
 /mob/living/basic/clown/lube/Initialize(mapload)
 	. = ..()
@@ -91,6 +100,12 @@
 	melee_damage_upper = 1
 	attack_verb_continuous = "cheers up"
 	attack_verb_simple = "cheer up"
+	loot = list(
+		/obj/item/clothing/mask/gas/clown_hat,
+		/obj/effect/gibspawner/human,
+		/obj/item/soap,
+		/obj/item/seeds/banana/bluespace,
+	)
 
 /mob/living/basic/clown/honkling/Initialize(mapload)
 	. = ..()
@@ -122,6 +137,12 @@
 	attack_verb_continuous = "limply slaps"
 	attack_verb_simple = "limply slap"
 	obj_damage = 5
+	loot = list(
+		/obj/effect/gibspawner/human,
+		/obj/item/clothing/mask/gas/clown_hat,
+		/obj/item/soap,
+		/obj/item/clothing/suit/hooded/bloated_human,
+	)
 	emotes = list(
 		BB_EMOTE_SAY = list(
 			"HONK",
@@ -161,6 +182,11 @@
 	melee_damage_lower = 5
 	attack_verb_continuous = "YA-HONKs"
 	attack_verb_simple = "YA-HONK"
+	loot = list(
+		/obj/effect/gibspawner/human,
+		/obj/item/soap,
+		/obj/item/clothing/mask/gas/clown_hat,
+	)
 	emotes = list(
 		BB_EMOTE_SAY = list("YA-HONK!!!"),
 		BB_EMOTE_HEAR = list("honks", "squeaks"),
@@ -191,6 +217,11 @@
 	attack_verb_simple = "pummel"
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_WALLS
+	loot = list(
+		/obj/effect/gibspawner/human,
+		/obj/item/soap,
+		/obj/item/clothing/mask/gas/clown_hat,
+	)
 	emotes = list(
 		BB_EMOTE_SAY = list("HONK", "Honk!", "HAUAUANK!!!", "GUUURRRRAAAHHH!!!"),
 		BB_EMOTE_HEAR = list("honks", "grunts"),
@@ -217,6 +248,12 @@
 	attack_verb_continuous = "steals the girlfriend of"
 	attack_verb_simple = "steal the girlfriend of"
 	attack_sound = 'sound/items/airhorn/airhorn2.ogg'
+	loot = list(
+		/obj/effect/gibspawner/human,
+		/obj/effect/spawner/foam_starter/small,
+		/obj/item/soap,
+		/obj/item/clothing/mask/gas/clown_hat,
+	)
 	emotes = list(
 		BB_EMOTE_SAY = list("HONK", "Honk!", "Bruh", "cheeaaaahhh?"),
 		BB_EMOTE_SEE = list("asserts his dominance", "emasculates everyone implicitly"),
@@ -240,6 +277,12 @@
 	attack_verb_continuous = "ferociously mauls"
 	attack_verb_simple = "ferociously maul"
 	environment_smash = ENVIRONMENT_SMASH_NONE
+	loot = list(
+		/obj/effect/gibspawner/xeno/bodypartless,
+		/obj/effect/spawner/foam_starter/small,
+		/obj/item/soap,
+		/obj/item/clothing/mask/gas/clown_hat,
+	)
 	emotes = list(
 		BB_EMOTE_SAY = list("honk"),
 		BB_EMOTE_SEE = list("squirms", "writhes"),
@@ -275,6 +318,12 @@
 	obj_damage = 50
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	ai_controller = /datum/ai_controller/basic_controller/clown/murder
+	loot = list(
+		/obj/effect/gibspawner/human,
+		/obj/effect/spawner/foam_starter/small,
+		/obj/item/soap,
+		/obj/item/clothing/mask/gas/clown_hat,
+	)
 	emotes = list(
 		BB_EMOTE_SAY = list("HONK!!!", "The Honkmother is merciful, so I must act out her wrath.", "parce mihi ad beatus honkmother placet mihi ut peccata committere,", "DIE!!!"),
 		BB_EMOTE_HEAR = list("honks", "grunts"),
@@ -303,6 +352,15 @@
 	melee_damage_upper = 20
 	attack_verb_continuous = "awkwardly flails at"
 	attack_verb_simple = "awkwardly flail at"
+	loot = list(
+		/obj/effect/gibspawner/generic,
+		/obj/effect/gibspawner/generic/animal,
+		/obj/effect/gibspawner/human,
+		/obj/effect/gibspawner/human/bodypartless,
+		/obj/effect/gibspawner/xeno/bodypartless,
+		/obj/item/soap,
+		/obj/item/clothing/mask/gas/clown_hat,
+	)
 	emotes = list(
 		BB_EMOTE_SAY = list("aaaaaahhhhuuhhhuhhhaaaaa", "AAAaaauuuaaAAAaauuhhh", "huuuuuh... hhhhuuuooooonnnnkk", "HuaUAAAnKKKK"),
 		BB_EMOTE_SEE = list("squirms", "writhes", "pulsates", "froths", "oozes"),
@@ -325,6 +383,12 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	attack_verb_continuous = "slams"
 	attack_verb_simple = "slam"
+	loot = list(
+		/obj/effect/gibspawner/generic,
+		/obj/effect/gibspawner/generic/animal,
+		/obj/effect/gibspawner/human/bodypartless,
+		/obj/effect/gibspawner/xeno/bodypartless,
+	)
 	emotes = list(
 		BB_EMOTE_SAY = list("hey, buddy", "HONK!!!", "H-h-h-H-HOOOOONK!!!!", "HONKHONKHONK!!!", "HEY, BUCKO, GET BACK HERE!!!", "HOOOOOOOONK!!!"),
 		BB_EMOTE_SEE = list("jiggles", "wobbles"),
@@ -477,6 +541,12 @@
 	maxHealth = 120
 	health = 120
 	speed = -1
+	loot = list(
+		/obj/effect/gibspawner/human,
+		/obj/item/seeds/banana,
+		/obj/item/soap,
+		/obj/item/clothing/mask/gas/clown_hat,
+	)
 	emotes = list(
 		BB_EMOTE_SAY = list("HONK", "Honk!", "YA-HONK!!!"),
 		BB_EMOTE_SEE = list("bites into the banana", "plucks a banana off its head", "photosynthesizes"),

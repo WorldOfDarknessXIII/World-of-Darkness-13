@@ -166,6 +166,7 @@
 		2. Talk to patrons.\n\
 		3. Don't get messed up in their affairs."
 	unique_name = FALSE // disables the (123) number suffix
+	initial_language_holder = /datum/language_holder/universal
 	default_storage = null
 
 /mob/living/basic/drone/snowflake/bardrone/Initialize(mapload)
@@ -206,6 +207,10 @@
 
 /obj/structure/table/wood/shuttle_bar/proc/is_barstaff(mob/living/user)
 	. = FALSE
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		if(is_bartender_job(human_user.mind?.assigned_role))
+			return TRUE
 
 	if(istype(user, /mob/living/basic/drone/snowflake/bardrone))
 		return TRUE

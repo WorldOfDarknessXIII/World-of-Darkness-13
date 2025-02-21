@@ -2,7 +2,7 @@
 	name = "elevator panel"
 	desc = "Call an elevator."
 	icon_state = "control"
-	icon = 'icons/obj/devices/new_assemblies.dmi'
+	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	anchored = TRUE
 	var/id = 1
 	var/obj/elevator_button_down/D
@@ -50,7 +50,7 @@
 	name = "elevator panel"
 	desc = "Call an elevator."
 	icon_state = "control"
-	icon = 'icons/obj/devices/new_assemblies.dmi'
+	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	anchored = TRUE
 	var/id = 1
 	var/obj/elevator_button_up/U
@@ -97,7 +97,7 @@
 /obj/elevator_button
 	name = "elevator button"
 	desc = "Call an elevator."
-	icon = 'icons/obj/devices/new_assemblies.dmi'
+	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = "control"
 	var/id = 1
 	var/obj/elevator_button_down/I = null

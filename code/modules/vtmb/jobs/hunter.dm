@@ -6,7 +6,7 @@
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	l_pocket = /obj/item/vamp/keys/church
 	backpack_contents = list(
-		/obj/item/book/bible = 1,
+		/obj/item/storage/book/bible = 1,
 		/obj/item/vampire_stake = 3,
 		/obj/item/molotov = 1,
 		/obj/item/gas_can/full = 1,

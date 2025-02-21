@@ -119,7 +119,7 @@
 
 /obj/item/paperwork/cargo
 	stamp_requested = /obj/item/stamp/head/qm
-	stamp_job = /datum/job/vamp/dealer
+	stamp_job = /datum/job/quartermaster
 	stamp_icon = "paper_stamp-qm"
 
 /obj/item/paperwork/cargo/Initialize(mapload)
@@ -132,7 +132,7 @@
 
 /obj/item/paperwork/security
 	stamp_requested = /obj/item/stamp/head/hos
-	stamp_job = /datum/outfit/job/citizen
+	stamp_job = /datum/job/head_of_security
 	stamp_icon = "paper_stamp-hos"
 
 /obj/item/paperwork/security/Initialize(mapload)
@@ -145,7 +145,7 @@
 
 /obj/item/paperwork/service
 	stamp_requested = /obj/item/stamp/head/hop
-	stamp_job = /datum/outfit/job/citizen
+	stamp_job = /datum/job/head_of_personnel
 	stamp_icon = "paper_stamp-hop"
 
 /obj/item/paperwork/service/Initialize(mapload)
@@ -158,7 +158,7 @@
 
 /obj/item/paperwork/medical
 	stamp_requested = /obj/item/stamp/head/cmo
-	stamp_job = /datum/outfit/job/citizen
+	stamp_job = /datum/job/chief_medical_officer
 	stamp_icon = "paper_stamp-cmo"
 
 /obj/item/paperwork/medical/Initialize(mapload)
@@ -172,7 +172,7 @@
 
 /obj/item/paperwork/engineering
 	stamp_requested = /obj/item/stamp/head/ce
-	stamp_job = /datum/outfit/job/citizen
+	stamp_job = /datum/job/chief_engineer
 	stamp_icon = "paper_stamp-ce"
 
 /obj/item/paperwork/engineering/Initialize(mapload)
@@ -185,7 +185,7 @@
 
 /obj/item/paperwork/research
 	stamp_requested = /obj/item/stamp/head/rd
-	stamp_job = /datum/job/vamp/citizen
+	stamp_job = /datum/job/research_director
 	stamp_icon = "paper_stamp-rd"
 
 /obj/item/paperwork/research/Initialize(mapload)
@@ -198,7 +198,7 @@
 
 /obj/item/paperwork/captain
 	stamp_requested = /obj/item/stamp/head/captain
-	stamp_job = /datum/job/vamp/prince
+	stamp_job = /datum/job/captain
 	stamp_icon = "paper_stamp-cap"
 
 /obj/item/paperwork/captain/Initialize(mapload)

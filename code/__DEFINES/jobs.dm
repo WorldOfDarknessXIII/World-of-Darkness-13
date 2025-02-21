@@ -45,8 +45,8 @@
  */
 
 //No department
+#define JOB_ASSISTANT "Assistant"
 #define JOB_PRISONER "Prisoner"
-#define JOB_CITIZEN "Citizen"
 //Command
 #define JOB_CAPTAIN "Captain"
 #define JOB_HEAD_OF_PERSONNEL "Head of Personnel"

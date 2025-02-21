@@ -15,5 +15,5 @@
 
 /datum/discipline/valeren/post_gain(mob/living/carbon/human/H)
 	if(level >= 4)
-		var/datum/action/cooldown/spell/forcewall/salubri/FW = new(H)
-		FW.Grant(H)
+		var/obj/effect/proc_holder/spell/targeted/forcewall/salubri/FW = new(H)
+		H.mind.AddSpell(FW)

@@ -12,6 +12,7 @@
 	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FIRE_BOT
+	additional_access = /datum/id_trim/job/station_engineer
 	hackables = "fire safety protocols"
 	path_image_color = "#FFA500"
 	possessed_message = "You are a firebot! Protect the station from fires to the best of your ability!"

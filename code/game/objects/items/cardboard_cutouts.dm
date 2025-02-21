@@ -233,7 +233,7 @@
 	name = "Clown"
 	applied_name = "HONK"
 	applied_desc = "A cardboard cutout of a clown. You get the feeling that it should be in a corner."
-	outfit = /datum/outfit/job/citizen
+	outfit = /datum/outfit/job/clown
 
 /datum/cardboard_cutout/clown/get_name()
 	return pick(GLOB.clown_names)
@@ -242,7 +242,7 @@
 	name = "Mime"
 	applied_name = "..."
 	applied_desc = "...(A cardboard cutout of a mime.)"
-	outfit = /datum/outfit/job/citizen
+	outfit = /datum/outfit/job/mime
 
 /datum/cardboard_cutout/mime/get_name()
 	return pick(GLOB.mime_names)

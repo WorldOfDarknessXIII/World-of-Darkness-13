@@ -63,13 +63,13 @@
 /datum/job_department/captain
 	department_name = DEPARTMENT_CAPTAIN
 	department_bitflags = DEPARTMENT_BITFLAG_CAPTAIN
-	department_head = /datum/job/vamp/prince
+	department_head = /datum/job/captain
 
 /datum/job_department/command
 	department_name = DEPARTMENT_COMMAND
 	department_bitflags = DEPARTMENT_BITFLAG_COMMAND
-	department_head = /datum/job/vamp/prince
-	department_experience_type = EXP_TYPE_LIVING
+	department_head = /datum/job/captain
+	department_experience_type = EXP_TYPE_COMMAND
 	display_order = 1
 	label_class = "command"
 	ui_color = "#6681a5"
@@ -78,8 +78,8 @@
 /datum/job_department/security
 	department_name = DEPARTMENT_SECURITY
 	department_bitflags = DEPARTMENT_BITFLAG_SECURITY
-	department_head = /datum/job/vamp/police_chief
-	department_experience_type = EXP_TYPE_LIVING
+	department_head = /datum/job/head_of_security
+	department_experience_type = EXP_TYPE_SECURITY
 	display_order = 2
 	label_class = "security"
 	ui_color = "#d46a78"
@@ -96,8 +96,8 @@
 /datum/job_department/engineering
 	department_name = DEPARTMENT_ENGINEERING
 	department_bitflags = DEPARTMENT_BITFLAG_ENGINEERING
-	department_head = /datum/job/vamp/taxi
-	department_experience_type = EXP_TYPE_LIVING
+	department_head = /datum/job/chief_engineer
+	department_experience_type = EXP_TYPE_ENGINEERING
 	display_order = 3
 	label_class = "engineering"
 	ui_color = "#dfb567"
@@ -113,8 +113,8 @@
 /datum/job_department/medical
 	department_name = DEPARTMENT_MEDICAL
 	department_bitflags = DEPARTMENT_BITFLAG_MEDICAL
-	department_head = /datum/job/vamp/vdoctor
-	department_experience_type = EXP_TYPE_LIVING
+	department_head = /datum/job/chief_medical_officer
+	department_experience_type = EXP_TYPE_MEDICAL
 	display_order = 4
 	label_class = "medical"
 	ui_color = "#65b2bd"
@@ -132,8 +132,8 @@
 /datum/job_department/science
 	department_name = DEPARTMENT_SCIENCE
 	department_bitflags = DEPARTMENT_BITFLAG_SCIENCE
-	department_head = /datum/job/vamp/vjanitor
-	department_experience_type = EXP_TYPE_CAMARILLA
+	department_head = /datum/job/research_director
+	department_experience_type = EXP_TYPE_SCIENCE
 	display_order = 5
 	label_class = "science"
 	ui_color = "#c973c9"
@@ -151,8 +151,8 @@
 /datum/job_department/cargo
 	department_name = DEPARTMENT_CARGO
 	department_bitflags = DEPARTMENT_BITFLAG_CARGO
-	department_head = /datum/job/vamp/dealer
-	department_experience_type = EXP_TYPE_WAREHOUSE
+	department_head = /datum/job/quartermaster
+	department_experience_type = EXP_TYPE_SUPPLY
 	display_order = 6
 	label_class = "supply"
 	ui_color = "#cf9c6c"
@@ -163,8 +163,8 @@
 /datum/job_department/service
 	department_name = DEPARTMENT_SERVICE
 	department_bitflags = DEPARTMENT_BITFLAG_SERVICE
-	department_head = /datum/job/vamp/giovanni
-	department_experience_type = EXP_TYPE_GIOVANNI
+	department_head = /datum/job/head_of_personnel
+	department_experience_type = EXP_TYPE_SERVICE
 	display_order = 7
 	label_class = "service"
 	ui_color = "#7cc46a"
@@ -177,8 +177,8 @@
 /datum/job_department/silicon
 	department_name = DEPARTMENT_SILICON
 	department_bitflags = DEPARTMENT_BITFLAG_SILICON
-	department_head = /datum/job/admin
-	department_experience_type = EXP_TYPE_ADMIN
+	department_head = /datum/job/ai
+	department_experience_type = EXP_TYPE_SILICON
 	display_order = 8
 	label_class = "silicon"
 	ui_color = "#5dbda0"

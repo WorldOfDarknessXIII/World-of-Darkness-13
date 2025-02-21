@@ -1,2 +1,2 @@
-/datum/job/vamp/citizen_operative
+/datum/job/clown_operative
 	title = ROLE_CLOWN_OPERATIVE

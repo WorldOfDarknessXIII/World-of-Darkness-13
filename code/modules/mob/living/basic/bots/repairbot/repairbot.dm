@@ -17,6 +17,7 @@
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = REPAIR_BOT
+	additional_access = /datum/id_trim/job/station_engineer
 	ai_controller = /datum/ai_controller/basic_controller/bot/repairbot
 	mob_size = MOB_SIZE_SMALL
 	possessed_message = "You are a repairbot, cursed to prolong the swiss-cheesening of this death metal trap!"

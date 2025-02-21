@@ -10,8 +10,8 @@
 	req_admin_notify = 1
 	minimal_player_age = 14
 	exp_requirements = 300
-	exp_required_type = PAYCHECK_CREW
-	exp_granted_type = EXP_TYPE_CAMARILLA
+	exp_type = EXP_TYPE_CREW
+	exp_granted_type = EXP_TYPE_CAMARILLIA
 
 	outfit = /datum/outfit/job/sheriff
 

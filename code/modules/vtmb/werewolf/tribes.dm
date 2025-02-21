@@ -69,7 +69,7 @@
 				if(L.stat == DEAD)
 					playsound(get_turf(owner), 'code/modules/wod13/sounds/bloody_feast.ogg', 50, FALSE)
 					qdel(L)
-					C.revive(HEAL_ADMIN)
+					C.revive(full_heal = TRUE, admin_revive = TRUE)
 
 /datum/action/gift/stinky_fur
 	name = "Stinky Fur"
@@ -84,8 +84,8 @@
 			if(C)
 				if(prob(25))
 					C.vomit()
-				C.adjust_dizzy(10)
-				C.adjust_confusion(10)
+				C.dizziness += 10
+				C.add_confusion(10)
 
 /datum/action/gift/venom_claws
 	name = "Venom Claws"
@@ -172,7 +172,7 @@
 	if(allowed_to_proceed)
 		owner.visible_message("<span class='danger'>[owner.name] crackles with static electricity!</span>", "<span class='danger'>You crackle with static electricity, charging up your Gift!</span>")
 		if(do_after(owner, 3 SECONDS))
-			playsound(src, 'sound/effects/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
+			playsound(src, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 			tesla_zap(owner, 3, 30, ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_ALLOW_DUPLICATES)
 			for(var/mob/living/L in orange(6, owner))
 				if(L)
@@ -191,8 +191,13 @@
 		animate(owner, color = "#6a839a", time = 10)
 		if(ishuman(owner))
 			playsound(get_turf(owner), 'code/modules/wod13/sounds/electro_cast.ogg', 75, FALSE)
+			var/mob/living/carbon/human/H = owner
+			H.physiology.armor.melee = 25
+			H.physiology.armor.bullet = 45
 			to_chat(owner, "<span class='notice'>You feel your skin replaced with the machine...</span>")
 			spawn(20 SECONDS)
+				H.physiology.armor.melee = initial(H.physiology.armor.melee)
+				H.physiology.armor.bullet = initial(H.physiology.armor.bullet)
 				to_chat(owner, "<span class='warning'>Your skin is natural again...</span>")
 				owner.color = "#FFFFFF"
 		else

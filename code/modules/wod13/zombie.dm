@@ -1,7 +1,3 @@
-/mob/living/basic/zombie/beastmaster
-	var/my_creator = null
-	var/beastmaster = null
-
 /mob/living/basic/zombie/beastmaster/giovanni_zombie
 	name = "Shambling Corpse"
 	desc = "When there is no more room in hell, the dead will walk on Earth."
@@ -26,7 +22,7 @@
 /mob/living/basic/zombie/beastmaster/giovanni_zombie/level1
 	name = "ghost"
 	desc = "A soul of the dead, spooky."
-	icon = 'icons/mob/simple/mob.dmi'
+	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
 	icon_living = "ghost"
 	mob_biotypes = MOB_UNDEAD
@@ -39,7 +35,7 @@
 	melee_damage_upper = 15
 	attack_verb_continuous = "grips"
 	attack_verb_simple = "grip"
-	attack_sound = 'sound/effects/hallucinations/growl1.ogg'
+	attack_sound = 'sound/hallucinations/growl1.ogg'
 	speak_emote = list("weeps")
 	pressure_resistance = 300
 	gold_core_spawnable = NO_SPAWN //too spooky for science

@@ -96,7 +96,7 @@
 
 /obj/item/organ/tongue/carp/get_possible_languages()
 	. = ..()
-	. += /datum/language/english
+	. += /datum/language/carptongue
 
 /obj/item/knife/carp
 	name = "carp tooth"

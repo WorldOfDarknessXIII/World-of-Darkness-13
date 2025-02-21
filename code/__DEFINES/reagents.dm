@@ -45,8 +45,6 @@
 #define LINEAR (1<<5)
 /// Used by smoke or inhaling from a source. Smoke and cigarettes.
 #define INHALE (1<<6)
-// Reagent exposure methods.
-#define VAMPIRE			(1<<7)
 
 /// When returned by on_mob_life(), on_mob_dead(), overdose_start() or overdose_processed(), will cause the mob to updatehealth() afterwards
 #define UPDATE_MOB_HEALTH 1

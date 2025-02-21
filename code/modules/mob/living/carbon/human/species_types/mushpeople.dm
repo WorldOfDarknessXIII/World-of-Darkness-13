@@ -23,6 +23,7 @@
 	mutanttongue = /obj/item/organ/tongue/mush
 	mutanteyes = /obj/item/organ/eyes/night_vision/mushroom
 	mutantlungs = null
+	species_language_holder = /datum/language_holder/mushroom
 
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/mushroom,

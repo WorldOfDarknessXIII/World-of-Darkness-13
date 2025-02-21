@@ -16,6 +16,7 @@
 	name = "Vampire"
 	id = "kindred"
 	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LIMBATTACHMENT, TRAIT_VIRUSIMMUNE, TRAIT_NOBLOOD, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_TOXIMMUNE, TRAIT_NOCRITDAMAGE)
+	use_skintones = TRUE
 	mutantbrain = /obj/item/organ/brain/vampire
 	mutanttongue = /obj/item/organ/tongue/vampire
 	brutemod = 0.5	// or change to 0.8
@@ -247,6 +248,16 @@
 	background_icon_state = "discipline"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	vampiric = TRUE
+
+/datum/action/blood_power/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
+	if(owner)
+		if(owner.client)
+			if(owner.client.prefs)
+				if(owner.client.prefs.old_discipline)
+					button_icon = 'code/modules/wod13/disciplines.dmi'
+				else
+					button_icon = 'code/modules/wod13/UI/actions.dmi'
+	. = ..()
 
 /datum/action/blood_power/Trigger(trigger_flags)
 	if(istype(owner, /mob/living/carbon/human))

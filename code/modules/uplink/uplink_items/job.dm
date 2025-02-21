@@ -56,7 +56,7 @@
 	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you."
 	item = /obj/item/clothing/under/color/grey/ancient
 	cost = 20
-	restricted_roles = list(JOB_CITIZEN)
+	restricted_roles = list(JOB_ASSISTANT)
 	surplus = 0
 
 /datum/uplink_item/role_restricted/oldtoolboxclean
@@ -64,7 +64,7 @@
 	desc = "An iconic toolbox design notorious with Assistants everywhere, this design was especially made to become more robust the more telecrystals it has inside it! Tools and insulated gloves included."
 	item = /obj/item/storage/toolbox/mechanical/old/clean
 	cost = 2
-	restricted_roles = list(JOB_CITIZEN)
+	restricted_roles = list(JOB_ASSISTANT)
 	surplus = 0
 
 /datum/uplink_item/role_restricted/clownpin
@@ -375,7 +375,7 @@
 		Please note that these are free-range monkeys that don't react with Mutadone. May contain severe allergies to species-changing phenomena."
 	item = /obj/item/antag_spawner/loadout/monkey_man
 	cost = 6
-	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_GENETICIST, JOB_CITIZEN, JOB_MIME, JOB_CLOWN, JOB_PUN_PUN)
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_GENETICIST, JOB_ASSISTANT, JOB_MIME, JOB_CLOWN, JOB_PUN_PUN)
 	restricted = TRUE
 	refundable = TRUE
 
@@ -386,7 +386,7 @@
 	item = /obj/item/storage/toolbox/guncase/monkeycase
 	cost = 4
 	limited_stock = 3
-	restricted_roles = list(JOB_CITIZEN, JOB_MIME, JOB_CLOWN, JOB_PUN_PUN)
+	restricted_roles = list(JOB_ASSISTANT, JOB_MIME, JOB_CLOWN, JOB_PUN_PUN)
 	restricted = TRUE
 	refundable = FALSE
 

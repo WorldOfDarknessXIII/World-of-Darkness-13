@@ -76,12 +76,19 @@
 	// This is the default list of languages most humans should be capable of speaking
 	return list(
 		/datum/language/english,
-		/datum/language/mandarin,
-		/datum/language/hebrew,
-		/datum/language/greek,
-		/datum/language/espanol,
-		/datum/language/latin,
-		/datum/language/german,
+		/datum/language/uncommon,
+		/datum/language/draconic,
+		/datum/language/codespeak,
+		/datum/language/monkey,
+		/datum/language/narsie,
+		/datum/language/beachbum,
+		/datum/language/aphasia,
+		/datum/language/piratespeak,
+		/datum/language/moffic,
+		/datum/language/sylvan,
+		/datum/language/shadowtongue,
+		/datum/language/terrum,
+		/datum/language/nekomimetic,
 	)
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
@@ -177,7 +184,7 @@
 	say_mod = "hisses"
 	taste_sensitivity = 10 // combined nose + tongue, extra sensitive
 	modifies_speech = TRUE
-	languages_native = list(/datum/language/hebrew)
+	languages_native = list(/datum/language/draconic)
 	liked_foodtypes = GORE | MEAT | SEAFOOD | NUTS | BUGS
 	disliked_foodtypes = GRAIN | DAIRY | CLOTH | GROSS
 	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.9,aresample=%SAMPLE_RATE%,atempo=1/0.9,aformat=channel_layouts=mono,volume=0.2 [p0]; [out2] asetrate=%SAMPLE_RATE%*1.1,aresample=%SAMPLE_RATE%,atempo=1/1.1,aformat=channel_layouts=mono,volume=0.2[p2]; [p0][0][p2] amix=inputs=3"}
@@ -474,11 +481,11 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 // Aliens can only speak alien and a few other languages.
 /obj/item/organ/tongue/alien/get_possible_languages()
 	return list(
-		/datum/language/russian,
+		/datum/language/xenocommon,
 		/datum/language/english,
-		/datum/language/mandarin,
-		/datum/language/hebrew, // Both hiss?
-		/datum/language/greek,
+		/datum/language/uncommon,
+		/datum/language/draconic, // Both hiss?
+		/datum/language/monkey,
 	)
 
 /obj/item/organ/tongue/alien/modify_speech(datum/source, list/speech_args)
@@ -509,7 +516,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 
 // Bone tongues can speak all default + calcic
 /obj/item/organ/tongue/bone/get_possible_languages()
-	return ..() + /datum/language/russian
+	return ..() + /datum/language/calcic
 
 /obj/item/organ/tongue/bone/modify_speech(datum/source, list/speech_args)
 	if (chattering)
@@ -578,9 +585,9 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	attack_verb_simple = list("shock", "jolt", "zap")
 	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.99,aresample=%SAMPLE_RATE%,volume=0.3 [p0]; [p0][out2] amix=inputs=2"}
 
-// Ethereal tongues can speak all default + russian
+// Ethereal tongues can speak all default + voltaic
 /obj/item/organ/tongue/ethereal/get_possible_languages()
-	return ..() + /datum/language/russian
+	return ..() + /datum/language/voltaic
 
 /obj/item/organ/tongue/cat
 	name = "felinid tongue"

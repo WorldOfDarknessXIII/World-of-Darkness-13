@@ -15,7 +15,7 @@
 	violating_appearance = TRUE
 	current_accessory = "none"
 	accessories = list("fae_ears", "none")
-	accessories_layers = list("fae_ears" = NECK_LAYER, "none" = NECK_LAYER)
+	accessories_layers = list("fae_ears" = UPPER_EARS_LAYER, "none" = UPPER_EARS_LAYER)
 
 	COOLDOWN_DECLARE(cold_iron_frenzy)
 
@@ -25,10 +25,10 @@
 	if (H.clane?.type != /datum/vampireclane/kiasyd)
 		return
 	if(H.isdwarfy)
-		H.RemoveElement(/datum/element/dwarfism, COMSIG_QDELETING, src)
+		H.RemoveElement(/datum/element/dwarfism, COMSIG_PARENT_PREQDELETED, src)
 		H.isdwarfy = FALSE
 	if(!H.istower)
-		H.AddElement(/datum/element/giantism, COMSIG_QDELETING, src)
+		H.AddElement(/datum/element/giantism, COMSIG_PARENT_PREQDELETED, src)
 		H.istower = TRUE
 	var/obj/item/organ/eyes/night_vision/kiasyd/NV = new()
 	NV.Insert(H, TRUE, FALSE)
@@ -70,8 +70,7 @@
 	var/datum/riddle/riddle
 	var/bad_answers = 0
 
-/atom/movable/screen/alert/riddle/Click(location, control, params)
-	. = ..()
+/atom/movable/screen/alert/riddle/Click()
 	if(iscarbon(usr) && (usr == owner))
 		var/mob/living/carbon/M = usr
 		if(riddle)
@@ -123,7 +122,7 @@
 		if(alert.bad_answers >= round(length(riddle_options)/2))
 			if(iscarbon(answerer))
 				var/mob/living/carbon/C = answerer
-				var/obj/item/organ/tongue/tongue = locate(/obj/item/organ/tongue) in C.organs
+				var/obj/item/organ/tongue/tongue = locate(/obj/item/organ/tongue) in C.internal_organs
 				if(tongue)
 					tongue.Remove(C)
 			to_chat(answerer,
@@ -161,13 +160,14 @@
 						to_chat(caster, "- [A.name]")
 		if(2)
 			caster.enhanced_strip = TRUE
+			target.strip(caster)
 			spawn(delay + caster.discipline_time_plus)
 				caster.enhanced_strip = FALSE
 		if(3)
 			var/obj/item/clothing/mask/facehugger/kiasyd/K = new (get_turf(caster))
 			K.throw_at(target, 10, 14, caster)
 		if(4)
-			var/list/screens = list(target.hud_used.plane_master_controllers[FLOOR_PLANE], target.hud_used.plane_master_controllers[GAME_PLANE], target.hud_used.plane_master_controllers[LIGHTING_PLANE])
+			var/list/screens = list(target.hud_used.plane_masters["[FLOOR_PLANE]"], target.hud_used.plane_masters["[GAME_PLANE]"], target.hud_used.plane_masters["[LIGHTING_PLANE]"])
 			var/rotation = 50
 			for(var/whole_screen in screens)
 				animate(whole_screen, transform = matrix(rotation, MATRIX_ROTATE), time = 0.5 SECONDS, easing = QUAD_EASING, loop = -1)
@@ -354,12 +354,12 @@
 	unique = TRUE
 	icon_state = "rune2"
 
-/obj/mytherceria_trap/disorient/on_cross(atom/movable/AM)
+/obj/mytherceria_trap/disorient/Crossed(atom/movable/AM)
 	..()
 	if(isliving(AM) && owner)
 		if(AM != owner)
 			var/mob/living/L = AM
-			var/list/screens = list(L.hud_used.plane_master_controllers[FLOOR_PLANE], L.hud_used.plane_master_controllers[GAME_PLANE], L.hud_used.plane_master_controllers[LIGHTING_PLANE])
+			var/list/screens = list(L.hud_used.plane_masters["[FLOOR_PLANE]"], L.hud_used.plane_masters["[GAME_PLANE]"], L.hud_used.plane_masters["[LIGHTING_PLANE]"])
 			var/rotation = 50
 			for(var/whole_screen in screens)
 				animate(whole_screen, transform = matrix(rotation, MATRIX_ROTATE), time = 0.5 SECONDS, easing = QUAD_EASING, loop = -1)

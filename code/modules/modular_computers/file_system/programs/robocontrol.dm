@@ -119,7 +119,7 @@
 			if(!computer || !computer.computer_id_slot)
 				return
 			if(id_card)
-				GLOB.manifest.modify(id_card.registered_name, id_card.assignment)
+				GLOB.manifest.modify(id_card.registered_name, id_card.assignment, id_card.get_trim_assignment())
 				computer.RemoveID(usr)
 			else
 				playsound(get_turf(computer.ui_host()) , 'sound/machines/buzz/buzz-sigh.ogg', 25, FALSE)

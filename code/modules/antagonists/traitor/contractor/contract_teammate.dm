@@ -29,6 +29,7 @@
 	ears = /obj/item/radio/headset/chameleon
 	id = /obj/item/card/id/advanced/chameleon
 	r_hand = /obj/item/storage/toolbox/syndicate
+	id_trim = /datum/id_trim/chameleon/operative
 
 	backpack_contents = list(
 		/obj/item/storage/box/survival,

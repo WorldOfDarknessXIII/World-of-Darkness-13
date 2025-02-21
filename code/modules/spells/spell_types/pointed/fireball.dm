@@ -20,18 +20,3 @@
 /datum/action/cooldown/spell/pointed/projectile/fireball/ready_projectile(obj/projectile/to_fire, atom/target, mob/user, iteration)
 	. = ..()
 	to_fire.range = (6 + 2 * spell_level)
-
-
-/datum/action/cooldown/spell/pointed/projectile/fireball/baali
-	name = "Infernal Fireball"
-	desc = "This spell fires an explosive fireball at a target."
-	school = "evocation"
-	cooldown_time = 6 SECONDS
-	invocation = "FR BRTH"
-	invocation_type = INVOCATION_WHISPER
-	cast_range = 20
-	projectile_type = /obj/projectile/magic/aoe/fireball/baali
-	base_icon_state = "infernaball"
-	sound = 'sound/effects/magic/fireball.ogg'
-	active_msg = "You prepare to cast your fireball spell!"
-	deactive_msg = "You extinguish your fireball... for now."

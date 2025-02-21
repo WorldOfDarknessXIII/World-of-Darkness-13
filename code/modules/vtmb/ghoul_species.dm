@@ -3,7 +3,8 @@
 	id = "ghoul"
 	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_VIRUSIMMUNE, TRAIT_NOCRITDAMAGE)
 	brutemod = 1	//0.8 instead, if changing.
-	heatmod = 1
+	burnmod = 1
+	dust_anim = "dust-h"
 	var/mob/living/carbon/human/master
 	var/changed_master = FALSE
 	var/last_vitae = 0
@@ -194,6 +195,16 @@
 	vampiric = TRUE
 	var/last_heal = 0
 	var/level = 1
+
+/datum/action/blood_heal/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
+	if(owner)
+		if(owner.client)
+			if(owner.client.prefs)
+				if(owner.client.prefs.old_discipline)
+					button_icon = 'code/modules/wod13/disciplines.dmi'
+				else
+					button_icon = 'code/modules/wod13/UI/actions.dmi'
+	. = ..()
 
 /datum/action/blood_heal/Trigger(trigger_flags)
 	if(istype(owner, /mob/living/carbon/human))

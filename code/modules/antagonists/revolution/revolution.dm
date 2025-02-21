@@ -259,7 +259,7 @@
 	var/mob/living/carbon/human/dummy/consistent/assistant = new
 	assistant.set_hairstyle(hairstyle, update = TRUE)
 
-	var/icon/assistant_icon = render_preview_outfit(/datum/outfit/job/citizen, assistant)
+	var/icon/assistant_icon = render_preview_outfit(/datum/outfit/job/assistant/consistent, assistant)
 	assistant_icon.ChangeOpacity(0.5)
 
 	qdel(assistant)

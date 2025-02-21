@@ -46,6 +46,7 @@
 
 /obj/machinery/vending/medical/syndicate
 	name = "\improper SyndiMed Plus"
+	initial_language_holder = /datum/language_holder/syndicate
 
 /obj/machinery/vending/medical/infested_frigate
 	products = list(

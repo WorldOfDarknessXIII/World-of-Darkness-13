@@ -82,6 +82,7 @@
 		outfit_id.registered_account = new()
 		outfit_id.registered_account.replaceable = FALSE
 
+		SSid_access.apply_trim_to_card(outfit_id, /datum/id_trim/bit_avatar)
 
 	avatar.AddComponent( \
 		/datum/component/simple_bodycam, \

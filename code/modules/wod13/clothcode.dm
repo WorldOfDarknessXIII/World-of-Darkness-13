@@ -658,6 +658,7 @@
    name = "opulent coat"
    desc = "Lavish, luxurious, and deeply purple. Slickback Clothing Co. It exudes immense energy."
    icon_state = "slickbackcoat"
+   armor = list(MELEE = 5, BULLET = 5, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 5)
 
 /obj/item/clothing/suit/vampire/jacket
 	name = "leather jacket"
@@ -748,15 +749,6 @@
 	desc = "Best choise for pleasant life... or not."
 	icon_state = "trench3"
 	armor_type = /datum/armor/trench_archive
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/trench_archive
-	melee = 10
-	laser = 10
-	energy = 10
-	bomb = 10
-	acid = 10
-	wound = 10
 
 /obj/item/clothing/suit/vampire/trench/tzi
 	name = "fleshcoat"
@@ -1021,7 +1013,7 @@
 	name = "Orthodox robe"
 	desc = "A traditional robe worn by priests of the Orthodox faith."
 	icon_state = "vestments"
-	armor_type = /datum/armor/vampire_orthodox
+	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
 
 //GLASSES
 
@@ -1390,6 +1382,8 @@
 	desc = "A traditional veil."
 	icon_state = "prayer_veil"
 	flags_inv = HIDEEARS|HIDEHAIR
+	dynamic_hair_suffix = ""
+	dynamic_fhair_suffix = ""
 
 //GLOVES
 

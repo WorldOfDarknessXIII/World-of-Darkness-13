@@ -1,4 +1,4 @@
-/mob/living/carbon/werewolf/say(message, bubble_type, list/spans, sanitize, datum/language/language, ignore_spam, forced, filterproof, message_range, datum/saymode/saymode, list/message_mods)
+/mob/living/carbon/werewolf/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	. = ..()
 	if(message)
 //		if(istype(loc, /obj/effect/dummy/chameleon))

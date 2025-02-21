@@ -9,6 +9,8 @@
 
 	outfit = /datum/outfit/job/vjanitor
 
+	access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS, ACCESS_MINERAL_STOREROOM)
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 

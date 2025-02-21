@@ -816,16 +816,3 @@
 		new /obj/item/reagent_containers/cup/tube(src)
 	update_appearance(UPDATE_ICON_STATE)
 
-/obj/item/storage/medkit/ifak
-	name = "IFAK"
-	desc = "An Individual First Aid Kit. Standard issue to duty belts."
-	icon_state = "ifak"
-
-/obj/item/storage/medkit/ifak/PopulateContents()
-	if(empty)
-		return
-	var/static/items_inside = list(
-		/obj/item/reagent_containers/hypospray/medipen/ifak = 3,
-		/obj/item/stack/medical/gauze = 1,
-		/obj/item/healthanalyzer = 1)
-	generate_items_inside(items_inside,src)

@@ -35,6 +35,7 @@
 /datum/outfit/virtual_pirate
 	name = "Virtual Pirate"
 	id = /obj/item/card/id/advanced
+	id_trim = /datum/id_trim/pirate
 	uniform = /obj/item/clothing/under/costume/pirate
 	suit = /obj/item/clothing/suit/costume/pirate/armored
 	glasses = /obj/item/clothing/glasses/eyepatch
@@ -61,6 +62,7 @@
 /datum/outfit/virtual_syndicate
 	name = "Virtual Syndie"
 	id = /obj/item/card/id/advanced/chameleon
+	id_trim = /datum/id_trim/chameleon/operative
 	uniform = /obj/item/clothing/under/syndicate
 	back = /obj/item/storage/backpack
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated

@@ -29,7 +29,7 @@
 	vampiric = TRUE
 	cooldown_time = 5 SECONDS
 
-/datum/action/cooldown/malk_hivemind/Trigger(trigger_flags, atom/target)
+/datum/action/cooldown/malk_hivemind/Trigger(trigger_flags)
 	. = ..()
 	var/new_thought = input(owner, "Have any thoughts about this, buddy?") as null|text
 	if(new_thought)

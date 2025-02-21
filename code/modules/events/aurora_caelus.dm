@@ -48,6 +48,9 @@
 				if (seymour in human_blacklist)
 					continue
 				human_blacklist += seymour
+				if(seymour.mind && istype(seymour.mind.assigned_role, /datum/job/cook))
+					seymour.say("My roast is ruined!!!", forced = "ruined roast")
+					seymour.emote("scream")
 
 /datum/round_event/aurora_caelus/tick()
 	if(activeFor % 8 != 0)

@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	password = gen_pass()
 	var/obj/item/paper/password_paper = new (loc)
 	password_paper.name = "don't forget your password!"
-	password_paper.default_raw_text = "<center><h2>Hello, [username]!</h2></center><br>I have to remind you about it again, but please don't forget your password - <b>[password]</b>"
+	password_paper.info = "<center><h2>Hello, [username]!</h2></center><br>I have to remind you about it again, but please don't forget your password - <b>[password]</b>"
 	var/datum/app/icq/icq = new ()
 	var/datum/app/notepad/notepad = new ()
 	var/datum/app/gmail/gmail = new ()

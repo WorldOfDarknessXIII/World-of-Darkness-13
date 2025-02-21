@@ -309,8 +309,35 @@
 		. = image(mannequin)
 		unset_busy_human_dummy("HOLODISK_PRESET")
 
+/datum/preset_holoimage/clown
+	outfit_type = /datum/outfit/job/clown
+
+/datum/preset_holoimage/engineer
+	outfit_type = /datum/outfit/job/engineer
+
 /datum/preset_holoimage/corgi
 	nonhuman_mobtype = /mob/living/basic/pet/dog/corgi
+
+/datum/preset_holoimage/engineer/mod
+	outfit_type = /datum/outfit/job/engineer/mod
+
+/datum/preset_holoimage/engineer/ce
+	outfit_type = /datum/outfit/job/ce
+
+/datum/preset_holoimage/engineer/ce/mod
+	outfit_type = /datum/outfit/job/ce/mod
+
+/datum/preset_holoimage/engineer/atmos
+	outfit_type = /datum/outfit/job/atmos
+
+/datum/preset_holoimage/engineer/atmos/mod
+	outfit_type = /datum/outfit/job/atmos/mod
+
+/datum/preset_holoimage/researcher
+	outfit_type = /datum/outfit/job/scientist
+
+/datum/preset_holoimage/captain
+	outfit_type = /datum/outfit/job/captain
 
 /datum/preset_holoimage/nanotrasenprivatesecurity
 	outfit_type = /datum/outfit/nanotrasensoldiercorpse
@@ -422,7 +449,7 @@
 	SAY Oh, shit!
 	DELAY 10
 	PRESET /datum/preset_holoimage/engineer/atmos/mod
-	LANGUAGE /datum/language/espanol
+	LANGUAGE /datum/language/narsie
 	NAME Unknown
 	SAY RISE, MY LORD!!
 	DELAY 10
@@ -540,7 +567,7 @@
 /obj/item/disk/holodisk/ruin/space/travelers_rest
 	name = "Owner's memo"
 	desc = "A holodisk containing a small memo from the previous owner, addressed to someone else."
-	preset_image_type = /datum/preset_holoimage/corgi
+	preset_image_type = /datum/preset_holoimage/engineer/atmos
 	preset_record_text = {"
 		NAME Space Adventurer
 		SOUND PING

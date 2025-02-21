@@ -170,9 +170,14 @@
 			highest_pref = this_pref
 
 	if(!appearance_job)
-		appearance_job = SSjob.get_job(JOB_CITIZEN)
+		appearance_job = SSjob.get_job(JOB_ASSISTANT)
 
-	human_image = get_flat_human_icon(null, appearance_job, appearance_from_prefs)
+	if(istype(appearance_job, /datum/job/ai))
+		human_image = icon('icons/mob/silicon/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
+	else if(istype(appearance_job, /datum/job/cyborg))
+		human_image = icon('icons/mob/silicon/robots.dmi', icon_state = "robot")
+	else
+		human_image = get_flat_human_icon(null, appearance_job, appearance_from_prefs)
 	Show()
 
 /// Returns all member clients of the imaginary_group

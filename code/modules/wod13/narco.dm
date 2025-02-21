@@ -54,7 +54,7 @@
 	name = "Roll Blunt"
 	time = 10
 	reqs = list(/obj/item/weedpack = 1, /obj/item/paper = 1)
-	result = /obj/item/cigarette/rollie/cannabis
+	result = /obj/item/clothing/mask/cigarette/rollie/cannabis
 	category = CAT_CHEMISTRY
 
 /obj/item/food/vampire/weed
@@ -153,7 +153,7 @@ SUBSYSTEM_DEF(smokeweedeveryday)
 	name = "Smoke Weed Every Day"
 	init_order = INIT_ORDER_DEFAULT
 	wait = 1800
-	priority = FIRE_PRIORITY_GARBAGE
+	priority = FIRE_PRIORITY_VERYLOW
 
 /datum/controller/subsystem/smokeweedeveryday/fire()
 	for(var/obj/structure/weedshit/W in GLOB.weed_list)
@@ -493,7 +493,7 @@ SUBSYSTEM_DEF(smokeweedeveryday)
 			if(prob(20))
 				to_chat(user, "Reagents start to react strangely...")
 			qdel(used_item)
-	if(istype(used_item, /obj/item/reagent_containers/cup/glass/bottle/vodka))
+	if(istype(used_item, /obj/item/reagent_containers/food/drinks/bottle/vodka))
 		if(added_iod == 1)
 			added_iod = 2
 			to_chat(user, "You [pick("throw", "blow", "spit")] [used_item] in [src].")
@@ -537,6 +537,7 @@ SUBSYSTEM_DEF(smokeweedeveryday)
 	list_reagents = list(/datum/reagent/drug/methamphetamine = 30)
 	spillable = FALSE
 	resistance_flags = FREEZE_PROOF
+	foodtype = BREAKFAST
 	illegal = TRUE
 	cost = 300
 

@@ -4,6 +4,8 @@
 	damage = 20
 	pass_flags = PASSTABLE
 	damage_type = BRUTE
+	nodamage = FALSE
+	flag = BULLET
 	reflectable = NONE
 	ricochets_max = 0
 	hitsound = 'sound/items/weapons/pierce.ogg'
@@ -11,15 +13,33 @@
 	sharpness = SHARP_POINTY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
 	shrapnel_type = /obj/item/shrapnel/bullet
+	embedding = list(embed_chance=15, fall_chance=2, jostle_chance=0, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.5, pain_mult=3, rip_time=10)
 	wound_falloff_tile = -5
 	embed_falloff_tile = -5
 	range = 50
 	eyeblur = 0
 	light_range = 0
 	light_power = 0
+//	jitter = 10
 	icon_state = ""
 	hitscan = TRUE
-	tracer_type = /obj/effect/projectile/tracer/tracer/beam_rifle
+	tracer_type = /obj/effect/projectile/tracer/tracer/beam_rifle/vampire
+
+/obj/projectile/beam/beam_rifle/vampire/generate_hitscan_tracers(cleanup = TRUE, duration = 5, impacting = TRUE, highlander)
+	set waitfor = FALSE
+	if(isnull(highlander))
+		highlander = TRUE
+	if(highlander && istype(gun))
+		QDEL_LIST(gun.current_tracers)
+		for(var/datum/point/p in beam_segments)
+			gun.current_tracers += generate_tracer_between_points(p, beam_segments[p], tracer_type, color, 0, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity)
+	else
+		for(var/datum/point/p in beam_segments)
+			generate_tracer_between_points(p, beam_segments[p], tracer_type, color, duration, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity)
+	if(cleanup)
+		QDEL_LIST(beam_segments)
+		beam_segments = null
+		QDEL_NULL(beam_index)
 
 /obj/projectile/beam/beam_rifle/vampire/vamp9mm
 	name = "9mm bullet"
@@ -107,7 +127,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(fire_stacks)
-		M.ignite_mob()
+		M.IgniteMob()
 
 /obj/projectile/bullet/crossbow_bolt
 	name = "bolt"
@@ -329,7 +349,7 @@
 			M.Stun(1 SECONDS)
 			M.Immobilize(1 SECONDS)
 			M.adjustBruteLoss(50, TRUE)
-			M.adjustFireLoss(20, TRUE)
+			M.adjustCloneLoss(20, TRUE)
 		if(!M.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
 			M.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
 			spawn(7 SECONDS)
@@ -349,7 +369,7 @@
 		else
 			M.Stun(1 SECONDS)
 			M.adjustBruteLoss(25, TRUE)
-			M.adjustFireLoss(10, TRUE)
+			M.adjustCloneLoss(10, TRUE)
 		if(!M.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
 			M.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
 			spawn(5 SECONDS)
@@ -369,7 +389,7 @@
 		else
 			M.Stun(1 SECONDS)
 			M.adjustBruteLoss(30, TRUE)
-			M.adjustFireLoss(15, TRUE)
+			M.adjustCloneLoss(15, TRUE)
 		if(!M.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
 			M.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
 			spawn(5 SECONDS)
@@ -392,7 +412,7 @@
 			M.Stun(2 SECONDS)
 			M.Immobilize(1 SECONDS)
 			M.adjustBruteLoss(40, TRUE)
-			M.adjustFireLoss(25, TRUE)
+			M.adjustCloneLoss(25, TRUE)
 		if(!M.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
 			M.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
 			spawn(7 SECONDS)

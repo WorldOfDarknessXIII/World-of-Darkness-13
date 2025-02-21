@@ -12,6 +12,7 @@
 	l_pocket = /obj/item/ammo_box/magazine/m45
 	r_pocket = /obj/item/restraints/handcuffs
 	id = /obj/item/card/id/advanced/bountyhunter
+	id_trim = /datum/id_trim/bounty_hunter/police
 
 /datum/outfit/spacepol/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
 	if(visuals_only)
@@ -21,6 +22,14 @@
 	W.icon_state = "card_black" //Less flamey, more modest, still unique enough to convey that they're fugitive hunters.
 	W.update_label()
 	W.update_icon()
+
+
+/datum/id_trim/bounty_hunter/police
+	assignment = "Police Officer"
+	trim_state = "trim_warden"
+	department_color = COLOR_STRONG_BLUE
+
+	access = list(ACCESS_HUNTER)
 
 /datum/outfit/russian_hunter
 	name = "Russian Hunter"
@@ -158,9 +167,19 @@
 		/obj/item/bountytrap = 4
 		)
 
+/datum/id_trim/bounty_hunter/psykers
+	assignment = "Psyker-gang Shikari"
+
+/datum/id_trim/bounty_hunter/psykers/captain
+	assignment = "Psyker-gang Shikari Captain"
+
+/datum/id_trim/bounty_hunter/psykers/seer
+	assignment = "Psyker-gang Shikari Seer"
+
 /datum/outfit/psyker/captain
 	name = "Psyker-Shikari Leader"
 
+	id_trim = /datum/id_trim/bounty_hunter/psykers/captain
 	suit = /obj/item/clothing/suit/armor/reactive/psykerboost
 	uniform = /obj/item/clothing/under/pants/camo
 
@@ -177,6 +196,7 @@
 	r_pocket = /obj/item/reagent_containers/hypospray/medipen/gore
 	id = /obj/item/card/id/advanced/bountyhunter
 
+	id_trim = /datum/id_trim/bounty_hunter/psykers
 
 /datum/outfit/psyker/post_equip(mob/living/carbon/human/equipped)
 	. = ..()
@@ -194,6 +214,7 @@
 	r_pocket = /obj/item/restraints/handcuffs/cable/zipties
 	id = /obj/item/card/id/advanced/bountyhunter
 
+	id_trim = /datum/id_trim/bounty_hunter/psykers/seer
 
 /datum/outfit/mi13_hunter
 	name = "\improper MI13 Fugitive Retrieval Agent"
@@ -250,6 +271,7 @@
 /obj/item/card/id/advanced/bountyhunter
 	assignment = "Bounty Hunter"
 	icon_state = "card_flame" //oh SHIT
+	trim = /datum/id_trim/bounty_hunter
 
 /datum/outfit/bountyarmor/ert
 	id = /obj/item/card/id/advanced/bountyhunter/ert
@@ -261,3 +283,4 @@
 	id = /obj/item/card/id/advanced/bountyhunter/ert
 
 /obj/item/card/id/advanced/bountyhunter/ert
+	trim = /datum/id_trim/centcom/bounty_hunter

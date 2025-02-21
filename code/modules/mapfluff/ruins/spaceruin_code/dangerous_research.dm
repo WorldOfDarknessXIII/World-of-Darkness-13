@@ -79,7 +79,9 @@
 /obj/item/card/id/away/dangerous_research
 	name = "Mike R. Smith"
 	desc = "An older ID card, it has a label reading \"Researcher\"."
+	trim = /datum/id_trim/away/dangerous_research
 
 /obj/item/card/id/away/dangerous_research/head_occultist
 	name = "Elias Valentin"
 	desc = "An older ID card, it has a label reading \"Head Occultist\". It's smeared with dried blood."
+	trim = /datum/id_trim/away/dangerous_research/head_occultist

@@ -9,6 +9,8 @@
 
 	outfit = /datum/outfit/job/regent
 
+	access = list(ACCESS_LIBRARY, ACCESS_AUX_BASE, ACCESS_MINING_STATION)
+	minimal_access = list(ACCESS_LIBRARY, ACCESS_AUX_BASE, ACCESS_MINING_STATION)
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 	exp_granted_type = EXP_TYPE_TREMERE

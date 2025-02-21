@@ -29,6 +29,7 @@
 	pass_flags = PASSMOB | PASSFLAPS
 	maximum_survivable_temperature = 360 //prone to overheating
 	possessed_message = "You are an exenteration drone. Exenterate."
+	additional_access = /datum/id_trim/away/hauntedtradingpost/boss
 	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL
 	mob_size = MOB_SIZE_SMALL
 	robot_arm = /obj/item/hatchet/cutterblade

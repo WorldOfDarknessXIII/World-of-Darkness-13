@@ -14,6 +14,7 @@
 	radio_channel = RADIO_CHANNEL_SERVICE
 	bot_type = CLEAN_BOT
 	hackables = "cleaning software"
+	additional_access = /datum/id_trim/job/janitor
 	possessed_message = "You are a cleanbot! Clean the station to the best of your ability!"
 	ai_controller = /datum/ai_controller/basic_controller/bot/cleanbot
 	path_image_color = "#993299"

@@ -23,6 +23,7 @@
 	name = "military radio"
 	subspace_transmission = FALSE
 	subspace_switchable = FALSE
+	syndie = TRUE
 	keyslot = new /obj/item/encryptionkey/syndicate
 
 /obj/item/radio/military/Initialize()

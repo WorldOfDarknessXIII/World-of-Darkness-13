@@ -168,7 +168,7 @@ SUBSYSTEM_DEF(carpool)
 			user.visible_message("<span class='warning'>[user] has managed to get [L] out of [src].</span>", \
 				"<span class='warning'>You've managed to get [L] out of [src].</span>")
 			if(C)
-				C.Trigger()
+				C.Trigger(trigger_flags)
 		else
 			to_chat(user, "<span class='warning'>You've failed to get [L] out of [src].</span>")
 		repairing = FALSE

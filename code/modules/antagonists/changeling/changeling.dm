@@ -560,6 +560,9 @@
 	entry.overlays = target.get_overlays_copy(list(HANDS_LAYER, HANDCUFF_LAYER, LEGCUFF_LAYER))
 	new_profile.profile_snapshot = entry
 
+	// Grab the target's sechut icon.
+	new_profile.id_icon = target.wear_id?.get_sechud_job_icon_state()
+
 	var/list/slots = list("head", "wear_mask", "wear_neck", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
 		if(!(slot in target.vars))
@@ -988,7 +991,7 @@
 
 /datum/antagonist/changeling/get_preview_icon()
 	var/icon/final_icon = render_preview_outfit(/datum/outfit/changeling)
-	var/icon/split_icon = render_preview_outfit(/datum/outfit/job/citizen)
+	var/icon/split_icon = render_preview_outfit(/datum/outfit/job/engineer)
 
 	final_icon.Shift(WEST, ICON_SIZE_X / 2)
 	final_icon.Shift(EAST, ICON_SIZE_X / 2)

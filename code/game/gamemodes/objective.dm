@@ -617,17 +617,6 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 		return TRUE
 	return FALSE
 
-/datum/objective/national_guard
-	name = "national_guard"
-	explanation_text = "Follow the orders of your sergeant."
-	martyr_compatible = TRUE
-
-/datum/objective/swat
-	name = "swat"
-	explanation_text = "Follow the orders of your commander."
-	martyr_compatible = TRUE
-
-
 GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/steal
 	name = "steal"

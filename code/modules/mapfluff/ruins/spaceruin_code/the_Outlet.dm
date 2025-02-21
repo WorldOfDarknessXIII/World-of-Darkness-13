@@ -23,11 +23,14 @@
 /obj/item/card/id/away/the_outlet
 	name = "Amos Rodriguez"
 	desc = "an Older model Civilian ID card, this one has the initials \ A.R.\ emblazoned on the back, it seems to be brand new minus it being covered in dust."
+	trim = /datum/id_trim/away/the_outlet
 
 /obj/item/card/id/away/the_outlet/angry_assistant_manager
 	name = "Mary Whittaker"
 	desc = "an Older model Civilian ID card, this one has the initials \ M.W. \ emblazoned on the back, the card smells vaguely of lavender and seems fairly well worn."
+	trim = /datum/id_trim/away/the_outlet/angry_assistant_manager
 
 /obj/item/card/id/away/the_outlet/mad_manager
 	name = "Caleb Whittaker"
 	desc = "an Older model Civilian ID card, this one has the initials \ C.W. \ emblazoned on the back, it has a thin film of grime and what appears to be blood coating its front."
+	trim = /datum/id_trim/away/the_outlet/mad_manager

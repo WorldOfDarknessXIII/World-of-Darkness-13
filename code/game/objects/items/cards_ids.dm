@@ -97,6 +97,9 @@
 	/// The job name registered on the card (for example: Assistant).
 	var/assignment
 
+	/// Trim datum associated with the card. Controls which job icon is displayed on the card and which accesses do not require wildcards.
+	var/datum/id_trim/trim
+
 	/// Access levels held by this card.
 	var/list/access = list()
 
@@ -132,12 +135,16 @@
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 
-	var/datum/bank_account/blank_bank_account = new("Unassigned", SSjob.get_job_type(/datum/job/vamp/citizen), player_account = FALSE)
+	var/datum/bank_account/blank_bank_account = new("Unassigned", SSjob.get_job_type(/datum/job/unassigned), player_account = FALSE)
 	registered_account = blank_bank_account
 	registered_account.replaceable = TRUE
 
-	update_label()
-	update_icon()
+	// Applying the trim updates the label and icon, so don't do this twice.
+	if(ispath(trim))
+		SSid_access.apply_trim_to_card(src, trim)
+	else
+		update_label()
+		update_icon()
 
 	register_context()
 
@@ -181,7 +188,7 @@
 	var/return_string = ""
 	if(carbon_human.name != voice_name)
 		end_string += " (as [registered_name])"
-	if(honorific_position != HONORIFIC_POSITION_NONE && (carbon_human.name == voice_name)) //The voice and name are the same, so we display the title.
+	if(trim && honorific_position != HONORIFIC_POSITION_NONE && (carbon_human.name == voice_name)) //The voice and name are the same, so we display the title.
 		return_string += honorific_title
 	else
 		return_string += voice_name //Name on the ID ain't the same as the speaker, so we display their real name with no title.
@@ -474,6 +481,15 @@
 	if(!length(accesses) || isnull(basic_access_list) || isnull(wildcard_access_list))
 		CRASH("Invalid parameters passed to build_access_lists")
 
+	var/list/trim_accesses = trim?.access
+
+	// Populate the lists.
+	for(var/new_access in accesses)
+		if(new_access in trim_accesses)
+			basic_access_list |= new_access
+			continue
+
+		wildcard_access_list |= new_access
 
 /// Helper proc that determines if a card can be used in certain types of payment transactions.
 /obj/item/card/id/proc/can_be_used_in_payment(mob/living/user)
@@ -512,6 +528,8 @@
 		context[SCREENTIP_CONTEXT_ALT_RMB] = "Assign account"
 	else if(registered_account.account_balance > 0)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Withdraw credits"
+	if(trim && length(trim.honorifics))
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle honorific"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/card/id/proc/try_project_paystand(mob/user, turf/target)
@@ -613,6 +631,9 @@
 			if(NAMEOF(src, assignment), NAMEOF(src, registered_name), NAMEOF(src, registered_age))
 				update_label()
 				update_icon()
+			if(NAMEOF(src, trim))
+				if(ispath(trim))
+					SSid_access.apply_trim_to_card(src, trim)
 
 /obj/item/card/id/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/rupee))
@@ -878,7 +899,7 @@
 /obj/item/card/id/proc/update_label()
 	var/name_string
 	if(registered_name)
-		if((honorific_position & ~HONORIFIC_POSITION_NONE))
+		if(trim && (honorific_position & ~HONORIFIC_POSITION_NONE))
 			name_string = "[update_honorific()]'s ID Card"
 		else
 			name_string = "[registered_name]'s ID Card"
@@ -889,7 +910,7 @@
 
 	if(is_intern)
 		if(assignment)
-			assignment_string = "Intern [assignment]"
+			assignment_string = trim?.intern_alt_name || "Intern [assignment]"
 		else
 			assignment_string = "Intern"
 	else
@@ -910,6 +931,14 @@
 			honorific_title = "[registered_name][chosen_honorific]"
 	return honorific_title
 
+/// Returns the trim assignment name.
+/obj/item/card/id/proc/get_trim_assignment()
+	return trim?.assignment || assignment
+
+/// Returns the trim sechud icon state.
+/obj/item/card/id/proc/get_trim_sechud_icon_state()
+	return trim?.sechud_icon_state || SECHUD_UNKNOWN
+
 /obj/item/card/id/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(iscash(interacting_with))
 		return insert_money(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
@@ -919,10 +948,19 @@
 	if(!in_contents_of(user) || user.incapacitated) //Check if the ID is in the ID slot, so it can be changed from there too.
 		return
 
+	if(!trim)
+		balloon_alert(user, "card has no trim!")
+		return
 
+	if(!length(trim.honorifics))
+		balloon_alert(user, "card has no honorific to use!")
+		return
 
 	var/list/choices = list()
 	var/list/readable_names = HONORIFIC_POSITION_BITFIELDS()
+	for(var/i in readable_names) //Filter out the options you don't have on your ID.
+		if(trim.honorific_positions & readable_names[i]) //If the positions list has the same bit value as the readable list.
+			choices += i
 
 	var/chosen_position = tgui_input_list(user, "What position do you want your honorific in?", "Flair!", choices)
 	if(user.incapacitated || !in_contents_of(user))
@@ -934,21 +972,42 @@
 
 	if(honorific_position_to_use & HONORIFIC_POSITION_NONE)
 		balloon_alert(user, "honorific disabled")
+	else
+		var/new_honorific = tgui_input_list(user, "What honorific do you want to use?", "Flair!!!", trim.honorifics)
+		if(!new_honorific || user.incapacitated || !in_contents_of(user))
+			return
+		chosen_honorific = new_honorific
+		switch(honorific_position_to_use)
+			if(HONORIFIC_POSITION_FIRST)
+				honorific_position = HONORIFIC_POSITION_FIRST
+				balloon_alert(user, "honorific set: display first name")
+			if(HONORIFIC_POSITION_LAST)
+				honorific_position = HONORIFIC_POSITION_LAST
+				balloon_alert(user, "honorific set: display last name")
+			if(HONORIFIC_POSITION_FIRST_FULL)
+				honorific_position = HONORIFIC_POSITION_FIRST_FULL
+				balloon_alert(user, "honorific set: start of full name")
+			if(HONORIFIC_POSITION_LAST_FULL)
+				honorific_position = HONORIFIC_POSITION_LAST_FULL
+				balloon_alert(user, "honorific set: end of full name")
 
 	update_label()
 
 /obj/item/card/id/away
 	name = "\proper a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
+	trim = /datum/id_trim/away
 	icon_state = "retro"
 	registered_age = null
 
 /obj/item/card/id/away/hotel
 	name = "Staff ID"
 	desc = "A staff ID used to access the hotel's doors."
+	trim = /datum/id_trim/away/hotel
 
 /obj/item/card/id/away/hotel/security
 	name = "Officer ID"
+	trim = /datum/id_trim/away/hotel/security
 
 /obj/item/card/id/away/old
 	name = "\proper a perfectly generic identification card"
@@ -957,22 +1016,27 @@
 /obj/item/card/id/away/old/sec
 	name = "Charlie Station Security Officer's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Security Officer\"."
+	trim = /datum/id_trim/away/old/sec
 
 /obj/item/card/id/away/old/sci
 	name = "Charlie Station Scientist's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Scientist\"."
+	trim = /datum/id_trim/away/old/sci
 
 /obj/item/card/id/away/old/eng
 	name = "Charlie Station Engineer's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Station Engineer\"."
+	trim = /datum/id_trim/away/old/eng
 
 /obj/item/card/id/away/old/equipment
 	name = "Engineering Equipment Access"
 	desc = "A special ID card that allows access to engineering equipment."
+	trim = /datum/id_trim/away/old/equipment
 
 /obj/item/card/id/away/old/robo
 	name = "Delta Station Roboticist's ID card"
 	desc = "An ID card that allows access to bots maintenance protocols."
+	trim = /datum/id_trim/away/old/robo
 
 /obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
 	name = "bunker access ID"
@@ -1140,11 +1204,11 @@
 	if(registered_name && registered_name != "Captain")
 		. += mutable_appearance(icon, assigned_icon_state)
 
-	var/trim_icon_file = trim_icon_override
-	var/trim_icon_state = trim_state_override
-	var/trim_department_color = department_color_override
-	var/trim_department_state = department_state_override
-	var/trim_subdepartment_color = subdepartment_color_override
+	var/trim_icon_file = trim_icon_override ? trim_icon_override : trim?.trim_icon
+	var/trim_icon_state = trim_state_override ? trim_state_override : trim?.trim_state
+	var/trim_department_color = department_color_override ? department_color_override : trim?.department_color
+	var/trim_department_state = department_state_override ? department_state_override : trim?.department_state
+	var/trim_subdepartment_color = subdepartment_color_override ? subdepartment_color_override : trim?.subdepartment_color
 
 	if(!trim_icon_file || !trim_icon_state || !trim_department_color || !trim_subdepartment_color || !trim_department_state)
 		return
@@ -1160,6 +1224,20 @@
 
 	/// Then we handle the job's icon here.
 	. += mutable_appearance(trim_icon_file, trim_icon_state)
+
+/obj/item/card/id/advanced/get_trim_assignment()
+	if(trim_assignment_override)
+		return trim_assignment_override
+
+	if(ispath(trim))
+		var/datum/id_trim/trim_singleton = SSid_access.trim_singletons_by_path[trim]
+		return trim_singleton.assignment
+
+	return ..()
+
+/// Returns the trim sechud icon state.
+/obj/item/card/id/advanced/get_trim_sechud_icon_state()
+	return sechud_icon_state_override || ..()
 
 /obj/item/card/id/advanced/rainbow
 	name = "rainbow identification card"
@@ -1182,9 +1260,14 @@
 	assigned_icon_state = "assigned_silver"
 	wildcard_slots = WILDCARD_LIMIT_GREY
 
+/datum/id_trim/maint_reaper
+	access = list(ACCESS_MAINT_TUNNELS)
+	trim_state = "trim_janitor"
+	assignment = "Reaper"
 
 /obj/item/card/id/advanced/silver/reaper
 	name = "Thirteen's ID Card (Reaper)"
+	trim = /datum/id_trim/maint_reaper
 	registered_name = "Thirteen"
 
 /obj/item/card/id/advanced/gold
@@ -1203,6 +1286,7 @@
 	name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
 	registered_name = "Captain"
+	trim = /datum/id_trim/job/captain
 	registered_age = null
 
 /obj/item/card/id/advanced/gold/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
@@ -1219,6 +1303,7 @@
 	assigned_icon_state = "assigned_centcom"
 	registered_name = JOB_CENTCOM
 	registered_age = null
+	trim = /datum/id_trim/centcom
 	wildcard_slots = WILDCARD_LIMIT_CENTCOM
 
 /obj/item/card/id/advanced/centcom/ert
@@ -1226,33 +1311,43 @@
 	desc = "An ERT ID card."
 	registered_age = null
 	registered_name = "Emergency Response Intern"
+	trim = /datum/id_trim/centcom/ert
 
 /obj/item/card/id/advanced/centcom/ert
 	registered_name = JOB_ERT_COMMANDER
+	trim = /datum/id_trim/centcom/ert/commander
 
 /obj/item/card/id/advanced/centcom/ert/security
 	registered_name = JOB_ERT_OFFICER
+	trim = /datum/id_trim/centcom/ert/security
 
 /obj/item/card/id/advanced/centcom/ert/engineer
 	registered_name = JOB_ERT_ENGINEER
+	trim = /datum/id_trim/centcom/ert/engineer
 
 /obj/item/card/id/advanced/centcom/ert/medical
 	registered_name = JOB_ERT_MEDICAL_DOCTOR
+	trim = /datum/id_trim/centcom/ert/medical
 
 /obj/item/card/id/advanced/centcom/ert/chaplain
 	registered_name = JOB_ERT_CHAPLAIN
+	trim = /datum/id_trim/centcom/ert/chaplain
 
 /obj/item/card/id/advanced/centcom/ert/janitor
 	registered_name = JOB_ERT_JANITOR
+	trim = /datum/id_trim/centcom/ert/janitor
 
 /obj/item/card/id/advanced/centcom/ert/clown
 	registered_name = JOB_ERT_CLOWN
+	trim = /datum/id_trim/centcom/ert/clown
 
 /obj/item/card/id/advanced/centcom/ert/militia
 	registered_name = "Frontier Militia"
+	trim = /datum/id_trim/centcom/ert/militia
 
 /obj/item/card/id/advanced/centcom/ert/militia/general
 	registered_name = "Frontier Militia General"
+	trim = /datum/id_trim/centcom/ert/militia/general
 
 /obj/item/card/id/advanced/black
 	name = "black identification card"
@@ -1265,6 +1360,7 @@
 	name = "\improper Death Squad ID"
 	desc = "A Death Squad ID card."
 	registered_name = JOB_ERT_DEATHSQUAD
+	trim = /datum/id_trim/centcom/deathsquad
 	wildcard_slots = WILDCARD_LIMIT_DEATHSQUAD
 
 /obj/item/card/id/advanced/black/syndicate_command
@@ -1272,17 +1368,20 @@
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
 	registered_age = null
+	trim = /datum/id_trim/syndicom
 	wildcard_slots = WILDCARD_LIMIT_SYNDICATE
 
 /obj/item/card/id/advanced/black/syndicate_command/crew_id
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
+	trim = /datum/id_trim/syndicom/crew
 
 /obj/item/card/id/advanced/black/syndicate_command/captain_id
 	name = "syndicate captain ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
+	trim = /datum/id_trim/syndicom/captain
 
 
 /obj/item/card/id/advanced/black/syndicate_command/captain_id/syndie_spare
@@ -1304,6 +1403,7 @@
 	desc = "A debug ID card. Has ALL the all access and a boatload of money, you really shouldn't have this."
 	icon_state = "card_centcom"
 	assigned_icon_state = "assigned_centcom"
+	trim = /datum/id_trim/admin
 	wildcard_slots = WILDCARD_LIMIT_ADMIN
 
 /obj/item/card/id/advanced/debug/Initialize(mapload)
@@ -1336,6 +1436,7 @@
 	inhand_icon_state = "orange-id"
 	registered_name = "Scum"
 	registered_age = null
+	trim = /datum/id_trim/job/prisoner
 
 	wildcard_slots = WILDCARD_LIMIT_PRISONER
 
@@ -1417,33 +1518,41 @@
 /obj/item/card/id/advanced/prisoner/one
 	name = "Prisoner #13-001"
 	registered_name = "Prisoner #13-001"
+	trim = /datum/id_trim/job/prisoner/one
 
 /obj/item/card/id/advanced/prisoner/two
 	name = "Prisoner #13-002"
 	registered_name = "Prisoner #13-002"
+	trim = /datum/id_trim/job/prisoner/two
 
 /obj/item/card/id/advanced/prisoner/three
 	name = "Prisoner #13-003"
 	registered_name = "Prisoner #13-003"
+	trim = /datum/id_trim/job/prisoner/three
 
 /obj/item/card/id/advanced/prisoner/four
 	name = "Prisoner #13-004"
 	registered_name = "Prisoner #13-004"
+	trim = /datum/id_trim/job/prisoner/four
 
 /obj/item/card/id/advanced/prisoner/five
 	name = "Prisoner #13-005"
 	registered_name = "Prisoner #13-005"
+	trim = /datum/id_trim/job/prisoner/five
 
 /obj/item/card/id/advanced/prisoner/six
 	name = "Prisoner #13-006"
 	registered_name = "Prisoner #13-006"
+	trim = /datum/id_trim/job/prisoner/six
 
 /obj/item/card/id/advanced/prisoner/seven
 	name = "Prisoner #13-007"
 	registered_name = "Prisoner #13-007"
+	trim = /datum/id_trim/job/prisoner/seven
 
 /obj/item/card/id/advanced/mining
 	name = "mining ID"
+	trim = /datum/id_trim/job/shaft_miner/spare
 
 /obj/item/card/id/advanced/highlander
 	name = "highlander ID"
@@ -1451,12 +1560,14 @@
 	desc = "There can be only one!"
 	icon_state = "card_black"
 	assigned_icon_state = "assigned_syndicate"
+	trim = /datum/id_trim/highlander
 	wildcard_slots = WILDCARD_LIMIT_ADMIN
 
 /// An ID that you can flip with attack_self_secondary, overriding the appearance of the ID (useful for plainclothes detectives for example).
 /obj/item/card/id/advanced/plainclothes
 	name = "Plainclothes ID"
 	///The trim that we use as plainclothes identity
+	var/alt_trim = /datum/id_trim/job/assistant
 
 /obj/item/card/id/advanced/plainclothes/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -1476,6 +1587,10 @@
 	if(popup_input == "Show")
 		return ..()
 	balloon_alert(user, "flipped")
+	if(trim_assignment_override)
+		SSid_access.remove_trim_override(src)
+	else
+		SSid_access.apply_trim_override(src, alt_trim)
 	update_label()
 	update_appearance()
 
@@ -1483,14 +1598,16 @@
 	if(!trim_assignment_override)
 		return ..()
 	var/name_string = registered_name ? "[registered_name]'s ID Card" : initial(name)
-	name = "[name_string]"
+	var/datum/id_trim/fake = SSid_access.trim_singletons_by_path[alt_trim]
+	name = "[name_string] ([fake.assignment])"
 
 /obj/item/card/id/advanced/chameleon
 	name = "agent card"
 	desc = "A highly advanced chameleon ID card. Touch this card on another ID card or player to choose which accesses to copy. \
 		Has special magnetic properties which force it to the front of wallets."
+	trim = /datum/id_trim/chameleon
 	wildcard_slots = WILDCARD_LIMIT_CHAMELEON
-	actions_types = list(/datum/action/item_action/chameleon/change/id)
+	actions_types = list(/datum/action/item_action/chameleon/change/id, /datum/action/item_action/chameleon/change/id_trim)
 
 	/// Have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
 	var/forged = FALSE
@@ -1616,6 +1733,7 @@
 
 	data["accesses"] = regions
 	data["ourAccess"] = access
+	data["ourTrimAccess"] = trim ? trim.access : list()
 	data["theftAccess"] = target_card.access.Copy()
 	data["wildcardSlots"] = wildcard_slots
 	data["selectedList"] = access
@@ -1688,6 +1806,7 @@
 	if(forged) //reset the ID if forged
 		registered_name = initial(registered_name)
 		assignment = initial(assignment)
+		SSid_access.remove_trim_override(src)
 		REMOVE_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
 		user.log_message("reset \the [initial(name)] named \"[src]\" to default.", LOG_GAME)
 		update_label()
@@ -1712,6 +1831,22 @@
 		else
 			input_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
 
+	var/change_trim = tgui_alert(user, "Adjust the appearance of your card's trim?", "Modify Trim", list("Yes", "No"))
+	if(!after_input_check(user))
+		return TRUE
+	var/selected_trim_path
+	var/static/list/trim_list
+	if(change_trim == "Yes")
+		trim_list = list()
+		for(var/trim_path in typesof(/datum/id_trim))
+			var/datum/id_trim/trim = SSid_access.trim_singletons_by_path[trim_path]
+			if(trim && trim.trim_state && trim.assignment)
+				var/fake_trim_name = "[trim.assignment] ([trim.trim_state])"
+				trim_list[fake_trim_name] = trim_path
+		selected_trim_path = tgui_input_list(user, "Select trim to apply to your card.\nNote: This will not grant any trim accesses.", "Forge Trim", sort_list(trim_list, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+		if(!after_input_check(user))
+			return TRUE
+
 	var/target_occupation = tgui_input_text(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : "Assistant", max_length = MAX_NAME_LEN)
 	if(!after_input_check(user))
 		return TRUE
@@ -1725,6 +1860,8 @@
 		return
 
 	registered_name = input_name
+	if(selected_trim_path)
+		SSid_access.apply_trim_override(src, trim_list[selected_trim_path])
 	if(target_occupation)
 		assignment = sanitize(target_occupation)
 	if(new_age)
@@ -1736,12 +1873,14 @@
 	update_icon()
 	forged = TRUE
 	to_chat(user, span_notice("You successfully forge the ID card."))
-	user.log_message("forged \the [initial(name)] with name \"[registered_name]\", occupation \"[assignment]\".", LOG_GAME)
+	user.log_message("forged \the [initial(name)] with name \"[registered_name]\", occupation \"[assignment]\" and trim \"[trim?.assignment]\".", LOG_GAME)
 
 	if(!ishuman(user))
 		return
 
 	var/mob/living/carbon/human/owner = user
+	if (!selected_trim_path) // Ensure that even without a trim update, we update user's sechud
+		owner.sec_hud_set_ID()
 
 	if (registered_account)
 		return
@@ -1774,6 +1913,7 @@
 /obj/item/card/id/advanced/engioutpost
 	registered_name = "George 'Plastic' Miller"
 	desc = "A card used to provide ID and determine access across the station. There's blood dripping from the corner. Ew."
+	trim = /datum/id_trim/engioutpost
 	registered_age = 47
 
 /obj/item/card/id/advanced/simple_bot
@@ -1886,6 +2026,22 @@
 			scribbled_assignment = sanitize(input_assignment)
 			var/list/details = item.get_writing_implement_details()
 			details_colors[INDEX_ASSIGNMENT_COLOR] = details["color"] || COLOR_BLACK
+		if("Trim")
+			var/static/list/possible_trims
+			if(!possible_trims)
+				possible_trims = list()
+				for(var/trim_path in typesof(/datum/id_trim))
+					var/datum/id_trim/trim = SSid_access.trim_singletons_by_path[trim_path]
+					if(trim?.trim_state && trim.assignment)
+						possible_trims |= replacetext(trim.trim_state, "trim_", "")
+				sortTim(possible_trims, GLOBAL_PROC_REF(cmp_typepaths_asc))
+			var/input_trim = tgui_input_list(user, "Select trim to apply to your card.\nNote: This will not grant any trim accesses.", "Forge Trim", possible_trims)
+			if(!input_trim || !after_input_check(user, item, input_trim, scribbled_trim))
+				return
+			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+			scribbled_trim = "cardboard_[input_trim]"
+			var/list/details = item.get_writing_implement_details()
+			details_colors[INDEX_TRIM_COLOR] = details["color"] || COLOR_BLACK
 		if("Reset")
 			scribbled_name = null
 			scribbled_assignment = null
@@ -1942,7 +2098,7 @@
 
 /obj/item/card/cardboard/examine(mob/user)
 	. = ..()
-	. += span_notice("You could use a pen or crayon to forge a name, assignment.")
+	. += span_notice("You could use a pen or crayon to forge a name, assignment or trim.")
 
 #undef INDEX_NAME_COLOR
 #undef INDEX_ASSIGNMENT_COLOR

@@ -40,6 +40,7 @@ SUBSYSTEM_DEF(id_access)
 	// We use this because creating the trim singletons requires the config to be loaded.
 	setup_access_flags()
 	setup_region_lists()
+	setup_trim_singletons()
 	setup_wildcard_dict()
 	setup_access_descriptions()
 	setup_tgui_lists()
@@ -47,6 +48,23 @@ SUBSYSTEM_DEF(id_access)
 	spare_id_safe_code = "[rand(0,9)][rand(0,9)][rand(0,9)][rand(0,9)][rand(0,9)]"
 
 	return SS_INIT_SUCCESS
+
+/**
+ * Called by [/datum/controller/subsystem/ticker/proc/setup]
+ *
+ * This runs through every /datum/id_trim/job singleton and ensures that its access is setup according to
+ * appropriate config entries.
+ */
+/datum/controller/subsystem/id_access/proc/refresh_job_trim_singletons()
+	for(var/trim in typesof(/datum/id_trim/job))
+		var/datum/id_trim/job/job_trim = trim_singletons_by_path[trim]
+
+		if(QDELETED(job_trim))
+			stack_trace("Trim \[[trim]\] missing from trim singleton list. Reinitialising this trim.")
+			trim_singletons_by_path[trim] = new trim()
+			continue
+
+		job_trim.refresh_trim_access()
 
 /// Build access flag lists.
 /datum/controller/subsystem/id_access/proc/setup_access_flags()
@@ -106,7 +124,10 @@ SUBSYSTEM_DEF(id_access)
 
 	station_regions = REGION_AREA_STATION
 
-
+/// Instantiate trim singletons and add them to a list.
+/datum/controller/subsystem/id_access/proc/setup_trim_singletons()
+	for(var/trim in typesof(/datum/id_trim))
+		trim_singletons_by_path[trim] = new trim()
 
 /// Creates various data structures that primarily get fed to tgui interfaces, although these lists are used in other places.
 /datum/controller/subsystem/id_access/proc/setup_tgui_lists()
@@ -174,6 +195,27 @@ SUBSYSTEM_DEF(id_access)
 			"pdas" = list(),
 		),
 	)
+
+	var/list/station_job_trims = subtypesof(/datum/id_trim/job)
+	for(var/trim_path in station_job_trims)
+		var/datum/id_trim/job/trim = trim_singletons_by_path[trim_path]
+		if(!length(trim.template_access))
+			continue
+
+		station_job_templates[trim_path] = trim.assignment
+		for(var/access in trim.template_access)
+			var/list/manager = sub_department_managers_tgui["[access]"]
+			if(!manager)
+				if(access != ACCESS_CHANGE_IDS)
+					WARNING("Invalid template access access \[[access]\] registered with [trim_path]. Template added to global list anyway.")
+				continue
+			var/list/templates = manager["templates"]
+			templates[trim_path] = trim.assignment
+
+	var/list/centcom_job_trims = typesof(/datum/id_trim/centcom) - typesof(/datum/id_trim/centcom/corpse)
+	for(var/trim_path in centcom_job_trims)
+		var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
+		centcom_job_templates[trim_path] = trim.assignment
 
 	var/list/all_pda_paths = typesof(/obj/item/modular_computer/pda)
 	var/list/pda_regions = PDA_PAINTING_REGIONS
@@ -336,6 +378,129 @@ SUBSYSTEM_DEF(id_access)
  */
 /datum/controller/subsystem/id_access/proc/get_flag_access_list(flag)
 	return accesses_by_flag["[flag]"]
+
+/**
+ * Applies a trim singleton to a card.
+ *
+ * Returns FALSE if the trim could not be applied due to being incompatible with the card.
+ * Incompatibility is defined as a card not being able to hold all the trim's required wildcards.
+ * Returns TRUE otherwise.
+ * Arguments:
+ * * id_card - ID card to apply the trim_path to.
+ * * trim_path - A trim path to apply to the card. Grabs the trim's associated singleton and applies it.
+ * * copy_access - Boolean value. If true, the trim's access is also copied to the card.
+ */
+/datum/controller/subsystem/id_access/proc/apply_trim_to_card(obj/item/card/id/id_card, trim_path, copy_access = TRUE)
+	var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
+
+	if(!id_card.can_add_wildcards(trim.wildcard_access))
+		return FALSE
+
+	id_card.clear_access()
+	id_card.trim = trim
+	id_card.big_pointer = trim.big_pointer
+	id_card.pointer_color = trim.pointer_color
+
+	if(copy_access)
+		id_card.access = trim.access.Copy()
+		id_card.add_wildcards(trim.wildcard_access)
+
+
+	if(trim.assignment)
+		id_card.assignment = trim.assignment
+
+	var/datum/job/trim_job = trim.find_job()
+	if (!isnull(id_card.registered_account))
+		var/datum/job/old_job = id_card.registered_account.account_job
+		id_card.registered_account.account_job = trim_job
+		id_card.registered_account.update_account_job_lists(trim_job, old_job)
+
+	id_card.update_label()
+	id_card.update_icon()
+
+	return TRUE
+
+/**
+ * Removes a trim from an ID card. Also removes all accesses from it too.
+ *
+ * Arguments:
+ * * id_card - The ID card to remove the trim from.
+ */
+/datum/controller/subsystem/id_access/proc/remove_trim_from_card(obj/item/card/id/id_card)
+	id_card.trim = null
+	id_card.clear_access()
+	id_card.update_label()
+	id_card.update_icon()
+
+/**
+ * Applies a trim to a card. This is purely visual, utilising the card's override vars.
+ *
+ * Arguments:
+ * * id_card - The card to apply the trim visuals to.
+ * * trim_path - A trim path to apply to the card. Grabs the trim's associated singleton and applies it.
+ * * check_forged - Boolean value. If TRUE, will not overwrite the card's assignment if the card has been forged.
+ */
+/datum/controller/subsystem/id_access/proc/apply_trim_override(obj/item/card/id/advanced/id_card, trim_path, check_forged = TRUE)
+	var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
+	id_card.trim_icon_override = trim.trim_icon
+	id_card.trim_state_override = trim.trim_state
+	id_card.trim_assignment_override = trim.assignment
+	id_card.sechud_icon_state_override = trim.sechud_icon_state
+	id_card.department_color_override = trim.department_color
+	id_card.department_state_override = trim.department_state
+	id_card.subdepartment_color_override = trim.subdepartment_color
+	id_card.big_pointer = trim.big_pointer
+	id_card.pointer_color = trim.pointer_color
+
+	var/obj/item/card/id/advanced/chameleon/cham_id = id_card
+	if (istype(cham_id) && (!check_forged || !cham_id.forged))
+		cham_id.assignment = trim.assignment
+
+	if (ishuman(id_card.loc))
+		var/mob/living/carbon/human/owner = id_card.loc
+		owner.sec_hud_set_ID()
+
+/**
+ * Removes a trim from a ID card.
+ *
+ * Arguments:
+ * * id_card - The ID card to remove the trim from.
+ */
+/datum/controller/subsystem/id_access/proc/remove_trim_override(obj/item/card/id/advanced/id_card)
+	id_card.trim_icon_override = null
+	id_card.trim_state_override = null
+	id_card.trim_assignment_override = null
+	id_card.sechud_icon_state_override = null
+	id_card.department_color_override = null
+	id_card.department_state_override = null
+	id_card.subdepartment_color_override = null
+	id_card.big_pointer = id_card.trim.big_pointer
+	id_card.pointer_color = id_card.trim.pointer_color
+
+	if (ishuman(id_card.loc))
+		var/mob/living/carbon/human/owner = id_card.loc
+		owner.sec_hud_set_ID()
+
+/**
+ * Adds the accesses associated with a trim to an ID card.
+ *
+ * Clears the card's existing access levels first.
+ * Primarily intended for applying trim templates to cards. Will attempt to add as many ordinary access
+ * levels as it can, without consuming any wildcards. Will then attempt to apply the trim-specific wildcards after.
+ *
+ * Arguments:
+ * * id_card - The ID card to remove the trim from.
+ */
+/datum/controller/subsystem/id_access/proc/add_trim_access_to_card(obj/item/card/id/id_card, trim_path)
+	var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
+
+	id_card.clear_access()
+
+	id_card.add_access(trim.access, mode = TRY_ADD_ALL_NO_WILDCARD)
+	id_card.add_wildcards(trim.wildcard_access, mode = TRY_ADD_ALL)
+	if(istype(trim, /datum/id_trim/job))
+		var/datum/id_trim/job/job_trim = trim // Here is where we update a player's paycheck department for the purposes of discounts/paychecks.
+		id_card.registered_account.account_job.paycheck_department = job_trim.job.paycheck_department
 
 /**
  * Tallies up all accesses the card has that have flags greater than or equal to the access_flag supplied.

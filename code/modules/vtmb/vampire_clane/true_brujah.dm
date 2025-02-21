@@ -22,7 +22,7 @@
 		var/datum/action/cooldown/temporis_step/tstep = new()
 		tstep.Grant(H)
 	if(level >= 5)
-		var/datum/action/cooldown/clotho/clot = new()
+		var/datum/action/clotho/clot = new()
 		clot.Grant(H)
 
 /datum/action/clock
@@ -72,7 +72,9 @@
 		M.temporis_visual = FALSE
 		playsound(M.loc, 'code/modules/wod13/sounds/temporis end.ogg', 50, FALSE)
 
-/datum/action/cooldown/temporis_step/Trigger(trigger_flags, atom/target)
+/datum/action/temporis_step/Trigger(trigger_flags)
+	if(spam_fix + 15 SECONDS > world.time)
+		return
 	var/mob/living/carbon/human/H = owner
 	if(H.bloodpool < 1)
 		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
@@ -114,7 +116,9 @@
 			M.next_move_modifier /= TEMPORIS_ATTACK_SPEED_MODIFIER
 
 
-/datum/action/cooldown/clotho/Trigger(trigger_flags, atom/target)
+/datum/action/clotho/Trigger(trigger_flags)
+	if(spam_fix + 15 SECONDS > world.time)
+		return
 	var/mob/living/carbon/human/H = owner
 	if(H.bloodpool < 3)
 		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")

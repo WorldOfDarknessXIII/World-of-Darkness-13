@@ -157,6 +157,7 @@
 	lighting_cutoff_green = 35
 	lighting_cutoff_blue = 20
 	faction = list(FACTION_HOSTILE,FACTION_VINES,FACTION_PLANTS)
+	initial_language_holder = /datum/language_holder/venus
 	unique_name = TRUE
 	speed = 1.2
 	melee_attack_cooldown = 1.2 SECONDS

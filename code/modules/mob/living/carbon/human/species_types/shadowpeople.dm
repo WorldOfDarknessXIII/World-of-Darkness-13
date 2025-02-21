@@ -21,6 +21,8 @@
 	mutantheart = null
 	mutantlungs = null
 
+	species_language_holder = /datum/language_holder/shadowpeople
+
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/shadow,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/shadow,

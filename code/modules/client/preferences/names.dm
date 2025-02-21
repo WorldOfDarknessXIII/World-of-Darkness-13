@@ -84,7 +84,7 @@
 
 	explanation = "Clown name"
 	group = "fun"
-	relevant_job = /datum/job/vamp/citizen
+	relevant_job = /datum/job/clown
 
 /datum/preference/name/clown/create_default_value()
 	return pick(GLOB.clown_names)
@@ -94,7 +94,7 @@
 
 	explanation = "Mime name"
 	group = "fun"
-	relevant_job = /datum/job/vamp/citizen
+	relevant_job = /datum/job/mime
 
 /datum/preference/name/mime/create_default_value()
 	return pick(GLOB.mime_names)
@@ -107,7 +107,7 @@
 
 	explanation = "Cyborg name"
 	group = "silicons"
-	relevant_job = /datum/job/vamp/citizen
+	relevant_job = /datum/job/cyborg
 
 /datum/preference/name/cyborg/create_default_value()
 	return DEFAULT_CYBORG_NAME
@@ -118,7 +118,7 @@
 	allow_numbers = TRUE
 	explanation = "AI name"
 	group = "silicons"
-	relevant_job = /datum/job/vamp/citizen
+	relevant_job = /datum/job/ai
 
 /datum/preference/name/ai/create_default_value()
 	return pick(GLOB.ai_names)
@@ -179,6 +179,15 @@
 		return TRUE
 
 	return FALSE
+
+
+/// The name to use while bitrunning
+/datum/preference/name/hacker_alias
+	explanation = "Hacker alias"
+	group = "bitrunning"
+	savefile_key = "hacker_alias"
+	relevant_job = /datum/job/bitrunner
+
 
 /datum/preference/name/hacker_alias/create_default_value()
 	return pick(GLOB.hacker_aliases)

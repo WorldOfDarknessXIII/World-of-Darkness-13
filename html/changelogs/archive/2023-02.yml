@@ -740,7 +740,7 @@
   - bugfix: falling off the shuttle wont trap you in a box anymore
   timothymtorres:
   - bugfix: Fix runtimes for IV drips, food processors, and gibber
-  - refactor: Refactored, improve, and rename can_perform_action to be can_perform_action
+  - refactor: Refactored, improve, and rename canUseTopic to be can_perform_action
       that now uses bitflags to determine if a mob can perform an action.
   tralezab:
   - refactor: Lizard related canned food now acts like canned food

@@ -505,9 +505,6 @@
 		explosion_cause = src,
 	)
 
-/obj/projectile/magic/aoe/fireball/baali
-	color = "#2dff00"
-
 /obj/projectile/magic/aoe/magic_missile
 	name = "magic missile"
 	icon_state = "magicm"

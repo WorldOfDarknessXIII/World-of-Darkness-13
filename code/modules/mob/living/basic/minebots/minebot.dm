@@ -82,7 +82,9 @@
 	stored_gun = new(src)
 	var/obj/item/implant/radio/mining/comms = new(src)
 	comms.implant(src)
-	var/static/list/accesses = list()
+	var/static/list/accesses = list(
+		/datum/id_trim/job/shaft_miner,
+	)
 	AddElement(/datum/element/mob_access, accesses)
 
 /mob/living/basic/mining_drone/set_combat_mode(new_mode, silent = TRUE)

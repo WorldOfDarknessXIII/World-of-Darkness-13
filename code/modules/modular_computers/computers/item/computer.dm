@@ -311,7 +311,7 @@
 		return ..()
 
 	if(crew_manifest_update)
-		GLOB.manifest.modify(computer_id_slot.registered_name, computer_id_slot.assignment)
+		GLOB.manifest.modify(computer_id_slot.registered_name, computer_id_slot.assignment, computer_id_slot.get_trim_assignment())
 
 	if(user && !issilicon(user) && in_range(src, user))
 		user.put_in_hands(computer_id_slot)

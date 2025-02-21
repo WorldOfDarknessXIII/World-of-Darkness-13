@@ -46,6 +46,7 @@ And it also helps for the character set panel
 	if(alt_sprite)
 		if (!alt_sprite_greyscale)
 			H.skin_tone = "albino"
+		H.dna.species.limbs_id = alt_sprite
 		H.update_body_parts()
 		H.update_body()
 		H.update_icon()

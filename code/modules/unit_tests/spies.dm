@@ -4,7 +4,7 @@
 /datum/unit_test/spy_bounty/Run()
 	var/mob/living/carbon/human/james_bond = allocate(/mob/living/carbon/human/consistent)
 	james_bond.mind_initialize()
-	james_bond.equipOutfit(/datum/outfit/job/citizen)
+	james_bond.equipOutfit(/datum/outfit/job/assistant/consistent)
 	var/datum/antagonist/spy/spy = james_bond.mind.add_antag_datum(/datum/antagonist/spy)
 
 	var/datum/component/spy_uplink/uplink = spy.uplink_weakref?.resolve()

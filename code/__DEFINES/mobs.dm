@@ -700,53 +700,50 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 /// Total number of layers for mob overlays
 /// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK
 /// Also consider updating layers_to_offset
-#define TOTAL_LAYERS			45		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			41		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
-#define LUZHA_LAYER				45
-#define UNDERSHADOW_LAYER		44
-#define MUTATIONS_LAYER			43		/// Mutations layer - Tk headglows, cold resistance glow, etc
-#define BODY_BEHIND_LAYER		42		/// Mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODYPARTS_LOW_LAYER 	41 		/// Layer for bodyparts that should appear behind every other bodypart - Mostly, legs when facing WEST or EAST
-#define BODYPARTS_LAYER			40		// Layer for most bodyparts, appears above BODYPARTS_LOW_LAYER and below BODYPARTS_HIGH_LAYER
-#define BODY_ADJ_LAYER			39		/// Mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_LAYER				38		/// Underwear, undershirts, socks, eyes, lips(makeup)
-#define FRONT_MUTATIONS_LAYER	37		/// Mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define DAMAGE_LAYER			36		/// Damage indicators (cuts and burns)
-#define UNIFORM_LAYER			35		/// Jumpsuit clothing layer
-#define ID_LAYER				34 		/// ID card layer
-#define ID_CARD_LAYER 			33		/// ID card layer (might be deprecated)
-#define BODYPARTS_HIGH_LAYER	32		/// Layer for bodyparts that should appear above every other bodypart - Currently only used for hands
-#define GLOVES_LAYER			31		/// Gloves layer
-#define SHOES_LAYER				30		/// Shoes layer
-#define LOW_FACEMASK_LAYER 		29 		/// Layer for masks that are worn below ears and eyes (like Balaclavas) (layers below hair, use flagsinv=HIDEHAIR as needed)
-#define EARS_LAYER				28		/// Ears layer (Spessmen have ears? Wow)
-#define LOW_NECK_LAYER 			27		/// Layer for neck apperal that should appear below the suit slot (like neckties)
-#define SUIT_LAYER				26		/// Suit layer (armor, coats, etc.)
-#define GLASSES_LAYER			25		/// Glasses layer
-#define BELT_LAYER				24		/// Belt layer, Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		23		/// Suit storage layer (tucking a gun or baton underneath your armor)
-#define NECK_LAYER				22		/// Neck layer (for wearing capes and bedsheets)
-#define BACK_LAYER				21		/// Back layer (for backpacks and equipment on your back)
-#define HAIR_LAYER				20		/// Hair layer (mess with the fro and you got to go!) TODO: make part of head layer?
-#define FACEMASK_LAYER			19 		/// Facemask layer (gas masks, breath masks, etc.)
-#define HEAD_LAYER				18		/// Head layer (hats, helmets, etc.)
-#define HANDCUFF_LAYER			17		/// Handcuff layer (when your hands are cuffed)
-#define LEGCUFF_LAYER			16		/// Legcuff layer (when your feet are cuffed)
-#define HANDS_LAYER				15		/// Hands layer (for the actual hand, not the arm... I think?)
-#define BODY_FRONT_LAYER		14		/// Body front layer. Usually used for mutant bodyparts that need to be in front of stuff (e.g. cat ears)
-#define ABOVE_BODY_FRONT_GLASSES_LAYER 13 /// Special body layer that actually require to be above the hair (e.g. lifted welding goggles)
-#define ABOVE_BODY_FRONT_HEAD_LAYER 12	/// Special body layer for the rare cases where something on the head needs to be above everything else (e.g. flowers)
-#define WOUND_LAYER 			11		/// Bleeding wound icons
-#define HALO_LAYER				10		/// Blood cult ascended halo layer, because there's currently no better solution for adding/removing
-#define BITE_LAYER				9
-#define FIGHT_LAYER 			8
-#define PROTEAN_LAYER			7
-#define UNICORN_LAYER			6
-#define POTENCE_LAYER			5
-#define FORTITUDE_LAYER			4
-#define FIRING_EFFECT_LAYER		3
-#define SAY_LAYER				2
-#define HIGHEST_LAYER			1 /// The highest most layer for mob overlays. Unused
+#define LUZHA_LAYER				41
+#define UNDERSHADOW_LAYER		40
+#define MUTATIONS_LAYER			39		/// Mutations layer - Tk headglows, cold resistance glow, etc
+#define BODY_BEHIND_LAYER		38		/// Mutantrace features (tail when looking south) that must appear behind the body parts
+#define BODYPARTS_LOW_LAYER 	37 		/// Layer for bodyparts that should appear behind every other bodypart - Mostly, legs when facing WEST or EAST
+#define BODYPARTS_LAYER			36		// Layer for most bodyparts, appears above BODYPARTS_LOW_LAYER and below BODYPARTS_HIGH_LAYER
+#define BODY_ADJ_LAYER			35		/// Mutantrace features (snout, body markings) that must appear above the body parts
+#define BODY_LAYER				34		/// Underwear, undershirts, socks, eyes, lips(makeup)
+#define FRONT_MUTATIONS_LAYER	33		/// Mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
+#define DAMAGE_LAYER			33		/// Damage indicators (cuts and burns)
+#define UNIFORM_LAYER			32		/// Jumpsuit clothing layer
+#define ID_LAYER				31 		/// ID card layer
+#define ID_CARD_LAYER 			30		/// ID card layer (might be deprecated)
+#define BODYPARTS_HIGH_LAYER	29 		/// Layer for bodyparts that should appear above every other bodypart - Currently only used for hands
+#define GLOVES_LAYER			28		/// Gloves layer
+#define SHOES_LAYER				27		/// Shoes layer
+#define LOW_FACEMASK_LAYER 		26 		/// Layer for masks that are worn below ears and eyes (like Balaclavas) (layers below hair, use flagsinv=HIDEHAIR as needed)
+#define EARS_LAYER				25		/// Ears layer (Spessmen have ears? Wow)
+#define LOW_NECK_LAYER 			24		/// Layer for neck apperal that should appear below the suit slot (like neckties)
+#define SUIT_LAYER				23		/// Suit layer (armor, coats, etc.)
+#define GLASSES_LAYER			22		/// Glasses layer
+#define BELT_LAYER				21		/// Belt layer, Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER		20		/// Suit storage layer (tucking a gun or baton underneath your armor)
+#define NECK_LAYER				19		/// Neck layer (for wearing capes and bedsheets)
+#define BACK_LAYER				18 		/// Back layer (for backpacks and equipment on your back)
+#define HAIR_LAYER				17		/// Hair layer (mess with the fro and you got to go!) TODO: make part of head layer?
+#define FACEMASK_LAYER			16 		/// Facemask layer (gas masks, breath masks, etc.)
+#define HEAD_LAYER				15 		/// Head layer (hats, helmets, etc.)
+#define HANDCUFF_LAYER			14		/// Handcuff layer (when your hands are cuffed)
+#define LEGCUFF_LAYER			13		/// Legcuff layer (when your feet are cuffed)
+#define HANDS_LAYER				12		/// Hands layer (for the actual hand, not the arm... I think?)
+#define BODY_FRONT_LAYER		11		/// Body front layer. Usually used for mutant bodyparts that need to be in front of stuff (e.g. cat ears)
+#define ABOVE_BODY_FRONT_GLASSES_LAYER 10 /// Special body layer that actually require to be above the hair (e.g. lifted welding goggles)
+#define ABOVE_BODY_FRONT_HEAD_LAYER 9 	/// Special body layer for the rare cases where something on the head needs to be above everything else (e.g. flowers)
+#define WOUND_LAYER 			8					/// Bleeding wound icons
+#define FIGHT_LAYER 			7
+#define PROTEAN_LAYER			6
+#define UNICORN_LAYER			5
+#define POTENCE_LAYER			4
+#define FORTITUDE_LAYER			3
+#define FIRING_EFFECT_LAYER		2
+#define SAY_LAYER				1
 
 #define UPPER_BODY "upper body"
 #define LOWER_BODY "lower body"
@@ -1006,7 +1003,3 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// Distance which you can see someone's ID card
 /// Short enough that you can inspect over tables (bartender checking age)
 #define ID_EXAMINE_DISTANCE 3
-
-#define SOUL_PRESENT 1
-#define SOUL_ABSENT 2
-#define SOUL_PROJECTING 3

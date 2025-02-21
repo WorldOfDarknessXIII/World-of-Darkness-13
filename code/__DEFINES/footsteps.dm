@@ -7,13 +7,7 @@
 #define FOOTSTEP_WATER "water"
 #define FOOTSTEP_LAVA "lava"
 #define FOOTSTEP_MEAT "meat"
-#define FOOTSTEP_PARKET "parket"
-#define FOOTSTEP_ASPHALT "asphalt"
-#define FOOTSTEP_TRAVA "trava"
-#define FOOTSTEP_TROTUAR "trotuar"
 #define FOOTSTEP_CATWALK "catwalk"
-#define FOOTSTEP_SNOW "snow"
-
 //barefoot sounds
 #define FOOTSTEP_WOOD_BAREFOOT "woodbarefoot"
 #define FOOTSTEP_WOOD_CLAW "woodclaw"

@@ -768,10 +768,4 @@
 		owner.vis_contents -= beam_from_above_b
 	QDEL_NULL(mob_light_obj)
 
-
-/datum/status_effect/fear
-	id = "fear"
-	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
-	alert_type = null
-
 #undef BEAM_ALPHA

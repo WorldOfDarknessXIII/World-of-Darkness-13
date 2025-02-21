@@ -30,6 +30,26 @@
 					discipline.activate(owner, owner)
 	. = ..()
 
+/datum/action/discipline/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
+	if(owner)
+		if(owner.client)
+			if(owner.client.prefs)
+				if(owner.client.prefs.old_discipline)
+					button_icon = 'code/modules/wod13/disciplines.dmi'
+				else
+					button_icon = 'code/modules/wod13/UI/actions.dmi'
+	if(button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))
+		current_button.cut_overlays(TRUE)
+		if(discipline)
+			current_button.name = discipline.name
+			current_button.desc = discipline.desc
+			current_button.add_overlay(mutable_appearance(button_icon, "[discipline.icon_state]"))
+			current_button.button_icon_state = "[discipline.icon_state]"
+			if(discipline.leveled)
+				current_button.add_overlay(mutable_appearance(button_icon, "[discipline.level_casting]"))
+		else
+			current_button.add_overlay(mutable_appearance(button_icon, button_icon_state))
+			current_button.button_icon_state = button_icon_state
 
 /datum/action/discipline/proc/switch_level()
 	SEND_SOUND(owner, sound('code/modules/wod13/sounds/highlight.ogg', 0, 0, 50))
@@ -333,7 +353,7 @@
 			caster.beastmaster |= F
 			F.beastmaster = caster
 		if(5)
-			AN.cast(caster)
+			AN.Shapeshift(caster)
 			spawn(20 SECONDS + caster.discipline_time_plus)
 				if(caster && caster.stat != DEAD)
 					AN.do_unshapeshift(caster)
@@ -753,6 +773,8 @@
 	var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "potence", -POTENCE_LAYER)
 	caster.overlays_standing[POTENCE_LAYER] = potence_overlay
 	caster.apply_overlay(POTENCE_LAYER)
+	caster.dna.species.meleemod += armah
+	caster.dna.species.attack_sound = 'code/modules/wod13/sounds/heavypunch.ogg'
 	tackler = caster.AddComponent(/datum/component/tackler, stamina_cost=0, base_knockdown = 1 SECONDS, range = 2+level_casting, speed = 1, skill_mod = 0, min_distance = 0)
 	caster.potential = level_casting
 	spawn(delay+caster.discipline_time_plus)
@@ -760,6 +782,8 @@
 			if(caster.dna)
 				if(caster.dna.species)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/potence_deactivate.ogg', 50, FALSE)
+					caster.dna.species.meleemod -= armah
+					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
 					caster.remove_overlay(POTENCE_LAYER)
 					caster.potential = 0
 					qdel(tackler)
@@ -1008,7 +1032,7 @@
 					caster.remove_movespeed_modifier(/datum/movespeed_modifier/protean2)
 		if(3)
 			caster.drop_all_held_items()
-			GA.do_shapeshift(caster)
+			GA.Shapeshift(caster)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster && caster.stat != DEAD)
 					GA.do_unshapeshift(caster)
@@ -1021,7 +1045,7 @@
 				GA.shapeshift_type = /mob/living/simple_animal/hostile/gangrel/better
 			if(level_casting == 5)
 				GA.shapeshift_type = /mob/living/simple_animal/hostile/gangrel/best
-			GA.do_shapeshift(caster)
+			GA.Shapeshift(caster)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster && caster.stat != DEAD)
 					GA.do_unshapeshift(caster)
@@ -1067,7 +1091,8 @@
 	damage_type = BURN
 	hitsound = 'code/modules/wod13/sounds/drinkblood1.ogg'
 	hitsound_wall = 'sound/items/weapons/effects/searwall.ogg'
-	light_system = COMPLEX_LIGHT
+	flag = LASER
+	light_system = MOVABLE_LIGHT
 	light_range = 1
 	light_power = 1
 	light_color = COLOR_SOFT_RED
@@ -1599,7 +1624,11 @@
 					caster.physiology.burn_mod *= 100
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
 		if(2)
-			return
+			caster.dna.species.GiveSpeciesFlight(caster)
+			spawn(delay+caster.discipline_time_plus)
+				if(caster)
+					caster.dna.species.RemoveSpeciesFlight(caster)
+					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/protean_deactivate.ogg', 50, FALSE)
 		if(3)
 			caster.drop_all_held_items()
 			caster.put_in_r_hand(new /obj/item/melee/vampirearms/knife/gangrel(caster))

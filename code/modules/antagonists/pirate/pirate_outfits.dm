@@ -2,6 +2,7 @@
 	name = "Space Pirate"
 
 	id = /obj/item/card/id/advanced
+	id_trim = /datum/id_trim/pirate
 	uniform = /obj/item/clothing/under/costume/pirate
 	suit = /obj/item/clothing/suit/costume/pirate/armored
 	ears = /obj/item/radio/headset/syndicate
@@ -32,6 +33,7 @@
 /datum/outfit/pirate/captain
 	name = "Space Pirate Captain"
 
+	id_trim = /datum/id_trim/pirate/captain
 	head = /obj/item/clothing/head/costume/pirate/armored
 
 /datum/outfit/pirate/captain/skeleton
@@ -53,6 +55,7 @@
 
 	head = /obj/item/clothing/head/helmet/space/pirate
 
+	id_trim = /datum/id_trim/pirate/captain
 
 /datum/outfit/pirate/space/captain/cardboard
 	name = "Space Pirate Captain (EVA)"
@@ -62,6 +65,7 @@
 	name = "Silver Scale Member"
 
 	id = /obj/item/card/id/advanced/silver
+	id_trim = /datum/id_trim/pirate/silverscale
 	uniform = /obj/item/clothing/under/syndicate/sniper
 	suit = /obj/item/clothing/suit/armor/vest/alt
 	back = /obj/item/storage/backpack/satchel
@@ -74,6 +78,7 @@
 /datum/outfit/pirate/silverscale/captain
 	name = "Silver Scale Captain"
 
+	id_trim = /datum/id_trim/pirate/captain/silverscale
 	head = /obj/item/clothing/head/costume/crown
 	mask = /obj/item/cigarette/cigar/havana
 	l_pocket = /obj/item/lighter
@@ -82,6 +87,7 @@
 	name = "Ex-Interdyne Pharmacist"
 
 	id = /obj/item/card/id/advanced/black
+	id_trim = /datum/id_trim/syndicom/Interdyne/pharmacist
 	uniform = /obj/item/clothing/under/rank/medical/scrubs/coroner
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	back = /obj/item/storage/backpack/satchel/med
@@ -94,6 +100,7 @@
 /datum/outfit/pirate/interdyne/captain
 	name = "Ex-Interdyne Senior Resident"
 
+	id_trim = /datum/id_trim/syndicom/Interdyne/pharmacist_director
 
 /datum/outfit/pirate/grey
 	name = "The Grey Tide"
@@ -112,6 +119,7 @@
 /datum/outfit/pirate/irs
 	name = "IRS Agent Outfit"
 	id = /obj/item/card/id/advanced
+	id_trim = /datum/id_trim/syndicom/irs
 	uniform = /obj/item/clothing/under/costume/buttondown/slacks
 	suit = /obj/item/clothing/suit/costume/irs
 	back = null
@@ -123,6 +131,7 @@
 
 /datum/outfit/pirate/irs/auditor
 	name = "IRS Head Auditor"
+	id_trim = /datum/id_trim/syndicom/irs/auditor
 	uniform = /obj/item/clothing/under/suit/charcoal
 	neck = /obj/item/clothing/neck/tie/red/tied
 	suit = null
@@ -148,6 +157,7 @@
 	suit = /obj/item/clothing/suit/jacket/oversized
 	head = /obj/item/clothing/head/costume/crown
 
+	id_trim = /datum/id_trim/pirate/captain
 
 /datum/outfit/pirate/medieval
 	name = "Medieval Warmonger"

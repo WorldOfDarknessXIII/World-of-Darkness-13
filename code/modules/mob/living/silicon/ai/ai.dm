@@ -1067,6 +1067,14 @@
 /mob/living/silicon/on_handsblocked_end()
 	return // AIs have no hands
 
+/mob/living/silicon/ai/get_exp_list(minutes)
+	. = ..()
+
+	var/datum/job/ai/ai_job_ref = SSjob.get_job_type(/datum/job/ai)
+
+	.[ai_job_ref.title] = minutes
+
+
 /mob/living/silicon/ai/GetVoice()
 	. = ..()
 	if(ai_voicechanger && ai_voicechanger.changing_voice)

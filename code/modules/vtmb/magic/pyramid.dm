@@ -130,6 +130,7 @@
 	icon_state = "blood_guardian"
 	icon_living = "blood_guardian"
 	del_on_death = 1
+	healable = 0
 	mob_biotypes = MOB_SPIRIT
 	speak_chance = 0
 	turns_per_move = 5
@@ -164,17 +165,14 @@
 	icon_state = "rune2"
 	word = "DUH'K-A'U"
 
-/obj/ritualrune/blood_trap/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_CROSS, PROC_REF(on_cross))
-
 /obj/ritualrune/blood_trap/complete()
 	if(!activated)
 		playsound(loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
 		activated = TRUE
 		alpha = 28
 
-/obj/ritualrune/blood_trap/proc/on_cross(atom/movable/AM)
+/obj/ritualrune/blood_trap/Crossed(atom/movable/AM)
+	..()
 	if(isliving(AM) && activated)
 		var/mob/living/L = AM
 		L.adjustFireLoss(50+activator_bonus)
@@ -203,6 +201,7 @@
 	anchored = TRUE
 	density = TRUE
 	max_integrity = 100
+	obj_integrity = 100
 
 /obj/structure/fleshwall
 	name = "flesh wall"
@@ -214,6 +213,7 @@
 	anchored = TRUE
 	density = TRUE
 	max_integrity = 100
+	obj_integrity = 100
 
 /obj/ritualrune/identification
 	name = "Identification Rune"

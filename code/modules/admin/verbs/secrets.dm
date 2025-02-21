@@ -85,6 +85,13 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 					doors.req_access = list(ACCESS_BRIG)
 					doors.req_one_access = list()
 			message_admins("[key_name_admin(holder)] made all maint doors brig access-only.")
+		if("infinite_sec")
+			if(!is_debugger)
+				return
+			var/datum/job/sec_job = SSjob.get_job_type(/datum/job/security_officer)
+			sec_job.total_positions = -1
+			sec_job.spawn_positions = -1
+			message_admins("[key_name_admin(holder)] has removed the cap on security officers.")
 
 		//Buttons for helpful stuff. This is where people land in the tgui
 		if("clear_virus")

@@ -56,7 +56,7 @@
 	else
 		former_captain.equipOutfit(/datum/outfit/job/citizen)
 
-	GLOB.manifest.modify(former_captain.real_name, JOB_CITIZEN, JOB_CITIZEN)
+	GLOB.manifest.modify(former_captain.real_name, JOB_ASSISTANT, JOB_ASSISTANT)
 	var/list/valid_turfs = list()
 	// Used to be into prison but that felt a bit too mean
 	for (var/turf/exile_turf as anything in get_area_turfs(/area/station/maintenance, subtypes = TRUE))
@@ -96,7 +96,9 @@
 /// An outfit which replaces parts of a wizard's clothes with captain's clothes but keeps the robes
 /datum/outfit/job/wizard_captain
 	name = "Captain (Wizard Transformation)"
+	jobtype = /datum/job/captain
 	id = /obj/item/card/id/advanced/gold
+	id_trim = /datum/id_trim/job/captain
 	uniform = /obj/item/clothing/under/rank/captain/parade
 	belt = /obj/item/modular_computer/pda/heads/captain
 	ears = /obj/item/radio/headset/heads/captain/alt

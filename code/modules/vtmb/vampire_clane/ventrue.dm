@@ -12,8 +12,8 @@
 
 /datum/discipline/dominate/post_gain(mob/living/carbon/human/H)
 	if(level >= 1)
-		var/datum/action/cooldown/spell/voice_of_god/S = new(H)
-		S.Grant(H)
+		var/voice_of_god/S = new(H)
+		H.mind.AddSpell(S)
 
 /datum/action/dominate
 	name = "Dominate"

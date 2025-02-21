@@ -98,6 +98,7 @@
 /datum/outfit/syndicate_empty
 	name = "Syndicate Operative Empty"
 	id = /obj/item/card/id/advanced/chameleon
+	id_trim = /datum/id_trim/chameleon/operative
 	uniform = /obj/item/clothing/under/syndicate
 	back = /obj/item/storage/backpack
 	ears = /obj/item/radio/headset/syndicate/alt
@@ -196,6 +197,8 @@
 	prompt_name = "a space doctor"
 	you_are_text = "You are a space doctor!"
 	flavour_text = "It's your job- no, your duty as a doctor, to care and heal those in need."
+	outfit = /datum/outfit/job/doctor
+	spawner_job_path = /datum/job/space_doctor
 
 /obj/effect/mob_spawn/ghost_role/human/doctor/alive/equip(mob/living/carbon/human/doctor)
 	. = ..()
@@ -245,6 +248,7 @@
 /datum/outfit/snowsyndie
 	name = "Syndicate Snow Operative"
 	id = /obj/item/card/id/advanced/chameleon
+	id_trim = /datum/id_trim/chameleon/operative
 	uniform = /obj/item/clothing/under/syndicate/coldres
 	ears = /obj/item/radio/headset/syndicate/alt
 	shoes = /obj/item/clothing/shoes/combat/coldres
@@ -268,7 +272,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/syndicatespace/special(mob/living/new_spawn)
 	. = ..()
-	new_spawn.grant_language(/datum/language/english, source = LANGUAGE_MIND)
+	new_spawn.grant_language(/datum/language/codespeak, source = LANGUAGE_MIND)
 	var/datum/job/spawn_job = SSjob.get_job_type(spawner_job_path)
 	var/policy = get_policy(spawn_job.policy_index)
 	if(policy)

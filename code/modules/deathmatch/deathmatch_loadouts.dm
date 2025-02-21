@@ -88,6 +88,26 @@
 	l_hand = /obj/item/knife/combat
 	l_pocket = /obj/item/knife/combat
 
+/datum/outfit/deathmatch_loadout/securing_sec
+	name = "Deathmatch: Security Officer"
+	display_name = "Security Officer"
+	desc = "A security officer."
+
+	uniform = /datum/outfit/job/security::uniform
+	suit = /datum/outfit/job/security::suit
+	suit_store = /datum/outfit/job/security::suit_store
+	belt = /datum/outfit/job/security::belt
+	ears = /datum/outfit/job/security::ears //cant communicate with station i think?
+	gloves = /datum/outfit/job/security::gloves
+	head = /datum/outfit/job/security::head
+	shoes = /datum/outfit/job/security::shoes
+	l_pocket = /obj/item/flashlight/seclite
+	l_hand = /obj/item/gun/energy/disabler
+	r_pocket = /obj/item/knife/combat/survival
+	back = /datum/outfit/job/security::backpack
+	box = /datum/outfit/job/security::box
+	implants = list(/obj/item/implant/mindshield)
+
 /datum/outfit/deathmatch_loadout/assistant/instagib
 	name = "DM: Instagib"
 	display_name = "Instagib"
@@ -247,6 +267,30 @@
 	back = /obj/item/spear
 	belt = /obj/item/gun/magic/hook
 	head = /obj/item/clothing/head/utility/welding
+
+/datum/outfit/deathmatch_loadout/battler/clown
+	name = "DM: Clown"
+	display_name = "Clown (Man Of Honk)"
+	desc = "Who called this honking clown"
+
+	uniform = /datum/outfit/job/clown::uniform
+	belt = /datum/outfit/job/clown::belt
+	shoes = /datum/outfit/job/clown::shoes
+	mask = /datum/outfit/job/clown::mask
+	l_pocket = /datum/outfit/job/clown::l_pocket
+	back = /datum/outfit/job/clown::backpack
+	box = /datum/outfit/job/clown::box
+	implants = list(/obj/item/implant/sad_trombone)
+	l_pocket = /obj/item/melee/energy/sword/bananium
+	r_pocket = /obj/item/shield/energy/bananium
+	gloves = /obj/item/clothing/gloves/tackler/rocket
+	backpack_contents = list(
+		/obj/item/reagent_containers/spray/waterflower = 1,
+		/obj/item/instrument/bikehorn = 1,
+		/obj/item/bikehorn/airhorn = 1,
+		/obj/item/food/grown/banana = 3,
+		/obj/item/food/pie/cream = 2,
+		)
 
 /datum/outfit/deathmatch_loadout/battler/tgcoder //tg doesnt stand for tgstation dont ask
 	name = "Deathmatch: Coder"
@@ -507,6 +551,26 @@
 		/datum/action/cooldown/spell/conjure/simian,
 	)
 
+/datum/outfit/deathmatch_loadout/head_of_security
+	name = "Deathmatch: Head of Security"
+	display_name = "Head of Security"
+	desc = "Finally, nobody to stop the power from going to your head."
+
+	head = /datum/outfit/job/hos::head
+	ears = 	/datum/outfit/job/hos::ears
+	uniform = /obj/item/clothing/under/rank/security/head_of_security/alt
+	shoes = /datum/outfit/job/hos::shoes
+	neck = /datum/outfit/job/hos::neck
+	glasses = /datum/outfit/job/hos::glasses
+	suit = /obj/item/clothing/suit/armor/hos/hos_formal
+	suit_store = /obj/item/gun/ballistic/shotgun/automatic/combat/compact
+	gloves = /obj/item/clothing/gloves/tackler/combat
+	belt = /obj/item/gun/energy/e_gun/hos
+	r_hand = /obj/item/melee/baton/security/loaded
+	l_hand = /obj/item/shield/riot/tele
+	l_pocket = /obj/item/grenade/flashbang
+	r_pocket = /obj/item/restraints/legcuffs/bola/energy
+
 /datum/outfit/deathmatch_loadout/captain
 	name = "Deathmatch: Captain"
 	display_name = "Captain"
@@ -634,6 +698,40 @@
 		/obj/item/sbeacondrop/clownbomb,
 		)
 
+/datum/outfit/deathmatch_loadout/mime
+	name = "Deathmatch: Mime"
+	display_name = "Mime"
+	desc = "..."
+
+	uniform = /datum/outfit/job/mime::uniform
+	belt = /obj/item/food/baguette/combat
+	head = /datum/outfit/job/mime::head
+	shoes = /datum/outfit/job/mime::shoes
+	mask = /datum/outfit/job/mime::mask
+	back = /datum/outfit/job/mime::backpack
+	box = /datum/outfit/job/mime::box
+	l_pocket = /obj/item/toy/crayon/spraycan/mimecan
+	r_pocket = /obj/item/food/grown/banana/mime
+	neck = /datum/outfit/job/mime::neck
+	gloves = /datum/outfit/job/mime::gloves
+
+	backpack_contents = list(
+		/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing,
+		/obj/item/gun/ballistic/automatic/pistol,
+		/obj/item/suppressor,
+		/obj/item/ammo_box/c9mm,
+		/obj/item/food/croissant/throwing = 2,
+		)
+
+	spells_to_add = list(
+		/datum/action/cooldown/spell/vow_of_silence,
+		/datum/action/cooldown/spell/conjure_item/invisible_box,
+		/datum/action/cooldown/spell/conjure/invisible_chair,
+		/datum/action/cooldown/spell/conjure/invisible_wall,
+		/datum/action/cooldown/spell/forcewall/mime,
+		/datum/action/cooldown/spell/pointed/projectile/finger_guns,
+		)
+
 /datum/outfit/deathmatch_loadout/chef/upgraded
 	name = "Deathmatch: Master Chef"
 	display_name = "Master Chef"
@@ -667,6 +765,7 @@
 	ears = /obj/item/radio/headset/headset_com
 	neck = /obj/item/clothing/neck/large_scarf/blue
 	//suit
+	id_trim = /datum/id_trim/job/bridge_assistant // half tider half command
 	id = /obj/item/card/id/advanced/chameleon
 	uniform = /obj/item/clothing/under/trek/command/next
 	l_pocket = /obj/item/gun/energy/e_gun/mini // they are thej best race in the end. not as impactful as you may think
@@ -684,6 +783,7 @@
 	species_override = /datum/species/lizard
 
 	head = /obj/item/clothing/head/soft/purple
+	id_trim = /datum/id_trim/job/janitor
 	id = /obj/item/card/id/advanced/chameleon
 	uniform = /obj/item/clothing/under/rank/civilian/janitor
 	gloves = /obj/item/clothing/gloves/color/black
@@ -710,6 +810,7 @@
 	glasses = /obj/item/clothing/glasses/hud/health
 	suit = /obj/item/clothing/suit/hooded/wintercoat/medical
 	suit_store = /obj/item/flashlight/pen/paramedic
+	id_trim = /datum/id_trim/job/medical_doctor
 	id = /obj/item/card/id/advanced/chameleon
 	uniform = /obj/item/clothing/under/rank/medical/scrubs/blue
 	belt = /obj/item/storage/belt/medical/paramedic
@@ -733,8 +834,10 @@
 	species_override = /datum/species/ethereal
 
 	head = /obj/item/clothing/head/soft/black
+	id_trim = /datum/id_trim/job/roboticist
 	id = /obj/item/card/id/advanced/chameleon
 	suit = /obj/item/clothing/suit/toggle/labcoat/roboticist
+	suit_store = /datum/id_trim/job/roboticist
 	uniform = /obj/item/clothing/under/rank/rnd/roboticist
 	l_pocket = /obj/item/assembly/flash
 	belt = /obj/item/storage/belt/utility/full
@@ -758,6 +861,7 @@
 	suit = /obj/item/clothing/suit/hazardvest
 	suit_store = /obj/item/flashlight
 	uniform = /obj/item/clothing/under/plasmaman/atmospherics
+	id_trim = /datum/id_trim/job/atmospheric_technician
 	id = /obj/item/card/id/advanced/chameleon
 	belt = /obj/item/storage/belt/utility/atmostech
 	gloves = /obj/item/clothing/gloves/color/plasmaman/atmos
@@ -835,6 +939,7 @@
 	suit = /obj/item/clothing/suit/hooded/cultrobes/cult_shield // the dreaded return!
 	suit_store = /obj/item/melee/cultblade
 	uniform = /obj/item/clothing/under/color/black
+	id_trim = null
 	belt = /obj/item/melee/cultblade/dagger
 	l_pocket = /obj/item/flashlight/flare/culttorch
 	r_pocket = /obj/item/flashlight/flare/culttorch
@@ -862,6 +967,7 @@
 	suit = /obj/item/clothing/suit/hooded/cultrobes/berserker
 	suit_store = /obj/item/melee/sickly_blade/cursed
 	uniform = /obj/item/clothing/under/color/red
+	id_trim = null
 	belt = /obj/item/melee/cultblade/dagger
 	l_pocket = /obj/item/flashlight/flare/culttorch
 	r_pocket = /obj/item/flashlight/flare/culttorch
@@ -915,6 +1021,7 @@
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	suit_store = /obj/item/melee/sickly_blade/dark
 	uniform = /obj/item/clothing/under/color/darkgreen
+	id_trim = null
 	belt = /obj/item/melee/sickly_blade/rust
 	gloves = null
 	shoes = /obj/item/clothing/shoes/sandal
@@ -961,6 +1068,7 @@
 	suit = /obj/item/clothing/suit/hooded/cultrobes/void
 	suit_store = /obj/item/melee/sickly_blade
 	uniform = /obj/item/clothing/under/costume/gamberson/military
+	id_trim = null
 	belt = /obj/item/storage/belt/unfathomable_curio
 	gloves = null
 	shoes = /obj/item/clothing/shoes/winterboots/ice_boots
@@ -1001,6 +1109,7 @@
 	suit = /obj/item/clothing/suit/chaplainsuit/armor/templar
 	suit_store = /obj/item/book/bible/booze
 	uniform = /obj/item/clothing/under/rank/civilian/chaplain
+	id_trim = null
 	belt = /obj/item/nullrod/non_station // choose any!
 	gloves = /obj/item/clothing/gloves/plate
 	shoes = /obj/item/clothing/shoes/plate
@@ -1029,6 +1138,7 @@
 	suit = /obj/item/clothing/suit/costume/bronze
 	suit_store = /obj/item/toy/clockwork_watch
 	uniform = /obj/item/clothing/under/chameleon
+	id_trim = null
 	belt = /obj/item/brass_spear
 	gloves = /obj/item/clothing/gloves/tinkerer
 	shoes = /obj/item/clothing/shoes/bronze

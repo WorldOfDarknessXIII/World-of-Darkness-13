@@ -22,6 +22,8 @@
 	var/rank
 	/// The character's species
 	var/species
+	/// The character's ID trim
+	var/trim
 	/// The character's voice, if they have one.
 	var/voice
 
@@ -36,6 +38,7 @@
 	name = "Unknown",
 	rank = "Unassigned",
 	species = "Human",
+	trim = "Unassigned",
 	voice = "?????",
 )
 	src.age = age
@@ -48,6 +51,7 @@
 	src.name = name
 	src.rank = rank
 	src.species = species
+	src.trim = trim
 
 /**
  * Crew record datum
@@ -94,6 +98,7 @@
 	name = "Unknown",
 	rank = "Unassigned",
 	species = "Human",
+	trim = "Unassigned",
 	/// Crew specific
 	lock_ref,
 	major_disabilities = "None",
@@ -143,6 +148,7 @@
 	name = "Unknown",
 	rank = "Unassigned",
 	species = "Human",
+	trim = "Unassigned",
 	/// Locked specific
 	datum/dna/locked_dna,
 	datum/mind/mind_ref,

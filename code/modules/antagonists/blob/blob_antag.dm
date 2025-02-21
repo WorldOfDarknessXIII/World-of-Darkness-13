@@ -164,7 +164,7 @@
 	var/icon/blob_head = icon('icons/mob/nonhuman-player/blob.dmi', "blob_head")
 	blob_head.Blend(initial(reactive_spines.complementary_color), ICON_MULTIPLY)
 
-	var/icon/human_icon = render_preview_outfit(/datum/outfit/job/citizen)
+	var/icon/human_icon = render_preview_outfit(/datum/outfit/job/miner)
 	human_icon.Blend(blob_head, ICON_OVERLAY)
 	human_icon.ChangeOpacity(0.7)
 

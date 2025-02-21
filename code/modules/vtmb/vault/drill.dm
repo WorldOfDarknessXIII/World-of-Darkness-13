@@ -49,8 +49,8 @@
 	var/drill_sound = 'code/modules/wod13/sounds/vault_drilling.ogg'
 
 /obj/structure/drill/proc/health_status()
-	if(get_integrity() < max_integrity)
-		switch(get_integrity())
+	if(obj_integrity < max_integrity)
+		switch(obj_integrity)
 			if(2500 to 3000)
 				return "slightly damaged"
 			if(2000 to 2500)
@@ -66,16 +66,16 @@
 	. = ..()
 	var/health_status = health_status()
 	. += "[src] has [gas] gas left."
-	if(get_integrity() < max_integrity)
+	if(obj_integrity < max_integrity)
 		. += "<span class='notice'>[src] is [health_status].</span>"
 
-/obj/structure/drill/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+/obj/structure/drill/MouseDrop(over_object, src_location, over_location)
 	. = ..()
-	if(over == usr && Adjacent(usr) && !active)
+	if(over_object == usr && Adjacent(usr) && !active)
 		if(do_after(usr, 5 SECONDS))
-			if(!item_drill)
+			if(!item_drill || src.flags_1 & NODECONSTRUCT_1)
 				return
-			if(!usr.can_perform_action(src))
+			if(!usr.can_perform_action(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 				return
 			usr.visible_message("<span class='notice'>[usr] lifts \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
 			ready = FALSE
@@ -84,12 +84,12 @@
 			TransferComponents(picked_drill)
 			usr.put_in_hands(picked_drill)
 			qdel(src)
-	var/obj/structure/vaultdoor/target_door = over
-	if((istype(over, /obj/structure/vaultdoor)) && Adjacent(usr) && !ISDIAGONALDIR(get_dir(src, over)) && !active && !target_door.is_broken)
+	var/obj/structure/vaultdoor/target_door = over_object
+	if((istype(over_object, /obj/structure/vaultdoor)) && Adjacent(usr) && !ISDIAGONALDIR(get_dir(src, over_object)) && !active && !target_door.is_broken)
 		if(do_after(usr, 5 SECONDS))
 			ready = TRUE
-			attached_door = over
-			var/direction = get_dir(src, over)
+			attached_door = over_object
+			var/direction = get_dir(src, over_object)
 			switch(direction)
 				if(WEST)
 					dir = WEST

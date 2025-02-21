@@ -158,7 +158,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_ERT_DEATHSQUAD = 227,
 
 		// ANYTHING ELSE = UNKNOWN_JOB_ID, Unknowns/custom jobs will appear after civilians, and before assistants
-		JOB_CITIZEN = 999,
+		JOB_ASSISTANT = 999,
 	)
 
 /datum/crewmonitor/ui_interact(mob/user, datum/tgui/ui)
@@ -241,6 +241,9 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		if (id_card)
 			entry["name"] = id_card.registered_name
 			entry["assignment"] = id_card.assignment
+			var/trim_assignment = id_card.get_trim_assignment()
+			if (jobs[trim_assignment] != null)
+				entry["ijob"] = jobs[trim_assignment]
 
 		// Broken sensors show garbage data
 		if (uniform.has_sensor == BROKEN_SENSORS)

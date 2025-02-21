@@ -46,7 +46,7 @@
 	PRIVATE_PROC(TRUE)
 
 	var/mob/living/carbon/human/consistent/human = new
-	human.equipOutfit(/datum/outfit/job/citizen)
+	human.equipOutfit(/datum/outfit/job/clown)
 
 	var/mutable_appearance/appearance = new(human.appearance)
 	appearance.plane = ESCAPE_MENU_PLANE

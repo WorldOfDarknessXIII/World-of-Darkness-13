@@ -23,6 +23,7 @@
 	hackables = "health processor circuits"
 	possessed_message = "You are a medbot! Ensure good health among the crew to the best of your ability!"
 
+	additional_access = /datum/id_trim/job/paramedic
 	announcement_type = /datum/action/cooldown/bot_announcement/medbot
 	path_image_color = "#d9d9f4"
 
@@ -395,6 +396,7 @@
 	faction = list(ROLE_SYNDICATE)
 	heal_threshold = 0
 	heal_amount = 5
+	additional_access = /datum/id_trim/syndicom/crew
 
 /mob/living/basic/bot/medbot/nukie/Initialize(mapload, new_skin)
 	. = ..()
