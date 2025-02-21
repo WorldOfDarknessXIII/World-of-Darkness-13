@@ -37634,7 +37634,9 @@
 /area/vtm/interior)
 "hMe" = (
 /obj/effect/turf_decal/siding/white,
-/obj/structure/vampdoor/simple,
+/obj/structure/vampdoor/anarch_bar{
+	locked = 0
+	},
 /turf/open/floor/plating/rough,
 /area/vtm/anarch)
 "hMu" = (
