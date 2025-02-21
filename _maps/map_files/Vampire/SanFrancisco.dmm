@@ -38828,7 +38828,9 @@
 /turf/open/floor/plating/sidewalk,
 /area/vtm/pacificheights)
 "isj" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/securearea{
+	pixel_y = 13
+	},
 /turf/closed/wall/vampwall/painted,
 /area/vtm/interior/police)
 "isn" = (
@@ -54138,6 +54140,10 @@
 /obj/effect/decal/litter,
 /turf/open/floor/plating/rough/cave,
 /area/vtm/interior)
+"qIm" = (
+/obj/structure/table/reinforced,
+/turf/closed/wall/vampwall/painted/low,
+/area/vtm/interior/police)
 "qIu" = (
 /obj/machinery/processor,
 /turf/open/floor/plating/toilet,
@@ -251952,7 +251958,7 @@ gHF
 pWI
 cyz
 isj
-aDl
+qIm
 aDl
 azv
 aiA
