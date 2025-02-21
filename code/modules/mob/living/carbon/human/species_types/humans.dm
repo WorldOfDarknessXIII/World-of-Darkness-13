@@ -85,7 +85,7 @@
 			for(var/i in host.knowscontacts)
 				dat += "-[i] contact<BR>"
 		var/obj/keypad/pd/pd = find_keypad(/obj/keypad/pd)
-		if(pddoor && (host.mind.assigned_role == "Police Chief" || host.mind.assigned_role == "Police Sergeant"))
+		if(pd && (host.mind.assigned_role == "Police Chief" || host.mind.assigned_role == "Police Sergeant"))
 			dat += "The pincode for the armory keypad is<b>: [pd.pincode]</b><BR>"
 		for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
 			if(host.bank_id == account.bank_id)
