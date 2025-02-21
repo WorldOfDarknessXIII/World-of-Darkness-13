@@ -5378,7 +5378,7 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/interior)
 "aug" = (
-/obj/effect/spawner/modular_map_root/sanfrancisco/sewernortheast1,
+/obj/modular_map_root/sewernortheast1,
 /turf/open/space/basic,
 /area/space)
 "auh" = (
@@ -25209,7 +25209,7 @@
 /turf/open/floor/plating/vampplating/stone,
 /area/vtm/park)
 "cdt" = (
-/obj/structure/flora/bush/jungle/large,
+/obj/structure/flora/bush/style_random,
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/floor/plating/vampgrass,
 /area/vtm/interior/bianchiBank)
@@ -34855,10 +34855,6 @@
 /obj/item/ammo_box/vampire/c556,
 /turf/open/floor/carpet,
 /area/vtm/interior/bianchiBank)
-"hOs" = (
-/obj/structure/flora/bush/jungle/large,
-/turf/open/floor/plating/vampgrass,
-/area/vtm/interior/bianchiBank)
 "hOR" = (
 /obj/structure/table/wood,
 /obj/vampire_computer,
@@ -42261,9 +42257,6 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
-/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton{
-	pixel_y = 10
-	},
 /turf/open/floor/carpet/cyan,
 /area/vtm/clinic)
 "mjC" = (
@@ -43993,7 +43986,7 @@
 	dir = 1;
 	pixel_y = 12
 	},
-/obj/structure/flora/bush/jungle/c,
+/obj/structure/flora/bush/style_random,
 /turf/open/floor/plating/vampgrass,
 /area/vtm/interior/bianchiBank)
 "npN" = (
@@ -44028,9 +44021,9 @@
 /area/vtm/cabaret)
 "nqg" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/glass/bottle/vodka,
-/obj/item/reagent_containers/food/drinks/glass/bottle/vodka,
-/obj/item/reagent_containers/food/drinks/glass/bottle/vodka,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
 /turf/open/floor/plating/rough,
 /area/vtm/interior)
 "nqi" = (
@@ -47745,9 +47738,6 @@
 "pFG" = (
 /obj/structure/table/wood,
 /obj/underplate,
-/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton{
-	pixel_y = 10
-	},
 /obj/item/food/vampire/pizza{
 	pixel_x = 10;
 	pixel_y = 10
@@ -48227,10 +48217,6 @@
 	},
 /obj/item/storage/bag/tray,
 /obj/item/storage/bag/tray,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/martini,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/martini,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/martini,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/martini,
 /obj/item/storage/box/drinkingglasses,
 /obj/item/reagent_containers/cup/glass/shaker,
 /turf/open/floor/plating/parquetry/old,
@@ -50441,9 +50427,6 @@
 "rlx" = (
 /obj/structure/table,
 /obj/item/toy/cards/deck,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/whiskey_shot{
-	pixel_y = 10
-	},
 /obj/structure/vampfence/rich{
 	dir = 4;
 	layer = 5;
@@ -54399,9 +54382,6 @@
 /obj/item/reagent_containers/cup/glass/bottle/whiskey{
 	pixel_x = 10;
 	pixel_y = 6
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/whiskey_shot{
-	pixel_y = 10
 	},
 /obj/structure/vampfence/rich{
 	dir = 4;
@@ -59810,10 +59790,6 @@
 /obj/effect/decal/wallpaper/blue/low,
 /turf/closed/wall/vampwall/market/low,
 /area/vtm/financialdistrict)
-"wRH" = (
-/obj/structure/flora/bush/jungle,
-/turf/open/floor/plating/vampgrass,
-/area/vtm/interior/bianchiBank)
 "wRN" = (
 /obj/structure/railing{
 	layer = 4
@@ -215970,7 +215946,7 @@ fvS
 sVc
 vSB
 bBk
-hOs
+uqN
 bBk
 fvS
 fvS
@@ -216487,7 +216463,7 @@ sVc
 bBk
 bBk
 gXm
-wRH
+uqN
 bBk
 hpF
 aiA

@@ -25,7 +25,6 @@
 
 /obj/structure/closet/crate/freezer/fridge : /obj/structure/closet/secure_closet/freezer/fridge{@OLD}
 /obj/item/reagent_containers/food/drinks/glass/beer/vampire/blue_stripe : /obj/item/reagent_containers/food/drinks/beer/vampire/blue_stripe{@OLD}
-/obj/item/reagent_containers/food/drinks/glass/drinkingglass/whiskey_shot : /obj/item/reagent_containers/cup/glass/drinkingglass/filled/whiskey_shot{@OLD}
 /obj/item/reagent_containers/food/drinks/glass/bottle/whiskey : /obj/item/reagent_containers/cup/glass/bottle/whiskey{@OLD}
 /obj/item/reagent_containers/food/drinks/glass/beer/vampire : /obj/item/reagent_containers/food/drinks/beer/vampire{@OLD}
 /obj/item/reagent_containers/food/drinks/bucket/wooden : /obj/item/reagent_containers/cup/bucket/wooden{@OLD}
@@ -42,7 +41,6 @@
 /obj/machinery/computer/order_console/mining/fastfood/gas : /obj/machinery/computer/order_console/mining/gas{@OLD}
 /obj/item/clothing/under/dress/redeveninggown : /obj/item/clothing/under/dress/eveninggown{@OLD}
 /obj/item/clothing/head/beret/black : /obj/item/clothing/head/beret{@OLD}
-/obj/item/reagent_containers/food/drinks/glass/drinkingglass/martini_glass : /obj/item/reagent_containers/cup/glass/drinkingglass/filled/martini{@OLD}
 /obj/item/reagent_containers/food/drinks/glass/shaker : /obj/item/reagent_containers/cup/glass/shaker{@OLD}
 /obj/item/clothing/suit/costume/yakuza : /obj/item/clothing/under/misc/yakuza{@OLD}
 /obj/item/clothing/under/costume/yakuza : /obj/item/clothing/under/misc/yakuza{@OLD}
@@ -62,7 +60,6 @@
 /obj/machinery/computer/order_console/mining/fastfood/library : /obj/machinery/computer/order_console/mining/library{@OLD}
 /obj/item/ammo_casing/bolt : @DELETE
 /obj/item/reagent_containers/food/drinks/glass/waterbottle : /obj/item/reagent_containers/cup/glass/waterbottle{@OLD}
-/obj/item/reagent_containers/food/drinks/glass/sillycup/smallcarton : /obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton{@OLD}
 /obj/machinery/computer/order_console/mining/restricted/police : /obj/machinery/computer/order_console/mining/police{@OLD}
 /obj/item/reagent_containers/food/drinks/glass/meth : /obj/item/reagent_containers/food/drinks/meth{@OLD}
 /obj/structure/closet/crate/freezer/surplus_limbs/organs : /obj/structure/closet/crate/freezer/organ{@OLD}
@@ -80,3 +77,6 @@
 /obj/structure/fireplace/large : /obj/structure/fireplace{@OLD}
 /obj/item/clothing/suit/gothcoat : /obj/item/clothing/suit/costume/gothcoat{@OLD}
 /obj/item/reagent_containers/food/drinks/glass/bottle/wine : /obj/item/reagent_containers/cup/glass/bottle/wine{@OLD}
+/obj/item/reagent_containers/food/drinks/glass/bottle/vodka : /obj/item/reagent_containers/cup/glass/bottle/vodka{@OLD}
+/obj/structure/flora/bush/jungle/large : /obj/structure/flora/bush/jungle{@OLD}
+/obj/effect/spawner/modular_map_root/sanfrancisco/sewernortheast1 : /obj/modular_map_root/sewernortheast1{@OLD}
