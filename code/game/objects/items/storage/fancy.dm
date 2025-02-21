@@ -611,3 +611,24 @@
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/condiment/chocolate(src)
 	update_appearance()
+
+/obj/item/storage/fancy/hardcase
+	name = "5.56 magazine hardcase"
+	desc = "A small metal hardcase specifically designed to carry 5.56 magazines."
+	icon = 'icons/obj/storage/storage.dmi'
+	icon_state = "hardcasbox"
+	inhand_icon_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	spawn_type = /obj/item/ammo_box/magazine/vamp556
+	spawn_count = 4
+
+/obj/item/storage/fancy/hardcase/mp5
+	name = "Mp5 magazine hardcase"
+	desc = "A small metal hardcase specifically designed to carry Mp5 magazines."
+	icon_state = "hardcasebox"
+	inhand_icon_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	spawn_type = /obj/item/ammo_box/magazine/vamp9mp5
+	spawn_count = 4

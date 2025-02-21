@@ -341,3 +341,5 @@
 /obj/machinery/computer/order_console/mining/library
 	order_categories = list(CATEGORY_LIBRARY)
 
+/obj/machinery/computer/order_console/mining/police
+	order_categories = list(CATEGORY_POLICE)

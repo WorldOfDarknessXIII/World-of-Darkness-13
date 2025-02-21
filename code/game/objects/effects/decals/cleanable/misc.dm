@@ -577,3 +577,15 @@
 	flick("rubble_bounce", src)
 	icon_state = "rubble"
 	update_appearance(UPDATE_ICON_STATE)
+
+
+/obj/effect/decal/cleanable/feet_trail
+	name = "trails"
+	desc = "Can lead somewhere... Or not."
+	icon = 'icons/effects/dirt.dmi'
+	icon_state = "feet_trail"
+
+/obj/effect/decal/cleanable/feet_trail/Initialize()
+	. = ..()
+	pixel_x = rand(-4, 4)
+	pixel_y = rand(-4, 4)

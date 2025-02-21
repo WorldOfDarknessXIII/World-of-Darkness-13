@@ -58,3 +58,53 @@
 	if(prob(33))
 		var/turf/T = get_step(man, pick(NORTH, SOUTH, WEST, EAST))
 		step_to(man,T,0)
+
+/mob/living/carbon/human/species/vamp_mannequin
+	race = /datum/species/vamp_mannequin
+
+/mob/living/carbon/human/species/vamp_mannequin/napoleon
+
+/mob/living/carbon/human/species/vamp_mannequin/napoleon/Initialize()
+	. = ..()
+	equip_to_slot_or_del(new /obj/item/clothing/head/vampire/napoleon(src), ITEM_SLOT_HEAD)
+	equip_to_slot_or_del(new /obj/item/clothing/shoes/vampire/jackboots/high(src), ITEM_SLOT_FEET)
+	equip_to_slot_or_del(new /obj/item/clothing/under/vampire/napoleon(src), ITEM_SLOT_ICLOTHING)
+
+/mob/living/carbon/human/species/vamp_mannequin/nazi
+
+/mob/living/carbon/human/species/vamp_mannequin/nazi/Initialize()
+	. = ..()
+	equip_to_slot_or_del(new /obj/item/clothing/head/vampire/nazi(src), ITEM_SLOT_HEAD)
+	equip_to_slot_or_del(new /obj/item/clothing/shoes/vampire/jackboots/high(src), ITEM_SLOT_FEET)
+	equip_to_slot_or_del(new /obj/item/clothing/under/vampire/nazi(src), ITEM_SLOT_ICLOTHING)
+
+//prevents this thing from being stripped
+/mob/living/carbon/human/species/vamp_mannequin/nazi/Topic(href, href_list)
+	if(href_list["item"])
+		message_admins("[ADMIN_LOOKUPFLW(usr)] tried to strip the Nazi mannequin.")
+		to_chat(usr, "<span class='warning'>You don't really want to pick that up...</span>")
+		return
+	else
+		..()
+
+//prevents anything from being dropped by the mannequin on gib
+/mob/living/carbon/human/species/vamp_mannequin/nazi/gib(no_brain, no_organs, no_bodyparts, safe_gib)
+	qdel(src)
+
+/mob/living/carbon/human/species/vamp_mannequin/conquestador
+
+/mob/living/carbon/human/species/vamp_mannequin/conquestador/Initialize()
+	. = ..()
+	equip_to_slot_or_del(new /obj/item/clothing/head/vampire/helmet/spain(src), ITEM_SLOT_HEAD)
+	equip_to_slot_or_del(new /obj/item/clothing/shoes/vampire/jackboots/work(src), ITEM_SLOT_FEET)
+	equip_to_slot_or_del(new /obj/item/clothing/under/vampire/tremere(src), ITEM_SLOT_ICLOTHING)
+	equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/vest/medieval(src), ITEM_SLOT_OCLOTHING)
+
+/mob/living/carbon/human/species/vamp_mannequin/cowboy
+
+/mob/living/carbon/human/species/vamp_mannequin/cowboy/Initialize()
+	. = ..()
+	equip_to_slot_or_del(new /obj/item/clothing/head/vampire/cowboy(src), ITEM_SLOT_HEAD)
+	equip_to_slot_or_del(new /obj/item/clothing/shoes/vampire/brown(src), ITEM_SLOT_FEET)
+	equip_to_slot_or_del(new /obj/item/clothing/under/vampire/bouncer(src), ITEM_SLOT_ICLOTHING)
+	equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/trench/alt(src), ITEM_SLOT_OCLOTHING)

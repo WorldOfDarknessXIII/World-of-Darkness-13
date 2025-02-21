@@ -120,3 +120,17 @@
 /obj/item/clothing/under/suit/carpskin/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+
+/obj/item/clothing/under/suit/nerdshirt
+	name = "gamer shirt"
+	desc = "A baggy shirt with vintage game character Phanic the Weasel. Why would anyone wear this?"
+	icon_state = "nerdshirt"
+	inhand_icon_state = "nerdshirt"
+	species_exception = list(/datum/species/golem)
+
+/obj/item/clothing/under/suit/leather_overcoat
+	name = "leather overcoat"
+	desc = "That's a damn fine coat."
+	icon_state = "leathercoat"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	cold_protection = CHEST|GROIN|ARMS|LEGS

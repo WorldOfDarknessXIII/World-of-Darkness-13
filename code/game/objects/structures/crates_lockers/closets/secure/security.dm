@@ -345,3 +345,9 @@
 	new /obj/item/clothing/under/rank/security/officer/skirt(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/flashlight/seclite(src)
+
+
+/obj/structure/closet/secure_closet/weapons
+	name = "armory weapon locker"
+	req_access = list(ACCESS_WEAPONS)
+	icon_state = "tac"

@@ -148,3 +148,17 @@
 	sensor_mode = NO_SENSORS
 	can_adjust = FALSE
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+
+/obj/item/clothing/under/misc/yakuza
+	name = "tojo clan jacket"
+	desc = "The jacket of a mad dog."
+	icon_state = "MajimaJacket"
+	inhand_icon_state = "MajimaJacket"
+	body_parts_covered = ARMS
+
+/obj/item/clothing/under/misc/dutch
+	name = "dutch's jacket"
+	desc = "For those long nights on the beach in Tahiti."
+	icon_state = "DutchJacket"
+	inhand_icon_state = "DutchJacket"
+	body_parts_covered = ARMS

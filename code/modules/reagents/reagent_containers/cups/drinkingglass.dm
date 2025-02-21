@@ -132,3 +132,11 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/half_full/Initialize(mapload, vol)
 	. = ..()
 	name = "[pick("half full", "half empty")] glass of water"
+
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/whiskey_shot
+	name = "Whiskey"
+	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 50)
+
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/martini
+	name = "Martini"
+	list_reagents = list(/datum/reagent/consumable/ethanol/martini = 50)
