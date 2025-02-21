@@ -273,6 +273,7 @@
 		new /datum/data/mining_equipment("magnifier", /obj/item/detective_scanner, 2),
 		new /datum/data/mining_equipment("body bags", /obj/item/storage/box/bodybags, 5),
 		new /datum/data/mining_equipment("police vest", /obj/item/clothing/suit/vampire/vest/police, 5),
+		new /datum/data/mining_equipment("smoke grenade",			/obj/item/grenade/smokebomb, 5),
 		new /datum/data/mining_equipment("Colt M1911 magazine",		/obj/item/ammo_box/magazine/vamp45acp,	10),
 		new /datum/data/mining_equipment("AUG Magazines",			/obj/item/ammo_box/magazine/vampaug,	10),
 		new /datum/data/mining_equipment("AR-15 Magazines",			/obj/item/ammo_box/magazine/vamp556,	10),
