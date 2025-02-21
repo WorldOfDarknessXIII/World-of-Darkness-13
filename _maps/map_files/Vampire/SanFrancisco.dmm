@@ -20490,6 +20490,8 @@
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
+/obj/structure/table/reinforced,
+/obj/item/grenade/smokebomb,
 /turf/open/floor/plating/vampplating,
 /area/vtm/interior/police)
 "bsE" = (
@@ -26651,9 +26653,6 @@
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
-/obj/american_flag{
-	pixel_y = 32
-	},
 /turf/open/floor/plating/vampplating,
 /area/vtm/interior/police)
 "ccB" = (
@@ -27543,13 +27542,11 @@
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/interior/millennium_tower/ventrue)
 "cyz" = (
-/obj/structure/vampdoor/police/secure{
-	color = "#466a72";
-	dir = 4;
-	lockpick_difficulty = 23
-	},
 /obj/effect/turf_decal/siding/white{
 	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/pd{
+	dir = 8
 	},
 /turf/open/floor/plating/toilet,
 /area/vtm/interior/police)
@@ -33751,6 +33748,9 @@
 	desc = "SFPD Breacher equipment. Provides best protection against nearly everything.";
 	name = "SFPD EOD suit"
 	},
+/obj/machinery/light/dim{
+	pixel_y = 32
+	},
 /turf/open/floor/plating/vampplating,
 /area/vtm/interior/police)
 "fPk" = (
@@ -38344,10 +38344,14 @@
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/laundromat)
 "ifO" = (
-/obj/structure/table/reinforced,
-/obj/item/gun/ballistic/shotgun/vampire,
-/obj/item/ammo_box/vampire/c12g/buck,
-/turf/closed/wall/vampwall/painted/low,
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/structure/closet/crate,
+/obj/item/gun/ballistic/automatic/vampire/sniper,
+/obj/item/ammo_box/vampire/c50,
+/obj/item/ammo_box/vampire/c50,
+/turf/open/floor/plating/vampplating,
 /area/vtm/interior/police)
 "ifW" = (
 /obj/structure/weedshit,
@@ -38829,9 +38833,8 @@
 /turf/open/floor/plating/sidewalk,
 /area/vtm/pacificheights)
 "isj" = (
-/obj/effect/decal/bordur,
-/obj/effect/decal/wallpaper/blue/low,
-/turf/closed/wall/vampwall/painted/low/window/reinforced,
+/obj/keypad/pd,
+/turf/closed/wall/vampwall/painted,
 /area/vtm/interior/police)
 "isn" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
@@ -40753,6 +40756,9 @@
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
+/obj/structure/table/reinforced,
+/obj/item/storage/box/handcuffs,
+/obj/item/food/donut/choco,
 /turf/open/floor/plating/vampplating,
 /area/vtm/interior/police)
 "jnN" = (
@@ -46432,13 +46438,10 @@
 /turf/open/floor/plating/vampcanalplating,
 /area/vtm/interior/glasswalker)
 "mxS" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/box/handcuffs,
-/obj/item/food/donut/choco,
 /obj/machinery/light/small{
 	pixel_y = 32
 	},
-/turf/closed/wall/vampwall/painted/low,
+/turf/closed/wall/vampwall/painted/low/window/reinforced,
 /area/vtm/interior/police)
 "myf" = (
 /obj/structure/table,
@@ -248601,7 +248604,7 @@ uMy
 nfu
 dex
 azv
-wQh
+wvi
 aAN
 aAN
 aAN
@@ -251948,9 +251951,9 @@ ltc
 gHF
 pWI
 cyz
-azv
+isj
 mxS
-ifO
+aDl
 azv
 aiA
 aiA
@@ -252207,7 +252210,7 @@ tJI
 ktm
 cRm
 iJw
-cRm
+ifO
 azv
 byD
 aiA
@@ -252460,7 +252463,7 @@ hGC
 azv
 hrZ
 aAN
-isj
+tJI
 ugl
 uQL
 uQL
@@ -252717,7 +252720,7 @@ cvu
 fVX
 nzM
 aAN
-isj
+tJI
 fPd
 uQL
 uQL
