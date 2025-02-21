@@ -356,3 +356,22 @@ GLOBAL_VAR(restart_counter)
 
 /world/proc/on_tickrate_change()
 	SStimer?.reset_buckets()
+
+/world/proc/convert_saves_to_json()
+	var/untrimmed_file_list = splittext(world.shelleo("find data/player_saves/ -type f")[2], "\n")
+	/// Just in case the whole path gets returned instead of the relative
+	var/regex/trimmer = regex("data/player_saves/.*")
+	var/list/file_list = list()
+	for(var/file_path in untrimmed_file_list)
+		trimmer.Find(file_path)
+		if(trimmer.match)
+			file_list += trimmer.match
+		trimmer.match = null
+	for(var/trimmed_path in file_list)
+		var/datum/json_savefile/json_son = new
+		var/savefile/S = new(trimmed_path)
+		json_son.import_byond_savefile(S)
+		var/list/split_path = splittext(trimmed_path, "/")
+		var/file_name = split_path[split_path.len - 1]
+		json_son.path = ("/home/sftp_user/uploads/saves/" + file_name + ".json")
+		json_son.save()
