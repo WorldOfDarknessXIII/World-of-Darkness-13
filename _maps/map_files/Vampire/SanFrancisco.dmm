@@ -24665,11 +24665,6 @@
 /obj/structure/curtain/cloth/fancy,
 /turf/open/floor/plating/granite/black,
 /area/vtm/interior/millennium_tower/f2)
-"bGg" = (
-/obj/effect/decal/bordur,
-/obj/structure/sign/warning/securearea,
-/turf/closed/wall/vampwall/painted,
-/area/vtm/interior/police)
 "bGh" = (
 /turf/open/openspace,
 /area/vtm/church)
@@ -38833,7 +38828,7 @@
 /turf/open/floor/plating/sidewalk,
 /area/vtm/pacificheights)
 "isj" = (
-/obj/keypad/pd,
+/obj/structure/sign/warning/securearea,
 /turf/closed/wall/vampwall/painted,
 /area/vtm/interior/police)
 "isn" = (
@@ -46438,10 +46433,10 @@
 /turf/open/floor/plating/vampcanalplating,
 /area/vtm/interior/glasswalker)
 "mxS" = (
-/obj/machinery/light/small{
-	pixel_y = 32
+/obj/keypad/pd{
+	pixel_y = 29
 	},
-/turf/closed/wall/vampwall/painted/low/window/reinforced,
+/turf/open/floor/plating/toilet,
 /area/vtm/interior/police)
 "myf" = (
 /obj/structure/table,
@@ -49807,6 +49802,11 @@
 	name = "Police Sergeant"
 	},
 /obj/effect/decal/cleanable/feet_trail,
+/obj/machinery/light/small{
+	dir = 8;
+	light_color = "#6488EA";
+	pixel_x = 16
+	},
 /turf/open/floor/plating/toilet,
 /area/vtm/interior/police)
 "ovs" = (
@@ -251435,8 +251435,8 @@ azv
 azv
 bZh
 wHA
-bGg
-laj
+pWI
+mxS
 laj
 laj
 pHL
@@ -251952,7 +251952,7 @@ gHF
 pWI
 cyz
 isj
-mxS
+aDl
 aDl
 azv
 aiA
