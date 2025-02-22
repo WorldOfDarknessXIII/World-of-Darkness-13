@@ -22,7 +22,7 @@
 /datum/discipline_power/presence/activate(mob/living/carbon/human/target)
 	. = ..()
 	target.remove_overlay(MUTATIONS_LAYER)
-	var/mutable_appearance/presence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "presence", -MUTATIONS_LAYER)
+	var/mutable_appearance/presence_overlay = mutable_appearance('icons/wod13/icons.dmi', "presence", -MUTATIONS_LAYER)
 	presence_overlay.pixel_z = 1
 	target.overlays_standing[MUTATIONS_LAYER] = presence_overlay
 	target.apply_overlay(MUTATIONS_LAYER)

@@ -40,7 +40,7 @@
 /obj/item/melee/touch_attack/quietus
 	name = "\improper poison touch"
 	desc = "This is kind of like when you rub your feet on a shag rug so you can zap your friends, only a lot less safe."
-	icon = 'code/modules/wod13/weapons.dmi'
+	icon = 'icons/wod13/weapons.dmi'
 	catchphrase = null
 	on_use_sound = 'sound/magic/disintegrate.ogg'
 	icon_state = "quietus"
@@ -154,7 +154,7 @@
 /obj/item/gun/magic/quietus
 	name = "acid spit"
 	desc = "Spit poison on your targets."
-	icon = 'code/modules/wod13/items.dmi'
+	icon = 'icons/wod13/items.dmi'
 	icon_state = "har4ok"
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL | NOBLUDGEON
 	flags_1 = NONE
@@ -193,7 +193,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.remove_overlay(MUTATIONS_LAYER)
-		var/mutable_appearance/quietus_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "quietus", -MUTATIONS_LAYER)
+		var/mutable_appearance/quietus_overlay = mutable_appearance('icons/wod13/icons.dmi', "quietus", -MUTATIONS_LAYER)
 		H.overlays_standing[MUTATIONS_LAYER] = quietus_overlay
 		H.apply_overlay(MUTATIONS_LAYER)
 		spawn(5*level_casting)

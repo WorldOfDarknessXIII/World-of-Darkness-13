@@ -55,7 +55,7 @@
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			H.remove_overlay(MUTATIONS_LAYER)
-			var/mutable_appearance/serpentis_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "serpentis", -MUTATIONS_LAYER)
+			var/mutable_appearance/serpentis_overlay = mutable_appearance('icons/wod13/icons.dmi', "serpentis", -MUTATIONS_LAYER)
 			H.overlays_standing[MUTATIONS_LAYER] = serpentis_overlay
 			H.apply_overlay(MUTATIONS_LAYER)
 
@@ -157,7 +157,7 @@
 /mob/living/simple_animal/hostile/cobra
 	name = "Cobra Form"
 	desc = "Hssssss..."
-	icon = 'code/modules/wod13/48x48.dmi'
+	icon = 'icons/wod13/48x48.dmi'
 	icon_state = "cobra"
 	icon_living = "cobra"
 	mob_biotypes = MOB_ORGANIC | MOB_HUMANOID
@@ -221,7 +221,7 @@
 /obj/item/urn
 	name = "organ urn"
 	desc = "Stores some precious organs..."
-	icon = 'code/modules/wod13/icons.dmi'
+	icon = 'icons/wod13/icons.dmi'
 	icon_state = "urn"
 	is_magic = TRUE
 	var/mob/living/own

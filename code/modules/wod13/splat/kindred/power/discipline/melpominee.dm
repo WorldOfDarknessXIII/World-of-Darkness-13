@@ -120,7 +120,7 @@
 		listener.create_walk_to(2 SECONDS, owner)
 
 		listener.remove_overlay(MUTATIONS_LAYER)
-		var/mutable_appearance/song_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "song", -MUTATIONS_LAYER)
+		var/mutable_appearance/song_overlay = mutable_appearance('icons/wod13/icons.dmi', "song", -MUTATIONS_LAYER)
 		listener.overlays_standing[MUTATIONS_LAYER] = song_overlay
 		listener.apply_overlay(MUTATIONS_LAYER)
 
@@ -155,7 +155,7 @@
 		listener.Stun(2 SECONDS)
 
 		listener.remove_overlay(MUTATIONS_LAYER)
-		var/mutable_appearance/song_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "song", -MUTATIONS_LAYER)
+		var/mutable_appearance/song_overlay = mutable_appearance('icons/wod13/icons.dmi', "song", -MUTATIONS_LAYER)
 		listener.overlays_standing[MUTATIONS_LAYER] = song_overlay
 		listener.apply_overlay(MUTATIONS_LAYER)
 
@@ -186,7 +186,7 @@
 		listener.apply_damage(50, BRUTE, BODY_ZONE_HEAD)
 
 		listener.remove_overlay(MUTATIONS_LAYER)
-		var/mutable_appearance/song_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "song", -MUTATIONS_LAYER)
+		var/mutable_appearance/song_overlay = mutable_appearance('icons/wod13/icons.dmi', "song", -MUTATIONS_LAYER)
 		listener.overlays_standing[MUTATIONS_LAYER] = song_overlay
 		listener.apply_overlay(MUTATIONS_LAYER)
 

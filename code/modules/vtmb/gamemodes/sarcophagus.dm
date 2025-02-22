@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(caesar_cipher, list(
 /obj/sarcophagus
 	name = "Unknown Sarcophagus"
 	desc = "Contains elder devil..."
-	icon = 'code/modules/wod13/48x32weapons.dmi'
+	icon = 'icons/wod13/48x32weapons.dmi'
 	icon_state = "b_sarcophagus"
 	plane = GAME_PLANE
 	layer = CAR_LAYER
@@ -123,13 +123,13 @@ GLOBAL_LIST_INIT(caesar_cipher, list(
 	name = "sarcophagus key"
 	desc = "The secrets of elder devil..."
 	icon_state = "sarcophagus_key"
-	icon = 'code/modules/wod13/icons.dmi'
+	icon = 'icons/wod13/icons.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/fake_sarcophagus
 	name = "Voivode-in-Waiting's Sarcophagus"
 	desc = "The Voivode-in-Waiting lies here."
-	icon = 'code/modules/wod13/48x32weapons.dmi'
+	icon = 'icons/wod13/48x32weapons.dmi'
 	icon_state = "b_sarcophagus"
 	density = TRUE
 	anchored = TRUE

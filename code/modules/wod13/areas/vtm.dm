@@ -1,6 +1,6 @@
 /area/vtm
 	name = "San Francisco"
-	icon = 'code/modules/wod13/tiles.dmi'
+	icon = 'icons/wod13/tiles.dmi'
 	icon_state = "sewer"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY

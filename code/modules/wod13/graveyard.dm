@@ -66,7 +66,7 @@ SUBSYSTEM_DEF(graveyard)
 //								P.exper = min(calculate_mob_max_exper(L), P.exper+((250+L.experience_plus)/mode))
 
 /obj/vampgrave
-	icon = 'code/modules/wod13/props.dmi'
+	icon = 'icons/wod13/props.dmi'
 	icon_state = "grave1"
 	name = "grave"
 	plane = GAME_PLANE
