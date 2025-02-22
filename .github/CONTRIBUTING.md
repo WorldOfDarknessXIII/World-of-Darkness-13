@@ -4,7 +4,7 @@
 2. [Introduction](#introduction)
 3. [Getting Started](#getting-started)
 4. [Meet the Team](#meet-the-team)
-	1. [Head Maintainer](#headcoder)
+	1. [Head Maintainer](#headmaint)
 	2. [Maintainers](#maintainers)
 	3. [Issue Managers](#issue-managers)
 5. [Development Guides](#development-guides)
