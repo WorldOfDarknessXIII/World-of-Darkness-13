@@ -45325,6 +45325,9 @@
 /area/vtm/interior/old_clan_tzimisce_manor)
 "lFJ" = (
 /obj/structure/table/wood,
+/obj/machinery/button/curtain{
+	id = 2006
+	},
 /turf/open/floor/carpet/lone,
 /area/vtm/interior/chantry)
 "lGc" = (
@@ -48532,6 +48535,9 @@
 /area/vtm/interior/millennium_tower)
 "npG" = (
 /obj/effect/decal/wallpaper/paper/rich/low,
+/obj/structure/curtain/cloth/fancy/mechanical{
+	id = 2006
+	},
 /turf/closed/wall/vampwall/old/low/window,
 /area/vtm/interior/chantry)
 "npN" = (
@@ -67699,6 +67705,12 @@
 /obj/item/gun/ballistic/shotgun/vampire,
 /turf/open/floor/plating/concrete,
 /area/vtm/graveyard/interior)
+"wZn" = (
+/obj/structure/curtain/cloth/fancy/mechanical{
+	id = 2006
+	},
+/turf/closed/wall/vampwall/old/low/window,
+/area/vtm/interior/chantry)
 "wZp" = (
 /obj/structure/toilet,
 /mob/living/carbon/human/npc/shop,
@@ -247887,8 +247899,8 @@ kKY
 fYr
 kKY
 kKY
-cRJ
-cRJ
+wZn
+wZn
 gtT
 hzq
 hzq
