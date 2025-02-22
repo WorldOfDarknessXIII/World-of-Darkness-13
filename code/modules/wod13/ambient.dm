@@ -185,32 +185,23 @@
 	fire_controled = TRUE
 	wall_rating = HIGH_WALL_RATING
 
-/area/vtm/interior/millennium_tower
-	name = "Millennium Tower F1"
-	icon_state = "millenniumtowerf1"
-	music = /datum/vampiremusic/prince
+/area/vtm/prince
+	name = "Millenium Tower"
+	icon_state = "prince"
+	ambience_index = AMBIENCE_PRINCE
+	upper = FALSE
 	zone_type = "elysium"
 	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
 
-/area/vtm/interior/millennium_tower/f2
-	name = "Millennium Tower F2"
-	icon_state = "millenniumtowerf2"
-
-/area/vtm/interior/millennium_tower/f3
-	name = "Millennium Tower F3"
-	icon_state = "millenniumtowerf3"
-
-/area/vtm/interior/millennium_tower/f4
-	name = "Millennium Tower F4"
-	icon_state = "millenniumtowerf4"
-
-/area/vtm/interior/millennium_tower/f5
-	name = "Millennium Tower F5"
-	icon_state = "millenniumtowerf5"
-
-/area/vtm/interior/millennium_tower/ventrue
-	name = "Millennium Tower Penthouse"
-	icon_state = "millenniumtowerpenthouse"
+/area/vtm/camarilla
+	name = "Millenium Appartements"
+	icon_state = "camarilla"
+	ambience_index = AMBIENCE_INTERIOR
+	upper = FALSE
+	zone_type = "elysium"
+	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
 
 /area/vtm/jazzclub
 	name = "Jazz Club"
@@ -226,6 +217,16 @@
 	icon_state = "melpominee"
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
+	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
+
+/area/vtm/cabinet
+	name = "Millenium Upper Level"
+	icon_state = "prince"
+	ambience_index = AMBIENCE_INTERIOR
+	music = /datum/vampiremusic/prince
+	upper = FALSE
+	zone_type = "elysium"
 	fire_controled = TRUE
 	wall_rating = HIGH_WALL_RATING
 
@@ -271,7 +272,6 @@
 	music = /datum/vampiremusic/church
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
-	fire_controled = TRUE
 	wall_rating = LOW_WALL_RATING
 
 /area/vtm/graveyard
@@ -352,14 +352,15 @@
 	fire_controled = TRUE
 	wall_rating = LOW_WALL_RATING
 
-/area/vtm/interior/endron_facility
-	name = "Endron Facility"
-	icon_state = "supply"
+/area/vtm/interior/wyrm_corrupted
+	name = "Corrupted by Wyrm"
+	icon_state = "graveyard"
+	upper = FALSE
 	zone_type = "battle"
 	music = /datum/vampiremusic/forest
 	fire_controled = FALSE
 	yang_chi = 0
-	yin_chi = 1
+	yin_chi = 2
 	wall_rating = LOW_WALL_RATING
 
 /area/vtm/interior/penumbra
@@ -497,73 +498,6 @@
 	length = 157 SECONDS
 	sound = 'code/modules/wod13/sounds/lift.ogg'
 	forced = TRUE
-
-/mob/living/proc/handle_vampire_music()
-	if(!client)
-		return
-	if(stat == DEAD)
-		return
-
-	var/turf/T
-
-	if(!isturf(loc))
-		var/atom/A = loc
-		if(!isturf(A.loc))
-			return
-		T = A.loc
-	else
-		T = loc
-
-	if(istype(get_area(T), /area/vtm))
-		var/area/vtm/VTM = get_area(T)
-		if(VTM)
-			/*
-			if(VTM.upper)
-				if(SScityweather.raining)
-					SEND_SOUND(src, sound('code/modules/wod13/sounds/rain.ogg', 0, 0, CHANNEL_RAIN, 25))
-					wash(CLEAN_WASH)
-			*/
-
-			var/cacophony = FALSE
-
-			if(iskindred(src))
-				var/mob/living/carbon/human/H = src
-				if(H.clane)
-					if(H.clane.name == "Daughters of Cacophony")
-						cacophony = FALSE //This Variable was TRUE, which makes the DoC music loop play.
-
-			if(!cacophony)
-				if(!(client && (client.prefs.toggles & SOUND_AMBIENCE)))
-					return
-
-				if(!VTM.music)
-					client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
-					last_vampire_ambience = 0
-					wait_for_music = 0
-					return
-				var/datum/vampiremusic/VMPMSC = new VTM.music()
-				if(VMPMSC.forced && wait_for_music != VMPMSC.length)
-					client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
-					last_vampire_ambience = 0
-					wait_for_music = 0
-					wasforced = TRUE
-
-				else if(wasforced && wait_for_music != VMPMSC.length)
-					client << sound(null, 0, 0, CHANNEL_LOBBYMUSIC)
-					last_vampire_ambience = 0
-					wait_for_music = 0
-					wasforced = FALSE
-
-				if(last_vampire_ambience+wait_for_music+10 < world.time)
-					wait_for_music = VMPMSC.length
-					client << sound(VMPMSC.sound, 0, 0, CHANNEL_LOBBYMUSIC, 10)
-					last_vampire_ambience = world.time
-				qdel(VMPMSC)
-			else
-				if(last_vampire_ambience+wait_for_music+10 < world.time)
-					wait_for_music = 1740
-					client << sound('code/modules/wod13/sounds/daughters.ogg', 0, 0, CHANNEL_LOBBYMUSIC, 5)
-					last_vampire_ambience = world.time
 
 #undef VERY_HIGH_WALL_RATING
 #undef HIGH_WALL_RATING

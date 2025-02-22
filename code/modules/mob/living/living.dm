@@ -392,12 +392,12 @@
 		to_chat(src, text="You are unable to succumb to death! This life continues.", type=MESSAGE_TYPE_INFO)
 		return
 	log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!", LOG_ATTACK)
-	if((iskindred(src) || iscathayan(src)) && !HAS_TRAIT(src, TRAIT_TORPOR))
+	if((iskindred(src) || iskuejin(src)) && !HAS_TRAIT(src, TRAIT_TORPOR))
 		adjustOxyLoss(health - HEALTH_THRESHOLD_VAMPIRE_TORPOR)
 		updatehealth()
-	if((iskindred(src) || iscathayan(src)) && HAS_TRAIT(src, TRAIT_TORPOR))
+	if((iskindred(src) || iskuejin(src)) && HAS_TRAIT(src, TRAIT_TORPOR))
 		adjustOxyLoss(health - HEALTH_THRESHOLD_VAMPIRE_DEAD)
-	if(!iskindred(src) && !iscathayan(src))
+	if(!iskindred(src) && !iskuejin(src))
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
 		updatehealth()
 	if(!whispered)
@@ -408,12 +408,12 @@
 	if(HAS_TRAIT(src, TRAIT_TORPOR))
 		if(iskindred(src))
 			if (bloodpool > 0)
-				bloodpool -= 1
+				adjust_blood_points(-1)
 				cure_torpor()
 				to_chat(src, "<span class='notice'>You have awoken from your Torpor.</span>")
 			else
 				to_chat(src, "<span class='warning'>You have no blood to re-awaken with...</span>")
-		if(iscathayan(src))
+		if(iskuejin(src))
 			if (yang_chi > 0)
 				yang_chi -= 1
 				cure_torpor()
@@ -666,7 +666,7 @@
 		if(iscarbon(src) && excess_healing)
 			var/mob/living/carbon/C = src
 			if(!(C.dna?.species && (NOBLOOD in C.dna.species.species_traits)))
-				C.blood_volume += (excess_healing*2)//1 excess = 10 blood
+				C.adjust_blood_volume(excess_healing*2)//1 excess = 10 blood
 
 			for(var/i in C.internal_organs)
 				var/obj/item/organ/O = i
@@ -818,7 +818,7 @@
 		return
 
 	var/bleed_amount = bleedDragAmount()
-	blood_volume = max(blood_volume - bleed_amount, 0) 					//that depends on our brute damage.
+	adjust_blood_volume(-bleed_amount) 					//that depends on our brute damage.
 	var/newdir = get_dir(target_turf, start)
 	if(newdir != direction)
 		newdir = newdir | direction
@@ -1996,7 +1996,7 @@
 	return dexterity + additional_dexterity
 
 /mob/living/proc/get_total_social()
-	if(iscathayan(src))
+	if(iskuejin(src))
 		if(mind?.dharma?.animated == "Yin")
 			return max(0, social + additional_social - 2)
 	return social + additional_social

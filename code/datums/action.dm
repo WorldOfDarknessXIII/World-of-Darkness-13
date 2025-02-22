@@ -94,7 +94,6 @@
 		return FALSE
 	return TRUE
 
-
 /datum/action/proc/IsAvailable()
 	if(!owner)
 		return FALSE
@@ -134,7 +133,7 @@
 			button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
 		else
 			button.color = rgb(255,255,255,255)
-			return 1
+			return TRUE
 
 /datum/action/proc/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
 	if(icon_icon && button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))

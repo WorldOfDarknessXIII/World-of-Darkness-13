@@ -96,26 +96,7 @@
 /obj/item/bodypart/head/can_dismember(obj/item/I)
 	if(owner.health > owner.maxHealth/2)
 		return FALSE
-//	if(!prob(I.cruelness))
-//		return FALSE
-//	if(owner.stat < HARD_CRIT)
-//		return FALSE
 	return ..()
-
-//obj/item/bodypart/head/drop_limb(special, dismembered)
-//	var/mob/living/carbon/human/C
-//	if(ishuman(owner))
-//		C = owner
-//	if(..())
-//		if(!iskindred(C))
-//			if(owner.bloodpool)
-//			C.remove_overlay(DECAPITATION_BLOOD_LAYER)
-//			var/mutable_appearance/blood_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "decapitation", -DECAPITATION_BLOOD_LAYER)
-//			C.overlays_standing[DECAPITATION_BLOOD_LAYER] = blood_overlay
-//			C.apply_overlay(DECAPITATION_BLOOD_LAYER)
-//			playsound(get_turf(C), 'code/modules/wod13/sounds/decap.ogg', 100, FALSE)
-//			spawn(40)
-//				C.remove_overlay(DECAPITATION_BLOOD_LAYER)
 
 /obj/item/bodypart/head/drop_organs(mob/user, violent_removal)
 	var/turf/T = get_turf(src)

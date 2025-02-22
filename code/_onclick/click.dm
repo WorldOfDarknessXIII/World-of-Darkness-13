@@ -216,7 +216,7 @@
 			var/obj/manholeup/M = A
 			if(!M.climbing)
 				M.climbing = TRUE
-				if(do_after(src, 30, A))
+				if(do_after(src, 3 SECONDS, A))
 					M.climbing = FALSE
 					var/turf/destination = get_step_multiz(A, UP)
 					var/mob/living/L = src
@@ -230,7 +230,7 @@
 			var/obj/manholeup/M = A
 			if(!M.climbing)
 				M.climbing = TRUE
-				if(do_after(src, 30, A))
+				if(do_after(src, 3 SECONDS, A))
 					M.climbing = FALSE
 					var/turf/destination = get_step_multiz(A, DOWN)
 					var/mob/living/L = src
@@ -505,7 +505,7 @@
 	if(istype(ML))
 		ML.pulled(src)
 
-/mob/living/CtrlClick(mob/user)
+/mob/living/carbon/human/CtrlClick(mob/user)
 	if(ishuman(user) && Adjacent(user) && !user.incapacitated())
 		if(world.time < user.next_move)
 			return FALSE

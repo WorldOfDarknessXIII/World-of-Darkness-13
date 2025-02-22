@@ -182,11 +182,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	var/message_range = 7
 
-	var/succumbed = FALSE
+
+	//var/succumbed = FALSE
 
 	if(message_mods[WHISPER_MODE] == MODE_WHISPER)
 		message_range = 1
 		log_talk(message, LOG_WHISPER)
+		/*
 		if(stat == HARD_CRIT)
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
@@ -196,6 +198,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			last_words = message
 			message_mods[WHISPER_MODE] = MODE_WHISPER_CRIT
 			succumbed = TRUE
+		*/
 	else
 		log_talk(message, LOG_SAY, forced_by=forced)
 
@@ -247,9 +250,11 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mods)
 
+	/*
 	if(succumbed)
 		succumb(1)
 		to_chat(src, compose_message(src, language, message, , spans, message_mods))
+	*/
 
 	return TRUE
 
