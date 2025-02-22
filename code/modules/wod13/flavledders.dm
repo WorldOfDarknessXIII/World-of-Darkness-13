@@ -14,9 +14,8 @@
 		if(do_after(user, 50, src))
 			climbing = FALSE
 			var/turf/destination = get_step_multiz(src, UP)
-			var/mob/living/L = user
-			if(L.pulling)
-				L.pulling.forceMove(destination)
+			if(user.pulling)
+				user.pulling.forceMove(destination)
 			user.forceMove(destination)
 			playsound(src, 'code/modules/wod13/sounds/manhole.ogg', 50, TRUE)
 		else
@@ -49,6 +48,14 @@
 			var/turf/destination = get_step_multiz(src, DOWN)
 			var/mob/living/L = user
 			if(L.pulling)
+				if(istype(L.pulling, /mob/living/carbon/human/npc))
+					var/mob/living/carbon/human/npc/NPC = L.pulling
+					NPC.on_kidnap(L)
+					if(NPC.CheckMove())
+						if(!storyteller_roll(L.get_total_physique() + L.get_total_athletics(), min(NPC.get_total_physique() + min(NPC.get_total_dexterity(), NPC.get_total_athletics()),7)))
+							NPC.Aggro(L, TRUE)
+							L.visible_message("<span class='danger'>[NPC.name] resists going down with [src].</span>", "<span class='danger'>[NPC.name] resists going down, breaking your descent.</span>", null, COMBAT_MESSAGE_RANGE, NPC)
+							return
 				L.pulling.forceMove(destination)
 			user.forceMove(destination)
 			playsound(src, 'code/modules/wod13/sounds/manhole.ogg', 50, TRUE)
