@@ -65499,6 +65499,13 @@
 	},
 /turf/closed/wall/vampwall/junk/alt,
 /area/vtm/interior)
+"vZf" = (
+/obj/structure/bed,
+/obj/item/bedsheet/red,
+/obj/effect/landmark/start/archivist,
+/obj/effect/decal/wallpaper/paper/darkred,
+/turf/open/floor/carpet/lone,
+/area/vtm/interior/chantry/basement)
 "vZq" = (
 /obj/effect/turf_decal/siding/white,
 /obj/structure/vampdoor/simple,
@@ -114003,16 +114010,16 @@ aab
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aab
 afA
 fhK
@@ -117865,11 +117872,11 @@ aHS
 aHS
 jXH
 jXH
-jXH
+afA
 bEZ
 jXH
 jXH
-jXH
+afA
 ags
 jXH
 jXH
@@ -118641,7 +118648,7 @@ lzj
 qto
 afA
 qBr
-agw
+vZf
 mbo
 jXH
 aab
