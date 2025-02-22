@@ -26,7 +26,7 @@
 	var/require_comms_key = FALSE
 
 /datum/world_topic/proc/TryRun(list/input)
-	key_valid = (CONFIG_GET(string/comms_key) == input["key"]) && CONFIG_GET(string/comms_key) && input["key"]
+	key_valid = config && (CONFIG_GET(string/comms_key) == input["key"])
 	input -= "key"
 	if(require_comms_key && !key_valid)
 		. = "Bad Key"
@@ -63,7 +63,7 @@
 /datum/world_topic/pr_announce
 	keyword = "announce"
 	require_comms_key = TRUE
-	var/static/list/PRcounts = list() //PR id -> number of times announced this round
+	var/static/list/PRcounts = list()	//PR id -> number of times announced this round
 
 /datum/world_topic/pr_announce/Run(list/input)
 	var/list/payload = json_decode(input["payload"])
@@ -72,10 +72,10 @@
 		PRcounts[id] = 1
 	else
 		++PRcounts[id]
-		if(PRcounts[id] > CONFIG_GET(number/pr_announcements_per_round))
+		if(PRcounts[id] > PR_ANNOUNCEMENTS_PER_ROUND)
 			return
 
-	var/final_composed = span_announce("PR: [input[keyword]]")
+	var/final_composed = "<span class='announce'>PR: [input[keyword]]</span>"
 	for(var/client/C in GLOB.clients)
 		C.AnnouncePR(final_composed)
 
@@ -84,13 +84,11 @@
 	require_comms_key = TRUE
 
 /datum/world_topic/ahelp_relay/Run(list/input)
-	relay_msg_admins(span_adminnotice("<b><font color=red>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b>"))
+	relay_msg_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b></span>")
 
 /datum/world_topic/comms_console
 	keyword = "Comms_Console"
 	require_comms_key = TRUE
-
-	var/list/timers
 
 /datum/world_topic/comms_console/Run(list/input)
 	// Reject comms messages from other servers that are not on our configured network,
@@ -99,63 +97,9 @@
 	if (configured_network && configured_network != input["network"])
 		return
 
-	// We can't add the timer without the timer ID, but we can't get the timer ID without the timer!
-	// To solve this, we just use a list that we mutate later.
-	var/list/data = list("input" = input)
-	// Did we have to pass the soft filter on our origin server? Passed as a boolean value.
-	var/soft_filter_passed = !!input["is_filtered"]
-	var/timer_id = addtimer(CALLBACK(src, PROC_REF(receive_cross_comms_message), data), soft_filter_passed ? EXTENDED_CROSS_SECTOR_CANCEL_TIME : CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
-	data["timer_id"] = timer_id
-
-	LAZYADD(timers, timer_id)
-
-	var/extended_time_display = DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME)
-	var/normal_time_display = DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)
-
-	var/message = "<b color='orange'>CROSS-SECTOR MESSAGE (INCOMING):</b> [input["sender_ckey"]] (from [input["source"]]) is about to send \
-			the following message (will autoapprove in [soft_filter_passed ? "[extended_time_display]" : "[normal_time_display]"]): \
-			<b><a href='byond://?src=[REF(src)];reject_cross_comms_message=[timer_id]'>REJECT</a></b><br><br>\
-			[input["message"]]"
-
-	if(soft_filter_passed)
-		message += "<br><br><b>NOTE: This message passed the soft filter on the origin server! The time was automatically expanded to [extended_time_display].</b>"
-
-	message_admins(span_adminnotice(message))
-
-/datum/world_topic/comms_console/Topic(href, list/href_list)
-	. = ..()
-	if (.)
-		return
-
-	if (href_list["reject_cross_comms_message"])
-		if (!usr.client?.holder)
-			log_game("[key_name(usr)] tried to reject an incoming cross-comms message without being an admin.")
-			message_admins("[key_name(usr)] tried to reject an incoming cross-comms message without being an admin.")
-			return
-
-		var/timer_id = href_list["reject_cross_comms_message"]
-		if (!(timer_id in timers))
-			to_chat(usr, span_warning("It's too late!"))
-			return
-
-		deltimer(timer_id)
-		LAZYREMOVE(timers, timer_id)
-
-		log_admin("[key_name(usr)] has cancelled the incoming cross-comms message.")
-		message_admins("[key_name(usr)] has cancelled the incoming cross-comms message.")
-
-		return TRUE
-
-/datum/world_topic/comms_console/proc/receive_cross_comms_message(list/data)
-	var/list/input = data["input"]
-	var/timer_id = data["timer_id"]
-
-	LAZYREMOVE(timers, timer_id)
-
 	minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
-	message_admins("Receiving a message from [input["sender_ckey"]] at [input["source"]]")
-	for(var/obj/machinery/computer/communications/communications_console in GLOB.shuttle_caller_list)
-		communications_console.override_cooldown()
+	for(var/obj/machinery/computer/communications/CM in GLOB.machines)
+		CM.override_cooldown()
 
 /datum/world_topic/news_report
 	keyword = "News_Report"
@@ -176,10 +120,12 @@
 	require_comms_key = TRUE
 
 /datum/world_topic/namecheck/Run(list/input)
-	log_admin("world/Topic Name Check: [input["sender"]] on [input["namecheck"]]")
-	message_admins("Name checking [input["namecheck"]] from [input["sender"]] (World topic)")
-
-	return keywords_lookup(input["namecheck"], 1)
+	//Oh this is a hack, someone refactor the functionality out of the chat command PLS
+	var/datum/tgs_chat_command/namecheck/NC = new
+	var/datum/tgs_chat_user/user = new
+	user.friendly_name = input["sender"]
+	user.mention = user.friendly_name
+	return NC.Run(user, input["namecheck"])
 
 /datum/world_topic/adminwho
 	keyword = "adminwho"
@@ -194,8 +140,10 @@
 /datum/world_topic/status/Run(list/input)
 	. = list()
 	.["version"] = GLOB.game_version
-	.["respawn"] = config ? !!CONFIG_GET(flag/allow_respawn) : FALSE // show respawn as true regardless of "respawn as char" or "free respawn"
-	.["enter"] = !LAZYACCESS(SSlag_switch.measures, DISABLE_NON_OBSJOBS)
+	.["mode"] = GLOB.master_mode
+	.["respawn"] = config ? !CONFIG_GET(flag/norespawn) : FALSE
+	.["enter"] = GLOB.enter_allowed
+	.["vote"] = CONFIG_GET(flag/allow_vote_mode)
 	.["ai"] = CONFIG_GET(flag/allow_ai)
 	.["host"] = world.host ? world.host : null
 	.["round_id"] = GLOB.round_id
@@ -203,11 +151,6 @@
 	.["revision"] = GLOB.revdata.commit
 	.["revision_date"] = GLOB.revdata.date
 	.["hub"] = GLOB.hub_visibility
-	.["identifier"] = CONFIG_GET(string/serversqlname)
-
-	var/public_address = CONFIG_GET(string/public_address)
-	if(public_address)
-		.["public_address"] = public_address
 
 
 	var/list/adm = get_admin_counts()
@@ -216,12 +159,15 @@
 	.["admins"] = presentmins.len + afkmins.len //equivalent to the info gotten from adminwho
 	.["gamestate"] = SSticker.current_state
 
-	.["map_name"] = SSmapping.current_map.map_name || "Loading..."
+	.["map_name"] = SSmapping.config?.map_name || "Loading..."
 
 	if(key_valid)
 		.["active_players"] = get_active_player_count()
+		if(SSticker.HasRoundStarted())
+			.["real_mode"] = SSticker.mode.name
+			// Key-authed callers may know the truth behind the "secret"
 
-	.["security_level"] = SSsecurity_level.get_current_level_as_text()
+	.["security_level"] = get_security_level()
 	.["round_duration"] = SSticker ? round((world.time-SSticker.round_start_time)/10) : 0
 	// Amount of world's ticks in seconds, useful for calculating round duration
 
@@ -243,3 +189,4 @@
 		// Shuttle status, see /__DEFINES/stat.dm
 		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()
 		// Shuttle timer, in seconds
+

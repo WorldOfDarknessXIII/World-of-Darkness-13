@@ -1,6 +1,6 @@
 // Tobacco
 /obj/item/seeds/tobacco
-	name = "tobacco seed pack"
+	name = "pack of tobacco seeds"
 	desc = "These seeds grow into tobacco plants."
 	icon_state = "seed-tobacco"
 	species = "tobacco"
@@ -24,21 +24,20 @@
 
 // Space Tobacco
 /obj/item/seeds/tobacco/space
-	name = "space tobacco seed pack"
+	name = "pack of space tobacco seeds"
 	desc = "These seeds grow into space tobacco plants."
 	icon_state = "seed-stobacco"
 	species = "stobacco"
 	plantname = "Space Tobacco Plant"
 	product = /obj/item/food/grown/tobacco/space
-	mutatelist = null
+	mutatelist = list()
 	reagents_add = list(/datum/reagent/medicine/salbutamol = 0.05, /datum/reagent/drug/nicotine = 0.08, /datum/reagent/consumable/nutriment = 0.03)
-	rarity = PLANT_MODERATELY_RARE
+	rarity = 20
 
 /obj/item/food/grown/tobacco/space
 	seed = /obj/item/seeds/tobacco/space
 	name = "space tobacco leaves"
 	desc = "Dry them out to make some space-smokes."
 	icon_state = "stobacco_leaves"
-	bite_consumption_mod = 2
 	distill_reagent = null
 	wine_power = 50

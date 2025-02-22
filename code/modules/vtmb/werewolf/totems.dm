@@ -10,7 +10,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	var/tribe
 	var/totem_health = 500
-	var/obj/effect/overlay/totem_light_overlay
+	var/obj/overlay/totem_light_overlay
 	var/totem_overlay_color = "#FFFFFF"
 
 	var/last_rage = 0
@@ -38,6 +38,7 @@
 	totem_light_overlay.icon = icon
 	totem_light_overlay.icon_state = "[icon_state]_overlay"
 	totem_light_overlay.plane = ABOVE_LIGHTING_PLANE
+	totem_light_overlay.layer = ABOVE_LIGHTING_LAYER
 	totem_light_overlay.color = totem_overlay_color
 	overlays |= totem_light_overlay
 
@@ -120,7 +121,7 @@
 	. = ..()
 	if(iswerewolf(user) || isgarou(user))
 		var/mob/living/carbon/C = user
-		if(!(C.combat_mode))
+		if(C.a_intent != INTENT_HARM)
 			if(totem_health <= 0)
 				to_chat(C, "<span class='warning'>[src] is broken!</span>")
 				return
@@ -129,7 +130,7 @@
 				if(C.auspice.name == "Theurge")
 					if(!opening)
 						opening = TRUE
-						if(do_after(user, 10 SECONDS, src))
+						if(do_mob(user, src, 10 SECONDS))
 							playsound(loc, 'code/modules/wod13/sounds/portal.ogg', 75, FALSE)
 							var/obj/umbra_portal/U = new (get_step(src, SOUTH))
 							U.id = "[tribe][rand(1, 999)]"

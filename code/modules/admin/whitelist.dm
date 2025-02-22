@@ -1,6 +1,7 @@
 #define WHITELISTFILE "[global.config.directory]/whitelist.txt"
 
 GLOBAL_LIST(whitelist)
+GLOBAL_PROTECT(whitelist)
 
 /proc/load_whitelist()
 	GLOB.whitelist = list()

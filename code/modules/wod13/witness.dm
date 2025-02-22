@@ -55,9 +55,9 @@
 	if(message != "")
 		for(var/obj/item/police_radio/radio in GLOB.police_radios)
 			radio.say(message)
-		for(var/obj/item/p25radio/police/radio in GLOB.p25_radios)
-			if(radio.linked_network == "police")
-				radio.say(message)
+
+/obj/item/police_radio/proc/dispatcher_talk(said)
+	say(said)
 
 /obj/item/police_radio/Initialize()
 	. = ..()
@@ -70,7 +70,7 @@
 /mob/living/carbon/Initialize()
 	. = ..()
 	var/datum/atom_hud/abductor/hud = GLOB.huds[DATA_HUD_ABDUCTOR]
-	hud.add_atom_to_hud(src)
+	hud.add_to_hud(src)
 
 /mob/living/carbon/proc/update_auspex_hud()
 	var/image/holder = hud_list[GLAND_HUD]
@@ -79,7 +79,7 @@
 	holder.icon_state = "aura"
 
 	if (client)
-		if(combat_mode)
+		if(a_intent == INTENT_HARM)
 			holder.color = "#ff0000"
 		else
 			holder.color = "#0000ff"

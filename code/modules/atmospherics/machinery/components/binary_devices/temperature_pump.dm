@@ -2,49 +2,37 @@
 	icon_state = "tpump_map-3"
 	name = "temperature pump"
 	desc = "A pump that moves heat from one pipeline to another. The input will get cooler, and the output will get hotter."
+
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
-	construction_type = /obj/item/pipe/directional
-	pipe_state = "tpump"
-	vent_movement = NONE
+
 	///Percent of the heat delta to transfer
 	var/heat_transfer_rate = 0
 	///Maximum allowed transfer percentage
 	var/max_heat_transfer_rate = 100
 
-/obj/machinery/atmospherics/components/binary/temperature_pump/Initialize(mapload)
-	. = ..()
-	register_context()
+	construction_type = /obj/item/pipe/directional
+	pipe_state = "tpump"
 
-/obj/machinery/atmospherics/components/binary/temperature_pump/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize transfer rate"
-	return CONTEXTUAL_SCREENTIP_SET
-
-/obj/machinery/atmospherics/components/binary/temperature_pump/click_ctrl(mob/user)
-	if(is_operational)
+/obj/machinery/atmospherics/components/binary/temperature_pump/CtrlClick(mob/user)
+	if(can_interact(user))
 		on = !on
-		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance()
-		return CLICK_ACTION_SUCCESS
-	return CLICK_ACTION_BLOCKING
+		update_icon()
+	return ..()
 
-/obj/machinery/atmospherics/components/binary/temperature_pump/click_alt(mob/user)
-	if(heat_transfer_rate == max_heat_transfer_rate)
-		return CLICK_ACTION_BLOCKING
-
-	heat_transfer_rate = max_heat_transfer_rate
-	investigate_log("was set to [heat_transfer_rate]% by [key_name(user)]", INVESTIGATE_ATMOS)
-	balloon_alert(user, "transfer rate set to [heat_transfer_rate]%")
-	update_appearance()
-	return CLICK_ACTION_SUCCESS
+/obj/machinery/atmospherics/components/binary/temperature_pump/AltClick(mob/user)
+	if(can_interact(user) && !(heat_transfer_rate == max_heat_transfer_rate))
+		heat_transfer_rate = max_heat_transfer_rate
+		investigate_log("was set to [heat_transfer_rate]% by [key_name(user)]", INVESTIGATE_ATMOS)
+		update_icon()
+	return ..()
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/update_icon_nopipes()
 	icon_state = "tpump_[on && is_operational ? "on" : "off"]-[set_overlay_offset(piping_layer)]"
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/process_atmos()
+
 	if(!on || !is_operational)
 		return
 
@@ -60,20 +48,16 @@
 
 	if(coolant_temperature_delta > 0)
 		var/input_capacity = remove_input.heat_capacity()
-		var/output_capacity = remove_output.heat_capacity()
+		var/output_capacity = air_output.heat_capacity()
 
-		var/cooling_heat_amount = (heat_transfer_rate * 0.01) * CALCULATE_CONDUCTION_ENERGY(coolant_temperature_delta, output_capacity, input_capacity)
-		remove_output.temperature = max(remove_output.temperature + (cooling_heat_amount / output_capacity), TCMB)
+		var/cooling_heat_amount = (heat_transfer_rate * 0.01) * coolant_temperature_delta * (input_capacity * output_capacity / (input_capacity + output_capacity))
 		remove_input.temperature = max(remove_input.temperature - (cooling_heat_amount / input_capacity), TCMB)
-		update_parents()
-
-	var/power_usage = 200
+		remove_output.temperature = max(remove_output.temperature + (cooling_heat_amount / output_capacity), TCMB)
 
 	air_input.merge(remove_input)
 	air_output.merge(remove_output)
 
-	if(power_usage)
-		use_energy(power_usage)
+	update_parents()
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -88,7 +72,7 @@
 	data["max_heat_transfer_rate"] = round(max_heat_transfer_rate)
 	return data
 
-/obj/machinery/atmospherics/components/binary/temperature_pump/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/atmospherics/components/binary/temperature_pump/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -108,26 +92,4 @@
 			if(.)
 				heat_transfer_rate = clamp(rate, 0, max_heat_transfer_rate)
 				investigate_log("was set to [heat_transfer_rate]% by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_appearance()
-
-//mapping
-
-/obj/machinery/atmospherics/components/binary/temperature_pump/layer2
-	icon_state = "tpump_map-2"
-	piping_layer = 2
-
-/obj/machinery/atmospherics/components/binary/temperature_pump/layer4
-	icon_state = "tpump_map-4"
-	piping_layer = 4
-
-/obj/machinery/atmospherics/components/binary/temperature_pump/on
-	on = TRUE
-	icon_state = "tpump_on_map-3"
-
-/obj/machinery/atmospherics/components/binary/temperature_pump/on/layer2
-	icon_state = "tpump_on_map-2"
-	piping_layer = 2
-
-/obj/machinery/atmospherics/components/binary/temperature_pump/on/layer4
-	icon_state = "tpump_on_map-4"
-	piping_layer = 4
+	update_icon()

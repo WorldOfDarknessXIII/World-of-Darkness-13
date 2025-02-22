@@ -1,17 +1,25 @@
 #define FEVER_CHANGE "fever"
-/**Fever
- * No change to stealth
- * Increases resistance considerably
- * Increases stage speed considerably
- * Increases transmissibility
- * Low level
- * Bonus: Heats up your body
- */
+
+/*
+//////////////////////////////////////
+
+Fever
+
+	No change to hidden.
+	Increases resistance.
+	Increases stage speed.
+	Little transmittable.
+	Low level.
+
+Bonus
+	Heats up your body.
+
+//////////////////////////////////////
+*/
 
 /datum/symptom/fever
 	name = "Fever"
 	desc = "The virus causes a febrile response from the host, raising its body temperature."
-	illness = "Burning Desire"
 	stealth = 0
 	resistance = 3
 	stage_speed = 3
@@ -28,24 +36,22 @@
 	)
 
 /datum/symptom/fever/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalResistance() >= 5) //dangerous fever
+	if(A.properties["resistance"] >= 5) //dangerous fever
 		power = 1.5
 		unsafe = TRUE
-	if(A.totalResistance() >= 10)
+	if(A.properties["resistance"] >= 10)
 		power = 2.5
 
 /datum/symptom/fever/Activate(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
 	var/mob/living/carbon/M = A.affected_mob
 	if(!unsafe || A.stage < 4)
-		to_chat(M, span_warning("[pick("You feel hot.", "You feel like you're burning.")]"))
+		to_chat(M, "<span class='warning'>[pick("You feel hot.", "You feel like you're burning.")]</span>")
 	else
-		to_chat(M, span_userdanger("[pick("You feel too hot.", "You feel like your blood is boiling.")]"))
+		to_chat(M, "<span class='userdanger'>[pick("You feel too hot.", "You feel like your blood is boiling.")]</span>")
 	set_body_temp(A.affected_mob, A)
 
 /**
@@ -57,12 +63,11 @@
  * * datum/disease/advance/A The disease applying the symptom
  */
 /datum/symptom/fever/proc/set_body_temp(mob/living/M, datum/disease/advance/A)
-	if(unsafe) // when unsafe the fever can cause heat damage
-		M.add_body_temperature_change(FEVER_CHANGE, 6 * power * A.stage)
-	else
-		// Get the max amount of change allowed before going over heat damage limit, then cap the maximum allowed temperature change from a safe fever to 5 under the heat damage limit
-		var/change_limit = max(M.get_body_temp_heat_damage_limit() - 5 - M.get_body_temp_normal(apply_change=FALSE), 0)
-		M.add_body_temperature_change(FEVER_CHANGE, min(6 * power * A.stage, change_limit))
+	// Get the max amount of change allowed before going over heat damage limit, 5 under the heat damage limit
+	var/change_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT - 5) - M.get_body_temp_normal(apply_change=FALSE)
+	if(unsafe) // when unsafe the fever can cause burn damage (not wounds)
+		change_limit += 20
+	M.add_body_temperature_change(FEVER_CHANGE, min((6 * power) * A.stage, change_limit))
 
 /// Update the body temp change based on the new stage
 /datum/symptom/fever/on_stage_change(datum/disease/advance/A)

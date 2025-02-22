@@ -59,7 +59,7 @@
 			else
 				complete()
 
-/obj/abyssrune/click_alt(mob/user)
+/obj/abyssrune/AltClick(mob/user)
 	..()
 	qdel(src)
 
@@ -92,7 +92,7 @@
 	BG.my_creator = last_activator
 	BG.melee_damage_lower = BG.melee_damage_lower+activator_bonus
 	BG.melee_damage_upper = BG.melee_damage_upper+activator_bonus
-	playsound(loc, 'sound/effects/magic/voidblink.ogg', 50, FALSE)
+	playsound(loc, 'sound/magic/voidblink.ogg', 50, FALSE)
 	if(length(H.beastmaster) > 3+H.mentality)
 		var/mob/living/simple_animal/hostile/beastmaster/B = pick(H.beastmaster)
 		B.death()
@@ -105,6 +105,7 @@
 	icon_state = "shadow2"
 	icon_living = "shadow2"
 	del_on_death = 1
+	healable = 0
 	mob_biotypes = MOB_SPIRIT
 	speak_chance = 0
 	turns_per_move = 5
@@ -123,9 +124,10 @@
 	melee_damage_upper = 20
 	attack_verb_continuous = "gouges"
 	attack_verb_simple = "gouge"
-	attack_sound = 'sound/mobs/non-humanoids/venus_trap/venus_trap_hit.ogg'
+	attack_sound = 'sound/creatures/venus_trap_hit.ogg'
 	speak_emote = list("gnashes")
 
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 	faction = list("Lasombra")
@@ -143,6 +145,6 @@
 	for(var/obj/item/vtm_artifact/VA in loc)
 		if(VA)
 			VA.identificate()
-			playsound(loc, 'sound/effects/magic/voidblink.ogg', 50, FALSE)
+			playsound(loc, 'sound/magic/voidblink.ogg', 50, FALSE)
 			qdel(src)
 			return

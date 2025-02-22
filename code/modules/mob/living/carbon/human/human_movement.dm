@@ -9,24 +9,46 @@
 		return
 	return considering
 
-/mob/living/carbon/human/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, daze, force_drop = FALSE)
-	if(HAS_TRAIT(src, TRAIT_NO_SLIP_ALL))
+/mob/living/carbon/human/slip(knockdown_amount, obj/O, lube, paralyze, forcedrop)
+	if(HAS_TRAIT(src, TRAIT_NOSLIPALL))
 		return FALSE
-
-	if(HAS_TRAIT(src, TRAIT_NO_SLIP_WATER) && !(lube_flags & GALOSHES_DONT_HELP))
-		return FALSE
-
-	if(HAS_TRAIT(src, TRAIT_NO_SLIP_ICE) && (lube_flags & SLIDE_ICE))
-		return FALSE
-
+	if (!(lube & GALOSHES_DONT_HELP))
+		if(HAS_TRAIT(src, TRAIT_NOSLIPWATER))
+			return FALSE
+		if(shoes && istype(shoes, /obj/item/clothing))
+			var/obj/item/clothing/CS = shoes
+			if (CS.clothing_flags & NOSLIP)
+				return FALSE
+	if (lube & SLIDE_ICE)
+		if(shoes && istype(shoes, /obj/item/clothing))
+			var/obj/item/clothing/CS = shoes
+			if (CS.clothing_flags & NOSLIP_ICE)
+				return FALSE
 	return ..()
 
+/mob/living/carbon/human/experience_pressure_difference()
+	playsound(src, 'sound/effects/space_wind.ogg', 50, TRUE)
+	if(shoes && istype(shoes, /obj/item/clothing))
+		var/obj/item/clothing/S = shoes
+		if (S.clothing_flags & NOSLIP)
+			return 0
+	return ..()
+
+/mob/living/carbon/human/mob_has_gravity()
+	. = ..()
+	if(!.)
+		if(mob_negates_gravity())
+			. = 1
+
 /mob/living/carbon/human/mob_negates_gravity()
-	return dna.species.negates_gravity(src) || ..()
+	return ((shoes?.negates_gravity()) || (dna.species.negates_gravity(src)))
 
 /mob/living/carbon/human/Move(NewLoc, direct)
 	. = ..()
-	if(shoes && body_position == STANDING_UP && has_gravity(loc))
-		if((. && !moving_diagonally) || (!. && moving_diagonally == SECOND_DIAG_STEP))
-			SEND_SIGNAL(shoes, COMSIG_SHOES_STEP_ACTION)
+	if(shoes && body_position == STANDING_UP && loc == NewLoc && has_gravity(loc))
+		SEND_SIGNAL(shoes, COMSIG_SHOES_STEP_ACTION)
 
+/mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
+	if(dna.species.space_move(src))
+		return TRUE
+	return ..()

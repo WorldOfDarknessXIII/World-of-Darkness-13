@@ -12,8 +12,6 @@
 	..()
 
 /datum/wires/rnd/interactable(mob/user)
-	if(!..())
-		return FALSE
 	var/obj/machinery/rnd/R = holder
 	if(R.panel_open)
 		return TRUE
@@ -33,7 +31,7 @@
 			R.hacked = !R.hacked
 		if(WIRE_DISABLE)
 			R.disabled = !R.disabled
-/datum/wires/rnd/on_cut(wire, mend, source)
+/datum/wires/rnd/on_cut(wire, mend)
 	var/obj/machinery/rnd/R = holder
 	switch(wire)
 		if(WIRE_HACK)

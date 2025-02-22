@@ -4,12 +4,12 @@
 /datum/song/proc/compile_legacy()
 	if(!length(src.lines))
 		return
-	var/list/lines = src.lines //cache for hyepr speed!
+	var/list/lines = src.lines		//cache for hyepr speed!
 	compiled_chords = list()
 	var/list/octaves = list(3, 3, 3, 3, 3, 3, 3)
 	var/list/accents = list("n", "n", "n", "n", "n", "n", "n")
 	for(var/line in lines)
-		var/list/chords = splittext(LOWER_TEXT(line), ",")
+		var/list/chords = splittext(lowertext(line), ",")
 		for(var/chord in chords)
 			var/list/compiled_chord = list()
 			var/tempodiv = 1
@@ -17,7 +17,7 @@
 			var/len = length(notes_tempodiv)
 			if(len >= 2)
 				tempodiv = text2num(notes_tempodiv[2])
-			if(len) //some dunkass is going to do ,,,, to make 3 rests instead of ,/1 because there's no standardization so let's be prepared for that.
+			if(len)			//some dunkass is going to do ,,,, to make 3 rests instead of ,/1 because there's no standardization so let's be prepared for that.
 				var/list/notes = splittext(notes_tempodiv[1], "-")
 				for(var/note in notes)
 					if(length(note) == 0)
@@ -29,12 +29,12 @@
 					for(var/i in 2 to length(note))
 						var/oct_acc = copytext(note, i, i + 1)
 						var/num = text2num(oct_acc)
-						if(!num) //it's an accidental
-							accents[key] = oct_acc //if they misspelled it/fucked up that's on them lmao, no safety checks.
-						else //octave
+						if(!num)		//it's an accidental
+							accents[key] = oct_acc		//if they misspelled it/fucked up that's on them lmao, no safety checks.
+						else	//octave
 							octaves[key] = clamp(num, octave_min, octave_max)
 					compiled_chord[++compiled_chord.len] = list(key, accents[key], octaves[key])
-			compiled_chord += tempodiv //this goes last
+			compiled_chord += tempodiv		//this goes last
 			if(length(compiled_chord))
 				compiled_chords[++compiled_chords.len] = compiled_chord
 
@@ -46,7 +46,7 @@
  * * acc is either "b", "n", or "#"
  * * oct is 1-8 (or 9 for C)
  */
-/datum/song/proc/playkey_legacy(note, acc as text, oct, atom/player)
+/datum/song/proc/playkey_legacy(note, acc as text, oct, mob/user)
 	// handle accidental -> B<>C of E<>F
 	if(acc == "b" && (note == 3 || note == 6)) // C or F
 		if(note == 3)
@@ -82,10 +82,10 @@
 	var/sound/music_played = sound(soundfile)
 	for(var/i in hearing_mobs)
 		var/mob/M = i
-		if(player && HAS_TRAIT(player, TRAIT_MUSICIAN) && isliving(M))
+		if(user && HAS_TRAIT(user, TRAIT_MUSICIAN) && isliving(M))
 			var/mob/living/L = M
-			L.apply_status_effect(/datum/status_effect/good_music)
-		if(!(M?.client?.prefs.read_preference(/datum/preference/toggle/sound_instruments)))
+			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
+		if(!(M?.client?.prefs?.toggles & SOUND_INSTRUMENTS))
 			continue
-		M.playsound_local(source, null, volume * using_instrument.volume_multiplier, sound_to_use = music_played)
+		M.playsound_local(source, null, volume * using_instrument.volume_multiplier, S = music_played)
 		// Could do environment and echo later but not for now

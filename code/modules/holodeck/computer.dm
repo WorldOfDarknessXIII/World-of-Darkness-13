@@ -22,21 +22,20 @@ created from them: make sure you handle that list correctly! Either copy them by
 and clear when youre done! if you dont i will use :newspaper2: on you
 */
 
-#define HOLODECK_CD (2 SECONDS)
-#define HOLODECK_DMG_CD (5 SECONDS)
+#define HOLODECK_CD 2 SECONDS
+#define HOLODECK_DMG_CD 5 SECONDS
 
-/// typecache for turfs that should be considered ok during floorchecks.
-/// A linked turf being anything not in this typecache will cause the holodeck to perform an emergency shutdown.
-GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf/open/floor/holofloor, /turf/closed)))
 
 /obj/machinery/computer/holodeck
 	name = "holodeck control console"
 	desc = "A computer used to control a nearby holodeck."
 	icon_screen = "holocontrol"
+	idle_power_usage = 10
+	active_power_usage = 50
 
 	//new vars
 	///what area type this holodeck loads into. linked turns into the nearest instance of this area
-	var/area/mapped_start_area = /area/station/holodeck/rec_center
+	var/area/mapped_start_area = /area/holodeck/rec_center
 
 	///the currently used map template
 	var/datum/map_template/holodeck/template
@@ -50,7 +49,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	//old vars
 
 	///the area that this holodeck loads templates into, used for power and deleting holo objects that leave it
-	var/area/station/holodeck/linked
+	var/area/holodeck/linked
 
 	///what program is loaded right now or is about to be loaded
 	var/program = "holodeck_offline"
@@ -71,11 +70,6 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	var/list/spawned = list()
 	var/list/effects = list() //like above, but for holo effects
 
-	///special locs that can mess with derez'ing holo spawned objects
-	var/list/special_locs = list(
-		/obj/item/clothing/head/mob_holder,
-	)
-
 	///TRUE if the holodeck is using extra power because of a program, FALSE otherwise
 	var/active = FALSE
 	///increases the holodeck cooldown if TRUE, causing the holodeck to take longer to allow loading new programs
@@ -84,38 +78,37 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	//creates the timer that determines if another program can be manually loaded
 	COOLDOWN_DECLARE(holodeck_cooldown)
 
-/obj/machinery/computer/holodeck/post_machine_initialize() //from here linked is populated and the program list is generated. its also set to load the offline program
-	. = ..()
-	linked = GLOB.areas_by_type[mapped_start_area]
-	if(!linked)
-		log_mapping("[src] at [AREACOORD(src)] has no matching holodeck area.")
-		qdel(src)
-		return
+/obj/machinery/computer/holodeck/Initialize(mapload)
+	..()
+	return INITIALIZE_HINT_LATELOAD
 
+/obj/machinery/computer/holodeck/LateInitialize()//from here linked is populated and the program list is generated. its also set to load the offline program
+	linked = GLOB.areas_by_type[mapped_start_area]
 	bottom_left = locate(linked.x, linked.y, src.z)
-	if(!bottom_left)
-		log_mapping("[src] at [AREACOORD(src)] has an invalid holodeck area.")
-		qdel(src)
-		return
 
 	var/area/computer_area = get_area(src)
-	if(istype(computer_area, /area/station/holodeck))
+	if(istype(computer_area, /area/holodeck))
 		log_mapping("Holodeck computer cannot be in a holodeck, This would cause circular power dependency.")
 		qdel(src)
 		return
 
 	// the following is necessary for power reasons
-	if(!offline_program)
+	if(!linked)
+		log_world("No matching holodeck area found")
+		qdel(src)
+		return
+	else if (!offline_program)
 		stack_trace("Holodeck console created without an offline program")
 		qdel(src)
 		return
 
-	linked.linked = src
-	var/area/my_area = get_area(src)
-	if(my_area)
-		linked.energy_usage = my_area.energy_usage
 	else
-		linked.energy_usage = list(AREA_USAGE_LEN)
+		linked.linked = src
+		var/area/my_area = get_area(src)
+		if(my_area)
+			linked.power_usage = my_area.power_usage
+		else
+			linked.power_usage = list(AREA_USAGE_LEN)
 
 	COOLDOWN_START(src, holodeck_cooldown, HOLODECK_CD)
 	generate_program_list()
@@ -132,7 +125,6 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			LAZYADD(program_cache, list(info_this))
 
 /obj/machinery/computer/holodeck/ui_interact(mob/user, datum/tgui/ui)
-	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Holodeck", name)
@@ -146,15 +138,14 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 		data["emagged"] = TRUE
 		data["emag_programs"] = emag_programs
 	data["program"] = program
-	data["can_toggle_safety"] = HAS_SILICON_ACCESS(user)
+	data["can_toggle_safety"] = issilicon(user) || isAdminGhostAI(user)
 	return data
 
-/obj/machinery/computer/holodeck/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/computer/holodeck/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
 	. = TRUE
-
 	switch(action)
 		if("load_program")
 			var/program_to_load = params["id"]
@@ -164,32 +155,30 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 				checked |= emag_programs
 			var/valid = FALSE //dont tell security about this
 
-			//checks if program_to_load is any one of the loadable programs, if it isnt then it rejects it
-			for(var/list/check_list as anything in checked)
-				if(check_list["id"] == program_to_load)
+			for (var/prog in checked)//checks if program_to_load is any one of the loadable programs, if it isnt then it rejects it
+				var/list/check_list = prog
+				if (check_list["id"] == program_to_load)
 					valid = TRUE
 					break
-			if(!valid)
+			if (!valid)
 				return FALSE
 			//load the map_template that program_to_load represents
 			if(program_to_load)
 				load_program(program_to_load)
 		if("safety")
-			if (!(obj_flags & EMAGGED) && !issilicon(usr))
-				return
 			if((obj_flags & EMAGGED) && program)
 				emergency_shutdown()
 			nerf(obj_flags & EMAGGED,FALSE)
 			obj_flags ^= EMAGGED
 			say("Safeties reset. Restarting...")
-			usr.log_message("disabled Holodeck safeties.", LOG_GAME)
 
 ///this is what makes the holodeck not spawn anything on broken tiles (space and non engine plating / non holofloors)
 /datum/map_template/holodeck/update_blacklist(turf/placement, list/input_blacklist)
-	for(var/turf/possible_blacklist as anything in get_affected_turfs(placement))
+	for (var/_turf in get_affected_turfs(placement))
+		var/turf/possible_blacklist = _turf
 		if (possible_blacklist.holodeck_compatible)
 			continue
-		input_blacklist[possible_blacklist] = TRUE
+		input_blacklist += possible_blacklist
 
 ///loads the template whose id string it was given ("offline_program" loads datum/map_template/holodeck/offline)
 /obj/machinery/computer/holodeck/proc/load_program(map_id, force = FALSE, add_delay = TRUE)
@@ -200,11 +189,8 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 		map_id = offline_program
 		force = TRUE
 
-	if (!force && (!COOLDOWN_FINISHED(src, holodeck_cooldown) || spawning_simulation))
+	if ((!COOLDOWN_FINISHED(src, holodeck_cooldown) && !force) || spawning_simulation)
 		say("ERROR. Recalibrating projection apparatus.")
-		return
-
-	if(spawning_simulation)
 		return
 
 	if (add_delay)
@@ -214,17 +200,29 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 
 	spawning_simulation = TRUE
 	active = (map_id != offline_program)
-	update_mode_power_usage(ACTIVE_POWER_USE, initial(active_power_usage))
+	use_power = active + IDLE_POWER_USE
 	program = map_id
 
-	clear_projection()
+	//clear the items from the previous program
+	for (var/_item in spawned)
+		var/obj/holo_item = _item
+		derez(holo_item)
+
+	for (var/_effect in effects)
+		var/obj/effect/holodeck_effect/holo_effect = _effect
+		effects -= holo_effect
+		holo_effect.deactivate(src)
+
+	//makes sure that any time a holoturf is inside a baseturf list (e.g. if someone put a wall over it) its set to the OFFLINE turf
+	//so that you cant bring turfs from previous programs into other ones (like putting the plasma burn turf into lounge for example)
+	for (var/turf/closed/holo_turf in linked)
+		for (var/_baseturf in holo_turf.baseturfs)
+			if (ispath(_baseturf, /turf/open/floor/holofloor))
+				holo_turf.baseturfs -= _baseturf
+				holo_turf.baseturfs += /turf/open/floor/holofloor/plating
 
 	template = SSmapping.holodeck_templates[map_id]
 	template.load(bottom_left) //this is what actually loads the holodeck simulation into the map
-
-	if(template.restricted)
-		usr.log_message("loaded a restricted Holodeck program: [program].", LOG_GAME)
-		message_admins("[ADMIN_LOOKUPFLW(usr)] loaded a restricted Holodeck program: [program].")
 
 	spawned = template.created_atoms //populate the spawned list with the atoms belonging to the holodeck
 
@@ -235,141 +233,78 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	nerf(!(obj_flags & EMAGGED))
 	finish_spawn()
 
-///To be used on destroy, mainly to prevent sleeping inside well, destroy. Missing a lot of the things contained in load_program
-/obj/machinery/computer/holodeck/proc/reset_to_default()
-	if (program == offline_program)
-		return
-
-	program = offline_program
-	clear_projection()
-	//update_mode_power_usage(ACTIVE_POWER_USE, initial(active_power_usage))
-	update_use_power(IDLE_POWER_USE)
-
-	template = SSmapping.holodeck_templates[offline_program]
-	INVOKE_ASYNC(template, TYPE_PROC_REF(/datum/map_template, load), bottom_left) //this is what actually loads the holodeck simulation into the map
-
-/obj/machinery/computer/holodeck/proc/clear_projection()
-	//clear the items from the previous program
-	for(var/holo_atom in spawned)
-		derez(holo_atom)
-
-	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
-		effects -= holo_effect
-		holo_effect.deactivate(src)
-
-	//makes sure that any time a holoturf is inside a baseturf list (e.g. if someone put a wall over it) its set to the OFFLINE turf
-	//so that you cant bring turfs from previous programs into other ones (like putting the plasma burn turf into lounge for example)
-	for(var/turf/closed/holo_turf in linked)
-		holo_turf.replace_baseturf(/turf/open/floor/holofloor, /turf/open/floor/holofloor/plating)
-
 ///finalizes objects in the spawned list
 /obj/machinery/computer/holodeck/proc/finish_spawn()
-	for(var/atom/holo_atom as anything in spawned)
-		if(QDELETED(holo_atom))
-			spawned -= holo_atom
+	//this is used for holodeck effects (like spawners). otherwise they dont do shit
+	//holo effects are taken out of the spawned list and added to the effects list
+	//turfs and overlay objects are taken out of the spawned list
+	//objects get resistance flags added to them
+	for (var/_atom in spawned)
+		var/atom/atoms = _atom
+
+		if (isturf(atoms) || istype(atoms, /obj/effect/overlay/vis)) //ssatoms
+			spawned -= atoms
 			continue
-		finalize_spawned(holo_atom)
+
+		atoms.flags_1 |= HOLOGRAM_1
+		RegisterSignal(atoms, COMSIG_PARENT_PREQDELETED, PROC_REF(remove_from_holo_lists))
+
+		if (isholoeffect(atoms))//activates holo effects and transfers them from the spawned list into the effects list
+			var/obj/effect/holodeck_effect/holo_effect = atoms
+			effects += holo_effect
+			spawned -= holo_effect
+			var/atom/active_effect = holo_effect.activate(src)
+			if(istype(active_effect) || islist(active_effect))
+				spawned += active_effect // we want mobs or objects spawned via holoeffects to be tracked as objects
+			continue
+
+		if (isobj(atoms))
+			var/obj/holo_object = atoms
+			holo_object.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+			if (isstructure(holo_object))
+				holo_object.flags_1 |= NODECONSTRUCT_1
+				continue
+
+			if (ismachinery(holo_object))
+				var/obj/machinery/machines = holo_object
+				machines.flags_1 |= NODECONSTRUCT_1
+				machines.power_change()
+
+				if(istype(machines, /obj/machinery/button))
+					var/obj/machinery/button/buttons = machines
+					buttons.setup_device()
 	spawning_simulation = FALSE
 
-/obj/machinery/computer/holodeck/proc/finalize_spawned(atom/holo_atom)
-	RegisterSignal(holo_atom, COMSIG_QDELETING, PROC_REF(remove_from_holo_lists))
-	holo_atom.flags_1 |= HOLOGRAM_1
-
-	if(isholoeffect(holo_atom))//activates holo effects and transfers them from the spawned list into the effects list
-		var/obj/effect/holodeck_effect/holo_effect = holo_atom
-		effects += holo_effect
-		spawned -= holo_effect
-		var/atom/holo_effect_product = holo_effect.activate(src)//change name
-		if(istype(holo_effect_product))
-			spawned += holo_effect_product // we want mobs or objects spawned via holoeffects to be tracked as objects
-			RegisterSignal(holo_effect_product, COMSIG_QDELETING, PROC_REF(remove_from_holo_lists))
-		if(islist(holo_effect_product))
-			for(var/atom/atom_product as anything in holo_effect_product)
-				spawned += atom_product
-				RegisterSignal(atom_product, COMSIG_QDELETING, PROC_REF(remove_from_holo_lists))
-		return
-
-	if(isobj(holo_atom))
-		var/obj/holo_object = holo_atom
-		holo_object.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-
-		if(isstructure(holo_object))
-			holo_object.obj_flags |= NO_DEBRIS_AFTER_DECONSTRUCTION
-			if(istype(holo_object, /obj/structure/closet))
-				RegisterSignal(holo_object, COMSIG_CLOSET_CONTENTS_INITIALIZED, PROC_REF(register_contents))
-			return
-
-		if(ismachinery(holo_object))
-			var/obj/machinery/holo_machine = holo_object
-			holo_machine.obj_flags |= NO_DEBRIS_AFTER_DECONSTRUCTION
-			holo_machine.power_change()
-
-			if(istype(holo_machine, /obj/machinery/button))
-				var/obj/machinery/button/holo_button = holo_machine
-				holo_button.setup_device()
-
-/obj/machinery/computer/holodeck/proc/register_contents(obj/structure/closet/storage)
-	SIGNAL_HANDLER
-
-	for(var/atom/movable/item as anything in storage.get_all_contents_type(/atom/movable))
-		if(item == storage)
-			continue
-		add_to_spawned(item)
-
-/**
- * A separate proc for objects that weren't loaded by the template nor spawned by holo effects
- * yet need to be added to the list of spawned objects. (e.g. holographic fishes)
- */
-/obj/machinery/computer/holodeck/proc/add_to_spawned(atom/holo_atom)
-	spawned |= holo_atom
-	if(!(obj_flags & EMAGGED) && isitem(holo_atom))
-		var/obj/item/to_be_nerfed = holo_atom
-		to_be_nerfed.damtype = STAMINA
-	finalize_spawned(holo_atom)
-
 ///this qdels holoitems that should no longer exist for whatever reason
-/obj/machinery/computer/holodeck/proc/derez(atom/movable/holo_atom, silent = TRUE, forced = FALSE)
-	spawned -= holo_atom
-	if(!holo_atom)
+/obj/machinery/computer/holodeck/proc/derez(obj/object, silent = TRUE, forced = FALSE)
+	if(!object)
 		return
-	UnregisterSignal(holo_atom, COMSIG_QDELETING)
-	var/turf/target_turf = get_turf(holo_atom)
-	for(var/atom/movable/atom_contents as anything in holo_atom) //make sure that things inside of a holoitem are moved outside before destroying it
-		if(atom_contents.flags_1 & HOLOGRAM_1) //hologram in hologram is fine
-			continue
-		atom_contents.forceMove(target_turf)
 
-	if(istype(holo_atom, /obj/item/clothing/under))
-		var/obj/item/clothing/under/holo_clothing = holo_atom
-		holo_clothing.dump_attachments()
+	spawned -= object
+	UnregisterSignal(object, COMSIG_PARENT_PREQDELETED)
+	var/turf/target_turf = get_turf(object)
+	for(var/c in object) //make sure that things inside of a holoitem are moved outside before destroying it
+		var/atom/movable/object_contents = c
+		object_contents.forceMove(target_turf)
 
-	if(istype(holo_atom, /obj/item/organ))
-		var/obj/item/organ/holo_organ = holo_atom
-		if(holo_organ.owner) // a mob has the holo organ inside them... oh dear
-			to_chat(holo_organ.owner, span_warning("\The [holo_organ] inside of you fades away!"))
 	if(!silent)
-		visible_message(span_notice("[holo_atom] fades away!"))
+		visible_message("<span class='notice'>[object] fades away!</span>")
 
-	if(is_type_in_list(holo_atom.loc, special_locs))
-		qdel(holo_atom.loc)
-	qdel(holo_atom)
+	qdel(object)
 
 /obj/machinery/computer/holodeck/proc/remove_from_holo_lists(datum/to_remove, _forced)
-	SIGNAL_HANDLER
 	spawned -= to_remove
-	UnregisterSignal(to_remove, COMSIG_QDELETING)
+	UnregisterSignal(to_remove, COMSIG_PARENT_PREQDELETED)
 
-/obj/machinery/computer/holodeck/process(seconds_per_tick)
-	if(damaged && SPT_PROB(5, seconds_per_tick))
+/obj/machinery/computer/holodeck/process(delta_time)
+	if(damaged && DT_PROB(5, delta_time))
 		for(var/turf/holo_turf in linked)
-			if(SPT_PROB(2.5, seconds_per_tick))
+			if(DT_PROB(2.5, delta_time))
 				do_sparks(2, 1, holo_turf)
 				return
-	if(spawning_simulation)
-		return // putting it here because updating power would be pointless we are only loading it
 	. = ..()
 	if(!. || program == offline_program)//we dont need to scan the holodeck if the holodeck is offline
-		update_use_power(IDLE_POWER_USE)
 		return
 
 	if(!floorcheck()) //if any turfs in the floor of the holodeck are broken
@@ -386,10 +321,10 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 		for(var/item in spawned)
 			if(!(get_turf(item) in linked))
 				derez(item)
-	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
+	for(var/_effect in effects)
+		var/obj/effect/holodeck_effect/holo_effect = _effect
 		holo_effect.tick()
-	update_use_power(ACTIVE_POWER_USE)
-	update_mode_power_usage(ACTIVE_POWER_USE, initial(active_power_usage) + (spawned.len * 15 + effects.len * 25))
+	active_power_usage = 50 + spawned.len * 3 + effects.len * 5
 
 /obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)
 	if(active == toggleOn)
@@ -397,7 +332,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 
 	if(toggleOn)
 		if(last_program && (last_program != offline_program))
-			addtimer(CALLBACK(src, PROC_REF(load_program), last_program, TRUE), 2.5 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(load_program), last_program, TRUE), 25)
 		active = TRUE
 	else
 		last_program = program
@@ -414,12 +349,13 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	active = FALSE
 	load_program(offline_program, TRUE)
 
-///returns TRUE if all floors of the holodeck are present, returns FALSE if any are broken or removed
+///returns TRUE if the entire floor of the holodeck is intact, returns FALSE if any are broken
 /obj/machinery/computer/holodeck/proc/floorcheck()
 	for(var/turf/holo_floor in linked)
-		if (is_type_in_typecache(holo_floor, GLOB.typecache_holodeck_linked_floorcheck_ok))
-			continue
-		return FALSE
+		if(isspaceturf(holo_floor))
+			return FALSE
+		if(!holo_floor.intact)
+			return FALSE
 	return TRUE
 
 ///changes all weapons in the holodeck to do stamina damage if set
@@ -428,26 +364,22 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 		return
 	for(var/obj/item/to_be_nerfed in spawned)
 		to_be_nerfed.damtype = nerf_this ? STAMINA : initial(to_be_nerfed.damtype)
-	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
+	for(var/to_be_nerfed in effects)
+		var/obj/effect/holodeck_effect/holo_effect = to_be_nerfed
 		holo_effect.safety(nerf_this)
 
-/obj/machinery/computer/holodeck/emag_act(mob/user, obj/item/card/emag/emag_card)
+/obj/machinery/computer/holodeck/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
-		return FALSE
+		return
 	if(!LAZYLEN(emag_programs))
-		balloon_alert(user, "no card swipe port!")
-		return FALSE
-	playsound(src, SFX_SPARKS, 75, TRUE)
+		to_chat(user, "[src] does not seem to have a card swipe port. It must be an inferior model.")
+		return
+	playsound(src, "sparks", 75, TRUE)
 	obj_flags |= EMAGGED
-	if (user)
-		balloon_alert(user, "safety protocols destroyed") // im gonna keep this once since this perfectly describes it
-		to_chat(user, span_warning("You override the safety and security protocols."))
-		user.log_message("emagged the Holodeck Control Console.", LOG_GAME)
-		message_admins("[ADMIN_LOOKUPFLW(user)] emagged the Holodeck Control Console.")
-
+	to_chat(user, "<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>")
 	say("Warning. Automatic shutoff and derezzing protocols have been corrupted. Please call Nanotrasen maintenance and do not use the simulator.")
+	log_game("[key_name(user)] emagged the Holodeck Control Console")
 	nerf(!(obj_flags & EMAGGED),FALSE)
-	return TRUE
 
 /obj/machinery/computer/holodeck/emp_act(severity)
 	. = ..()
@@ -460,10 +392,10 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	return ..()
 
 /obj/machinery/computer/holodeck/Destroy()
-	reset_to_default()
+	emergency_shutdown()
 	if(linked)
 		linked.linked = null
-		linked.energy_usage = list(AREA_USAGE_LEN)
+		linked.power_usage = list(AREA_USAGE_LEN)
 	return ..()
 
 /obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)

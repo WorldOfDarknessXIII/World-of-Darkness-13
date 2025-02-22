@@ -39,7 +39,7 @@ menu "menu"
 		command = ".quit"
 		category = "&File"
 		saved-params = "is-checked"
-	elem "help-menu"
+	elem
 		name = "&Help"
 		command = ""
 		saved-params = "is-checked"
@@ -50,7 +50,7 @@ menu "menu"
 		saved-params = "is-checked"
 	elem
 		name = "&Hotkeys"
-		command = "Hotkeys-Help"
+		command = "hotkeys-help"
 		category = "&Help"
 		saved-params = "is-checked"
 
@@ -58,20 +58,21 @@ menu "menu"
 window "mainwindow"
 	elem "mainwindow"
 		type = MAIN
-		pos = 281,0
+		pos = 0,0
 		size = 640x440
-		anchor1 = -1,-1
-		anchor2 = -1,-1
+		anchor1 = -1, -1
+		anchor2 = -1, -1
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
 		statusbar = false
-		icon = 'icons\\ui\\common\\tg_32.png'
+		on-status = ".winset \"[[*]] = \"\" ? status_bar.text = [[*]] status_bar.is-visible = true : status_bar.is-visible = false\""
+		icon = 'icons\\tg_32.png'
 		macro = "default"
 		menu = "menu"
 	elem "split"
 		type = CHILD
-		pos = 0,0
-		size = 640x440
+		pos = 3,0
+		size = 634x440
 		anchor1 = 0,0
 		anchor2 = 100,100
 		saved-params = "splitter"
@@ -82,56 +83,47 @@ window "mainwindow"
 		type = BROWSER
 		pos = 0,0
 		size = 200x200
-		anchor1 = -1,-1
-		anchor2 = -1,-1
+		anchor1 = -1, -1
+		anchor2 = -1, -1
 		is-visible = false
 		saved-params = ""
 	elem "tooltip"
 		type = BROWSER
 		pos = 0,0
 		size = 999x999
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		is-visible = false
-		saved-params = ""
-	elem "commandbar_spy"
-		type = BROWSER
-		is-default = false
-		pos = 0,0
-		size = 200x200
-		anchor1 = -1,-1
-		anchor2 = -1,-1
+		anchor1 = -1, -1
+		anchor2 = -1, -1
 		is-visible = false
 		saved-params = ""
 
 window "mapwindow"
 	elem "mapwindow"
 		type = MAIN
-		pos = 281,0
+		pos = 0,0
 		size = 640x480
-		anchor1 = -1,-1
-		anchor2 = -1,-1
+		anchor1 = -1, -1
+		anchor2 = -1, -1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
-		on-status = ".winset \"status_bar.text=[[*]]\" "
 	elem "map"
 		type = MAP
 		pos = 0,0
 		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
-		font-family = "Grand9K Pixel"
-		font-size = 6pt
-		is-default = true
+		font-family = "Arial"
+		font-size = 7
+		text-color = none
 		right-click = true
+		is-default = true
 		saved-params = "zoom;letterbox;zoom-mode"
-		style = ".center { text-align: center; } .maptext { font-family: 'Grand9K Pixel'; font-size: 6pt; -dm-text-outline: 1px black; color: white; line-height: 1.0; } .command_headset { font-weight: bold; } .context { font-family: 'Pixellari'; font-size: 12pt; -dm-text-outline: 1px black; }  .subcontext { font-family: 'TinyUnicode'; font-size: 12pt; line-height: 0.75; } .small { font-family: 'Spess Font'; font-size: 6pt; line-height: 1.4; } .big { font-family: 'Pixellari'; font-size: 12pt; } .reallybig { font-size: 12pt; } .extremelybig { font-size: 12pt; } .greentext { color: #00FF00; font-size: 6pt; } .redtext { color: #FF0000; font-size: 6pt; } .clown { color: #FF69BF; font-weight: bold; } .his_grace { color: #15D512; } .hypnophrase { color: #0d0d0d; font-weight: bold; } .yell { font-weight: bold; } .italics { font-family: 'Spess Font'; font-size: 6pt; line-height: 1.4; }"
+		style = ".center { text-align: center; } .maptext { font-family: 'Small Fonts'; font-size: 7px; -dm-text-outline: 1px black; color: white; line-height: 1.1; } .command_headset { font-weight: bold;\tfont-size: 8px; } .small { font-size: 6px; } .big { font-size: 8px; } .reallybig { font-size: 8px; } .extremelybig { font-size: 8px; } .greentext { color: #00FF00; font-size: 7px; } .redtext { color: #FF0000; font-size: 7px; } .clown { color: #FF69Bf; font-size: 7px;  font-weight: bold; } .his_grace { color: #15D512; } .hypnophrase { color: #0d0d0d; font-weight: bold; } .yell { font-weight: bold; } .italics { font-size: 6px; }"
 	elem "status_bar"
 		type = LABEL
 		pos = 0,464
 		size = 280x16
 		anchor1 = 0,100
-		is-visible = true
+		is-visible = false
 		text = ""
 		align = left
 		background-color = #222222
@@ -143,8 +135,8 @@ window "infowindow"
 		type = MAIN
 		pos = 281,0
 		size = 640x480
-		anchor1 = -1,-1
-		anchor2 = -1,-1
+		anchor1 = -1, -1
+		anchor2 = -1, -1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "info"
@@ -159,80 +151,77 @@ window "infowindow"
 		is-vert = false
 	elem "changelog"
 		type = BUTTON
-		pos = 0,5
-		size = 87x20
-		anchor1 = 0,0
-		anchor2 = 15,0
+		pos = 5,5
+		size = 90x20
+		anchor1 = 3,0
+		anchor2 = 19,0
 		saved-params = "is-checked"
 		text = "Changelog"
 		command = "changelog"
 	elem "rules"
 		type = BUTTON
-		pos = 92,5
-		size = 87x20
-		anchor1 = 15,0
-		anchor2 = 29,0
+		pos = 95,5
+		size = 90x20
+		anchor1 = 19,0
+		anchor2 = 34,0
 		saved-params = "is-checked"
 		text = "Rules"
 		command = "rules"
 	elem "wiki"
 		type = BUTTON
-		pos = 184,5
-		size = 87x20
-		anchor1 = 29,0
-		anchor2 = 43,0
+		pos = 185,5
+		size = 90x20
+		anchor1 = 34,0
+		anchor2 = 50,0
 		saved-params = "is-checked"
 		text = "Wiki"
 		command = "wiki"
 	elem "forum"
 		type = BUTTON
-		pos = 276,5
-		size = 87x20
-		anchor1 = 43,0
-		anchor2 = 57,0
+		pos = 275,5
+		size = 90x20
+		anchor1 = 50,0
+		anchor2 = 66,0
 		saved-params = "is-checked"
 		text = "Forum"
 		command = "forum"
+	elem "discord"
+		type = BUTTON
+		pos = 365,5
+		size = 90x20
+		anchor1 = 66,0
+		anchor2 = 81,0
+		saved-params = "is-checked"
+		text = "Discord"
+		command = "discord"
 	elem "github"
 		type = BUTTON
-		pos = 368,5
-		size = 87x20
-		anchor1 = 57,0
-		anchor2 = 71,0
+		pos = 455,5
+		size = 90x20
+		anchor1 = 81,0
+		anchor2 = 97,0
 		saved-params = "is-checked"
 		text = "Github"
 		command = "github"
 	elem "report-issue"
 		type = BUTTON
-		pos = 460,5
-		size = 87x20
-		anchor1 = 71,0
-		anchor2 = 85,0
+		pos = 545,5
+		size = 90x20
+		anchor1 = 97,0
+		anchor2 = 113,0
 		saved-params = "is-checked"
 		text = "Report Issue"
 		command = "report-issue"
-	elem "fullscreen-toggle"
-		type = BUTTON
-		pos = 552,5
-		size = 88x20
-		anchor1 = 85,0
-		anchor2 = 100,0
-		saved-params = "is-checked"
-		text = "Fullscreen"
-		command = "fullscreen"
 
 window "outputwindow"
 	elem "outputwindow"
 		type = MAIN
 		pos = 0,0
 		size = 640x480
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		background-color = none
+		anchor1 = -1, -1
+		anchor2 = -1, -1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
-		outer-size = 656x538
-		inner-size = 640x499
 	elem "input"
 		type = INPUT
 		pos = 2,460
@@ -281,26 +270,16 @@ window "outputwindow"
 		command = ".winset \"mebutton.is-checked=true ? input.command=\"!me \\\"\" : input.command=\"\"mebutton.is-checked=true ? saybutton.is-checked=false\"\"mebutton.is-checked=true ? oocbutton.is-checked=false\""
 		is-flat = true
 		button-type = pushbox
-	elem "legacy_output_selector"
-		type = CHILD
+	elem "browseroutput"
+		type = BROWSER
 		pos = 0,0
 		size = 640x456
 		anchor1 = 0,0
 		anchor2 = 100,100
-		saved-params = "splitter"
-		left = "output_legacy"
-		is-vert = false
-
-window "output_legacy"
-	elem "output_legacy"
-		type = MAIN
-		pos = 0,0
-		size = 640x456
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		background-color = none
-		saved-params = "pos;size;is-minimized;is-maximized"
-		is-pane = true
+		background-color = #ffffff
+		is-visible = false
+		is-disabled = true
+		saved-params = ""
 	elem "output"
 		type = OUTPUT
 		pos = 0,0
@@ -310,32 +289,13 @@ window "output_legacy"
 		is-default = true
 		saved-params = ""
 
-window "output_browser"
-	elem "output_browser"
-		type = MAIN
-		pos = 0,0
-		size = 640x456
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		background-color = none
-		saved-params = "pos;size;is-minimized;is-maximized"
-		is-pane = true
-	elem "browseroutput"
-		type = BROWSER
-		pos = 0,0
-		size = 640x456
-		anchor1 = 0,0
-		anchor2 = 100,100
-		background-color = none
-		saved-params = ""
-
 window "popupwindow"
 	elem "popupwindow"
 		type = MAIN
 		pos = 281,0
 		size = 120x120
-		anchor1 = -1,-1
-		anchor2 = -1,-1
+		anchor1 = -1, -1
+		anchor2 = -1, -1
 		is-visible = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		statusbar = false
@@ -346,8 +306,8 @@ window "preferences_window"
 		type = MAIN
 		pos = 281,0
 		size = 1280x1000
-		anchor1 = -1,-1
-		anchor2 = -1,-1
+		anchor1 = -1, -1
+		anchor2 = -1, -1
 		is-visible = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		statusbar = false
@@ -370,10 +330,10 @@ window "preferences_window"
 window "statwindow"
 	elem "statwindow"
 		type = MAIN
-		pos = 281,0
+		pos = 372,0
 		size = 640x480
-		anchor1 = -1,-1
-		anchor2 = -1,-1
+		anchor1 = -1, -1
+		anchor2 = -1, -1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "statbrowser"
@@ -384,23 +344,3 @@ window "statwindow"
 		anchor2 = 100,100
 		is-visible = false
 		saved-params = ""
-
-window "tgui_say"
-	elem "tgui_say"
-		type = MAIN
-		pos = 848,500
-		size = 231x30
-		anchor1 = 50,50
-		anchor2 = 50,50
-		is-visible = false
-		saved-params = ""
-		statusbar = false
-		can-minimize = false
-	elem "browser"
-		type = BROWSER
-		pos = 0,0
-		size = 231x30
-		anchor1 = 0,0
-		anchor2 = 0,0
-		saved-params = ""
-

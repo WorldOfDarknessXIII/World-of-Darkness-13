@@ -1,4 +1,0 @@
-directory = "_maps/modular_generic/sanfrancisco"
-
-[rooms.sewersnortheast1]
-modules = ["sewersdrugden.dmm", "sewersthunderdome.dmm"]

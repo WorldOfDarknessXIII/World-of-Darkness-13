@@ -84,7 +84,7 @@
 			else
 				complete()
 
-/obj/ritualrune/click_alt(mob/user)
+/obj/ritualrune/AltClick(mob/user)
 	..()
 	qdel(src)
 
@@ -130,6 +130,7 @@
 	icon_state = "blood_guardian"
 	icon_living = "blood_guardian"
 	del_on_death = 1
+	healable = 0
 	mob_biotypes = MOB_SPIRIT
 	speak_chance = 0
 	turns_per_move = 5
@@ -148,9 +149,10 @@
 	melee_damage_upper = 25
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
-	attack_sound = 'sound/items/weapons/punch1.ogg'
+	attack_sound = 'sound/weapons/punch1.ogg'
 	speak_emote = list("gnashes")
 
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 	faction = list("Tremere")
@@ -164,17 +166,14 @@
 	icon_state = "rune2"
 	word = "DUH'K-A'U"
 
-/obj/ritualrune/blood_trap/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_CROSS, PROC_REF(on_cross))
-
 /obj/ritualrune/blood_trap/complete()
 	if(!activated)
 		playsound(loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
 		activated = TRUE
 		alpha = 28
 
-/obj/ritualrune/blood_trap/proc/on_cross(atom/movable/AM)
+/obj/ritualrune/blood_trap/Crossed(atom/movable/AM)
+	..()
 	if(isliving(AM) && activated)
 		var/mob/living/L = AM
 		L.adjustFireLoss(50+activator_bonus)
@@ -203,6 +202,7 @@
 	anchored = TRUE
 	density = TRUE
 	max_integrity = 100
+	obj_integrity = 100
 
 /obj/structure/fleshwall
 	name = "flesh wall"
@@ -214,6 +214,7 @@
 	anchored = TRUE
 	density = TRUE
 	max_integrity = 100
+	obj_integrity = 100
 
 /obj/ritualrune/identification
 	name = "Identification Rune"
@@ -246,7 +247,7 @@
 
 /obj/ritualrune/question/complete()
 	visible_message("<span class='notice'>A call rings out to the dead from the [src.name] rune...</span>")
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghosts_for_target("Do you wish to answer a question? (You are allowed to spread meta information)", null, null, null, 10 SECONDS, src)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you wish to answer a question? (You are allowed to spread meta information)", null, null, null, 10 SECONDS, src)
 	for(var/mob/dead/observer/G in GLOB.player_list)
 		if(G.key)
 			to_chat(G, "<span class='ghostalert'>Question rune has been triggered.</span>")
@@ -360,7 +361,7 @@
 			cursed = namem
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
 				if(H.real_name == cursed)
-					H.adjustFireLoss(25)
+					H.adjustCloneLoss(25)
 					playsound(H.loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
 					to_chat(H, "<span class='warning'>You feel someone repeating your name from the shadows...</span>")
 					H.Stun(10)
@@ -402,7 +403,7 @@
 				H.forceMove(get_turf(src))
 				H.create_disciplines(FALSE, H.clane.clane_disciplines)
 				if(!H.key)
-					var/list/mob/dead/observer/candidates = SSpolling.poll_ghosts_for_target("Do you wish to play as Sentient Gargoyle?", null, null, null, 50, src)
+					var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you wish to play as Sentient Gargoyle?", null, null, null, 50, src)
 					for(var/mob/dead/observer/G in GLOB.player_list)
 						if(G.key)
 							to_chat(G, "<span class='ghostalert'>Gargoyle Transformation rune has been triggered.</span>")

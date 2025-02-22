@@ -6,7 +6,7 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/template_noop)
 "c" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating/airless,
 /area/template_noop)
 "d" = (
@@ -22,7 +22,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/template_noop)
 "j" = (
-/obj/machinery/door/airlock/titanium,
+/obj/machinery/door/unpowered/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/template_noop)
 "l" = (
@@ -38,19 +38,19 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/template_noop)
 "n" = (
-/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
 /area/template_noop)
 "p" = (
-/obj/machinery/power/shuttle_engine/propulsion/left,
+/obj/structure/shuttle/engine/propulsion/left,
 /turf/open/floor/plating/airless,
 /area/template_noop)
 "q" = (
-/obj/machinery/power/shuttle_engine/propulsion,
+/obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/template_noop)
 "r" = (
-/obj/machinery/power/shuttle_engine/propulsion/right,
+/obj/structure/shuttle/engine/propulsion/right,
 /turf/open/floor/plating/airless,
 /area/template_noop)
 

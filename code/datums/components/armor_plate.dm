@@ -1,42 +1,35 @@
 /datum/component/armor_plate
-	/// The current number of upgrades applied to the parent via this component.
 	var/amount = 0
-	/// The maximum number of upgarde items that can be applied. Once var/amount reaches this value, no more upgrades can be applied
 	var/maxamount = 3
-	/// THe path for our upgrade item. Each one is expended to improve the parent's armor values.
 	var/upgrade_item = /obj/item/stack/sheet/animalhide/goliath_hide
-	/// THe armor datum path for our upgrade values. This value is added per upgrade item applied
-	var/datum/armor/armor_mod = /datum/armor/armor_plate
-	/// The name of the upgrade item.
+	var/datum/armor/added_armor = list(MELEE = 10)
 	var/upgrade_name
-	/// Adds a prefix to the item, demonstrating that it is upgraded in some way.
-	var/upgrade_prefix = "reinforced"
-	/// Tracks whether or not we've received an upgrade or not.
-	var/have_upgraded = FALSE
 
-/datum/armor/armor_plate
-	melee = 10
-
-/datum/component/armor_plate/Initialize(maxamount, obj/item/upgrade_item, datum/armor/armor_mod, upgrade_prefix = "reinforced")
+/datum/component/armor_plate/Initialize(_maxamount,obj/item/_upgrade_item,datum/armor/_added_armor)
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
-	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(applyplate))
-	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(dropplates))
-	if(istype(parent, /obj/vehicle/sealed/mecha/ripley))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(examine))
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(applyplate))
+	RegisterSignal(parent, COMSIG_PARENT_PREQDELETED, PROC_REF(dropplates))
+	if(istype(parent, /obj/vehicle/sealed/mecha/working/ripley))
 		RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_mech_overlays))
 
-	if(maxamount)
-		src.maxamount = maxamount
-	if(upgrade_item)
-		src.upgrade_item = upgrade_item
-	if(armor_mod)
-		src.armor_mod = armor_mod
-	if(upgrade_prefix)
-		src.upgrade_prefix = upgrade_prefix
-	var/obj/item/typecast = src.upgrade_item
-	src.upgrade_name = initial(typecast.name)
+	if(_maxamount)
+		maxamount = _maxamount
+	if(_upgrade_item)
+		upgrade_item = _upgrade_item
+	if(_added_armor)
+		if(islist(_added_armor))
+			added_armor = getArmor(arglist(_added_armor))
+		else if (istype(_added_armor, /datum/armor))
+			added_armor = _added_armor
+		else
+			stack_trace("Invalid type [_added_armor.type] passed as _armor_item argument to armorplate component")
+	else
+		added_armor = getArmor(arglist(added_armor))
+	var/obj/item/typecast = upgrade_item
+	upgrade_name = initial(typecast.name)
 
 /datum/component/armor_plate/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -45,48 +38,46 @@
 	if(ismecha(parent))
 		if(amount)
 			if(amount < maxamount)
-				examine_list += span_notice("Its armor is enhanced with [amount] [upgrade_name].")
+				examine_list += "<span class='notice'>Its armor is enhanced with [amount] [upgrade_name].</span>"
 			else
-				examine_list += span_notice("It's wearing a fearsome carapace entirely composed of [upgrade_name] - its pilot must be an experienced monster hunter.")
+				examine_list += "<span class='notice'>It's wearing a fearsome carapace entirely composed of [upgrade_name] - its pilot must be an experienced monster hunter.</span>"
 		else
-			examine_list += span_notice("It has attachment points for strapping monster hide on for added protection.")
+			examine_list += "<span class='notice'>It has attachment points for strapping monster hide on for added protection.</span>"
 	else
 		if(amount)
-			examine_list += span_notice("It has been strengthened with [amount]/[maxamount] [upgrade_name].")
+			examine_list += "<span class='notice'>It has been strengthened with [amount]/[maxamount] [upgrade_name].</span>"
 		else
-			examine_list += span_notice("It can be strengthened with up to [maxamount] [upgrade_name].")
+			examine_list += "<span class='notice'>It can be strengthened with up to [maxamount] [upgrade_name].</span>"
 
-/datum/component/armor_plate/proc/applyplate(datum/source, obj/item/our_upgrade_item, mob/user, params)
+/datum/component/armor_plate/proc/applyplate(datum/source, obj/item/I, mob/user, params)
 	SIGNAL_HANDLER
 
-	if(!istype(our_upgrade_item, upgrade_item))
+	if(!istype(I,upgrade_item))
 		return
 	if(amount >= maxamount)
-		to_chat(user, span_warning("You can't improve [parent] any further!"))
+		to_chat(user, "<span class='warning'>You can't improve [parent] any further!</span>")
 		return
 
-	if(istype(our_upgrade_item, /obj/item/stack))
-		our_upgrade_item.use(1)
+	if(istype(I,/obj/item/stack))
+		I.use(1)
 	else
-		if(length(our_upgrade_item.contents))
-			to_chat(user, span_warning("[our_upgrade_item] cannot be used for armoring while there's something inside!"))
+		if(length(I.contents))
+			to_chat(user, "<span class='warning'>[I] cannot be used for armoring while there's something inside!</span>")
 			return
-		qdel(our_upgrade_item)
+		qdel(I)
 
-	var/obj/target_for_upgrading = parent
+	var/obj/O = parent
 	amount++
-	target_for_upgrading.set_armor(target_for_upgrading.get_armor().add_other_armor(armor_mod))
+	O.armor = O.armor.attachArmor(added_armor)
 
-	if(ismecha(target_for_upgrading))
-		var/obj/vehicle/sealed/mecha/mecha_for_upgrading = target_for_upgrading
-		mecha_for_upgrading.update_appearance()
-		to_chat(user, span_info("You strengthen [mecha_for_upgrading], improving its resistance against attacks."))
+	if(ismecha(O))
+		var/obj/vehicle/sealed/mecha/R = O
+		R.update_icon()
+		to_chat(user, "<span class='info'>You strengthen [R], improving its resistance against melee, bullet and laser damage.</span>")
 	else
-		SEND_SIGNAL(target_for_upgrading, COMSIG_ARMOR_PLATED, amount, maxamount)
-		if(upgrade_prefix && !have_upgraded)
-			target_for_upgrading.name = "[upgrade_prefix] [target_for_upgrading.name]"
-			have_upgraded = TRUE
-		to_chat(user, span_info("You strengthen [target_for_upgrading], improving its resistance against attacks."))
+		SEND_SIGNAL(O, COMSIG_ARMOR_PLATED, amount, maxamount)
+		to_chat(user, "<span class='info'>You strengthen [O], improving its resistance against melee attacks.</span>")
+
 
 /datum/component/armor_plate/proc/dropplates(datum/source, force)
 	SIGNAL_HANDLER

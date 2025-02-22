@@ -22,16 +22,15 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 			"size" = 1
 		)
 	),
-	// Not implemented, but if this isn't uncommented some windows will just error
-	// Needs either a proper matrix editor, or just a hook to our existing one
-	// Issue is filterrific assumes variables will have the same value type if they share the same name, which this violates
-	// Gotta refactor this sometime
+	/* Not supported because making a proper matrix editor on the frontend would be a huge dick pain.
+		Uncomment if you ever implement it
 	"color" = list(
 		"defaults" = list(
 			"color" = matrix(),
 			"space" = FILTER_COLOR_RGB
 		)
 	),
+	*/
 	"displace" = list(
 		"defaults" = list(
 			"x" = 0,
@@ -169,7 +168,7 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 	if(!isnull(space))
 		.["space"] = space
 
-/proc/displacement_map_filter(icon, render_source, x, y, size = ICON_SIZE_ALL)
+/proc/displacement_map_filter(icon, render_source, x, y, size = 32)
 	. = list("type" = "displace")
 	if(!isnull(icon))
 		.["icon"] = icon
@@ -312,18 +311,9 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 		animate(filter, offset = random_roll, time = 0, loop = -1, flags = ANIMATION_PARALLEL)
 		animate(offset = random_roll - 1, time = rand() * 20 + 10)
 
-/proc/remove_wibbly_filters(atom/in_atom, remove_duration = 0)
+/proc/remove_wibbly_filters(atom/in_atom)
 	var/filter
 	for(var/i in 1 to 7)
 		filter = in_atom.get_filter("wibbly-[i]")
-		if(remove_duration == 0)
-			animate(filter)
-			in_atom.remove_filter("wibbly-[i]")
-			continue
-		animate(filter, x = 0, y = 0, size = 0, offset = 0, time = remove_duration)
-		addtimer(CALLBACK(in_atom, TYPE_PROC_REF(/datum, remove_filter), "wibbly-[i]"), remove_duration)
-
-/proc/convert_list_to_filter(list/list_filter)
-	var/list/arguments = list_filter.Copy()
-	arguments -= "priority"
-	return filter(arglist(arguments))
+		animate(filter)
+		in_atom.remove_filter("wibbly-[i]")

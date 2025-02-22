@@ -28,21 +28,22 @@
 	if(!ispath(delivery))
 		delivery = pick_closest_path(attempted_target_path)
 		if(!delivery)
-			tgui_alert(user, "ERROR: Incorrect / improper path given.")
+			alert(user, "ERROR: Incorrect / improper path given.")
 			return FALSE
 	target_path = delivery
 
 /datum/smite/supply_pod_quick/effect(client/user, mob/living/target)
 	. = ..()
-	podspawn(list(
-		"target" = get_turf(target),
-		"path" = /obj/structure/closet/supplypod/centcompod,
-		"style" = /datum/pod_style/centcom,
-		"spawn" = target_path,
-		"damage" = SUPPLY_POD_QUICK_DAMAGE,
-		"explosionSize" = list(0, 0, 0, SUPPLY_POD_QUICK_FIRE_RANGE),
-		"effectStun" = TRUE
-	))
+
+	var/obj/structure/closet/supplypod/centcompod/pod = new
+	pod.damage = SUPPLY_POD_QUICK_DAMAGE
+	pod.explosionSize = list(0, 0, 0, SUPPLY_POD_QUICK_FIRE_RANGE)
+	pod.effectStun = TRUE
+
+	if (!isnull(target_path))
+		new target_path(pod)
+
+	new /obj/effect/pod_landingzone(get_turf(target), pod)
 
 #undef SUPPLY_POD_QUICK_DAMAGE
 #undef SUPPLY_POD_QUICK_FIRE_RANGE

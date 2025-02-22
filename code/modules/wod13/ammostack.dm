@@ -4,22 +4,42 @@
 	damage = 20
 	pass_flags = PASSTABLE
 	damage_type = BRUTE
+	nodamage = FALSE
+	flag = BULLET
 	reflectable = NONE
 	ricochets_max = 0
-	hitsound = 'sound/items/weapons/pierce.ogg'
+	hitsound = 'sound/weapons/pierce.ogg'
 	hitsound_wall = "ricochet"
 	sharpness = SHARP_POINTY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
 	shrapnel_type = /obj/item/shrapnel/bullet
+	embedding = list(embed_chance=15, fall_chance=2, jostle_chance=0, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.5, pain_mult=3, rip_time=10)
 	wound_falloff_tile = -5
 	embed_falloff_tile = -5
 	range = 50
 	eyeblur = 0
 	light_range = 0
 	light_power = 0
+//	jitter = 10
 	icon_state = ""
 	hitscan = TRUE
-	tracer_type = /obj/effect/projectile/tracer/tracer/beam_rifle
+	tracer_type = /obj/effect/projectile/tracer/tracer/beam_rifle/vampire
+
+/obj/projectile/beam/beam_rifle/vampire/generate_hitscan_tracers(cleanup = TRUE, duration = 5, impacting = TRUE, highlander)
+	set waitfor = FALSE
+	if(isnull(highlander))
+		highlander = TRUE
+	if(highlander && istype(gun))
+		QDEL_LIST(gun.current_tracers)
+		for(var/datum/point/p in beam_segments)
+			gun.current_tracers += generate_tracer_between_points(p, beam_segments[p], tracer_type, color, 0, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity)
+	else
+		for(var/datum/point/p in beam_segments)
+			generate_tracer_between_points(p, beam_segments[p], tracer_type, color, duration, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity)
+	if(cleanup)
+		QDEL_LIST(beam_segments)
+		beam_segments = null
+		QDEL_NULL(beam_index)
 
 /obj/projectile/beam/beam_rifle/vampire/vamp9mm
 	name = "9mm bullet"
@@ -71,12 +91,12 @@
 	bare_wound_bonus = 10
 	wound_bonus = 5
 
-/obj/projectile/beam/beam_rifle/vampire/vamp12g/on_hit(atom/target, blocked = 0, pierce_hit)
+/obj/projectile/beam/beam_rifle/vampire/vamp12g/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/hit_person = target
 		if(hit_person.storyteller_roll(
-			dice = hit_person.get_total_strength() + min(hit_person.get_total_dexterity(), hit_person.get_total_athletics()),
+			dice = hit_person.get_total_physique() + min(hit_person.get_total_dexterity(), hit_person.get_total_athletics()),
 			difficulty = 3 + (!isnull(firer) ? rand(1,2) : 0)
 		) == ROLL_FAILURE)
 			hit_person.Knockdown(20)
@@ -91,7 +111,7 @@
 	bare_wound_bonus = 5
 	wound_bonus = 0
 
-/obj/projectile/beam/beam_rifle/vampire/shotpellet/on_hit(atom/target, blocked, pierce_hit)
+/obj/projectile/beam/beam_rifle/vampire/shotpellet/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
@@ -102,12 +122,11 @@
 	damage = 30
 	var/fire_stacks = 4
 
-/obj/projectile/beam/beam_rifle/vampire/vamp556mm/incendiary/on_hit(atom/target, blocked, pierce_hit)
-	. = ..()
+/obj/projectile/beam/beam_rifle/vampire/vamp556mm/incendiary/on_hit(atom/target, blocked = FALSE)
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(fire_stacks)
-		M.ignite_mob()
+		M.IgniteMob()
 
 /obj/projectile/bullet/crossbow_bolt
 	name = "bolt"
@@ -263,6 +282,12 @@
 	ammo_type = /obj/item/ammo_casing/vampire/c44
 	max_ammo = 60
 
+/obj/item/ammo_box/vampire/c50
+	name = "ammo box (.50)"
+	icon_state = "50box"
+	ammo_type = /obj/item/ammo_casing/vampire/c50
+	max_ammo = 20
+
 /obj/item/ammo_box/vampire/c556
 	name = "ammo box (5.56)"
 	icon_state = "556box"
@@ -315,88 +340,61 @@
 
 /obj/projectile/beam/beam_rifle/vampire/vamp556mm/silver
 	name = "5.56mm silver bullet"
-	armour_penetration = 10
-	damage = 35
+	armour_penetration = 20
 
-/obj/projectile/beam/beam_rifle/vampire/vamp556mm/silver/on_hit(atom/target, blocked = 0, pierce_hit)
+/obj/projectile/beam/beam_rifle/vampire/vamp556mm/silver/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iswerewolf(target) || isgarou(target))
 		var/mob/living/carbon/M = target
 		if(M.auspice.gnosis)
 			if(prob(50))
 				adjust_gnosis(-1, M)
-		else
-			M.Stun(1 SECONDS)
-			M.Immobilize(1 SECONDS)
-			M.adjustBruteLoss(50, TRUE)
-			M.adjustFireLoss(20, TRUE)
-		if(!M.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
-			M.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
-			spawn(7 SECONDS)
-			M.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
+
+		M.apply_damage(20, CLONE)
+		M.apply_status_effect(STATUS_EFFECT_SILVER_SLOWDOWN)
 
 /obj/projectile/beam/beam_rifle/vampire/vamp9mm/silver
 	name = "9mm silver bullet"
-	damage = 23
 
-/obj/projectile/beam/beam_rifle/vampire/vamp9mm/silver/on_hit(atom/target, blocked = 0, pierce_hit)
+/obj/projectile/beam/beam_rifle/vampire/vamp9mm/silver/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iswerewolf(target) || isgarou(target))
 		var/mob/living/carbon/M = target
 		if(M.auspice.gnosis)
 			if(prob(50))
 				adjust_gnosis(-1, M)
-		else
-			M.Stun(1 SECONDS)
-			M.adjustBruteLoss(25, TRUE)
-			M.adjustFireLoss(10, TRUE)
-		if(!M.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
-			M.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
-			spawn(5 SECONDS)
-				M.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
+
+		M.apply_damage(10, CLONE)
+		M.apply_status_effect(STATUS_EFFECT_SILVER_SLOWDOWN)
 
 /obj/projectile/beam/beam_rifle/vampire/vamp45acp/silver
 	name = ".45 ACP silver bullet"
-	damage = 25
 
-/obj/projectile/beam/beam_rifle/vampire/vamp45acp/silver/on_hit(atom/target, blocked, pierce_hit)
+/obj/projectile/beam/beam_rifle/vampire/vamp45acp/silver/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iswerewolf(target) || isgarou(target))
 		var/mob/living/carbon/M = target
 		if(M.auspice.gnosis)
 			if(prob(50))
 				adjust_gnosis(-1, M)
-		else
-			M.Stun(1 SECONDS)
-			M.adjustBruteLoss(30, TRUE)
-			M.adjustFireLoss(15, TRUE)
-		if(!M.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
-			M.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
-			spawn(5 SECONDS)
-				M.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
+
+		M.apply_damage(15, CLONE)
+		M.apply_status_effect(STATUS_EFFECT_SILVER_SLOWDOWN)
 
 /obj/projectile/beam/beam_rifle/vampire/vamp44/silver
 	name = ".44 silver bullet"
-	damage = 40
-	armour_penetration = 15
 	icon_state = "s44"
 
-/obj/projectile/beam/beam_rifle/vampire/vamp44/silver/on_hit(atom/target, blocked, pierce_hit)
+/obj/projectile/beam/beam_rifle/vampire/vamp44/silver/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iswerewolf(target) || isgarou(target))
 		var/mob/living/carbon/M = target
 		if(M.auspice.gnosis)
 			if(prob(50))
 				adjust_gnosis(-1, M)
-		else
-			M.Stun(2 SECONDS)
-			M.Immobilize(1 SECONDS)
-			M.adjustBruteLoss(40, TRUE)
-			M.adjustFireLoss(25, TRUE)
-		if(!M.has_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown))
-			M.add_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
-			spawn(7 SECONDS)
-				M.remove_movespeed_modifier(/datum/movespeed_modifier/silver_slowdown)
+
+		M.apply_damage(20, CLONE)
+		M.apply_status_effect(STATUS_EFFECT_SILVER_SLOWDOWN)
 
 /obj/item/ammo_casing/vampire/c9mm/silver
 	name = "9mm silver bullet casing"

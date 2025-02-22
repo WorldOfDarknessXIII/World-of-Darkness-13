@@ -1,12 +1,3 @@
-
-///All currently running polls held as datums
-GLOBAL_LIST_EMPTY(polls)
-GLOBAL_PROTECT(polls)
-
-///All poll option datums of running polls
-GLOBAL_LIST_EMPTY(poll_options)
-GLOBAL_PROTECT(poll_options)
-
 /**
  * Shows a list of currently running polls a player can vote/has voted on
  *
@@ -18,7 +9,7 @@ GLOBAL_PROTECT(poll_options)
 		var/datum/poll_question/poll = p
 		if((poll.admin_only && !client.holder) || poll.future_poll)
 			continue
-		output += "<tr bgcolor='#e2e2e2'><td><a href='byond://?src=[rs];viewpoll=[REF(poll)]'><b>[poll.question]</b></a></td></tr>"
+		output += "<tr bgcolor='#e2e2e2'><td><a href='?src=[rs];viewpoll=[REF(poll)]'><b>[poll.question]</b></a></td></tr>"
 	output += "</table>"
 	src << browse(jointext(output, ""),"window=playerpolllist;size=500x300")
 
@@ -30,7 +21,7 @@ GLOBAL_PROTECT(poll_options)
 	if(!poll)
 		return
 	if(!SSdbcore.Connect())
-		to_chat(src, span_danger("Failed to establish database connection."))
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	switch(poll.poll_type)
 		if(POLLTYPE_OPTION)
@@ -247,21 +238,23 @@ GLOBAL_PROTECT(poll_options)
 	var/list/prepared_options = list()
 	//if they've already voted we use the order they voted in plus a shuffle of any options they haven't voted for, if any
 	if(length(voted_for))
-		var/list/option_copy = poll.options.Copy()
 		for(var/vote_id in voted_for)
-			for(var/o in option_copy)
+			for(var/o in poll.options)
 				var/datum/poll_option/option = o
 				if(option.option_id == vote_id)
 					prepared_options += option
-					option_copy -= option
-		prepared_options += shuffle(option_copy)
+		var/list/shuffle_options = poll.options - prepared_options
+		if(length(shuffle_options))
+			shuffle_options = shuffle(shuffle_options)
+			for(var/shuffled in shuffle_options)
+				prepared_options += shuffled
 	//otherwise just shuffle the options
 	else
 		prepared_options = shuffle(poll.options)
 	var/list/output = list({"<html><head><meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 	<script src="[SSassets.transport.get_asset_url("jquery.min.js")]"></script>
-	<script src="[SSassets.transport.get_asset_url("jquery-ui.custom-core-widgit-mouse-sortable.min.js")]"></script>
+	<script src="[SSassets.transport.get_asset_url("jquery-ui.custom-core-widgit-mouse-sortable-min.js")]"></script>
 	<style>
 		#sortable { list-style-type: none; margin: 0; padding: 2em; }
 		#sortable li { min-height: 1em; margin: 0px 1px 1px 1px; padding: 1px; border: 1px solid black; border-radius: 5px; background-color: white; cursor:move;}
@@ -320,19 +313,19 @@ GLOBAL_PROTECT(poll_options)
  */
 /mob/dead/new_player/proc/vote_on_poll_handler(datum/poll_question/poll, href_list)
 	if(!SSdbcore.Connect())
-		to_chat(src, span_danger("Failed to establish database connection."))
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	if(!poll || !href_list)
 		return
 	if(IsAdminAdvancedProcCall())
-		usr.log_message("attempted to rig the vote by voting as [key].", LOG_ADMIN)
-		message_admins("[key_name_admin(usr)] attempted to rig the vote by voting as [key].")
-		to_chat(usr, span_danger("You don't seem to be [key]."))
-		to_chat(src, span_danger("Something went horribly wrong processing your vote. Please contact an administrator, they should have gotten a message about this."))
+		log_game("[key_name(usr)] attempted to rig the vote by voting as [key]")
+		message_admins("[key_name_admin(usr)] attempted to rig the vote by voting as [key]")
+		to_chat(usr, "<span class='danger'>You don't seem to be [key].</span>")
+		to_chat(src, "<span class='danger'>Something went horribly wrong processing your vote. Please contact an administrator, they should have gotten a message about this</span>")
 		return
 	var/admin_rank
 	if(client.holder)
-		admin_rank = client.holder.rank_names()
+		admin_rank = client.holder.rank.name
 	else
 		if(poll.admin_only)
 			return
@@ -356,11 +349,11 @@ GLOBAL_PROTECT(poll_options)
 	if(query_validate_poll_vote.NextRow())
 		vote_id = text2num(query_validate_poll_vote.item[1])
 		if(vote_id && !poll.allow_revoting)
-			to_chat(usr, span_danger("Poll revoting is disabled and you've already replied to this poll."))
+			to_chat(usr, "<span class='danger'>Poll revoting is disabled and you've already replied to this poll.</span>")
 			qdel(query_validate_poll_vote)
 			return
 	else
-		to_chat(usr, span_danger("Selected poll is not open."))
+		to_chat(usr, "<span class='danger'>Selected poll is not open.</span>")
 		qdel(query_validate_poll_vote)
 		return
 	qdel(query_validate_poll_vote)
@@ -379,7 +372,7 @@ GLOBAL_PROTECT(poll_options)
 	if(vote_success)
 		if(!vote_id)
 			poll.poll_votes++
-		to_chat(usr, span_notice("Vote successful."))
+		to_chat(usr, "<span class='notice'>Vote successful.</span>")
 
 /**
  * Processes vote form data and saves results to the database for an option type poll.
@@ -387,13 +380,13 @@ GLOBAL_PROTECT(poll_options)
  */
 /mob/dead/new_player/proc/vote_on_poll_option(datum/poll_question/poll, href_list, admin_rank, sql_poll_id, vote_id)
 	if(!SSdbcore.Connect())
-		to_chat(src, span_danger("Failed to establish database connection."))
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	if(IsAdminAdvancedProcCall())
 		return
 	var/datum/poll_option/option = locate(href_list["voteoptionref"]) in poll.options
 	if(!option)
-		to_chat(src, span_danger("No option was selected."))
+		to_chat(src, "<span class='danger'>No option was selected.</span>")
 		return
 	var/datum/db_query/query_vote_option = SSdbcore.NewQuery({"
 		INSERT INTO [format_table_name("poll_vote")] (id, datetime, pollid, optionid, ckey, ip, adminrank)
@@ -419,13 +412,13 @@ GLOBAL_PROTECT(poll_options)
  */
 /mob/dead/new_player/proc/vote_on_poll_text(href_list, admin_rank, sql_poll_id, vote_id)
 	if(!SSdbcore.Connect())
-		to_chat(src, span_danger("Failed to establish database connection."))
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	if(IsAdminAdvancedProcCall())
 		return
 	var/reply_text = href_list["replytext"]
 	if(!reply_text || (length(reply_text) > 2048))
-		to_chat(src, span_danger("The text you entered was blank or too long. Please correct the text and submit again."))
+		to_chat(src, "<span class='danger'>The text you entered was blank or too long. Please correct the text and submit again.</span>")
 		return
 	var/datum/db_query/query_vote_text = SSdbcore.NewQuery({"
 		INSERT INTO [format_table_name("poll_textreply")] (id, datetime, pollid, ckey, ip, replytext, adminrank)
@@ -451,7 +444,7 @@ GLOBAL_PROTECT(poll_options)
  */
 /mob/dead/new_player/proc/vote_on_poll_rating(datum/poll_question/poll, list/href_list, admin_rank, sql_poll_id)
 	if(!SSdbcore.Connect())
-		to_chat(src, span_danger("Failed to establish database connection."))
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	if(IsAdminAdvancedProcCall())
 		return
@@ -494,14 +487,14 @@ GLOBAL_PROTECT(poll_options)
  */
 /mob/dead/new_player/proc/vote_on_poll_multi(datum/poll_question/poll, list/href_list, admin_rank, sql_poll_id)
 	if(!SSdbcore.Connect())
-		to_chat(src, span_danger("Failed to establish database connection."))
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	if(IsAdminAdvancedProcCall())
 		return
 	if(length(href_list) > 2)
 		href_list.Cut(1,3) //first two values aren't options
 	else
-		to_chat(src, span_danger("No options were selected."))
+		to_chat(src, "<span class='danger'>No options were selected.</span>")
 
 	var/special_columns = list(
 		"datetime" = "NOW()",
@@ -512,7 +505,7 @@ GLOBAL_PROTECT(poll_options)
 	var/vote_count = 0
 	for(var/h in href_list)
 		if(vote_count == poll.options_allowed)
-			to_chat(src, span_danger("Allowed option count exceeded, only the first [poll.options_allowed] selected options have been saved."))
+			to_chat(src, "<span class='danger'>Allowed option count exceeded, only the first [poll.options_allowed] selected options have been saved.</span>")
 			break
 		vote_count++
 		var/datum/poll_option/option = locate(h) in poll.options
@@ -541,25 +534,22 @@ GLOBAL_PROTECT(poll_options)
  */
 /mob/dead/new_player/proc/vote_on_poll_irv(datum/poll_question/poll, list/href_list, admin_rank, sql_poll_id)
 	if(!SSdbcore.Connect())
-		to_chat(src, span_danger("Failed to establish database connection."))
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	if(IsAdminAdvancedProcCall())
 		return
 	var/list/votelist = splittext(href_list["IRVdata"], ",")
 	if(!length(votelist))
-		to_chat(src, span_danger("No ordering data found. Please try again or contact an administrator."))
+		to_chat(src, "<span class='danger'>No ordering data found. Please try again or contact an administrator.</span>")
 
 	var/list/special_columns = list(
 		"datetime" = "NOW()",
 		"ip" = "INET_ATON(?)",
 	)
 
-	var/list/sql_votes = list()
-	var/list/option_copy = poll.options.Copy()
+	var/sql_votes = list()
 	for(var/o in votelist)
-		var/datum/poll_option/option = locate(o) in option_copy
-		if (!option)
-			to_chat(src, span_warning("invalid votes were trimmed from your ballot, please revote ."))
+		var/datum/poll_option/option = locate(o) in poll.options
 		sql_votes += list(list(
 			"pollid" = sql_poll_id,
 			"optionid" = option.option_id,

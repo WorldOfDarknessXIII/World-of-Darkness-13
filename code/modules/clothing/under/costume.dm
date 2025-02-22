@@ -1,6 +1,6 @@
 /obj/item/clothing/under/costume
 	icon = 'icons/obj/clothing/under/costume.dmi'
-	worn_icon = 'icons/mob/clothing/under/costume.dmi'
+	worn_icon =  'icons/mob/clothing/under/costume.dmi'
 
 /obj/item/clothing/under/costume/roman
 	name = "\improper Roman armor"
@@ -15,14 +15,13 @@
 	name = "jabroni outfit"
 	desc = "The leather club is two sectors down."
 	icon_state = "darkholme"
-	inhand_icon_state = null
+	inhand_icon_state = "darkholme"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/owl
 	name = "owl uniform"
 	desc = "A soft brown jumpsuit made of synthetic feathers and strong conviction."
 	icon_state = "owl"
-	inhand_icon_state = "owl"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/griffin
@@ -35,45 +34,45 @@
 	name = "blue schoolgirl uniform"
 	desc = "It's just like one of my Japanese animes!"
 	icon_state = "schoolgirl"
-	inhand_icon_state = null
+	inhand_icon_state = "schoolgirl"
 	body_parts_covered = CHEST|GROIN|ARMS
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/schoolgirl/red
 	name = "red schoolgirl uniform"
 	icon_state = "schoolgirlred"
-	inhand_icon_state = null
+	inhand_icon_state = "schoolgirlred"
 
 /obj/item/clothing/under/costume/schoolgirl/green
 	name = "green schoolgirl uniform"
 	icon_state = "schoolgirlgreen"
-	inhand_icon_state = null
+	inhand_icon_state = "schoolgirlgreen"
 
 /obj/item/clothing/under/costume/schoolgirl/orange
 	name = "orange schoolgirl uniform"
 	icon_state = "schoolgirlorange"
-	inhand_icon_state = null
+	inhand_icon_state = "schoolgirlorange"
 
 /obj/item/clothing/under/costume/pirate
 	name = "pirate outfit"
 	desc = "Yarr."
 	icon_state = "pirate"
-	inhand_icon_state = null
+	inhand_icon_state = "pirate"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/soviet
 	name = "soviet uniform"
 	desc = "For the Motherland!"
 	icon_state = "soviet"
-	inhand_icon_state = null
+	inhand_icon_state = "soviet"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/redcoat
 	name = "redcoat uniform"
 	desc = "Looks old."
 	icon_state = "redcoat"
-	inhand_icon_state = null
+	inhand_icon_state = "redcoat"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/kilt
@@ -82,24 +81,23 @@
 	icon_state = "kilt"
 	inhand_icon_state = "kilt"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/kilt/highlander
 	desc = "You're the only one worthy of this kilt."
 
-/obj/item/clothing/under/costume/kilt/highlander/Initialize(mapload)
+/obj/item/clothing/under/costume/kilt/highlander/Initialize()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
 
 /obj/item/clothing/under/costume/gladiator
 	name = "gladiator uniform"
 	desc = "Are you not entertained? Is that not why you are here?"
 	icon_state = "gladiator"
-	inhand_icon_state = null
+	inhand_icon_state = "gladiator"
 	body_parts_covered = CHEST|GROIN|ARMS
-	female_sprite_flags = NO_FEMALE_UNIFORM
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
 
@@ -113,13 +111,12 @@
 	icon_state = "maid"
 	inhand_icon_state = "maid"
 	body_parts_covered = CHEST|GROIN
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
-/obj/item/clothing/under/costume/maid/Initialize(mapload)
+/obj/item/clothing/under/costume/maid/Initialize()
 	. = ..()
-	var/obj/item/clothing/accessory/maidcorset/A = new (src)
+	var/obj/item/clothing/accessory/maidapron/A = new (src)
 	attach_accessory(A)
 
 /obj/item/clothing/under/costume/geisha
@@ -129,45 +126,6 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 
-/obj/item/clothing/under/costume/yukata
-	name = "black yukata"
-	desc = "A comfortable black cotton yukata inspired by traditional designs, perfect for a non-formal setting."
-	icon_state = "yukata1"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/under/costume/yukata/green
-	name = "green yukata"
-	desc = "A comfortable green cotton yukata inspired by traditional designs, perfect for a non-formal setting."
-	icon_state = "yukata2"
-
-/obj/item/clothing/under/costume/yukata/white
-	name = "white yukata"
-	desc = "A comfortable white cotton yukata inspired by traditional designs, perfect for a non-formal setting."
-	icon_state = "yukata3"
-
-/obj/item/clothing/under/costume/kimono
-	name = "black kimono"
-	desc = "A luxurious black silk kimono with traditional flair, ideal for elegant festive occasions."
-	icon_state = "kimono1"
-	inhand_icon_state = "yukata1"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/under/costume/kimono/red
-	name = "red kimono"
-	desc = "A luxurious red silk kimono with traditional flair, ideal for elegant festive occasions."
-	icon_state = "kimono2"
-	inhand_icon_state = "kimono2"
-
-/obj/item/clothing/under/costume/kimono/purple
-	name = "purple kimono"
-	desc = "A luxurious purple silk kimono with traditional flair, ideal for elegant festive occasions."
-	icon_state = "kimono3"
-	inhand_icon_state = "kimono3"
-
 /obj/item/clothing/under/costume/villain
 	name = "villain suit"
 	desc = "A change of wardrobe is necessary if you ever want to catch a real superhero."
@@ -176,7 +134,7 @@
 
 /obj/item/clothing/under/costume/sailor
 	name = "sailor suit"
-	desc = "Skipper's in the wardroom drinkin' gin."
+	desc = "Skipper's in the wardroom drinkin gin'."
 	icon_state = "sailor"
 	inhand_icon_state = "b_suit"
 	can_adjust = FALSE
@@ -190,22 +148,22 @@
 /obj/item/clothing/under/costume/singer/yellow
 	name = "yellow performer's outfit"
 	icon_state = "ysing"
-	inhand_icon_state = null
-	female_sprite_flags = NO_FEMALE_UNIFORM
+	inhand_icon_state = "ysing"
+	fitted = NO_FEMALE_UNIFORM
 
 /obj/item/clothing/under/costume/singer/blue
 	name = "blue performer's outfit"
 	icon_state = "bsing"
-	inhand_icon_state = null
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	inhand_icon_state = "bsing"
+	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/costume/mummy
 	name = "mummy wrapping"
 	desc = "Return the slab or suffer my stale references."
 	icon_state = "mummy"
-	inhand_icon_state = null
+	inhand_icon_state = "mummy"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	female_sprite_flags = NO_FEMALE_UNIFORM
+	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
 
@@ -213,9 +171,9 @@
 	name = "scarecrow clothes"
 	desc = "Perfect camouflage for hiding in botany."
 	icon_state = "scarecrow"
-	inhand_icon_state = null
+	inhand_icon_state = "scarecrow"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	female_sprite_flags = NO_FEMALE_UNIFORM
+	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
 
@@ -223,24 +181,24 @@
 	name = "draculass coat"
 	desc = "A dress inspired by the ancient \"Victorian\" era."
 	icon_state = "draculass"
-	inhand_icon_state = null
+	inhand_icon_state = "draculass"
 	body_parts_covered = CHEST|GROIN|ARMS
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/drfreeze
 	name = "doctor freeze's jumpsuit"
 	desc = "A modified scientist jumpsuit to look extra cool."
 	icon_state = "drfreeze"
-	inhand_icon_state = null
+	inhand_icon_state = "drfreeze"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/lobster
 	name = "foam lobster suit"
 	desc = "Who beheaded the college mascot?"
 	icon_state = "lobster"
-	inhand_icon_state = null
-	female_sprite_flags = NO_FEMALE_UNIFORM
+	inhand_icon_state = "lobster"
+	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/gondola
@@ -254,230 +212,71 @@
 	name = "skeleton jumpsuit"
 	desc = "A black jumpsuit with a white bone pattern printed on it. Spooky!"
 	icon_state = "skeleton"
-	inhand_icon_state = null
+	inhand_icon_state = "skeleton"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	female_sprite_flags = NO_FEMALE_UNIFORM
+	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
 
 /obj/item/clothing/under/costume/mech_suit
-	name = "mech pilot's suit"
-	desc = "A mech pilot's suit. Might make your butt look big."
+	name = "red mech pilot's suit"
+	desc = "A red mech pilot's suit. Might make your butt look big."
 	icon_state = "red_mech_suit"
-	inhand_icon_state = null
+	inhand_icon_state = "red_mech_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	female_sprite_flags = NO_FEMALE_UNIFORM
+	fitted = NO_FEMALE_UNIFORM
 	alternate_worn_layer = GLOVES_LAYER //covers hands but gloves can go over it. This is how these things work in my head.
 	can_adjust = FALSE
 
-	unique_reskin = list(
-						"Red" = "red_mech_suit",
-						"White" = "white_mech_suit",
-						"Blue" = "blue_mech_suit",
-						"Black" = "black_mech_suit",
-						)
+/obj/item/clothing/under/costume/mech_suit/white
+	name = "white mech pilot's suit"
+	desc = "A white mech pilot's suit. Very fetching."
+	icon_state = "white_mech_suit"
+	inhand_icon_state = "white_mech_suit"
 
+/obj/item/clothing/under/costume/mech_suit/blue
+	name = "blue mech pilot's suit"
+	desc = "A blue mech pilot's suit. For the more reluctant mech pilots."
+	icon_state = "blue_mech_suit"
+	inhand_icon_state = "blue_mech_suit"
 
 /obj/item/clothing/under/costume/russian_officer
 	name = "\improper Russian officer's uniform"
 	desc = "The latest in fashionable russian outfits."
 	icon = 'icons/obj/clothing/under/security.dmi'
 	icon_state = "hostanclothes"
-	inhand_icon_state = null
-	worn_icon = 'icons/mob/clothing/under/security.dmi'
+	inhand_icon_state = "hostanclothes"
+	worn_icon =  'icons/mob/clothing/under/security.dmi'
 	alt_covers_chest = TRUE
-	armor_type = /datum/armor/clothing_under/costume_russian_officer
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 30, ACID = 30)
 	strip_delay = 50
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
-	can_adjust = FALSE
-
-/datum/armor/clothing_under/costume_russian_officer
-	melee = 10
-	fire = 30
-	acid = 30
-
-/obj/item/clothing/under/costume/buttondown
-	gender = PLURAL
-	female_sprite_flags = NO_FEMALE_UNIFORM
-	custom_price = PAYCHECK_CREW
-	icon = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
-	worn_icon = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
-	species_exception = list(/datum/species/golem)
-	can_adjust = TRUE
-	alt_covers_chest = TRUE
-
-/obj/item/clothing/under/costume/buttondown/slacks
-	name = "button-down shirt with slacks"
-	desc = "A fancy button-down shirt with slacks."
-	icon_state = "buttondown_slacks"
-	greyscale_config = /datum/greyscale_config/buttondown_slacks
-	greyscale_config_worn = /datum/greyscale_config/buttondown_slacks/worn
-	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
-	flags_1 = IS_PLAYER_COLORABLE_1
-
-/obj/item/clothing/under/costume/buttondown/slacks/service //preset one to be a formal white shirt and black pants
-	greyscale_colors = "#EEEEEE#CBDBFC#17171B#222227"
-
-/obj/item/clothing/under/costume/buttondown/shorts
-	name = "button-down shirt with shorts"
-	desc = "A fancy button-down shirt with shorts."
-	icon_state = "buttondown_shorts"
-	greyscale_config = /datum/greyscale_config/buttondown_shorts
-	greyscale_config_worn = /datum/greyscale_config/buttondown_shorts/worn
-	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
-	flags_1 = IS_PLAYER_COLORABLE_1
-
-/obj/item/clothing/under/costume/buttondown/skirt
-	name = "button-down shirt with skirt"
-	desc = "A fancy button-down shirt with skirt."
-	icon_state = "buttondown_skirt"
-	greyscale_config = /datum/greyscale_config/buttondown_skirt
-	greyscale_config_worn = /datum/greyscale_config/buttondown_skirt/worn
-	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
-	body_parts_covered = CHEST|GROIN|ARMS
-	flags_1 = IS_PLAYER_COLORABLE_1
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/under/costume/buttondown/skirt/service //preset one to be a formal white shirt and black skirt
-	greyscale_colors = "#EEEEEE#CBDBFC#17171B#222227"
 
 /obj/item/clothing/under/costume/jackbros
 	name = "jack bros outfit"
 	desc = "For when it's time to hee some hos."
 	icon_state = "JackFrostUniform"
-	inhand_icon_state = null
+	inhand_icon_state = "JackFrostUniform"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/costume/deckers
-	name = "deckers outfit"
-	icon_state = "decker_jumpsuit"
-	inhand_icon_state = null
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/football_suit
-	name = "football uniform"
-	icon_state = "football_suit"
-	can_adjust = FALSE
-	greyscale_config = /datum/greyscale_config/football_suit
-	greyscale_config_worn = /datum/greyscale_config/football_suit/worn
-	greyscale_colors = "#D74722"
-	flags_1 = IS_PLAYER_COLORABLE_1
-
-/obj/item/clothing/under/costume/swagoutfit
-	name = "Swag outfit"
-	desc = "Why don't you go secure some bitches?"
-	icon_state = "SwagOutfit"
-	inhand_icon_state = null
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/referee
-	name = "referee uniform"
-	desc = "A standard black and white striped uniform to signal authority."
-	icon_state = "referee"
-	inhand_icon_state = null
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/joker
-	name = "comedian suit"
-	desc = "The worst part of having a mental illness is people expect you to behave as if you don't."
-	icon_state = "joker"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/yuri
-	name = "yuri initiate jumpsuit"
-	icon_state = "yuri_uniform"
-	inhand_icon_state = null
+/obj/item/clothing/under/costume/yakuza
+	name = "tojo clan pants"
+	desc = "For those long nights under the traffic cone."
+	icon_state = "MajimaPants"
+	inhand_icon_state = "MajimaPants"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/dutch
 	name = "dutch's suit"
 	desc = "You can feel a <b>god damn plan</b> coming on."
 	icon_state = "DutchUniform"
-	inhand_icon_state = null
+	inhand_icon_state = "DutchUniform"
 	can_adjust = FALSE
-
-// For the nuke-ops cowboy fit. Sadly no Lone Ranger fit & I don't wanna bloat costume files further.
-/obj/item/clothing/under/costume/dutch/syndicate
-	desc = "You can feel a <b>god damn plan</b> coming on, and the armor lining in this suit'll do wonders in makin' it work."
-	armor_type = /datum/armor/clothing_under/syndicate
-
-/obj/item/clothing/under/costume/osi
-	name = "O.S.I. jumpsuit"
-	icon_state = "osi_jumpsuit"
-	inhand_icon_state = null
+/obj/item/clothing/under/costume/swagoutfit
+	name = "Swag outfit"
+	desc = "Why don't you go secure some bitches?"
+	icon_state = "SwagOutfit"
+	inhand_icon_state = "SwagOutfit"
 	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/tmc
-	name = "Lost MC clothing"
-	icon_state = "tmc_jumpsuit"
-	inhand_icon_state = null
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/gi
-	name = "martial gi"
-	desc = "Assistant, nukie, whatever. You can beat anyone; it's called hard work!"
-	icon_state = "martial_arts_gi"
-	greyscale_config = /datum/greyscale_config/gi
-	greyscale_config_worn = /datum/greyscale_config/gi/worn
-	greyscale_colors = "#f1eeee#000000"
-	flags_1 = IS_PLAYER_COLORABLE_1
-	inhand_icon_state = null
-	female_sprite_flags = NO_FEMALE_UNIFORM
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/gi/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/gags_recolorable)
-	update_icon(UPDATE_OVERLAYS)
-
-/obj/item/clothing/under/costume/gi/goku
-	name = "sacred gi"
-	desc = "Created by a man who touched the hearts and lives of many."
-	icon_state = "martial_arts_gi_goku"
-	greyscale_colors = "#f89925#3e6dd7"
-
-/obj/item/clothing/under/costume/traditional
-	name = "traditional suit"
-	desc = "A full, vibrantly coloured suit. Likely with traditional purposes. Maybe the colours represent a family, clan, or rank, who knows."
-	icon_state = "tradition"
-	inhand_icon_state = null
-	female_sprite_flags = NO_FEMALE_UNIFORM
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/loincloth
-	name = "leather loincloth"
-	desc = "Just a piece of leather to cover private areas. Itchy to the touch. Whoever made this must have been desperate, or savage."
-	icon_state = "loincloth"
-	inhand_icon_state = null
-	body_parts_covered = GROIN
-	female_sprite_flags = NO_FEMALE_UNIFORM
-	can_adjust = TRUE
-	alt_covers_chest = TRUE
-
-/obj/item/clothing/under/costume/henchmen
-	name = "henchmen jumpsuit"
-	desc = "A very gaudy jumpsuit for a proper Henchman. Guild regulations, you understand."
-	icon = 'icons/obj/clothing/under/syndicate.dmi'
-	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
-	icon_state = "henchmen"
-	inhand_icon_state = null
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR
-
-/obj/item/clothing/under/costume/gamberson
-	name = "re-enactor's gambeson"
-	desc = "A colorful set of clothes made to look like a medieval gambeson."
-	icon_state = "gamberson"
-	inhand_icon_state = null
-	female_sprite_flags = NO_FEMALE_UNIFORM
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/gamberson/military
-	name = "swordsman's gambeson"
-	desc = "A padded medieval gambeson. Has enough woolen layers to dull a strike from any small weapon."
-	armor_type = /datum/armor/clothing_under/rank_security
-	has_sensor = NO_SENSORS
-

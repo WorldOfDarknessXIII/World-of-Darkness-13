@@ -5,16 +5,15 @@
 	desc = "This is a plant."
 	icon_state = "ambrosiavulgaris"
 	slot_flags = ITEM_SLOT_HEAD
-	bite_consumption_mod = 3
+	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
 	tastes = list("ambrosia" = 1)
 
 // Ambrosia Vulgaris
 /obj/item/seeds/ambrosia
-	name = "ambrosia vulgaris seed pack"
+	name = "pack of ambrosia vulgaris seeds"
 	desc = "These seeds grow into common ambrosia, a plant grown by and from medicine."
 	icon_state = "seed-ambrosiavulgaris"
-	plant_icon_offset = 0
 	species = "ambrosiavulgaris"
 	plantname = "Ambrosia Vulgaris"
 	product = /obj/item/food/grown/ambrosia/vulgaris
@@ -36,7 +35,7 @@
 
 // Ambrosia Deus
 /obj/item/seeds/ambrosia/deus
-	name = "ambrosia deus seed pack"
+	name = "pack of ambrosia deus seeds"
 	desc = "These seeds grow into ambrosia deus. Could it be the food of the gods..?"
 	icon_state = "seed-ambrosiadeus"
 	species = "ambrosiadeus"
@@ -55,7 +54,7 @@
 
 //Ambrosia Gaia
 /obj/item/seeds/ambrosia/gaia
-	name = "ambrosia gaia seed pack"
+	name = "pack of ambrosia gaia seeds"
 	desc = "These seeds grow into ambrosia gaia, filled with infinite potential."
 	icon_state = "seed-ambrosia_gaia"
 	species = "ambrosia_gaia"
@@ -72,10 +71,8 @@
 	name = "ambrosia gaia branch"
 	desc = "Eating this <i>makes</i> you immortal."
 	icon_state = "ambrosia_gaia"
-	light_system = OVERLAY_LIGHT
+	light_system = MOVABLE_LIGHT
 	light_range = 3
-	light_power = 1.2
-	light_color = "#ffff00"
 	seed = /obj/item/seeds/ambrosia/gaia
 	wine_power = 70
 	wine_flavor = "the earthmother's blessing"

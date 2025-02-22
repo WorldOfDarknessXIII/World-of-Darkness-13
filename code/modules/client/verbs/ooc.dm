@@ -1,117 +1,143 @@
 GLOBAL_VAR_INIT(OOC_COLOR, null)//If this is null, use the CSS for OOC. Otherwise, use a custom colour.
 GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
-///talking in OOC uses this
 /client/verb/ooc(msg as text)
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
 
-	if(GLOB.say_disabled) //This is here to try to identify lag problems
-		to_chat(usr, span_danger("Speech is currently admin-disabled."))
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
-	var/client_initalized = VALIDATE_CLIENT_INITIALIZATION(src)
-	if(isnull(mob) || !client_initalized)
-		if(!client_initalized)
-			unvalidated_client_error() // we only want to throw this warning message when it's directly related to client failure.
-
-		to_chat(usr, span_warning("Failed to send your OOC message. You attempted to send the following message:\n[span_big(msg)]"))
+	if(!mob)
 		return
 
-	if(isnull(holder))
+	if(!holder)
 		if(!GLOB.ooc_allowed)
-			to_chat(src, span_danger("OOC is globally muted."))
+			to_chat(src, "<span class='danger'>OOC is globally muted.</span>")
 			return
 		if(!GLOB.dooc_allowed && (mob.stat == DEAD))
-			to_chat(usr, span_danger("OOC for dead mobs has been turned off."))
+			to_chat(usr, "<span class='danger'>OOC for dead mobs has been turned off.</span>")
 			return
 		if(prefs.muted & MUTE_OOC)
-			to_chat(src, span_danger("You cannot use OOC (muted)."))
+			to_chat(src, "<span class='danger'>You cannot use OOC (muted).</span>")
 			return
 	if(is_banned_from(ckey, "OOC"))
-		to_chat(src, span_danger("You have been banned from OOC."))
+		to_chat(src, "<span class='danger'>You have been banned from OOC.</span>")
 		return
 	if(QDELETED(src))
 		return
 
-	msg = trim(copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN))
+	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	var/raw_msg = msg
-
-	var/list/filter_result = is_ooc_filtered(msg)
-	if (!CAN_BYPASS_FILTER(usr) && filter_result)
-		REPORT_CHAT_FILTER_TO_USER(usr, filter_result)
-		log_filter("OOC", msg, filter_result)
-		return
-
-	// Protect filter bypassers from themselves.
-	// Demote hard filter results to soft filter results if necessary due to the danger of accidentally speaking in OOC.
-	var/list/soft_filter_result = filter_result || is_soft_ooc_filtered(msg)
-
-	if (soft_filter_result)
-		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
-			return
-		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[msg]\"")
-		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[msg]\"")
 
 	if(!msg)
 		return
 
 	msg = emoji_parse(msg)
 
-	if(SSticker.HasRoundStarted() && ((msg[1] in list(".",";",":","#")) || findtext_char(msg, "say", 1, 5)))
-		if(tgui_alert(usr,"Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", list("Yes", "No")) != "Yes")
+	if(SSticker.HasRoundStarted() && (msg[1] in list(".",";",":","#") || findtext_char(msg, "say", 1, 5)))
+		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "Yes", "No") != "Yes")
 			return
 
 	if(!holder)
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
 		if(findtext(msg, "byond://"))
-			to_chat(src, span_boldannounce("Advertising other servers is not allowed."))
+			to_chat(src, "<B>Advertising other servers is not allowed.</B>")
 			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 
-	if(!(get_chat_toggles(src) & CHAT_OOC))
-		to_chat(src, span_danger("You have OOC muted."))
+	if(!(prefs.chat_toggles & CHAT_OOC))
+		to_chat(src, "<span class='danger'>You have OOC muted.</span>")
 		return
 
 	mob.log_talk(raw_msg, LOG_OOC)
 
 	var/keyname = key
-	if(prefs.unlock_content)
-		if(prefs.toggles & MEMBER_PUBLIC)
-			keyname = "<font color='[prefs.read_preference(/datum/preference/color/ooc_color) || GLOB.normal_ooc_colour]'>[icon2html('icons/ui/chat/member_content.dmi', world, "blag")][keyname]</font>"
 	if(prefs.hearted)
 		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 		keyname = "[sheet.icon_tag("emoji-heart")][keyname]"
+	if(prefs.unlock_content)
+		if(prefs.toggles & MEMBER_PUBLIC)
+			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'>[icon2html('icons/member_content.dmi', world, "blag")][keyname]</font>"
 	//The linkify span classes and linkify=TRUE below make ooc text get clickable chat href links if you pass in something resembling a url
-	for(var/client/receiver as anything in GLOB.clients)
-		if(!receiver.prefs) // Client being created or deleted. Despite all, this can be null.
-			continue
-		if(!(get_chat_toggles(receiver) & CHAT_OOC))
-			continue
-		if(holder?.fakekey in receiver.prefs.ignoring)
-			continue
-		var/avoid_highlight = receiver == src
-		if(holder)
-			if(!holder.fakekey || receiver.holder)
-				if(check_rights_for(src, R_ADMIN))
-					var/ooc_color = prefs.read_preference(/datum/preference/color/ooc_color)
-					to_chat(receiver, span_adminooc("[CONFIG_GET(flag/allow_admin_ooccolor) && ooc_color ? "<font color=[ooc_color]>" :"" ][span_prefix("OOC:")] <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]</span>"), avoid_highlighting = avoid_highlight)
+	for(var/client/C in GLOB.clients)
+		if(C.prefs.chat_toggles & CHAT_OOC)
+			if(holder?.fakekey in C.prefs.ignoring)
+				continue
+			if(holder)
+				if(!holder.fakekey || C.holder)
+					if(check_rights_for(src, R_ADMIN))
+						to_chat(C, "<span class='adminooc'>[CONFIG_GET(flag/allow_admin_ooccolor) && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]</span></span></font>")
+					else
+						to_chat(C, "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]</span></span>")
 				else
-					to_chat(receiver, span_adminobserverooc(span_prefix("OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
-			else
+					if(GLOB.OOC_COLOR)
+						to_chat(C, "<font color='[GLOB.OOC_COLOR]'><b><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]</span></b></font>")
+					else
+						to_chat(C, "<span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]</span></span>")
+
+			else if(!(key in C.prefs.ignoring))
 				if(GLOB.OOC_COLOR)
-					to_chat(receiver, "<span class='oocplain'><font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]</span></b></font></span>", avoid_highlighting = avoid_highlight)
+					to_chat(C, "<font color='[GLOB.OOC_COLOR]'><b><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></b></font>")
 				else
-					to_chat(receiver, span_ooc(span_prefix("OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
+					to_chat(C, "<span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></span>")
 
-		else if(!(key in receiver.prefs.ignoring))
-			if(GLOB.OOC_COLOR)
-				to_chat(receiver, "<span class='oocplain'><font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></b></font></span>", avoid_highlighting = avoid_highlight)
-			else
-				to_chat(receiver, span_ooc(span_prefix("OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
+/client/verb/looc(msg as text)
+	set name = "LOOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
+	set category = "OOC"
 
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		return
+
+	if(!mob)
+		return
+
+	if(!holder)
+		if(!GLOB.ooc_allowed)
+			to_chat(src, "<span class='danger'>OOC is globally muted.</span>")
+			return
+		if(!GLOB.dooc_allowed && (mob.stat == DEAD))
+			to_chat(usr, "<span class='danger'>OOC for dead mobs has been turned off.</span>")
+			return
+		if(prefs.muted & MUTE_OOC)
+			to_chat(src, "<span class='danger'>You cannot use OOC (muted).</span>")
+			return
+	if(is_banned_from(ckey, "OOC"))
+		to_chat(src, "<span class='danger'>You have been banned from OOC.</span>")
+		return
+	if(QDELETED(src))
+		return
+
+	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	var/raw_msg = msg
+
+	if(!msg)
+		return
+
+	msg = emoji_parse(msg)
+
+	if(!holder)
+		if(handle_spam_prevention(msg,MUTE_OOC))
+			return
+		if(findtext(msg, "byond://"))
+			to_chat(src, "<B>Advertising other servers is not allowed.</B>")
+			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
+			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
+			return
+
+	if(!(prefs.chat_toggles & CHAT_OOC))
+		to_chat(src, "<span class='danger'>You have OOC muted.</span>")
+		return
+
+	mob.log_talk(raw_msg, LOG_OOC)
+	for(var/mob/L in viewers(9, mob))
+		if(L.client)
+			if(L.client.prefs.chat_toggles & CHAT_OOC)
+				to_chat(L, "<span class='notice'><b><span class='prefix'>LOOC:</span> <EM>[mob.name]:</EM> [msg]</b></span>")
 
 /proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
@@ -121,7 +147,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			return
 	else //otherwise just toggle it
 		GLOB.ooc_allowed = !GLOB.ooc_allowed
-	to_chat(world, "<span class='oocplain'><B>The OOC channel has been globally [GLOB.ooc_allowed ? "enabled" : "disabled"].</B></span>")
+	to_chat(world, "<B>The OOC channel has been globally [GLOB.ooc_allowed ? "enabled" : "disabled"].</B>")
 
 /proc/toggle_dooc(toggle = null)
 	if(toggle != null)
@@ -139,15 +165,18 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set category = "Server"
 	if(IsAdminAdvancedProcCall())
 		return
-
-ADMIN_VERB(set_ooc_color, R_FUN, "Set Player OOC Color", "Modifies the global OOC color.", ADMIN_CATEGORY_SERVER)
-	var/newColor = input(user, "Please select the new player OOC color.", "OOC color") as color|null
+	var/newColor = input(src, "Please select the new player OOC color.", "OOC color") as color|null
 	if(isnull(newColor))
 		return
-	var/new_color = sanitize_color(newColor)
-	message_admins("[key_name_admin(user)] has set the players' ooc color to [new_color].")
-	log_admin("[key_name_admin(user)] has set the player ooc color to [new_color].")
+	if(!check_rights(R_FUN))
+		message_admins("[usr.key] has attempted to use the Set Player OOC Color verb!")
+		log_admin("[key_name(usr)] tried to set player ooc color without authorization.")
+		return
+	var/new_color = sanitize_ooccolor(newColor)
+	message_admins("[key_name_admin(usr)] has set the players' ooc color to [new_color].")
+	log_admin("[key_name_admin(usr)] has set the player ooc color to [new_color].")
 	GLOB.OOC_COLOR = new_color
+
 
 /client/proc/reset_ooc()
 	set name = "Reset Player OOC Color"
@@ -155,13 +184,45 @@ ADMIN_VERB(set_ooc_color, R_FUN, "Set Player OOC Color", "Modifies the global OO
 	set category = "Server"
 	if(IsAdminAdvancedProcCall())
 		return
-
-ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC color to default.", ADMIN_CATEGORY_SERVER)
-	if(tgui_alert(user, "Are you sure you want to reset the OOC color of all players?", "Reset Player OOC Color", list("Yes", "No")) != "Yes")
+	if(alert(usr, "Are you sure you want to reset the OOC color of all players?", "Reset Player OOC Color", "Yes", "No") != "Yes")
 		return
-	message_admins("[key_name_admin(user)] has reset the players' ooc color.")
-	log_admin("[key_name_admin(user)] has reset player ooc color.")
+	if(!check_rights(R_FUN))
+		message_admins("[usr.key] has attempted to use the Reset Player OOC Color verb!")
+		log_admin("[key_name(usr)] tried to reset player ooc color without authorization.")
+		return
+	message_admins("[key_name_admin(usr)] has reset the players' ooc color.")
+	log_admin("[key_name_admin(usr)] has reset player ooc color.")
 	GLOB.OOC_COLOR = null
+
+
+/client/verb/colorooc()
+	set name = "Set Your OOC Color"
+	set category = "Preferences"
+
+	if(!holder || !check_rights_for(src, R_ADMIN))
+		if(!is_content_unlocked())
+			return
+
+	var/new_ooccolor = input(src, "Please select your OOC color.", "OOC color", prefs.ooccolor) as color|null
+	if(isnull(new_ooccolor))
+		return
+	new_ooccolor = sanitize_ooccolor(new_ooccolor)
+	prefs.ooccolor = new_ooccolor
+	prefs.save_preferences()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Set OOC Color") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+
+/client/verb/resetcolorooc()
+	set name = "Reset Your OOC Color"
+	set desc = "Returns your OOC Color to default"
+	set category = "Preferences"
+
+	if(!holder || !check_rights_for(src, R_ADMIN))
+		if(!is_content_unlocked())
+			return
+
+		prefs.ooccolor = initial(prefs.ooccolor)
+		prefs.save_preferences()
 
 //Checks admin notice
 /client/verb/admin_notice()
@@ -170,9 +231,9 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	set desc ="Check the admin notice if it has been set"
 
 	if(GLOB.admin_notice)
-		to_chat(src, "[span_boldnotice("Admin Notice:")]\n \t [GLOB.admin_notice]")
+		to_chat(src, "<span class='boldnotice'>Admin Notice:</span>\n \t [GLOB.admin_notice]")
 	else
-		to_chat(src, span_notice("There are no admin notices at the moment."))
+		to_chat(src, "<span class='notice'>There are no admin notices at the moment.</span>")
 
 /client/verb/motd()
 	set name = "MOTD"
@@ -181,9 +242,9 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 
 	var/motd = global.config.motd
 	if(motd)
-		to_chat(src, "<span class='infoplain'><div class=\"motd\">[motd]</div></span>", handle_whitespace=FALSE)
+		to_chat(src, "<div class=\"motd\">[motd]</div>", handle_whitespace=FALSE)
 	else
-		to_chat(src, span_notice("The Message of the Day has not been set."))
+		to_chat(src, "<span class='notice'>The Message of the Day has not been set.</span>")
 
 /client/proc/self_notes()
 	set name = "View Admin Remarks"
@@ -191,7 +252,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	set desc = "View the notes that admins have written about you"
 
 	if(!CONFIG_GET(flag/see_own_notes))
-		to_chat(usr, span_notice("Sorry, that function is not enabled on this server."))
+		to_chat(usr, "<span class='notice'>Sorry, that function is not enabled on this server.</span>")
 		return
 
 	browse_messages(null, usr.ckey, null, TRUE)
@@ -202,7 +263,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	set desc = "View the amount of playtime for roles the server has tracked."
 
 	if(!CONFIG_GET(flag/use_exp_tracking))
-		to_chat(usr, span_notice("Sorry, tracking is currently disabled."))
+		to_chat(usr, "<span class='notice'>Sorry, tracking is currently disabled.</span>")
 		return
 
 	new /datum/job_report_menu(src, usr)
@@ -252,21 +313,21 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 			players[displayed_key] = displayed_key
 
 	// Check if the list is empty
-	if(!length(players))
+	if(!players.len)
 		// Express that there are no players we can ignore in chat
-		to_chat(src, span_infoplain("There are no other players you can ignore!"))
+		to_chat(src, "There are no other players you can ignore!")
 
 		// Stop running
 		return
 
 	// Sort the list
-	players = sort_list(players)
+	players = sortList(players)
 
 	// Request the player to ignore
-	var/selection = tgui_input_list(src, "Select a player", "Ignore", players)
+	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in players
 
 	// Stop running if we didn't receieve a valid selection
-	if(isnull(selection) || !(selection in players))
+	if(!selection || !(selection in players))
 		return
 
 	// Store the selected player
@@ -275,7 +336,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	// Check if the selected player is on our ignore list
 	if(selection in prefs.ignoring)
 		// Express that the selected player is already on our ignore list in chat
-		to_chat(src, span_infoplain("You are already ignoring [selection]!"))
+		to_chat(src, "You are already ignoring [selection]!")
 
 		// Stop running
 		return
@@ -287,7 +348,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	prefs.save_preferences()
 
 	// Express that we've ignored the selected player in chat
-	to_chat(src, span_infoplain("You are now ignoring [selection] on the OOC channel."))
+	to_chat(src, "You are now ignoring [selection] on the OOC channel.")
 
 // Unignore verb
 /client/verb/select_unignore()
@@ -296,24 +357,24 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	set desc = "Stop ignoring a player's messages on the OOC channel"
 
 	// Check if we've ignored any players
-	if(!length(prefs.ignoring))
+	if(!prefs.ignoring.len)
 		// Express that we haven't ignored any players in chat
-		to_chat(src, span_infoplain("You haven't ignored any players!"))
+		to_chat(src, "You haven't ignored any players!")
 
 		// Stop running
 		return
 
 	// Request the player to unignore
-	var/selection = tgui_input_list(src, "Select a player", "Unignore", prefs.ignoring)
+	var/selection = input("Please, select a player!", "Unignore", null, null) as null|anything in prefs.ignoring
 
 	// Stop running if we didn't receive a selection
-	if(isnull(selection))
+	if(!selection)
 		return
 
 	// Check if the selected player is not on our ignore list
 	if(!(selection in prefs.ignoring))
 		// Express that the selected player is not on our ignore list in chat
-		to_chat(src, span_infoplain("You are not ignoring [selection]!"))
+		to_chat(src, "You are not ignoring [selection]!")
 
 		// Stop running
 		return
@@ -325,7 +386,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	prefs.save_preferences()
 
 	// Express that we've unignored the selected player in chat
-	to_chat(src, span_infoplain("You are no longer ignoring [selection] on the OOC channel."))
+	to_chat(src, "You are no longer ignoring [selection] on the OOC channel.")
 
 /client/proc/show_previous_roundend_report()
 	set name = "Your Last Round"
@@ -348,6 +409,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 
 	// Fetch aspect ratio
 	var/view_size = getviewsize(view)
+	view_size[1] += 4
 	var/aspect_ratio = view_size[1] / view_size[2]
 
 	// Calculate desired pixel width using window size and aspect ratio
@@ -360,23 +422,13 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 
 	var/list/map_size = splittext(sizes["mapwindow.size"], "x")
 
-	// Gets the type of zoom we're currently using from our view datum
-	// If it's 0 we do our pixel calculations based off the size of the mapwindow
-	// If it's not, we already know how big we want our window to be, since zoom is the exact pixel ratio of the map
-	var/zoom_value = src.view_size?.zoom || 0
+	// Looks like we expect mapwindow.size to be "ixj" where i and j are numbers.
+	// If we don't get our expected 2 outputs, let's give some useful error info.
+	if(length(map_size) != 2)
+		CRASH("map_size of incorrect length --- map_size var: [map_size] --- map_size length: [length(map_size)]")
 
-	var/desired_width = 0
-	if(zoom_value)
-		desired_width = round(view_size[1] * zoom_value * ICON_SIZE_X)
-	else
-
-		// Looks like we expect mapwindow.size to be "ixj" where i and j are numbers.
-		// If we don't get our expected 2 outputs, let's give some useful error info.
-		if(length(map_size) != 2)
-			CRASH("map_size of incorrect length --- map_size var: [map_size] --- map_size length: [length(map_size)]")
-		var/height = text2num(map_size[2])
-		desired_width = round(height * aspect_ratio)
-
+	var/height = text2num(map_size[2])
+	var/desired_width = round(height * aspect_ratio)
 	if (text2num(map_size[1]) == desired_width)
 		// Nothing to do
 		return
@@ -412,14 +464,6 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 		pct += delta
 		winset(src, "mainwindow.split", "splitter=[pct]")
 
-/// Attempt to automatically fit the viewport, assuming the user wants it
-/client/proc/attempt_auto_fit_viewport()
-	if (!prefs.read_preference(/datum/preference/toggle/auto_fit_viewport))
-		return
-	if(fully_created)
-		INVOKE_ASYNC(src, VERB_REF(fit_viewport))
-	else //Delayed to avoid wingets from Login calls.
-		addtimer(CALLBACK(src, VERB_REF(fit_viewport), 1 SECONDS))
 
 /client/verb/policy()
 	set name = "Show Policy"
@@ -429,7 +473,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	//Collect keywords
 	var/list/keywords = mob.get_policy_keywords()
 	var/header = get_policy(POLICY_VERB_HEADER)
-	var/list/policytext = list(header)
+	var/list/policytext = list(header,"<hr>")
 	var/anything = FALSE
 	for(var/keyword in keywords)
 		var/p = get_policy(keyword)
@@ -440,27 +484,10 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	if(!anything)
 		policytext += "No related rules found."
 
-	var/datum/browser/browser = new(usr, "policy", "Server Policy", 600, 500)
-	browser.set_content(policytext.Join(""))
-	browser.open()
+	usr << browse(policytext.Join(""),"window=policy")
 
 /client/verb/fix_stat_panel()
 	set name = "Fix Stat Panel"
 	set hidden = TRUE
 
 	init_verbs()
-
-/client/proc/export_preferences()
-	set name = "Export Preferences"
-	set desc = "Export your current preferences to a file."
-	set category = "OOC"
-
-	ASSERT(prefs, "User attempted to export preferences while preferences were null!") // what the fuck
-
-	prefs.savefile.export_json_to_client(usr, ckey)
-
-/client/verb/map_vote_tally_count()
-	set name = "Show Map Vote Tallies"
-	set desc = "View the current map vote tally counts."
-	set category = "Server"
-	to_chat(mob, SSmap_vote.tally_printout)

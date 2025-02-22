@@ -6,7 +6,7 @@
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	l_pocket = /obj/item/vamp/keys/church
 	backpack_contents = list(
-		/obj/item/book/bible = 1,
+		/obj/item/storage/book/bible = 1,
 		/obj/item/vampire_stake = 3,
 		/obj/item/molotov = 1,
 		/obj/item/gas_can/full = 1,
@@ -19,8 +19,8 @@
 		qdel(H.clane)
 	H.set_species(/datum/species/human)
 	H.generation = 13
-	H.maxHealth = round((initial(H.maxHealth)-initial(H.maxHealth)/4)+(initial(H.maxHealth)/4)*(H.strength+13-H.generation))
-	H.health = round((initial(H.health)-initial(H.health)/4)+(initial(H.health)/4)*(H.strength+13-H.generation))
+	H.maxHealth = round((initial(H.maxHealth)-initial(H.maxHealth)/4)+(initial(H.maxHealth)/4)*(H.physique+13-H.generation))
+	H.health = round((initial(H.health)-initial(H.health)/4)+(initial(H.health)/4)*(H.physique+13-H.generation))
 	var/my_name = "Tyler"
 	if(H.gender == MALE)
 		my_name = pick(GLOB.first_names_male)
@@ -86,12 +86,14 @@
 	roundend_category = "hunters"
 	antagpanel_category = "Hunter"
 	job_rank = ROLE_OPERATIVE
+	antag_hud_type = ANTAG_HUD_OPS
 	antag_hud_name = "synd"
 	antag_moodlet = /datum/mood_event/focused
 	show_to_ghosts = TRUE
 
 /datum/antagonist/hunter/on_gain()
 	owner.holy_role = HOLY_ROLE_PRIEST
+	add_antag_hud(ANTAG_HUD_OPS, "synd", owner.current)
 	owner.special_role = src
 	var/datum/objective/custom/custom_objective = new
 	custom_objective.owner = owner

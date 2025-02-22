@@ -3,75 +3,86 @@
 	desc = "Used to access the station's automated alert system."
 	icon_screen = "alert:0"
 	icon_keyboard = "atmos_key"
-	circuit = /obj/item/circuitboard/computer/station_alert
+	circuit = /obj/item/circuitboard/computer/stationalert
+	var/alarms = list("Fire" = list(), "Atmosphere" = list(), "Power" = list())
+
 	light_color = LIGHT_COLOR_CYAN
-	/// Station alert datum for showing alerts UI
-	var/datum/station_alert/alert_control
 
-/obj/machinery/computer/station_alert/examine(mob/user)
+/obj/machinery/computer/station_alert/Initialize()
 	. = ..()
-	var/obj/item/circuitboard/computer/station_alert/my_circuit = circuit
-	. += span_info("The console is set to [my_circuit.station_only ? "track all station and mining alarms" : "track alarms on the same z-level"].")
-
-/obj/machinery/computer/station_alert/Initialize(mapload)
-	link_alerts()
-	return ..()
-
-/obj/machinery/computer/station_alert/on_construction(mob/user)
-	. = ..()
-	link_alerts()
+	GLOB.alert_consoles += src
 
 /obj/machinery/computer/station_alert/Destroy()
-	QDEL_NULL(alert_control)
+	GLOB.alert_consoles -= src
 	return ..()
 
-/obj/machinery/computer/station_alert/ui_interact(mob/user)
-	. = ..()
-	alert_control.ui_interact(user)
+/obj/machinery/computer/station_alert/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "StationAlertConsole", name)
+		ui.open()
 
-/obj/machinery/computer/station_alert/on_set_machine_stat(old_value)
-	if(machine_stat & BROKEN)
-		alert_control.listener.prevent_alarm_changes()
-	else
-		alert_control.listener.allow_alarm_changes()
+/obj/machinery/computer/station_alert/ui_data(mob/user)
+	var/list/data = list()
+
+	data["alarms"] = list()
+	for(var/class in alarms)
+		data["alarms"][class] = list()
+		for(var/area in alarms[class])
+			data["alarms"][class] += area
+
+	return data
+
+/obj/machinery/computer/station_alert/proc/triggerAlarm(class, area/A, O, obj/source)
+	if(source.z != z)
+		return
+	if(machine_stat & (BROKEN))
+		return
+
+	var/list/L = alarms[class]
+	for(var/I in L)
+		if (I == A.name)
+			var/list/alarm = L[I]
+			var/list/sources = alarm[3]
+			if (!(source in sources))
+				sources += source
+			return 1
+	var/obj/machinery/camera/C = null
+	var/list/CL = null
+	if(O && islist(O))
+		CL = O
+		if (CL.len == 1)
+			C = CL[1]
+	else if(O && istype(O, /obj/machinery/camera))
+		C = O
+	L[A.name] = list(A, (C ? C : O), list(source))
+	return 1
+
+
+/obj/machinery/computer/station_alert/proc/cancelAlarm(class, area/A, obj/origin)
+	if(machine_stat & (BROKEN))
+		return
+	var/list/L = alarms[class]
+	var/cleared = 0
+	for (var/I in L)
+		if (I == A.name)
+			var/list/alarm = L[I]
+			var/list/srcs  = alarm[3]
+			if (origin in srcs)
+				srcs -= origin
+			if (srcs.len == 0)
+				cleared = 1
+				L -= I
+	return !cleared
 
 /obj/machinery/computer/station_alert/update_overlays()
 	. = ..()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	if(length(alert_control.listener.alarms))
+	var/active_alarms = FALSE
+	for(var/cat in alarms)
+		var/list/L = alarms[cat]
+		if(L.len)
+			active_alarms = TRUE
+	if(active_alarms)
 		. += "alert:2"
-
-/**
- * Clears out any active alert_control listeners, then sets up a new one based on the circuit settings
- */
-/obj/machinery/computer/station_alert/proc/link_alerts()
-	//Start from scratch, clear out the existing alert listeners
-	QDEL_NULL(alert_control)
-
-	//Then we check the circuit to determine if it should show alarms from Station & Mining areas,
-	//or Local (z-level) areas
-	var/obj/item/circuitboard/computer/station_alert/my_circuit = circuit
-	if(my_circuit.station_only)
-		name = "station alert console"
-		var/list/alert_areas
-		alert_areas = (GLOB.the_station_areas + typesof(/area/mine))
-		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), listener_areas = alert_areas, title = name)
-	else
-		name = "local alert console"
-		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z), title = name)
-	RegisterSignals(alert_control.listener, list(COMSIG_ALARM_LISTENER_TRIGGERED, COMSIG_ALARM_LISTENER_CLEARED), PROC_REF(update_alarm_display))
-
-/**
- * Signal handler for calling an icon update in case an alarm is added or cleared
- *
- * Arguments:
- * * source The datum source of the signal
- */
-/obj/machinery/computer/station_alert/proc/update_alarm_display(datum/source)
-	SIGNAL_HANDLER
-	update_icon()
-
-// Subtype which only checks station areas and the mining station
-/obj/machinery/computer/station_alert/station_only
-	circuit = /obj/item/circuitboard/computer/station_alert/station_only

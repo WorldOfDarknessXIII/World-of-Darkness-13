@@ -3,14 +3,12 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:math';
-
 $border-color: rgba(140, 140, 140, 0.5) !default;
 
 .Ping {
   position: relative;
   padding: 0.125em 0.25em;
-  border: math.div(1em, 12) solid $border-color;
+  border: (1em / 12) solid $border-color;
   border-radius: 0.25em;
   width: 3.75em;
   text-align: right;
@@ -23,6 +21,6 @@ $border-color: rgba(140, 140, 140, 0.5) !default;
   left: 0.5em;
   width: 0.5em;
   height: 0.5em;
-  background-color: hsl(0, 0%, 53.3%);
+  background-color: #888;
   border-radius: 0.25em;
 }

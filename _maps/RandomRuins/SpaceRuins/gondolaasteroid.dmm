@@ -6,7 +6,7 @@
 /turf/closed/mineral/random,
 /area/ruin/space/has_grav)
 "c" = (
-/turf/open/misc/asteroid/airless,
+/turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "d" = (
 /turf/open/floor/grass,
@@ -19,19 +19,63 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "f" = (
-/obj/structure/flora/bush/style_random,
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav)
+"g" = (
+/obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "h" = (
-/mob/living/basic/pet/gondola,
+/mob/living/simple_animal/pet/gondola,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav)
+"i" = (
+/obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "j" = (
-/obj/structure/flora/coconuts,
+/obj/effect/overlay/coconut,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav)
+"k" = (
+/obj/effect/overlay/palmtree_l,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav)
+"l" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav)
+"m" = (
+/obj/structure/flora/ausbushes/grassybush,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav)
+"n" = (
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav)
+"o" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav)
+"p" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav)
+"q" = (
+/obj/structure/flora/ausbushes/fernybush,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "r" = (
-/obj/structure/flora/tree/palm,
+/obj/effect/overlay/palmtree_r,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav)
+"s" = (
+/obj/structure/flora/junglebush/large,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav)
+"t" = (
+/obj/structure/flora/ausbushes/sunnybush,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "u" = (
@@ -268,7 +312,7 @@ d
 d
 d
 d
-f
+g
 d
 d
 d
@@ -303,7 +347,7 @@ d
 d
 d
 d
-f
+o
 d
 r
 d
@@ -366,21 +410,21 @@ b
 b
 b
 d
-r
+k
 d
 d
-f
+q
 d
 d
 j
 d
 d
-r
+k
 d
 d
 d
 d
-f
+m
 d
 d
 b
@@ -409,14 +453,14 @@ d
 d
 d
 d
-f
+s
 d
 d
 d
 d
 d
 d
-f
+i
 d
 d
 d
@@ -441,9 +485,9 @@ b
 b
 b
 d
-f
-f
-f
+i
+n
+g
 d
 d
 e
@@ -453,7 +497,7 @@ j
 d
 h
 d
-f
+l
 d
 e
 d
@@ -479,8 +523,8 @@ d
 d
 d
 d
-f
-f
+o
+o
 d
 h
 d
@@ -490,8 +534,8 @@ d
 d
 d
 d
-f
-f
+i
+o
 d
 d
 b
@@ -516,16 +560,16 @@ d
 d
 u
 d
-f
+i
 d
-f
-d
-d
+q
 d
 d
 d
 d
-f
+d
+d
+s
 d
 d
 d
@@ -553,12 +597,12 @@ d
 d
 d
 d
-f
+l
 d
 d
 d
-f
-f
+m
+i
 d
 d
 d
@@ -594,8 +638,8 @@ d
 d
 d
 d
-f
-f
+i
+o
 d
 d
 d
@@ -631,8 +675,8 @@ b
 d
 d
 d
-f
-f
+o
+p
 d
 d
 d
@@ -668,7 +712,7 @@ b
 b
 d
 f
-f
+n
 d
 d
 d
@@ -709,12 +753,12 @@ d
 d
 d
 d
-f
-f
+i
+t
 d
 d
 d
-f
+i
 d
 d
 b
@@ -747,7 +791,7 @@ j
 d
 d
 d
-f
+g
 d
 d
 d
@@ -808,13 +852,13 @@ b
 d
 d
 d
-r
+k
 d
-f
-f
+i
+i
 d
 d
-f
+q
 d
 d
 d
@@ -848,7 +892,7 @@ d
 d
 d
 d
-f
+l
 d
 d
 d
@@ -892,11 +936,11 @@ d
 u
 d
 h
-f
+s
 d
 d
 d
-f
+s
 d
 d
 d
@@ -931,7 +975,7 @@ d
 d
 d
 d
-f
+m
 d
 d
 d
@@ -960,16 +1004,16 @@ d
 d
 d
 d
-f
-f
+i
+l
 d
 d
 d
 d
 d
 d
-f
-f
+n
+m
 d
 d
 d
@@ -996,18 +1040,18 @@ d
 d
 d
 d
-f
-f
-f
+m
+p
+i
 d
-f
-d
-d
+g
 d
 d
 d
 d
-r
+d
+d
+k
 d
 d
 j
@@ -1038,8 +1082,8 @@ d
 d
 d
 e
-f
-f
+m
+i
 d
 d
 d
@@ -1075,9 +1119,9 @@ d
 d
 d
 d
-f
-f
-f
+i
+l
+p
 d
 d
 d
@@ -1117,7 +1161,7 @@ d
 d
 d
 d
-f
+i
 d
 d
 d
@@ -1137,9 +1181,9 @@ b
 b
 d
 e
-f
+g
 d
-f
+i
 d
 d
 d

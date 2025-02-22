@@ -20,27 +20,24 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		return //this will never happen.
 
 	else if(copytext(E.name, 1, 18) == "Out of resources!")//18 == length() of that string + 1
-		log_world("BYOND out of memory. Restarting ([E?.file]:[E?.line])")
+		log_world("BYOND out of memory. Restarting")
+		log_game("BYOND out of memory. Restarting")
 		TgsEndProcess()
-		. = ..()
 		Reboot(reason = 1)
+		return ..()
+
+	if (islist(stack_trace_storage))
+		for (var/line in splittext(E.desc, "\n"))
+			if (text2ascii(line) != 32)
+				stack_trace_storage += line
 		return
 
-	var/static/regex/stack_workaround
-	if(isnull(stack_workaround))
-		stack_workaround = regex("[WORKAROUND_IDENTIFIER](.+?)[WORKAROUND_IDENTIFIER]")
 	var/static/list/error_last_seen = list()
 	var/static/list/error_cooldown = list() /* Error_cooldown items will either be positive(cooldown time) or negative(silenced error)
 												If negative, starts at -1, and goes down by 1 each time that error gets skipped*/
 
 	if(!error_last_seen) // A runtime is occurring too early in start-up initialization
 		return ..()
-
-	if(stack_workaround.Find(E.name))
-		var/list/data = json_decode(stack_workaround.group[1])
-		E.file = data[1]
-		E.line = data[2]
-		E.name = stack_workaround.Replace(E.name, "")
 
 	var/erroruid = "[E.file][E.line]"
 	var/last_seen = error_last_seen[erroruid]
@@ -68,11 +65,11 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		configured_error_silence_time = CONFIG_GET(number/error_silence_time)
 	else
 		var/datum/config_entry/CE = /datum/config_entry/number/error_cooldown
-		configured_error_cooldown = initial(CE.default)
+		configured_error_cooldown = initial(CE.config_entry_value)
 		CE = /datum/config_entry/number/error_limit
-		configured_error_limit = initial(CE.default)
+		configured_error_limit = initial(CE.config_entry_value)
 		CE = /datum/config_entry/number/error_silence_time
-		configured_error_silence_time = initial(CE.default)
+		configured_error_silence_time = initial(CE.config_entry_value)
 
 
 	//Each occurence of a unique error adds to its cooldown time...
@@ -103,14 +100,6 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	// The proceeding mess will almost definitely break if error messages are ever changed
 	var/list/splitlines = splittext(E.desc, "\n")
 	var/list/desclines = list()
-#ifndef DISABLE_DREAMLUAU
-	var/list/state_stack = GLOB.lua_state_stack
-	var/is_lua_call = length(state_stack)
-	var/list/lua_stacks = list()
-	if(is_lua_call)
-		for(var/level in 1 to state_stack.len)
-			lua_stacks += list(splittext(DREAMLUAU_GET_TRACEBACK(level), "\n"))
-#endif
 	if(LAZYLEN(splitlines) > ERROR_USEFUL_LEN) // If there aren't at least three lines, there's no info
 		for(var/line in splitlines)
 			if(LAZYLEN(line) < 3 || findtext(line, "source file:") || findtext(line, "usr.loc:"))
@@ -120,16 +109,13 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 					desclines.Add(usrinfo)
 					usrinfo = null
 				continue // Our usr info is better, replace it
+
 			if(copytext(line, 1, 3) != "  ")//3 == length("  ") + 1
 				desclines += ("  " + line) // Pad any unpadded lines, so they look pretty
 			else
 				desclines += line
 	if(usrinfo) //If this info isn't null, it hasn't been added yet
 		desclines.Add(usrinfo)
-#ifndef DISABLE_DREAMLUAU
-	if(is_lua_call)
-		SSlua.log_involved_runtime(E, desclines, lua_stacks)
-#endif
 	if(silencing)
 		desclines += "  (This error will now be silenced for [DisplayTimeText(configured_error_silence_time)])"
 	if(GLOB.error_cache)
@@ -143,12 +129,10 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 #ifdef UNIT_TESTS
 	if(GLOB.current_test)
 		//good day, sir
-		GLOB.current_test.Fail("[main_line]\n[desclines.Join("\n")]", file = E.file, line = E.line)
+		GLOB.current_test.Fail("[main_line]\n[desclines.Join("\n")]")
 #endif
 
 
 	// This writes the regular format (unwrapping newlines and inserting timestamps as needed).
 	log_runtime("runtime error: [E.name]\n[E.desc]")
 #endif
-
-#undef ERROR_USEFUL_LEN

@@ -3,7 +3,7 @@
 
 This file will be written in the first person in the interest of having a laid back style, as some of the concepts here would be ass to read as technical writing. Understand that this isn't the work of one person, but the combined efforts of several contributors. It is a living document, and one you should strive to keep up to date.
 
-I have ~~stolen~~ adapted this document from the work of duncathan, an off and on maintainer who is responsible for the majority of the quality of the current atmos system. Hii pushed through several code cleanliness and sanity refactors to the system, and wrote the rundown of gas mixtures you'll find in this document. See the [original](https://gist.github.com/duncathan/77d918748d153b4f31a8f76f6085b91a) for his draft.
+I have ~~stolen~~ adapted this document from the work of duncathan, an off and on maintainer who is responsible for the majority of the quality of the current atmos system. He pushed through several code cleanliness and sanity refactors to the system, and wrote the rundown of gas mixtures you'll find in this document. See the [original](https://gist.github.com/duncathan/77d918748d153b4f31a8f76f6085b91a) for his draft.
 
 Now, the purpose of this bit of documentation.
 
@@ -37,8 +37,8 @@ Now then, into the breach.
 
  The air controller is, at its core, quite simple, yet it is absolutely fundamental to the atmospheric system. The air controller is the clock which triggers all continuous actions within the atmos system, such as vents distributing air or gas moving between tiles. The actions taken by the air controller are quite simple, and will be enumerated here. Much of the substance of the air ticker is due to the game's master controller, whose intricacies I will not delve into for this document. I will however go into more detail about how SSAir in particular works in Chapter 6. In any case, this is a simplified list of the air controller's actions in a single tick:
 1. Rebuild Pipenets
-    - Runs each time SSAir processes, sometimes out of order. It ensures that no pipeline sit unresolved or unbuilt
-    - Processes the `rebuild_queue` list into the `expansion_queue` list, and then builds a full pipeline piecemeal. We do a ton of fenagling here to reduce overrun
+    - Runs each time SSAir processes, sometimes out of order. It ensures that no pipenets sit unresolved or unbuilt
+    - Calls `build_network()` on each `/obj/machinery/atmospherics` in the `pipenets_needing_rebuilt` list
 2. Pipenets
     - Updates the internal gasmixes of attached pipe machinery, and reacts the gases in a pipeline
 	- Calls `process()` on each `/datum/pipenet` in the `networks` list
@@ -50,25 +50,28 @@ Now then, into the breach.
     - This is the heart and soul of environmental atmos, see more details below
     - All you need to know right now is it manages moving gas from tile to tile
     - Calls `process_cell()` on each `/turf/open` in the `active_turfs` list
-5. Excited groups
+5. Excited group cleanup
+    - Rebuilds excited groups when the structure of their turfs changes
+    - Calls `cleanup_group()` on each `/turf/open` in the `cleanup_ex_groups` list
+6. Excited groups
     - Manages excited groups, which are core to working flow simulation
     - More details to come, they handle differences between gasmixtures when active turfs can't do the job
     - Increases the `breakdown_cooldown` and `dismantle_cooldown` for each `/datum/excited_group` in the `excited_groups` list
     - If either cooldown for a given excited group has passed its threshold
     - Calls `self_breakdown()` or `dismantle()` appropriately on the excited group.
-6. High pressure deltas
+7. High pressure deltas
     - Takes the gas movement from Active Turfs and uses it to move objects on said turfs
     - Calls `high_pressure_movements()` on each `/turf/open` in the `high_pressure_delta` list.
     - Sets each turf's `pressure_difference` to 0
-7. Hotspots
+8. Hotspots
     - These are what you might know as fire, at least the effect of it.
     - They deal with burning things, and color calculations, lots of color calculations
     - Calls `process()` on each `/obj/effect/hotspot` in the `hotspots` list
-8. Superconductivity
+9. Superconductivity
     - Moves heat through turfs that don't allow gas to pass
     - Deals with heating up the floor below windows, and some other more painful heat stuff
     - Calls `super_conduct()` on each `/turf` in the `active_super_conductivity` list
-9. Atoms
+10. Atoms
     - Processes things in the world that should know about gas changes, used to account for turfs sleeping, I'll get more into that in a bit
     - Calls `process_exposure()` on each `/atom` in the `atom_process` list
 
@@ -149,85 +152,13 @@ It's also implemented by `/datum/gas_mixture/immutable/planetary`, which is used
 ### Reactions
 While defining a new gas on its own is very simple, there is no gas-specific behavior defined within /datum/gas. This behavior gets defined in a few places, notably breath code (to be discussed later) and in reactions. The most important and well known reaction in SS13 is fire - the combustion of plasma. Reactions are used for several things - in particular, it is conventional (though by no means enforced) that to form a gas, a reaction must occur. Creating a new reaction is fairly simple, this is the area of atmos that has received the most attention over the last few years, and the best place to start. Don't be scared of the size of reactions.dm, it's not that complex.
 
-There are two procs needed when defining a new reaction, /datum/gas_reaction/proc/init_reqs() and /datum/gas_reaction/proc/react(). init_reqs() initializes the requirements for the reaction to occur. There is a list, min_requirements, which maps gas paths to required amount of moles. It also maps three specific strings ("TEMP", "MAX_TEMP" and "ENER") to temperature in kelvins and thermal energy in joules. More behavior could easily be added here, but it hasn't yet for performance reasons because no reactions have need of it.
+There are two procs needed when defining a new reaction, TYPE_PROC_REF(/datum/gas_reaction, init_reqs)() and /datum/gas_reaction/proc/react(). init_reqs() initializes the requirements for the reaction to occur. There is a list, min_requirements, which maps gas paths to required amount of moles. It also maps three specific strings ("TEMP", "MAX_TEMP" and "ENER") to temperature in kelvins and thermal energy in joules. More behavior could easily be added here, but it hasn't yet for performance reasons because no reactions have need of it.
 
 As for react(), it is where all the behavior of the reaction is defined. The proc must return one of NO_REACTION, REACTING, or STOP_REACTIONS. The proc takes one or optionally two arguments. The first, mandatory, argument is a gas mixture on which to perform calculations; this mixture is what is reacting. The second, optional, argument is a turf or pipenet, specifically the thing which contains the gas mixture. You may choose for the reaction to affect the object in some way. Note that it is conventional for constants within reactions to be #define'd at the top of the file and #undef'd at the end.
 
 ## 5. Environmental Atmos
 
 This is a rather large subject, we will need to cover gas flow, turf sleeping, superconduction, and much more. Strap in and enjoy the ride!
-
-### A Word On `Share()`
-
-Each pair of turfs will only ever call `share()` on each other once. They use an archived cycle to keep track of
-this ordering
-
-That means turf A calling share on turf B should work the same as turf B calling share on turf A
-
-The key idea of FEA, the core sharing system we use is that neighboring cells should effectively equalize with each other.
-So taken on a line, you'd have two sharing partners, the cells to your left and right. The end goal of the simulation is for all the tiles on the line to have the same mix. But we can't just jump to that. So each "tick" we take our mix and average it with the mixes of the two tiles next to us.
-
-There's an equation for this that's considered standard in heat simulation. (Watch this video: https://www.youtube.com/watch?v=ly4S0oi3Yz8)
-We can't use it because means each pair of turfs needs to talk to each other twice, which is pain expensive. That and I'm pretty sure it would prevent us from yielding
-
-So instead of a complex form of averaging, we portion up tiles. So if you have two neighbors and you have something they don't, you can give them each a third. Have to keep one for ourselves mind, because otherwise we'll run out of gas. They can then act on this portion however they like, and we can likewise act on a portion of them to our liking.
-
-We know how much gas a tile had at the outset because of the archived moles list index. If we take more then we're owed in any shares before all other turfs have had their say, we could end up with negative moles. We expend a lot of effort to avoid this.
-
-The math for this looks like (totaldeltagas)/(neighborcount + 1)
-
-You may notice something like this in `process_cell()`. It's not quite the same though.
-
-Back in the old FEA days, neighbor count was hardcoded to 4 (Likely because this is what cell sharing on an infinite grid would look like). This means that turf A -> turf B is the same as turf B -> turf A, because they're each portioning up the gas in the same way.
-
-But when we moved to LINDA, we started using the length of our atmos_adjacent_turfs list (or an analog).
-We need this so things like multiz can work, and so tiles in a corner share in a way that makes sense.
-
-Because of this, turf A -> turf B was no longer the same as turf B -> turf A, assuming one of those turfs had a different neighbor count, from I DON'T KNOW WALLS?
-
-The fix for this was to use our neighbor count when moving gas from our tile to someone else's, and use the sharer's neighbor count when taking from it.
-
-This makes sense intuitively if you think of it like portioning up a tile, but I've included a rundown to make
-it a bit easier to prove to yourself.
-
-<details open>
-<summary>Take a look</summary>
-
-I have 10
-You have 20
-let's share
-I've got 2 partners
-you've got 3 partners
-so you want to give me 1/4th of your gas
-I want to give you 1/3rd of my gas
-
-the total gas diff between me and you is -10
-since it's negative you get to decide how to portion it
-so the total amount to share is -2.5
-I end up with 12.5
-you end up with 17.5
-
-again
-
-total diff is -5
-to share is 1.25
-I end up with 13.75
-you end up with 16.25
-
-again
-
-total diff is -2.5
-to share is 0.3125
-I end up with 14.0625
-you end up with 15.9375
-
-</details>
-
-We need to do this because if the portions get mixed up, our archived gas list ends up lying about how much of each gas type we have available to share.
-This can lead to negative moles, which the system is not prepared for.
-
-This is also why we queue space's sucking till the end of a tile's `process_cell()` btw, by that point we can ensure that no other tile will need to check for our mix, so we can freely violate our portioning.
-
 
 ### Active Turfs
 ![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/FlowVisuals.png)
@@ -236,7 +167,7 @@ This is also why we queue space's sucking till the end of a tile's `process_cell
 
 Active turfs are the backbone of how gas moves from tile to tile. While most of `process_cell()` should be easy enough to understand, I am going to go into some detail about archiving, since I think it's a common source of hiccups.
 
-* *`archived_cycle`* this var stores the last cycle of the atmos loop that the turf processed on. The key point to notice here is that when processing a turf, we don't share with all its neighbors, we only talk to those who haven't processed yet. This is because the remainder of `process_cell()` and especially `share()` are like addition. We can add in any order we like, and we only need to add once. This is what archived gases are for by the way, they store the state of the relevant tile before any processing occurs.
+* *`archived_cycle`* this var stores the last cycle of the atmos loop that the turf processed on. The key point to notice here is that when processing a turf, we don't share with all its neighbors, we only talk to those who haven't processed yet. This is because the remainder of `process_cell()` and especially `share()` ought to be similar in form to addition. We can add in any order we like, and we only need to add once. This is what archived gases are for by the way, they store the state of the relevant tile before any processing occurs. This isn't strictly the case unfortunately, but it's minor enough that we can ignore the effects.
 
 Alright then, with that out of the way, what is an active turf.
 
@@ -269,7 +200,7 @@ I've been talking kinda abstractly about turfs sleeping. That's because turfs on
 
 ### A brief romp to talk about excited groups and LAST_SHARE_CHECK
 
-Excited groups can tell the amount of diff being shared by hooking into a value `share()` sets on gasmixes, the absolute amount of gas shared by each tile. The issue is this isn't pressure, its molar count. So heat being shared in a sealed room causes excited groups to break down, then reform from sources. This isn't a major issue due to how breakdown evens things out, but it's worth knowing.
+Excited groups can tell the amount of diff being shared by hooking into a value `share()` sets on gasmixes, the absolute amount of gas shared by each tile. The issue is this isn't pressure, it's molar count. So heat being shared in a sealed room causes excited groups to break down, then reform from sources. This isn't a major issue due to how breakdown evens things out, but it's worth knowing.
 
 ### Back to the main thread
 
@@ -285,11 +216,13 @@ When a turf is removed from active, the excited group is broken down, as it's as
 
 Now this issue here is we'd like to keep this napping, but we don't want to `garbage_collect()` the excited group constantly.
 
-So, a new proc was added, `sleep_active_turf()`. It removes the active turf from processing, but doesn't `garbage_collect()` the group.
+So, a new proc was added, `sleep_active_turf()`. It removes the active turf from processing, but doesn't `garbage_collect()` the group. This has some additional costs however.
 
-You'd think this would cause issues with maintaining the shape of an excited group, however this isn't actually a priority, since `garbage_collect()` and the subsequent rebuild in `process_cell()` causes turfs that are actually active to reform, just as it always has. This has benefits, as it lessens the tendency of one group to cover a huge space, equalize all at once, and fuck with things.
+The excited group's `garbage_collect()` proc is the real issue here. When the landscape of the map changes, we need to rebuild the groups, as we don't want to rebuild them across a wall. The old way relied on the group rebuilding itself, in `process_cell()`, but since players can cause rebuilds quite often, can't afford to just wake all the turfs up.
 
-There's another issue here however, how do we deal with things that react to heat? A firelock shouldn't just open because the turf that the alarm is on went to sleep. Thus, atom_process, as I mentioned before, a list of atoms with requirements and things to do. It processes them until their requirements are not met, then it removes them from its list them.
+Thus, we have excited group cleanup, which takes all the old turfs, and reaches out to their neighbors to rebuild the group. This allows us to rebuild excited groups without relying on active turfs.
+
+There's another issue here too, how do we deal with things that react to heat? A firelock shouldn't just open because the turf that the alarm is on went to sleep. Thus, atom_process, as I mentioned before, a list of atoms with requirements and things to do. It processes them until their requirements are not met, then it removes them from its list them.
 
 There's one more major aspect of environmental atmos to cover, and while it's not the most misunderstood, it is the code with the worst set dressing.
 
@@ -311,7 +244,7 @@ So then, what does superconduction do, and what do all these damn vars mean.
 
 As I mentioned above, superconduction shares heat where heat can't normally travel. It does this by heating up the turf the heat is in, not the gasmix, the turf itself. This temperature is then shared with adjacent turfs, based on `thermal_conductivity`, a value between 0 and 1 that slows the heat share. Turfs also have a `heat_capacity`, which is how hard it is to heat, along with providing a threshold for the lowest temperature that can melt the turf.
 
-There's one more, and it's a doozy. `atmos_superconductivity` is a set of directions that we cannot share with. I know. It's set in can_atmos_pass(), a rather heady set of procs that build `atmos_adjacent_turfs`, and also modify `atmos_superconductivity`.
+There's one more, and it's a doozy. `atmos_superconductivity` is a set of directions that we cannot share with. I know. It's set in CanAtmosPass(), a rather heady set of procs that build `atmos_adjacent_turfs`, and also modify `atmos_superconductivity`.
 
 So then, a review.
 
@@ -336,9 +269,15 @@ The MC entry for SSAir is very helpful for debugging, and it is good to understa
 
 *Figure 6.1: SSAir sitting doing little to nothing turf wise, only processing pipenets and atmos machines*
 
-If you aren't familiar with the default subsystem stats, you can see them explained here: [][http://codedocs.tgstation13.org/.github/guides/MC_tab.md]
+As you can see here, SSAir is a bit of a jumble, don't worry, it'll make sense in a second. The first line is in this order: cost, tick_usage, tick_overrun, ticks.
+All of these are averages by the way.
 
-The second line is the cost each subprocess contributed per full cycle, this is a rolling average. It'll give you a good feel for what is misbehaving. (The only exception to this is pipenet rebuilds, the last entry. Because of its nature as something that can happen at any time, it doesn't have a rolling average, instead it just displays the time it used last process)
+* *`cost`* Cost is the raw time spent running the subsystem in milliseconds
+* *`tick_usage`* The percent of each byond tick the last fire() took. Tends to be twice cost, good for comparing with overrun.
+* *`tick_overrun`* A percentage of how far past our allotted time we ran. This is what causes Time Dilation, it's bad.
+* *`ticks`* The amount of subsystem fires it takes to run through all the subprocesses once.
+
+The second line is the cost each subprocess contributed per full cycle, this is a rolling average. It'll give you a good feel for what is misbehaving.
 
 The third line is the amount of "whatever" in each subprocess. Handy for noticing dupe bugs and crying at active turf cost. Speaking of, the last entry is the active turfs per overall cost. Not a great metric, but larger is better.
 
@@ -408,16 +347,7 @@ On that note, I'd like to be clear about something. In lines of connected pipes,
 
 Oh, and pipelines react the gas mixture inside them, thought I should mention that.
 
-### A short note on rebuilding
-
-Everything that needs a pipeline should have it before it's allowed to do any processing. This is to prevent runtimes and shitcode related things.
-
-The act of rebuilding a pipeline is quite expensive however, since it involves iterating over all the connected pipes/components.
-That's why we go to such great pains to make sure no large amount of work is allowed to happen at once. It's in an attempt to avoid the excited group settling type of lag I discussed above. It's ok for atmos to lock up for a short period if the system isn't killing the game as a whole.
-
-
 All the other behavior of pipes and pipe components are handled by atmos machinery. I'll give a brief rundown of how they're classified, but the details of each machine are left as an exercise to the reader.
-
 
 #### Pipes
 
@@ -457,17 +387,9 @@ This is for the oddballs, the one offs, the half useless things. Things that are
 
 These are the atmos machines you can move around. They interface with connectors to talk to pipelines, and can contain tanks. Not a whole lot more to discuss here.
 
-## 9. A word on processing
-
-You may have noticed that a large portion of the optimizations we do are focused around not checking to see if we need to do work.
-
-This is essentially what active turfs are built around, and it's a somewhat unfinished project. There's still quite a few things in atmos, mostly machinery, that check each fire to see if they should be doing work. There's a general pattern to solving this sort of thing by the way, centralize the ways a bit of outside code can interact with a "thing", and then when the outside code does something that might warrant processing, start processing.
-
-This attitude needs to be applied to a few large targets, and you may see it crop up when reading through the code. Keep this in mind, and make sure to respect the rules that describe how to work with the object, or things will go to shit.
-
 ## Appendix A - Glossary
 
-* *LINDA* - Our environmental gas system, created by Aranclanos, allegedly Beautiful in Spanish
+* *LINDA* - Our environmental gas system, created by Aranclanos, Beautiful in Spanish
 * *Naps* - A healthy pastime
 * *Gas mixtures* - The datums that store gas information, key to listmos and our underlying method of handling well gas
 * *Diffs* - The differences between gasmixes. We want to get rid of these over time, and clump them up with their sources so we don't need to process too many turfs

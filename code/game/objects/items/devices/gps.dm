@@ -2,23 +2,17 @@
 /obj/item/gps
 	name = "global positioning system"
 	desc = "Helping lost spacemen find their way through the planets since 2016."
-	icon = 'icons/obj/devices/tracker.dmi'
+	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	obj_flags = UNIQUE_RENAME
 	var/gpstag
 
-/obj/item/gps/Initialize(mapload)
+/obj/item/gps/Initialize()
 	. = ..()
-	add_gps_component()
-
-/// Adds the GPS component to this item.
-/obj/item/gps/proc/add_gps_component()
 	AddComponent(/datum/component/gps/item, gpstag)
 
 /obj/item/gps/spaceruin
@@ -42,7 +36,7 @@
 	gpstag = "BORG0"
 	desc = "A mining cyborg internal positioning system. Used as a recovery beacon for damaged cyborg assets, or a collaboration tool for mining teams."
 
-/obj/item/gps/cyborg/Initialize(mapload)
+/obj/item/gps/cyborg/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
@@ -50,15 +44,6 @@
 	icon_state = "gps-m"
 	gpstag = "MINER"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
-
-/*
- * GPS for pAIS, which only allows access if it's contained within the user.
- */
-/obj/item/gps/pai
-	gpstag = "PAI0"
-
-/obj/item/gps/pai/add_gps_component()
-	AddComponent(/datum/component/gps/item, gpstag, state = GLOB.inventory_state)
 
 /obj/item/gps/visible_debug
 	name = "visible GPS"
@@ -68,7 +53,7 @@
 		for marking the area around the transition edges."
 	var/list/turf/tagged
 
-/obj/item/gps/visible_debug/Initialize(mapload)
+/obj/item/gps/visible_debug/Initialize()
 	. = ..()
 	tagged = list()
 	START_PROCESSING(SSfastprocess, src)

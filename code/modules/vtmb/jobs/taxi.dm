@@ -5,13 +5,16 @@
 	total_positions = 3
 	spawn_positions = 3
 	supervisors = " the Traditions"
+	selection_color = "#e3e3e3"
 
 	outfit = /datum/outfit/job/taxi
 
-	paycheck = PAYCHECK_CREW
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_TAXI
-	exp_granted_type = EXP_TYPE_SERVICES
+	exp_type_department = EXP_TYPE_SERVICES
 
 	allowed_species = list("Vampire", "Ghoul", "Human", "Werewolf", "Kuei-Jin")
 
@@ -20,6 +23,10 @@
 	minimal_masquerade = 0
 	experience_addition = 10
 	allowed_bloodlines = list("Daughters of Cacaphony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff", "Kiasyd", "Cappadocian")
+
+/datum/job/vamp/taxi/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
+	..()
+	H.taxist = TRUE
 
 /datum/outfit/job/taxi
 	name = "Taxi Driver"

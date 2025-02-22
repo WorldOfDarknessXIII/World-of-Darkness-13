@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(zombiepool)
 	name = "Zombie Pool"
 	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_BACKGROUND
-	priority = FIRE_PRIORITY_IDLE_NPC
+	priority = FIRE_PRIORITY_VERYLOW
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	wait = 20
 
@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(zombiepool)
 	var/list/currentrun = src.currentrun
 
 	while(currentrun.len)
-		var/mob/living/basic/zombie/Z = currentrun[currentrun.len]
+		var/mob/living/simple_animal/hostile/zombie/Z = currentrun[currentrun.len]
 		--currentrun.len
 
 		if (QDELETED(Z)) // Some issue causes nulls to get into this list some times. This keeps it running, but the bug is still there.
@@ -83,7 +83,7 @@ SUBSYSTEM_DEF(zombiepool)
 	if(istype(I, /obj/item/melee/vampirearms/tire))
 		if(!repairing)
 			repairing = TRUE
-			if(do_after(user, 5 SECONDS, src))
+			if(do_mob(user, src, 5 SECONDS))
 				punches_to_break = min(punches_to_break+5, initial(punches_to_break))
 				if(punches_to_break)
 					density = TRUE

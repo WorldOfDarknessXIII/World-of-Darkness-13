@@ -15,21 +15,25 @@
 /datum/species/kindred
 	name = "Vampire"
 	id = "kindred"
-	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LIMBATTACHMENT, TRAIT_VIRUSIMMUNE, TRAIT_NOBLOOD, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_TOXIMMUNE, TRAIT_NOCRITDAMAGE)
+	default_color = "FFFFFF"
+	toxic_food = MEAT | VEGETABLES | RAW | JUNKFOOD | GRAIN | FRUIT | DAIRY | FRIED | ALCOHOL | SUGAR | PINEAPPLE
+	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, HAS_FLESH, HAS_BONE)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LIMBATTACHMENT, TRAIT_VIRUSIMMUNE, TRAIT_NOBLEED, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_TOXIMMUNE, TRAIT_NOCRITDAMAGE)
+	use_skintones = TRUE
+	limbs_id = "human"
+	wings_icon = "Dragon"
+	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
 	mutantbrain = /obj/item/organ/brain/vampire
-	mutanttongue = /obj/item/organ/tongue/vampire
 	brutemod = 0.5	// or change to 0.8
-	heatmod = 2
-	bodytemp_normal = T20C //Change this to be the ambient temperature if anyone adds weather.
+	heatmod = 1		//Sucking due to overheating	///THEY DON'T SUCK FROM FIRE ANYMORE
+	burnmod = 2
+	punchdamagelow = 10
+	punchdamagehigh = 20
+	dust_anim = "dust-h"
 	var/datum/vampireclane/clane
 	var/list/datum/discipline/disciplines = list()
+	selectable = TRUE
 	COOLDOWN_DECLARE(torpor_timer)
-
-/datum/species/kindred/get_species_description()
-	return "Vampires."
-
-/datum/species/kindred/get_species_lore()
-	return "Vampires."
 
 /datum/action/vampireinfo
 	name = "About Me"
@@ -38,7 +42,7 @@
 	check_flags = NONE
 	var/mob/living/carbon/human/host
 
-/datum/action/vampireinfo/Trigger(trigger_flags)
+/datum/action/vampireinfo/Trigger()
 	if(host)
 		var/dat = {"
 			<style type="text/css">
@@ -150,7 +154,7 @@
 				if(host.real_name != GLOB.ventruename)
 					dat += " My primogen is:  [GLOB.ventruename].<BR>"
 
-		dat += "<b>strength</b>: [host.strength] + [host.additional_strength]<BR>"
+		dat += "<b>Physique</b>: [host.physique] + [host.additional_physique]<BR>"
 		dat += "<b>Dexterity</b>: [host.dexterity] + [host.additional_dexterity]<BR>"
 		dat += "<b>Social</b>: [host.social] + [host.additional_social]<BR>"
 		dat += "<b>Mentality</b>: [host.mentality] + [host.additional_mentality]<BR>"
@@ -183,12 +187,15 @@
 						dat += "Their number is [host.Myself.Lover.phone_number].<BR>"
 					if(host.Myself.Lover.lover_text)
 						dat += "[host.Myself.Lover.lover_text]<BR>"
-		var/obj/keypad/armory/K = find_keypad(/obj/keypad/armory)
-		if(K && (host.mind.assigned_role == "Prince" || host.mind.assigned_role == "Sheriff"))
-			dat += "<b>The pincode for the armory keypad is: [K.pincode]</b><BR>"
+		var/obj/keypad/armory/armory = find_keypad(/obj/keypad/armory)
+		if(armory && (host.mind.assigned_role == "Prince" || host.mind.assigned_role == "Sheriff" || host.mind.assigned_role == "Seneschal"))
+			dat += "The pincode for the armory keypad is<b>: [armory.pincode]</b><BR>"
+		var/obj/keypad/panic_room/panic = find_keypad(/obj/keypad/panic_room)
+		if(panic && (host.mind.assigned_role == "Prince" || host.mind.assigned_role == "Sheriff" || host.mind.assigned_role == "Seneschal"))
+			dat += "The pincode for the panic room keypad is<b>: [panic.pincode]</b><BR>"
 		var/obj/structure/vaultdoor/pincode/bank/bankdoor = find_door_pin(/obj/structure/vaultdoor/pincode/bank)
 		if(bankdoor && (host.mind.assigned_role == "Capo"))
-			dat += "<b>The pincode for the bank vault is: [bankdoor.pincode]</b><BR>"
+			dat += "The pincode for the bank vault is <b>: [bankdoor.pincode]</b><BR>"
 		if(bankdoor && (host.mind.assigned_role == "La Squadra"))
 			if(prob(50))
 				dat += "<b>The pincode for the bank vault is: [bankdoor.pincode]</b><BR>"
@@ -200,43 +207,47 @@
 			for(var/i in host.knowscontacts)
 				dat += "-[i] contact<BR>"
 		for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
-			if(host.account_id == account.bank_id)
+			if(host.bank_id == account.bank_id)
 				dat += "<b>My bank account code is: [account.code]</b><BR>"
 		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
 		onclose(host, "vampire", src)
 
-/datum/species/kindred/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
+/datum/species/kindred/on_species_gain(mob/living/carbon/human/C)
 	. = ..()
-	human_who_gained_species.update_body(0)
-	human_who_gained_species.last_experience = world.time + 5 MINUTES
+	C.update_body(0)
+	C.last_experience = world.time + 5 MINUTES
 	var/datum/action/vampireinfo/infor = new()
-	infor.host = human_who_gained_species
-	infor.Grant(human_who_gained_species)
+	infor.host = C
+	infor.Grant(C)
 	var/datum/action/give_vitae/vitae = new()
-	vitae.Grant(human_who_gained_species)
+	vitae.Grant(C)
 	var/datum/action/blood_heal/bloodheal = new()
-	bloodheal.Grant(human_who_gained_species)
+	bloodheal.Grant(C)
 	var/datum/action/blood_power/bloodpower = new()
-	bloodpower.Grant(human_who_gained_species)
-	add_verb(human_who_gained_species, /mob/living/carbon/human/verb/teach_discipline)
+	bloodpower.Grant(C)
+	add_verb(C, /mob/living/carbon/human/verb/teach_discipline)
 
-	human_who_gained_species.yang_chi = 0
-	human_who_gained_species.max_yang_chi = 0
-	human_who_gained_species.yin_chi = 6
-	human_who_gained_species.max_yin_chi = 6
+	C.yang_chi = 0
+	C.max_yang_chi = 0
+	C.yin_chi = 6
+	C.max_yin_chi = 6
 
 	//vampires go to -200 damage before dying
-	for (var/obj/item/bodypart/bodypart in human_who_gained_species.bodyparts)
+	for (var/obj/item/bodypart/bodypart in C.bodyparts)
 		bodypart.max_damage *= 1.5
 
 	//vampires die instantly upon having their heart removed
-	RegisterSignal(human_who_gained_species, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(lose_organ))
+	RegisterSignal(C, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(lose_organ))
 
 	//vampires don't die while in crit, they just slip into torpor after 2 minutes of being critted
-	RegisterSignal(human_who_gained_species, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(slip_into_torpor))
+	RegisterSignal(C, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(slip_into_torpor))
+
+	//vampires resist vampire bites better than mortals
+	RegisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_vampire_bitten))
 
 /datum/species/kindred/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
+	UnregisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED)
 	for(var/datum/action/vampireinfo/VI in C.actions)
 		if(VI)
 			VI.Remove(C)
@@ -251,10 +262,23 @@
 	button_icon_state = "bloodpower"
 	button_icon = 'code/modules/wod13/UI/actions.dmi'
 	background_icon_state = "discipline"
+	icon_icon = 'code/modules/wod13/UI/actions.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	vampiric = TRUE
 
-/datum/action/blood_power/Trigger(trigger_flags)
+/datum/action/blood_power/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
+	if(owner)
+		if(owner.client)
+			if(owner.client.prefs)
+				if(owner.client.prefs.old_discipline)
+					button_icon = 'code/modules/wod13/disciplines.dmi'
+					icon_icon = 'code/modules/wod13/disciplines.dmi'
+				else
+					button_icon = 'code/modules/wod13/UI/actions.dmi'
+					icon_icon = 'code/modules/wod13/UI/actions.dmi'
+	. = ..()
+
+/datum/action/blood_power/Trigger()
 	if(istype(owner, /mob/living/carbon/human))
 		if (HAS_TRAIT(owner, TRAIT_TORPOR))
 			return
@@ -266,9 +290,14 @@
 			plus = 1
 		if(BD.bloodpool >= 2+plus)
 			playsound(usr, 'code/modules/wod13/sounds/bloodhealing.ogg', 50, FALSE)
+			button.color = "#970000"
+			animate(button, color = "#ffffff", time = 20, loop = 1)
 			BD.last_bloodpower_use = world.time
 			BD.bloodpool = max(0, BD.bloodpool-(2+plus))
 			to_chat(BD, "<span class='notice'>You use blood to become more powerful.</span>")
+			BD.dna.species.punchdamagehigh = BD.dna.species.punchdamagehigh+5
+			BD.physiology.armor.melee = BD.physiology.armor.melee+15
+			BD.physiology.armor.bullet = BD.physiology.armor.bullet+15
 			BD.dexterity = BD.dexterity+2
 			BD.athletics = BD.athletics+2
 			BD.lockpicking = BD.lockpicking+2
@@ -286,6 +315,9 @@
 		var/mob/living/carbon/human/BD = owner
 		to_chat(BD, "<span class='warning'>You feel like your <b>BLOOD</b>-powers slowly decrease.</span>")
 		if(BD.dna.species)
+			BD.dna.species.punchdamagehigh = BD.dna.species.punchdamagehigh-5
+			BD.physiology.armor.melee = BD.physiology.armor.melee-15
+			BD.physiology.armor.bullet = BD.physiology.armor.bullet-15
 			if(HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
 				REMOVE_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
 		BD.dexterity = BD.dexterity-2
@@ -300,7 +332,7 @@
 	vampiric = TRUE
 	var/giving = FALSE
 
-/datum/action/give_vitae/Trigger(trigger_flags)
+/datum/action/give_vitae/Trigger()
 	if(istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner
 		if(H.bloodpool < 2)
@@ -329,7 +361,7 @@
 				return
 			giving = TRUE
 			owner.visible_message("<span class='warning'>[owner] tries to feed [BLOODBONDED] with their own blood!</span>", "<span class='notice'>You started to feed [BLOODBONDED] with your own blood.</span>")
-			if(do_after(owner, 10 SECONDS, BLOODBONDED))
+			if(do_mob(owner, BLOODBONDED, 10 SECONDS))
 				H.bloodpool = max(0, H.bloodpool-2)
 				giving = FALSE
 
@@ -370,7 +402,7 @@
 						message_admins("[ADMIN_LOOKUPFLW(H)] has Embraced [ADMIN_LOOKUPFLW(BLOODBONDED)].")
 						giving = FALSE
 						var/save_data_v = FALSE
-						if(BLOODBONDED.revive(full_heal_flags = HEAL_ADMIN, force_grab_ghost = TRUE))
+						if(BLOODBONDED.revive(full_heal = TRUE, admin_revive = TRUE))
 							BLOODBONDED.grab_ghost(force = TRUE)
 							to_chat(BLOODBONDED, "<span class='userdanger'>You rise with a start, you're alive! Or not... You feel your soul going somewhere, as you realize you are embraced by a vampire...</span>")
 							var/response_v = input(BLOODBONDED, "Do you wish to keep being a vampire on your save slot?(Yes will be a permanent choice and you can't go back!)") in list("Yes", "No")
@@ -427,12 +459,13 @@
 						if (iskindred(BLOODBONDED) && save_data_v)
 							var/datum/preferences/BLOODBONDED_prefs_v = BLOODBONDED.client.prefs
 
-							BLOODBONDED_prefs_v.write_preference(/datum/preference/choiced/species, "kindred")
+							BLOODBONDED_prefs_v.pref_species.id = "kindred"
+							BLOODBONDED_prefs_v.pref_species.name = "Vampire"
 							if(H.generation < 13)
 
 								BLOODBONDED_prefs_v.clane = BLOODBONDED.clane
 								BLOODBONDED_prefs_v.generation = 13
-								BLOODBONDED_prefs_v.write_preference(/datum/preference/choiced/skin_tone, get_vamp_skin_color(BLOODBONDED.skin_tone))
+								BLOODBONDED_prefs_v.skin_tone = get_vamp_skin_color(BLOODBONDED.skin_tone)
 								BLOODBONDED_prefs_v.clane.enlightenment = H.clane.enlightenment
 
 
@@ -464,9 +497,9 @@
 						giving = FALSE
 						return
 				else
-					if(BLOODBONDED.has_status_effect(/datum/status_effect/in_love))
-						BLOODBONDED.remove_status_effect(/datum/status_effect/in_love)
-					BLOODBONDED.apply_status_effect(/datum/status_effect/in_love, owner)
+					if(BLOODBONDED.has_status_effect(STATUS_EFFECT_INLOVE))
+						BLOODBONDED.remove_status_effect(STATUS_EFFECT_INLOVE)
+					BLOODBONDED.apply_status_effect(STATUS_EFFECT_INLOVE, owner)
 					to_chat(owner, "<span class='notice'>You successfuly fed [BLOODBONDED] with vitae.</span>")
 					to_chat(BLOODBONDED, "<span class='userlove'>You feel good when you drink this <b>BLOOD</b>...</span>")
 
@@ -475,7 +508,7 @@
 
 					if(H.reagents)
 						if(length(H.reagents.reagent_list))
-							H.reagents.trans_to(BLOODBONDED, min(10, H.reagents.total_volume), transferred_by = H, methods = VAMPIRE)
+							H.reagents.trans_to(BLOODBONDED, min(10, H.reagents.total_volume), transfered_by = H, methods = VAMPIRE)
 					BLOODBONDED.adjustBruteLoss(-25, TRUE)
 					if(length(BLOODBONDED.all_wounds))
 						var/datum/wound/W = pick(BLOODBONDED.all_wounds)
@@ -535,7 +568,8 @@
 										var/index = BLOODBONDED_prefs_g.discipline_types.Find(removing_discipline)
 										BLOODBONDED_prefs_g.discipline_types.Cut(index, index + 1)
 										BLOODBONDED_prefs_g.discipline_levels.Cut(index, index + 1)
-							BLOODBONDED.client.prefs.write_preference(/datum/preference/choiced/species, "Ghoul")
+							BLOODBONDED_prefs_g.pref_species.name = "Ghoul"
+							BLOODBONDED_prefs_g.pref_species.id = "ghoul"
 							BLOODBONDED_prefs_g.save_character()
 			else
 				giving = FALSE
@@ -554,6 +588,7 @@
  */
 /mob/living/carbon/human/proc/create_disciplines(discipline_pref = TRUE, list/disciplines)	//EMBRACE BASIC
 	if(client)
+		client.prefs.slotlocked = TRUE
 		client.prefs.save_preferences()
 		client.prefs.save_character()
 
@@ -649,7 +684,7 @@
 		H.base_body_mod = ""
 
 	if(H.clane.alt_sprite)
-		H.dna.species.examine_limb_id = "[H.base_body_mod][H.clane.alt_sprite]"
+		H.dna.species.limbs_id = "[H.base_body_mod][H.clane.alt_sprite]"
 
 	if (H.clane.no_hair)
 		H.hairstyle = "Bald"
@@ -672,7 +707,7 @@
 
 	if (istype(organ, /obj/item/organ/heart))
 		spawn()
-			if (!source.get_organ_loss(ORGAN_SLOT_HEART))
+			if (!source.getorganslot(ORGAN_SLOT_HEART))
 				source.death()
 
 /datum/species/kindred/proc/slip_into_torpor(var/mob/living/carbon/human/source)
@@ -801,8 +836,9 @@
 
 //Vampires take 4% of their max health in burn damage every tick they are on fire. Very potent against lower-gens.
 //Set at 0.02 because they already take twice as much burn damage.
-// /datum/species/kindred/on_fire_stack(mob/living/carbon/human/H, no_protection)
-//	H.adjustFireLoss(H.maxHealth * 0.02)
+/datum/species/kindred/handle_fire(mob/living/carbon/human/H, no_protection)
+	if(!..())
+		H.adjustFireLoss(H.maxHealth * 0.02)
 
 /**
  * Checks a vampire for whitelist access to a Discipline.
@@ -853,3 +889,14 @@
 
 	//nothing found
 	return FALSE
+
+/**
+ * On being bit by a vampire
+ *
+ * This handles vampire bite sleep immunity and any future special interactions.
+ */
+/datum/species/kindred/proc/on_vampire_bitten(datum/source, mob/living/carbon/being_bitten)
+	SIGNAL_HANDLER
+
+	if(iskindred(being_bitten))
+		return COMPONENT_RESIST_VAMPIRE_KISS

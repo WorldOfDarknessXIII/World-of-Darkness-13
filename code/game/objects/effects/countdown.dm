@@ -7,14 +7,14 @@
 
 	invisibility = INVISIBILITY_OBSERVER
 	anchored = TRUE
-	plane = GHOST_PLANE
+	layer = GHOST_LAYER
 	color = "#ff0000" // text color
 	var/text_size = 3 // larger values clip when the displayed text is larger than 2 digits.
 	var/started = FALSE
 	var/displayed_text
 	var/atom/attached_to
 
-/obj/effect/countdown/Initialize(mapload)
+/obj/effect/countdown/Initialize()
 	. = ..()
 	attach(loc)
 
@@ -24,20 +24,7 @@
 
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A
-	var/turf/loc_turf = get_turf(A)
-	if(!loc_turf)
-		RegisterSignal(attached_to, COMSIG_MOVABLE_MOVED, PROC_REF(retry_attach), TRUE)
-	else
-		forceMove(loc_turf)
-
-/obj/effect/countdown/proc/retry_attach()
-	SIGNAL_HANDLER
-
-	var/turf/loc_turf = get_turf(attached_to)
-	if(!loc_turf)
-		return
-	forceMove(loc_turf)
-	UnregisterSignal(attached_to, COMSIG_MOVABLE_MOVED)
+	forceMove(get_turf(A))
 
 /obj/effect/countdown/proc/start()
 	if(!started)
@@ -64,7 +51,7 @@
 	displayed_text = new_val
 
 	if(displayed_text)
-		maptext = MAPTEXT("[displayed_text]")
+		maptext = MAPTEXT("<font size = [text_size]>[displayed_text]</font>")
 	else
 		maptext = null
 
@@ -73,7 +60,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
 
-/obj/effect/countdown/singularity_pull(atom/singularity, current_size)
+/obj/effect/countdown/singularity_pull()
 	return
 
 /obj/effect/countdown/singularity_act()
@@ -102,19 +89,14 @@
 
 /obj/effect/countdown/supermatter
 	name = "supermatter damage"
+	text_size = 1
 	color = "#00ff80"
-	pixel_y = 8
-
-/obj/effect/countdown/supermatter/attach(atom/A)
-	. = ..()
-	if(istype(A, /obj/machinery/power/supermatter_crystal/shard))
-		pixel_y = -12
 
 /obj/effect/countdown/supermatter/get_value()
 	var/obj/machinery/power/supermatter_crystal/S = attached_to
 	if(!istype(S))
 		return
-	return "<div align='center' valign='bottom' style='position:relative; top:0px; left:0px'>[round(S.get_integrity_percent())]%</div>"
+	return "<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[round(S.get_integrity(), 1)]%</div>"
 
 /obj/effect/countdown/transformer
 	name = "transformer countdown"
@@ -145,8 +127,6 @@
 	var/obj/effect/anomaly/A = attached_to
 	if(!istype(A))
 		return
-	else if(A.immortal) //we can't die, why are we still here? just to suffer?
-		stop()
 	else
 		var/time_left = max(0, (A.death_time - world.time) / 10)
 		return round(time_left)
@@ -160,6 +140,19 @@
 		return
 	else
 		var/time_left = max(0, (H.finish_time - world.time) / 10)
+		return round(time_left)
+
+/obj/effect/countdown/arena
+	invisibility = 0
+	name = "arena countdown"
+
+/obj/effect/countdown/arena/get_value()
+	var/obj/machinery/arena_spawn/A = attached_to
+	if(!istype(A))
+		return
+	else
+		var/obj/machinery/computer/arena/C = A.get_controller()
+		var/time_left = max(0, (C.start_time - world.time) / 10)
 		return round(time_left)
 
 /obj/effect/countdown/flower_bud

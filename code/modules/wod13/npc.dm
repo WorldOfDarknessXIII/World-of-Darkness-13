@@ -1,5 +1,27 @@
+#define BANDIT_TYPE_NPC /mob/living/carbon/human/npc/bandit
+#define POLICE_TYPE_NPC /mob/living/carbon/human/npc/police
+
 /mob/living/carbon/human/npc
 	name = "Loh ebanii"
+	/// Until we do a full NPC refactor (see: rewriting every single bit of code)
+	/// use this to determine NPC weapons and their chances to spawn with them -- assuming you want the NPC to do that
+	/// Otherwise just set it under the NPC's type as
+	/// my_weapon = type_path
+	/// my_backup_weapon = type_path
+	/// This only determines my_weapon, you set my_backup_weapon yourself
+	/// The last entry in the list for a type of NPC should always have 100 as the index
+	var/static/list/role_weapons_chances = list(
+		BANDIT_TYPE_NPC = list(
+			 /obj/item/gun/ballistic/automatic/vampire/deagle = 33,
+			 /obj/item/gun/ballistic/vampire/revolver/snub = 33,
+			 /obj/item/melee/vampirearms/baseball = 100,
+		),
+		POLICE_TYPE_NPC = list(
+			/obj/item/gun/ballistic/vampire/revolver = 66,
+			/obj/item/gun/ballistic/automatic/vampire/ar15 = 100,
+		)
+	)
+	a_intent = INTENT_HELP
 	var/datum/socialrole/socialrole
 
 	var/is_talking = FALSE
@@ -23,9 +45,20 @@
 
 	var/stopturf = 1
 
+	var/extra_mags=2
+	var/extra_loaded_rounds=10
 
-	var/obj/item/my_weapon
+	var/has_weapon = FALSE
+
+	var/my_weapon_type = null
+	var/obj/item/my_weapon = null
+
+	var/my_backup_weapon_type = null
+	var/obj/item/my_backup_weapon = null
+
 	var/spawned_weapon = FALSE
+
+	var/spawned_backup_weapon = FALSE
 
 	var/ghoulificated = FALSE
 
@@ -36,6 +69,59 @@
 	var/max_stat = 2
 
 	var/list/spotted_bodies = list()
+
+	var/is_criminal = FALSE
+
+	var/list/drop_on_death_list = null
+
+/mob/living/carbon/human/npc/LateInitialize()
+	. = ..()
+	if(role_weapons_chances.Find(type))
+		for(var/weapon in role_weapons_chances[type])
+			if(prob(role_weapons_chances[type][weapon]))
+				my_weapon = new weapon(src)
+				break
+	if(!my_weapon && my_weapon_type)
+		my_weapon = new my_weapon_type(src)
+		
+
+
+	if(my_weapon)
+		has_weapon = TRUE
+		equip_to_appropriate_slot(my_weapon)
+		if(istype(my_weapon, /obj/item/gun/ballistic))
+			RegisterSignal(my_weapon, COMSIG_GUN_FIRED, PROC_REF(handle_gun))
+			RegisterSignal(my_weapon, COMSIG_GUN_EMPTY, PROC_REF(handle_empty_gun))
+		register_sticky_item(my_weapon)
+
+	if(my_backup_weapon_type)
+		my_backup_weapon = new my_backup_weapon_type(src)
+		equip_to_appropriate_slot(my_backup_weapon)
+		register_sticky_item(my_backup_weapon)
+
+//====================Sticky Item Handling====================
+/mob/living/carbon/human/npc/proc/register_sticky_item(obj/item/my_item)
+	ADD_TRAIT(my_item, TRAIT_NODROP, NPC_ITEM_TRAIT)
+	if(!drop_on_death_list?.len)
+		drop_on_death_list = list()
+	drop_on_death_list += my_item
+
+/mob/living/carbon/human/npc/death(gibbed)
+	. = ..()
+	if(drop_on_death_list?.len)
+		for(var/obj/item/dropping_item in drop_on_death_list)
+			drop_on_death_list -= dropping_item
+			if(HAS_TRAIT_FROM(dropping_item, TRAIT_NODROP, NPC_ITEM_TRAIT))
+				REMOVE_TRAIT(dropping_item, TRAIT_NODROP, NPC_ITEM_TRAIT)
+			dropItemToGround(dropping_item, TRUE)
+
+//If an npc's item has TRAIT_NODROP, we NEVER drop it, even if it is forced.
+/mob/living/carbon/human/npc/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
+	if(I && HAS_TRAIT(I, TRAIT_NODROP))
+		return FALSE
+	. = ..() 
+//============================================================
+
 
 /datum/movespeed_modifier/npc
 	multiplicative_slowdown = 2
@@ -252,18 +338,22 @@
 		"What the fuck?!"
 	)
 
+	var/is_criminal = FALSE
+
 /mob/living/carbon/human/npc/proc/AssignSocialRole(var/datum/socialrole/S, var/dont_random = FALSE)
 	if(!S)
 		return
-	strength = rand(1, max_stat)
+	physique = rand(1, max_stat)
 	social = rand(1, max_stat)
 	mentality = rand(1, max_stat)
 	lockpicking = rand(1, max_stat)
 	blood = rand(1, 2)
-	maxHealth = round(initial(maxHealth)+(initial(maxHealth)/3)*(strength))
-	health = round(initial(health)+(initial(health)/3)*(strength))
+	maxHealth = round(initial(maxHealth)+(initial(maxHealth)/3)*(physique))
+	health = round(initial(health)+(initial(health)/3)*(physique))
 	last_health = health
 	socialrole = new S()
+
+	is_criminal = socialrole.is_criminal
 	if(GLOB.winter && !length(socialrole.suits))
 		socialrole.suits = list(/obj/item/clothing/suit/vampire/coat/winter, /obj/item/clothing/suit/vampire/coat/winter/alt)
 	if(GLOB.winter && !length(socialrole.neck))
@@ -277,6 +367,7 @@
 		gender = pick(MALE, FEMALE)
 		if(socialrole.preferedgender)
 			gender = socialrole.preferedgender
+		body_type = gender
 		var/list/m_names = list()
 		var/list/f_names = list()
 		var/list/s_names = list()
@@ -313,14 +404,12 @@
 			real_name = "[pick(f_names)] [pick(s_names)]"
 		name = real_name
 		dna.real_name = real_name
-		var/obj/item/organ/eyes/organ_eyes = get_organ_by_type(/obj/item/organ/eyes)
-		var/eye_color = random_eye_color()
+		var/obj/item/organ/eyes/organ_eyes = getorgan(/obj/item/organ/eyes)
 		if(organ_eyes)
-			organ_eyes.eye_color_left = eye_color
-			organ_eyes.eye_color_right = eye_color
+			organ_eyes.eye_color = random_eye_color()
 		underwear = random_underwear(gender)
 		if(prob(50))
-			underwear_color = eye_color
+			underwear_color = organ_eyes.eye_color
 		if(prob(50) || gender == FEMALE)
 			undershirt = random_undershirt(gender)
 		if(prob(25))
@@ -381,7 +470,7 @@
 	var/delay = round(length_char(message)/2)
 	spawn(5)
 		remove_overlay(SAY_LAYER)
-		var/mutable_appearance/say_overlay = mutable_appearance('icons/mob/effects/talk.dmi', "default0", -SAY_LAYER)
+		var/mutable_appearance/say_overlay = mutable_appearance('icons/mob/talk.dmi', "default0", -SAY_LAYER)
 		overlays_standing[SAY_LAYER] = say_overlay
 		apply_overlay(SAY_LAYER)
 		spawn(max(1, delay))
@@ -420,7 +509,7 @@
 	. = ..()
 	var/mob/living/carbon/human/npc/NPC = locate() in get_turf(Obstacle)
 	if(NPC)
-		if(combat_mode)
+		if(a_intent != INTENT_HELP)
 			NPC.Annoy(src)
 
 /mob/living/carbon/Move(NewLoc, direct)
@@ -428,7 +517,7 @@
 		if(alpha < 200)
 			playsound(loc, 'code/modules/wod13/sounds/obfuscate_deactivate.ogg', 50, FALSE)
 			alpha = 255
-	if(move_intent != MOVE_INTENT_WALK)
+	if(m_intent != MOVE_INTENT_WALK)
 		if(obfuscate_level < 3)
 			if(alpha < 200)
 				playsound(loc, 'code/modules/wod13/sounds/obfuscate_deactivate.ogg', 50, FALSE)
@@ -474,23 +563,25 @@
 	else if(overlays_standing[UNDERSHADOW_LAYER])
 		remove_overlay(UNDERSHADOW_LAYER)
 
-/mob/living/carbon/human/npc/attack_hand(mob/living/carbon/human/user)
+/mob/living/carbon/human/npc/attack_hand(mob/user)
 	if(user)
-		if(user.combat_mode)
+		if(user.a_intent == INTENT_HELP)
+			Annoy(user)
+		if(user.a_intent == INTENT_DISARM)
+			Aggro(user, TRUE)
+		if(user.a_intent == INTENT_HARM)
 			for(var/mob/living/carbon/human/npc/NEPIC in oviewers(7, src))
 				NEPIC.Aggro(user)
 			Aggro(user, TRUE)
-		else
-			Annoy(user)
 	..()
 
-/mob/living/carbon/human/npc/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
+/mob/living/carbon/human/npc/on_hit(obj/projectile/P)
 	. = ..()
-	if(hitting_projectile)
-		if(hitting_projectile.firer)
+	if(P)
+		if(P.firer)
 			for(var/mob/living/carbon/human/npc/NEPIC in oviewers(7, src))
-				NEPIC.Aggro(hitting_projectile.firer)
-			Aggro(hitting_projectile.firer, TRUE)
+				NEPIC.Aggro(P.firer)
+			Aggro(P.firer, TRUE)
 			var/witness_count
 			for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, usr))
 				if(NEPIC && NEPIC.stat != DEAD)
@@ -498,20 +589,20 @@
 				if(witness_count > 1)
 					for(var/obj/item/police_radio/radio in GLOB.police_radios)
 						radio.announce_crime("victim", get_turf(src))
-					for(var/obj/item/p25radio/police/radio in GLOB.p25_radios)
-						if(radio.linked_network == "police")
+					for(var/obj/machinery/p25transceiver/police/radio in GLOB.p25_tranceivers)
+						if(radio.p25_network == "police")
 							radio.announce_crime("victim", get_turf(src))
+							break
 
 /mob/living/carbon/human/npc/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(throwingdatum)
-		if(throwingdatum.thrower)
-			Aggro(throwingdatum.thrower, TRUE)
+	if(throwingdatum?.thrower && (AM.throwforce > 5 || (AM.throwforce && src.health < src.maxHealth)))
+		Aggro(throwingdatum.thrower, TRUE)
 
 /mob/living/carbon/human/npc/attackby(obj/item/W, mob/living/user, params)
 	. = ..()
 	if(user)
-		if(W.force)
+		if(W.force > 5 || (W.force && src.health < src.maxHealth))
 			for(var/mob/living/carbon/human/npc/NEPIC in oviewers(7, src))
 				NEPIC.Aggro(user)
 			Aggro(user, TRUE)
@@ -572,7 +663,7 @@
 
 /mob/living/carbon/human/npc/proc/ghoulificate(mob/owner)
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = SSpolling.poll_candidates("Do you want to play as [owner]`s ghoul?", check_jobban = ROLE_SENTIENCE, poll_time = 5 SECONDS, group = GLOB.current_observers_list, alert_pic = src, role_name_text = "ghoul")
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]`s ghoul?", null, null, null, 50, src)
 	for(var/mob/dead/observer/G in GLOB.player_list)
 		if(G.key)
 			to_chat(G, "<span class='ghostalert'>[owner] is ghoulificating [src].</span>")

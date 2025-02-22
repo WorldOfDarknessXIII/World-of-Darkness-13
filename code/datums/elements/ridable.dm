@@ -7,13 +7,15 @@
  * just having the variables, behavior, and procs be standardized is still a big improvement.
  */
 /datum/element/ridable
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH_ON_HOST_DESTROY
-	argument_hash_start_idx = 2
+	element_flags = ELEMENT_BESPOKE
+	id_arg_index = 2
 
 	/// The specific riding component subtype we're loading our instructions from, don't leave this as default please!
 	var/riding_component_type = /datum/component/riding
+	/// If we have a xenobio red potion applied to us, we get split off so we can pass our special status onto new riding components
+	var/potion_boosted = FALSE
 
-/datum/element/ridable/Attach(atom/movable/target, component_type = /datum/component/riding, force_rider_standup = TRUE)
+/datum/element/ridable/Attach(atom/movable/target, component_type = /datum/component/riding, potion_boost = FALSE)
 	. = ..()
 	if(!ismovable(target))
 		return COMPONENT_INCOMPATIBLE
@@ -22,22 +24,15 @@
 		stack_trace("Tried attaching a ridable element to [target] with basic/abstract /datum/component/riding component type. Please designate a specific riding component subtype when adding the ridable element.")
 		return COMPONENT_INCOMPATIBLE
 
-	target.can_buckle = TRUE
 	riding_component_type = component_type
-
-	if(force_rider_standup)
-		target.buckle_lying = 0
+	potion_boosted = potion_boost
 
 	RegisterSignal(target, COMSIG_MOVABLE_PREBUCKLE, PROC_REF(check_mounting))
 	if(isvehicle(target))
-		RegisterSignal(target, COMSIG_SPEED_POTION_APPLIED, PROC_REF(check_potion))
-	if(ismob(target))
-		RegisterSignal(target, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
+		RegisterSignal(target, COMSIG_PARENT_ATTACKBY, PROC_REF(check_potion))
 
-/datum/element/ridable/Detach(atom/movable/target)
-	target.buckle_lying = target::buckle_lying
-	target.can_buckle = target::can_buckle
-	UnregisterSignal(target, list(COMSIG_MOVABLE_PREBUCKLE, COMSIG_SPEED_POTION_APPLIED, COMSIG_MOB_STATCHANGE))
+/datum/element/ridable/Detach(datum/target, force)
+	UnregisterSignal(target, list(COMSIG_MOVABLE_PREBUCKLE, COMSIG_PARENT_ATTACKBY))
 	return ..()
 
 /// Someone is buckling to this movable, which is literally the only thing we care about (other than speed potions)
@@ -45,9 +40,7 @@
 	SIGNAL_HANDLER
 
 	if(HAS_TRAIT(potential_rider, TRAIT_CANT_RIDE))
-		//Do not prevent buckle, but stop any riding, do not block buckle here
-		//There are things that are supposed to buckle (like slimes) but not ride the creature
-		return NONE
+		return
 
 	var/arms_needed = 0
 	if(ride_check_flags & RIDER_NEEDS_ARMS)
@@ -58,13 +51,13 @@
 		ride_check_flags |= RIDER_NEEDS_ARMS
 
 	if(arms_needed && !equip_buckle_inhands(potential_rider, arms_needed, target_movable)) // can be either 1 (cyborg riding) or 2 (human piggybacking) hands
-		potential_rider.visible_message(span_warning("[potential_rider] can't get a grip on [target_movable] because [potential_rider.p_their()] hands are full!"),
-			span_warning("You can't get a grip on [target_movable] because your hands are full!"))
+		potential_rider.visible_message("<span class='warning'>[potential_rider] can't get a grip on [target_movable] because [potential_rider.p_their()] hands are full!</span>",
+			"<span class='warning'>You can't get a grip on [target_movable] because your hands are full!</span>")
 		return COMPONENT_BLOCK_BUCKLE
 
 	if((ride_check_flags & RIDER_NEEDS_LEGS) && HAS_TRAIT(potential_rider, TRAIT_FLOORED))
-		potential_rider.visible_message(span_warning("[potential_rider] can't get [potential_rider.p_their()] footing on [target_movable]!"),
-			span_warning("You can't get your footing on [target_movable]!"))
+		potential_rider.visible_message("<span class='warning'>[potential_rider] can't get [potential_rider.p_their()] footing on [target_movable]!</span>",
+			"<span class='warning'>You can't get your footing on [target_movable]!</span>")
 		return COMPONENT_BLOCK_BUCKLE
 
 	var/mob/living/target_living = target_movable
@@ -72,11 +65,11 @@
 	// need to see if !equip_buckle_inhands() checks are enough to skip any needed incapac/restrain checks
 	// CARRIER_NEEDS_ARM shouldn't apply if the ridden isn't even a living mob
 	if((ride_check_flags & CARRIER_NEEDS_ARM) && !equip_buckle_inhands(target_living, 1, target_living, potential_rider)) // hardcode 1 hand for now
-		target_living.visible_message(span_warning("[target_living] can't get a grip on [potential_rider] because [target_living.p_their()] hands are full!"),
-			span_warning("You can't get a grip on [potential_rider] because your hands are full!"))
+		target_living.visible_message("<span class='warning'>[target_living] can't get a grip on [potential_rider] because [target_living.p_their()] hands are full!</span>",
+			"<span class='warning'>You can't get a grip on [potential_rider] because your hands are full!</span>")
 		return COMPONENT_BLOCK_BUCKLE
 
-	target_living.AddComponent(riding_component_type, potential_rider, force, ride_check_flags)
+	target_living.AddComponent(riding_component_type, potential_rider, force, ride_check_flags, potion_boost = potion_boosted)
 
 /// Try putting the appropriate number of [riding offhand items][/obj/item/riding_offhand] into the target's hands, return FALSE if we can't
 /datum/element/ridable/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1, atom/movable/target_movable, riding_target_override = null)
@@ -90,7 +83,7 @@
 			inhand.rider = riding_target_override
 		inhand.parent = AM
 		for(var/obj/item/I in user.held_items) // delete any hand items like slappers that could still totally be used to grab on
-			if((I.item_flags & HAND_ITEM))
+			if((I.obj_flags & HAND_ITEM))
 				qdel(I)
 
 		// this would be put_in_hands() if it didn't have the chance to sleep, since this proc gets called from a signal handler that relies on what this returns
@@ -106,7 +99,7 @@
 			amount_equipped++
 		else
 			qdel(inhand)
-			return FALSE
+			break
 
 	if(amount_equipped >= amount_required)
 		return TRUE
@@ -115,21 +108,33 @@
 		return FALSE
 
 /// Checks to see if we've been hit with a red xenobio potion to make us faster. This is only registered if we're a vehicle
-/datum/element/ridable/proc/check_potion(atom/movable/ridable_atom, obj/item/slimepotion/speed/speed_potion, mob/living/user)
+/datum/element/ridable/proc/check_potion(atom/movable/ridable_atom, obj/item/slimepotion/speed/speed_potion, mob/living/user, params)
 	SIGNAL_HANDLER
 
-	if(HAS_TRAIT(ridable_atom, TRAIT_SPEED_POTIONED))
-		to_chat(user, span_warning("[ridable_atom] has already been coated with red, that's as fast as it'll go!"))
-		return SPEED_POTION_STOP
+	if(!istype(speed_potion))
+		return
+	if(potion_boosted)
+		to_chat(user, "<span class='warning'>[ridable_atom] has already been coated with red, that's as fast as it'll go!</span>")
+		return
 	if(ridable_atom.has_buckled_mobs()) // effect won't take place til the next time someone mounts it, so just prevent that situation
-		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [ridable_atom] while it's being ridden!"))
-		return SPEED_POTION_STOP
+		to_chat(user, "<span class='warning'>It's too dangerous to smear [speed_potion] on [ridable_atom] while it's being ridden!</span>")
+		return
+
 	var/speed_limit = round(CONFIG_GET(number/movedelay/run_delay) * 0.85, 0.01)
 	var/datum/component/riding/theoretical_riding_component = riding_component_type
 	var/theoretical_speed = initial(theoretical_riding_component.vehicle_move_delay)
+
 	if(theoretical_speed <= speed_limit) // i say speed but this is actually move delay, so you have to be ABOVE the speed limit to pass
-		to_chat(user, span_warning("[ridable_atom] can't be made any faster!"))
-		return SPEED_POTION_STOP
+		to_chat(user, "<span class='warning'>[ridable_atom] can't be made any faster!</span>")
+		return
+
+	Detach(ridable_atom)
+	ridable_atom.AddElement(/datum/element/ridable, component_type = riding_component_type, potion_boost = TRUE)
+	to_chat(user, "<span class='notice'>You slather the red gunk over [ridable_atom], making it faster.</span>")
+	ridable_atom.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	ridable_atom.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
+	qdel(speed_potion)
+	return COMPONENT_NO_AFTERATTACK
 
 /// Remove all of the relevant [riding offhand items][/obj/item/riding_offhand] from the target
 /datum/element/ridable/proc/unequip_buckle_inhands(mob/living/carbon/user, atom/movable/target_movable)
@@ -143,21 +148,12 @@
 			qdel(O)
 	return TRUE
 
-/datum/element/ridable/proc/on_stat_change(mob/source)
-	SIGNAL_HANDLER
 
-	// If we're dead, don't let anyone buckle onto us
-	if(source.stat == DEAD)
-		source.can_buckle = FALSE
-		source.unbuckle_all_mobs()
 
-	// If we're alive, back to being buckle-able
-	else
-		source.can_buckle = TRUE
 
 /obj/item/riding_offhand
 	name = "offhand"
-	icon = 'icons/obj/weapons/hand.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT | DROPDEL | NOBLUDGEON
@@ -188,18 +184,6 @@
 		return //Piggyback user.
 	user.unbuckle_mob(rider)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_notice("You gently let go of [rider]."))
+		to_chat(user, "<span class='notice'>You gently let go of [rider].</span>")
 		return
 	return rider
-
-/obj/item/riding_offhand/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
-	if(!istype(interacting_with) || !interacting_with.can_buckle)
-		return NONE
-	if(rider == user) // Piggyback user
-		return ITEM_INTERACT_BLOCKING
-
-	// Handles de-fireman carrying a mob and buckling them onto something (tables, etc)
-	var/mob/living/former_rider = rider
-	user.unbuckle_mob(former_rider)
-	former_rider.forceMove(get_turf(interacting_with))
-	return interacting_with.mouse_buckle_handling(former_rider, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING

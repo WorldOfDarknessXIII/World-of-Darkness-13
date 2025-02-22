@@ -1,17 +1,12 @@
 /obj/item/food/grown/mushroom
 	name = "mushroom"
-	// This is a prototype that should never be spawned
-	// but we'll default it to SOME seed if it does end up spawning just so we don't runtime horribly
-	seed = /obj/item/seeds/chanter
-	bite_consumption_mod = 3
+	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
 	wine_power = 40
-	/// Default mushroom icon for recipes that need any mushroom
-	icon_state = "plumphelmet"
 
 // Reishi
 /obj/item/seeds/reishi
-	name = "reishi mycelium pack"
+	name = "pack of reishi mycelium"
 	desc = "This mycelium grows into something medicinal and relaxing."
 	icon_state = "mycelium-reishi"
 	species = "reishi"
@@ -26,7 +21,7 @@
 	instability = 30
 	growthstages = 4
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
-	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/medicine/morphine = 0.35, /datum/reagent/medicine/c2/multiver = 0.35, /datum/reagent/consumable/nutriment = 0)
 	graft_gene = /datum/plant_gene/trait/plant_type/fungal_metabolism
 
@@ -36,9 +31,10 @@
 	desc = "<I>Ganoderma lucidum</I>: A special fungus known for its medicinal and stress relieving properties."
 	icon_state = "reishi"
 
+
 // Fly Amanita
 /obj/item/seeds/amanita
-	name = "fly amanita mycelium pack"
+	name = "pack of fly amanita mycelium"
 	desc = "This mycelium grows into something horrible."
 	icon_state = "mycelium-amanita"
 	species = "amanita"
@@ -52,7 +48,7 @@
 	instability = 30
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
-	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/angel)
 	reagents_add = list(/datum/reagent/drug/mushroomhallucinogen = 0.04, /datum/reagent/toxin/amatoxin = 0.35, /datum/reagent/consumable/nutriment = 0, /datum/reagent/growthserum = 0.1)
 	graft_gene = /datum/plant_gene/trait/plant_type/fungal_metabolism
@@ -65,7 +61,7 @@
 
 // Destroying Angel
 /obj/item/seeds/angel
-	name = "destroying angel mycelium pack"
+	name = "pack of destroying angel mycelium"
 	desc = "This mycelium grows into something devastating."
 	icon_state = "mycelium-angel"
 	species = "angel"
@@ -79,7 +75,7 @@
 	potency = 35
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
-	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/drug/mushroomhallucinogen = 0.04, /datum/reagent/toxin/amatoxin = 0.1, /datum/reagent/consumable/nutriment = 0, /datum/reagent/toxin/amanitin = 0.2)
 	rarity = 30
 	graft_gene = /datum/plant_gene/trait/plant_type/fungal_metabolism
@@ -93,7 +89,7 @@
 
 // Liberty Cap
 /obj/item/seeds/liberty
-	name = "liberty-cap mycelium pack"
+	name = "pack of liberty-cap mycelium"
 	desc = "This mycelium grows into liberty-cap mushrooms."
 	icon_state = "mycelium-liberty"
 	species = "liberty"
@@ -106,7 +102,7 @@
 	instability = 10
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
-	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/drug/mushroomhallucinogen = 0.25, /datum/reagent/consumable/nutriment = 0.02)
 	graft_gene = /datum/plant_gene/trait/plant_type/fungal_metabolism
 
@@ -119,7 +115,7 @@
 
 // Plump Helmet
 /obj/item/seeds/plump
-	name = "plump-helmet mycelium pack"
+	name = "pack of plump-helmet mycelium"
 	desc = "This mycelium grows into helmets... maybe."
 	icon_state = "mycelium-plump"
 	species = "plump"
@@ -131,7 +127,7 @@
 	potency = 15
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
-	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/plump/walkingmushroom)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	graft_gene = /datum/plant_gene/trait/plant_type/fungal_metabolism
@@ -141,11 +137,11 @@
 	name = "plump-helmet"
 	desc = "<I>Plumus Hellmus</I>: Plump, soft and s-so inviting~"
 	icon_state = "plumphelmet"
-	distill_reagent = /datum/reagent/consumable/ethanol/manly_dorf
+	//distill_reagent = /datum/reagent/consumable/ethanol/manly_dorf
 
 // Walking Mushroom
 /obj/item/seeds/plump/walkingmushroom
-	name = "walking mushroom mycelium pack"
+	name = "pack of walking mushroom mycelium"
 	desc = "This mycelium will grow into huge stuff!"
 	icon_state = "mycelium-walkingmushroom"
 	species = "walkingmushroom"
@@ -155,9 +151,8 @@
 	endurance = 30
 	maturation = 5
 	yield = 1
-	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/mob_transformation/shroom)
-	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
-	mutatelist = null
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.15)
 	rarity = 30
 	graft_gene = /datum/plant_gene/trait/eyes
@@ -169,9 +164,22 @@
 	icon_state = "walkingmushroom"
 	can_distill = FALSE
 
+/obj/item/food/grown/mushroom/walkingmushroom/attack_self(mob/user)
+	if(isspaceturf(user.loc))
+		return
+	var/mob/living/simple_animal/hostile/mushroom/M = new /mob/living/simple_animal/hostile/mushroom(user.loc)
+	M.maxHealth += round(seed.endurance / 4)
+	M.melee_damage_lower += round(seed.potency / 20)
+	M.melee_damage_upper += round(seed.potency / 20)
+	M.move_to_delay -= round(seed.production / 50)
+	M.health = M.maxHealth
+	qdel(src)
+	to_chat(user, "<span class='notice'>You plant the walking mushroom.</span>")
+
+
 // Chanterelle
 /obj/item/seeds/chanter
-	name = "chanterelle mycelium pack"
+	name = "pack of chanterelle mycelium"
 	desc = "This mycelium grows into chanterelle mushrooms."
 	icon_state = "mycelium-chanter"
 	species = "chanter"
@@ -186,7 +194,7 @@
 	instability = 20
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
-	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
 	mutatelist = list(/obj/item/seeds/chanter/jupitercup)
 	graft_gene = /datum/plant_gene/trait/plant_type/fungal_metabolism
@@ -197,23 +205,9 @@
 	desc = "<I>Cantharellus Cibarius</I>: These jolly yellow little shrooms sure look tasty!"
 	icon_state = "chanterelle"
 
-/obj/item/food/grown/mushroom/chanterelle/attackby(obj/item/I, mob/user, params)
-	if(!istype(I, /obj/item/kitchen/spoon))
-		return ..()
-	if(seed.potency < 95)
-		return ..()
-
-	to_chat(user, span_notice("You hollow up the chanterelle with [I]."))
-	remove_item_from_storage(user)
-	if(seed.resistance_flags & FIRE_PROOF)
-		user.put_in_hands(new /obj/item/clothing/head/wizard/chanterelle/fr())
-	else
-		user.put_in_hands(new /obj/item/clothing/head/wizard/chanterelle())
-	qdel(src)
-
 //Jupiter Cup
 /obj/item/seeds/chanter/jupitercup
-	name = "jupiter cup mycelium pack"
+	name = "pack of jupiter cup mycelium"
 	desc = "This mycelium grows into jupiter cups. Zeus would be envious at the power at your fingertips."
 	icon_state = "mycelium-jupitercup"
 	species = "jupitercup"
@@ -224,11 +218,16 @@
 	endurance = 8
 	yield = 4
 	growthstages = 2
-	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/reagent/preset/liquidelectricity, /datum/plant_gene/trait/carnivory/jupitercup)
-	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/reagent/liquidelectricity, /datum/plant_gene/trait/plant_type/carnivory)
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
-	mutatelist = null
-	graft_gene = /datum/plant_gene/trait/carnivory
+	graft_gene = /datum/plant_gene/trait/plant_type/carnivory
+
+/obj/item/seeds/chanter/jupitercup/Initialize(mapload,nogenes)
+	. = ..()
+	if(!nogenes)
+		unset_mutability(/datum/plant_gene/reagent/liquidelectricity, PLANT_GENE_EXTRACTABLE)
+		unset_mutability(/datum/plant_gene/trait/plant_type/carnivory, PLANT_GENE_REMOVABLE)
 
 /obj/item/food/grown/mushroom/jupitercup
 	seed = /obj/item/seeds/chanter/jupitercup
@@ -238,7 +237,7 @@
 
 // Glowshroom
 /obj/item/seeds/glowshroom
-	name = "glowshroom mycelium pack"
+	name = "pack of glowshroom mycelium"
 	desc = "This mycelium -glows- into mushrooms!"
 	icon_state = "mycelium-glowshroom"
 	species = "glowshroom"
@@ -252,9 +251,9 @@
 	potency = 30 //-> brightness
 	instability = 20
 	growthstages = 4
-	rarity = PLANT_MODERATELY_RARE
+	rarity = 20
 	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/plant_type/fungal_metabolism)
-	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/glowshroom/glowcap, /obj/item/seeds/glowshroom/shadowshroom)
 	reagents_add = list(/datum/reagent/uranium/radium = 0.1, /datum/reagent/phosphorus = 0.1, /datum/reagent/consumable/nutriment = 0.04)
 	graft_gene = /datum/plant_gene/trait/glow
@@ -271,7 +270,7 @@
 	if(isspaceturf(user.loc))
 		return FALSE
 	if(!isturf(user.loc))
-		to_chat(user, span_warning("You need more space to plant [src]."))
+		to_chat(user, "<span class='warning'>You need more space to plant [src].</span>")
 		return FALSE
 	var/count = 0
 	var/maxcount = 1
@@ -282,18 +281,17 @@
 	for(var/obj/structure/glowshroom/G in user.loc)
 		count++
 	if(count >= maxcount)
-		to_chat(user, span_warning("There are too many shrooms here to plant [src]."))
+		to_chat(user, "<span class='warning'>There are too many shrooms here to plant [src].</span>")
 		return FALSE
 	new effect_path(user.loc, seed)
-	to_chat(user, span_notice("You plant [src]."))
-	seed = null // We pass our seed to our planted shroom, null it here
+	to_chat(user, "<span class='notice'>You plant [src].</span>")
 	qdel(src)
 	return TRUE
 
 
 // Glowcap
 /obj/item/seeds/glowshroom/glowcap
-	name = "glowcap mycelium pack"
+	name = "pack of glowcap mycelium"
 	desc = "This mycelium -powers- into mushrooms!"
 	icon_state = "mycelium-glowcap"
 	species = "glowcap"
@@ -301,7 +299,7 @@
 	plantname = "Glowcaps"
 	product = /obj/item/food/grown/mushroom/glowshroom/glowcap
 	genes = list(/datum/plant_gene/trait/glow/red, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/plant_type/fungal_metabolism)
-	mutatelist = null
+	mutatelist = list()
 	reagents_add = list(/datum/reagent/teslium = 0.1, /datum/reagent/consumable/nutriment = 0.04)
 	rarity = 30
 	graft_gene = /datum/plant_gene/trait/cell_charge
@@ -317,7 +315,7 @@
 
 //Shadowshroom
 /obj/item/seeds/glowshroom/shadowshroom
-	name = "shadowshroom mycelium pack"
+	name = "pack of shadowshroom mycelium"
 	desc = "This mycelium will grow into something shadowy."
 	icon_state = "mycelium-shadowshroom"
 	species = "shadowshroom"
@@ -326,7 +324,7 @@
 	plantname = "Shadowshrooms"
 	product = /obj/item/food/grown/mushroom/glowshroom/shadowshroom
 	genes = list(/datum/plant_gene/trait/glow/shadow, /datum/plant_gene/trait/plant_type/fungal_metabolism)
-	mutatelist = null
+	mutatelist = list()
 	reagents_add = list(/datum/reagent/uranium/radium = 0.2, /datum/reagent/consumable/nutriment = 0.04)
 	rarity = 30
 	graft_gene = /datum/plant_gene/trait/glow/shadow
@@ -344,32 +342,3 @@
 	. = ..()
 	if(.)
 		investigate_log("was planted by [key_name(user)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
-
-/obj/item/seeds/odious_puffball
-	name = "odious pullball spore pack"
-	desc = "These spores reek! Disgusting."
-	icon_state = "seed-odiouspuffball"
-	species = "odiouspuffball"
-	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
-	icon_grow = "odiouspuffball-grow"
-	icon_dead = "odiouspuffball-dead"
-	icon_harvest = "odiouspuffball-harvest"
-	plantname = "Odious Puffballs"
-	maturation = 3
-	production = 8
-	potency = 30
-	instability = 65
-	growthstages = 3
-	product = /obj/item/food/grown/mushroom/odious_puffball
-	genes = list(/datum/plant_gene/trait/smoke, /datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/squash)
-	reagents_add = list(/datum/reagent/toxin/spore = 0.2, /datum/reagent/consumable/nutriment = 0.04)
-	rarity = 35
-	graft_gene = /datum/plant_gene/trait/smoke
-
-/obj/item/food/grown/mushroom/odious_puffball
-	seed = /obj/item/seeds/odious_puffball
-	name = "odious puffball"
-	desc = "<I>Lycoperdon Faetidus</I>: This puffball is considered a great nuisance not only because of the highly irritating nature of its spores, but also because of its considerable size and unsightly appearance."
-	icon_state = "odious_puffball"
-	tastes = list("rotten garlic" = 2, "mushroom" = 1, "spores" = 1)
-	wine_power = 50

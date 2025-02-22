@@ -6,16 +6,21 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the Baron"
+	selection_color = "#434343"
 
 	outfit = /datum/outfit/job/emissary
 
-	paycheck = PAYCHECK_CREW
+	access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
+	minimal_access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
+	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 
+	mind_traits = list(TRAIT_DONUT_LOVER)
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_EMISSARY
-	known_contacts = list("Baron")
+	my_contact_is_important = TRUE
+	known_contacts = list("Baron","Bouncer","Emissary","Sweeper","Prince","Sheriff")
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Tremere", "Toreador", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian", "Ministry")
 
 	v_duty = "You are a diplomat for the anarchs. Make deals, keep the peace, all through words, not violence. But the latter may come to pass if the former fails."

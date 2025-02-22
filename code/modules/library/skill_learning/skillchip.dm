@@ -2,9 +2,9 @@
 	name = "skillchip"
 	desc = "This biochip integrates with user's brain to enable mastery of specific skill. Consult certified Nanotrasen neurosurgeon before use."
 
-	icon = 'icons/obj/devices/circuitry_n_data.dmi'
-	icon_state = "skillchip"
-	custom_price = PAYCHECK_CREW * 3
+	icon = 'icons/obj/card.dmi'
+	icon_state = "data_3"
+	custom_price = PAYCHECK_MEDIUM * 3
 	w_class = WEIGHT_CLASS_SMALL
 
 	/// Traits automatically granted by this chip, optional. Lazylist.
@@ -35,9 +35,7 @@
 	var/cooldown = 5 MINUTES
 	/// Cooldown for chip actions.
 	COOLDOWN_DECLARE(chip_cooldown)
-	/// Used to determine if this is an abstract type or not.
-	/// If this is meant to be an abstract type, set it to the type's path.
-	/// Will be overridden by subsequent abstract parents.
+	/// Used to determine if this is an abstract type or not. If this is meant to be an abstract type, set it to the type's path. Will be overridden by subsequent abstract parents. See /datum/action/item_action/chameleon/change/skillchip/initialize_disguises()
 	var/abstract_parent_type = /obj/item/skillchip
 	/// Set to TRUE when the skill chip's effects are applied. Set to FALSE when they're not.
 	var/active = FALSE
@@ -47,10 +45,6 @@
 /obj/item/skillchip/Initialize(mapload, is_removable = TRUE)
 	. = ..()
 	removable = is_removable
-
-///We don't grant actions outside of being activated when implanted
-/obj/item/skillchip/item_action_slot_check(slot, mob/user, datum/action/action)
-	return FALSE
 
 /**
  * Activates the skillchip, if possible.
@@ -97,28 +91,25 @@
  * Arguments:
  * * silent - Boolean. Whether or not an activation message should be shown to the user.
  * * force - Boolean. Whether or not to just force de-activation if it would be prevented for any reason.
- * * brain_owner - the owner var of the brain is set to null on organ/on_mob_remove(), so we need this if owner is null.
  */
-/obj/item/skillchip/proc/try_deactivate_skillchip(silent = FALSE, force = FALSE, mob/living/brain_owner)
+/obj/item/skillchip/proc/try_deactivate_skillchip(silent = FALSE, force = FALSE)
 	if(!active)
 		return "Skillchip is not active."
 
 	// Should not happen. Holding brain is destroyed and the chip hasn't had its state set appropriately.
-	if(!holding_brain)
-		stack_trace("Skillchip doesn't have a holding brain.")
+	if(QDELETED(holding_brain))
+		stack_trace("Skillchip's owner is null or qdeleted brain.")
 		return "Skillchip cannot detect viable brain."
 
-	if(!brain_owner)
-		brain_owner = holding_brain.owner
 	// Also should not happen. We're somehow deactivating skillchips in a bodyless brain.
-	if(QDELETED(brain_owner))
+	if(QDELETED(holding_brain.owner))
 		active = FALSE
 		stack_trace("Skillchip's brain has no owner, owner is null or owner qdeleted.")
 		return "Skillchip cannot detect viable body."
 
 	// We have a holding brain, the holding brain has an owner. If we're forcing this, do it hard and fast.
 	if(force)
-		on_deactivate(brain_owner, silent)
+		on_deactivate(holding_brain.owner, silent)
 		return
 
 	// Is the chip still experiencing a cooldown period?
@@ -126,7 +117,7 @@
 		return "Skillchip is still recharging for [COOLDOWN_TIMELEFT(src, chip_cooldown) * 0.1]s"
 
 	// We're good to go. Deactive this chip.
-	on_deactivate(brain_owner, silent)
+	on_deactivate(holding_brain.owner, silent)
 
 /**
  * Called when a skillchip is inserted in a user's brain.
@@ -135,12 +126,10 @@
  * * owner_brain - The brain that this skillchip was implanted in to.
  */
 /obj/item/skillchip/proc/on_implant(obj/item/organ/brain/owner_brain)
-	SHOULD_CALL_PARENT(TRUE)
 	if(holding_brain)
 		CRASH("Skillchip is trying to be implanted into [owner_brain], but it's already implanted in [holding_brain]")
 
 	holding_brain = owner_brain
-	SEND_SIGNAL(src, COMSIG_SKILLCHIP_IMPLANTED, holding_brain)
 
 /**
  * Called when a skillchip is activated.
@@ -150,17 +139,13 @@
  * * silent - Boolean. Whether or not an activation message should be shown to the user.
  */
 /obj/item/skillchip/proc/on_activate(mob/living/carbon/user, silent=FALSE)
-	SHOULD_CALL_PARENT(TRUE)
 	if(!silent && activate_message)
 		to_chat(user, activate_message)
 
-	if(length(auto_traits))
-		user.add_traits(auto_traits, SKILLCHIP_TRAIT)
+	for(var/trait in auto_traits)
+		ADD_TRAIT(user, trait, SKILLCHIP_TRAIT)
 
 	active = TRUE
-
-	for(var/datum/action/action as anything in actions)
-		action.Grant(user)
 
 	COOLDOWN_START(src, chip_cooldown, cooldown)
 
@@ -177,7 +162,7 @@
 		try_deactivate_skillchip(silent, TRUE)
 
 	COOLDOWN_RESET(src, chip_cooldown)
-	SEND_SIGNAL(src, COMSIG_SKILLCHIP_REMOVED, holding_brain)
+
 	holding_brain = null
 
 /**
@@ -188,17 +173,13 @@
  * * silent - Boolean. Whether or not a deactivation message should be shown to the user.
  */
 /obj/item/skillchip/proc/on_deactivate(mob/living/carbon/user, silent=FALSE)
-	SHOULD_CALL_PARENT(TRUE)
 	if(!silent && deactivate_message)
 		to_chat(user, deactivate_message)
 
-	if(length(auto_traits))
-		user.remove_traits(auto_traits, SKILLCHIP_TRAIT)
+	for(var/trait in auto_traits)
+		REMOVE_TRAIT(user, trait, SKILLCHIP_TRAIT)
 
 	active = FALSE
-
-	for(var/datum/action/action as anything in actions)
-		action.Remove(user)
 
 	COOLDOWN_START(src, chip_cooldown, cooldown)
 
@@ -260,7 +241,7 @@
 		return "Incompatible lifeform detected."
 
 	// No brain
-	var/obj/item/organ/brain/brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/brain = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(QDELETED(brain))
 		return "No brain detected."
 
@@ -384,3 +365,95 @@
 	removable = metadata["removable"]
 
 	return active_msg
+
+/obj/item/skillchip/basketweaving
+	name = "Basketsoft 3000 skillchip"
+	desc = "Underwater edition."
+	auto_traits = list(TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE)
+	skill_name = "Underwater Basketweaving"
+	skill_description = "Master intricate art of using twine to create perfect baskets while submerged."
+	skill_icon = "shopping-basket"
+	activate_message = "<span class='notice'>You're one with the twine and the sea.</span>"
+	deactivate_message = "<span class='notice'>Higher mysteries of underwater basketweaving leave your mind.</span>"
+
+/obj/item/skillchip/wine_taster
+	name = "WINE skillchip"
+	desc = "Wine.Is.Not.Equal version 5."
+	auto_traits = list(TRAIT_WINE_TASTER)
+	skill_name = "Wine Tasting"
+	skill_description = "Recognize wine vintage from taste alone. Never again lack an opinion when presented with an unknown drink."
+	skill_icon = "wine-bottle"
+	activate_message = "<span class='notice'>You recall wine taste.</span>"
+	deactivate_message = "<span class='notice'>Your memories of wine evaporate.</span>"
+
+/obj/item/skillchip/bonsai
+	name = "Hedge 3 skillchip"
+	auto_traits = list(TRAIT_BONSAI)
+	skill_name = "Hedgetrimming"
+	skill_description = "Trim hedges and potted plants into marvelous new shapes with any old knife. Not applicable to plastic plants."
+	skill_icon = "spa"
+	activate_message = "<span class='notice'>Your mind is filled with plant arrangments.</span>"
+	deactivate_message = "<span class='notice'>You can't remember what a hedge looks like anymore.</span>"
+
+/obj/item/skillchip/useless_adapter
+	name = "Skillchip adapter"
+	skill_name = "Useless adapter"
+	skill_description = "Allows you to insert another skillchip into this adapter after it has been inserted into your brain..."
+	skill_icon = "plug"
+	activate_message = "<span class='notice'>You can now activate another chip through this adapter, but you're not sure why you did this...</span>"
+	deactivate_message = "<span class='notice'>You no longer have the useless skillchip adapter.</span>"
+	skillchip_flags = SKILLCHIP_ALLOWS_MULTIPLE | SKILLCHIP_CHAMELEON_INCOMPATIBLE
+	// Literally does nothing.
+	complexity = 0
+	slot_use = 0
+
+/obj/item/skillchip/light_remover
+	name = "N16H7M4R3 skillchip"
+	auto_traits = list(TRAIT_LIGHTBULB_REMOVER)
+	skill_name = "Lightbulb Removing"
+	skill_description = "Stop failing taking out lightbulbs today, no gloves needed!"
+	skill_icon = "lightbulb"
+	activate_message = "<span class='notice'>Your feel like your pain receptors are less sensitive to hot objects.</span>"
+	deactivate_message = "<span class='notice'>You feel like hot objects could stop you again...</span>"
+
+/obj/item/skillchip/disk_verifier
+	name = "K33P-TH4T-D15K skillchip"
+	auto_traits = list(TRAIT_DISK_VERIFIER)
+	skill_name = "Nuclear Disk Verification"
+	skill_description = "Nuclear authentication disks have an extremely long serial number for verification. This skillchip stores that number, which allows the user to automatically spot forgeries."
+	skill_icon = "save"
+	activate_message = "<span class='notice'>You feel your mind automatically verifying long serial numbers on disk shaped objects.</span>"
+	deactivate_message = "<span class='notice'>The innate recognition of absurdly long disk-related serial numbers fades from your mind.</span>"
+
+/obj/item/skillchip/entrails_reader
+	name = "3NTR41LS skillchip"
+	auto_traits = list(TRAIT_ENTRAILS_READER)
+	skill_name = "Entrails Reader"
+	skill_description = "Be able to learn about a person's life, by looking at their internal organs. Not to be confused with looking into the future."
+	skill_icon = "lungs"
+	activate_message = "<span class='notice'>You feel that you know a lot about interpreting organs.</span>"
+	deactivate_message = "<span class='notice'>Knowledge of liver damage, heart strain and lung scars fades from your mind.</span>"
+
+/obj/item/skillchip/quickcarry
+	name = "Ant Hauler skillchip"
+	auto_traits = list(TRAIT_QUICK_CARRY)
+	skill_name = "Ant Hauler"
+	chip_category = SKILLCHIP_CATEGORY_FIREMAN_CARRYING
+	skillchip_flags = SKILLCHIP_RESTRICTED_CATEGORIES
+	incompatibility_list = list(SKILLCHIP_CATEGORY_FIREMAN_CARRYING)
+	skill_description = "Discover various lifting techniques to more accurately and quickly lift someone up into a fireman carry."
+	skill_icon = "hand-holding"
+	activate_message = "<span class='notice'>You feel like you can easily lift and carry people around.</span>"
+	deactivate_message = "<span class='notice'>Your skill at lifting people into a fireman carry fades from your mind.</span>"
+
+/obj/item/skillchip/quickercarry
+	name = "RES-Q skillchip"
+	auto_traits = list(TRAIT_QUICKER_CARRY)
+	skill_name = "RES-Q"
+	chip_category = SKILLCHIP_CATEGORY_FIREMAN_CARRYING
+	skillchip_flags = SKILLCHIP_RESTRICTED_CATEGORIES
+	incompatibility_list = list(SKILLCHIP_CATEGORY_FIREMAN_CARRYING)
+	skill_description = "Learn how to fireman carry like a professional, and haul the injured, sick or dying with speed!"
+	skill_icon = "hand-holding"
+	activate_message = "<span class='notice'>Carrying people across your back feels like second nature to you.</span>"
+	deactivate_message = "<span class='notice'>Your expert knowledge in fireman carrying fades from your mind.</span>"

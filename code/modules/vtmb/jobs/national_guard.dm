@@ -11,7 +11,8 @@
 	head = /obj/item/clothing/head/vampire/army
 	backpack_contents = list(
 		/obj/item/ammo_box/magazine/vampaug = 3,
-		/obj/item/radio/military = 1
+		/obj/item/radio/military = 1,
+		/obj/item/gun/ballistic/automatic/vampire/beretta=1
 		)
 
 /datum/antagonist/national_guard/proc/equip_national_guard()
@@ -25,8 +26,8 @@
 	H.set_species(/datum/species/human)
 	H.generation = 13
 	H.ignores_warrant = TRUE
-	H.maxHealth = round((initial(H.maxHealth)-initial(H.maxHealth)/4)+(initial(H.maxHealth)/4)*(H.strength+13-H.generation))
-	H.health = round((initial(H.health)-initial(H.health)/4)+(initial(H.health)/4)*(H.strength+13-H.generation))
+	H.maxHealth = round((initial(H.maxHealth)-initial(H.maxHealth)/4)+(initial(H.maxHealth)/4)*(H.physique+13-H.generation))
+	H.health = round((initial(H.health)-initial(H.health)/4)+(initial(H.health)/4)*(H.physique+13-H.generation))
 /*	var/my_name = "Tyler"
 	if(H.gender == MALE)
 		my_name = pick(GLOB.first_names_male)
@@ -66,7 +67,7 @@
 			owner.current.put_in_r_hand(new /obj/item/clothing/suit/vampire/eod(owner.current))
 			owner.current.put_in_l_hand(new /obj/item/clothing/head/vampire/eod(owner.current))
 		if("Medic")
-			owner.current.put_in_r_hand(new /obj/item/storage/medkit/tactical(owner.current))
+			owner.current.put_in_r_hand(new /obj/item/storage/firstaid/tactical(owner.current))
 		if("Sniper")
 			owner.current.put_in_r_hand(new /obj/item/gun/ballistic/automatic/vampire/sniper(owner.current))
 			owner.current.put_in_l_hand(new /obj/item/ammo_box/vampire/c556(owner.current))
@@ -83,6 +84,7 @@
 	roundend_category = "national guard"
 	antagpanel_category = "National Guard"
 	job_rank = ROLE_NATIONAL_GUARD
+	antag_hud_type = ANTAG_HUD_OPS
 	antag_hud_name = "synd"
 	antag_moodlet = /datum/mood_event/focused
 	show_to_ghosts = TRUE
@@ -99,7 +101,7 @@
 /datum/antagonist/national_guard/on_gain()
 	randomize_appearance()
 	forge_objectives()
-	add_team_hud(owner.current, "national_guard")
+	add_antag_hud(ANTAG_HUD_OPS, "synd", owner.current)
 	owner.special_role = src
 	equip_national_guard()
 	give_alias()
@@ -128,7 +130,7 @@
 	var/my_surname = pick(GLOB.last_names)
 	owner.current.fully_replace_character_name(null,"[selected_rank] [my_name] [my_surname]")
 
-/datum/antagonist/national_guard/forge_objectives()
+/datum/antagonist/national_guard/proc/forge_objectives()
 	if(national_guard_team)
 		objectives |= national_guard_team.objectives
 
@@ -288,6 +290,7 @@
 	var/datum/random_gen/national_guard/h_gen = new
 	var/mob/living/carbon/human/H = owner.current
 	H.gender = pick(MALE, FEMALE)
+	H.body_type = H.gender
 	H.age = rand(18, 36)
 //	if(age >= 55)
 //		hair_color = "a2a2a2"
@@ -306,12 +309,12 @@
 		H.facial_hairstyle = "Shaved"
 	H.name = H.real_name
 	H.dna.real_name = H.real_name
-	var/obj/item/organ/eyes/organ_eyes = H.get_organ_by_type(/obj/item/organ/eyes)
+	var/obj/item/organ/eyes/organ_eyes = H.getorgan(/obj/item/organ/eyes)
 	if(organ_eyes)
-		organ_eyes.eye_color_right = random_eye_color()
+		organ_eyes.eye_color = random_eye_color()
 	H.underwear = random_underwear(H.gender)
 	if(prob(50))
-		H.underwear_color = organ_eyes.eye_color_right
+		H.underwear_color = organ_eyes.eye_color
 	if(prob(50) || H.gender == FEMALE)
 		H.undershirt = random_undershirt(H.gender)
 	if(prob(25))
@@ -334,24 +337,7 @@
 
 /datum/team/national_guard/New()
 	..()
-	var/name = ""
-
-	// Prefix
-	name += pick("Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel", "India", "Juliet", "Kilo", "Lima", "Mike", "November", "Oscar", "Papa", "Quebec", "Romeo", "Sierra", "Tango", "Uniform", "Victor", "Whiskey", "X-ray", "Yankee", "Zulu")
-
-	// Suffix
-	if	(prob(80))
-		name += " "
-
-		// Full
-		if(prob(60))
-			name += pick("Squad", "Team", "Unit", "Group", "Section", "Element", "Detachment")
-		// Broken
-		else
-			name += pick("-", "*", "")
-			name += "Ops"
-
-	national_guard_name = name
+	national_guard_name = national_guard_name()
 
 /datum/team/national_guard/proc/update_objectives()
 	if(core_objective)
@@ -389,8 +375,9 @@
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	var/datum/team/national_guard/national_guard_team
+	flags = HIGHLANDER_RULESET
 
-/datum/dynamic_ruleset/midround/from_ghosts/national_guard/acceptable(population = 0, threat_level = 0)
+/datum/dynamic_ruleset/midround/from_ghosts/national_guard/acceptable(population=0, threat=0)
 	indice_pop = min(operative_cap.len, round(living_players.len/5)+1)
 	required_candidates = max(5, operative_cap[indice_pop])
 	return ..()

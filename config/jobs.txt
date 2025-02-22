@@ -1,0 +1,27 @@
+#This allows easy configuration of the number of positions allowed for each job
+#Format is: [Job name]=[total positions],[spawn positions]
+#Job names must be identical to the title var of each job datum
+#Positions can be set to -1 to allow unlimited slots
+Prince=1,1
+Clerk=1,1
+Sheriff=1,1
+Hound=5,5
+
+Citizen=-1,-1
+
+Supply Technician=3,3
+Dealer=1,1
+Bruiser=3,3
+Barkeeper=1,1
+
+Archivist=1,1
+Street Janitor=2,2
+Doctor=2,2
+Graveyard Keeper=3,3
+Voivode =1,1
+Bogatyr =4,4
+Zadruga = 2, 2
+
+
+
+

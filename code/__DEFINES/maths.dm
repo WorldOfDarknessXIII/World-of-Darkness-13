@@ -1,14 +1,11 @@
-#define IS_FINITE__UNSAFE(a) (!isinf(a) && !isnan(a))
-#define IS_FINITE(a) (isnum(a) && IS_FINITE__UNSAFE(a))
-
 // Credits to Nickr5 for the useful procs I've taken from his library resource.
 // This file is quadruple wrapped for your pleasure
 // (
 
 #define NUM_E 2.71828183
 
-#define PI 3.1416
-#define INFINITY 1e31 //closer then enough
+#define PI						3.1416
+#define INFINITY				1e31	//closer then enough
 
 #define SHORT_REAL_LIMIT 16777216
 
@@ -29,16 +26,7 @@
 /// Gets the sign of x, returns -1 if negative, 0 if 0, 1 if positive
 #define SIGN(x) ( ((x) > 0) - ((x) < 0) )
 
-/// Returns the integer closest to 0 from a division
-#define SIGNED_FLOOR_DIVISION(x, y) (SIGN(x) * FLOOR(abs(x) / y, 1))
-
 #define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
-
-#define ROUND_UP(x) ( -round(-(x)))
-
-/// Returns the number of digits in a number. Only works on whole numbers.
-/// This is marginally faster than string interpolation -> length
-#define DIGITS(x) (ROUND_UP(log(10, x)))
 
 // round() acts like floor(x, 1) by default but can't handle other values
 #define FLOOR(x, y) ( round((x) / (y)) * (y) )
@@ -46,11 +34,8 @@
 // Similar to clamp but the bottom rolls around to the top and vice versa. min is inclusive, max is exclusive
 #define WRAP(val, min, max) clamp(( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) ),min,max)
 
-/// Increments a value and wraps it if it exceeds some value. Can be used to circularly iterate through a list through `idx = WRAP_UP(idx, length_of_list)`.
-#define WRAP_UP(val, max) (((val) % (max)) + 1)
-
 // Real modulus that handles decimals
-#define MODULUS(x, y) ( (x) - FLOOR(x, y))
+#define MODULUS(x, y) ( (x) - (y) * round((x) / (y)) )
 
 // Cotangent
 #define COT(x) (1 / tan(x))
@@ -96,23 +81,22 @@
 // amount=0.5 returns the mean of a and b.
 #define LERP(a, b, amount) ( amount ? ((a) + ((b) - (a)) * (amount)) : a )
 
-/**
- * Performs an inverse linear interpolation between a, b, and a provided value between a and b
- * This returns the amount that you would need to feed into a lerp between A and B to return the third value
- */
-#define INVERSE_LERP(a, b, value) ((value - a) / (b - a))
-
 // Returns the nth root of x.
 #define ROOT(n, x) ((x) ** (1 / (n)))
+
+/// Low-pass filter a value to smooth out high frequent peaks. This can be thought of as a moving average filter as well.
+/// delta_time is how many seconds since we last ran this command. RC is the filter constant, high RC means more smoothing
+/// See https://en.wikipedia.org/wiki/Low-pass_filter#Simple_infinite_impulse_response_filter for the maths
+#define LPFILTER(memory, signal, delta_time, RC) (delta_time / (RC + delta_time)) * signal + (1 - delta_time / (RC + delta_time)) * memory
 
 // The quadratic formula. Returns a list with the solutions, or an empty list
 // if they are imaginary.
 /proc/SolveQuadratic(a, b, c)
 	ASSERT(a)
 	. = list()
-	var/d = b*b - 4 * a * c
+	var/d		= b*b - 4 * a * c
 	var/bottom  = 2 * a
-	if(d < 0 || !IS_FINITE__UNSAFE(d) || !IS_FINITE__UNSAFE(bottom))
+	if(d < 0)
 		return
 	var/root = sqrt(d)
 	. += (-b + root) / bottom
@@ -125,15 +109,11 @@
 #define TORADIANS(degrees) ((degrees) * 0.0174532925)
 
 /// Gets shift x that would be required the bitflag (1<<x)
-/// We need the round because log has floating-point inaccuracy, and if we undershoot at all on list indexing we'll get the wrong index.
-#define TOBITSHIFT(bit) ( round(log(2, bit), 1) )
+#define TOBITSHIFT(bit) ( log(2, bit) )
 
 // Will filter out extra rotations and negative rotations
 // E.g: 540 becomes 180. -180 becomes 180.
 #define SIMPLIFY_DEGREES(degrees) (MODULUS((degrees), 360))
-
-// 180s an angle
-#define REVERSE_ANGLE(degrees) (SIMPLIFY_DEGREES(degrees + 180))
 
 #define GET_ANGLE_OF_INCIDENCE(face, input) (MODULUS((face) - (input), 360))
 
@@ -174,32 +154,86 @@
 			R1 = rand(-ACCURACY,ACCURACY)/ACCURACY
 			R2 = rand(-ACCURACY,ACCURACY)/ACCURACY
 			working = R1*R1 + R2*R2
-		while(working >= 1 || working == 0)
+		while(working >= 1 || working==0)
 		working = sqrt(-2 * log(working) / working)
 		R1 *= working
 		gaussian_next = R2 * working
 	return (mean + stddev * R1)
+
+var/global/normal_next
+
+/proc/NormalDistr(mean = 0, stddev = 1) //because gaussian() looks... strange. This is Box-Muller transform
+	if(normal_next != null)
+		. = mean + normal_next * stddev
+		normal_next = null
+	else
+		var/R1 = sqrt(-2.0 * log(rand(1, ACCURACY) / ACCURACY))
+		var/R2 = 360 * (rand(0, ACCURACY) / ACCURACY) //because BYOND's cos() and sin() accepts degrees
+		. = mean + (R1 * cos(R2)) * stddev
+		normal_next = R1 * sin(R2)
+	return .
 #undef ACCURACY
+
+/proc/get_line(atom/starting_atom, atom/ending_atom)
+	var/current_x_step = starting_atom.x//start at x and y, then add 1 or -1 to these to get every turf from starting_atom to ending_atom
+	var/current_y_step = starting_atom.y
+	var/starting_z = starting_atom.z
+
+	var/list/line = list(get_turf(starting_atom))//get_turf(atom) is faster than locate(x, y, z)
+
+	var/x_distance = ending_atom.x - current_x_step //x distance
+	var/y_distance = ending_atom.y - current_y_step
+
+	var/abs_x_distance = abs(x_distance)//Absolute value of x distance
+	var/abs_y_distance = abs(y_distance)
+
+	var/x_distance_sign = SIGN(x_distance) //Sign of x distance (+ or -)
+	var/y_distance_sign = SIGN(y_distance)
+
+	var/x = abs_x_distance / 2 //Counters for steps taken, setting to distance/2
+	var/y = abs_y_distance / 2 //Bit-shifting makes me l33t.  It also makes get_line() unnessecarrily fast.
+
+	if(abs_x_distance >= abs_y_distance) //x distance is greater than y
+		for(var/distance_counter in 0 to (abs_x_distance - 1))//It'll take abs_x_distance steps to get there
+			y += abs_y_distance
+
+			if(y >= abs_x_distance) //Every abs_y_distance steps, step once in y direction
+				y -= abs_x_distance
+				current_y_step += y_distance_sign
+
+			current_x_step += x_distance_sign //Step on in x direction
+			line += locate(current_x_step, current_y_step, starting_z)//Add the turf to the list
+	else
+		for(var/distance_counter in 0 to (abs_y_distance - 1))
+			x += abs_x_distance
+
+			if(x >= abs_y_distance)
+				x -= abs_y_distance
+				current_x_step += x_distance_sign
+
+			current_y_step += y_distance_sign
+			line += locate(current_x_step, current_y_step, starting_z)
+	return line
 
 /proc/get_turf_in_angle(angle, turf/starting, increments)
 	var/pixel_x = 0
 	var/pixel_y = 0
 	for(var/i in 1 to increments)
-		pixel_x += sin(angle)+(ICON_SIZE_X/2)*sin(angle)*2
-		pixel_y += cos(angle)+(ICON_SIZE_Y/2)*cos(angle)*2
+		pixel_x += sin(angle)+16*sin(angle)*2
+		pixel_y += cos(angle)+16*cos(angle)*2
 	var/new_x = starting.x
 	var/new_y = starting.y
-	while(pixel_x > (ICON_SIZE_X/2))
-		pixel_x -= ICON_SIZE_X
+	while(pixel_x > 16)
+		pixel_x -= 32
 		new_x++
-	while(pixel_x < -(ICON_SIZE_X/2))
-		pixel_x += ICON_SIZE_X
+	while(pixel_x < -16)
+		pixel_x += 32
 		new_x--
-	while(pixel_y > (ICON_SIZE_Y/2))
-		pixel_y -= ICON_SIZE_Y
+	while(pixel_y > 16)
+		pixel_y -= 32
 		new_y++
-	while(pixel_y < -(ICON_SIZE_Y/2))
-		pixel_y += ICON_SIZE_Y
+	while(pixel_y < -16)
+		pixel_y += 32
 		new_y--
 	new_x = clamp(new_x, 1, world.maxx)
 	new_y = clamp(new_y, 1, world.maxy)
@@ -228,32 +262,16 @@
 #define EXP_DISTRIBUTION(desired_mean) ( -(1/(1/desired_mean)) * log(rand(1, 1000) * 0.001) )
 
 #define LORENTZ_DISTRIBUTION(x, s) ( s*tan(TODEGREES(PI*(rand()-0.5))) + x )
-#define LORENTZ_CUMULATIVE_DISTRIBUTION(x, y, s) ( (1/PI)*TORADIANS(arctan((x-(y))/s)) + 1/2 )
+#define LORENTZ_CUMULATIVE_DISTRIBUTION(x, y, s) ( (1/PI)*TORADIANS(arctan((x-y)/s)) + 1/2 )
 
 #define RULE_OF_THREE(a, b, x) ((a*x)/b)
 
-/// Converts a probability/second chance to probability/seconds_per_tick chance
-/// For example, if you want an event to happen with a 10% per second chance, but your proc only runs every 5 seconds, do `if(prob(100*SPT_PROB_RATE(0.1, 5)))`
-#define SPT_PROB_RATE(prob_per_second, seconds_per_tick) (1 - (1 - (prob_per_second)) ** (seconds_per_tick))
+/// Converts a probability/second chance to probability/delta_time chance
+/// For example, if you want an event to happen with a 10% per second chance, but your proc only runs every 5 seconds, do `if(prob(100*DT_PROB_RATE(0.1, 5)))`
+#define DT_PROB_RATE(prob_per_second, delta_time) (1 - (1 - (prob_per_second)) ** (delta_time))
 
-/// Like SPT_PROB_RATE but easier to use, simply put `if(SPT_PROB(10, 5))`
-#define SPT_PROB(prob_per_second_percent, seconds_per_tick) (prob(100*SPT_PROB_RATE((prob_per_second_percent)/100, (seconds_per_tick))))
+/// Like DT_PROB_RATE but easier to use, simply put `if(DT_PROB(10, 5))`
+#define DT_PROB(prob_per_second_percent, delta_time) (prob(100*DT_PROB_RATE((prob_per_second_percent)/100, (delta_time))))
 // )
 
-// This value per these many units. Very unnecessary but helpful for readability (For example wanting 30 units of synthflesh to heal 50 damage - VALUE_PER(50, 30))
-#define VALUE_PER(value, per) (value / per)
-
 #define GET_TRUE_DIST(a, b) (a == null || b == null) ? -1 : max(abs(a.x -b.x), abs(a.y-b.y), abs(a.z-b.z))
-
-//We used to use linear regression to approximate the answer, but Mloc realized this was actually faster.
-//And lo and behold, it is, and it's more accurate to boot.
-#define CHEAP_HYPOTENUSE(Ax, Ay, Bx, By) (sqrt((Ax - Bx) ** 2 + (Ay - By) ** 2)) //A squared + B squared = C squared
-
-/// The number of cells in a taxicab circle (rasterized diamond) of radius X.
-#define DIAMOND_AREA(X) (1 + 2*(X)*((X)+1))
-
-/// Returns a random decimal between x and y.
-#define RANDOM_DECIMAL(x, y) LERP((x), (y), rand())
-
-#define SI_COEFFICIENT "coefficient"
-#define SI_UNIT "unit"

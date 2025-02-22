@@ -3,7 +3,7 @@
 	singular_name = "light floor tile"
 	desc = "A floor tile, made out of glass. It produces light."
 	icon_state = "tile_e"
-	obj_flags = CONDUCTS_ELECTRICITY
+	flags_1 = CONDUCT_1
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "smashes")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "smash")
 	turf_type = /turf/open/floor/light
@@ -12,7 +12,7 @@
 
 /obj/item/stack/tile/light/attackby(obj/item/O, mob/user, params)
 	if(O.tool_behaviour == TOOL_CROWBAR)
-		new/obj/item/stack/sheet/iron(user.loc)
+		new/obj/item/stack/sheet/metal(user.loc)
 		amount--
 		new/obj/item/stack/light_w(user.loc)
 		if(amount <= 0)
@@ -20,7 +20,7 @@
 	else
 		return ..()
 
-/obj/item/stack/tile/light/place_tile(turf/open/target_plating, mob/user)
+/obj/item/stack/tile/light/place_tile(turf/open/T)
 	. = ..()
-	var/turf/open/floor/light/floor = .
-	floor?.state = state
+	var/turf/open/floor/light/F = .
+	F?.state = state

@@ -1,5 +1,5 @@
 /datum/emote/silicon
-	trait_required = TRAIT_SILICON_EMOTES_ALLOWED
+	mob_type_allowed_typecache = list(/mob/living/silicon)
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/silicon/boop
@@ -7,27 +7,20 @@
 	key_third_person = "boops"
 	message = "boops."
 
-/datum/emote/silicon/beep
-	key = "beep"
-	key_third_person = "beeps"
-	message = "beeps."
-	message_param = "beeps at %t."
-	emote_type = EMOTE_AUDIBLE
-	sound = 'sound/machines/beep/twobeep.ogg'
-
 /datum/emote/silicon/buzz
 	key = "buzz"
 	key_third_person = "buzzes"
 	message = "buzzes."
 	message_param = "buzzes at %t."
 	emote_type = EMOTE_AUDIBLE
-	sound = 'sound/machines/buzz/buzz-sigh.ogg'
+	sound = 'sound/machines/buzz-sigh.ogg'
+
 
 /datum/emote/silicon/buzz2
 	key = "buzz2"
 	message = "buzzes twice."
 	emote_type = EMOTE_AUDIBLE
-	sound = 'sound/machines/buzz/buzz-two.ogg'
+	sound = 'sound/machines/buzz-two.ogg'
 
 /datum/emote/silicon/chime
 	key = "chime"
@@ -63,9 +56,3 @@
 	message = "blares an alarm!"
 	emote_type = EMOTE_AUDIBLE
 	sound = 'sound/machines/warning-buzzer.ogg'
-
-/datum/emote/silicon/slowclap
-	key = "slowclap"
-	message = "activates their slow clap processor."
-	emote_type = EMOTE_AUDIBLE
-	sound = 'sound/machines/slowclap.ogg'

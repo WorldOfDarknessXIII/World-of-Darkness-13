@@ -1,24 +1,34 @@
 /datum/species/vamp_mannequin
 	name = "mannequin"
 	id = "mannequin"
-	inherent_traits = list(TRAIT_GODMODE, TRAIT_NO_EYELIDS,TRAIT_NOBLOOD, TRAIT_NO_UNDERWEAR, TRAIT_VIRUSIMMUNE,TRAIT_NOHUNGER,TRAIT_NOBREATH,TRAIT_TOXIMMUNE,TRAIT_NOCRITDAMAGE,TRAIT_ADVANCEDTOOLUSER,TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE)
+	species_traits = list(NOEYESPRITES,NOBLOOD,NO_UNDERWEAR)
+	inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_NOHUNGER,TRAIT_NOBREATH,TRAIT_TOXIMMUNE,TRAIT_NOCRITDAMAGE,TRAIT_ADVANCEDTOOLUSER,TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE)
 	inherent_biotypes = MOB_HUMANOID
 	payday_modifier = 0.75
 	siemens_coeff = 0
+	punchdamagelow = 5
+	punchdamagehigh = 5
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
+	damage_overlay_type = ""
 	meat = /obj/item/food/meat/slab/human/mutant/golem
 	sexes = 1
+	limbs_id = "mannequin"
+//	fixed_mut_color = "aaa"
+	use_skintones = FALSE
+//	var/last_spooked_out = 0
 
-/datum/species/vamp_mannequin/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
+/datum/species/vamp_mannequin/on_species_gain(mob/living/carbon/human/C)
 	. = ..()
-	human_who_gained_species.skin_tone = "albino"
-	human_who_gained_species.update_body_parts()
-	human_who_gained_species.update_body()
-	human_who_gained_species.update_icon()
-	human_who_gained_species.dna.real_name = "mannequin"
-	human_who_gained_species.real_name = "mannequin"
-	human_who_gained_species.true_real_name = "mannequin"
-	human_who_gained_species.real_name = "mannequin"
+	C.status_flags |= GODMODE
+	C.skin_tone = "albino"
+	C.dna.species.limbs_id = "mannequin"
+	C.update_body_parts()
+	C.update_body()
+	C.update_icon()
+	C.dna.real_name = "mannequin"
+	C.real_name = "mannequin"
+	C.true_real_name = "mannequin"
+	C.real_name = "mannequin"
 
 /datum/species/vamp_mannequin/check_roundstart_eligible()
 	return FALSE
@@ -37,11 +47,14 @@
 		walk_to(H, 0)
 
 /datum/species/vamp_mannequin/proc/do_spooky(var/mob/living/carbon/human/man)
+//	if(last_spooked_out+10 > world.time)
+//		return
+//	last_spooked_out = world.time
 	for(var/mob/living/L in range(7, man))
 		if(L.client)
 			man.face_atom(L)
 			if(prob(50))
-				step(man, L)
+				walk_to(man, L, 0, man.total_multiplicative_slowdown())
 
 	for(var/mob/living/carbon/human/H in range(1, man))
 		if(H.client)
@@ -57,54 +70,5 @@
 
 	if(prob(33))
 		var/turf/T = get_step(man, pick(NORTH, SOUTH, WEST, EAST))
+//		man.face_atom(T)
 		step_to(man,T,0)
-
-/mob/living/carbon/human/species/vamp_mannequin
-	race = /datum/species/vamp_mannequin
-
-/mob/living/carbon/human/species/vamp_mannequin/napoleon
-
-/mob/living/carbon/human/species/vamp_mannequin/napoleon/Initialize()
-	. = ..()
-	equip_to_slot_or_del(new /obj/item/clothing/head/vampire/napoleon(src), ITEM_SLOT_HEAD)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/vampire/jackboots/high(src), ITEM_SLOT_FEET)
-	equip_to_slot_or_del(new /obj/item/clothing/under/vampire/napoleon(src), ITEM_SLOT_ICLOTHING)
-
-/mob/living/carbon/human/species/vamp_mannequin/nazi
-
-/mob/living/carbon/human/species/vamp_mannequin/nazi/Initialize()
-	. = ..()
-	equip_to_slot_or_del(new /obj/item/clothing/head/vampire/nazi(src), ITEM_SLOT_HEAD)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/vampire/jackboots/high(src), ITEM_SLOT_FEET)
-	equip_to_slot_or_del(new /obj/item/clothing/under/vampire/nazi(src), ITEM_SLOT_ICLOTHING)
-
-//prevents this thing from being stripped
-/mob/living/carbon/human/species/vamp_mannequin/nazi/Topic(href, href_list)
-	if(href_list["item"])
-		message_admins("[ADMIN_LOOKUPFLW(usr)] tried to strip the Nazi mannequin.")
-		to_chat(usr, "<span class='warning'>You don't really want to pick that up...</span>")
-		return
-	else
-		..()
-
-//prevents anything from being dropped by the mannequin on gib
-/mob/living/carbon/human/species/vamp_mannequin/nazi/gib(no_brain, no_organs, no_bodyparts, safe_gib)
-	qdel(src)
-
-/mob/living/carbon/human/species/vamp_mannequin/conquestador
-
-/mob/living/carbon/human/species/vamp_mannequin/conquestador/Initialize()
-	. = ..()
-	equip_to_slot_or_del(new /obj/item/clothing/head/vampire/helmet/spain(src), ITEM_SLOT_HEAD)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/vampire/jackboots/work(src), ITEM_SLOT_FEET)
-	equip_to_slot_or_del(new /obj/item/clothing/under/vampire/tremere(src), ITEM_SLOT_ICLOTHING)
-	equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/vest/medieval(src), ITEM_SLOT_OCLOTHING)
-
-/mob/living/carbon/human/species/vamp_mannequin/cowboy
-
-/mob/living/carbon/human/species/vamp_mannequin/cowboy/Initialize()
-	. = ..()
-	equip_to_slot_or_del(new /obj/item/clothing/head/vampire/cowboy(src), ITEM_SLOT_HEAD)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/vampire/brown(src), ITEM_SLOT_FEET)
-	equip_to_slot_or_del(new /obj/item/clothing/under/vampire/bouncer(src), ITEM_SLOT_ICLOTHING)
-	equip_to_slot_or_del(new /obj/item/clothing/suit/vampire/trench/alt(src), ITEM_SLOT_OCLOTHING)

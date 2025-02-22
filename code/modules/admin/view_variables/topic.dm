@@ -5,16 +5,13 @@
 		return
 	var/target = GET_VV_TARGET
 	vv_do_basic(target, href_list, href)
-	if(isdatum(target))
+	if(istype(target, /datum))
 		var/datum/D = target
 		D.vv_do_topic(href_list)
 	else if(islist(target))
 		vv_do_list(target, href_list)
 	if(href_list["Vars"])
-		var/datum/vars_target = locate(href_list["Vars"])
-		if(href_list["special_varname"]) // Some special vars can't be located even if you have their ref, you have to use this instead
-			vars_target = vars_target.vars[href_list["special_varname"]]
-		debug_variables(vars_target)
+		debug_variables(locate(href_list["Vars"]))
 
 //Stuff below aren't in dropdowns/etc.
 
@@ -35,7 +32,7 @@
 
 			// If the new name is something that would be restricted by IC chat filters,
 			// give the admin a warning but allow them to do it anyway if they want.
-			if(is_ic_filtered(new_name) || is_soft_ic_filtered(new_name) && tgui_alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", list("Confirm", "Cancel")) == "Cancel")
+			if(CHAT_FILTER_CHECK(new_name) && alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", "Confirm", "Cancel") == "Cancel")
 				return
 
 			if( !new_name || !M )
@@ -63,6 +60,22 @@
 			vv_update_display(A, "dir", dir2text(A.dir))
 
 
+		else if(href_list["makehuman"])
+			if(!check_rights(R_SPAWN))
+				return
+
+			var/mob/living/carbon/human/Mo = locate(href_list["makehuman"]) in GLOB.mob_list
+			if(!ismonkey(Mo))
+				to_chat(usr, "This can only be done to monkeys", confidential = TRUE)
+				return
+
+			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+				return
+			if(!Mo)
+				to_chat(usr, "Mob doesn't exist anymore", confidential = TRUE)
+				return
+			holder.Topic(href, list("humanone"=href_list["makehuman"]))
+
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(NONE))
 				return
@@ -73,7 +86,7 @@
 
 			var/Text = href_list["adjustDamage"]
 
-			var/amount = input("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num|null
+			var/amount =  input("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num|null
 
 			if (isnull(amount))
 				return
@@ -85,22 +98,25 @@
 			var/newamt
 			switch(Text)
 				if("brute")
-					L.adjustBruteLoss(amount, forced = TRUE)
+					L.adjustBruteLoss(amount)
 					newamt = L.getBruteLoss()
 				if("fire")
-					L.adjustFireLoss(amount, forced = TRUE)
+					L.adjustFireLoss(amount)
 					newamt = L.getFireLoss()
 				if("toxin")
-					L.adjustToxLoss(amount, forced = TRUE)
+					L.adjustToxLoss(amount)
 					newamt = L.getToxLoss()
 				if("oxygen")
-					L.adjustOxyLoss(amount, forced = TRUE)
+					L.adjustOxyLoss(amount)
 					newamt = L.getOxyLoss()
 				if("brain")
 					L.adjustOrganLoss(ORGAN_SLOT_BRAIN, amount)
-					newamt = L.get_organ_loss(ORGAN_SLOT_BRAIN)
+					newamt = L.getOrganLoss(ORGAN_SLOT_BRAIN)
+				if("clone")
+					L.adjustCloneLoss(amount)
+					newamt = L.getCloneLoss()
 				if("stamina")
-					L.adjustStaminaLoss(amount, forced = TRUE)
+					L.adjustStaminaLoss(amount)
 					newamt = L.getStaminaLoss()
 				else
 					to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]", confidential = TRUE)
@@ -113,51 +129,10 @@
 				admin_ticket_log(L, "<font color='blue'>[log_msg]</font>")
 				vv_update_display(L, Text, "[newamt]")
 
-		else if(href_list["item_to_tweak"] && href_list["var_tweak"])
-			if(!check_rights(NONE))
-				return
-
-			var/obj/item/editing = locate(href_list["item_to_tweak"])
-			if(!istype(editing) || QDELING(editing))
-				return
-
-			var/existing_val = -1
-			switch(href_list["var_tweak"])
-				if("damtype")
-					existing_val = editing.damtype
-				if("force")
-					existing_val = editing.force
-				if("wound")
-					existing_val = editing.wound_bonus
-				if("bare wound")
-					existing_val = editing.bare_wound_bonus
-				else
-					CRASH("Invalid var_tweak passed to item vv set var: [href_list["var_tweak"]]")
-
-			var/new_val
-			if(href_list["var_tweak"] == "damtype")
-				new_val = input("Enter the new damage type for [editing]","Set Damtype", existing_val) in list(BRUTE, BURN, TOX, OXY, STAMINA, BRAIN)
-			else
-				new_val = input("Enter the new value for [editing]'s [href_list["var_tweak"]]","Set [href_list["var_tweak"]]", existing_val) as num|null
-			if(isnull(new_val) || new_val == existing_val || QDELETED(editing) || !check_rights(NONE))
-				return
-
-			switch(href_list["var_tweak"])
-				if("damtype")
-					editing.damtype = new_val
-				if("force")
-					editing.force = new_val
-				if("wound")
-					editing.wound_bonus = new_val
-				if("bare wound")
-					editing.bare_wound_bonus = new_val
-
-			message_admins("[key_name(usr)] set [editing]'s [href_list["var_tweak"]] to [new_val] (was [existing_val])")
-			log_admin("[key_name(usr)] set [editing]'s [href_list["var_tweak"]] to [new_val] (was [existing_val])")
-			vv_update_display(editing, href_list["var_tweak"], istext(new_val) ? uppertext(new_val) : new_val)
 
 	//Finally, refresh if something modified the list.
 	if(href_list["datumrefresh"])
 		var/datum/DAT = locate(href_list["datumrefresh"])
-		if(isdatum(DAT) || istype(DAT, /client) || islist(DAT))
+		if(istype(DAT, /datum) || istype(DAT, /client) || islist(DAT))
 			debug_variables(DAT)
+

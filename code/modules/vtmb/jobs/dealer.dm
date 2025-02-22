@@ -6,11 +6,14 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "None. You are beholden only to yourself."
-	exp_granted_type = EXP_TYPE_WAREHOUSE // This is so the jobs menu can work properly
+	selection_color = "#edc009"
+	exp_type_department = EXP_TYPE_WAREHOUSE // This is so the jobs menu can work properly
 
 	outfit = /datum/outfit/job/dealer
 
-	paycheck = PAYCHECK_CREW
+	access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_QM, ACCESS_MINING, ACCESS_MECH_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM, ACCESS_VAULT, ACCESS_AUX_BASE)
+	minimal_access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_QM, ACCESS_MINING, ACCESS_MECH_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM, ACCESS_VAULT, ACCESS_AUX_BASE)
+	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_CAR
 
 	liver_traits = list(TRAIT_PRETENDER_ROYAL_METABOLISM)

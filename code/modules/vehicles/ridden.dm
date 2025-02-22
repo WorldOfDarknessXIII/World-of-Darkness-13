@@ -5,15 +5,14 @@
 	buckle_lying = 0
 	pass_flags_self = PASSTABLE
 	COOLDOWN_DECLARE(message_cooldown)
-	interaction_flags_click = NEED_DEXTERITY
 
 /obj/vehicle/ridden/examine(mob/user)
 	. = ..()
 	if(key_type)
 		if(!inserted_key)
-			. += span_notice("Put a key inside it by clicking it with the key.")
+			. += "<span class='notice'>Put a key inside it by clicking it with the key.</span>"
 		else
-			. += span_notice("Alt-click [src] to remove the key.")
+			. += "<span class='notice'>Alt-click [src] to remove the key.</span>"
 
 /obj/vehicle/ridden/generate_action_type(actiontype)
 	var/datum/action/vehicle/ridden/A = ..()
@@ -33,38 +32,32 @@
 	if(!key_type || is_key(inserted_key) || !is_key(I))
 		return ..()
 	if(!user.transferItemToLoc(I, src))
-		to_chat(user, span_warning("[I] seems to be stuck to your hand!"))
+		to_chat(user, "<span class='warning'>[I] seems to be stuck to your hand!</span>")
 		return
-	to_chat(user, span_notice("You insert \the [I] into \the [src]."))
-	if(inserted_key) //just in case there's an invalid key
+	to_chat(user, "<span class='notice'>You insert \the [I] into \the [src].</span>")
+	if(inserted_key)	//just in case there's an invalid key
 		inserted_key.forceMove(drop_location())
 	inserted_key = I
 
-/obj/vehicle/ridden/click_alt(mob/user)
-	if(!inserted_key)
-		return CLICK_ACTION_BLOCKING
+/obj/vehicle/ridden/AltClick(mob/user)
+	if(!inserted_key || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !issilicon(user)))
+		return ..()
 	if(!is_occupant(user))
-		to_chat(user, span_warning("You must be riding the [src] to remove [src]'s key!"))
-		return CLICK_ACTION_BLOCKING
-	to_chat(user, span_notice("You remove \the [inserted_key] from \the [src]."))
+		to_chat(user, "<span class='warning'>You must be riding the [src] to remove [src]'s key!</span>")
+		return
+	to_chat(user, "<span class='notice'>You remove \the [inserted_key] from \the [src].</span>")
 	inserted_key.forceMove(drop_location())
 	user.put_in_hands(inserted_key)
 	inserted_key = null
-	return CLICK_ACTION_SUCCESS
 
 /obj/vehicle/ridden/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	if(!in_range(user, src) || !in_range(M, src))
 		return FALSE
-	return ..(M, user, FALSE)
+	. = ..(M, user, FALSE)
 
 /obj/vehicle/ridden/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!force && occupant_amount() >= max_occupants)
 		return FALSE
-
-	var/response = SEND_SIGNAL(M, COMSIG_VEHICLE_RIDDEN, src)
-	if(response & EJECT_FROM_VEHICLE)
-		return FALSE
-
 	return ..()
 
 /obj/vehicle/ridden/zap_act(power, zap_flags)

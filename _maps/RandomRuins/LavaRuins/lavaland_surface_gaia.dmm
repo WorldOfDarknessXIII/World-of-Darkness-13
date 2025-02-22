@@ -3,124 +3,109 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/structure/flora/grass/jungle/b/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/structure/flora/grass/jungle/b,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "c" = (
-/turf/open/misc/grass/lavaland,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "d" = (
-/obj/structure/flora/grass/jungle/a/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/structure/flora/grass/jungle,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "e" = (
-/obj/structure/flora/rock/pile/jungle/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/structure/flora/rock/jungle,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "f" = (
-/obj/structure/flora/bush/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"g" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"h" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "i" = (
 /obj/machinery/hydroponics/soil{
 	self_sustaining = 1
 	},
-/turf/open/misc/grass/lavaland,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "j" = (
-/mob/living/basic/butterfly/lavaland,
-/turf/open/misc/grass/lavaland,
-/area/ruin/unpowered/gaia)
-"k" = (
-/obj/item/food/grown/mushroom/amanita,
-/turf/open/floor/bronze/filled/lavaland,
+/mob/living/simple_animal/butterfly{
+	atmos_requirements = list()
+	},
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "l" = (
 /obj/item/food/grown/mushroom/angel,
-/turf/open/misc/grass/lavaland,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "m" = (
 /obj/item/food/grown/mushroom/libertycap,
-/turf/open/misc/grass/lavaland,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
-"o" = (
-/obj/structure/flora/bush/style_random,
-/turf/open/floor/bronze/filled/lavaland,
+"n" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "p" = (
-/mob/living/basic/lightgeist{
+/mob/living/simple_animal/hostile/lightgeist{
+	AIStatus = 1;
 	light_color = "#42ECFF"
 	},
-/turf/open/misc/grass/lavaland,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "q" = (
-/obj/structure/flora/tree/jungle/small/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/structure/flora/tree/jungle/small,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "r" = (
-/obj/structure/flora/grass/jungle/b/style_random,
-/obj/structure/flora/bush/style_random,
-/mob/living/basic/butterfly/lavaland,
-/turf/open/misc/grass/lavaland,
+/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/ausbushes/sparsegrass,
+/mob/living/simple_animal/butterfly{
+	atmos_requirements = list()
+	},
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "s" = (
 /obj/item/food/grown/mushroom/amanita,
-/turf/open/misc/grass/lavaland,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"t" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "v" = (
-/obj/structure/flora/tree/jungle/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/structure/flora/tree/jungle,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "w" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/ruin/unpowered/gaia)
-"x" = (
-/obj/structure/flora/bush/style_random,
-/obj/structure/flora/bush/style_random,
-/turf/open/misc/grass/lavaland,
+"A" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "B" = (
-/obj/structure/flora/grass/jungle/a/style_random,
-/mob/living/basic/lightgeist{
+/obj/structure/flora/grass/jungle,
+/mob/living/simple_animal/hostile/lightgeist{
+	AIStatus = 1;
 	light_color = "#42ECFF"
 	},
-/turf/open/misc/grass/lavaland,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"C" = (
+/obj/structure/flora/ausbushes/fernybush,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "D" = (
 /obj/item/food/grown/mushroom/chanterelle,
-/turf/open/misc/grass/lavaland,
-/area/ruin/unpowered/gaia)
-"E" = (
-/turf/open/floor/bronze/filled/lavaland,
-/area/ruin/unpowered/gaia)
-"J" = (
-/turf/closed/wall/mineral/bronze,
-/area/ruin/unpowered/gaia)
-"K" = (
-/obj/structure/flora/bush/style_random,
-/obj/structure/flora/bush/style_random,
-/turf/open/floor/bronze/filled/lavaland,
-/area/ruin/unpowered/gaia)
-"N" = (
-/obj/structure/flora/grass/jungle/b/style_random,
-/turf/open/floor/bronze/filled/lavaland,
-/area/ruin/unpowered/gaia)
-"P" = (
-/obj/structure/flora/grass/jungle/b/style_random,
-/obj/structure/flora/bush/style_random,
-/turf/open/misc/grass/lavaland,
-/area/ruin/unpowered/gaia)
-"T" = (
-/obj/structure/flora/grass/jungle/a/style_random,
-/turf/open/floor/bronze/filled/lavaland,
-/area/ruin/unpowered/gaia)
-"V" = (
-/obj/item/mod/construction/lavalandcore,
-/turf/open/misc/grass/lavaland,
-/area/ruin/unpowered/gaia)
-"Z" = (
-/obj/structure/flora/grass/jungle/b/style_random,
-/turf/closed/wall/mineral/bronze,
+/turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 
 (1,1,1) = {"
@@ -149,7 +134,7 @@ a
 w
 w
 c
-N
+b
 c
 b
 c
@@ -166,7 +151,7 @@ a
 w
 w
 c
-f
+g
 d
 f
 c
@@ -186,9 +171,9 @@ c
 d
 c
 i
-T
-f
-f
+d
+C
+n
 c
 w
 w
@@ -207,7 +192,7 @@ p
 j
 s
 b
-f
+h
 c
 b
 w
@@ -217,16 +202,16 @@ a
 a
 w
 w
-f
+g
 d
 c
 c
-E
+c
 v
-T
+d
 c
 c
-f
+h
 w
 w
 a
@@ -240,11 +225,11 @@ m
 r
 c
 c
-f
-f
-f
+A
+n
+C
 b
-f
+g
 c
 w
 w
@@ -255,15 +240,15 @@ b
 c
 d
 c
-f
+n
 c
-N
+b
 B
-f
+c
 d
 m
 d
-f
+h
 c
 w
 "}
@@ -276,8 +261,8 @@ f
 d
 c
 d
-f
-o
+h
+c
 f
 j
 c
@@ -288,19 +273,19 @@ w
 (10,1,1) = {"
 w
 c
-o
-f
-b
-o
 c
-J
-x
-Z
-T
-c
-K
+h
 b
-o
+c
+c
+q
+t
+b
+d
+c
+A
+b
+c
 w
 "}
 (11,1,1) = {"
@@ -308,14 +293,14 @@ w
 d
 e
 i
-o
+n
 d
 c
-x
-V
-o
-f
-o
+t
+c
+c
+n
+c
 c
 q
 c
@@ -323,20 +308,20 @@ w
 "}
 (12,1,1) = {"
 w
-o
+c
 b
 c
 p
-f
-k
-J
-P
-J
-f
-T
-f
+g
+s
 c
-N
+b
+j
+h
+d
+n
+c
+b
 w
 "}
 (13,1,1) = {"
@@ -349,12 +334,12 @@ d
 b
 c
 c
-o
+n
 c
 c
 b
 D
-f
+C
 w
 "}
 (14,1,1) = {"
@@ -362,16 +347,16 @@ w
 w
 f
 c
-f
+n
 c
 c
 b
-o
+c
 b
-j
-f
+c
+h
 i
-f
+C
 d
 w
 "}
@@ -382,10 +367,10 @@ w
 l
 j
 c
-f
-o
+n
 c
-f
+c
+g
 c
 j
 c
@@ -401,11 +386,11 @@ c
 b
 c
 c
-f
+g
 c
-o
 c
-f
+c
+n
 c
 w
 w
@@ -416,15 +401,15 @@ a
 a
 w
 d
-f
+g
 c
 p
-f
-f
-f
+h
+t
+h
 e
 c
-f
+h
 w
 a
 a
@@ -436,11 +421,11 @@ w
 w
 c
 b
-f
+n
 c
-o
+c
 j
-f
+g
 c
 c
 w
@@ -454,9 +439,9 @@ a
 w
 w
 c
-f
+h
 c
-f
+n
 c
 c
 w

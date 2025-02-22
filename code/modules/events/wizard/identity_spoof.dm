@@ -3,18 +3,16 @@
 	weight = 5
 	typepath = /datum/round_event/wizard/identity_spoof
 	max_occurrences = 1
-	description = "Makes everyone dressed up like a wizard."
 
-/datum/round_event_control/wizard/identity_spoof/can_spawn_event(players_amt, allow_magic = FALSE)
+/datum/round_event_control/wizard/identity_spoof/canSpawnEvent(players_amt, gamemode)
 	. = ..()
-	if(!.)
-		return .
-
-	if(GLOB.current_anonymous_theme) //already anonymous, ABORT ABORT
+	if(.)
 		return FALSE
-	return TRUE
+	if(SSticker.anonymousnames) //already anonymous, ABORT ABORT
+		return FALSE
 
 /datum/round_event/wizard/identity_spoof/start()
-	if(GLOB.current_anonymous_theme)
-		QDEL_NULL(GLOB.current_anonymous_theme)
-	GLOB.current_anonymous_theme = new /datum/anonymous_theme/wizards(extras_enabled = TRUE, alert_players = TRUE)
+	if(SSticker.anonymousnames)
+		QDEL_NULL(SSticker.anonymousnames)
+	SSticker.anonymousnames = new /datum/anonymous_theme/wizards()
+	anonymous_all_players()

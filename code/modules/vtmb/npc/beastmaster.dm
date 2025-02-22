@@ -90,6 +90,8 @@ SUBSYSTEM_DEF(beastmastering)
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	attack_sound = 'code/modules/wod13/sounds/dog.ogg'
+	a_intent = INTENT_HARM
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	bloodpool = 2
 	maxbloodpool = 2
@@ -126,10 +128,12 @@ SUBSYSTEM_DEF(beastmastering)
 						targa = L
 
 	var/totalshit = 1
+	if(total_multiplicative_slowdown() > 0)
+		totalshit = total_multiplicative_slowdown()
 
 	if(targa)
 		var/reqsteps = round((SSbeastmastering.next_fire-world.time)/totalshit)
-		walk_to(src, targa, reqsteps)
+		walk_to(src, targa, reqsteps, total_multiplicative_slowdown())
 		if(get_dist(src, targa) <= 1)
 			ClickOn(targa)
 	else
@@ -138,7 +142,7 @@ SUBSYSTEM_DEF(beastmastering)
 				forceMove(get_turf(beastmaster))
 			else
 				var/reqsteps = round((SSbeastmastering.next_fire-world.time)/totalshit)
-				walk_to(src, beastmaster, reqsteps)
+				walk_to(src, beastmaster, reqsteps, total_multiplicative_slowdown())
 		else
 			walk(src, 0)
 
@@ -153,9 +157,9 @@ SUBSYSTEM_DEF(beastmastering)
 	if(!targa)
 		targa = L
 
-/mob/living/carbon/human/attack_hand(mob/living/carbon/human/user)
+/mob/living/carbon/human/attack_hand(mob/user)
 	if(user)
-		if(user.combat_mode)
+		if(user.a_intent != INTENT_HELP)
 			for(var/mob/living/simple_animal/hostile/beastmaster/B in beastmaster)
 				B.add_beastmaster_enemies(user)
 	..()
@@ -166,12 +170,12 @@ SUBSYSTEM_DEF(beastmastering)
 			B.add_beastmaster_enemies(user)
 	..()
 
-/mob/living/carbon/human/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
+/mob/living/carbon/human/on_hit(obj/projectile/P)
 	. = ..()
-	if(hitting_projectile)
-		if(hitting_projectile.firer)
+	if(P)
+		if(P.firer)
 			for(var/mob/living/simple_animal/hostile/beastmaster/B in beastmaster)
-				B.add_beastmaster_enemies(hitting_projectile.firer)
+				B.add_beastmaster_enemies(P.firer)
 
 /mob/living/carbon/human/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	. = ..()
@@ -199,19 +203,19 @@ SUBSYSTEM_DEF(beastmastering)
 				B.add_beastmaster_enemies(A)
 //				B.GiveTarget(A)
 
-/mob/living/simple_animal/hostile/beastmaster/attack_hand(mob/living/carbon/human/user, list/modifiers)
+/mob/living/simple_animal/hostile/beastmaster/attack_hand(mob/user)
 	if(user)
-		if(user.combat_mode)
+		if(user.a_intent != INTENT_HELP)
 			for(var/mob/living/simple_animal/hostile/beastmaster/B in beastmaster.beastmaster)
 				B.add_beastmaster_enemies(user)
 	..()
 
-/mob/living/simple_animal/hostile/beastmaster/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
+/mob/living/simple_animal/hostile/beastmaster/on_hit(obj/projectile/P)
 	. = ..()
-	if(hitting_projectile)
-		if(hitting_projectile.firer)
+	if(P)
+		if(P.firer)
 			for(var/mob/living/simple_animal/hostile/beastmaster/B in beastmaster.beastmaster)
-				B.add_beastmaster_enemies(hitting_projectile.firer)
+				B.add_beastmaster_enemies(P.firer)
 
 /mob/living/simple_animal/hostile/beastmaster/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	. = ..()
@@ -247,7 +251,7 @@ SUBSYSTEM_DEF(beastmastering)
 	var/cool_down = 0
 	var/following = FALSE
 
-/datum/action/beastmaster_stay/Trigger(trigger_flags)
+/datum/action/beastmaster_stay/Trigger()
 	. = ..()
 	if(ishuman(owner))
 		if(cool_down+10 >= world.time)
@@ -272,7 +276,7 @@ SUBSYSTEM_DEF(beastmastering)
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	var/cool_down = 0
 
-/datum/action/beastmaster_deaggro/Trigger(trigger_flags)
+/datum/action/beastmaster_deaggro/Trigger()
 	. = ..()
 	if(ishuman(owner))
 		if(cool_down+10 >= world.time)
@@ -282,3 +286,4 @@ SUBSYSTEM_DEF(beastmastering)
 		for(var/mob/living/simple_animal/hostile/beastmaster/B in H.beastmaster)
 			B.enemies = list()
 			B.targa = null
+//			B.LosePatience()

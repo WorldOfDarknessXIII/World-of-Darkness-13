@@ -1,20 +1,12 @@
-//#define LOWMEMORYMODE //uncomment this to load centcom and runtime station and thats it.
+//#define LOWMEMORYMODE //uncomment this to load just titlescreen and runtime town
 
-#include "map_files\generic\CentCom.dmm"
+#include "map_files\generic\titlescreen.dmm"
+// #include "map_files\Mining\Lavaland.dmm"
 
 #ifndef LOWMEMORYMODE
 	#ifdef ALL_MAPS
-		#include "map_files\Birdshot\birdshot.dmm"
-		#include "map_files\debug\multiz.dmm"
-		#include "map_files\debug\runtimestation.dmm"
-		#include "map_files\Deltastation\DeltaStation2.dmm"
-		#include "map_files\IceBoxStation\IceBoxStation.dmm"
-		#include "map_files\MetaStation\MetaStation.dmm"
-		#include "map_files\Mining\Lavaland.dmm"
-		#include "map_files\tramstation\tramstation.dmm"
-		#include "map_files\NebulaStation\NebulaStation.dmm"
-		#include "map_files\wawastation\wawastation.dmm"
-
+		#include "map_files\Vampire\runtimetown.dmm"
+		#include "map_files\Vampire\SanFrancisco.dmm"
 		#ifdef CIBUILDING
 			#include "templates.dm"
 		#endif

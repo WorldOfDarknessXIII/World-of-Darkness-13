@@ -25,7 +25,7 @@
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	vampiric = TRUE
 
-/datum/action/ghost_hear/Trigger(trigger_flags)
+/datum/action/ghost_hear/Trigger()
 	. = ..()
 	if(isliving(owner))
 		var/mob/living/L = owner

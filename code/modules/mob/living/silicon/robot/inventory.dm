@@ -27,18 +27,18 @@
 		CRASH("activate_module called with item_module not in model.modules")
 
 	if(activated(item_module))
-		to_chat(src, span_warning("That module is already activated."))
+		to_chat(src, "<span class='warning'>That module is already activated.</span>")
 		return FALSE
 
 	if(disabled_modules & BORG_MODULE_ALL_DISABLED)
-		to_chat(src, span_warning("All modules are disabled!"))
+		to_chat(src, "<span class='warning'>All modules are disabled!</span>")
 		return FALSE
 
 	/// What's the first free slot for the borg?
 	var/first_free_slot = !held_items[1] ? 1 : (!held_items[2] ? 2 : (!held_items[3] ? 3 : null))
 
 	if(!first_free_slot || is_invalid_module_number(first_free_slot))
-		to_chat(src, span_warning("Deactivate a module first!"))
+		to_chat(src, "<span class='warning'>Deactivate a module first!</span>")
 		return FALSE
 
 	return equip_module_to_slot(item_module, first_free_slot)
@@ -52,8 +52,7 @@
  */
 /mob/living/silicon/robot/proc/equip_module_to_slot(obj/item/item_module, module_num)
 	var/storage_was_closed = FALSE //Just to be consistant and all
-	//spawning a clientless borg won't init its hud, much like with all mobs, so don't bother showing what's not there
-	if(hud_used && !shown_robot_modules) //Tools may be invisible if the collection is hidden
+	if(!shown_robot_modules) //Tools may be invisible if the collection is hidden
 		hud_used.toggle_show_robot_modules()
 		storage_was_closed = TRUE
 	switch(module_num)
@@ -65,8 +64,10 @@
 			item_module.screen_loc = inv3.screen_loc
 
 	held_items[module_num] = item_module
+	item_module.equipped(src, ITEM_SLOT_HANDS)
 	item_module.mouse_opacity = initial(item_module.mouse_opacity)
-	SET_PLANE_EXPLICIT(item_module, ABOVE_HUD_PLANE, src)
+	item_module.layer = ABOVE_HUD_LAYER
+	item_module.plane = ABOVE_HUD_PLANE
 	item_module.forceMove(src)
 
 	if(istype(item_module, /obj/item/borg/sight))
@@ -76,9 +77,8 @@
 
 	observer_screen_update(item_module, TRUE)
 
-	if(hud_used && storage_was_closed)
+	if(storage_was_closed)
 		hud_used.toggle_show_robot_modules()
-	item_module.on_equipped(src, ITEM_SLOT_HANDS)
 	return TRUE
 
 /**
@@ -98,7 +98,7 @@
 	item_module.mouse_opacity = MOUSE_OPACITY_OPAQUE
 
 	if(istype(item_module, /obj/item/storage/bag/tray/))
-		item_module.atom_storage.remove_all(loc)
+		SEND_SIGNAL(item_module, COMSIG_TRY_STORAGE_QUICK_EMPTY)
 	if(istype(item_module, /obj/item/borg/sight))
 		var/obj/item/borg/sight/borg_sight = item_module
 		sight_mode &= ~borg_sight.sight_mode
@@ -129,7 +129,7 @@
 	item_module.forceMove(model) //Return item to configuration so it appears in its contents, so it can be taken out again.
 
 	observer_screen_update(item_module, FALSE)
-	hud_used?.update_robot_modules_display()
+	hud_used.update_robot_modules_display()
 	return TRUE
 
 /**
@@ -155,13 +155,13 @@
 			disabled_modules |= BORG_MODULE_ALL_DISABLED
 
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
-			audible_message(span_warning("[src] sounds an alarm! \"CRITICAL ERROR: ALL modules OFFLINE.\""))
+			audible_message("<span class='warning'>[src] sounds an alarm! \"CRITICAL ERROR: ALL modules OFFLINE.\"</span>")
 
 			if(builtInCamera)
-				builtInCamera.camera_enabled = FALSE
-				to_chat(src, span_userdanger("CRITICAL ERROR: Built in security camera OFFLINE."))
+				builtInCamera.status = FALSE
+				to_chat(src, "<span class='userdanger'>CRITICAL ERROR: Built in security camera OFFLINE.</span>")
 
-			to_chat(src, span_userdanger("CRITICAL ERROR: ALL modules OFFLINE."))
+			to_chat(src, "<span class='userdanger'>CRITICAL ERROR: ALL modules OFFLINE.</span>")
 
 		if(BORG_CHOOSE_MODULE_TWO)
 			if(disabled_modules & BORG_MODULE_TWO_DISABLED)
@@ -171,8 +171,8 @@
 			disabled_modules |= BORG_MODULE_TWO_DISABLED
 
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 60, TRUE, TRUE)
-			audible_message(span_warning("[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\""))
-			to_chat(src, span_userdanger("SYSTEM ERROR: Module [module_num] OFFLINE."))
+			audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\"</span>")
+			to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module [module_num] OFFLINE.</span>")
 
 		if(BORG_CHOOSE_MODULE_THREE)
 			if(disabled_modules & BORG_MODULE_THREE_DISABLED)
@@ -182,8 +182,8 @@
 			disabled_modules |= BORG_MODULE_THREE_DISABLED
 
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, TRUE, TRUE)
-			audible_message(span_warning("[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\""))
-			to_chat(src, span_userdanger("SYSTEM ERROR: Module [module_num] OFFLINE."))
+			audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\"</span>")
+			to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module [module_num] OFFLINE.</span>")
 
 	return TRUE
 
@@ -212,8 +212,8 @@
 			inv1.icon_state = initial(inv1.icon_state)
 			disabled_modules &= ~BORG_MODULE_ALL_DISABLED
 			if(builtInCamera)
-				builtInCamera.camera_enabled = TRUE
-				to_chat(src, span_notice("You hear your built in security camera focus adjust as it comes back online!"))
+				builtInCamera.status = TRUE
+				to_chat(src, "<span class='notice'>You hear your built in security camera focus adjust as it comes back online!</span>")
 		if(BORG_CHOOSE_MODULE_TWO)
 			if(!(disabled_modules & BORG_MODULE_TWO_DISABLED))
 				return FALSE
@@ -227,7 +227,7 @@
 			inv3.icon_state = initial(inv3.icon_state)
 			disabled_modules &= ~BORG_MODULE_THREE_DISABLED
 
-	to_chat(src, span_notice("ERROR CLEARED: Module [module_num] back online."))
+	to_chat(src, "<span class='notice'>ERROR CLEARED: Module [module_num] back online.</span>")
 
 	return TRUE
 
@@ -266,9 +266,11 @@
 	if(module_active)
 		unequip_module_from_slot(module_active, get_selected_module())
 
-// Technically none of the items are dropped, only unequipped
-/mob/living/silicon/robot/drop_all_held_items()
-	for(var/cyborg_slot in 1 to length(held_items))
+/**
+ * Unequips all held items.
+ */
+/mob/living/silicon/robot/proc/uneq_all()
+	for(var/cyborg_slot in 1 to 3)
 		if(!held_items[cyborg_slot])
 			continue
 		unequip_module_from_slot(held_items[cyborg_slot], cyborg_slot)
@@ -282,8 +284,6 @@
  */
 /mob/living/silicon/robot/proc/activated(obj/item/item_module)
 	if(item_module in held_items)
-		return TRUE
-	if(item_module.loc in held_items) //Apparatus check
 		return TRUE
 	return FALSE
 
@@ -400,9 +400,8 @@
 		if(slot_num > 4) // not >3 otherwise cycling with just one item on module 3 wouldn't work
 			slot_num = 1 //Wrap around.
 
-/mob/living/silicon/robot/perform_hand_swap()
+/mob/living/silicon/robot/swap_hand()
 	cycle_modules()
-	return TRUE
 
 /mob/living/silicon/robot/can_hold_items(obj/item/I)
 	return (I && (I in model.modules)) //Only if it's part of our model.

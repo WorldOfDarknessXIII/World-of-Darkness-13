@@ -1,6 +1,6 @@
 // Eggplant
 /obj/item/seeds/eggplant
-	name = "eggplant seed pack"
+	name = "pack of eggplant seeds"
 	desc = "These seeds grow to produce berries that look nothing like eggs."
 	icon_state = "seed-eggplant"
 	species = "eggplant"
@@ -8,7 +8,7 @@
 	product = /obj/item/food/grown/eggplant
 	yield = 2
 	potency = 20
-	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "eggplant-grow"
 	icon_dead = "eggplant-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
@@ -20,12 +20,13 @@
 	name = "eggplant"
 	desc = "Maybe there's a chicken inside?"
 	icon_state = "eggplant"
+	bite_consumption_mod = 2
 	foodtypes = FRUIT
 	wine_power = 20
 
 // Egg-Plant
 /obj/item/seeds/eggplant/eggy
-	name = "egg-plant seed pack"
+	name = "pack of egg-plant seeds"
 	desc = "These seeds grow to produce berries that look a lot like eggs."
 	icon_state = "seed-eggy"
 	species = "eggy"
@@ -33,7 +34,7 @@
 	product = /obj/item/food/grown/shell/eggy
 	lifespan = 75
 	production = 12
-	mutatelist = null
+	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/food/grown/shell/eggy
@@ -42,5 +43,6 @@
 	desc = "There MUST be a chicken inside."
 	icon_state = "eggyplant"
 	trash_type = /obj/item/food/egg
+	bite_consumption_mod = 2
 	foodtypes = MEAT
-	distill_reagent = /datum/reagent/consumable/ethanol/eggnog
+	//distill_reagent = /datum/reagent/consumable/ethanol/eggnog

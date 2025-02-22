@@ -1,0 +1,95 @@
+.login-screen {
+  position: relative;
+  height: 1200px;
+  background-color: #095bc9;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.login-background {
+  height: 100%;
+  background-color: #ebe9d8;
+}
+.login-header {
+  background: linear-gradient(to right, #6286e1, #6286e1, #9fbbf6, #7899e9);
+  height: 50%;
+  width: 100%;
+  color: #fff;
+}
+.login-bar {
+  background: linear-gradient(
+    to right,
+    #6d8ce1,
+    #6b81ca,
+    #b48e7e,
+    #e89148,
+    #e89148,
+    #b48e7e,
+    #6b87d5
+  );
+  height: 9px;
+  width: 100%;
+  height: 9px;
+}
+.login-header {
+  width: 100%;
+  height: 50%;
+  background-color: #a5d2f8;
+  align-items: flex-end;
+}
+
+.login-logo {
+  width: 40%;
+  height: 100%;
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+}
+
+.login-corp {
+  width: 30%;
+  height: 100%;
+  justify-content: flex-end;
+  align-items: flex-end;
+  display: flex;
+  font-style: italic;
+  font-weight: 700;
+}
+
+.login-copy {
+  width: 30%;
+  height: 100%;
+  align-items: flex-end;
+  display: flex;
+  text-shadow: 0 2px rgba(0, 0, 0, 0.2);
+  font-size: 10px;
+  line-height: 14px;
+}
+
+.login-logobar {
+  height: 93%;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  display: flex;
+}
+.login-footer {
+  width: 100%;
+  height: 50%;
+  padding: 20px 0 10px 5px;
+}
+.login-row {
+  color: #333;
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.login-buttons {
+  margin-right: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}

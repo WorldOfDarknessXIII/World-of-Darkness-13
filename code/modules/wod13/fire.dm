@@ -37,10 +37,7 @@ SUBSYSTEM_DEF(die_in_a_fire)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/stage = 1
 	plane = ABOVE_LIGHTING_PLANE
-
-/obj/effect/fire/Initialize()
-	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_CROSS, PROC_REF(on_crossed))
+	layer = ABOVE_LIGHTING_LAYER
 
 /obj/structure
 	var/pepeled = FALSE
@@ -61,7 +58,7 @@ SUBSYSTEM_DEF(die_in_a_fire)
 	for(var/mob/living/L in loc)
 		if(L)
 			L.fire_stacks += 5
-			L.ignite_mob()
+			L.IgniteMob()
 			L.apply_damage(10*stage, BURN, BODY_ZONE_CHEST)
 	for(var/obj/machinery/light/M in loc)
 		if(M)
@@ -127,11 +124,12 @@ SUBSYSTEM_DEF(die_in_a_fire)
 	else
 		qdel(src)
 
-/obj/effect/fire/proc/on_crossed(atom/movable/AM, oldloc)
+/obj/effect/fire/Crossed(atom/movable/AM, oldloc)
+	. = ..()
 	if(isliving(AM))
 		var/mob/living/L = AM
 		L.fire_stacks += 5
-		L.ignite_mob()
+		L.IgniteMob()
 
 /obj/effect/fire/Destroy()
 	. = ..()

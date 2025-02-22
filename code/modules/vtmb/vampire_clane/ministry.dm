@@ -61,7 +61,7 @@
 	var/obj/item/urn/urn
 	var/cool_down = 0
 
-/datum/action/urn/Trigger(trigger_flags)
+/datum/action/urn/Trigger()
 	. = ..()
 	if(cool_down+200 >= world.time)
 		return
@@ -82,7 +82,7 @@
 					H.stakeimmune = TRUE
 					urn = new(H.loc)
 					urn.own = owner
-					var/obj/item/organ/heart/heart = H.get_organ_loss(ORGAN_SLOT_HEART)
+					var/obj/item/organ/heart/heart = H.getorganslot(ORGAN_SLOT_HEART)
 					heart.forceMove(urn)
 
 		else
@@ -107,7 +107,7 @@
 	vampiric = TRUE
 	var/abuse_fix = 0
 
-/datum/action/mummyfy/Trigger(trigger_flags)
+/datum/action/mummyfy/Trigger()
 	. = ..()
 	if(abuse_fix+150 > world.time)
 		return
@@ -118,10 +118,11 @@
 	G.Stun(100)
 	G.petrify(100, "Serpentis")
 
-/datum/action/cooldown/spell/shapeshift/cobra
+/obj/effect/proc_holder/spell/targeted/shapeshift/cobra
 	name = "Cobra"
 	desc = "Take on the shape a beast."
-	cooldown_time = 5 SECONDS
+	charge_max = 50
+	cooldown_min = 50
 	revert_on_death = TRUE
 	die_with_shapeshifted_form = FALSE
 	shapeshift_type = /mob/living/simple_animal/hostile/cobra
@@ -132,9 +133,9 @@
 	button_icon_state = "cobra"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	vampiric = TRUE
-	var/datum/action/cooldown/spell/shapeshift/cobra/BC
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/cobra/BC
 
-/datum/action/cobra/Trigger(trigger_flags)
+/datum/action/cobra/Trigger()
 	. = ..()
 	var/mob/living/carbon/human/NG = owner
 	if(NG.stat > 1 || NG.IsSleeping() || NG.IsUnconscious() || NG.IsParalyzed() || NG.IsKnockdown() || NG.IsStun() || HAS_TRAIT(NG, TRAIT_RESTRAINED) || !isturf(NG.loc))
@@ -146,10 +147,10 @@
 	if(!BC)
 		BC = new(owner)
 	H.bloodpool = max(0, H.bloodpool-2)
-	BC.do_shapeshift(H)
+	BC.Shapeshift(H)
 	spawn(150)
 		if(BC)
-			BC.do_unshapeshift(H)
+			BC.Restore(BC.myshape)
 			NG.Stun(15)
 			NG.do_jitter_animation(30)
 
@@ -170,7 +171,9 @@
 	melee_damage_upper = 50
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
-	attack_sound = 'sound/items/weapons/slash.ogg'
+	attack_sound = 'sound/weapons/slash.ogg'
+	a_intent = INTENT_HARM
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	bloodpool = 10
 	maxbloodpool = 10

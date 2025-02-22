@@ -3,18 +3,21 @@
 	time = 25
 	reqs = list(/obj/item/reagent_containers/food/drinks/meth = 1, /obj/item/drinkable_bloodpack = 1)
 	result = /obj/item/reagent_containers/drug/methpack
-	category = CAT_CHEMISTRY
+	always_available = TRUE
+	category = CAT_DRUGS
 
 /datum/crafting_recipe/morphpack
 	name = "Make Morphine Adulterated Bloodpack"
 	time = 25
 	reqs = list(/obj/item/reagent_containers/syringe/contraband/morphine = 1, /obj/item/drinkable_bloodpack = 1)
 	result = /obj/item/reagent_containers/drug/morphpack
-	category = CAT_CHEMISTRY
+	always_available = TRUE
+	category = CAT_DRUGS
 
 /datum/crafting_recipe/cokepack
 	name = "Make Cocaine Adulterated Bloodpack"
 	time = 25
 	reqs = list(/obj/item/reagent_containers/food/drinks/meth/cocaine = 1, /obj/item/drinkable_bloodpack = 1)
 	result = /obj/item/reagent_containers/drug/morphpack
-	category = CAT_CHEMISTRY
+	always_available = TRUE
+	category = CAT_DRUGS

@@ -1,45 +1,30 @@
 /datum/species/plasmaman
-	name = "\improper Plasmaman"
-	plural_form = "Plasmamen"
-	id = SPECIES_PLASMAMAN
-	sexes = FALSE
+	name = "Plasmaman"
+	id = "plasmaman"
+	say_mod = "rattles"
+	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
+	species_traits = list(NOBLOOD,NOTRANSSTING, HAS_BONE)
 	// plasmemes get hard to wound since they only need a severe bone wound to dismember, but unlike skellies, they can't pop their bones back into place
-	inherent_traits = list(
-		TRAIT_GENELESS,
-		TRAIT_HARDLY_WOUNDED,
-		TRAIT_NOBLOOD,
-		TRAIT_NO_DNA_COPY,
-		TRAIT_NO_PLASMA_TRANSFORM,
-		TRAIT_RADIMMUNE,
-		TRAIT_RESISTCOLD,
-		TRAIT_UNHUSKABLE,
-	)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_GENELESS, TRAIT_NOHUNGER, TRAIT_HARDLY_WOUNDED)
 
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
-	inherent_respiration_type = RESPIRATION_PLASMA
 	mutantlungs = /obj/item/organ/lungs/plasmaman
-	smoker_lungs = /obj/item/organ/lungs/plasmaman/plasmaman_smoker
 	mutanttongue = /obj/item/organ/tongue/bone/plasmaman
-	mutantliver = /obj/item/organ/liver/bone/plasmaman
+	mutantliver = /obj/item/organ/liver/plasmaman
 	mutantstomach = /obj/item/organ/stomach/bone/plasmaman
-	mutantappendix = null
-	mutantheart = null
+	burnmod = 1.5
 	heatmod = 1.5
-	payday_modifier = 1.0
-	breathid = GAS_PLASMA
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
-	species_cookie = /obj/item/reagent_containers/condiment/milk
+	brutemod = 1.5
+	payday_modifier = 0.75
+	breathid = "tox"
+	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
+	var/internal_fire = FALSE //If the bones themselves are burning clothes won't help you much
+	disliked_food = FRUIT
+	liked_food = VEGETABLES
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	outfit_important_for_life = /datum/outfit/plasmaman
-
-	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/plasmaman,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/plasmaman,
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/plasmaman,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/plasmaman,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/plasmaman,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/plasmaman,
-	)
+	species_language_holder = /datum/language_holder/skeleton
 
 	// Body temperature for Plasmen is much lower human as they can handle colder environments
 	bodytemp_normal = (BODYTEMP_NORMAL - 40)
@@ -50,107 +35,181 @@
 	// This effects how fast body temp stabilizes, also if cold resit is lost on the mob
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 50) // about -50c
 
-	outfit_override_registry = list(
-		/datum/outfit/syndicate = /datum/outfit/syndicate/plasmaman,
-		/datum/outfit/syndicate/full = /datum/outfit/syndicate/full/plasmaman,
-		/datum/outfit/syndicate/leader = /datum/outfit/syndicate/leader/plasmaman,
-		/datum/outfit/syndicate/reinforcement = /datum/outfit/syndicate/reinforcement/plasmaman,
-		/datum/outfit/syndicate/reinforcement/cybersun = /datum/outfit/syndicate/reinforcement/plasmaman,
-		/datum/outfit/syndicate/reinforcement/donk = /datum/outfit/syndicate/reinforcement/plasmaman,
-		/datum/outfit/syndicate/reinforcement/gorlex = /datum/outfit/syndicate/reinforcement/plasmaman,
-		/datum/outfit/syndicate/reinforcement/interdyne = /datum/outfit/syndicate/reinforcement/plasmaman,
-		/datum/outfit/syndicate/reinforcement/mi13 = /datum/outfit/syndicate/reinforcement/plasmaman,
-		/datum/outfit/syndicate/reinforcement/waffle = /datum/outfit/syndicate/reinforcement/plasmaman,
-		/datum/outfit/syndicate/support = /datum/outfit/syndicate/support/plasmaman,
-		/datum/outfit/syndicate/full/loneop = /datum/outfit/syndicate/full/plasmaman/loneop,
-	)
+	ass_image = 'icons/ass/assplasma.png'
 
-	/// If the bones themselves are burning clothes won't help you much
-	var/internal_fire = FALSE
+/datum/species/plasmaman/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	. = ..()
+	C.set_safe_hunger_level()
 
-/datum/species/plasmaman/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
-	if(job?.plasmaman_outfit)
-		equipping.equipOutfit(job.plasmaman_outfit, visuals_only)
+/datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
+	var/atmos_sealed = CanIgniteMob(H) && (isclothing(H.wear_suit) && H.wear_suit.clothing_flags & STOPSPRESSUREDAMAGE) && (isclothing(H.head) && H.head.clothing_flags & STOPSPRESSUREDAMAGE)
+	if(!atmos_sealed && (!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman) || !istype(H.gloves, /obj/item/clothing/gloves)))
+		var/datum/gas_mixture/environment = H.loc.return_air()
+		if(environment)
+			if(environment.total_moles())
+				if(environment.gases[/datum/gas/hypernoblium] && (environment.gases[/datum/gas/hypernoblium][MOLES]) >= 5)
+					if(H.on_fire && H.fire_stacks > 0)
+						H.adjust_fire_stacks(-20)
+				else if(!HAS_TRAIT(H, TRAIT_NOFIRE))
+					if(environment.gases[/datum/gas/oxygen] && (environment.gases[/datum/gas/oxygen][MOLES]) >= 1) //Same threshhold that extinguishes fire
+						H.adjust_fire_stacks(0.5)
+						if(!H.on_fire && H.fire_stacks > 0)
+							H.visible_message("<span class='danger'>[H]'s body reacts with the atmosphere and bursts into flames!</span>","<span class='userdanger'>Your body reacts with the atmosphere and bursts into flame!</span>")
+						H.IgniteMob()
+						internal_fire = TRUE
+	else if(H.fire_stacks)
+		var/obj/item/clothing/under/plasmaman/P = H.w_uniform
+		if(istype(P))
+			P.Extinguish(H)
+			internal_fire = FALSE
 	else
-		give_important_for_life(equipping)
+		internal_fire = FALSE
+	H.update_fire()
 
-/datum/species/plasmaman/get_scream_sound(mob/living/carbon/human)
-	return pick(
-		'sound/mobs/humanoids/plasmaman/plasmeme_scream_1.ogg',
-		'sound/mobs/humanoids/plasmaman/plasmeme_scream_2.ogg',
-		'sound/mobs/humanoids/plasmaman/plasmeme_scream_3.ogg',
-	)
+/datum/species/plasmaman/handle_fire(mob/living/carbon/human/H, no_protection)
+	if(internal_fire)
+		no_protection = TRUE
+	. = ..()
 
-/datum/species/plasmaman/get_physical_attributes()
-	return "Plasmamen literally breathe and live plasma. They spontaneously combust on contact with oxygen, and besides all the quirks that go with that, \
-		they're very vulnerable to all kinds of physical damage due to their brittle structure."
+/datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
+	var/current_job = J.title
+	var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman
+	switch(current_job)
+		if("Chaplain")
+			O = new /datum/outfit/plasmaman/chaplain
 
-/datum/species/plasmaman/get_species_description()
-	return "Found on the Icemoon of Freyja, plasmamen consist of colonial \
-		fungal organisms which together form a sentient being. In human space, \
-		they're usually attached to skeletons to afford a human touch."
+		if("Curator")
+			O = new /datum/outfit/plasmaman/curator
 
-/datum/species/plasmaman/get_species_lore()
-	return list(
-		"A confusing species, plasmamen are truly \"a fungus among us\". \
-		What appears to be a singular being is actually a colony of millions of organisms \
-		surrounding a found (or provided) skeletal structure.",
+		if("Janitor")
+			O = new /datum/outfit/plasmaman/janitor
 
-		"Originally discovered by NT when a researcher \
-		fell into an open tank of liquid plasma, the previously unnoticed fungal colony overtook the body creating \
-		the first \"true\" plasmaman. The process has since been streamlined via generous donations of convict corpses and plasmamen \
-		have been deployed en masse throughout NT to bolster the workforce.",
+		if("Botanist")
+			O = new /datum/outfit/plasmaman/botany
 
-		"New to the galactic stage, plasmamen are a blank slate. \
-		Their appearance, generally regarded as \"ghoulish\", inspires a lot of apprehension in their crewmates. \
-		It might be the whole \"flammable purple skeleton\" thing.",
+		if("Bartender", "Lawyer")
+			O = new /datum/outfit/plasmaman/bar
 
-		"The colonids that make up plasmamen require the plasma-rich atmosphere they evolved in. \
-		Their psuedo-nervous system runs with externalized electrical impulses that immediately ignite their plasma-based bodies when oxygen is present.",
-	)
+		if("Psychologist")
+			O = new /datum/outfit/plasmaman/psychologist
 
-/datum/species/plasmaman/create_pref_unique_perks()
-	var/list/to_add = list()
+		if("Cook")
+			O = new /datum/outfit/plasmaman/chef
 
-	to_add += list(
-		list(
-			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "user-shield",
-			SPECIES_PERK_NAME = "Protected",
-			SPECIES_PERK_DESC = "Plasmamen are immune to radiation, poisons, and most diseases.",
-		),
-		list(
-			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "bone",
-			SPECIES_PERK_NAME = "Wound Resistance",
-			SPECIES_PERK_DESC = "Plasmamen have higher tolerance for damage that would wound others.",
-		),
-		list(
-			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "wind",
-			SPECIES_PERK_NAME = "Plasma Healing",
-			SPECIES_PERK_DESC = "Plasmamen can heal wounds by consuming plasma.",
-		),
-		list(
-			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "hard-hat",
-			SPECIES_PERK_NAME = "Protective Helmet",
-			SPECIES_PERK_DESC = "Plasmamen's helmets provide them shielding from the flashes of welding, as well as an inbuilt flashlight.",
-		),
-		list(
-			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-			SPECIES_PERK_ICON = "fire",
-			SPECIES_PERK_NAME = "Living Torch",
-			SPECIES_PERK_DESC = "Plasmamen instantly ignite when their body makes contact with oxygen.",
-		),
-		list(
-			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-			SPECIES_PERK_ICON = "briefcase-medical",
-			SPECIES_PERK_NAME = "Complex Biology",
-			SPECIES_PERK_DESC = "Plasmamen take specialized medical knowledge to be \
-				treated. Do not expect speedy revival, if you are lucky enough to get \
-				one at all.",
-		),
-	)
+		if("Prisoner")
+			O = new /datum/outfit/plasmaman/prisoner
 
-	return to_add
+		if("Security Officer")
+			O = new /datum/outfit/plasmaman/security
+
+		if("Detective")
+			O = new /datum/outfit/plasmaman/detective
+
+		if("Warden")
+			O = new /datum/outfit/plasmaman/warden
+
+		if("Cargo Technician", "Quartermaster")
+			O = new /datum/outfit/plasmaman/cargo
+
+		if("Shaft Miner")
+			O = new /datum/outfit/plasmaman/mining
+
+		if("Medical Doctor")
+			O = new /datum/outfit/plasmaman/medical
+
+		if("Paramedic")
+			O = new /datum/outfit/plasmaman/paramedic
+
+		if("Chemist")
+			O = new /datum/outfit/plasmaman/chemist
+
+		if("Geneticist")
+			O = new /datum/outfit/plasmaman/genetics
+
+		if("Roboticist")
+			O = new /datum/outfit/plasmaman/robotics
+
+		if("Virologist")
+			O = new /datum/outfit/plasmaman/viro
+
+		if("Scientist")
+			O = new /datum/outfit/plasmaman/science
+
+		if("Station Engineer")
+			O = new /datum/outfit/plasmaman/engineering
+
+		if("Atmospheric Technician")
+			O = new /datum/outfit/plasmaman/atmospherics
+
+		if("Mime")
+			O = new /datum/outfit/plasmaman/mime
+
+		if("Clown")
+			O = new /datum/outfit/plasmaman/clown
+
+		if("Captain")
+			O = new /datum/outfit/plasmaman/captain
+
+		if("Head of Personnel")
+			O = new /datum/outfit/plasmaman/head_of_personnel
+
+		if("Head of Security")
+			O = new /datum/outfit/plasmaman/head_of_security
+
+		if("Chief Engineer")
+			O = new /datum/outfit/plasmaman/chief_engineer
+
+		if("Chief Medical Officer")
+			O = new /datum/outfit/plasmaman/chief_medical_officer
+
+		if("Research Director")
+			O = new /datum/outfit/plasmaman/research_director
+
+	H.equipOutfit(O, visualsOnly)
+	H.internal = H.get_item_for_held_index(2)
+	H.update_internals_hud_icon(1)
+
+/datum/species/plasmaman/random_name(gender,unique,lastname)
+	if(unique)
+		return random_unique_plasmaman_name()
+
+	var/randname = plasmaman_name()
+
+	if(lastname)
+		randname += " [lastname]"
+
+	return randname
+
+/datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	. = ..()
+	if(istype(chem, /datum/reagent/toxin/plasma))
+		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
+		for(var/i in H.all_wounds)
+			var/datum/wound/iter_wound = i
+			iter_wound.on_xadone(4) // plasmamen use plasma to reform their bones or whatever
+		return TRUE
+	if(istype(chem, /datum/reagent/toxin/bonehurtingjuice))
+		H.adjustStaminaLoss(7.5, 0)
+		H.adjustBruteLoss(0.5, 0)
+		if(prob(20))
+			switch(rand(1, 3))
+				if(1)
+					H.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
+				if(2)
+					H.manual_emote(pick("oofs silently.", "looks like their bones hurt.", "grimaces, as though their bones hurt."))
+				if(3)
+					to_chat(H, "<span class='warning'>Your bones hurt!</span>")
+		if(chem.overdosed)
+			if(prob(4) && iscarbon(H)) //big oof
+				var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
+				var/obj/item/bodypart/bp = H.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
+				if(bp)
+					playsound(H, get_sfx("desecration"), 50, TRUE, -1) //You just want to socialize
+					H.visible_message("<span class='warning'>[H] rattles loudly and flails around!!</span>", "<span class='danger'>Your bones hurt so much that your missing muscles spasm!!</span>")
+					H.say("OOF!!", forced=/datum/reagent/toxin/bonehurtingjuice)
+					bp.receive_damage(200, 0, 0) //But I don't think we should
+				else
+					to_chat(H, "<span class='warning'>Your missing arm aches from wherever you left it.</span>")
+					H.emote("sigh")
+		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
+		return TRUE

@@ -5,13 +5,16 @@
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = " the Laws of Hospitality"
+	selection_color = "#953d2d"
 
 	outfit = /datum/outfit/job/zadruga
 
-	paycheck = PAYCHECK_CREW
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_ZADRUGA
-	exp_granted_type = EXP_TYPE_TZIMISCE
+	exp_type_department = EXP_TYPE_TZIMISCE
 
 	//ghoul_only = TRUE
 	//allowed_bloodlines = list("Old Clan Tzimisce", "Tzimisce")

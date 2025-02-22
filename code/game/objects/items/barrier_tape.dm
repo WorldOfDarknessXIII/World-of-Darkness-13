@@ -49,12 +49,12 @@
 	return FALSE
 
 /obj/structure/barrier_tape/attack_hand(mob/living/user)
-	if(!(user.combat_mode))
+	if(user.a_intent != INTENT_HARM)
 		user.visible_message("<span class='notice'>[user] lifts [src], allowing passage.</span>")
 		lift_tape()
 	else
 		user.visible_message("<span class='notice'>[user] tears down [src]!</span>")
-		playsound(src, 'sound/items/poster/poster_ripped.ogg', 100, TRUE)
+		playsound(src, 'sound/items/poster_ripped.ogg', 100, TRUE)
 		qdel(src)
 
 /obj/structure/barrier_tape/proc/lift_tape()

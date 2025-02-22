@@ -1,11 +1,11 @@
-//NEVER USE THIS IT SUX -PETETHEGOAT
+//NEVER USE THIS IT SUX	-PETETHEGOAT
 //IT SUCKS A BIT LESS -GIACOM
 
 /obj/item/paint
 	gender= PLURAL
 	name = "paint"
 	desc = "Used to recolor floors and walls. Can be removed by the janitor."
-	icon = 'icons/obj/art/paint.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "paint_neutral"
 	inhand_icon_state = "paintcan"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -14,11 +14,7 @@
 	/// With what color will we paint with
 	var/paint_color = COLOR_WHITE
 	/// How many uses are left
-	var/paintleft = 200
-
-/obj/item/paint/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/falling_hazard, damage = 20, wound_bonus = 5, hardhat_safety = TRUE, crushes = FALSE) // You ever watched home alone?
+	var/paintleft = 10
 
 /obj/item/paint/red
 	name = "red paint"
@@ -60,13 +56,7 @@
 	name = "adaptive paint"
 	icon_state = "paint_neutral"
 
-/obj/item/paint/anycolor/cyborg
-	paintleft = INFINITY
-
 /obj/item/paint/anycolor/attack_self(mob/user)
-	if(paintleft <= 0)
-		balloon_alert(user, "no paint left!")
-		return	// Don't do any of the following because there's no paint left to be able to change the color of
 	var/list/possible_colors = list(
 		"black" = image(icon = src.icon, icon_state = "paint_black"),
 		"blue" = image(icon = src.icon, icon_state = "paint_blue"),
@@ -108,34 +98,32 @@
 		return FALSE
 	if(!user.is_holding(src))
 		return FALSE
-	if(user.incapacitated)
+	if(user.incapacitated())
 		return FALSE
 	return TRUE
 
-/obj/item/paint/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!isturf(interacting_with) || isspaceturf(interacting_with))
-		return NONE
-	if(paintleft <= 0)
-		return NONE
-	paintleft--
-	var/color_type = SATURATION_MULTIPLY
-	if (LAZYACCESS(modifiers, RIGHT_CLICK))
-		color_type = SATURATION_OVERRIDE
-	interacting_with.add_atom_colour(color_transition_filter(paint_color, color_type), WASHABLE_COLOUR_PRIORITY)
+/obj/item/paint/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
 	if(paintleft <= 0)
 		icon_state = "paint_empty"
-	return ITEM_INTERACT_SUCCESS
+		return
+	if(!isturf(target) || isspaceturf(target))
+		return
+	target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 
 /obj/item/paint/paint_remover
-	gender = PLURAL
+	gender =  PLURAL
 	name = "paint remover"
 	desc = "Used to remove color from anything."
 	icon_state = "paint_neutral"
 
-/obj/item/paint/paint_remover/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!isturf(interacting_with) || !isobj(interacting_with))
-		return NONE
-	if(interacting_with.color != initial(interacting_with.color))
-		interacting_with.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		return ITEM_INTERACT_SUCCESS
-	return NONE
+/obj/item/paint/paint_remover/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	if(!isturf(target) || !isobj(target))
+		return
+	if(target.color != initial(target.color))
+		target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)

@@ -89,7 +89,7 @@ SUBSYSTEM_DEF(carpool)
 	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.combat_mode && H.potential >= 4)
+		if(H.a_intent == INTENT_HARM && H.potential >= 4)
 			var/atom/throw_target = get_edge_target_turf(src, user.dir)
 			playsound(get_turf(src), 'code/modules/wod13/sounds/bump.ogg', 100, FALSE)
 			get_damage(10)
@@ -128,6 +128,7 @@ SUBSYSTEM_DEF(carpool)
 
 	var/last_beep = 0
 
+	var/component_type = /datum/component/storage/concrete/vtm/car
 	var/baggage_limit = 40
 	var/baggage_max = WEIGHT_CLASS_BULKY
 
@@ -136,6 +137,15 @@ SUBSYSTEM_DEF(carpool)
 
 	var/gas = 1000
 
+/obj/vampire_car/ComponentInitialize()
+	. = ..()
+	AddComponent(component_type)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_combined_w_class = 100
+	STR.max_w_class = baggage_max
+	STR.max_items = baggage_limit
+	STR.locked = TRUE
+
 /obj/vampire_car/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
 	. = ..()
 	get_damage(5)
@@ -143,7 +153,7 @@ SUBSYSTEM_DEF(carpool)
 		if(prob(50))
 			L.apply_damage(P.damage, P.damage_type, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST))
 
-/obj/vampire_car/click_alt(mob/user)
+/obj/vampire_car/AltClick(mob/user)
 	..()
 	if(!repairing)
 		if(locked)
@@ -163,7 +173,7 @@ SUBSYSTEM_DEF(carpool)
 
 		user.visible_message("<span class='warning'>[user] begins pulling someone out of [src]!</span>", \
 			"<span class='warning'>You begin pulling [L] out of [src]...</span>")
-		if(do_after(user, 5 SECONDS, src))
+		if(do_mob(user, src, 5 SECONDS))
 			var/datum/action/carr/exit_car/C = locate() in L.actions
 			user.visible_message("<span class='warning'>[user] has managed to get [L] out of [src].</span>", \
 				"<span class='warning'>You've managed to get [L] out of [src].</span>")
@@ -189,7 +199,7 @@ SUBSYSTEM_DEF(carpool)
 		if(istype(I, /obj/item/vamp/keys/hack))
 			if(!repairing)
 				repairing = TRUE
-				if(do_after(user, 20 SECONDS, src))
+				if(do_mob(user, src, 20 SECONDS))
 					var/roll = rand(1, 20) + (user.get_total_lockpicking()+user.get_total_dexterity()) - 8
 					//(<= 1, break lockpick) (2-9, trigger car alarm), (>= 10, unlock car)
 					if (roll <= 1)
@@ -241,7 +251,7 @@ SUBSYSTEM_DEF(carpool)
 
 			user.visible_message("<span class='notice'>[user] begins repairing [src]...</span>", \
 				"<span class='notice'>You begin repairing [src]. Stop at any time to only partially repair it.</span>")
-			if(do_after(user, time_to_repair SECONDS, src))
+			if(do_mob(user, src, time_to_repair SECONDS))
 				health = maxhealth
 				playsound(src, 'code/modules/wod13/sounds/repair.ogg', 50, TRUE)
 				user.visible_message("<span class='notice'>[user] repairs [src].</span>", \
@@ -365,26 +375,26 @@ SUBSYSTEM_DEF(carpool)
 	desc = "Toggle light on/off."
 	button_icon_state = "lights"
 
-/datum/action/carr/fari_vrubi/Trigger(trigger_flags)
+/datum/action/carr/fari_vrubi/Trigger()
 	if(istype(owner.loc, /obj/vampire_car))
 		var/obj/vampire_car/V = owner.loc
 		if(!V.fari_on)
 			V.fari_on = TRUE
 			V.add_overlay(V.Fari)
 			to_chat(owner, "<span class='notice'>You toggle [V]'s lights.</span>")
-			playsound(V, 'sound/items/weapons/magin.ogg', 40, TRUE)
+			playsound(V, 'sound/weapons/magin.ogg', 40, TRUE)
 		else
 			V.fari_on = FALSE
 			V.cut_overlay(V.Fari)
 			to_chat(owner, "<span class='notice'>You toggle [V]'s lights.</span>")
-			playsound(V, 'sound/items/weapons/magout.ogg', 40, TRUE)
+			playsound(V, 'sound/weapons/magout.ogg', 40, TRUE)
 
 /datum/action/carr/beep
 	name = "Signal"
 	desc = "Beep-beep."
 	button_icon_state = "beep"
 
-/datum/action/carr/beep/Trigger(trigger_flags)
+/datum/action/carr/beep/Trigger()
 	if(istype(owner.loc, /obj/vampire_car))
 		var/obj/vampire_car/V = owner.loc
 		if(V.last_beep+10 < world.time)
@@ -396,7 +406,7 @@ SUBSYSTEM_DEF(carpool)
 	desc = "Toggle transmission to 1, 2 or 3."
 	button_icon_state = "stage"
 
-/datum/action/carr/stage/Trigger(trigger_flags)
+/datum/action/carr/stage/Trigger()
 	if(istype(owner.loc, /obj/vampire_car))
 		var/obj/vampire_car/V = owner.loc
 		if(V.stage < 3)
@@ -410,10 +420,10 @@ SUBSYSTEM_DEF(carpool)
 	desc = "Lock/Unlock Baggage."
 	button_icon_state = "baggage"
 
-/datum/action/carr/baggage/Trigger(trigger_flags)
+/datum/action/carr/baggage/Trigger()
 	if(istype(owner.loc, /obj/vampire_car))
 		var/obj/vampire_car/V = owner.loc
-		var/datum/storage/STR = V.GetComponent(/datum/storage)
+		var/datum/component/storage/STR = V.GetComponent(/datum/component/storage)
 		STR.locked = !STR.locked
 		playsound(V, 'code/modules/wod13/sounds/door.ogg', 50, TRUE)
 		if(STR.locked)
@@ -426,7 +436,7 @@ SUBSYSTEM_DEF(carpool)
 	desc = "Toggle engine on/off."
 	button_icon_state = "keys"
 
-/datum/action/carr/engine/Trigger(trigger_flags)
+/datum/action/carr/engine/Trigger()
 	if(istype(owner.loc, /obj/vampire_car))
 		var/obj/vampire_car/V = owner.loc
 		if(!V.on)
@@ -455,7 +465,7 @@ SUBSYSTEM_DEF(carpool)
 	desc = "Exit the vehicle."
 	button_icon_state = "exit"
 
-/datum/action/carr/exit_car/Trigger(trigger_flags)
+/datum/action/carr/exit_car/Trigger()
 	if(istype(owner.loc, /obj/vampire_car))
 		var/obj/vampire_car/V = owner.loc
 		if(V.driver == owner)
@@ -489,7 +499,7 @@ SUBSYSTEM_DEF(carpool)
 		for(var/datum/action/carr/C in owner.actions)
 			qdel(C)
 
-/mob/living/carbon/human/mouse_drop_receive(atom/over_object, atom/user, params)
+/mob/living/carbon/human/MouseDrop(atom/over_object)
 	. = ..()
 	if(istype(over_object, /obj/vampire_car) && get_dist(src, over_object) < 2)
 		var/obj/vampire_car/V = over_object
@@ -504,7 +514,7 @@ SUBSYSTEM_DEF(carpool)
 
 		visible_message("<span class='notice'>[src] begins entering [V]...</span>", \
 			"<span class='notice'>You begin entering [V]...</span>")
-		if(do_after(src, 1 SECONDS, over_object))
+		if(do_mob(src, over_object, 1 SECONDS))
 			if(!V.driver)
 				forceMove(over_object)
 				V.driver = src
@@ -644,6 +654,27 @@ SUBSYSTEM_DEF(carpool)
 	access = "clinic"
 	icon_state = "5"
 
+/obj/vampire_car/limousine
+	icon_state = "limo"
+	max_passengers = 6
+	dir = WEST
+	baggage_limit = 45
+
+/obj/vampire_car/limousine/giovanni
+	icon_state = "giolimo"
+	max_passengers = 6
+	dir = WEST
+	access = "giovanni"
+	baggage_limit = 45
+	baggage_max = WEIGHT_CLASS_BULKY
+
+/obj/vampire_car/limousine/camarilla
+	icon_state = "limo"
+	max_passengers = 6
+	dir = WEST
+	access = "camarilla"
+	baggage_limit = 45
+
 /obj/vampire_car/police
 	icon_state = "police"
 	max_passengers = 3
@@ -688,6 +719,7 @@ SUBSYSTEM_DEF(carpool)
 	access = "none"
 	baggage_limit = 100
 	baggage_max = WEIGHT_CLASS_BULKY
+	component_type = /datum/component/storage/concrete/vtm/car/track
 
 /obj/vampire_car/track/Initialize()
 	if(access == "none")
@@ -708,6 +740,17 @@ SUBSYSTEM_DEF(carpool)
 	var/total_y = abs(pixel_starts_y-pixel_ends_y)
 	return round(sqrt(total_x*total_x + total_y*total_y))
 
+/proc/get_angle_raw(start_x, start_y, start_pixel_x, start_pixel_y, end_x, end_y, end_pixel_x, end_pixel_y)
+	var/dy = (world.icon_size * end_y + end_pixel_y) - (world.icon_size * start_y + start_pixel_y)
+	var/dx = (world.icon_size * end_x + end_pixel_x) - (world.icon_size * start_x + start_pixel_x)
+	if(!dy)
+		return (dx >= 0) ? 90 : 270
+	. = arctan(dx/dy)
+	if(dy < 0)
+		. += 180
+	else if(dx < 0)
+		. += 360
+
 /proc/get_angle_diff(var/angle_a, var/angle_b)
 	return ((angle_b - angle_a) + 180) % 360 - 180;
 
@@ -725,6 +768,7 @@ SUBSYSTEM_DEF(carpool)
 	Fari.icon_state = "light"
 	Fari.pixel_x = -64
 	Fari.pixel_y = -64
+	Fari.layer = O_LIGHTING_VISUAL_LAYER
 	Fari.plane = O_LIGHTING_VISUAL_PLANE
 	Fari.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	Fari.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -785,7 +829,7 @@ SUBSYSTEM_DEF(carpool)
 	. = ..()
 	apply_vector_angle()
 
-/obj/vampire_car/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/obj/vampire_car/Moved(atom/OldLoc, Dir)
 	. = ..()
 	last_pos["x"] = x
 	last_pos["y"] = y
@@ -843,7 +887,7 @@ SUBSYSTEM_DEF(carpool)
 								if(get_step(NPC, angle2dir(angle)).density)
 									dodge_direction.Remove(angle)
 							if(length(dodge_direction))
-								step(NPC, angle2dir(pick(dodge_direction)), NPC.get_movespeed_modifiers())
+								step(NPC, angle2dir(pick(dodge_direction)), NPC.total_multiplicative_slowdown())
 								COOLDOWN_START(NPC, car_dodge, 2 SECONDS)
 								if(prob(50))
 									NPC.RealisticSay(pick(NPC.socialrole.car_dodged))

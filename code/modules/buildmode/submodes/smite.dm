@@ -6,11 +6,11 @@
 	selected_smite = null
 	return ..()
 
-/datum/buildmode_mode/smite/show_help(client/builder)
-	to_chat(builder, span_purple(boxed_message(
-		"[span_bold("Select smite to use")] -> Right Mouse Button on buildmode button\n\
-		[span_bold("Smite the mob")] -> Left Mouse Button on mob/living"))
-	)
+/datum/buildmode_mode/smite/show_help(client/user)
+	to_chat(user, "<span class='notice'>***********************************************************\n\
+		Right Mouse Button on buildmode button = Select smite to use.\n\
+		Left Mouse Button on mob/living = Smite the mob.\n\
+		***********************************************************</span>")
 
 /datum/buildmode_mode/smite/change_settings(client/user)
 	var/punishment = input(user, "Choose a punishment", "DIVINE SMITING") as null|anything in GLOB.smites
@@ -21,20 +21,20 @@
 		return
 	selected_smite = picking_smite
 
-/datum/buildmode_mode/smite/handle_click(client/user, params, object)
-	var/list/modifiers = params2list(params)
+/datum/buildmode_mode/smite/handle_click(client/user, params_string, object)
+	var/list/params = params2list(params_string)
 
 	if (!check_rights(R_ADMIN | R_FUN))
 		return
 
-	if (!LAZYACCESS(modifiers, LEFT_CLICK))
+	if (!params.Find("left"))
 		return
 
 	if (!isliving(object))
 		return
 
 	if (selected_smite == null)
-		to_chat(user, span_notice("No smite selected."))
+		to_chat(user, "<span class='notice'>No smite selected.</span>")
 		return
 
 	selected_smite.effect(user, object)

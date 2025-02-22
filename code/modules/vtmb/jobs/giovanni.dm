@@ -5,13 +5,16 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the Family and the Traditions"
+	selection_color = "#cb4aad"
 
 	outfit = /datum/outfit/job/giovannielder
 
-	paycheck = PAYCHECK_CREW
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_GIOVANNI
-	exp_granted_type = EXP_TYPE_GIOVANNI
+	exp_type_department = EXP_TYPE_GIOVANNI
 
 	minimal_generation = 11	//Uncomment when players get exp enough
 
@@ -50,13 +53,16 @@
 	total_positions = 10
 	spawn_positions = 10
 	supervisors = "the Family and the Traditions"
+	selection_color = "#cb4aad"
 
 	outfit = /datum/outfit/job/giovanni
 
-	paycheck = PAYCHECK_CREW
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_GIOVANNI
-	exp_granted_type = EXP_TYPE_GIOVANNI
+	exp_type_department = EXP_TYPE_GIOVANNI
 
 	v_duty = "Whether born or Embraced into the family, you are one of the Giovanni. Be you a necromancer, financier or lowly fledgling, remember that so long as you stand with your family, they too will stand with you."
 	minimal_masquerade = 0
@@ -93,13 +99,16 @@
 	total_positions = 10
 	spawn_positions = 10
 	supervisors = "the Family"
+	selection_color = "#cb4aad"
 
 	outfit = /datum/outfit/job/giovannimafia
 
-	paycheck = PAYCHECK_CREW
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_GIOVANNI
-	exp_granted_type = EXP_TYPE_GIOVANNI
+	exp_type_department = EXP_TYPE_GIOVANNI
 
 //	minimal_generation = 11	//Uncomment when players get exp enough
 

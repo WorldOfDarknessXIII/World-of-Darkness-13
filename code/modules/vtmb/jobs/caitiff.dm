@@ -48,6 +48,7 @@
 	antagpanel_category = "Caitiff"
 	job_rank = ROLE_TRAITOR
 	antag_moodlet = /datum/mood_event/focused
+	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
 
 /datum/antagonist/caitiff/on_gain()

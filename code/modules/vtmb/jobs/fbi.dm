@@ -6,13 +6,16 @@
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = " the FBI"
+	selection_color = "#1a1d8a"
 
 	outfit = /datum/outfit/job/fbi
 
-	paycheck = PAYCHECK_CREW
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_ARMORY, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_FBI
-	exp_granted_type = EXP_TYPE_NATIONAL_SECURITY
+	exp_type_department = EXP_TYPE_NATIONAL_SECURITY
 
 	allowed_species = list("Human")
 	minimal_generation = 13
@@ -37,7 +40,7 @@
 	r_pocket = /obj/item/radio/cop
 	l_hand = /obj/item/vamp/keys/police
 	r_hand = /obj/item/police_radio
-	backpack_contents = list(/obj/item/card/id/police/sergeant=1, /obj/item/passport=1, /obj/item/implant/radio=1, /obj/item/camera/detective=1, /obj/item/camera_film=1, /obj/item/taperecorder=1, /obj/item/tape=1, /obj/item/vamp/creditcard=1, /obj/item/ammo_box/vampire/c45acp=1, /obj/item/storage/medkit/ifak=1)
+	backpack_contents = list(/obj/item/card/id/police/sergeant=1, /obj/item/passport=1, /obj/item/implant/radio=1, /obj/item/camera/detective=1, /obj/item/camera_film=1, /obj/item/taperecorder=1, /obj/item/tape=1, /obj/item/vamp/creditcard=1, /obj/item/ammo_box/vampire/c45acp=1, /obj/item/storage/firstaid/ifak=1)
 
 /datum/outfit/job/fbi/post_equip(mob/living/carbon/human/agent)
 	..()

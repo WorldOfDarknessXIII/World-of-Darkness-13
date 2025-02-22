@@ -9,13 +9,10 @@
 	layer = ABOVE_ALL_MOB_LAYERS_LAYER
 	anchored = TRUE
 	mouse_opacity = 0
+//	vis_flags = VIS_HIDE
 
-/obj/effect/addwall/Initialize(mapload)
+/obj/effect/addwall/Crossed(atom/movable/AM, oldloc)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_CROSS, PROC_REF(on_cross))
-	RegisterSignal(src, COMSIG_ATOM_EXITED, PROC_REF(on_uncross))
-
-/obj/effect/addwall/proc/on_cross(atom/movable/AM, oldloc)
 	var/someoneshere = FALSE
 	for(var/mob/living/L in get_turf(src))
 		if(L)
@@ -25,7 +22,8 @@
 	else
 		alpha = 128
 
-/obj/effect/addwall/proc/on_uncross(atom/movable/AM)
+/obj/effect/addwall/Uncrossed(atom/movable/AM)
+	. = ..()
 	var/someoneshere = FALSE
 	for(var/mob/living/L in get_turf(src))
 		if(L)
@@ -90,8 +88,8 @@
 					return
 
 				var/roll = rand(1, 20)
-				var/strength = H.strength
-				if(roll + strength*2 >= 15)
+				var/physique = H.physique
+				if(roll + physique*2 >= 15)
 					H.loc = above_turf
 					var/turf/forward_turf = get_step(H.loc, H.dir)
 					if(forward_turf && !forward_turf.density)
@@ -475,6 +473,7 @@
 		if(istype(get_area(src), /area/vtm))
 			var/area/vtm/V = get_area(src)
 			if(V.upper)
+				initial_gas_mix = WINTER_DEFAULT_ATMOS
 				new /obj/effect/decal/snow_overlay(src)
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
@@ -517,6 +516,7 @@
 		if(istype(get_area(src), /area/vtm))
 			var/area/vtm/V = get_area(src)
 			if(V.upper)
+				initial_gas_mix = WINTER_DEFAULT_ATMOS
 				icon_state = "snow[rand(1, 14)]"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
@@ -545,6 +545,7 @@
 		if(istype(get_area(src), /area/vtm))
 			var/area/vtm/V = get_area(src)
 			if(V.upper)
+				initial_gas_mix = WINTER_DEFAULT_ATMOS
 				icon_state = "snow[rand(1, 14)]"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
@@ -583,6 +584,7 @@
 		if(istype(get_area(src), /area/vtm))
 			var/area/vtm/V = get_area(src)
 			if(V.upper)
+				initial_gas_mix = WINTER_DEFAULT_ATMOS
 				icon_state = "snow[rand(1, 14)]"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
@@ -687,7 +689,7 @@
 			if(!P.burying)
 				P.burying = TRUE
 				user.visible_message("<span class='warning'>[user] starts to dig [src]</span>", "<span class='warning'>You start to dig [src].</span>")
-				if(do_after(user, 10 SECONDS, src))
+				if(do_mob(user, src, 10 SECONDS))
 					P.burying = FALSE
 					if(P.icon_state == "pit0")
 						var/dead_amongst = FALSE
@@ -713,7 +715,7 @@
 					P.burying = FALSE
 		else
 			user.visible_message("<span class='warning'>[user] starts to dig [src]</span>", "<span class='warning'>You start to dig [src].</span>")
-			if(do_after(user, 10 SECONDS, src))
+			if(do_mob(user, src, 10 SECONDS))
 				if(!locate(/obj/structure/bury_pit) in src)
 					user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
 					new /obj/structure/bury_pit(src)
@@ -727,6 +729,7 @@
 		if(istype(get_area(src), /area/vtm))
 			var/area/vtm/V = get_area(src)
 			if(V.upper)
+				initial_gas_mix = WINTER_DEFAULT_ATMOS
 				icon_state = "snow[rand(1, 14)]"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
@@ -765,7 +768,7 @@
 			if(!P.burying)
 				P.burying = TRUE
 				user.visible_message("<span class='warning'>[user] starts to dig [src]</span>", "<span class='warning'>You start to dig [src].</span>")
-				if(do_after(user, 10 SECONDS, src))
+				if(do_mob(user, src, 10 SECONDS))
 					P.burying = FALSE
 					if(P.icon_state == "pit0")
 						var/dead_amongst = FALSE
@@ -791,7 +794,7 @@
 					P.burying = FALSE
 		else
 			user.visible_message("<span class='warning'>[user] starts to dig [src]</span>", "<span class='warning'>You start to dig [src].</span>")
-			if(do_after(user, 10 SECONDS, src))
+			if(do_mob(user, src, 10 SECONDS))
 				if(!locate(/obj/structure/bury_pit) in src)
 					user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
 					new /obj/structure/bury_pit(src)
@@ -803,6 +806,7 @@
 		if(istype(get_area(src), /area/vtm))
 			var/area/vtm/V = get_area(src)
 			if(V.upper)
+				initial_gas_mix = WINTER_DEFAULT_ATMOS
 				icon_state = "snow[rand(1, 14)]"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
@@ -818,6 +822,7 @@
 		if(istype(get_area(src), /area/vtm))
 			var/area/vtm/V = get_area(src)
 			if(V.upper)
+				initial_gas_mix = WINTER_DEFAULT_ATMOS
 				icon_state = "snow_rails"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
@@ -959,9 +964,6 @@
 	plane = GAME_PLANE
 	layer = ABOVE_NORMAL_TURF_LAYER	//WALLPAPER_LAYER dont work
 
-/obj/effect/decal/wallpaper/NeverShouldHaveComeHere(turf/here_turf)
-	return isopenturf(here_turf) //Fuck this shit.
-
 /obj/effect/decal/wallpaper/Initialize()
 	..()
 	if(isclosedturf(loc))
@@ -1068,6 +1070,7 @@
 		if(istype(get_area(src), /area/vtm))
 			var/area/vtm/V = get_area(src)
 			if(V.upper)
+				initial_gas_mix = WINTER_DEFAULT_ATMOS
 				icon_state = "snow[rand(1, 14)]"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
@@ -1093,7 +1096,7 @@
 			if(!P.burying)
 				P.burying = TRUE
 				user.visible_message("<span class='warning'>[user] starts to dig [src]</span>", "<span class='warning'>You start to dig [src].</span>")
-				if(do_after(user, 10 SECONDS, src))
+				if(do_mob(user, src, 10 SECONDS))
 					P.burying = FALSE
 					if(P.icon_state == "pit0")
 						var/dead_amongst = FALSE
@@ -1119,7 +1122,7 @@
 					P.burying = FALSE
 		else
 			user.visible_message("<span class='warning'>[user] starts to dig [src]</span>", "<span class='warning'>You start to dig [src].</span>")
-			if(do_after(user, 10 SECONDS, src))
+			if(do_mob(user, src, 10 SECONDS))
 				if(!locate(/obj/structure/bury_pit) in src)
 					user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
 					new /obj/structure/bury_pit(src)
@@ -1146,14 +1149,7 @@
 	barefootstep = FOOTSTEP_WATER
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	density = FALSE
-
-/turf/open/floor/plating/vampocean/Enter(atom/movable/mover, atom/oldloc)
-	if(isliving(mover))
-		var/mob/living/swimmer = mover
-		if(!HAS_TRAIT(swimmer, TRAIT_SUPERNATURAL_DEXTERITY))
-			return FALSE
-	. = ..()
+	density = TRUE
 
 /turf/open/floor/plating/vampocean/Initialize()
 	..()
@@ -1186,7 +1182,7 @@
 	if(isliving(L))
 		if(L.movement_type & FLYING)
 			return
-		L.apply_damage(10, BURN)
+		L.apply_damage(10, CLONE)
 		L.apply_damage(30, TOX)
 		to_chat(L, "<span class='warning'>Your flesh burns!</span>")
 

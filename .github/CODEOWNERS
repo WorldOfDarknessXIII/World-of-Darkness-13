@@ -4,11 +4,27 @@
 # In the event that people are to be informed of changes
 # to the same file or dir, add them to the end of under Multiple Owners
 
+##ATTRIBUTION##
+
+# This file is based off of the tgstation/tgstation github repository.
+# Changes to this file do not constitute any claim of ownership of previous code written before or after the modification,
+# and is solely undertaken with the purpose of instituting functional integration with Github code owners for the WoD13 repository.
+# Joshua "Joan Metek" Kidder, 1/21/2025, for further information on initial code attribution please see:
+# https://github.com/tgstation/tgstation
+
 # MAINTAINERS
 
-# XeonMations
+# Dominion/Cyberboss
 
-# /code
 
 # CONTRIBUTORS
 
+# MULTIPLE OWNERS
+
+# Expensive files that touching basically always cause performance problems
+## Init times
+**/*_EXPENSIVE.dm @Mothblocks @LemonInTheDark
+
+# SIC SEMPER TYRANNIS
+
+/code/modules/hydroponics/grown/citrus.dm @LemonInTheDark @optimumtact

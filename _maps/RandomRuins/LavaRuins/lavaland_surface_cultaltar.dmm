@@ -15,11 +15,11 @@
 /area/ruin/unpowered/cultaltar)
 "e" = (
 /obj/effect/decal/remains/human,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/cultaltar)
 "f" = (
 /obj/structure/destructible/cult/pylon,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/cultaltar)
 "g" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -63,7 +63,12 @@
 /obj/item/cult_shift,
 /obj/effect/decal/remains/human,
 /obj/item/melee/cultblade/dagger,
-/obj/effect/step_trigger/sound_effect/lavaland_cult_altar,
+/obj/effect/step_trigger/sound_effect{
+	happens_once = 1;
+	name = "\proper a grave mistake";
+	sound = 'sound/hallucinations/i_see_you1.ogg';
+	triggerer_only = 1
+	},
 /obj/effect/step_trigger/message{
 	message = "<span class='cult italic'><b><span class='big'>You've made a grave mistake, haven't you?</span></b></span>";
 	name = "ohfuck"
@@ -82,7 +87,7 @@
 	},
 /area/ruin/unpowered/cultaltar)
 "s" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/cultaltar)
 
 (1,1,1) = {"

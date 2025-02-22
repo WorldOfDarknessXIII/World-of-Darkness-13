@@ -88,8 +88,9 @@
 /mob/living/carbon/proc/frenzystep()
 	if(!isturf(loc) || CheckFrenzyMove())
 		return
-	if(move_intent == MOVE_INTENT_WALK)
+	if(m_intent == MOVE_INTENT_WALK)
 		toggle_move_intent(src)
+	set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
 
 	var/atom/fear
 	for(var/obj/effect/fire/F in GLOB.fires_list)
@@ -141,7 +142,7 @@
 			if(isliving(frenzy_target))
 				var/mob/living/L = frenzy_target
 				if(L.stat != DEAD)
-					set_combat_mode(TRUE)
+					a_intent = INTENT_HARM
 					if(last_rage_hit+5 < world.time)
 						last_rage_hit = world.time
 						UnarmedAttack(L)
@@ -175,9 +176,9 @@
 		frenzy_target = get_frenzy_targets()
 		if(frenzy_target)
 			var/datum/cb = CALLBACK(src, PROC_REF(frenzystep))
-			var/reqsteps = SSfrenzypool.wait
+			var/reqsteps = SSfrenzypool.wait/total_multiplicative_slowdown()
 			for(var/i in 1 to reqsteps)
-				addtimer(cb, (i - 1))
+				addtimer(cb, (i - 1)*total_multiplicative_slowdown())
 		else
 			if(!CheckFrenzyMove())
 				if(isturf(loc))
@@ -193,7 +194,7 @@
 				to_chat(H, "<span class='warning'>You don't belong here!</span>")
 				H.adjustFireLoss(20)
 				H.adjust_fire_stacks(6)
-				H.ignite_mob()
+				H.IgniteMob()
 	//FIRE FEAR
 	if(!H.antifrenzy && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
 		var/fearstack = 0
@@ -214,10 +215,10 @@
 					if(prob(fearstack))
 						if(!H.in_frenzy)
 							H.rollfrenzy()
-			if(!H.has_status_effect(/datum/status_effect/fear))
-				H.apply_status_effect(/datum/status_effect/fear)
+			if(!H.has_status_effect(STATUS_EFFECT_FEAR))
+				H.apply_status_effect(STATUS_EFFECT_FEAR)
 		else
-			H.remove_status_effect(/datum/status_effect/fear)
+			H.remove_status_effect(STATUS_EFFECT_FEAR)
 
 	//masquerade violations due to unnatural appearances
 	if(H.is_face_visible() && H.clane?.violating_appearance)
@@ -290,7 +291,7 @@
 	if(H.clane?.name == "Tzimisce" || H.clane?.name == "Old Clan Tzimisce")
 		var/datum/vampireclane/tzimisce/TZ = H.clane
 		if(TZ.heirl)
-			if(!(TZ.heirl in H.get_all_contents()))
+			if(!(TZ.heirl in H.GetAllContents()))
 				if(prob(5))
 					to_chat(H, "<span class='warning'>You are missing your home soil...</span>")
 					H.bloodpool = max(0, H.bloodpool-1)

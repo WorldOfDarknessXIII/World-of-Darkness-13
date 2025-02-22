@@ -1,76 +1,113 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/structure/closet,
-/obj/item/clothing/under/color/green,
-/obj/item/clothing/under/color/green,
-/obj/item/clothing/shoes/sneakers/green,
-/obj/item/clothing/shoes/sneakers/green,
+/obj/structure/table,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "b" = (
-/obj/structure/hoop{
-	dir = 1
+/obj/effect/turf_decal/tile/green{
+	dir = 8
 	},
-/obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/effect/turf_decal/tile/green,
+/obj/structure/holohoop{
+	dir = 1;
+	layer = 4.1
+	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "c" = (
-/obj/effect/turf_decal/tile/green/anticorner/contrasted,
-/turf/open/floor/holofloor,
-/area/template_noop)
-"d" = (
-/obj/structure/chair/sofa/bench/left{
+/obj/effect/turf_decal/tile/green{
 	dir = 8
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "e" = (
-/obj/effect/turf_decal/tile/green/half/contrasted{
+/obj/effect/turf_decal/tile/green{
 	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
+"f" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/holofloor,
+/area/template_noop)
 "h" = (
-/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"i" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "j" = (
-/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "k" = (
-/obj/structure/hoop,
-/obj/effect/turf_decal/tile/red/half/contrasted{
+/obj/structure/holohoop{
+	layer = 3.9
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "l" = (
-/obj/effect/turf_decal/tile/red/half/contrasted{
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "m" = (
-/obj/structure/chair/sofa/bench/left{
+/obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/structure/window/spawner/directional/east,
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/holofloor,
 /area/template_noop)
-"o" = (
-/obj/structure/chair/sofa/bench/right{
-	dir = 8
+"n" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
 	},
-/obj/structure/window/spawner/directional/west,
-/turf/open/floor/holofloor,
-/area/template_noop)
-"p" = (
-/obj/structure/chair/sofa/bench/right{
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /turf/open/floor/holofloor,
@@ -78,154 +115,192 @@
 "q" = (
 /obj/structure/table,
 /obj/item/storage/box/cups,
-/obj/structure/window/spawner/directional/east,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "r" = (
-/obj/effect/turf_decal/tile/red/half/contrasted{
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "s" = (
-/obj/structure/chair/sofa/bench/right{
+/obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "u" = (
-/obj/effect/turf_decal/tile/red/half/contrasted{
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/holofloor,
-/area/template_noop)
-"v" = (
-/obj/structure/chair/sofa/bench/right{
-	dir = 4
-	},
-/obj/structure/window/spawner/directional/east,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "w" = (
 /turf/open/floor/holofloor,
 /area/template_noop)
 "x" = (
-/obj/effect/turf_decal/tile/red/half/contrasted,
-/turf/open/floor/holofloor,
-/area/template_noop)
-"y" = (
-/obj/effect/turf_decal/tile/red/anticorner/contrasted{
-	dir = 1
-	},
-/turf/open/floor/holofloor,
-/area/template_noop)
-"A" = (
-/obj/structure/chair/sofa/bench/left{
-	dir = 4
-	},
-/turf/open/floor/holofloor,
-/area/template_noop)
-"C" = (
-/obj/structure/closet,
-/obj/item/clothing/under/color/red,
-/obj/item/clothing/under/color/red,
-/obj/item/clothing/shoes/sneakers/red,
-/obj/item/clothing/shoes/sneakers/red,
-/turf/open/floor/holofloor,
-/area/template_noop)
-"F" = (
-/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
-"G" = (
-/obj/structure/table,
-/obj/item/storage/box/cups,
-/obj/structure/window/spawner/directional/west,
+"y" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"B" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"E" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"F" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "J" = (
-/obj/item/toy/basketball,
-/obj/effect/turf_decal/tile/green/half/contrasted{
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/item/toy/beach_ball/holoball,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"L" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "M" = (
-/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+/obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/holofloor,
-/area/template_noop)
-"P" = (
-/obj/machinery/door/window/left/directional/west{
-	name = "Basketball Court"
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
-/turf/open/floor/holofloor,
-/area/template_noop)
-"Q" = (
-/obj/machinery/door/window/left/directional/east{
-	name = "Basketball Court"
-	},
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "R" = (
-/obj/effect/turf_decal/tile/green/half/contrasted{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "T" = (
-/obj/structure/chair/sofa/bench/left{
+/obj/structure/chair{
 	dir = 8
 	},
-/obj/structure/window/spawner/directional/west,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "U" = (
-/obj/effect/turf_decal/tile/red/anticorner/contrasted,
-/turf/open/floor/holofloor,
-/area/template_noop)
-"V" = (
-/obj/effect/turf_decal/tile/green/half/contrasted{
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
 	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
-"W" = (
-/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+"V" = (
+/obj/effect/turf_decal/tile/green{
 	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"W" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "Y" = (
-/obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"Z" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 
 (1,1,1) = {"
-C
-A
+a
+s
 s
 w
-A
+s
 s
 w
-A
+s
 s
 a
 "}
 (2,1,1) = {"
 q
-m
-v
-Q
-m
-v
-Q
-m
-v
+s
+s
+w
+s
+s
+w
+s
+s
 q
 "}
 (3,1,1) = {"
@@ -241,16 +316,16 @@ e
 F
 "}
 (4,1,1) = {"
-y
-r
+n
+L
 l
 w
 x
 R
 w
 Y
-e
-F
+B
+Z
 "}
 (5,1,1) = {"
 k
@@ -260,24 +335,24 @@ w
 x
 J
 w
-Y
+f
 w
 b
 "}
 (6,1,1) = {"
 M
-u
+m
 l
 w
 x
 R
 w
-Y
+f
 V
 c
 "}
 (7,1,1) = {"
-M
+i
 u
 u
 u
@@ -286,29 +361,29 @@ W
 V
 V
 V
-c
+E
 "}
 (8,1,1) = {"
-G
-o
+q
 T
-P
-o
 T
-P
-o
+w
 T
-G
+T
+w
+T
+T
+q
 "}
 (9,1,1) = {"
-C
-p
-d
+a
+T
+T
 w
-p
-d
+T
+T
 w
-p
-d
+T
+T
 a
 "}

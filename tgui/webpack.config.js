@@ -7,8 +7,9 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
+const { createBabelConfig } = require('./babel.config.js');
 
-const createStats = (verbose) => ({
+const createStats = verbose => ({
   assets: verbose,
   builtAt: verbose,
   cached: false,
@@ -24,16 +25,20 @@ const createStats = (verbose) => ({
 });
 
 module.exports = (env = {}, argv) => {
-  const mode = argv.mode || 'production';
-  const bench = env.TGUI_BENCH;
+  const mode = argv.mode === 'production' ? 'production' : 'development';
   const config = {
-    mode: mode === 'production' ? 'production' : 'development',
+    mode,
     context: path.resolve(__dirname),
-    target: ['web', 'es5', 'browserslist:ie 11'],
+    target: ['web', 'es3', 'browserslist:ie 8'],
     entry: {
-      tgui: ['./packages/tgui-polyfill', './packages/tgui'],
-      'tgui-panel': ['./packages/tgui-polyfill', './packages/tgui-panel'],
-      'tgui-say': ['./packages/tgui-polyfill', './packages/tgui-say'],
+      'tgui': [
+        './packages/tgui-polyfill',
+        './packages/tgui',
+      ],
+      'tgui-panel': [
+        './packages/tgui-polyfill',
+        './packages/tgui-panel',
+      ],
     },
     output: {
       path: argv.useTmpFolder
@@ -42,25 +47,24 @@ module.exports = (env = {}, argv) => {
       filename: '[name].bundle.js',
       chunkFilename: '[name].bundle.js',
       chunkLoadTimeout: 15000,
-      publicPath: '/',
     },
     resolve: {
-      extensions: ['.tsx', '.ts', '.js', '.jsx'],
+      extensions: ['.js', '.jsx'],
       alias: {},
     },
     module: {
       rules: [
         {
-          test: /\.([tj]s(x)?|cjs)$/,
-          exclude: /node_modules[\\/]core-js/,
+          test: /\.m?jsx?$/,
           use: [
             {
-              loader: require.resolve('swc-loader'),
+              loader: 'babel-loader',
+              options: createBabelConfig({ mode }),
             },
           ],
         },
         {
-          test: /\.(s)?css$/,
+          test: /\.scss$/,
           use: [
             {
               loader: ExtractCssPlugin.loader,
@@ -69,31 +73,30 @@ module.exports = (env = {}, argv) => {
               },
             },
             {
-              loader: require.resolve('css-loader'),
+              loader: 'css-loader',
               options: {
                 esModule: false,
               },
             },
             {
-              loader: require.resolve('sass-loader'),
+              loader: 'sass-loader',
             },
           ],
         },
         {
           test: /\.(png|jpg|svg)$/,
           use: [
-            {
-              loader: require.resolve('url-loader'),
-              options: {
-                esModule: false,
-              },
-            },
+            'url-loader',
           ],
         },
       ],
     },
     optimization: {
       emitOnErrors: false,
+      splitChunks: {
+        chunks: 'initial',
+        name: 'tgui-common',
+      },
     },
     performance: {
       hints: false,
@@ -102,14 +105,11 @@ module.exports = (env = {}, argv) => {
     cache: {
       type: 'filesystem',
       cacheLocation: path.resolve(__dirname, `.yarn/webpack/${mode}`),
-      buildDependencies: {
-        config: [__filename],
-      },
     },
     stats: createStats(true),
     plugins: [
       new webpack.EnvironmentPlugin({
-        NODE_ENV: env.NODE_ENV || mode,
+        NODE_ENV: env.NODE_ENV || argv.mode || 'development',
         WEBPACK_HMR_ENABLED: env.WEBPACK_HMR_ENABLED || argv.hot || false,
         DEV_SERVER_IP: env.DEV_SERVER_IP || null,
       }),
@@ -120,28 +120,34 @@ module.exports = (env = {}, argv) => {
     ],
   };
 
-  if (bench) {
-    config.entry = {
-      'tgui-bench': [
-        './packages/tgui-polyfill',
-        './packages/tgui-bench/entrypoint',
-      ],
-    };
+  // Add a bundle analyzer to the plugins array
+  if (argv.analyze) {
+    const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+    config.plugins = [
+      ...config.plugins,
+      new BundleAnalyzerPlugin(),
+    ];
   }
 
   // Production build specific options
-  if (mode === 'production') {
-    const { EsbuildPlugin } = require('esbuild-loader');
+  if (argv.mode === 'production') {
+    const TerserPlugin = require('terser-webpack-plugin');
     config.optimization.minimizer = [
-      new EsbuildPlugin({
-        target: 'ie11',
-        css: true,
+      new TerserPlugin({
+        extractComments: false,
+        terserOptions: {
+          ie8: true,
+          output: {
+            ascii_only: true,
+            comments: false,
+          },
+        },
       }),
     ];
   }
 
   // Development build specific options
-  if (mode !== 'production') {
+  if (argv.mode !== 'production') {
     config.devtool = 'cheap-module-source-map';
   }
 

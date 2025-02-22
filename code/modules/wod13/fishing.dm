@@ -3,6 +3,7 @@
 	icon = 'code/modules/wod13/48x32weapons.dmi'
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_SMALL
+	eatsound = 'code/modules/wod13/sounds/eat.ogg'
 	tastes = list("fish" = 1)
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 3)
 	foodtypes = RAW | MEAT
@@ -46,14 +47,15 @@
 		dir = user.dir
 		anchored = TRUE
 
-/obj/item/fishing_rod/mouse_drop_receive(mob/living/M, mob/user, params)
+/obj/item/fishing_rod/MouseDrop(atom/over_object)
 	. = ..()
 	if(isturf(loc))
-		if(get_dist(src, M) < 2)
-			if(anchored)
-				anchored = FALSE
-				onflooricon = initial(onflooricon)
-				icon = onflooricon
+		if(istype(over_object, /mob/living))
+			if(get_dist(src, over_object) < 2)
+				if(anchored)
+					anchored = FALSE
+					onflooricon = initial(onflooricon)
+					icon = onflooricon
 
 /obj/item/fishing_rod/attack_hand(mob/living/user)
 	if(anchored)
@@ -65,7 +67,7 @@
 			catching = TRUE
 			user.isfishing = TRUE
 			playsound(loc, 'code/modules/wod13/sounds/catching.ogg', 50, FALSE)
-			if(do_after(user, 15 SECONDS, src))
+			if(do_mob(user, src, 15 SECONDS))
 				catching = FALSE
 				user.isfishing = FALSE
 				var/diceroll = rand(1, 20)

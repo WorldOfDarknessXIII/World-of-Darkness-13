@@ -6,13 +6,16 @@
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "God"
+	selection_color = "#fff700"
 
 	outfit = /datum/outfit/job/priest
 
-	paycheck = PAYCHECK_CREW
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_PRIEST
-	exp_granted_type = EXP_TYPE_CHURCH
+	exp_type_department = EXP_TYPE_CHURCH
 
 	allowed_species = list("Human")
 	minimal_generation = 13
@@ -53,11 +56,10 @@
 				switch(loadout_type)
 					if("Numina")
 						to_chat(H, "<span class='alertsyndie'>You have been blessed with psychic powers. They make you extraordinary among mortals, yet you still fear the horrors lurking unknown.</span>")
-						var/datum/action/cooldown/spell/pointed/numina_freeze/n_freeze = new(H)
-						var/datum/action/cooldown/spell/numina_heal/n_heal = new(H)
-						n_freeze.Grant(H)
-						n_heal.Grant(H)
-
+						var/obj/effect/proc_holder/spell/targeted/numina_freeze/n_freeze = new(H)
+						var/obj/effect/proc_holder/spell/self/numina_heal/n_heal = new(H)
+						H.mind.AddSpell(n_freeze)
+						H.mind.AddSpell(n_heal)
 					if("True Faith")
 						H.mind.holy_role = HOLY_ROLE_PRIEST
 						H.resistant_to_disciplines = TRUE

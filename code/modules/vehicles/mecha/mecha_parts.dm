@@ -4,28 +4,28 @@
 
 /obj/item/mecha_parts
 	name = "mecha part"
-	icon = 'icons/mob/rideables/mech_construct.dmi'
+	icon = 'icons/mecha/mech_construct.dmi'
 	icon_state = "blank"
 	w_class = WEIGHT_CLASS_GIGANTIC
-	obj_flags = CONDUCTS_ELECTRICITY
+	flags_1 = CONDUCT_1
 
-/obj/item/mecha_parts/proc/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE) //For attaching parts to a finished mech
+/obj/item/mecha_parts/proc/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M) //For attaching parts to a finished mech
 	if(!user.transferItemToLoc(src, M))
-		to_chat(user, span_warning("\The [src] is stuck to your hand, you cannot put it in \the [M]!"))
+		to_chat(user, "<span class='warning'>\The [src] is stuck to your hand, you cannot put it in \the [M]!</span>")
 		return FALSE
-	user.visible_message(span_notice("[user] attaches [src] to [M]."), span_notice("You attach [src] to [M]."))
+	user.visible_message("<span class='notice'>[user] attaches [src] to [M].</span>", "<span class='notice'>You attach [src] to [M].</span>")
 	return TRUE
 
-/obj/item/mecha_parts/part/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
+/obj/item/mecha_parts/part/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M)
 	return
 
 /obj/item/mecha_parts/chassis
 	name = "Mecha Chassis"
 	icon_state = "backbone"
-	interaction_flags_item = NONE //Don't pick us up!!
+	interaction_flags_item = NONE			//Don't pick us up!!
 	var/construct_type
 
-/obj/item/mecha_parts/chassis/Initialize(mapload)
+/obj/item/mecha_parts/chassis/Initialize()
 	. = ..()
 	if(construct_type)
 		AddComponent(construct_type)
@@ -253,12 +253,12 @@
 
 /obj/item/mecha_parts/chassis/phazon/attackby(obj/item/I, mob/user, params)
 	. = ..()
-	if(istype(I, /obj/item/assembly/signaler/anomaly) && !istype(I, /obj/item/assembly/signaler/anomaly/ectoplasm))
-		to_chat(user, "The anomaly core socket only accepts ectoplasm anomaly cores!")
+	if(istype(I, /obj/item/assembly/signaler/anomaly) && !istype(I, /obj/item/assembly/signaler/anomaly/bluespace))
+		to_chat(user, "The anomaly core socket only accepts bluespace anomaly cores!")
 
 /obj/item/mecha_parts/part/phazon_torso
 	name="\improper Phazon torso"
-	desc="A Phazon torso part. The socket for the ectoplasmic core that powers the exosuit's unique phase drives is located in the middle."
+	desc="A Phazon torso part. The socket for the bluespace core that powers the exosuit's unique phase drives is located in the middle."
 	icon_state = "phazon_harness"
 
 /obj/item/mecha_parts/part/phazon_head
@@ -291,93 +291,17 @@
 	desc="Phazon armor plates. They are layered with plasma to protect the pilot from the stress of phasing and have unusual properties."
 	icon_state = "phazon_armor"
 
-// Savannah-Ivanov
-
-/obj/item/mecha_parts/chassis/savannah_ivanov
-	name = "\improper Savannah-Ivanov chassis"
-	construct_type = /datum/component/construction/unordered/mecha_chassis/savannah_ivanov
-
-/obj/item/mecha_parts/part/savannah_ivanov_torso
-	name="\improper Savannah-Ivanov torso"
-	desc="A Savannah-Ivanov torso part. It's missing a huge chunk of space..."
-	icon_state = "savannah_ivanov_harness"
-
-/obj/item/mecha_parts/part/savannah_ivanov_head
-	name="\improper Savannah-Ivanov head"
-	desc="A Savannah-Ivanov head. It's sensors have been adjusted to support graceful landings."
-	icon_state = "savannah_ivanov_head"
-
-/obj/item/mecha_parts/part/savannah_ivanov_left_arm
-	name="\improper Savannah-Ivanov left arm"
-	desc="A Savannah-Ivanov left arm. Hidden rocket fabrication included in the wrists."
-	icon_state = "savannah_ivanov_l_arm"
-
-/obj/item/mecha_parts/part/savannah_ivanov_right_arm
-	name="\improper Savannah-Ivanov right arm"
-	desc="A Savannah-Ivanov left arm. Hidden rocket fabrication included in the wrists."
-	icon_state = "savannah_ivanov_r_arm"
-
-/obj/item/mecha_parts/part/savannah_ivanov_left_leg
-	name="\improper Savannah-Ivanov left leg"
-	desc="A Savannah-Ivanov left leg. In production they were designed to carry more than two passengers, so the leaping functionality was added as to not waste potential."
-	icon_state = "savannah_ivanov_l_leg"
-
-/obj/item/mecha_parts/part/savannah_ivanov_right_leg
-	name="\improper Savannah-Ivanov right leg"
-	desc="A Savannah-Ivanov left leg. In production they were designed to carry more than two passengers, so the leaping functionality was added as to not waste potential."
-	icon_state = "savannah_ivanov_r_leg"
-
-/obj/item/mecha_parts/part/savannah_ivanov_armor
-	name="Savannah-Ivanov armor"
-	desc="Savannah-Ivanov armor plates. They are uniquely shaped and reinforced to deal with the stresses of two pilots, grandiose leaps, and missiles."
-	icon_state = "savannah_ivanov_armor"
-
-// Justice
-
-/obj/item/mecha_parts/chassis/justice
-	name = "\improper Justice chassis"
-	construct_type = /datum/component/construction/unordered/mecha_chassis/justice
-
-/obj/item/mecha_parts/part/justice_torso
-	name="\improper Justice torso"
-	desc="A Justice torso part."
-	icon_state = "justice_torso"
-
-/obj/item/mecha_parts/part/justice_left_arm
-	name="\improper Justice left arm"
-	desc="A Justice left arm."
-	icon_state = "justice_l_arm"
-
-/obj/item/mecha_parts/part/justice_right_arm
-	name="\improper Justice right arm"
-	desc="A Justice left arm."
-	icon_state = "justice_r_arm"
-
-/obj/item/mecha_parts/part/justice_left_leg
-	name="\improper Justice left leg"
-	desc="A Justice left leg."
-	icon_state = "justice_l_leg"
-
-/obj/item/mecha_parts/part/justice_right_leg
-	name="\improper Justice right leg"
-	desc="A Justice left leg."
-	icon_state = "justice_r_leg"
-
-/obj/item/mecha_parts/part/justice_armor
-	name="Justice armor"
-	desc="Justice armor plates."
-	icon_state = "justice_armor"
 
 ///////// Circuitboards
 
 /obj/item/circuitboard/mecha
 	name = "exosuit circuit board"
-	icon = 'icons/obj/devices/circuitry_n_data.dmi'
+	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	obj_flags = CONDUCTS_ELECTRICITY
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	flags_1 = CONDUCT_1
 	force = 5
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
@@ -454,16 +378,4 @@
 
 /obj/item/circuitboard/mecha/clarke/main
 	name = "Clarke Central Control module (Exosuit Board)"
-	icon_state = "mainboard"
-
-/obj/item/circuitboard/mecha/savannah_ivanov/peripherals
-	name = "Savannah Peripherals Control module (Exosuit Board)"
-	icon_state = "mcontroller"
-
-/obj/item/circuitboard/mecha/savannah_ivanov/targeting
-	name = "Ivanov Weapon Control and Targeting module (Exosuit Board)"
-	icon_state = "mcontroller"
-
-/obj/item/circuitboard/mecha/savannah_ivanov/main
-	name = "Savannah-Ivanov Combination Control Lock module (Exosuit Board)"
 	icon_state = "mainboard"

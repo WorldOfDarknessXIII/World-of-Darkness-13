@@ -6,10 +6,13 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the Anarchs and the Traditions"
+	selection_color = "#434343"
 
 	outfit = /datum/outfit/job/barkeeper
 
-	paycheck = PAYCHECK_CREW
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_BARKEEPER
 	bounty_types = CIV_JOB_DRINK
@@ -19,7 +22,11 @@
 	my_contact_is_important = TRUE
 	known_contacts = list(
 		"Prince",
-		"Dealer"
+		"Sheriff",
+		"Dealer",
+		"Bouncer",
+		"Emissary",
+		"Sweeper"
 	)
 
 	v_duty = "You lead the Anarchs in the City. A Camarilla faction that values freedom and individuality. While not a fan of the traditions, you still respect the Masquerade."

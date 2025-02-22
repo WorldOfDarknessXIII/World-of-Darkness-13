@@ -1,10 +1,20 @@
 /datum/species/garou
 	name = "Werewolf"
 	id = "garou"
+	default_color = "FFFFFF"
+	toxic_food = PINEAPPLE
+	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_VIRUSIMMUNE, TRAIT_PERFECT_ATTACKER)
+	use_skintones = TRUE
+	limbs_id = "human"
+	wings_icon = "Dragon"
+	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
 	brutemod = 0.75
 	heatmod = 1
+	burnmod = 1
+	dust_anim = "dust-h"
 	whitelisted = TRUE
+	selectable = TRUE
 	var/glabro = FALSE
 
 /datum/action/garouinfo
@@ -14,7 +24,7 @@
 	check_flags = NONE
 	var/mob/living/carbon/host
 
-/datum/action/garouinfo/Trigger(trigger_flags)
+/datum/action/garouinfo/Trigger()
 	if(host)
 		var/dat = {"
 			<style type="text/css">
@@ -52,7 +62,7 @@
 				if(A.objectives)
 					dat += "[printobjectives(A.objectives)]<BR>"
 
-		dat += "<b>strength</b>: [host.strength]<BR>"
+		dat += "<b>Physique</b>: [host.physique]<BR>"
 		dat += "<b>Dexterity</b>: [host.dexterity]<BR>"
 		dat += "<b>Social</b>: [host.social]<BR>"
 		dat += "<b>Mentality</b>: [host.mentality]<BR>"
@@ -84,23 +94,31 @@
 		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
 		onclose(host, "vampire", src)
 
-/datum/species/garou/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
+/datum/species/garou/on_species_gain(mob/living/carbon/human/C)
 	. = ..()
 //	ADD_TRAIT(C, TRAIT_NOBLEED, HIGHLANDER)
-	human_who_gained_species.update_body(0)
-	human_who_gained_species.last_experience = world.time+3000
+	C.update_body(0)
+	C.last_experience = world.time+3000
 	var/datum/action/garouinfo/infor = new()
-	infor.host = human_who_gained_species
-	infor.Grant(human_who_gained_species)
+	infor.host = C
+	infor.Grant(C)
 	var/datum/action/gift/glabro/glabro = new()
-	glabro.Grant(human_who_gained_species)
+	glabro.Grant(C)
 	var/datum/action/gift/rage_heal/GH = new()
-	GH.Grant(human_who_gained_species)
-	human_who_gained_species.transformator = new(human_who_gained_species)
-	human_who_gained_species.transformator.human_form = human_who_gained_species
+	GH.Grant(C)
+	C.transformator = new(C)
+	C.transformator.human_form = C
+
+	//garou resist vampire bites better than mortals
+	RegisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
+	RegisterSignal(C.transformator.lupus_form, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
+	RegisterSignal(C.transformator.crinos_form, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))
 
 /datum/species/garou/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
+	UnregisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED)
+	UnregisterSignal(C.transformator.lupus_form, COMSIG_MOB_VAMPIRE_SUCKED)
+	UnregisterSignal(C.transformator.crinos_form, COMSIG_MOB_VAMPIRE_SUCKED)
 	for(var/datum/action/garouinfo/VI in C.actions)
 		if(VI)
 			VI.Remove(C)
@@ -126,19 +144,6 @@
 			to_chat(C, "<span class='userdanger'><b>RAGE DECREASES</b></span>")
 	C.update_rage_hud()
 
-	if(amount && sound)
-		if(prob(20))
-			INVOKE_ASYNC(C, TYPE_PROC_REF(/mob/living/carbon, emote), "growl")
-			if(iscrinos(C))
-				playsound(get_turf(C), 'code/modules/wod13/sounds/crinos_growl.ogg', 75, FALSE)
-			if(islupus(C))
-				playsound(get_turf(C), 'code/modules/wod13/sounds/lupus_growl.ogg', 75, FALSE)
-			if(isgarou(C))
-				if(C.gender == FEMALE)
-					playsound(get_turf(C), 'code/modules/wod13/sounds/female_growl.ogg', 75, FALSE)
-				else
-					playsound(get_turf(C), 'code/modules/wod13/sounds/male_growl.ogg', 75, FALSE)
-
 /proc/adjust_gnosis(var/amount, var/mob/living/carbon/C, var/sound = TRUE)
 	if(amount > 0)
 		if(C.auspice.gnosis < C.auspice.start_gnosis)
@@ -153,3 +158,14 @@
 				SEND_SOUND(C, sound('code/modules/wod13/sounds/rage_decrease.ogg', 0, 0, 75))
 			to_chat(C, "<span class='boldnotice'><b>GNOSIS DECREASES</b></span>")
 	C.update_rage_hud()
+
+/**
+ * On being bit by a vampire
+ *
+ * This handles vampire bite sleep immunity and any future special interactions.
+ */
+/datum/species/garou/proc/on_garou_bitten(datum/source, mob/living/carbon/being_bitten)
+	SIGNAL_HANDLER
+
+	if(isgarou(being_bitten) || iswerewolf(being_bitten))
+		return COMPONENT_RESIST_VAMPIRE_KISS

@@ -3,14 +3,9 @@ This module allows user to convert MIDI melodies to SS13 sheet music ready
 for copy-and-paste
 """
 from functools import reduce
-import MidiDependencies as mi
-import tkinter as tk
-from tkinter import filedialog
-from tkinter import messagebox
+import midi as mi
+import easygui as egui
 import pyperclip as pclip
-root = tk.Tk()
-root.attributes('-topmost', 1)
-root.withdraw()
 
 LINE_LENGTH_LIM = 50
 LINES_LIMIT = 200
@@ -59,7 +54,6 @@ def notenum2string(num, accidentals, octaves):
     names = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
     convert_table = {1:0, 3:1, 6:2, 8:3, 10:4}
     inclusion_table = {0:0, 2:1, 5:2, 7:3, 9:4}
-    correspondence_table = {0:1, 1:0, 2:3, 3:2, 5:6, 6:5, 7:8, 8:7, 9:10, 10:9}
 
     num += OCTAVE_KEYS * OCTAVE_TRANSPOSE
     octave = int(num / OCTAVE_KEYS)
@@ -74,8 +68,6 @@ def notenum2string(num, accidentals, octaves):
 
     accidental = (len(names[name_indx]) == 2)
     output_octaves[name_indx] = octave
-    if name_indx in correspondence_table:
-        output_octaves[correspondence_table[name_indx]] = octave
     add_n = False
 
     if accidental:
@@ -110,8 +102,9 @@ def obtain_midi_file():
     """
     Asks user to select MIDI and returns this file opened in binary mode for reading
     """
-    messagebox.showinfo("Midi2Piano Information", "Choose a MIDI file to convert")
-    file = filedialog.askopenfilename(title='MIDI file selection',filetypes=[['*.mid', 'MID files']])
+    file = egui.fileopenbox(msg='Choose MIDI file to convert',
+                            title='MIDI file selection',
+                            filetypes=[['*.mid', 'MID files']])
     if not file:
         return None
     file = open(file, mode='rb').read()
@@ -292,24 +285,24 @@ def main_cycle():
     """
     Activate the script
     """
-    midi_file = obtain_midi_file()
-    if not midi_file:
-        return # Cancel
-    score = midi2score_without_ticks(midi_file)
-    score = filter_events_from_score(score)
-    score = filter_start_time_and_note_num(score)
-    score = filter_empty_tracks(score)
-    score = merge_events(score)
-    score = sort_score_by_event_times(score)
-    score = convert_into_delta_times(score)
-    score = perform_roundation(score)
-    most_frequent_dur = obtain_common_duration(score)
-    score = reduce_score_to_chords(score)
-    sheet_music = obtain_sheet_music(score, most_frequent_dur)
-    split_music = explode_sheet_music(sheet_music)
-    sheet_music = finalize_sheet_music(split_music, most_frequent_dur)
+    while True:
+        midi_file = obtain_midi_file()
+        if not midi_file:
+            return # Cancel
+        score = midi2score_without_ticks(midi_file)
+        score = filter_events_from_score(score)
+        score = filter_start_time_and_note_num(score)
+        score = filter_empty_tracks(score)
+        score = merge_events(score)
+        score = sort_score_by_event_times(score)
+        score = convert_into_delta_times(score)
+        score = perform_roundation(score)
+        most_frequent_dur = obtain_common_duration(score)
+        score = reduce_score_to_chords(score)
+        sheet_music = obtain_sheet_music(score, most_frequent_dur)
+        split_music = explode_sheet_music(sheet_music)
+        sheet_music = finalize_sheet_music(split_music, most_frequent_dur)
 
-    pclip.copy(sheet_music)
-    messagebox.showinfo("Midi2Piano Information", "Your sheet music has been copied to your clipboard.")
+        pclip.copy(sheet_music)
 
 main_cycle()

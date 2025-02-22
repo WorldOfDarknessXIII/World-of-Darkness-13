@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple
-	icon = 'icons/obj/pipes_n_cables/he-simple.dmi'
+	icon = 'icons/obj/atmospherics/pipes/he-simple.dmi'
 	icon_state = "pipe11-3"
 
 	name = "pipe"
@@ -14,7 +14,7 @@
 	construction_type = /obj/item/pipe/binary/bendable
 	pipe_state = "he"
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple/set_init_directions()
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple/SetInitDirections()
 	if(ISDIAGONALDIR(dir))
 		initialize_directions = dir
 		return
@@ -24,9 +24,9 @@
 		if(EAST, WEST)
 			initialize_directions = EAST|WEST
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple/update_pipe_icon()
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple/update_icon()
 	icon_state = "pipe[nodes[1] ? "1" : "0"][nodes[2] ? "1" : "0"]-[piping_layer]"
-	return
+	update_layer()
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer2
 	piping_layer = 2

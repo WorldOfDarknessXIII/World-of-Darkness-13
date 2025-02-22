@@ -15,5 +15,5 @@
 	if (date_whitelisted)
 		src.date_whitelisted = date_whitelisted
 	else
-		src.date_whitelisted = ISOtime()
+		src.date_whitelisted = SQLtime()
 

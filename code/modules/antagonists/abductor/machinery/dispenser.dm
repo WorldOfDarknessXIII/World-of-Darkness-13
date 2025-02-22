@@ -1,7 +1,7 @@
 /obj/machinery/abductor/gland_dispenser
 	name = "replacement organ storage"
 	desc = "A tank filled with replacement organs."
-	icon = 'icons/obj/antags/abductor.dmi'
+	icon = 'icons/obj/abductor.dmi'
 	icon_state = "dispenser"
 	density = TRUE
 	var/list/gland_types
@@ -12,17 +12,17 @@
 	//TODO : replace with presets or spectrum
 	return rgb(rand(0,255),rand(0,255),rand(0,255))
 
-/obj/machinery/abductor/gland_dispenser/Initialize(mapload)
+/obj/machinery/abductor/gland_dispenser/Initialize()
 	. = ..()
 	gland_types = subtypesof(/obj/item/organ/heart/gland)
 	gland_types = shuffle(gland_types)
 	gland_colors = new/list(gland_types.len)
 	amounts = new/list(gland_types.len)
-	for(var/i in 1 to gland_types.len)
+	for(var/i=1,i<=gland_types.len,i++)
 		gland_colors[i] = random_color()
 		amounts[i] = rand(1,5)
 
-/obj/machinery/abductor/gland_dispenser/ui_status(mob/user, datum/ui_state/state)
+/obj/machinery/abductor/gland_dispenser/ui_status(mob/user)
 	if(!isabductor(user) && !isobserver(user))
 		return UI_CLOSE
 	return ..()
@@ -39,7 +39,7 @@
 /obj/machinery/abductor/gland_dispenser/ui_data(mob/user)
 	var/list/data = list()
 	data["glands"] = list()
-	for(var/gland_number in 1 to gland_colors.len)
+	for(var/gland_number=1,gland_number<=gland_colors.len,gland_number++)
 		var/list/gland_information = list(
 			"color" = gland_colors[gland_number],
 			"amount" = amounts[gland_number],
@@ -48,7 +48,7 @@
 		data["glands"] += list(gland_information)
 	return data
 
-/obj/machinery/abductor/gland_dispenser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/abductor/gland_dispenser/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return
@@ -65,7 +65,7 @@
 	if(istype(W, /obj/item/organ/heart/gland))
 		if(!user.transferItemToLoc(W, src))
 			return
-		for(var/i in 1 to gland_colors.len)
+		for(var/i=1,i<=gland_colors.len,i++)
 			if(gland_types[i] == W.type)
 				amounts[i]++
 	else

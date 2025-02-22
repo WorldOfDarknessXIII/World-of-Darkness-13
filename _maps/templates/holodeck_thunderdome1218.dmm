@@ -6,12 +6,12 @@
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "f" = (
-/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced,
 /obj/item/banner/red,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "g" = (
-/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced,
 /obj/item/banner/blue,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
@@ -22,7 +22,9 @@
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "n" = (
-/obj/machinery/door/window/left/directional/south,
+/obj/machinery/door/window/westleft{
+	dir = 2
+	},
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "p" = (
@@ -38,7 +40,10 @@
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "s" = (
-/obj/machinery/door/window/right/directional/south,
+/obj/machinery/door/window/westleft{
+	dir = 2;
+	icon_state = "right"
+	},
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "x" = (
@@ -59,13 +64,13 @@
 /area/template_noop)
 "C" = (
 /obj/structure/table/wood/fancy,
-/obj/item/clothing/head/costume/crown/fancy{
+/obj/item/clothing/head/crown/fancy{
 	pixel_y = 6
 	},
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "E" = (
-/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "H" = (
@@ -73,7 +78,7 @@
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "J" = (
-/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "N" = (
@@ -89,7 +94,9 @@
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "R" = (
-/obj/machinery/door/window/left/directional/south,
+/obj/machinery/door/window/westleft{
+	dir = 2
+	},
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "T" = (

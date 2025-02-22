@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(graveyard)
 							to_chat(L, "WALKING DEAD ARE RISING...")
 		for(var/i in 1 to 30-alive_zombies)
 			var/atom/grave = pick(graves)
-			new /mob/living/basic/zombie(grave.loc)
+			new /mob/living/simple_animal/hostile/zombie(grave.loc)
 			alive_zombies = max(0, alive_zombies+1)
 		clear_runs = max(0, clear_runs+1)
 	else

@@ -24,7 +24,7 @@
 	data["target_filter_data"] = target.filter_data
 	return data
 
-/datum/filter_editor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/datum/filter_editor/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return
@@ -53,7 +53,7 @@
 			target.change_filter_priority(params["name"], new_priority)
 			. = TRUE
 		if("transition_filter_value")
-			target.transition_filter(params["name"], params["new_data"], 4)
+			target.transition_filter(params["name"], 4, params["new_data"])
 			. = TRUE
 		if("modify_filter_value")
 			var/list/old_filter_data = target.filter_data[params["name"]]
@@ -69,7 +69,7 @@
 		if("modify_color_value")
 			var/new_color = input(usr, "Pick new filter color", "Filteriffic Colors!") as color|null
 			if(new_color)
-				target.transition_filter(params["name"], list("color" = new_color), 4)
+				target.transition_filter(params["name"], 4, list("color" = new_color))
 				. = TRUE
 		if("modify_icon_value")
 			var/icon/new_icon = input("Pick icon:", "Icon") as null|icon
@@ -79,7 +79,7 @@
 				. = TRUE
 		if("mass_apply")
 			if(!check_rights_for(usr.client, R_FUN))
-				to_chat(usr, span_userdanger("Stay in your lane, jannie."))
+				to_chat(usr, "<span class='userdanger>Stay in your lane, jannie.</span>'")
 				return
 			var/target_path = text2path(params["path"])
 			if(!target_path)

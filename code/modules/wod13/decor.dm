@@ -451,11 +451,8 @@
 
 /obj/machinery/light/prince/ghost
 
-/obj/machinery/light/prince/ghost/Initialize(mapload)
+/obj/machinery/light/prince/ghost/Crossed(atom/movable/AM)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_CROSS, PROC_REF(on_cross))
-
-/obj/machinery/light/prince/ghost/proc/on_cross(atom/movable/AM)
 	if(ishuman(AM))
 		var/mob/living/L = AM
 		if(L.client)
@@ -609,8 +606,8 @@
 	. = ..()
 	icon_state = "[rand(2, 5)]"
 
-/obj/cargotrain/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	for(var/mob/living/L in get_step(src, movement_dir))
+/obj/cargotrain/Moved(atom/OldLoc, Dir, Forced = FALSE)
+	for(var/mob/living/L in get_step(src, Dir))
 		if(isnpc(L))
 			if(starter)
 				if(ishuman(starter))
@@ -700,7 +697,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	var/stored_money = 0
 
-/obj/structure/fuelstation/click_alt(mob/user)
+/obj/structure/fuelstation/AltClick(mob/user)
 	if(stored_money)
 		say("Money refunded.")
 		for(var/i in 1 to stored_money)
@@ -747,7 +744,7 @@
 	reagent_id = /datum/reagent/space_cleaner
 	icon_state = "water"
 
-/mob/living/carbon/human/mouse_drop_receive(atom/over_object, atom/user, params)
+/mob/living/carbon/human/MouseDrop(atom/over_object)
 	. = ..()
 	if(istype(over_object, /obj/structure/bloodextractor))
 		if(get_dist(src, over_object) < 2)
@@ -944,6 +941,9 @@
 		// Handle job slot/tater cleanup.
 		var/job = mob_occupant.mind.assigned_role
 		crew_member["job"] = job
+		SSjob.FreeRole(job, mob_occupant)
+//		if(LAZYLEN(mob_occupant.mind.objectives))
+//			mob_occupant.mind.objectives.Cut()
 		mob_occupant.mind.special_role = null
 	else
 		crew_member["job"] = "N/A"
@@ -963,7 +963,7 @@
 		gear = C.get_all_gear()
 		for(var/obj/item/item_content as anything in gear)
 			qdel(item_content)
-		for(var/mob/living/L in mob_occupant.get_all_contents() - mob_occupant)
+		for(var/mob/living/L in mob_occupant.GetAllContents() - mob_occupant)
 			L.forceMove(pod.loc)
 		if(mob_occupant.client)
 			mob_occupant.client.screen.Cut()
@@ -987,8 +987,8 @@
 	icon_state = "billiard[rand(1, 3)]"
 
 /obj/police_department
-	name = "San Francisco Police Demartment"
-	desc = "Stop right there you criminal scum! Nobody can break the law in my watch!!"
+	name = "San Francisco Police Department"
+	desc = "Stop right there you criminal scum! Nobody can break the law on my watch!!"
 	icon = 'code/modules/wod13/props.dmi'
 	icon_state = "police"
 	plane = GAME_PLANE
@@ -1011,19 +1011,28 @@
 	. = ..()
 	if(.)
 		return
-	user.setDir(SOUTH)
-	user.Stun(100)
-	user.forceMove(src.loc)
-	user.visible_message("<B>[user] dances on [src]!</B>")
-	animatepole(user)
-	user.layer = layer //set them to the poles layer
-	user.pixel_y = 0
-	icon_state = initial(icon_state)
+	if(obj_flags & IN_USE)
+		to_chat(user, "It's already in use - wait a bit.")
+		return
+	if(user.dancing)
+		return
+	else
+		obj_flags |= IN_USE
+		user.setDir(SOUTH)
+		user.Stun(100)
+		user.forceMove(src.loc)
+		user.visible_message("<B>[user] dances on [src]!</B>")
+		animatepole(user)
+		user.layer = layer //set them to the poles layer
+		obj_flags &= ~IN_USE
+		user.pixel_y = 0
+		icon_state = initial(icon_state)
 
 /obj/structure/pole/proc/animatepole(mob/living/user)
 	return
 
 /obj/structure/pole/animatepole(mob/living/user)
+
 	if (user.loc != src.loc)
 		return
 	animate(user,pixel_x = -6, pixel_y = 0, time = 10)
@@ -1163,10 +1172,86 @@
 	name = "american flag"
 	desc = "PATRIOTHICC!!!"
 	icon = 'code/modules/wod13/props.dmi'
-	icon_state = "america"
+	icon_state = "flag_usa"
 	plane = GAME_PLANE
 	layer = CAR_LAYER
 	anchored = TRUE
+
+//flags
+
+/obj/flag
+	name = "DO NOT USE"
+	desc = "This shouldn't be used. If you see this in-game, someone has fucked up."
+	icon = 'code/modules/wod13/props.dmi'
+	icon_state = "flag_usa"
+	plane = GAME_PLANE
+	layer = CAR_LAYER
+	anchored = TRUE
+
+/obj/flag/usa
+	name = "flag of the United States"
+	desc = "The flag of the United States of America. In God we trust!"
+	icon_state = "flag_usa"
+
+/obj/flag/california
+	name = "flag of California"
+	desc = "The flag of the great State of California. Eureka!"
+	icon_state = "flag_california"
+
+/obj/flag/britain
+	name = "flag of Great Britain"
+	desc = "The flag of the United Kingdom of Great Britain and Northern Ireland. Dieu et mon droit!"
+	icon_state = "flag_britain"
+
+/obj/flag/france
+	name = "flag of France"
+	desc = "The flag of the French Republic. Liberte, egalite, fraternite!"
+	icon_state = "flag_france"
+
+/obj/flag/germany
+	name = "flag of Germany"
+	desc = "The flag of the Federal Republic of Germany."
+	icon_state = "flag_germany"
+
+/obj/flag/spain
+	name = "flag of Spain"
+	desc = "The flag of the Kingdom of Spain. Plus ultra!"
+	icon_state = "flag_spain"
+
+/obj/flag/italy
+	name = "flag of Italy"
+	desc = "The flag of the Republic of Italy."
+	icon_state = "flag_italy"
+
+/obj/flag/vatican
+	name = "flag of the Vatican"
+	desc = "The flag of Vatican City."
+	icon_state = "flag_vatican"
+
+/obj/flag/russia
+	name = "flag of Russia"
+	desc = "The flag of the Russian Federation."
+	icon_state = "flag_russia"
+
+/obj/flag/soviet
+	name = "flag of the Soviet Union"
+	desc = "The flag of the Union of Socialist Soviet Republics. Workers of the world, unite!"
+	icon_state = "flag_soviet"
+
+/obj/flag/china
+	name = "flag of China"
+	desc = "The flag of the People's Republic of China."
+	icon_state = "flag_china"
+
+/obj/flag/taiwan
+	name = "flag of Taiwan"
+	desc = "The flag of the Republic of China."
+	icon_state = "flag_taiwan"
+
+/obj/flag/japan
+	name = "flag of Japan"
+	desc = "The flag of the State of Japan."
+	icon_state = "flag_japan"
 
 /obj/effect/decal/graffiti
 	name = "graffiti"
@@ -1242,7 +1327,7 @@
 			total_corpses += 1
 			if(total_corpses >= 20)
 				total_corpses = 0
-				playsound(get_turf(src), 'sound/effects/magic/demon_dies.ogg', 100, TRUE)
+				playsound(get_turf(src), 'sound/magic/demon_dies.ogg', 100, TRUE)
 				new /mob/living/simple_animal/hostile/baali_guard(get_turf(src))
 //			var/datum/preferences/P = GLOB.preferences_datums[ckey(user.key)]
 //			if(P)
@@ -1455,7 +1540,7 @@
 		if(!burying)
 			burying = TRUE
 			user.visible_message("<span class='warning'>[user] starts to dig [src]</span>", "<span class='warning'>You start to dig [src].</span>")
-			if(do_after(user, 10 SECONDS, src))
+			if(do_mob(user, src, 10 SECONDS))
 				burying = FALSE
 				if(icon_state == "pit0")
 					var/dead_amongst = FALSE
@@ -1483,7 +1568,7 @@
 /obj/structure/bury_pit/container_resist_act(mob/living/user)
 	if(!burying)
 		burying = TRUE
-		if(do_after(user, 30 SECONDS, src))
+		if(do_mob(user, src, 30 SECONDS))
 			for(var/mob/living/L in src)
 				L.forceMove(get_turf(src))
 			icon_state = "pit0"

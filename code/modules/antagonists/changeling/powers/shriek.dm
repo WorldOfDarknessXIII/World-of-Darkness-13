@@ -5,35 +5,30 @@
 	button_icon_state = "resonant_shriek"
 	chemical_cost = 20
 	dna_cost = 1
-	req_human = TRUE
-	disabled_by_fire = FALSE
+	req_human = 1
 
 //A flashy ability, good for crowd control and sowing chaos.
 /datum/action/changeling/resonant_shriek/sting_action(mob/user)
 	..()
-	if(user.movement_type & VENTCRAWLING)
-		user.balloon_alert(user, "can't shriek in pipes!")
-		return FALSE
 	for(var/mob/living/M in get_hearers_in_view(4, user))
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
-			if(!IS_CHANGELING(C))
-				var/obj/item/organ/ears/ears = C.get_organ_slot(ORGAN_SLOT_EARS)
+			if(!C.mind || !C.mind.has_antag_datum(/datum/antagonist/changeling))
+				var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
 				if(ears)
 					ears.adjustEarDamage(0, 30)
-				C.adjust_confusion(25 SECONDS)
-				C.set_jitter_if_lower(100 SECONDS)
+				C.add_confusion(25)
+				C.Jitter(50)
 			else
 				SEND_SOUND(C, sound('sound/effects/screech.ogg'))
 
 		if(issilicon(M))
-			SEND_SOUND(M, sound('sound/items/weapons/flash.ogg'))
+			SEND_SOUND(M, sound('sound/weapons/flash.ogg'))
 			M.Paralyze(rand(100,200))
 
 	for(var/obj/machinery/light/L in range(4, user))
-		L.on = TRUE
+		L.on = 1
 		L.break_light_tube()
-		stoplag()
 	return TRUE
 
 /datum/action/changeling/dissonant_shriek
@@ -42,17 +37,11 @@
 	button_icon_state = "dissonant_shriek"
 	chemical_cost = 20
 	dna_cost = 1
-	disabled_by_fire = FALSE
 
 /datum/action/changeling/dissonant_shriek/sting_action(mob/user)
 	..()
-	if(user.movement_type & VENTCRAWLING)
-		user.balloon_alert(user, "can't shriek in pipes!")
-		return FALSE
-	empulse(get_turf(user), 2, 5, 1)
 	for(var/obj/machinery/light/L in range(5, usr))
-		L.on = TRUE
+		L.on = 1
 		L.break_light_tube()
-		stoplag()
-
+	empulse(get_turf(user), 2, 5, 1)
 	return TRUE

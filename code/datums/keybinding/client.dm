@@ -14,7 +14,7 @@
 	. = ..()
 	if(.)
 		return
-	user.adminhelp()
+	user.get_adminhelp()
 	return TRUE
 
 
@@ -29,21 +29,7 @@
 	. = ..()
 	if(.)
 		return
-	winset(user, null, "command=.auto")
-	return TRUE
-
-/datum/keybinding/client/toggle_fullscreen
-	hotkey_keys = list("F11")
-	name = "toggle_fullscreen"
-	full_name = "Toggle Fullscreen"
-	description = "Makes the game window fullscreen."
-	keybind_signal = COMSIG_KB_CLIENT_FULLSCREEN_DOWN
-
-/datum/keybinding/client/toggle_fullscreen/down(client/user)
-	. = ..()
-	if(.)
-		return
-	user.toggle_fullscreen()
+	winset(user, null, "command=.screenshot [!user.keys_held["shift"] ? "auto" : ""]")
 	return TRUE
 
 /datum/keybinding/client/minimal_hud
@@ -58,4 +44,18 @@
 	if(.)
 		return
 	user.mob.button_pressed_F12()
+	return TRUE
+
+/datum/keybinding/client/toggle_fullscreen
+	hotkey_keys = list("F11")
+	name = "fullscreen"
+	full_name = "Toggle Fullscreen"
+	description = "Switch between windowed and fullscreen mode."
+	keybind_signal = COMSIG_KB_CLIENT_FULLSCREEN_DOWN
+
+/datum/keybinding/client/toggle_fullscreen/down(client/user)
+	. = ..()
+	if(.)
+		return
+	user.toggle_fullscreen()
 	return TRUE

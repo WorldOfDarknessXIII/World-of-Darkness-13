@@ -34,8 +34,8 @@
 		var/datum/action/mysticism/mystic = new()
 		mystic.Grant(H)
 		mystic.level = level
-		var/datum/action/cooldown/spell/jaunt/shadow_walk/S = new(H)
-		S.Grant(H)
+		var/obj/effect/proc_holder/spell/targeted/shadowwalk/S = new(H)
+		H.mind.AddSpell(S)
 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/mystome)
 
 /datum/action/lastentacles
@@ -46,7 +46,7 @@
 	vampiric = TRUE
 	var/abuse_fix = 0
 
-/datum/action/lastentacles/Trigger(trigger_flags)
+/datum/action/lastentacles/Trigger()
 	. = ..()
 	if(abuse_fix+100 > world.time)
 		return
@@ -55,7 +55,7 @@
 		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 		return
 	H.bloodpool = max(0, H.bloodpool-1)
-	playsound(H.loc, 'sound/effects/magic/voidblink.ogg', 50, FALSE)
+	playsound(H.loc, 'sound/magic/voidblink.ogg', 50, FALSE)
 	abuse_fix = world.time
 	H.drop_all_held_items()
 	H.put_in_r_hand(new /obj/item/melee/vampirearms/knife/gangrel/lasombra(H))
@@ -67,7 +67,7 @@
 		H.AdjustMasquerade(-1)
 	spawn(20 SECONDS)
 		if(H)
-			playsound(H.loc, 'sound/effects/magic/voidblink.ogg', 50, FALSE)
+			playsound(H.loc, 'sound/magic/voidblink.ogg', 50, FALSE)
 			for(var/obj/item/melee/vampirearms/knife/gangrel/lasombra/G in H.contents)
 				if(G)
 					qdel(G)
@@ -83,7 +83,7 @@
 	vampiric = TRUE
 	var/abuse_fix = 0
 
-/datum/action/lasarmor/Trigger(trigger_flags)
+/datum/action/lasarmor/Trigger()
 	. = ..()
 	if(abuse_fix+250 > world.time)
 		return
@@ -92,7 +92,7 @@
 		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 		return
 	H.bloodpool = max(0, H.bloodpool-2)
-	playsound(H.loc, 'sound/effects/magic/voidblink.ogg', 50, FALSE)
+	playsound(H.loc, 'sound/magic/voidblink.ogg', 50, FALSE)
 	abuse_fix = world.time
 	H.physiology.damage_resistance += 60
 	animate(H, color = "#000000", time = 10, loop = 1)
@@ -100,7 +100,7 @@
 		H.AdjustMasquerade(-1)
 	spawn(15 SECONDS)
 		if(H)
-			playsound(H.loc, 'sound/effects/magic/voidblink.ogg', 50, FALSE)
+			playsound(H.loc, 'sound/magic/voidblink.ogg', 50, FALSE)
 			H.physiology.damage_resistance -= 60
 			H.color = initial(H.color)
 
@@ -112,7 +112,7 @@
 	vampiric = TRUE
 	var/abuse_fix = 0
 
-/datum/action/shadowcontrol/Trigger(trigger_flags)
+/datum/action/shadowcontrol/Trigger()
 	. = ..()
 	if((abuse_fix + 10 SECONDS) > world.time)
 		return
@@ -121,7 +121,7 @@
 		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 		return
 	H.bloodpool = max(0, H.bloodpool-1)
-	playsound(H.loc, 'sound/effects/magic/voidblink.ogg', 50, FALSE)
+	playsound(H.loc, 'sound/magic/voidblink.ogg', 50, FALSE)
 	abuse_fix = world.time
 	var/atom/movable/AM = new(H)
 	AM.set_light(3, -7)
@@ -131,13 +131,14 @@
 		if(AM)
 			qdel(AM)
 			if(H)
-				playsound(H.loc, 'sound/effects/magic/voidblink.ogg', 50, FALSE)
+				playsound(H.loc, 'sound/magic/voidblink.ogg', 50, FALSE)
 
 /datum/crafting_recipe/mystome
 	name = "Abyss Mysticism Tome"
 	time = 100
 	reqs = list(/obj/item/paper = 3, /obj/item/drinkable_bloodpack = 1)
 	result = /obj/item/mystic_tome
+	always_available = FALSE
 	category = CAT_MISC
 
 /datum/action/mysticism
@@ -149,7 +150,7 @@
 	var/drawing = FALSE
 	var/level = 1
 
-/datum/action/mysticism/Trigger(trigger_flags)
+/datum/action/mysticism/Trigger()
 	. = ..()
 	var/mob/living/carbon/human/H = owner
 	if(H.bloodpool < 2)

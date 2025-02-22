@@ -15,14 +15,14 @@
 	/// Countdown timer for the mass driver's delayed launch functionality.
 	COOLDOWN_DECLARE(massdriver_countdown)
 
-/obj/machinery/computer/pod/Initialize(mapload)
+/obj/machinery/computer/pod/Initialize()
 	. = ..()
 	for(var/obj/machinery/mass_driver/M in range(range, src))
 		if(M.id == id)
 			connected = M
 			break
 
-/obj/machinery/computer/pod/process(seconds_per_tick)
+/obj/machinery/computer/pod/process(delta_time)
 	if(COOLDOWN_FINISHED(src, massdriver_countdown))
 		timing = FALSE
 		// alarm() sleeps, so we want to end processing first and can't rely on return PROCESS_KILL
@@ -44,19 +44,18 @@
 		if(M.id == id)
 			M.open()
 
-	sleep(2 SECONDS)
+	sleep(20)
 	for(var/obj/machinery/mass_driver/M in range(range, src))
 		if(M.id == id)
 			M.power = connected.power
 			M.drive()
 
-	sleep(5 SECONDS)
+	sleep(50)
 	for(var/obj/machinery/door/poddoor/M in range(range, src))
 		if(M.id == id)
 			M.close()
 
 /obj/machinery/computer/pod/ui_interact(mob/user, datum/tgui/ui)
-	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "MassDriverControl", name)
@@ -78,12 +77,12 @@
 			break
 	return data
 
-/obj/machinery/computer/pod/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/computer/pod/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return
 	if(!allowed(usr))
-		to_chat(usr, span_warning("Access denied."))
+		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return
 
 	switch(action)
@@ -135,20 +134,20 @@
 	name = "\improper DoorMex control console"
 	icon_state = "oldcomp"
 	icon_screen = "library"
-	icon_keyboard = null
+	icon_keyboard = "no_keyboard"
 
 /obj/machinery/computer/pod/old/mass_driver_controller
 	name = "\improper Mass Driver Controller"
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
-	icon_screen = null
+	icon_keyboard = "no_keyboard"
 	density = FALSE
 
-/obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver
-	id = MASSDRIVER_ORDNANCE
+/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver
+	id = MASSDRIVER_TOXINS
 
 //for maps where pod doors are outside of the standard 4 tile controller detection range (ie Pubbystation)
-/obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver/longrange
+/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver/longrange
 	range = 6
 
 /obj/machinery/computer/pod/old/mass_driver_controller/chapelgun

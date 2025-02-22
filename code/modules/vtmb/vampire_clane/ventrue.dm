@@ -9,11 +9,12 @@
 	)
 	male_clothes = /obj/item/clothing/under/vampire/ventrue
 	female_clothes = /obj/item/clothing/under/vampire/ventrue/female
+	clan_keys = /obj/item/vamp/keys/ventrue
 
 /datum/discipline/dominate/post_gain(mob/living/carbon/human/H)
 	if(level >= 1)
-		var/datum/action/cooldown/spell/voice_of_god/S = new(H)
-		S.Grant(H)
+		var/obj/effect/proc_holder/spell/voice_of_god/S = new(H)
+		H.mind.AddSpell(S)
 
 /datum/action/dominate
 	name = "Dominate"
@@ -23,7 +24,7 @@
 	vampiric = TRUE
 	var/cool_down = 0
 
-/datum/action/dominate/Trigger(trigger_flags)
+/datum/action/dominate/Trigger()
 	. = ..()
 	if((cool_down + 5 SECONDS) >= world.time)
 		return

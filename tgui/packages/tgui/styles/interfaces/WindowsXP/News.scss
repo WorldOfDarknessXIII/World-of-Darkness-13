@@ -1,0 +1,55 @@
+.news__screen {
+  animation: colorPulse 5s infinite ease-in-out;
+  background-color: #000;
+  box-sizing: border-box;
+  font-family: 'Fira Mono', monospace;
+  font-size: 20px;
+  height: 100%;
+  overflow: hidden;
+  padding: 10vmin;
+  width: 100%;
+}
+.news__text {
+  height: 85%;
+}
+.news__screen:after {
+  background-image: linear-gradient(transparent, transparent 3px, #222);
+  background-size: 4px 4px;
+  bottom: 0;
+  content: '';
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.news__text:last-child:after {
+  animation: blink 1s infinite;
+  content: '_';
+}
+
+.news__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@keyframes colorPulse {
+  0%,
+  100% {
+    color: #0c0;
+  }
+  48%,
+  52% {
+    color: #090;
+  }
+  50% {
+    color: #060;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}

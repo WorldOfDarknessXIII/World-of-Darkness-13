@@ -7,18 +7,18 @@
 @use 'sass:meta';
 
 @use '../colors.scss' with (
-  $primary: hsl(0, 0%, 100%),
+  $primary: #ffffff,
   $bg-lightness: 25%,
   $fg-lightness: -10%,
   // Commenting out color maps will adjust all colors based on the lightness
   // settings above, but will add extra 10KB to the theme.
   $fg-map-keys: (),
-  $bg-map-keys: ()
+  $bg-map-keys: (),
 );
 @use '../base.scss' with (
-  $color-fg: hsl(0, 0%, 0%),
-  $color-bg: hsl(0, 0%, 87%),
-  $color-bg-grad-spread: 0%
+  $color-fg: #000000,
+  $color-bg: #ffffff,
+  $color-bg-grad-spread: 0%,
 );
 
 $font-size: 24px;
@@ -30,37 +30,28 @@ $font-size: 24px;
   @include meta.load-css('../atomic/color.scss');
 
   // Components
-  @include meta.load-css('~tgui-core/styles/components/Tabs');
-  @include meta.load-css(
-    '~tgui-core/styles/components/Section',
-    $with: ('background-color': hsla(0, 0%, 0%, 0.1))
-  );
-  @include meta.load-css(
-    '~tgui-core/styles/components/Button',
-    $with: (
-      'color-default': hsl(50, 50%, 90%),
-      'color-disabled': hsl(0, 0%, 21%),
-      'color-selected': hsl(0, 100%, 30%),
-      'color-caution': hsl(30, 90%, 40%),
-      'color-danger': hsl(60, 100%, 30%),
-      'color-transparent-text': hsla(0, 0%, 0%, 0.5)
-    )
-  );
+  @include meta.load-css('../components/Tabs.scss');
+  @include meta.load-css('../components/Section.scss', $with: (
+    'background-color': rgba(0, 0, 0, 0.1),
+    'shadow-color': rgba(0, 0, 0, 0.2),
+  ));
+  @include meta.load-css('../components/Button.scss', $with: (
+    'color-default': #E8E4C9,
+    'color-disabled': #363636,
+    'color-selected': #9d0808,
+    'color-caution': #be6209,
+    'color-danger': #9a9d00,
+    'color-transparent-text': rgba(0, 0, 0, 0.5),
+  ));
 
   // Layouts
-  @include meta.load-css(
-    '../layouts/Layout.scss',
-    $with: ('scrollbar-color-multiplier': -1)
-  );
+  @include meta.load-css('../layouts/Layout.scss');
   @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: (
-      'text-color': hsla(0, 0%, 0%, 0.75),
-      'background-color': base.$color-bg,
-      'shadow-color-core': hsla(0, 0%, 0%, 0.25)
-    )
-  );
+  @include meta.load-css('../layouts/TitleBar.scss', $with: (
+    'text-color': rgba(0, 0, 0, 0.75),
+    'background-color': base.$color-bg,
+    'shadow-color-core': rgba(0, 0, 0, 0.25),
+  ));
 
   .PaperInput {
     position: relative;
@@ -68,9 +59,9 @@ $font-size: 24px;
     width: 120px;
     border: none;
     background: transparent;
-    border-bottom: 1px solid hsl(0, 0%, 0%);
+    border-bottom: 1px solid #000;
     outline: none;
-    background-color: hsla(60, 100%, 60%, 0.8);
+    background-color:rgba(255, 255, 62, 0.8);
     padding: 0 4px;
     margin-right: 2px;
     line-height: 17px;
@@ -99,13 +90,13 @@ $font-size: 24px;
     padding: 0 6px;
     font-family: Verdana, sans-serif;
     background-color: transparent;
-    color: hsl(0, 0%, 100%);
+    color: #fff;
     color: inherit;
 
     &:-ms-input-placeholder {
       font-style: italic;
-      color: hsl(0, 0%, 47%);
-      color: hsla(0, 0%, 100%, 0.45);
+      color: #777;
+      color: rgba(255, 255, 255, 0.45);
     }
   }
 
@@ -124,9 +115,9 @@ $font-size: 24px;
       display: inline-block;
       border: none;
       background: transparent;
-      border-bottom: 1px solid hsl(0, 0%, 0%);
+      border-bottom: 1px solid #000;
       outline: none;
-      background-color: hsla(60, 100%, 60%, 0.8);
+      background-color:rgba(255, 255, 62, 0.8);
       padding: 0 4px;
       margin-right: 2px;
       line-height: 17px;
@@ -138,18 +129,14 @@ $font-size: 24px;
       display: inline-block;
       border: none;
       background: transparent;
-      border-bottom: 1px solid hsl(0, 0%, 0%);
+      border-bottom: 1px solid #000;
       outline: none;
-      background-color: hsla(60, 100%, 60%, 0.8);
+      background-color:rgba(255, 255, 62, 0.8);
       padding: 0 4px;
       margin-right: 2px;
       line-height: 17px;
       overflow: visible;
     }
-  }
-
-  .Section__title {
-    border-bottom: none;
   }
 
   .paper-field {
@@ -158,9 +145,9 @@ $font-size: 24px;
 
     border: none;
     background: transparent;
-    border-bottom: 1px solid hsl(0, 0%, 0%);
+    border-bottom: 1px solid #000;
     outline: none;
-    background-color: hsla(60, 100%, 60%, 0.8);
+    background-color:rgba(255, 255, 62, 0.8);
     padding: 0 4px;
     margin-right: 2px;
     line-height: 17px;
@@ -172,9 +159,9 @@ $font-size: 24px;
 
       border: none;
       background: transparent;
-      border-bottom: 1px solid hsl(0, 0%, 0%);
+      border-bottom: 1px solid #000;
       outline: none;
-      background-color: hsla(60, 100%, 60%, 0.8);
+      background-color:rgba(255, 255, 62, 0.8);
       padding: 0 4px;
       margin-right: 2px;
       line-height: 17px;

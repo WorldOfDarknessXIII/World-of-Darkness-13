@@ -1,25 +1,24 @@
+/area/awaymission/vr/murderdome
+	name = "Murderdome"
+	icon_state = "awaycontent8"
+	pacifist = FALSE
 
-/obj/structure/window/reinforced/fulltile/indestructible
+/obj/structure/window/reinforced/fulltile/indestructable
 	name = "robust window"
-	move_resist = MOVE_FORCE_OVERPOWERING
-	flags_1 = PREVENT_CLICK_UNDER_1
+	flags_1 = PREVENT_CLICK_UNDER_1 | NODECONSTRUCT_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-
-/obj/structure/grille/indestructible
-	desc = "A STRONG framework of hardened plasteel rods, that you cannot possibly get through. If you were an engineer you would be drooling over its construction right now."
-	move_resist = MOVE_FORCE_OVERPOWERING
-	obj_flags = CONDUCTS_ELECTRICITY
+/obj/structure/window/reinforced/indestructable
+	name = "robust window"
+	flags_1 = NODECONSTRUCT_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/structure/grille/indestructible/screwdriver_act(mob/living/user, obj/item/tool)
-	return NONE
+/obj/structure/grille/indestructable
+	flags_1 = CONDUCT_1 | NODECONSTRUCT_1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/structure/grille/indestructible/wirecutter_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/effect/spawner/structure/window/reinforced/indestructible
-	spawn_list = list(/obj/structure/grille/indestructible, /obj/structure/window/reinforced/fulltile/indestructible)
+/obj/effect/spawner/structure/window/reinforced/indestructable
+	spawn_list = list(/obj/structure/grille/indestructable, /obj/structure/window/reinforced/fulltile/indestructable)
 
 /obj/structure/barricade/security/murderdome
 	name = "respawnable barrier"
@@ -33,11 +32,11 @@
 /obj/effect/murderdome/dead_barricade
 	name = "dead barrier"
 	desc = "It provided cover in fire fights. And now it's gone."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "barrier0"
 	alpha = 100
 
-/obj/effect/murderdome/dead_barricade/Initialize(mapload)
+/obj/effect/murderdome/dead_barricade/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(respawn)), 3 MINUTES)
 

@@ -16,7 +16,7 @@
 	if(!iscathayan(src))
 		if((yang_chi == 0 && max_yang_chi != 0) && (yang_chi == 0 && max_yang_chi != 0))
 			to_chat(src, "<span clas='warning'>Your vital energies seem to disappear...</span>")
-			adjustFireLoss(5, TRUE)
+			adjustCloneLoss(5, TRUE)
 		else if(yang_chi == 0 && max_yang_chi != 0)
 			if(max_yin_chi != 0)
 				to_chat(src, "<span clas='warning'>You lack dynamic part of life...</span>")
@@ -24,7 +24,7 @@
 				adjustFireLoss(5, TRUE)
 			else
 				to_chat(src, "<span clas='warning'>Your vital energies seem to disappear...</span>")
-				adjustFireLoss(5, TRUE)
+				adjustCloneLoss(5, TRUE)
 		else if(yin_chi == 0 && max_yin_chi != 0)
 			if(max_yang_chi != 0)
 				to_chat(src, "<span clas='warning'>You lack static part of life...</span>")
@@ -32,7 +32,7 @@
 				adjustFireLoss(5, TRUE)
 			else
 				to_chat(src, "<span clas='warning'>Your vital energies seem to disappear...</span>")
-				adjustFireLoss(5, TRUE)
+				adjustCloneLoss(5, TRUE)
 
 	if(!iscathayan(src))
 		if (COOLDOWN_FINISHED(src, chi_restore))
@@ -45,10 +45,22 @@
 /datum/species/kuei_jin
 	name = "Kuei-Jin"
 	id = "kuei-jin"
+	default_color = "FFFFFF"
+	mutant_bodyparts = list("wings" = "None")
+	disliked_food = GROSS | RAW
+	liked_food = JUNKFOOD | FRIED
+	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_VIRUSIMMUNE, TRAIT_PERFECT_ATTACKER, TRAIT_NOBREATH)
+	use_skintones = TRUE
+	limbs_id = "human"
+	wings_icon = "None"
+	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
 	brutemod = 0.5
-	heatmod = 3
+	heatmod = 1
+	burnmod = 3
+	dust_anim = "dust-k"
 	whitelisted = TRUE
+	selectable = TRUE
 	var/turf/fool_turf
 	var/fool_fails = 0
 
@@ -76,6 +88,7 @@
 	name = "Chi Pool"
 	icon = 'code/modules/wod13/UI/chi.dmi'
 	icon_state = "base"
+	layer = HUD_LAYER
 	plane = HUD_PLANE
 	var/image/upper_layer
 
@@ -83,29 +96,33 @@
 	name = "Yang Chi"
 	icon = 'code/modules/wod13/UI/chi.dmi'
 	icon_state = "yang-0"
+	layer = HUD_LAYER
 	plane = HUD_PLANE
 
 /atom/movable/screen/yin_chi
 	name = "Yin Chi"
 	icon = 'code/modules/wod13/UI/chi.dmi'
 	icon_state = "yin-0"
+	layer = HUD_LAYER
 	plane = HUD_PLANE
 
 /atom/movable/screen/imbalance_chi
 	name = "Chi Imbalance"
 	icon = 'code/modules/wod13/UI/chi.dmi'
 	icon_state = "base"
+	layer = HUD_LAYER-1
 	plane = HUD_PLANE
 
 /atom/movable/screen/demon_chi
 	name = "Demon Chi"
 	icon = 'code/modules/wod13/UI/chi.dmi'
 	icon_state = "base"
+	layer = HUD_LAYER
 	plane = HUD_PLANE
 
 /atom/movable/screen/chi_pool/Initialize()
 	. = ..()
-	upper_layer = image(icon = 'code/modules/wod13/UI/chi.dmi', icon_state = "add", layer = HUD_PLANE+1)
+	upper_layer = image(icon = 'code/modules/wod13/UI/chi.dmi', icon_state = "add", layer = HUD_LAYER+1)
 	add_overlay(upper_layer)
 
 /atom/movable/screen/chi_pool/Click()
@@ -119,7 +136,7 @@
 	check_flags = NONE
 	var/mob/living/carbon/human/host
 
-/datum/action/kueijininfo/Trigger(trigger_flags)
+/datum/action/kueijininfo/Trigger()
 	if(host)
 		var/dat = {"
 			<style type="text/css">
@@ -183,7 +200,7 @@
 		dat += "<b>Yin/Yang</b>[host.max_yin_chi]/[host.max_yang_chi]<BR>"
 		dat += "<b>Hun/P'o</b>[host.mind.dharma?.Hun]/[host.max_demon_chi]<BR>"
 
-		dat += "<b>strength</b>: [host.strength]<BR>"
+		dat += "<b>Physique</b>: [host.physique]<BR>"
 		dat += "<b>Dexterity</b>: [host.dexterity]<BR>"
 		dat += "<b>Social</b>: [host.social]<BR>"
 		dat += "<b>Mentality</b>: [host.mentality]<BR>"
@@ -222,25 +239,29 @@
 			for(var/i in host.knowscontacts)
 				dat += "-[i] contact<BR>"
 		for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
-			if(host.account_id == account.bank_id)
+			if(host.bank_id == account.bank_id)
 				dat += "<b>My bank account code is: [account.code]</b><BR>"
 		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
 		onclose(host, "vampire", src)
 
-/datum/species/kuei_jin/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
+/datum/species/kuei_jin/on_species_gain(mob/living/carbon/human/C)
 	. = ..()
-	human_who_gained_species.update_body(0)
-	human_who_gained_species.last_experience = world.time + 5 MINUTES
+	C.update_body(0)
+	C.last_experience = world.time + 5 MINUTES
 	var/datum/action/kueijininfo/infor = new()
-	infor.host = human_who_gained_species
-	infor.Grant(human_who_gained_species)
+	infor.host = C
+	infor.Grant(C)
 	var/datum/action/reanimate_yang/YG = new()
-	YG.Grant(human_who_gained_species)
+	YG.Grant(C)
 	var/datum/action/reanimate_yin/YN = new()
-	YN.Grant(human_who_gained_species)
+	YN.Grant(C)
+
+	//Kuei-jin resist vampire bites better than mortals
+	RegisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_kuei_jin_bitten))
 
 /datum/species/kuei_jin/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
+	UnregisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED)
 	for(var/datum/action/kueijininfo/VI in C.actions)
 		if(VI)
 			VI.Remove(C)
@@ -402,11 +423,12 @@
 	button_icon_state = "breathe"
 	button_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	background_icon_state = "discipline"
+	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	var/cooldown = 10 SECONDS
 	COOLDOWN_DECLARE(use)
 
-/datum/action/breathe_chi/Trigger(trigger_flags)
+/datum/action/breathe_chi/Trigger()
 	if(!COOLDOWN_FINISHED(src, use))
 		to_chat(usr, "<span class='warning'>You need to wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, use))] to Inhale Chi again!</span>")
 		return
@@ -432,6 +454,8 @@
 
 	drain_breath(kueijin, victim)
 
+	button.color = "#970000"
+	animate(button, color = "#ffffff", time = cooldown)
 
 /datum/action/breathe_chi/proc/drain_breath(mob/living/carbon/human/kueijin, mob/living/victim)
 	//this one is on carbon instead of living which means it needs some annoying extra code
@@ -482,11 +506,12 @@
 	button_icon_state = "area"
 	button_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	background_icon_state = "discipline"
+	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	var/cooldown = 30 SECONDS
 	COOLDOWN_DECLARE(use)
 
-/datum/action/area_chi/Trigger(trigger_flags)
+/datum/action/area_chi/Trigger()
 	if(!COOLDOWN_FINISHED(src, use))
 		to_chat(usr, "<span class='warning'>You need to wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, use))] to gather Chi again!</span>")
 		return
@@ -506,17 +531,21 @@
 			kueijin.yin_chi = min(kueijin.yin_chi + draining_area.yin_chi, kueijin.max_yin_chi)
 			to_chat(kueijin, "<span class='medradio'>Some <b>Yin</b> Chi energy enters you...</span>")
 
+		button.color = "#970000"
+		animate(button, color = "#ffffff", time = cooldown)
+
 /datum/action/reanimate_yin
 	name = "Yin Reanimate"
 	desc = "Reanimate your body with Yin Chi energy."
 	button_icon_state = "yin"
 	button_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	background_icon_state = "discipline"
+	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	vampiric = TRUE
 	var/cooldown = 3 SECONDS
 
-/datum/action/reanimate_yin/Trigger(trigger_flags)
+/datum/action/reanimate_yin/Trigger()
 	if(!istype(owner, /mob/living/carbon/human))
 		return
 	var/mob/living/carbon/human/kueijin = usr
@@ -537,7 +566,7 @@
 	kueijin.mind.dharma?.animated = "Yin"
 	kueijin.skin_tone = get_vamp_skin_color(kueijin.skin_tone)
 	kueijin.dna?.species.brutemod = initial(kueijin.dna?.species.brutemod)
-	kueijin.dna?.species.heatmod = initial(kueijin.dna?.species.heatmod)
+	kueijin.dna?.species.burnmod = initial(kueijin.dna?.species.burnmod)
 	kueijin.update_body()
 
 	for (var/i in 1 to 5)
@@ -545,20 +574,24 @@
 			var/datum/wound/wound = pick(kueijin.all_wounds)
 			wound.remove_wound()
 
-	var/obj/item/organ/eyes/eyes = kueijin.get_organ_loss(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = kueijin.getorganslot(ORGAN_SLOT_EYES)
 	if(eyes)
-		eyes.apply_organ_damage(10)
+		kueijin.adjust_blindness(-2)
+		kueijin.adjust_blurriness(-2)
+		eyes.applyOrganDamage(-5)
 
-	var/obj/item/organ/brain/brain = kueijin.get_organ_loss(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/brain = kueijin.getorganslot(ORGAN_SLOT_BRAIN)
 	if(brain)
-		brain.apply_organ_damage(100)
+		brain.applyOrganDamage(-100)
 
 	var/heal_level = min(kueijin.mind.dharma.level, 4)
 	kueijin.heal_ordered_damage(20 * heal_level, list(OXY, STAMINA, BRUTE, TOX))
-	kueijin.heal_ordered_damage(5 * heal_level, list(BURN))
+	kueijin.heal_ordered_damage(5 * heal_level, list(BURN, CLONE))
 	kueijin.blood_volume = min(kueijin.blood_volume + 56, 560)
 	kueijin.yin_chi = max(0, kueijin.yin_chi - 1)
 
+	button.color = "#970000"
+	animate(button, color = "#ffffff", time = cooldown)
 
 /datum/action/reanimate_yang
 	name = "Yang Reanimate"
@@ -566,11 +599,12 @@
 	button_icon_state = "yang"
 	button_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	background_icon_state = "discipline"
+	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	vampiric = TRUE
 	var/cooldown = 3 SECONDS
 
-/datum/action/reanimate_yang/Trigger(trigger_flags)
+/datum/action/reanimate_yang/Trigger()
 	if(!istype(owner, /mob/living/carbon/human))
 		return
 	var/mob/living/carbon/human/kueijin = usr
@@ -591,7 +625,7 @@
 	kueijin.mind.dharma?.animated = "Yang"
 	kueijin.skin_tone = kueijin.mind.dharma?.initial_skin_color
 	kueijin.dna?.species.brutemod = 1
-	kueijin.dna?.species.heatmod = 0.5
+	kueijin.dna?.species.burnmod = 0.5
 	kueijin.update_body()
 
 	for (var/i in 1 to 5)
@@ -599,19 +633,24 @@
 			var/datum/wound/wound = pick(kueijin.all_wounds)
 			wound.remove_wound()
 
-	var/obj/item/organ/eyes/eyes = kueijin.get_organ_loss(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = kueijin.getorganslot(ORGAN_SLOT_EYES)
 	if(eyes)
-		eyes.apply_organ_damage(10)
+		kueijin.adjust_blindness(-2)
+		kueijin.adjust_blurriness(-2)
+		eyes.applyOrganDamage(-5)
 
-	var/obj/item/organ/brain/brain = kueijin.get_organ_loss(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/brain = kueijin.getorganslot(ORGAN_SLOT_BRAIN)
 	if(brain)
-		brain.apply_organ_damage(100)
+		brain.applyOrganDamage(-100)
 
 	var/heal_level = min(kueijin.mind.dharma.level, 4)
 	kueijin.heal_ordered_damage(10 * heal_level, list(OXY, STAMINA, BRUTE, TOX))
-	kueijin.heal_ordered_damage(2.5 * heal_level, list(BURN))
+	kueijin.heal_ordered_damage(2.5 * heal_level, list(BURN, CLONE))
 	kueijin.blood_volume = min(kueijin.blood_volume + 28, 560)
 	kueijin.yang_chi = max(0, kueijin.yang_chi - 1)
+
+	button.color = "#970000"
+	animate(button, color = "#ffffff", time = cooldown)
 
 /datum/action/rebalance
 	name = "Rebalance"
@@ -619,9 +658,10 @@
 	button_icon_state = "assign"
 	button_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	background_icon_state = "discipline"
+	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 
-/datum/action/rebalance/Trigger(trigger_flags)
+/datum/action/rebalance/Trigger()
 	if(!istype(owner, /mob/living/carbon/human))
 		return
 	var/mob/living/carbon/human/kueijin = usr
@@ -642,3 +682,14 @@
 		kueijin.mind.dharma.Hun = max_hun
 		kueijin.max_demon_chi = max_limit - max_hun
 		kueijin.demon_chi = min(kueijin.demon_chi, kueijin.max_demon_chi)
+
+/**
+ * On being bit by a vampire
+ *
+ * This handles vampire bite sleep immunity and any future special interactions.
+ */
+/datum/species/kuei_jin/proc/on_kuei_jin_bitten(datum/source, mob/living/carbon/being_bitten)
+	SIGNAL_HANDLER
+
+	if(iscathayan(being_bitten))
+		return COMPONENT_RESIST_VAMPIRE_KISS

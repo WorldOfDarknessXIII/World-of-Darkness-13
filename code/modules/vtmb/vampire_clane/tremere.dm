@@ -30,7 +30,7 @@
 	var/drawing = FALSE
 	var/level = 1
 
-/datum/action/thaumaturgy/Trigger(trigger_flags)
+/datum/action/thaumaturgy/Trigger()
 	. = ..()
 	var/mob/living/carbon/human/H = owner
 	if(H.bloodpool < 2)
@@ -86,7 +86,7 @@
 	vampiric = TRUE
 	var/abuse_fix = 0
 
-/datum/action/bloodshield/Trigger(trigger_flags)
+/datum/action/bloodshield/Trigger()
 	. = ..()
 	if((abuse_fix + 25 SECONDS) > world.time)
 		return

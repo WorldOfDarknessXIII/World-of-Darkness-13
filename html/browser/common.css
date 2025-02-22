@@ -2,24 +2,24 @@ body
 {
 	padding: 0;
 	margin: 0;
-	background-color: #272727;
-	font-size: 12px;
+	background-color: #090909;
+	font-size: 13px;
 	color: #ffffff;
 	line-height: 170%;
 }
 
 hr
 {
-	background-color: #40628a;
-	height: 1px;
+	background-color: #5c432e;
+	height: 2px;
 }
 
 a, button, a:link, a:visited, a:active, .linkOn, .linkOff
 {
 	color: #ffffff;
 	text-decoration: none;
-	background: #40628a;
-	border: 1px solid #161616;
+	background: #090909;
+	border: 1px solid #999999;
 	padding: 1px 4px 1px 4px;
 	margin: 0 2px 0 0;
 	cursor:default;
@@ -27,16 +27,17 @@ a, button, a:link, a:visited, a:active, .linkOn, .linkOff
 
 a:hover
 {
-	color: #40628a;
-	background: #ffffff;
+	color: #47a0c3;
+	background: #090909;
+	border-color: #ffffff;
 }
 
 a.white, a.white:link, a.white:visited, a.white:active
 {
-	color: #40628a;
+	color: #47a0c3;
 	text-decoration: none;
-	background: #ffffff;
-	border: 1px solid #161616;
+	background: #090909;
+	border: 1px solid #999999;
 	padding: 1px 4px 1px 4px;
 	margin: 0 2px 0 0;
 	cursor:default;
@@ -45,14 +46,14 @@ a.white, a.white:link, a.white:visited, a.white:active
 a.white:hover
 {
 	color: #ffffff;
-	background: #40628a;
+	background: #090909;
 }
 
 .linkOn, a.linkOn:link, a.linkOn:visited, a.linkOn:active, a.linkOn:hover
 {
 	color: #ffffff;
-	background: #2f943c;
-	border-color: #24722e;
+	background: #161616;
+	border-color: #ffffff;
 }
 
 .linkOff, a.linkOff:link, a.linkOff:visited, a.linkOff:active, a.linkOff:hover
@@ -97,27 +98,27 @@ h1, h2, h3, h4, h5, h6
 {
 	margin: 0;
 	padding: 16px 0 8px 0;
-	color: #517087;
+	color: #ffef9d;
 }
 
 h1
 {
-	font-size: 15px;
+	font-size: 16px;
 }
 
 h2
 {
-	font-size: 14px;
+	font-size: 15px;
 }
 
 h3
 {
-	font-size: 13px;
+	font-size: 14px;
 }
 
 h4
 {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .uiWrapper
@@ -131,10 +132,10 @@ h4
 {
 	clear: both;
 	padding: 6px 8px 6px 8px;
-	border-bottom: 2px solid #161616;
-	background: #383838;
-	color: #98B0C3;
-	font-size: 16px;
+	border-bottom: 2px solid #000000;
+	background: #161616;
+	color: #e9c52f;
+	font-size: 18px;
 }
 
 .uiTitle.icon
@@ -173,7 +174,7 @@ h4
 
 .dark
 {
-	color: #272727;
+	color: #090909;
 }
 
 .notice
@@ -210,7 +211,7 @@ div.notice
 {
 	background: #000000;
 	color: #ffffff;
-	border: 1px solid #40628a;
+	border: 1px solid #821313;
 	padding: 4px;
 	margin: 3px 0;
 }
@@ -220,7 +221,7 @@ div.notice
 	width: 138px;
 	float: left;
 	overflow: hidden;
-	color: #98B0C3;
+	color: #e61919;
 }
 
 .statusValue
@@ -232,7 +233,7 @@ div.notice
 {
 	padding: 8px;
 	margin: 10px 4px 4px 4px;
-	border: 1px solid #40628a;
+	border: 1px solid #821313;
 	background-color: #202020;
 }
 
@@ -255,7 +256,7 @@ div.notice
 {
 	width: 100%;
 	height: 100%;
-	background: #40628a;
+	background: #821313;
 	overflow: hidden;
 }
 
@@ -321,7 +322,7 @@ div.notice
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #383838;
+  background-color: #161616;
   transition: .4s;
 }
 
@@ -332,7 +333,7 @@ div.notice
   width: 18px;
   left: 4px;
   bottom: 4px;
-  background-color: #98B0C3;
+  background-color: #e61919;
   transition: .4s;
 }
 
@@ -346,7 +347,7 @@ div.notice
 }
 
 input:checked + .slider {
-  background-color: #40628a;
+  background-color: #821313;
 }
 
 input:checked + .slider.red {
@@ -400,8 +401,8 @@ ul.sparse {
 	margin:0px;
 	padding: 1px 8px 1px 8px;
 	border-radius: 25px;
-	border: 1px solid #161616;
-	background: #40628a;
+	border: 1px solid #000000;
+	background: #821313;
 	color: #ffffff;
 }
 
@@ -409,19 +410,3 @@ ul.sparse {
     display: inline-block;
     vertical-align: middle;
 }
-
-.code {
-	padding: 6px 8px;
-	border: 1px solid #161616;
-	background: #383838;
-	color: #FFFFFF;
-	font-size: 12px;
-	display: block;
-	margin: 4px 0;
-	font-family: 'Courier New', Courier, monospace;
-}
-
-.user-select {
-	user-select: all;
-}
-

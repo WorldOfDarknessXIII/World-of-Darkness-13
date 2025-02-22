@@ -2,8 +2,7 @@
 	name = "Blood Hunt Is Going On"
 	icon_state = "bloodhunt"
 
-/atom/movable/screen/alert/bloodhunt/Click(location, control, params)
-	. = ..()
+/atom/movable/screen/alert/bloodhunt/Click()
 	for(var/mob/living/carbon/human/H in SSbloodhunt.hunted)
 		if(H)
 			var/area/A = get_area(H)
@@ -48,7 +47,7 @@ SUBSYSTEM_DEF(bloodhunt)
 	name = "Blood Hunt"
 	init_order = INIT_ORDER_DEFAULT
 	wait = 600
-	priority = FIRE_PRIORITY_PING
+	priority = FIRE_PRIORITY_VERYLOW
 
 	var/list/hunted = list()
 
@@ -74,7 +73,9 @@ SUBSYSTEM_DEF(bloodhunt)
 	var/mob/living/carbon/human/H = target
 	if(!H.bloodhunted)
 		H.bloodhunted = TRUE
-		to_chat(world, "<b>The Blood Hunt after <span class='warning'>[H.true_real_name]</span> has been announced! <br> Reason: [reason]</b>")
-		SEND_SOUND(world, sound('code/modules/wod13/sounds/announce.ogg'))
+		for(var/mob/living/carbon/human/R in GLOB.player_list)
+			if(R && iskindred(R) && R.client)
+				to_chat(R, "<b>The Blood Hunt after <span class='warning'>[H.true_real_name]</span> has been announced! <br> Reason: [reason]</b>")
+				SEND_SOUND(R, sound('code/modules/wod13/sounds/announce.ogg'))
 		hunted += H
 		update_shit()

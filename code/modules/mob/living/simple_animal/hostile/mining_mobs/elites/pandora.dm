@@ -7,8 +7,8 @@
  * # Pandora
  *
  * A box with a similar design to the Hierophant which trades large, single attacks for more frequent smaller ones.
- * As its health gets lower, the time between its attacks decrease.
- * Its attacks are as follows:
+ * As it's health gets lower, the time between it's attacks decrease.
+ * It's attacks are as follows:
  * - Fires hierophant blasts in a straight line.  Can only fire in a straight line in 8 directions, being the diagonals and cardinals.
  * - Creates a box of hierophant blasts around the target.  If they try to run away to avoid it, they'll very likely get hit.
  * - Teleports the pandora from one location to another, almost identical to Hierophant.
@@ -31,13 +31,13 @@
 	melee_damage_upper = 15
 	attack_verb_continuous = "smashes into the side of"
 	attack_verb_simple = "smash into the side of"
-	attack_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
+	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	throw_message = "merely dinks off of the"
 	speed = 3
 	move_to_delay = 10
 	mouse_opacity = MOUSE_OPACITY_ICON
-	death_sound = 'sound/effects/magic/repulse.ogg'
-	death_message = "'s lights flicker, before its top part falls down."
+	deathsound = 'sound/magic/repulse.ogg'
+	deathmessage = "'s lights flicker, before its top part falls down."
 	loot_drop = /obj/item/clothing/accessory/pandora_hope
 
 	attack_action_types = list(/datum/action/innate/elite_attack/singular_shot,
@@ -51,25 +51,25 @@
 /datum/action/innate/elite_attack/singular_shot
 	name = "Singular Shot"
 	button_icon_state = "singular_shot"
-	chosen_message = span_boldwarning("You are now creating a single linear magic square.")
+	chosen_message = "<span class='boldwarning'>You are now creating a single linear magic square.</span>"
 	chosen_attack_num = SINGULAR_SHOT
 
 /datum/action/innate/elite_attack/magic_box
 	name = "Magic Box"
 	button_icon_state = "magic_box"
-	chosen_message = span_boldwarning("You are now attacking with a box of magic squares.")
+	chosen_message = "<span class='boldwarning'>You are now attacking with a box of magic squares.</span>"
 	chosen_attack_num = MAGIC_BOX
 
 /datum/action/innate/elite_attack/pandora_teleport
 	name = "Line Teleport"
 	button_icon_state = "pandora_teleport"
-	chosen_message = span_boldwarning("You will now teleport to your target.")
+	chosen_message = "<span class='boldwarning'>You will now teleport to your target.</span>"
 	chosen_attack_num = PANDORA_TELEPORT
 
 /datum/action/innate/elite_attack/aoe_squares
 	name = "AOE Blast"
 	button_icon_state = "aoe_squares"
-	chosen_message = span_boldwarning("Your attacks will spawn an AOE blast at your target location.")
+	chosen_message = "<span class='boldwarning'>Your attacks will spawn an AOE blast at your target location.</span>"
 	chosen_attack_num = AOE_SQUARES
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/OpenFire()
@@ -95,7 +95,7 @@
 		if(AOE_SQUARES)
 			aoe_squares(target)
 
-/mob/living/simple_animal/hostile/asteroid/elite/pandora/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/asteroid/elite/pandora/Life()
 	. = ..()
 	if(health >= maxHealth * 0.5)
 		cooldown_time = 2 SECONDS
@@ -135,8 +135,8 @@
 	var/turf/source = get_turf(src)
 	new /obj/effect/temp_visual/hierophant/telegraph(turf_target, src)
 	new /obj/effect/temp_visual/hierophant/telegraph(source, src)
-	playsound(source,'sound/machines/airlock/airlockopen.ogg', 200, 1)
-	addtimer(CALLBACK(src, PROC_REF(pandora_teleport_2), turf_target, source), 0.2 SECONDS)
+	playsound(source,'sound/machines/airlockopen.ogg', 200, 1)
+	addtimer(CALLBACK(src, PROC_REF(pandora_teleport_2), turf_target, source), 2)
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/pandora_teleport_2(turf/T, turf/source)
 	new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, src)
@@ -146,22 +146,22 @@
 	for(var/t in RANGE_TURFS(1, source))
 		new /obj/effect/temp_visual/hierophant/blast/damaging/pandora(t, src)
 	animate(src, alpha = 0, time = 2, easing = EASE_OUT) //fade out
-	visible_message(span_hierophant_warning("[src] fades out!"))
-	ADD_TRAIT(src, TRAIT_UNDENSE, VANISHING_TRAIT)
-	addtimer(CALLBACK(src, PROC_REF(pandora_teleport_3), T), 0.2 SECONDS)
+	visible_message("<span class='hierophant_warning'>[src] fades out!</span>")
+	density = FALSE
+	addtimer(CALLBACK(src, PROC_REF(pandora_teleport_3), T), 2)
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/pandora_teleport_3(turf/T)
 	forceMove(T)
 	animate(src, alpha = 255, time = 2, easing = EASE_IN) //fade IN
-	REMOVE_TRAIT(src, TRAIT_UNDENSE, VANISHING_TRAIT)
-	visible_message(span_hierophant_warning("[src] fades in!"))
+	density = TRUE
+	visible_message("<span class='hierophant_warning'>[src] fades in!</span>")
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/aoe_squares(target)
 	ranged_cooldown = world.time + cooldown_time
 	var/turf/T = get_turf(target)
 	new /obj/effect/temp_visual/hierophant/blast/damaging/pandora(T, src)
 	var/max_size = 3
-	addtimer(CALLBACK(src, PROC_REF(aoe_squares_2), T, 0, max_size), 0.2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(aoe_squares_2), T, 0, max_size), 2)
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/aoe_squares_2(turf/T, ring, max_size)
 	if(ring > max_size)
@@ -180,17 +180,16 @@
 /obj/item/clothing/accessory/pandora_hope
 	name = "Hope"
 	desc = "Found at the bottom of Pandora. After all the evil was released, this was the only thing left inside."
-	icon = 'icons/obj/mining_zones/elite_trophies.dmi'
+	icon = 'icons/obj/lavaland/elite_trophies.dmi'
 	icon_state = "hope"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/accessory/pandora_hope/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
-	user.add_mood_event("hope_lavaland", /datum/mood_event/hope_lavaland)
+/obj/item/clothing/accessory/pandora_hope/on_uniform_equip(obj/item/clothing/under/U, user)
+	var/mob/living/L = user
+	if(L?.mind)
+		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "hope_lavaland", /datum/mood_event/hope_lavaland)
 
-/obj/item/clothing/accessory/pandora_hope/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
-	user.clear_mood_event("hope_lavaland")
-
-#undef SINGULAR_SHOT
-#undef MAGIC_BOX
-#undef PANDORA_TELEPORT
-#undef AOE_SQUARES
+/obj/item/clothing/accessory/pandora_hope/on_uniform_dropped(obj/item/clothing/under/U, user)
+	var/mob/living/L = user
+	if(L?.mind)
+		SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "hope_lavaland")

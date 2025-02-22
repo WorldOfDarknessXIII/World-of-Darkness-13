@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/structure/table/wood/shuttle_bar,
-/obj/item/reagent_containers/cup/rag{
+/obj/structure/table/wood/bar,
+/obj/item/reagent_containers/glass/rag{
 	pixel_x = 10;
 	pixel_y = 1
 	},
@@ -18,14 +18,19 @@
 	},
 /area/template_noop)
 "c" = (
-/obj/machinery/door/window/right/directional/east,
+/obj/machinery/door/window{
+	base_state = "right";
+	dir = 4;
+	icon_state = "right";
+	layer = 3
+	},
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
 "d" = (
-/obj/structure/table/wood/shuttle_bar,
+/obj/structure/table/wood/bar,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -33,7 +38,9 @@
 /area/template_noop)
 "f" = (
 /obj/structure/table/wood,
-/obj/item/flashlight/lamp/green,
+/obj/item/flashlight/lamp/green{
+	layer = 3.3
+	},
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -41,20 +48,23 @@
 /area/template_noop)
 "h" = (
 /obj/structure/table/wood,
-/obj/item/cigarette/pipe,
-/obj/effect/holodeck_effect/random_book,
+/obj/item/clothing/mask/cigarette/pipe,
+/obj/item/book/manual/random,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "i" = (
-/obj/structure/table/wood/shuttle_bar,
-/obj/item/reagent_containers/cup/glass/shaker,
+/obj/structure/table/wood/bar,
+/obj/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
 "j" = (
-/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -69,8 +79,11 @@
 	},
 /area/template_noop)
 "l" = (
-/obj/structure/chair/stool/bar/directional/south,
-/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/chair/stool/bar,
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -101,7 +114,7 @@
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "t" = (
-/obj/structure/table/wood/shuttle_bar,
+/obj/structure/table/wood/bar,
 /obj/item/book/manual/wiki/barman_recipes,
 /turf/open/floor/holofloor{
 	dir = 9;
@@ -142,12 +155,13 @@
 	},
 /area/template_noop)
 "C" = (
-/obj/structure/chair/stool/bar/directional/west,
+/obj/structure/chair/stool/bar,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "D" = (
 /obj/structure/table/wood,
-/obj/item/kirbyplants/organic/plant5{
+/obj/item/kirbyplants{
+	icon_state = "plant-05";
 	pixel_y = 10
 	},
 /turf/open/floor/holofloor/carpet,
@@ -164,8 +178,10 @@
 	},
 /area/template_noop)
 "G" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/table/wood/shuttle_bar,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/table/wood/bar,
 /obj/item/storage/box/cups,
 /turf/open/floor/holofloor{
 	dir = 9;
@@ -173,7 +189,10 @@
 	},
 /area/template_noop)
 "H" = (
-/obj/structure/sink/directional/east,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12
+	},
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -190,7 +209,7 @@
 /area/template_noop)
 "J" = (
 /obj/structure/table/wood,
-/obj/effect/holodeck_effect/random_book,
+/obj/item/book/manual/random,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "K" = (
@@ -228,6 +247,7 @@
 /area/template_noop)
 "P" = (
 /obj/structure/table/wood/poker,
+/obj/structure/table/wood/poker,
 /obj/effect/holodeck_effect/cards,
 /turf/open/floor/holofloor{
 	dir = 9;
@@ -235,7 +255,7 @@
 	},
 /area/template_noop)
 "R" = (
-/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -250,7 +270,7 @@
 /area/template_noop)
 "T" = (
 /obj/structure/table/wood/poker,
-/obj/item/cigarette/pipe,
+/obj/item/clothing/mask/cigarette/pipe,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -258,29 +278,34 @@
 /area/template_noop)
 "U" = (
 /obj/structure/table/wood/poker,
-/obj/item/storage/dice,
+/obj/item/storage/pill_bottle/dice,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
 "V" = (
-/obj/structure/chair/stool/bar/directional/south,
+/obj/structure/chair/stool/bar,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
 "Y" = (
-/obj/structure/table/wood/shuttle_bar,
-/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/table/wood/bar,
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
 "Z" = (
-/obj/structure/musician/piano,
+/obj/structure/musician/piano{
+	icon_state = "piano"
+	},
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 

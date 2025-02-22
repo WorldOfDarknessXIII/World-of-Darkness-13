@@ -2,7 +2,7 @@
 /obj/structure/guncase
 	name = "gun locker"
 	desc = "A locker that holds guns."
-	icon = 'icons/obj/storage/closet.dmi'
+	icon = 'icons/obj/closet.dmi'
 	icon_state = "shotguncase"
 	anchored = FALSE
 	density = TRUE
@@ -20,7 +20,7 @@
 				I.forceMove(src)
 			if(contents.len >= capacity)
 				break
-	update_appearance()
+	update_icon()
 
 /obj/structure/guncase/update_overlays()
 	. = ..()
@@ -29,28 +29,31 @@
 		for(var/i in 1 to contents.len)
 			gun_overlay.pixel_x = 3 * (i - 1)
 			. += new /mutable_appearance(gun_overlay)
-	. += "[icon_state]_[open ? "open" : "door"]"
+	if(open)
+		. += "[icon_state]_open"
+	else
+		. += "[icon_state]_door"
 
-/obj/structure/guncase/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/guncase/attackby(obj/item/I, mob/user, params)
 	if(iscyborg(user) || isalien(user))
 		return
 	if(istype(I, gun_category) && open)
 		if(LAZYLEN(contents) < capacity)
 			if(!user.transferItemToLoc(I, src))
 				return
-			to_chat(user, span_notice("You place [I] in [src]."))
-			update_appearance()
+			to_chat(user, "<span class='notice'>You place [I] in [src].</span>")
+			update_icon()
 		else
-			to_chat(user, span_warning("[src] is full."))
+			to_chat(user, "<span class='warning'>[src] is full.</span>")
 		return
 
-	else if(!user.combat_mode)
+	else if(user.a_intent != INTENT_HARM)
 		open = !open
-		update_appearance()
+		update_icon()
 	else
 		return ..()
 
-/obj/structure/guncase/attack_hand(mob/user, list/modifiers)
+/obj/structure/guncase/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
@@ -60,7 +63,7 @@
 		show_menu(user)
 	else
 		open = !open
-		update_appearance()
+		update_icon()
 
 /**
  * show_menu: Shows a radial menu to a user consisting of an available weaponry for taking
@@ -92,6 +95,7 @@
 		return
 	if(!user.put_in_hands(weapon))
 		weapon.forceMove(get_turf(src))
+	update_icon()
 
 /**
  * check_menu: Checks if we are allowed to interact with a radial menu
@@ -104,22 +108,22 @@
 		return FALSE
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated)
+	if(user.incapacitated())
 		return FALSE
 	return TRUE
 
-/obj/structure/guncase/Exited(atom/movable/gone, direction)
-	. = ..()
-	update_appearance()
+/obj/structure/guncase/handle_atom_del(atom/A)
+	update_icon()
 
 /obj/structure/guncase/contents_explosion(severity, target)
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			SSexplosions.high_mov_atom += contents
-		if(EXPLODE_HEAVY)
-			SSexplosions.med_mov_atom += contents
-		if(EXPLODE_LIGHT)
-			SSexplosions.low_mov_atom += contents
+	for(var/thing in contents)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += thing
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += thing
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += thing
 
 /obj/structure/guncase/shotgun
 	name = "shotgun locker"
@@ -130,10 +134,6 @@
 /obj/structure/guncase/ecase
 	name = "energy gun locker"
 	desc = "A locker that holds energy guns."
+	icon_state = "ecase"
 	case_type = "egun"
 	gun_category = /obj/item/gun/energy/e_gun
-
-/obj/structure/guncase/wt550
-	name = "WT-550 gun locker"
-	desc = "A locker that holds WT-550 rifles."
-	case_type = "wt550"

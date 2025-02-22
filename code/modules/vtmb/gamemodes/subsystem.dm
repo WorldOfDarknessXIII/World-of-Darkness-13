@@ -130,10 +130,10 @@ SUBSYSTEM_DEF(bad_guys_party)
 	SSticker.queued_players -= src
 	SSticker.queue_delay = 4
 
-	SSjob.assign_role(src, /datum/job/vamp/citizen, TRUE)
+	SSjob.AssignRole(src, "Citizen", 1)
 
 	var/mob/living/character = create_character(TRUE)	//creates the human and transfers vars and mind
-	SSbad_guys_party.Next.equip(character, FALSE)
+	SSbad_guys_party.Next.equip(H = character, visualsOnly = FALSE)
 	var/atom/movable/screen/splash/Spl = new(character.client, TRUE)
 	Spl.Fade(TRUE)
 	character.update_parallax_teleport()

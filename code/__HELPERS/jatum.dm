@@ -42,7 +42,7 @@
 			"path" = value
 		)
 
-	var/ref = text_ref(value)
+	var/ref = "\ref[value]"
 	var/existing_ref = seen_references[ref]
 	if(existing_ref)
 		return list(
@@ -80,13 +80,15 @@
 		// Serialize all lists as dicts, list("a") and list("a" = null) can't be differentiated in DM
 		var/list_contents = list()
 		for(var/key in value)
+			var/got_l_value
 			var/l_value
 			try
 				l_value = value[key]
+				got_l_value = TRUE
 			catch
 				// Expected, indicates a flat list
 
-			if(!isnull(l_value))
+			if(got_l_value)
 				list_contents += list(list(
 					"key" = _jatum_serialize_value(key, seen_references),
 					"value" = _jatum_serialize_value(l_value, seen_references)
@@ -101,7 +103,7 @@
 			"contents" = list_contents)
 
 	// JATUM is really only meant for PoD types
-	if(!isdatum(value)\
+	if(!istype(value, /datum)\
 		|| istype(value, /image)\
 		|| istype(value, /icon)\
 		|| istype(value, /sound)\
@@ -133,7 +135,7 @@
 	return json_structure
 
 /**
- * Attempt to create a value from a JATUM JSON.
+ * Attempt to create a value from a JATUN JSON.
  *
  * * json - The JSON to deserialize.
  */

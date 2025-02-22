@@ -1,7 +1,7 @@
 /obj/machinery/computer/stockexchange
 	name = "stock exchange computer"
 	desc = "A console that connects to the galactic stock market. Stocks trading involves substantial risk of loss and is not suitable for every cargo technician."
-	icon = 'icons/obj/machines/computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "oldcomp"
 	icon_screen = "stock_computer"
 	icon_keyboard = "no_keyboard"
@@ -22,7 +22,7 @@
 		return
 	..()
 
-/obj/machinery/computer/stockexchange/click_alt(mob/user)
+/obj/machinery/computer/stockexchange/AltClick(mob/user)
 	var/obj/item/stocks_license/CR = get_fuckin_card_number(logged_in)
 	if(CR)
 		if(CR.balance)
@@ -274,9 +274,12 @@ a.updated {
 	else
 		to_chat(user, "<span class='danger'>Could not complete transaction. Check your account balance.</span>")
 
-/obj/machinery/computer/stockexchange/Topic(href, list/href_list)
+/obj/machinery/computer/stockexchange/Topic(href, href_list)
 	if (..())
 		return 1
+
+	if (!usr || (!(usr in range(1, src)) && iscarbon(usr)))
+		usr.machine = src
 
 	if (href_list["viewhistory"])
 		var/datum/stock/S = locate(href_list["viewhistory"]) in GLOB.stockExchange.stocks
@@ -346,3 +349,4 @@ a.updated {
 			vmode = 0
 
 	src.add_fingerprint(usr)
+	src.updateUsrDialog()

@@ -1,28 +1,16 @@
 /obj/machinery/gulag_item_reclaimer
 	name = "equipment reclaimer station"
 	desc = "Used to reclaim your items after you finish your sentence at the labor camp."
-	icon = 'icons/obj/machines/wallmounts.dmi'
-	icon_state = "gulag_off"
-	req_access = list(ACCESS_BRIG) //REQACCESS TO ACCESS ALL STORED ITEMS
+	icon = 'icons/obj/terminals.dmi'
+	icon_state = "dorm_taken"
+	req_access = list(ACCESS_SECURITY) //REQACCESS TO ACCESS ALL STORED ITEMS
 	density = FALSE
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 100
+	active_power_usage = 2500
 
 	var/list/stored_items = list()
 	var/obj/machinery/gulag_teleporter/linked_teleporter = null
-	///Icon of the current screen status
-	var/screen_icon = "gulag_on"
-
-/obj/machinery/gulag_item_reclaimer/Exited(atom/movable/gone, direction)
-	. = ..()
-	for(var/person in stored_items)
-		stored_items[person] -= gone
-
-/obj/machinery/gulag_item_reclaimer/update_overlays()
-	. = ..()
-	if(machine_stat & (NOPOWER|BROKEN))
-		return
-
-	. += mutable_appearance(icon, screen_icon)
-	. += emissive_appearance(icon, screen_icon, src)
 
 /obj/machinery/gulag_item_reclaimer/Destroy()
 	for(var/i in contents)
@@ -30,18 +18,13 @@
 		I.forceMove(get_turf(src))
 	if(linked_teleporter)
 		linked_teleporter.linked_reclaimer = null
-	linked_teleporter = null
 	return ..()
 
-/obj/machinery/gulag_item_reclaimer/emag_act(mob/user, obj/item/card/emag/emag_card)
+/obj/machinery/gulag_item_reclaimer/emag_act(mob/user)
 	if(obj_flags & EMAGGED) // emagging lets anyone reclaim all the items
-		return FALSE
+		return
 	req_access = list()
 	obj_flags |= EMAGGED
-	screen_icon = "emagged_general"
-	update_appearance()
-	balloon_alert(user, "id checker scrambled")
-	return TRUE
 
 /obj/machinery/gulag_item_reclaimer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -60,8 +43,8 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		I = L.get_idcard(TRUE)
-	if(istype(I, /obj/item/card/id/advanced/prisoner))
-		var/obj/item/card/id/advanced/prisoner/P = I
+	if(istype(I, /obj/item/card/id/prisoner))
+		var/obj/item/card/id/prisoner/P = I
 		if(P.points >= P.goal)
 			can_reclaim = TRUE
 
@@ -82,7 +65,7 @@
 
 	return data
 
-/obj/machinery/gulag_item_reclaimer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/gulag_item_reclaimer/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -91,7 +74,7 @@
 		if("release_items")
 			var/mob/living/carbon/human/H = locate(params["mobref"]) in stored_items
 			if(H != usr && !allowed(usr))
-				to_chat(usr, span_warning("Access denied."))
+				to_chat(usr, "<span class='warning'>Access denied.</span>")
 				return
 			drop_items(H)
 			. = TRUE
@@ -99,13 +82,9 @@
 /obj/machinery/gulag_item_reclaimer/proc/drop_items(mob/user)
 	if(!stored_items[user])
 		return
-	if(!use_energy(active_power_usage, force = FALSE))
-		balloon_alert(user, "not enough energy!")
-		return
 	var/drop_location = drop_location()
 	for(var/i in stored_items[user])
 		var/obj/item/W = i
 		stored_items[user] -= W
 		W.forceMove(drop_location)
 	stored_items -= user
-	user.log_message("has reclaimed their items from the gulag item reclaimer.", LOG_GAME)

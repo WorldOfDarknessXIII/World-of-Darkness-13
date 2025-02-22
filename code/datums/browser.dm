@@ -4,7 +4,7 @@
 	var/window_id // window_id is used as the window name for browse and onclose
 	var/width = 0
 	var/height = 0
-	var/datum/weakref/ref = null
+	var/atom/ref = null
 	var/window_options = "can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;" // window option is set using window_id
 	var/stylesheets[0]
 	var/scripts[0]
@@ -12,10 +12,12 @@
 	var/body_elements
 	var/head_content = ""
 	var/content = ""
+	var/static/datum/asset/simple/namespaced/common/common_asset = get_asset_datum(/datum/asset/simple/namespaced/common)
+
 
 /datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref = null)
+
 	user = nuser
-	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(user_deleted))
 	window_id = nwindow_id
 	if (ntitle)
 		title = format_text(ntitle)
@@ -24,11 +26,7 @@
 	if (nheight)
 		height = nheight
 	if (nref)
-		ref = WEAKREF(nref)
-
-/datum/browser/proc/user_deleted(datum/source)
-	SIGNAL_HANDLER
-	user = null
+		ref = nref
 
 /datum/browser/proc/add_head_content(nhead_content)
 	head_content = nhead_content
@@ -59,7 +57,6 @@
 	content += ncontent
 
 /datum/browser/proc/get_header()
-	var/datum/asset/simple/namespaced/common/common_asset = get_asset_datum(/datum/asset/simple/namespaced/common)
 	var/file
 	head_content += "<link rel='stylesheet' type='text/css' href='[common_asset.get_url_mappings()["common.css"]]'>"
 	for (file in stylesheets)
@@ -97,14 +94,13 @@
 	"}
 
 /datum/browser/proc/open(use_onclose = TRUE)
-	if(isnull(window_id)) //null check because this can potentially nuke goonchat
+	if(isnull(window_id))	//null check because this can potentially nuke goonchat
 		WARNING("Browser [title] tried to open with a null ID")
-		to_chat(user, span_userdanger("The [title] browser you tried to open failed a sanity check! Please report this on GitHub!"))
+		to_chat(user, "<span class='userdanger'>The [title] browser you tried to open failed a sanity check! Please report this on github!</span>")
 		return
 	var/window_size = ""
 	if (width && height)
 		window_size = "size=[width]x[height];"
-	var/datum/asset/simple/namespaced/common/common_asset = get_asset_datum(/datum/asset/simple/namespaced/common)
 	common_asset.send(user)
 	if (stylesheets.len)
 		SSassets.transport.send_assets(user, stylesheets)
@@ -117,13 +113,8 @@
 /datum/browser/proc/setup_onclose()
 	set waitfor = 0 //winexists sleeps, so we don't need to.
 	for (var/i in 1 to 10)
-		if (user?.client && winexists(user, window_id))
-			var/atom/send_ref
-			if(ref)
-				send_ref = ref.resolve()
-				if(!send_ref)
-					ref = null
-			onclose(user, window_id, send_ref)
+		if (user && winexists(user, window_id))
+			onclose(user, window_id, ref)
 			break
 
 /datum/browser/proc/close()
@@ -136,15 +127,15 @@
 	if (!User)
 		return
 
-	var/output = {"<center><b>[Message]</b></center><br />
+	var/output =  {"<center><b>[Message]</b></center><br />
 		<div style="text-align:center">
-		<a style="font-size:large;float:[( Button2 ? "left" : "right" )]" href='byond://?src=[REF(src)];button=1'>[Button1]</a>"}
+		<a style="font-size:large;float:[( Button2 ? "left" : "right" )]" href="?src=[REF(src)];button=1">[Button1]</a>"}
 
 	if (Button2)
-		output += {"<a style="font-size:large;[( Button3 ? "" : "float:right" )]" href='byond://?src=[REF(src)];button=2'>[Button2]</a>"}
+		output += {"<a style="font-size:large;[( Button3 ? "" : "float:right" )]" href="?src=[REF(src)];button=2">[Button2]</a>"}
 
 	if (Button3)
-		output += {"<a style="font-size:large;float:right" href='byond://?src=[REF(src)];button=3'>[Button3]</a>"}
+		output += {"<a style="font-size:large;float:right" href="?src=[REF(src)];button=3">[Button3]</a>"}
 
 	output += {"</div>"}
 
@@ -249,7 +240,7 @@
 	if (!User)
 		return
 
-	var/output = {"<form><input type="hidden" name="src" value="[REF(src)]"><ul class="sparse">"}
+	var/output =  {"<form><input type="hidden" name="src" value="[REF(src)]"><ul class="sparse">"}
 	if (inputtype == "checkbox" || inputtype == "radio")
 		for (var/i in values)
 			var/div_slider = slidecolor
@@ -356,11 +347,11 @@
 		var/setting = settings["mainsettings"][name]
 		if (setting["type"] == "datum")
 			if (setting["subtypesonly"])
-				dat += "<b>[setting["desc"]]:</b> <a href='byond://?src=[REF(src)];setting=[name];task=input;subtypesonly=1;type=datum;path=[setting["path"]]'>[setting["value"]]</a><BR>"
+				dat += "<b>[setting["desc"]]:</b> <a href='?src=[REF(src)];setting=[name];task=input;subtypesonly=1;type=datum;path=[setting["path"]]'>[setting["value"]]</a><BR>"
 			else
-				dat += "<b>[setting["desc"]]:</b> <a href='byond://?src=[REF(src)];setting=[name];task=input;type=datum;path=[setting["path"]]'>[setting["value"]]</a><BR>"
+				dat += "<b>[setting["desc"]]:</b> <a href='?src=[REF(src)];setting=[name];task=input;type=datum;path=[setting["path"]]'>[setting["value"]]</a><BR>"
 		else
-			dat += "<b>[setting["desc"]]:</b> <a href='byond://?src=[REF(src)];setting=[name];task=input;type=[setting["type"]]'>[setting["value"]]</a><BR>"
+			dat += "<b>[setting["desc"]]:</b> <a href='?src=[REF(src)];setting=[name];task=input;type=[setting["type"]]'>[setting["value"]]</a><BR>"
 
 	if (preview_icon)
 		dat += "<td valign='center'>"
@@ -371,7 +362,7 @@
 
 	dat += "</tr></table>"
 
-	dat += "<hr><center><a href='byond://?src=[REF(src)];button=1'>Ok</a> "
+	dat += "<hr><center><a href='?src=[REF(src)];button=1'>Ok</a> "
 
 	dat += "</center>"
 
@@ -399,7 +390,7 @@
 			if ("color")
 				settings["mainsettings"][setting]["value"] = input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]", settings["mainsettings"][setting]["value"]) as color
 			if ("boolean")
-				settings["mainsettings"][setting]["value"] = (settings["mainsettings"][setting]["value"] == "Yes") ? "No" : "Yes"
+				settings["mainsettings"][setting]["value"] = input(user, "[settings["mainsettings"][setting]["desc"]]?") in list("Yes","No")
 			if ("ckey")
 				settings["mainsettings"][setting]["value"] = input(user, "[settings["mainsettings"][setting]["desc"]]?") in list("none") + GLOB.directory
 		if (settings["mainsettings"][setting]["callback"])
@@ -440,8 +431,8 @@
 // e.g. canisters, timers, etc.
 //
 // windowid should be the specified window name
-// e.g. code is : user << browse(text, "window=fred")
-// then use : onclose(user, "fred")
+// e.g. code is	: user << browse(text, "window=fred")
+// then use 	: onclose(user, "fred")
 //
 // Optionally, specify the "ref" parameter as the controlled atom (usually src)
 // to pass a "close=1" parameter to the atom's Topic() proc for special handling.
@@ -464,14 +455,18 @@
 // otherwise, just reset the client mob's machine var.
 //
 /client/verb/windowclose(atomref as text)
-	set hidden = TRUE // hide this verb from the user's panel
-	set name = ".windowclose" // no autocomplete on cmd line
+	set hidden = TRUE						// hide this verb from the user's panel
+	set name = ".windowclose"			// no autocomplete on cmd line
 
-	if(atomref != "null") // if passed a real atomref
-		var/hsrc = locate(atomref) // find the reffed atom
+	if(atomref!="null")				// if passed a real atomref
+		var/hsrc = locate(atomref)	// find the reffed atom
 		var/href = "close=1"
 		if(hsrc)
 			usr = src.mob
-			src.Topic(href, params2list(href), hsrc) // this will direct to the atom's
-			return // Topic() proc via client.Topic()
+			src.Topic(href, params2list(href), hsrc)	// this will direct to the atom's
+			return										// Topic() proc via client.Topic()
 
+	// no atomref specified (or not found)
+	// so just reset the user mob's machine var
+	if(src?.mob)
+		src.mob.unset_machine()

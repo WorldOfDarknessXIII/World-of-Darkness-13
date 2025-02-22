@@ -3,12 +3,9 @@
 $include game_options.txt
 $include dbconfig.txt
 $include comms.txt
-$include logging.txt
+$include antag_rep.txt
 $include resources.txt
 $include interviews.txt
-$include lua.txt
-$include auxtools.txt
-$include map_vote.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -19,22 +16,22 @@ $include map_vote.txt
 # There are various options which are hard-locked for security reasons.
 
 ## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
-# SERVERNAME tgstation
+SERVERNAME World of Darkness XIII
 
 ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
-# SERVERSQLNAME tgstation
+# SERVERSQLNAME wod13
 
 ## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
-STATIONNAME Space Station 13
+STATIONNAME San Francisco
 
 ## Put on byond hub: Uncomment this to put your server on the byond hub.
-#HUB
+HUB
 
 ## Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
 LOBBY_COUNTDOWN 120
 
 ## Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.
-ROUND_END_COUNTDOWN 90
+ROUND_END_COUNTDOWN 60
 
 ## Comment this out if you want to use the SQL based admin system, the legacy system uses admins.txt.
 ## You need to set up your database to use the SQL based system.
@@ -77,10 +74,82 @@ ENABLE_LOCALHOST_RANK
 #USE_EXP_RESTRICTIONS_OTHER
 ## Allows admins to bypass job playtime requirements.
 #USE_EXP_RESTRICTIONS_ADMIN_BYPASS
-## Unhash this to have intern tags automatically added to ID cards for station roles depending on the living hours of the player holding them.
-#USE_LOW_LIVING_HOUR_INTERN
-## If USE_LOW_LIVING_HOUR_INTERN is unhashed, players under this number of living hours have [Intern] added to their ID card. If this isn't set, uses USE_EXP_RESTRICTIONS_HEADS_HOURS instead. If that isn't set, it finally defaults to a hardcoded fallback of 15 hours.
-#USE_LOW_LIVING_HOUR_INTERN_HOURS 50
+
+## log OOC channel
+LOG_OOC
+
+## log client Say
+LOG_SAY
+
+## log admin actions
+LOG_ADMIN
+
+## log admin chat
+LOG_ADMINCHAT
+
+## log client access (logon/logoff)
+LOG_ACCESS
+
+## log game actions (start of round, results, etc.)
+LOG_GAME
+
+## log player votes
+LOG_VOTE
+
+## log client Whisper
+LOG_WHISPER
+
+## log emotes
+LOG_EMOTE
+
+## log attack messages
+LOG_ATTACK
+
+## log pda messages
+LOG_PDA
+
+## log uplink purchases
+LOG_UPLINK
+
+## log telecomms messages
+LOG_TELECOMMS
+
+## log prayers
+LOG_PRAYER
+
+## log lawchanges
+LOG_LAW
+
+## log economy actions
+LOG_ECON
+
+## log crew manifest to seperate file
+LOG_MANIFEST
+
+## log job divide debugging information
+#LOG_JOB_DEBUG
+
+## log all world.Topic() calls
+# LOG_WORLD_TOPIC
+
+## enables use of the proc twitterize() that lets you take a large list of strings and turn it into a JSON file of tweet sized strings.
+## As an example of how this could be """useful""" look towards Poly (https://twitter.com/Poly_the_Parrot)
+# LOG_TWITTER
+
+## Enable logging pictures
+# LOG_PICTURES
+
+## log mecha actions
+# LOG_MECHA
+
+## log virus and actions
+LOG_VIRUS
+
+## log cloning actions
+LOG_CLONING
+
+## log shuttle actions
+LOG_SHUTTLE
 
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
@@ -106,14 +175,11 @@ ID_CONSOLE_JOBSLOT_DELAY 30
 ## allow players to initiate a restart vote
 #ALLOW_VOTE_RESTART
 
+## allow players to initiate a mode-change vote
+#ALLOW_VOTE_MODE
+
 ## allow players to initiate a map-change vote
 #ALLOW_VOTE_MAP
-
-## allow players to rock the vote, or to vote on the map again if they didn't like the last results
-#ALLOW_ROCK_THE_VOTE
-
-## the number of times you wish to allow players to rock the vote in a given shift
-MAX_ROCKING_VOTES 1
 
 ## min delay (deciseconds) between voting sessions (default 10 minutes)
 VOTE_DELAY 6000
@@ -127,14 +193,8 @@ VOTE_PERIOD 600
 ## players' votes default to "No vote" (otherwise,  default to "No change")
 # DEFAULT_NO_VOTE
 
-## Determines if players can respawn after death
-## 0 = Cannot respawn (default)
-## 1 = Can respawn
-## 2 = Can respawn if choosing a different character
-ALLOW_RESPAWN 0
-
-## Respawn delay (deciseconds), which doesn't allow to return to lobby
-RESPAWN_DELAY 0
+## disable abandon mob
+#NORESPAWN
 
 ## set a hosted by name for unix platforms
 HOSTEDBY Yournamehere
@@ -142,28 +202,21 @@ HOSTEDBY Yournamehere
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
 GUEST_BAN
 
+## Comment this out to disable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
+CHECK_RANDOMIZER
+
 ## IPINTEL:
 ## This allows you to detect likely proxies by checking ips against getipintel.net
-## Rating to warn at: (0.8 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything equal to or higher then this number triggers an admin warning
-#IPINTEL_RATING_BAD 0.8
+## Rating to warn at: (0.9 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything equal to or higher then this number triggers an admin warning
+#IPINTEL_RATING_BAD 0.9
 ## Contact email, (required to use the service, leaving blank or default disables IPINTEL)
 #IPINTEL_EMAIL ch@nge.me
-## Query base, if you pay for more queries this is what you want to change.
-#IPINTEL_BASE check.getipintel.net
-## Maximum number of queries in a minute
-#IPINTEL_MAX_QUERY_MINUTE 15
-## Maximum number of queries in a day
-#IPINTEL_MAX_QUERY_DAY 500
-## Whether clients which cannot be checked due to a rate limit will be denied
-#IPINTEL_REJECT_RATE_LIMITED
-## Whether clients which are flagged as a VPN will be denied
-IPINTEL_REJECT_BAD
-## Whether clients which cannot be checked due to an error of some form will be denied
-#IPINTEL_REJECT_UNKNOWN
-## How long to store results in the cache before they must be retrieved again. IN DAYS.
-#IPINTEL_CACHE_LENGTH 7
-## How many minutes of living playtime to be automatically exempt from IPIntel. 0 for never.
-#IPINTEL_EXEMPT_PLAYTIME_LIVING 0
+## How long to save good matches (ipintel rate limits to 15 per minute and 500 per day. so this shouldn't be too low, getipintel.net suggests 6 hours, time is in hours) (Your ip will get banned if you go over 500 a day too many times)
+#IPINTEL_SAVE_GOOD 12
+## How long to save bad matches (these numbers can change as ips change hands, best not to save these for too long in case somebody gets a new ip used by a spammer/proxy before.)
+#IPINTEL_SAVE_BAD 3
+## Domain name to query (leave commented out for the default, only needed if you pay getipintel.net for more querys)
+#IPINTEL_DOMAIN check.getipintel.net
 
 ## Uncomment to allow web client connections
 #ALLOW_WEBCLIENT
@@ -176,25 +229,21 @@ IPINTEL_REJECT_BAD
 ## Set to prevent anyone but those ckeys listed in config/whitelist.txt and config/admins.txt from joining your server
 #USEWHITELIST
 
-## The address shown for the game server in the TGS check command
-# PUBLIC_ADDRESS ss13.example.com:2506
-
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
 ## Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
-## This is also used to show the server's address in the TGS check command if the public address isn't set
 # SERVER ss13.example.com:2506
 
 ## forum address
-# FORUMURL http://tgstation13.org/phpBB/index.php
+FORUMURL https://discord.gg/WU92NG2Me8
 
 ## Wiki address
-# WIKIURL http://www.tgstation13.org/wiki
+WIKIURL https://wiki.wod13.org
 
 ## Rules address
-# RULESURL http://www.tgstation13.org/wiki/Rules
+RULESURL https://discord.gg/WU92NG2Me8
 
 ## Github address
-# GITHUBURL https://www.github.com/tgstation/tgstation
+# GITHUBURL https://github.com/TheCarnalest/World-of-Darkness-13
 
 ## Discord bot command prefix, if the discord bot is used
 # DISCORDBOTCOMMANDPREFIX ?
@@ -211,42 +260,26 @@ IPINTEL_REJECT_BAD
 # GAMELOGURL
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
-# BANAPPEALS http://justanotherday.example.com
+BANAPPEALS https://discord.gg/WU92NG2Me8
 
-## System command that invokes yt-dlp, used by Play Internet Sound.
-## You can install yt-dlp with
-## "pip install yt-dlp" if you have pip installed
-## from https://github.com/yt-dlp/yt-dlp/releases
+## System command that invokes youtube-dl, used by Play Internet Sound.
+## You can install youtube-dl with
+## "pip install youtube-dl" if you have pip installed
+## from https://github.com/rg3/youtube-dl/releases
 ## or your package manager
-## The default value assumes yt-dlp is in your system PATH
-# INVOKE_YOUTUBEDL yt-dlp
-
-## Comment this out to disable users ability to use the request internet sounds to be played.
-REQUEST_INTERNET_SOUND
-
-## Request Internet Sound Allowed URL'S comma separated, urls here are the only sites allowed through Request Internet Sound, Add more to allow more, or remove to disallow.
-## The Defaults here are all supported by yt-dlp
-## Ensure . and / are escaped with \
-REQUEST_INTERNET_ALLOWED youtube\.com\/watch?v=,youtu\.be\/,soundcloud\.com\/,bandcamp\.com\/track\/
+## The default value assumes youtube-dl is in your system PATH
+# INVOKE_YOUTUBEDL youtube-dl
 
 ## In-game features
-
-## Toggle for having jobs load up from the jobconfig.toml (or jobs.txt) file. Will use codebase defaults if commented out.
-## Jobs have specific "keys" tied to their in-game datums, those should sync up otherwise it will fail to load.
-## Setting Total/Spawn Positions to -1 will open unlimited join slots for it.
-## Playtime Requirements is in minutes, Required Account Age is in days.
-## Human Authority Whitelist Setting can either be 0 or 1.
-## Make sure to read the start of the file to get a more in-depth explanation of what each entry does!
-#LOAD_JOBS_FROM_TXT
+##Toggle for having jobs load up from the .txt
+# LOAD_JOBS_FROM_TXT
 
 ## Uncomment this to forbid admins from possessing the singularity.
-## It is intentional that Admins can edit this config, as its meant to serve as a deterrent/warning for admin abuse.
-## Add a `@` in front to lock admins from editing this.
 #FORBID_SINGULO_POSSESSION
 
-## Uncomment to give admins the ability to send a maptext popup to players.
-## Only fires when an admin requests it, not every ahelp.
-POPUP_ADMIN_PM
+## Uncomment to show a popup 'reply to' window to every non-admin that receives an adminPM.
+## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
+#POPUP_ADMIN_PM
 
 ## Uncomment to allow special 'Easter-egg' events on special holidays such as seasonal holidays and stuff like 'Talk Like a Pirate Day' :3 YAARRR
 ALLOW_HOLIDAYS
@@ -254,8 +287,9 @@ ALLOW_HOLIDAYS
 ## Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
 #SHOW_IRC_NAME
 
-## Uncomment to prevent machines syncing to the Science techweb by default.
-#NO_DEFAULT_TECHWEB_LINK
+## Defines the ticklimit for subsystem initialization (In percents of a byond tick). Lower makes world start smoother. Higher makes it faster.
+##This is currently a testing optimized setting. A good value for production would be 98.
+TICK_LIMIT_MC_INIT 500
 
 ##Defines the ticklag for the world. Ticklag is the amount of time between game ticks (aka byond ticks) (in 1/10ths of a second).
 ##	This also controls the client network update rate, as well as the default client fps
@@ -275,9 +309,6 @@ TICKLAG 0.5
 NOTE_FRESH_DAYS 91.31055
 ## Notes older then this will be completely faded out.
 NOTE_STALE_DAYS 365.2422
-
-## Uncomment to allow drastic performance enhancement measures to turn on automatically once there are equal or more clients than the configured amount (will also prompt admin for veto)
-#AUTO_LAG_SWITCH_POP 75
 
 ##Note: all population caps can be used with each other if desired.
 
@@ -303,7 +334,7 @@ EXTREME_POPCAP_MESSAGE The server is currently serving a high number of users, f
 BYOND_MEMBER_BYPASS_POPCAP
 
 ## Notify admins when a new player connects for the first x days a player's been around. (0 for first connection only, -1 for never)
-##	Requires database
+##	Requres database
 NOTIFY_NEW_PLAYER_AGE 0
 
 ## Notify admins when a player connects if their byond account was created in the last X days
@@ -311,11 +342,8 @@ NOTIFY_NEW_PLAYER_AGE 0
 NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 
 ## Notify the irc channel when a new player makes their first connection
-##	Requires database
+##	Requres database
 #IRC_FIRST_CONNECTION_ALERT
-
-## Discord ID of a role that should be pinged when a new player makes their first connection
-#NEW_PLAYER_ALERT_ROLE_ID 1138188190604341308
 
 ## Deny all new connections by ckeys we haven't seen before (exempts admins and only denies the connection if the database is enabled and connected)
 ##	Requires database
@@ -385,14 +413,13 @@ AUTOADMIN_RANK Game Master
 ## These trigger for any version below (non-inclusive) the given version, so 510 triggers on 509 or lower.
 ## These messages will be followed by one stating the clients current version and the required version for clarity.
 ## If CLIENT_WARN_POPUP is uncommented a popup window with the message will be displayed instead
-#CLIENT_WARN_VERSION 515
-#CLIENT_WARN_BUILD 1635
+#CLIENT_WARN_VERSION 511
 #CLIENT_WARN_POPUP
-#CLIENT_WARN_MESSAGE Byond released 515 as the stable release. This comes bundled with a host of niceties, including image generation for UIs and :: operators.
-CLIENT_ERROR_VERSION 515
+#CLIENT_WARN_MESSAGE Byond released 511 as the stable release. You can set the framerate your client runs at, which makes the game feel very different and cool. Shortly after its release we will end up using 511 client features and you will be forced to update.
+CLIENT_ERROR_VERSION 511
 CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
-## The minimum build needed for joining the server.
-CLIENT_ERROR_BUILD 1590
+## The minimum build needed for joining the server, if using 512, a good minimum build would be 1421 as that disables the Middle Mouse Button exploit.
+CLIENT_ERROR_BUILD 1421
 
 ## TOPIC RATE LIMITING
 ## This allows you to limit how many topic calls (clicking on an interface window) the client can do in any given game second and/or game minute.
@@ -401,7 +428,7 @@ CLIENT_ERROR_BUILD 1590
 ## Set to 0 or comment out to disable.
 SECOND_TOPIC_LIMIT 10
 
-MINUTE_TOPIC_LIMIT 200
+MINUTE_TOPIC_LIMIT 100
 
 
 ## CLICK RATE LIMITING
@@ -415,35 +442,27 @@ SECOND_CLICK_LIMIT 15
 MINUTE_CLICK_LIMIT 400
 
 ##Error handling related options
-## The "cooldown" time for each occurrence of a unique error
+## The "cooldown" time for each occurence of a unique error
 #ERROR_COOLDOWN 600
-## How many occurrences before the next will silence them
+## How many occurences before the next will silence them
 #ERROR_LIMIT 90
 ## How long a unique error will be silenced for
 #ERROR_SILENCE_TIME 6000
-##How long to wait between messaging admins about occurrences of a unique error
+##How long to wait between messaging admins about occurences of a unique error
 #ERROR_MSG_DELAY 50
 
 
 ## Game Chat Message Options
 ## Various messages to be sent to connected chat channels.
-## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS>=4.
-## If using TGS>=4, the string option can be set as one of more chat channel tags (separated by ','s) to limit the message to channels with that tag name (case-sensitive). This will have no effect on TGS3.
-## You can also specify multiple channel tags by using the config option multiple times,
-## i.e. CHANNEL_ANNOUNCE_NEW_GAME chat_channel_tag_1
-## i.e. CHANNEL_ANNOUNCE_NEW_GAME chat_channel_tag_2
+## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS4.
+## If using TGS4, the string option can be set as one of more chat channel tags (separated by ','s) to limit the message to channels with that tag name (case-sensitive). This will have no effect on TGS3.
+## i.e. CHAT_ANNOUNCE_NEW_GAME chat_channel_tag
 
-## Which channels will have a message about a new game starting, message includes the station name.
-#CHANNEL_ANNOUNCE_NEW_GAME
-
-## Which channels will have a message about a new game starting, message includes the round ID of the game that has just ended.
-#CHANNEL_ANNOUNCE_END_GAME
+## Send a message with the station name starting a new game.
+#CHAT_ANNOUNCE_NEW_GAME
 
 ## Ping users who use the `notify` command when a new game starts.
 #CHAT_NEW_GAME_NOTIFICATIONS
-
-## Uncomment this flag to validate admin commands from discord by requiring they come from linked discord accounts and that those discord accounts link to a ckey with the right admin permissions.
-# SECURE_CHAT_COMMANDS
 
 ## Allow admin hrefs that don't use the new token system, will eventually be removed
 #DEBUG_ADMIN_HREFS
@@ -471,7 +490,7 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 ## Uncomment to prevent the world from sleeping while no players are connected after initializations
 #RESUME_AFTER_INITIALIZATIONS
 
-## Uncomment to set the number of /world/Reboot()s before the DreamDaemon restarts itself. 0 means restart every round. Requires tgstation server tools.
+## Uncomment to set the number of /world/Reboot()s before the Dream Daemon restarts itself. 0 means restart every round. Requires tgstation server tools.
 #ROUNDS_UNTIL_HARD_RESTART 10
 
 
@@ -480,7 +499,7 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 ##  15x15 would be the standard square view. 21x15 is what goonstation uses for widescreen.
 ##  Setting this to something different from DEFAULT_VIEW_SQUARE will enable widescreen toggles
 ##	Do note that changing this value will affect the title screen. The title screen will have to be updated manually if this is changed.
-DEFAULT_VIEW 19x15
+DEFAULT_VIEW 17x15
 
 ##Default view size, in tiles. Should *always* be square.
 ## The alternative square viewport size if you're using a widescreen view size
@@ -491,15 +510,6 @@ DEFAULT_VIEW_SQUARE 15x15
 ## Enable automatic profiling - Byond 513.1506 and newer only.
 #AUTO_PROFILE
 
-## Determines the interval between each saved profiler snapshot (in deciseconds).
-#PROFILER_INTERVAL 3000
-
-## Threshold (in deciseconds) for real time between ticks before we start dumping profiles
-DRIFT_DUMP_THRESHOLD 40
-
-## How long to wait (in deciseconds) after a profile dump before logging another tickdrift sourced one
-DRIFT_PROFILE_DELAY 150
-
 ## Uncomment to enable global ban DB using the provided URL. The API should expect to receive a ckey at the end of the URL.
 ## More API details can be found here: https://centcom.melonmesa.com
 #CENTCOM_BAN_DB https://centcom.melonmesa.com/ban/search
@@ -507,120 +517,18 @@ DRIFT_PROFILE_DELAY 150
 ## If enabled, only bans from these servers will be shown to admins using CentCom. The default sources list is an example.
 #CENTCOM_SOURCE_WHITELIST Beestation MRP,TGMC,FTL13
 
-## If uncommented, this will enable admin 2FA (two-factor authentication).
-## The URL admins will be asked to go to will be here, with %ID% being the ID
-## of their connection attempt.
-#ADMIN_2FA_URL https://example.com/id/%ID%
+#### DISCORD STUFFS ####
+## MAKE SURE ALL SECTIONS OF THIS ARE FILLED OUT BEFORE ENABLING
+## Discord IDs can be obtained by following this guide: https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-
 
-## How long in seconds after which a hard delete is treated as causing lag. This can be a float and supports a precision as low as nanoseconds.
-#HARD_DELETES_OVERRUN_THRESHOLD 0.5
+## Uncomment to enable discord auto-roling when users link their BYOND and Discord accounts
+#ENABLE_DISCORD_AUTOROLE
 
-## Once a typepath causes overrun from hard deletes this many times, stop hard deleting it on garbage collection failures. (set to 0 to disable)
-#HARD_DELETES_OVERRUN_LIMIT 0
+## Add your discord bot token here. Make sure it has the ability to manage roles
+#DISCORD_TOKEN someDiscordToken
 
-## The URL to the webhook for adminhelps to relay the urgent ahelp message to
-## If not set, will disable urgent ahelps.
-#URGENT_ADMINHELP_WEBHOOK_URL
+## Add the ID of your guild (server) here
+#DISCORD_GUILDID 000000000000000000
 
-## See above, but for non-urgent ahelps
-#REGULAR_ADMINHELP_WEBHOOK_URL
-
-## The urgent ahelp cooldown for a given player if they're alone on a server and need to send an urgent ahelp.
-URGENT_AHELP_COOLDOWN 300
-
-## The message that is sent to the discord if an urgent ahelp is sent. Useful for sending a role ping.
-#URGENT_AHELP_MESSAGE
-
-## See above, but for non-urgent ahelps.
-#AHELP_MESSAGE
-
-## The message that the player receives whenever prompted whether they want to send an urgent ahelp or not.
-#URGENT_AHELP_USER_PROMPT This'll ping the admins!
-
-## The link that the title of a ticket can link to.
-## If not set, it will link nowhere
-## use $RID for the round ID and $TID for the ticket ID
-#ADMINHELP_AHELP_LINK
-
-## The URL for the pfp of the webhook
-#ADMINHELP_WEBHOOK_PFP
-
-## The name of the webhook
-#ADMINHELP_WEBHOOK_NAME
-
-## Sets an MOTD of the server.
-## You can use this multiple times, and the MOTDs will be appended in order.
-## Based on config directory, so "motd.txt" points to "config/motd.txt"
-MOTD motd.txt
-#MOTD motd_extra.txt
-
-## Assets can opt-in to caching their results into `cache/`.
-## This is important, as preferences assets take upwards of 30 seconds (without sleeps) to collect.
-## The cache is assumed to be cleared by TGS recompiling, which deletes `cache/`.
-## This should be disabled (through `CACHE_ASSETS 0`) on development,
-## but enabled on production (the default).
-CACHE_ASSETS 0
-
-## If this is uncommented, we will save all associated spritesheet PNGs and CSS files to a folder in the round-specific logs folder.
-## Useful for developers to debug potential spritesheet issues to determine where the issue is cropping up (either in DM-side sprite generation or in the TGUI-side display of said spritesheet).
-## Will only seek to waste disk space if ran on production.
-#SAVE_SPRITESHEETS
-
-## If this remains commented out, we will allow players to download their own preferences as a JSON file to do whatever they wish.
-## This does require the game code to read (and only read) the /data folder where these files are stored, and then use the BYOND FTP Function to send the file to the client.
-## In case you get overloaded with requests such as these, simply uncomment to disable this feature to clients.
-#FORBID_PREFERENCES_EXPORT
-
-## The time (in seconds) that a player must wait between download requests of their JSON preferences.
-## Minimum number settable for this is 1.
-SECONDS_COOLDOWN_FOR_PREFERENCES_EXPORT 10
-
-## Uncomment to allow the station name to be in the hub entry.
-## You should only enable this if you can guarantee a station name doesn't break BYOND's TOS.
-## BYOND staff have gotten upset at us in the past for inappropriate station names.
-#STATION_NAME_IN_HUB_ENTRY
-
-## The number of PR announcements allowed for the same pull request per round
-## This makes sure that somebody can only spam a few reopens and closes before being ignored
-PR_ANNOUNCEMENTS_PER_ROUND 5
-
-## Uncomment to block all attempts to profile, for performance reasons
-#FORBID_ALL_PROFILING
-
-## Uncomment to block granting profiling privileges to users with R_DEBUG, for performance purposes
-#FORBID_ADMIN_PROFILING
-
-## Uncomment to disable TTS messages on whispering, such as radio messages or the whisper verb. Useful for reducing your TTS load.
-#TTS_NO_WHISPER
-
-## Link to a HTTP server that's been set up on a server. Docker-compose file can be found in tools/tts
-#TTS_HTTP_URL http://localhost:5002
-
-## Token that can be used to prevent misuse of your TTS server that you've set up.
-#TTS_HTTP_TOKEN coolio
-
-## The maximum number of concurrent tts http requests that can be made by the server at once.
-#TTS_MAX_CONCURRENT_REQUESTS 4
-
-## Add voices to the TTS voice blacklist.
-#TTS_VOICE_BLACKLIST Sans Undertale
-#TTS_VOICE_BLACKLIST Papyrus Undertale
-
-## Comment to disable sending a toast notification on the host server when initializations complete.
-## Even if this is enabled, a notification will only be sent if there are no clients connected.
-TOAST_NOTIFICATION_ON_INIT
-
-## Causes configuration errors to spit out runtimes
-CONFIG_ERRORS_RUNTIME
-
-## Restricts client uploads to the server, defined in bytes, default is 0.5MB
-UPLOAD_LIMIT 524288
-
-## Restricts admin client uploads to the server, defined in bytes, default is 5MB
-UPLOAD_LIMIT_ADMIN 5242880
-
-## Uncomment to allow admins with +DEBUG to start the byond-tracy profiler during the round.
-#ALLOW_TRACY_START
-
-## Uncomment to allow admins with +DEBUG to queue the next round to run the byond-tracy profiler.
-#ALLOW_TRACY_QUEUE
+## Add the ID of the role you want assigning here
+#DISCORD_ROLEID 000000000000000000

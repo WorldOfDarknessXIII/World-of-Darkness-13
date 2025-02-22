@@ -1,40 +1,37 @@
 /mob/living/silicon/robot/examine(mob/user)
-	. = list()
+	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!")
 	if(desc)
 		. += "[desc]"
-
-	var/model_name = model ? "\improper [model.name]" : "\improper Default"
-	. += "It is currently <b>\a [model_name]-type</b> cyborg."
 
 	var/obj/act_module = get_active_held_item()
 	if(act_module)
 		. += "It is holding [icon2html(act_module, user)] \a [act_module]."
-	. += get_status_effect_examinations()
+	. += status_effect_examines()
 	if (getBruteLoss())
 		if (getBruteLoss() < maxHealth*0.5)
-			. += span_warning("It looks slightly dented.")
+			. += "<span class='warning'>It looks slightly dented.</span>"
 		else
-			. += span_boldwarning("It looks severely dented!")
+			. += "<span class='warning'><B>It looks severely dented!</B></span>"
 	if (getFireLoss() || getToxLoss())
 		var/overall_fireloss = getFireLoss() + getToxLoss()
 		if (overall_fireloss < maxHealth * 0.5)
-			. += span_warning("It looks slightly charred.")
+			. += "<span class='warning'>It looks slightly charred.</span>"
 		else
-			. += span_boldwarning("It looks severely burnt and heat-warped!")
+			. += "<span class='warning'><B>It looks severely burnt and heat-warped!</B></span>"
 	if (health < -maxHealth*0.5)
-		. += span_warning("It looks barely operational.")
+		. += "<span class='warning'>It looks barely operational.</span>"
 	if (fire_stacks < 0)
-		. += span_warning("It's covered in water.")
+		. += "<span class='warning'>It's covered in water.</span>"
 	else if (fire_stacks > 0)
-		. += span_warning("It's coated in something flammable.")
+		. += "<span class='warning'>It's coated in something flammable.</span>"
 
 	if(opened)
-		. += span_warning("Its cover is open and the power cell is [cell ? "installed" : "missing"].")
+		. += "<span class='warning'>Its cover is open and the power cell is [cell ? "installed" : "missing"].</span>"
 	else
 		. += "Its cover is closed[locked ? "" : ", and looks unlocked"]."
 
 	if(cell && cell.charge <= 0)
-		. += span_warning("Its battery indicator is blinking red!")
+		. += "<span class='warning'>Its battery indicator is blinking red!</span>"
 
 	switch(stat)
 		if(CONSCIOUS)
@@ -43,8 +40,9 @@
 			else if(!client)
 				. += "It appears to be in stand-by mode." //afk
 		if(SOFT_CRIT, UNCONSCIOUS, HARD_CRIT)
-			. += span_warning("It doesn't seem to be responding.")
+			. += "<span class='warning'>It doesn't seem to be responding.</span>"
 		if(DEAD)
-			. += span_deadsay("It looks like its system is corrupted and requires a reset.")
+			. += "<span class='deadsay'>It looks like its system is corrupted and requires a reset.</span>"
+	. += "*---------*</span>"
 
 	. += ..()

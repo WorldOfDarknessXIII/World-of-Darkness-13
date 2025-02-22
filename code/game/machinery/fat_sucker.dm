@@ -27,32 +27,28 @@
 	"Unsaturated fat, that is monounsaturated fats, polyunsaturated fats and omega-3 fatty acids, is found in plant foods and fish." \
 	)
 
-/obj/machinery/fat_sucker/Initialize(mapload)
+/obj/machinery/fat_sucker/Initialize()
 	. = ..()
-	soundloop = new(src,  FALSE)
-	update_appearance()
-
-/obj/machinery/fat_sucker/Destroy()
-	QDEL_NULL(soundloop)
-	. = ..()
+	soundloop = new(list(src),  FALSE)
+	update_icon()
 
 /obj/machinery/fat_sucker/RefreshParts()
-	. = ..()
+	..()
 	var/rating = 0
-	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
-		rating += micro_laser.tier
+	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
+		rating += L.rating
 	bite_size = initial(bite_size) + rating * 2.5
 	nutrient_to_meat = initial(nutrient_to_meat) - rating * 5
 
 /obj/machinery/fat_sucker/examine(mob/user)
 	. = ..()
-	. += {"[span_notice("Alt-Click to toggle the safety hatch.")]
-				[span_notice("Removing [bite_size] nutritional units per operation.")]
-				[span_notice("Requires [nutrient_to_meat] nutritional units per meat slab.")]"}
+	. += {"<span class='notice'>Alt-Click to toggle the safety hatch.</span>
+				<span class='notice'>Removing [bite_size] nutritional units per operation.</span>
+				<span class='notice'>Requires [nutrient_to_meat] nutritional units per meat slab.</span>"}
 
-/obj/machinery/fat_sucker/close_machine(mob/user, density_to_set = TRUE)
+/obj/machinery/fat_sucker/close_machine(mob/user)
 	if(panel_open)
-		to_chat(user, span_warning("You need to close the maintenance hatch first!"))
+		to_chat(user, "<span class='warning'>You need to close the maintenance hatch first!</span>")
 		return
 	..()
 	playsound(src, 'sound/machines/click.ogg', 50)
@@ -61,11 +57,11 @@
 			occupant.forceMove(drop_location())
 			set_occupant(null)
 			return
-		to_chat(occupant, span_notice("You enter [src]."))
+		to_chat(occupant, "<span class='notice'>You enter [src].</span>")
 		addtimer(CALLBACK(src, PROC_REF(start_extracting)), 20, TIMER_OVERRIDE|TIMER_UNIQUE)
-		update_appearance()
+		update_icon()
 
-/obj/machinery/fat_sucker/open_machine(mob/user, density_to_set = FALSE)
+/obj/machinery/fat_sucker/open_machine(mob/user)
 	make_meat()
 	playsound(src, 'sound/machines/click.ogg', 50)
 	if(processing)
@@ -74,18 +70,18 @@
 
 /obj/machinery/fat_sucker/container_resist_act(mob/living/user)
 	if(!free_exit || state_open)
-		to_chat(user, span_notice("The emergency release is not responding! You start pushing against the hull!"))
+		to_chat(user, "<span class='notice'>The emergency release is not responding! You start pushing against the hull!</span>")
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
-		user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
-			span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
-			span_hear("You hear a metallic creaking from [src]."))
-		if(do_after(user, breakout_time, target = src, hidden = TRUE))
+		user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
+			"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
+			"<span class='hear'>You hear a metallic creaking from [src].</span>")
+		if(do_after(user, breakout_time, target = src))
 			if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 				return
 			free_exit = TRUE
-			user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
-				span_notice("You successfully break out of [src]!"))
+			user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
+				"<span class='notice'>You successfully break out of [src]!</span>")
 			open_machine()
 		return
 	open_machine()
@@ -96,18 +92,19 @@
 	else if(!processing || free_exit)
 		open_machine()
 	else
-		to_chat(user, span_warning("The safety hatch has been disabled!"))
+		to_chat(user, "<span class='warning'>The safety hatch has been disabled!</span>")
 
-/obj/machinery/fat_sucker/click_alt(mob/living/user)
+/obj/machinery/fat_sucker/AltClick(mob/living/user)
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
 	if(user == occupant)
-		to_chat(user, span_warning("You can't reach the controls from inside!"))
-		return CLICK_ACTION_BLOCKING
+		to_chat(user, "<span class='warning'>You can't reach the controls from inside!</span>")
+		return
 	if(!(obj_flags & EMAGGED) && !allowed(user))
-		to_chat(user, span_warning("You lack the required access."))
-		return CLICK_ACTION_BLOCKING
+		to_chat(user, "<span class='warning'>You lack the required access.</span>")
+		return
 	free_exit = !free_exit
-	to_chat(user, span_notice("Safety hatch [free_exit ? "unlocked" : "locked"]."))
-	return CLICK_ACTION_SUCCESS
+	to_chat(user, "<span class='notice'>Safety hatch [free_exit ? "unlocked" : "locked"].</span>")
 
 /obj/machinery/fat_sucker/update_overlays()
 	. = ..()
@@ -131,7 +128,7 @@
 	if(panel_open)
 		. += "[icon_state]_panel"
 
-/obj/machinery/fat_sucker/process(seconds_per_tick)
+/obj/machinery/fat_sucker/process(delta_time)
 	if(!processing)
 		return
 	if(!powered() || !occupant || !iscarbon(occupant))
@@ -143,8 +140,8 @@
 		open_machine()
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 		return
-	C.adjust_nutrition(-bite_size * seconds_per_tick)
-	nutrients += bite_size * seconds_per_tick
+	C.adjust_nutrition(-bite_size * delta_time)
+	nutrients += bite_size * delta_time
 
 	if(next_fact <= 0)
 		next_fact = initial(next_fact)
@@ -152,7 +149,7 @@
 		playsound(loc, 'sound/machines/chime.ogg', 30, FALSE)
 	else
 		next_fact--
-	use_energy(active_power_usage * seconds_per_tick)
+	use_power(500)
 
 /obj/machinery/fat_sucker/proc/start_extracting()
 	if(state_open || !occupant || processing || !powered())
@@ -162,11 +159,11 @@
 		if(C.nutrition > start_at)
 			processing = TRUE
 			soundloop.start()
-			update_appearance()
+			update_icon()
 			set_light(2, 1, "#ff0000")
 		else
 			say("Subject not fat enough.")
-			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
 			overlays += "[icon_state]_red" //throw a red light icon over it, to show that it won't work
 
 /obj/machinery/fat_sucker/proc/stop()
@@ -183,11 +180,11 @@
 			while(nutrients >= nutrient_to_meat)
 				nutrients -= nutrient_to_meat
 				var/atom/meat = new C.type_of_meat (drop_location())
-				meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, C) = SHEET_MATERIAL_AMOUNT * 4))
+				meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, C) = MINERAL_MATERIAL_AMOUNT * 4))
 			while(nutrients >= nutrient_to_meat / 3)
 				nutrients -= nutrient_to_meat / 3
 				var/atom/meat = new /obj/item/food/meat/rawcutlet/plain (drop_location())
-				meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, C) = round(SHEET_MATERIAL_AMOUNT * (4/3))))
+				meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, C) = round(MINERAL_MATERIAL_AMOUNT * (4/3))))
 			nutrients = 0
 
 /obj/machinery/fat_sucker/screwdriver_act(mob/living/user, obj/item/I)
@@ -195,13 +192,13 @@
 	if(..())
 		return
 	if(occupant)
-		to_chat(user, span_warning("[src] is currently occupied!"))
+		to_chat(user, "<span class='warning'>[src] is currently occupied!</span>")
 		return
 	if(state_open)
-		to_chat(user, span_warning("[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!"))
+		to_chat(user, "<span class='warning'>[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!</span>")
 		return
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
-		update_appearance()
+		update_icon()
 		return
 	return FALSE
 
@@ -209,11 +206,10 @@
 	if(default_deconstruction_crowbar(I))
 		return TRUE
 
-/obj/machinery/fat_sucker/emag_act(mob/user, obj/item/card/emag/emag_card)
+/obj/machinery/fat_sucker/emag_act(mob/living/user)
 	if(obj_flags & EMAGGED)
-		return FALSE
+		return
 	start_at = 100
 	stop_at = 0
-	to_chat(user, span_notice("You remove the access restrictions and lower the automatic ejection threshold!"))
+	to_chat(user, "<span class='notice'>You remove the access restrictions and lower the automatic ejection threshold!</span>")
 	obj_flags |= EMAGGED
-	return TRUE

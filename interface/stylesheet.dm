@@ -2,7 +2,7 @@
 /// !!!!!!!!!!HEY LISTEN!!!!!!!!!!!!!!!!!!!!!!!!
 /// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-// If you modify this file you ALSO need to modify tgui/packages/tgui-panel/styles/tgchat/chat-light.scss and chat-dark.scss
+// If you modify this file you ALSO need to modify code/modules/goonchat/browserAssets/browserOutput.css and browserOutput_white.css
 // BUT you have to use PX font sizes with are on a x8 scale of these font sizes
 // Sample font-size: DM: 8 CSS: 64px
 
@@ -24,8 +24,7 @@ em						{font-style: normal;	font-weight: bold;}
 .bold					{					font-weight: bold;}
 
 .prefix					{					font-weight: bold;}
-.oocplain				{}
-.warningplain			{}
+
 .ooc					{					font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
 .adminooc				{color: #700038;	font-weight: bold;}
@@ -51,12 +50,8 @@ em						{font-style: normal;	font-weight: bold;}
 .syndradio				{color: #6d3f40;}
 .centcomradio			{color: #686868;}
 .aiprivradio			{color: #ff00ff;}
-.enteradio				{color: #00ff99;}
 .redteamradio			{color: #ff0000;}
 .blueteamradio			{color: #0000ff;}
-.greenteamradio			{color: #00ff00;}
-.yellowteamradio		{color: #d1ba22;}
-.gangradio				{color: #ac2ea1;}
 
 .yell					{					font-weight: bold;}
 
@@ -67,6 +62,7 @@ h1.alert, h2.alert		{color: #000000;}
 .infoplain				{}
 
 .userdanger				{color: #ff0000;	font-weight: bold;	font-size: 3;}
+.userhelp				{color: #14a833;	font-weight: bold;	font-size: 3;}
 .danger					{color: #ff0000;	font-weight: bold;}
 .danger					{color: #ff0000;}
 .tinydanger				{color: #ff0000; font-size: 85%;}
@@ -91,9 +87,9 @@ h1.alert, h2.alert		{color: #000000;}
 .unconscious			{color: #0000ff;	font-weight: bold;}
 .suicide				{color: #ff5050;	font-style: italic;}
 .green					{color: #03ff39;}
-.grey					{color: #838383;}
 .nicegreen				{color: #14a833;}
-.boldnicegreen			{color: #14a833;	font-weight: bold;}
+.userlove				{color: #FF1493;	font-style: italic; font-weight: bold;	text-shadow: 0 0 6px #ff6dbc;}
+.love					{color: #ff006a;	font-style: italic;	text-shadow: 0 0 6px #ff6d6d;}
 .cult					{color: #973e3b;}
 .cultlarge				{color: #973e3b;	font-weight: bold;	font-size: 3;}
 .narsie					{color: #973e3b;	font-weight: bold;	font-size: 15;}
@@ -112,8 +108,6 @@ h1.alert, h2.alert		{color: #000000;}
 .revenwarning			{color: #760fbb;	font-style: italic;}
 .revendanger			{color: #760fbb;	font-weight: bold;	font-size: 3;}
 
-.sentientdisease		{color: #446600;}
-
 .deconversion_message	{color: #5000A0;	font-size: 3;	font-style: italic;}
 
 .ghostalert				{color: #5c00e6;	font-style: italic;	font-weight: bold;}
@@ -127,14 +121,13 @@ h1.alert, h2.alert		{color: #000000;}
 
 .interface				{color: #330033;}
 
-.blob					{color: #556B2F;	font-weight: bold;	font-size: 3;}
-
 .sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
 .papyrus				{font-family: "Papyrus", cursive, sans-serif;}
 .robot					{font-family: "Courier New", cursive, sans-serif;}
+.phone					{font-family: "Courier New", cursive, sans-serif;}
+.smallphone					{font-family: "Courier New", cursive, sans-serif; font-size: 85%;}
 
 .command_headset		{font-weight: bold;	font-size: 3;}
-.soapbox 				{font-weight: bold; font-size: 3;}
 .small					{font-size: 1;}
 .big					{font-size: 3;}
 .reallybig				{font-size: 4;}
@@ -172,5 +165,6 @@ h1.alert, h2.alert		{color: #000000;}
 .swarmer				{color: #2C75FF;}
 .resonate				{color: #298F85;}
 
-.upside_down			{display: inline; -moz-transform: scale(-1, -1); -webkit-transform: scale(-1, -1); -o-transform: scale(-1, -1); -ms-transform: scale(-1, -1); transform: scale(-1, -1);}
+.monkeyhive				{color: #774704;}
+.monkeylead				{color: #774704;	font-size: 2;}
 </style>"}

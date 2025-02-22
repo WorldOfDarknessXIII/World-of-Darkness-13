@@ -1,5 +1,5 @@
 /obj/item/seeds/cotton
-	name = "cotton seed pack"
+	name = "pack of cotton seeds"
 	desc = "A pack of seeds that'll grow into a cotton plant. Assistants make good free labor if neccesary."
 	icon_state = "seed-cotton"
 	species = "cotton"
@@ -14,7 +14,7 @@
 	potency = 50
 	instability = 15
 	growthstages = 3
-	growing_icon = 'icons/obj/service/hydroponics/growing.dmi'
+	growing_icon = 'icons/obj/hydroponics/growing.dmi'
 	icon_dead = "cotton-dead"
 	mutatelist = list(/obj/item/seeds/cotton/durathread)
 
@@ -34,18 +34,22 @@
 	var/cotton_name = "raw cotton"
 
 /obj/item/grown/cotton/attack_self(mob/user)
-	var/cotton_count = 1
+	user.show_message("<span class='notice'>You pull some [cotton_name] out of the [name]!</span>", MSG_VISUAL)
+	var/seed_modifier = 0
 	if(seed)
-		cotton_count += round(seed.potency / 25)
-
-	user.balloon_alert(user, "pulled [cotton_count] piece\s")
-	new cotton_type(user.drop_location(), cotton_count)
+		seed_modifier = round(seed.potency / 25)
+	var/obj/item/stack/cotton = new cotton_type(user.loc, 1 + seed_modifier)
+	var/old_cotton_amount = cotton.amount
+	for(var/obj/item/stack/ST in user.loc)
+		if(ST != cotton && istype(ST, cotton_type) && ST.amount < ST.max_amount)
+			ST.attackby(cotton, user)
+	if(cotton.amount > old_cotton_amount)
+		to_chat(user, "<span class='notice'>You add the newly-formed [cotton_name] to the stack. It now contains [cotton.amount] [cotton_name].</span>")
 	qdel(src)
-
 
 //reinforced mutated variant
 /obj/item/seeds/cotton/durathread
-	name = "durathread seed pack"
+	name = "pack of durathread seeds"
 	desc = "A pack of seeds that'll grow into an extremely durable thread that could easily rival plasteel if woven properly."
 	icon_state = "seed-durathread"
 	species = "durathread"
@@ -59,9 +63,8 @@
 	yield = 2
 	potency = 50
 	growthstages = 3
-	growing_icon = 'icons/obj/service/hydroponics/growing.dmi'
+	growing_icon = 'icons/obj/hydroponics/growing.dmi'
 	icon_dead = "cotton-dead"
-	mutatelist = null
 
 /obj/item/grown/cotton/durathread
 	seed = /obj/item/seeds/cotton/durathread

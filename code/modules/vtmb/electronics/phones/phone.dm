@@ -28,8 +28,9 @@
 	lefthand_file = 'code/modules/wod13/lefthand.dmi'
 	righthand_file = 'code/modules/wod13/righthand.dmi'
 	item_flags = NOBLUDGEON
+	flags_1 = HEAR_1
 	w_class = WEIGHT_CLASS_SMALL
-	armor_type = /datum/armor/vamp_phone
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 
@@ -56,11 +57,6 @@
 	var/open_state = "phone2"
 	var/closed_state = "phone1"
 	var/folded_state = "phone0"
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/vamp_phone
-	fire = 100
-	acid = 100
 
 /obj/item/vamp/phone/Initialize()
 	. = ..()
@@ -130,7 +126,7 @@
 		return ..()
 */
 
-/obj/item/vamp/phone/click_alt(mob/user)
+/obj/item/vamp/phone/AltClick(mob/user)
 	if(can_fold && !closed)
 		closed = TRUE
 		icon_state = folded_state
@@ -359,7 +355,7 @@
 					call_sound = 'code/modules/wod13/sounds/nokia.ogg'
 					to_chat(usr, "<span class='notice'>Code activated.</span>")
 				else if(choosed_number == "#666")
-					call_sound = 'sound/mobs/humanoids/human/scream/malescream_6.ogg'
+					call_sound = 'sound/voice/human/malescream_6.ogg'
 					to_chat(usr, "<span class='notice'>Code activated.</span>")
 				else if(choosed_number == "#34")
 					if(ishuman(usr))
@@ -571,7 +567,7 @@
 			.= TRUE
 		if("keypad")
 			if(!silence)
-				playsound(loc, 'sound/machines/terminal/terminal_select.ogg', 15, TRUE)
+				playsound(loc, 'sound/machines/terminal_select.ogg', 15, TRUE)
 			switch(params["value"])
 				if("C")
 					choosed_number = ""
@@ -627,7 +623,7 @@
 /obj/item/vamp/phone/Topic(href, href_list)
 	..()
 	var/mob/living/U = usr
-	if(usr.can_perform_action(src, FALSE, FALSE, NO_TK) && !href_list["close"] && !closed)
+	if(usr.canUseTopic(src, FALSE, FALSE, NO_TK) && !href_list["close"] && !closed)
 		switch(href_list["choice"])
 			if("hang")
 				last_call = 0
@@ -780,15 +776,16 @@
 /obj/item/vamp/phone/street
 	desc = "An ordinary street payphone"
 	icon = 'code/modules/wod13/props.dmi'
+	onflooricon = 'code/modules/wod13/props.dmi'
 	icon_state = "payphone"
 	anchored = TRUE
 	number = "1447"
 	can_fold = 0
 
 	/// Phone icon states
-	open_state = "streetphone"
-	closed_state = "streetphone"
-	folded_state = "streetphone"
+	open_state = "payphone"
+	closed_state = "payphone"
+	folded_state = "payphone"
 
 /obj/item/vamp/phone/clean
 	desc = "The usual phone of a cleaning company used to communicate with employees"
@@ -801,6 +798,24 @@
 	open_state = "redphone"
 	closed_state = "redphone"
 	folded_state = "redphone"
+
+/obj/item/vamp/phone/emergency
+	desc = "The 911 dispatch phone"
+	icon = 'code/modules/wod13/onfloor.dmi'
+	icon_state = "redphone"
+	anchored = TRUE
+	number = "911"
+	can_fold = 0
+	open_state = "redphone"
+	closed_state = "redphone"
+	folded_state = "redphone"
+	var/obj/machinery/p25transceiver/clinic_transciever
+	var/obj/machinery/p25transceiver/police_transciever
+
+/obj/item/vamp/phone/emergency/Initialize()
+	. = ..()
+	GLOB.phone_numbers_list += number
+	GLOB.phones_list += src
 
 /obj/item/vamp/phone/clean/Initialize()
 	. = ..()

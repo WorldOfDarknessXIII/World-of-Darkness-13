@@ -1,62 +1,40 @@
 //Biosuit complete with shoes (in the item sprite)
 /obj/item/clothing/head/bio_hood
 	name = "bio hood"
-	desc = "A hood that protects the head and face from biological contaminants."
-	icon = 'icons/obj/clothing/head/bio.dmi'
-	worn_icon = 'icons/mob/clothing/head/bio.dmi'
 	icon_state = "bio"
-	inhand_icon_state = "bio_hood"
-	clothing_flags = THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT | STACKABLE_HELMET_EXEMPT | HEADINTERNALS
-	armor_type = /datum/armor/head_bio_hood
+	desc = "A hood that protects the head and face from biological contaminants."
+	permeability_coefficient = 0.01
+	clothing_flags = THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, RAD = 80, FIRE = 30, ACID = 100)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
 	resistance_flags = ACID_PROOF
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
-/obj/item/clothing/head/bio_hood/Initialize(mapload)
-	. = ..()
-	if(flags_inv & HIDEFACE)
-		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
-	AddComponent(/datum/component/adjust_fishing_difficulty, 6)
-	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
-
-/datum/armor/head_bio_hood
-	bio = 100
-	fire = 30
-	acid = 100
-
 /obj/item/clothing/suit/bio_suit
 	name = "bio suit"
 	desc = "A suit that protects against biological contamination."
-	icon = 'icons/obj/clothing/suits/bio.dmi'
 	icon_state = "bio"
-	worn_icon = 'icons/mob/clothing/suits/bio.dmi'
 	inhand_icon_state = "bio_suit"
 	w_class = WEIGHT_CLASS_BULKY
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.01
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 0.5
-	allowed = list(/obj/item/tank/internals, /obj/item/reagent_containers/dropper, /obj/item/flashlight/pen, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/reagent_containers/cup/beaker, /obj/item/gun/syringe)
-	armor_type = /datum/armor/suit_bio_suit
-	flags_inv = HIDEGLOVES|HIDEJUMPSUIT|HIDEBELT
+	allowed = list(/obj/item/tank/internals, /obj/item/reagent_containers/dropper, /obj/item/flashlight/pen, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/reagent_containers/glass/beaker)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, RAD = 80, FIRE = 30, ACID = 100)
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	strip_delay = 70
 	equip_delay_other = 70
 	resistance_flags = ACID_PROOF
 
-/obj/item/clothing/suit/bio_suit/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 6)
-
 //Standard biosuit, orange stripe
-/datum/armor/suit_bio_suit
-	bio = 100
-	fire = 30
-	acid = 100
-
 /obj/item/clothing/head/bio_hood/general
-	icon_state = "bio"
+	icon_state = "bio_general"
 
 /obj/item/clothing/suit/bio_suit/general
-	icon_state = "bio"
+	icon_state = "bio_general"
+
 
 //Virology biosuit, green stripe
 /obj/item/clothing/head/bio_hood/virology
@@ -65,36 +43,17 @@
 /obj/item/clothing/suit/bio_suit/virology
 	icon_state = "bio_virology"
 
+
 //Security biosuit, grey with red stripe across the chest
 /obj/item/clothing/head/bio_hood/security
-	armor_type = /datum/armor/bio_hood_security
+	armor = list(MELEE = 25, BULLET = 15, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 100, RAD = 80, FIRE = 30, ACID = 100)
 	icon_state = "bio_security"
-
-/datum/armor/bio_hood_security
-	melee = 25
-	bullet = 15
-	laser = 25
-	energy = 35
-	bomb = 25
-	bio = 100
-	fire = 30
-	acid = 100
 
 /obj/item/clothing/suit/bio_suit/security
-	armor_type = /datum/armor/bio_suit_security
+	armor = list(MELEE = 25, BULLET = 15, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 100, RAD = 80, FIRE = 30, ACID = 100)
 	icon_state = "bio_security"
 
-/datum/armor/bio_suit_security
-	melee = 25
-	bullet = 15
-	laser = 25
-	energy = 35
-	bomb = 25
-	bio = 100
-	fire = 30
-	acid = 100
-
-/obj/item/clothing/suit/bio_suit/security/Initialize(mapload)
+/obj/item/clothing/suit/bio_suit/security/Initialize()
 	. = ..()
 	allowed += GLOB.security_vest_allowed
 
@@ -105,7 +64,7 @@
 /obj/item/clothing/suit/bio_suit/janitor
 	icon_state = "bio_janitor"
 
-/obj/item/clothing/suit/bio_suit/janitor/Initialize(mapload)
+/obj/item/clothing/suit/bio_suit/janitor/Initialize()
 	. = ..()
 	allowed += list(/obj/item/storage/bag/trash, /obj/item/reagent_containers/spray)
 
@@ -123,9 +82,9 @@
 /obj/item/clothing/suit/bio_suit/cmo
 	icon_state = "bio_cmo"
 
-/obj/item/clothing/suit/bio_suit/cmo/Initialize(mapload)
+/obj/item/clothing/suit/bio_suit/cmo/Initialize()
 	. = ..()
-	allowed += list(/obj/item/melee/baton/telescopic)
+	allowed += list(/obj/item/melee/classic_baton/telescopic)
 
 //Plague Dr mask can be found in clothing/masks/gasmask.dm
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit
@@ -136,6 +95,6 @@
 	strip_delay = 40
 	equip_delay_other = 20
 
-/obj/item/clothing/suit/bio_suit/plaguedoctorsuit/Initialize(mapload)
+/obj/item/clothing/suit/bio_suit/plaguedoctorsuit/Initialize()
 	. = ..()
-	allowed += list(/obj/item/book/bible, /obj/item/nullrod, /obj/item/cane)
+	allowed += list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/cane)

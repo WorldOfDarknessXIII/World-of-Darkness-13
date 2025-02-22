@@ -2,12 +2,12 @@ SUBSYSTEM_DEF(masquerade)
 	name = "Masquerade"
 	init_order = INIT_ORDER_DEFAULT
 	wait = 1200
-	priority = FIRE_PRIORITY_MASQUERADE
+	priority = FIRE_PRIORITY_VERYLOW
 
 	var/total_level = 1000
 	var/dead_level = 0
 	var/last_level = "stable"
-	var/manual_adjustment = 0
+	var/manual_adjustment = 0 
 
 /datum/controller/subsystem/masquerade/proc/get_description()
 	switch(total_level)

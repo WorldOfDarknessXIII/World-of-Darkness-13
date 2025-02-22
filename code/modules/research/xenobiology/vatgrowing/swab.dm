@@ -2,12 +2,12 @@
 /obj/item/swab
 	name = "swab"
 	desc = "Some men use these for different reasons."
-	icon = 'icons/obj/science/vatgrowing.dmi'
+	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
 	icon_state = "swab"
 	w_class = WEIGHT_CLASS_TINY
 
 ///Adds the swabbing component to the biopsy tool
-/obj/item/swab/Initialize(mapload)
+/obj/item/swab/Initialize()
 	. = ..()
 	AddComponent(/datum/component/swabbing, TRUE, TRUE, FALSE, null, CALLBACK(src, PROC_REF(update_swab_icon)), max_items = 1)
 

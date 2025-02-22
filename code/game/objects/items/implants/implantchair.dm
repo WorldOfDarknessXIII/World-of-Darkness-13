@@ -1,11 +1,10 @@
 /obj/machinery/implantchair
 	name = "mindshield implanter"
 	desc = "Used to implant occupants with mindshield implants."
-	icon = 'icons/obj/machines/implant_chair.dmi'
+	icon = 'icons/obj/machines/implantchair.dmi'
 	icon_state = "implantchair"
 	density = TRUE
 	opacity = FALSE
-	interaction_flags_mouse_drop = NEED_DEXTERITY
 
 	var/ready = TRUE
 	var/replenishing = FALSE
@@ -22,10 +21,10 @@
 	var/message_cooldown
 	var/breakout_time = 600
 
-/obj/machinery/implantchair/Initialize(mapload)
+/obj/machinery/implantchair/Initialize()
 	. = ..()
 	open_machine()
-	update_appearance()
+	update_icon()
 
 /obj/machinery/implantchair/ui_state(mob/user)
 	return GLOB.notcontained_state
@@ -49,13 +48,13 @@
 		data["occupant"]["stat"] = mob_occupant.stat
 
 	data["special_name"] = special ? special_name : null
-	data["ready_implants"] = ready_implants
+	data["ready_implants"]  = ready_implants
 	data["ready"] = ready
 	data["replenishing"] = replenishing
 
 	return data
 
-/obj/machinery/implantchair/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/implantchair/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -84,20 +83,20 @@
 			ready = FALSE
 			addtimer(CALLBACK(src, PROC_REF(set_ready)),injection_cooldown)
 	else
-		playsound(get_turf(src), 'sound/machines/buzz/buzz-sigh.ogg', 25, TRUE)
-	update_appearance()
+		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, TRUE)
+	update_icon()
 
 /obj/machinery/implantchair/proc/implant_action(mob/living/M)
 	var/obj/item/I = new implant_type
 	if(istype(I, /obj/item/implant))
 		var/obj/item/implant/P = I
 		if(P.implant(M))
-			visible_message(span_warning("[M] is implanted by [src]."))
+			visible_message("<span class='warning'>[M] is implanted by [src].</span>")
 			return TRUE
-	else if(isorgan(I))
+	else if(istype(I, /obj/item/organ))
 		var/obj/item/organ/P = I
 		P.Insert(M, FALSE, FALSE)
-		visible_message(span_warning("[M] is implanted by [src]."))
+		visible_message("<span class='warning'>[M] is implanted by [src].</span>")
 		return TRUE
 
 /obj/machinery/implantchair/update_icon_state()
@@ -106,7 +105,6 @@
 		icon_state += "_open"
 	if(occupant)
 		icon_state += "_occupied"
-	return ..()
 
 /obj/machinery/implantchair/update_overlays()
 	. = ..()
@@ -123,32 +121,38 @@
 
 /obj/machinery/implantchair/proc/set_ready()
 	ready = TRUE
-	update_appearance()
+	update_icon()
 
 /obj/machinery/implantchair/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
-		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
-		span_hear("You hear a metallic creaking from [src]."))
+	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
+		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
+		"<span class='hear'>You hear a metallic creaking from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 			return
-		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
-			span_notice("You successfully break out of [src]!"))
+		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
+			"<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
 
 /obj/machinery/implantchair/relaymove(mob/living/user, direction)
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
-		to_chat(user, span_warning("[src]'s door won't budge!"))
+		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 
-/obj/machinery/implantchair/mouse_drop_receive(mob/target, mob/user, params)
-	if(!isliving(target))
+
+/obj/machinery/implantchair/MouseDrop_T(mob/target, mob/user)
+	if(user.stat || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !ISADVANCEDTOOLUSER(user))
 		return
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.body_position == LYING_DOWN)
+			return
 	close_machine(target)
 
-/obj/machinery/implantchair/close_machine(mob/living/user, density_to_set = TRUE)
+
+/obj/machinery/implantchair/close_machine(mob/living/user)
 	if((isnull(user) || istype(user)) && state_open)
 		..(user)
 		if(auto_inject && ready && ready_implants > 0)
@@ -182,20 +186,20 @@
 	var/objective = "Obey the law. Praise Nanotrasen."
 	var/custom = FALSE
 
-/obj/machinery/implantchair/brainwash/implant_action(mob/living/C, mob/user)
+/obj/machinery/implantchair/brainwash/implant_action(mob/living/C,mob/user)
 	if(!istype(C) || !C.mind) // I don't know how this makes any sense for silicons but laws trump objectives anyway.
 		return FALSE
 	if(custom)
 		if(!user || !user.Adjacent(src))
 			return FALSE
-		objective = tgui_input_text(user, "What order do you want to imprint on [C]?", "Brainwashing", max_length = 120)
+		objective = stripped_input(usr,"What order do you want to imprint on [C]?","Enter the order","",120)
 		message_admins("[ADMIN_LOOKUPFLW(user)] set brainwash machine objective to '[objective]'.")
-		user.log_message("set brainwash machine objective to '[objective]'.", LOG_GAME)
-	if(HAS_MIND_TRAIT(C, TRAIT_UNCONVERTABLE))
+		log_game("[key_name(user)] set brainwash machine objective to '[objective]'.")
+	if(HAS_TRAIT(C, TRAIT_MINDSHIELD))
 		return FALSE
 	brainwash(C, objective)
 	message_admins("[ADMIN_LOOKUPFLW(user)] brainwashed [key_name_admin(C)] with objective '[objective]'.")
-	user.log_message("has brainwashed [key_name(C)] with the objective '[objective]' using \the [src]", LOG_ATTACK)
-	C.log_message("has been brainwashed with the objective '[objective]' by [key_name(user)] using \the [src]", LOG_VICTIM, log_globally = FALSE)
+	C.log_message("has been brainwashed with the objective '[objective]' by [key_name(user)] using \the [src]", LOG_ATTACK)
+	user.log_message("has brainwashed [key_name(C)] with the objective '[objective]' using \the [src]", LOG_ATTACK, log_globally = FALSE)
 	log_game("[key_name(user)] brainwashed [key_name(C)] with objective '[objective]'.")
 	return TRUE

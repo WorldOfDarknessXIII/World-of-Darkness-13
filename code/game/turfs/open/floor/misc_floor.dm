@@ -1,78 +1,48 @@
-// Usage for a bar light is 160, let's do a bit less then that since these tend to be used a lot in one place
-#define CIRCUIT_FLOOR_POWERUSE 120
+/turf/open/floor/goonplaque
+	name = "commemorative plaque"
+	icon_state = "plaque"
+	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding."
+	floor_tile = /obj/item/stack/tile/plasteel
+	tiled_dirt = FALSE
+
+/turf/open/floor/vault
+	icon_state = "rockvault"
+	floor_tile = /obj/item/stack/tile/plasteel
+
 //Circuit flooring, glows a little
 /turf/open/floor/circuit
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "bcircuit"
 	var/icon_normal = "bcircuit"
-	light_color = LIGHT_COLOR_BABY_BLUE
+	light_color = LIGHT_COLOR_CYAN
 	floor_tile = /obj/item/stack/tile/circuit
-	/// If we want to ignore our area's power status and just be always off
-	/// Mostly for mappers doing asthetic things, or cases where the floor should be broken
-	var/always_off = FALSE
-	/// If this floor is powered or not
-	/// We don't consume any power, but we do require it
-	var/on = -1
+	var/on = TRUE
 
-/turf/open/floor/circuit/Initialize(mapload)
+/turf/open/floor/circuit/Initialize()
 	SSmapping.nuke_tiles += src
-	RegisterSignal(loc, COMSIG_AREA_POWER_CHANGE, PROC_REF(handle_powerchange))
-	var/area/cur_area = get_area(src)
-	if (!isnull(cur_area))
-		handle_powerchange(cur_area, TRUE)
+	update_icon()
 	. = ..()
 
 /turf/open/floor/circuit/Destroy()
 	SSmapping.nuke_tiles -= src
-	UnregisterSignal(loc, COMSIG_AREA_POWER_CHANGE)
-	var/area/cur_area = get_area(src)
-	if(on && !isnull(cur_area))
-		cur_area.removeStaticPower(CIRCUIT_FLOOR_POWERUSE, AREA_USAGE_STATIC_LIGHT)
 	return ..()
 
-/turf/open/floor/circuit/update_appearance(updates)
-	. = ..()
-	if(!on)
-		set_light(0)
-		return
-
-	set_light_color(LAZYLEN(SSmapping.nuke_threats) ? LIGHT_COLOR_INTENSE_RED : initial(light_color))
-	set_light(2, 1.5)
-
-/turf/open/floor/circuit/update_icon_state()
-	icon_state = on ? (LAZYLEN(SSmapping.nuke_threats) ? "rcircuitanim" : icon_normal) : "[icon_normal]off"
-	return ..()
-
-/turf/open/floor/circuit/on_change_area(area/old_area, area/new_area)
-	. = ..()
-	UnregisterSignal(old_area, COMSIG_AREA_POWER_CHANGE)
-	RegisterSignal(new_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(handle_powerchange))
+/turf/open/floor/circuit/update_icon()
 	if(on)
-		old_area.removeStaticPower(CIRCUIT_FLOOR_POWERUSE, AREA_USAGE_STATIC_LIGHT)
-	handle_powerchange(new_area)
-
-/// Enables/disables our lighting based off our source area
-/turf/open/floor/circuit/proc/handle_powerchange(area/source, mapload = FALSE)
-	SIGNAL_HANDLER
-	var/old_on = on
-	if(always_off)
-		on = FALSE
+		if(LAZYLEN(SSmapping.nuke_threats))
+			icon_state = "rcircuitanim"
+			set_light_color(LIGHT_COLOR_FLARE)
+		else
+			icon_state = icon_normal
+			set_light_color(initial(light_color))
+		set_light(1.4, 0.5)
 	else
-		on = source.powered(AREA_USAGE_LIGHT)
-	if(on == old_on)
-		return
-
-	if(on)
-		source.addStaticPower(CIRCUIT_FLOOR_POWERUSE, AREA_USAGE_STATIC_LIGHT)
-	else if (!mapload)
-		source.removeStaticPower(CIRCUIT_FLOOR_POWERUSE, AREA_USAGE_STATIC_LIGHT)
-	update_appearance()
-
-#undef CIRCUIT_FLOOR_POWERUSE
+		icon_state = "[icon_normal]off"
+		set_light(0)
 
 /turf/open/floor/circuit/off
 	icon_state = "bcircuitoff"
-	always_off = TRUE
+	on = FALSE
 
 /turf/open/floor/circuit/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -92,12 +62,12 @@
 /turf/open/floor/circuit/green
 	icon_state = "gcircuit"
 	icon_normal = "gcircuit"
-	light_color = LIGHT_COLOR_VIVID_GREEN
+	light_color = LIGHT_COLOR_GREEN
 	floor_tile = /obj/item/stack/tile/circuit/green
 
 /turf/open/floor/circuit/green/off
 	icon_state = "gcircuitoff"
-	always_off = TRUE
+	on = FALSE
 
 /turf/open/floor/circuit/green/anim
 	icon_state = "gcircuitanim"
@@ -116,12 +86,12 @@
 /turf/open/floor/circuit/red
 	icon_state = "rcircuit"
 	icon_normal = "rcircuit"
-	light_color = LIGHT_COLOR_INTENSE_RED
+	light_color = LIGHT_COLOR_FLARE
 	floor_tile = /obj/item/stack/tile/circuit/red
 
 /turf/open/floor/circuit/red/off
 	icon_state = "rcircuitoff"
-	always_off = TRUE
+	on = FALSE
 
 /turf/open/floor/circuit/red/anim
 	icon_state = "rcircuitanim"
@@ -154,27 +124,19 @@
 	floor_tile = /obj/item/stack/tile/noslip
 	slowdown = -0.3
 
-/turf/open/floor/noslip/broken_states()
+/turf/open/floor/noslip/setup_broken_states()
 	return list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
 
-/turf/open/floor/noslip/burnt_states()
+/turf/open/floor/noslip/setup_burnt_states()
 	return list("noslip-scorched1","noslip-scorched2")
 
 /turf/open/floor/noslip/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
-/turf/open/floor/noslip/tram/Initialize(mapload)
-	. = ..()
-	var/current_holiday_color = request_station_colors(src, PATTERN_VERTICAL_STRIPE) || request_holiday_colors(src, PATTERN_VERTICAL_STRIPE)
-	if(current_holiday_color)
-		color = current_holiday_color
-	else
-		color = "#EFB341"
-
 /turf/open/floor/oldshuttle
 	icon = 'icons/turf/shuttleold.dmi'
 	icon_state = "floor"
-	floor_tile = /obj/item/stack/tile/iron/base
+	floor_tile = /obj/item/stack/tile/plasteel
 
 /turf/open/floor/bluespace
 	slowdown = -1
@@ -193,22 +155,15 @@
 /turf/open/floor/bronze
 	name = "bronze floor"
 	desc = "Some heavy bronze tiles."
+	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "clockwork_floor"
 	floor_tile = /obj/item/stack/tile/bronze
 
-/turf/open/floor/bronze/flat
-	icon_state = "reebe"
-	floor_tile = /obj/item/stack/tile/bronze/flat
-
-/turf/open/floor/bronze/filled
-	icon_state = "clockwork_floor_filled"
-	floor_tile = /obj/item/stack/tile/bronze/filled
-
-/turf/open/floor/bronze/filled/lavaland
+/turf/open/floor/bronze/lavaland
 	planetary_atmos = TRUE
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
-/turf/open/floor/bronze/filled/icemoon
+/turf/open/floor/bronze/icemoon
 	planetary_atmos = TRUE
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
@@ -227,10 +182,10 @@
 	icon_state = "plastic"
 	thermal_conductivity = 0.1
 	heat_capacity = 900
-	custom_materials = list(/datum/material/plastic=SMALL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/plastic=500)
 	floor_tile = /obj/item/stack/tile/plastic
 
-/turf/open/floor/plastic/broken_states()
+/turf/open/floor/plastic/setup_broken_states()
 	return list("plastic-damaged1","plastic-damaged2")
 
 /turf/open/floor/eighties
@@ -239,47 +194,19 @@
 	icon_state = "eighties"
 	floor_tile = /obj/item/stack/tile/eighties
 
-/turf/open/floor/eighties/broken_states()
+/turf/open/floor/eighties/setup_broken_states()
 	return list("eighties_damaged")
 
-/turf/open/floor/eighties/red
-	name = "red retro floor"
-	desc = "Totally RED-ICAL!"
-	icon_state = "eightiesred"
-	floor_tile = /obj/item/stack/tile/eighties/red
-
-/turf/open/floor/eighties/red/broken_states()
-	return list("eightiesred_damaged")
-
 /turf/open/floor/plating/rust
-	//SDMM supports colors, this is simply for easier mapping
-	//and should be removed on initialize
-	color = COLOR_BROWN
+	name = "rusted plating"
+	desc = "Corrupted steel."
+	icon_state = "plating_rust"
 
-/turf/open/floor/plating/rust/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/rust)
-	color = null
+/turf/open/floor/plating/rust/plasma
+	initial_gas_mix = "plasma=104;TEMP=293.15"
 
-/turf/open/floor/plating/rust/airless
-	initial_gas_mix = AIRLESS_ATMOS
-
-/turf/open/floor/plating/heretic_rust
-	color = COLOR_GREEN_GRAY
-
-/turf/open/floor/plating/heretic_rust/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/rust/heretic)
-	color = null
-
-/turf/open/floor/plating/plasma
-	initial_gas_mix = ATMOS_TANK_PLASMA
-
-/turf/open/floor/plating/plasma/rust/Initialize(mapload)
-	. = ..()
-	// Because this is a fluff turf explicitly for KiloStation it doesn't make sense to ChangeTurf like usual
-	// Especially since it looks like we don't even change the default icon/iconstate???
-	AddElement(/datum/element/rust)
+/turf/open/floor/plating/rust/rust_heretic_act()
+	return
 
 /turf/open/floor/stone
 	name = "stone brick floor"
@@ -290,85 +217,3 @@
 		out of. It only makes sense in the context of space because you're trying to keep a freezing vacuum out. Is anyone following me on this? \
 		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
 	icon_state = "stone_floor"
-
-/turf/open/floor/stone/icemoon
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
-	name = "stone brick floor"
-	desc = "Odd, really, how it looks exactly like the iron walls yet is stone instead of iron. Now, if that's really more of a complaint about\
-		the ironness of walls or the stoneness of the floors, that's really up to you. But have you really ever seen iron that dull? I mean, it\
-		makes sense for the station to have dull metal walls but we're talking how a rudimentary iron wall would be. Medieval ages didn't even\
-		use iron walls, iron walls are actually not even something that exists because iron is an expensive and not-so-great thing to build walls\
-		out of. It only makes sense in the context of space because you're trying to keep a freezing vacuum out. Is anyone following me on this? \
-		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
-	icon_state = "stone_floor"
-
-/turf/open/floor/vault
-	name = "strange floor"
-	desc = "You feel a strange nostalgia from looking at this..."
-	icon_state = "rockvault"
-	base_icon_state = "rockvault"
-
-/turf/open/floor/vault/rock
-	name = "rocky floor"
-
-/turf/open/floor/vault/alien
-	name = "alien floor"
-	icon_state = "alienvault"
-	base_icon_state = "alienvault"
-
-/turf/open/floor/vault/sandstone
-	name = "sandstone floor"
-	icon_state = "sandstonevault"
-	base_icon_state = "sandstonevault"
-
-/turf/open/floor/cult
-	name = "engraved floor"
-	icon_state = "cult"
-	base_icon_state = "cult"
-	floor_tile = /obj/item/stack/tile/cult
-
-/turf/open/floor/cult/broken_states()
-	return list("cultdamage","cultdamage2","cultdamage3","cultdamage4","cultdamage5","cultdamage6","cultdamage7")
-
-/turf/open/floor/cult/narsie_act()
-	return
-
-/turf/open/floor/cult/airless
-	initial_gas_mix = AIRLESS_ATMOS
-
-/turf/open/floor/material/meat
-	name = "living floor"
-	icon_state = "grey"
-	baseturfs = /turf/open/misc/asteroid
-	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
-
-/turf/open/floor/material/meat/Initialize(mapload)
-	. = ..()
-	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
-
-/turf/open/floor/material/meat/airless
-	initial_gas_mix = AIRLESS_ATMOS
-	baseturfs = /turf/open/misc/asteroid/airless
-
-/turf/open/floor/iron/tgmcemblem
-	name = "TGMC Emblem"
-	desc = "The symbol of the Terran Government."
-	icon_state = "tgmc_emblem"
-
-/turf/open/floor/iron/tgmcemblem/center
-	icon_state = "tgmc_center"
-
-/turf/open/floor/asphalt
-	name = "asphalt"
-	desc = "Melted down oil can, in some cases, be used to pave road surfaces."
-	icon_state = "asphalt"
-
-/turf/open/floor/asphalt/outdoors
-	planetary_atmos = TRUE
-
-/turf/open/floor/asphalt/lavaland
-	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	baseturfs = /turf/open/misc/asteroid/basalt
-
-/turf/open/floor/asphalt/lavaland/outdoors
-	planetary_atmos = TRUE

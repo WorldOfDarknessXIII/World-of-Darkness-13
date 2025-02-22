@@ -113,6 +113,10 @@
 
 /mob/living/proc/CheckEyewitness(var/mob/living/source, var/mob/attacker, var/range = 0, var/affects_source = FALSE)
 	var/actual_range = max(1, round(range*(attacker.alpha/255)))
+	/*
+	if(SScityweather.fogging)
+		actual_range = round(actual_range/2)
+	*/
 	var/list/seenby = list()
 	if(source.ignores_warrant)
 		return

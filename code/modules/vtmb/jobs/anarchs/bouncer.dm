@@ -6,16 +6,21 @@
 	total_positions = 7
 	spawn_positions = 7
 	supervisors = "the Baron"
+	selection_color = "#434343"
 
 	outfit = /datum/outfit/job/bruiser
 
-	paycheck = PAYCHECK_CREW
+	access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
+	minimal_access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
+	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 
+	mind_traits = list(TRAIT_DONUT_LOVER)
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_BRUISER
-	known_contacts = list("Baron")
+	my_contact_is_important = TRUE
+	known_contacts = list("Baron","Bouncer","Emissary","Sweeper")
 	allowed_bloodlines = list("Daughters of Cacophony", "True Brujah", "Brujah", "Nosferatu", "Gangrel", "Toreador", "Tremere", "Malkavian", "Banu Haqim", "Tzimisce", "Caitiff", "Ventrue", "Lasombra", "Gargoyle", "Kiasyd", "Cappadocian", "Ministry")
 
 	v_duty = "You are the enforcer of the Anarchs. The baron is always in need of muscle power. Enforce the Traditions - in the anarch way."

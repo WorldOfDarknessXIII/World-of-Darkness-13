@@ -72,7 +72,7 @@
 	if(is_locked() || key_locked)
 		if(uses_pincode_lock)
 			ui_interact()
-		if(!(door_user.combat_mode))
+		if(door_user.a_intent != INTENT_HARM)
 			to_chat(user, "<span class='warning'>[src] is locked!</span>")
 		return
 
@@ -135,7 +135,7 @@
 		. += "<span class='notice'>[src] requires a key to unlock.</span>"
 
 
-/obj/structure/vaultdoor/click_alt(mob/user)
+/obj/structure/vaultdoor/AltClick(mob/user)
 	. = ..()
 	if(is_broken)
 		return

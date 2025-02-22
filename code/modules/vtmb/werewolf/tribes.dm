@@ -5,7 +5,7 @@
 	rage_req = 2
 	gnosis_req = 1
 
-/datum/action/gift/stoic_pose/Trigger(trigger_flags)
+/datum/action/gift/stoic_pose/Trigger()
 	. = ..()
 	if(allowed_to_proceed)
 		playsound(get_turf(owner), 'code/modules/wod13/sounds/ice_blocking.ogg', 100, FALSE)
@@ -39,7 +39,7 @@
 	rage_req = 1
 	//gnosis_req = 1
 
-/datum/action/gift/freezing_wind/Trigger(trigger_flags)
+/datum/action/gift/freezing_wind/Trigger()
 	. = ..()
 	if(allowed_to_proceed)
 		playsound(get_turf(owner), 'code/modules/wod13/sounds/wind_cast.ogg', 100, FALSE)
@@ -59,7 +59,7 @@
 	rage_req = 2
 	gnosis_req = 1
 
-/datum/action/gift/bloody_feast/Trigger(trigger_flags)
+/datum/action/gift/bloody_feast/Trigger()
 	. = ..()
 	if(allowed_to_proceed)
 		var/mob/living/carbon/C = owner
@@ -69,23 +69,23 @@
 				if(L.stat == DEAD)
 					playsound(get_turf(owner), 'code/modules/wod13/sounds/bloody_feast.ogg', 50, FALSE)
 					qdel(L)
-					C.revive(HEAL_ADMIN)
+					C.revive(full_heal = TRUE, admin_revive = TRUE)
 
 /datum/action/gift/stinky_fur
 	name = "Stinky Fur"
 	desc = "Garou creates an aura of very toxic smell, which disorientates everyone around."
 	button_icon_state = "stinky_fur"
 
-/datum/action/gift/stinky_fur/Trigger(trigger_flags)
+/datum/action/gift/stinky_fur/Trigger()
 	. = ..()
 	if(allowed_to_proceed)
 		playsound(get_turf(owner), 'code/modules/wod13/sounds/necromancy.ogg', 75, FALSE)
-		for(var/mob/living/carbon/C in orange(5, src))
+		for(var/mob/living/carbon/C in orange(5, owner))
 			if(C)
 				if(prob(25))
 					C.vomit()
-				C.adjust_dizzy(10)
-				C.adjust_confusion(10)
+				C.dizziness += 10
+				C.add_confusion(10)
 
 /datum/action/gift/venom_claws
 	name = "Venom Claws"
@@ -93,7 +93,7 @@
 	button_icon_state = "venom_claws"
 	rage_req = 1
 
-/datum/action/gift/venom_claws/Trigger(trigger_flags)
+/datum/action/gift/venom_claws/Trigger()
 	. = ..()
 	if(allowed_to_proceed)
 		if(ishuman(owner))
@@ -128,7 +128,7 @@
 	rage_req = 2
 	gnosis_req = 1
 
-/datum/action/gift/burning_scars/Trigger(trigger_flags)
+/datum/action/gift/burning_scars/Trigger()
 	. = ..()
 	if(allowed_to_proceed)
 		owner.visible_message("<span class='danger'>[owner.name] crackles with heat!</span>", "<span class='danger'>You crackle with heat, charging up your Gift!</span>")
@@ -147,7 +147,7 @@
 	button_icon_state = "smooth_move"
 	//rage_req = 1   somewhat useless gift with MMB pounce
 
-/datum/action/gift/smooth_move/Trigger(trigger_flags)
+/datum/action/gift/smooth_move/Trigger()
 	. = ..()
 	if(allowed_to_proceed)
 		var/turf/T = get_turf(get_step(get_step(get_step(owner, owner.dir), owner.dir), owner.dir))
@@ -167,12 +167,12 @@
 	rage_req = 2
 	gnosis_req = 1
 
-/datum/action/gift/digital_feelings/Trigger(trigger_flags)
+/datum/action/gift/digital_feelings/Trigger()
 	. = ..()
 	if(allowed_to_proceed)
 		owner.visible_message("<span class='danger'>[owner.name] crackles with static electricity!</span>", "<span class='danger'>You crackle with static electricity, charging up your Gift!</span>")
 		if(do_after(owner, 3 SECONDS))
-			playsound(src, 'sound/effects/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
+			playsound(owner, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 			tesla_zap(owner, 3, 30, ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_ALLOW_DUPLICATES)
 			for(var/mob/living/L in orange(6, owner))
 				if(L)
@@ -185,14 +185,19 @@
 	rage_req = 2
 	gnosis_req = 1
 
-/datum/action/gift/elemental_improvement/Trigger(trigger_flags)
+/datum/action/gift/elemental_improvement/Trigger()
 	. = ..()
 	if(allowed_to_proceed)
 		animate(owner, color = "#6a839a", time = 10)
 		if(ishuman(owner))
 			playsound(get_turf(owner), 'code/modules/wod13/sounds/electro_cast.ogg', 75, FALSE)
+			var/mob/living/carbon/human/H = owner
+			H.physiology.armor.melee = 25
+			H.physiology.armor.bullet = 45
 			to_chat(owner, "<span class='notice'>You feel your skin replaced with the machine...</span>")
 			spawn(20 SECONDS)
+				H.physiology.armor.melee = initial(H.physiology.armor.melee)
+				H.physiology.armor.bullet = initial(H.physiology.armor.bullet)
 				to_chat(owner, "<span class='warning'>Your skin is natural again...</span>")
 				owner.color = "#FFFFFF"
 		else

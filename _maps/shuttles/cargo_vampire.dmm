@@ -1,0 +1,11 @@
+"a" = (/turf/closed/wall,/area/shuttle/supply)
+"b" = (/obj/machinery/door/airlock/titanium{name = "Supply Shuttle Airlock"; req_access_txt = "31"},/turf/open/floor/plating/vampplating/mono,/area/shuttle/supply)
+"c" = (/obj/docking_port/mobile/supply,/turf/closed/wall,/area/shuttle/supply)
+"d" = (/turf/open/floor/plating/vampplating/mono,/area/shuttle/supply)
+
+(1,1,1) = {"
+aabaaaaabac
+addddddddda
+addddddddda
+aaaaaaaaaaa
+"}

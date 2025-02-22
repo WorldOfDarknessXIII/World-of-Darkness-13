@@ -48,7 +48,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "l" = (
-/obj/item/stock_parts/power_store/cell,
+/obj/item/stock_parts/cell,
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "m" = (
@@ -60,11 +60,11 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "o" = (
-/obj/effect/spawner/random/structure/crate_abandoned,
+/obj/effect/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "p" = (
-/obj/machinery/door/airlock/external/ruin,
+/obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -127,7 +127,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "O" = (
-/obj/machinery/door/airlock/external/ruin,
+/obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},

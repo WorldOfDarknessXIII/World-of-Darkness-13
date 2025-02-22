@@ -31,11 +31,18 @@
 	accessories_layers = list("gargoyle_full" = UNICORN_LAYER, "gargoyle_left" = UNICORN_LAYER, "gargoyle_right" = UNICORN_LAYER, "gargoyle_broken" = UNICORN_LAYER, "gargoyle_round" = UNICORN_LAYER, "none" = UNICORN_LAYER)
 	whitelisted = TRUE
 
+/datum/vampireclane/gargoyle/on_gain(mob/living/carbon/human/H)
+	..()
+	H.dna.species.wings_icon = "Gargoyle"
+	H.physiology.brute_mod = 0.8
 
+/datum/vampireclane/gargoyle/post_gain(mob/living/carbon/human/H)
+	..()
+	H.dna.species.GiveSpeciesFlight(H)
 
 //datum/discipline/visceratika/post_gain(mob/living/carbon/human/H)
 //	var/obj/effect/proc_holder/spell/voice_of_god/S = new(H)
-//	S.Grant(H)
+//	H.mind.AddSpell(S)
 
 /datum/discipline/visceratika
 	name = "Visceratika"

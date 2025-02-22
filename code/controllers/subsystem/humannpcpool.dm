@@ -2,7 +2,7 @@ GLOBAL_LIST_EMPTY(npc_spawn_points)
 SUBSYSTEM_DEF(humannpcpool)
 	name = "Human NPC Pool"
 	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_BACKGROUND
-	priority = FIRE_PRIORITY_PING
+	priority = FIRE_PRIORITY_VERYLOW
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	wait = 30
 

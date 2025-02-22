@@ -31,11 +31,10 @@
 
 /datum/holiday/nth_week/thanksgiving
 	name = "Thanksgiving in the United States"
-	timezones = list(TIMEZONE_EST, TIMEZONE_CST, TIMEZONE_MST, TIMEZONE_PST, TIMEZONE_AKST, TIMEZONE_HST)
 	begin_week = 4
 	begin_month = NOVEMBER
 	begin_weekday = THURSDAY
-	holiday_hat = /obj/item/clothing/head/hats/tophat //This is the closest we can get to a pilgrim's hat
+	drone_hat = /obj/item/clothing/head/that //This is the closest we can get to a pilgrim's hat
 
 /datum/holiday/nth_week/thanksgiving/canada
 	name = "Thanksgiving in Canada"
@@ -68,7 +67,7 @@
 	return pick("Stout","Porter","Lager","Ale","Malt","Bock","Doppelbock","Hefeweizen","Pilsner","IPA","Lite") //I'm sorry for the last one
 
 /datum/holiday/nth_week/moth
-	name = MOTH_WEEK
+	name = "Moth Week"
 	begin_week = 3
 	end_week = 4
 	begin_month = JULY
@@ -84,12 +83,3 @@
 
 /datum/holiday/nth_week/moth/getStationPrefix()
 	return pick("Mothball","Lepidopteran","Lightbulb","Moth","Giant Atlas","Twin-spotted Sphynx","Madagascan Sunset","Luna","Death's Head","Emperor Gum","Polyphenus","Oleander Hawk","Io","Rosy Maple","Cecropia","Noctuidae","Giant Leopard","Dysphania Militaris","Garden Tiger")
-
-/datum/holiday/nth_week/ice_cream
-	name = ICE_CREAM_DAY
-	begin_week = 3
-	begin_month = JULY
-	begin_weekday = SUNDAY
-
-/datum/holiday/nth_week/ice_cream/getStationPrefix()
-	return pick("Ice Cream", "Gelato", "Semifreddo", "Cornuto", "Soft Serve", "Cone", "Ice", "Cream", "I Scream", "Parfait", "Straccciatella", "Sherbet", "Snow", "Affogato", "Mochi", "Tartufo", "Sundae", "Neapolitan")
