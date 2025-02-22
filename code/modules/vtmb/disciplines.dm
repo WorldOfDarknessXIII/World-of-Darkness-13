@@ -3,10 +3,10 @@
 
 /datum/action/discipline
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
-	button_icon = 'code/modules/wod13/UI/actions.dmi' //This is the file for the BACKGROUND icon
+	button_icon = 'icons/wod13/UI/actions.dmi' //This is the file for the BACKGROUND icon
 	background_icon_state = "discipline" //And this is the state for the background icon
 
-	icon_icon = 'code/modules/wod13/UI/actions.dmi' //This is the file for the ACTION icon
+	icon_icon = 'icons/wod13/UI/actions.dmi' //This is the file for the ACTION icon
 	button_icon_state = "discipline" //And this is the state for the action icon
 	vampiric = TRUE
 	var/level_icon_state = "1" //And this is the state for the action icon
@@ -39,11 +39,11 @@
 		if(owner.client)
 			if(owner.client.prefs)
 				if(owner.client.prefs.old_discipline)
-					button_icon = 'code/modules/wod13/disciplines.dmi'
-					icon_icon = 'code/modules/wod13/disciplines.dmi'
+					button_icon = 'icons/wod13/disciplines.dmi'
+					icon_icon = 'icons/wod13/disciplines.dmi'
 				else
-					button_icon = 'code/modules/wod13/UI/actions.dmi'
-					icon_icon = 'code/modules/wod13/UI/actions.dmi'
+					button_icon = 'icons/wod13/UI/actions.dmi'
+					icon_icon = 'icons/wod13/UI/actions.dmi'
 	if(icon_icon && button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))
 		current_button.cut_overlays(TRUE)
 		if(discipline)
@@ -302,7 +302,7 @@
 /obj/effect/spectral_wolf
 	name = "Spectral Wolf"
 	desc = "Bites enemies in other dimensions."
-	icon = 'code/modules/wod13/icons.dmi'
+	icon = 'icons/wod13/icons.dmi'
 	icon_state = "wolf"
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER
@@ -579,7 +579,7 @@
 	if(ishuman(target))
 		TRGT = target
 		TRGT.remove_overlay(MUTATIONS_LAYER)
-		var/mutable_appearance/dominate_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "dominate", -MUTATIONS_LAYER)
+		var/mutable_appearance/dominate_overlay = mutable_appearance('icons/wod13/icons.dmi', "dominate", -MUTATIONS_LAYER)
 		dominate_overlay.pixel_z = 2
 		TRGT.overlays_standing[MUTATIONS_LAYER] = dominate_overlay
 		TRGT.apply_overlay(MUTATIONS_LAYER)
@@ -747,7 +747,7 @@
 		return
 	var/mob/living/carbon/human/H = target
 	H.remove_overlay(MUTATIONS_LAYER)
-	var/mutable_appearance/dementation_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "dementation", -MUTATIONS_LAYER)
+	var/mutable_appearance/dementation_overlay = mutable_appearance('icons/wod13/icons.dmi', "dementation", -MUTATIONS_LAYER)
 	dementation_overlay.pixel_z = 1
 	H.overlays_standing[MUTATIONS_LAYER] = dementation_overlay
 	H.apply_overlay(MUTATIONS_LAYER)
@@ -796,7 +796,7 @@
 	var/mod = 8*level_casting
 	var/armah = 0.4*level_casting
 	caster.remove_overlay(POTENCE_LAYER)
-	var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "potence", -POTENCE_LAYER)
+	var/mutable_appearance/potence_overlay = mutable_appearance('icons/wod13/icons.dmi', "potence", -POTENCE_LAYER)
 	caster.overlays_standing[POTENCE_LAYER] = potence_overlay
 	caster.apply_overlay(POTENCE_LAYER)
 	caster.dna.species.punchdamagelow += mod
@@ -832,7 +832,7 @@
 	var/mod = min(3, level_casting)
 	var/armah = 15*mod
 //	caster.remove_overlay(FORTITUDE_LAYER)
-//	var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "fortitude", -FORTITUDE_LAYER)
+//	var/mutable_appearance/fortitude_overlay = mutable_appearance('icons/wod13/icons.dmi', "fortitude", -FORTITUDE_LAYER)
 //	caster.overlays_standing[FORTITUDE_LAYER] = fortitude_overlay
 //	caster.apply_overlay(FORTITUDE_LAYER)
 	caster.physiology.armor.melee += armah
@@ -969,7 +969,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.remove_overlay(MUTATIONS_LAYER)
-		var/mutable_appearance/presence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "presence", -MUTATIONS_LAYER)
+		var/mutable_appearance/presence_overlay = mutable_appearance('icons/wod13/icons.dmi', "presence", -MUTATIONS_LAYER)
 		presence_overlay.pixel_z = 1
 		H.overlays_standing[MUTATIONS_LAYER] = presence_overlay
 		H.apply_overlay(MUTATIONS_LAYER)
@@ -1048,7 +1048,7 @@
 /datum/discipline/protean/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
 	var/mod = min(4, level_casting)
-//	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
+//	var/mutable_appearance/protean_overlay = mutable_appearance('icons/wod13/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
 	if(!GA)
 		GA = new(caster)
 	switch(mod)
@@ -1360,7 +1360,7 @@
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 				H.remove_overlay(MUTATIONS_LAYER)
-				var/mutable_appearance/serpentis_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "serpentis", -MUTATIONS_LAYER)
+				var/mutable_appearance/serpentis_overlay = mutable_appearance('icons/wod13/icons.dmi', "serpentis", -MUTATIONS_LAYER)
 				H.overlays_standing[MUTATIONS_LAYER] = serpentis_overlay
 				H.apply_overlay(MUTATIONS_LAYER)
 				spawn(5)
@@ -1558,7 +1558,7 @@
 /obj/item/gun/magic/quietus
 	name = "acid spit"
 	desc = "Spit poison on your targets."
-	icon = 'code/modules/wod13/items.dmi'
+	icon = 'icons/wod13/items.dmi'
 	icon_state = "har4ok"
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL | NOBLUDGEON
 	flags_1 = NONE
@@ -1597,7 +1597,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.remove_overlay(MUTATIONS_LAYER)
-		var/mutable_appearance/quietus_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "quietus", -MUTATIONS_LAYER)
+		var/mutable_appearance/quietus_overlay = mutable_appearance('icons/wod13/icons.dmi', "quietus", -MUTATIONS_LAYER)
 		H.overlays_standing[MUTATIONS_LAYER] = quietus_overlay
 		H.apply_overlay(MUTATIONS_LAYER)
 		spawn(5*level_casting)
@@ -1726,7 +1726,7 @@
 /datum/discipline/daimonion/activate(mob/living/target, mob/living/carbon/human/caster)
 	. = ..()
 	var/mod = min(4, level_casting)
-//	var/mutable_appearance/protean_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
+//	var/mutable_appearance/protean_overlay = mutable_appearance('icons/wod13/icons.dmi', "protean[mod]", -PROTEAN_LAYER)
 	if(!BAT)
 		BAT = new(caster)
 	switch(mod)
@@ -1926,7 +1926,7 @@
 					HU.caster = caster
 					HU.create_walk_to(2 SECONDS)
 					HU.remove_overlay(MUTATIONS_LAYER)
-					var/mutable_appearance/song_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "song", -MUTATIONS_LAYER)
+					var/mutable_appearance/song_overlay = mutable_appearance('icons/wod13/icons.dmi', "song", -MUTATIONS_LAYER)
 					HU.overlays_standing[MUTATIONS_LAYER] = song_overlay
 					HU.apply_overlay(MUTATIONS_LAYER)
 					spawn(2 SECONDS)
@@ -1938,7 +1938,7 @@
 				if(HU)
 					HU.Stun(2 SECONDS)
 					HU.remove_overlay(MUTATIONS_LAYER)
-					var/mutable_appearance/song_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "song", -MUTATIONS_LAYER)
+					var/mutable_appearance/song_overlay = mutable_appearance('icons/wod13/icons.dmi', "song", -MUTATIONS_LAYER)
 					HU.overlays_standing[MUTATIONS_LAYER] = song_overlay
 					HU.apply_overlay(MUTATIONS_LAYER)
 					spawn(2 SECONDS)
@@ -1951,7 +1951,7 @@
 					HU.Stun(20)
 					HU.apply_damage(50, BRUTE, BODY_ZONE_HEAD)
 					HU.remove_overlay(MUTATIONS_LAYER)
-					var/mutable_appearance/song_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "song", -MUTATIONS_LAYER)
+					var/mutable_appearance/song_overlay = mutable_appearance('icons/wod13/icons.dmi', "song", -MUTATIONS_LAYER)
 					HU.overlays_standing[MUTATIONS_LAYER] = song_overlay
 					HU.apply_overlay(MUTATIONS_LAYER)
 					spawn(20)

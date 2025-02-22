@@ -2,8 +2,8 @@
 	name = "a book"
 	desc = "So full of knowledge"
 	icon_state = "book"
-	icon = 'code/modules/wod13/items.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/items.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/quote = "Hm... This book is boring."
 	COOLDOWN_DECLARE(read)

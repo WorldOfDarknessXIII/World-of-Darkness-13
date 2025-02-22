@@ -1,6 +1,6 @@
 /obj/item/food/vampire
-	icon = 'code/modules/wod13/items.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/items.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	eatsound = 'code/modules/wod13/sounds/eat.ogg'
 	var/biten = FALSE
@@ -53,8 +53,8 @@
 /obj/item/trash/vampirenugget
 	name = "chicken wing bone"
 	icon_state = "nugget0"
-	icon = 'code/modules/wod13/items.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/items.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 
 /obj/item/food/vampire/nugget
 	name = "chicken wing"
@@ -72,8 +72,8 @@
 /obj/item/trash/vampirebar
 	name = "chocolate bar wrapper"
 	icon_state = "bar0"
-	icon = 'code/modules/wod13/items.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/items.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 
 /obj/item/food/vampire/bar
 	name = "chocolate bar"
@@ -106,8 +106,8 @@
 /obj/item/trash/vampirecrisps
 	name = "chips wrapper"
 	icon_state = "crisps0"
-	icon = 'code/modules/wod13/items.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/items.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 
 /obj/item/food/vampire/crisps
 	name = "chips"
@@ -163,8 +163,8 @@
 	name = "coffee"
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."
 	icon_state = "coffee"
-	icon = 'code/modules/wod13/items.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/items.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	list_reagents = list(/datum/reagent/consumable/coffee = 30)
 	spillable = TRUE
 	resistance_flags = FREEZE_PROOF
@@ -179,8 +179,8 @@
 	name = "beer"
 	desc = "Beer."
 	icon_state = "beer"
-	icon = 'code/modules/wod13/items.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/items.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 30)
 	foodtype = GRAIN | ALCOHOL
 	custom_price = PAYCHECK_EASY
@@ -195,8 +195,8 @@
 	name = "two liter cola bottle"
 	desc = "Coca cola espuma..."
 	icon_state = "colared"
-	icon = 'code/modules/wod13/items.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/items.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/space_cola = 100)
 	foodtype = SUGAR
@@ -224,8 +224,8 @@
 	name = "water bottle"
 	desc = "H2O."
 	icon_state = "water1"
-	icon = 'code/modules/wod13/items.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/items.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/water = 100)
 	age_restricted = FALSE
@@ -234,8 +234,8 @@
 	name = "cola"
 	desc = "Coca cola espuma..."
 	icon_state = "colared2"
-	icon = 'code/modules/wod13/items.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/items.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	list_reagents = list(/datum/reagent/consumable/space_cola = 50)
 	foodtype = SUGAR
 
@@ -248,8 +248,8 @@
 	name = "soda"
 	desc = "More water..."
 	icon_state = "soda"
-	icon = 'code/modules/wod13/items.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/items.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	list_reagents = list(/datum/reagent/consumable/sodawater = 50)
 	foodtype = SUGAR
 
@@ -257,8 +257,8 @@
 	name = "milk"
 	desc = "More milk..."
 	icon_state = "milk"
-	icon = 'code/modules/wod13/items.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/items.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	list_reagents = list(/datum/reagent/consumable/milk = 50)
 	fill_icon_thresholds = null
 
@@ -270,7 +270,7 @@
 /obj/machinery/mineral/equipment_vendor/fastfood
 	name = "Clerk Catalogue"
 	desc = "Order some fastfood here."
-	icon = 'code/modules/wod13/props.dmi'
+	icon = 'icons/wod13/props.dmi'
 	icon_state = "menu"
 	icon_deny = "menu"
 	prize_list = list()
@@ -279,7 +279,7 @@
 /obj/machinery/mineral/equipment_vendor/fastfood/sodavendor
 	name = "Drink Vendor"
 	desc = "Order drinks here."
-	icon = 'code/modules/wod13/props.dmi'
+	icon = 'icons/wod13/props.dmi'
 	icon_state = "vend_r"
 	anchored = TRUE
 	density = TRUE
@@ -298,7 +298,7 @@
 /obj/machinery/mineral/equipment_vendor/fastfood/coffeevendor
 	name = "Coffee Vendor"
 	desc = "For those sleepy mornings."
-	icon = 'code/modules/wod13/props.dmi'
+	icon = 'icons/wod13/props.dmi'
 	icon_state = "vend_g"
 	anchored = TRUE
 	density = TRUE
@@ -515,7 +515,7 @@
 /obj/food_cart
 	name = "food cart"
 	desc = "Ding-aling ding dong. Get your cholesterine!"
-	icon = 'code/modules/wod13/32x48.dmi'
+	icon = 'icons/wod13/32x48.dmi'
 	icon_state = "vat1"
 	density = TRUE
 	anchored = TRUE

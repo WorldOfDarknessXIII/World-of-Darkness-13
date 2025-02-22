@@ -33,7 +33,7 @@
 /obj/item/urn
 	name = "organ urn"
 	desc = "Stores some precious organs..."
-	icon = 'code/modules/wod13/icons.dmi'
+	icon = 'icons/wod13/icons.dmi'
 	icon_state = "urn"
 	is_magic = TRUE
 	var/mob/living/own
@@ -157,7 +157,7 @@
 /mob/living/simple_animal/hostile/cobra
 	name = "Cobra Form"
 	desc = "Hssssss..."
-	icon = 'code/modules/wod13/48x48.dmi'
+	icon = 'icons/wod13/48x48.dmi'
 	icon_state = "cobra"
 	icon_living = "cobra"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
