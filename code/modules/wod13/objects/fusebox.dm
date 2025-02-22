@@ -1,7 +1,7 @@
 /obj/fusebox
 	name = "fuse box"
 	desc = "Power the controlled area with pure electricity."
-	icon = 'code/modules/wod13/32x48.dmi'
+	icon = 'icons/wod13/32x48.dmi'
 	icon_state = "fusebox"
 	plane = GAME_PLANE
 	layer = CAR_LAYER

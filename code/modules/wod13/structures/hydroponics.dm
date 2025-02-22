@@ -1,7 +1,7 @@
 /obj/structure/weedshit
 	name = "hydroponics"
 	desc = "Definitely not for the weed."
-	icon = 'code/modules/wod13/weed.dmi'
+	icon = 'icons/wod13/weed.dmi'
 	icon_state = "soil_dry0"
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER

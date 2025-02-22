@@ -1,12 +1,12 @@
 /obj/item/vampire/drill
 	name = "thermal drill"
 	desc = "Guys! The thermal drill, go get it!"
-	icon = 'code/modules/wod13/48x32weapons.dmi'
+	icon = 'icons/wod13/48x32weapons.dmi'
 	icon_state = "vaultdrill"
 	inhand_icon_state = "vaultdrill"
-	lefthand_file = 'code/modules/wod13/lefthand.dmi'
-	righthand_file = 'code/modules/wod13/righthand.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	lefthand_file = 'icons/wod13/lefthand.dmi'
+	righthand_file = 'icons/wod13/righthand.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	force = 8
 	throwforce = 10
@@ -32,7 +32,7 @@
 /obj/structure/drill
 	name = "thermal drill"
 	desc = "Guys! The thermal drill, go get it!"
-	icon = 'code/modules/wod13/props.dmi'
+	icon = 'icons/wod13/props.dmi'
 	icon_state = "vaultdrill"
 	anchored = TRUE
 	density = TRUE
@@ -107,7 +107,7 @@
 					pixel_y = -5
 
 /obj/structure/drill/proc/update_effects()
-	var/mutable_appearance/sparks = mutable_appearance('code/modules/wod13/particle_effects.dmi', "welding_sparks", ABOVE_ALL_MOB_LAYERS_LAYER, ABOVE_LIGHTING_PLANE)
+	var/mutable_appearance/sparks = mutable_appearance('icons/wod13/particle_effects.dmi', "welding_sparks", ABOVE_ALL_MOB_LAYERS_LAYER, ABOVE_LIGHTING_PLANE)
 	if(active)
 		add_overlay(sparks)
 	else

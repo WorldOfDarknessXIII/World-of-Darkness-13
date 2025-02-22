@@ -2,7 +2,7 @@
 	name = "bailer"
 	desc = "Best for flora!"
 	icon_state = "bailer"
-	icon = 'code/modules/wod13/items.dmi'
+	icon = 'icons/wod13/items.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/amount_of_water = 10
 

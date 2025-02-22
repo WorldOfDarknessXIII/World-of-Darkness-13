@@ -26,8 +26,8 @@
 	name = "unidentified occult fetish"
 	desc = "Who knows what secrets it could contain..."
 	icon_state = "arcane"
-	icon = 'code/modules/wod13/items.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/items.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	is_magic = TRUE
 	var/mob/living/owner
