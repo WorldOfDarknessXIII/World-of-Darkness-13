@@ -64,6 +64,10 @@
 	locked = TRUE
 	lock_id = "police_chief"
 	lockpick_difficulty = 21
+/obj/structure/vampdoor/glass/jazz_club
+	name = "Jazz Club"
+	lock_id = "milleniumCommon"
+	lockpick_difficulty = 8
 
 /obj/structure/vampdoor/glass/glass_bar
 	locked = FALSE

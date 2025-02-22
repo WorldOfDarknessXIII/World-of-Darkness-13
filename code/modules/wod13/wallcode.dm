@@ -594,6 +594,9 @@
 /turf/open/floor/plating/roofwalk/no_air
 	blocks_air = 1
 
+/turf/open/floor/plating/roofwalk/cobblestones
+	name = "cobblestones"
+
 /obj/effect/decal/bordur
 	name = "sidewalk"
 	icon = 'code/modules/wod13/tiles.dmi'

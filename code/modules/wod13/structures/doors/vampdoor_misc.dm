@@ -48,11 +48,11 @@
 	lock_id = "cleaning"
 	lockpick_difficulty = 4
 
-/obj/structure/vampdoor/archive
+/obj/structure/vampdoor/chantry
 	icon_state = "old-1"
 	baseicon = "old"
 	locked = TRUE
-	lock_id = "archive"
+	lock_id = "chantry"
 	lockpick_difficulty = 10
 
 /obj/structure/vampdoor/anarch
