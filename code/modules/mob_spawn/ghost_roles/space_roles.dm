@@ -176,7 +176,6 @@
 /datum/outfit/syndicate_empty/battlecruiser/assault/captain
 	name = "Syndicate Battlecruiser Captain"
 	id = /obj/item/card/id/advanced/black/syndicate_command/captain_id
-	id_trim = /datum/id_trim/battlecruiser/captain
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
 	suit_store = /obj/item/gun/ballistic/revolver/mateba
 	back = /obj/item/storage/backpack/satchel/leather

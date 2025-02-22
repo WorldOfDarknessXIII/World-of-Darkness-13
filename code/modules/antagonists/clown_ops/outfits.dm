@@ -22,7 +22,6 @@
 
 	uplink_type = /obj/item/uplink/clownop
 
-	id_trim = /datum/id_trim/chameleon/operative/clown
 
 /datum/outfit/syndicate/clownop/no_crystals
 	name = "Clown Operative - Reinforcement"
@@ -32,4 +31,3 @@
 	name = "Clown Operative Leader - Basic"
 	command_radio = TRUE
 
-	id_trim = /datum/id_trim/chameleon/operative/clown_leader

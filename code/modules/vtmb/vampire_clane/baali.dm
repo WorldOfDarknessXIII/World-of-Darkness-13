@@ -21,8 +21,8 @@
 
 /datum/discipline/daimonion/post_gain(mob/living/carbon/human/H)
 	if(level >= 3)
-		var/obj/effect/proc_holder/spell/aimed/fireball/baali/S = new(H)
-		H.mind.AddSpell(S)
+		var/datum/action/cooldown/spell/pointed/projectile/fireball/baali/S = new(H)
+		S.Grant(H)
 	if(level >= 5)
 		var/datum/action/antifrenzy/A = new()
 		A.Grant(H)
@@ -45,7 +45,7 @@
 	used = TRUE
 	var/mob/living/carbon/human/H = owner
 	H.antifrenzy = TRUE
-	SEND_SOUND(owner, sound('sound/magic/curse.ogg', 0, 0, 50))
+	SEND_SOUND(owner, sound('sound/effects/magic/curse.ogg', 0, 0, 50))
 	to_chat(owner, "<span class='warning'>You feel control over your Beast, but at what cost...</span>")
 
 /mob/living/simple_animal/hostile/baali_guard

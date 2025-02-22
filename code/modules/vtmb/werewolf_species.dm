@@ -2,12 +2,8 @@
 	name = "Werewolf"
 	id = "garou"
 	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_VIRUSIMMUNE, TRAIT_PERFECT_ATTACKER)
-	use_skintones = TRUE
-	limbs_id = "human"
-	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
 	brutemod = 0.75
 	heatmod = 1
-	burnmod = 1
 	whitelisted = TRUE
 	var/glabro = FALSE
 
@@ -91,15 +87,15 @@
 /datum/species/garou/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 //	ADD_TRAIT(C, TRAIT_NOBLEED, HIGHLANDER)
-	C.update_body(0)
-	C.last_experience = world.time+3000
+	human_who_gained_species.update_body(0)
+	human_who_gained_species.last_experience = world.time+3000
 	var/datum/action/garouinfo/infor = new()
-	infor.host = C
-	infor.Grant(C)
+	infor.host = human_who_gained_species
+	infor.Grant(human_who_gained_species)
 	var/datum/action/gift/glabro/glabro = new()
-	glabro.Grant(C)
+	glabro.Grant(human_who_gained_species)
 	var/datum/action/gift/rage_heal/GH = new()
-	GH.Grant(C)
+	GH.Grant(human_who_gained_species)
 	human_who_gained_species.transformator = new(human_who_gained_species)
 	human_who_gained_species.transformator.human_form = human_who_gained_species
 

@@ -1,4 +1,6 @@
 /datum/preferences
+	var/datum/vampireclane/clane = new /datum/vampireclane/brujah()
+
 	//Generation
 	var/generation = 13
 	var/generation_bonus = 0

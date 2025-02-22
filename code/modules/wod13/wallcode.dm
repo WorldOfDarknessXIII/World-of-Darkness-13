@@ -12,10 +12,10 @@
 
 /obj/effect/addwall/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSS, PROC_REF(on_cross))
+	RegisterSignal(src, COMSIG_ATOM_EXITED, PROC_REF(on_uncross))
 
-
-/obj/effect/addwall/Crossed(atom/movable/AM, oldloc)
-	. = ..()
+/obj/effect/addwall/proc/on_cross(atom/movable/AM, oldloc)
 	var/someoneshere = FALSE
 	for(var/mob/living/L in get_turf(src))
 		if(L)
@@ -25,8 +25,7 @@
 	else
 		alpha = 128
 
-/obj/effect/addwall/Uncrossed(atom/movable/AM)
-	. = ..()
+/obj/effect/addwall/proc/on_uncross(atom/movable/AM)
 	var/someoneshere = FALSE
 	for(var/mob/living/L in get_turf(src))
 		if(L)
@@ -476,7 +475,6 @@
 		if(istype(get_area(src), /area/vtm))
 			var/area/vtm/V = get_area(src)
 			if(V.upper)
-				initial_gas_mix = WINTER_DEFAULT_ATMOS
 				new /obj/effect/decal/snow_overlay(src)
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
@@ -519,7 +517,6 @@
 		if(istype(get_area(src), /area/vtm))
 			var/area/vtm/V = get_area(src)
 			if(V.upper)
-				initial_gas_mix = WINTER_DEFAULT_ATMOS
 				icon_state = "snow[rand(1, 14)]"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
@@ -548,7 +545,6 @@
 		if(istype(get_area(src), /area/vtm))
 			var/area/vtm/V = get_area(src)
 			if(V.upper)
-				initial_gas_mix = WINTER_DEFAULT_ATMOS
 				icon_state = "snow[rand(1, 14)]"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
@@ -587,7 +583,6 @@
 		if(istype(get_area(src), /area/vtm))
 			var/area/vtm/V = get_area(src)
 			if(V.upper)
-				initial_gas_mix = WINTER_DEFAULT_ATMOS
 				icon_state = "snow[rand(1, 14)]"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
@@ -732,7 +727,6 @@
 		if(istype(get_area(src), /area/vtm))
 			var/area/vtm/V = get_area(src)
 			if(V.upper)
-				initial_gas_mix = WINTER_DEFAULT_ATMOS
 				icon_state = "snow[rand(1, 14)]"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
@@ -809,7 +803,6 @@
 		if(istype(get_area(src), /area/vtm))
 			var/area/vtm/V = get_area(src)
 			if(V.upper)
-				initial_gas_mix = WINTER_DEFAULT_ATMOS
 				icon_state = "snow[rand(1, 14)]"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
@@ -825,7 +818,6 @@
 		if(istype(get_area(src), /area/vtm))
 			var/area/vtm/V = get_area(src)
 			if(V.upper)
-				initial_gas_mix = WINTER_DEFAULT_ATMOS
 				icon_state = "snow_rails"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
@@ -1073,7 +1065,6 @@
 		if(istype(get_area(src), /area/vtm))
 			var/area/vtm/V = get_area(src)
 			if(V.upper)
-				initial_gas_mix = WINTER_DEFAULT_ATMOS
 				icon_state = "snow[rand(1, 14)]"
 				footstep = FOOTSTEP_SNOW
 				barefootstep = FOOTSTEP_SNOW
@@ -1192,7 +1183,7 @@
 	if(isliving(L))
 		if(L.movement_type & FLYING)
 			return
-		L.apply_damage(10, CLONE)
+		L.apply_damage(10, BURN)
 		L.apply_damage(30, TOX)
 		to_chat(L, "<span class='warning'>Your flesh burns!</span>")
 

@@ -29,7 +29,7 @@
 
 	RegisterSignal(nuke_team, COMSIG_NUKE_TEAM_ADDITION, PROC_REF(late_bodycam))
 
-	owner.current.grant_language(/datum/language/codespeak)
+	owner.current.grant_language(/datum/language/english)
 
 /datum/antagonist/nukeop/support/get_spawnpoint()
 	return pick(GLOB.nukeop_overwatch_start)

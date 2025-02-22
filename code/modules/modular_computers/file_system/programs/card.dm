@@ -82,7 +82,7 @@
 	computer.crew_manifest_update = FALSE
 	var/obj/item/card/id/inserted_auth_card = computer.computer_id_slot
 	if(inserted_auth_card)
-		GLOB.manifest.modify(inserted_auth_card.registered_name, inserted_auth_card.assignment, inserted_auth_card.get_trim_assignment())
+		GLOB.manifest.modify(inserted_auth_card.registered_name, inserted_auth_card.assignment)
 
 	return ..()
 
@@ -144,14 +144,9 @@
 		if("PRG_terminate")
 			if(!computer || !authenticated_card)
 				return TRUE
-			if(minor)
-				if(!(inserted_auth_card.trim?.type in job_templates))
-					to_chat(usr, span_notice("Software error: You do not have the necessary permissions to demote this card."))
-					return TRUE
 
 			// Set the new assignment then remove the trim.
 			inserted_auth_card.assignment = is_centcom ? "Fired" : "Demoted"
-			SSid_access.remove_trim_from_card(inserted_auth_card)
 
 			playsound(computer, 'sound/machines/terminal/terminal_prompt_deny.ogg', 50, FALSE)
 			return TRUE
@@ -247,14 +242,6 @@
 			if(!template_name)
 				return TRUE
 
-			for(var/trim_path in job_templates)
-				var/datum/id_trim/trim = SSid_access.trim_singletons_by_path[trim_path]
-				if(trim.assignment != template_name)
-					continue
-
-				SSid_access.add_trim_access_to_card(inserted_auth_card, trim_path)
-				return TRUE
-
 			stack_trace("[key_name(usr)] ([usr]) attempted to apply invalid template \[[template_name]\] to [inserted_auth_card]")
 
 			return TRUE
@@ -292,25 +279,6 @@
 	var/obj/item/card/id/inserted_id = computer.computer_id_slot
 	data["authIDName"] = inserted_id ? inserted_id.name : "-----"
 	data["authenticatedUser"] = authenticated_card
-
-	data["has_id"] = !!inserted_id
-	data["id_name"] = inserted_id ? inserted_id.name : "-----"
-	if(inserted_id)
-		data["id_rank"] = inserted_id.assignment ? inserted_id.assignment : "Unassigned"
-		data["id_owner"] = inserted_id.registered_name ? inserted_id.registered_name : "-----"
-		data["access_on_card"] = inserted_id.access
-		data["wildcardSlots"] = inserted_id.wildcard_slots
-		data["id_age"] = inserted_id.registered_age
-
-		if(inserted_id.trim)
-			var/datum/id_trim/card_trim = inserted_id.trim
-			data["hasTrim"] = TRUE
-			data["trimAssignment"] = card_trim.assignment ? card_trim.assignment : ""
-			data["trimAccess"] = card_trim.access ? card_trim.access : list()
-		else
-			data["hasTrim"] = FALSE
-			data["trimAssignment"] = ""
-			data["trimAccess"] = list()
 
 	data["has_id"] = !!inserted_id
 	data["id_name"] = inserted_id ? inserted_id.name : "-----"

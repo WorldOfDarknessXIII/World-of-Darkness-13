@@ -38,7 +38,7 @@
 	name = "binary translator key"
 	icon_state = "cypherkey_basic"
 	special_channels = RADIO_SPECIAL_BINARY
-	translated_language = /datum/language/machine
+	translated_language = /datum/language/arabic
 	greyscale_config = /datum/greyscale_config/encryptionkey_basic
 	greyscale_colors = "#24a157#3758c4"
 
@@ -217,7 +217,7 @@
 		RADIO_CHANNEL_ENTERTAINMENT = 1,
 	)
 	special_channels = RADIO_SPECIAL_BINARY
-	translated_language = /datum/language/machine
+	translated_language = /datum/language/arabic
 
 /obj/item/encryptionkey/ai/evil //ported from NT, this goes 'inside' the AI.
 	name = "syndicate binary encryption key"

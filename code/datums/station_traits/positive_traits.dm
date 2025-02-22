@@ -257,42 +257,6 @@
 	trait_to_give = STATION_TRAIT_CYBERNETIC_REVOLUTION
 	/// List of all job types with the cybernetics they should receive.
 	var/static/list/job_to_cybernetic = list(
-		/datum/job/assistant = /obj/item/organ/heart/cybernetic, //real cardiac
-		/datum/job/atmospheric_technician = /obj/item/organ/cyberimp/mouth/breathing_tube,
-		/datum/job/bartender = /obj/item/organ/liver/cybernetic/tier3,
-		/datum/job/bitrunner = /obj/item/organ/eyes/robotic/thermals,
-		/datum/job/botanist = /obj/item/organ/cyberimp/chest/nutriment,
-		/datum/job/captain = /obj/item/organ/heart/cybernetic/tier3,
-		/datum/job/cargo_technician = /obj/item/organ/stomach/cybernetic/tier2,
-		/datum/job/chaplain = /obj/item/organ/cyberimp/brain/anti_drop,
-		/datum/job/chemist = /obj/item/organ/liver/cybernetic/tier2,
-		/datum/job/chief_engineer = /obj/item/organ/cyberimp/chest/thrusters,
-		/datum/job/chief_medical_officer = /obj/item/organ/cyberimp/chest/reviver,
-		/datum/job/clown = /obj/item/organ/cyberimp/brain/anti_stun, //HONK!
-		/datum/job/cook = /obj/item/organ/cyberimp/chest/nutriment/plus,
-		/datum/job/coroner = /obj/item/organ/tongue/bone, //hes got a bone to pick with you
-		/datum/job/curator = /obj/item/organ/cyberimp/brain/connector,
-		/datum/job/detective = /obj/item/organ/lungs/cybernetic/tier3,
-		/datum/job/doctor = /obj/item/organ/cyberimp/arm/surgery,
-		/datum/job/geneticist = /obj/item/organ/fly, //we don't care about implants, we have cancer.
-		/datum/job/head_of_personnel = /obj/item/organ/eyes/robotic,
-		/datum/job/head_of_security = /obj/item/organ/eyes/robotic/thermals,
-		/datum/job/human_ai = /obj/item/organ/brain/cybernetic,
-		/datum/job/janitor = /obj/item/organ/eyes/robotic/xray,
-		/datum/job/lawyer = /obj/item/organ/heart/cybernetic/tier2,
-		/datum/job/mime = /obj/item/organ/tongue/robot, //...
-		/datum/job/paramedic = /obj/item/organ/cyberimp/eyes/hud/medical,
-		/datum/job/prisoner = /obj/item/organ/eyes/robotic/shield,
-		/datum/job/psychologist = /obj/item/organ/ears/cybernetic/whisper,
-		/datum/job/pun_pun = /obj/item/organ/cyberimp/arm/strongarm,
-		/datum/job/quartermaster = /obj/item/organ/stomach/cybernetic/tier3,
-		/datum/job/research_director = /obj/item/organ/cyberimp/bci,
-		/datum/job/roboticist = /obj/item/organ/cyberimp/eyes/hud/diagnostic,
-		/datum/job/scientist = /obj/item/organ/ears/cybernetic,
-		/datum/job/security_officer = /obj/item/organ/cyberimp/arm/flash,
-		/datum/job/shaft_miner = /obj/item/organ/monster_core/rush_gland,
-		/datum/job/station_engineer = /obj/item/organ/cyberimp/arm/toolset,
-		/datum/job/warden = /obj/item/organ/cyberimp/eyes/hud/security,
 	)
 
 /datum/station_trait/cybernetic_revolution/New()
@@ -405,23 +369,6 @@
 	desc = "Repair Technician? We don't have those in this sector, just a bunch of lazy engineers! This must have been from the between-shift crew..."
 	registered_name = "Pluoxium LXVII"
 	registered_age = 67
-	trim = /datum/id_trim/technician_id
-
-/datum/id_trim/technician_id
-	access = list(ACCESS_EXTERNAL_AIRLOCKS, ACCESS_MAINT_TUNNELS)
-	assignment = "Repair Technician"
-	trim_state = "trim_stationengineer"
-	department_color = COLOR_ASSISTANT_GRAY
-
-/// Spawns assistants with some gear, either gimmicky or functional. Maybe, one day, it will inspire an assistant to do something productive or fun
-/datum/station_trait/assistant_gimmicks
-	name = "Geared Assistants Pilot"
-	report_message = "The Nanotrassen Assistant Affairs division is performing a pilot to see if different assistant equipment helps improve productivity!"
-	trait_type = STATION_TRAIT_POSITIVE
-	weight = 3
-	trait_to_give = STATION_TRAIT_ASSISTANT_GIMMICKS
-	show_in_report = TRUE
-	blacklist = list(/datum/station_trait/colored_assistants)
 
 /datum/station_trait/random_event_weight_modifier/assistant_gimmicks/get_pulsar_message()
 	var/advisory_string = "Advisory Level: <b>Grey Sky</b></center><BR>"

@@ -901,7 +901,7 @@ SUBSYSTEM_DEF(dynamic)
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		ruleset.restricted_roles |= ruleset.protected_roles
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
-		ruleset.restricted_roles |= JOB_ASSISTANT
+		ruleset.restricted_roles |= JOB_CITIZEN
 	if(!(ruleset.ruleset_category & GLOB.dynamic_ruleset_categories))
 		ruleset.requirements = list(101,101,101,101,101,101,101,101,101,101)
 

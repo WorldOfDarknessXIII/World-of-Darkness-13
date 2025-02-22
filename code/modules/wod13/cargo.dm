@@ -425,7 +425,8 @@
 	. = ..()
 	update_icon()
 
-/obj/item/stack/dollar/update_icon_state()
+/obj/item/stack/dollar/update_icon()
+	. = ..()
 	var/amount = get_amount()
 	switch(amount)
 		if(100 to INFINITY)

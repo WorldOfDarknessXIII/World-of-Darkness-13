@@ -333,13 +333,16 @@
 	firing_effect_type = null
 	var/obj/item/gun/magic/tentacle/gun //the item that shot it
 
+/obj/item/ammo_casing/magic/tentacle/lasombra
+	projectile_type = /obj/projectile/tentacle/lasombra
+
 /obj/item/ammo_casing/magic/tentacle/Initialize(mapload)
 	gun = loc
 	. = ..()
 
 /obj/projectile/tentacle/lasombra
 	damage_type = BURN
-	state_icon = "curse0"
+	icon_state = "curse0"
 
 /obj/item/ammo_casing/magic/tentacle/Destroy()
 	gun = null

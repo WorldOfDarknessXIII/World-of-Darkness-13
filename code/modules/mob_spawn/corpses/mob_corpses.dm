@@ -18,7 +18,6 @@
 	head = /obj/item/clothing/head/helmet/swat
 	back = /obj/item/storage/backpack
 	id = /obj/item/card/id/advanced/chameleon
-	id_trim = /datum/id_trim/chameleon/operative
 
 /obj/effect/mob_spawn/corpse/human/syndicatecommando
 	name = "Syndicate Commando"
@@ -36,7 +35,6 @@
 	back = /obj/item/mod/control/pre_equipped/nuclear
 	r_pocket = /obj/item/tank/internals/emergency_oxygen
 	id = /obj/item/card/id/advanced/chameleon
-	id_trim = /datum/id_trim/chameleon/operative
 
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear
 	outfit = /datum/outfit/syndicatecommandocorpse/lessenedgear
@@ -46,7 +44,6 @@
 	gloves = /obj/item/clothing/gloves/tackler
 	back = null
 	id = null
-	id_trim = null
 
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/soft_suit
 	outfit = /datum/outfit/syndicatecommandocorpse/soft_suit
@@ -58,7 +55,6 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	back = null
 	id = null
-	id_trim = null
 
 /obj/effect/mob_spawn/corpse/human/syndicatestormtrooper
 	name = "Syndicate Stormtrooper"
@@ -75,7 +71,6 @@
 	mask = /obj/item/clothing/mask/gas/syndicate
 	back = /obj/item/mod/control/pre_equipped/elite
 	id = /obj/item/card/id/advanced/chameleon
-	id_trim = /datum/id_trim/chameleon/operative
 
 /obj/effect/mob_spawn/corpse/human/syndicatepilot
 	name = "Syndicate Pilot"
@@ -96,7 +91,6 @@
 	head = /obj/item/clothing/head/helmet/swat
 	back = /obj/item/storage/backpack
 	id = /obj/item/card/id/advanced/chameleon
-	id_trim = /datum/id_trim/chameleon/operative
 
 /obj/effect/mob_spawn/corpse/human/syndicatepilot/lessenedgear
 	outfit = /datum/outfit/syndicatepilotcorpse/lessenedgear
@@ -105,7 +99,6 @@
 	name = "Syndicate Pilot Corpse (Less Antag Gear)"
 	gloves = /obj/item/clothing/gloves/color/black
 	id = /obj/item/card/id/advanced/black
-	id_trim = /datum/id_trim/syndicom
 
 /obj/effect/mob_spawn/corpse/human/tigercultist
 	name = "Tiger Cooperative Cultist"
@@ -318,7 +311,6 @@
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security
 	id = /obj/item/card/id/advanced/centcom
-	id_trim = /datum/id_trim/centcom/corpse/private_security/tradepost_officer
 
 /obj/effect/mob_spawn/corpse/human/nanotrasenassaultsoldier
 	name = "\improper Nanotrasen Assault Officer Corpse"
@@ -337,7 +329,6 @@
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security
 	id = /obj/item/card/id/advanced/centcom
-	id_trim = /datum/id_trim/centcom/corpse/assault
 
 /obj/effect/mob_spawn/corpse/human/nanotrasenelitesoldier
 	name = "\improper Nanotrasen Elite Assault Officer Corpse"
@@ -353,7 +344,6 @@
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	back = /obj/item/mod/control/pre_equipped/responsory/security
 	id = /obj/item/card/id/advanced/centcom
-	id_trim = /datum/id_trim/centcom/ert/security
 
 /obj/effect/mob_spawn/corpse/human/cat_butcher
 	name = "The Cat Surgeon"
@@ -372,7 +362,6 @@
 	back = /obj/item/storage/backpack/satchel/med
 	id = /obj/item/card/id/advanced
 	glasses = /obj/item/clothing/glasses/hud/health
-	id_trim = /datum/id_trim/away/cat_surgeon
 
 /obj/effect/mob_spawn/corpse/human/bee_terrorist
 	name = "BLF Operative"
@@ -396,7 +385,7 @@
 	haircolor = COLOR_BLACK
 	facial_hairstyle = "Shaved"
 	skin_tone = "caucasian1"
-	outfit = /datum/outfit/job/assistant/consistent
+	outfit = /datum/outfit/job/citizen
 
 /obj/effect/mob_spawn/corpse/human/prey_pod
 	husk = TRUE

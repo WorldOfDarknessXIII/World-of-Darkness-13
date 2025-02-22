@@ -24,7 +24,6 @@
 	species_cookie = /obj/item/food/grown/banana
 	inherent_factions = list(FACTION_MONKEY)
 	sexes = FALSE
-	species_language_holder = /datum/language_holder/monkey
 
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/monkey,
@@ -126,14 +125,14 @@
 	var/list/to_add = list()
 	// Holding these variables so we can grab the exact names for our perk.
 	var/datum/language/common_language = /datum/language/english
-	var/datum/language/monkey_language = /datum/language/monkey
+	var/datum/language/greek_language = /datum/language/greek
 
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = "comment",
 		SPECIES_PERK_NAME = "Primitive Tongue",
 		SPECIES_PERK_DESC = "You may be able to understand [initial(common_language.name)], but you can't speak it. \
-			You can only speak [initial(monkey_language.name)].",
+			You can only speak [initial(greek_language.name)].",
 	))
 
 	return to_add

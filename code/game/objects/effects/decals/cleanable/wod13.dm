@@ -59,3 +59,12 @@
 		fire_act(attacked_by_hot_thing)
 		return
 	return ..()
+
+/obj/effect/decal/cleanable/fire_ash
+	name = "ashes"
+	desc = "Ashes to ashes, dust to dust, and into space."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "dirt"
+	mergeable_decal = FALSE
+	beauty = -75
+	color = "#000000"

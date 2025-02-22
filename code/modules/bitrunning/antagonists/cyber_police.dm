@@ -19,7 +19,6 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black
 	id = /obj/item/card/id/advanced
-	id_trim = /datum/id_trim/cyber_police
 	shoes = /obj/item/clothing/shoes/laceup
 	uniform = /obj/item/clothing/under/suit/black_really
 

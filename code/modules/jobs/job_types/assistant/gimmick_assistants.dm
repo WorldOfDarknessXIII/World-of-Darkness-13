@@ -6,10 +6,6 @@
 	/// The weight of the outfit to be picked
 	var/outfit_weight = 0
 
-
-/datum/outfit/job/assistant/gimmick/give_jumpsuit(mob/living/carbon/human/target)
-	return //dont do colorized and stuff, it messes with our uniforms
-
 /datum/outfit/job/assistant/gimmick/bee
 	name = "Gimmick Assistant - Bee"
 	suit = /obj/item/clothing/suit/hooded/bee_costume

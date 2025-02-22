@@ -152,7 +152,6 @@
 	name = "CentCom Official"
 
 	id = /obj/item/card/id/advanced/centcom
-	id_trim = /datum/id_trim/centcom/official
 	uniform = /obj/item/clothing/under/rank/centcom/official
 	back = /obj/item/storage/backpack/satchel
 	box = /obj/item/storage/box/survival
@@ -295,7 +294,6 @@
 	name = "CentCom Intern"
 
 	id = /obj/item/card/id/advanced/centcom
-	id_trim = /datum/id_trim/centcom/intern
 	uniform = /obj/item/clothing/under/rank/centcom/intern
 	back = /obj/item/storage/backpack/satchel
 	box = /obj/item/storage/box/survival
@@ -429,7 +427,6 @@
 	name = "Death Commando"
 
 	id = /obj/item/card/id/advanced/black/deathsquad
-	id_trim = /datum/id_trim/centcom/deathsquad
 	uniform = /obj/item/clothing/under/rank/centcom/commander
 	back = /obj/item/mod/control/pre_equipped/apocryphal
 	box = /obj/item/storage/box/survival/centcom

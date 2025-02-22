@@ -753,6 +753,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME
 
+/obj/structure/window/reinforced/fulltile/indestructable
+	name = "robust window"
+	flags_1 = PREVENT_CLICK_UNDER_1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
 /obj/structure/window/reinforced/fulltile
 	name = "full tile reinforced window"
 	desc = "A full tile window that is reinforced with metal rods."

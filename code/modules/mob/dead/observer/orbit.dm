@@ -216,10 +216,6 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		serialized["icon"] = "borg"
 		return serialized
 
-	var/obj/item/card/id/id_card = player.get_idcard(hand_first = FALSE)
-	serialized["job"] = id_card?.get_trim_assignment()
-	serialized["icon"] = id_card?.get_trim_sechud_icon_state()
-
 	var/datum/job/job = player.mind?.assigned_role
 	if (isnull(job))
 		return serialized
@@ -229,9 +225,6 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 	if (isnull(outfit))
 		return serialized
 
-	var/datum/id_trim/trim = outfit.id_trim
-	if (!isnull(trim))
-		serialized["mind_icon"] = trim::sechud_icon_state
 	return serialized
 
 /// Gets a list: Misc data and whether it's critical. Handles all snowflakey type cases

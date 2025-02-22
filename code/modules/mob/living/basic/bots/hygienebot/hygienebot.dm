@@ -17,7 +17,6 @@
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE
 	bot_type = HYGIENE_BOT
-	additional_access = /datum/id_trim/job/janitor
 	hackables = "cleaning service protocols"
 	ai_controller = /datum/ai_controller/basic_controller/bot/hygienebot
 

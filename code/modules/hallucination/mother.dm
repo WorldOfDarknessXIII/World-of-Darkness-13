@@ -82,7 +82,7 @@
 		return ..()
 
 	if (istype(hallucinator, /mob/living/basic/pet/dog/corgi/ian))
-		image_icon = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/job/hop))
+		image_icon = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/job/citizen))
 		name = "Head of Personnel"
 		return ..()
 

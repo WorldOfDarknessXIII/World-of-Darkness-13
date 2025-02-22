@@ -2,7 +2,8 @@
 	name = "Blood Hunt Is Going On"
 	icon_state = "bloodhunt"
 
-/atom/movable/screen/alert/bloodhunt/Click()
+/atom/movable/screen/alert/bloodhunt/Click(location, control, params)
+	. = ..()
 	for(var/mob/living/carbon/human/H in SSbloodhunt.hunted)
 		if(H)
 			var/area/A = get_area(H)
@@ -47,7 +48,7 @@ SUBSYSTEM_DEF(bloodhunt)
 	name = "Blood Hunt"
 	init_order = INIT_ORDER_DEFAULT
 	wait = 600
-	priority = FIRE_PRIORITY_VERYLOW
+	priority = FIRE_PRIORITY_PING
 
 	var/list/hunted = list()
 

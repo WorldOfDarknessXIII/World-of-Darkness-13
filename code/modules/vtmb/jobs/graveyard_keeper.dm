@@ -11,7 +11,7 @@
 
 	outfit = /datum/outfit/job/graveyard
 
-	paycheck = PAYCHECK_MEDIUM
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CAR
 
 	display_order = JOB_DISPLAY_ORDER_GRAVEYARD

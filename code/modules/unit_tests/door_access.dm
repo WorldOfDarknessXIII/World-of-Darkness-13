@@ -11,7 +11,7 @@
 	door.close() // close it here as well
 
 	// Alright, now let's test that someone with access can open a door that requires access when only req_access is set.
-	subject.equipOutfit(/datum/outfit/job/assistant/consistent) // set up the outfit here to ensure the last check is pure.
+	subject.equipOutfit(/datum/outfit/job/citizen) // set up the outfit here to ensure the last check is pure.
 	var/obj/item/card/id/advanced/keycard = subject.wear_id
 
 	// Test two accesses at once just to make sure the script hasn't changed on us.

@@ -34,6 +34,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 	/turf/open/space/openspace
 	)))
 
+#define isnpcbeacon(A) (istype(A, /obj/effect/landmark/npcbeacon))
+
 #define isgroundlessturf(A) (is_type_in_typecache(A, GLOB.turfs_without_ground))
 
 GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
@@ -92,6 +94,8 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 #define isliving(A) (istype(A, /mob/living))
 
 #define isbrain(A) (istype(A, /mob/living/brain))
+
+#define iszomboid(A) (istype(A, /mob/living/basic/zombie))
 
 //Carbon mobs
 #define iscarbon(A) (istype(A, /mob/living/carbon))
@@ -327,16 +331,16 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 
 // Jobs
 #define is_job(job_type)  (istype(job_type, /datum/job))
-#define is_assistant_job(job_type) (istype(job_type, /datum/job/assistant))
-#define is_bartender_job(job_type) (istype(job_type, /datum/job/bartender))
-#define is_captain_job(job_type) (istype(job_type, /datum/job/captain))
-#define is_chaplain_job(job_type) (istype(job_type, /datum/job/chaplain))
-#define is_clown_job(job_type) (istype(job_type, /datum/job/clown))
-#define is_mime_job(job_type) (istype(job_type, /datum/job/mime))
-#define is_detective_job(job_type) (istype(job_type, /datum/job/detective))
-#define is_scientist_job(job_type) (istype(job_type, /datum/job/scientist))
-#define is_security_officer_job(job_type) (istype(job_type, /datum/job/security_officer))
-#define is_research_director_job(job_type) (istype(job_type, /datum/job/research_director))
+#define is_assistant_job(job_type) (istype(job_type, /datum/job/vamp/citizen))
+#define is_bartender_job(job_type) (istype(job_type, /datum/job/vamp/citizen))
+#define is_captain_job(job_type) (istype(job_type, /datum/job/vamp/prince))
+#define is_chaplain_job(job_type) (istype(job_type, /datum/job/vamp/citizen))
+#define is_clown_job(job_type) (istype(job_type, /datum/job/vamp/citizen))
+#define is_mime_job(job_type) (istype(job_type, /datum/job/vamp/citizen))
+#define is_detective_job(job_type) (istype(job_type, /datum/job/vamp/citizen))
+#define is_scientist_job(job_type) (istype(job_type, /datum/job/vamp/citizen))
+#define is_security_officer_job(job_type) (istype(job_type, /datum/job/vamp/citizen))
+#define is_research_director_job(job_type) (istype(job_type, /datum/job/vamp/citizen))
 #define is_unassigned_job(job_type) (istype(job_type, /datum/job/unassigned))
 
 #define isprojectilespell(thing) (istype(thing, /datum/action/cooldown/spell/pointed/projectile))

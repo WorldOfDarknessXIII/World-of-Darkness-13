@@ -45,7 +45,6 @@
 /datum/outfit/waystation/cargohauler
 	name = "Waystation Cargo Hauler"
 	id = /obj/item/card/id/advanced
-	id_trim = /datum/id_trim/away/waystation/cargo_technician
 	uniform = /obj/item/clothing/under/rank/cargo/tech
 	belt = /obj/item/modular_computer/pda/cargo
 	ears = /obj/item/radio/headset/headset_cargo
@@ -54,7 +53,6 @@
 /datum/outfit/waystation/qm
 	name = "Waystation Quartermaster"
 	id = /obj/item/card/id/advanced/silver
-	id_trim = /datum/id_trim/away/waystation/quartermaster
 	uniform = /obj/item/clothing/under/rank/cargo/qm
 	belt = /obj/item/modular_computer/pda/heads/quartermaster
 	ears = /obj/item/radio/headset/headset_cargo
@@ -64,7 +62,6 @@
 /datum/outfit/waystation/nanotrasenofficer
 	name = "Waystation Security Officer"
 	id = /obj/item/card/id/advanced
-	id_trim = /datum/id_trim/away/waystation/security
 	uniform = /obj/item/clothing/under/rank/security/officer
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat

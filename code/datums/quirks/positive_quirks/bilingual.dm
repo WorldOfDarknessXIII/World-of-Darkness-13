@@ -20,7 +20,7 @@
 	else
 		language_type = GLOB.language_types_by_name[wanted_language]
 	if(quirk_holder.has_language(language_type))
-		language_type = /datum/language/uncommon
+		language_type = /datum/language/mandarin
 		if(quirk_holder.has_language(language_type))
 			to_chat(quirk_holder, span_boldnotice("You are already familiar with the quirk in your preferences, so you did not learn one."))
 			return

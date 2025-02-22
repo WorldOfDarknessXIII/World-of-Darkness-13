@@ -75,9 +75,7 @@
 	// The delusion includes us - we might be in it already, we might not
 	if(affects_us)
 		funny_looking_mobs |= hallucinator
-
-	// The delusion should not inlude us
-	else
+	else // The delusion should not inlude us
 		funny_looking_mobs -= hallucinator
 
 	// The delusion shouldn not include anyone in view of us
@@ -102,10 +100,7 @@
 
 /datum/hallucination/delusion/proc/make_delusion_image(mob/over_who)
 	var/image/funny_image
-	if(delusion_appearance)
-		funny_image = image(delusion_appearance, over_who)
-	else
-		funny_image = image(delusion_icon_file, over_who, delusion_icon_state)
+	funny_image = image(delusion_appearance, over_who, (delusion_appearance ? delusion_icon_state : null))
 	funny_image.name = delusion_name
 	funny_image.override = TRUE
 	return funny_image
@@ -228,22 +223,6 @@
 		),
 	)
 
-	return ..()
-
-/datum/hallucination/delusion/preset/seccies
-	dynamic_delusion = TRUE
-	random_hallucination_weight = 0
-	delusion_name = "Security"
-	affects_others = TRUE
-	affects_us = FALSE
-
-/datum/hallucination/delusion/preset/seccies/make_delusion_image(mob/over_who)
-	delusion_appearance = get_dynamic_human_appearance(
-		outfit_path = /datum/outfit/job/security,
-		bloody_slots = prob(5) ? ALL : NONE,
-		r_hand = prob(15) ? /obj/item/melee/baton/security/loaded : null,
-		l_hand = prob(15) ? /obj/item/melee/baton/security/loaded : null,
-	)
 	return ..()
 
 /// Hallucination used by the nightmare vision goggles to turn everyone except you into mares

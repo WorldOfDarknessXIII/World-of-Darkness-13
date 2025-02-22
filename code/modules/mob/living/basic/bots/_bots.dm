@@ -33,7 +33,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
 
-	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
 
 	speech_span = SPAN_ROBOT
@@ -72,8 +71,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	var/radio_channel = RADIO_CHANNEL_COMMON
 	///our access card
 	var/obj/item/card/id/access_card
-	///The trim type that will grant additional acces
-	var/datum/id_trim/additional_access
 	///file the path icon is stored in
 	var/path_image_icon = 'icons/mob/silicon/aibots.dmi'
 	///state of the path icon
@@ -776,10 +773,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	return null
 
 /mob/living/basic/bot/proc/provide_additional_access()
-	var/datum/id_trim/additional_trim = SSid_access.trim_singletons_by_path[additional_access]
-	if(isnull(additional_trim))
-		return
-	access_card.add_access(additional_trim.access + additional_trim.wildcard_access)
 	initial_access = access_card.access.Copy()
 
 

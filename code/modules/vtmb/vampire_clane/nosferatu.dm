@@ -28,7 +28,7 @@
 	male_clothes = /obj/item/clothing/under/vampire/nosferatu
 	female_clothes = /obj/item/clothing/under/vampire/nosferatu/female
 	accessories = list("nosferatu_ears")
-	accessories_layers = list("nosferatu_ears" = UPPER_EARS_LAYER)
+	accessories_layers = list("nosferatu_ears" = NECK_LAYER)
 	current_accessory = "nosferatu_ears"
 	clan_keys = /obj/item/vamp/keys/nosferatu
 
@@ -36,4 +36,3 @@
 	..()
 	var/obj/item/organ/eyes/night_vision/NV = new()
 	NV.Insert(H, TRUE, FALSE)
-	H.ventcrawler = VENTCRAWLER_ALWAYS

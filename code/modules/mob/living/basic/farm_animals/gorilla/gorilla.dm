@@ -16,7 +16,6 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	maxHealth = 220
 	health = 220
-	initial_language_holder = /datum/language_holder/monkey
 	response_help_continuous = "prods"
 	response_help_simple = "prod"
 	response_disarm_continuous = "challenges"

@@ -16,43 +16,17 @@
 	)
 	reward_points = BITRUNNER_REWARD_LOW
 
-// ID Trims
-/datum/id_trim/factory
-	assignment = "Factory Worker"
-	trim_state = "trim_cargotechnician"
-	department_color = COLOR_CARGO_BROWN
-	subdepartment_color = COLOR_CARGO_BROWN
-	sechud_icon_state = SECHUD_CARGO_TECHNICIAN
-	access = list(
-		ACCESS_AWAY_SUPPLY
-		)
-
-/datum/id_trim/factory/qm
-	assignment = "Factory Quartermaster"
-	trim_state = "trim_quartermaster"
-	department_color = COLOR_COMMAND_BLUE
-	subdepartment_color = COLOR_CARGO_BROWN
-	department_state = "departmenthead"
-	sechud_icon_state = SECHUD_QUARTERMASTER
-	access = list(
-		ACCESS_AWAY_SUPPLY,
-		ACCESS_AWAY_COMMAND
-		)
-
 // ID Cards
 /obj/item/card/id/advanced/factory
 	name = "factory worker ID"
-	trim = /datum/id_trim/factory
 
 /obj/item/card/id/advanced/factory/qm
 	name = "factory quartermaster ID"
-	trim = /datum/id_trim/factory/qm
 
 //Outfits
 /datum/outfit/factory
 	name = "Factory Worker"
 
-	id_trim = /datum/id_trim/factory
 	id = /obj/item/card/id/advanced/
 	uniform = /obj/item/clothing/under/rank/cargo/tech
 	suit = /obj/item/clothing/suit/hazardvest
@@ -77,7 +51,6 @@
 /datum/outfit/factory/qm
 	name = "Factory Quartermaster"
 
-	id_trim = /datum/id_trim/factory/qm
 	id = /obj/item/card/id/advanced/silver
 	uniform = /obj/item/clothing/under/rank/cargo/qm
 	belt = /obj/item/radio

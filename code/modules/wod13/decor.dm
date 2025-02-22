@@ -1244,7 +1244,7 @@
 			total_corpses += 1
 			if(total_corpses >= 20)
 				total_corpses = 0
-				playsound(get_turf(src), 'sound/magic/demon_dies.ogg', 100, TRUE)
+				playsound(get_turf(src), 'sound/effects/magic/demon_dies.ogg', 100, TRUE)
 				new /mob/living/simple_animal/hostile/baali_guard(get_turf(src))
 //			var/datum/preferences/P = GLOB.preferences_datums[ckey(user.key)]
 //			if(P)

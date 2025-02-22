@@ -21,7 +21,7 @@
 		client.images -= suckbar
 	qdel(suckbar)
 	suckbar_loc = mob
-	suckbar = image('code/modules/wod13/bloodcounter.dmi', suckbar_loc, "[round(14*(mob.bloodpool/mob.maxbloodpool))]", HUD_LAYER)
+	suckbar = image('code/modules/wod13/bloodcounter.dmi', suckbar_loc, "[round(14*(mob.bloodpool/mob.maxbloodpool))]")
 	suckbar.pixel_z = 40
 	suckbar.plane = ABOVE_HUD_PLANE
 	suckbar.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA

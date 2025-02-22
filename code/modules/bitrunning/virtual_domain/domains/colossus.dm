@@ -3,7 +3,7 @@
 	cost = BITRUNNER_COST_HIGH
 	desc = "A massive, ancient beast named the Colossus. Judgment comes."
 	difficulty = BITRUNNER_DIFFICULTY_HIGH
-	forced_outfit = /datum/outfit/job/miner
+	forced_outfit = /datum/outfit/job/citizen
 	key = "colossus"
 	map_name = "colossus"
 	reward_points = BITRUNNER_REWARD_HIGH

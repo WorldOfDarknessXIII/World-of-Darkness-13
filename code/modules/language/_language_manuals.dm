@@ -54,7 +54,7 @@
 /obj/item/language_manual/codespeak_manual
 	name = "codespeak manual"
 	desc = "The book's cover reads: \"Codespeak(tm) - Secure your communication with metaphors so elaborate, they seem randomly generated!\""
-	language = /datum/language/codespeak
+	language = /datum/language/russian
 	flavour_text = "suddenly your mind is filled with codewords and responses"
 
 /obj/item/language_manual/codespeak_manual/unlimited
@@ -89,7 +89,7 @@
 	name = "\improper Captain Pete's Guide to Pirate Lingo"
 	icon_state = "book_pirate"
 	desc = "A book containing all the knowledge, jargon and buzzwords to speak like a true old salt."
-	language = /datum/language/piratespeak
+	language = /datum/language/russian
 	flavour_text = "Blimey! I feel less of a landlubber now."
 	charges = 5
 
@@ -97,7 +97,7 @@
 /obj/item/language_manual/dronespeak_manual
 	name = "dronespeak manual"
 	desc = "The book's cover reads: \"Understanding Dronespeak - An exercise in futility.\" The book is written entirely in binary, non-silicons probably won't understand it."
-	language = /datum/language/drone
+	language = /datum/language/italian
 	flavour_text = "suddenly the drone chittering makes sense"
 	charges = INFINITY
 

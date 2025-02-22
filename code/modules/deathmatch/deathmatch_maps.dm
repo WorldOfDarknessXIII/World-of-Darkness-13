@@ -61,14 +61,6 @@
 	map_name = "shooting_range"
 	key = "shooting_range"
 
-/datum/lazy_template/deathmatch/securing
-	name = "SecuRing"
-	desc = "Presenting the Security Ring, ever wanted to shoot people with disablers? Well now you can."
-	max_players = 4
-	allowed_loadouts = list(/datum/outfit/deathmatch_loadout/securing_sec)
-	map_name = "secu_ring"
-	key = "secu_ring"
-
 /datum/lazy_template/deathmatch/instagib
 	name = "Instagib"
 	desc = "EVERYONE GETS AN INSTAKILL RIFLE!"
@@ -191,14 +183,12 @@
 	max_players = 8
 	allowed_loadouts = list(
 		/datum/outfit/deathmatch_loadout/captain,
-		/datum/outfit/deathmatch_loadout/head_of_security,
 		/datum/outfit/deathmatch_loadout/traitor,
 		/datum/outfit/deathmatch_loadout/nukie,
 		/datum/outfit/deathmatch_loadout/tider,
 		/datum/outfit/deathmatch_loadout/abductor,
 		/datum/outfit/deathmatch_loadout/chef/upgraded,
 		/datum/outfit/deathmatch_loadout/battler/clown/upgraded,
-		/datum/outfit/deathmatch_loadout/mime,
 		/datum/outfit/deathmatch_loadout/pete,
 	)
 	map_name = "finaldestination"

@@ -93,28 +93,24 @@
 //begin buttons
 
 	transform_werewolf = new /atom/movable/screen/transform_lupus()
+	transform_werewolf.icon = src
 	transform_werewolf.screen_loc = ui_werewolf_lupus
-	transform_werewolf.hud = src
 	static_inventory += transform_werewolf
 
 	transform_werewolf = new /atom/movable/screen/transform_crinos()
 	transform_werewolf.screen_loc = ui_werewolf_crinos
-	transform_werewolf.hud = src
 	static_inventory += transform_werewolf
 
 	transform_werewolf = new /atom/movable/screen/transform_homid()
 	transform_werewolf.screen_loc = ui_werewolf_homid
-	transform_werewolf.hud = src
 	static_inventory += transform_werewolf
 
 	auspice_icon = new /atom/movable/screen/auspice()
 	auspice_icon.screen_loc = ui_werewolf_auspice
-	auspice_icon.hud = src
 	static_inventory += auspice_icon
 
 	rage_icon = new /atom/movable/screen/rage()
 	rage_icon.screen_loc = ui_werewolf_rage
-	rage_icon.hud = src
 	infodisplay += rage_icon
 
 	if(iscrinos(owner))
@@ -132,56 +128,47 @@
 	using = new/atom/movable/screen/language_menu
 	using.screen_loc = ui_language_menu
 	using.icon = 'code/modules/wod13/UI/buttons_wide.dmi'
-	using.hud = src
 	static_inventory += using
 
 	using = new /atom/movable/screen/drop()
 	using.icon = 'code/modules/wod13/UI/buttons_wide.dmi'
 	using.screen_loc = ui_swaphand_position(owner, 1)
-	using.hud = src
 	static_inventory += using
 
 	using = new /atom/movable/screen/resist()
 	using.icon = 'code/modules/wod13/UI/buttons_wide.dmi'
 	using.screen_loc = ui_above_movement
-	using.hud = src
 	hotkeybuttons += using
 
 	throw_icon = new /atom/movable/screen/throw_catch()
 	throw_icon.icon = 'code/modules/wod13/UI/buttons_wide.dmi'
 	throw_icon.screen_loc = ui_drop_throw
-	throw_icon.hud = src
 	hotkeybuttons += throw_icon
 
 	pull_icon = new /atom/movable/screen/pull()
 	pull_icon.icon = 'code/modules/wod13/UI/buttons_wide.dmi'
 	pull_icon.screen_loc = ui_above_movement_top
 	pull_icon.update_appearance()
-	pull_icon.hud = src
 	static_inventory += pull_icon
 
 //begin indicators
 
-	healths = new /atom/movable/screen/healths()
-	healths.icon = 'code/modules/wod13/UI/buttons32.dmi'
-	healths.hud = src
+	healths = new /atom/movable/screen/healths(null, src)
 	infodisplay += healths
+
 	blood_icon = new /atom/movable/screen/blood()
 	blood_icon.screen_loc = ui_bloodpool
-	blood_icon.hud = src
 	infodisplay += blood_icon
 
-	zone_select = new /atom/movable/screen/zone_sel()
-	zone_select.icon = 'code/modules/wod13/UI/buttons64.dmi'
-	zone_select.hud = src
-	zone_select.update_icon()
+	zone_select = new /atom/movable/screen/zone_sel(null, src)
+	zone_select.icon = ui_style
+	zone_select.update_appearance()
 	static_inventory += zone_select
 
 	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)
-			inv.hud = src
 			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
-			inv.update_icon()
+			inv.update_appearance()
 
 /datum/hud/werewolf/persistent_inventory_update()
 	if(!mymob)

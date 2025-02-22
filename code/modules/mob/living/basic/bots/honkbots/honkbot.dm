@@ -13,7 +13,6 @@
 	hackables = "sound control systems"
 	path_image_color = "#FF69B4"
 	data_hud_type = DATA_HUD_SECURITY_BASIC
-	additional_access = /datum/id_trim/job/clown
 	possessed_message = "You are a honkbot! Make sure the crew are having a great time!"
 	///our voicelines
 	var/static/list/honkbot_sounds = list(

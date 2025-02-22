@@ -40,6 +40,8 @@
 //Lower left, persistent menu
 #define ui_inventory "WEST:6,SOUTH:5"
 
+#define ui_full_inventory "WEST-4,SOUTH"
+
 //Middle left indicators
 #define ui_lingchemdisplay "WEST,CENTER-1:15"
 #define ui_lingstingdisplay "WEST:6,CENTER-3:11"
@@ -77,8 +79,19 @@
 #define ui_palette_scroll_offset(north_offset) ("WEST+1:8,NORTH-[6+north_offset]:28")
 
 //Middle right (status indicators)
+
+#define ui_werewolf_lupus "EAST,CENTER+1:16"
+#define ui_werewolf_crinos "EAST-1,CENTER+1:16"
+#define ui_werewolf_homid "EAST-2,CENTER+1:16"
+#define ui_werewolf_auspice "EAST-2:16,CENTER:16"
+#define ui_werewolf_rage "EAST-2:20,CENTER-1:16"
+
+#define ui_chi_pool "WEST-1,NORTH-4"
+#define ui_chi_demon "WEST-1,NORTH-5"
+
 #define ui_healthdoll "EAST-1:28,CENTER-2:17"
 #define ui_health "EAST-1:28,CENTER-1:19"
+#define ui_bloodpool "WEST-4:16,SOUTH+5:1"
 #define ui_internal "EAST-1:28,CENTER+1:21"
 #define ui_mood "EAST-1:28,CENTER:21"
 #define ui_hunger "EAST-1:2,CENTER:21"

@@ -21,7 +21,7 @@
 	values += "Random"
 
 	//we add uncommon as it's foreigner-only.
-	var/datum/language/uncommon/uncommon_language = /datum/language/uncommon
+	var/datum/language/mandarin/uncommon_language = /datum/language/mandarin
 	values += initial(uncommon_language.name)
 
 	for(var/datum/language/language_type as anything in GLOB.uncommon_roundstart_languages)

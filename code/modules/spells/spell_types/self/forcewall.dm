@@ -69,3 +69,18 @@
 /datum/action/cooldown/spell/forcewall/mime/before_cast(atom/cast_on)
 	. = ..()
 	invocation = span_notice("<b>[cast_on]</b> looks as if a blockade is in front of [cast_on.p_them()].")
+
+/datum/action/cooldown/spell/forcewall/salubri/cast(list/targets, mob/user = usr)
+	. = ..()
+	//[Lucia] TODO: when Disciplines are refactored, make this not terrible
+	if (iskindred(user))
+		var/mob/living/carbon/human/human_user = user
+		human_user.bloodpool = max(0, human_user.bloodpool - 1)
+		new wall_type(get_step(user, NORTH), user)
+		new wall_type(get_step(user, SOUTH), user)
+		new wall_type(get_step(user, EAST), user)
+		new wall_type(get_step(user, WEST), user)
+		new wall_type(get_step(get_step(user, NORTH), EAST), user) // Northeast
+		new wall_type(get_step(get_step(user, NORTH), WEST), user) // Northwest
+		new wall_type(get_step(get_step(user, SOUTH), EAST), user) // Southeast
+		new wall_type(get_step(get_step(user, SOUTH), WEST), user) // Southwest

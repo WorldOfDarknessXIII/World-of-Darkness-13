@@ -136,7 +136,6 @@
 
 ///Changes our appearance to the passed ID card
 /obj/item/card/id/advanced/heretic/proc/shapeshift(obj/item/card/id/advanced/card)
-	trim = card.trim
 	assignment = card.assignment
 	registered_age = card.registered_age
 	registered_name = card.registered_name

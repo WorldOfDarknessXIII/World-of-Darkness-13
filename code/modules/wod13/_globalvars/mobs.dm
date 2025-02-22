@@ -3,5 +3,3 @@ GLOBAL_LIST_EMPTY(alive_npc_list)
 GLOBAL_LIST_EMPTY(frenzy_list)
 GLOBAL_LIST_EMPTY(fires_list)
 GLOBAL_LIST_EMPTY(relationship_list)
-
-GLOBAL_LIST_EMPTY(narcd_underages)

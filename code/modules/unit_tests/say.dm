@@ -56,7 +56,7 @@
 	handle_speech_result = null
 
 	// lizard's forked tongue does not cause hissing when speaking native draconic
-	talking_lizard.set_active_language(/datum/language/draconic)
+	talking_lizard.set_active_language(/datum/language/hebrew)
 	talking_lizard.say(unhissed_quote)
 	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
 	TEST_ASSERT_EQUAL(unhissed_quote, handle_speech_result[SPEECH_MESSAGE], "Speech modifier test failed: [handle_speech_result[SPEECH_LANGUAGE]] did not equal [unhissed_quote] when spoken by a lizard in language [handle_speech_result[SPEECH_LANGUAGE]]")
@@ -89,12 +89,12 @@
 	host_mob = allocate(/mob/living/carbon/human/consistent)
 	var/surfer_quote = "surfing in the USA"
 
-	host_mob.grant_language(/datum/language/beachbum, SPOKEN_LANGUAGE) // can speak but can't understand
-	host_mob.add_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
-	TEST_ASSERT_NOTEQUAL(surfer_quote, host_mob.translate_language(host_mob, /datum/language/beachbum, surfer_quote), "Language test failed. Mob was supposed to understand: [surfer_quote]")
+	host_mob.grant_language(/datum/language/english, SPOKEN_LANGUAGE) // can speak but can't understand
+	host_mob.add_blocked_language(subtypesof(/datum/language) - /datum/language/english, LANGUAGE_STONER)
+	TEST_ASSERT_NOTEQUAL(surfer_quote, host_mob.translate_language(host_mob, /datum/language/english, surfer_quote), "Language test failed. Mob was supposed to understand: [surfer_quote]")
 
-	host_mob.grant_language(/datum/language/beachbum, ALL) // can now understand
-	TEST_ASSERT_EQUAL(surfer_quote, host_mob.translate_language(host_mob, /datum/language/beachbum, surfer_quote), "Language test failed. Mob was supposed NOT to understand: [surfer_quote]")
+	host_mob.grant_language(/datum/language/english, ALL) // can now understand
+	TEST_ASSERT_EQUAL(surfer_quote, host_mob.translate_language(host_mob, /datum/language/english, surfer_quote), "Language test failed. Mob was supposed NOT to understand: [surfer_quote]")
 
 /// This runs some simple speech tests on a speaker and listener and determines if a person can hear whispering or speaking as they are moved a distance away
 /datum/unit_test/speech
@@ -183,9 +183,9 @@
 	radio_test()
 
 	// Language test
-	speaker.grant_language(/datum/language/beachbum)
-	speaker.set_active_language(/datum/language/beachbum)
-	listener.add_blocked_language(/datum/language/beachbum)
+	speaker.grant_language(/datum/language/english)
+	speaker.set_active_language(/datum/language/english)
+	listener.add_blocked_language(/datum/language/english)
 	// speaking and whispering should be hearable
 	conversation(distance = 1)
 	// speaking should be hearable but not whispering

@@ -62,7 +62,6 @@
 	roundend_category = "Swat"
 	antagpanel_category = "Swat"
 	job_rank = ROLE_SWAT
-	antag_hud_type = ANTAG_HUD_OPS
 	antag_hud_name = "synd"
 	antag_moodlet = /datum/mood_event/focused
 	show_to_ghosts = TRUE
@@ -79,7 +78,7 @@
 /datum/antagonist/swat/on_gain()
 	randomize_appearance()
 	forge_objectives()
-	add_antag_hud(ANTAG_HUD_OPS, "synd", owner.current)
+	add_team_hud(owner.current, "synd")
 	owner.special_role = src
 	equip_swat()
 	give_alias()
@@ -108,7 +107,7 @@
 	var/my_surname = pick(GLOB.last_names)
 	owner.current.fully_replace_character_name(null,"[selected_rank] [my_name] [my_surname]")
 
-/datum/antagonist/swat/proc/forge_objectives()
+/datum/antagonist/swat/forge_objectives()
 	spawn(2 SECONDS)
 	if(swat_team)
 		objectives |= swat_team.objectives
@@ -270,7 +269,6 @@
 	var/datum/random_gen/swat/h_gen = new
 	var/mob/living/carbon/human/H = owner.current
 	H.gender = pick(MALE, FEMALE)
-	H.body_type = H.gender
 	H.age = rand(18, 36)
 //	if(age >= 55)
 //		hair_color = "a2a2a2"
@@ -289,12 +287,12 @@
 		H.facial_hairstyle = "Shaved"
 	H.name = H.real_name
 	H.dna.real_name = H.real_name
-	var/obj/item/organ/eyes/organ_eyes = H.getorgan(/obj/item/organ/eyes)
+	var/obj/item/organ/eyes/organ_eyes = H.get_organ_by_type(/obj/item/organ/eyes)
 	if(organ_eyes)
-		organ_eyes.eye_color = random_eye_color()
+		organ_eyes.eye_color_right = random_eye_color()
 	H.underwear = random_underwear(H.gender)
 	if(prob(50))
-		H.underwear_color = organ_eyes.eye_color
+		H.underwear_color = organ_eyes.eye_color_right
 	if(prob(50) || H.gender == FEMALE)
 		H.undershirt = random_undershirt(H.gender)
 	if(prob(25))
@@ -317,7 +315,24 @@
 
 /datum/team/swat/New()
 	..()
-	swat_name = swat_name()
+	var/name = ""
+
+	// Prefix
+	name += pick("Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel", "India", "Juliet", "Kilo", "Lima", "Mike", "November", "Oscar", "Papa", "Quebec", "Romeo", "Sierra", "Tango", "Uniform", "Victor", "Whiskey", "X-ray", "Yankee", "Zulu")
+
+	// Suffix
+	if	(prob(80))
+		name += " "
+
+		// Full
+		if(prob(60))
+			name += pick("Squad", "Team", "Unit", "Group", "Section", "Element", "Detachment")
+		// Broken
+		else
+			name += pick("-", "*", "")
+			name += "Ops"
+
+	swat_name = name
 
 /datum/team/swat/proc/update_objectives()
 	if(core_objective)
@@ -355,7 +370,6 @@
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	var/datum/team/swat/swat_team
-	flags = HIGHLANDER_RULESET
 
 /datum/dynamic_ruleset/midround/from_ghosts/swat/acceptable(population = 0, threat_level = 0)
 	indice_pop = min(operative_cap.len, round(living_players.len/5)+1)

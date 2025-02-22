@@ -27,6 +27,7 @@
 	/// Chance to spread zombieism on hit
 	/// Only for admins because we don't actually want romerol to get into the round from space ruins generally speaking
 	var/infection_chance = 0
+	var/mob/living/target_to_zombebe
 
 /mob/living/basic/zombie/Initialize(mapload)
 	. = ..()

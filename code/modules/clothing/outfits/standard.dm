@@ -2,7 +2,6 @@
 	name = "Special Ops Officer"
 
 	id = /obj/item/card/id/advanced/centcom
-	id_trim = /datum/id_trim/centcom/specops_officer
 	uniform = /obj/item/clothing/under/rank/centcom/commander
 	suit = /obj/item/clothing/suit/space/officer
 	back = /obj/item/storage/backpack/satchel/leather
@@ -148,7 +147,6 @@
 	name = "Tunnel Clown"
 
 	id = /obj/item/card/id/advanced/gold
-	id_trim = /datum/id_trim/tunnel_clown
 	uniform = /obj/item/clothing/under/rank/civilian/clown
 	suit = /obj/item/clothing/suit/hooded/chaplain_hoodie
 	ears = /obj/item/radio/headset
@@ -195,7 +193,6 @@
 	name = "Assassin"
 
 	id = /obj/item/card/id/advanced/chameleon/black
-	id_trim = /datum/id_trim/reaper_assassin
 	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	neck = /obj/item/clothing/neck/tie/red/hitman/tied
 	belt = /obj/item/modular_computer/pda/heads
@@ -236,7 +233,6 @@
 	name = "CentCom Commander"
 
 	id = /obj/item/card/id/advanced/centcom
-	id_trim = /datum/id_trim/centcom/commander
 	uniform = /obj/item/clothing/under/rank/centcom/commander
 	suit = /obj/item/clothing/suit/armor/centcom_formal
 	back = /obj/item/storage/backpack/satchel/leather
@@ -351,7 +347,6 @@
 	name = "Soviet Admiral"
 
 	id = /obj/item/card/id/advanced/centcom
-	id_trim = /datum/id_trim/centcom/admiral
 	uniform = /obj/item/clothing/under/costume/soviet
 	suit = /obj/item/clothing/suit/costume/pirate/captain
 	back = /obj/item/storage/backpack/satchel/leather
@@ -377,7 +372,6 @@
 	name = "Mobster"
 
 	id = /obj/item/card/id/advanced
-	id_trim = /datum/id_trim/mobster
 	uniform = /obj/item/clothing/under/suit/black_really
 	neck = /obj/item/clothing/neck/tie/red/tied
 	ears = /obj/item/radio/headset

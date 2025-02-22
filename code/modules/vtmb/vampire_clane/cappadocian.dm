@@ -14,7 +14,7 @@
 	whitelisted = TRUE
 
 /datum/vampireclane/cappadocian/on_gain(mob/living/carbon/human/H)
-	var/years_undead = H.chronological_age - H.age
+	var/years_undead = H.age
 	switch(years_undead)
 		if (-INFINITY to 100)
 			rot_body(1)

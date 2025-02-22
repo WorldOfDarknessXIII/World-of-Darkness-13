@@ -9,8 +9,6 @@
 
 	outfit = /datum/outfit/job/priest
 
-	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
-	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_PRIEST
@@ -55,10 +53,10 @@
 				switch(loadout_type)
 					if("Numina")
 						to_chat(H, "<span class='alertsyndie'>You have been blessed with psychic powers. They make you extraordinary among mortals, yet you still fear the horrors lurking unknown.</span>")
-						var/datum/action/targeted/numina_freeze/n_freeze = new(H)
-						var/datum/spell/self/numina_heal/n_heal = new(H)
-						H.mind.AddSpell(n_freeze)
-						H.mind.AddSpell(n_heal)
+						var/datum/action/cooldown/spell/pointed/numina_freeze/n_freeze = new(H)
+						var/datum/action/cooldown/spell/numina_heal/n_heal = new(H)
+						n_freeze.Grant(H)
+						n_heal.Grant(H)
 
 					if("True Faith")
 						H.mind.holy_role = HOLY_ROLE_PRIEST

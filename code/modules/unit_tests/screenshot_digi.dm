@@ -14,7 +14,7 @@
 
 	// screenshot test of an assistant outfit
 	// covers digitigrade autogen'd legs
-	dummy.equipOutfit(/datum/outfit/job/assistant/consistent)
+	dummy.equipOutfit(/datum/outfit/job/citizen)
 	TEST_ASSERT(isclothing(dummy.w_uniform), "Dummy (Ashwalker) should be wearing a jumpsuit!")
 	finished_icon = icon(finished_icon)
 	finished_icon.Insert(getFlatIcon(dummy, no_anim = TRUE), dir = SOUTH, frame = 2)

@@ -6,7 +6,6 @@
 	meat = /obj/item/food/meat/slab/human/mutant/fly
 	mutanteyes = /obj/item/organ/eyes/fly
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	species_language_holder = /datum/language_holder/fly
 	payday_modifier = 1.0
 
 	mutanttongue = /obj/item/organ/tongue/fly

@@ -147,9 +147,7 @@
 				hands2_overlay.color = "#[skintone2hex(H.skin_tone)]"
 				H.overlays_standing[PROTEAN_LAYER] = hands2_overlay
 				H.apply_overlay(PROTEAN_LAYER)
-			if("Leather wings")
-				H.additional_wings = TRUE
-				H.dna.species.GiveSpeciesFlight(H)
+
 
 /mob/living/carbon/human/proc/switch_masquerade(var/mob/living/carbon/human/H)
 	if(!additional_hands && !additional_wings && !additional_centipede && !additional_armor)
@@ -159,9 +157,6 @@
 		REMOVE_TRAIT(H, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 		if(additional_hands)
 			H.remove_overlay(PROTEAN_LAYER)
-		if(additional_wings)
-			H.dna.species.RemoveSpeciesFlight(H)
-			H.pixel_z = 0
 		if(additional_centipede)
 			H.remove_overlay(PROTEAN_LAYER)
 			H.remove_movespeed_modifier(/datum/movespeed_modifier/centipede)
@@ -178,8 +173,6 @@
 			hands2_overlay.color = "#[skintone2hex(H.skin_tone)]"
 			H.overlays_standing[PROTEAN_LAYER] = hands2_overlay
 			H.apply_overlay(PROTEAN_LAYER)
-		if(additional_wings)
-			H.dna.species.GiveSpeciesFlight(H)
 		if(additional_centipede)
 			H.remove_overlay(PROTEAN_LAYER)
 			var/mutable_appearance/centipede_overlay = mutable_appearance('code/modules/wod13/64x64.dmi', "centipede", -PROTEAN_LAYER)

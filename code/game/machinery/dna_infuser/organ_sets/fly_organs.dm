@@ -43,7 +43,7 @@
 	disliked_foodtypes = NONE
 	toxic_foodtypes = NONE // these fucks eat vomit, i am sure they can handle drinking bleach or whatever too
 	modifies_speech = TRUE
-	languages_native = list(/datum/language/buzzwords)
+	languages_native = list(/datum/language/english)
 	var/static/list/speech_replacements = list(
 		new /regex("z+", "g") = "zzz",
 		new /regex("Z+", "g") = "ZZZ",
@@ -58,7 +58,7 @@
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fly)
 
 /obj/item/organ/tongue/fly/get_possible_languages()
-	return ..() + /datum/language/buzzwords
+	return ..() + /datum/language/english
 
 /obj/item/organ/heart/fly
 	desc = FLY_INFUSED_ORGAN_DESC

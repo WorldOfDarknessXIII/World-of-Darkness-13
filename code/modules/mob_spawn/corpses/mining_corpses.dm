@@ -219,7 +219,6 @@
 //takes a lot from the clown job, notably NO PDA and different backpack loot + pocket goodies
 /datum/outfit/consumed_clown
 	name = "Legion-Consumed Clown"
-	id_trim = /datum/id_trim/job/clown
 	uniform = /obj/item/clothing/under/rank/civilian/clown
 	back = /obj/item/storage/backpack/clown
 	backpack_contents = list()

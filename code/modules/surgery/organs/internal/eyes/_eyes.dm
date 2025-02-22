@@ -486,6 +486,12 @@
 	var/list/high_light_cutoff
 	var/light_level = NIGHTVISION_LIGHT_OFF
 
+/obj/item/organ/eyes/night_vision/salubri
+	eye_icon_state = "salubri"
+
+/obj/item/organ/eyes/night_vision/kiasyd
+	eye_icon_state = "kiasyd"
+
 /obj/item/organ/eyes/night_vision/Initialize(mapload)
 	. = ..()
 	if (PERFORM_ALL_TESTS(focus_only/nightvision_color_cutoffs) && type != /obj/item/organ/eyes/night_vision)

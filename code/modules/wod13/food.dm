@@ -178,7 +178,6 @@
 	icon = 'code/modules/wod13/items.dmi'
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 30)
-	foodtype = GRAIN | ALCOHOL
 	custom_price = PAYCHECK_CREW
 
 /obj/item/reagent_containers/food/drinks/beer/vampire/blue_stripe
@@ -263,6 +262,7 @@
 	icon = 'code/modules/wod13/props.dmi'
 	icon_state = "menu"
 	var/dispenses_dollars = TRUE
+	order_categories = list(CATEGORY_FASTFOOD)
 
 /obj/machinery/computer/order_console/mining/fastfood/sodavendor
 	name = "Drink Vendor"
@@ -283,19 +283,13 @@
 	anchored = TRUE
 	density = TRUE
 
-/obj/machinery/mineral/equipment_vendor/fastfood/click_altt(mob/user)
-	. = ..()
-	if(points && dispenses_dollars)
-		for(var/i in 1 to points)
-			new /obj/item/stack/dollar(loc)
-		points = 0
-
 /obj/machinery/computer/order_console/mining/fastfood/snacks
 	name = "Snack Vendor"
 	desc = "That candy bar better not get stuck this time..."
 	icon_state = "vend_b"
 	anchored = TRUE
 	density = TRUE
+
 
 /obj/machinery/computer/order_console/mining/fastfood/bacotell
 
@@ -308,10 +302,11 @@
 
 /obj/machinery/computer/order_console/mining/fastfood/clothing
 	desc = "Purchase all the finest outfits.. Or don't wagie.."
-
+	order_categories = list(CATEGORY_CLOTHING)
 
 /obj/machinery/computer/order_console/mining/fastfood/costumes
 	desc = "Purchase a mask for that ugly mug."
+	order_categories = list(CATEGORY_MASKS)
 
 
 /obj/food_cart
@@ -348,4 +343,3 @@
 
 /obj/machinery/computer/order_console/mining/police
 	order_categories = list(CATEGORY_POLICE)
- 

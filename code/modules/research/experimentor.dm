@@ -877,11 +877,6 @@
 	card_id.details_colors = list(ready_random_color(), ready_random_color(), ready_random_color())
 	card_id.item_flags |= DROPDEL
 
-	var/datum/id_trim/random_trim = pick(subtypesof(/datum/id_trim)) // this can pick silly things
-	random_trim = new random_trim()
-	if(random_trim.trim_state && random_trim.assignment)
-		card_id.scribbled_trim = replacetext(random_trim.trim_state, "trim_", "cardboard_")
-	card_id.scribbled_assignment = random_trim.assignment
 	card_id.update_appearance()
 	REMOVE_TRAIT(user, TRAIT_NO_JUMPSUIT, REF(src))
 

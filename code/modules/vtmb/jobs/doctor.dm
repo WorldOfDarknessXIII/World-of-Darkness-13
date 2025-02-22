@@ -38,13 +38,13 @@
 	gloves = /obj/item/clothing/gloves/vampire/latex
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/vamp/keys/clinic
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1, /obj/item/storage/firstaid/medical=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1, /obj/item/storage/medkit/regular=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
 	duffelbag = /obj/item/storage/backpack/duffelbag
 
-	skillchips = list(/obj/item/skillchip/entrails_reader, /obj/item/skillchip/quickcarry)
+	skillchips = list(/obj/item/skillchip/entrails_reader)
 
 /obj/effect/landmark/start/vdoctor
 	name = "Doctor"
@@ -89,13 +89,13 @@
 	gloves = /obj/item/clothing/gloves/vampire/latex
 	l_pocket = /obj/item/vamp/phone
 	r_pocket = /obj/item/vamp/keys/clinics_director
-	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1, /obj/item/storage/firstaid/medical=1)
+	backpack_contents = list(/obj/item/passport=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1, /obj/item/storage/medkit/regular=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
 	duffelbag = /obj/item/storage/backpack/duffelbag
 
-	skillchips = list(/obj/item/skillchip/entrails_reader, /obj/item/skillchip/quickcarry)
+	skillchips = list(/obj/item/skillchip/entrails_reader)
 
 /obj/effect/landmark/start/vdirector
 	name = "Director"

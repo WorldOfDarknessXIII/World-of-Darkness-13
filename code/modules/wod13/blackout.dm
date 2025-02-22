@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(blackout)
 	name = "Blackout"
 	init_order = INIT_ORDER_DEFAULT
 	wait = 10 MINUTES
-	priority = FIRE_PRIORITY_VERYLOW
+	priority = FIRE_PRIORITY_PING
 
 /datum/controller/subsystem/blackout/fire()
 	for(var/obj/generator/G in GLOB.generators)

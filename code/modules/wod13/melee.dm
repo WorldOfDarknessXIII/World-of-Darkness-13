@@ -4,7 +4,7 @@
 	worn_icon = 'code/modules/wod13/worn.dmi'
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	var/quieted = FALSE
-	var/cost = 25
+	cost = 25
 
 /obj/item
 	var/masquerade_violating = FALSE
@@ -34,9 +34,7 @@
 
 /obj/item/melee/vampirearms/fireaxe/Initialize()
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, PROC_REF(on_wield))
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, PROC_REF(on_unwield))
-	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound)
+	AddComponent(/datum/component/butchering, 100, 80, 0, hitsound)
 	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=70, icon_wielded="fireaxe1")
 
 /obj/item/melee/vampirearms/fireaxe/update_icon_state()
@@ -235,7 +233,7 @@
 		. += "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
 
 /obj/item/storage/belt/vampire/sheathe/click_alt(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+	if(!user.can_perform_action(src))
 		return
 	if(length(contents))
 		var/obj/item/I = contents[1]
@@ -461,11 +459,6 @@
 
 /obj/item/melee/vampirearms/chainsaw/Initialize()
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, PROC_REF(on_wield))
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, PROC_REF(on_unwield))
-
-/obj/item/melee/vampirearms/chainsaw/ComponentInitialize()
-	. = ..()
 	AddComponent(/datum/component/butchering, 30, 100, 0, 'sound/items/weapons/chainsawhit.ogg', TRUE)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
 
@@ -593,6 +586,11 @@
 	is_wood = TRUE
 	var/on = FALSE
 	var/last_solo = 0
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/vampirearms_eguitar
+	fire = 100
+	acid = 30
 
 /obj/item/melee/vampirearms/eguitar/click_alt(mob/user)
 	if(last_solo+600 > world.time)

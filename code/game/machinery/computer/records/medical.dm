@@ -66,7 +66,6 @@
 			quirk_notes = target.quirk_notes,
 			rank = target.rank,
 			species = target.species,
-			trim = target.trim,
 		))
 
 	data["records"] = records
@@ -158,6 +157,5 @@
 	target.quirk_notes = ""
 	target.rank = "Unknown"
 	target.species = "Unknown"
-	target.trim = "Unknown"
 
 	return TRUE

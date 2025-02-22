@@ -96,6 +96,99 @@ ADMIN_VERB(game_panel, R_ADMIN, "Game Panel", "Look at the state of the game.", 
 	user.holder.Game()
 	BLACKBOX_LOG_ADMIN_VERB("Game Panel")
 
+ADMIN_VERB(toggle_canon, R_ADMIN, "Toggle Canon", "Toggle the canonnity of the round.", ADMIN_CATEGORY_GAME)
+	BLACKBOX_LOG_ADMIN_VERB("Toggle Canon")
+	if (!check_rights(R_ADMIN))
+		return
+
+	GLOB.canon_event = !GLOB.canon_event
+	SEND_SOUND(world, sound('code/modules/wod13/sounds/canon.ogg'))
+	if(GLOB.canon_event)
+		to_chat(world, "<b>THE ROUND IS NOW CANON. ALL ROLEPLAY AND ESCALATION RULES ARE IN EFFECT.</b>")
+	else
+		to_chat(world, "<b>THE ROUND IS NO LONGER CANON. DATA WILL NO LONGER SAVE, AND ROLEPLAY AND ESCALATION RULES ARE NO LONGER IN EFFECT.</b>")
+	message_admins("[key_name_admin(usr)] toggled the round's canonicity. The round is [GLOB.canon_event ? "now canon." : "no longer canon."]")
+	log_admin("[key_name(usr)] toggled the round's canonicity. The round is [GLOB.canon_event ? "now canon." : "no longer canon."]")
+
+ADMIN_VERB(cmd_admin_global_adjust_masquerade, R_ADMIN, "Adjust Global Masquerade", "Adjust the masquerade of the round.", ADMIN_CATEGORY_GAME)
+	if (!check_rights(R_ADMIN))
+		return
+
+
+	var/last_global_mask = SSmasquerade.total_level
+
+	var/value = input(usr, "Enter the Global Masquerade adjustment values(- will decrease, + will increase) :", "Global Masquerade Adjustment", 0) as num|null
+	if(value == null)
+		return
+
+	SSmasquerade.manual_adjustment = value
+
+	var/changed_mask = max(0,min(1000,last_global_mask + value))
+
+	SSmasquerade.fire()
+
+	var/msg = "<span class='adminnotice'><b>Global Masquerade Adjustment: [key_name_admin(usr)] has adjusted Global masquerade from [last_global_mask] to [changed_mask] with the value of : [value]. Real Masquerade Value with the other possible variables : [SSmasquerade.total_level]</b></span>"
+	log_admin("Global MasqAdjust: [key_name(usr)] has adjusted Global masquerade from [last_global_mask] to [changed_mask] with the value of : [value]. Real Masquerade Value with the other possible variables : [SSmasquerade.total_level]")
+	message_admins(msg)
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Global Adjust Masquerade")
+
+ADMIN_VERB(reward_exp, R_ADMIN, "Reward Experience", "Reward experience to a player.", ADMIN_CATEGORY_MAIN)
+	if (!check_rights(R_ADMIN))
+		return
+
+	var/list/explist = list()
+	for(var/client/C in GLOB.clients)
+		explist |= "[C.ckey]"
+	var/exper = input("Rewarding:") as null|anything in explist
+	if(exper)
+		var/amount = input("Amount:") as null|num
+		if(amount)
+			var/reason = input("Reason:") as null|text
+			if(reason)
+				for(var/client/C in GLOB.clients)
+					if("[C.ckey]" == "[exper]")
+						to_chat(C, "<b>You've been rewarded with [amount] experience points. Reason: \"[reason]\"</b>")
+
+						C.prefs.add_experience(amount)
+						C.prefs.save_character()
+
+						message_admins("[ADMIN_LOOKUPFLW(usr)] rewarded [ADMIN_LOOKUPFLW(exper)] with [amount] experience points. Reason: [reason]")
+						log_admin("[key_name(usr)] rewarded [key_name(exper)] with [amount] experience points. Reason: [reason]")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Reward Experience") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+ADMIN_VERB(grant_whitelist, R_ADMIN, "Grant Whitelist", "Add a player to the whitelist.", ADMIN_CATEGORY_MAIN)
+	if (!check_rights(R_ADMIN))
+		return
+
+	if (!SSwhitelists.whitelists_enabled)
+		to_chat(usr, "<span class='warning'>Whitelisting isn't enabled!</span>")
+		return
+
+	var/whitelistee = input("CKey to whitelist:") as null|text
+	if (whitelistee)
+		whitelistee = ckey(whitelistee)
+		var/list/whitelist_pool = (SSwhitelists.possible_whitelists - SSwhitelists.get_user_whitelists(whitelistee))
+		if (whitelist_pool.len == 0)
+			to_chat(usr, "<span class='warning'>[whitelistee] already has all whitelists!</span>")
+			return
+		var/whitelist = input("Whitelist to give:") as null|anything in whitelist_pool
+		if (whitelist)
+			var/ticket_link = input("Link to whitelist request ticket:") as null|text
+			if (ticket_link)
+				var/approval_reason = input("Reason for whitelist approval:") as null|text
+				if (approval_reason)
+					SSwhitelists.add_whitelist(whitelistee, whitelist, usr.ckey, ticket_link, approval_reason)
+					message_admins("[key_name_admin(usr)] gave [whitelistee] the [whitelist] whitelist. Reason: [approval_reason]")
+					log_admin("[key_name(usr)] gave [whitelistee] the [whitelist] whitelist. Reason: [approval_reason]")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Grant Whitelist") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+ADMIN_VERB(whitelist_panel, R_ADMIN, "Whitelist Management", "View and manage whitelists.", ADMIN_CATEGORY_MAIN)
+	if (!check_rights(R_ADMIN))
+		return
+	user.holder.whitelist_panel()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Whitelist Management") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+
 ADMIN_VERB(poll_panel, R_POLL, "Server Poll Management", "View and manage polls.", ADMIN_CATEGORY_MAIN)
 	user.holder.poll_list_panel()
 	BLACKBOX_LOG_ADMIN_VERB("Server Poll Management")

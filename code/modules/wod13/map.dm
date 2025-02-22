@@ -231,9 +231,6 @@
 	icon = 'icons/obj/mining_zones/spawners.dmi'
 	icon_state = "cryostasis_sleeper"
 	outfit = /datum/outfit/triadsoldier
-	roundstart = FALSE
-	death = FALSE
-	random = FALSE
 	mob_species = /datum/species/human
 	you_are_text = "You were sleeping. But you can't anymore."
 	flavour_text = "You woke up because of the stupid washing machines. Probably better that you go and check what the gang's up to..."
@@ -273,6 +270,7 @@
 	you_are_text = "You worked a simple night shift, but then..."
 	flavour_text = "You woke up on your regular night shift and noticed something strange happening in the city. Only man interested in finding the truth is you..."
 	spawner_job_path = /datum/job/vamp/police_officer
+
 
 /obj/effect/mob_spawn/ghost_role/human/police/special(mob/living/new_spawn)
 	. = ..()
@@ -342,8 +340,7 @@
 	mob_species = /datum/species/human
 	you_are_text = "You are working the night shift on Millenium Towers, just like any other night...."
 	flavour_text = "You are up late protecting Millenium Towers on behalf of your pasty-faced, but filthy rich, boss. Come to think of it, you only ever see him at night..."
-	assignedrole = "Millenium Tower Secuity Guard"
-	spawner_job_path = /datum/job/
+	spawner_job_path = /datum/job/vamp/chunkguard
 
 /obj/effect/mob_spawn/ghost_role/human/chunkguard/special(mob/living/new_spawn)
 	. = ..()

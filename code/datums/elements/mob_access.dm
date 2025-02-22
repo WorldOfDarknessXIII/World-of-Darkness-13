@@ -12,10 +12,6 @@
 	for(var/access_path in accesses)
 		if(!ispath(access_path))
 			continue
-		var/datum/id_trim/job/trim = SSid_access.trim_singletons_by_path[access_path]
-		if(isnull(trim))
-			continue
-		my_access += trim.access
 
 	RegisterSignal(target, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
 

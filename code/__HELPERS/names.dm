@@ -60,16 +60,16 @@
 	return generate_random_name_species_based(gender, unique, dna?.species?.type || /datum/species/human)
 
 /mob/living/silicon/generate_random_mob_name(unique)
-	return generate_random_name(gender, unique, list(/datum/language/machine = 1))
+	return generate_random_name(gender, unique, list(/datum/language/arabic = 1))
 
 /mob/living/basic/drone/generate_random_mob_name(unique)
-	return generate_random_name(gender, unique, list(/datum/language/machine = 1))
+	return generate_random_name(gender, unique, list(/datum/language/arabic = 1))
 
 /mob/living/basic/bot/generate_random_mob_name(unique)
-	return generate_random_name(gender, unique, list(/datum/language/machine = 1))
+	return generate_random_name(gender, unique, list(/datum/language/arabic = 1))
 
 /mob/living/simple_animal/bot/generate_random_mob_name(unique)
-	return generate_random_name(gender, unique, list(/datum/language/machine = 1))
+	return generate_random_name(gender, unique, list(/datum/language/arabic = 1))
 
 GLOBAL_VAR(command_name)
 /proc/command_name()

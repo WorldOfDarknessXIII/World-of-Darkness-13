@@ -124,7 +124,7 @@
 	naked_patient.take_overall_damage(100)
 
 	var/mob/living/carbon/human/clothed_patient = allocate(/mob/living/carbon/human/consistent)
-	clothed_patient.equipOutfit(/datum/outfit/job/doctor, TRUE)
+	clothed_patient.equipOutfit(/datum/outfit/job/citizen, TRUE)
 	clothed_patient.take_overall_damage(100)
 
 	basic_brute_heal.success(user, naked_patient, BODY_ZONE_CHEST)

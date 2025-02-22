@@ -29,7 +29,7 @@
 	/// Related to above. If present, the energy we draw from when using stack items, for cyborgs
 	var/datum/robot_energy_storage/source
 	/// Related to above. How much energy it costs from storage to use stack items
-	var/cost = 1
+	cost = 1
 	/// This path and its children should merge with this stack, defaults to src.type
 	var/merge_type = null
 	/// The weight class the stack has at amount > 2/3rds max_amount

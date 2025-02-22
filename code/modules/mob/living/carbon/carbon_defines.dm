@@ -127,3 +127,6 @@
 	var/bodyshape = BODYSHAPE_HUMANOID
 
 	COOLDOWN_DECLARE(bleeding_message_cd)
+
+#define JUMP_DELAY 40
+#define MAX_JUMP_DISTANCE 1

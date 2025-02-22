@@ -237,7 +237,7 @@
  */
 /obj/machinery/pdapainter/proc/eject_id_card(mob/living/user)
 	if(stored_id_card)
-		GLOB.manifest.modify(stored_id_card.registered_name, stored_id_card.assignment, stored_id_card.get_trim_assignment())
+		GLOB.manifest.modify(stored_id_card.registered_name, stored_id_card.assignment)
 		if(user && !issilicon(user) && in_range(src, user))
 			user.put_in_hands(stored_id_card)
 		else
@@ -350,8 +350,6 @@
 				if(card_trims[path] != selection)
 					continue
 
-				if(SSid_access.apply_trim_to_card(stored_id_card, path, copy_access = FALSE))
-					return TRUE
 
 				to_chat(usr, span_warning("The trim you selected could not be added to \the [stored_id_card]. You will need a rarer ID card to imprint that trim data."))
 

@@ -16,7 +16,6 @@
 		if(card && card.has_checked == FALSE)
 			for(var/obj/item/vamp/creditcard/caard in b.contents)
 				if(caard)
-					H.bank_id = caard.account.bank_id
 					caard.account.account_owner = H.true_real_name
 					caard.has_checked = TRUE
 
@@ -180,7 +179,6 @@
 
 /obj/item/card/id/clinic
 	name = "medical badge"
-	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY)
 	desc = "A badge which shows medical qualification."
 	icon = 'code/modules/wod13/items.dmi'
 	icon_state = "id2"

@@ -30,14 +30,12 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 	for(var/datum/record/crew/target as anything in GLOB.manifest.general)
 		var/name = target.name
 		var/rank = target.rank // user-visible job
-		var/trim = target.trim // internal jobs by trim type
-		var/datum/job/job = SSjob.get_job(trim)
+		var/datum/job/job = SSjob.get_job(target.rank)
 		if(!job || !(job.job_flags & JOB_CREW_MANIFEST) || !LAZYLEN(job.departments_list)) // In case an unlawful custom rank is added.
 			var/list/misc_list = manifest_out[DEPARTMENT_UNASSIGNED]
 			misc_list[++misc_list.len] = list(
 				"name" = name,
 				"rank" = rank,
-				"trim" = trim,
 				)
 			continue
 		for(var/department_type as anything in job.departments_list)
@@ -51,7 +49,6 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 			var/list/entry = list(
 				"name" = name,
 				"rank" = rank,
-				"trim" = trim,
 				)
 			var/list/department_list = manifest_out[department.department_name]
 			if(istype(job, department.department_head))
@@ -104,8 +101,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		return
 
 	// Attempt to get assignment from ID, otherwise default to mind.
-	var/obj/item/card/id/id_card = person.get_idcard(hand_first = FALSE)
-	var/assignment = id_card?.get_trim_assignment() || person.mind.assigned_role.title
+	var/assignment = person.mind.assigned_role.title
 
 	var/mutable_appearance/character_appearance = new(person.appearance)
 	var/person_gender = "Other"
@@ -127,7 +123,6 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		name = person.real_name,
 		rank = assignment,
 		species = record_dna.species.name,
-		trim = assignment,
 		// Locked specifics
 		locked_dna = record_dna,
 		mind_ref = person.mind,
@@ -144,7 +139,6 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		name = person.real_name,
 		rank = assignment,
 		species = record_dna.species.name,
-		trim = assignment,
 		// Crew specific
 		lock_ref = REF(lockfile),
 		major_disabilities = person.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY, from_scan = TRUE),
@@ -155,13 +149,12 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 	)
 
 /// Edits the rank and trim of the found record.
-/datum/manifest/proc/modify(name, assignment, trim)
+/datum/manifest/proc/modify(name, assignment)
 	var/datum/record/crew/target = find_record(name)
 	if(!target)
 		return
 
 	target.rank = assignment
-	target.trim = trim
 
 /**
  * Using the name to find the record, and person in reference to the body, we recreate photos for the manifest (and records).

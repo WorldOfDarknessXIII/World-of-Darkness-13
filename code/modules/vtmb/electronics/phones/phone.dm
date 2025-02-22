@@ -28,7 +28,6 @@
 	lefthand_file = 'code/modules/wod13/lefthand.dmi'
 	righthand_file = 'code/modules/wod13/righthand.dmi'
 	item_flags = NOBLUDGEON
-	flags_1 = HEAR_1
 	w_class = WEIGHT_CLASS_SMALL
 	armor_type = /datum/armor/vamp_phone
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -360,7 +359,7 @@
 					call_sound = 'code/modules/wod13/sounds/nokia.ogg'
 					to_chat(usr, "<span class='notice'>Code activated.</span>")
 				else if(choosed_number == "#666")
-					call_sound = 'sound/voice/human/malescream_6.ogg'
+					call_sound = 'sound/mobs/humanoids/human/scream/malescream_6.ogg'
 					to_chat(usr, "<span class='notice'>Code activated.</span>")
 				else if(choosed_number == "#34")
 					if(ishuman(usr))
@@ -572,7 +571,7 @@
 			.= TRUE
 		if("keypad")
 			if(!silence)
-				playsound(loc, 'sound/machines/terminal_select.ogg', 15, TRUE)
+				playsound(loc, 'sound/machines/terminal/terminal_select.ogg', 15, TRUE)
 			switch(params["value"])
 				if("C")
 					choosed_number = ""

@@ -4,14 +4,13 @@
 	value = -3
 	medical_record_text = "Patient demonstrates a fear of the light."
 	hardcore_value = 5
-	mood_quirk = TRUE
 
-/datum/quirk/lightophobia/on_process()
+/datum/quirk/lightophobia/process()
 	var/turf/T = get_turf(quirk_holder)
 	if(T)
 		var/lums = T.get_lumcount()
 		if(lums > 0.5)
-			if(quirk_holder.m_intent == MOVE_INTENT_RUN && prob(50))
+			if(quirk_holder.move_intent == MOVE_INTENT_RUN && prob(50))
 				to_chat(quirk_holder, "<span class='warning'>Easy, easy, take it slow... you're in the light...</span>")
 				quirk_holder.toggle_move_intent()
 				if(prob(10))

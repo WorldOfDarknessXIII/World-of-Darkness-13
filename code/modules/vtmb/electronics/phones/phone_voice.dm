@@ -14,7 +14,7 @@ var/list/zalgo_letters = list(
     "̨T", "̨U", "̨V", "̨W", "̨X", "̨Y", "̨Z"
 )
 
-/obj/phonevoice/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/obj/phonevoice/say(message, bubble_type, list/spans, sanitize, datum/language/language, ignore_spam, forced, filterproof, message_range, datum/saymode/saymode, list/message_mods)
 	if(message == "" || !message)
 		return
 	spans |= speech_span

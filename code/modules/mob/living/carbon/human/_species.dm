@@ -99,6 +99,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Flat modifier on all damage taken via [apply_damage][/mob/living/proc/apply_damage] (so being punched, shot, etc.)
 	/// IE: 10 = 10% less damage taken.
 	var/damage_modifier = 0
+	///multiplier for brute damage
+	var/brutemod = 1
 	///multiplier for damage from cold temperature
 	var/coldmod = 1
 	///multiplier for damage from hot temperature
@@ -181,6 +183,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/list/outfit_override_registry = list()
 
 	var/whitelisted = FALSE
+	var/selectable = TRUE
 
 ///////////
 // PROCS //

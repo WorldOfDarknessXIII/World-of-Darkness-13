@@ -93,10 +93,10 @@
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
-	if(iscarbon(A))
-		var/mob/living/carbon/C = A
+	if(iscarbon(attack_target))
+		var/mob/living/carbon/C = attack_target
 		if(C.canBeHandcuffed() && !C.handcuffed)
-			cuff(A)
+			cuff(C)
 			return
 		else
 			..()
@@ -110,7 +110,7 @@
 	addtimer(CALLBACK(src, PROC_REF(attempt_handcuff), C), 4 SECONDS)
 
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire/proc/attempt_handcuff(mob/living/carbon/C)
-	if( !Adjacent(C) || !isturf(C.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
+	if(!Adjacent(C) || !isturf(C.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 		return
 	if(!C.handcuffed)
 		C.set_handcuffed(new /obj/item/restraints/handcuffs/cable/zipties/used(C))

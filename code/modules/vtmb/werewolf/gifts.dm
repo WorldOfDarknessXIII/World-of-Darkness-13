@@ -7,10 +7,6 @@
 
 	var/allowed_to_proceed = FALSE
 
-/datum/action/gift/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
-	button_icon = 'code/modules/wod13/werewolf_abilities.dmi'
-	. = ..()
-
 /datum/action/gift/Trigger(trigger_flags)
 	. = ..()
 	if(istype(owner, /mob/living/carbon))
@@ -431,8 +427,6 @@
 		if(G.glabro)
 			H.remove_overlay(PROTEAN_LAYER)
 			H.strength = initial(H.strength)
-			H.physiology.armor.melee -= 15
-			H.physiology.armor.bullet -= 15
 			var/matrix/M = matrix()
 			M.Scale(1)
 			animate(H, transform = M, time = 1 SECONDS)
@@ -444,8 +438,6 @@
 			H.overlays_standing[PROTEAN_LAYER] = glabro_overlay
 			H.apply_overlay(PROTEAN_LAYER)
 			H.strength = H.strength+2
-			H.physiology.armor.melee += 15
-			H.physiology.armor.bullet += 15
 			var/matrix/M = matrix()
 			M.Scale(1.23)
 			animate(H, transform = M, time = 1 SECONDS)

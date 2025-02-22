@@ -96,7 +96,7 @@
 	var/warrant = FALSE
 	var/ignores_warrant = FALSE
 
-	var/obj/overlay/gnosis
+	var/obj/effect/overlay/gnosis
 
 	var/isdwarfy = FALSE
 	var/ischildren = FALSE
@@ -118,3 +118,5 @@
 	var/max_demon_chi = 0
 	COOLDOWN_DECLARE(chi_restore)
 	var/datum/action/chi_discipline/chi_ranged
+
+	var/mob/living/lastattacked = null

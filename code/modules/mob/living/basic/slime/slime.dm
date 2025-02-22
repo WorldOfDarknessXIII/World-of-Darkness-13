@@ -48,7 +48,6 @@
 
 	speak_emote = list("blorbles")
 	bubble_icon = "slime"
-	initial_language_holder = /datum/language_holder/slime
 
 	verb_say = "blorbles"
 	verb_ask = "inquisitively blorbles"

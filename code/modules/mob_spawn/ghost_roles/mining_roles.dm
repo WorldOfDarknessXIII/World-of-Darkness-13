@@ -107,7 +107,6 @@
 
 /datum/outfit/beachbum/lifeguard
 	name = "Beach Lifeguard"
-	id_trim = /datum/id_trim/lifeguard
 	uniform = /obj/item/clothing/under/shorts/red
 
 /obj/effect/mob_spawn/ghost_role/human/bartender
@@ -123,7 +122,6 @@
 /datum/outfit/spacebartender
 	name = "Space Bartender"
 	id = /obj/item/card/id/advanced
-	id_trim = /datum/id_trim/space_bartender
 	neck = /obj/item/clothing/neck/bowtie
 	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	suit = /obj/item/clothing/suit/armor/vest
@@ -287,7 +285,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/special(mob/living/new_spawn)
 	. = ..()
-	new_spawn.grant_language(/datum/language/codespeak, source = LANGUAGE_MIND)
+	new_spawn.grant_language(/datum/language/english, source = LANGUAGE_MIND)
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms
 	name = "Syndicate Comms Agent"
@@ -300,7 +298,6 @@
 /datum/outfit/lavaland_syndicate
 	name = "Lavaland Syndicate Agent"
 	id = /obj/item/card/id/advanced/chameleon
-	id_trim = /datum/id_trim/chameleon/operative
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	back = /obj/item/storage/backpack

@@ -72,12 +72,10 @@
 	name = "\improper Donk Co. ID Card"
 	desc = "A plastic card that identifies its bearer as an employee of Donk Co. There are electronic chips embedded to communicate with airlocks and other machines. It does not have a name attached."
 	icon_state = "card_donk"
-	trim = /datum/id_trim/away/hauntedtradingpost
 
 /obj/item/card/id/away/donk/boss
 	desc = "A plastic card that identifies its bearer as a senior employee of Donk Co. There are electronic chips embedded to communicate with airlocks and other machines. It does not have a name attached."
 	icon_state = "card_donkboss"
-	trim = /datum/id_trim/away/hauntedtradingpost/boss
 
 // [Gimmick Treasure]
 // loot & weird items that should only exist in hauntedtradingpost.dmm

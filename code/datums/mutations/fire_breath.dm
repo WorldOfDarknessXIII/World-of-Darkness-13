@@ -94,3 +94,10 @@
 /datum/action/cooldown/spell/cone/staggered/firebreath/do_obj_cone_effect(obj/target_obj, atom/caster, level)
 	// Further out objects experience less exposed_temperature and exposed_volume
 	target_obj.fire_act(max(500, 900 - (100 * level)), max(50, 200 - (50 * level)))
+
+/obj/projectile/magic/fireball/firebreath
+	name = "fire breath"
+	exp_heavy = 0
+	exp_light = 0
+	exp_flash = 0
+	exp_fire= 4

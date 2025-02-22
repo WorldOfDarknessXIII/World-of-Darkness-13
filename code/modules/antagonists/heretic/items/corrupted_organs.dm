@@ -60,7 +60,7 @@
 	SIGNAL_HANDLER
 	if (organ_owner.has_reagent(/datum/reagent/water/holywater) || prob(60))
 		return
-	speech_args[SPEECH_LANGUAGE] = /datum/language/shadowtongue
+	speech_args[SPEECH_LANGUAGE] = /datum/language/english
 
 
 /// Randomly secretes alcohol or hallucinogens when you're drinking something

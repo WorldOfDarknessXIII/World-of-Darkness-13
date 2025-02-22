@@ -537,6 +537,11 @@
 	icon_state = "duffel-medical"
 	inhand_icon_state = "duffel-med"
 
+/obj/item/storage/backpack/duffelbag/med/surgery
+	name = "surgical duffel bag"
+	desc = "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+
 /obj/item/storage/backpack/duffelbag/coroner
 	name = "coroner duffel bag"
 	desc = "A large duffel bag for holding large amounts of organs at once."
