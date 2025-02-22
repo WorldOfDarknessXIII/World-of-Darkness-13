@@ -18400,7 +18400,6 @@
 /area/vtm/pacificheights)
 "bmo" = (
 /obj/structure/table/wood,
-/obj/item/clothing/suit/hooded/robes/darkred,
 /obj/item/clothing/mask/vampire/venetian_mask,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/interior/giovanni)
@@ -19171,7 +19170,6 @@
 /obj/item/clothing/under/vampire/ventrue,
 /obj/item/clothing/under/vampire/ventrue/female,
 /obj/item/clothing/mask/vampire/venetian_mask,
-/obj/item/clothing/suit/hooded/robes/purple,
 /turf/open/floor/carpet/purple,
 /area/vtm/interior/millennium_tower/ventrue)
 "boS" = (
@@ -20536,7 +20534,6 @@
 /obj/item/clothing/under/vampire/ventrue,
 /obj/item/clothing/under/vampire/ventrue/female,
 /obj/item/clothing/mask/vampire/venetian_mask,
-/obj/item/clothing/suit/hooded/robes/purple,
 /turf/open/floor/carpet/purple,
 /area/vtm/interior/millennium_tower/ventrue)
 "btq" = (
@@ -24130,10 +24127,6 @@
 /area/vtm/interior/chantry)
 "bFe" = (
 /obj/structure/table/wood,
-/obj/item/clothing/suit/hooded/robes/magister,
-/obj/item/clothing/suit/hooded/robes/magister,
-/obj/item/clothing/suit/hooded/robes/tremere,
-/obj/item/clothing/suit/hooded/robes/tremere,
 /obj/machinery/light/prince{
 	dir = 8
 	},
@@ -27218,7 +27211,6 @@
 /obj/item/clothing/under/suit/charcoal,
 /obj/item/clothing/under/suit/black/skirt,
 /obj/item/clothing/under/rank/civilian/lawyer/purpsuit,
-/obj/item/clothing/suit/hooded/robes/purple,
 /obj/item/clothing/mask/vampire/venetian_mask/fancy,
 /obj/structure/railing{
 	dir = 8
@@ -27850,11 +27842,6 @@
 /obj/structure/punching_bag,
 /turf/open/floor/plating/concrete,
 /area/vtm/interior)
-"cPD" = (
-/obj/structure/table/wood,
-/obj/item/clothing/suit/hooded/robes/red,
-/turf/open/floor/plating/concrete,
-/area/vtm/sewer)
 "cPG" = (
 /obj/machinery/light{
 	dir = 1
@@ -36520,9 +36507,6 @@
 /area/vtm/interior/techshop)
 "heo" = (
 /obj/structure/table/wood,
-/obj/item/clothing/suit/hooded/robes/blue,
-/obj/item/clothing/suit/hooded/robes/blue,
-/obj/item/clothing/suit/hooded/robes/blue,
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/chantry)
 "heu" = (
@@ -43668,9 +43652,6 @@
 /area/vtm/interior/bianchiBank)
 "kIk" = (
 /obj/structure/table/wood/fancy/red,
-/obj/item/clothing/suit/hooded/robes/red,
-/obj/item/clothing/suit/hooded/robes/red,
-/obj/item/clothing/suit/hooded/robes/red,
 /turf/open/floor/carpet,
 /area/vtm/interior/chantry/basement)
 "kIn" = (
@@ -46651,11 +46632,6 @@
 	},
 /turf/open/floor/plating/vampdirt,
 /area/vtm/park)
-"mnQ" = (
-/obj/structure/closet/cabinet,
-/obj/item/clothing/suit/hooded/robes/yellow,
-/turf/open/floor/carpet/royalblue,
-/area/vtm/interior/old_clan_tzimisce_manor)
 "mnS" = (
 /obj/structure/fluff/hedge,
 /obj/effect/turf_decal/siding/white{
@@ -50325,7 +50301,6 @@
 	max_integrity = 1000;
 	name = "armored trenchcoat"
 	},
-/obj/item/clothing/suit/hooded/robes/purple,
 /turf/open/floor/carpet/orange,
 /area/vtm/interior)
 "omJ" = (
@@ -51742,7 +51717,6 @@
 /area/vtm/financialdistrict)
 "oWW" = (
 /obj/structure/closet/cabinet,
-/obj/item/clothing/suit/hooded/robes/green,
 /turf/open/floor/carpet/royalblue,
 /area/vtm/interior/old_clan_tzimisce_manor)
 "oXa" = (
@@ -55673,7 +55647,6 @@
 "qVv" = (
 /obj/structure/closet/cabinet,
 /obj/item/vampire_stake,
-/obj/item/clothing/suit/hooded/robes/darkred,
 /turf/open/floor/plating/parquetry,
 /area/vtm/interior/giovanni)
 "qVy" = (
@@ -57115,7 +57088,6 @@
 "rKL" = (
 /obj/structure/table/wood,
 /obj/item/clothing/head/vampire/top,
-/obj/item/clothing/suit/hooded/robes/black,
 /turf/open/floor/plating/parquetry,
 /area/vtm/interior/giovanni)
 "rKQ" = (
@@ -60914,7 +60886,6 @@
 /obj/item/card/id/noddist,
 /obj/item/clothing/suit/chaplainsuit/holidaypriest,
 /obj/item/clothing/mask/vampire/venetian_mask/scary,
-/obj/item/clothing/suit/hooded/robes/black,
 /turf/open/floor/plating/rough,
 /area/vtm/sewer)
 "tFe" = (
@@ -61037,7 +61008,6 @@
 /obj/item/clothing/suit/vampire/orthodox,
 /obj/item/clothing/head/vampire/hijab,
 /obj/item/clothing/head/nun_hood,
-/obj/item/clothing/suit/hooded/robes/darkred,
 /turf/open/floor/plating/rough,
 /area/vtm/sewer)
 "tHf" = (
@@ -68509,7 +68479,6 @@
 /area/vtm/ghetto)
 "xrQ" = (
 /obj/structure/table/wood,
-/obj/item/clothing/suit/hooded/robes/black,
 /obj/item/clothing/mask/vampire/venetian_mask/fancy,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/interior/giovanni)
@@ -83512,7 +83481,7 @@ bIf
 bIs
 qlz
 juI
-cPD
+juI
 aez
 aab
 aaa
@@ -291972,7 +291941,7 @@ dsL
 lXR
 lXR
 nEk
-mnQ
+oWW
 mOT
 mKI
 mOT
