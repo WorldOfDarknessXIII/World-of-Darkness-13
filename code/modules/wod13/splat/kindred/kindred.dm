@@ -268,9 +268,9 @@
 	name = "Blood Power"
 	desc = "Use vitae to gain supernatural abilities."
 	button_icon_state = "bloodpower"
-	button_icon = 'code/modules/wod13/UI/actions.dmi'
+	button_icon = 'icons/wod13/UI/actions.dmi'
 	background_icon_state = "discipline"
-	icon_icon = 'code/modules/wod13/UI/actions.dmi'
+	icon_icon = 'icons/wod13/UI/actions.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	vampiric = TRUE
 
@@ -279,11 +279,11 @@
 		if(owner.client)
 			if(owner.client.prefs)
 				if(owner.client.prefs.old_discipline)
-					button_icon = 'code/modules/wod13/disciplines.dmi'
-					icon_icon = 'code/modules/wod13/disciplines.dmi'
+					button_icon = 'icons/wod13/disciplines.dmi'
+					icon_icon = 'icons/wod13/disciplines.dmi'
 				else
-					button_icon = 'code/modules/wod13/UI/actions.dmi'
-					icon_icon = 'code/modules/wod13/UI/actions.dmi'
+					button_icon = 'icons/wod13/UI/actions.dmi'
+					icon_icon = 'icons/wod13/UI/actions.dmi'
 	. = ..()
 
 /datum/action/blood_power/Trigger()
@@ -859,7 +859,7 @@
 
 /atom/movable/screen/blood
 	name = "bloodpool"
-	icon = 'code/modules/wod13/UI/bloodpool.dmi'
+	icon = 'icons/wod13/UI/bloodpool.dmi'
 	icon_state = "blood0"
 	layer = HUD_LAYER
 	plane = HUD_PLANE
@@ -889,7 +889,7 @@
 
 /datum/action/drinkblood/proc/add_bite_animation(mob/living/carbon/victim)
 	victim.remove_overlay(BITE_LAYER)
-	var/mutable_appearance/bite_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "bite", -BITE_LAYER)
+	var/mutable_appearance/bite_overlay = mutable_appearance('icons/wod13/icons.dmi', "bite", -BITE_LAYER)
 	victim.overlays_standing[BITE_LAYER] = bite_overlay
 	victim.apply_overlay(BITE_LAYER)
 	spawn(1.5 SECONDS)

@@ -30,7 +30,7 @@
 	if(ishuman(target))
 		TRGT = target
 		TRGT.remove_overlay(MUTATIONS_LAYER)
-		var/mutable_appearance/dominate_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "dominate", -MUTATIONS_LAYER)
+		var/mutable_appearance/dominate_overlay = mutable_appearance('icons/wod13/icons.dmi', "dominate", -MUTATIONS_LAYER)
 		dominate_overlay.pixel_z = 2
 		TRGT.overlays_standing[MUTATIONS_LAYER] = dominate_overlay
 		TRGT.apply_overlay(MUTATIONS_LAYER)

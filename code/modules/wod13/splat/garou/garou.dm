@@ -375,7 +375,7 @@
 /mob/living/carbon/werewolf/lupus
 	name = "wolf"
 	icon_state = "black"
-	icon = 'code/modules/wod13/werewolf_lupus.dmi'
+	icon = 'icons/wod13/werewolf_lupus.dmi'
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL
 	butcher_results = list(/obj/item/food/meat/slab = 5)

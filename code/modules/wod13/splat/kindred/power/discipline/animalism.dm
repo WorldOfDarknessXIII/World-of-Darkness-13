@@ -65,7 +65,7 @@
 /obj/effect/spectral_wolf
 	name = "Spectral Wolf"
 	desc = "Bites enemies in other dimensions."
-	icon = 'code/modules/wod13/icons.dmi'
+	icon = 'icons/wod13/icons.dmi'
 	icon_state = "wolf"
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER

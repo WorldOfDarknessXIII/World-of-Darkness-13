@@ -91,8 +91,8 @@
 /obj/item/clothing/mask/facehugger/kiasyd
 	name = "goblin"
 	desc = "A green changeling creature."
-	worn_icon = 'code/modules/wod13/worn.dmi'
-	icon = 'code/modules/wod13/icons.dmi'
+	worn_icon = 'icons/wod13/worn.dmi'
+	icon = 'icons/wod13/icons.dmi'
 	icon_state = "goblin"
 	sterile = TRUE
 
@@ -175,7 +175,7 @@
 	anchored = TRUE
 	density = FALSE
 	alpha = 64
-	icon = 'code/modules/wod13/icons.dmi'
+	icon = 'icons/wod13/icons.dmi'
 	icon_state = "rune1"
 	color = "#4182ad"
 	var/unique = FALSE

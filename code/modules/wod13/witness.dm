@@ -2,8 +2,8 @@
 	name = "dispatch frequency radio"
 	desc = "911, I'm stuck in my dishwasher and stepbrother is coming in my room..."
 	icon_state = "radio"
-	icon = 'code/modules/wod13/items.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/items.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/last_shooting = 0
 	var/last_shooting_victims = 0

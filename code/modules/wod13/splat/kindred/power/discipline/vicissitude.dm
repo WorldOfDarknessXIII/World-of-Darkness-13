@@ -318,7 +318,7 @@
 			user.physiology.armor.bullet += 20
 		if ("Centipede legs")
 			user.remove_overlay(PROTEAN_LAYER)
-			upgrade_overlay = mutable_appearance('code/modules/wod13/64x64.dmi', "centipede", -PROTEAN_LAYER)
+			upgrade_overlay = mutable_appearance('icons/wod13/64x64.dmi', "centipede", -PROTEAN_LAYER)
 			upgrade_overlay.pixel_z = -16
 			upgrade_overlay.pixel_w = -16
 			user.overlays_standing[PROTEAN_LAYER] = upgrade_overlay
@@ -328,7 +328,7 @@
 			var/limbs = user.held_items.len
 			user.change_number_of_hands(limbs + 2)
 			user.remove_overlay(PROTEAN_LAYER)
-			upgrade_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "2hands", -PROTEAN_LAYER)
+			upgrade_overlay = mutable_appearance('icons/wod13/icons.dmi', "2hands", -PROTEAN_LAYER)
 			upgrade_overlay.color = "#[skintone2hex(user.skin_tone)]"
 			user.overlays_standing[PROTEAN_LAYER] = upgrade_overlay
 			user.apply_overlay(PROTEAN_LAYER)

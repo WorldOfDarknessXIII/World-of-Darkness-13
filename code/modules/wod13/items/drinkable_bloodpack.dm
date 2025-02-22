@@ -1,16 +1,16 @@
 /obj/item/drinkable_bloodpack
 	name = "\improper drinkable blood pack (full)"
 	desc = "Fast way to feed your inner beast."
-	icon = 'code/modules/wod13/items.dmi'
+	icon = 'icons/wod13/items.dmi'
 	icon_state = "blood4"
 	inhand_icon_state = "blood4"
-	lefthand_file = 'code/modules/wod13/lefthand.dmi'
-	righthand_file = 'code/modules/wod13/righthand.dmi'
+	lefthand_file = 'icons/wod13/lefthand.dmi'
+	righthand_file = 'icons/wod13/righthand.dmi'
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_SMALL
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 
 	var/empty = FALSE
 	var/feeding = FALSE

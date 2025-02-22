@@ -17,7 +17,7 @@
 /mob/living/simple_animal/hostile/werewolf
 	name = "Werewolf"
 	desc = "AUF."
-//	icon = 'code/modules/wod13/48x64.dmi'
+//	icon = 'icons/wod13/48x64.dmi'
 	icon_state = "werewolf"
 	icon_living = "werewolf"
 	icon_dead = "werewolf_dead"

@@ -22,17 +22,17 @@
 /obj/item/vamp/phone
 	name = "\improper phone"
 	desc = "A portable device to call anyone you want."
-	icon = 'code/modules/wod13/items.dmi'
+	icon = 'icons/wod13/items.dmi'
 	icon_state = "phone0"
 	inhand_icon_state = "phone0"
-	lefthand_file = 'code/modules/wod13/lefthand.dmi'
-	righthand_file = 'code/modules/wod13/righthand.dmi'
+	lefthand_file = 'icons/wod13/lefthand.dmi'
+	righthand_file = 'icons/wod13/righthand.dmi'
 	item_flags = NOBLUDGEON
 	flags_1 = HEAR_1
 	w_class = WEIGHT_CLASS_SMALL
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 
 	var/exchange_num = 513
 	var/list/contacts = list()
@@ -775,8 +775,8 @@
 
 /obj/item/vamp/phone/street
 	desc = "An ordinary street payphone"
-	icon = 'code/modules/wod13/props.dmi'
-	onflooricon = 'code/modules/wod13/props.dmi'
+	icon = 'icons/wod13/props.dmi'
+	onflooricon = 'icons/wod13/props.dmi'
 	icon_state = "payphone"
 	anchored = TRUE
 	number = "1447"
@@ -789,7 +789,7 @@
 
 /obj/item/vamp/phone/clean
 	desc = "The usual phone of a cleaning company used to communicate with employees"
-	icon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/onfloor.dmi'
 	icon_state = "redphone"
 	anchored = TRUE
 	number = "700 4424"
@@ -801,7 +801,7 @@
 
 /obj/item/vamp/phone/emergency
 	desc = "The 911 dispatch phone"
-	icon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/onfloor.dmi'
 	icon_state = "redphone"
 	anchored = TRUE
 	number = "911"

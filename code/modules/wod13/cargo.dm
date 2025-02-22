@@ -439,10 +439,10 @@
 	desc = "Wow! With enough of these, you could buy a lot! ...Pssh, yeah right."
 	singular_name = "dollar"
 	icon_state = "money1"
-	icon = 'code/modules/wod13/items.dmi'
+	icon = 'icons/wod13/items.dmi'
 	lefthand_file = null
 	righthand_file = null
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	max_amount = 1000
 	merge_type = /obj/item/stack/dollar
@@ -488,15 +488,15 @@
 	name = "cargo box"
 	desc = "Special deliever."
 	icon_state = "box"
-	icon = 'code/modules/wod13/items.dmi'
-	lefthand_file = 'code/modules/wod13/righthand.dmi'
-	righthand_file = 'code/modules/wod13/lefthand.dmi'
+	icon = 'icons/wod13/items.dmi'
+	lefthand_file = 'icons/wod13/righthand.dmi'
+	righthand_file = 'icons/wod13/lefthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 
 /obj/structure/cargo_take
 	name = "cargo"
 	desc = "Take and place boxes."
-	icon = 'code/modules/wod13/props.dmi'
+	icon = 'icons/wod13/props.dmi'
 	icon_state = "box_take"
 	plane = GAME_PLANE
 	layer = BELOW_OBJ_LAYER
@@ -517,7 +517,7 @@
 /obj/structure/cargo_put
 	name = "cargo"
 	desc = "Take and place boxes."
-	icon = 'code/modules/wod13/props.dmi'
+	icon = 'icons/wod13/props.dmi'
 	icon_state = "box_put"
 	plane = GAME_PLANE
 	layer = BELOW_OBJ_LAYER

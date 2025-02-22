@@ -22,7 +22,7 @@
 /mob/living/simple_animal/hostile/baali_guard
 	name = "Infernal Creature"
 	desc = "The peak of abominations armor. Unbelievably undamagable..."
-	icon = 'code/modules/wod13/32x48.dmi'
+	icon = 'icons/wod13/32x48.dmi'
 	icon_state = "baali"
 	icon_living = "baali"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID

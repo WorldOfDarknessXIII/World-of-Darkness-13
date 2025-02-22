@@ -197,7 +197,7 @@
 /obj/machinery/mineral/equipment_vendor/restricted
 	name = "Requisitions"
 	desc = "A requisitions form waiting for any of the employees here to fill out for frivolous and mismanaged goodies."
-	icon = 'code/modules/wod13/props.dmi'
+	icon = 'icons/wod13/props.dmi'
 	icon_state = "menu"
 	icon_deny = "menu"
 	prize_list = list()

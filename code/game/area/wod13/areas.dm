@@ -440,7 +440,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /obj/effect/decal/firecontrol
 	name = "fire shower"
-	icon = 'code/modules/wod13/props.dmi'
+	icon = 'icons/wod13/props.dmi'
 	icon_state = "rain"
 	plane = GAME_PLANE
 	layer = CAR_LAYER

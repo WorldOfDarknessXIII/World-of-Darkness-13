@@ -135,8 +135,8 @@
 	sharpness = SHARP_POINTY
 
 /obj/item/ammo_casing/vampire
-	icon = 'code/modules/wod13/ammo.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/ammo.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	var/base_iconstate
 
 /obj/item/ammo_casing/vampire/c9mm
@@ -211,7 +211,7 @@
 
 /*
 /obj/item/storage/ammostack
-	icon = 'code/modules/wod13/ammo.dmi'
+	icon = 'icons/wod13/ammo.dmi'
 	var/base_caliber = "tut base_iconstate"
 	var/max_patroni = 5
 
@@ -244,8 +244,8 @@
 */
 
 /obj/item/ammo_box/vampire
-	icon = 'code/modules/wod13/ammo.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/ammo.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 
 ///9mm/////////////
