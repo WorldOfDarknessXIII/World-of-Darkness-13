@@ -290,15 +290,11 @@
 	anchored = TRUE
 	density = TRUE
 
-
 /obj/machinery/computer/order_console/mining/fastfood/bacotell
 
 /obj/machinery/computer/order_console/mining/fastfood/bubway
 
 /obj/machinery/computer/order_console/mining/fastfood/gummaguts
-
-/obj/machinery/computer/order_console/mining/fastfood/products
-	desc = "Purchase junkfood and crap."
 
 /obj/machinery/computer/order_console/mining/fastfood/clothing
 	desc = "Purchase all the finest outfits.. Or don't wagie.."
@@ -307,7 +303,6 @@
 /obj/machinery/computer/order_console/mining/fastfood/costumes
 	desc = "Purchase a mask for that ugly mug."
 	order_categories = list(CATEGORY_MASKS)
-
 
 /obj/food_cart
 	name = "food cart"
