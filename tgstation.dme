@@ -285,6 +285,7 @@
 #include "code\_onclick\hud\swarmer.dm"
 #include "code\controllers\subsystem\merits.dm"
 #include "code\datums\merits\_merit.dm"
+#include "code\game\objects\structures\petrified_statue.dm"
 #include "code\modules\tgui\USE_BUILD_BAT_INSTEAD_OF_DREAM_MAKER.dm"
 #include "code\modules\wod13\ambient.dm"
 #include "code\modules\wod13\weather.dm"
