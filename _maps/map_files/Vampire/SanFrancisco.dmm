@@ -59169,6 +59169,10 @@
 "sLn" = (
 /obj/structure/lattice,
 /obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/vamptree{
+	pixel_x = 20;
+	density = 0
+	},
 /turf/open/floor/plating/vampgrass,
 /area/vtm/interior/chantry)
 "sLu" = (
@@ -62070,14 +62074,6 @@
 /obj/effect/decal/rugs,
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/interior/endron_facility)
-"uka" = (
-/obj/structure/lattice,
-/obj/structure/vamptree{
-	pixel_x = 20;
-	density = 0
-	},
-/turf/open/floor/plating/vampgrass,
-/area/vtm/interior/chantry)
 "ukr" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp{
@@ -246365,7 +246361,7 @@ aKE
 aKE
 aKE
 rFR
-uka
+mVl
 qnl
 aKE
 aKE
