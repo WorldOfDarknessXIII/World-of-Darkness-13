@@ -1,7 +1,7 @@
 /obj/item/blood_hunt
 	name = "Blood Hunt Announcer"
 	desc = "Announce a Blood Hunt to the city."
-	icon = 'code/modules/wod13/items.dmi'
+	icon = 'icons/wod13/items.dmi'
 	icon_state = "eye"
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_SMALL

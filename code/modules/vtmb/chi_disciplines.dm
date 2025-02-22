@@ -1,9 +1,9 @@
 /datum/action/chi_discipline
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
-	button_icon = 'code/modules/wod13/UI/kuei_jin.dmi' //This is the file for the BACKGROUND icon
+	button_icon = 'icons/wod13/UI/kuei_jin.dmi' //This is the file for the BACKGROUND icon
 	background_icon_state = "discipline" //And this is the state for the background icon
 
-	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi' //This is the file for the ACTION icon
+	icon_icon = 'icons/wod13/UI/kuei_jin.dmi' //This is the file for the ACTION icon
 	button_icon_state = "discipline" //And this is the state for the action icon
 	vampiric = TRUE
 	var/level_icon_state = "1" //And this is the state for the action icon
@@ -32,8 +32,8 @@
 	. = ..()
 
 /datum/action/chi_discipline/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
-	button_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
-	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	button_icon = 'icons/wod13/UI/kuei_jin.dmi'
+	icon_icon = 'icons/wod13/UI/kuei_jin.dmi'
 	if(icon_icon && button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))
 		current_button.cut_overlays(TRUE)
 		if(discipline)
@@ -384,7 +384,7 @@
 
 /obj/item/melee/powerfist/stone
 	name = "stone-fist"
-	icon = 'code/modules/wod13/items.dmi'
+	icon = 'icons/wod13/items.dmi'
 	icon_state = "stonefist"
 	desc = "A stone gauntlet to punch someone."
 	item_flags = DROPDEL
@@ -432,7 +432,7 @@
 					caster.dna.species.ToggleFlight(caster)
 		if(5)
 			caster.remove_overlay(POTENCE_LAYER)
-			var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "[caster.base_body_mod]rock", -POTENCE_LAYER)
+			var/mutable_appearance/fortitude_overlay = mutable_appearance('icons/wod13/icons.dmi', "[caster.base_body_mod]rock", -POTENCE_LAYER)
 			caster.overlays_standing[POTENCE_LAYER] = fortitude_overlay
 			caster.apply_overlay(POTENCE_LAYER)
 			caster.physiology.armor.melee += 50
@@ -582,7 +582,7 @@
 /mob/living/simple_animal/hostile/beastmaster/fireball
 	name = "fireball"
 	desc = "FIREBALL!!"
-	icon = 'code/modules/wod13/mobs.dmi'
+	icon = 'icons/wod13/mobs.dmi'
 	icon_state = "fireball"
 	icon_living = "fireball"
 	del_on_death = TRUE
@@ -625,7 +625,7 @@
 /obj/item/gun/magic/ghostflame_shintai
 	name = "fire spit"
 	desc = "Spit fire on your targets."
-	icon = 'code/modules/wod13/mobs.dmi'
+	icon = 'icons/wod13/mobs.dmi'
 	icon_state = "fireball"
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL | NOBLUDGEON
 	flags_1 = NONE
@@ -744,10 +744,10 @@
 	name = "obviously long arm"
 	ammo_type = /obj/item/ammo_casing/magic/hook/flesh_shintai
 	icon_state = "hook_hand"
-	icon = 'code/modules/wod13/weapons.dmi'
+	icon = 'icons/wod13/weapons.dmi'
 	inhand_icon_state = "hook_hand"
-	lefthand_file = 'code/modules/wod13/lefthand.dmi'
-	righthand_file = 'code/modules/wod13/righthand.dmi'
+	lefthand_file = 'icons/wod13/lefthand.dmi'
+	righthand_file = 'icons/wod13/righthand.dmi'
 	fire_sound = 'code/modules/wod13/sounds/vicissitude.ogg'
 	max_charges = 1
 	item_flags = DROPDEL | NOBLUDGEON
@@ -763,7 +763,7 @@
 /obj/projectile/flesh_shintai
 	name = "hand"
 	icon_state = "hand"
-	icon = 'code/modules/wod13/icons.dmi'
+	icon = 'icons/wod13/icons.dmi'
 	pass_flags = PASSTABLE
 	damage = 0
 	stamina = 20
@@ -803,7 +803,7 @@
 /obj/structure/flesh_grip
 	name = "flesh grip"
 	desc = "A huge flesh meat structure."
-	icon = 'code/modules/wod13/icons.dmi'
+	icon = 'icons/wod13/icons.dmi'
 	icon_state = "flesh_grip"
 	can_buckle = TRUE
 	anchored = TRUE
@@ -857,7 +857,7 @@
 				qdel(fleshhook)
 		if(2)
 			caster.remove_overlay(PROTEAN_LAYER)
-			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "flesh_arms", -PROTEAN_LAYER)
+			var/mutable_appearance/potence_overlay = mutable_appearance('icons/wod13/icons.dmi', "flesh_arms", -PROTEAN_LAYER)
 			caster.overlays_standing[PROTEAN_LAYER] = potence_overlay
 			caster.apply_overlay(PROTEAN_LAYER)
 			caster.dna.species.punchdamagelow += 20
@@ -966,9 +966,9 @@
 	name = "Choose Demon Form"
 	desc = "Choose your form of a Demon."
 	button_icon_state = "demon_form"
-	button_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	button_icon = 'icons/wod13/UI/kuei_jin.dmi'
 	background_icon_state = "discipline"
-	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	icon_icon = 'icons/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 
 /datum/action/choose_demon_form/Trigger()
@@ -1005,7 +1005,7 @@
 		if("Samurai")
 			var/mod = 10*level_casting
 			caster.remove_overlay(UNICORN_LAYER)
-			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "samurai", -UNICORN_LAYER)
+			var/mutable_appearance/potence_overlay = mutable_appearance('icons/wod13/icons.dmi', "samurai", -UNICORN_LAYER)
 			caster.overlays_standing[UNICORN_LAYER] = potence_overlay
 			caster.apply_overlay(UNICORN_LAYER)
 			caster.physiology.armor.melee += mod
@@ -1021,7 +1021,7 @@
 		if("Tentacles")
 			var/mod = level_casting
 			caster.remove_overlay(UNICORN_LAYER)
-			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "tentacles", -UNICORN_LAYER)
+			var/mutable_appearance/potence_overlay = mutable_appearance('icons/wod13/icons.dmi', "tentacles", -UNICORN_LAYER)
 			caster.overlays_standing[UNICORN_LAYER] = potence_overlay
 			caster.apply_overlay(UNICORN_LAYER)
 			ADD_TRAIT(caster, TRAIT_SHOCKIMMUNE, SPECIES_TRAIT)
@@ -1055,7 +1055,7 @@
 		if("Demon")
 			var/mod = level_casting
 			caster.remove_overlay(UNICORN_LAYER)
-			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "demon", -UNICORN_LAYER)
+			var/mutable_appearance/potence_overlay = mutable_appearance('icons/wod13/icons.dmi', "demon", -UNICORN_LAYER)
 			caster.overlays_standing[UNICORN_LAYER] = potence_overlay
 			caster.apply_overlay(UNICORN_LAYER)
 			ADD_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
@@ -1090,7 +1090,7 @@
 			var/mod = level_casting*10
 			var/meleemod = level_casting*0.5
 			caster.remove_overlay(UNICORN_LAYER)
-			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "giant", -UNICORN_LAYER)
+			var/mutable_appearance/potence_overlay = mutable_appearance('icons/wod13/icons.dmi', "giant", -UNICORN_LAYER)
 			caster.overlays_standing[UNICORN_LAYER] = potence_overlay
 			caster.apply_overlay(UNICORN_LAYER)
 			caster.dna.species.punchdamagelow += mod
@@ -1107,7 +1107,7 @@
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/demonshintai_deactivate.ogg', 50, FALSE)
 		if("Foul")
 			caster.remove_overlay(UNICORN_LAYER)
-			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "foul", -UNICORN_LAYER)
+			var/mutable_appearance/potence_overlay = mutable_appearance('icons/wod13/icons.dmi', "foul", -UNICORN_LAYER)
 			caster.overlays_standing[UNICORN_LAYER] = potence_overlay
 			caster.apply_overlay(UNICORN_LAYER)
 			spawn()
@@ -1226,7 +1226,7 @@
 	var/mod = level_casting
 	var/bonus = 15 * mod
 //	caster.remove_overlay(FORTITUDE_LAYER)
-//	var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "mountain", -FORTITUDE_LAYER)
+//	var/mutable_appearance/fortitude_overlay = mutable_appearance('icons/wod13/icons.dmi', "mountain", -FORTITUDE_LAYER)
 //	caster.overlays_standing[FORTITUDE_LAYER] = fortitude_overlay
 //	caster.apply_overlay(FORTITUDE_LAYER)
 	caster.physiology.armor.melee += bonus
@@ -1326,7 +1326,7 @@
 /mob/living/simple_animal/hostile/crinos_beast
 	name = "Wolf-like Beast"
 	desc = "The peak of abominations damage. Unbelievably deadly..."
-	icon = 'code/modules/wod13/32x48.dmi'
+	icon = 'icons/wod13/32x48.dmi'
 	icon_state = "beast_crinos"
 	icon_living = "beast_crinos"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
@@ -1484,7 +1484,7 @@
 				visual1.density = FALSE
 				visual1.anchored = TRUE
 				visual1.layer = ABOVE_ALL_MOB_LAYER
-				visual1.icon = 'code/modules/wod13/icons.dmi'
+				visual1.icon = 'icons/wod13/icons.dmi'
 				visual1.icon_state = "puff"
 				playsound(get_turf(caster), 'sound/effects/smoke.ogg', 50, TRUE)
 				caster.forceMove(to_move)
@@ -1492,7 +1492,7 @@
 				visual2.density = FALSE
 				visual1.anchored = TRUE
 				visual2.layer = ABOVE_ALL_MOB_LAYER
-				visual2.icon = 'code/modules/wod13/icons.dmi'
+				visual2.icon = 'icons/wod13/icons.dmi'
 				visual2.icon_state = "puff"
 				spawn(2 SECONDS)
 					qdel(visual1)
@@ -1578,8 +1578,8 @@
 	icon_state = "zapper"
 	inhand_icon_state = "zapper"
 	icon = 'icons/obj/items_and_weapons.dmi'
-	lefthand_file = 'code/modules/wod13/lefthand.dmi'
-	righthand_file = 'code/modules/wod13/righthand.dmi'
+	lefthand_file = 'icons/wod13/lefthand.dmi'
+	righthand_file = 'icons/wod13/righthand.dmi'
 	fire_sound = 'code/modules/wod13/sounds/lightning.ogg'
 	max_charges = 1
 	item_flags = DROPDEL | NOBLUDGEON
@@ -1639,7 +1639,7 @@
 	switch(level_casting)
 		if(1)
 			caster.remove_overlay(FORTITUDE_LAYER)
-			var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "tornado", -FORTITUDE_LAYER)
+			var/mutable_appearance/fortitude_overlay = mutable_appearance('icons/wod13/icons.dmi', "tornado", -FORTITUDE_LAYER)
 			fortitude_overlay.alpha = 128
 			caster.overlays_standing[FORTITUDE_LAYER] = fortitude_overlay
 			caster.apply_overlay(FORTITUDE_LAYER)
@@ -1657,7 +1657,7 @@
 		if(4)
 			caster.dna.species.ToggleFlight(caster)
 			caster.remove_overlay(FORTITUDE_LAYER)
-			var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "tornado", -FORTITUDE_LAYER)
+			var/mutable_appearance/fortitude_overlay = mutable_appearance('icons/wod13/icons.dmi', "tornado", -FORTITUDE_LAYER)
 			fortitude_overlay.pixel_y = -16
 			caster.overlays_standing[FORTITUDE_LAYER] = fortitude_overlay
 			caster.apply_overlay(FORTITUDE_LAYER)
@@ -1667,7 +1667,7 @@
 					caster.remove_overlay(FORTITUDE_LAYER)
 		if(5)
 			caster.remove_overlay(FORTITUDE_LAYER)
-			var/mutable_appearance/fortitude_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "puff_const", -FORTITUDE_LAYER)
+			var/mutable_appearance/fortitude_overlay = mutable_appearance('icons/wod13/icons.dmi', "puff_const", -FORTITUDE_LAYER)
 			fortitude_overlay.alpha = 128
 			caster.overlays_standing[FORTITUDE_LAYER] = fortitude_overlay
 			caster.apply_overlay(FORTITUDE_LAYER)
@@ -2128,7 +2128,7 @@
 /obj/item/melee/touch_attack/yin_touch
 	name = "\improper shadow touch"
 	desc = "This is kind of like when you rub your feet on a shag rug so you can zap your friends, only a lot less safe."
-	icon = 'code/modules/wod13/weapons.dmi'
+	icon = 'icons/wod13/weapons.dmi'
 	catchphrase = null
 	on_use_sound = 'sound/magic/disintegrate.ogg'
 	icon_state = "quietus"

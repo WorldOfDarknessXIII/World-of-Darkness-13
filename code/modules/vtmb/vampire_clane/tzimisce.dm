@@ -136,7 +136,7 @@
 			if("Centipede legs")
 				H.additional_centipede = TRUE
 				H.remove_overlay(PROTEAN_LAYER)
-				var/mutable_appearance/centipede_overlay = mutable_appearance('code/modules/wod13/64x64.dmi', "centipede", -PROTEAN_LAYER)
+				var/mutable_appearance/centipede_overlay = mutable_appearance('icons/wod13/64x64.dmi', "centipede", -PROTEAN_LAYER)
 				centipede_overlay.pixel_z = -16
 				centipede_overlay.pixel_w = -16
 				H.overlays_standing[PROTEAN_LAYER] = centipede_overlay
@@ -147,7 +147,7 @@
 				var/limbs = H.held_items.len
 				H.change_number_of_hands(limbs+2)
 				H.remove_overlay(PROTEAN_LAYER)
-				var/mutable_appearance/hands2_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "2hands", -PROTEAN_LAYER)
+				var/mutable_appearance/hands2_overlay = mutable_appearance('icons/wod13/icons.dmi', "2hands", -PROTEAN_LAYER)
 				hands2_overlay.color = "#[skintone2hex(H.skin_tone)]"
 				H.overlays_standing[PROTEAN_LAYER] = hands2_overlay
 				H.apply_overlay(PROTEAN_LAYER)
@@ -183,7 +183,7 @@
 
 		if(additional_hands)
 			H.remove_overlay(PROTEAN_LAYER)
-			var/mutable_appearance/hands2_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "2hands", -PROTEAN_LAYER)
+			var/mutable_appearance/hands2_overlay = mutable_appearance('icons/wod13/icons.dmi', "2hands", -PROTEAN_LAYER)
 			hands2_overlay.color = "#[skintone2hex(H.skin_tone)]"
 			H.overlays_standing[PROTEAN_LAYER] = hands2_overlay
 			H.apply_overlay(PROTEAN_LAYER)
@@ -191,7 +191,7 @@
 			H.dna.species.GiveSpeciesFlight(H)
 		if(additional_centipede)
 			H.remove_overlay(PROTEAN_LAYER)
-			var/mutable_appearance/centipede_overlay = mutable_appearance('code/modules/wod13/64x64.dmi', "centipede", -PROTEAN_LAYER)
+			var/mutable_appearance/centipede_overlay = mutable_appearance('icons/wod13/64x64.dmi', "centipede", -PROTEAN_LAYER)
 			centipede_overlay.pixel_z = -16
 			centipede_overlay.pixel_w = -16
 			H.overlays_standing[PROTEAN_LAYER] = centipede_overlay
@@ -340,7 +340,7 @@
 
 /obj/effect/decal/gut_floor
 	name = "gut floor"
-	icon = 'code/modules/wod13/tiles.dmi'
+	icon = 'icons/wod13/tiles.dmi'
 	icon_state = "tzimisce_floor"
 
 /datum/action/vicissitude
@@ -545,23 +545,23 @@
 	category = CAT_TZIMISCE
 
 /obj/structure/chair/old/tzimisce
-	icon = 'code/modules/wod13/props.dmi'
+	icon = 'icons/wod13/props.dmi'
 	icon_state = "tzimisce_stool"
 
 /obj/item/guts
 	name = "guts"
 	desc = "Just blood and guts..."
 	icon_state = "guts"
-	icon = 'code/modules/wod13/items.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/items.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/spine
 	name = "spine"
 	desc = "If only I had control..."
 	icon_state = "spine"
-	icon = 'code/modules/wod13/items.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/items.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 
 /datum/crafting_recipe/tzi_biter
@@ -591,7 +591,7 @@
 /mob/living/simple_animal/hostile/biter
 	name = "biter"
 	desc = "A ferocious, fang-bearing creature that resembles a spider."
-	icon = 'code/modules/wod13/mobs.dmi'
+	icon = 'icons/wod13/mobs.dmi'
 	icon_state = "biter"
 	icon_living = "biter"
 	icon_dead = "biter_dead"
@@ -649,7 +649,7 @@
 /mob/living/simple_animal/hostile/fister
 	name = "fister"
 	desc = "True abomination walking on both hands."
-	icon = 'code/modules/wod13/mobs.dmi'
+	icon = 'icons/wod13/mobs.dmi'
 	icon_state = "fister"
 	icon_living = "fister"
 	icon_dead = "fister_dead"
@@ -676,7 +676,7 @@
 /mob/living/simple_animal/hostile/tanker
 	name = "tanker"
 	desc = "The peak of abominations armor. Unbelievably undamagable..."
-	icon = 'code/modules/wod13/mobs.dmi'
+	icon = 'icons/wod13/mobs.dmi'
 	icon_state = "tanker"
 	icon_living = "tanker"
 	icon_dead = "tanker_dead"
@@ -702,7 +702,7 @@
 /mob/living/simple_animal/hostile/gangrel
 	name = "Gangrel Form"
 	desc = "The peak of abominations armor. Unbelievably undamagable..."
-	icon = 'code/modules/wod13/32x48.dmi'
+	icon = 'icons/wod13/32x48.dmi'
 	icon_state = "gangrel_f"
 	icon_living = "gangrel_f"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
@@ -746,7 +746,7 @@
 /mob/living/simple_animal/hostile/gargoyle
 	name = "Gargoyle"
 	desc = "Stone-skinned..."
-	icon = 'code/modules/wod13/32x48.dmi'
+	icon = 'icons/wod13/32x48.dmi'
 	icon_state = "gargoyle_m"
 	icon_living = "gargoyle_m"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
@@ -808,7 +808,7 @@
 /mob/living/simple_animal/hostile/tzimisce_beast
 	name = "Tzimisce Beast Form"
 	desc = "The peak of abominations armor. Unbelievably undamagable..."
-	icon = 'code/modules/wod13/64x64.dmi'
+	icon = 'icons/wod13/64x64.dmi'
 	icon_state = "weretzi"
 	icon_living = "weretzi"
 	pixel_w = -16
@@ -836,7 +836,7 @@
 /mob/living/simple_animal/hostile/bloodcrawler
 	name = "Tzimisce Blood Form"
 	desc = "The peak of abominations. Unbelievably undamagable..."
-	icon = 'code/modules/wod13/mobs.dmi'
+	icon = 'icons/wod13/mobs.dmi'
 	icon_state = "liquid"
 	icon_living = "liquid"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
@@ -870,8 +870,8 @@
 	name = "bag of ground"
 	desc = "Boghatyrskaya sila taitsa zdies'..."
 	icon_state = "dirt"
-	icon = 'code/modules/wod13/icons.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/icons.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/stack/human_flesh
@@ -879,7 +879,7 @@
 	desc = "What the fuck..."
 	singular_name = "human flesh"
 	icon_state = "human"
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	mats_per_unit = list(/datum/material/pizza = MINERAL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/human_flesh
 	max_amount = 50
@@ -906,7 +906,7 @@
 /obj/item/extra_arm
 	name = "extra arm installer"
 	desc = "Distantly related to the technology of the Man-Machine Interface, this state-of-the-art syndicate device adapts your nervous and circulatory system to the presence of an extra limb..."
-	icon = 'code/modules/wod13/icons.dmi'
+	icon = 'icons/wod13/icons.dmi'
 	icon_state = "vicissitude"
 	var/used = FALSE
 

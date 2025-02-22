@@ -1,7 +1,7 @@
 /obj/item/food/fish
 	desc = "Marine life."
-	icon = 'code/modules/wod13/48x32weapons.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/48x32weapons.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	eatsound = 'code/modules/wod13/sounds/eat.ogg'
 	tastes = list("fish" = 1)
@@ -31,19 +31,19 @@
 /obj/item/fishing_rod
 	name = "fishing rod"
 	icon_state = "fishing"
-	icon = 'code/modules/wod13/items.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/items.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	lefthand_file = 'code/modules/wod13/righthand.dmi'
-	righthand_file = 'code/modules/wod13/lefthand.dmi'
+	lefthand_file = 'icons/wod13/righthand.dmi'
+	righthand_file = 'icons/wod13/lefthand.dmi'
 	var/catching = FALSE
 
 /obj/item/fishing_rod/attack_self(mob/user)
 	. = ..()
 	if(isturf(user.loc))
 		forceMove(user.loc)
-		onflooricon = 'code/modules/wod13/64x64.dmi'
-		icon = 'code/modules/wod13/64x64.dmi'
+		onflooricon = 'icons/wod13/64x64.dmi'
+		icon = 'icons/wod13/64x64.dmi'
 		dir = user.dir
 		anchored = TRUE
 

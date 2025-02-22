@@ -107,7 +107,7 @@
 /obj/structure/werewolf_totem/spiral
 	name = "Spiral Totem"
 	desc = "Gives power to all Garou of that tribe and steals it from others."
-	icon = 'code/modules/wod13/64x32.dmi'
+	icon = 'icons/wod13/64x32.dmi'
 	icon_state = "spiral"
 	tribe = "Black Spiral Dancers"
 	totem_overlay_color = "#ff5235"
