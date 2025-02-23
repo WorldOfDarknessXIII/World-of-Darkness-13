@@ -45615,10 +45615,6 @@
 "lOI" = (
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/interior/strip_elysium)
-"lOK" = (
-/mob/living/carbon/human/species/vamp_mannequin/nazi,
-/turf/open/floor/plating/vampplating/mono,
-/area/vtm/interior)
 "lPa" = (
 /obj/effect/decal/bordur{
 	dir = 1
@@ -247320,7 +247316,7 @@ aiA
 aiA
 bAv
 xFj
-lOK
+fFw
 fFw
 xQS
 xQS

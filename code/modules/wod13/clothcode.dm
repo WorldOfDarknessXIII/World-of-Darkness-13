@@ -114,18 +114,10 @@
 	desc = "Some oddly historical clothes."
 	icon_state = "napoleon"
 
-/obj/item/clothing/under/vampire/nazi
-	desc = "Some historical clothes."
-	icon_state = "nazi"
-
 /obj/item/clothing/under/vampire/military_fatigues
 	name = "Military fatigues"
 	desc = "Some military clothes."
 	icon_state = "milfatigues"
-
-/obj/item/clothing/under/vampire/nazi/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, ADMIN_TRAIT)
 
 //FOR NPC
 
@@ -1088,16 +1080,6 @@
 	desc = "Dans mon esprit tout divague, je me perds dans tes yeux... Je me noie dans la vague de ton regard amoureux..."
 	icon_state = "french"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 0)
-
-/obj/item/clothing/head/vampire/nazi
-	name = "german bad guy hat"
-	desc = "\"Du wirst immer ein Schwein sein!\""
-	icon_state = "ss"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 0)
-
-/obj/item/clothing/head/vampire/nazi/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, ADMIN_TRAIT)
 
 /obj/item/clothing/head/vampire/top
 	name = "top hat"
