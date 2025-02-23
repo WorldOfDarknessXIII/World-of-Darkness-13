@@ -366,8 +366,7 @@
 			C.adjustCloneLoss(-10*C.auspice.level, TRUE)
 			C.adjustToxLoss(-10*C.auspice.level, TRUE)
 			C.adjustOxyLoss(-20*C.auspice.level, TRUE)
-			C.bloodpool = min(C.bloodpool + C.auspice.level, C.maxbloodpool)
-			C.blood_volume = min(C.blood_volume + 56 * C.auspice.level, BLOOD_VOLUME_NORMAL)
+			C.adjust_blood_points(C.auspice.level)
 			if(ishuman(owner))
 				var/mob/living/carbon/human/BD = owner
 				if(length(BD.all_wounds))

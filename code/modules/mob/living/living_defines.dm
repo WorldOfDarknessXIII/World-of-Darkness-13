@@ -119,7 +119,7 @@
 
 	var/stun_absorption = null ///converted to a list of stun absorption sources this mob has when one is added
 
-	var/blood_volume = 0 ///how much blood the mob has
+	var/blood_volume = BLOOD_VOLUME_NORMAL ///how much blood the mob has
 	var/obj/effect/proc_holder/ranged_ability ///Any ranged ability the mob has, as a click override
 
 	var/see_override = 0 ///0 for no override, sets see_invisible = see_override in silicon & carbon life process via update_sight()
@@ -170,7 +170,7 @@
 	var/body_position_pixel_y_offset = 0
 
 	//Shitty VtM vars I'm moving here so they're not strewn around the codebase
-	var/bloodquality = 1
+	var/bloodquality = BLOOD_QUALITY_LOW
 
 	var/list/drunked_of = list()
 
@@ -217,8 +217,6 @@
 
 	var/frenzy_chance_boost = 10
 
-	var/last_bloodpool_restore = 0
-
 	var/list/knowscontacts = list()
 
 	var/mysticism_knowledge = FALSE
@@ -227,8 +225,6 @@
 
 	var/elysium_checks = 0
 	var/bloodhunted = FALSE
-
-	var/hearing_ghosts = FALSE
 
 	var/stakeimmune = FALSE
 
@@ -260,6 +256,7 @@
 
 	var/bloodpool = 5
 	var/maxbloodpool = 5
+	var/blood_per_point = 0
 	var/generation = 13
 	var/humanity = 7
 	var/masquerade = 5

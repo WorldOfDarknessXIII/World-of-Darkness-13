@@ -629,8 +629,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 					preferences.discipline_levels += giving_discipline_level
 					preferences.save_character()
 
-					var/datum/discipline/discipline = new giving_discipline
-					discipline.level = giving_discipline_level
+					var/datum/discipline/discipline = new giving_discipline(giving_discipline_level)
 
 					message_admins("[ADMIN_LOOKUPFLW(usr)] gave [ADMIN_LOOKUPFLW(player)] the Discipline [discipline.name] at rank [discipline.level]. Reason: [reason]")
 					log_admin("[key_name(usr)] gave [key_name(player)] the Discipline [discipline.name] at rank [discipline.level]. Reason: [reason]")
