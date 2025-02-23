@@ -78,4 +78,4 @@
 /obj/structure/vampdoor/glass/setite/high_sec
 	lock_id = "setite"
 	locked = TRUE
-	lockpick_difficulty = 12
+	lockpick_difficulty = 15

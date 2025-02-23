@@ -95,4 +95,4 @@
 	baseicon = "reinf"
 	locked = TRUE
 	lock_id = "setite"
-	lockpick_difficulty = 12
+	lockpick_difficulty = 15
