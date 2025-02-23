@@ -30053,6 +30053,10 @@
 /obj/fusebox,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/interior/chantry)
+"dVk" = (
+/obj/structure/curtain/cloth/fancy,
+/turf/open/floor/plating/church,
+/area/vtm/interior/community_center/basement)
 "dVs" = (
 /obj/effect/decal/shadow{
 	pixel_y = -32
@@ -30061,10 +30065,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/vtm/interior/chantry)
-"dVk" = (
-/obj/structure/curtain/cloth/fancy,
-/turf/open/floor/plating/church,
-/area/vtm/interior/community_center/basement)
 "dVy" = (
 /obj/structure/railing{
 	dir = 1;
@@ -42556,13 +42556,6 @@
 	},
 /turf/open/floor/plating/granite/black,
 /area/vtm/interior/millennium_tower/f2)
-"kdm" = (
-/obj/structure/railing,
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/plating/sidewalk/poor,
-/area/vtm/interior/chantry)
 "kdl" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -42570,6 +42563,13 @@
 	},
 /turf/open/floor/plating/toilet,
 /area/vtm/interior/community_center)
+"kdm" = (
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/interior/chantry)
 "kdo" = (
 /obj/effect/decal/wallpaper/red/low,
 /turf/closed/wall/vampwall/market/low/window/reinforced,
@@ -45865,6 +45865,8 @@
 "lTS" = (
 /obj/effect/decal/bordur{
 	dir = 5
+/obj/effect/decal/bordur{
+	dir = 5
 	},
 /obj/effect/landmark/npcwall,
 /turf/open/floor/plating/sidewalk,
@@ -47236,6 +47238,11 @@
 "mDs" = (
 /obj/structure/closet/crate/large,
 /obj/effect/decal/pallet,
+/obj/item/storage/fancy/cigarettes/cigpack_robust,
+/obj/item/storage/fancy/cigarettes/cigpack_robust,
+/obj/item/storage/fancy/cigarettes/cigpack_robust,
+/obj/item/storage/fancy/cigarettes/cigpack_robust,
+/obj/item/storage/fancy/cigarettes/cigpack_robust,
 /obj/item/storage/fancy/cigarettes/cigpack_robust,
 /obj/item/storage/fancy/cigarettes/cigpack_robust,
 /obj/item/storage/fancy/cigarettes/cigpack_robust,
@@ -49890,10 +49897,6 @@
 /obj/structure/stairs/north,
 /turf/open/floor/plating/rough,
 /area/vtm/sewer)
-"oan" = (
-/obj/fusebox,
-/turf/open/floor/plating/parquetry/old,
-/area/vtm/interior/chantry/basement)
 "nZW" = (
 /obj/structure/closet,
 /obj/item/clothing/under/vampire/archivist,
@@ -49904,6 +49907,10 @@
 /obj/item/card/id/archive,
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/interior/community_center/basement)
+"oan" = (
+/obj/fusebox,
+/turf/open/floor/plating/parquetry/old,
+/area/vtm/interior/chantry/basement)
 "oap" = (
 /obj/structure/table/wood,
 /turf/closed/wall/vampwall/brick/low,
@@ -50955,20 +50962,6 @@
 /obj/item/food/vampire/pizza,
 /turf/open/floor/plating/sidewalk/poor,
 /area/vtm/interior/police)
-"oCE" = (
-/obj/structure/lattice,
-/obj/structure/railing,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/flora/ausbushes/ywflowers{
-	pixel_y = 10
-	},
-/obj/effect/turf_decal/weather/dirt{
-	dir = 6
-	},
-/turf/open/floor/plating/vampgrass,
-/area/vtm/interior/chantry)
 "oCC" = (
 /obj/structure/table/wood/fancy/purple,
 /obj/item/clothing/suit/hooded/robes/purple,
@@ -50986,6 +50979,20 @@
 /obj/item/clothing/mask/vampire/venetian_mask,
 /turf/open/floor/plating/saint,
 /area/vtm/interior/community_center/basement)
+"oCE" = (
+/obj/structure/lattice,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/flora/ausbushes/ywflowers{
+	pixel_y = 10
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/floor/plating/vampgrass,
+/area/vtm/interior/chantry)
 "oDl" = (
 /obj/structure/weightmachine/stacklifter,
 /obj/effect/turf_decal/stripes/white/line{
@@ -67980,11 +67987,6 @@
 	},
 /turf/open/floor/plating/sidewalk/poor,
 /area/vtm/financialdistrict)
-"xca" = (
-/obj/effect/decal/wallpaper/grey,
-/obj/effect/decal/wallpaper/paper/rich,
-/turf/closed/wall/vampwall/rich/old,
-/area/vtm/interior/chantry)
 "xbZ" = (
 /obj/machinery/light/small/broken{
 	dir = 4;
@@ -67992,6 +67994,11 @@
 	},
 /turf/open/floor/plating/toilet,
 /area/vtm/interior/community_center)
+"xca" = (
+/obj/effect/decal/wallpaper/grey,
+/obj/effect/decal/wallpaper/paper/rich,
+/turf/closed/wall/vampwall/rich/old,
+/area/vtm/interior/chantry)
 "xch" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -138653,6 +138660,8 @@ aiz
 aiz
 vmT
 vmT
+vmT
+vmT
 qZE
 qZE
 vmT
@@ -138660,7 +138669,7 @@ qZE
 qZE
 vmT
 vmT
-vmT
+onz
 onz
 vmT
 vmT
