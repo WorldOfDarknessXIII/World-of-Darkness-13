@@ -212,7 +212,7 @@
 /obj/item/card/id/baron
 	name = "eagle badge"
 	id_type_name = "eagle badge"
-	desc = "An eagle surrounded with gold, showing leadership under their terms."
+	desc = "An eagle surrounded with gold, showing leadership under their own terms."
 	icon = 'code/modules/wod13/items.dmi'
 	icon_state = "eagle_badge"
 	inhand_icon_state = "card-id"
