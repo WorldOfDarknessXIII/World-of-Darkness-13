@@ -12,8 +12,7 @@
 	worn_icon_state = "blank" // needed so that weird pink default thing doesn't show up
 
 /obj/item/clothing/ears/fake_p25radio/examine_more(mob/user)
-	var/list/msg = list(span_notice("On closer examination, it becomes evident this radio is counterfeit. It is entirely nonfunctional."))
-	return msg
+	. = list(span_notice("On closer examination, it becomes evident this radio is counterfeit. It is entirely nonfunctional."))
 
 /obj/item/clothing/ears/fake_p25radio/police
 	name = "P25 police radio"
