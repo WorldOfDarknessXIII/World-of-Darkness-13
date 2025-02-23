@@ -627,6 +627,8 @@ SUBSYSTEM_DEF(ticker)
 	set waitfor = FALSE
 	if(usr && !check_rights(R_SERVER, TRUE))
 		return
+	/// Buckle up, we're gonna json it...
+	world.convert_saves_to_json()
 
 	if(!delay)
 		delay = CONFIG_GET(number/round_end_countdown) * 10
