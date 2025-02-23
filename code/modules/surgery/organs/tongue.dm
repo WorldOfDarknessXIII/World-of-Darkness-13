@@ -31,7 +31,9 @@
 		/datum/language/hebrew,
 		/datum/language/japanese,
 		/datum/language/cantonese,
-		/datum/language/greek
+		/datum/language/greek,
+		/datum/language/garou_tongue,
+		/datum/language/primal_tongue
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)
