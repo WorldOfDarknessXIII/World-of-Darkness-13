@@ -63,3 +63,9 @@
 	ertblast = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	id = 11
+
+/obj/machinery/door/poddoor/shutters/pd
+	name = "armory shutters"
+	ertblast = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	id = 13
