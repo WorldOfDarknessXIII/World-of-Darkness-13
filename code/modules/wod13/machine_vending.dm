@@ -157,6 +157,9 @@
 //				to_chat(usr, "<span class='alert'>Error: An ID is required!</span>")
 //				flick(icon_deny, src)
 //				return
+			if(req_access && !allowed(usr))
+				to_chat(usr, span_warning("This shop does not sell its products for you."))
+				return
 			var/datum/data/mining_equipment/prize = locate(params["ref"]) in prize_list
 			if(!prize || !(prize in prize_list))
 				to_chat(usr, "<span class='alert'>Error: Invalid choice!</span>")
@@ -250,6 +253,8 @@
 		new /datum/data/mining_equipment("bruise pack", /obj/item/stack/medical/bruise_pack, 20),
 		new /datum/data/mining_equipment("Compact Defibillator", /obj/item/defibrillator/compact, 25),
 		new /datum/data/mining_equipment("surgery dufflebag", /obj/item/storage/backpack/duffelbag/med/surgery, 50),
+		new /datum/data/mining_equipment("high quality blood pack", /obj/item/drinkable_bloodpack/elite, 200),
+		new /datum/data/mining_equipment("blood pack", /obj/item/drinkable_bloodpack, 50),
 		new /datum/data/mining_equipment("Hospital Radio", /obj/item/p25radio, 50)
 	)
 
