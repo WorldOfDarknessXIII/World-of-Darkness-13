@@ -1,11 +1,11 @@
 /obj/item/toy/rubberpig
 	name = "rubberpig"
 	desc = "Klim Sanych, zdravstvuite."
-	icon = 'code/modules/wod13/icons.dmi'
+	icon = 'icons/wod13/icons.dmi'
 	icon_state = "rubberpig"
 	inhand_icon_state = "rubberpig"
-	lefthand_file = 'code/modules/wod13/lefthand.dmi'
-	righthand_file = 'code/modules/wod13/righthand.dmi'
+	lefthand_file = 'icons/wod13/lefthand.dmi'
+	righthand_file = 'icons/wod13/righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
 

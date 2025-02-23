@@ -819,7 +819,7 @@
 /mob/living/simple_animal/pet/rat
 	name = "rat"
 	desc = "It's a rat."
-	icon = 'code/modules/wod13/icons.dmi'
+	icon = 'icons/wod13/icons.dmi'
 	icon_state = "rat"
 	icon_living = "rat"
 	icon_dead = "rat_dead"
@@ -872,7 +872,7 @@
 /mob/living/simple_animal/hostile/beastmaster/rat
 	name = "rat"
 	desc = "It's a rat."
-	icon = 'code/modules/wod13/icons.dmi'
+	icon = 'icons/wod13/icons.dmi'
 	icon_state = "rat"
 	icon_living = "rat"
 	icon_dead = "rat_dead"
@@ -913,7 +913,7 @@
 	pixel_z = rand(-8, 8)
 
 /mob/living/simple_animal/hostile/beastmaster/rat/flying
-	icon = 'code/modules/wod13/mobs.dmi'
+	icon = 'icons/wod13/mobs.dmi'
 	icon_state = "bat"
 	icon_living = "bat"
 	icon_dead = "bat_dead"

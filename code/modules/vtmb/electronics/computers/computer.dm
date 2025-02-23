@@ -3,7 +3,7 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 /obj/vampire_computer
 	name = "computer"
 	desc = "See the Internet."
-	icon = 'code/modules/wod13/props.dmi'
+	icon = 'icons/wod13/props.dmi'
 	icon_state = "computer"
 	plane = GAME_PLANE
 	layer = CAR_LAYER

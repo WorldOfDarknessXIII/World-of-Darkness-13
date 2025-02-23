@@ -155,7 +155,7 @@
 
 /obj/elevator_door
 	name = "elevator door"
-	icon = 'code/modules/wod13/doors.dmi'
+	icon = 'icons/wod13/doors.dmi'
 	icon_state = "elevator-0"
 	anchored = TRUE
 	density = FALSE
@@ -176,7 +176,7 @@
 
 /obj/elevator_door/start_closed
 	name = "elevator door"
-	icon = 'code/modules/wod13/doors.dmi'
+	icon = 'icons/wod13/doors.dmi'
 	icon_state = "elevator-1"
 	density = TRUE
 	opacity = TRUE

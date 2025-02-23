@@ -1,7 +1,7 @@
 /obj/structure/vampdoor
 	name = "\improper door"
 	desc = "It opens and closes."
-	icon = 'code/modules/wod13/doors.dmi'
+	icon = 'icons/wod13/doors.dmi'
 	icon_state = "door-1"
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER

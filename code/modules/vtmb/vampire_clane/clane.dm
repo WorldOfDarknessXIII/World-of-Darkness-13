@@ -40,7 +40,7 @@ And it also helps for the character set panel
 	if(length(accessories))
 		if(current_accessory)
 			H.remove_overlay(accessories_layers[current_accessory])
-			var/mutable_appearance/acc_overlay = mutable_appearance('code/modules/wod13/icons.dmi', current_accessory, -accessories_layers[current_accessory])
+			var/mutable_appearance/acc_overlay = mutable_appearance('icons/wod13/icons.dmi', current_accessory, -accessories_layers[current_accessory])
 			H.overlays_standing[accessories_layers[current_accessory]] = acc_overlay
 			H.apply_overlay(accessories_layers[current_accessory])
 	if(alt_sprite)

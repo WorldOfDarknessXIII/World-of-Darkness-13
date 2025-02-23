@@ -1,10 +1,10 @@
 /obj/item/bong
 	name = "bong"
 	desc = "Technically known as a water pipe."
-	icon = 'code/modules/wod13/items.dmi'
+	icon = 'icons/wod13/items.dmi'
 	icon_state = "bulbulator"
 	inhand_icon_state = "bulbulator"
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 
 	///The icon state when the bong is lit
 	var/icon_on = "bulbulator"

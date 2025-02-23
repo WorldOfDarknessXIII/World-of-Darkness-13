@@ -69,7 +69,7 @@ SUBSYSTEM_DEF(beastmastering)
 /mob/living/simple_animal/hostile/beastmaster
 	name = "dog"
 	desc = "Woof-woof."
-	icon = 'code/modules/wod13/mobs.dmi'
+	icon = 'icons/wod13/mobs.dmi'
 	icon_state = "dog"
 	icon_living = "dog"
 	icon_dead = "dog_dead"

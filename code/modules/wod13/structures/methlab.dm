@@ -1,7 +1,7 @@
 /obj/structure/methlab
 	name = "chemical laboratory"
 	desc = "\"Jesse... It's not about style, it's about science... I forgor in what order... But you should mix gasoline, 2 potassium iodide pills or mix of full coffee cup and vodka bottle... then add 3-4 ephedrine pills and mix it... May your ass not be blown off...\""
-	icon = 'code/modules/wod13/32x48.dmi'
+	icon = 'icons/wod13/32x48.dmi'
 	icon_state = "methlab"
 //	plane = GAME_PLANE
 //	layer = ABOVE_ALL_MOB_LAYER

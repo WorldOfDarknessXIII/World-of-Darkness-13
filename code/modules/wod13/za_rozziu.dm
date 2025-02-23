@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(zombiepool)
 /obj/structure/vampgate
 	name = "Graveyard Gate"
 	desc = "It opens and closes."
-	icon = 'code/modules/wod13/gate.dmi'
+	icon = 'icons/wod13/gate.dmi'
 	icon_state = "gate"
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER

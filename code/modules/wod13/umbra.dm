@@ -4,7 +4,7 @@
 /turf/open/floor/plating/umbra
 	gender = PLURAL
 	name = "nothing"
-	icon = 'code/modules/wod13/tiles.dmi'
+	icon = 'icons/wod13/tiles.dmi'
 	icon_state = "black"
 	flags_1 = NONE
 	attachment_holes = FALSE
@@ -29,7 +29,7 @@
 /obj/minespot
 	name = "safe umbral tether"
 	desc = "Connects the parts of Penumbra together."
-	icon = 'code/modules/wod13/umbra.dmi'
+	icon = 'icons/wod13/umbra.dmi'
 	icon_state = "tile1"
 	plane = GAME_PLANE
 	layer = BELOW_OBJ_LAYER
@@ -144,7 +144,7 @@
 /obj/umbra_portal
 	name = "gateway"
 	desc = "Step to the other side."
-	icon = 'code/modules/wod13/48x48.dmi'
+	icon = 'icons/wod13/48x48.dmi'
 	icon_state = "portal"
 	density = TRUE
 	anchored = TRUE
