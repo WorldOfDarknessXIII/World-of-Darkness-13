@@ -1322,27 +1322,6 @@
 	equip_to_slot_or_del(new /obj/item/clothing/shoes/vampire/jackboots/high(src), ITEM_SLOT_FEET)
 	equip_to_slot_or_del(new /obj/item/clothing/under/vampire/napoleon(src), ITEM_SLOT_ICLOTHING)
 
-/mob/living/carbon/human/species/vamp_mannequin/nazi
-
-/mob/living/carbon/human/species/vamp_mannequin/nazi/Initialize()
-	. = ..()
-	equip_to_slot_or_del(new /obj/item/clothing/head/vampire/nazi(src), ITEM_SLOT_HEAD)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/vampire/jackboots/high(src), ITEM_SLOT_FEET)
-	equip_to_slot_or_del(new /obj/item/clothing/under/vampire/nazi(src), ITEM_SLOT_ICLOTHING)
-
-//prevents this thing from being stripped
-/mob/living/carbon/human/species/vamp_mannequin/nazi/Topic(href, href_list)
-	if(href_list["item"])
-		message_admins("[ADMIN_LOOKUPFLW(usr)] tried to strip the Nazi mannequin.")
-		to_chat(usr, "<span class='warning'>You don't really want to pick that up...</span>")
-		return
-	else
-		..()
-
-//prevents anything from being dropped by the mannequin on gib
-/mob/living/carbon/human/species/vamp_mannequin/nazi/gib(no_brain, no_organs, no_bodyparts, safe_gib)
-	qdel(src)
-
 /mob/living/carbon/human/species/vamp_mannequin/conquestador
 
 /mob/living/carbon/human/species/vamp_mannequin/conquestador/Initialize()
