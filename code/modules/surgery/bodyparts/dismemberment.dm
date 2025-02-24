@@ -15,7 +15,7 @@
 
 	for(var/mob/living/carbon/human/H in oviewers(7, C))
 		if((H.real_name == C.lastattacker))
-			if(iscathayan(H)) //Cathayan, ding dharma
+			if(iskuejin(H)) //Cathayan, ding dharma
 				if(C.stat != DEAD)
 					call_dharma("torture", H)
 				else

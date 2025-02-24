@@ -1,0 +1,8 @@
+DOCUMENTED, files I need to return for maintenance after scaffolding splat functionality
+
+code/modules/wod13/decor.dm
+code/controllers/subsystem/city_time.dm
+code/datums/components/food/edible.dm
+code/datums/keybinding/human.dm
+code/game/objects/items/devices/scanners.dm
+code/game/objects/structures/morgue.dm

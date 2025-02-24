@@ -638,29 +638,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	all_quirks = SANITIZE_LIST(all_quirks)
 	validate_quirks()
 
-	//Convert jank old Discipline system to new Discipline system
-	if ((istype(pref_species, /datum/species/kindred) || istype(pref_species, /datum/species/ghoul)) && !discipline_types.len)
-		if (discipline1type && discipline1level)
-			discipline_types += discipline1type
-			discipline_levels += discipline1level
-			discipline1type = null
-			discipline1level = null
-		if (discipline2type && discipline2level)
-			discipline_types += discipline2type
-			discipline_levels += discipline2level
-			discipline2type = null
-			discipline2level = null
-		if (discipline3type && discipline3level)
-			discipline_types += discipline3type
-			discipline_levels += discipline3level
-			discipline3type = null
-			discipline3level = null
-		if (discipline4type && discipline4level)
-			discipline_types += discipline4type
-			discipline_levels += discipline4level
-			discipline4type = null
-			discipline4level = null
-
 	//repair some damage done by an exploit by resetting
 	if ((true_experience > 1000) && !check_rights_for(parent, R_ADMIN))
 		message_admins("[ADMIN_LOOKUPFLW(parent)] loaded a character slot with [true_experience] experience. The slot has been reset.")
@@ -806,6 +783,63 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(!length(base_bindings[key]))
 			base_bindings -= key
 	return base_bindings
+
+/**
+ * Translate outdated savedata to new savedata.
+ *
+ * Whenever something is changed that would break savedata in any way,
+ * this proc and the procs it calls are used to automatically adapt the old
+ * savedata into the new structure. Examples of when this has been used are
+ * when renaming and changing the typepath of a Discipline, renaming a Clan, or
+ * changing the data structure of Disciplines. Every splat has its own proc
+ * for organisation reasons, and general fixes go in the human proc.
+ */
+/datum/preferences/proc/fix_outdated_savedata()
+	fix_outdated_human_savedata()
+	fix_outdated_vampire_savedata()
+	fix_outdated_werewolf_savedata()
+	fix_outdated_kueijin_savedata()
+
+///Currently unused, but for general savedata corrections
+/datum/preferences/proc/fix_outdated_human_savedata()
+	return
+
+/datum/preferences/proc/fix_outdated_vampire_savedata()
+	if ((pref_species.id != "kindred") && (pref_species.id != "ghoul"))
+		return
+
+	//discipline uncapping translation
+	if (!discipline_types.len)
+		if (discipline1type && discipline1level)
+			discipline_types += discipline1type
+			discipline_levels += discipline1level
+			discipline1type = null
+			discipline1level = null
+		if (discipline2type && discipline2level)
+			discipline_types += discipline2type
+			discipline_levels += discipline2level
+			discipline2type = null
+			discipline2level = null
+		if (discipline3type && discipline3level)
+			discipline_types += discipline3type
+			discipline_levels += discipline3level
+			discipline3type = null
+			discipline3level = null
+		if (discipline4type && discipline4level)
+			discipline_types += discipline4type
+			discipline_levels += discipline4level
+			discipline4type = null
+			discipline4level = null
+
+///Currently unused
+/datum/preferences/proc/fix_outdated_werewolf_savedata()
+	if (pref_species.id != "garou")
+		return
+
+///Currently unused
+/datum/preferences/proc/fix_outdated_kueijin_savedata()
+	if (pref_species.id != "kuei-jin")
+		return
 
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN

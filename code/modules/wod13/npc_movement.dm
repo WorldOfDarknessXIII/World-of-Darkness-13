@@ -189,9 +189,9 @@
 				else
 					return pick(north_steps, south_steps, west_steps)
 /mob/living/carbon/human/npc/proc/CheckMove()
-	if(stat >= HARD_CRIT)
+	if(stat >= UNCONSCIOUS)
 		return TRUE
-	if(last_grab+15 > world.time)
+	if((last_grab + 1.5 SECONDS) > world.time)
 		return TRUE
 	if(ghoulificated)
 		return TRUE

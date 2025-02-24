@@ -223,15 +223,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	//[Lucia] TODO: make this good what the fuck is wrong with the previous thing
 	GLOB.roundstart_races = list("human", "kindred", "ghoul")
 	GLOB.selectable_races = list("human", "kindred", "ghoul", "garou", "kuei-jin")
-	/*
-	for(var/I in subtypesof(/datum/species))
-		var/datum/species/S = new I
-		if(S.selectable)
-			GLOB.roundstart_races += S.id
-	if(!GLOB.roundstart_races.len)
-		GLOB.roundstart_races += "kindred"
-	*/
-
+#warn tgui will be the dragon you slay to let people pick splats in chargen
 /**
  * Checks if a species is eligible to be picked at roundstart.
  *
@@ -1017,6 +1009,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		var/takes_crit_damage = (!HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
 		if((H.health < H.crit_threshold) && takes_crit_damage)
 			H.adjustBruteLoss(1)
+
 	if(flying_species)
 		HandleFlight(H)
 
@@ -1183,7 +1176,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 
 /datum/species/proc/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.type == exotic_blood)
-		H.blood_volume = min(H.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+		H.adjust_blood_volume(round(chem.volume, 0.1))
 		H.reagents.del_reagent(chem.type)
 		return TRUE
 	if(chem.overdose_threshold && chem.volume >= chem.overdose_threshold)
@@ -1354,14 +1347,12 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	user.do_cpr(target)
 
 
-/datum/species/proc/grab(mob/living/carbon/human/user, mob/living/target, datum/martial_art/attacker_style)
-	if(ishuman(target))
-		var/mob/living/carbon/human/human = target
-		if(human.check_block())
-			human.visible_message("<span class='warning'>[human] blocks [user]'s grab!</span>", \
-							"<span class='userdanger'>You block [user]'s grab!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, "<span class='warning'>Your grab at [human] was blocked!</span>")
-			return FALSE
+/datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+	if(target.check_block())
+		target.visible_message("<span class='warning'>[target] blocks [user]'s grab!</span>", \
+						"<span class='userdanger'>You block [user]'s grab!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, "<span class='warning'>Your grab at [target] was blocked!</span>")
+		return FALSE
 	if(attacker_style?.grab_act(user,target))
 		return TRUE
 	else
@@ -1561,7 +1552,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			if(OC)
 				if(OC.identified)
 					if(H.bloodpool)
-						H.bloodpool = max(0, H.bloodpool-1)
+						H.adjust_blood_points(-1)
 						OC.stored_blood = OC.stored_blood+1
 	apply_damage((I.force*modifikator) * weakness, I.damtype, def_zone, armor_block, H, wound_bonus = Iwound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
 
@@ -2151,9 +2142,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			H.dna.features["wings"] = "None"
 			H.update_body()
 
-/datum/species
-	var/animation_goes_up = FALSE	//
-
 /datum/species/proc/HandleFlight(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)
 		if(!CanFly(H))
@@ -2255,6 +2243,9 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		else
 			to_chat(H, "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>")
 			H.set_resting(FALSE, TRUE)
+
+/datum/movespeed_modifier/wing
+	multiplicative_slowdown = -0.25
 
 /**
  * The human species version of [/mob/living/carbon/proc/get_biological_state]. Depends on the HAS_FLESH and HAS_BONE species traits, having bones lets you have bone wounds, having flesh lets you have burn, slash, and piercing wounds
