@@ -303,18 +303,6 @@
 	yin_chi = 0
 	wall_rating = HIGH_WALL_RATING
 
-/area/vtm/theatre
-	name = "Theatre"
-	icon_state = "theatre"
-	ambience_index = AMBIENCE_INTERIOR
-	upper = FALSE
-	music = /datum/vampiremusic/theatre
-	zone_type = "elysium"
-	fire_controled = TRUE
-	yang_chi = 0
-	yin_chi = 2
-	wall_rating = HIGH_WALL_RATING
-
 /area/vtm/sewer
 	name = "Sewer"
 	icon_state = "sewer"
@@ -383,6 +371,24 @@
 	music = /datum/vampiremusic/penumbra
 	fire_controled = FALSE
 	wall_rating = LOW_WALL_RATING
+
+/area/vtm/interior/chantry
+	name = "Chantry"
+	icon_state = "theatre"
+	zone_type = "elysium"
+	fire_controled = TRUE
+	yang_chi = 0
+	yin_chi = 2
+
+/area/vtm/interior/chantry/basement
+	name = "Chantry Basement"
+
+/area/vtm/interior/theatre
+	name = "Theatre"
+	icon_state = "theatre"
+	music = /datum/vampiremusic/theatre
+	zone_type = "elysium"
+	fire_controled = TRUE
 
 /area/vtm/interior/backrooms
 	name = "Backrooms"
