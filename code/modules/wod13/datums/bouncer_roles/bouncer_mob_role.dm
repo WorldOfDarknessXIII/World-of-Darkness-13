@@ -173,5 +173,12 @@
 		"Nice story, bucko. Now scram."
 	)
 
+	var/unmask_phrases = list(
+		"Hey, if you want inside, show me your face first.",
+		"Come let us take a look at you, before you go in.",
+		"Wait, I can't see your face. Show it to me before you go in.",
+		"I can't let some masked nobody inside. Come over here and show me your ugly mug."
+	)
+
 	var/bouncer_weapon_type = /obj/item/gun/ballistic/shotgun/vampire
 	var/bouncer_backup_weapon_type = /obj/item/melee/vampirearms/machete

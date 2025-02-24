@@ -111,7 +111,7 @@
 				return TRUE
 	return FALSE
 
-/mob/living/proc/CheckEyewitness(var/mob/living/source, var/mob/attacker, var/range = 0, var/affects_source = FALSE)
+/mob/living/proc/CheckEyewitness(var/mob/living/source, var/mob/attacker, var/range = 0, var/affects_source = FALSE, var/type_of_infraction = INFRACTION_TYPE_DEFAULT)
 	var/actual_range = max(1, round(range*(attacker.alpha/255)))
 	/*
 	if(SScityweather.fogging)
@@ -120,27 +120,55 @@
 	var/list/seenby = list()
 	if(source.ignores_warrant)
 		return
-	else
-		for(var/mob/living/carbon/human/npc/NPC in oviewers(1, source))
-			if(!NPC.CheckMove())
-				if(get_turf(src) != turn(NPC.dir, 180))
-					seenby |= NPC
-					NPC.Aggro(attacker, FALSE)
-		for(var/mob/living/carbon/human/npc/NPC in viewers(actual_range, source))
-			if(!NPC.CheckMove())
-				if(affects_source)
-					if(NPC == source)
-						NPC.Aggro(attacker, TRUE)
-						seenby |= NPC
-				if(!NPC.pulledby)
-					var/turf/LC = get_turf(attacker)
-					if(LC.get_lumcount() > 0.25 || get_dist(NPC, attacker) <= 1)
-						if(NPC.backinvisible(attacker))
-							seenby |= NPC
-							NPC.Aggro(attacker, FALSE)
-		if(length(seenby) >= 1)
-			return TRUE
-		return FALSE
+
+	for(var/mob/living/carbon/human/npc/NPC in oviewers(1, source))
+		if(NPC.CheckMove())
+			continue
+		
+		if(get_turf(src) == turn(NPC.dir, 180))
+			continue
+		
+		if(!infraction_matters_to_npc(NPC, type_of_infraction))
+			continue
+		
+		seenby |= NPC
+		NPC.Aggro(attacker, FALSE)
+
+	for(var/mob/living/carbon/human/npc/NPC in viewers(actual_range, source))
+		if(NPC.CheckMove())
+			continue
+		
+		if(affects_source && NPC == source)
+			NPC.Aggro(attacker, TRUE)
+			seenby |= NPC
+			continue
+		
+		if(NPC.pulledby)
+			continue
+		
+		var/turf/LC = get_turf(attacker)
+		if(LC.get_lumcount() <= 0.25 && get_dist(NPC, attacker) >= 1)
+			continue
+		
+		if(!NPC.backinvisible(attacker))
+			continue
+
+		if(!infraction_matters_to_npc(NPC, type_of_infraction))
+			continue
+		
+		seenby |= NPC
+		NPC.Aggro(attacker, FALSE)
+	
+	if(length(seenby) >= 1)
+		return TRUE
+	return FALSE
+
+/mob/living/proc/infraction_matters_to_npc(mob/living/carbon/human/npc/our_npc, type_of_infraction = INFRACTION_TYPE_DEFAULT)
+	switch(type_of_infraction)
+		if(INFRACTION_TYPE_UGLY)
+			if(our_npc.tolerates_ugly)
+				return FALSE
+	return TRUE
 
 /mob/proc/can_respawn()
 	if (client?.ckey)
