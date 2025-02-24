@@ -1,5 +1,6 @@
 You can find a lockpick on certain NPCs and at the black market. Lockpicking skill and physique assist in your chances to succeed, and doors have varying difficulty.
 Cars use gasoline - you can buy more at a Gas Station. This can be used in the production of molotovs, as well.
+Keys dropped by NPCs may be able to unlock some cars. Just keep trying until you find one whose lock fits the key.
 If you ever find yourself lost, the bus stations usually have a map of the city near them.
 Less humane clans and the Sabbat have access to the Paths of Enlightenment. They are various and diverse, each a method to co-exist with your beast.
 Discipline levels can be changed with Right-Click.

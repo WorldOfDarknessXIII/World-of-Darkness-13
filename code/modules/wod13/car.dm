@@ -14,7 +14,6 @@ SUBSYSTEM_DEF(carpool)
 	return ..()
 
 /datum/controller/subsystem/carpool/fire(resumed = FALSE)
-
 	if (!resumed)
 		var/list/activelist = GLOB.car_list
 		src.currentrun = activelist.Copy()
@@ -34,7 +33,7 @@ SUBSYSTEM_DEF(carpool)
 
 		if(MC_TICK_CHECK)
 			return
-		CAR.handle_caring()
+		CAR.running()
 
 /obj/item/gas_can
 	name = "gas can"
@@ -84,7 +83,6 @@ SUBSYSTEM_DEF(carpool)
 		playsound(get_turf(H), 'code/modules/wod13/sounds/gas_splat.ogg', 50, TRUE)
 		user.visible_message("<span class='warning'>[user] covers [A] in something flammable!</span>")
 
-
 /obj/vampire_car/attack_hand(mob/user)
 	. = ..()
 	if(ishuman(user))
@@ -106,27 +104,39 @@ SUBSYSTEM_DEF(carpool)
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	throwforce = 150
-
-	var/last_vzhzh = 0
-
-	var/image/Fari
-	var/fari_on = FALSE
+	glide_size = 96
 
 	var/mob/living/driver
 	var/list/passengers = list()
 	var/max_passengers = 3
 
-	var/speed = 1	//Future
-	var/stage = 1
+	var/health = 100
+	var/maxhealth = 100
+	var/repairing = FALSE
+	var/gas = 1000
 	var/on = FALSE
 	var/locked = TRUE
 	var/access = "none"
 
-	var/health = 100
-	var/maxhealth = 100
-	var/repairing = FALSE
+	//handling stats
+	var/speed = 32 //acceleration in pixels per carpool/fire()
+	var/top_speed = 418
+	var/top_speed_back = 64
+	var/steering = 3
 
-	var/last_beep = 0
+	var/speed_x
+	var/speed_y
+	var/accel_x
+	var/accel_y
+	var/speed_magnitude
+	var/angle_looking
+	//var/torque
+	var/drifting = FALSE
+	var/reverse = FALSE //i was going to do full on gear transmissions, but i got lazy
+	var/new_pix_x
+	var/new_pix_y
+
+	COOLDOWN_DECLARE(sfx)
 
 	var/component_type = /datum/component/storage/concrete/vtm/car
 	var/baggage_limit = 40
@@ -134,8 +144,6 @@ SUBSYSTEM_DEF(carpool)
 
 	var/exploded = FALSE
 	var/beep_sound = 'code/modules/wod13/sounds/beep.ogg'
-
-	var/gas = 1000
 
 /obj/vampire_car/ComponentInitialize()
 	. = ..()
@@ -155,34 +163,45 @@ SUBSYSTEM_DEF(carpool)
 
 /obj/vampire_car/AltClick(mob/user)
 	..()
-	if(!repairing)
-		if(locked)
-			to_chat(user, "<span class='warning'>[src] is locked!</span>")
-			return
-		repairing = TRUE
-		var/mob/living/L
+	if(locked)
+		to_chat(user, "<span class='warning'>[src] is locked!</span>")
+		return
+	var/mob/living/removing_who
 
-		if(driver)
-			L = driver
-		else if(length(passengers))
-			L = pick(passengers)
-		else
-			to_chat(user, "<span class='notice'>There's no one in [src].</span>")
-			repairing = FALSE
-			return
-
-		user.visible_message("<span class='warning'>[user] begins pulling someone out of [src]!</span>", \
-			"<span class='warning'>You begin pulling [L] out of [src]...</span>")
-		if(do_mob(user, src, 5 SECONDS))
-			var/datum/action/carr/exit_car/C = locate() in L.actions
-			user.visible_message("<span class='warning'>[user] has managed to get [L] out of [src].</span>", \
-				"<span class='warning'>You've managed to get [L] out of [src].</span>")
-			if(C)
-				C.Trigger()
-		else
-			to_chat(user, "<span class='warning'>You've failed to get [L] out of [src].</span>")
+	if(driver)
+		removing_who = driver
+	else if(length(passengers))
+		removing_who = pick(passengers)
+	else
+		to_chat(user, "<span class='notice'>There's no one in [src].</span>")
 		repairing = FALSE
 		return
+
+	user.visible_message("<span class='warning'>[user] begins pulling someone out of [src]!</span>", \
+		"<span class='warning'>You begin pulling [removing_who] out of [src]...</span>")
+	if(do_mob(user, src, 4 SECONDS))
+		user.visible_message("<span class='warning'>[user] has managed to get [removing_who] out of [src].</span>", \
+			"<span class='warning'>You've managed to get [removing_who] out of [src].</span>")
+
+		if(driver == removing_who)
+			driver = null
+		if(removing_who in passengers)
+			passengers -= removing_who
+		removing_who.forceMove(user.loc)
+
+		var/mob/living/carbon/human/user_as_carbon = user
+		user_as_carbon.dna.species.grab(user, removing_who)
+		user_as_carbon.setGrabState(GRAB_PASSIVE)
+
+		if(removing_who.client)
+			removing_who.client.pixel_x = 0
+			removing_who.client.pixel_y = 0
+		playsound(removing_who, 'code/modules/wod13/sounds/door.ogg', 50, TRUE)
+		for(var/datum/action/carr/C in removing_who.actions)
+			qdel(C)
+	else
+		to_chat(user, "<span class='warning'>You've failed to get [removing_who] out of [src].</span>")
+	return
 
 /obj/vampire_car/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/gas_can))
@@ -251,12 +270,12 @@ SUBSYSTEM_DEF(carpool)
 
 			user.visible_message("<span class='notice'>[user] begins repairing [src]...</span>", \
 				"<span class='notice'>You begin repairing [src]. Stop at any time to only partially repair it.</span>")
+			color = "#ffffff"
 			if(do_mob(user, src, time_to_repair SECONDS))
 				health = maxhealth
 				playsound(src, 'code/modules/wod13/sounds/repair.ogg', 50, TRUE)
 				user.visible_message("<span class='notice'>[user] repairs [src].</span>", \
 					"<span class='notice'>You finish repairing all the dents on [src].</span>")
-				color = "#ffffff"
 				repairing = FALSE
 				return
 			else
@@ -264,7 +283,6 @@ SUBSYSTEM_DEF(carpool)
 				playsound(src, 'code/modules/wod13/sounds/repair.ogg', 50, TRUE)
 				user.visible_message("<span class='notice'>[user] repairs [src].</span>", \
 					"<span class='notice'>You repair some of the dents on [src].</span>")
-				color = "#ffffff"
 				repairing = FALSE
 				return
 		return
@@ -276,8 +294,7 @@ SUBSYSTEM_DEF(carpool)
 				if(prob(50))
 					L.apply_damage(round(I.force/2), I.damtype, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST))
 
-			if(!driver && !length(passengers) && last_beep+70 < world.time && locked)
-				last_beep = world.time
+			if(!driver && !length(passengers) && locked)
 				playsound(src, 'code/modules/wod13/sounds/signal.ogg', 50, FALSE)
 				for(var/mob/living/carbon/human/npc/police/P in oviewers(7, src))
 					P.Aggro(user)
@@ -296,15 +313,9 @@ SUBSYSTEM_DEF(carpool)
 		var/datum/action/carr/exit_car/E = locate() in L.actions
 		if(E)
 			qdel(E)
-		var/datum/action/carr/fari_vrubi/F = locate() in L.actions
-		if(F)
-			qdel(F)
 		var/datum/action/carr/engine/N = locate() in L.actions
 		if(N)
 			qdel(N)
-		var/datum/action/carr/stage/S = locate() in L.actions
-		if(S)
-			qdel(S)
 		var/datum/action/carr/beep/B = locate() in L.actions
 		if(B)
 			qdel(B)
@@ -315,7 +326,7 @@ SUBSYSTEM_DEF(carpool)
 /obj/vampire_car/examine(mob/user)
 	. = ..()
 	if(user.loc == src)
-		. += "<b>Gas</b>: [gas]/1000"
+		. += "<b>Gas</b>: [round(gas)]/1000"
 	if(health < maxhealth && health >= maxhealth-(maxhealth/4))
 		. += "It's slightly dented..."
 	if(health < maxhealth-(maxhealth/4) && health >= maxhealth/2)
@@ -327,9 +338,9 @@ SUBSYSTEM_DEF(carpool)
 	if(locked)
 		. += "<span class='warning'>It's locked.</span>"
 	if(driver || length(passengers))
-		. += "<span class='notice'>\nYou see the following people inside:</span>"
+		. += "<span class='notice'>You see the following people inside:</span>"
 		for(var/mob/living/rider in src)
-			. += "<span class='notice'>* [rider]</span>"
+			. += "<span class='notice'>[icon2html(rider, user)] [rider]</span>"
 
 /obj/vampire_car/proc/get_damage(var/cost)
 	if(cost > 0)
@@ -348,15 +359,9 @@ SUBSYSTEM_DEF(carpool)
 				var/datum/action/carr/exit_car/E = locate() in L.actions
 				if(E)
 					qdel(E)
-				var/datum/action/carr/fari_vrubi/F = locate() in L.actions
-				if(F)
-					qdel(F)
 				var/datum/action/carr/engine/N = locate() in L.actions
 				if(N)
 					qdel(N)
-				var/datum/action/carr/stage/S = locate() in L.actions
-				if(S)
-					qdel(S)
 				var/datum/action/carr/beep/B = locate() in L.actions
 				if(B)
 					qdel(B)
@@ -370,50 +375,18 @@ SUBSYSTEM_DEF(carpool)
 		set_light(0)
 	return
 
-/datum/action/carr/fari_vrubi
-	name = "Toggle Light"
-	desc = "Toggle light on/off."
-	button_icon_state = "lights"
-
-/datum/action/carr/fari_vrubi/Trigger()
-	if(istype(owner.loc, /obj/vampire_car))
-		var/obj/vampire_car/V = owner.loc
-		if(!V.fari_on)
-			V.fari_on = TRUE
-			V.add_overlay(V.Fari)
-			to_chat(owner, "<span class='notice'>You toggle [V]'s lights.</span>")
-			playsound(V, 'sound/weapons/magin.ogg', 40, TRUE)
-		else
-			V.fari_on = FALSE
-			V.cut_overlay(V.Fari)
-			to_chat(owner, "<span class='notice'>You toggle [V]'s lights.</span>")
-			playsound(V, 'sound/weapons/magout.ogg', 40, TRUE)
-
 /datum/action/carr/beep
 	name = "Signal"
 	desc = "Beep-beep."
 	button_icon_state = "beep"
+	COOLDOWN_DECLARE(beep)
 
 /datum/action/carr/beep/Trigger()
 	if(istype(owner.loc, /obj/vampire_car))
 		var/obj/vampire_car/V = owner.loc
-		if(V.last_beep+10 < world.time)
-			V.last_beep = world.time
+		if(COOLDOWN_FINISHED(src, beep))
+			COOLDOWN_START(src, beep, 2 SECONDS)
 			playsound(V.loc, V.beep_sound, 60, FALSE)
-
-/datum/action/carr/stage
-	name = "Toggle Transmission"
-	desc = "Toggle transmission to 1, 2 or 3."
-	button_icon_state = "stage"
-
-/datum/action/carr/stage/Trigger()
-	if(istype(owner.loc, /obj/vampire_car))
-		var/obj/vampire_car/V = owner.loc
-		if(V.stage < 3)
-			V.stage = V.stage+1
-		else
-			V.stage = 1
-		to_chat(owner, "<span class='notice'>You enable [V]'s transmission at [V.stage].</span>")
 
 /datum/action/carr/baggage
 	name = "Lock Baggage"
@@ -435,22 +408,24 @@ SUBSYSTEM_DEF(carpool)
 	name = "Toggle Engine"
 	desc = "Toggle engine on/off."
 	button_icon_state = "keys"
+	COOLDOWN_DECLARE(trigger)
 
 /datum/action/carr/engine/Trigger()
-	if(istype(owner.loc, /obj/vampire_car))
+	if(istype(owner.loc, /obj/vampire_car) && COOLDOWN_FINISHED(src, trigger))
+		COOLDOWN_START(src, trigger, 1 SECONDS)
 		var/obj/vampire_car/V = owner.loc
 		if(!V.on)
-			if(V.health == V.maxhealth)
-				V.on = TRUE
-				playsound(V, 'code/modules/wod13/sounds/start.ogg', 50, TRUE)
-				to_chat(owner, "<span class='notice'>You managed to start [V]'s engine.</span>")
+			if(V.gas <= 0)
+				playsound(V, 'code/modules/wod13/sounds/engine-start-failure.ogg', 50, FALSE)
+				to_chat(owner, "<span class='warning'>[V] is out of gas.")
 				return
-			if(prob(100*(V.health/V.maxhealth)))
+			if(V.health == V.maxhealth || prob(100*(V.health/V.maxhealth)))
 				V.on = TRUE
 				playsound(V, 'code/modules/wod13/sounds/start.ogg', 50, TRUE)
 				to_chat(owner, "<span class='notice'>You managed to start [V]'s engine.</span>")
 				return
 			else
+				playsound(V, 'code/modules/wod13/sounds/engine-start-failure.ogg', 50, FALSE)
 				to_chat(owner, "<span class='warning'>You failed to start [V]'s engine.</span>")
 				return
 		else
@@ -468,6 +443,13 @@ SUBSYSTEM_DEF(carpool)
 /datum/action/carr/exit_car/Trigger()
 	if(istype(owner.loc, /obj/vampire_car))
 		var/obj/vampire_car/V = owner.loc
+
+		if(HAS_TRAIT(owner, TRAIT_INCAPACITATED))
+			return
+		if(HAS_TRAIT(owner, TRAIT_RESTRAINED))
+			to_chat(owner, "<span class='warning'>You can't get [V]'s door open while you're restrained.</span>")
+			return
+
 		if(V.driver == owner)
 			V.driver = null
 		if(owner in V.passengers)
@@ -475,17 +457,19 @@ SUBSYSTEM_DEF(carpool)
 		owner.forceMove(V.loc)
 
 		var/list/exit_side = list(
-			SIMPLIFY_DEGREES(V.movement_vector + 90),
-			SIMPLIFY_DEGREES(V.movement_vector - 90)
+			SIMPLIFY_DEGREES(V.angle_looking + 90),
+			SIMPLIFY_DEGREES(V.angle_looking - 90)
 		)
 		for(var/angle in exit_side)
 			if(get_step(owner, angle2dir(angle)).density)
 				exit_side.Remove(angle)
+
 		var/list/exit_alt = GLOB.alldirs.Copy()
 		for(var/dir in exit_alt)
 			if(get_step(owner, dir).density)
 				exit_alt.Remove(dir)
-		if(length(exit_side))
+
+		if(length(exit_side)) //pick a direction to move out of the car to, preferably the car's side
 			owner.Move(get_step(owner, angle2dir(pick(exit_side))))
 		else if(length(exit_alt))
 			owner.Move(get_step(owner, exit_alt))
@@ -501,31 +485,32 @@ SUBSYSTEM_DEF(carpool)
 
 /mob/living/carbon/human/MouseDrop(atom/over_object)
 	. = ..()
-	if(istype(over_object, /obj/vampire_car) && get_dist(src, over_object) < 2)
+	if(istype(over_object, /obj/vampire_car) && get_dist(usr, src) < 2 && get_dist(usr, over_object) < 2)
 		var/obj/vampire_car/V = over_object
 
 		if(V.locked)
 			to_chat(src, "<span class='warning'>[V] is locked.</span>")
 			return
-
 		if(V.driver && (length(V.passengers) >= V.max_passengers))
 			to_chat(src, "<span class='warning'>There's no space left for you in [V].")
 			return
+		if(V.speed_magnitude > 24 || HAS_TRAIT(usr, TRAIT_INCAPACITATED) || HAS_TRAIT(usr, TRAIT_RESTRAINED))
+			return
 
-		visible_message("<span class='notice'>[src] begins entering [V]...</span>", \
-			"<span class='notice'>You begin entering [V]...</span>")
-		if(do_mob(src, over_object, 1 SECONDS))
+		if(usr != src)
+			visible_message("<span class='notice'>[usr] begins forcing [src] into [V]...</span>", \
+				"<span class='notice'>You begin forcing [src] into [V]...</span>")
+		else
+			visible_message("<span class='notice'>[src] begins entering [V]...</span>", \
+				"<span class='notice'>You begin entering [V]...</span>")
+		if(do_mob(usr, src, 0.5 SECONDS))
 			if(!V.driver)
 				forceMove(over_object)
 				V.driver = src
 				var/datum/action/carr/exit_car/E = new()
 				E.Grant(src)
-				var/datum/action/carr/fari_vrubi/F = new()
-				F.Grant(src)
 				var/datum/action/carr/engine/N = new()
 				N.Grant(src)
-				var/datum/action/carr/stage/S = new()
-				S.Grant(src)
 				var/datum/action/carr/beep/B = new()
 				B.Grant(src)
 				var/datum/action/carr/baggage/G = new()
@@ -539,72 +524,6 @@ SUBSYSTEM_DEF(carpool)
 				"<span class='notice'>You enter [V].</span>")
 			playsound(V, 'code/modules/wod13/sounds/door.ogg', 50, TRUE)
 			return
-		else
-			to_chat(src, "<span class='warning'>You fail to enter [V].")
-			return
-
-/obj/vampire_car/Bump(atom/A)
-	if(!A)
-		return
-	var/prev_speed = round(abs(speed_in_pixels)/8)
-	if(!prev_speed)
-		return
-
-	if(istype(A, /mob/living))
-		var/mob/living/hit_mob = A
-		switch(hit_mob.mob_size)
-			if(MOB_SIZE_HUGE) 	//gangrel warforms, werewolves, bears, ppl with fortitude
-				playsound(src, 'code/modules/wod13/sounds/bump.ogg', 75, TRUE)
-				speed_in_pixels = 0
-				impact_delay = world.time
-				hit_mob.Paralyze(1 SECONDS)
-			if(MOB_SIZE_LARGE)	//ppl with fat bodytype
-				playsound(src, 'code/modules/wod13/sounds/bump.ogg', 60, TRUE)
-				speed_in_pixels = round(speed_in_pixels * 0.35)
-				hit_mob.Knockdown(1 SECONDS)
-			if(MOB_SIZE_SMALL)	//small animals
-				playsound(src, 'code/modules/wod13/sounds/bump.ogg', 40, TRUE)
-				speed_in_pixels = round(speed_in_pixels * 0.75)
-				hit_mob.Knockdown(1 SECONDS)
-			else				//everything else
-				playsound(src, 'code/modules/wod13/sounds/bump.ogg', 50, TRUE)
-				speed_in_pixels = round(speed_in_pixels * 0.5)
-				hit_mob.Knockdown(1 SECONDS)
-	else
-		playsound(src, 'code/modules/wod13/sounds/bump.ogg', 75, TRUE)
-		speed_in_pixels = 0
-		impact_delay = world.time
-
-	if(driver && istype(A, /mob/living/carbon/human/npc))
-		var/mob/living/carbon/human/npc/NPC = A
-		NPC.Aggro(driver, TRUE)
-
-	last_pos["x_pix"] = 0
-	last_pos["y_pix"] = 0
-	for(var/mob/living/L in src)
-		if(L)
-			if(L.client)
-				L.client.pixel_x = 0
-				L.client.pixel_y = 0
-	if(istype(A, /mob/living))
-		var/mob/living/L = A
-		var/dam2 = prev_speed
-		if(!HAS_TRAIT(L, TRAIT_TOUGH_FLESH))
-			dam2 = dam2*2
-		L.apply_damage(dam2, BRUTE, BODY_ZONE_CHEST)
-		var/dam = prev_speed
-		if(driver)
-			if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
-				dam = round(dam/2)
-		get_damage(dam)
-	else
-		var/dam = prev_speed
-		if(driver)
-			if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
-				dam = round(dam/2)
-			driver.apply_damage(prev_speed, BRUTE, BODY_ZONE_CHEST)
-		get_damage(dam)
-	return
 
 /obj/vampire_car/retro
 	icon_state = "1"
@@ -686,22 +605,8 @@ SUBSYSTEM_DEF(carpool)
 	var/color_blue = FALSE
 	var/last_color_change = 0
 
-/obj/vampire_car/police/handle_caring()
-	if(fari_on)
-		if(last_color_change+10 <= world.time)
-			last_color_change = world.time
-			if(color_blue)
-				color_blue = FALSE
-				set_light(0)
-				set_light(4, 6, "#ff0000")
-			else
-				color_blue = TRUE
-				set_light(0)
-				set_light(4, 6, "#0000ff")
-	else
-		if(last_color_change+10 <= world.time)
-			last_color_change = world.time
-			set_light(0)
+/obj/vampire_car/police/running()
+	//im sorry
 	..()
 
 /obj/vampire_car/taxi
@@ -735,296 +640,229 @@ SUBSYSTEM_DEF(carpool)
 	access = "clinic"
 	baggage_limit = 60
 
-/proc/get_dist_in_pixels(var/pixel_starts_x, var/pixel_starts_y, var/pixel_ends_x, var/pixel_ends_y)
-	var/total_x = abs(pixel_starts_x-pixel_ends_x)
-	var/total_y = abs(pixel_starts_y-pixel_ends_y)
-	return round(sqrt(total_x*total_x + total_y*total_y))
-
-/proc/get_angle_raw(start_x, start_y, start_pixel_x, start_pixel_y, end_x, end_y, end_pixel_x, end_pixel_y)
-	var/dy = (world.icon_size * end_y + end_pixel_y) - (world.icon_size * start_y + start_pixel_y)
-	var/dx = (world.icon_size * end_x + end_pixel_x) - (world.icon_size * start_x + start_pixel_x)
-	if(!dy)
-		return (dx >= 0) ? 90 : 270
-	. = arctan(dx/dy)
-	if(dy < 0)
-		. += 180
-	else if(dx < 0)
-		. += 360
-
-/proc/get_angle_diff(var/angle_a, var/angle_b)
-	return ((angle_b - angle_a) + 180) % 360 - 180;
-
-/obj/vampire_car
-	var/movement_vector = 0		//0-359 degrees
-	var/speed_in_pixels = 0		// 16 pixels (turf is 2x2m) = 1 meter per 1 SECOND (process fire). Minus equals to reverse, max should be 444
-	var/last_pos = list("x" = 0, "y" = 0, "x_pix" = 0, "y_pix" = 0, "x_frwd" = 0, "y_frwd" = 0)
-	var/impact_delay = 0
-	glide_size = 96
-
 /obj/vampire_car/Initialize()
 	. = ..()
-	Fari = new (src)
-	Fari.icon = 'icons/effects/light_overlays/light_cone_car.dmi'
-	Fari.icon_state = "light"
-	Fari.pixel_x = -64
-	Fari.pixel_y = -64
-	Fari.layer = O_LIGHTING_VISUAL_LAYER
-	Fari.plane = O_LIGHTING_VISUAL_PLANE
-	Fari.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-	Fari.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-//	Fari.vis_flags = NONE
-	Fari.alpha = 110
-	gas = rand(100, 1000)
+
 	GLOB.car_list += src
-	last_pos["x"] = x
-	last_pos["y"] = y
-//	last_pos["x_pix"] = 32
-//	last_pos["y_pix"] = 32
-	switch(dir)
-		if(SOUTH)
-			movement_vector = 180
-		if(EAST)
-			movement_vector = 90
-		if(WEST)
-			movement_vector = 270
+	angle_looking = dir2angle(dir)
+	gas = rand(850, 1000)
+
 	add_overlay(image(icon = src.icon, icon_state = src.icon_state, pixel_x = -32, pixel_y = -32))
 	icon_state = "empty"
 
-/turf
-	var/list/unpassable = list()
+/obj/vampire_car/relaymove(mob/living/carbon/human/driver, movement_dir) //fires 5 times for every call to running()
+	if(driver.IsUnconscious() \
+		|| HAS_TRAIT(driver, TRAIT_INCAPACITATED) \
+		|| HAS_TRAIT(driver, TRAIT_RESTRAINED)
+	)
+		return
 
-/turf/Initialize()
-	. = ..()
-	if(density)
-		unpassable += src
+	var/delta_angle = 0
+	if(movement_dir & EAST)
+		delta_angle = min(abs(speed_magnitude) / 15, steering)
+	if(movement_dir & WEST)
+		delta_angle = -min(abs(speed_magnitude) / 15, steering)
+	angle_looking = SIMPLIFY_DEGREES(angle_looking + delta_angle)
 
-/atom/movable/Initialize()
-	. = ..()
-	if(density && !isitem(src))
-		if(isturf(get_turf(src)))
-			var/turf/T = get_turf(src)
-			T.unpassable += src
+	//TODO: randomly swerve if our driver is drunk
 
-/atom/movable/Destroy()
-	var/turf/T = get_turf(src)
-	if(T)
-		T.unpassable -= src
-	. = ..()
+	//at max turn speed, snap to nearest cardinal if our angle increment > difference to a cardinal direction
+	var/nearest_cardinal = round(SIMPLIFY_DEGREES(angle_looking + 45) / 90) * 90
+	if(abs(delta_angle) == steering && abs(closer_angle_difference(angle_looking, nearest_cardinal)) < steering)
+		angle_looking = nearest_cardinal
+	handle_rotation()
 
-/turf/Exited(atom/movable/AM, atom/newLoc)
-	. = ..()
-	unpassable -= AM
-	if(AM.density && !isitem(AM))
-		if(isturf(newLoc))
-			var/turf/T = newLoc
-			T.unpassable += AM
+	if(movement_dir & NORTH && on)
+		playsound(src, 'code/modules/wod13/sounds/drive.ogg', 10, FALSE)
+		gas -= 0.02
+		accel_x = round(sin(angle_looking) * speed)
+		accel_y = round(cos(angle_looking) * speed)
+		reverse = FALSE
+	if(movement_dir & SOUTH && on)
+		playsound(src, 'code/modules/wod13/sounds/stopping.ogg', 10, FALSE)
+		var/angle_behind = SIMPLIFY_DEGREES(angle_looking + 180)
+		gas -= 0.005
+		accel_x = round(sin(angle_behind) * speed)
+		accel_y = round(cos(angle_behind) * speed)
+		reverse = TRUE
 
-/mob/living/death(gibbed)
-	. = ..()
-	var/turf/T = get_turf(src)
-	if(T)
-		T.unpassable -= src
-
-/obj/vampire_car/setDir(newdir)
-	. = ..()
-	apply_vector_angle()
-
-/obj/vampire_car/Moved(atom/OldLoc, Dir)
-	. = ..()
-	last_pos["x"] = x
-	last_pos["y"] = y
-
-/obj/vampire_car/proc/handle_caring()
-	speed_in_pixels = max(speed_in_pixels, -64)
-	var/used_vector = movement_vector
-	var/used_speed = speed_in_pixels
+/obj/vampire_car/proc/running()
+	if(reverse)
+		speed_x = clamp(speed_x + accel_x, -top_speed_back, top_speed_back) * 0.8
+		speed_y = clamp(speed_y + accel_y, -top_speed_back, top_speed_back) * 0.8
+	else
+		speed_x = clamp(speed_x + accel_x, -top_speed, top_speed) * 0.8
+		speed_y = clamp(speed_y + accel_y, -top_speed, top_speed) * 0.8
+	speed_x = SIGN(speed_x) * round(max(abs(speed_x) - 2, 0))
+	speed_y = SIGN(speed_y) * round(max(abs(speed_y) - 2, 0))
+	speed_magnitude = sqrt(speed_x ** 2 + speed_y ** 2)
+	accel_x = 0
+	accel_y = 0
 
 	if(gas <= 0)
 		on = FALSE
+		playsound(src, 'code/modules/wod13/sounds/stop.ogg', 50, TRUE)
 		set_light(0)
-		if(driver)
-			to_chat(driver, "<span class='warning'>No fuel in the tank!</span>")
-	if(on)
-		if(last_vzhzh+10 < world.time)
-			playsound(src, 'code/modules/wod13/sounds/work.ogg', 25, FALSE)
-			last_vzhzh = world.time
-	if(!on || !driver)
-		speed_in_pixels = (speed_in_pixels < 0 ? -1 : 1) * max(abs(speed_in_pixels) - 15, 0)
+	if(on && COOLDOWN_FINISHED(src, sfx))
+		playsound(src, 'code/modules/wod13/sounds/work.ogg', 25, FALSE)
+		COOLDOWN_START(src, sfx, 1 SECONDS)
 
-	forceMove(locate(last_pos["x"], last_pos["y"], z))
-	pixel_x = last_pos["x_pix"]
-	pixel_y = last_pos["y_pix"]
-	var/moved_x = round(sin(used_vector)*used_speed)
-	var/moved_y = round(cos(used_vector)*used_speed)
-	if(used_speed != 0)
-		var/true_movement_angle = used_vector
-		if(used_speed < 0)
-			true_movement_angle = SIMPLIFY_DEGREES(used_vector+180)
-		var/turf/check_turf = locate( \
-			x + (moved_x < 0 ? -1 : 1) * round(max(abs(moved_x), 36) / 32), \
-			y + (moved_y < 0 ? -1 : 1) * round(max(abs(moved_y), 36) / 32), \
-			z
-		)
-		var/turf/check_turf_ahead = locate( \
-			x + (moved_x < 0 ? -1 : 1) * round(max(abs(moved_x), 18) / 16), \
-			y + (moved_y < 0 ? -1 : 1) * round(max(abs(moved_y), 18) / 16), \
-			z
-		)
-		for(var/turf/T in get_line(src, check_turf_ahead))
-			if(length(T.unpassable))
-				for(var/contact in T.unpassable)
-					//make NPC move out of car's way
-					if(istype(contact, /mob/living/carbon/human/npc))
-						var/mob/living/carbon/human/npc/NPC = contact
-						if(COOLDOWN_FINISHED(NPC, car_dodge) && !HAS_TRAIT(NPC, TRAIT_INCAPACITATED))
-							var/list/dodge_direction = list(
-								SIMPLIFY_DEGREES(movement_vector + 45),
-								SIMPLIFY_DEGREES(movement_vector - 45),
-								SIMPLIFY_DEGREES(movement_vector + 90),
-								SIMPLIFY_DEGREES(movement_vector - 90),
-							)
-							for(var/angle in dodge_direction)
-								if(get_step(NPC, angle2dir(angle)).density)
-									dodge_direction.Remove(angle)
-							if(length(dodge_direction))
-								step(NPC, angle2dir(pick(dodge_direction)), NPC.total_multiplicative_slowdown())
-								COOLDOWN_START(NPC, car_dodge, 2 SECONDS)
-								if(prob(50))
-									NPC.RealisticSay(pick(NPC.socialrole.car_dodged))
-
-		var/turf/hit_turf
-		var/list/in_line = get_line(src, check_turf)
-		for(var/turf/T in in_line)
-			if(T)
-				var/dist_to_hit = get_dist_in_pixels(last_pos["x"]*32+last_pos["x_pix"], last_pos["y"]*32+last_pos["y_pix"], T.x*32, T.y*32)
-				if(dist_to_hit <= used_speed)
-					var/list/stuff = T.unpassable.Copy()
-					stuff -= src
-					for(var/contact in stuff)
-						if(istype(contact, /mob/living/carbon/human/npc))
-							var/mob/living/carbon/human/npc/NPC = contact
-							if(NPC.IsKnockdown())
-								stuff -= contact
-					if(length(stuff))
-						if(!hit_turf || dist_to_hit < get_dist_in_pixels(last_pos["x"]*32+last_pos["x_pix"], last_pos["y"]*32+last_pos["y_pix"], hit_turf.x*32, hit_turf.y*32))
-							hit_turf = T
-		if(hit_turf)
-			Bump(pick(hit_turf.unpassable))
-			// to_chat(world, "I can't pass that [hit_turf] at [hit_turf.x] x [hit_turf.y] cause of [pick(hit_turf.unpassable)] FUCK")
-			// var/bearing = get_angle_raw(x, y, pixel_x, pixel_y, hit_turf.x, hit_turf.y, 0, 0)
-			var/actual_distance = get_dist_in_pixels(last_pos["x"]*32+last_pos["x_pix"], last_pos["y"]*32+last_pos["y_pix"], hit_turf.x*32, hit_turf.y*32)-32
-			moved_x = round(sin(true_movement_angle)*actual_distance)
-			moved_y = round(cos(true_movement_angle)*actual_distance)
-			if(last_pos["x"]*32+last_pos["x_pix"] > hit_turf.x*32)
-				moved_x = max((hit_turf.x*32+32)-(last_pos["x"]*32+last_pos["x_pix"]), moved_x)
-			if(last_pos["x"]*32+last_pos["x_pix"] < hit_turf.x*32)
-				moved_x = min((hit_turf.x*32-32)-(last_pos["x"]*32+last_pos["x_pix"]), moved_x)
-			if(last_pos["y"]*32+last_pos["y_pix"] > hit_turf.y*32)
-				moved_y = max((hit_turf.y*32+32)-(last_pos["y"]*32+last_pos["y_pix"]), moved_y)
-			if(last_pos["y"]*32+last_pos["y_pix"] < hit_turf.y*32)
-				moved_y = min((hit_turf.y*32-32)-(last_pos["y"]*32+last_pos["y_pix"]), moved_y)
-	var/turf/west_turf = get_step(src, WEST)
-	if(length(west_turf.unpassable))
-		moved_x = max(-8-last_pos["x_pix"], moved_x)
-	var/turf/east_turf = get_step(src, EAST)
-	if(length(east_turf.unpassable))
-		moved_x = min(8-last_pos["x_pix"], moved_x)
-	var/turf/north_turf = get_step(src, NORTH)
-	if(length(north_turf.unpassable))
-		moved_y = min(8-last_pos["y_pix"], moved_y)
-	var/turf/south_turf = get_step(src, SOUTH)
-	if(length(south_turf.unpassable))
-		moved_y = max(-8-last_pos["y_pix"], moved_y)
-
-	for(var/mob/living/rider in src)
-		if(rider)
-			if(rider.client)
-				rider.client.pixel_x = last_pos["x_frwd"]
-				rider.client.pixel_y = last_pos["y_frwd"]
-				animate(rider.client, \
-					pixel_x = last_pos["x_pix"] + moved_x * 2, \
-					pixel_y = last_pos["y_pix"] + moved_y * 2, \
-					SScarpool.wait, 1)
-
-	animate(src, pixel_x = last_pos["x_pix"]+moved_x, pixel_y = last_pos["y_pix"]+moved_y, SScarpool.wait, 1)
-
-	last_pos["x_frwd"] = last_pos["x_pix"] + moved_x * 2
-	last_pos["y_frwd"] = last_pos["y_pix"] + moved_y * 2
-	last_pos["x_pix"] = last_pos["x_pix"] + moved_x
-	last_pos["y_pix"] = last_pos["y_pix"] + moved_y
-
-	var/x_add = (last_pos["x_pix"] < 0 ? -1 : 1) * round((abs(last_pos["x_pix"]) + 16) / 32)
-	var/y_add = (last_pos["y_pix"] < 0 ? -1 : 1) * round((abs(last_pos["y_pix"]) + 16) / 32)
-
-	last_pos["x_frwd"] -= x_add * 32
-	last_pos["y_frwd"] -= y_add * 32
-	last_pos["x_pix"] -= x_add * 32
-	last_pos["y_pix"] -= y_add * 32
-
-	last_pos["x"] = clamp(last_pos["x"] + x_add, 1, world.maxx)
-	last_pos["y"] = clamp(last_pos["y"] + y_add, 1, world.maxy)
-
-/obj/vampire_car/relaymove(mob/living/carbon/human/driver, direct)
-	if(world.time-impact_delay < 20)
-		return
-	if(driver.IsUnconscious() || HAS_TRAIT(driver, TRAIT_INCAPACITATED) || HAS_TRAIT(driver, TRAIT_RESTRAINED))
-		return
-	var/turn_speed = min(abs(speed_in_pixels) / 10, 3)
-	switch(direct)
-		if(NORTH)
-			controlling(1, 0)
-		if(NORTHEAST)
-			controlling(1, turn_speed)
-		if(NORTHWEST)
-			controlling(1, -turn_speed)
-		if(SOUTH)
-			controlling(-1, 0)
-		if(SOUTHEAST)
-			controlling(-1, turn_speed)
-		if(SOUTHWEST)
-			controlling(-1, -turn_speed)
-		if(EAST)
-			controlling(0, turn_speed)
-		if(WEST)
-			controlling(0, -turn_speed)
-
-/obj/vampire_car/proc/controlling(var/adjusting_speed, var/adjusting_turn)
-	var/drift = 1
-	if(driver)
-		if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
-			drift = 2
-	var/adjust_true = adjusting_turn
-	if(speed_in_pixels != 0)
-		movement_vector = SIMPLIFY_DEGREES(movement_vector+adjust_true)
-		apply_vector_angle()
-	if(adjusting_speed)
-		if(on)
-			if(adjusting_speed > 0 && speed_in_pixels <= 0)
-				playsound(src, 'code/modules/wod13/sounds/stopping.ogg', 10, FALSE)
-				speed_in_pixels = speed_in_pixels+adjusting_speed*3
-				movement_vector = SIMPLIFY_DEGREES(movement_vector+adjust_true*drift)
-			else if(adjusting_speed < 0 && speed_in_pixels > 0)
-				playsound(src, 'code/modules/wod13/sounds/stopping.ogg', 10, FALSE)
-				speed_in_pixels = speed_in_pixels+adjusting_speed*3
-				movement_vector = SIMPLIFY_DEGREES(movement_vector+adjust_true*drift)
-			else
-				speed_in_pixels = min(stage*64, max(-stage*64, speed_in_pixels+adjusting_speed*stage))
-				playsound(src, 'code/modules/wod13/sounds/drive.ogg', 10, FALSE)
+	//handle drifting: if we're not drifting, apply centripetal force
+	var/momentum_angle = ATAN2(speed_y, speed_x)
+	var/delta_angle =		 closer_angle_difference(angle_looking, momentum_angle)
+	var/delta_angle_behind = closer_angle_difference(SIMPLIFY_DEGREES(angle_looking + 180), momentum_angle)
+	var/line_angle = abs(delta_angle) < abs(delta_angle_behind) ? angle_looking : SIMPLIFY_DEGREES(angle_looking + 180)
+	delta_angle = abs(delta_angle) < abs(delta_angle_behind) ? delta_angle : delta_angle_behind
+	if(drifting)
+		playsound(src, 'code/modules/wod13/sounds/stopping.ogg', min(speed_magnitude / 4, 20), FALSE)
+		if(delta_angle < 20 || speed_magnitude < 32)
+			drifting = FALSE
+			steering = 3
+	else if(delta_angle && speed_magnitude)
+		if(closer_angle_difference(ATAN2(accel_x, accel_y), momentum_angle) > 67.5)
+			drifting = TRUE
+			steering = 6
 		else
-			if(adjusting_speed > 0 && speed_in_pixels < 0)
-				playsound(src, 'code/modules/wod13/sounds/stopping.ogg', 10, FALSE)
-				speed_in_pixels = min(0, speed_in_pixels+adjusting_speed*3)
-				movement_vector = SIMPLIFY_DEGREES(movement_vector+adjust_true*drift)
-			else if(adjusting_speed < 0 && speed_in_pixels > 0)
-				playsound(src, 'code/modules/wod13/sounds/stopping.ogg', 10, FALSE)
-				speed_in_pixels = max(0, speed_in_pixels+adjusting_speed*3)
-				movement_vector = SIMPLIFY_DEGREES(movement_vector+adjust_true*drift)
+			var/turn_radius = (360 / abs(delta_angle)) / (2 * PI)
+			var/centripetal_force = round(speed_magnitude / turn_radius) * 0.9
+			var/inwards = SIMPLIFY_DEGREES(line_angle + 90 * SIGN(delta_angle))
+			speed_x += round(sin(inwards) * centripetal_force)
+			speed_y += round(cos(inwards) * centripetal_force)
 
-/obj/vampire_car/proc/apply_vector_angle()
-	var/turn_state = round(SIMPLIFY_DEGREES(movement_vector + 22.5) / 45)
+	//make NPCs dodge out of the way
+	var/turf/check_ahead = locate( \
+		x + SIGN(speed_x) * round(max(abs(speed_x), 18) / 16), \
+		y + SIGN(speed_y) * round(max(abs(speed_y), 18) / 16), \
+		z)
+	for(var/turf/turf in get_line(src, check_ahead))
+		for(var/contact in turf.contents)
+			if(istype(contact, /mob/living/carbon/human/npc))
+				var/mob/living/carbon/human/npc/NPC = contact
+				if(COOLDOWN_FINISHED(NPC, car_dodge) && !HAS_TRAIT(NPC, TRAIT_INCAPACITATED))
+					var/list/dodge_direction = list(
+						SIMPLIFY_DEGREES(angle_looking + 45),
+						SIMPLIFY_DEGREES(angle_looking - 45),
+						SIMPLIFY_DEGREES(angle_looking + 90),
+						SIMPLIFY_DEGREES(angle_looking - 90),
+					)
+					for(var/angle in dodge_direction)
+						if(get_step(NPC, angle2dir(angle)).density)
+							dodge_direction.Remove(angle)
+					if(length(dodge_direction))
+						step(NPC, angle2dir(pick(dodge_direction)), NPC.total_multiplicative_slowdown())
+						COOLDOWN_START(NPC, car_dodge, 2 SECONDS)
+						if(prob(50))
+							NPC.RealisticSay(pick(NPC.socialrole.car_dodged))
+
+	new_pix_x = pixel_x + speed_x //we'll call animate() later to update our pixel_x to this
+	new_pix_y = pixel_y + speed_y
+
+	//if our sprite is >16 pixels offcenter, move accross the world
+	var/delta_x = (new_pix_x < 0 ? -1 : 1) * round((abs(new_pix_x) + 16) / 32) //amount of turfs we will cross
+	var/delta_y = (new_pix_y < 0 ? -1 : 1) * round((abs(new_pix_y) + 16) / 32)
+	var/last_x = x
+	var/last_y = y
+	if(delta_x || delta_y)
+		var/horizontal = new_pix_x < 0 ? WEST : EAST
+		var/vertical = new_pix_y < 0 ? SOUTH : NORTH
+		if(abs(delta_x) > abs(delta_y))
+			bresenham_move(abs(delta_x), abs(delta_y), horizontal, vertical)
+		else
+			bresenham_move(abs(delta_y), abs(delta_x), vertical, horizontal)
+		delta_x = x - last_x
+		delta_y = y - last_y
+		pixel_x -= delta_x * 32
+		pixel_y -= delta_y * 32
+		new_pix_x -= delta_x * 32
+		new_pix_y -= delta_y * 32
+
+	//vfx
+	for(var/mob/living/rider in src)
+		if(rider && rider.client)
+			rider.client.pixel_x = pixel_x
+			rider.client.pixel_y = pixel_y
+			animate(rider.client,
+				pixel_x = new_pix_x,
+				pixel_y = new_pix_y,
+				SScarpool.wait, 1)
+	animate(src,
+		pixel_x = new_pix_x,
+		pixel_y = new_pix_y,
+		SScarpool.wait, 1)
+
+//move in a straight diagonal line
+/obj/vampire_car/proc/bresenham_move(dx, dy, h, v)
+	var/margin = 2 * dy - dx
+	for(var/i=0; i<dx; i++)
+		if(margin >= 0)
+			if(!Move(get_step(src, v), v)) return
+			margin -= 2 * dx
+		margin += 2 * dy
+		if(!Move(get_step(src, h), h)) return
+
+/obj/vampire_car/Bump(atom/contact)
+	if(istype(contact, /mob/living))
+		var/mob/living/hit_mob = contact
+		switch(hit_mob.mob_size)
+			if(MOB_SIZE_HUGE) 	//gangrel warforms, werewolves, bears, ppl with fortitude
+				playsound(src, 'code/modules/wod13/sounds/bump.ogg', 75, TRUE)
+				speed_x = 0
+				speed_y = 0
+				driver.Paralyze(1 SECONDS)
+				hit_mob.Paralyze(1 SECONDS)
+			if(MOB_SIZE_LARGE)	//gargoyles, other heavier creatures
+				playsound(src, 'code/modules/wod13/sounds/bump.ogg', 60, TRUE)
+				speed_x *= 0.35
+				speed_y *= 0.35
+				hit_mob.Knockdown(1 SECONDS)
+			if(MOB_SIZE_SMALL)	//small animals
+				playsound(src, 'code/modules/wod13/sounds/bump.ogg', 40, TRUE)
+				speed_x *= 0.75
+				speed_y *= 0.75
+				hit_mob.Knockdown(1 SECONDS)
+			else
+				playsound(src, 'code/modules/wod13/sounds/bump.ogg', 50, TRUE)
+				speed_x *= 0.5
+				speed_y *= 0.5
+				hit_mob.Knockdown(1 SECONDS)
+	else
+		playsound(src, 'code/modules/wod13/sounds/bump.ogg', 75, TRUE)
+		speed_x = 0
+		speed_y = 0
+		driver.Paralyze(1 SECONDS)
+
+	if(driver && istype(contact, /mob/living/carbon/human/npc))
+		var/mob/living/carbon/human/npc/NPC = contact
+		NPC.Aggro(driver, TRUE)
+
+	new_pix_x = 0
+	new_pix_y = 0
+
+	if(istype(contact, /mob/living))
+		var/mob/living/L = contact
+		var/dam2 = speed_magnitude / 8
+		if(!HAS_TRAIT(L, TRAIT_TOUGH_FLESH))
+			dam2 = dam2*2
+		L.apply_damage(dam2, BRUTE, BODY_ZONE_CHEST)
+		var/dam = speed_magnitude / 8
+		if(driver)
+			if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
+				dam = round(dam/2)
+		get_damage(dam)
+	else
+		var/dam = speed_magnitude / 8
+		if(driver)
+			if(HAS_TRAIT(driver, TRAIT_EXP_DRIVER))
+				dam = round(dam/2)
+			driver.apply_damage(speed_magnitude / 8, BRUTE, BODY_ZONE_CHEST)
+		get_damage(dam)
+	return
+
+/obj/vampire_car/proc/handle_rotation()
+	var/turn_state = round(SIMPLIFY_DEGREES(angle_looking + 22.5) / 45)
 	dir = GLOB.modulo_angle_to_dir[turn_state + 1]
-	var/minus_angle = turn_state * 45
+	transform = turn(matrix(), angle_looking - turn_state * 45)
 
-	var/matrix/M = matrix()
-	M.Turn(movement_vector - minus_angle)
-	transform = M
+/obj/vampire_car/setDir(newdir)
+	. = ..()
+	handle_rotation()
