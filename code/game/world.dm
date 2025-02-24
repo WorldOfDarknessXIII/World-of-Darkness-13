@@ -358,7 +358,7 @@ GLOBAL_VAR(restart_counter)
 	SStimer?.reset_buckets()
 
 /world/proc/convert_saves_to_json(path_to_save)
-	/// Determine the path variables to use based on our host OS
+	// Determine the path variables to use based on our host OS
 	var/regex/trimmer
 	var/shell_command
 	var/path_char
@@ -371,7 +371,7 @@ GLOBAL_VAR(restart_counter)
 		shell_command = "dir /A-D /b /s data\\player_saves\\"
 		path_char = "\\"
 	var/untrimmed_file_list = splittext(world.shelleo("[shell_command]")[2], "\n")
-	/// Just in case the whole path gets returned instead of the relative
+	// Just in case the whole path gets returned instead of the relative
 	var/list/file_list = list()
 	for(var/file_path in untrimmed_file_list)
 		trimmer.Find(file_path)
