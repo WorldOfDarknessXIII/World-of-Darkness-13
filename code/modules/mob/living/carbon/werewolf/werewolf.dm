@@ -188,8 +188,8 @@
 	hud_type = /datum/hud/werewolf
 	melee_damage_lower = 35
 	melee_damage_upper = 65
-	health = 250
-	maxHealth = 250
+	health = 450
+	maxHealth = 450
 //	speed = -1  doesn't work on carbons
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
@@ -206,10 +206,10 @@
 		/obj/item/bodypart/l_leg,
 		)
 
-	werewolf_armor = 30
+	werewolf_armor = 50
 
 /datum/movespeed_modifier/crinosform
-	multiplicative_slowdown = -0.2
+	multiplicative_slowdown = -0.6
 
 /datum/movespeed_modifier/silver_slowdown
 	multiplicative_slowdown = 0.3
