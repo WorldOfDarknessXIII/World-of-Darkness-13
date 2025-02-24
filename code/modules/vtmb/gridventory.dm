@@ -544,7 +544,7 @@ VENTORY!
 	return TRUE
 
 /datum/component/storage/proc/generate_bound_underlay(grid_width = 32, grid_height = 32)
-	var/mutable_appearance/bound_underlay = mutable_appearance(icon = 'code/modules/wod13/UI/storage.dmi')
+	var/mutable_appearance/bound_underlay = mutable_appearance(icon = 'icons/wod13/UI/storage.dmi')
 	var/static/list/scale_both = list("block_under")
 	var/static/list/scale_x_states = list("up", "down")
 	var/static/list/scale_y_states = list("left", "right")
@@ -763,7 +763,7 @@ VENTORY!
 	return TRUE
 
 /atom/movable/screen/close
-	icon = 'code/modules/wod13/UI/storage.dmi'
+	icon = 'icons/wod13/UI/storage.dmi'
 	icon_state = "close"
 	var/locked = TRUE
 
@@ -788,7 +788,7 @@ VENTORY!
 		storage_master.hide_from(usr)
 
 /atom/movable/screen/storage
-	icon = 'code/modules/wod13/UI/storage.dmi'
+	icon = 'icons/wod13/UI/storage.dmi'
 	icon_state = "background"
 	plane = HUD_PLANE
 	layer = 1
@@ -850,7 +850,7 @@ VENTORY!
 	usr.client.screen |= hovering
 
 /atom/movable/screen/storage_hover
-	icon = 'code/modules/wod13/UI/storage.dmi'
+	icon = 'icons/wod13/UI/storage.dmi'
 	icon_state = "white"
 	plane = ABOVE_HUD_PLANE
 	layer = 1

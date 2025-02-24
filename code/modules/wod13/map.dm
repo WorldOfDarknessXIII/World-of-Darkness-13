@@ -1,59 +1,59 @@
 /obj/damap
-	icon = 'code/modules/wod13/map.dmi'
+	icon = 'icons/wod13/map.dmi'
 	icon_state = "map"
 	plane = GAME_PLANE
 	layer = ABOVE_NORMAL_TURF_LAYER
 
 /obj/damap/supply
-	icon = 'code/modules/wod13/disciplines.dmi'
+	icon = 'icons/wod13/disciplines.dmi'
 	icon_state = "supply"
 	plane = GAME_PLANE
 	layer = ABOVE_NORMAL_TURF_LAYER
 
 /obj/damap/church
-	icon = 'code/modules/wod13/disciplines.dmi'
+	icon = 'icons/wod13/disciplines.dmi'
 	icon_state = "church"
 	plane = GAME_PLANE
 	layer = ABOVE_NORMAL_TURF_LAYER
 
 /obj/damap/graveyard
-	icon = 'code/modules/wod13/disciplines.dmi'
+	icon = 'icons/wod13/disciplines.dmi'
 	icon_state = "graveyard"
 	plane = GAME_PLANE
 	layer = ABOVE_NORMAL_TURF_LAYER
 
 /obj/damap/hotel
-	icon = 'code/modules/wod13/disciplines.dmi'
+	icon = 'icons/wod13/disciplines.dmi'
 	icon_state = "hotel"
 	plane = GAME_PLANE
 	layer = ABOVE_NORMAL_TURF_LAYER
 
 /obj/damap/tower
-	icon = 'code/modules/wod13/disciplines.dmi'
+	icon = 'icons/wod13/disciplines.dmi'
 	icon_state = "tower"
 	plane = GAME_PLANE
 	layer = ABOVE_NORMAL_TURF_LAYER
 
 /obj/damap/clean
-	icon = 'code/modules/wod13/disciplines.dmi'
+	icon = 'icons/wod13/disciplines.dmi'
 	icon_state = "clean"
 	plane = GAME_PLANE
 	layer = ABOVE_NORMAL_TURF_LAYER
 
 /obj/damap/theatre
-	icon = 'code/modules/wod13/disciplines.dmi'
+	icon = 'icons/wod13/disciplines.dmi'
 	icon_state = "theatre"
 	plane = GAME_PLANE
 	layer = ABOVE_NORMAL_TURF_LAYER
 
 /obj/damap/bar
-	icon = 'code/modules/wod13/disciplines.dmi'
+	icon = 'icons/wod13/disciplines.dmi'
 	icon_state = "bar"
 	plane = GAME_PLANE
 	layer = ABOVE_NORMAL_TURF_LAYER
 
 /obj/damap/hospital
-	icon = 'code/modules/wod13/disciplines.dmi'
+	icon = 'icons/wod13/disciplines.dmi'
 	icon_state = "hospital"
 	plane = GAME_PLANE
 	layer = ABOVE_NORMAL_TURF_LAYER
@@ -61,7 +61,7 @@
 /obj/structure/vampmap
 	name = "\improper map"
 	desc = "Locate yourself now."
-	icon = 'code/modules/wod13/props.dmi'
+	icon = 'icons/wod13/props.dmi'
 	icon_state = "map"
 	plane = GAME_PLANE
 	layer = ABOVE_MOB_LAYER
@@ -90,7 +90,7 @@
 	var/obj/damap/bar/BA = new(user)
 	var/obj/damap/hospital/HS = new(user)
 	var/obj/overlay/AM = new(DAMAP)
-	AM.icon = 'code/modules/wod13/disciplines.dmi'
+	AM.icon = 'icons/wod13/disciplines.dmi'
 	AM.icon_state = "target"
 	AM.layer = ABOVE_HUD_LAYER
 	AM.pixel_x = x-4
@@ -368,13 +368,13 @@
 	name = "Millenium Tower Security ID"
 	id_type_name = "Security ID"
 	desc = "An ID showing propensity for donuts"
-	icon = 'code/modules/wod13/items.dmi'
+	icon = 'icons/wod13/items.dmi'
 	icon_state = "id2"
 	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
-	worn_icon = 'code/modules/wod13/worn.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
+	worn_icon = 'icons/wod13/worn.dmi'
 	worn_icon_state = "id2"
 
 /obj/item/card/id/chunk/AltClick(mob/user)

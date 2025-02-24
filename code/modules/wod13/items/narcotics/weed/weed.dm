@@ -2,8 +2,8 @@
 	name = "leaf"
 	desc = "Green and smelly..."
 	icon_state = "weed"
-	icon = 'code/modules/wod13/items.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/items.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	bite_consumption = 5
 	tastes = list("cat piss" = 4, "weed" = 2)
 	foodtypes = VEGETABLES

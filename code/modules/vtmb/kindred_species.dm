@@ -260,9 +260,9 @@
 	name = "Blood Power"
 	desc = "Use vitae to gain supernatural abilities."
 	button_icon_state = "bloodpower"
-	button_icon = 'code/modules/wod13/UI/actions.dmi'
+	button_icon = 'icons/wod13/UI/actions.dmi'
 	background_icon_state = "discipline"
-	icon_icon = 'code/modules/wod13/UI/actions.dmi'
+	icon_icon = 'icons/wod13/UI/actions.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	vampiric = TRUE
 
@@ -271,11 +271,11 @@
 		if(owner.client)
 			if(owner.client.prefs)
 				if(owner.client.prefs.old_discipline)
-					button_icon = 'code/modules/wod13/disciplines.dmi'
-					icon_icon = 'code/modules/wod13/disciplines.dmi'
+					button_icon = 'icons/wod13/disciplines.dmi'
+					icon_icon = 'icons/wod13/disciplines.dmi'
 				else
-					button_icon = 'code/modules/wod13/UI/actions.dmi'
-					icon_icon = 'code/modules/wod13/UI/actions.dmi'
+					button_icon = 'icons/wod13/UI/actions.dmi'
+					icon_icon = 'icons/wod13/UI/actions.dmi'
 	. = ..()
 
 /datum/action/blood_power/Trigger()
