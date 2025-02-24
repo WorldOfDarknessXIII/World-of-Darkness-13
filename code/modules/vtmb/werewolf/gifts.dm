@@ -471,3 +471,70 @@
 			animate(H, transform = M, time = 1 SECONDS)
 			G.glabro = TRUE
 			H.update_icons()
+
+/datum/action/gift/howling
+	name = "Howl"
+	desc = "The werewolf may send her howl far beyond the normal range of hearing and communicate a single word or concept to all other Garou across the city."
+	button_icon_state = "call_of_the_wyld"
+	rage_req = 1
+	cool_down = 5
+	check_flags = null
+	var/list/howls = list(
+		"attack" = list(
+			"menu" = "Attack",
+			"message" = "A tribe howls a fierce call to attack!"
+		),
+		"retreat" = list(
+			"menu" = "Retreat",
+			"message" = "A tribe howls a warning to retreat!"
+		),
+		"help" = list(
+			"menu" = "Help",
+			"message" = "A tribe howls a desperate plea for help!"
+		),
+		"gather" = list(
+			"menu" = "Gather",
+			"message" = "A tribe howls to gather the pack!"
+		),
+		"victory" = list(
+			"menu" = "Victory",
+			"message" = "A tribe howls in celebration of victory!"
+		),
+		"dying" = list(
+			"menu" = "Dying",
+			"message" = "A tribe howls in pain and despair!"
+		),
+		"mourning" = list(
+			"menu" = "Mourning",
+			"message" = "A tribe howls in deep mourning for the fallen!"
+		)
+	)
+
+/datum/action/gift/howling/Trigger()
+	. = ..()
+	if(allowed_to_proceed)
+		var/mob/living/carbon/C = owner
+		var/list/menu_options = list()
+		for (var/howl_key in howls)
+			menu_options += howls[howl_key]["menu"]
+		menu_options += "Cancel"
+
+		var/choice = input(owner, "Select a howl to use!", "Howl Selection") in menu_options
+		if(choice && choice != "Cancel")
+			var/howl
+			for (var/howl_key in howls)
+				if (howls[howl_key]["menu"] == choice)
+					howl = howls[howl_key]
+					break
+
+			var/message = howl["message"]
+			var/tribe = C.auspice.tribe
+			if (tribe)
+				message = replacetext(message, "tribe", tribe)
+
+			C.emote("howl")
+			playsound(get_turf(C), pick('code/modules/wod13/sounds/awo1.ogg', 'code/modules/wod13/sounds/awo2.ogg'), 100, FALSE)
+			for(var/mob/living/carbon/Garou in GLOB.player_list)
+				if(isgarou(Garou) || iswerewolf(Garou))
+					playsound(get_turf(Garou), pick('code/modules/wod13/sounds/awo1.ogg', 'code/modules/wod13/sounds/awo2.ogg'), 100, FALSE)
+					to_chat(Garou, message, confidential = TRUE)
