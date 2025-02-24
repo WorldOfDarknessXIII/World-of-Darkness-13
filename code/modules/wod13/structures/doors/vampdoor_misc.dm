@@ -60,14 +60,35 @@
 	baseicon = "cam"
 	locked = TRUE
 	lock_id = "anarch"
+	lockpick_difficulty = 8
+
+/obj/structure/vampdoor/anarch_bar
+	icon_state = "cam-1"
+	baseicon = "cam"
+	locked = TRUE
+	lock_id = "anarch"
 	lockpick_difficulty = 10
 
-/obj/structure/vampdoor/bar
+/obj/structure/vampdoor/anarch_secure
+	icon_state = "cam-1"
+	baseicon = "cam"
+	locked = TRUE
+	lock_id = "anarch"
+	lockpick_difficulty = 12
+
+/obj/structure/vampdoor/wood_bar
+	icon_state = "wood-1"
+	baseicon = "wood"
+	locked = FALSE
+	lock_id = "bar"
+	lockpick_difficulty = 10
+
+/obj/structure/vampdoor/baron
 	icon_state = "cam-1"
 	baseicon = "cam"
 	locked = TRUE
 	lock_id = "bar"
-	lockpick_difficulty = 10
+	lockpick_difficulty = 11
 
 /obj/structure/vampdoor/supply
 	icon_state = "cam-1"
