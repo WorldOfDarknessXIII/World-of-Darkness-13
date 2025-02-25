@@ -17,20 +17,6 @@
 			return FALSE
 		AddComponent(/datum/component/pellet_cloud, projectile_type, pellets)
 
-<<<<<<< HEAD
-	if(click_cooldown_override)
-		if((click_cooldown_override > CLICK_CD_RAPID) && HAS_TRAIT(user, TRAIT_GUNFIGHTER))
-			user.changeNext_move(max(CLICK_CD_RAPID, round(click_cooldown_override/2)))
-		else
-			user.changeNext_move(click_cooldown_override)
-	else
-		if(HAS_TRAIT(user, TRAIT_GUNFIGHTER))
-			user.changeNext_move(CLICK_CD_RAPID)
-		else
-			user.changeNext_move(CLICK_CD_RANGE)
-	user.newtonian_move(get_dir(target, user))
-	update_icon()
-=======
 	var/next_delay = click_cooldown_override || CLICK_CD_RANGE
 	if(HAS_TRAIT(user, TRAIT_DOUBLE_TAP))
 		next_delay = round(next_delay * 0.5)
@@ -47,7 +33,6 @@
 
 	SEND_SIGNAL(src, COMSIG_FIRE_CASING, target, user, fired_from, randomspread, spread, zone_override, params, distro, thrown_proj)
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	return TRUE
 
 /obj/item/ammo_casing/proc/tk_firing(mob/living/user, atom/fired_from)
@@ -88,40 +73,10 @@
 		return null
 
 	var/firing_dir
-<<<<<<< HEAD
-	if(BB.firer)
-		firing_dir = BB.firer.dir
-	if(!BB.suppressed && firing_effect_type)
-		var/witness_count
-		for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, usr))
-			if(NEPIC && NEPIC.stat != DEAD)
-				witness_count++
-			if(witness_count > 1)
-				for(var/obj/item/police_radio/P in GLOB.police_radios)
-					P.announce_crime("shooting", get_turf(user))
-				for(var/obj/machinery/p25transceiver/police/radio in GLOB.p25_tranceivers)
-					if(radio.p25_network == "police")
-						radio.announce_crime("shooting", get_turf(src))
-						break
-		var/atom/A = new firing_effect_type(get_turf(src), firing_dir)
-		var/atom/movable/shit = new(A.loc)
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.remove_overlay(FIRING_EFFECT_LAYER)
-			var/mutable_appearance/firing_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "firing", -PROTEAN_LAYER)
-			H.overlays_standing[FIRING_EFFECT_LAYER] = firing_overlay
-			H.apply_overlay(FIRING_EFFECT_LAYER)
-			shit.set_light(3, 2, "#ffedbb")
-//			animate(firing_overlay, alpha = 0, time = 2)
-			spawn(2)
-				H.remove_overlay(FIRING_EFFECT_LAYER)
-				qdel(shit)
-=======
 	if(loaded_projectile.firer)
 		firing_dir = get_dir(fired_from, target)
 	if(!loaded_projectile.suppressed && firing_effect_type && !tk_firing(user, fired_from))
 		new firing_effect_type(get_turf(src), firing_dir)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	var/direct_target
 	if(target && curloc.Adjacent(targloc, target=targloc, mover=src)) //if the target is right on our location or adjacent (including diagonally if reachable) we'll skip the travelling code in the proj's fire()

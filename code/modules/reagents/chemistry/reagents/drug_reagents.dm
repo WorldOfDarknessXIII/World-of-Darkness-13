@@ -150,48 +150,6 @@
 			if(affected_mob.adjustBruteLoss(50 * REM, updating_health = FALSE, required_bodytype = affected_bodytype)) // holy shit your skin just FELL THE FUCK OFF
 				return UPDATE_MOB_HEALTH
 
-<<<<<<< HEAD
-/datum/reagent/drug/krokodil/overdose_process(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25*REM)
-	M.adjustToxLoss(0.25*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/drug/krokodil/addiction_act_stage1(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
-	M.adjustToxLoss(2*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/drug/krokodil/addiction_act_stage2(mob/living/M)
-	if(prob(25))
-		to_chat(M, "<span class='danger'>Your skin feels loose...</span>")
-	..()
-
-/datum/reagent/drug/krokodil/addiction_act_stage3(mob/living/M)
-	if(prob(25))
-		to_chat(M, "<span class='danger'>Your skin starts to peel away...</span>")
-	M.adjustBruteLoss(3*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/drug/krokodil/addiction_act_stage4(mob/living/carbon/human/M)
-	CHECK_DNA_AND_SPECIES(M)
-	if(M.dna.species.limbs_id != "nosferatu")
-		to_chat(M, "<span class='userdanger'>Your skin falls off easily!</span>")
-		M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
-		M.dna.species.limbs_id = "nosferatu"
-		M.facial_hairstyle = "Shaved"
-		M.hairstyle = "Bald"
-		M.update_hair()
-		M.update_body()
-		M.update_body_parts()
-		M.update_icon()
-	else
-		M.adjustBruteLoss(5*REM, 0)
-	..()
-	. = 1
-=======
 /datum/reagent/drug/krokodil/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
@@ -199,7 +157,6 @@
 	need_mob_update = affected_mob.adjustToxLoss(0.25 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /datum/reagent/drug/methamphetamine
 	name = "Methamphetamine"
@@ -637,93 +594,6 @@
 /datum/reagent/drug/blastoff/on_mob_metabolize(mob/living/dancer)
 	. = ..()
 
-<<<<<<< HEAD
-	M.adjustToxLoss(5)
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER,3)
-
-/datum/reagent/drug/methamphetamine/cocaine
-	name = "Cocaine"
-	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
-	reagent_state = LIQUID
-	color = "#ffffff"
-	overdose_threshold = 20
-	addiction_threshold = 10
-	metabolization_rate = 0.75 * REAGENTS_METABOLISM
-
-/datum/reagent/drug/methamphetamine/cocaine/on_mob_metabolize(mob/living/L)
-	..()
-	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
-
-/datum/reagent/drug/methamphetamine/cocaine/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
-	..()
-
-/datum/reagent/drug/methamphetamine/cocaine/on_mob_life(mob/living/carbon/M)
-	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
-	if(prob(5))
-		to_chat(M, "<span class='notice'>[high_message]</span>")
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
-	M.AdjustStun(-40)
-	M.AdjustKnockdown(-40)
-	M.AdjustUnconscious(-40)
-	M.AdjustParalyzed(-40)
-	M.AdjustImmobilized(-40)
-	M.adjustStaminaLoss(-2, 0)
-	M.Jitter(2)
-	if(prob(5))
-		M.emote(pick("twitch", "shiver"))
-	..()
-	. = 1
-
-/datum/reagent/drug/methamphetamine/cocaine/overdose_process(mob/living/M)
-	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
-		for(var/i in 1 to 4)
-			step(M, pick(GLOB.cardinals))
-	if(prob(20))
-		M.emote("laugh")
-	if(prob(33))
-		M.visible_message("<span class='danger'>[M]'s hands flip out and flail everywhere!</span>")
-		M.drop_all_held_items()
-	..()
-	M.adjustToxLoss(1, 0)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, pick(0.5, 0.6, 0.7, 0.8, 0.9, 1))
-	. = 1
-
-/datum/reagent/drug/methamphetamine/cocaine/addiction_act_stage1(mob/living/M)
-	M.Jitter(5)
-	if(prob(20))
-		M.emote(pick("twitch","drool","moan"))
-	..()
-
-/datum/reagent/drug/methamphetamine/cocaine/addiction_act_stage2(mob/living/M)
-	M.Jitter(10)
-	M.Dizzy(10)
-	if(prob(30))
-		M.emote(pick("twitch","drool","moan"))
-	..()
-
-/datum/reagent/drug/methamphetamine/cocaine/addiction_act_stage3(mob/living/M)
-	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
-		for(var/i = 0, i < 4, i++)
-			step(M, pick(GLOB.cardinals))
-	M.Jitter(15)
-	M.Dizzy(15)
-	if(prob(40))
-		M.emote(pick("twitch","drool","moan"))
-	..()
-
-/datum/reagent/drug/methamphetamine/cocaine/addiction_act_stage4(mob/living/carbon/human/M)
-	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
-		for(var/i = 0, i < 8, i++)
-			step(M, pick(GLOB.cardinals))
-	M.Jitter(20)
-	M.Dizzy(20)
-	M.adjustToxLoss(5, 0)
-	if(prob(50))
-		M.emote(pick("twitch","drool","moan"))
-	..()
-	. = 1
-=======
 	dancer.add_mood_event("vibing", /datum/mood_event/high)
 	RegisterSignal(dancer, COMSIG_MOB_EMOTED("flip"), PROC_REF(on_flip))
 	RegisterSignal(dancer, COMSIG_MOB_EMOTED("spin"), PROC_REF(on_spin))
@@ -1019,4 +889,3 @@
 	)
 	new /obj/structure/bouncy_castle(gored.loc, gored)
 	gored.gib()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

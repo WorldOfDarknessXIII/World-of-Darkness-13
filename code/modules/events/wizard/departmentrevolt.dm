@@ -33,7 +33,7 @@
 
 /datum/event_admin_setup/listed_options/departmental_revolt/get_list()
 	return subtypesof(/datum/job_department)
-	
+
 /datum/event_admin_setup/listed_options/departmental_revolt/apply_to_event(datum/round_event/wizard/deprevolt/event)
 	event.picked_department = chosen
 
@@ -41,33 +41,8 @@
 /datum/event_admin_setup/question/departmental_revolt_annouce
 	input_text = "Announce This New Independent State?"
 
-<<<<<<< HEAD
-	switch(department)
-		if("Uprising of Assistants") //God help you
-			jobs_to_revolt = list("Assistant")
-			nation_name = pick("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Grigio", "Ass", "Assi")
-		if("Medical")
-			jobs_to_revolt = GLOB.ss13
-			nation_name = pick("Mede", "Healtha", "Recova", "Chemi", "Viro", "Psych")
-		if("Engineering")
-			jobs_to_revolt = GLOB.ss13
-			nation_name = pick("Atomo", "Engino", "Power", "Teleco")
-		if("Science")
-			jobs_to_revolt = GLOB.anarch_positions
-			nation_name = pick("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno", "Nani", "Cyto")
-		if("Supply")
-			jobs_to_revolt = GLOB.ss13
-			nation_name = pick("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
-		if("Service") //the few, the proud, the technically aligned
-			jobs_to_revolt = GLOB.neutral_positions.Copy() - list("Assistant", "Prisoner")
-			nation_name = pick("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
-		if("Security")
-			jobs_to_revolt = GLOB.ss13
-			nation_name = pick("Securi", "Beepski", "Shitcuri", "Red", "Stunba", "Flashbango", "Flasha", "Stanfordi")
-=======
 /datum/event_admin_setup/question/departmental_revolt_annouce/apply_to_event(datum/round_event/wizard/deprevolt/event)
 	event.announce = chosen
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /// Is it going to try fighting other nations?
 /datum/event_admin_setup/question/departmental_revolt_dangerous

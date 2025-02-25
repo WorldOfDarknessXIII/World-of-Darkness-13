@@ -481,12 +481,7 @@
 	name = "bolt of fireball"
 	icon_state = "fireball"
 	damage = 10
-<<<<<<< HEAD
-	damage_type = BURN
-	nodamage = FALSE
-=======
 	damage_type = BRUTE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	/// Heavy explosion range of the fireball
 	var/exp_heavy = 0
@@ -499,21 +494,6 @@
 
 /obj/projectile/magic/fireball/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-<<<<<<< HEAD
-	if(ismob(target))
-		var/mob/living/M = target
-		if(M.anti_magic_check())
-			visible_message("<span class='warning'>[src] vanishes into smoke on contact with [target]!</span>")
-			return BULLET_ACT_BLOCK
-		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
-//	var/turf/T = get_turf(target)
-//	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = 0)
-	var/obj/effect/fire/R = new(get_turf(target))
-	R.color = color
-
-/obj/projectile/magic/aoe/fireball/baali
-	color = "#2dff00"
-=======
 	if(isliving(target))
 		var/mob/living/mob_target = target
 		// between this 10 burn, the 10 brute, the explosion brute, and the onfire burn,
@@ -580,7 +560,6 @@
 
 		adjacent_object.take_damage(90, BRUTE, MELEE, 0)
 		new /obj/effect/temp_visual/cult/turf/floor(get_turf(adjacent_object))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 //still magic related, but a different path
 

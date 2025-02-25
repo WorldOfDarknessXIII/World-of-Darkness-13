@@ -3,26 +3,17 @@
 // TODO: Split everything into easy to manage procs.
 
 /obj/item/detective_scanner
-<<<<<<< HEAD
 	name = "forensic magnifier"
-	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can show a report of the findings."
+	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
 	icon = 'code/modules/wod13/items.dmi'
 	icon_state = "magnifier"
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
-	w_class = WEIGHT_CLASS_SMALL
-	flags_1 = CONDUCT_1
-=======
-	name = "forensic scanner"
-	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
-	icon = 'icons/obj/devices/scanner.dmi'
-	icon_state = "forensicnew"
 	w_class = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	/// if the scanner is currently busy processing
@@ -42,14 +33,6 @@
 		scanner.display_detective_scan_results(usr)
 
 /obj/item/detective_scanner/attack_self(mob/user)
-<<<<<<< HEAD
-	if(log.len && !scanning)
-		scanning = TRUE
-		to_chat(user, "<span class='notice'>Analyzing report...</span>")
-		displayDetectiveScanResults(user)
-	else
-		to_chat(user, "<span class='notice'>You find nothing interesting.</span>")
-=======
 	if(!LAZYLEN(log))
 		balloon_alert(user, "no logs!")
 		return
@@ -59,7 +42,6 @@
 	scanner_busy = TRUE
 	balloon_alert(user, "printing report...")
 	addtimer(CALLBACK(src, PROC_REF(safe_print_report)), 10 SECONDS)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /**
  * safe_print_report - a wrapper proc for print_report

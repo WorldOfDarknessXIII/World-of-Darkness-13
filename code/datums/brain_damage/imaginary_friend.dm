@@ -84,18 +84,9 @@
 	var/icon/human_image
 	var/image/current_image
 	var/hidden = FALSE
-<<<<<<< HEAD
-	//var/move_delay = 0
-	var/mob/living/carbon/owner
-	var/datum/brain_trauma/special/imaginary_friend/trauma
-
-	var/datum/action/innate/imaginary_join/join
-	var/datum/action/innate/imaginary_hide/hide
-=======
 	var/move_delay = 0
 	var/mob/living/owner
 	var/bubble_icon = "default"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /mob/camera/imaginary_friend/Login()
 	. = ..()
@@ -141,14 +132,8 @@
 	gender = pick(MALE, FEMALE)
 	real_name = generate_random_name_species_based(gender, FALSE, /datum/species/human)
 	name = real_name
-<<<<<<< HEAD
-	var/datum/job/sacjob = SSjob.GetJob("Taxi Driver")
-	var/datum/preferences/sacface = client.prefs
-	human_image = get_flat_human_icon(null, sacjob, sacface)
-=======
 	human_image = get_flat_human_icon(null, pick(SSjob.joinable_occupations))
 	Show()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /**
  * Sets up the imaginary friend's name and look using a set of datum preferences.
@@ -429,34 +414,20 @@
 	remove_thinking_indicator()
 	remove_typing_indicator()
 
-<<<<<<< HEAD
-/*mob/camera/imaginary_friend/Move(NewLoc, Dir = 0)
-//	if(world.time < move_delay)
-//return FALSE
-=======
 /mob/camera/imaginary_friend/Move(NewLoc, Dir = 0)
 	if(world.time < move_delay)
 		return FALSE
 	setDir(Dir)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(get_dist(src, owner) > 9)
 		recall()
 		move_delay = world.time + 10
 		return FALSE
 	abstract_move(NewLoc)
 	move_delay = world.time + 1
-<<<<<<< HEAD
-*/
-/mob/camera/imaginary_friend/forceMove(atom/destination)
-	dir = get_dir(get_turf(src), destination)
-	loc = destination
-	Show()
-=======
 
 /mob/camera/imaginary_friend/setDir(newdir)
 	. = ..()
 	Show() // The image does not actually update until Show() gets called
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /mob/camera/imaginary_friend/proc/recall()
 	if(!owner || loc == owner)

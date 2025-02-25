@@ -257,12 +257,6 @@
 	. = ..()
 	if(.)
 		return
-<<<<<<< HEAD
-	if(istype(src, /obj/machinery/chem_dispenser/drinks))
-		beaker.required_eject = TRUE
-=======
-
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	switch(action)
 		if("amount")
 			if(!is_operational || QDELETED(beaker))
@@ -306,17 +300,9 @@
 				return TRUE
 
 		if("eject")
-<<<<<<< HEAD
-			if(beaker.required_eject == TRUE)
-				beaker.required_eject = FALSE
-				beaker.reagents.handle_reactions()
-			replace_beaker(usr)
-			. = TRUE
-=======
 			replace_beaker(ui.user)
 			return TRUE
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		if("dispense_recipe")
 			if(!is_operational || QDELETED(cell))
 				return
@@ -582,52 +568,6 @@
 			b_o.pixel_x = rand(-9, 9)
 	return b_o
 
-<<<<<<< HEAD
-/obj/machinery/chem_dispenser/drinks
-	name = "soda dispenser"
-	desc = "Contains a large reservoir of soft drinks."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "soda_dispenser"
-	has_panel_overlay = FALSE
-	amount = 10
-	pixel_y = 6
-	layer = WALL_OBJ_LAYER
-	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks
-	working_state = null
-	nopower_state = null
-	pass_flags = PASSTABLE
-	dispensable_reagents = list(
-		/datum/reagent/water,
-		/datum/reagent/consumable/ice,
-		/datum/reagent/consumable/cream,
-		/datum/reagent/consumable/space_cola,
-		/datum/reagent/consumable/spacemountainwind,
-		/datum/reagent/consumable/dr_gibb,
-		/datum/reagent/consumable/space_up,
-		/datum/reagent/consumable/tonic,
-		/datum/reagent/consumable/sodawater,
-		/datum/reagent/consumable/lemon_lime,
-		/datum/reagent/consumable/pwr_game,
-		/datum/reagent/consumable/shamblers,
-		/datum/reagent/consumable/sugar,
-		/datum/reagent/consumable/pineapplejuice,
-		/datum/reagent/consumable/orangejuice,
-		/datum/reagent/consumable/grenadine,
-		/datum/reagent/consumable/limejuice,
-		/datum/reagent/consumable/tomatojuice,
-		/datum/reagent/consumable/lemonjuice,
-		/datum/reagent/consumable/berryjuice,
-		/datum/reagent/consumable/menthol
-	)
-	upgrade_reagents = null
-	emagged_reagents = list(
-		/datum/reagent/consumable/ethanol/whiskey_cola,
-		/datum/reagent/toxin/mindbreaker,
-		/datum/reagent/toxin/staminatoxin
-	)
-
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
 	desc = "Contains a large reservoir of soft drinks. This model has had its safeties shorted out."
 	obj_flags = CAN_BE_HIT | EMAGGED
@@ -677,12 +617,8 @@
 	var/static/list/beer_emagged_reagents = list(
 		/datum/reagent/consumable/ethanol,
 		/datum/reagent/iron,
-<<<<<<< HEAD
-		/datum/reagent/toxin/minttoxin,
-=======
 		/datum/reagent/consumable/mintextract,
 		/datum/reagent/consumable/ethanol/atomicbomb,
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		/datum/reagent/consumable/ethanol/fernet
 	)
 

@@ -721,7 +721,6 @@
 	message_mime = "makes a rude gesture!"
 	emote_type = EMOTE_AUDIBLE
 
-<<<<<<< HEAD:code/modules/wod13/emote.dm
 /datum/emote/living/howl
 	key = "howl"
 	key_third_person = "howls"
@@ -733,7 +732,7 @@
 	key_third_person = "growls"
 	message = "growls!"
 	emote_type = EMOTE_AUDIBLE
-=======
+
 /datum/emote/living/carbon/whistle
 	key = "whistle"
 	key_third_person = "whistles"
@@ -745,4 +744,3 @@
 
 /datum/emote/living/carbon/whistle/get_sound(mob/living/user)
 	return 'sound/voice/human/whistle1.ogg'
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/modules/mob/living/emote.dm

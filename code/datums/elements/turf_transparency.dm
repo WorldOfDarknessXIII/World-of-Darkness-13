@@ -200,27 +200,6 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	REMOVE_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, ELEMENT_TRAIT(type))
 
 ///Updates the viscontents or underlays below this tile.
-<<<<<<< HEAD
-/datum/element/turf_z_transparency/proc/update_multiz(turf/our_turf, prune_on_fail = FALSE, init = FALSE)
-	var/turf/below_turf = our_turf.below()
-	if(!below_turf)
-		our_turf.vis_contents.len = 0
-		if(!show_bottom_level(our_turf) && prune_on_fail) //If we cant show whats below, and we prune on fail, change the turf to plating as a fallback
-			our_turf.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-			return FALSE
-	if(init)
-		var/atom/movable/shitta = new(our_turf)
-		shitta.vis_contents += below_turf
-		if(get_step(get_step_multiz(shitta, DOWN), NORTH))
-			shitta.vis_contents += get_step(get_step_multiz(shitta, DOWN), NORTH)
-		shitta.pixel_y = -24
-		shitta.plane = our_turf.plane
-		shitta.layer = our_turf.layer
-		shitta.mouse_opacity = 0
-		shitta.anchored = TRUE
-//		shitta.add_filter("z_level_blur", 1, list(type = "blur", size = 0.75))
-//		our_turf.vis_contents += below_turf
-=======
 /datum/element/turf_z_transparency/proc/update_multi_z(turf/our_turf)
 	var/turf/below_turf = GET_TURF_BELOW(our_turf)
 	if(below_turf) // If we actually have something below us, display it.
@@ -239,7 +218,6 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	// similarly, if you rip this out, rework diagonal closed turfs to work with this system
 	// it will make them look significantly nicer, and should let you tie into their logic more easily
 	// Just please don't break behavior yeah? thanks, I love you <3
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(isclosedturf(our_turf)) //Show girders below closed turfs
 		var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', "girder", layer = BELOW_CLOSED_TURF_LAYER)
 		girder_underlay.appearance_flags = RESET_ALPHA | RESET_COLOR

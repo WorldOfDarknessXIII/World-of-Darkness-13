@@ -72,20 +72,6 @@
 	// If we weren't passed a client source try to use a present one
 	client_source ||= quirk_holder.client
 
-<<<<<<< HEAD
-	var/list/allowed_species = list()
-
-/datum/quirk/New(mob/living/quirk_mob, spawn_effects)
-	..()
-	if(!quirk_mob || (human_only && !ishuman(quirk_mob)) || quirk_mob.has_quirk(type))
-		qdel(src)
-		return
-	quirk_holder = quirk_mob
-	SSquirks.quirk_objects += src
-	to_chat(quirk_holder, gain_text)
-	quirk_holder.roundstart_quirks += src
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(mob_trait)
 		ADD_TRAIT(quirk_holder, mob_trait, QUIRK_TRAIT)
 

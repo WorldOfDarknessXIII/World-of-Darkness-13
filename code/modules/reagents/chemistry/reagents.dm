@@ -10,19 +10,6 @@
 	var/taste_description = "metaphorical salt"
 	///how this taste compares to others. Higher values means it is more noticable
 	var/taste_mult = 1
-<<<<<<< HEAD
-	/// use for specialty drinks.
-	var/glass_name = "glass of ...what?"
-	/// desc applied to glasses with this reagent
-	var/glass_desc = "You can't really tell what this is."
-	/// Otherwise just sets the icon to a normal glass with the mixture of the reagents in the glass.
-	var/glass_icon_state = null
-	/// used for shot glasses, mostly for alcohol
-	var/shot_glass_icon_state = null
-	/// used to setup alcohol reagents icon only in the appropriate glass
-	var/empty_glass_icon_state = null
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	/// reagent holder this belongs to
 	var/datum/reagents/holder = null
 	/// LIQUID, SOLID, GAS

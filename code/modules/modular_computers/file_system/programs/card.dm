@@ -265,36 +265,6 @@
 	data["centcom_access"] = is_centcom
 	data["minor"] = target_dept || minor ? TRUE : FALSE
 
-<<<<<<< HEAD
-	var/list/departments = target_dept
-	if(is_centcom)
-		departments = list("CentCom" = get_all_centcom_jobs())
-	else if(isnull(departments))
-		departments = list(
-			CARDCON_DEPARTMENT_COMMAND = list("Captain"),//lol
-			CARDCON_DEPARTMENT_ENGINEERING = GLOB.ss13,
-			CARDCON_DEPARTMENT_MEDICAL = GLOB.ss13,
-			CARDCON_DEPARTMENT_SCIENCE = GLOB.anarch_positions,
-			CARDCON_DEPARTMENT_SECURITY = GLOB.ss13,
-			CARDCON_DEPARTMENT_SUPPLY = GLOB.ss13,
-			CARDCON_DEPARTMENT_SERVICE = GLOB.neutral_positions
-		)
-	data["jobs"] = list()
-	for(var/department in departments)
-		var/list/job_list = departments[department]
-		var/list/department_jobs = list()
-		for(var/job in job_list)
-			if(minor && !(job in head_subordinates))
-				continue
-			department_jobs += list(list(
-				"display_name" = replacetext(job, "&nbsp", " "),
-				"job" = job
-			))
-		if(length(department_jobs))
-			data["jobs"][department] = department_jobs
-
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	var/list/regions = list()
 	var/list/tgui_region_data = SSid_access.all_region_access_tgui
 	if(is_centcom)

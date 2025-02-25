@@ -78,16 +78,6 @@
 
 /datum/status_effect/in_love/on_creation(mob/living/new_owner, mob/living/date)
 	. = ..()
-<<<<<<< HEAD
-	if(.)
-		date = love_interest
-		linked_alert.desc = "You're in blood bond with [date.real_name]! How lovely."
-/*
-/datum/status_effect/in_love/tick()
-	if(date)
-		new /obj/effect/temp_visual/love_heart/invisible(date.drop_location(), owner)
-*/
-=======
 	if(!.)
 		return
 
@@ -103,7 +93,6 @@
 /datum/status_effect/in_love/on_remove()
 	QDEL_NULL(hearts)
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 /datum/status_effect/throat_soothed
 	id = "throat_soothed"
 	duration = 60 SECONDS

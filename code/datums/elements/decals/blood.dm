@@ -16,18 +16,9 @@
 
 /datum/element/decal/blood/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _smoothing, source)
 	var/obj/item/I = source
-<<<<<<< HEAD
-	if(!_icon)
-		_icon = 'icons/effects/blood_inventory.dmi'
-	if(!_icon_state)
-		_icon_state = "itemblood"
-	var/icon = initial(I.icon)
-	var/icon_state = initial(I.icon_state)
-=======
 	ADD_KEEP_TOGETHER(I, type)
 	var/icon = I.icon
 	var/icon_state = I.icon_state
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(!icon || !icon_state)
 		// It's something which takes on the look of other items, probably
 		icon = I.icon

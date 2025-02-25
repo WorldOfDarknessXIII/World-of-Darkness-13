@@ -180,40 +180,6 @@
  * Called when the component has a source removed.
  * You probably want to call parent after you do your logic because at the end of this we qdel if we have no sources remaining!
  */
-<<<<<<< HEAD
-/datum/proc/UnregisterSignal(datum/target, sig_type_or_types)
-	if(!target)
-		return
-	var/list/lookup = target.comp_lookup
-	if(!signal_procs || !signal_procs[target] || !lookup)
-		return
-	if(!islist(sig_type_or_types))
-		sig_type_or_types = list(sig_type_or_types)
-	for(var/sig in sig_type_or_types)
-		if(!signal_procs[target][sig])
-			continue
-		switch(length(lookup[sig]))
-			if(2)
-				lookup[sig] = (lookup[sig]-src)[1]
-			if(1)
-				stack_trace("[target] ([target.type]) somehow has single length list inside comp_lookup")
-				if(src in lookup[sig])
-					lookup -= sig
-					if(!length(lookup))
-						target.comp_lookup = null
-						break
-			if(0)
-				lookup -= sig
-				if(!length(lookup))
-					target.comp_lookup = null
-					break
-			else
-				lookup[sig] -= src
-
-	signal_procs[target] -= sig_type_or_types
-	if(!signal_procs[target].len)
-		signal_procs -= target
-=======
 /datum/component/proc/on_source_remove(source)
 	SHOULD_CALL_PARENT(TRUE)
 	if(dupe_mode != COMPONENT_DUPE_SOURCES)
@@ -221,7 +187,6 @@
 	LAZYREMOVE(sources, source)
 	if(!LAZYLEN(sources))
 		qdel(src)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /**
  * Called on a component when a component of the same type was added to the same parent

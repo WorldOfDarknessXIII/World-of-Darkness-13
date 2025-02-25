@@ -682,22 +682,6 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 		message_admins("Loading [away_name] failed!")
 		return
 
-<<<<<<< HEAD
-/datum/controller/subsystem/mapping/proc/preloadModularTemplates()
-	for(var/item in subtypesof(/datum/map_template/modular))
-		var/datum/map_template/modular/modular_type = item
-
-		var/datum/map_template/modular/M = new modular_type()
-
-		LAZYINITLIST(modular_templates[M.modular_id])
-		modular_templates[M.modular_id] += M
-		map_templates[M.type] = M
-
-/datum/controller/subsystem/mapping/proc/RequestBlockReservation(width, height, z, type = /datum/turf_reservation, turf_type_override)
-	UNTIL((!z || reservation_ready["[z]"]) && !clearing_reserved_turfs)
-	var/datum/turf_reservation/reserve = new type
-	if(turf_type_override)
-=======
 /// Adds a new reservation z level. A bit of space that can be handed out on request
 /// Of note, reservations default to transit turfs, to make their most common use, shuttles, faster
 /datum/controller/subsystem/mapping/proc/add_reservation_zlevel(for_shuttles)
@@ -716,7 +700,6 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 	UNTIL((!z_reservation || reservation_ready["[z_reservation]"]) && !clearing_reserved_turfs)
 	var/datum/turf_reservation/reserve = new reservation_type
 	if(!isnull(turf_type_override))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		reserve.turf_type = turf_type_override
 	if(!z_reservation)
 		for(var/i in levels_by_trait(ZTRAIT_RESERVED))

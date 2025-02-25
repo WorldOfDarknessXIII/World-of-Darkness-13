@@ -18,34 +18,6 @@
 	var/list/admin_forced_args
 
 /datum/round_event/mass_hallucination/start()
-<<<<<<< HEAD
-	switch(rand(1,4))
-		if(1) //same sound for everyone
-			var/sound = pick("airlock","airlock_pry","console","explosion","far_explosion","mech","glass","alarm","beepsky","mech","wall_decon","door_hack","tesla")
-			for(var/mob/living/carbon/C in GLOB.alive_mob_list)
-				if(C.z in SSmapping.levels_by_trait(ZTRAIT_CENTCOM))//not for admin/ooc stuff
-					continue
-				new /datum/hallucination/sounds(C, TRUE, sound)
-		if(2)
-			var/weirdsound = pick("phone","hallelujah","highlander","hyperspace","game_over","creepy","tesla")
-			for(var/mob/living/carbon/C in GLOB.alive_mob_list)
-				if(C.z in SSmapping.levels_by_trait(ZTRAIT_CENTCOM))//not for admin/ooc stuff
-					continue
-				new /datum/hallucination/weird_sounds(C, TRUE, weirdsound)
-		if(3 to 5)
-			var/picked_hallucination = pick(	/datum/hallucination/chat,
-												/datum/hallucination/message,
-												/datum/hallucination/battle,
-												/datum/hallucination/fire,
-												/datum/hallucination/self_delusion,
-												/datum/hallucination/death,
-												/datum/hallucination/delusion,
-												/datum/hallucination/oh_yeah)
-			for(var/mob/living/carbon/C in GLOB.alive_mob_list)
-				if(C.z in SSmapping.levels_by_trait(ZTRAIT_CENTCOM))//not for admin/ooc stuff
-					continue
-				new picked_hallucination(C, TRUE)
-=======
 	if(!admin_forced_hallucination)
 		var/category_to_pick_from = rand(1, 10)
 		switch(category_to_pick_from)
@@ -160,4 +132,3 @@
 /datum/event_admin_setup/mass_hallucination/apply_to_event(datum/round_event/mass_hallucination/event)
 	event.admin_forced_hallucination = admin_forced_hallucination
 	event.admin_forced_args = admin_forced_args
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

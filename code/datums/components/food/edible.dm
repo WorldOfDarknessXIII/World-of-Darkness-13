@@ -466,25 +466,7 @@ Behavior that's still missing from this component that original food items had t
 		return FALSE
 	if(eater.satiety > -200)
 		eater.satiety -= junkiness
-<<<<<<< HEAD
-
-	if(F)
-		playsound(eater.loc,F.eatsound, rand(10,50), TRUE)
-	else
-		playsound(eater.loc,'code/modules/wod13/sounds/eat.ogg', rand(10,50), TRUE)
-
-	if(owner.reagents.total_volume)
 		SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder, bitecount, bite_consumption)
-		var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
-		owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, methods = INGEST)
-		bitecount++
-		if(istype(parent, /obj/item/food/vampire))
-			var/obj/item/food/vampire/V = parent
-			V.got_biten()
-		if(!owner.reagents.total_volume)
-			On_Consume(eater, feeder)
-		checkLiked(fraction, eater)
-=======
 	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	if(!owner.reagents.total_volume)
 		return
@@ -492,7 +474,6 @@ Behavior that's still missing from this component that original food items had t
 	if(sig_return & DESTROY_FOOD)
 		qdel(owner)
 		return
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	//Give a buff when the dish is hand-crafted and unbitten
 	if(bitecount == 0)
@@ -579,30 +560,12 @@ Behavior that's still missing from this component that original food items had t
 		gourmand.add_mood_event("breakfast", /datum/mood_event/breakfast)
 	last_check_time = world.time
 
-<<<<<<< HEAD
-	if(H.dna.species.id == "kindred")
-		if(HAS_TRAIT(H, TRAIT_AGEUSIA))
-			to_chat(H, "<span class='warning'>You don't feel so good...</span>")
-			H.adjust_disgust(11 + 15 * fraction)
-		else
-			to_chat(H,"<span class='notice'>That didn't taste very good...</span>")
-			H.adjust_disgust(25 + 30 * fraction)
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "toxic_food", /datum/mood_event/disgusting_food)
-		return	//Don't care later checks cause you are fucking vamp
-
-	if(HAS_TRAIT(H, TRAIT_AGEUSIA))
-		if(foodtypes & H.dna.species.toxic_food)
-			to_chat(H, "<span class='warning'>You don't feel so good...</span>")
-			H.adjust_disgust(25 + 30 * fraction)
-		return // Don't care about the later checks if user has ageusia
-=======
 	var/food_quality = get_perceived_food_quality(gourmand)
 	if(food_quality <= FOOD_QUALITY_DANGEROUS && (foodtypes & gourmand.get_allergic_foodtypes())) // Only cause anaphylaxis if we're ACTUALLY allergic, otherwise it just tastes horrible
 		if(gourmand.ForceContractDisease(new /datum/disease/anaphylaxis(), make_copy = FALSE, del_on_fail = TRUE))
 			to_chat(gourmand, span_warning("You feel your throat start to itch."))
 			gourmand.add_mood_event("allergic_food", /datum/mood_event/allergic_food)
 		return
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	if(food_quality <= TOXIC_FOOD_QUALITY_THRESHOLD)
 		to_chat(gourmand,span_warning("What the hell was that thing?!"))

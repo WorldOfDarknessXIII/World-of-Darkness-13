@@ -168,39 +168,7 @@
 			adjusted = DIGITIGRADE_STYLE
 			update_appearance()
 
-<<<<<<< HEAD
-	if(slot == ITEM_SLOT_ICLOTHING && freshly_laundered)
-		freshly_laundered = FALSE
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fresh_laundry", /datum/mood_event/fresh_laundry)
-
-	if(attached_accessory && slot != ITEM_SLOT_HANDS && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		attached_accessory.on_uniform_equip(src, user)
-		H.fan_hud_set_fandom()
-		if(attached_accessory.above_suit)
-			H.update_inv_wear_suit()
-
-/obj/item/clothing/under/dropped(mob/user)
-	. = ..()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.back && istype(H.back, /obj/item/storage/backpack/satchel))
-			var/obj/item/storage/backpack/satchel/S = H.back
-			if(S.icon_hidden)
-				S.icon_hidden = FALSE
-				S.worn_icon_state = initial(S.worn_icon_state)
-				H.update_inv_back()
-
-	if(attached_accessory)
-		attached_accessory.on_uniform_dropped(src, user)
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.fan_hud_set_fandom()
-			if(attached_accessory.above_suit)
-				H.update_inv_wear_suit()
-=======
 /obj/item/clothing/under/equipped(mob/living/user, slot)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	..()
 	if((slot & ITEM_SLOT_ICLOTHING) && freshly_laundered)
 		freshly_laundered = FALSE

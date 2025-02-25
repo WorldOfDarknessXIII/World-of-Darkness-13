@@ -103,7 +103,6 @@
 		books_to_load--
 		new /obj/item/book/manual/random(src)
 
-<<<<<<< HEAD:code/modules/library/wod13/random_books.dm
 // TODO: UPDATE THIS JOB CHECK AFTER TIMELOCKS ARE IN
 /obj/structure/bookcase/random/regent
 	var/animation_delay = 2 SECONDS
@@ -126,16 +125,3 @@
 
 /obj/structure/bookcase/random/regent/proc/fade_in_finish()
 	density = TRUE
-=======
-/obj/structure/bookcase/random/reference/wizard
-	desc = "It reeks of cheese..."
-	///Whether this shelf has spawned a cheese granter
-	var/static/cheese_granter_spawned = FALSE
-
-/obj/structure/bookcase/random/reference/wizard/after_random_load()
-	if(cheese_granter_spawned)
-		return
-	cheese_granter_spawned = TRUE
-	new /obj/item/book/granter/action/spell/summon_cheese(src)
-	new /obj/item/book/manual/ancient_parchment(src)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/modules/library/random_books.dm

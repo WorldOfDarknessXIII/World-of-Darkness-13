@@ -32,10 +32,6 @@
 	 * list(0, 10) whill have two overlay options, for 0-10 units ("overlayname0") and 10+ units ("overlayname10").
 	 */
 	var/list/fill_icon_thresholds = null
-<<<<<<< HEAD
-	var/fill_icon_state = null // Optional custom name for reagent fill icon_state prefix
-	var/required_eject = FALSE // Check for drinks in dispenser to proceed reaction
-=======
 	/// The optional custom name for the reagent fill icon_state prefix
 	/// If not set, uses the current icon state.
 	var/fill_icon_state = null
@@ -53,7 +49,6 @@
 		reagents.maximum_volume = reset_fantasy_variable("maximum_volume", reagents.maximum_volume)
 	volume = reset_fantasy_variable("maximum_volume_beaker", volume)
 	return ..()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
@@ -281,24 +276,11 @@
 	. = ..()
 	if(!fill_icon_thresholds || !fill_icon_state)
 		return
-<<<<<<< HEAD
-	if(reagents.total_volume)
-		var/fill_name = fill_icon_state//? fill_icon_state : icon_state
-		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[fill_name][fill_icon_thresholds[1]]")
-
-		var/percent = round((reagents.total_volume / volume) * 100)
-		for(var/i in 1 to fill_icon_thresholds.len)
-			var/threshold = round((fill_icon_thresholds[i] / volume) * 100)
-			var/threshold_end = (i == fill_icon_thresholds.len)? INFINITY : round((fill_icon_thresholds[i+1] / volume) * 100)
-			if(threshold <= percent && percent < threshold_end)
-				filling.icon_state = "[fill_name][fill_icon_thresholds[i]]"
-=======
 	if(!reagents.total_volume)
 		return
 
 	var/fill_name = fill_icon_state ? fill_icon_state : icon_state
 	var/mutable_appearance/filling = mutable_appearance(fill_icon, "[fill_name][fill_icon_thresholds[1]]")
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	var/percent = round((reagents.total_volume / volume) * 100)
 	for(var/i in 1 to fill_icon_thresholds.len)

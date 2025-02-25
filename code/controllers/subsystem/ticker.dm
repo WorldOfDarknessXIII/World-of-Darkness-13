@@ -36,13 +36,8 @@ SUBSYSTEM_DEF(ticker)
 	var/timeLeft //pregame timer
 	var/start_at
 
-<<<<<<< HEAD
-	var/gametime_offset = 432000		//Deciseconds to add to world.time for station time.
-	var/station_time_rate_multiplier = 1		//factor of station time progressal vs real time.
-=======
 	var/gametime_offset = 432000 //Deciseconds to add to world.time for station time.
 	var/station_time_rate_multiplier = 12 //factor of station time progressal vs real time.
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	/// Num of players, used for pregame stats on statpanel
 	var/totalPlayers = 0
@@ -162,13 +157,8 @@ SUBSYSTEM_DEF(ticker)
 				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
-<<<<<<< HEAD
-			to_chat(world, "<span class='boldnotice'>Welcome to [SSmapping.config.map_name]!</span>")
-			send2chat("New round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game))
-=======
 			to_chat(world, span_notice("<b>Welcome to [station_name()]!</b>"))
 			send2chat(new /datum/tgs_message_content("New round starting on [SSmapping.config.map_name]!"), CONFIG_GET(string/channel_announce_new_game))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 			current_state = GAME_STATE_PREGAME
 			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
 
@@ -290,33 +280,20 @@ SUBSYSTEM_DEF(ticker)
 	round_start_time = world.time //otherwise round_start_time would be 0 for the signals
 	SEND_SIGNAL(src, COMSIG_TICKER_ROUND_STARTING, world.time)
 
-<<<<<<< HEAD
-	to_chat(world, "<span class='notice'><B>[station_name()] is calling you. Farewell, vampire!</B></span>")
-	SEND_SOUND(world, sound('code/modules/wod13/sounds/announce.ogg'))
-=======
 	log_world("Game start took [(world.timeofday - init_start)/10]s")
 	INVOKE_ASYNC(SSdbcore, TYPE_PROC_REF(/datum/controller/subsystem/dbcore,SetRoundStart))
 
-	to_chat(world, span_notice(span_bold("Welcome to [station_name()], enjoy your stay!")))
-	SEND_SOUND(world, sound(SSstation.announcer.get_rand_welcome_sound()))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
+	to_chat(world, span_notice(span_bold("[station_name()] is calling you. Farewell, vampire!")))
+	SEND_SOUND(world, sound('code/modules/wod13/sounds/announce.ogg'))
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
 
-<<<<<<< HEAD
-//	if(SSevents.holidays)
-//		to_chat(world, "<span class='notice'>and...</span>")
-//		for(var/holidayname in SSevents.holidays)
-//			var/datum/holiday/holiday = SSevents.holidays[holidayname]
-//			to_chat(world, "<h4>[holiday.greet()]</h4>")
-=======
 	if(length(GLOB.holidays))
 		to_chat(world, span_notice("and..."))
 		for(var/holidayname in GLOB.holidays)
 			var/datum/holiday/holiday = GLOB.holidays[holidayname]
 			to_chat(world, span_info(holiday.greet()))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	PostSetup()
 
@@ -746,15 +723,7 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/Shutdown()
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
 	if(!round_end_sound)
-<<<<<<< HEAD
-		round_end_sound = pick(\
-		'sound/roundend/malkavian.ogg',
-		'sound/roundend/cain.ogg',
-		'sound/roundend/die.ogg'\
-		)
-=======
 		round_end_sound = choose_round_end_song()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	///The reference to the end of round sound that we have chosen.
 	var/sound/end_of_round_sound_ref = sound(round_end_sound)
 	for(var/mob/M in GLOB.player_list)

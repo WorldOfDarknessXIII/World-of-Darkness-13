@@ -10,12 +10,8 @@
 		"cho", "ar", "kas", "kal", "ra", "lom", "im", "bok",
 		"erev", "shlo", "lo", "ta", "im", "yom"
 	)
-<<<<<<< HEAD:code/modules/language/hebrew.dm
-	icon_state = "hebrew"
-=======
 	special_characters = list("'")
-	icon_state = "golem"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/modules/language/terrum.dm
+	icon_state = "hebrew"
 	default_priority = 90
 
 /datum/language/terrum/get_random_name(

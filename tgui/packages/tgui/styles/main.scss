@@ -73,8 +73,12 @@
 @include meta.load-css('./interfaces/RequestManager.scss');
 @include meta.load-css('./interfaces/Roulette.scss');
 @include meta.load-css('./interfaces/Safe.scss');
-<<<<<<< HEAD
+@include meta.load-css('./interfaces/TachyonArray.scss');
+@include meta.load-css('./interfaces/Techweb.scss');
 @include meta.load-css('./interfaces/Telephone.scss');
+@include meta.load-css('./interfaces/Trophycase.scss');
+@include meta.load-css('./interfaces/Uplink.scss');
+@include meta.load-css('./interfaces/UtilityModulesPane.scss');
 @include meta.load-css('./interfaces/WindowsXP/System.scss');
 @include meta.load-css('./interfaces/WindowsXP/Notepad.scss');
 @include meta.load-css('./interfaces/WindowsXP/ICQ.scss');
@@ -83,13 +87,6 @@
 @include meta.load-css('./interfaces/WindowsXP/News.scss');
 @include meta.load-css('./interfaces/WindowsXP/LoginScreen.scss');
 @include meta.load-css('./interfaces/WindowsXP/Components.scss');
-=======
-@include meta.load-css('./interfaces/TachyonArray.scss');
-@include meta.load-css('./interfaces/Techweb.scss');
-@include meta.load-css('./interfaces/Trophycase.scss');
-@include meta.load-css('./interfaces/Uplink.scss');
-@include meta.load-css('./interfaces/UtilityModulesPane.scss');
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');

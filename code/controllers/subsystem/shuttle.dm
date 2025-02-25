@@ -143,11 +143,6 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/Initialize()
 	order_number = rand(1, 9000)
 
-<<<<<<< HEAD
-	for(var/pack in subtypesof(/datum/supply_pack/vampire))
-		var/datum/supply_pack/vampire/P = new pack()
-		if(!P.contains)
-=======
 	var/list/pack_processing = subtypesof(/datum/supply_pack)
 	while(length(pack_processing))
 		var/datum/supply_pack/pack = pack_processing[length(pack_processing)]
@@ -158,13 +153,8 @@ SUBSYSTEM_DEF(shuttle)
 		var/list/generated_packs = pack.generate_supply_packs()
 		if(generated_packs)
 			pack_processing += generated_packs
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 			continue
 
-<<<<<<< HEAD
-	//[Lucia] removed this because we literally don't use any of these
-	/*
-=======
 		//we have to create the pack before checking if it has 'contains' because generate_supply_packs manually sets it, therefore we cant check initial.
 		if(!pack.contains)
 			continue
@@ -185,7 +175,6 @@ SUBSYSTEM_DEF(shuttle)
 	setup_shuttles(stationary_docking_ports)
 	has_purchase_shuttle_access = init_has_purchase_shuttle_access()
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(!arrivals)
 		log_mapping("No /obj/docking_port/mobile/arrivals placed on the map!")
 	if(!emergency)
@@ -193,14 +182,8 @@ SUBSYSTEM_DEF(shuttle)
 	if(!backup_shuttle)
 		log_mapping("No /obj/docking_port/mobile/emergency/backup placed on the map!")
 	if(!supply)
-<<<<<<< HEAD
-		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
-	*/
-	return ..()
-=======
 		log_mapping("No /obj/docking_port/mobile/supply placed on the map!")
 	return SS_INIT_SUCCESS
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /datum/controller/subsystem/shuttle/proc/setup_shuttles(list/stationary)
 	for(var/obj/docking_port/stationary/port as anything in stationary)
@@ -680,13 +663,6 @@ SUBSYSTEM_DEF(shuttle)
 	if(!midpoint)
 		qdel(proposal)
 		return FALSE
-<<<<<<< HEAD
-	var/area/shuttle/transit/A = new()
-	for(var/turf/open/space/transit/T in range(4, midpoint))
-		new /turf/closed/indestructible/elevatorshaft(T)
-	A.parallax_movedir = travel_dir
-	A.contents = proposal.reserved_turfs
-=======
 
 	var/area/old_area = midpoint.loc
 	LISTASSERTLEN(old_area.turfs_to_uncontain_by_zlevel, bottomleft.z, list())
@@ -698,7 +674,6 @@ SUBSYSTEM_DEF(shuttle)
 	LISTASSERTLEN(new_area.turfs_by_zlevel, bottomleft.z, list())
 	new_area.turfs_by_zlevel[bottomleft.z] = proposal.reserved_turfs
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
 	new_transit_dock.reserved_area = proposal
 	new_transit_dock.name = "Transit for [M.shuttle_id]/[M.name]"

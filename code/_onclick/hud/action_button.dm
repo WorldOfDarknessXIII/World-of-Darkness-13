@@ -238,29 +238,6 @@
 	RegisterSignal(take_from, COMSIG_MOB_GRANTED_ACTION, PROC_REF(on_observing_action_granted))
 	RegisterSignal(take_from, COMSIG_MOB_REMOVED_ACTION, PROC_REF(on_observing_action_removed))
 
-<<<<<<< HEAD
-#define AB_MAX_COLUMNS 15
-
-/datum/hud
-	var/actionbuttons = 0
-	var/spellbuttons = 0
-
-/datum/hud/proc/ButtonNumberToScreenCoords(number, spell) // TODO : Make this zero-indexed for readabilty
-	var/row = round((number - 1)/AB_MAX_COLUMNS)
-	var/col = ((number - 1)%(AB_MAX_COLUMNS)) + 1
-
-	var/coord_col = "+[col-1]"
-//	var/coord_col_offset = 4 + 2 * col
-	if(spell)
-		var/coord_row = "[row ? row : "+0"]"
-
-		return "WEST[coord_col],SOUTH[coord_row]:+6"	//:[coord_col_offset]
-	else
-		var/coord_row = "[row ? -row : "+0"]"
-
-		return "WEST[coord_col],NORTH[coord_row]:-6"	//:[coord_col_offset]
-
-=======
 /**
  * Hide another mob's action buttons from this mob
  *
@@ -286,7 +263,6 @@
 	SIGNAL_HANDLER
 
 	action.HideFrom(src)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /atom/movable/screen/button_palette
 	desc = "<b>Drag</b> buttons to move them<br><b>Shift-click</b> any button to reset it<br><b>Alt-click any button</b> to begin binding it to a key<br><b>Alt-click this</b> to reset all buttons"

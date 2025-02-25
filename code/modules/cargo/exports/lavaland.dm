@@ -30,12 +30,6 @@
 /datum/export/lavaland/major //valuable chest/ruin loot, minor megafauna loot
 	cost = CARGO_CRATE_VALUE * 40
 	unit_name = "lava planet artifact"
-<<<<<<< HEAD
-	export_types = list(/obj/item/guardiancreator,
-						/obj/item/rod_of_asclepius,
-						/obj/item/clothing/suit/space/hardsuit/ert/paranormal,
-						/obj/item/prisoncube)
-=======
 	export_types = list(
 		/obj/item/dragons_blood,
 		/obj/item/guardian_creator/miner,
@@ -45,7 +39,6 @@
 		/obj/item/prisoncube,
 		/obj/item/rod_of_asclepius,
 	)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 //Megafauna loot, except for ash drakes
 

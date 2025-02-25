@@ -9,14 +9,7 @@
 	var/labelled = FALSE
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 
-<<<<<<< HEAD
-/obj/item/reagent_containers/blood/canconsume(mob/eater, mob/user)
-	return FALSE
-
-/obj/item/reagent_containers/blood/Initialize()
-=======
 /obj/item/reagent_containers/blood/Initialize(mapload, vol)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	. = ..()
 	if(blood_type != null)
 		reagents.add_reagent(unique_blood ? unique_blood : /datum/reagent/blood, 200, list("viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
