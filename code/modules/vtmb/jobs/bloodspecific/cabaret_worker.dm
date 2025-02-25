@@ -1,14 +1,14 @@
 
-/datum/job/vamp/citizen
-	title = "Citizen"
+/datum/job/vamp/daughterof
+	title = "Cabaret Worker"
 	faction = "Vampire"
-	total_positions = -1
-	spawn_positions = -1
+	total_positions = 4
+	spawn_positions = -4
 	supervisors = "the Traditions"
 	selection_color = "#df7058"
 	access = list()			//See /datum/job/assistant/get_access()
 	minimal_access = list()	//See /datum/job/assistant/get_access()
-	outfit = /datum/outfit/job/citizen
+	outfit = /datum/outfit/job/daughteroutfit
 	antag_rep = 7
 	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
 
@@ -18,20 +18,20 @@
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_CITIZEN
 
-	allowed_species = list("Vampire", "Ghoul", "Human", "Werewolf", "Kuei-Jin")
+	allowed_species = list("Vampire")
 
 	v_duty = "Follow the traditions of the Camarilla. Obey the Prince and their authority. The city belongs to him. Aligning yourself with your clan members would be of benefit."
-	duty = "Obey the authorities... Or don't. You are up late tonight for one reason or another."
+	duty = "You are either a Daughter of Cacophony or a Son of Discord. You work at the Cabaret and sing masterful songs yet the singing never stops within your head..."
 	minimal_masquerade = 0
-	allowed_bloodlines = list("True Brujah", "Daughters of Cacophony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff", "Old Clan Tzimisce", "Kiasyd", "Cappadocian", "Gargoyle")
+	allowed_bloodlines = list("Daughters of Cacophony")
 
-/datum/outfit/job/citizen
-	name = "Citizen"
-	jobtype = /datum/job/vamp/citizen
+/datum/outfit/job/daughteroutfit
+	name = "Cabaret Worker"
+	jobtype = /datum/job/vamp/daughterjob
 	l_pocket = /obj/item/vamp/phone
 	id = /obj/item/cockclock
 
-/datum/outfit/job/citizen/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/daughteroutfit/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(H.clane)
 		if(H.gender == MALE)
@@ -56,6 +56,6 @@
 	if(H.clane && H.clane.name != "Lasombra")
 		backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
 
-/obj/effect/landmark/start/citizen
-	name = "Citizen"
+/obj/effect/landmark/start/daughterof
+	name = "Cabaret Worker"
 	icon_state = "Assistant"

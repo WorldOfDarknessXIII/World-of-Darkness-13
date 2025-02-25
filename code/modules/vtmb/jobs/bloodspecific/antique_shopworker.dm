@@ -1,14 +1,14 @@
 
-/datum/job/vamp/citizen
-	title = "Citizen"
+/datum/job/vamp/antiqueworker
+	title = "Antique Shop Manager"
 	faction = "Vampire"
-	total_positions = -1
-	spawn_positions = -1
+	total_positions = 1
+	spawn_positions = 1
 	supervisors = "the Traditions"
 	selection_color = "#df7058"
 	access = list()			//See /datum/job/assistant/get_access()
 	minimal_access = list()	//See /datum/job/assistant/get_access()
-	outfit = /datum/outfit/job/citizen
+	outfit = /datum/outfit/job/trujahoutfit
 	antag_rep = 7
 	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
 
@@ -18,15 +18,15 @@
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_CITIZEN
 
-	allowed_species = list("Vampire", "Ghoul", "Human", "Werewolf", "Kuei-Jin")
+	allowed_species = list("Vampire")
 
 	v_duty = "Follow the traditions of the Camarilla. Obey the Prince and their authority. The city belongs to him. Aligning yourself with your clan members would be of benefit."
-	duty = "Obey the authorities... Or don't. You are up late tonight for one reason or another."
+	duty = "You are either a servant of the Del'Roh or an errant auturkis. Regardless of affiliation, you are a child of Ilyes."
 	minimal_masquerade = 0
-	allowed_bloodlines = list("True Brujah", "Daughters of Cacophony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff", "Old Clan Tzimisce", "Kiasyd", "Cappadocian", "Gargoyle")
+	allowed_bloodlines = list("True Brujah")
 
-/datum/outfit/job/citizen
-	name = "Citizen"
+/datum/outfit/job/trujahoutfit
+	name = "Antique Shop Worker"
 	jobtype = /datum/job/vamp/citizen
 	l_pocket = /obj/item/vamp/phone
 	id = /obj/item/cockclock

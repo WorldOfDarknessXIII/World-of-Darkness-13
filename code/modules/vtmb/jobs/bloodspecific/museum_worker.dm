@@ -1,9 +1,9 @@
 
 /datum/job/vamp/citizen
-	title = "Citizen"
+	title = "Museum Groundskeeper"
 	faction = "Vampire"
-	total_positions = -1
-	spawn_positions = -1
+	total_positions = 4
+	spawn_positions = 4
 	supervisors = "the Traditions"
 	selection_color = "#df7058"
 	access = list()			//See /datum/job/assistant/get_access()
@@ -18,12 +18,12 @@
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_CITIZEN
 
-	allowed_species = list("Vampire", "Ghoul", "Human", "Werewolf", "Kuei-Jin")
+	allowed_species = list("Vampire")
 
 	v_duty = "Follow the traditions of the Camarilla. Obey the Prince and their authority. The city belongs to him. Aligning yourself with your clan members would be of benefit."
 	duty = "Obey the authorities... Or don't. You are up late tonight for one reason or another."
 	minimal_masquerade = 0
-	allowed_bloodlines = list("True Brujah", "Daughters of Cacophony", "Salubri", "Baali", "Brujah", "Tremere", "Ventrue", "Nosferatu", "Gangrel", "Toreador", "Malkavian", "Banu Haqim", "Giovanni", "Ministry", "Tzimisce", "Lasombra", "Caitiff", "Old Clan Tzimisce", "Kiasyd", "Cappadocian", "Gargoyle")
+	allowed_bloodlines = list("Kiasyd")
 
 /datum/outfit/job/citizen
 	name = "Citizen"
