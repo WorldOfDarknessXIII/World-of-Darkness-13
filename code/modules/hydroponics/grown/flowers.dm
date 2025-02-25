@@ -213,17 +213,9 @@
 	icon_grow = "moonflower-grow"
 	icon_dead = "sunflower-dead"
 	product = /obj/item/food/grown/moonflower
-<<<<<<< HEAD
-	genes = list(/datum/plant_gene/trait/glow/purple)
-	mutatelist = list()
-	reagents_add = list(\
-	/*/datum/reagent/consumable/ethanol/moonshine = 0.2,*/\
-	/datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
-=======
 	genes = list(/datum/plant_gene/trait/glow/purple, /datum/plant_gene/trait/preserved)
 	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/ethanol/moonshine = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	rarity = 15
 	graft_gene = /datum/plant_gene/trait/glow/purple
 

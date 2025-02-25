@@ -189,7 +189,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	toggles = savefile.get_entry("toggles", toggles)
 	ignoring = savefile.get_entry("ignoring", ignoring)
 
-<<<<<<< HEAD
 	READ_FILE(S["tgui_fancy"], tgui_fancy)
 	READ_FILE(S["tgui_lock"], tgui_lock)
 	READ_FILE(S["buttons_locked"], buttons_locked)
@@ -228,10 +227,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	check_keybindings()
 	// hearted
 	READ_FILE(S["hearted_until"], hearted_until)
-=======
 	// OOC commendations
 	hearted_until = savefile.get_entry("hearted_until", hearted_until)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(hearted_until > world.realtime)
 		hearted = TRUE
 	//favorite outfits
@@ -259,7 +256,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
 
 	//Sanitize
-<<<<<<< HEAD
 	asaycolor		= sanitize_ooccolor(sanitize_hexcolor(asaycolor, 6, 1, initial(asaycolor)))
 	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
@@ -293,14 +289,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	pda_style		= sanitize_inlist(pda_style, GLOB.pda_styles, initial(pda_style))
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 	key_bindings 	= sanitize_keybindings(key_bindings)
-=======
 	lastchangelog = sanitize_text(lastchangelog, initial(lastchangelog))
 	default_slot = sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles = sanitize_integer(toggles, 0, SHORT_REAL_LIMIT-1, initial(toggles))
 	be_special = sanitize_be_special(SANITIZE_LIST(be_special))
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	if(needs_update >= 0) //save the updated version
 		var/old_default_slot = default_slot
@@ -332,7 +326,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (preference.savefile_identifier != PREFERENCE_PLAYER)
 			continue
 
-<<<<<<< HEAD
 	//general preferences
 	WRITE_FILE(S["asaycolor"], asaycolor)
 	WRITE_FILE(S["ooccolor"], ooccolor)
@@ -376,7 +369,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["pda_color"], pda_color)
 	WRITE_FILE(S["key_bindings"], key_bindings)
 	WRITE_FILE(S["hearted_until"], (hearted_until > world.realtime ? hearted_until : null))
-=======
 		if (!(preference.type in recently_updated_keys))
 			continue
 
@@ -395,7 +387,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	savefile.set_entry("hearted_until", (hearted_until > world.realtime ? hearted_until : null))
 	savefile.set_entry("favorite_outfits", favorite_outfits)
 	savefile.save()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	return TRUE
 
 /datum/preferences/proc/load_character(slot)
@@ -445,7 +436,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["werewolf_eye_color"], werewolf_eye_color)
 
 	//Character
-<<<<<<< HEAD
 	READ_FILE(S["slotlocked"], slotlocked)
 	READ_FILE(S["diablerist"], diablerist)
 	READ_FILE(S["auspice_level"], auspice_level)
@@ -537,9 +527,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		READ_FILE(S["feature_human_tail"], features["tail_human"])
 		READ_FILE(S["feature_human_ears"], features["ears"])
-=======
 	randomise = save_data?["randomise"]
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	//Load prefs
 	job_preferences = save_data?["job_preferences"]
@@ -553,7 +541,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		update_character(needs_update, save_data) //needs_update == savefile_version if we need an update (positive integer)
 
 	//Sanitize
-<<<<<<< HEAD
 	real_name = reject_bad_name(real_name)
 	werewolf_name = reject_bad_name(werewolf_name)
 	gender = sanitize_gender(gender)
@@ -584,13 +571,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!features["ethcolor"] || features["ethcolor"] == "#000")
 		features["ethcolor"] = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
 
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	randomise = SANITIZE_LIST(randomise)
 	job_preferences = SANITIZE_LIST(job_preferences)
 	all_quirks = SANITIZE_LIST(all_quirks)
 
-<<<<<<< HEAD
 	if(gender == MALE)
 		hairstyle			= sanitize_inlist(hairstyle, GLOB.hairstyles_male_list)
 		facial_hairstyle			= sanitize_inlist(facial_hairstyle, GLOB.facial_hairstyles_male_list)
@@ -695,8 +679,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	persistent_scars = sanitize_integer(persistent_scars)
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	//Validate job prefs
 	for(var/j in job_preferences)
 		if(job_preferences[j] != JP_LOW && job_preferences[j] != JP_MEDIUM && job_preferences[j] != JP_HIGH)
@@ -776,7 +758,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["auspice"]			, auspice.name)
 
 	//Character
-<<<<<<< HEAD
 	WRITE_FILE(S["slotlocked"]			, slotlocked)
 	WRITE_FILE(S["diablerist"]			, diablerist)
 	WRITE_FILE(S["humanity"]			, humanity)
@@ -866,9 +847,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["yin"], yin)
 	WRITE_FILE(S["chi_types"], chi_types)
 	WRITE_FILE(S["chi_levels"], chi_levels)
-=======
 	save_data["randomise"] = randomise
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	//Write prefs
 	save_data["job_preferences"] = job_preferences

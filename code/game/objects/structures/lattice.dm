@@ -18,24 +18,9 @@
 	var/build_material = /obj/item/stack/rods
 	var/list/give_turf_traits = list(TRAIT_CHASM_STOPPED, TRAIT_HYPERSPACE_STOPPED)
 
-<<<<<<< HEAD
 /obj/structure/lattice/pentex
 	desc = "Looks sturdy enough and made of advanced materials."
 	icon = 'code/modules/wod13/pentexcatwalk.dmi'
-
-=======
-/obj/structure/lattice/Initialize(mapload)
-	. = ..()
-	if(length(give_turf_traits))
-		give_turf_traits = string_list(give_turf_traits)
-		AddElement(/datum/element/give_turf_traits, give_turf_traits)
-	AddElement(/datum/element/footstep_override, footstep = FOOTSTEP_CATWALK)
-
-/datum/armor/structure_lattice
-	melee = 50
-	fire = 80
-	acid = 50
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/structure/lattice/examine(mob/user)
 	. = ..()

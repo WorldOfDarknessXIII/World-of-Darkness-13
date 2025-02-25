@@ -4,12 +4,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "riverwater_motion"
 	baseturfs = /turf/open/chasm/lavaland
-<<<<<<< HEAD
-//	initial_gas_mix = OPENTURF_LOW_PRESSURE
-//	planetary_atmos = TRUE
-=======
 	planetary_atmos = TRUE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	slowdown = 1
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null //needs a splashing sound one day.

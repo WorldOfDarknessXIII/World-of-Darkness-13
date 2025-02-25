@@ -1,14 +1,9 @@
 #define FREQ_LISTENING (1<<0)
 
 /obj/item/radio
-<<<<<<< HEAD
 	icon = 'icons/obj/radio.dmi'
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	name = "city bounced radio"
-=======
-	icon = 'icons/obj/devices/voice.dmi'
-	name = "station bounced radio"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	icon_state = "walkietalkie"
 	inhand_icon_state = "walkietalkie"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -382,14 +377,10 @@
 	// Okay, the signal was never processed, send a mundane broadcast.
 	signal.data["compression"] = 0
 	signal.transmission_method = TRANSMISSION_RADIO
-<<<<<<< HEAD
 
 	//WoD13 edit! We want the radio to reach most of the z-levels, not just the one it's on.
 	//Ugly hardcoding; z-level 1 is the splashscreen (no signal), 2 is sewers, 3 is city, 4 is upper floors, 5 is special, 6 is Penumbra (no signal)
 	signal.levels = list(2, 3, 4, 5)
-=======
-	signal.levels = SSmapping.get_connected_levels(T)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	signal.broadcast()
 
 /obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)

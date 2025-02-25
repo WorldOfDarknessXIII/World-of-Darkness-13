@@ -19,13 +19,10 @@
 	//Can this plating have reinforced floors placed ontop of it
 	var/attachment_holes = TRUE
 
-<<<<<<< HEAD
 /turf/open/floor/plating/setup_broken_states()
 	return list("dirt")
-=======
 	//Used for upgrading this into R-Plating
 	var/upgradable = TRUE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	/// If true, will allow tiles to replace us if the tile [wants to] [/obj/item/stack/tile/var/replace_plating].
 	/// And if our baseturfs are compatible.

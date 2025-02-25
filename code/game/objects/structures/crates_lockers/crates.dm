@@ -238,7 +238,6 @@
 	/// Minimum temperature of the internal air mixture
 	var/minimum_temperature = T0C - 60
 
-<<<<<<< HEAD
 //Snowflake organ freezer code
 //Order is important, since we check source, we need to do the check whenever we have all the organs in the crate
 
@@ -266,21 +265,6 @@
 	anchored = TRUE
 
 
-=======
-/obj/structure/closet/crate/freezer/process_internal_air(seconds_per_tick)
-	if(opened)
-		var/datum/gas_mixture/current_exposed_air = loc.return_air()
-		if(!current_exposed_air)
-			return
-		// The internal air won't cool down the external air when the freezer is opened.
-		internal_air.temperature = max(current_exposed_air.temperature, internal_air.temperature)
-		return ..()
-	else
-		if(internal_air.temperature <= minimum_temperature)
-			return
-		var/temperature_decrease_this_tick = min(cooling_rate_per_second * seconds_per_tick, internal_air.temperature - minimum_temperature)
-		internal_air.temperature -= temperature_decrease_this_tick
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/structure/closet/crate/freezer/blood
 	name = "blood freezer"

@@ -155,7 +155,6 @@
 				unbuckle_all_mobs()
 				kill_count += 1
 
-<<<<<<< HEAD
 		playsound(src, 'sound/weapons/guillotine.ogg', 100, TRUE)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
 			var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
@@ -184,33 +183,6 @@
 			log_combat(user, H, "dropped the blade on", src, " non-fatally")
 			H.emote("scream")
 
-=======
-				var/blood_overlay = "bloody"
-
-				if (kill_count == 2)
-					blood_overlay = "bloodier"
-				else if (kill_count > 2)
-					blood_overlay = "bloodiest"
-
-				blood_overlay = "guillotine_" + blood_overlay + "_overlay"
-				cut_overlays()
-				add_overlay(mutable_appearance(icon, blood_overlay))
-
-				// The crowd is pleased
-				// The delay is to make large crowds have a longer lasting applause
-				var/delay_offset = 0
-				for(var/mob/living/carbon/human/spectator in viewers(src, 7))
-					addtimer(CALLBACK(spectator, TYPE_PROC_REF(/mob/, emote), "clap"), delay_offset * 0.3)
-					delay_offset++
-			else
-				victim.apply_damage(15 * blade_sharpness, BRUTE, head, attacking_item = src)
-				log_combat(user, victim, "dropped the blade on", src, " non-fatally")
-				victim.emote("scream")
-
-			if (blade_sharpness > 1)
-				blade_sharpness -= 1
-
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	blade_status = GUILLOTINE_BLADE_DROPPED
 	icon_state = "guillotine"
 

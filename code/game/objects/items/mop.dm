@@ -29,26 +29,6 @@
 	. = ..()
 	mopspeed = modify_fantasy_variable("mopspeed", mopspeed, -bonus)
 
-<<<<<<< HEAD
-/obj/item/mop/proc/clean(turf/A, mob/living/cleaner)
-	var/really = FALSE
-	for(var/obj/effect/decal/cleanable/blood/B in A)
-		if(A)
-			really = TRUE
-	if(really)
-		cleaner.total_cleaned += 1
-//	var/datum/preferences/P = GLOB.preferences_datums[ckey(cleaner.key)]
-//	P.exper = min(calculate_mob_max_exper(cleaner), P.exper+1)
-	if(reagents.has_reagent(/datum/reagent/water, 1) || reagents.has_reagent(/datum/reagent/water/holywater, 1) || reagents.has_reagent(/datum/reagent/consumable/ethanol/vodka, 1) || reagents.has_reagent(/datum/reagent/space_cleaner, 1))
-		// If there's a cleaner with a mind, let's gain some experience!
-		if(cleaner?.mind)
-			var/total_experience_gain = 0
-			for(var/obj/effect/decal/cleanable/cleanable_decal in A)
-				//it is intentional that the mop rounds xp but soap does not, USE THE SACRED TOOL
-				total_experience_gain += max(round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT, 1), 0)
-			cleaner.mind.adjust_experience(/datum/skill/cleaning, total_experience_gain)
-		A.wash(CLEAN_SCRUB)
-=======
 /obj/item/mop/remove_fantasy_bonuses(bonus)
 	mopspeed = reset_fantasy_variable("mopspeed", mopspeed)
 	return ..()
@@ -58,7 +38,6 @@
 	AddComponent(/datum/component/cleaner, mopspeed, pre_clean_callback=CALLBACK(src, PROC_REF(should_clean)), on_cleaned_callback=CALLBACK(src, PROC_REF(apply_reagents)))
 	create_reagents(max_reagent_volume)
 	GLOB.janitor_devices += src
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/mop/Destroy(force)
 	GLOB.janitor_devices -= src

@@ -191,9 +191,9 @@
 /obj/structure/punji_sticks/spikes
 	name = "wooden spikes"
 	icon_state = "woodspike"
-<<<<<<< HEAD
 
 /////////BONFIRES//////////
+//why is this here
 
 /obj/structure/bonfire
 	name = "bonfire"
@@ -337,5 +337,3 @@
 /obj/structure/bonfire/unbuckle_mob(mob/living/buckled_mob, force=FALSE)
 	if(..())
 		buckled_mob.pixel_y -= 13
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

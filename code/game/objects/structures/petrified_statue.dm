@@ -4,16 +4,10 @@
 	icon_state = "human_male"
 	density = TRUE
 	anchored = TRUE
-<<<<<<< HEAD
-//	max_integrity = 200
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
-	var/timer = 7 SECONDS //eventually the person will be freed
-=======
 	max_integrity = 200
 	// Should we leave a brain behind when the statue is wrecked?
 	var/brain = TRUE
 	var/timer = 480 //eventually the person will be freed
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	var/mob/living/petrified_mob
 
 /obj/structure/statue/petrified/relaymove()
@@ -115,7 +109,6 @@
 /mob/proc/petrify(statue_timer)
 	return
 
-<<<<<<< HEAD
 /mob/living/carbon/human/petrify(statue_timer, clane_type)
 	if(!isturf(loc))
 		return FALSE
@@ -153,25 +146,16 @@
 	return TRUE
 
 /mob/living/simple_animal/hostile/gargoyle/petrify(statue_timer)
-=======
-/mob/living/carbon/human/petrify(statue_timer, save_brain, colorlist)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(!isturf(loc))
 		return FALSE
 	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer, save_brain)
 	S.name = "statue of [name]"
-<<<<<<< HEAD
-	S.icon = icon
-	S.icon_state = icon_state
-	S.color = "#000000"
-=======
 	ADD_TRAIT(src, TRAIT_NOBLOOD, MAGIC_TRAIT)
 	S.copy_overlays(src)
 	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 	if(colorlist)
 		newcolor = colorlist
 	S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	return TRUE
 
 /mob/living/basic/pet/dog/corgi/petrify(statue_timer)

@@ -11,17 +11,6 @@
 	potency = 20
 	growthstages = 1
 	instability = 40
-<<<<<<< HEAD
-	growing_icon = 'icons/obj/power.dmi'
-	icon_grow = "smes" // Uses one growth icons set for all the subtypes
-	icon_dead = "smes" // Same for the dead icon
-	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/cannabis/rainbow,
-						/obj/item/seeds/cannabis/death,
-						/obj/item/seeds/cannabis/white,
-						/obj/item/seeds/cannabis/ultimate)
-	reagents_add = list(/datum/reagent/drug/cannabis = 0.15, /datum/reagent/toxin/lipolicide = 0.35) // gives u the munchies
-=======
 	growing_icon = 'icons/obj/service/hydroponics/growing.dmi'
 	icon_grow = "cannabis-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "cannabis-dead" // Same for the dead icon
@@ -32,7 +21,6 @@
 		/obj/item/seeds/cannabis/ultimate,
 	)
 	reagents_add = list(/datum/reagent/drug/cannabis = 0.15)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 
 /obj/item/seeds/cannabis/rainbow
@@ -103,11 +91,7 @@
 
 /obj/item/food/grown/cannabis
 	seed = /obj/item/seeds/cannabis
-<<<<<<< HEAD
-	icon = 'icons/obj/power.dmi'
-=======
 	icon = 'icons/obj/service/hydroponics/harvest.dmi'
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	name = "cannabis leaf"
 	desc = "Recently legalized in most galaxies."
 	icon_state = "cannabis"

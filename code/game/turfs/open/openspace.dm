@@ -1,14 +1,6 @@
 /turf/open/openspace
 	name = "open space"
 	desc = "Watch your step!"
-<<<<<<< HEAD
-	icon_state = "open space"
-	baseturfs = /turf/open/openspace
-//	CanAtmosPassVertical = ATMOS_PASS_YES
-	baseturfs = /turf/open/openspace
-	intact = FALSE //this means wires go on top
-	//mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-=======
 	// We don't actually draw openspace, but it needs to have color
 	// In its icon state so we can count it as a "non black" tile
 	icon_state = MAP_SWITCH("pure_white", "invisible")
@@ -20,7 +12,6 @@
 	plane = TRANSPARENT_FLOOR_PLANE
 	layer = SPACE_LAYER
 	rust_resistance = RUST_RESISTANCE_ABSOLUTE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 
@@ -34,16 +25,12 @@
 // I am so sorry
 /turf/open/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
-<<<<<<< HEAD
-//	vis_contents += GLOB.openspace_backdrop_one_for_all //Special grey square for projecting backdrop darkness filter on it.
-=======
 	if(PERFORM_ALL_TESTS(focus_only/openspace_clear) && !GET_TURF_BELOW(src))
 		stack_trace("[src] was inited as openspace with nothing below it at ([x], [y], [z])")
 	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_created))
 	var/area/our_area = loc
 	if(istype(our_area, /area/space))
 		force_no_gravity = TRUE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/openspace/LateInitialize()
@@ -60,10 +47,6 @@
  */
 /turf/open/openspace/Enter(atom/movable/movable, atom/oldloc)
 	. = ..()
-<<<<<<< HEAD
-	AddElement(/datum/element/turf_z_transparency, FALSE)
-//	add_filter("z_level_blur", 1, list(type = "blur", size = 0.75))
-=======
 	if(.)
 		//higher priority than CURRENTLY_Z_FALLING so the movable doesn't fall on Entered()
 		movable.set_currently_z_moving(CURRENTLY_Z_FALLING_FROM_MOVE)
@@ -86,7 +69,6 @@
 	if(QDELETED(movable) || movable.loc != src)
 		return
 	zFall(movable)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /turf/open/openspace/can_have_cabling()
 	if(locate(/obj/structure/lattice/catwalk, src))

@@ -51,14 +51,7 @@
 	///Buff given when a hand-crafted version of this item is consumed. Randomized according to crafting_complexity if not assigned.
 	var/datum/status_effect/food/crafted_food_buff = null
 
-<<<<<<< HEAD
-	var/eatsound = 'sound/items/eatfood.ogg'
-
-/obj/item/food/Initialize()
-	. = ..()
-=======
 /obj/item/food/Initialize(mapload)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(food_reagents)
 		food_reagents = string_assoc_list(food_reagents)
 	. = ..()

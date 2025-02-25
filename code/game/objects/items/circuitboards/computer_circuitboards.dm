@@ -19,21 +19,10 @@
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/computer/upload/borg
 
-<<<<<<< HEAD
 /obj/item/circuitboard/computer/card
 	name = "ID Console (Computer Board)"
 	icon_state = "command"
 	build_path = /obj/machinery/computer/card
-=======
-/obj/item/circuitboard/computer/bsa_control
-	name = "Bluespace Artillery Controls"
-	build_path = /obj/machinery/computer/bsa_control
-
-/obj/item/circuitboard/computer/accounting
-	name = "Account Lookup Console"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/computer/accounting
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/circuitboard/computer/bankmachine
 	name = "Bank Machine Console"
@@ -220,17 +209,10 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/monitor
 
-<<<<<<< HEAD
 /obj/item/circuitboard/computer/powermonitor/secret
 	name = "Outdated Power Monitor (Computer Board)" //Variant used on ruins to prevent them from showing up on PDA's.
 	icon_state = "engineering"
 	build_path = /obj/machinery/computer/monitor/secret
-=======
-/obj/item/circuitboard/computer/sat_control
-	name = "Satellite Network Control"
-	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/computer/sat_control
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/circuitboard/computer/solar_control
 	name = "Solar Control"  //name fixed 250810
@@ -303,14 +285,11 @@
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/computer/pod
 
-<<<<<<< HEAD
-=======
 /obj/item/circuitboard/computer/slot_machine
 	name = "Slot Machine"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/computer/slot_machine
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 /obj/item/circuitboard/computer/swfdoor
 	name = "Magix"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
@@ -596,13 +575,8 @@
 	build_path = /obj/machinery/computer/security/mining
 
 /obj/item/circuitboard/computer/mining_shuttle
-<<<<<<< HEAD
 	name = "Elevator (Computer Board)"
 	icon_state = "supply"
-=======
-	name = "Mining Shuttle"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	build_path = /obj/machinery/computer/shuttle/mining
 
 /obj/item/circuitboard/computer/mining_shuttle/common

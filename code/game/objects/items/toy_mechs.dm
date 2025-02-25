@@ -442,22 +442,6 @@
  */
 /obj/item/toy/mecha/proc/check_battle_start(mob/living/carbon/user, obj/item/toy/mecha/attacker, mob/living/carbon/target)
 	if(attacker?.in_combat)
-<<<<<<< HEAD
-		to_chat(user, "<span class='notice'>[target?target.p_their() : "Your" ] [attacker.name] is in combat.</span>")
-		to_chat(target, "<span class='notice'>Your [attacker.name] is in combat.</span>")
-		return FALSE
-	if(in_combat)
-		to_chat(user, "<span class='notice'>Your [name] is in combat.</span>")
-		to_chat(target, "<span class='notice'>[target.p_their()] [name] is in combat.</span>")
-		return FALSE
-	if(attacker && attacker.timer > world.time)
-		to_chat(user, "<span class='notice'>[target?target.p_their() : "Your" ] [attacker.name] isn't ready for battle.</span>")
-		to_chat(target, "<span class='notice'>Your [attacker.name] isn't ready for battle.</span>")
-		return FALSE
-	if(timer > world.time)
-		to_chat(user, "<span class='notice'>Your [name] isn't ready for battle.</span>")
-		to_chat(target, "<span class='notice'>[target.p_their()] [name] isn't ready for battle.</span>")
-=======
 		to_chat(user, span_notice("[target?target.p_their() : "Your" ] [attacker.name] is in combat."))
 		to_chat(target, span_notice("Your [attacker.name] is in combat."))
 		return FALSE
@@ -472,7 +456,6 @@
 	if(timer > world.time)
 		to_chat(user, span_notice("Your [name] isn't ready for battle."))
 		to_chat(target, span_notice("[user.p_their()] [name] isn't ready for battle."))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		return FALSE
 
 	return TRUE

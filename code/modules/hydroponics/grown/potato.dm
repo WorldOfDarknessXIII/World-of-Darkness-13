@@ -64,11 +64,7 @@
 	name = "sweet potato"
 	desc = "It's sweet."
 	icon_state = "sweetpotato"
-<<<<<<< HEAD
-	//distill_reagent = /datum/reagent/consumable/ethanol/sbiten
-=======
 	distill_reagent = /datum/reagent/consumable/ethanol/sbiten
 
 /obj/item/food/grown/potato/sweet/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/yakiimo, rand(15 SECONDS, 35 SECONDS), TRUE, TRUE)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

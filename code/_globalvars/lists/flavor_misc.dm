@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //Preferences stuff
 	//Hairstyles
 GLOBAL_LIST_EMPTY(hairstyles_list)			//stores /datum/sprite_accessory/hair indexed by name
@@ -42,8 +41,6 @@ GLOBAL_LIST_EMPTY(moth_markings_list)
 GLOBAL_LIST_EMPTY(caps_list)
 GLOBAL_LIST_EMPTY(tails_list_monkey)
 
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 GLOBAL_LIST_INIT(color_list_ethereal, list(
 	"Blue" = "#3399ff",
 	"Bright Yellow" = "#ffff99",

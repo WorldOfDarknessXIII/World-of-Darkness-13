@@ -15,10 +15,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 /obj/structure/extinguisher_cabinet/Initialize(mapload, ndir, building)
 	. = ..()
 	if(building)
-<<<<<<< HEAD
 		setDir(ndir)
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		opened = TRUE
 	else
 		stored_extinguisher = new /obj/item/extinguisher(src)

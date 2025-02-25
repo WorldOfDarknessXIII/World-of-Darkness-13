@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-//wip wip wup
-GLOBAL_LIST_EMPTY(las_mirrors)
-=======
 
 // Normal Mirrors
 
@@ -18,7 +14,6 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 #define INERT_MIRROR_OPTIONS list(CHANGE_HAIR, CHANGE_BEARD)
 #define PRIDE_MIRROR_OPTIONS list(CHANGE_HAIR, CHANGE_BEARD, CHANGE_RACE, CHANGE_SEX, CHANGE_EYES)
 #define MAGIC_MIRROR_OPTIONS list(CHANGE_HAIR, CHANGE_BEARD, CHANGE_RACE, CHANGE_SEX, CHANGE_EYES, CHANGE_NAME)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/structure/mirror
 	name = "mirror"
@@ -29,7 +24,6 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 	density = FALSE
 	anchored = TRUE
 	integrity_failure = 0.5
-<<<<<<< HEAD
 	var/datum/weakref/ref
 	vis_flags = VIS_HIDE
 	var/timerid = null
@@ -70,19 +64,6 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 /obj/structure/mirror/Destroy()
 	. = ..()
 	GLOB.las_mirrors -= src
-=======
-	max_integrity = 200
-	var/list/mirror_options = INERT_MIRROR_OPTIONS
-
-	///Flags this race must have to be selectable with this type of mirror.
-	var/race_flags = MIRROR_MAGIC
-	///List of all Races that can be chosen, decided by its Initialize.
-	var/list/selectable_races = list()
-
-/obj/structure/mirror/Initialize(mapload)
-	. = ..()
-	update_choices()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/structure/mirror/Destroy()
 	mirror_options = null
@@ -230,7 +211,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		if(new_mutantcolor)
 			var/list/mutant_hsv = rgb2hsv(new_mutantcolor)
 
-<<<<<<< HEAD
 		//Sorry, you can't see yourself in front of the mirror!
 		if(H.clane)
 			if(H.clane.name == "Lasombra")
@@ -238,14 +218,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 		//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
 		//this is largely copypasted from there.
-=======
-			if(mutant_hsv[3] >= 50) // mutantcolors must be bright
-				race_changer.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
-				race_changer.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
-			else
-				to_chat(race_changer, span_notice("Invalid color. Your color is not bright enough."))
-				return TRUE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	race_changer.update_body(is_creating = TRUE)
 	race_changer.update_mutations_overlay() // no hulk lizard
@@ -297,34 +269,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		return list()// no message spam
 	return ..()
 
-<<<<<<< HEAD
-/obj/structure/mirror/obj_break(damage_flag, mapload)
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
-		icon_state = "mirror_broke"
-		if(!mapload)
-			playsound(src, "shatter", 70, TRUE)
-		if(desc == initial(desc))
-			desc = "Oh no, seven years of bad luck!"
-		broken = TRUE
-		if(!ref)
-			var/obj/effect/reflection/reflection = new(src.loc)
-			reflection.setup_visuals(src)
-			ref = WEAKREF(reflection)
-		var/obj/effect/reflection/reflection = ref.resolve()
-		if(istype(reflection))
-			reflection.alpha_icon_state = "mirror_mask_broken"
-			reflection.update_mirror_filters()
-
-/obj/structure/mirror/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!disassembled)
-			new /obj/item/shard( src.loc )
-	var/obj/effect/reflection/reflection = ref.resolve()
-	if(istype(reflection))
-		qdel(reflection)
-		ref = null
-	qdel(src)
-=======
 /obj/structure/mirror/attacked_by(obj/item/I, mob/living/user)
 	if(broken || !istype(user) || !I.force)
 		return ..()
@@ -360,7 +304,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		new /obj/item/shard(loc)
 	else
 		new /obj/item/wallframe/mirror(loc)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/structure/mirror/welder_act(mob/living/user, obj/item/I)
 	..()

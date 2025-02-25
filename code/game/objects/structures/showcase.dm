@@ -102,19 +102,10 @@
 	desc = "A stand with a model of the perfect Nanotrasen Employee bolted to it. Signs indicate it is robustly genetically engineered, as well as being ruthlessly loyal."
 
 /obj/structure/showcase/machinery/tv
-<<<<<<< HEAD
 	name = "\improper TV"
 	desc = "A slightly battered looking TV. Various infomercials play on a loop, accompanied by a jaunty tune."
 	icon = 'code/modules/wod13/props.dmi'
 	icon_state = "tv_news"
-
-
-=======
-	name = "\improper Nanotrasen corporate newsfeed"
-	desc = "A slightly battered looking TV. Various Nanotrasen infomercials play on a loop, accompanied by a jaunty tune."
-	icon = 'icons/obj/machines/computer.dmi'
-	icon_state = "television"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/structure/showcase/machinery/signal_decrypter
 	name = "subsystem signal decrypter"

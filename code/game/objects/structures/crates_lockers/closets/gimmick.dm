@@ -8,11 +8,7 @@
 	open_sound_volume = 25
 	close_sound_volume = 50
 	max_integrity = 70
-<<<<<<< HEAD
 	icon = 'icons/obj/closet_high.dmi'
-=======
-	door_anim_time = 0 // no animation
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/structure/closet/acloset
 	name = "strange closet"

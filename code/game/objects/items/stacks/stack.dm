@@ -28,15 +28,6 @@
 	var/is_cyborg = FALSE
 	/// Related to above. If present, the energy we draw from when using stack items, for cyborgs
 	var/datum/robot_energy_storage/source
-<<<<<<< HEAD
-	//[Lucia] - this is defined for all /obj/item/ instances in code\modules\wod13\lombard.dm
-	cost = 1 // How much energy from storage it costs
-	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
-	var/full_w_class = WEIGHT_CLASS_NORMAL //The weight class the stack should have at amount > 2/3rds max_amount
-	var/novariants = TRUE //Determines whether the item should update it's sprites based on amount.
-	var/list/mats_per_unit //list that tells you how much is in a single unit.
-	///Datum material type that this stack is made of
-=======
 	/// Related to above. How much energy it costs from storage to use stack items
 	var/cost = 1
 	/// This path and its children should merge with this stack, defaults to src.type
@@ -48,7 +39,6 @@
 	/// List that tells you how much is in a single unit.
 	var/list/mats_per_unit
 	/// Datum material type that this stack is made of
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	var/material_type
 	// NOTE: When adding grind_results, the amounts should be for an INDIVIDUAL ITEM -
 	// these amounts will be multiplied by the stack size in on_grind()
@@ -344,15 +334,6 @@
 			icon_state = initial(recipe.result_type.icon_state),
 		)
 
-<<<<<<< HEAD
-			//BubbleWrap - so newly formed boxes are empty
-			if(istype(O, /obj/item/storage))
-				for (var/obj/item/I in O)
-					qdel(I)
-			//BubbleWrap END
-			return TRUE
-	*/
-=======
 		if(recipe.desc)
 			option.info = recipe.desc
 
@@ -485,7 +466,6 @@
 /// Run special logic on created items after they've been successfully crafted.
 /obj/item/stack/proc/on_item_crafted(mob/builder, atom/created)
 	return
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/stack/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, amount))

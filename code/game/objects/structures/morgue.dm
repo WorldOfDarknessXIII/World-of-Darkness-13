@@ -470,13 +470,9 @@ GLOBAL_LIST_EMPTY(crematoriums)
 
 		call_dharma("disrespect", user)
 		for(var/mob/living/M in conts)
-<<<<<<< HEAD
-			if(M.stat != DEAD)
-=======
 			if(M.incorporeal_move) //can't cook revenants!
 				continue
 			if (M.stat != DEAD)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 				M.emote("scream")
 				if(user)
 					if(isnpc(M) && !iskindred(M))
@@ -493,15 +489,10 @@ GLOBAL_LIST_EMPTY(crematoriums)
 					HM.AdjustMasquerade(1)
 			else
 				M.log_message("was cremated", LOG_ATTACK)
-<<<<<<< HEAD
-			if(M.stat != DEAD)		//So it's the bug which causes to loose humanity if burning corpses
-				M.death(1)
-=======
 
 			if(user.stat != DEAD)
 				user.investigate_log("has died from being cremated.", INVESTIGATE_DEATHS)
 			M.death(TRUE)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 			if(M) //some animals get automatically deleted on death.
 				M.ghostize()
 				qdel(M)

@@ -86,7 +86,6 @@
 
 /obj/item/storage/belt/holster/detective/Initialize(mapload)
 	. = ..()
-<<<<<<< HEAD
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 4
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
@@ -104,30 +103,6 @@
 		/obj/item/ammo_box/magazine/glock9mm,
 		/obj/item/ammo_box/magazine/glock45acp,	,
 		))
-=======
-	atom_storage.max_slots = 3
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.set_holdable(list(
-		/obj/item/gun/ballistic/automatic/pistol,
-		/obj/item/ammo_box/magazine/m9mm, // Pistol magazines.
-		/obj/item/ammo_box/magazine/m9mm_aps,
-		/obj/item/ammo_box/magazine/m10mm,
-		/obj/item/ammo_box/magazine/m45,
-		/obj/item/ammo_box/magazine/m50,
-		/obj/item/gun/ballistic/revolver,
-		/obj/item/ammo_box/c38, // Revolver speedloaders.
-		/obj/item/ammo_box/a357,
-		/obj/item/ammo_box/strilka310,
-		/obj/item/ammo_box/magazine/toy/pistol,
-		/obj/item/gun/energy/e_gun/mini,
-		/obj/item/gun/energy/disabler,
-		/obj/item/gun/energy/dueling,
-		/obj/item/gun/energy/laser/thermal,
-		/obj/item/gun/energy/laser/captain,
-		/obj/item/gun/energy/e_gun/hos,
-		/obj/item/gun/ballistic/rifle/boltaction, //fits if you make it an obrez
-	))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/storage/belt/holster/detective/full/PopulateContents()
 	generate_items_inside(list(

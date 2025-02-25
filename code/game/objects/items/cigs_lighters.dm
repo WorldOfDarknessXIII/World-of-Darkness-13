@@ -170,9 +170,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/chem_volume = 30
 	/// The reagents that this cigarette starts with.
 	var/list/list_reagents = list(/datum/reagent/drug/nicotine = 15)
-<<<<<<< HEAD
-	var/lung_harm = 0.1 //How bad it is for you //Edited to lower from 1 to 0.1
-=======
 	/// Should we smoke all of the chems in the cig before it runs out. Splits each puff to take a portion of the overall chems so by the end you'll always have consumed all of the chems inside.
 	var/smoke_all = FALSE
 	/// How much damage this deals to the lungs per drag.
@@ -187,7 +184,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	VAR_PRIVATE/obj/effect/abstract/particle_holder/mob_smoke
 	/// How long the current mob has been smoking this cigarette
 	VAR_FINAL/how_long_have_we_been_smokin = 0 SECONDS
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/cigarette/Initialize(mapload)
 	. = ..()
@@ -385,7 +381,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	QDEL_NULL(cig_smoke)
 	QDEL_NULL(mob_smoke)
 
-<<<<<<< HEAD
 /obj/item/clothing/mask/cigarette/proc/handle_reagents()
 	if(reagents.total_volume)
 		var/to_smoke = REAGENTS_METABOLISM
@@ -426,14 +421,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(ismob(loc))
 			to_chat(M, "<span class='notice'>Your [name] goes out.</span>")
 		qdel(src)
-=======
 /obj/item/cigarette/proc/long_exhale(mob/living/carbon/smoker)
 	smoker.visible_message(
 		span_notice("[smoker] exhales a large cloud of smoke from [src]."),
 		span_notice("You exhale a large cloud of smoke from [src]."),
 	)
 	if(!isturf(smoker.loc))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		return
 
 	var/obj/effect/abstract/particle_holder/big_smoke = new(smoker.loc, /particles/smoke/cig/big)
@@ -556,15 +549,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 4 MINUTES // space cigs have a shorter burn time than normal cigs
 	smoke_all = TRUE // so that it doesn't runout of oxygen while being smoked in space
 
-<<<<<<< HEAD
 /obj/item/clothing/mask/cigarette/space_cigarette
 	desc = "A Space Cigarette brand cigarette."
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 
 /obj/item/clothing/mask/cigarette/dromedary
-=======
-/obj/item/cigarette/dromedary
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	desc = "A DromedaryCo brand cigarette. Contrary to popular belief, does not contain Calomel, but is reported to have a watery taste."
 	list_reagents = list(/datum/reagent/drug/nicotine = 13, /datum/reagent/water = 5) //camel has water
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
@@ -585,16 +574,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/cigarette/carp
 	desc = "A Carp Classic brand cigarette. A small label on its side indicates that it does NOT contain carpotoxin."
-<<<<<<< HEAD
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
-=======
-
-/obj/item/cigarette/carp/Initialize(mapload)
-	. = ..()
-	if(!prob(5))
-		return
-	reagents?.add_reagent(/datum/reagent/toxin/carpotoxin , 3) // They lied
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/cigarette/syndicate
 	desc = "An unknown brand cigarette."
@@ -607,23 +587,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/cigarette/shadyjims
 	desc = "A Shady Jim's Super Slims cigarette."
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/toxin/plantbgone = 1, /datum/reagent/toxin = 1.5)
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
-=======
-	lung_harm = 1.5
-	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/toxin/lipolicide = 4, /datum/reagent/ammonia = 2, /datum/reagent/toxin/plantbgone = 1, /datum/reagent/toxin = 1.5)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/cigarette/xeno
 	desc = "A Xeno Filtered brand cigarette."
-<<<<<<< HEAD
 	list_reagents = list (/datum/reagent/drug/nicotine = 20, /datum/reagent/medicine/omnizine = 15)
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
-=======
-	lung_harm = 2
-	list_reagents = list (/datum/reagent/drug/nicotine = 20, /datum/reagent/medicine/regen_jelly = 15, /datum/reagent/drug/krokodil = 4)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 // Rollies.
 
@@ -638,11 +608,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 4 MINUTES
 	chem_volume = 50
 	list_reagents = null
-<<<<<<< HEAD
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
-=======
-	choke_time_max = 40 SECONDS
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/cigarette/rollie/Initialize(mapload)
 	name = pick(list(
@@ -697,13 +663,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/drug/mushroomhallucinogen = 35)
 	starts_lit = TRUE
 
-<<<<<<< HEAD
 /obj/item/clothing/mask/cigarette/rollie/cannabis
 	list_reagents = list(/datum/reagent/drug/cannabis = 15, /datum/reagent/toxin/lipolicide = 35)
-=======
-/obj/item/cigarette/rollie/cannabis
-	list_reagents = list(/datum/reagent/drug/cannabis = 15)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/cigarette/rollie/mindbreaker
 	list_reagents = list(/datum/reagent/toxin/mindbreaker = 35, /datum/reagent/toxin/lipolicide = 15)
@@ -1073,17 +1034,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 
 /obj/item/lighter/process()
-<<<<<<< HEAD
-	open_flame()
 	if(istype(loc, /turf/open/floor))
 		var/turf/open/floor/F = loc
 		if(F.spread_chance > 50 && F.burn_material)
 			var/obj/effect/fire/R = locate() in loc
 			if(!R)
 				new /obj/effect/fire(loc)
-=======
 	open_flame(heat)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/lighter/get_temperature()
 	return lit * heat

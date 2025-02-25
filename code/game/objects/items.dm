@@ -224,7 +224,6 @@
 	/// Used if we want to have a custom verb text for throwing. "John Spaceman flicks the ciggerate" for example.
 	var/throw_verb
 
-<<<<<<< HEAD
 	//WoD13 vars start here :3
 
 	//lombard.dm VARIABLES
@@ -249,10 +248,8 @@
 	//WoD13 vars end here :3
 
 /obj/item/Initialize()
-=======
 	/// A lazylist used for applying fantasy values, contains the actual modification applied to a variable.
 	var/list/fantasy_modifications = null
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	/// Has the item been reskinned?
 	var/current_skin
@@ -461,16 +458,8 @@
 /obj/item/examine(mob/user) //This might be spammy. Remove?
 	. = ..()
 
-<<<<<<< HEAD
 	. += "[gender == PLURAL ? "They are" : "It is"] a [weightclass2text(w_class)] item."
 /*
-=======
-	. += "[gender == PLURAL ? "They are" : "It is"] a [weight_class_to_text(w_class)] item."
-
-	if(item_flags & CRUEL_IMPLEMENT)
-		. += "[src] seems quite practical for particularly <font color='red'>morbid</font> procedures and experiments."
-
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(resistance_flags & INDESTRUCTIBLE)
 		. += "[src] seems extremely robust! It'll probably withstand anything that could happen to it!"
 	else
@@ -482,11 +471,6 @@
 			. += "[src] is made of cold-resistant materials."
 		if(resistance_flags & FIRE_PROOF)
 			. += "[src] is made of fire-retardant materials."
-<<<<<<< HEAD
-*/
-	if(!user.research_scanner)
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		return
 
 /obj/item/examine_more(mob/user)
@@ -1305,16 +1289,9 @@
 	if((item_flags & ABSTRACT) || HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	user.dropItemToGround(src, silent = TRUE)
-<<<<<<< HEAD
-	if(throwforce)
-		if(HAS_TRAIT(user, TRAIT_PACIFISM))
-			to_chat(user, "<span class='notice'>You set [src] down gently on the ground.</span>")
-			return
-=======
 	if(throwforce && (HAS_TRAIT(user, TRAIT_PACIFISM)) || HAS_TRAIT(user, TRAIT_NO_THROWING))
 		to_chat(user, span_notice("You set [src] down gently on the ground."))
 		return
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	return src
 
 /**

@@ -55,7 +55,6 @@
 /obj/effect/temp_visual/dir_setting/firing_effect
 	icon = 'code/modules/wod13/64x64.dmi'
 	icon_state = "firing_effect"
-<<<<<<< HEAD
 	pixel_w = -16
 	pixel_z = -16
 	duration = 2
@@ -112,9 +111,6 @@
 /obj/effect/temp_visual/dir_setting/claw_effect/Initialize()
 	. = ..()
 	icon_state = "claw[rand(1, 2)]"
-=======
-	duration = 3
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/effect/temp_visual/dir_setting/firing_effect/setDir(newdir)
 	switch(newdir)
@@ -359,7 +355,6 @@
 	icon = 'icons/mob/simple/animal.dmi'
 
 /obj/effect/temp_visual/dust_animation
-<<<<<<< HEAD
 	icon = 'icons/mob/mob.dmi'
 	duration = 16
 
@@ -368,10 +363,6 @@
 	icon_state = "gib"
 	pixel_w = -8
 	duration = 50
-=======
-	icon = 'icons/mob/simple/mob.dmi'
-	duration = 15
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/effect/temp_visual/dust_animation/Initialize(mapload, dust_icon)
 	icon_state = dust_icon // Before ..() so the correct icon is flick()'d

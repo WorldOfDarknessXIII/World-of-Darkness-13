@@ -665,7 +665,6 @@
 
 /obj/item/card/id/click_alt(mob/living/user)
 	if(!alt_click_can_use_id(user))
-<<<<<<< HEAD
 		return
 	if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
 		to_chat(user, "<span class='warning'>The account ID number needs to be between 111111 and 999999.</span>")
@@ -699,16 +698,6 @@
 		set_new_account(user)
 		return
 
-=======
-		return NONE
-	if(registered_account.account_debt)
-		var/choice = tgui_alert(user, "Choose An Action", "Bank Account", list("Withdraw", "Pay Debt"))
-		if(!choice || QDELETED(user) || QDELETED(src) || !alt_click_can_use_id(user) || loc != user)
-			return CLICK_ACTION_BLOCKING
-		if(choice == "Pay Debt")
-			pay_debt(user)
-			return CLICK_ACTION_SUCCESS
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if (registered_account.being_dumped)
 		registered_account.bank_card_talk(span_warning("内部服务器错误"), TRUE)
 		return CLICK_ACTION_SUCCESS
@@ -736,10 +725,6 @@
 		return CLICK_ACTION_SUCCESS
 	else
 		var/difference = amount_to_remove - registered_account.account_balance
-<<<<<<< HEAD
-		registered_account.bank_card_talk("<span class='warning'>ERROR: The linked account requires [difference] more credit\s to perform that withdrawal.</span>", TRUE)
-	*/
-=======
 		registered_account.bank_card_talk(span_warning("ERROR: The linked account requires [difference] more credit\s to perform that withdrawal."), TRUE)
 		return CLICK_ACTION_BLOCKING
 
@@ -760,7 +745,6 @@
 		if(!registered_account.account_debt)
 			message = span_nicegreen("You pay the last [amount_to_pay] credits of your debt, extinguishing it. Congratulations!")
 		to_chat(user, message)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/card/id/examine(mob/user)
 	. = ..()
@@ -855,14 +839,8 @@
 
 /// Updates the name based on the card's vars and state.
 /obj/item/card/id/proc/update_label()
-<<<<<<< HEAD
-	var/blank = !registered_name
-	name = "[blank ? id_type_name : "[registered_name]'s"] [initial(name)]"
-	update_icon()
-=======
 	var/name_string = registered_name ? "[registered_name]'s ID Card" : initial(name)
 	var/assignment_string
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	if(is_intern)
 		if(assignment)

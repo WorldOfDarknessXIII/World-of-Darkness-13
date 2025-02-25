@@ -114,7 +114,6 @@
 					return ..()
 				to_chat(user, span_warning("[pushed_mob] is buckled to [pushed_mob.buckled]!"))
 				return
-<<<<<<< HEAD
 			if(user.a_intent == INTENT_GRAB)
 				if(user.grab_state < GRAB_AGGRESSIVE)
 					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
@@ -129,21 +128,6 @@
 				pushed_mob.visible_message("<span class='notice'>[user] begins to place [pushed_mob] onto [src]...</span>", \
 									"<span class='userdanger'>[user] begins to place [pushed_mob] onto [src]...</span>")
 				if(do_after(user, 35, target = pushed_mob))
-=======
-			if(user.combat_mode)
-				switch(user.grab_state)
-					if(GRAB_PASSIVE)
-						to_chat(user, span_warning("You need a better grip to do that!"))
-						return
-					if(GRAB_AGGRESSIVE)
-						tablepush(user, pushed_mob)
-					if(GRAB_NECK to GRAB_KILL)
-						tablelimbsmash(user, pushed_mob)
-			else
-				pushed_mob.visible_message(span_notice("[user] begins to place [pushed_mob] onto [src]..."), \
-									span_userdanger("[user] begins to place [pushed_mob] onto [src]..."))
-				if(do_after(user, 3.5 SECONDS, target = pushed_mob))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 					tableplace(user, pushed_mob)
 				else
 					return
@@ -191,18 +175,11 @@
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_danger("Throwing [pushed_mob] onto the table might hurt them!"))
 		return
-<<<<<<< HEAD
-	var/added_passtable = FALSE
-	if((!pushed_mob.pass_flags) & PASSTABLE)
-		added_passtable = TRUE
-		pushed_mob.pass_flags |= PASSTABLE
-=======
 	var/passtable_key = REF(user)
 	passtable_on(pushed_mob, passtable_key)
 	for (var/obj/obj in user.loc.contents)
 		if(!obj.CanAllowThrough(pushed_mob))
 			return
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	pushed_mob.Move(src.loc)
 	passtable_off(pushed_mob, passtable_key)
 	if(pushed_mob.loc != loc) //Something prevented the tabling
@@ -783,13 +760,8 @@
 /obj/structure/table/optable
 	name = "operating table"
 	desc = "Used for advanced medical procedures."
-<<<<<<< HEAD
 	icon = 'code/modules/wod13/props.dmi'
 	icon_state = "surgeonchair"
-=======
-	icon = 'icons/obj/medical/surgery_table.dmi'
-	icon_state = "surgery_table"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	buildstack = /obj/item/stack/sheet/mineral/silver
 	smoothing_flags = NONE
 	smoothing_groups = null

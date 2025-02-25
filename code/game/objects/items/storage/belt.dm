@@ -546,29 +546,6 @@
 	var/rig_snacks
 	while(contents.len <= amount)
 		rig_snacks = pick(list(
-<<<<<<< HEAD
-		/obj/item/food/candy,
-		/obj/item/reagent_containers/food/drinks/dry_ramen,
-		/obj/item/food/chips,
-		/obj/item/food/sosjerky,
-		/obj/item/food/syndicake,
-		/obj/item/food/spacetwinkie,
-		/obj/item/food/cheesiehonkers,
-		/obj/item/food/nachos,
-		/obj/item/food/cheesynachos,
-		/obj/item/food/cubannachos,
-		/obj/item/food/nugget,
-		/obj/item/food/spaghetti/pastatomato,
-		/obj/item/food/rofflewaffles,
-		/obj/item/food/donkpocket,
-		/obj/item/reagent_containers/food/drinks/soda_cans/cola,
-		/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind,
-		/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb,
-		/obj/item/reagent_containers/food/drinks/soda_cans/starkist,
-		/obj/item/reagent_containers/food/drinks/soda_cans/space_up,
-		/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game,
-		/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime
-=======
 			/obj/item/food/candy,
 			/obj/item/food/cheesiehonkers,
 			/obj/item/food/cheesynachos,
@@ -591,7 +568,6 @@
 			/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind,
 			/obj/item/reagent_containers/cup/soda_cans/space_up,
 			/obj/item/reagent_containers/cup/soda_cans/starkist,
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		))
 		new rig_snacks(src)
 

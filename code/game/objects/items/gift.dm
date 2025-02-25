@@ -55,44 +55,6 @@
 /obj/item/gift/proc/get_gift_type()
 	var/static/list/gift_type_list = null
 
-<<<<<<< HEAD
-/obj/item/a_gift/proc/get_gift_type()
-	var/gift_type_list = list(/obj/item/sord,
-		/obj/item/storage/wallet,
-		/obj/item/storage/photo_album,
-		/obj/item/storage/box/snappops,
-		/obj/item/storage/crayons,
-		/obj/item/storage/backpack/holding,
-		/obj/item/storage/belt/champion,
-		/obj/item/soap/deluxe,
-		/obj/item/pickaxe/diamond,
-		/obj/item/pen/invisible,
-		/obj/item/lipstick/random,
-		/obj/item/grenade/smokebomb,
-		/obj/item/grown/corncob,
-		/obj/item/poster/random_contraband,
-		/obj/item/book/manual/wiki/barman_recipes,
-		/obj/item/book/manual/chef_recipes,
-		/obj/item/bikehorn,
-		/obj/item/toy/beach_ball,
-		/obj/item/toy/beach_ball/holoball,
-		/obj/item/banhammer,
-		/obj/item/food/grown/ambrosia/deus,
-		/obj/item/food/grown/ambrosia/vulgaris,
-		/obj/item/paicard,
-		/obj/item/instrument/violin,
-		/obj/item/instrument/guitar,
-		/obj/item/storage/belt/utility/full,
-		/obj/item/clothing/neck/tie/horrible,
-		/obj/item/clothing/suit/jacket/leather,
-		/obj/item/clothing/suit/jacket/leather/overcoat,
-		/obj/item/clothing/suit/poncho,
-		/obj/item/clothing/suit/poncho/green,
-		/obj/item/clothing/suit/poncho/red,
-		/obj/item/clothing/suit/snowman,
-		/obj/item/clothing/head/snowman,
-		/obj/item/stack/sheet/mineral/coal)
-=======
 	if(isnull(gift_type_list))
 		gift_type_list = list(
 			/obj/item/banhammer,
@@ -132,7 +94,6 @@
 			/obj/item/toy/basketball,
 			/obj/item/toy/beach_ball,
 		)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 		gift_type_list += subtypesof(/obj/item/clothing/head/collectable)
 		//Add all toys, except for abstract types and syndicate cards.

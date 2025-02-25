@@ -407,7 +407,6 @@
 	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & USES_SMOOTHING))
 		QUEUE_SMOOTH(src)
 
-<<<<<<< HEAD
 		if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 			QUEUE_SMOOTH(src)
 
@@ -416,13 +415,11 @@
 			return
 		crack_overlay = mutable_appearance('code/modules/wod13/32x48.dmi', "damage[ratio]", -(layer+0.1))
 		. += crack_overlay
-=======
 	var/ratio = atom_integrity / max_integrity
 	ratio = CEILING(ratio*4, 1) * 25
 	if(ratio > 75)
 		return
 	. += mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/structure/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > T0C + heat_resistance
@@ -698,13 +695,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	icon = 'icons/obj/smooth_structures/window.dmi'
 	icon_state = "window-0"
 	base_icon_state = "window"
-<<<<<<< HEAD
 	max_integrity = 50
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER
-=======
-	max_integrity = 100
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	obj_flags = CAN_BE_HIT

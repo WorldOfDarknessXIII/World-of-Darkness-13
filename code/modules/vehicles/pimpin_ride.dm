@@ -6,17 +6,14 @@
 	desc = "A brave janitor cyborg gave its life to produce such an amazing combination of speed and utility."
 	icon_state = "pussywagon"
 	key_type = /obj/item/key/janitor
-<<<<<<< HEAD
 	var/obj/item/storage/bag/trash/mybag = null
 	var/floorbuffer = FALSE
 	var/turfs_for_exp = 0
-=======
 	movedelay = 1
 	/// The attached garbage bag, if present
 	var/obj/item/storage/bag/trash/trash_bag
 	/// The installed upgrade, if present
 	var/obj/item/janicart_upgrade/installed_upgrade
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/vehicle/ridden/janicart/Initialize(mapload)
 	. = ..()
@@ -94,10 +91,6 @@
 
 /obj/vehicle/ridden/janicart/update_overlays()
 	. = ..()
-<<<<<<< HEAD
-	if(mybag)
-		. += "cart_garbage"
-=======
 	if(trash_bag)
 		if(istype(trash_bag, /obj/item/storage/bag/trash/bluespace))
 			. += "cart_bluespace_garbage"
@@ -107,7 +100,6 @@
 		var/mutable_appearance/overlay = new(SSgreyscale.GetColoredIconByType(installed_upgrade.overlay_greyscale_config, installed_upgrade.greyscale_colors))
 		overlay.icon_state = "janicart_upgrade"
 		. += overlay
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/vehicle/ridden/janicart/attack_hand(mob/user, list/modifiers)
 	// right click removes bag without unbuckling when possible

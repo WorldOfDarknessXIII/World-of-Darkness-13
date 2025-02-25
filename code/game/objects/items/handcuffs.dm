@@ -38,14 +38,9 @@
 	inhand_icon_state = "handcuff"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-<<<<<<< HEAD
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-=======
-	obj_flags = CONDUCTS_ELECTRICITY
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_HANDCUFFED
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
@@ -161,56 +156,6 @@
 
 	if(trashtype && !dispense)
 		qdel(src)
-<<<<<<< HEAD
-	return
-
-/obj/item/restraints/handcuffs/cable/sinew
-	name = "sinew restraints"
-	desc = "A pair of restraints fashioned from long strands of flesh."
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "sinewcuff"
-	inhand_icon_state = "sinewcuff"
-	custom_materials = null
-	color = null
-
-/obj/item/restraints/handcuffs/cable
-	name = "cable restraints"
-	desc = "Looks like some cables tied together. Could be used to tie something up."
-	icon_state = "cuff"
-	inhand_icon_state = "coil"
-	color = "#ff0000"
-	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_materials = list(/datum/material/iron=150, /datum/material/glass=75)
-	breakouttime = 30 SECONDS
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
-	cuffsound = 'sound/weapons/cablecuff.ogg'
-
-/obj/item/restraints/handcuffs/cable/red
-	color = "#ff0000"
-
-/obj/item/restraints/handcuffs/cable/yellow
-	color = "#ffff00"
-
-/obj/item/restraints/handcuffs/cable/blue
-	color = "#1919c8"
-
-/obj/item/restraints/handcuffs/cable/green
-	color = "#00aa00"
-
-/obj/item/restraints/handcuffs/cable/pink
-	color = "#ff3ccd"
-
-/obj/item/restraints/handcuffs/cable/orange
-	color = "#ff8000"
-
-/obj/item/restraints/handcuffs/cable/cyan
-	color = "#00ffff"
-
-/obj/item/restraints/handcuffs/cable/white
-	color = null
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /**
  * # Alien handcuffs

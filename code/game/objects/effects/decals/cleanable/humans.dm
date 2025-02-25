@@ -8,27 +8,6 @@
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	beauty = -100
 	clean_type = CLEAN_TYPE_BLOOD
-<<<<<<< HEAD
-	var/dryname = "dried blood"
-	var/drydesc = "Looks like it's been here a while. Eew."
-	var/drytime = 0
-
-//obj/effect/decal/cleanable/blood/Destroy()
-//	. = ..()
-//	if(istype(get_area(src), /area/vtm))
-//		var/area/vtm/V = get_area(src)
-//		if(V.zone_type == "masquerade")
-//			SSmasquerade.total_level = min(1000, SSmasquerade.total_level+0.5)
-
-/obj/effect/decal/cleanable/blood/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
-	pixel_x = rand(-8,8) //MOJAVE SUN EDIT - Blood Sprites
-	pixel_y = rand(-8,8) //MOJAVE SUN EDIT - Blood Sprites
-//	if(istype(get_area(src), /area/vtm))
-//		var/area/vtm/V = get_area(src)
-//		if(V.zone_type == "masquerade")
-//			SSmasquerade.total_level = max(0, SSmasquerade.total_level-0.5)
-=======
 	var/should_dry = TRUE
 	var/dryname = "dried blood" //when the blood lasts long enough, it becomes dry and gets a new name
 	var/drydesc = "Looks like it's been here a while. Eew." //as above
@@ -37,73 +16,40 @@
 
 /obj/effect/decal/cleanable/blood/Initialize(mapload)
 	. = ..()
+	pixel_x = rand(-8,8) //MOJAVE SUN EDIT - Blood Sprites
+	pixel_y = rand(-8,8) //MOJAVE SUN EDIT - Blood Sprites
 	if(!should_dry)
 		return
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(bloodiness)
 		start_drying()
 	else
 		dry()
 
-<<<<<<< HEAD
-/obj/effect/decal/cleanable/blood/process()
-	if(world.time > drytime)
-		dry()
-
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 /obj/effect/decal/cleanable/blood/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-<<<<<<< HEAD
-/obj/effect/decal/cleanable/blood/proc/get_timer()
-	drytime = world.time + 15 SECONDS
-=======
 /obj/effect/decal/cleanable/blood/process()
 	if(world.time > drytime)
 		dry()
 
 /obj/effect/decal/cleanable/blood/proc/get_timer()
 	drytime = world.time + 3 MINUTES
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/effect/decal/cleanable/blood/proc/start_drying()
 	get_timer()
 	START_PROCESSING(SSobj, src)
 
-<<<<<<< HEAD
-=======
 ///This is what actually "dries" the blood. Returns true if it's all out of blood to dry, and false otherwise
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 /obj/effect/decal/cleanable/blood/proc/dry()
 	if(bloodiness > 20)
 		bloodiness -= BLOOD_AMOUNT_PER_DECAL
 		get_timer()
-<<<<<<< HEAD
-=======
 		return FALSE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	else
 		name = dryname
 		desc = drydesc
 		bloodiness = 0
-<<<<<<< HEAD
-		color =  COLOR_GRAY
-		STOP_PROCESSING(SSobj, src)
-		if(istype(get_area(src), /area/vtm))
-			var/area/vtm/V = get_area(src)
-			if(V.upper)
-				animate(src, alpha = 0, time = 1200)
-				spawn(1200)
-					qdel(src)
-
-/obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
-	if(C)
-		C.add_blood_DNA(return_blood_DNA())
-		if(bloodiness)
-			C.bloodiness = min((C.bloodiness + bloodiness), BLOOD_AMOUNT_PER_DECAL)
-=======
 		color = COLOR_GRAY //not all blood splatters have their own sprites... It still looks pretty nice
 		STOP_PROCESSING(SSobj, src)
 		return TRUE
@@ -112,7 +58,6 @@
 	C.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 	if (bloodiness)
 		C.bloodiness = min((C.bloodiness + bloodiness), BLOOD_AMOUNT_PER_DECAL)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	return ..()
 
 /obj/effect/decal/cleanable/blood/old
@@ -121,15 +66,6 @@
 
 /obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
 	add_blood_DNA(list("Non-human DNA" = random_blood_type())) // Needs to happen before ..()
-<<<<<<< HEAD
-	. = ..()
-
-/obj/effect/decal/cleanable/blood/splatter
-	icon_state = "floor1" //MOJAVE SUN EDIT - Blood Sprites
-	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7","splatter1","splatter2","splatter3","splatter4","splatter5","splatter6") //MOJAVE SUN EDIT - Blood Sprites
-/obj/effect/decal/cleanable/blood/splatter/replace_decal(obj/effect/decal/cleanable/C) //MOJAVE SUN EDIT - Blood Sprites
-	return FALSE
-=======
 	return ..()
 
 /obj/effect/decal/cleanable/blood/splatter
@@ -145,7 +81,6 @@
 /obj/effect/decal/cleanable/blood/splatter/over_window/NeverShouldHaveComeHere(turf/here_turf)
 	return isgroundlessturf(here_turf)
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 /obj/effect/decal/cleanable/blood/tracks
 	icon_state = "tracks"
 	desc = "They look like tracks left by wheels."
@@ -183,29 +118,6 @@
 	plane = GAME_PLANE
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
-<<<<<<< HEAD
-	dryname = "rotting gibs"
-	drydesc = "They look bloody and gruesome while some terrible smell fills the air."
-
-/obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
-	reagents.add_reagent(/datum/reagent/liquidgibs, 5)
-	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, .proc/on_pipe_eject)
-	if(mapload) //Don't rot at roundstart for the love of god
-		return
-
-/obj/effect/decal/cleanable/blood/gibs/dry()
-	. = ..()
-	AddComponent(/datum/component/rot/gibs)
-
-/obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
-	return
-
-/obj/effect/decal/cleanable/blood/gibs/Crossed(atom/movable/L)
-	if(isliving(L) && has_gravity(loc))
-		playsound(loc, 'sound/effects/gib_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 10 : 50, TRUE)
-	. = ..()
-=======
 
 	dryname = "rotting gibs"
 	drydesc = "They look bloody and gruesome while some terrible smell fills the air."
@@ -231,7 +143,6 @@
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return FALSE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/effect/decal/cleanable/blood/gibs/proc/on_pipe_eject(atom/source, direction)
 	SIGNAL_HANDLER
@@ -298,10 +209,7 @@
 	desc = "Space Jesus, why didn't anyone clean this up? They smell terrible."
 	icon_state = "gib1-old"
 	bloodiness = 0
-<<<<<<< HEAD
-=======
 	should_dry = FALSE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	dryname = "old rotting gibs"
 	drydesc = "Space Jesus, why didn't anyone clean this up? They smell terrible."
 
@@ -330,13 +238,8 @@
 /obj/effect/decal/cleanable/blood/footprints
 	name = "footprints"
 	desc = "WHOSE FOOTPRINTS ARE THESE?"
-<<<<<<< HEAD
-	icon = 'icons/effects/blood.dmi'
-	icon_state = "blood1"
-=======
 	icon = 'icons/effects/footprints.dmi'
 	icon_state = "blood_shoes_enter"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	random_icon_states = null
 	blood_state = BLOOD_STATE_HUMAN //the icon state to load images from
 	var/entered_dirs = 0
@@ -415,15 +318,12 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 				GLOB.bloody_footprints_cache["entered-[footprint_sprite]-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]_[footprint_sprite]_enter", dir = Ddir)
 			. += bloodstep_overlay
 
-<<<<<<< HEAD
-=======
 		if(exited_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[footprint_sprite]-[blood_state]-[Ddir]"]
 			if(!bloodstep_overlay)
 				GLOB.bloody_footprints_cache["exited-[footprint_sprite]-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]_[footprint_sprite]_exit", dir = Ddir)
 			. += bloodstep_overlay
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/effect/decal/cleanable/blood/footprints/examine(mob/user)
 	. = ..()

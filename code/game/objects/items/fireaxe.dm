@@ -4,14 +4,8 @@
 /obj/item/fireaxe  // DEM AXES MAN, marker -Agouri
 	icon = 'icons/obj/weapons/fireaxe.dmi'
 	icon_state = "fireaxe0"
-<<<<<<< HEAD
 	lefthand_file = 'code/modules/wod13/righthand.dmi'
 	righthand_file = 'code/modules/wod13/lefthand.dmi'
-=======
-	base_icon_state = "fireaxe"
-	lefthand_file = 'icons/mob/inhands/weapons/axes_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/axes_righthand.dmi'
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	force = 5

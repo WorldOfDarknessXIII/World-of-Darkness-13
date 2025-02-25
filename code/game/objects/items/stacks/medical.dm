@@ -125,7 +125,6 @@
 /// Apply the actual effects of the healing if it's a simple animal, goes to [/obj/item/stack/medical/proc/heal_carbon] if it's a carbon, returns TRUE if it works, FALSE if it doesn't
 /obj/item/stack/medical/proc/heal(mob/living/patient, mob/user)
 	if(patient.stat == DEAD)
-<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>[patient] is dead! You can not help [patient.p_them()].</span>")
 		return
 	if(iskindred(patient))
@@ -142,10 +141,6 @@
 		user.visible_message("<span class='green'>[user] applies [src] on [patient].</span>", "<span class='green'>You apply [src] on [patient].</span>")
 		patient.heal_bodypart_damage((heal_brute * 0.5))
 		return TRUE
-=======
-		patient.balloon_alert(user, "they're dead!")
-		return FALSE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(iscarbon(patient))
 		return heal_carbon(patient, user, heal_brute, heal_burn)
 	else if(isanimal_or_basicmob(patient))

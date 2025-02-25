@@ -39,7 +39,6 @@
 	. = ..()
 	if(start_showpiece_type)
 		showpiece = new start_showpiece_type (src)
-<<<<<<< HEAD
 	if(!showpiece)
 		for(var/obj/item/I in loc)
 			if(I)
@@ -47,10 +46,8 @@
 				qdel(I)
 				return
 	update_icon()
-=======
 	update_appearance()
 	alarm_manager = new(src)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/structure/displaycase/vv_edit_var(vname, vval)
 	. = ..()

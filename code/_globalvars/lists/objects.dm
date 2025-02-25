@@ -75,7 +75,6 @@ GLOBAL_LIST_EMPTY(mob_spawners)
 /// List of all mobs with the "ghost_direct_control" component
 GLOBAL_LIST_EMPTY(joinable_mobs)
 
-<<<<<<< HEAD
 GLOBAL_LIST_EMPTY(air_scrub_names)			// Name list of all air scrubbers
 GLOBAL_LIST_EMPTY(air_vent_names)			// Name list of all air vents
 
@@ -112,7 +111,6 @@ GLOBAL_LIST_EMPTY(weed_list)
 GLOBAL_LIST_EMPTY(zombie_list)
 
 GLOBAL_LIST_INIT(psychokids, list())
-=======
 /// List of area names of roundstart station cyborg rechargers, for the low charge/no charge cyborg screen alert tooltips.
 GLOBAL_LIST_EMPTY(roundstart_station_borgcharger_areas)
 
@@ -121,4 +119,3 @@ GLOBAL_LIST_EMPTY(roundstart_station_mechcharger_areas)
 
 /// Associative list of alcoholic container typepath to instances, currently used by the alcoholic quirk
 GLOBAL_LIST_INIT(alcohol_containers, init_alcohol_containers())
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

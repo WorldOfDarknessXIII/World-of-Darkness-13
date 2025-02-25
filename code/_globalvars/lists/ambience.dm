@@ -58,7 +58,6 @@ GLOBAL_LIST_INIT(engi_ambience,list(
 	'sound/ambience/ambitech3.ogg',
 ))
 
-<<<<<<< HEAD
 GLOBAL_LIST_INIT(mining_ambience,list(
 	'sound/ambience/ambimine.ogg', 'sound/ambience/ambicave.ogg',
 	'sound/ambience/ambiruin.ogg', 'sound/ambience/ambiruin2.ogg',
@@ -68,25 +67,6 @@ GLOBAL_LIST_INIT(mining_ambience,list(
 	'sound/ambience/ambidanger2.ogg', 'sound/ambience/ambimaint1.ogg',
 	'sound/ambience/ambilava1.ogg', 'sound/ambience/ambilava2.ogg',
 	'sound/ambience/ambilava3.ogg'))
-=======
-GLOBAL_LIST_INIT(mining_ambience, list(
-	'sound/ambience/ambicave.ogg',
-	'sound/ambience/ambidanger.ogg',
-	'sound/ambience/ambidanger2.ogg',
-	'sound/ambience/ambilava1.ogg',
-	'sound/ambience/ambilava2.ogg',
-	'sound/ambience/ambilava3.ogg',
-	'sound/ambience/ambimaint1.ogg',
-	'sound/ambience/ambimine.ogg',
-	'sound/ambience/ambiruin.ogg',
-	'sound/ambience/ambiruin2.ogg',
-	'sound/ambience/ambiruin3.ogg',
-	'sound/ambience/ambiruin4.ogg',
-	'sound/ambience/ambiruin5.ogg',
-	'sound/ambience/ambiruin6.ogg',
-	'sound/ambience/ambiruin7.ogg',
-))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 GLOBAL_LIST_INIT(icemoon_ambience,list(
 	'sound/ambience/ambiicetheme.ogg',
@@ -224,7 +204,6 @@ GLOBAL_LIST_INIT(ambience_assoc,list(
 	AMBIENCE_MINING = GLOB.mining_ambience,
 	AMBIENCE_ICEMOON = GLOB.icemoon_ambience,
 	AMBIENCE_REEBE = GLOB.reebe_ambience,
-<<<<<<< HEAD
 	AMBIENCE_CREEPY = GLOB.creepy_ambience,
 	AMBIENCE_CITY = GLOB.city_ambience,
 	AMBIENCE_BEACH = GLOB.beach_ambience,
@@ -233,9 +212,3 @@ GLOBAL_LIST_INIT(ambience_assoc,list(
 	AMBIENCE_INTERIOR = GLOB.interior_ambience,
 	AMBIENCE_PRINCE = GLOB.prince_ambience
 	))
-=======
-	AMBIENCE_RUINS = GLOB.ruins_ambience,
-	AMBIENCE_SPACE = GLOB.space_ambience,
-	AMBIENCE_SPOOKY = GLOB.spooky_ambience,
-))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

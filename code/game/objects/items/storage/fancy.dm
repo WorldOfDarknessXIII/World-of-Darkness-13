@@ -232,11 +232,6 @@
 
 /obj/item/storage/fancy/cigarettes/Initialize(mapload)
 	. = ..()
-<<<<<<< HEAD
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 10
-	STR.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
-=======
 	atom_storage.display_contents = FALSE
 	atom_storage.set_holdable(list(/obj/item/cigarette, /obj/item/lighter))
 	register_context()
@@ -279,7 +274,6 @@
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove lighter"
 	context[SCREENTIP_CONTEXT_RMB] = "Remove [contents_tag]"
 	return CONTEXTUAL_SCREENTIP_SET
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/storage/fancy/cigarettes/examine(mob/user)
 	. = ..()
@@ -513,19 +507,11 @@
 	desc = "A cardboard box used for holding unsauced chicken wings."
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "nuggetbox"
-<<<<<<< HEAD
 	icon_type = "nugget"
 	spawn_type = /obj/item/food/vampire/nugget
-=======
-	base_icon_state = "nuggetbox"
-	contents_tag = "nugget"
-	spawn_type = /obj/item/food/nugget
-	spawn_count = 6
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/storage/fancy/nugget_box/Initialize(mapload)
 	. = ..()
-<<<<<<< HEAD
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 5
 	STR.set_holdable(list(/obj/item/food/vampire/nugget))
@@ -564,102 +550,3 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 4
 	STR.set_holdable(list(/obj/item/ammo_box/magazine/vamp9mp5))
-=======
-	atom_storage.set_holdable(/obj/item/food/nugget)
-
-/*
- * Jar of pickles
- */
-
-/obj/item/storage/fancy/pickles_jar
-	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "pickles"
-	base_icon_state = "pickles"
-	name = "pickles"
-	desc = "A jar for containing pickles."
-	spawn_type = /obj/item/food/pickle
-	spawn_count = 10
-	contents_tag = "pickle"
-	foldable_result = /obj/item/reagent_containers/cup/beaker/large
-	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
-	open_status = FANCY_CONTAINER_ALWAYS_OPEN
-	has_open_closed_states = FALSE
-
-/obj/item/storage/fancy/pickles_jar/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(/obj/item/food/pickle)
-
-/obj/item/storage/fancy/pickles_jar/update_icon_state()
-	. = ..()
-	if(!contents.len)
-		icon_state = "[base_icon_state]_empty"
-	else
-		if(contents.len < 5)
-			icon_state = "[base_icon_state]_[contents.len]"
-		else
-			icon_state = base_icon_state
-
-/*
- * Coffee condiments display
- */
-
-/obj/item/storage/fancy/coffee_condi_display
-	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "coffee_condi_display"
-	base_icon_state = "coffee_condi_display"
-	name = "coffee condiments display"
-	desc = "A neat small wooden box, holding all your favorite coffee condiments."
-	contents_tag = "coffee condiment"
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT/2)
-	resistance_flags = FLAMMABLE
-	foldable_result = /obj/item/stack/sheet/mineral/wood
-	open_status = FANCY_CONTAINER_ALWAYS_OPEN
-	has_open_closed_states = FALSE
-
-/obj/item/storage/fancy/coffee_condi_display/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 14
-	atom_storage.set_holdable(list(
-		/obj/item/reagent_containers/condiment/pack/sugar,
-		/obj/item/reagent_containers/condiment/creamer,
-		/obj/item/reagent_containers/condiment/pack/astrotame,
-		/obj/item/reagent_containers/condiment/chocolate,
-	))
-
-/obj/item/storage/fancy/coffee_condi_display/update_overlays()
-	. = ..()
-	var/has_sugar = FALSE
-	var/has_sweetener = FALSE
-	var/has_creamer = FALSE
-	var/has_chocolate = FALSE
-
-	for(var/thing in contents)
-		if(istype(thing, /obj/item/reagent_containers/condiment/pack/sugar))
-			has_sugar = TRUE
-		else if(istype(thing, /obj/item/reagent_containers/condiment/pack/astrotame))
-			has_sweetener = TRUE
-		else if(istype(thing, /obj/item/reagent_containers/condiment/creamer))
-			has_creamer = TRUE
-		else if(istype(thing, /obj/item/reagent_containers/condiment/chocolate))
-			has_chocolate = TRUE
-
-	if (has_sugar)
-		. += "condi_display_sugar"
-	if (has_sweetener)
-		. += "condi_display_sweetener"
-	if (has_creamer)
-		. += "condi_display_creamer"
-	if (has_chocolate)
-		. += "condi_display_chocolate"
-
-/obj/item/storage/fancy/coffee_condi_display/PopulateContents()
-	for(var/i in 1 to 4)
-		new /obj/item/reagent_containers/condiment/pack/sugar(src)
-	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/condiment/pack/astrotame(src)
-	for(var/i in 1 to 4)
-		new /obj/item/reagent_containers/condiment/creamer(src)
-	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/condiment/chocolate(src)
-	update_appearance()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

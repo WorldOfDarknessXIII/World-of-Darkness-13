@@ -517,7 +517,6 @@
 	icon_state = "palm[rand(1,2)]"
 	update_appearance()
 
-<<<<<<< HEAD
 /obj/structure/flora/tree/jungle
 	name = "tree"
 	icon_state = "tree"
@@ -536,11 +535,6 @@
 	icon = 'icons/obj/flora/jungletreesmall.dmi'
 
 //grass
-=======
-/*********
- * Grass *
- *********/
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 /obj/structure/flora/grass
 	name = "grass"
 	desc = "A patch of overgrown grass."
@@ -596,7 +590,6 @@
 /obj/structure/flora/grass/both/style_random/Initialize(mapload)
 	. = ..()
 	icon_state = "snowgrassall[rand(1, 3)]"
-<<<<<<< HEAD
 	. = ..()
 
 
@@ -885,9 +878,6 @@
 	desc = "A pile of rocks."
 
 //Jungle grass
-=======
-	update_appearance()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/structure/flora/grass/jungle
 	name = "jungle grass"

@@ -25,13 +25,8 @@
 	trash_type = /obj/item/grown/bananapeel
 	bite_consumption_mod = 3
 	foodtypes = FRUIT
-<<<<<<< HEAD
-	juice_results = list(/datum/reagent/consumable/banana = 0)
-	//distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
-=======
 	juice_typepath = /datum/reagent/consumable/banana
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/food/grown/banana/make_edible()
 	. = ..()

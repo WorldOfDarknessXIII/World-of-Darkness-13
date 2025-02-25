@@ -492,16 +492,10 @@
 	if(action == "change_mode")
 		harmful = !harmful
 		if(harmful)
-<<<<<<< HEAD
-			to_chat(usr, "[icon2html(src, usr)]<span class='warning'>Lethal Fisting Enabled.</span>")
-		else
-			to_chat(usr, "[icon2html(src, usr)]<span class='warning'>Lethal Fisting Disabled.</span>")
-=======
 			to_chat(usr, "[icon2html(src, usr)][span_warning("Lethal Fisting Enabled.")]")
 		else
 			to_chat(usr, "[icon2html(src, usr)][span_warning("Lethal Fisting Disabled.")]")
 		return TRUE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/action(mob/source, atom/target, list/modifiers)
 	. = ..()

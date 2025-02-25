@@ -86,15 +86,11 @@
 		set_density(FALSE)
 	return ..()
 
-<<<<<<< HEAD
 /obj/vehicle/ridden/scooter/skateboard/Moved()
 	. = ..()
 	layer = OBJ_LAYER
 
-/obj/vehicle/ridden/scooter/skateboard/Bump(atom/A)
-=======
 /obj/vehicle/ridden/scooter/skateboard/Bump(atom/bumped_thing)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	. = ..()
 	if(!bumped_thing.density || !has_buckled_mobs() || world.time < next_crash)
 		return
@@ -193,12 +189,9 @@
 	board_item_type = /obj/item/melee/skateboard/pro
 	instability = 6
 
-<<<<<<< HEAD
-=======
 /obj/vehicle/ridden/scooter/skateboard/pro/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard/pro)
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 /obj/vehicle/ridden/scooter/skateboard/hoverboard
 	name = "hoverboard"
 	desc = "A blast from the past, so retro!"

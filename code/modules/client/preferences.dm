@@ -4,17 +4,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/client/parent
 	/// The path to the general savefile for this datum
 	var/path
-<<<<<<< HEAD
-	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
-	var/max_save_slots = 20
-=======
 	/// Whether or not we allow saving/loading. Used for guests, if they're enabled
 	var/load_and_save = TRUE
 	/// Ensures that we always load the last used save, QOL
 	var/default_slot = 1
 	/// The maximum number of slots we're allowed to contain
-	var/max_save_slots = 3
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
+	var/max_save_slots = 20
 
 	/// Bitflags for communications that are muted
 	var/muted = NONE
@@ -29,7 +24,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// List of ROLE_X that the client wants to be eligible for
 	var/list/be_special = list() //Special role selection
 
-<<<<<<< HEAD
 	var/UI_style = null
 	var/buttons_locked = FALSE
 	var/hotkeys = TRUE
@@ -45,10 +39,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//Клан вампиров
 	var/datum/vampireclane/clane = new /datum/vampireclane/brujah()
 	// Custom Keybindings
-=======
 	/// Custom keybindings. Map of keybind names to keyboard inputs.
 	/// For example, by default would have "swap_hands" -> list("X")
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	var/list/key_bindings = list()
 
 	/// Cached list of keybindings, mapping keys to actions.
@@ -61,7 +53,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/ghost_form = "ghost"
 
 	//character preferences
-<<<<<<< HEAD
 	var/slot_randomized					//keeps track of round-to-round randomization of the character slot, prevents overwriting
 	var/slotlocked = 0
 	var/real_name						//our character's name
@@ -84,9 +75,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/features = list("mcolor" = "FFF", "ethcolor" = "9c3030", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "moth_antennae" = "Plain", "moth_markings" = "None")
 	var/list/randomise = list(RANDOM_UNDERWEAR = TRUE, RANDOM_UNDERWEAR_COLOR = TRUE, RANDOM_UNDERSHIRT = TRUE, RANDOM_SOCKS = TRUE, RANDOM_BACKPACK = TRUE, RANDOM_JUMPSUIT_STYLE = TRUE, RANDOM_HAIRSTYLE = TRUE, RANDOM_HAIR_COLOR = TRUE, RANDOM_FACIAL_HAIRSTYLE = TRUE, RANDOM_FACIAL_HAIR_COLOR = TRUE, RANDOM_SKIN_TONE = TRUE, RANDOM_EYE_COLOR = TRUE)
 	var/phobia = "spiders"
-=======
 	var/slot_randomized //keeps track of round-to-round randomization of the character slot, prevents overwriting
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	var/list/randomise = list()
 
@@ -103,7 +92,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/list/ignoring = list()
 
-<<<<<<< HEAD
 	var/clientfps = -1
 
 	var/parallax
@@ -123,8 +111,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///The playtime_reward_cloak variable can be set to TRUE from the prefs menu only once the user has gained over 5K playtime hours. If true, it allows the user to get a cool looking roundstart cloak.
 	var/playtime_reward_cloak = FALSE
 
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	var/list/exp = list()
 
 	var/action_buttons_screen_locs = list()
@@ -133,7 +119,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/hearted
 	///If we have a hearted commendations, we honor it every time the player loads preferences until this time has been passed
 	var/hearted_until
-<<<<<<< HEAD
 	/// Agendered spessmen can choose whether to have a male or female bodytype
 	var/body_type
 	var/body_model = 2
@@ -287,13 +272,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/New(client/C)
 	parent = C
-=======
 	///What outfit typepaths we've favorited in the SelectEquipment menu
 	var/list/favorite_outfits = list()
 
 	/// A preview of the current character
 	var/atom/movable/screen/map_view/char_preview/character_preview_view
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	/// A list of instantiated middleware
 	var/list/datum/preference_middleware/middleware = list()
@@ -343,7 +326,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
 	randomise = get_default_randomization()
 
-<<<<<<< HEAD
 	UI_style = GLOB.available_ui_styles[1]
 	if(istype(C))
 		if(!IsGuestKey(C.key))
@@ -351,14 +333,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 //			unlock_content = C.IsByondMember()
 //			if(unlock_content)
 //				max_save_slots = 8
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
 			return
 	//we couldn't load character data so just randomize the character appearance + name
-<<<<<<< HEAD
 	random_species()
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
 	reset_shit()
@@ -366,18 +345,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	C?.set_macros()
 //	pref_species = new /datum/species/kindred()
 	real_name = pref_species.random_name(gender,1)
-=======
 	randomise_appearance_prefs() //let's create a random character then - rather than a fat, bald and naked man.
 	if(parent)
 		apply_all_client_preferences()
 		parent.set_macros()
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(!loaded_preferences_successfully)
 		save_preferences()
 	save_character() //let's save this new random character so it doesn't keep generating new ones.
 
-<<<<<<< HEAD
 #define APPEARANCE_CATEGORY_COLUMN "<td valign='top' width='14%'>"
 #define MAX_MUTANT_ROWS 4
 #define ATTRIBUTE_BASE_LIMIT 5 //Highest level that a base attribute can be upgraded to. Bonus attributes can increase the actual amount past the limit.
@@ -399,7 +375,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>[make_font_cool("GAME PREFERENCES")]</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>[make_font_cool("OOC PREFERENCES")]</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=3' [current_tab == 3 ? "class='linkOn'" : ""]>[make_font_cool("CUSTOM KEYBINDINGS")]</a>"
-=======
 /datum/preferences/ui_interact(mob/user, datum/tgui/ui)
 	// There used to be code here that readded the preview view if you "rejoined"
 	// I'm making the assumption that ui close will be called whenever a user logs out, or loses a window
@@ -412,7 +387,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		ui = new(user, src, "PreferencesMenu")
 		ui.set_autoupdate(FALSE)
 		ui.open()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 		// HACK: Without this the character starts out really tiny because of some BYOND bug.
 		// You can fix it by changing a preference, so let's just forcably update the body to emulate this.
@@ -429,7 +403,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/ui_status(mob/user, datum/ui_state/state)
 	return user.client == parent ? UI_INTERACTIVE : UI_CLOSE
 
-<<<<<<< HEAD
 	switch(current_tab)
 		if (0) // Character Settings#
 			if(path)
@@ -467,18 +440,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<a href='?_src_=prefs;preference=name;task=random'>Random Name</A> "
 			dat += "<br><b>Name:</b> "
 			dat += "<a href='?_src_=prefs;preference=name;task=input'>[real_name]</a><BR>"
-=======
 /datum/preferences/ui_data(mob/user)
 	var/list/data = list()
 
 	if (tainted_character_profiles)
 		data["character_profiles"] = create_character_profiles()
 		tainted_character_profiles = FALSE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	data["character_preferences"] = compile_character_preferences(user)
 
-<<<<<<< HEAD
 			var/body_m = "Normal"
 			switch(body_model)
 				if(1)
@@ -492,7 +462,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<br><b>Biological Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
 			dat += "<br><b>Actual Age:</b> <a href='?_src_=prefs;preference=total_age;task=input'>[max(age, total_age)]</a>"
-=======
 	data["active_slot"] = default_slot
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
@@ -502,11 +471,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/ui_static_data(mob/user)
 	var/list/data = list()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	data["character_profiles"] = create_character_profiles()
 
-<<<<<<< HEAD
 			dat += "<h2>[make_font_cool("BODY")]</h2>"
 			/*
 			dat += "<BR>"
@@ -542,15 +509,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<BR>"
 			*/
 			dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
-=======
 	data["character_preview_view"] = character_preview_view.assigned_map
 	data["overflow_role"] = SSjob.GetJobType(SSjob.overflow_role).title
 	data["window"] = current_window
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	data["content_unlocked"] = unlock_content
 
-<<<<<<< HEAD
 			dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
 			if(pref_species.name == "Vampire")
 				dat += "<b>Path of [enlightenment ? "Enlightenment" : "Humanity"]:</b> [humanity]/10"
@@ -820,7 +784,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<BR><b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a>"
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_UNDERSHIRT]'>[(randomise[RANDOM_UNDERSHIRT]) ? "Lock" : "Unlock"]</A>"
-=======
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		data += preference_middleware.get_ui_static_data(user)
 
@@ -834,11 +797,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		assets += preference_middleware.get_ui_assets()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	return assets
 
-<<<<<<< HEAD
 			dat += "<br><b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a>"
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SOCKS]'>[(randomise[RANDOM_SOCKS]) ? "Lock" : "Unlock"]</A>"
 
@@ -1419,11 +1380,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), widthPerColumn = 295, height = 620)
 	if(!SSjob)
-=======
 /datum/preferences/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		return
 
 	switch (action)
@@ -1458,23 +1417,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (istype(requested_preference, /datum/preference/name))
 				tainted_character_profiles = TRUE
 
-<<<<<<< HEAD
 		var/bypass = FALSE
 		if (check_rights_for(user.client, R_ADMIN))
 			bypass = TRUE
 
 		for(var/datum/job/job in sortList(SSjob.occupations, GLOBAL_PROC_REF(cmp_job_display_asc)))
-=======
 			return TRUE
 		if ("set_color_preference")
 			var/requested_preference_key = params["preference"]
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 			var/datum/preference/requested_preference = GLOB.preference_entries_by_key[requested_preference_key]
 			if (isnull(requested_preference))
 				return FALSE
 
-<<<<<<< HEAD
 			HTML += "<tr bgcolor='[job.selection_color]'><td width='60%' align='right'>"
 			var/rank = job.title
 			lastJob = job
@@ -1513,7 +1468,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				continue
 			if((rank in GLOB.leader_positions) || (rank == "AI"))//Bold head jobs
 				HTML += "<b><span class='dark'>[rank]</span></b>"
-=======
 			if (!istype(requested_preference, /datum/preference/color))
 				return FALSE
 
@@ -1588,7 +1542,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		for (var/category in append_character_preferences)
 			if (category in preferences)
 				preferences[category] += append_character_preferences[category]
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 			else
 				preferences[category] = append_character_preferences[category]
 
@@ -1675,7 +1628,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				else
 					job_preferences[other_job] = JP_MEDIUM
 
-<<<<<<< HEAD
 /datum/preferences/proc/UpdateJobPreference(mob/user, role, desiredLvl)
 	if(!SSjob || SSjob.occupations.len <= 0)
 		return
@@ -1785,12 +1737,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Remove" : "Take"] ([quirk_cost] pts.)</a> \
 					<font color='[font_color]'>[quirk_name]</font> - [initial(T.desc)]<br>"
 		dat += "<br><center><a href='?_src_=prefs;preference=trait;task=reset'>Reset Quirks</a></center>"
-=======
 	if(level == null)
 		job_preferences -= job.title
 	else
 		job_preferences[job.title] = level
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	return TRUE
 
@@ -1878,7 +1828,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 		preference.apply_to_human(character, read_preference(preference.type))
 
-<<<<<<< HEAD
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(href_list["bancheck"])
 		var/list/ban_details = is_banned_from_with_details(user.ckey, user.client.address, user.client.computer_id, href_list["bancheck"])
@@ -3432,13 +3381,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	character.dna.features = features.Copy()
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	character.dna.real_name = character.real_name
 	if(character.clane)
 		character.clane.on_gain(character)
 
-<<<<<<< HEAD
 	if(pref_species.name == "Werewolf")
 		var/datum/auspice/CLN = new auspice.type()
 		character.auspice = CLN
@@ -3510,11 +3456,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				character.AddElement(/datum/element/children, COMSIG_PARENT_PREQDELETED, src)
 		parent << browse(null, "window=preferences_window")
 		parent << browse(null, "window=preferences_browser")
-=======
 	if(icon_updates)
 		character.icon_render_keys = list()
 		character.update_body(is_creating = TRUE)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	SEND_SIGNAL(character, COMSIG_HUMAN_PREFS_APPLIED)
 

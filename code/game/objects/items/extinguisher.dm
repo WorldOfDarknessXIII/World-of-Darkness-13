@@ -263,7 +263,6 @@
 		water_reagents.my_atom = water
 		reagents.trans_to(water, 1, transferred_by = user)
 
-<<<<<<< HEAD
 		var/list/water_particles=list()
 		for(var/a=0, a<5, a++)
 			var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(get_turf(src))
@@ -280,17 +279,11 @@
 
 		//Make em move dat ass, hun
 		addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_particles, water_particles), 2)
-=======
-	//Make em move dat ass, hun
-	move_particles(water_particles)
-	return ITEM_INTERACT_SKIP_TO_ATTACK // You can smack while spraying
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 //Particle movement loop
 /obj/item/extinguisher/proc/move_particles(list/particles)
 	var/delay = 2
 	// Second loop: Get all the water particles and make them move to their target
-<<<<<<< HEAD
 	for(var/obj/effect/particle_effect/water/W in particles)
 		var/turf/my_target = particles[W]
 		if(!W)
@@ -312,10 +305,6 @@
 	if(repetition < power)
 		repetition++
 		addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_particles, particles, repetition), 2)
-=======
-	for(var/obj/effect/particle_effect/water/extinguisher/water as anything in particles)
-		water.move_at(particles[water], delay, power)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 //Chair movement loop
 /obj/item/extinguisher/proc/move_chair(obj/buckled_object, movementdirection)

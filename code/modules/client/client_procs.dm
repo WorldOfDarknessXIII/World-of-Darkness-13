@@ -884,17 +884,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			to_chat(src, span_danger("Your previous click was ignored because you've done too many in a second"))
 			return
 
-<<<<<<< HEAD
 	if (prefs.hotkeys)
 		// If hotkey mode is enabled, then clicking the map will automatically
 		// unfocus the text bar.
 		winset(src, null, "input.focus=false")
-=======
 	//check if the server is overloaded and if it is then queue up the click for next tick
 	//yes having it call a wrapping proc on the subsystem is fucking stupid glad we agree unfortunately byond insists its reasonable
 	if(!QDELETED(object) && TRY_QUEUE_VERB(VERB_CALLBACK(object, TYPE_PROC_REF(/atom, _Click), location, control, params), VERB_HIGH_PRIORITY_QUEUE_THRESHOLD, SSinput, control))
 		return
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	if (hotkeys)
 		// If hotkey mode is enabled, then clicking the map will automatically
@@ -902,11 +899,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		winset(src, null, "input.focus=false")
 	else
 		winset(src, null, "input.focus=true")
-<<<<<<< HEAD
-=======
 
 	SEND_SIGNAL(src, COMSIG_CLIENT_CLICK, object, location, control, params, usr)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	..()
 
@@ -1015,14 +1009,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					movement_keys[key] = WEST
 				if("South")
 					movement_keys[key] = SOUTH
-<<<<<<< HEAD
 				if("Say")
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=inputSay")
 				if("OOC")
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=ooc")
 				if("Me")
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=me")
-=======
 				if(ADMIN_CHANNEL)
 					if(holder)
 						var/asay = tgui_say_create_open_command(ADMIN_CHANNEL)
@@ -1030,7 +1022,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					else
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=")
 	calculate_move_dir()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
@@ -1134,8 +1125,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		holder.filteriffic = new /datum/filter_editor(in_atom)
 		holder.filteriffic.ui_interact(mob)
 
-<<<<<<< HEAD
-=======
 ///opens the particle editor UI for the in_atom object for this client
 /client/proc/open_particle_editor(atom/movable/in_atom)
 	if(holder)
@@ -1211,7 +1200,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	tgui_panel?.stop_music()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds"))
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 /client/verb/toggle_fullscreen()
 	set name = "Toggle Fullscreen"
 	set category = "OOC"
@@ -1219,19 +1207,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	fullscreen = !fullscreen
 
 	if (fullscreen)
-<<<<<<< HEAD
-		winset(usr, "mainwindow", "menu=\"\"")
-		winset(usr, "mainwindow","titlebar=false")
-		winset(usr, "mainwindow","can-resize=false")
-		winset(usr, "mainwindow","is-minimized=true")
-		winset(usr, "mainwindow","is-maximized=true")
-		winset(usr, null, "split.size=mainwindow.size")
-	else
-		winset(usr, "mainwindow", "menu=\"menu\"")
-		winset(usr, "mainwindow","titlebar=true")
-		winset(usr, "mainwindow","can-resize=true")
-	fit_viewport()
-=======
 		winset(usr, "mainwindow", "on-size=")
 		winset(usr, "mainwindow", "titlebar=false")
 		winset(usr, "mainwindow", "can-resize=false")
@@ -1303,4 +1278,3 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 #undef LIMITER_SIZE
 #undef MINUTE_COUNT
 #undef SECOND_COUNT
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

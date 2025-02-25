@@ -8,11 +8,7 @@
 	desc = "A hand-held emergency light."
 	custom_price = PAYCHECK_CREW
 	icon = 'icons/obj/lighting.dmi'
-<<<<<<< HEAD
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
-=======
-	dir = WEST
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	icon_state = "flashlight"
 	inhand_icon_state = "flashlight"
 	worn_icon_state = "flashlight"
@@ -28,21 +24,8 @@
 	light_range = 4
 	light_power = 1
 	light_on = FALSE
-<<<<<<< HEAD
 	is_iron = TRUE
 	var/on = FALSE
-=======
-	/// If we've been forcibly disabled for a temporary amount of time.
-	COOLDOWN_DECLARE(disabled_time)
-	/// Can we toggle this light on and off (used for contexual screentips only)
-	var/toggle_context = TRUE
-	/// The sound the light makes when it's turned on
-	var/sound_on = 'sound/weapons/magin.ogg'
-	/// The sound the light makes when it's turned off
-	var/sound_off = 'sound/weapons/magout.ogg'
-	/// Should the flashlight start turned on?
-	var/start_on = FALSE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/flashlight/Initialize(mapload)
 	. = ..()
@@ -104,7 +87,6 @@
 	return light_on != old_light_on // If the value of light_on didn't change, return false. Otherwise true.
 
 /obj/item/flashlight/attack_self(mob/user)
-<<<<<<< HEAD
 	if(iskindred(user))
 		var/mob/living/carbon/human/H = user
 		if(H.clane)
@@ -118,13 +100,6 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 	return 1
-=======
-	return toggle_light(user)
-
-/obj/item/flashlight/attack_hand_secondary(mob/user, list/modifiers)
-	attack_self(user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/flashlight/suicide_act(mob/living/carbon/human/user)
 	if (user.is_blind())

@@ -64,82 +64,10 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	. = ..()
 	. += "This is a [generation]\th generation [name]!"
 
-/**
- * Creates a new glowshroom structure.
- *
- * Arguments:
- * * newseed - Seed of the shroom
- */
-<<<<<<< HEAD
-/*
-/obj/structure/glowshroom/Initialize(mapload, obj/item/seeds/newseed, mutate_stats, spread)
-=======
-
-
-
-/obj/structure/glowshroom/Initialize(mapload, obj/item/seeds/newseed)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
-	. = ..()
-	GLOB.glowshrooms++
-	if(istype(newseed))
-		myseed = newseed
-		myseed.forceMove(src)
-	else
-		myseed = new myseed(src)
-
-	modify_max_integrity(GLOWSHROOM_BASE_INTEGRITY + ((100 - GLOWSHROOM_BASE_INTEGRITY) / 100 * myseed.endurance)) //goes up to 100 with peak endurance
-
-	var/datum/plant_gene/trait/glow/our_glow_gene = myseed.get_gene(/datum/plant_gene/trait/glow)
-	if(ispath(our_glow_gene)) // Seeds were ported to initialize so their genes are still typepaths here, luckily their initializer is smart enough to handle us doing this
-		myseed.genes -= our_glow_gene
-		our_glow_gene = new our_glow_gene
-		myseed.genes += our_glow_gene
-	if(istype(our_glow_gene))
-		set_light(our_glow_gene.glow_range(myseed), our_glow_gene.glow_power(myseed), our_glow_gene.glow_color)
-	setDir(calc_dir())
-	base_icon_state = initial(icon_state)
-	if(!floor)
-		switch(dir) //offset to make it be on the wall rather than on the floor
-			if(NORTH)
-				pixel_y = 32
-			if(SOUTH)
-				pixel_y = -32
-			if(EAST)
-				pixel_x = 32
-			if(WEST)
-				pixel_x = -32
-		icon_state = "[base_icon_state][rand(1,3)]"
-	else //if on the floor, glowshroom on-floor sprite
-		icon_state = base_icon_state
-
-	AddElement(/datum/element/atmos_sensitive, mapload)
-	COOLDOWN_START(src, spread_cooldown, rand(min_delay_spread, max_delay_spread))
-
-	START_PROCESSING(SSobj, src)
-
-<<<<<<< HEAD
 /obj/structure/glowshroom/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive)
 */
-=======
-	var/static/list/hovering_item_typechecks = list(
-		/obj/item/plant_analyzer = list(
-			SCREENTIP_CONTEXT_LMB = "Scan shroom stats",
-			SCREENTIP_CONTEXT_RMB = "Scan shroom chemicals"
-		),
-	)
-
-	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
-
-/obj/structure/glowshroom/Destroy()
-	if(isatom(myseed))
-		QDEL_NULL(myseed)
-	GLOB.glowshrooms--
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 /**
  * Causes glowshroom spreading across the floor/walls.
  */

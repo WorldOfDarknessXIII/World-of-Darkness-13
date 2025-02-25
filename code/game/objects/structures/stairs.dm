@@ -11,11 +11,8 @@
 	icon = 'icons/obj/stairs.dmi'
 	icon_state = "stairs"
 	anchored = TRUE
-<<<<<<< HEAD
 	layer = 3
-=======
 	move_resist = INFINITY
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	var/force_open_above = FALSE // replaces the turf above this stair obj with /turf/open/openspace
 	var/terminator_mode = STAIR_TERMINATOR_AUTOMATIC

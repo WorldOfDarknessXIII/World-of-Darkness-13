@@ -245,11 +245,7 @@
 		h_boost *= -2
 	else if(chassis.internal_damage && SPT_PROB(8, seconds_per_tick))
 		for(var/int_dam_flag in repairable_damage)
-<<<<<<< HEAD
-			if( (!chassis.internal_damage) & int_dam_flag)
-=======
 			if(!(chassis.internal_damage & int_dam_flag))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 				continue
 			chassis.clear_internal_damage(int_dam_flag)
 			repaired = TRUE

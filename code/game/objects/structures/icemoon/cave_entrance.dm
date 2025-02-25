@@ -176,15 +176,9 @@ GLOBAL_LIST_INIT(ore_probability, list(
 			new /obj/item/ship_in_a_bottle(loc)
 			new /obj/item/oar(loc)
 		if(16)
-<<<<<<< HEAD
 			new /obj/item/seeds/gatfruit(loc)
 		//if(17)
 			//new /obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola(loc)
-=======
-			new /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom(loc)
-		if(17)
-			new /obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola(loc)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		if(18)
 			new /obj/item/soulstone/anybody(loc)
 		if(19)

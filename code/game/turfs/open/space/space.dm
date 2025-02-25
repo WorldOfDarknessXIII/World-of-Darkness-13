@@ -53,10 +53,7 @@ GLOBAL_LIST_EMPTY(starlight)
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
-<<<<<<< HEAD
-=======
 	var/starlight_source_count = 0
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	var/destination_z
 	var/destination_x

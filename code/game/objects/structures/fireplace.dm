@@ -23,7 +23,6 @@
 	/// the looping sound effect that is played while burning
 	var/datum/looping_sound/burning/burning_loop
 
-<<<<<<< HEAD
 /obj/structure/fireplace/large
 	name = "large fireplace"
 	desc = "A large stone brick fireplace, warm and cozy."
@@ -39,11 +38,6 @@
 /obj/structure/fireplace/New()
 	..()
 	START_PROCESSING(SSobj, src)
-=======
-/obj/structure/fireplace/Initialize(mapload)
-	. = ..()
-	burning_loop = new(src)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/structure/fireplace/Destroy()
 	STOP_PROCESSING(SSobj, src)

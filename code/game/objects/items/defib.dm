@@ -653,7 +653,6 @@
 					H.emote("gasp")
 					H.set_jitter_if_lower(200 SECONDS)
 					SEND_SIGNAL(H, COMSIG_LIVING_MINOR_SHOCK)
-<<<<<<< HEAD
 					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
 					var/mob/living/carbon/human/HM = user
 					HM.AdjustHumanity(1, 10)
@@ -665,12 +664,6 @@
 //							if(HAS_TRAIT(user, TRAIT_NON_INT))
 //								mode = 2
 //							P.exper = min(calculate_mob_max_exper(user), P.exper+100/mode)
-=======
-					if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
-						user.add_mood_event("morbid_saved_life", /datum/mood_event/morbid_saved_life)
-					else
-						user.add_mood_event("saved_life", /datum/mood_event/saved_life)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 					log_combat(user, H, "revived", defib)
 				do_success()
 				return

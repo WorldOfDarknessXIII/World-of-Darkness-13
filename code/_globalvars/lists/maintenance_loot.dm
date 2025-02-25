@@ -27,12 +27,9 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/trash/flare = 1,
 		/obj/item/trash/candle = 1,
 
-<<<<<<< HEAD
 		/obj/item/poster/random_contraband = 1,
-=======
 		/obj/item/c_tube = 1,
 		/obj/item/disk/data = 1,
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		/obj/item/folder/yellow = 1,
 		/obj/item/hand_labeler = 1,
 		/obj/item/paper = 1,

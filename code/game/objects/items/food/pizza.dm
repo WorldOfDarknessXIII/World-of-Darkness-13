@@ -237,16 +237,12 @@
 	name = "dank pizza"
 	desc = "The hippie's pizza of choice."
 	icon_state = "dankpizza"
-<<<<<<< HEAD
-	food_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
-=======
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 25,
 		/datum/reagent/consumable/doctor_delight = 5,
 		/datum/reagent/consumable/tomatojuice = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 	slice_type = /obj/item/food/pizzaslice/dank

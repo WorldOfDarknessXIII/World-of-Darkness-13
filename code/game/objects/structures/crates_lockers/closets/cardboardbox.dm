@@ -36,21 +36,9 @@
 		return
 	move_delay = TRUE
 	var/oldloc = loc
-<<<<<<< HEAD
-	set_glide_size(DELAY_TO_GLIDE_SIZE(CONFIG_GET(number/movedelay/walk_delay) * move_speed_multiplier))
-	step(src, direction)
-	if(oldloc != loc)
-		animate(src, pixel_z = 4, time = 0)
-		var/prev_trans = matrix(transform)
-		animate(pixel_z = 0, transform = turn(transform, pick(-6, 0, 6)), time=2)
-		animate(pixel_z = 0, transform = prev_trans, time = 0)
-		playsound(loc, 'code/modules/wod13/sounds/snake_move.ogg', 25, FALSE)
-		addtimer(CALLBACK(src, .proc/ResetMoveDelay), CONFIG_GET(number/movedelay/walk_delay) * move_speed_multiplier)
-=======
 	try_step_multiz(direction);
 	if(oldloc != loc)
 		addtimer(CALLBACK(src, PROC_REF(ResetMoveDelay)), CONFIG_GET(number/movedelay/walk_delay) * move_speed_multiplier)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	else
 		move_delay = FALSE
 
@@ -61,25 +49,6 @@
 	. = ..()
 	if(!.)
 		return FALSE
-<<<<<<< HEAD
-	var/list/alerted = null
-	if(egged < world.time)
-		var/mob/living/Snake = null
-		for(var/mob/living/L in src.contents)
-			Snake = L
-			break
-		if(Snake)
-			alerted = viewers(7,src)
-	..()
-	if(LAZYLEN(alerted))
-		egged = world.time + SNAKE_SPAM_TICKS
-		for(var/mob/living/L in alerted)
-			if(!L.stat)
-				if(!L.incapacitated(ignore_restraints = 1))
-					L.face_atom(src)
-				L.do_alert_animation()
-		playsound(loc, 'code/modules/wod13/sounds/snake.ogg', 50, FALSE, -5)
-=======
 
 	LAZYINITLIST(alerted)
 	var/do_alert = (COOLDOWN_FINISHED(src, alert_cooldown) && (locate(/mob/living) in contents))
@@ -109,7 +78,6 @@
 
 	alerted.Cut()
 	playsound(loc, 'sound/machines/chime.ogg', 50, FALSE, -5)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /// Does the MGS ! animation
 /atom/proc/do_alert_animation()

@@ -4,12 +4,6 @@
 	icon_state = "black"
 	dir = SOUTH
 	baseturfs = /turf/open/space/transit
-<<<<<<< HEAD
-	flags_1 = NOJAUNT_1 //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
-	explosion_block = INFINITY
-	density = TRUE
-	opacity = TRUE
-=======
 	turf_flags = NOJAUNT //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
 	explosive_resistance = INFINITY
 
@@ -25,7 +19,6 @@
 	UnregisterSignal(src, list(COMSIG_TURF_RESERVATION_RELEASED, COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
 
 	return ..()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /turf/open/space/transit/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	. = ..()

@@ -108,7 +108,6 @@
 		return TRUE
 	return FALSE
 
-<<<<<<< HEAD
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/kitchenspike/attack_hand(mob/user)
 	if(VIABLE_MOB_CHECK(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
@@ -186,13 +185,6 @@
 	if(has_buckled_mobs())
 		for(var/mob/living/L in buckled_mobs)
 			release_mob(L)
-=======
-/obj/structure/kitchenspike/user_buckle_mob(mob/living/target, mob/user, check_loc = TRUE)
-	if(!iscarbon(target) && !isanimal_or_basicmob(target))
-		return
-	if(!do_after(user, 10 SECONDS, target))
-		return
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	return ..()
 
 /obj/structure/kitchenspike/post_buckle_mob(mob/living/target)

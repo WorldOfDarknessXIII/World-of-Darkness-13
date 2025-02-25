@@ -11,7 +11,6 @@
 	/// What storage type to use for this item
 	var/datum/storage/storage_type = /datum/storage
 
-<<<<<<< HEAD
 	//WoD13 vars start here :3
 
 	var/grid = TRUE /// Determines whether the container uses grid-based inventory.
@@ -23,9 +22,6 @@
 	return src
 
 /obj/item/storage/Initialize()
-=======
-/obj/item/storage/apply_fantasy_bonuses(bonus)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	. = ..()
 	if(isnull(atom_storage)) // some abstract types of storage (yes i know) don't get a datum
 		return

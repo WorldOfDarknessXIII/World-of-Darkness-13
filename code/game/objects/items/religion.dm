@@ -91,11 +91,7 @@
 
 /obj/item/banner/security/Initialize(mapload)
 	. = ..()
-<<<<<<< HEAD
-	job_loyalties = GLOB.ss13
-=======
 	job_loyalties = DEPARTMENT_BITFLAG_SECURITY
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/banner/security/mundane
 	inspiration_available = FALSE
@@ -119,11 +115,7 @@
 
 /obj/item/banner/medical/Initialize(mapload)
 	. = ..()
-<<<<<<< HEAD
-	job_loyalties = GLOB.ss13
-=======
 	job_loyalties = DEPARTMENT_BITFLAG_MEDICAL
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/banner/medical/mundane
 	inspiration_available = FALSE
@@ -158,11 +150,7 @@
 
 /obj/item/banner/science/Initialize(mapload)
 	. = ..()
-<<<<<<< HEAD
-	job_loyalties = GLOB.anarch_positions
-=======
 	job_loyalties = DEPARTMENT_BITFLAG_SCIENCE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/banner/science/mundane
 	inspiration_available = FALSE
@@ -189,11 +177,7 @@
 
 /obj/item/banner/cargo/Initialize(mapload)
 	. = ..()
-<<<<<<< HEAD
-	job_loyalties = GLOB.ss13
-=======
 	job_loyalties = DEPARTMENT_BITFLAG_CARGO
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/banner/cargo/mundane
 	inspiration_available = FALSE
@@ -217,11 +201,7 @@
 
 /obj/item/banner/engineering/Initialize(mapload)
 	. = ..()
-<<<<<<< HEAD
-	job_loyalties = GLOB.ss13
-=======
 	job_loyalties = DEPARTMENT_BITFLAG_ENGINEERING
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/banner/engineering/mundane
 	inspiration_available = FALSE

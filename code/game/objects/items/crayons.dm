@@ -885,12 +885,8 @@
 
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
-<<<<<<< HEAD
 		user.visible_message("<span class='notice'>[user] coats [target] with spray paint!</span>", "<span class='notice'>You coat [target] with spray paint.</span>")
 		SEND_SIGNAL(src, COMSIG_MOB_USING_SPAYPRAINT, user, target)
-=======
-		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		return
 
 	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
