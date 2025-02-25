@@ -3,7 +3,7 @@
 	title = "Cabaret Worker"
 	faction = "Vampire"
 	total_positions = 4
-	spawn_positions = -4
+	spawn_positions = 4
 	supervisors = "the Traditions"
 	selection_color = "#df7058"
 	access = list()			//See /datum/job/assistant/get_access()
@@ -21,9 +21,9 @@
 	allowed_species = list("Vampire")
 
 	v_duty = "Follow the traditions of the Camarilla. Obey the Prince and their authority. The city belongs to him. Aligning yourself with your clan members would be of benefit."
-	duty = "You are either a Daughter of Cacophony or a Son of Discord. You work at the Cabaret and sing masterful songs yet the singing never stops within your head..."
+	duty = "You are a servant of your infernal lord, whoever it may be. Acting as an alcoholics anonymous counselor, your kin have etched out a cover as members of alcoholics anonymous. Good luck."
 	minimal_masquerade = 0
-	allowed_bloodlines = list("Daughters of Cacophony")
+	allowed_bloodlines = list("Baali")
 
 /datum/outfit/job/daughteroutfit
 	name = "Cabaret Worker"
