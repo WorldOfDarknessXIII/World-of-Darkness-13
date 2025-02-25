@@ -1,6 +1,6 @@
 
-/datum/job/vamp/citizen
-	title = "Barista"
+/datum/job/vamp/baali
+	title = "Counselor"
 	faction = "Vampire"
 	total_positions = 4
 	spawn_positions = 4
@@ -8,7 +8,7 @@
 	selection_color = "#df7058"
 	access = list()			//See /datum/job/assistant/get_access()
 	minimal_access = list()	//See /datum/job/assistant/get_access()
-	outfit = /datum/outfit/job/citizen
+	outfit = /datum/outfit/job/baali
 	antag_rep = 7
 	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
 
@@ -21,17 +21,17 @@
 	allowed_species = list("Vampire")
 
 	v_duty = "Follow the traditions of the Camarilla. Obey the Prince and their authority. The city belongs to him. Aligning yourself with your clan members would be of benefit."
-	duty = "You are a childe of Haqim! You are one of the many Banu Haqim within the city and judge kindred where they stand. The Banu Haqim operate a coffee shop as a clan cover within the city."
+	duty = "You are a servant of your infernal lord, whoever it may be. Acting as an alcoholics anonymous counselor, your kin have etched out a cover as members of alcoholics anonymous. Good luck."
 	minimal_masquerade = 0
-	allowed_bloodlines = list("Banu Haqim")
+	allowed_bloodlines = list("Baali")
 
-/datum/outfit/job/citizen
-	name = "Citizen"
-	jobtype = /datum/job/vamp/citizen
+/datum/outfit/job/baali
+	name = "Counselor"
+	jobtype = /datum/job/vamp/bali
 	l_pocket = /obj/item/vamp/phone
 	id = /obj/item/cockclock
 
-/datum/outfit/job/citizen/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/baali/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(H.clane)
 		if(H.gender == MALE)
@@ -48,14 +48,7 @@
 			shoes = /obj/item/clothing/shoes/vampire
 		else
 			shoes = /obj/item/clothing/shoes/vampire/heels
-	if(H.clane)
-		if(H.clane.name == "Lasombra")
-			backpack_contents = list(/obj/item/passport =1, /obj/item/vamp/creditcard=1)
-	if(!H.clane)
-		backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
-	if(H.clane && H.clane.name != "Lasombra")
-		backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
 
-/obj/effect/landmark/start/citizen
-	name = "Citizen"
+/obj/effect/landmark/start/baali
+	name = "Counselor"
 	icon_state = "Assistant"

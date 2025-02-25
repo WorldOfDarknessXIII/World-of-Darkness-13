@@ -1,14 +1,14 @@
 
-/datum/job/vamp/citizen
-	title = "Hotel Attendant"
+/datum/job/vamp/lasombra
+	title = "Monestary Monk"
 	faction = "Vampire"
-	total_positions = 4
-	spawn_positions = 4
+	total_positions = 5
+	spawn_positions = 5
 	supervisors = "the Traditions"
 	selection_color = "#df7058"
 	access = list()			//See /datum/job/assistant/get_access()
 	minimal_access = list()	//See /datum/job/assistant/get_access()
-	outfit = /datum/outfit/job/citizen
+	outfit = /datum/outfit/job/lasombra
 	antag_rep = 7
 	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
 
@@ -21,17 +21,17 @@
 	allowed_species = list("Vampire")
 
 	v_duty = "Follow the traditions of the Camarilla. Obey the Prince and their authority. The city belongs to him. Aligning yourself with your clan members would be of benefit."
-	duty = "You are a spawn of the Eldest. The Tzimisce within the city operate the local Hotel and enforce the rites of hospitality within the Hotel."
+	duty = "You are a member of the Amis Noir of Clan Lasombra! You maintain the gradually collapsing church that was set up along the pier that became a historical site."
 	minimal_masquerade = 0
-	allowed_bloodlines = list("Tzimisce")
+	allowed_bloodlines = list("Lasombra")
 
-/datum/outfit/job/citizen
-	name = "Citizen"
-	jobtype = /datum/job/vamp/citizen
+/datum/outfit/job/lasombra
+	name = "lasombra"
+	jobtype = /datum/job/vamp/lasombra
 	l_pocket = /obj/item/vamp/phone
 	id = /obj/item/cockclock
 
-/datum/outfit/job/citizen/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/lasombra/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(H.clane)
 		if(H.gender == MALE)
@@ -48,14 +48,7 @@
 			shoes = /obj/item/clothing/shoes/vampire
 		else
 			shoes = /obj/item/clothing/shoes/vampire/heels
-	if(H.clane)
-		if(H.clane.name == "Lasombra")
-			backpack_contents = list(/obj/item/passport =1, /obj/item/vamp/creditcard=1)
-	if(!H.clane)
-		backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
-	if(H.clane && H.clane.name != "Lasombra")
-		backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
 
-/obj/effect/landmark/start/citizen
-	name = "Citizen"
+/obj/effect/landmark/start/lasombra
+	name = "lasombra"
 	icon_state = "Assistant"
