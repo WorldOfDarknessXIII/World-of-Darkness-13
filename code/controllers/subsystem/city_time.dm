@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(city_time)
 /datum/controller/subsystem/city_time/fire()
 	if(minutes == 59)
 		minutes = 0
-		hour =  get_next_hour(hour)
+		hour = get_next_hour(hour)
 	else
 		minutes = max(0, minutes+1)
 
