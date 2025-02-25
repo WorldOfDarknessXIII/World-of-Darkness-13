@@ -21,7 +21,7 @@
 	allowed_species = list("Vampire", "Ghoul", "Human", "Werewolf", "Kuei-Jin")
 
 	v_duty = "Follow the traditions of the Camarilla. Obey the Prince and their authority. The city belongs to him. Aligning yourself with your clan members would be of benefit."
-	duty = "Obey the authorities... Or don't. You are up late tonight for one reason or another."
+	duty = "One of the few Healer Salubri left within the city, you operate the Vet for any diseased or sick animals. You may have been an escaped member of The Seven or not. Regardless, you must hide and lay low."
 	minimal_masquerade = 0
 	allowed_bloodlines = list("Salubri")
 

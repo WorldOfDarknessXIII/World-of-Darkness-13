@@ -21,7 +21,7 @@
 	allowed_species = list("Vampire")
 
 	v_duty = "Follow the traditions of the Camarilla. Obey the Prince and their authority. The city belongs to him. Aligning yourself with your clan members would be of benefit."
-	duty = "Obey the authorities... Or don't. You are up late tonight for one reason or another."
+	duty = "You are a childe of Haqim! You are one of the many Banu Haqim within the city and judge kindred where they stand. The Banu Haqim operate a coffee shop as a clan cover within the city."
 	minimal_masquerade = 0
 	allowed_bloodlines = list("Banu Haqim")
 

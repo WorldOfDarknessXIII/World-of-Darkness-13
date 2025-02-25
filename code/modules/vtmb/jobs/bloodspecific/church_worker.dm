@@ -21,7 +21,7 @@
 	allowed_species = list("Vampire")
 
 	v_duty = "Follow the traditions of the Camarilla. Obey the Prince and their authority. The city belongs to him. Aligning yourself with your clan members would be of benefit."
-	duty = "Obey the authorities... Or don't. You are up late tonight for one reason or another."
+	duty = "You are a member of the Amis Noir of Clan Lasombra! You maintain the gradually collapsing church that was set up along the pier that became a historical site."
 	minimal_masquerade = 0
 	allowed_bloodlines = list("Lasombra")
 
