@@ -7,14 +7,10 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-<<<<<<< HEAD
-	mouse_opacity = 0
-=======
 	armor_type = /datum/armor/supplypod_beacon
 	resistance_flags = FIRE_PROOF
 	interaction_flags_click = ALLOW_SILICON_REACH
 	/// The linked console
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	var/obj/machinery/computer/cargo/express/express_console
 	/// If linked
 	var/linked = FALSE
@@ -99,34 +95,12 @@
 		update_status(SP_READY)
 	to_chat(user, span_notice("[src] linked to [C]."))
 
-<<<<<<< HEAD
-/obj/item/supplypod_beacon/proc/altlink_console(obj/machinery/computer/cargo/express/C)
-	if (C.beacon)//if new console has a beacon, then...
-		C.beacon.unlink_console()//unlink the old beacon from new console
-	if (express_console)//if this beacon has an express console
-		express_console.beacon = null//remove the connection the expressconsole has from beacons
-	express_console = C//set the linked console var to the console
-	express_console.beacon = src//out with the old in with the news
-	update_status(SP_LINKED)
-	if (express_console.usingBeacon)
-		update_status(SP_READY)
-
-/obj/item/supplypod_beacon/AltClick(mob/user)
-	return
-//	if (!user.canUseTopic(src, !issilicon(user)))
-//		return
-//	if (express_console)
-//		unlink_console()
-//	else
-//		to_chat(user, "<span class='alert'>There is no linked console.</span>")
-=======
 /obj/item/supplypod_beacon/click_alt(mob/user)
 	if(!express_console)
 		to_chat(user, span_alert("There is no linked console."))
 		return CLICK_ACTION_BLOCKING
 	unlink_console()
 	return CLICK_ACTION_SUCCESS
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/supplypod_beacon/attackby(obj/item/W, mob/user)
 	if(IS_WRITING_UTENSIL(W)) //give a tag that is visible from the linked express console

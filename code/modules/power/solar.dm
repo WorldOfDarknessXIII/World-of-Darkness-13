@@ -6,13 +6,8 @@
 /obj/machinery/power/solar
 	name = "solar panel"
 	desc = "A solar panel. Generates electricity when in contact with sunlight."
-<<<<<<< HEAD
-	icon = 'icons/obj/power.dmi'
-	icon_state = "smes"
-=======
 	icon = 'icons/obj/machines/solar.dmi'
 	icon_state = "sp_base"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	density = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
@@ -274,11 +269,7 @@
 /obj/item/solar_assembly
 	name = "solar panel assembly"
 	desc = "A solar panel assembly kit, allows constructions of a solar panel, or with a tracking circuit board, a solar tracker."
-<<<<<<< HEAD
-	icon = 'icons/obj/power.dmi'
-=======
 	icon = 'icons/obj/machines/solar.dmi'
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	icon_state = "sp_base"
 	inhand_icon_state = "electropack"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'

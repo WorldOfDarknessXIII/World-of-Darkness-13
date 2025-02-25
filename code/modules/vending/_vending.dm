@@ -764,17 +764,10 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 				if(6 to 15)
 					freebie(2)
 				if(16 to 25)
-<<<<<<< HEAD
-					freebie(user, 1)
-				if(26 to 75)
-					//nothing!
-				if(76 to 90)
-=======
 					freebie(1)
 				if(26 to 75)
 					return
 				if(76 to 100)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 					tilt(user)
 
 /**

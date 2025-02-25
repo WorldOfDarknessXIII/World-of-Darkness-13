@@ -63,14 +63,9 @@
 
 	current_target = target
 	active = TRUE
-<<<<<<< HEAD:code/modules/projectiles/guns/misc/medbeam.dm
-	current_beam = user.Beam(current_target, icon_state="blood", time = 10 MINUTES, maxdistance = max_range, beam_type = /obj/effect/ebeam/medical)
-	RegisterSignal(current_beam, COMSIG_PARENT_QDELETING, .proc/beam_died)//this is a WAY better rangecheck than what was done before (process check)
-=======
 	current_beam = user.Beam(current_target, icon_state="medbeam", time = 10 MINUTES, maxdistance = max_range, beam_type = /obj/effect/ebeam/medical)
 	RegisterSignal(current_beam, COMSIG_QDELETING, PROC_REF(beam_died))//this is a WAY better rangecheck than what was done before (process check)
 	START_PROCESSING(SSobj, src)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/modules/projectiles/guns/special/medbeam.dm
 
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 
@@ -124,13 +119,6 @@
 			if(!movable.CanPass(dummy, get_dir(next_step, previous_step)))
 				qdel(dummy)
 				return FALSE
-<<<<<<< HEAD:code/modules/projectiles/guns/misc/medbeam.dm
-//		for(var/obj/effect/ebeam/medical/B in turf)// Don't cross the str-beams!
-//			if(B.owner.origin != current_beam.origin)
-//				explosion(B.loc,0,3,5,8)
-//				qdel(dummy)
-//				return FALSE
-=======
 		for(var/obj/effect/ebeam/medical/B in next_step)// Don't cross the str-beams!
 			if(QDELETED(current_beam))
 				break //We shouldn't be processing anymore.
@@ -144,7 +132,6 @@
 				qdel(dummy)
 				return FALSE
 		previous_step = next_step
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/modules/projectiles/guns/special/medbeam.dm
 	qdel(dummy)
 	return TRUE
 
@@ -153,13 +140,6 @@
 
 /obj/item/gun/medbeam/proc/on_beam_tick(mob/living/target)
 	if(target.health != target.maxHealth)
-<<<<<<< HEAD:code/modules/projectiles/guns/misc/medbeam.dm
-		new /obj/effect/temp_visual/heal(get_turf(target), "#FF0000")
-	target.adjustBruteLoss(-20)
-	target.adjustFireLoss(-20)
-	target.adjustToxLoss(-10)
-	target.adjustOxyLoss(-10)
-=======
 		new /obj/effect/temp_visual/heal(get_turf(target), COLOR_HEALING_CYAN)
 	var/need_mob_update
 	need_mob_update = target.adjustBruteLoss(-4, updating_health = FALSE, forced = TRUE)
@@ -168,7 +148,6 @@
 	need_mob_update += target.adjustOxyLoss(-1, updating_health = FALSE, forced = TRUE)
 	if(need_mob_update)
 		target.updatehealth()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/modules/projectiles/guns/special/medbeam.dm
 	return
 
 /obj/item/gun/medbeam/proc/on_beam_release(mob/living/target)

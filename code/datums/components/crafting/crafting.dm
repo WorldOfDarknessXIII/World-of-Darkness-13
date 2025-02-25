@@ -197,48 +197,12 @@
 
 	var/list/contents = get_surroundings(crafter, recipe.blacklist)
 	var/send_feedback = 1
-<<<<<<< HEAD
-	var/mob/living/carbon/human/PIS
-	if(ishuman(a))
-		PIS = a
-	if(check_contents(a, R, contents))
-		if(check_tools(a, R, contents))
-			//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
-			if(ismob(a) && !do_after(a, R.time*max(1, (5-PIS.mentality)), target = a))
-				return "."
-			contents = get_surroundings(a,R.blacklist)
-			if(!check_contents(a, R, contents))
-				return ", missing component."
-			if(!check_tools(a, R, contents))
-				return ", missing tool."
-			var/list/parts = del_reqs(R, a)
-			var/atom/movable/I = new R.result (get_turf(a.loc))
-			if(istype(I, /mob/living/simple_animal/hostile))
-				var/mob/living/simple_animal/hostile/HS = I
-				if(ishuman(a))
-					HS.my_creator = a
-			if(istype(I, /obj/structure/fleshwall))
-				if(istype(get_area(a), /area/vtm))
-					var/area/vtm/V = get_area(a)
-					if(V.upper)
-						PIS.AdjustMasquerade(-1)
-			if(istype(I, /obj/effect/decal/gut_floor))
-				if(istype(get_area(a), /area/vtm))
-					var/area/vtm/V = get_area(a)
-					if(V.upper)
-						PIS.AdjustMasquerade(-1)
-			I.CheckParts(parts, R)
-			if(send_feedback)
-				SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
-			return I //Send the item back to whatever called this proc so it can handle whatever it wants to do with the new item
-=======
 	var/turf/dest_turf = get_turf(crafter)
 
 	if(!check_contents(crafter, recipe, contents))
 		return ", missing component."
 
 	if(!check_tools(crafter, recipe, contents))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		return ", missing tool."
 
 
@@ -473,19 +437,8 @@
 //For the UI related things we're going to assume the user is a mob rather than typesetting it to an atom as the UI isn't generated if the parent is an atom
 /datum/component/personal_crafting/ui_interact(mob/user, datum/tgui/ui, var/open_ui = TRUE)
 	ui = SStgui.try_update_ui(user, src, ui)
-<<<<<<< HEAD
-	if(!ui && open_ui)
-		cur_category = categories[1]
-		if(islist(categories[cur_category]))
-			var/list/subcats = categories[cur_category]
-			cur_subcategory = subcats[1]
-		else
-			cur_subcategory = CAT_NONE
-		ui = new(user, src, "PersonalCrafting")
-=======
 	if(!ui)
 		ui = new(user, src, "PersonalCrafting", "Crafting")
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		ui.open()
 
 /datum/component/personal_crafting/ui_data(mob/user)

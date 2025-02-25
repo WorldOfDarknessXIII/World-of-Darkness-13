@@ -35,16 +35,11 @@
 	examine_texts += span_notice("[source] looks climbable.")
 
 /datum/element/climbable/proc/can_climb(atom/source, mob/user)
-<<<<<<< HEAD
-	if(get_turf(user) == get_turf(source))
-		to_chat(user, "<span class='warning'>You are already on \the [source]!</span>")
-=======
 	if (!user.CanReach(source))
 		return FALSE
 	var/dir_step = get_dir(user, source.loc)
 	//To jump over a railing you have to be standing next to it, not far behind it.
 	if(source.flags_1 & ON_BORDER_1 && user.loc != source.loc && (dir_step & source.dir) == source.dir)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		return FALSE
 	return TRUE
 
@@ -98,17 +93,6 @@
 	LAZYREMOVEASSOC(current_climbers, climbed_thing, user)
 
 
-<<<<<<< HEAD
-/datum/element/climbable/proc/do_climb(atom/climbed_thing, mob/living/user)
-	climbed_thing.density = FALSE
-	//Switched from step() to Move() because it allows for diagonal movement
-	//Switched from loc to get_turf() because it is possible to climb through low walls, whose loc variable is the area they're in
-	user.Move(get_turf(climbed_thing))
-	climbed_thing.density = TRUE
-	if(get_turf(user) == get_turf(climbed_thing))
-		return TRUE
-	return FALSE
-=======
 /datum/element/climbable/proc/do_climb(atom/climbed_thing, mob/living/user, params)
 	if(!can_climb(climbed_thing, user))
 		return
@@ -129,7 +113,6 @@
 			dir_step = get_dir(user, get_step(climbed_thing, climbed_thing.dir))
 	. = step(user, dir_step)
 	climbed_thing.set_density(TRUE)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 ///Handles climbing onto the atom when you click-drag
 /datum/element/climbable/proc/mousedrop_receive(atom/climbed_thing, atom/movable/dropped_atom, mob/user, params)

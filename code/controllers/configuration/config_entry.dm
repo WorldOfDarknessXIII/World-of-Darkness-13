@@ -122,13 +122,8 @@
 	return FALSE
 
 /datum/config_entry/number/vv_edit_var(var_name, var_value)
-<<<<<<< HEAD
-	//var/static/list/banned_edits = list(NAMEOF(src, max_val), NAMEOF(src, min_val), NAMEOF(src, integer))
-	return ..()
-=======
 	var/static/list/banned_edits = list(NAMEOF_STATIC(src, max_val), NAMEOF_STATIC(src, min_val), NAMEOF_STATIC(src, integer))
 	return !(var_name in banned_edits) && ..()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /datum/config_entry/flag
 	default = FALSE

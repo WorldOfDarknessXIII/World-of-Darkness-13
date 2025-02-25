@@ -18,16 +18,10 @@
 		/datum/reagent/consumable/eggyolk = 1)
 
 	suppressive_reagents = list(
-<<<<<<< HEAD
-							/datum/reagent/toxin/heparin = -6,
-							/datum/reagent/consumable/astrotame = -4, //Saccarin gives rats cancer.
-							/datum/reagent/consumable/grey_bull = -1)
-=======
 		/datum/reagent/toxin/heparin = -6,
 		/datum/reagent/consumable/astrotame = -4, //Saccarin gives rats cancer.
 		/datum/reagent/consumable/ethanol/rubberneck = -3,
 		/datum/reagent/consumable/grey_bull = -1)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	virus_suspectibility = 2
 	growth_rate = VAT_GROWTH_RATE
@@ -326,14 +320,6 @@
 		/datum/reagent/consumable/vitfro)
 
 	supplementary_reagents = list(
-<<<<<<< HEAD
-						/datum/reagent/medicine/omnizine = 4,
-						/datum/reagent/consumable/nutriment/peptides = 3,
-						/datum/reagent/consumable/corn_syrup = 2,
-						/datum/reagent/medicine/salglu_solution = 1,
-						/datum/reagent/liquidgibs = 1,
-						/datum/reagent/consumable/nutriment/vitamin = 1)
-=======
 		/datum/reagent/medicine/omnizine = 4,
 		/datum/reagent/consumable/nutriment/peptides = 3,
 		/datum/reagent/consumable/corn_syrup = 2,
@@ -342,7 +328,6 @@
 		/datum/reagent/medicine/salglu_solution = 1,
 		/datum/reagent/consumable/liquidgibs = 1,
 		/datum/reagent/consumable/nutriment/vitamin = 1)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	suppressive_reagents = list(
 		/datum/reagent/toxin/carpotoxin = -3,
@@ -366,15 +351,10 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1)
 
 	suppressive_reagents = list(
-<<<<<<< HEAD
-							/datum/reagent/toxin/pestkiller = -2,
-							/datum/reagent/consumable/poisonberryjuice = -4)
-=======
 		/datum/reagent/toxin/pestkiller = -2,
 		/datum/reagent/consumable/salt = -3, //Some salts are toxic to cockroaches, + helps makes the cell line more manageable
 		/datum/reagent/consumable/poisonberryjuice = -4,
 		/datum/reagent/consumable/ethanol/bug_spray = -4)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	virus_suspectibility = 0
 	resulting_atom = /mob/living/basic/cockroach
@@ -478,14 +458,9 @@
 /datum/micro_organism/cell_line/netherworld
 	desc = "Aberrant residue"
 	required_reagents = list(//theme here: very odd requirements
-<<<<<<< HEAD
-							/datum/reagent/water/hollowwater,//geyser reagent, so plentiful when found
-							/datum/reagent/yuck) //since the other two are easy to make tons of, this is kind of a limiter
-=======
 		/datum/reagent/water/hollowwater,//geyser reagent, so plentiful when found
 		/datum/reagent/consumable/ethanol/wizz_fizz, //EZ bartender drink, like brainless
 		/datum/reagent/yuck) //since the other two are easy to make tons of, this is kind of a limiter
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	supplementary_reagents = list( //all of these are just geyser stuff, rated by their rarity
 		/datum/reagent/wittel = 10, //stupid rare
@@ -530,18 +505,11 @@
 		/datum/reagent/plantnutriment/robustharvestnutriment = 1)
 
 	suppressive_reagents = list(
-<<<<<<< HEAD
-							/datum/reagent/consumable/clownstears = -8,
-							/datum/reagent/toxin/plantbgone = -4,
-							/datum/reagent/consumable/nothing = -2,
-							/datum/reagent/fuel/oil = -1)
-=======
 		/datum/reagent/consumable/nutriment/soup/clown_tears = -8,
 		/datum/reagent/toxin/plantbgone = -4,
 		/datum/reagent/consumable/ethanol/silencer = -3,
 		/datum/reagent/consumable/nothing = -2,
 		/datum/reagent/fuel/oil = -1)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	resulting_atom = /mob/living/basic/clown/banana
 
@@ -561,14 +529,6 @@
 		/datum/reagent/consumable/space_cola = 1)
 
 	suppressive_reagents = list(
-<<<<<<< HEAD
-							/datum/reagent/consumable/clownstears = -8,
-							/datum/reagent/toxin/minttoxin = -6,
-							/datum/reagent/consumable/ethanol/fernet = -3,
-							/datum/reagent/toxin/lipolicide = -3,
-							/datum/reagent/consumable/nothing = -2,
-							/datum/reagent/toxin/bad_food = -1)
-=======
 		/datum/reagent/consumable/nutriment/soup/clown_tears = -8,
 		/datum/reagent/consumable/mintextract = -6,
 		/datum/reagent/consumable/ethanol/silencer = -3,
@@ -576,7 +536,6 @@
 		/datum/reagent/toxin/lipolicide = -3,
 		/datum/reagent/consumable/nothing = -2,
 		/datum/reagent/toxin/bad_food = -1)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	resulting_atom = /mob/living/basic/clown/mutant/glutton
 
@@ -594,19 +553,12 @@
 		/datum/reagent/nitrous_oxide = 2)
 
 	suppressive_reagents = list(
-<<<<<<< HEAD
-						/datum/reagent/consumable/clownstears = -8,
-						/datum/reagent/toxin/mutetoxin = -3,
-						/datum/reagent/consumable/nothing = -2,
-						/datum/reagent/sulfur = -1)
-=======
 		/datum/reagent/consumable/nutriment/soup/clown_tears = -8,
 		/datum/reagent/consumable/ethanol/beepsky_smash = -3,
 		/datum/reagent/consumable/ethanol/silencer = -3,
 		/datum/reagent/toxin/mutetoxin = -3,
 		/datum/reagent/consumable/nothing = -2,
 		/datum/reagent/sulfur = -1)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	resulting_atom = /mob/living/basic/clown/longface
 

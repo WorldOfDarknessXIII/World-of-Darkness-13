@@ -23,20 +23,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud
 	var/mob/mymob
 
-<<<<<<< HEAD
-	var/hud_shown = TRUE			//Used for the HUD toggle (F12)
-	var/hud_version = HUD_STYLE_STANDARD	//Current displayed version of the HUD
-	var/inventory_shown = TRUE		//Equipped item inventory
-	var/hotkey_ui_hidden = FALSE	//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
-
-	var/atom/movable/screen/ling/chems/lingchemdisplay
-	var/atom/movable/screen/ling/sting/lingstingdisplay
-=======
 	var/hud_shown = TRUE //Used for the HUD toggle (F12)
 	var/hud_version = HUD_STYLE_STANDARD //Current displayed version of the HUD
 	var/inventory_shown = FALSE //Equipped item inventory
 	var/hotkey_ui_hidden = FALSE //This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	var/atom/movable/screen/blobpwrdisplay
 
@@ -113,14 +103,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/list/floating_actions
 
 	var/atom/movable/screen/healths
-<<<<<<< HEAD
-//	var/atom/movable/screen/healthdoll
-//	var/atom/movable/screen/internals
-	var/atom/movable/screen/wanted/wanted_lvl
-=======
 	var/atom/movable/screen/stamina
 	var/atom/movable/screen/healthdoll
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	var/atom/movable/screen/spacesuit
 	var/atom/movable/screen/hunger
 	// subtypes can override this to force a specific UI style
@@ -264,9 +248,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_LIST(infodisplay)
 
 	healths = null
-//	healthdoll = null
-	wanted_lvl = null
-//	internals = null
 	stamina = null
 	spacesuit = null
 	hunger = null

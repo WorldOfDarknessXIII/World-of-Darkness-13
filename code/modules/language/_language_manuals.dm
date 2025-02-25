@@ -59,17 +59,8 @@
 
 /obj/item/language_manual/roundstart_species/Initialize(mapload)
 	. = ..()
-<<<<<<< HEAD:code/modules/language/language_manuals.dm
-	language = pick( \
-		/datum/language/japanese, \
-		/datum/language/mandarin, \
-		/datum/language/russian, \
-
-	)
-=======
 	var/list/available_languages = length(GLOB.uncommon_roundstart_languages) ? GLOB.uncommon_roundstart_languages : list(/datum/language/common)
 	language = pick(available_languages)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/modules/language/_language_manuals.dm
 	name = "[initial(language.name)] manual"
 	desc = "The book's cover reads: \"[initial(language.name)] for Xenos - Learn common galactic tongues in seconds.\""
 	flavour_text = "you feel empowered with a mastery over [initial(language.name)]"

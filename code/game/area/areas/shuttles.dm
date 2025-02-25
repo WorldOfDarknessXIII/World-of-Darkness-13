@@ -144,12 +144,7 @@
 	area_flags = NONE
 
 /area/shuttle/mining
-<<<<<<< HEAD
-	name = "Elevator"
-	area_flags = NONE //Set this so it doesn't inherit NO_ALERTS
-=======
 	name = "Mining Shuttle"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /area/shuttle/mining/large
 	name = "Mining Shuttle"

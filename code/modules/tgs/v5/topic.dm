@@ -149,13 +149,7 @@
 		if(DMAPI5_TOPIC_COMMAND_HEALTHCHECK)
 			if(event_handler && event_handler.receive_health_checks)
 				event_handler.HandleEvent(TGS_EVENT_HEALTH_CHECK)
-<<<<<<< HEAD
-			var/list/health_check_response = TopicResponse()
-			health_check_response[DMAPI5_TOPIC_RESPONSE_CLIENT_COUNT] = TGS_CLIENT_COUNT
-			return health_check_response;
-=======
 			return TopicResponse()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 		if(DMAPI5_TOPIC_COMMAND_WATCHDOG_REATTACH)
 			detached = FALSE

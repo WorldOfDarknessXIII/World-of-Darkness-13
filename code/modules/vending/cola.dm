@@ -6,21 +6,6 @@
 	panel_type = "panel2"
 	product_slogans = "Robust Softdrinks: More robust than a toolbox to the head!"
 	product_ads = "Refreshing!;Hope you're thirsty!;Over 1 million drinks sold!;Thirsty? Why not cola?;Please, have a drink!;Drink up!;The best drinks in space."
-<<<<<<< HEAD
-	products = list(/obj/item/reagent_containers/food/drinks/soda_cans/cola = 10,
-		            /obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/starkist = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/space_up = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 10,
-					/obj/item/reagent_containers/food/drinks/waterbottle = 10)
-	contraband = list(/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 6)
-	premium = list(/obj/item/reagent_containers/food/drinks/soda_cans/air = 1,
-		           /obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy = 1,
-		           /obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 1)
-=======
 	products = list(
 		/obj/item/reagent_containers/cup/soda_cans/cola = 10,
 		/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind = 10,
@@ -46,7 +31,6 @@
 		/obj/item/reagent_containers/cup/soda_cans/grey_bull = 1,
 		/obj/item/reagent_containers/cup/glass/bottle/rootbeer = 1,
 	)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	refill_canister = /obj/item/vending_refill/cola
 	default_price = PAYCHECK_CREW * 0.7
 	extra_price = PAYCHECK_CREW

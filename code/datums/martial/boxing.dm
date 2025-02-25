@@ -44,16 +44,6 @@
 
 	return combo_multiplier
 
-<<<<<<< HEAD
-	var/damage = 5 + species.punchdamagelow
-	damage = min(damage, 20)
-	if(!damage)
-		playsound(D.loc, species.miss_sound, 25, TRUE, -1)
-		D.visible_message("<span class='warning'>[A]'s [atk_verb] misses [D]!</span>", \
-						"<span class='danger'>You avoid [A]'s [atk_verb]!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, A)
-		to_chat(A, "<span class='warning'>Your [atk_verb] misses [D]!</span>")
-		log_combat(A, D, "attempted to hit", atk_verb)
-=======
 /datum/martial_art/boxing/disarm_act(mob/living/attacker, mob/living/defender)
 	if(honor_check(defender))
 		add_to_streak("D", defender)
@@ -130,7 +120,6 @@
 			span_danger("You avoid [attacker]'s [current_atk_verb]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, attacker)
 		to_chat(attacker, span_warning("Your [current_atk_verb] misses [defender]!"))
 		log_combat(attacker, defender, "attempted to hit", current_atk_verb)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		return FALSE
 
 	if(defender.check_block(attacker, damage, "[attacker]'s [current_atk_verb]", UNARMED_ATTACK))
@@ -206,20 +195,6 @@
 	new /obj/effect/temp_visual/crit(get_turf(defender))
 	skill_experience_adjustment(attacker, experience_earned) //double experience for a successful crit
 
-<<<<<<< HEAD
-	D.apply_damage(damage, STAMINA, affecting, armor_block)
-	log_combat(A, D, "punched (boxing) ")
-	if(D.getStaminaLoss() > 60 && istype(D.mind?.martial_art, /datum/martial_art/boxing))
-		var/knockout_prob = D.getStaminaLoss()-20
-		if((D.stat != DEAD) && prob(knockout_prob) && !iscathayan(D) && !iskindred(D) && !iscrinos(D) && !iswerewolf(D))
-			D.visible_message("<span class='danger'>[A] knocks [D] out with a haymaker!</span>", \
-							"<span class='userdanger'>You're knocked unconscious by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
-			to_chat(A, "<span class='danger'>You knock [D] out with a haymaker!</span>")
-			D.apply_effect(200,EFFECT_KNOCKDOWN,armor_block)
-			D.SetSleeping(100)
-			log_combat(A, D, "knocked out (boxing) ")
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	return TRUE
 
 /// Returns whether whoever is checked by this proc is complying with the rules of boxing. The boxer cannot block non-boxers, and cannot apply their scariest moves against non-boxers.

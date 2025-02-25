@@ -99,13 +99,6 @@
  * Run to equally share the blood between us and a decal
  */
 /datum/component/bloodysoles/proc/share_blood(obj/effect/decal/cleanable/pool)
-<<<<<<< HEAD
-	if(!pool)
-		return
-	last_blood_state = pool.blood_state
-
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	// Share the blood between our boots and the blood pool
 	var/total_bloodiness = pool.bloodiness + bloody_shoes[pool.blood_state]
 

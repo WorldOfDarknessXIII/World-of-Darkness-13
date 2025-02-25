@@ -1,12 +1,7 @@
 /obj/item/gun/ballistic/revolver
-<<<<<<< HEAD
 	name = "\improper revolver"
 	desc = "Old, but might."
 	icon = 'code/modules/wod13/weapons.dmi'
-=======
-	name = "\improper .357 revolver"
-	desc = "A suspicious revolver. Uses .357 ammo."
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	icon_state = "revolver"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder
 	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
@@ -125,10 +120,6 @@
 	alternative_caliber = CALIBER_357
 	alternative_fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
 	alternative_ammo_misfires = TRUE
-<<<<<<< HEAD
-	can_misfire = FALSE
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	misfire_probability = 0
 	misfire_percentage_increment = 25 //about 1 in 4 rounds, which increases rapidly every shot
 

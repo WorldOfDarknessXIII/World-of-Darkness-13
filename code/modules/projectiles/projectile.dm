@@ -319,18 +319,6 @@
 	var/mob/living/living_target = target
 
 	if(blocked != 100) // not completely blocked
-<<<<<<< HEAD
-		if(damage && L.bloodpool && damage_type == BRUTE)
-			var/splatter_dir = dir
-			if(starting)
-				splatter_dir = get_dir(starting, target_loca)
-			if(isalien(L))
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_loca, splatter_dir)
-			else
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir)
-			if(prob(33))
-				L.add_splatter_floor(target_loca)
-=======
 		var/obj/item/bodypart/hit_bodypart = living_target.get_bodypart(hit_limb_zone)
 		if (damage && damage_type == BRUTE)
 			if (living_target.blood_volume && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
@@ -351,7 +339,6 @@
 				if (spark_amount > 0)
 					do_sparks(spark_amount, FALSE, living_target)
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		else if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_turf, hitx, hity)
 
@@ -820,17 +807,9 @@
 		trajectory.set_angle(new_angle)
 	if(fired && hitscan && isloc(loc) && (loc != last_angle_set_hitscan_store))
 		last_angle_set_hitscan_store = loc
-<<<<<<< HEAD
-		var/datum/point/pcache = new (src)
-		var/list/coordinates = trajectory.return_coordinates()
-		pcache.initialize_location(coordinates[1], coordinates[2], coordinates[3]) // Take the center of the hitscan collision tile, so it looks good on reflector boxes and the like
-		trajectory.initialize_location(coordinates[1], coordinates[2], coordinates[3]) // Sets the trajectory to it as well, to prevent a strange visual bug
-		store_hitscan_collision(pcache)
-=======
 		var/datum/point/point_cache = new (src)
 		point_cache = trajectory.copy_to()
 		store_hitscan_collision(point_cache)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	return TRUE
 
 /// Same as set_angle, but the reflection continues from the center of the object that reflects it instead of the side
@@ -1015,25 +994,6 @@
 	if(length(modifiers))
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, target_loc && target, modifiers)
 
-<<<<<<< HEAD
-	if(isliving(source) && params)
-		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, params)
-		if(calculated)
-			p_x = calculated[2]
-			p_y = calculated[3]
-			setAngle(calculated[1] + spread)
-		else
-			yo = targloc.y - curloc.y
-			xo = targloc.x - curloc.x
-			setAngle(Get_Angle(src, targloc) + spread)
-	else if(targloc)
-		yo = targloc.y - curloc.y
-		xo = targloc.x - curloc.x
-		setAngle(Get_Angle(src, targloc) + spread)
-	else
-		stack_trace("WARNING: Projectile [type] fired without either mouse parameters, or a target atom to aim at!")
-		qdel(src)
-=======
 		p_x = calculated[2]
 		p_y = calculated[3]
 		set_angle(calculated[1] + deviation)
@@ -1044,7 +1004,6 @@
 		xo = target_loc.x - source_loc.x
 		set_angle(get_angle(src, target_loc) + deviation)
 		return TRUE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	stack_trace("WARNING: Projectile [type] fired without a target or mouse parameters to aim with.")
 	qdel(src)
@@ -1073,21 +1032,6 @@
 		angle = ATAN2(dy, dx)
 		return list(angle, p_x, p_y)
 
-<<<<<<< HEAD
-		//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
-		var/list/screenview = getviewsize(world.view)
-		if(user.client)
-			screenview = getviewsize(user.client.view)
-		var/screenviewX = screenview[1] * world.icon_size
-		var/screenviewY = screenview[2] * world.icon_size
-
-		var/ox = round(screenviewX/2)
-		var/oy = round(screenviewY/2)
-		if(user.client)
-			ox = ox-user.client.pixel_x
-			oy = oy-user.client.pixel_y
-		angle = ATAN2(y - oy, x - ox)
-=======
 	if(!ismob(source) || !LAZYACCESS(modifiers, SCREEN_LOC))
 		CRASH("Can't make trajectory calculations without a target or click modifiers and a client.")
 
@@ -1111,7 +1055,6 @@
 	var/ox = round(screenview[1] / 2) - user.client.pixel_x //"origin" x
 	var/oy = round(screenview[2] / 2) - user.client.pixel_y //"origin" y
 	angle = ATAN2(tx - oy, ty - ox)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	return list(angle, p_x, p_y)
 
 /obj/projectile/Destroy()

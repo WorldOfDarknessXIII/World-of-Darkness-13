@@ -15,11 +15,7 @@
 
 /datum/tgui_panel/New(client/client, id)
 	src.client = client
-<<<<<<< HEAD
-	window = new(client, "browseroutput")
-=======
 	window = new(client, id)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	window.subscribe(src, PROC_REF(on_message))
 
 /datum/tgui_panel/Del()

@@ -180,8 +180,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-<<<<<<< HEAD
-=======
 /datum/design/board/slot_machine
 	name = "Slot Machine Board"
 	desc = "Allows for the construction of circuit boards used to build a new slot machine."
@@ -193,7 +191,6 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 /datum/design/board/powermonitor
 	name = "Power Monitor Board"
 	desc = "Allows for the construction of circuit boards used to build a new power monitor."

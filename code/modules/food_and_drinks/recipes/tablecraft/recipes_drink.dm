@@ -14,8 +14,6 @@
 	result = /obj/item/reagent_containers/cup/glass/bottle/lizardwine
 	category = CAT_DRINK
 
-<<<<<<< HEAD
-=======
 /datum/crafting_recipe/moonshinejug
 	name = "Moonshine Jug"
 	time = 30
@@ -47,7 +45,6 @@
 	result = /obj/item/reagent_containers/cup/glass/bottle/blazaam
 	category = CAT_DRINK
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 /datum/crafting_recipe/champagnebottle
 	name = "Champagne Bottle"
 	time = 30
@@ -58,8 +55,6 @@
 	result = /obj/item/reagent_containers/cup/glass/bottle/champagne
 	category = CAT_DRINK
 
-<<<<<<< HEAD
-=======
 /datum/crafting_recipe/trappistbottle
 	name = "Trappist Bottle"
 	time = 15
@@ -90,7 +85,6 @@
 	result = /obj/item/reagent_containers/cup/glass/bottle/patron
 	category = CAT_DRINK
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 ////////////////////// Non-alcoholic recipes ///////////////////
 
 /datum/crafting_recipe/holybottle

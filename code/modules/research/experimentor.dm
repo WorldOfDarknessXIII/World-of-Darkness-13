@@ -307,21 +307,12 @@
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message(span_notice("[exp_on] achieves the perfect mix!"))
 			new /obj/item/stack/sheet/mineral/plasma(get_turf(pick(oview(1,src))))
-<<<<<<< HEAD
-		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
-			visible_message("<span class='danger'>[src] destroys [exp_on], leaking dangerous gas!</span>")
-			chosenchem = pick(/datum/reagent/carbon,/datum/reagent/uranium/radium,/datum/reagent/toxin,/datum/reagent/consumable/condensedcapsaicin,/datum/reagent/drug/mushroomhallucinogen,/datum/reagent/drug/space_drugs,/datum/reagent/consumable/ethanol)
-			var/datum/reagents/R = new/datum/reagents(50)
-			R.my_atom = src
-			R.add_reagent(chosenchem , 50)
-=======
 		else if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src] destroys [exp_on], leaking dangerous gas!"))
 			chosenchem = pick(/datum/reagent/carbon,/datum/reagent/uranium/radium,/datum/reagent/toxin,/datum/reagent/consumable/condensedcapsaicin,/datum/reagent/drug/mushroomhallucinogen,/datum/reagent/drug/space_drugs,/datum/reagent/consumable/ethanol,/datum/reagent/consumable/ethanol/beepsky_smash)
 			var/datum/reagents/tmp_holder = new/datum/reagents(50)
 			tmp_holder.my_atom = src
 			tmp_holder.add_reagent(chosenchem , 50)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 			investigate_log("Experimentor has released [chosenchem] smoke.", INVESTIGATE_EXPERIMENTOR)
 			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
 			smoke.set_up(0, holder = src, location = src, carry = tmp_holder, silent = TRUE)

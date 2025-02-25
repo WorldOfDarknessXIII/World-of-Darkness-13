@@ -402,7 +402,16 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  *
  * Allows interested parties (lights and fire alarms) to react
  */
-<<<<<<< HEAD
+/area/proc/set_fire_effect(new_fire, fault_type, fault_source)
+	if(new_fire == fire)
+		return
+	fire = new_fire
+	fault_status = fault_type
+	if(fire)
+		fault_location = fault_source
+	else
+		fault_location = null
+	SEND_SIGNAL(src, COMSIG_AREA_FIRE_CHANGED, fire)
 
 /obj/effect/decal/firecontrol
 	name = "fire shower"
@@ -445,60 +454,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		for(var/obj/effect/decal/firecontrol/F in src)
 			if(F)
 				qdel(F)
-
-/*/area/proc/fog_setup()
-	for(var/turf/open/O in src)
-		var/obj/effect/realistic_fog/F = new(O)
-		GLOB.fog_suka += F
-
-/area/proc/rain_setup()
-	for(var/turf/open/O in src)
-		var/obj/effect/new_rain/R = new(O)
-		GLOB.rain_suka += R
-
-/area/proc/snow_setup()
-	for(var/turf/open/O in src)
-		var/obj/effect/new_snow/S = new(O)
-		GLOB.snow_suka += S
-*/
-/area/proc/set_fire_alarm_effect()
-	fire = TRUE
-	if(!triggered_firealarms) //If there aren't any fires/breaches
-		triggered_firealarms = INFINITY //You're not allowed to naturally die
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	for(var/alarm in firealarms)
-		var/obj/machinery/firealarm/F = alarm
-		F.update_fire_light(fire)
-	for(var/obj/machinery/light/L in src)
-		L.update()
-
-/**
- * unset the fire alarm visual affects in an area
- *
- * Updates the fire light on fire alarms in the area and sets all lights to emergency mode
- */
-/area/proc/unset_fire_alarm_effects()
-	fire = FALSE
-	triggered_firealarms = 0
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	for(var/alarm in firealarms)
-		var/obj/machinery/firealarm/F = alarm
-		F.update_fire_light(fire)
-		F.triggered = FALSE
-	for(var/obj/machinery/light/L in src)
-		L.update()
-=======
-/area/proc/set_fire_effect(new_fire, fault_type, fault_source)
-	if(new_fire == fire)
-		return
-	fire = new_fire
-	fault_status = fault_type
-	if(fire)
-		fault_location = fault_source
-	else
-		fault_location = null
-	SEND_SIGNAL(src, COMSIG_AREA_FIRE_CHANGED, fire)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /**
  * Update the icon state of the area
@@ -644,35 +599,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 	if(!gone.important_recursive_contents?[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		return
-<<<<<<< HEAD
-
-	// Ambience goes down here -- make sure to list each area separately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
-//	if(L.client && !L.client.ambience_playing && L.client.prefs.toggles & SOUND_SHIP_AMBIENCE)
-//		L.client.ambience_playing = 1
-	if(L)
-		if(L.client)
-			if(istype(get_area(loc), /area/vtm/northbeach))
-				if(!L.client.ambience_playing)
-					L.client.ambience_playing = 1
-					SEND_SOUND(L, sound('code/modules/wod13/sounds/beach.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
-			else if(L.client.ambience_playing)
-				L.client.ambience_playing = 0
-				SEND_SOUND(L, sound(null, channel = CHANNEL_BUZZ))
-
-	if(!(L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))
-		return //General ambience check is below the ship ambience so one can play without the other
-
-	if(prob(50))
-		var/sound = pick(ambientsounds)
-
-		if(!L.client.played)
-			SEND_SOUND(L, sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))
-			L.client.played = TRUE
-			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
-=======
 	for(var/atom/movable/recipient as anything in gone.important_recursive_contents[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		SEND_SIGNAL(recipient, COMSIG_EXIT_AREA, src)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 ///Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.
 /area/proc/update_beauty()

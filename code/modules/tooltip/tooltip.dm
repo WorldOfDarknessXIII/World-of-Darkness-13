@@ -107,19 +107,6 @@ Notes:
 //Open a tooltip for user, at a location based on params
 //Theme is a CSS class in tooltip.html, by default this wrapper chooses a CSS class based on the user's UI_style (Midnight, Plasmafire, Retro, etc)
 //Includes sanity.checks
-<<<<<<< HEAD
-/proc/openToolTip(mob/user = null, atom/movable/tip_src = null, params = null,title = "",content = "",theme = "")
-	return
-/*
-	if(istype(user))
-		if(user.client && user.client.tooltips)
-			if(!theme && user.client.prefs && user.client.prefs.UI_style)
-				theme = lowertext(user.client.prefs.UI_style)
-			if(!theme)
-				theme = "default"
-			user.client.tooltips.show(tip_src, params,title,content,theme)
-*/
-=======
 /proc/openToolTip(mob/user = null, atom/movable/tip_src = null, params = null, title = "", content = "", theme = "")
 	if(!istype(user) || !user.client?.tooltips)
 		return
@@ -130,22 +117,12 @@ Notes:
 		theme = "default"
 	user.client.tooltips.show(tip_src, params, title, content, theme)
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 //Arbitrarily close a user's tooltip
 //Includes sanity checks.
 /proc/closeToolTip(mob/user)
-<<<<<<< HEAD
-	return
-/*
-	if(istype(user))
-		if(user.client && user.client.tooltips)
-			user.client.tooltips.hide()
-*/
-=======
 	if(!istype(user) || !user.client?.tooltips)
 		return
 	user.client.tooltips.hide()
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 

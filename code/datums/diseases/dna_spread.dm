@@ -39,15 +39,9 @@
 
 	switch(stage)
 		if(2, 3) //Pretend to be a cold and give time to spread.
-<<<<<<< HEAD
-			if(prob(8))
-				affected_mob.emote("sneeze")
-			if(prob(8))
-=======
 			if(SPT_PROB(4, seconds_per_tick))
 				affected_mob.sneeze()
 			if(SPT_PROB(4, seconds_per_tick))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 				affected_mob.emote("cough")
 			if(SPT_PROB(0.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("Your muscles ache."))

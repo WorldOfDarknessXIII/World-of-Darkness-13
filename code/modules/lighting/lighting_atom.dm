@@ -1,41 +1,5 @@
 
 // The proc you should always use to set the light of this atom.
-<<<<<<< HEAD
-// Nonesensical value for l_color default, so we can detect if it gets set to null.
-#define NONSENSICAL_VALUE -99999
-/atom
-	var/atom/movable/parent_multiz_light
-
-/atom/proc/set_light(l_range, l_power, l_color = NONSENSICAL_VALUE, l_on)
-	if(istype(get_step_multiz(src, UP), /turf/open/openspace))
-		parent_multiz_light = new(get_step_multiz(src, UP))
-	if(l_range > 0 && l_range < MINIMUM_USEFUL_LIGHT_RANGE)
-		l_range = MINIMUM_USEFUL_LIGHT_RANGE	//Brings the range up to 1.4, which is just barely brighter than the soft lighting that surrounds players.
-//		AM.l_range = MINIMUM_USEFUL_LIGHT_RANGE
-	if (!isnull(l_power))
-		light_power = l_power
-		if(parent_multiz_light)
-			parent_multiz_light.light_power = l_power
-
-	if (!isnull(l_range))
-		light_range = l_range
-		if(parent_multiz_light)
-			parent_multiz_light.light_range = l_range
-
-	if (l_color != NONSENSICAL_VALUE)
-		light_color = l_color
-		if(parent_multiz_light)
-			parent_multiz_light.light_color = l_color
-
-	if(!isnull(l_on))
-		light_on = l_on
-		if(parent_multiz_light)
-			parent_multiz_light.light_on = l_on
-
-	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT, l_range, l_power, l_color, l_on)
-	if(parent_multiz_light)
-		SEND_SIGNAL(parent_multiz_light, COMSIG_ATOM_SET_LIGHT, l_range, l_power, l_color, l_on)
-=======
 /atom/proc/set_light(l_range, l_power, l_color = NONSENSICAL_VALUE, l_angle, l_dir, l_height, l_on)
 	// We null everything but l_dir, because we don't want to allow for modifications while frozen
 	if(light_flags & LIGHT_FROZEN)
@@ -72,7 +36,6 @@
 
 	if(!isnull(l_height))
 		set_light_height(l_height)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	update_light()
 	if(parent_multiz_light)
@@ -136,29 +99,8 @@
 	var/obj/effect/dummy/light_obj = new light_type(get_turf(src), range, power, color, duration)
 	return light_obj
 
-<<<<<<< HEAD
-/atom/Destroy()
-	. = ..()
-	if(parent_multiz_light)
-		qdel(parent_multiz_light)
-
-/atom/movable/Moved(atom/OldLoc, Dir)
-	. = ..()
-	var/datum/light_source/L
-	var/thing
-	for (thing in light_sources) // Cycle through the light sources on this atom and tell them to update.
-		L = thing
-		L.source_atom.update_light()
-		if(L.source_atom.parent_multiz_light)
-			L.source_atom.parent_multiz_light.forceMove(get_step_multiz(src, UP))
-			if(!istype(L.source_atom.parent_multiz_light.loc, /turf/open/openspace))
-				qdel(L.source_atom.parent_multiz_light)
-		else if(istype(get_step_multiz(L.source_atom, UP), /turf/open/openspace))
-			L.source_atom.parent_multiz_light = new(get_step_multiz(L.source_atom, UP))
-=======
 /mob/living/flash_lighting_fx(range = FLASH_LIGHT_RANGE, power = FLASH_LIGHT_POWER, color = COLOR_WHITE, duration = FLASH_LIGHT_DURATION, light_type = /obj/effect/dummy/lighting_obj/moblight)
 	return mob_light(range, power, color, duration)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /mob/living/proc/mob_light(range, power, color, duration, light_type = /obj/effect/dummy/lighting_obj/moblight)
 	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = new light_type(src, range, power, color, duration)

@@ -454,42 +454,6 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			var/book_name = params["book_name"]
 			if(QDELETED(src) || !book_name)
 				return
-<<<<<<< HEAD
-			printer_cooldown = world.time + PRINTER_COOLDOWN
-			while(query_library_print.NextRow())
-				var/author = query_library_print.item[2]
-				var/title = query_library_print.item[3]
-				var/content = query_library_print.item[4]
-				if(!QDELETED(src))
-					var/obj/item/book/B = new(get_turf(src))
-					B.name = "Book: [title]"
-					B.title = title
-					B.author = author
-					B.dat = content
-					B.icon_state = "book[rand(1,8)]"
-					visible_message("<span class='notice'>[src]'s printer hums as it produces a completely bound book. How did it do that?</span>")
-				break
-			qdel(query_library_print)
-	if(href_list["printbible"])
-		if(printer_cooldown < world.time)
-			var/obj/item/storage/book/bible/B = new /obj/item/storage/book/bible(src.loc)
-			if(GLOB.bible_icon_state && GLOB.bible_inhand_icon_state)
-				B.icon_state = GLOB.bible_icon_state
-				B.inhand_icon_state = GLOB.bible_inhand_icon_state
-				B.name = GLOB.bible_name
-				B.deity_name = GLOB.deity
-			printer_cooldown = world.time + PRINTER_COOLDOWN
-		else
-			say("Printer currently unavailable, please wait a moment.")
-	if(href_list["printposter"])
-		if(printer_cooldown < world.time)
-			new /obj/item/poster/random_contraband(src.loc)
-			printer_cooldown = world.time + PRINTER_COOLDOWN
-		else
-			say("Printer currently unavailable, please wait a moment.")
-	add_fingerprint(usr)
-	updateUsrDialog()
-=======
 			var/datum/book_info/book_info = available[book_name]
 			if(!istype(book_info))
 				return
@@ -715,7 +679,6 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			log_paper("[key_name(usr)] has printed \"[title]\" (id: [id]) by [author] from a book management console.")
 		break
 	qdel(query_library_print)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /*
  * Library Scanner

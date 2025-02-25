@@ -21,8 +21,6 @@
 	REMOVE_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
 	..()
 
-<<<<<<< HEAD
-=======
 /datum/brain_trauma/severe/aphasia
 	name = "Aphasia"
 	desc = "Patient is unable to speak or understand any language."
@@ -42,7 +40,6 @@
 
 	..()
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 /datum/brain_trauma/severe/blindness
 	name = "Cerebral Blindness"
 	desc = "Patient's brain is no longer connected to its eyes."
@@ -233,10 +230,6 @@
 				else
 					to_chat(owner, span_userdanger("You feel your heart lurching in your chest..."))
 					owner.adjustOxyLoss(8)
-<<<<<<< HEAD
-		else
-			//nothing!
-=======
 			else
 				to_chat(owner, span_warning("Your heart skips a beat."))
 				owner.adjustOxyLoss(8)
@@ -244,7 +237,6 @@
 		else
 			//No effect
 			return
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /datum/brain_trauma/severe/discoordination
 	name = "Discoordination"

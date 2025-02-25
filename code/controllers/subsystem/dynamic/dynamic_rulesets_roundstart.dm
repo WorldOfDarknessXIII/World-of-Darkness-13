@@ -518,13 +518,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	blocking_rules = list(/datum/dynamic_ruleset/latejoin/provocateur)
 	// I give up, just there should be enough heads with 35 players...
 	minimum_players = 35
-<<<<<<< HEAD:code/game/gamemodes/dynamic/dynamic_rulesets_roundstart.dm
-	/// How much threat should be injected when the revolution wins?
-	var/revs_win_threat_injection = 20
-	var/datum/team/sabbat/revolution
-=======
 	var/datum/team/revolution/revolution
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/controllers/subsystem/dynamic/dynamic_rulesets_roundstart.dm
 	var/finished = FALSE
 
 /datum/dynamic_ruleset/roundstart/revs/pre_execute(population)

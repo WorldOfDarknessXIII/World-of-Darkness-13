@@ -107,11 +107,6 @@
 
 	// Gun internal magazine modification and misfiring
 
-<<<<<<< HEAD:code/modules/projectiles/guns/wod13/ballistic.dm
-	///Gun internal magazine modification and misfiring
-
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/modules/projectiles/guns/ballistic.dm
 	///Can we modify our ammo type in this gun's internal magazine?
 	var/can_modify_ammo = FALSE
 	///our initial ammo type. Should match initial caliber, but a bit of redundency doesn't hurt.
@@ -294,23 +289,10 @@
 /obj/item/gun/ballistic/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!semi_auto && from_firing)
 		return
-<<<<<<< HEAD:code/modules/projectiles/guns/wod13/ballistic.dm
-	var/obj/item/ammo_casing/AC = chambered //Find chambered round
-	if(istype(AC)) //there's a chambered round
-		if(casing_ejector || !from_firing)
-			AC.forceMove(drop_location()) //Eject casing onto ground.
-			AC.bounce_away(TRUE)
-			if(AC.onflooricon && isturf(AC.loc))
-				AC.icon = AC.onflooricon
-				if(AC.onflooricon_state)
-					AC.icon_state = AC.onflooricon_state
-			AC.update_icon()
-=======
 	var/obj/item/ammo_casing/casing = chambered //Find chambered round
 	if(istype(casing)) //there's a chambered round
 		if(QDELING(casing))
 			stack_trace("Trying to move a qdeleted casing of type [casing.type]!")
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/modules/projectiles/guns/ballistic.dm
 			chambered = null
 		else if(casing_ejector || !from_firing)
 			casing.forceMove(drop_location()) //Eject casing onto ground.
@@ -449,14 +431,10 @@
 		if (!magazine)
 			insert_magazine(user, ammo_mag)
 		else
-<<<<<<< HEAD:code/modules/projectiles/guns/wod13/ballistic.dm
-			handle_attackby_mag_eject_logic(user, ammo_mag)
-=======
 			if (tac_reloads)
 				eject_magazine(user, FALSE, AM)
 			else
 				balloon_alert(user, "already loaded!")
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/modules/projectiles/guns/ballistic.dm
 		return
 	if (isammocasing(A) || istype(A, /obj/item/ammo_box))
 		if (must_hold_to_load && !check_if_held(user))
@@ -501,23 +479,6 @@
 
 	return FALSE
 
-<<<<<<< HEAD:code/modules/projectiles/guns/wod13/ballistic.dm
-
-
-/obj/item/gun/ballistic/proc/handle_attackby_mag_eject_logic(mob/user, obj/item/ammo_box/magazine/ammo_mag)
-	if (tac_reloads)
-		eject_magazine(user, FALSE, ammo_mag)
-	else
-		to_chat(user, "<span class='notice'>There's already a [magazine_wording] in \the [src].</span>")
-
-
-/obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-
-//	if(magazine && chambered.BB && can_misfire && misfire_probability > 0)
-//		if(prob(misfire_probability))
-//			if(blow_up(user))
-//				to_chat(user, "<span class='userdanger'>[src] misfires!</span>")
-=======
 /obj/item/gun/ballistic/proc/check_if_held(mob/user)
 	if(src != user.get_inactive_held_item())
 		return FALSE
@@ -527,7 +488,6 @@
 	if(target != user && chambered.loaded_projectile && can_misfire && prob(misfire_probability) && blow_up(user))
 		to_chat(user, span_userdanger("[src] misfires!"))
 		return
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/modules/projectiles/guns/ballistic.dm
 
 	if (sawn_off)
 		bonus_spread += SAWN_OFF_ACC_PENALTY
@@ -537,13 +497,8 @@
 /obj/item/gun/ballistic/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
 	if(can_misfire)
 		misfire_probability += misfire_percentage_increment
-<<<<<<< HEAD:code/modules/projectiles/guns/wod13/ballistic.dm
-
-	. = ..()
-=======
 		misfire_probability = clamp(misfire_probability, 0, misfire_probability_cap)
 	return ..()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/modules/projectiles/guns/ballistic.dm
 
 ///Installs a new suppressor, assumes that the suppressor is already in the contents of src
 /obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
@@ -748,33 +703,6 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		return
 
 	user.changeNext_move(CLICK_CD_MELEE)
-<<<<<<< HEAD:code/modules/projectiles/guns/wod13/ballistic.dm
-	user.visible_message("<span class='notice'>[user] begins to cleaning \the [src].</span>", "<span class='notice'>You begin to clean the internals of \the [src].</span>")
-
-	if(do_after(user, 100, target = src))
-		var/original_misfire_value = initial(misfire_probability)
-		if(misfire_probability > original_misfire_value)
-			misfire_probability = original_misfire_value
-			user.visible_message("<span class='notice'>[user] cleans \the [src] of any fouling.</span>", "<span class='notice'>You clean \the [src], removing any fouling, preventing misfire.</span>")
-			return TRUE
-
-/obj/item/gun/ballistic/wrench_act(mob/living/user, obj/item/I)
-	if(!user.is_holding(src))
-		to_chat(user, "<span class='notice'>You need to hold [src] to modify it.</span>")
-		return TRUE
-
-	if(!can_modify_ammo)
-		return
-
-	if(bolt_type == BOLT_TYPE_STANDARD)
-		if(get_ammo())
-			to_chat(user, "<span class='notice'>You can't get at the internals while the gun has a bullet in it!</span>")
-			return
-
-		else if(!bolt_locked)
-			to_chat(user, "<span class='notice'>You can't get at the internals while the bolt is down!</span>")
-			return
-=======
 	balloon_alert(user, "cleaning...")
 
 	if(do_after(user, 10 SECONDS, target = src))
@@ -785,7 +713,6 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 /obj/item/gun/ballistic/wrench_act(mob/living/user, obj/item/I)
 	if(!can_modify_ammo)
 		return
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/modules/projectiles/guns/ballistic.dm
 
 	if(!user.is_holding(src))
 		balloon_alert(user, "hold to modify!")
@@ -803,13 +730,6 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 3 SECONDS))
 		return TRUE
-<<<<<<< HEAD:code/modules/projectiles/guns/wod13/ballistic.dm
-
-	if(blow_up(user))
-		user.visible_message("<span class='danger'>\The [src] goes off!</span>", "<span class='danger'>\The [src] goes off in your face!</span>")
-		return
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/modules/projectiles/guns/ballistic.dm
 
 	if(magazine.caliber == initial_caliber)
 		magazine.caliber = alternative_caliber
@@ -828,8 +748,6 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 /obj/item/gun/ballistic/proc/blow_up(mob/user)
 	return chambered && process_fire(user, user, FALSE)
 
-<<<<<<< HEAD:code/modules/projectiles/guns/wod13/ballistic.dm
-=======
 /obj/item/gun/ballistic/proc/instant_reload()
 	SIGNAL_HANDLER
 	if(magazine)
@@ -859,7 +777,6 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	if(!isnull(chambered)) //if there is a cartridge in the chamber, we remove it
 		rack()
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/modules/projectiles/guns/ballistic.dm
 /obj/item/suppressor
 	name = "suppressor"
 	desc = "A syndicate small-arms suppressor for maximum espionage."

@@ -6,18 +6,11 @@
     "tgui-polyfill:build": "terser 1-misc.js -f ascii_only,comments=false -o ../../public/tgui-polyfill.min.js"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "core-js": "^3.8.2",
-    "regenerator-runtime": "^0.13.7",
-    "tgui-polyfill": "file:",
-    "whatwg-fetch": "^3.5.0"
-=======
     "core-js": "^3.36.1",
     "regenerator-runtime": "^0.14.1",
     "unfetch": "^5.0.0"
   },
   "devDependencies": {
     "terser": "^5.30.2"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
   }
 }

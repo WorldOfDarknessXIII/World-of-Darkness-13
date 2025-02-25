@@ -54,15 +54,9 @@
 		else
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-<<<<<<< HEAD
-				H.SetSpecialVoice(H.dna.species.random_name(H.gender))
-				if(scramble_language && !current_language)	// Last part prevents rerolling language with small amounts of cure.
-					current_language = pick(subtypesof(/datum/language) - /datum/language/english)
-=======
 				H.SetSpecialVoice(H.generate_random_mob_name())
 				if(scramble_language && !current_language) // Last part prevents rerolling language with small amounts of cure.
-					current_language = pick(subtypesof(/datum/language) - /datum/language/common)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
+					current_language = pick(subtypesof(/datum/language) - /datum/language/english)
 					H.add_blocked_language(subtypesof(/datum/language) - current_language, LANGUAGE_VOICECHANGE)
 					H.grant_language(current_language, source = LANGUAGE_VOICECHANGE)
 

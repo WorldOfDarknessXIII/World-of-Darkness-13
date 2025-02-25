@@ -21,11 +21,7 @@
 	return TRUE
 
 /datum/keybinding/mob/swap_hands
-<<<<<<< HEAD
-	hotkey_keys = list("X") // PAGEUP
-=======
 	hotkey_keys = list("X")
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	name = "swap_hands"
 	full_name = "Swap hands"
 	description = ""
@@ -90,18 +86,7 @@
 		user.mob.dropItemToGround(I)
 	return TRUE
 
-<<<<<<< HEAD
-/datum/keybinding/mob/toggle_move_intent
-	hotkey_keys = list("V")
-	name = "toggle_move_intent"
-	full_name = "Hold to toggle move intent"
-	description = "Held down to cycle to the other move intent, release to cycle back"
-	keybind_signal = COMSIG_KB_MOB_TOGGLEMOVEINTENT_DOWN
-
-/datum/keybinding/mob/toggle_move_intent/down(client/user)
-=======
 /datum/keybinding/mob/target/down(client/user)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	. = ..()
 	if(.)
 		return .

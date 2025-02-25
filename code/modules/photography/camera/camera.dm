@@ -8,18 +8,11 @@
 	icon_state = "camera"
 	inhand_icon_state = "camera"
 	worn_icon_state = "camera"
-<<<<<<< HEAD
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
-	light_system = MOVABLE_LIGHT //Used as a flash here.
-	light_range = 8
-=======
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	light_system = OVERLAY_LIGHT_DIRECTIONAL //Used as a flash here.
 	light_range = 6
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	light_color = COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
 	light_on = FALSE
