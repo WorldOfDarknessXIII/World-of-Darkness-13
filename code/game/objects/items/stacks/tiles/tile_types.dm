@@ -403,7 +403,6 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
 	matter_amount = 1
-	cost = 125
 	source = /datum/robot_energy_storage/metal
 	merge_type = /obj/item/stack/tile/plasteel
 

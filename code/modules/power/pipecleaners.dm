@@ -194,7 +194,6 @@ By design, d1 is the smallest direction and d2 is the highest
 	full_w_class = WEIGHT_CLASS_SMALL
 	grind_results = list("copper" = 2) //2 copper per pipe_cleaner in the coil
 	usesound = 'sound/items/deconstruct.ogg'
-	cost = 1
 	source = /datum/robot_energy_storage/pipe_cleaner
 	color = COLOR_RED
 

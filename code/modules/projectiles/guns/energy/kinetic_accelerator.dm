@@ -32,9 +32,6 @@
 	if(max_mod_capacity)
 		. += "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining."
 		. += "<span class='info'>You can use a <b>crowbar</b> to remove modules.</span>"
-		for(var/A in modkits)
-			var/obj/item/borg/upgrade/modkit/M = A
-			. += "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>"
 
 /obj/item/gun/energy/kinetic_accelerator/crowbar_act(mob/living/user, obj/item/I)
 	. = TRUE
@@ -62,9 +59,6 @@
 
 /obj/item/gun/energy/kinetic_accelerator/proc/get_remaining_mod_capacity()
 	var/current_capacity_used = 0
-	for(var/A in modkits)
-		var/obj/item/borg/upgrade/modkit/M = A
-		current_capacity_used += M.cost
 	return max_mod_capacity - current_capacity_used
 
 /obj/item/gun/energy/kinetic_accelerator/proc/modify_projectile(obj/projectile/kinetic/K)
@@ -244,14 +238,9 @@
 	var/denied_type = null
 	var/maximum_of_type = 1
 	//[Lucia] this is defined for all /obj/item/ instances in code\modules\wod13\lombard.dm
-	cost = 30
 	var/modifier = 1 //For use in any mod kit that has numerical modifiers
 	var/minebot_upgrade = TRUE
 	var/minebot_exclusive = FALSE
-
-/obj/item/borg/upgrade/modkit/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>Occupies <b>[cost]%</b> of mod capacity.</span>"
 
 /obj/item/borg/upgrade/modkit/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/gun/energy/kinetic_accelerator) && !issilicon(user))
@@ -283,18 +272,6 @@
 			if(number_of_denied >= maximum_of_type)
 				. = FALSE
 				break
-	if(KA.get_remaining_mod_capacity() >= cost)
-		if(.)
-			if(transfer_to_loc && !user.transferItemToLoc(src, KA))
-				return
-			to_chat(user, "<span class='notice'>You install the modkit.</span>")
-			playsound(loc, 'sound/items/screwdriver.ogg', 100, TRUE)
-			KA.modkits += src
-		else
-			to_chat(user, "<span class='notice'>The modkit you're trying to install would conflict with an already installed modkit. Use a crowbar to remove existing modkits.</span>")
-	else
-		to_chat(user, "<span class='notice'>You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar to remove existing modkits.</span>")
-		. = FALSE
 
 /obj/item/borg/upgrade/modkit/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -319,7 +296,6 @@
 	name = "range increase"
 	desc = "Increases the range of a kinetic accelerator when installed."
 	modifier = 1
-	cost = 25
 
 /obj/item/borg/upgrade/modkit/range/modify_projectile(obj/projectile/kinetic/K)
 	K.range += modifier
@@ -358,7 +334,6 @@
 	icon = 'icons/obj/module.dmi'
 	denied_type = /obj/item/borg/upgrade/modkit/cooldown/minebot
 	modifier = 10
-	cost = 0
 	minebot_upgrade = TRUE
 	minebot_exclusive = TRUE
 
@@ -426,7 +401,6 @@
 /obj/item/borg/upgrade/modkit/minebot_passthrough
 	name = "minebot passthrough"
 	desc = "Causes kinetic accelerator shots to pass through minebots."
-	cost = 0
 
 //Tendril-unique modules
 /obj/item/borg/upgrade/modkit/cooldown/repeater
@@ -434,7 +408,6 @@
 	desc = "Quarters the kinetic accelerator's cooldown on striking a living target, but greatly increases the base cooldown."
 	denied_type = /obj/item/borg/upgrade/modkit/cooldown/repeater
 	modifier = -14 //Makes the cooldown 3 seconds(with no cooldown mods) if you miss. Don't miss.
-	cost = 50
 
 /obj/item/borg/upgrade/modkit/cooldown/repeater/projectile_strike_predamage(obj/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/gun/energy/kinetic_accelerator/KA)
 	var/valid_repeat = FALSE
@@ -453,7 +426,6 @@
 	desc = "Causes kinetic accelerator shots to slightly heal the firer on striking a living target."
 	icon_state = "modkit_crystal"
 	modifier = 2.5 //Not a very effective method of healing.
-	cost = 20
 	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
 
 /obj/item/borg/upgrade/modkit/lifesteal/projectile_prehit(obj/projectile/kinetic/K, atom/target, obj/item/gun/energy/kinetic_accelerator/KA)
@@ -468,7 +440,6 @@
 	name = "resonator blast"
 	desc = "Causes kinetic accelerator shots to leave and detonate resonator blasts."
 	denied_type = /obj/item/borg/upgrade/modkit/resonator_blasts
-	cost = 30
 	modifier = 0.25 //A bonus 15 damage if you burst the field on a target, 60 if you lure them into it.
 
 /obj/item/borg/upgrade/modkit/resonator_blasts/projectile_strike(obj/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/gun/energy/kinetic_accelerator/KA)
@@ -485,7 +456,6 @@
 	desc = "Killing or assisting in killing a creature permanently increases your damage against that type of creature."
 	denied_type = /obj/item/borg/upgrade/modkit/bounty
 	modifier = 1.25
-	cost = 30
 	var/maximum_bounty = 25
 	var/list/bounties_reaped = list()
 
@@ -526,7 +496,6 @@
 	modifier = 2
 	denied_type = /obj/item/borg/upgrade/modkit/indoors
 	maximum_of_type = 2
-	cost = 35
 
 /obj/item/borg/upgrade/modkit/indoors/modify_projectile(obj/projectile/kinetic/K)
 	K.pressure_decrease *= modifier
@@ -536,7 +505,6 @@
 /obj/item/borg/upgrade/modkit/trigger_guard
 	name = "modified trigger guard"
 	desc = "Allows creatures normally incapable of firing guns to operate the weapon when installed."
-	cost = 20
 	denied_type = /obj/item/borg/upgrade/modkit/trigger_guard
 
 /obj/item/borg/upgrade/modkit/trigger_guard/install(obj/item/gun/energy/kinetic_accelerator/KA, mob/user)
@@ -554,7 +522,6 @@
 /obj/item/borg/upgrade/modkit/chassis_mod
 	name = "super chassis"
 	desc = "Makes your KA yellow. All the fun of having a more powerful KA without actually having a more powerful KA."
-	cost = 0
 	denied_type = /obj/item/borg/upgrade/modkit/chassis_mod
 	var/chassis_icon = "kineticgun_u"
 	var/chassis_name = "super-kinetic accelerator"
@@ -579,7 +546,6 @@
 /obj/item/borg/upgrade/modkit/tracer
 	name = "white tracer bolts"
 	desc = "Causes kinetic accelerator bolts to have a white tracer trail and explosion."
-	cost = 0
 	denied_type = /obj/item/borg/upgrade/modkit/tracer
 	var/bolt_color = "#FFFFFF"
 
