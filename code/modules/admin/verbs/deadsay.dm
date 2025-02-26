@@ -17,11 +17,7 @@ ADMIN_VERB(dsay, R_NONE, "DSay", "Speak to the dead.", ADMIN_CATEGORY_GAME, mess
 	if(user.holder.fakekey)
 		rank_name = pick(strings("admin_nicknames.json", "ranks", "config"))
 		admin_name = pick(strings("admin_nicknames.json", "names", "config"))
-<<<<<<< HEAD
-	var/rendered = "<span class='game deadsay'><span class='name'>[rank_name]([admin_name])</span> says, <span class='message'>\"[emoji_parse(msg)]\"</span></span>" //<span class='prefix'>DEAD:</span> [ChillRaccoon] - removed due to a maggot developer
-=======
 	var/name_and_rank = "[span_tooltip(rank_name, "STAFF")] ([admin_name])"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	deadchat_broadcast("[span_prefix("DEAD:")] [name_and_rank] says, <span class='message'>\"[emoji_parse(message)]\"</span>")
 

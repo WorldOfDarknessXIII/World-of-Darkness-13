@@ -114,14 +114,6 @@ GLOBAL_VAR(restart_counter)
  * All atoms in both compiled and uncompiled maps are initialized()
  */
 /world/New()
-<<<<<<< HEAD
-	enable_debugger()
-#ifdef REFERENCE_TRACKING
-	enable_reference_tracking()
-#endif
-
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	log_world("World loaded at [time_stamp()]!")
 
 	// From a really fucking old commit (91d7150)
@@ -359,23 +351,14 @@ GLOBAL_VAR(restart_counter)
 
 	var/list/features = list()
 
-<<<<<<< HEAD
-//	if(GLOB.master_mode)
-//		features += GLOB.master_mode
-
-//	if (!GLOB.enter_allowed)
-//		features += "closed"
-=======
 	if(LAZYACCESS(SSlag_switch.measures, DISABLE_NON_OBSJOBS))
 		features += "closed"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	var/new_status = ""
 	var/hostedby
 	if(config)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
-<<<<<<< HEAD
 			s += "<a href=\"https://discord.gg/invite/WU92NG2Me8\"><b>[server_name] &#8212; Werewolf-Friendly</b></a>"
 		hostedby = CONFIG_GET(string/hostedby)
 	s += "<br>Persistent roleplaying server in the World of Darkness."
@@ -383,45 +366,13 @@ GLOBAL_VAR(restart_counter)
 
 	var/players = GLOB.clients.len
 
-	/*
-	var/popcaptext = ""
-	var/popcap = max(CONFIG_GET(number/extreme_popcap), CONFIG_GET(number/hard_popcap), CONFIG_GET(number/soft_popcap))
-	if (popcap)
-		popcaptext = "/[popcap]"
-
-
-	if (players > 1)
-		features += "[players][popcaptext] players"
-	else if (players > 0)
-		features += "[players][popcaptext] player"
-	*/
-
-=======
-			new_status += "<b>[server_name]</b> "
-		if(CONFIG_GET(flag/allow_respawn))
-			features += "respawn" // show "respawn" regardless of "respawn as char" or "free respawn"
-		if(!CONFIG_GET(flag/allow_ai))
-			features += "AI disabled"
-		hostedby = CONFIG_GET(string/hostedby)
-
-	if (CONFIG_GET(flag/station_name_in_hub_entry))
-		new_status += " &#8212; <b>[station_name()]</b>"
-
-	var/players = GLOB.clients.len
-
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	game_state = (CONFIG_GET(number/extreme_popcap) && players >= CONFIG_GET(number/extreme_popcap)) //tells the hub if we are full
 
 	if (!host && hostedby)
 		features += "hosted by <b>[hostedby]</b>"
 
-<<<<<<< HEAD
-	if (features.len)
+	if (length(features))
 		s += ": [jointext(features, ", ")]"
-=======
-	if(length(features))
-		new_status += ": [jointext(features, ", ")]"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	if(!SSticker || SSticker?.current_state == GAME_STATE_STARTUP)
 		new_status += "<br><b>STARTING</b>"

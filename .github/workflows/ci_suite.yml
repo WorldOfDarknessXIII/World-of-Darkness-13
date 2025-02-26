@@ -19,23 +19,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-<<<<<<< HEAD
-  start_gate:
-    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
-    name: Start Gate
-    runs-on: ubuntu-latest
-    steps:
-      - name: Mandatory Empty Step
-        run: exit 0
-
-  run_linters:
-    name: Run Linters
-    needs: start_gate
-    runs-on: ubuntu-22.04
-    timeout-minutes: 5
-
-    steps:
-=======
   run_linters:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Run Linters
@@ -43,7 +26,6 @@ jobs:
     timeout-minutes: 5
 
     steps:
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
       - uses: actions/checkout@v4
       - name: Restore SpacemanDMM cache
         uses: actions/cache@v4
@@ -85,17 +67,8 @@ jobs:
         with:
           path: tools/icon_cutter/cache
           key: ${{ runner.os }}-cutter-${{ hashFiles('dependencies.sh') }}
-<<<<<<< HEAD
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v4.2.0
-        with:
-          dotnet-version: 9.x
-      - name: Install OpenDream
-        uses: robinraju/release-downloader@v1.11
-=======
       - name: Install OpenDream
         uses: robinraju/release-downloader@v1.9
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
         with:
           repository: "OpenDreamProject/OpenDream"
           tag: "latest"
@@ -157,14 +130,9 @@ jobs:
         run: tools/build/build --ci lint tgui-test
 
   compile_all_maps:
-<<<<<<< HEAD
-    name: Compile Maps
-    needs: collect_data
-=======
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Compile Maps
     needs: [collect_data]
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
     runs-on: ubuntu-22.04
     timeout-minutes: 5
 
@@ -187,13 +155,8 @@ jobs:
           max-required-client-version: ${{needs.collect_data.outputs.max_required_byond_client}}
 
   collect_data:
-<<<<<<< HEAD
-    name: Collect data for other tasks
-    needs: start_gate
-=======
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Collect data for other tasks
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
     runs-on: ubuntu-22.04
     timeout-minutes: 5
     outputs:
@@ -213,11 +176,7 @@ jobs:
       - name: Find Alternate Tests
         id: alternate_test_finder
         run: |
-<<<<<<< HEAD
-          ALTERNATE_TESTS_JSON=$(jq -nRc '[inputs | capture("^(?<major>[0-9]+)\\.(?<minor>[0-9]+): (?<map>[^;]+);?(?<max_client_version>[0-9]+)?$")]' .github/alternate_byond_versions.txt)
-=======
           ALTERNATE_TESTS_JSON=$(jq -nRc '[inputs | capture("^(?<major>[0-9]+)\\.(?<minor>[0-9]+): (?<map>.+)$")]' .github/alternate_byond_versions.txt)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
           echo "alternate_tests=$ALTERNATE_TESTS_JSON" >> $GITHUB_OUTPUT
       - name: Collect byond client version configuration
         id: max_required_byond_client
@@ -226,14 +185,9 @@ jobs:
           echo "max_required_byond_client=$(grep -Ev '^[[:blank:]]{0,}#{1,}|^[[:blank:]]{0,}$' .github/max_required_byond_client.txt | tail -n1)" >> $GITHUB_OUTPUT
 
   run_all_tests:
-<<<<<<< HEAD
-    name: Integration Tests
-    needs: collect_data
-=======
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Integration Tests
     needs: [collect_data]
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
     strategy:
       fail-fast: false
@@ -246,15 +200,9 @@ jobs:
       max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
 
   run_alternate_tests:
-<<<<<<< HEAD
-    if: needs.collect_data.outputs.alternate_tests != '[]'
-    name: Alternate Tests
-    needs: collect_data
-=======
     if: ( !contains(github.event.head_commit.message, '[ci skip]') && needs.collect_data.outputs.alternate_tests != '[]' )
     name: Alternate Tests
     needs: [collect_data]
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
     strategy:
       fail-fast: false
       matrix:
@@ -265,17 +213,6 @@ jobs:
       map: ${{ matrix.setup.map }}
       major: ${{ matrix.setup.major }}
       minor: ${{ matrix.setup.minor }}
-<<<<<<< HEAD
-      max_required_byond_client: ${{ matrix.setup.max_client_version || needs.collect_data.outputs.max_required_byond_client }}
-
-  compare_screenshots:
-    if: needs.collect_data.outputs.alternate_tests == '[]' || needs.run_alternate_tests.result == 'success'
-    needs: [ collect_data, run_all_tests, run_alternate_tests ]
-    name: Compare Screenshot Tests
-    timeout-minutes: 15
-    runs-on: ubuntu-22.04
-    steps:
-=======
       max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
 
   check_alternate_tests:
@@ -294,7 +231,6 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-22.04
     steps:
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
       - uses: actions/checkout@v4
       - name: Setup directory
         run: mkdir -p artifacts
@@ -327,10 +263,7 @@ jobs:
           path: artifacts/screenshot_comparisons
 
   test_windows:
-<<<<<<< HEAD
-=======
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
     name: Windows Build
     needs: [collect_data]
     runs-on: windows-latest
@@ -354,18 +287,3 @@ jobs:
         with:
           dmb-location: tgstation.dmb
           max-required-client-version: ${{needs.collect_data.outputs.max_required_byond_client}}
-<<<<<<< HEAD
-
-  completion_gate: # Serves as a non-moving target for branch rulesets
-    if: always() && !cancelled()
-    name: Completion Gate
-    needs: [ test_windows, compare_screenshots, compile_all_maps, run_all_tests, run_alternate_tests, run_linters ]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Decide whether the needed jobs succeeded or failed
-        uses: re-actors/alls-green@release/v1
-        with:
-          jobs: ${{ toJSON(needs) }}
-          allowed-skips: compare_screenshots
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

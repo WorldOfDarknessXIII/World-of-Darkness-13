@@ -165,13 +165,8 @@
 	name = "Bedhead 3"
 	icon_state = "hair_bedheadv3"
 
-<<<<<<< HEAD:code/modules/mob/dead/new_player/sprite_accessories.dm
 /datum/sprite_accessory/hair/bedhead4
 	name = "Bedhead 4"
-=======
-/datum/sprite_accessory/hair/bedheadv4
-	name = "Bedhead 4x"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/datums/sprite_accessories.dm
 	icon_state = "hair_bedheadv4"
 
 /datum/sprite_accessory/hair/bedheadlong
@@ -371,19 +366,9 @@
 	name = "Buzzcut"
 	icon_state = "hair_buzzcut"
 
-<<<<<<< HEAD:code/modules/mob/dead/new_player/sprite_accessories.dm
-/datum/sprite_accessory/hair/combed
-	name = "Combed"
-	icon_state = "hair_combed"
-
-/datum/sprite_accessory/hair/combedbob
-	name = "Combed Bob"
-	icon_state = "hair_combedbob"
-=======
 /datum/sprite_accessory/hair/chinbob
 	name = "Chin-Length Bob Cut"
 	icon_state = "hair_chinbob"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/datums/sprite_accessories.dm
 
 /datum/sprite_accessory/hair/comet
 	name = "Comet"
@@ -816,14 +801,11 @@
 	icon_state = "hair_d"
 	natural_spawn = FALSE // sorry little one
 
-<<<<<<< HEAD:code/modules/mob/dead/new_player/sprite_accessories.dm
-=======
 /datum/sprite_accessory/hair/nitori
 	name = "Nitori"
 	icon_state = "hair_nitori"
 	natural_spawn = FALSE
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/datums/sprite_accessories.dm
 /datum/sprite_accessory/hair/reversemohawk
 	name = "Mohawk (Reverse)"
 	icon_state = "hair_reversemohawk"
@@ -896,15 +878,9 @@
 	name = "Over Eye (Short)"
 	icon_state = "hair_shortovereye"
 
-<<<<<<< HEAD:code/modules/mob/dead/new_player/sprite_accessories.dm
-/datum/sprite_accessory/hair/shortovereyealt
-	name = "Over Eye (Short Alt)"
-	icon_state = "hair_shortovereyealt"
-=======
 /datum/sprite_accessory/hair/hair_overeyetwo
 	name = "Over Eye 2"
 	icon_state = "hair_overeyetwo"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/datums/sprite_accessories.dm
 
 /datum/sprite_accessory/hair/oxton
 	name = "Oxton"
@@ -1409,14 +1385,6 @@
 	name = "Ziegler"
 	icon_state = "hair_ziegler"
 
-<<<<<<< HEAD:code/modules/mob/dead/new_player/sprite_accessories.dm
-/datum/sprite_accessory/hair/zoey
-	name = "Zoey"
-	icon_state = "hair_zoey"
-
-
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/datums/sprite_accessories.dm
 /*
 /////////////////////////////////////
 /  =---------------------------=    /
@@ -1426,19 +1394,12 @@
 */
 
 /datum/sprite_accessory/gradient
-<<<<<<< HEAD:code/modules/mob/dead/new_player/sprite_accessories.dm
-	icon = 'icons/mob/hair_gradients.dmi'
-
-/datum/sprite_accessory/gradient/none
-	name = "None"
-=======
 	icon = 'icons/mob/human/species/hair_gradients.dmi'
 	///whether this gradient applies to hair and/or beards. Some gradients do not work well on beards.
 	var/gradient_category = GRADIENT_APPLIES_TO_HAIR|GRADIENT_APPLIES_TO_FACIAL_HAIR
 
 /datum/sprite_accessory/gradient/none
 	name = SPRITE_ACCESSORY_NONE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/datums/sprite_accessories.dm
 	icon_state = "none"
 
 /datum/sprite_accessory/gradient/full
@@ -1464,34 +1425,25 @@
 /datum/sprite_accessory/gradient/reflected
 	name = "Reflected"
 	icon_state = "reflected_high"
-<<<<<<< HEAD:code/modules/mob/dead/new_player/sprite_accessories.dm
-=======
 	gradient_category = GRADIENT_APPLIES_TO_HAIR
 
 /datum/sprite_accessory/gradient/reflected/beard
 	icon_state = "reflected_high_beard"
 	gradient_category = GRADIENT_APPLIES_TO_FACIAL_HAIR
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/datums/sprite_accessories.dm
 
 /datum/sprite_accessory/gradient/reflected_inverse
 	name = "Reflected Inverse"
 	icon_state = "reflected_inverse_high"
-<<<<<<< HEAD:code/modules/mob/dead/new_player/sprite_accessories.dm
-=======
 	gradient_category = GRADIENT_APPLIES_TO_HAIR
 
 /datum/sprite_accessory/gradient/reflected_inverse/beard
 	icon_state = "reflected_inverse_high_beard"
 	gradient_category = GRADIENT_APPLIES_TO_FACIAL_HAIR
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/datums/sprite_accessories.dm
 
 /datum/sprite_accessory/gradient/wavy
 	name = "Wavy"
 	icon_state = "wavy"
-<<<<<<< HEAD:code/modules/mob/dead/new_player/sprite_accessories.dm
-=======
 	gradient_category = GRADIENT_APPLIES_TO_HAIR
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/datums/sprite_accessories.dm
 
 /datum/sprite_accessory/gradient/long_fade_up
 	name = "Long Fade Up"
@@ -1504,50 +1456,34 @@
 /datum/sprite_accessory/gradient/short_fade_up
 	name = "Short Fade Up"
 	icon_state = "short_fade_up"
-<<<<<<< HEAD:code/modules/mob/dead/new_player/sprite_accessories.dm
-=======
 	gradient_category = GRADIENT_APPLIES_TO_HAIR
 
 /datum/sprite_accessory/gradient/short_fade_up/beard
 	icon_state = "short_fade_down"
 	gradient_category = GRADIENT_APPLIES_TO_FACIAL_HAIR
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/datums/sprite_accessories.dm
 
 /datum/sprite_accessory/gradient/short_fade_down
 	name = "Short Fade Down"
 	icon_state = "short_fade_down_beard"
-<<<<<<< HEAD:code/modules/mob/dead/new_player/sprite_accessories.dm
-=======
 	gradient_category = GRADIENT_APPLIES_TO_HAIR
 
 /datum/sprite_accessory/gradient/short_fade_down/beard
 	icon_state = "short_fade_down_beard"
 	gradient_category = GRADIENT_APPLIES_TO_FACIAL_HAIR
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/datums/sprite_accessories.dm
 
 /datum/sprite_accessory/gradient/wavy_spike
 	name = "Spiked Wavy"
 	icon_state = "wavy_spiked"
-<<<<<<< HEAD:code/modules/mob/dead/new_player/sprite_accessories.dm
-
-/datum/sprite_accessory/gradient/striped
-	name = "Striped"
-=======
 	gradient_category = GRADIENT_APPLIES_TO_HAIR
 
 /datum/sprite_accessory/gradient/striped
 	name = "striped"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/datums/sprite_accessories.dm
 	icon_state = "striped"
 
 /datum/sprite_accessory/gradient/striped_vertical
 	name = "Striped Vertical"
 	icon_state = "striped_vertical"
 
-<<<<<<< HEAD:code/modules/mob/dead/new_player/sprite_accessories.dm
-
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/datums/sprite_accessories.dm
 /////////////////////////////
 // Facial Hair Definitions //
 /////////////////////////////
@@ -2222,15 +2158,11 @@
 /datum/sprite_accessory/socks/thin_knee
 	name = "Knee-high (Thin)"
 	icon_state = "thin_knee"
-<<<<<<< HEAD:code/modules/mob/dead/new_player/sprite_accessories.dm
-/*
-=======
 
 /datum/sprite_accessory/socks/trans_knee
 	name = "Knee-high (Trans)"
 	icon_state = "trans_knee"
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/datums/sprite_accessories.dm
 /datum/sprite_accessory/socks/uk_knee
 	name = "Knee-High (UK)"
 	icon_state = "uk_knee"
@@ -2238,19 +2170,11 @@
 /datum/sprite_accessory/socks/white_knee
 	name = "Knee-high (White)"
 	icon_state = "white_knee"
-<<<<<<< HEAD:code/modules/mob/dead/new_player/sprite_accessories.dm
-/*
-/datum/sprite_accessory/socks/bee_knee
-	name = "Knee-high (Bee)"
-	icon_state = "bee_knee"
-*/
-=======
 
 /datum/sprite_accessory/socks/fishnet_knee
 	name = "Knee-high (Fishnet)"
 	icon_state = "fishnet_knee"
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/datums/sprite_accessories.dm
 /datum/sprite_accessory/socks/black_norm
 	name = "Normal (Black)"
 	icon_state = "black_norm"
@@ -2262,113 +2186,14 @@
 /datum/sprite_accessory/socks/pantyhose
 	name = "Pantyhose"
 	icon_state = "pantyhose"
-/*
-/datum/sprite_accessory/socks/black_short
-	name = "Short (Black)"
-	icon_state = "black_short"
 
-/datum/sprite_accessory/socks/white_short
-	name = "Short (White)"
-	icon_state = "white_short"
-
-/datum/sprite_accessory/socks/stockings_blue
-	name = "Stockings (Blue)"
-	icon_state = "stockings_blue"
-
-/datum/sprite_accessory/socks/stockings_cyan
-	name = "Stockings (Cyan)"
-	icon_state = "stockings_cyan"
-
-/datum/sprite_accessory/socks/stockings_dpink
-	name = "Stockings (Dark Pink)"
-	icon_state = "stockings_dpink"
-
-/datum/sprite_accessory/socks/stockings_green
-	name = "Stockings (Green)"
-	icon_state = "stockings_green"
-
-/datum/sprite_accessory/socks/stockings_orange
-	name = "Stockings (Orange)"
-	icon_state = "stockings_orange"
-
-/datum/sprite_accessory/socks/stockings_programmer
-	name = "Stockings (Programmer)"
-	icon_state = "stockings_lpink"
-
-/datum/sprite_accessory/socks/stockings_purple
-	name = "Stockings (Purple)"
-	icon_state = "stockings_purple"
-
-/datum/sprite_accessory/socks/stockings_yellow
-	name = "Stockings (Yellow)"
-	icon_state = "stockings_yellow"
-<<<<<<< HEAD:code/modules/mob/dead/new_player/sprite_accessories.dm
-*/
-=======
-
-/datum/sprite_accessory/socks/stockings_fishnet
-	name = "Stockings (Fishnet)"
-	icon_state = "fishnet_full"
-
-/datum/sprite_accessory/socks/ace_thigh
-	name = "Thigh-high (Ace)"
-	icon_state = "ace_thigh"
-
-/datum/sprite_accessory/socks/bee_thigh
-	name = "Thigh-high (Bee)"
-	icon_state = "bee_thigh"
-
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/datums/sprite_accessories.dm
-/datum/sprite_accessory/socks/black_thigh
-	name = "Thigh-high (Black)"
-	icon_state = "black_thigh"
-/*
-/datum/sprite_accessory/socks/commie_thigh
-	name = "Thigh-high (Commie)"
-	icon_state = "commie_thigh"
-
-/datum/sprite_accessory/socks/usa_thigh
-	name = "Thigh-high (Freedom)"
-	icon_state = "assblastusa_thigh"
-
-/datum/sprite_accessory/socks/rainbow_thigh
-	name = "Thigh-high (Rainbow)"
-	icon_state = "rainbow_thigh"
-
-/datum/sprite_accessory/socks/striped_thigh
-	name = "Thigh-high (Striped)"
-	icon_state = "striped_thigh"
-*/
-/datum/sprite_accessory/socks/thin_thigh
-	name = "Thigh-high (Thin)"
-	icon_state = "thin_thigh"
-<<<<<<< HEAD:code/modules/mob/dead/new_player/sprite_accessories.dm
-/*
-=======
-
-/datum/sprite_accessory/socks/trans_thigh
-	name = "Thigh-high (Trans)"
-	icon_state = "trans_thigh"
-
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/datums/sprite_accessories.dm
-/datum/sprite_accessory/socks/uk_thigh
-	name = "Thigh-high (UK)"
-	icon_state = "uk_thigh"
-*/
 /datum/sprite_accessory/socks/white_thigh
 	name = "Thigh-high (White)"
 	icon_state = "white_thigh"
-<<<<<<< HEAD:code/modules/mob/dead/new_player/sprite_accessories.dm
-/*
-/datum/sprite_accessory/socks/bee_thigh
-	name = "Thigh-high (Bee)"
-	icon_state = "bee_thigh"
-=======
 
 /datum/sprite_accessory/socks/fishnet_thigh
 	name = "Thigh-high (Fishnet)"
 	icon_state = "fishnet_thigh"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/datums/sprite_accessories.dm
 
 /datum/sprite_accessory/socks/thocks
 	name = "Thocks"

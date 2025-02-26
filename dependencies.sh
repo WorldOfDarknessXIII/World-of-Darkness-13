@@ -4,19 +4,11 @@
 #Final authority on what's required to fully build the project
 
 # byond version
-<<<<<<< HEAD
-export BYOND_MAJOR=514
-export BYOND_MINOR=1589
-
-#rust_g git tag
-export RUST_G_VERSION=3.5.1
-=======
 export BYOND_MAJOR=515
 export BYOND_MINOR=1637
 
 #rust_g git tag
 export RUST_G_VERSION=3.3.0
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 #node version
 export NODE_VERSION_LTS=20.13.0
@@ -28,8 +20,6 @@ export SPACEMAN_DMM_VERSION=suite-1.8
 
 # Python version for mapmerge and other tools
 export PYTHON_VERSION=3.9.0
-<<<<<<< HEAD
-=======
 
 #dreamluau repo
 export DREAMLUAU_REPO="tgstation/dreamluau"
@@ -42,4 +32,3 @@ export CUTTER_REPO=spacestation13/hypnagogic
 
 #hypnagogic git tag
 export CUTTER_VERSION=v3.1.0
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

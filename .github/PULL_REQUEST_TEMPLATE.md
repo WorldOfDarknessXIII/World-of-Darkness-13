@@ -8,7 +8,6 @@
 ## Why It's Good For The Game
 
 <!-- Argue for the merits of your changes and how they benefit the game, especially if they are controversial and/or far reaching. If you can't actually explain WHY what you are doing will improve the game, then it probably isn't good for the game in the first place. -->
-<<<<<<< HEAD
 
 ## Testing Photographs and Procedure
 <!-- Include any screenshots/videos/debugging steps of the modified code functioning successfully, ideally including edge cases. -->
@@ -19,8 +18,6 @@
 Put screenshots and videos here with an empty line between the screenshots and the `<details>` tags.
 
 </details>
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 ## Changelog
 
@@ -35,10 +32,7 @@ balance: rebalanced something
 fix: fixed a few things
 sound: added/modified/removed audio or sound effects
 image: added/modified/removed some icons or images
-<<<<<<< HEAD
 map: added/modified/removed map content
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 spellcheck: fixed a few typos
 code: changed some code
 refactor: refactored some code

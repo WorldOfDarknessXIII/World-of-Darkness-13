@@ -1,25 +1,13 @@
 {
 	"recommendations": [
-<<<<<<< HEAD
-=======
 		"platymuus.dm-langclient",
 		"EditorConfig.EditorConfig",
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		"arcanis.vscode-zipfs",
 		"dbaeumer.vscode-eslint",
 		"donkie.vscode-tgstation-test-adapter",
 		"stylemistake.auto-comment-blocks",
-<<<<<<< HEAD
-		"oderwat.indent-rainbow",
-		"platymuus.dm-langclient",
-		"editorconfig.editorconfig",
-		"eamodio.gitlens",
-		"anturk.dmi-editor",
-		"sukumo28.wav-preview",
-=======
 		"Donkie.vscode-tgstation-test-adapter",
 		"anturk.dmi-editor",
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		"esbenp.prettier-vscode"
 	]
 }

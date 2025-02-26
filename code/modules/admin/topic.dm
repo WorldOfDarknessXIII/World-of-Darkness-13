@@ -48,7 +48,6 @@
 			return
 		cmd_show_exp_panel(M.client)
 
-<<<<<<< HEAD
 	else if(href_list["toggleexempt"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -193,8 +192,6 @@
 			log_admin("[key_name(usr)] has triggered an event. ([E.name])")
 		return
 
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	else if(href_list["editrightsbrowser"])
 		edit_admin_permissions(0)
 
@@ -1837,7 +1834,6 @@
 			return
 		GLOB.interviews.ui_interact(usr)
 
-<<<<<<< HEAD
 	else if (href_list["deletewhitelist"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1858,10 +1854,6 @@
 	else if (href_list["searchwhitelistckey"])
 		whitelist_panel(href_list["searchwhitelistckey"])
 
-/datum/admins/proc/HandleCMode()
-	if(!check_rights(R_ADMIN))
-		return
-=======
 	else if(href_list["tag_datum"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1869,7 +1861,10 @@
 		if(!datum_to_tag)
 			return
 		return add_tagged_datum(datum_to_tag)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
+
+/datum/admins/proc/HandleCMode()
+	if(!check_rights(R_ADMIN))
+		return
 
 	else if(href_list["del_tag"])
 		if(!check_rights(R_ADMIN))

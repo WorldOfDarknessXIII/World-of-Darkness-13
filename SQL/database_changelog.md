@@ -2,13 +2,6 @@ Any time you make a change to the schema files, remember to increment the databa
 
 Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be found in `code/__DEFINES/subsystem.dm`.
 
-<<<<<<< HEAD:SQL/database_changelog.txt
-The latest database version is 5.21; The query to update the schema revision table is:
-
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 22);
-or
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 22);
-=======
 The latest database version is 5.27; The query to update the schema revision table is:
 
 ```sql
@@ -19,7 +12,6 @@ or
 ```sql
 INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 27);
 ```
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:SQL/database_changelog.md
 
 In any query remember to add a prefix to the table names if you use one.
 -----------------------------------------------------
@@ -397,19 +389,13 @@ Version 5.11, 7 September 2020, by bobbahbrown, MrStonedOne, and Jordie0608 (Upd
 
 Adds indices to support search operations on the adminhelp ticket tables. This is to support improved performance on Atlanta Ned's Statbus.
 
-<<<<<<< HEAD:SQL/database_changelog.txt
-=======
 ```sql
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:SQL/database_changelog.md
 ALTER TABLE `ticket`
 	ADD INDEX `idx_ticket_act_recip` (`action`, `recipient`),
 	ADD INDEX `idx_ticket_act_send` (`action`, `sender`),
 	ADD INDEX `idx_ticket_tic_rid` (`ticket`, `round_id`),
 	ADD INDEX `idx_ticket_act_time_rid` (`action`, `timestamp`, `round_id`);
-<<<<<<< HEAD:SQL/database_changelog.txt
-=======
 ```
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:SQL/database_changelog.md
 
 -----------------------------------------------------
 

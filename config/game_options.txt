@@ -90,89 +90,6 @@ STATION_GOAL_BUDGET 1
 
 REPEATED_MODE_ADJUST 45 30 10
 
-<<<<<<< HEAD
-## Toggles for continuous modes.
-## Modes that aren't continuous will end the instant all antagonists are dead.
-
-#CONTINUOUS TRAITOR
-#CONTINUOUS TRAITORBRO
-#CONTINUOUS TRAITORCHAN
-#CONTINUOUS INTERNAL_AFFAIRS
-#CONTINUOUS NUCLEAR
-#CONTINUOUS REVOLUTION
-#CONTINUOUS CULT
-#CONTINUOUS CHANGELING
-#CONTINUOUS WIZARD
-#CONTINUOUS MONKEY
-
-##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
-
-#CONTINUOUS METEOR
-CONTINUOUS EXTENDED
-#CONTINUOUS SECRET_EXTENDED
-
-
-## Toggles for allowing midround antagonists (aka mulligan antagonists).
-## In modes that are continuous, if all antagonists should die then a new set of antagonists will be created.
-
-MIDROUND_ANTAG TRAITOR
-#MIDROUND_ANTAG TRAITORBRO
-#MIDROUND_ANTAG TRAITORCHAN
-#MIDROUND_ANTAG INTERNAL_AFFAIRS
-#MIDROUND_ANTAG  NUCLEAR
-#MIDROUND_ANTAG  REVOLUTION
-#MIDROUND_ANTAG CULT
-#MIDROUND_ANTAG CHANGELING
-#MIDROUND_ANTAG WIZARD
-#MIDROUND_ANTAG  MONKEY
-
-## Uncomment these for overrides of the minimum / maximum number of players in a round type.
-## If you set any of these occasionally check to see if you still need them as the modes
-## will still be actively rebalanced around the SUGGESTED populations, not your overrides.
-## Notes: For maximum number of players a value of -1 means no maximum. Setting minimums to
-## VERY low numbers (< 5) can lead to errors if the roundtypes were not designed for that.
-
-#MIN_POP TRAITOR 0
-#MAX_POP TRAITOR -1
-
-#MIN_POP TRAITORBRO 0
-#MAX_POP TRAITORBRO -1
-
-#MIN_POP TRAITORCHAN 15
-#MAX_POP TRAITORCHAN -1
-
-#MIN_POP DOUBLE_AGENTS 25
-#MAX_POP DOUBLE_AGENTS -1
-
-#MIN_POP NUCLEAR 0
-#MAX_POP NUCLEAR -1
-
-#MIN_POP REVOLUTION 20
-#MAX_POP REVOLUTION -1
-
-#MIN_POP CULT 24
-#MAX_POP CULT -1
-
-#MIN_POP CHANGELING 15
-#MAX_POP CHANGELING -1
-
-#MIN_POP WIZARD 20
-#MAX_POP WIZARD -1
-
-#MIN_POP MONKEY 20
-#MAX_POP MONKEY -1
-
-#MIN_POP METEOR 0
-#MAX_POP METEOR -1
-
-## Setting at least one mode to be playable at 0/1 players is required.
-#MIN_POP EXTENDED 0
-#MAX_POP EXTENDED -1
-
-
-
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 ## The amount of time it takes for the emergency shuttle to be called, from round start.
 SHUTTLE_REFUEL_DELAY 12000
 
@@ -470,15 +387,11 @@ ROUNDSTART_RACES ethereal
 ## Recommended to leave this commented out so nonhuman species will have viable replacement bodies / organs when they die.
 # MORGUE_CADAVER_DISABLE_NONHUMANS
 
-<<<<<<< HEAD
-##Overflow job. Default is assistant
-OVERFLOW_JOB Citizen
-=======
 ## Morgue Cadaver Species Probability
 ## The probability for nonhuman cadavers to spawn in the morgue.
 ## Only used if MORGUE_CADAVER_DISABLE_NONHUMANS is commented out
 ## If left undefined, defaults to 50%.
-MORGUE_CADAVER_OTHER_SPECIES_PROBABILITY 50
+# MORGUE_CADAVER_OTHER_SPECIES_PROBABILITY 50
 
 ## A single specific Species ID to supplement human morgue cadavers.
 ## Set MORGUE_CADAVER_OTHER_SPECIES_PROBABILITY to determine the chances between being a human and this specific species.
@@ -486,11 +399,9 @@ MORGUE_CADAVER_OTHER_SPECIES_PROBABILITY 50
 ## Prob = 100 means all corpses will be this race.
 #MORGUE_CADAVER_OVERRIDE_SPECIES lizard
 
-
 ##Overflow job. Default is assistant.
 ## NOTE: This will overwrite anything you put in jobconfig.toml!
-OVERFLOW_JOB Assistant
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
+OVERFLOW_JOB Citizen
 
 ## Overflow slot cap. Set to -1 for unlimited. If limited, it will still open up if every other job is full.
 ## NOTE: This will overwrite anything you put in jobconfig.toml!
@@ -565,15 +476,10 @@ DISABLE_HUMAN_MOOD
 #ENABLE_NIGHT_SHIFTS
 
 ## The shift start hour in 24-hour (0-23) notation
-SHIFT_TIME_START_HOUR 7
+SHIFT_TIME_START_HOUR 20
 
-<<<<<<< HEAD
-## Sets shift time to server time at roundstart. Overridden by RANDOMIZE_SHIFT_TIME ##
-SHIFT_TIME_REALTIME
-=======
 ## Sets shift time to server time at roundstart. Overrides SHIFT_TIME_START_HOUR
 #SHIFT_TIME_REALTIME
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 ## Enable randomized shift start times. Overrides SHIFT_TIME_REALTIME and SHIFT_TIME_START_HOUR
 #RANDOMIZE_SHIFT_TIME

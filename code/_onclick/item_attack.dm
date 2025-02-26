@@ -158,12 +158,6 @@
 /obj/attackby(obj/item/attacking_item, mob/user, params)
 	if(..())
 		return TRUE
-<<<<<<< HEAD
-	user.changeNext_move(CLICK_CD_MELEE)
-	SEND_SIGNAL(user, COMSIG_MOB_ATTACKING_MELEE, /*target =*/src, /*item =*/I, /*params =*/params)
-	SEND_SIGNAL(src, COMSIG_MOB_ATTACKED_BY_MELEE, /*attacker =*/user, /*item =*/I, /*params =*/params)
-	return I.attack(src, user)
-=======
 	if(!(obj_flags & CAN_BE_HIT))
 		return FALSE
 	return attacking_item.attack_atom(src, user, params)
@@ -196,7 +190,6 @@
 			user.changeNext_move(weapon.attack_speed)
 
 	return result
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /**
  * Called from [/mob/living/proc/attackby]
@@ -216,36 +209,17 @@
 	if(item_flags & NOBLUDGEON)
 		return FALSE
 
-<<<<<<< HEAD
-	if(force && HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
-		return
-	if(item_flags & EYE_STAB && user.zone_selected == BODY_ZONE_PRECISE_EYES)
-		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-			M = user
-		if(eyestab(M,user))
-			return
-	if(!force)
-		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
-=======
 	if(damtype != STAMINA && force && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to harm other living beings!"))
 		return FALSE
 
 	if(!force && !HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
 		playsound(src, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	else if(hitsound)
 		playsound(src, hitsound, get_clamped_volume(), TRUE, extrarange = stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1, falloff_distance = 0)
 
-<<<<<<< HEAD
-	M.lastattacker = user.real_name
-	M.lastattackerckey = user.ckey
-	user.lastattacked = M
-=======
 	target_mob.lastattacker = user.real_name
 	target_mob.lastattackerckey = user.ckey
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	if(force && target_mob == user && user.client)
 		user.client.give_award(/datum/award/achievement/misc/selfouch, user)

@@ -72,26 +72,3 @@
 	#define VAR_PRIVATE var
 	#define VAR_PROTECTED var
 #endif
-<<<<<<< HEAD
-
-/proc/auxtools_stack_trace(msg)
-	CRASH(msg)
-
-/proc/auxtools_expr_stub()
-	CRASH("auxtools not loaded")
-
-/proc/enable_debugging(mode, port)
-	CRASH("auxtools not loaded")
-
-/world/Del()
-	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
-	if(debug_server)
-		LIBCALL(debug_server, "auxtools_shutdown")()
-	. = ..()
-/world/proc/enable_debugger()
-	var/dll = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
-	if(dll)
-		LIBCALL(dll, "auxtools_init")()
-		enable_debugging()
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

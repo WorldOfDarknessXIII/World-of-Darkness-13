@@ -137,16 +137,6 @@
 		if(!(locate(/obj/item/organ/internal/tongue) in src))
 			. += span_info("[real_name]'s tongue has been removed.")
 
-<<<<<<< HEAD
-
-/obj/item/bodypart/head/can_dismember(obj/item/I)
-	if(owner.health > owner.maxHealth/2)
-		return FALSE
-//	if(!prob(I.cruelness))
-//		return FALSE
-//	if(owner.stat < HARD_CRIT)
-//		return FALSE
-=======
 /obj/item/bodypart/head/can_dismember(obj/item/item)
 	if (!can_dismember)
 		return FALSE
@@ -154,7 +144,6 @@
 	if(!HAS_TRAIT(owner, TRAIT_CURSED) && owner.stat < HARD_CRIT)
 		return FALSE
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	return ..()
 
 //obj/item/bodypart/head/drop_limb(special, dismembered)

@@ -48,17 +48,7 @@
 		if(!length(text))
 			return
 
-<<<<<<< HEAD
-	if(type == "Priority")
-		announcement += "<h1 class='alert'>Priority Announcement</h1>"
-		if (title && length(title) > 0)
-			announcement += "<br><h2 class='alert'>[html_encode(title)]</h2>"
-	else if(type == "Captain")
-		announcement += "<h1 class='alert'>Captain Announces</h1>"
-		GLOB.news_network.SubmitArticle(text, "Captain's Announcement", "City Announcements", null)
-=======
 	var/list/announcement_strings = list()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	if(!sound)
 		sound = SSstation.announcer.get_rand_alert_sound()
@@ -79,15 +69,7 @@
 		else
 			header += generate_unique_announcement_header(title, sender_override)
 
-<<<<<<< HEAD
-		if(!sender_override)
-			if(title == "")
-				GLOB.news_network.SubmitArticle(text, "San Francisco City Council Update", "City Announcements", null)
-			else
-				GLOB.news_network.SubmitArticle(title + "<br><br>" + text, "San Francisco City Council", "City Announcements", null)
-=======
 	announcement_strings += ANNOUNCEMENT_HEADER(header)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	///If the announcer overrides alert messages, use that message.
 	if(SSstation.announcer.custom_alert_message && !has_important_message)

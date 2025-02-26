@@ -24,38 +24,6 @@ Juke.setup({ file: import.meta.url }).then((code) => {
     return;
   }
 
-<<<<<<< HEAD
-const taskDm = new Task('dm')
-  .depends('_maps/**')
-  .depends('code/**')
-  .depends('goon/**')
-  .depends('html/**')
-  .depends('icons/**')
-  .depends('interface/**')
-  .depends('tgui/public/tgui.html')
-  .depends('tgui/public/*.bundle.*')
-  .depends('tgui/public/*.chunk.*')
-  .depends('tgstation.dme')
-  .provides('tgstation.dmb')
-  .provides('tgstation.rsc')
-  .build(async () => {
-    let compiler = 'dm';
-    // Let's do some registry queries on Windows, because dm is not in PATH.
-    if (process.platform === 'win32') {
-      const installPath = (
-        await regQuery(
-          'HKLM\\Software\\Dantom\\BYOND',
-          'installpath')
-        || await regQuery(
-          'HKLM\\SOFTWARE\\WOW6432Node\\Dantom\\BYOND',
-          'installpath')
-      );
-      if (installPath) {
-        compiler = resolvePath(installPath, 'bin/dm.exe');
-      }
-    } else {
-      compiler = 'DreamMaker';
-=======
   if (TGS_MODE) {
     // workaround for ESBuild process lingering
     // Once https://github.com/privatenumber/esbuild-loader/pull/354 is merged and updated to, this can be removed
@@ -137,7 +105,6 @@ export const CutterTarget = new Juke.Target({
         '+x',
         cutter_path,
       ]);
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
     }
   },
 });

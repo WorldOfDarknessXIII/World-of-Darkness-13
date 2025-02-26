@@ -4,13 +4,9 @@
 
 // Mutable appearances are children of images, just so you know.
 
-<<<<<<< HEAD
-/image/mutable_appearance/New()
-=======
 // Mutable appearances erase template vars on new, because they accept an appearance to copy as an arg
 // If we have nothin to copy, we set the float plane
 /mutable_appearance/New(mutable_appearance/to_copy)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	..()
 	if(!to_copy)
 		plane = FLOAT_PLANE

@@ -1,29 +1,11 @@
 
-<<<<<<< HEAD
 * **Website:** TO_BE_DECLARED
 * **Code:** https://github.com/WorldOfDarknessXIII/World-of-Darkness-13
-* **Wiki:** UNDER_CONSTRUCTION
+* **Wiki:** https://wiki.wod13.org/wiki/Main_Page
 * **Codedocs:** https://codedocs.tgstation13.org/ + For the time being +
 * **World of Darkness 13 Discord:** https://discord.gg/WBktth6Z8j
 * **Coderbus Discord:** https://discord.gg/Vh8TJp9
 * ~~**IRC:** irc://irc.rizon.net/coderbus~~ (dead)
-=======
-[![Build Status](https://github.com/tgstation/tgstation/workflows/CI%20Suite/badge.svg)](https://github.com/tgstation/tgstation/actions?query=workflow%3A%22CI+Suite%22)
-[![Percentage of issues still open](https://isitmaintained.com/badge/open/tgstation/tgstation.svg)](https://isitmaintained.com/project/tgstation/tgstation "Percentage of issues still open")
-[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/tgstation/tgstation.svg)](https://isitmaintained.com/project/tgstation/tgstation "Average time to resolve an issue")
-![Coverage](https://img.shields.io/badge/coverage---4%25-red.svg)
-
-[![resentment](.github/images/badges/built-with-resentment.svg)](.github/images/comics/131-bug-free.png) [![technical debt](.github/images/badges/contains-technical-debt.svg)](.github/images/comics/106-tech-debt-modified.png) [![forinfinityandbyond](.github/images/badges/made-in-byond.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
-
-| Website                   | Link                                           |
-|---------------------------|------------------------------------------------|
-| Website                   | [https://www.tgstation13.org](https://www.tgstation13.org)          |
-| Code                      | [https://github.com/tgstation/tgstation](https://github.com/tgstation/tgstation)    |
-| Wiki                      | [https://tgstation13.org/wiki/Main_Page](https://tgstation13.org/wiki/Main_Page)   |
-| Codedocs                  | [https://codedocs.tgstation13.org/](https://codedocs.tgstation13.org/)       |
-| /tg/station Discord       | [https://tgstation13.org/phpBB/viewforum.php?f=60](https://tgstation13.org/phpBB/viewforum.php?f=60) |
-| Coderbus Discord          | [https://discord.gg/Vh8TJp9](https://discord.gg/Vh8TJp9)               |
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 This is the codebase for the World of Darkness 13, a build of a fork of a downstream of a-- in any case...
 
@@ -47,10 +29,6 @@ If you'd like to contribute to this codebase, consider uncommenting line 1 @ _ma
 
 [Running a server](.github/guides/RUNNING_A_SERVER.md)
 
-<<<<<<< HEAD
-## Requirements for contributors
-[Guidelines for Contributors](.github/CONTRIBUTING.md)
-=======
 [Maps and Away Missions](.github/guides/MAPS_AND_AWAY_MISSIONS.md)
 
 ## Compilation
@@ -65,7 +43,6 @@ If you'd like to contribute to this codebase, consider uncommenting line 1 @ _ma
 
 ## Contributors
 [Guides for Contributors](.github/CONTRIBUTING.md)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 [/tg/station HACKMD account](https://hackmd.io/@tgstation) - Design documentation here
 

@@ -19,15 +19,10 @@
 	var/map_file = "MetaStation.dmm"
 
 	var/traits = null
-<<<<<<< HEAD
-	var/space_ruin_levels = 0
-	var/space_empty_levels = 0
-=======
 	var/space_ruin_levels = DEFAULT_SPACE_RUIN_LEVELS
 	var/space_empty_levels = DEFAULT_SPACE_EMPTY_LEVELS
 	/// Boolean that tells us if this is a planetary station. (like IceBoxStation)
 	var/planetary = FALSE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	///The type of mining Z-level that should be loaded.
 	var/minetype = "lavaland"

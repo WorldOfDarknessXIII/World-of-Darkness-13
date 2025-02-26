@@ -1386,14 +1386,8 @@
 	if(spin)
 		SpinAnimation(5, 1)
 
-<<<<<<< HEAD
-	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_THROW, TT, spin)
-	SEND_SIGNAL(thrower, COMSIG_MOB_THREW_MOVABLE, target, TT)
-	SSthrowing.processing[src] = TT
-=======
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_THROW, thrown_thing, spin)
 	SSthrowing.processing[src] = thrown_thing
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = thrown_thing
 	if (quickstart)

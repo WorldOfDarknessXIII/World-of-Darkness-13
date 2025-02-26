@@ -14,7 +14,6 @@
 	if(HAS_TRAIT(limb_owner, TRAIT_NODISMEMBER))
 		return FALSE
 
-<<<<<<< HEAD
 	for(var/mob/living/carbon/human/H in oviewers(7, C))
 		if((H.real_name == C.lastattacker))
 			if(iscathayan(H)) //Cathayan, ding dharma
@@ -23,11 +22,7 @@
 				else
 					call_dharma("disrespect", H)
 
-
-	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
-=======
 	var/obj/item/bodypart/affecting = limb_owner.get_bodypart(BODY_ZONE_CHEST)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	affecting.receive_damage(clamp(brute_dam/2 * affecting.body_damage_coeff, 15, 50), clamp(burn_dam/2 * affecting.body_damage_coeff, 0, 50), wound_bonus=CANT_WOUND) //Damage the chest based on limb's existing damage
 	if(!silent)
 		limb_owner.visible_message(span_danger("<B>[limb_owner]'s [name] is violently dismembered!</B>"))
