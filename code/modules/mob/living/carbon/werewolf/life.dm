@@ -28,7 +28,7 @@
 									adjust_gnosis(1, src, TRUE)
 			if(iscrinos(src))
 				if(auspice.base_breed == "Crinos")
-					gaining_rage = FALSE
+					gaining_rage = TRUE
 			//else if(auspice.rage == 0) //! [ChillRaccoon] - FIXME
 			//	transformator.trans_gender(src, auspice.base_breed)
 			if(islupus(src))

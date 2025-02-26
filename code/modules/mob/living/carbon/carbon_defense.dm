@@ -253,7 +253,7 @@
 
 /mob/living/carbon/proc/do_rage_from_attack(var/mob/living/target)
 	if(isgarou(src) || iswerewolf(src))
-		if(last_rage_from_attack == 0 || last_rage_from_attack+50 < world.time)
+		if(last_rage_from_attack == 0 || last_rage_from_attack+30 < world.time)
 			last_rage_from_attack = world.time
 			adjust_rage(1, src, TRUE)
 	if(iscathayan(src))
