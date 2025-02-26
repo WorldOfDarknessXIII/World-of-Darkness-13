@@ -419,6 +419,68 @@
 	yin_chi = 2
 	wall_rating = LOW_WALL_RATING
 
+/area/vtm/interior/lasombra_church_interior
+	name = "Old Church"
+	icon_state = "old_clan_tzimisce"
+	zone_type = "elysium"
+	music = /datum/vampiremusic/prince
+	fire_controled = TRUE
+	yang_chi = 0
+	yin_chi = 2
+	wall_rating = LOW_WALL_RATING // abyss mysticism and stuff
+
+/area/vtm/interior/kiasyd_museum
+	name = "Historical Museum"
+	icon_state = "old_clan_tzimisce"
+	zone_type = "elysium"
+	music = /datum/vampiremusic/prince
+	fire_controled = TRUE
+	yang_chi = 0
+	yin_chi = 3
+	wall_rating = LOW_WALL_RATING // abyss mysticism and stuff, and worse!
+
+/area/vtm/interior/tzimisce_hotel
+	name = "Nerve Ends Hotel"
+	icon_state = "old_clan_tzimisce"
+	zone_type = "elysium"
+	music = /datum/vampiremusic/prince
+	fire_controled = TRUE
+	yang_chi = 0
+	yin_chi = 2
+	wall_rating = LOW_WALL_RATING // there are probably haunts from wraiths happening here
+
+/area/vtm/interior/trujah
+	name = "Antique Firearms Shop"
+	icon_state = "old_clan_tzimisce"
+	zone_type = "elysium"
+	music = /datum/vampiremusic/prince
+	fire_controled = TRUE
+	wall_rating = LOW_WALL_RATING // something-something safe house to the Shadowlands/Enoch?
+
+/area/vtm/interior/baali
+	name = "Alcoholics Anonymous"
+	icon_state = "old_clan_tzimisce"
+	zone_type = "elysium"
+	music = /datum/vampiremusic/prince
+	fire_controled = TRUE
+	wall_rating = LOW_WALL_RATING // Holy "All hail Satan" Batman!
+
+/area/vtm/interior/salubri
+	name = "Veterinary Clinic"
+	icon_state = "old_clan_tzimisce"
+	zone_type = "elysium"
+	music = /datum/vampiremusic/prince
+	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
+
+/area/vtm/interior/banu
+	name = "Coffee House"
+	icon_state = "old_clan_tzimisce"
+	zone_type = "elysium"
+	music = /datum/vampiremusic/prince
+	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
+
 /area/vtm/interior/old_clan_tzimisce_manor
 	name = "Old Clan Tzimisce Manor"
 	icon_state = "old_clan_tzimisce"
