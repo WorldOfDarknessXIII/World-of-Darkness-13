@@ -105,11 +105,11 @@
 
 /obj/elevator_button/Initialize()
 	. = ..()
-	for(var/obj/elevator_button_up/W in range(3, src))
+	for(var/obj/elevator_button_up/W in range(4, src))
 		if(W)
 			if(W.id == id)
 				O = W
-	for(var/obj/elevator_button_down/D in range(3, src))
+	for(var/obj/elevator_button_down/D in range(4, src))
 		if(D)
 			if(D.id == id)
 				I = D
