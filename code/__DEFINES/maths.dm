@@ -123,13 +123,7 @@
 		return
 	a = SIMPLIFY_DEGREES(a)
 	b = SIMPLIFY_DEGREES(b)
-	var/inc = b - a
-	if(inc < 0)
-		inc += 360
-	var/dec = a - b
-	if(dec < 0)
-		dec += 360
-	. = inc > dec? -dec : inc
+	return SIMPLIFY_DEGREES(a - b + 180) - 180
 
 //A logarithm that converts an integer to a number scaled between 0 and 1.
 //Currently, this is used for hydroponics-produce sprite transforming, but could be useful for other transform functions.
