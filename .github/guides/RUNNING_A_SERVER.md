@@ -4,11 +4,7 @@ BYOND installed. You can get it from https://www.byond.com/download. Once you've
 that, extract the game files to wherever you want to keep them. This is a
 sourcecode-only release, so the next step is to compile the server files.
 
-<<<<<<< HEAD
-Double-click `BUILD.cmd` in the root directory of the source code. This'll take
-=======
 Double-click `BUILD.bat` in the root directory of the source code. This'll take
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 a little while, and if everything's done right you'll get a message like this:
 
 ```

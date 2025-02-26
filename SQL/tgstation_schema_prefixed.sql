@@ -283,17 +283,10 @@ CREATE TABLE `SS13_library_action` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `book` int(10) unsigned NOT NULL,
   `reason` longtext DEFAULT NULL,
-<<<<<<< HEAD
-  `ckey` varchar(11) NOT NULL DEFAULT '',
-  `datetime` datetime NOT NULL DEFAULT current_timestamp(),
-  `action` varchar(11) NOT NULL DEFAULT '',
-  `ip_addr` int(11) NOT NULL,
-=======
   `ckey` varchar(32) NOT NULL DEFAULT '',
   `datetime` datetime NOT NULL DEFAULT current_timestamp(),
   `action` varchar(11) NOT NULL DEFAULT '',
   `ip_addr` int(10) unsigned NOT NULL,
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -658,22 +651,6 @@ CREATE TABLE `SS13_discord_links` (
 ) ENGINE=InnoDB;
 
 --
-<<<<<<< HEAD
--- Table structure for table `text_adventures`
---
-DROP TABLE IF EXISTS `SS13_text_adventures`;
-CREATE TABLE `SS13_text_adventures` (
-	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`adventure_data` LONGTEXT NOT NULL,
-	`uploader` VARCHAR(32) NOT NULL,
-	`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`approved` TINYINT(1) NOT NULL DEFAULT FALSE,
-	PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
-
---
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 -- Table structure for table `admin_connections`
 --
 DROP TABLE IF EXISTS `SS13_admin_connections`;
@@ -716,22 +693,6 @@ CREATE TABLE `SS13_telemetry_connections` (
     UNIQUE INDEX `unique_constraints` (`ckey` , `telemetry_ckey` , `address` , `computer_id`)
 );
 
-<<<<<<< HEAD
---
--- Table structure for table `whitelist`
---
-DROP TABLE IF EXISTS `SS13_whitelist`;
-CREATE TABLE `SS13_whitelist` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `ckey` VARCHAR(32) NOT NULL,
-    `whitelist` VARCHAR(100) NOT NULL,
-    `approver_ckey` VARCHAR(32) NOT NULL,
-    `ticket_link` VARCHAR(100) NOT NULL,
-    `approval_reason` VARCHAR(2048) NOT NULL,
-    `date_whitelisted` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`)
-);
-=======
 DROP TABLE IF EXISTS `SS13_tutorial_completions`;
 CREATE TABLE `SS13_tutorial_completions` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -739,7 +700,6 @@ CREATE TABLE `SS13_tutorial_completions` (
   `tutorial_key` VARCHAR(64) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `ckey_tutorial_unique` (`ckey`, `tutorial_key`));
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -14,10 +14,6 @@ on:
     - 'code/__DEFINES/tgs.dm'
     - 'code/game/world.dm'
     - 'code/modules/tgs/**'
-<<<<<<< HEAD
-    - 'tools/bootstrap/**'
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
     - 'tools/tgs_scripts/**'
     - 'tools/tgs_test/**'
   pull_request:
@@ -32,10 +28,6 @@ on:
     - 'code/__DEFINES/tgs.dm'
     - 'code/game/world.dm'
     - 'code/modules/tgs/**'
-<<<<<<< HEAD
-    - 'tools/bootstrap/**'
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
     - 'tools/tgs_scripts/**'
     - 'tools/tgs_test/**'
   merge_group:
@@ -65,11 +57,7 @@ jobs:
           - 5000:5000 #Can't use env here for some reason
     steps:
       - name: Setup dotnet
-<<<<<<< HEAD
-        uses: actions/setup-dotnet@v4
-=======
         uses: actions/setup-dotnet@v2
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
         with:
           dotnet-version: 8.0.x
 

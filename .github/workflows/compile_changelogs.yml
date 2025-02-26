@@ -9,11 +9,6 @@ jobs:
   compile:
     name: "Compile changelogs"
     runs-on: ubuntu-22.04
-<<<<<<< HEAD
-    permissions:
-      contents: write
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
     steps:
       - name: "Check for ACTION_ENABLER secret and pass true to output if it exists to be checked by later steps"
         id: value_holder
@@ -23,16 +18,9 @@ jobs:
           unset SECRET_EXISTS
           if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
           echo "ACTIONS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
-<<<<<<< HEAD
-
-      - name: "Setup python"
-        if: steps.value_holder.outputs.ACTIONS_ENABLED
-        uses: actions/setup-python@v5
-=======
       - name: "Setup python"
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         uses: actions/setup-python@v1
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
         with:
           python-version: '3.x'
 
@@ -49,18 +37,10 @@ jobs:
         with:
           fetch-depth: 25
           persist-credentials: false
-<<<<<<< HEAD
-
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
       - name: "Compile"
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         run: |
           python tools/ss13_genchangelog.py html/changelogs
-<<<<<<< HEAD
-
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
       - name: Commit
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         run: |
@@ -85,8 +65,4 @@ jobs:
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         uses: ad-m/github-push-action@master
         with:
-<<<<<<< HEAD
-          github_token: ${{ steps.app-token-generation.outputs.token || secrets.GITHUB_TOKEN }}
-=======
           github_token: ${{ secrets.COMFY_ORANGE_PAT || secrets.GITHUB_TOKEN }}
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

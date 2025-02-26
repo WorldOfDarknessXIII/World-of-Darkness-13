@@ -54,21 +54,6 @@
 #define TRACK_MAX_SHARE //Allows max share tracking, for use in the atmos debugging ui
 #endif //ifdef TESTING
 
-<<<<<<< HEAD
-//#define UNIT_TESTS			//If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
-			//set to:
-#define PRELOAD_RSC	0		//	0 to allow using external resources or on-demand behaviour;						//	1 to use the default behaviour;
-								//	2 for preloading absolutely everything;
-
-#ifdef LOWMEMORYMODE
-#define FORCE_MAP "_maps/runtimetown.json"
-#endif
-
-#if DM_VERSION < MIN_COMPILER_VERSION || DM_BUILD < MIN_COMPILER_BUILD
-//Don't forget to update this part
-#error Your version of BYOND is too out-of-date to compile this project. Go to https://secure.byond.com/download and update.
-#error You need version 513.1589 or higher
-=======
 /// If this is uncommented, we set up the ref tracker to be used in a live environment
 /// And to log events to [log_dir]/harddels.log
 //#define REFERENCE_DOING_IT_LIVE
@@ -136,9 +121,8 @@
 								// 2 for preloading absolutely everything;
 
 #ifdef LOWMEMORYMODE
-#define FORCE_MAP "runtimestation"
+#define FORCE_MAP "runtimetown"
 #define FORCE_MAP_DIRECTORY "_maps"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #endif
 
 //Additional code for the above flags.

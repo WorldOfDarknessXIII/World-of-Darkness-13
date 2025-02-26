@@ -3,17 +3,10 @@
 	"french": {
 		"yes": "oui",
 		"no": "non",
-<<<<<<< HEAD
         "I'm": "j'",
         "am": "suis",
 		"a": "un",
         "and": "et",
-=======
-		"I'm": "j'",
-		"am": "suis",
-		"a": "un",
-		"and": "et",
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		"the": "l'",
 		"I": "j'",
 		"for": "pour",
@@ -21,59 +14,6 @@
 		"of": "de",
 
 
-<<<<<<< HEAD
-        "assistant": "ravageur",
-        "assistants": "ravageurs",
-        "baby": [
-            "enfant",
-            "petit baguette"
-        ],
-        "bad": "mal",
-        "bye": [
-            "bon voyage",
-            "adieu",
-			"au revoir"
-        ],
-		"cake": "gateau",
-        "captain": "capitaine",
-		"changeling": "changeur",
-        "cheese": [
-            "brie",
-            "roquefort",
-			"camembert"
-        ],
-		"cigarette": "clope",
-        "cook": "cuisinier",
-        "dad": "papa",
-        "enemy": "silly english dog",
-        "friend": "ami",
-        "good": "bon",
-        "The french": "les français",
-        "The frenchmen": "les français",
-		"hardsuit": "burkini",
-        "hello": [
-            "'allo",
-            "bonjour",
-			"salut"
-        ],
-		"maint": "les banlieues",
-        "meat": [
-            "coq au vin",
-            "boeuf"
-        ],
-        "mom": "maman",
-        "my": "mon",
-        "nuke": [
-			"grand bombe",
-			"la baguette ultime"
-		],
-        "op": "boche",
-        "operative": "boche",
-        "operatives": "boches",
-        "ops": "boches",
-        "urity": "urite",
-        "security": "securite",
-=======
 		"assistant": "ravageur",
 		"assistants": "ravageurs",
 		"baby": [
@@ -126,7 +66,6 @@
 		"ops": "boches",
 		"urity": "urite",
 		"security": "securite",
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		"shit": "merde",
 		"shitcurity": [
 			"gendarmerie",
@@ -136,18 +75,6 @@
 			"gendarmerie",
 			"les keufs"
 		],
-<<<<<<< HEAD
-        "spaghetti": "macaroni",
-        "spicy": "epice",
-        "thanks": "merci",
-		"tomato": "tomate",
-        "traitor": "collaborateur",
-        "want": "envie",
-        "what's": "quel est",
-        "who's": "qui est",
-        "why": "porquois",
-        "wine": "vin",
-=======
 		"spaghetti": "macaroni",
 		"spicy": "epice",
 		"thanks": "merci",
@@ -158,7 +85,6 @@
 		"who's": "qui est",
 		"why": "porquois",
 		"wine": "vin",
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		"wizard": "sorcier"
 		}
 

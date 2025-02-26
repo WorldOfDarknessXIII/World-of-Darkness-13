@@ -93,12 +93,9 @@ h1.alert, h2.alert		{color: #000000;}
 .green					{color: #03ff39;}
 .grey					{color: #838383;}
 .nicegreen				{color: #14a833;}
-<<<<<<< HEAD
 .userlove				{color: #FF1493;	font-style: italic; font-weight: bold;	text-shadow: 0 0 6px #ff6dbc;}
 .love					{color: #ff006a;	font-style: italic;	text-shadow: 0 0 6px #ff6d6d;}
-=======
 .boldnicegreen			{color: #14a833;	font-weight: bold;}
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 .cult					{color: #973e3b;}
 .cultlarge				{color: #973e3b;	font-weight: bold;	font-size: 3;}
 .narsie					{color: #973e3b;	font-weight: bold;	font-size: 15;}

@@ -298,8 +298,6 @@
 		<br>
 		When ticked, edits here will also affect bans created with matching ckey, IP, CID and time. Use this to edit all role bans which were made at the same time.
 		"}
-<<<<<<< HEAD
-=======
 	else
 		output += "<input type='hidden' name='roleban_delimiter' value='1'>"
 		//there's not always a client to use the bancache of so to avoid many individual queries from using is_banned_form we'll build a cache to use here
@@ -414,7 +412,6 @@
 				break_counter++
 			output += "</div></div>"
 		output += "</div>"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	output += "</form>"
 	panel.set_content(output.Join())
 	panel.open()

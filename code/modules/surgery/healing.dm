@@ -339,16 +339,10 @@
 	burn_multiplier = 0.1
 
 /datum/surgery_step/heal/combo/upgraded/femto
-<<<<<<< HEAD
-	brutehealing = 5
-	burnhealing = 5
-	missinghpbonus = 12.5
-=======
 	brutehealing = 1
 	burnhealing = 1
 	brute_multiplier = 0.4
 	burn_multiplier = 0.4
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /datum/surgery_step/heal/combo/upgraded/femto/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(

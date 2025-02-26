@@ -76,16 +76,6 @@ ADMIN_VERB(play_direct_mob_sound, R_SOUND, "Play Direct Mob Sound", "Play a soun
 			to_chat(user, span_boldwarning("Youtube-dl URL retrieval FAILED:"), confidential = TRUE)
 			to_chat(user, span_warning("[stderr]"), confidential = TRUE)
 			return
-<<<<<<< HEAD
-		if(web_sound_url || stop_web_sounds)
-			for(var/m in GLOB.player_list)
-				var/mob/M = m
-				var/client/C = M.client
-				if(!stop_web_sounds)
-					C.tgui_panel?.play_music(web_sound_url, music_extra_data)
-				else
-					C.tgui_panel?.stop_music()
-=======
 		var/list/data
 		try
 			data = json_decode(stdout)
@@ -140,7 +130,6 @@ ADMIN_VERB(play_direct_mob_sound, R_SOUND, "Play Direct Mob Sound", "Play a soun
 	else
 		//pressed ok with blank
 		log_admin("[key_name(user)] stopped web sounds.")
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 		message_admins("[key_name(user)] stopped web sounds.")
 		web_sound_url = null

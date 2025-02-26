@@ -25,11 +25,8 @@
 #include "code\__DEFINES\_click.dm"
 #include "code\__DEFINES\_flags.dm"
 #include "code\__DEFINES\_helpers.dm"
-<<<<<<< HEAD
 #include "code\__DEFINES\_misc.dm"
 #include "code\__DEFINES\_profile.dm"
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\__DEFINES\_protect.dm"
 #include "code\__DEFINES\_tick.dm"
 #include "code\__DEFINES\access.dm"
@@ -96,15 +93,12 @@
 #include "code\__DEFINES\electrified_buckle.dm"
 #include "code\__DEFINES\events.dm"
 #include "code\__DEFINES\exosuit_fab.dm"
-<<<<<<< HEAD
 #include "code\__DEFINES\exports.dm"
 #include "code\__DEFINES\factions.dm"
 #include "code\__DEFINES\faith.dm"
-=======
 #include "code\__DEFINES\experisci.dm"
 #include "code\__DEFINES\explosions.dm"
 #include "code\__DEFINES\external_organs.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\__DEFINES\fantasy_affixes.dm"
 #include "code\__DEFINES\firealarm.dm"
 #include "code\__DEFINES\fish.dm"
@@ -112,11 +106,9 @@
 #include "code\__DEFINES\fonts.dm"
 #include "code\__DEFINES\food.dm"
 #include "code\__DEFINES\footsteps.dm"
-<<<<<<< HEAD
 #include "code\__DEFINES\forensics.dm"
 #include "code\__DEFINES\garou.dm"
 #include "code\__DEFINES\gridventory.dm"
-=======
 #include "code\__DEFINES\fov.dm"
 #include "code\__DEFINES\generators.dm"
 #include "code\__DEFINES\ghost.dm"
@@ -125,7 +117,6 @@
 #include "code\__DEFINES\guardian_defines.dm"
 #include "code\__DEFINES\holiday.dm"
 #include "code\__DEFINES\holopads.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\__DEFINES\hud.dm"
 #include "code\__DEFINES\icon_smoothing.dm"
 #include "code\__DEFINES\id_cards.dm"
@@ -163,15 +154,12 @@
 #include "code\__DEFINES\medical.dm"
 #include "code\__DEFINES\megafauna.dm"
 #include "code\__DEFINES\melee.dm"
-<<<<<<< HEAD
 #include "code\__DEFINES\menu.dm"
-=======
 #include "code\__DEFINES\memory_defines.dm"
 #include "code\__DEFINES\mergers.dm"
 #include "code\__DEFINES\mining.dm"
 #include "code\__DEFINES\mob_spawn.dm"
 #include "code\__DEFINES\mobfactions.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\__DEFINES\mobs.dm"
 #include "code\__DEFINES\mod.dm"
 #include "code\__DEFINES\modular_computer.dm"
@@ -410,7 +398,6 @@
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_simple.dm"
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_spawner.dm"
 #include "code\__DEFINES\research\anomalies.dm"
-<<<<<<< HEAD
 #include "code\__DEFINES\wod13\lockpick_difficulty.dm"
 #include "code\__DEFINES\wod13\signals_kindred.dm"
 #include "code\__DEFINES\wod13\status_effects.dm"
@@ -419,7 +406,6 @@
 #include "code\__DEFINES\wod13\traits.dm"
 #include "code\__DEFINES\wod13\dcs\bouncer_signals.dm"
 #include "code\__DEFINES\wod13\dcs\gun_signals.dm"
-=======
 #include "code\__DEFINES\research\research_categories.dm"
 #include "code\__DEFINES\research\slimes.dm"
 #include "code\__DEFINES\research\techweb_nodes.dm"
@@ -429,7 +415,6 @@
 #include "code\__DEFINES\traits\sources.dm"
 #include "code\__HELPERS\_auxtools_api.dm"
 #include "code\__HELPERS\_dreamluau.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\__HELPERS\_lists.dm"
 #include "code\__HELPERS\_planes.dm"
 #include "code\__HELPERS\_string_lists.dm"
@@ -552,14 +537,11 @@
 #include "code\_globalvars\genetics.dm"
 #include "code\_globalvars\lighting.dm"
 #include "code\_globalvars\logging.dm"
-<<<<<<< HEAD
 #include "code\_globalvars\misc.dm"
 #include "code\_globalvars\phonesnumbers.dm"
 #include "code\_globalvars\regexes.dm"
-=======
 #include "code\_globalvars\phobias.dm"
 #include "code\_globalvars\rcd.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\_globalvars\religion.dm"
 #include "code\_globalvars\silo.dm"
 #include "code\_globalvars\tgui.dm"
@@ -634,10 +616,7 @@
 #include "code\_onclick\hud\robot.dm"
 #include "code\_onclick\hud\screen_object_holder.dm"
 #include "code\_onclick\hud\screen_objects.dm"
-<<<<<<< HEAD
-#include "code\_onclick\hud\swarmer.dm"
 #include "code\_onclick\hud\werewolf.dm"
-=======
 #include "code\_onclick\hud\screentip.dm"
 #include "code\_onclick\hud\parallax\parallax.dm"
 #include "code\_onclick\hud\parallax\random_layer.dm"
@@ -646,7 +625,6 @@
 #include "code\_onclick\hud\rendering\render_plate.dm"
 #include "code\_onclick\hud\rendering\plane_masters\_plane_master.dm"
 #include "code\_onclick\hud\rendering\plane_masters\plane_master_subtypes.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\controllers\admin.dm"
 #include "code\controllers\controller.dm"
 #include "code\controllers\failsafe.dm"
@@ -679,12 +657,8 @@
 #include "code\controllers\subsystem\bitrunning.dm"
 #include "code\controllers\subsystem\blackbox.dm"
 #include "code\controllers\subsystem\chat.dm"
-<<<<<<< HEAD
 #include "code\controllers\subsystem\city_time.dm"
-#include "code\controllers\subsystem\communications.dm"
-=======
 #include "code\controllers\subsystem\circuit_component.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\controllers\subsystem\dbcore.dm"
 #include "code\controllers\subsystem\dcs.dm"
 #include "code\controllers\subsystem\discord.dm"
@@ -693,12 +667,9 @@
 #include "code\controllers\subsystem\economy.dm"
 #include "code\controllers\subsystem\events.dm"
 #include "code\controllers\subsystem\explosions.dm"
-<<<<<<< HEAD
 #include "code\controllers\subsystem\fire_burning.dm"
 #include "code\controllers\subsystem\frenzypool.dm"
-=======
 #include "code\controllers\subsystem\fluids.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\controllers\subsystem\garbage.dm"
 #include "code\controllers\subsystem\humannpcpool.dm"
 #include "code\controllers\subsystem\icon_smooth.dm"
@@ -707,13 +678,9 @@
 #include "code\controllers\subsystem\input.dm"
 #include "code\controllers\subsystem\ipintel.dm"
 #include "code\controllers\subsystem\job.dm"
-<<<<<<< HEAD
 #include "code\controllers\subsystem\job_scaling.dm"
-#include "code\controllers\subsystem\language.dm"
-=======
 #include "code\controllers\subsystem\lag_switch.dm"
 #include "code\controllers\subsystem\library.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\controllers\subsystem\lighting.dm"
 #include "code\controllers\subsystem\lua.dm"
 #include "code\controllers\subsystem\machines.dm"
@@ -722,11 +689,8 @@
 #include "code\controllers\subsystem\materials.dm"
 #include "code\controllers\subsystem\minor_mapping.dm"
 #include "code\controllers\subsystem\mobs.dm"
-<<<<<<< HEAD
 #include "code\controllers\subsystem\modularmapping.dm"
-=======
 #include "code\controllers\subsystem\modular_computers.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\controllers\subsystem\moods.dm"
 #include "code\controllers\subsystem\mouse_entered.dm"
 #include "code\controllers\subsystem\nightshift.dm"
@@ -777,9 +741,7 @@
 #include "code\controllers\subsystem\vote.dm"
 #include "code\controllers\subsystem\wardrobe.dm"
 #include "code\controllers\subsystem\weather.dm"
-<<<<<<< HEAD
 #include "code\controllers\subsystem\whitelists.dm"
-=======
 #include "code\controllers\subsystem\wiremod_composite.dm"
 #include "code\controllers\subsystem\dynamic\dynamic.dm"
 #include "code\controllers\subsystem\dynamic\dynamic_hijacking.dm"
@@ -808,7 +770,6 @@
 #include "code\controllers\subsystem\persistence\scars.dm"
 #include "code\controllers\subsystem\persistence\tattoos.dm"
 #include "code\controllers\subsystem\persistence\trophies.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\controllers\subsystem\processing\acid.dm"
 #include "code\controllers\subsystem\processing\ai_basic_avoidance.dm"
 #include "code\controllers\subsystem\processing\ai_behaviors.dm"
@@ -856,14 +817,10 @@
 #include "code\datums\hotkeys_help.dm"
 #include "code\datums\http.dm"
 #include "code\datums\hud.dm"
-<<<<<<< HEAD
-#include "code\datums\json_savefile.dm"
-=======
 #include "code\datums\instability_meltdown.dm"
 #include "code\datums\json_database.dm"
 #include "code\datums\json_savefile.dm"
 #include "code\datums\lazy_template.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\datums\map_config.dm"
 #include "code\datums\minigames_menu.dm"
 #include "code\datums\mood.dm"
@@ -1360,9 +1317,7 @@
 #include "code\datums\components\crafting\equipment.dm"
 #include "code\datums\components\crafting\furniture.dm"
 #include "code\datums\components\crafting\guncrafting.dm"
-<<<<<<< HEAD
 #include "code\datums\components\crafting\recipes.dm"
-=======
 #include "code\datums\components\crafting\melee_weapon.dm"
 #include "code\datums\components\crafting\misc.dm"
 #include "code\datums\components\crafting\ranged_weapon.dm"
@@ -1372,7 +1327,6 @@
 #include "code\datums\components\crafting\tiles.dm"
 #include "code\datums\components\crafting\tools.dm"
 #include "code\datums\components\crafting\weapon_ammo.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\datums\components\fantasy\_fantasy.dm"
 #include "code\datums\components\fantasy\affix.dm"
 #include "code\datums\components\fantasy\prefixes.dm"
@@ -1912,11 +1866,8 @@
 #include "code\datums\status_effects\_status_effect_helpers.dm"
 #include "code\datums\status_effects\agent_pinpointer.dm"
 #include "code\datums\status_effects\buffs.dm"
-<<<<<<< HEAD
-=======
 #include "code\datums\status_effects\drug_effects.dm"
 #include "code\datums\status_effects\food_effects.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\datums\status_effects\gas.dm"
 #include "code\datums\status_effects\grouped_effect.dm"
 #include "code\datums\status_effects\limited_effect.dm"
@@ -1989,11 +1940,7 @@
 #include "code\datums\votes\restart_vote.dm"
 #include "code\datums\votes\rock_the_vote.dm"
 #include "code\datums\weather\weather.dm"
-<<<<<<< HEAD
-#include "code\datums\weather\weather_types\acid_rain.dm"
-=======
 #include "code\datums\weather\weather_types\ash_storm.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\datums\weather\weather_types\floor_is_lava.dm"
 #include "code\datums\weather\weather_types\radiation_storm.dm"
 #include "code\datums\weather\weather_types\snow_storm.dm"
@@ -2146,12 +2093,8 @@
 #include "code\game\machinery\scanner_gate.dm"
 #include "code\game\machinery\sheetifier.dm"
 #include "code\game\machinery\shieldgen.dm"
-<<<<<<< HEAD
-#include "code\game\machinery\Sleeper.dm"
-=======
 #include "code\game\machinery\sleepers.dm"
 #include "code\game\machinery\slotmachine.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\game\machinery\spaceheater.dm"
 #include "code\game\machinery\stasis.dm"
 #include "code\game\machinery\status_display.dm"
@@ -2352,13 +2295,8 @@
 #include "code\game\objects\effects\spawners\bombspawner.dm"
 #include "code\game\objects\effects\spawners\costume.dm"
 #include "code\game\objects\effects\spawners\gibspawner.dm"
-<<<<<<< HEAD
 #include "code\game\objects\effects\spawners\lootdrop.dm"
-#include "code\game\objects\effects\spawners\lootsite.dm"
 #include "code\game\objects\effects\spawners\modularmappingspawner.dm"
-#include "code\game\objects\effects\spawners\scatter.dm"
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\game\objects\effects\spawners\structure.dm"
 #include "code\game\objects\effects\spawners\xeno_egg_delivery.dm"
 #include "code\game\objects\effects\spawners\random\ai_module.dm"
@@ -2393,11 +2331,8 @@
 #include "code\game\objects\effects\temporary_visuals\projectiles\tracer.dm"
 #include "code\game\objects\items\airlock_painter.dm"
 #include "code\game\objects\items\apc_frame.dm"
-<<<<<<< HEAD
 #include "code\game\objects\items\barrier_tape.dm"
-=======
 #include "code\game\objects\items\bear_armor.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\game\objects\items\binoculars.dm"
 #include "code\game\objects\items\blueprints.dm"
 #include "code\game\objects\items\body_egg.dm"
@@ -2430,11 +2365,7 @@
 #include "code\game\objects\items\door_seal.dm"
 #include "code\game\objects\items\drug_items.dm"
 #include "code\game\objects\items\dualsaber.dm"
-<<<<<<< HEAD
-#include "code\game\objects\items\dyekit.dm"
-=======
 #include "code\game\objects\items\dyespray.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\game\objects\items\eightball.dm"
 #include "code\game\objects\items\emags.dm"
 #include "code\game\objects\items\etherealdiscoball.dm"
@@ -2750,16 +2681,13 @@
 #include "code\game\objects\items\tools\wrench.dm"
 #include "code\game\objects\structures\ai_core.dm"
 #include "code\game\objects\structures\aliens.dm"
-<<<<<<< HEAD
 #include "code\game\objects\structures\artstuff.dm"
 #include "code\game\objects\structures\barsigns.dm"
-=======
 #include "code\game\objects\structures\bedsheet_bin.dm"
 #include "code\game\objects\structures\billboard.dm"
 #include "code\game\objects\structures\bonfire.dm"
 #include "code\game\objects\structures\broken_flooring.dm"
 #include "code\game\objects\structures\cat_house.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\game\objects\structures\chess.dm"
 #include "code\game\objects\structures\containers.dm"
 #include "code\game\objects\structures\curtains.dm"
@@ -2888,14 +2816,11 @@
 #include "code\game\objects\structures\transit_tubes\transit_tube.dm"
 #include "code\game\objects\structures\transit_tubes\transit_tube_construction.dm"
 #include "code\game\objects\structures\transit_tubes\transit_tube_pod.dm"
-<<<<<<< HEAD
 #include "code\game\objects\structures\wod13\bedsheet_bin.dm"
-=======
 #include "code\game\objects\structures\water_structures\sink.dm"
 #include "code\game\objects\structures\water_structures\toilet.dm"
 #include "code\game\objects\structures\water_structures\urinal.dm"
 #include "code\game\objects\structures\water_structures\water_source.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\game\turfs\baseturf_skipover.dm"
 #include "code\game\turfs\baseturfs.dm"
 #include "code\game\turfs\change_turf.dm"
@@ -4128,11 +4053,6 @@
 #include "code\modules\events\market_crash.dm"
 #include "code\modules\events\mass_hallucination.dm"
 #include "code\modules\events\mice_migration.dm"
-<<<<<<< HEAD
-#include "code\modules\events\nightmare.dm"
-#include "code\modules\events\operative.dm"
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\modules\events\portal_storm.dm"
 #include "code\modules\events\processor_overload.dm"
 #include "code\modules\events\radiation_leak.dm"
@@ -4280,7 +4200,6 @@
 #include "code\modules\food_and_drinks\machinery\stove_component.dm"
 #include "code\modules\food_and_drinks\recipes\food_mixtures.dm"
 #include "code\modules\food_and_drinks\recipes\processor_recipes.dm"
-<<<<<<< HEAD
 #include "code\modules\games\cas.dm"
 #include "code\modules\games\kotahi.dm"
 #include "code\modules\games\tarot.dm"
@@ -4288,8 +4207,6 @@
 #include "code\modules\holiday\foreign_calendar.dm"
 #include "code\modules\holiday\holidays.dm"
 #include "code\modules\holiday\nth_week.dm"
-#include "code\modules\holodeck\area_copy.dm"
-=======
 #include "code\modules\food_and_drinks\recipes\soup_guide.dm"
 #include "code\modules\food_and_drinks\recipes\soup_mixtures.dm"
 #include "code\modules\food_and_drinks\recipes\drinks\drinks_alcoholic.dm"
@@ -4349,7 +4266,6 @@
 #include "code\modules\holiday\foreign_calendar.dm"
 #include "code\modules\holiday\holidays.dm"
 #include "code\modules\holiday\nth_week.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\modules\holodeck\computer.dm"
 #include "code\modules\holodeck\holo_effect.dm"
 #include "code\modules\holodeck\holodeck_map_templates.dm"
@@ -4544,7 +4460,6 @@
 #include "code\modules\keybindings\bindings_client.dm"
 #include "code\modules\keybindings\focus.dm"
 #include "code\modules\keybindings\setup.dm"
-<<<<<<< HEAD
 #include "code\modules\language\arabic.dm"
 #include "code\modules\language\beachbum.dm"
 #include "code\modules\language\cantonese.dm"
@@ -4556,14 +4471,9 @@
 #include "code\modules\language\hebrew.dm"
 #include "code\modules\language\italian.dm"
 #include "code\modules\language\japanese.dm"
-#include "code\modules\language\language.dm"
-#include "code\modules\language\language_holder.dm"
-#include "code\modules\language\language_manuals.dm"
-#include "code\modules\language\language_menu.dm"
 #include "code\modules\language\latin.dm"
 #include "code\modules\language\mandarin.dm"
 #include "code\modules\language\russian.dm"
-=======
 #include "code\modules\language\_language.dm"
 #include "code\modules\language\_language_holder.dm"
 #include "code\modules\language\_language_manuals.dm"
@@ -4596,14 +4506,9 @@
 #include "code\modules\library\book.dm"
 #include "code\modules\library\book_info.dm"
 #include "code\modules\library\bookcase.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\modules\library\lib_codex_gigas.dm"
 #include "code\modules\library\lib_machines.dm"
-<<<<<<< HEAD
 #include "code\modules\library\soapstone.dm"
-=======
-#include "code\modules\library\random_books.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\modules\library\skill_learning\skill_station.dm"
 #include "code\modules\library\skill_learning\skillchip.dm"
 #include "code\modules\library\skill_learning\generic_skillchips\matrix_flip.dm"
@@ -4617,12 +4522,9 @@
 #include "code\modules\library\skill_learning\job_skillchips\psychologist.dm"
 #include "code\modules\library\skill_learning\job_skillchips\roboticist.dm"
 #include "code\modules\library\skill_learning\job_skillchips\station_engineer.dm"
-<<<<<<< HEAD
 #include "code\modules\library\skill_learning\job_skillchips\traitor.dm"
 #include "code\modules\library\wod13\random_books.dm"
 #include "code\modules\lighting\emissive_blocker.dm"
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\modules\lighting\lighting_area.dm"
 #include "code\modules\lighting\lighting_atom.dm"
 #include "code\modules\lighting\lighting_corner.dm"
@@ -4630,11 +4532,6 @@
 #include "code\modules\lighting\lighting_setup.dm"
 #include "code\modules\lighting\lighting_source.dm"
 #include "code\modules\lighting\lighting_turf.dm"
-<<<<<<< HEAD
-#include "code\modules\mapping\map_template.dm"
-#include "code\modules\mapping\mapping_helpers.dm"
-#include "code\modules\mapping\modular_mapping.dm"
-=======
 #include "code\modules\lighting\static_lighting_area.dm"
 #include "code\modules\loadout\loadout_categories.dm"
 #include "code\modules\loadout\loadout_helpers.dm"
@@ -4758,7 +4655,7 @@
 #include "code\modules\mapping\map_template.dm"
 #include "code\modules\mapping\mapping_helpers.dm"
 #include "code\modules\mapping\merge_conflicts.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
+#include "code\modules\mapping\modular_mapping.dm"
 #include "code\modules\mapping\preloader.dm"
 #include "code\modules\mapping\reader.dm"
 #include "code\modules\mapping\ruins.dm"
@@ -5722,16 +5619,6 @@
 #include "code\modules\projectiles\guns\magic\arcane_barrage.dm"
 #include "code\modules\projectiles\guns\magic\staff.dm"
 #include "code\modules\projectiles\guns\magic\wand.dm"
-<<<<<<< HEAD
-#include "code\modules\projectiles\guns\misc\beam_rifle.dm"
-#include "code\modules\projectiles\guns\misc\blastcannon.dm"
-#include "code\modules\projectiles\guns\misc\bow.dm"
-#include "code\modules\projectiles\guns\misc\chem_gun.dm"
-#include "code\modules\projectiles\guns\misc\grenade_launcher.dm"
-#include "code\modules\projectiles\guns\misc\medbeam.dm"
-#include "code\modules\projectiles\guns\misc\syringe_gun.dm"
-#include "code\modules\projectiles\guns\wod13\ballistic.dm"
-=======
 #include "code\modules\projectiles\guns\special\blastcannon.dm"
 #include "code\modules\projectiles\guns\special\chem_gun.dm"
 #include "code\modules\projectiles\guns\special\grenade_launcher.dm"
@@ -5739,7 +5626,7 @@
 #include "code\modules\projectiles\guns\special\meat_hook.dm"
 #include "code\modules\projectiles\guns\special\medbeam.dm"
 #include "code\modules\projectiles\guns\special\syringe_gun.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
+#include "code\modules\projectiles\guns\wod13\ballistic.dm"
 #include "code\modules\projectiles\projectile\beams.dm"
 #include "code\modules\projectiles\projectile\bullets.dm"
 #include "code\modules\projectiles\projectile\magic.dm"
@@ -6021,46 +5908,6 @@
 #include "code\modules\shuttle\shuttle_events\turbulence.dm"
 #include "code\modules\spatial_grid\cell_tracker.dm"
 #include "code\modules\spells\spell.dm"
-<<<<<<< HEAD
-#include "code\modules\spells\spell_types\aimed.dm"
-#include "code\modules\spells\spell_types\area_teleport.dm"
-#include "code\modules\spells\spell_types\bloodcrawl.dm"
-#include "code\modules\spells\spell_types\charge.dm"
-#include "code\modules\spells\spell_types\cone_spells.dm"
-#include "code\modules\spells\spell_types\conjure.dm"
-#include "code\modules\spells\spell_types\construct_spells.dm"
-#include "code\modules\spells\spell_types\curse.dm"
-#include "code\modules\spells\spell_types\emplosion.dm"
-#include "code\modules\spells\spell_types\ethereal_jaunt.dm"
-#include "code\modules\spells\spell_types\explosion.dm"
-#include "code\modules\spells\spell_types\forcewall.dm"
-#include "code\modules\spells\spell_types\genetic.dm"
-#include "code\modules\spells\spell_types\godhand.dm"
-#include "code\modules\spells\spell_types\infinite_guns.dm"
-#include "code\modules\spells\spell_types\inflict_handler.dm"
-#include "code\modules\spells\spell_types\knock.dm"
-#include "code\modules\spells\spell_types\lichdom.dm"
-#include "code\modules\spells\spell_types\lightning.dm"
-#include "code\modules\spells\spell_types\mime.dm"
-#include "code\modules\spells\spell_types\numina.dm"
-#include "code\modules\spells\spell_types\personality_commune.dm"
-#include "code\modules\spells\spell_types\projectile.dm"
-#include "code\modules\spells\spell_types\rightandwrong.dm"
-#include "code\modules\spells\spell_types\rod_form.dm"
-#include "code\modules\spells\spell_types\santa.dm"
-#include "code\modules\spells\spell_types\shadow_walk.dm"
-#include "code\modules\spells\spell_types\shapeshift.dm"
-#include "code\modules\spells\spell_types\soultap.dm"
-#include "code\modules\spells\spell_types\spacetime_distortion.dm"
-#include "code\modules\spells\spell_types\summonitem.dm"
-#include "code\modules\spells\spell_types\telepathy.dm"
-#include "code\modules\spells\spell_types\the_traps.dm"
-#include "code\modules\spells\spell_types\touch_attacks.dm"
-#include "code\modules\spells\spell_types\trigger.dm"
-#include "code\modules\spells\spell_types\turf_teleport.dm"
-#include "code\modules\spells\spell_types\voice_of_god.dm"
-#include "code\modules\spells\spell_types\wizard.dm"
-=======
 #include "code\modules\spells\spell_types\madness_curse.dm"
 #include "code\modules\spells\spell_types\right_and_wrong.dm"
 #include "code\modules\spells\spell_types\tower_of_babel.dm"
@@ -6102,7 +5949,6 @@
 #include "code\modules\spells\spell_types\list_target\telepathy.dm"
 #include "code\modules\spells\spell_types\pointed\_pointed.dm"
 #include "code\modules\spells\spell_types\pointed\abyssal_gaze.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\modules\spells\spell_types\pointed\barnyard.dm"
 #include "code\modules\spells\spell_types\pointed\blind.dm"
 #include "code\modules\spells\spell_types\pointed\dominate.dm"
@@ -6110,7 +5956,6 @@
 #include "code\modules\spells\spell_types\pointed\fireball.dm"
 #include "code\modules\spells\spell_types\pointed\lightning_bolt.dm"
 #include "code\modules\spells\spell_types\pointed\mind_transfer.dm"
-<<<<<<< HEAD
 #include "code\modules\spells\spell_types\pointed\pointed.dm"
 #include "code\modules\station_goals\station_goal.dm"
 #include "code\modules\stock_market\articles.dm"
@@ -6120,7 +5965,6 @@
 #include "code\modules\stock_market\logs.dm"
 #include "code\modules\stock_market\stockmarket.dm"
 #include "code\modules\stock_market\stocks.dm"
-=======
 #include "code\modules\spells\spell_types\pointed\spell_cards.dm"
 #include "code\modules\spells\spell_types\pointed\swap.dm"
 #include "code\modules\spells\spell_types\pointed\terrorize.dm"
@@ -6163,7 +6007,6 @@
 #include "code\modules\station_goals\meteor_shield.dm"
 #include "code\modules\station_goals\station_goal.dm"
 #include "code\modules\station_goals\vault_mutation.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\modules\surgery\amputation.dm"
 #include "code\modules\surgery\autopsy.dm"
 #include "code\modules\surgery\blood_filter.dm"
@@ -6439,7 +6282,6 @@
 #include "code\modules\vending\toys.dm"
 #include "code\modules\vending\wardrobes.dm"
 #include "code\modules\vending\youtool.dm"
-<<<<<<< HEAD
 #include "code\modules\vtmb\_signals.dm"
 #include "code\modules\vtmb\archetypes.dm"
 #include "code\modules\vtmb\artifacts.dm"
@@ -6626,7 +6468,6 @@
 #include "code\modules\wod13\structures\doors\vampdoor.dm"
 #include "code\modules\wod13\events\pirates.dm"
 #include "code\modules\wod13\verbs\dice.dm"
-=======
 #include "code\modules\visuals\render_steps.dm"
 #include "code\modules\wiremod\components\abstract\assoc_list_variable.dm"
 #include "code\modules\wiremod\components\abstract\compare.dm"
@@ -6768,7 +6609,6 @@
 #include "code\modules\wiremod\shell\scanner_gate.dm"
 #include "code\modules\wiremod\shell\server.dm"
 #include "code\modules\wiremod\shell\shell_items.dm"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 #include "code\modules\zombie\items.dm"
 #include "code\modules\zombie\organs.dm"
 #include "code\ze_genesis_call\genesis_call.dm"

@@ -11,9 +11,6 @@
 #Ignore byond config folder.
 /cfg/**/*
 
-<<<<<<< HEAD
-# Ignore compiled linux libs in the root folder, e.g. librust_g.so
-=======
 #Ignore IDE files we don't need in the repo.
 /.vs/**/*
 /tgstation/FileContentIndex/**/*
@@ -27,7 +24,6 @@
 
 # Ignore compiled linux libs in the root folder, e.g. librust_g.so
 /*.so
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 #Ignore compiled files and other files generated during compilation.
 *.mdme
@@ -180,12 +176,6 @@ Temporary Items
 
 #Visual studio stuff
 *.vscode/*
-<<<<<<< HEAD
-!/.vscode/extensions.json
-!/.vscode/launch.json
-!/.vscode/tasks.json
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 /tools/MapAtmosFixer/MapAtmosFixer/obj/*
 /tools/MapAtmosFixer/MapAtmosFixer/bin/*
 /tools/CreditsTool/bin/*
@@ -209,22 +199,6 @@ Temporary Items
 /dmdoc
 
 #Linux docker
-<<<<<<< HEAD
-/tools/LinuxOneShot/SetupProgram/obj/*
-/tools/LinuxOneShot/SetupProgram/bin/*
-/tools/LinuxOneShot/SetupProgram/.vs
-/tools/LinuxOneShot/Database
-/tools/LinuxOneShot/TGS_Config
-/tools/LinuxOneShot/TGS_Instances
-/tools/LinuxOneShot/TGS_Logs
-imgui.ini
-config/config.txt
-config/dbconfig.txt
-
-#tgs_test thats generated @ obj & bin
-/tools/tgs_test/obj*
-/tools/tgs_test/bin*
-=======
 /tools/tgs_test/.vs/*
 /tools/tgs_test/bin/*
 /tools/tgs_test/obj/*
@@ -262,4 +236,3 @@ define_sanity_output.txt
 
 # Running OpenDream locally
 tgstation.json
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

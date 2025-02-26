@@ -14,8 +14,4 @@
 #_maps/RandomZLevels/snowdin.dmm
 #_maps/RandomZLevels/research.dmm
 #_maps/RandomZLevels/SnowCabin.dmm
-<<<<<<< HEAD
-#_maps/RandomZLevels/VR/snowdin_VR.dmm
-=======
 #_maps/RandomZLevels/museum.dmm
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

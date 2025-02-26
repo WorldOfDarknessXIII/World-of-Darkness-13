@@ -234,8 +234,9 @@
 		if("albino")
 			. = "#fff4e6"
 		if("orange")
-<<<<<<< HEAD
-			. = "ffc905"
+			. = "#ffc905"
+		if("green")
+			. = "#a8e61d"
 		if("vamp1")
 			. = "decdc4"
 		if("vamp2")
@@ -293,8 +294,3 @@
 				H.update_inv_w_uniform()
 		if(H.shoes && !swap_back)
 			H.dropItemToGround(H.shoes)
-=======
-			. = "#ffc905"
-		if("green")
-			. = "#a8e61d"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

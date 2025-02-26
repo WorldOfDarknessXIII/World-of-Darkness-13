@@ -48,13 +48,6 @@
 	var/trait_required
 	/// In which state can you use this emote? (Check stat.dm for a full list of them)
 	var/stat_allowed = CONSCIOUS
-<<<<<<< HEAD
-	var/sound //Sound to play when emote is called
-	var/vary = FALSE	//used for the honk borg emote
-	var/cooldown = 0.8 SECONDS
-	///How often we can do this audio cooldown
-	var/audio_cooldown = 10 SECONDS
-=======
 	/// Sound to play when emote is called.
 	var/sound
 	/// Used for the honk borg emote.
@@ -69,7 +62,6 @@
 	var/audio_cooldown = 2 SECONDS
 	/// Does this emote's sound ignore walls?
 	var/sound_wall_ignore = FALSE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /datum/emote/New()
 	switch(mob_type_allowed_typecache)
@@ -102,27 +94,12 @@
 		msg = select_param(user, params)
 
 	msg = replace_pronoun(user, msg)
-<<<<<<< HEAD
-
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(!msg)
 		return
 
 	user.log_message(msg, LOG_EMOTE)
 
 	var/tmp_sound = get_sound(user)
-<<<<<<< HEAD
-	if(tmp_sound)
-		if(TIMER_COOLDOWN_CHECK(user, COOLDOWN_MOB_AUDIO))
-			return
-		TIMER_COOLDOWN_START(user, type, audio_cooldown)
-		S_TIMER_COOLDOWN_START(user, COOLDOWN_MOB_AUDIO, 10 SECONDS)
-		playsound(user, tmp_sound, 50, vary)
-
-	if(emote_type == EMOTE_AUDIBLE)
-		user.audible_message(msg, audible_message_flags = EMOTE_MESSAGE)
-=======
 	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, type))
 		TIMER_COOLDOWN_START(user, type, audio_cooldown)
 		playsound(source = user,soundin = tmp_sound,vol = 50, vary = vary, ignore_walls = sound_wall_ignore)
@@ -193,7 +170,6 @@
 			self_message = msg,
 			visible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE,
 		)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	else
 		CRASH("Emote [type] has no valid emote type set!")
 

@@ -215,17 +215,11 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 /datum/controller/subsystem/ticker/proc/declare_completion(was_forced = END_ROUND_AS_NORMAL)
 	set waitfor = FALSE
 
-<<<<<<< HEAD
 	to_chat(world, "<BR><BR><BR><span class='big bold'>The dawn is coming.</span>")
 	log_game("The round has ended.")
 
-	for(var/I in round_end_events)
-		var/datum/callback/cb = I
-		cb.InvokeAsync()
-=======
 	for(var/datum/callback/roundend_callbacks as anything in round_end_events)
 		roundend_callbacks.InvokeAsync()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	LAZYCLEARLIST(round_end_events)
 
 	var/speed_round = (STATION_TIME_PASSED() <= 10 MINUTES)
@@ -303,13 +297,8 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 
 /datum/controller/subsystem/ticker/proc/standard_reboot()
 	if(ready_for_reboot)
-<<<<<<< HEAD
 		if(mode.station_was_nuked)
 			Reboot("City destroyed by Nuclear Device.", "nuke")
-=======
-		if(GLOB.station_was_nuked)
-			Reboot("Station destroyed by Nuclear Device.", "nuke")
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		else
 			Reboot("Round ended.", "proper completion")
 	else
@@ -351,13 +340,8 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		var/statspage = CONFIG_GET(string/roundstatsurl)
 		var/info = statspage ? "<a href='?action=openLink&link=[url_encode(statspage)][GLOB.round_id]'>[GLOB.round_id]</a>" : GLOB.round_id
 		parts += "[FOURSPACES]Round ID: <b>[info]</b>"
-<<<<<<< HEAD
 	parts += "[FOURSPACES]Night Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
 	parts += "[FOURSPACES]City Integrity: <B>[mode.station_was_nuked ? "<span class='redtext'>Destroyed</span>" : "[popcount["station_integrity"]]%"]</B>"
-=======
-	parts += "[FOURSPACES]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
-	parts += "[FOURSPACES]Station Integrity: <B>[GLOB.station_was_nuked ? span_redtext("Destroyed") : "[popcount["station_integrity"]]%"]</B>"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	var/total_players = GLOB.joined_player_list.len
 	if(total_players)
 		parts+= "[FOURSPACES]Total Population: <B>[total_players]</B>"
@@ -371,17 +355,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 				parts += "[FOURSPACES]First Death: <b>[ded["name"]], [ded["role"]], at [ded["area"]]. Damage taken: [ded["damage"]].[ded["last_words"] ? " Their last words were: \"[ded["last_words"]]\"" : ""]</b>"
 			//ignore this comment, it fixes the broken sytax parsing caused by the " above
 			else
-<<<<<<< HEAD
 				parts += "[FOURSPACES]<i>Nobody died this night!</i>"
-	if(istype(SSticker.mode, /datum/game_mode/dynamic))
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		parts += "[FOURSPACES]Threat level: [mode.threat_level]"
-		parts += "[FOURSPACES]Threat left: [mode.threat]"
-		parts += "[FOURSPACES]Executed rules:"
-		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
-			parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
-=======
-				parts += "[FOURSPACES]<i>Nobody died this shift!</i>"
 
 	parts += "[FOURSPACES]Threat level: [SSdynamic.threat_level]"
 	parts += "[FOURSPACES]Threat left: [SSdynamic.mid_round_budget]"
@@ -393,7 +367,6 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	for(var/datum/dynamic_ruleset/rule in SSdynamic.executed_rules)
 		parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	return parts.Join("<br>")
 
 /client/proc/roundend_report_file()
@@ -457,7 +430,6 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 					parts += "<span class='marooned'>You managed to survive, but were quarantined in [station_name()]...</span>"
 				else
 					parts += "<div class='panel greenborder'>"
-<<<<<<< HEAD
 					parts += "<span class='greentext'>You managed to survive the events of [station_name()] as [M.real_name].</span>"
 			else
 				parts += "<div class='panel greenborder'>"
@@ -466,16 +438,6 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		else
 			parts += "<div class='panel redborder'>"
 			parts += "<span class='redtext'>You did not survive the events of [station_name()]...</span>"
-=======
-					parts += span_greentext("You managed to survive the events on [station_name()] as [M.real_name].")
-			else
-				parts += "<div class='panel greenborder'>"
-				parts += span_greentext("You managed to survive the events on [station_name()] as [M.real_name].")
-
-		else
-			parts += "<div class='panel redborder'>"
-			parts += span_redtext("You did not survive the events on [station_name()]...")
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	else
 		parts += "<div class='panel stationborder'>"
 	parts += "<br>"
@@ -544,13 +506,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 ///Generate a report for how much money is on station, as well as the richest crewmember on the station.
 /datum/controller/subsystem/ticker/proc/market_report()
 	var/list/parts = list()
-<<<<<<< HEAD
 	parts += "<span class='header'>City Economic Summary:</span>"
-=======
-
-	///total service income
-	var/tourist_income = 0
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	///This is the richest account on station at roundend.
 	var/datum/vtm_bank_account/mr_moneybags = GLOB.bank_account_list[1]
 	if(!istype(mr_moneybags))
@@ -559,46 +515,12 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	var/station_vault = 0
 	///How many players joined the round.
 	var/total_players = GLOB.joined_player_list.len
-<<<<<<< HEAD
 	for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
 		if(account && account.account_owner)
 			station_vault += account.balance
 			if(mr_moneybags.balance < account.balance)
 				mr_moneybags = account
 	parts += "<div class='panel stationborder'>There were [station_vault] dollars collected by people this shift.<br>"
-=======
-	var/static/list/typecache_bank = typecacheof(list(/datum/bank_account/department, /datum/bank_account/remote))
-	for(var/i in SSeconomy.bank_accounts_by_id)
-		var/datum/bank_account/current_acc = SSeconomy.bank_accounts_by_id[i]
-		if(typecache_bank[current_acc.type])
-			continue
-		station_vault += current_acc.account_balance
-		if(!mr_moneybags || mr_moneybags.account_balance < current_acc.account_balance)
-			mr_moneybags = current_acc
-	parts += "<div class='panel stationborder'><span class='header'>Station Economic Summary:</span><br>"
-	parts += "<span class='service'>Service Statistics:</span><br>"
-	for(var/venue_path in SSrestaurant.all_venues)
-		var/datum/venue/venue = SSrestaurant.all_venues[venue_path]
-		tourist_income += venue.total_income
-		parts += "The [venue] served [venue.customers_served] customer\s and made [venue.total_income] credits.<br>"
-	parts += "In total, they earned [tourist_income] credits[tourist_income ? "!" : "..."]<br>"
-	log_econ("Roundend service income: [tourist_income] credits.")
-	switch(tourist_income)
-		if(0)
-			parts += "[span_redtext("Service did not earn any credits...")]<br>"
-		if(1 to 2000)
-			parts += "[span_redtext("Centcom is displeased. Come on service, surely you can do better than that.")]<br>"
-			award_service(/datum/award/achievement/jobs/service_bad)
-		if(2001 to 4999)
-			parts += "[span_greentext("Centcom is satisfied with service's job today.")]<br>"
-			award_service(/datum/award/achievement/jobs/service_okay)
-		else
-			parts += "<span class='reallybig greentext'>Centcom is incredibly impressed with service today! What a team!</span><br>"
-			award_service(/datum/award/achievement/jobs/service_good)
-
-	parts += "<b>General Statistics:</b><br>"
-	parts += "There were [station_vault] credits collected by crew this shift.<br>"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(total_players > 0)
 		parts += "An average of [station_vault/total_players] dollars were collected.<br>"
 		log_econ("Roundend credit total: [station_vault] dollars. Average cash amount: [station_vault/total_players]")
@@ -751,11 +673,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		if(fleecheck)
 			var/turf/T = get_turf(ply.current)
 			if(!T || !is_station_level(T.z))
-<<<<<<< HEAD
 				text += " while <span class='redtext'>fleeing the city</span>"
-=======
-				text += " while [span_redtext("fleeing the station")]"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		if(ply.current.real_name != ply.name)
 			text += " as <b>[ply.current.real_name]</b>"
 	else

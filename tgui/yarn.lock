@@ -18783,12 +18783,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "tgui-polyfill@workspace:packages/tgui-polyfill"
   dependencies:
-<<<<<<< HEAD
-    core-js: ^3.8.2
-    regenerator-runtime: ^0.13.7
-    tgui-polyfill: "file:"
-    whatwg-fetch: ^3.5.0
-=======
     core-js: "npm:^3.36.1"
     regenerator-runtime: "npm:^0.14.1"
     terser: "npm:^5.30.2"
@@ -18807,7 +18801,6 @@ __metadata:
     react-dom: "npm:^18.2.0"
     tgui: "workspace:*"
     tgui-polyfill: "workspace:*"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
   languageName: unknown
   linkType: soft
 

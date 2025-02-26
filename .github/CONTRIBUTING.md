@@ -9,11 +9,7 @@
 	3. [Issue Managers](#issue-managers)
 5. [Development Guides](#development-guides)
 6. [Pull Request Process](#pull-request-process)
-<<<<<<< HEAD
 7. [Bounties](#bounties)
-=======
-7. [Good Boy Points](#good-boy-points)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 8. [Porting features/sprites/sounds/tools from other codebases](#porting-featuresspritessoundstools-from-other-codebases)
 9. [Banned content](#banned-content)
 10. [A word on Git](#a-word-on-git)
@@ -57,7 +53,7 @@ Maintainers are quality control. If a proposed pull request doesn't meet the fol
 
 Maintainers can revert your changes if they feel they are not worth maintaining or if they did not live up to the quality specifications.
 
-Maintainers reserve the right to close any PR with no reason specified, that they deem unfit for the game with three or more approvals. 
+Maintainers reserve the right to close any PR with no reason specified, that they deem unfit for the game with three or more approvals.
 
 <details>
 <summary>Maintainer Guidelines</summary>
@@ -94,11 +90,7 @@ Things you **CAN'T** do:
 * [Close PRs](https://imgur.com/w2RqpX8.png): Only maintainers are allowed to close PRs. Do not hit that button.
 * Close issues purely for breaking a template if the same information is contained without it.
 
-<<<<<<< HEAD
 For more information reference the [Issue Manager Guide](./guides/ISSUE_MANAGER.md).
-=======
-For more information reference the [Issue Manager Guide](.github/guides/ISSUE_MANAGER.md).
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 </details>
 
@@ -108,13 +100,13 @@ Our team is entirely voluntary, as such we extend our thanks to maintainers, iss
 
 ## Development Guides
 
-#### Writing readable code 
+#### Writing readable code
 [Style guide](./guides/STYLE.md)
 
-#### Writing sane code 
+#### Writing sane code
 [Code standards](./guides/STANDARDS.md)
 
-#### Writing understandable code 
+#### Writing understandable code
 [Autodocumenting code](./guides/AUTODOC.md)
 
 #### Misc
@@ -152,16 +144,13 @@ There is no strict process when it comes to merging pull requests. Pull requests
 
 * After leaving reviews on an open pull request, maintainers may convert it to a draft. Once you have addressed all their comments to the best of your ability, feel free to mark the pull as `Ready for Review` again.
 
-<<<<<<< HEAD
 ## Bounties
 
 Pull requests created with commissions attached to them are not guaranteed to be merged into the game. Bounty benefactor reserve the right to pay whenever they deem fit. These pull requests as well, are applicable to the terms above. Maintainers and anyone in the staff team are not liable for any paid for commissions that are closed. Bounty benefactors are asked to pay after the pull requests they ask for are merged into the game.
 
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 ## Justifying Your Changes
 
-You must explain why you are submitting the pull request in the "Why It's Good For The Game" section of your pull request, and how you think your change will be beneficial to the game. Failure to do so will be grounds for rejecting your pull request wholesale, or requiring that you fix it before your pull request is merged. A reasonable justification for your changes is a requirement. 
+You must explain why you are submitting the pull request in the "Why It's Good For The Game" section of your pull request, and how you think your change will be beneficial to the game. Failure to do so will be grounds for rejecting your pull request wholesale, or requiring that you fix it before your pull request is merged. A reasonable justification for your changes is a requirement.
 
 Your "Why It's Good For The Game" section must make a good faith and reasonable attempt to:
 * Assert and argue that the current state of affairs in the game is not good, and needs changing.
@@ -176,42 +165,17 @@ This is also still a requirement if your pull request has a corresponding design
 1. All reviewers can easily see the reasoning behind your changes on the pull request itself, no reliance on other sites required.
 2. The actual, manifested implementation of the idea behind the design document is being justified after said implementation is actually realized. This is in contrast to any reasoning put on the design document itself, which very well may have been made before any work was done on it, possibly even by an author different from the author of the pull request. Any idea in the design document may have had compromises put into it due to complications not seen in the original vision, thus the current state of the implementation (the pull request as it stands) must be defended, explained, and ultimately justified in and of itself. Of course, you should still list the design document the pull request is implementing, and may even use arguments from the design document if said arguments are applicable to the current reality of your proposed changes.
 
-<<<<<<< HEAD
-=======
-## Good Boy Points
-
-Each GitHub account has a score known as Good Boy Points, or GBP. This is a system we use to ensure that the codebase stays maintained and that contributors fix bugs as well as add features.
-
-The GBP gain or loss for a PR depends on the type of changes the PR makes, represented by the tags assigned to the PR by the tgstation github bot or maintainers. Generally speaking, fixing bugs, updating sprites, or improving maps increases your GBP score, while adding mechanics, or rebalancing things will cost you GBP.
-
-The GBP change of a PR is the sum of greatest positive and lowest negative values it has. For example, a PR that has tags worth +10, +4, -1, -7, will net 3 GBP (10 - 7).
-
-Negative GBP increases the likelihood of a maintainer closing your PR. With that chance being higher the lower your GBP is. Be sure to use the proper tags in the changelog to prevent unnecessary GBP loss. Maintainers reserve the right to change tags as they deem appropriate.
-
-There is no benefit to having a higher positive GBP score, since GBP only comes into consideration when it is negative.
-
-You can see each tag and their GBP values [Here](https://github.com/tgstation/tgstation/blob/master/.github/gbp.toml). 
-
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 ## Porting features/sprites/sounds/tools from other codebases
 
 If you are porting features/tools from other codebases, you must give them credit where it's due. Typically, crediting them in your pull request and the changelog is the recommended way of doing it. Take note of what license they use though, porting stuff from AGPLv3 and GPLv3 codebases are allowed.
 
-<<<<<<< HEAD
 Regarding sprites & sounds, you must credit the artist and possibly the codebase. All WOD13 assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
-=======
-Regarding sprites & sounds, you must credit the artist and possibly the codebase. All /tg/station assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 ## Banned content
 Do not add any of the following in a Pull Request or risk getting the PR closed:
 * National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
-<<<<<<< HEAD
 * Any additions to the game that reference the server's players or their characters.
 * Code adding, removing, or updating the availability of races/species/humans/antagonists without prior approval. Pull requests attempting to add or remove features from said races/species/humans/antagonists require prior approval as well.
-=======
-* Code adding, removing, or updating the availability of alien races/species/human mutants without prior approval. Pull requests attempting to add or remove features from said races/species/mutants require prior approval as well.
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 * Code which violates GitHub's [terms of service](https://github.com/site/terms).
 
 Just because something isn't on this list doesn't mean that it's acceptable. Use common sense above all else.
@@ -225,11 +189,4 @@ Note: VSC requires an [extension](https://marketplace.visualstudio.com/items?ite
 
 Github actions that require additional configuration are disabled on the repository until ACTION_ENABLER secret is created with non-empty value.
 
-<<<<<<< HEAD
-=======
-## Using the Maintainer Role Ping in Discord
-
-This role `@Maintainer` is pingable as a compromise reached with the server host MrStonedOne over the auto-stale system we presently have in the codebase. It should be used only to ping Maintainers when your PR has had the "Stale" label applied. Using it before then can be met with escalating timeouts and referral to /tg/station's Discord moderators for further infractions.
-
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 Feel free to engage and obtain general feedback in the Coding General channel without the role ping before your PR goes stale to build interest and get reviews.

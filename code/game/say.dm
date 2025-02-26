@@ -69,8 +69,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 	return TRUE
 
-
-<<<<<<< HEAD
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language = null, list/message_mods = list())
 	var/turf/T = get_turf(src)
 	var/ending = copytext_char(message, -1)	//Better not to do like that..
@@ -96,7 +94,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 //						if(hive.clane.name == "Malkavian")
 //							if(z != hive.z || get_dist(src, hive) > 7)
 //								to_chat(hive, "[rendered]")
-=======
 /**
  * Checks if our movable can speak the provided message, passing it through filters
  * and spam detection. Does not call can_speak. CAN include feedback messages about
@@ -116,7 +113,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
  */
 /atom/movable/proc/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
 	return can_speak()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /**
  * Checks if our movable can currently speak, vocally, in general.
