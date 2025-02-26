@@ -15,15 +15,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
-<<<<<<< HEAD
-/datum/admins/proc/show_player_panel(mob/M in GLOB.mob_list)
-	set category = "Admin.Game"
-	set name = "Show Player Panel"
-	set desc="Edit player (respawn, ban, heal, etc)"
-
-	if(!check_rights())
-		return
-
+ADMIN_VERB(show_player_panel, R_ADMIN, "Player Panel", "Show the player panel window.", ADMIN_CATEGORY_GAME, mob/M in GLOB.mob_list)
 	log_admin("[key_name(usr)] checked the individual player panel for [key_name(M)][isobserver(usr)?"":" while in game"].")
 
 	if(!M)
@@ -204,17 +196,7 @@
 	usr << browse(body, "window=adminplayeropts-[REF(M)];size=550x515")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Player Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-/datum/admins/proc/access_news_network() //MARKER
-	set category = "Admin.Events"
-	set name = "Access Newscaster Network"
-	set desc = "Allows you to view, add and edit news feeds."
-
-	if (!istype(src, /datum/admins))
-		src = usr.client.holder
-	if (!istype(src, /datum/admins))
-		to_chat(usr, "Error: you are not an admin!", confidential = TRUE)
-		return
+ADMIN_VERB(show_player_panel, R_ADMIN, "Access Newscaster Network", "Allows you to view, add and edit news feeds.", ADMIN_CATEGORY_EVENTS)
 	var/dat
 	dat = text("<HEAD><TITLE>Admin Newscaster</TITLE></HEAD><H3>Admin Newscaster Unit</H3>")
 
@@ -413,8 +395,6 @@
 	onclose(usr, "admincaster_main")
 
 
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 /datum/admins/proc/Game()
 	if(!check_rights(0))
 		return
