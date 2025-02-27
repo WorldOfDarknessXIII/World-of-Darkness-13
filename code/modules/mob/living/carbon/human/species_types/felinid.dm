@@ -17,19 +17,12 @@
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/felinid
-<<<<<<< HEAD
-	var/original_felinid = TRUE //set to false for felinids created by mass-purrbation
-	payday_modifier = 0.75
-	ass_image = 'icons/ass/asscat.png'
-	selectable = FALSE
-=======
 	payday_modifier = 1.0
 	family_heirlooms = list(/obj/item/toy/cattoy)
 	/// When false, this is a felinid created by mass-purrbation
 	var/original_felinid = TRUE
 	/// Yummy!
 	species_cookie = /obj/item/food/nugget
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 // Prevents felinids from taking toxin damage from carpotoxin
 /datum/species/human/felinid/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)

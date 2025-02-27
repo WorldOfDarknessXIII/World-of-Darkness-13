@@ -62,12 +62,8 @@
 	key_third_person = "screams"
 	message = "screams!"
 	message_mime = "acts out a scream!"
-<<<<<<< HEAD
-	emote_type = EMOTE_AUDIBLE
-=======
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	only_forced_audio = TRUE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	vary = TRUE
 
 /datum/emote/living/carbon/human/scream/can_run_emote(mob/user, status_check = TRUE , intentional, params)
@@ -78,28 +74,7 @@
 /datum/emote/living/carbon/human/scream/get_sound(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
-<<<<<<< HEAD
-	var/mob/living/carbon/human/H = user
-	if(H.mind?.miming)
-		return
-	if(ishuman(H))
-		if(user.gender == FEMALE)
-			return pick('sound/voice/human/femalescream_1.ogg', 'sound/voice/human/femalescream_2.ogg', 'sound/voice/human/femalescream_3.ogg', 'sound/voice/human/femalescream_4.ogg', 'sound/voice/human/femalescream_5.ogg')
-		else
-			if(prob(1))
-				return 'sound/voice/human/wilhelm_scream.ogg'
-			return pick('sound/voice/human/malescream_1.ogg', 'sound/voice/human/malescream_2.ogg', 'sound/voice/human/malescream_3.ogg', 'sound/voice/human/malescream_4.ogg', 'sound/voice/human/malescream_5.ogg', 'sound/voice/human/malescream_6.ogg')
-	else if(ismonkey(user))
-		return pick('sound/creatures/monkey/monkey_screech_1.ogg',
-					'sound/creatures/monkey/monkey_screech_2.ogg',
-					'sound/creatures/monkey/monkey_screech_3.ogg',
-					'sound/creatures/monkey/monkey_screech_4.ogg',
-					'sound/creatures/monkey/monkey_screech_5.ogg',
-					'sound/creatures/monkey/monkey_screech_6.ogg',
-					'sound/creatures/monkey/monkey_screech_7.ogg')
-=======
 	return user.dna.species.get_scream_sound(user)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /datum/emote/living/carbon/human/scream/screech //If a human tries to screech it'll just scream.
 	key = "screech"

@@ -46,7 +46,6 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 				<b>Reagents</b>:<br>[reagents_readout()]", INVESTIGATE_DEATHS)
 	to_chat(src, span_warning("You have died. Barring complete bodyloss, you can in most cases be revived by other players. If you do not wish to be brought back, use the \"Do Not Resuscitate\" verb in the ghost tab."))
 
-<<<<<<< HEAD
 	for(var/mob/living/carbon/human/U in viewers(7, src))
 		if(iscathayan(U) && U != src)
 			if(U.real_name == lastattacker && !iscathayan(src) && !iskindred(src) && !isgarou(src))
@@ -59,7 +58,7 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 			if(!(real_name in U.mind?.dharma?.deserving) && U.real_name == lastattacker)
 				call_dharma("killfirst", U)
 	to_chat(src, "<span class='warning'>You have died. Barring complete bodyloss, you can in most cases be revived by other players. If you do not wish to be brought back, use the \"Do Not Resuscitate\" verb in the ghost tab.</span>")
-=======
+
 /mob/living/carbon/human/proc/reagents_readout()
 	var/readout = "Blood:"
 	for(var/datum/reagent/reagent in reagents?.reagent_list)
@@ -72,7 +71,6 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 			readout += "<br>[round(bile.volume, 0.001)] units of [bile.name]"
 
 	return readout
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	ADD_TRAIT(src, TRAIT_DISFIGURED, TRAIT_GENERIC)

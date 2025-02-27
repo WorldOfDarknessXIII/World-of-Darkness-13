@@ -99,24 +99,4 @@
 		),
 	)
 
-<<<<<<< HEAD
-/obj/item/organ/fly/Initialize()
-	. = ..()
-	name = odd_organ_name()
-	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
-
-/obj/item/organ/fly/groin //appendix is the only groin organ so we gotta have one of these too lol
-	zone = BODY_ZONE_PRECISE_GROIN
-
-/*
-/obj/item/organ/penis
-	name = "penis"
-	desc = "Fallic object of flesh."
-	icon = 'code/modules/wod13/onfloor.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
-	icon_state = "penis"
-	zone = BODY_ZONE_PRECISE_GROIN
-*/
-=======
 	return to_add
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

@@ -17,7 +17,6 @@
 			obscure_name = TRUE
 			obscure_examine = TRUE
 
-<<<<<<< HEAD
 	var/my_shape = "average"
 	var/my_gender = "male"
 	if(gender == MALE)
@@ -43,12 +42,9 @@
 		my_shape = "fat"
 
 	. = list("<span class='info'>*---------*\nThis is <EM>[!obscure_name ? name : "Unknown"]</EM>, [age2agedescription(age)] [my_shape] [my_gender]!")
-=======
-	. = list("<span class='info'>This is <EM>[!obscure_name ? name : "Unknown"]</EM>!")
 
 	if(obscure_examine)
 		return list("<span class='warning'>You're struggling to make out any details...")
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	var/obscured = check_obscured_slots()
 
@@ -139,14 +135,7 @@
 	if(wear_id && !(wear_id.item_flags & EXAMINE_SKIP))
 		. += "[t_He] [t_is] wearing [wear_id.get_examine_string(user)]."
 
-<<<<<<< HEAD
-//	if(ishuman(user))
-//		var/mob/living/carbon/human/US = user
-//		if(US.dna.species.id == "kindred" && dna.species.id == "kindred")
-//			. += "[t_He] [t_is] at least from <b>[client.prefs.generation]</b> generation."
-=======
 		. += wear_id.get_id_examine_strings(user)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	//Status effects
 	var/list/status_examines = get_status_effect_examinations()
@@ -171,15 +160,8 @@
 
 			. += generate_death_examine_text()
 
-<<<<<<< HEAD
-	if(get_bodypart(BODY_ZONE_HEAD) && !getorgan(/obj/item/organ/brain) && surgeries.len)
-		. += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>"
-
-	var/temp = getBruteLoss() //no need to calculate each of these twice
-=======
 	if(get_bodypart(BODY_ZONE_HEAD) && !get_organ_by_type(/obj/item/organ/internal/brain))
 		. += span_deadsay("It appears that [t_his] brain is missing...")
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	var/list/msg = list()
 
@@ -280,7 +262,6 @@
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
 			msg += "[t_He] look[p_s()] extremely disgusted.\n"
 
-<<<<<<< HEAD
 	var/apparent_blood_volume = bloodpool
 	if(skin_tone == "albino")
 		apparent_blood_volume -= 3
@@ -290,7 +271,8 @@
 		msg += "[t_He] look[p_s()] like pale death.\n"
 	else if(bloodpool <= 0)
 		msg += "<span class='deadsay'><b>[t_He] resemble[p_s()] a crushed, empty juice pouch.</b></span>\n"
-=======
+
+	/* WOD13: TO DO - REWORK BLOOD POOLS TO BE ACTUAL BLOOD VOLUME
 	var/apparent_blood_volume = blood_volume
 	if(HAS_TRAIT(src, TRAIT_USES_SKINTONES) && (skin_tone == "albino"))
 		apparent_blood_volume -= 150 // enough to knock you down one tier
@@ -301,7 +283,7 @@
 			msg += "<b>[t_He] look[p_s()] like pale death.</b>\n"
 		if(-INFINITY to BLOOD_VOLUME_BAD)
 			msg += "[span_deadsay("<b>[t_He] resemble[p_s()] a crushed, empty juice pouch.</b>")]\n"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
+	*/
 
 	if(is_bleeding())
 		var/list/obj/item/bodypart/bleeding_limbs = list()
@@ -386,7 +368,6 @@
 			if(CONSCIOUS)
 				if(HAS_TRAIT(src, TRAIT_DUMB))
 					msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
-<<<<<<< HEAD
 
 		//examine text for unusual appearances
 		if (iskindred(src) && is_face_visible())
@@ -468,13 +449,11 @@
 				msg += "<span class='purple'><i>You aren't sensing any supernatural taint on [p_them()]...</i></span>\n"
 		else
 			msg += "<span class='purple'><i>[p_they(TRUE)] [p_are()] too far away to sense any taint...</i></span>\n"
-=======
 		if(get_organ_by_type(/obj/item/organ/internal/brain) && isnull(ai_controller))
 			if(!key)
 				msg += "[span_deadsay("[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.")]\n"
 			else if(!client)
 				msg += "[span_deadsay("[t_He] [t_has] a blank, absent-minded stare and appears completely unresponsive to anything. [t_He] may snap out of it soon.")]\n"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	var/scar_severity = 0
 	for(var/i in all_scars)
@@ -490,12 +469,8 @@
 		if(9 to 11)
 			msg += "[span_notice("<i>[t_He] [t_has] significantly disfiguring scarring, you can look again to take a closer look...</i>")]\n"
 		if(12 to INFINITY)
-<<<<<<< HEAD
-			msg += "<span class='notice'><b><i>[t_He] [t_is] just absolutely fucked up, you can look again to take a closer look...</i></b></span>\n"
-=======
 			msg += "[span_notice("<b><i>[t_He] [t_is] just absolutely fucked up, you can look again to take a closer look...</i></b>")]\n"
 	msg += "</span>" // closes info class
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	if (length(msg))
 		. += span_warning("[msg.Join("")]")
@@ -504,13 +479,11 @@
 	if (!isnull(trait_exam))
 		. += trait_exam
 
-<<<<<<< HEAD
 	if(ishuman(user))
 		. += "<a href='?src=[REF(src)];masquerade=1'>Spot a Masquerade violation</a>"
 
 	if(flavor_text)
 		. += "[sanitize_text(flavor_text)]\n"
-=======
 	if(isliving(user))
 		var/mob/living/privacy_invader = user
 		if(HAS_MIND_TRAIT(privacy_invader, TRAIT_MORBID))
@@ -520,7 +493,6 @@
 				msg += "[span_notice("A skilled hand has mapped this one's internal intricacies. It will be far easier to perform future experimentations upon [t_him]. <b><i>Exquisite.</i></b>")]\n"
 		if(HAS_MIND_TRAIT(privacy_invader, TRAIT_EXAMINE_FITNESS))
 			. += compare_fitness(user)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	var/perpname = get_face_name(get_id_name(""))
 	if(perpname && (HAS_TRAIT(user, TRAIT_SECURITY_HUD) || HAS_TRAIT(user, TRAIT_MEDICAL_HUD)))
@@ -578,21 +550,6 @@
 /mob/living/proc/get_status_effect_examinations()
 	var/list/examine_list = list()
 
-<<<<<<< HEAD
-/mob/living/proc/status_effect_examines(pronoun_replacement) //You can include this in any mob's examine() to show the examine texts of status effects!
-	var/list/dat = list()
-	if(!pronoun_replacement)
-		pronoun_replacement = p_they(TRUE)
-	for(var/V in status_effects)
-		var/datum/status_effect/E = V
-		if(E.examine_text)
-			var/new_text = replacetext(E.examine_text, "SUBJECTPRONOUN", pronoun_replacement)
-			new_text = replacetext(new_text, "[pronoun_replacement] is", "[pronoun_replacement] [p_are()]") //To make sure something become "They are" or "She is", not "They are" and "She are"
-			dat += "[new_text]\n" //dat.Join("\n") doesn't work here, for some reason
-	if(dat.len)
-		return dat.Join()
-
-=======
 	for(var/datum/status_effect/effect as anything in status_effects)
 		var/effect_text = effect.get_examine_text()
 		if(!effect_text)
@@ -624,4 +581,3 @@
 		if(101 to INFINITY)
 			age_text = "withering away"
 	. += list(span_notice("[p_They()] appear[p_s()] to be [age_text]."))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

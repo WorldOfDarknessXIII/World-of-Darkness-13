@@ -63,8 +63,11 @@
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
 	GLOB.human_list -= src
+	if (mob_mood)
+		QDEL_NULL(mob_mood)
 
-<<<<<<< HEAD
+	return ..()
+
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
 	if(!HAS_TRAIT(src, TRAIT_FREERUNNING) || levels > 1)
 		if(src.athletics < 5) // falling off one level
@@ -72,12 +75,7 @@
 	visible_message("<span class='danger'>[src] makes a hard landing on [T] but remains unharmed from the fall.</span>", \
 					"<span class='userdanger'>You brace for the fall. You make a hard landing on [T] but remain unharmed.</span>")
 	Knockdown(levels * 50)
-=======
-	if (mob_mood)
-		QDEL_NULL(mob_mood)
 
-	return ..()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
@@ -99,88 +97,7 @@
 
 
 /mob/living/carbon/human/Topic(href, href_list)
-<<<<<<< HEAD
-	if(href_list["embedded_object"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
-		var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
-		if(!L)
-			return
-		var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
-		if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
-			return
-		SEND_SIGNAL(src, COMSIG_CARBON_EMBED_RIP, I, L)
-		return
-
-	if(href_list["item"]) //canUseTopic check for this is handled by mob/Topic()
-		var/slot = text2num(href_list["item"])
-		if(check_obscured_slots(TRUE) & slot)
-			to_chat(usr, "<span class='warning'>You can't reach that! Something is covering it.</span>")
-			return
-
-	var/mob/living/L = usr
-	if(href_list["pockets"] && (usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) || (L.enhanced_strip && (get_dist(usr, src) <= 3)))) //TODO: Make it match (or intergrate it into) strippanel so you get 'item cannot fit here' warnings if mob_can_equip fails
-		if(isnpc(src))
-			var/mob/living/carbon/human/npc/N = src
-			if(N.fights_anyway)
-				N.Aggro(usr, TRUE)
-			else
-				if(prob(33))
-					N.Aggro(usr, TRUE)
-		var/pocket_side = href_list["pockets"] != "right" ? "left" : "right"
-		var/pocket_id = (pocket_side == "right" ? ITEM_SLOT_RPOCKET : ITEM_SLOT_LPOCKET)
-		var/obj/item/pocket_item = (pocket_id == ITEM_SLOT_RPOCKET ? r_store : l_store)
-		var/obj/item/place_item = usr.get_active_held_item() // Item to place in the pocket, if it's empty
-
-		var/delay_denominator = 1
-		if(pocket_item && !(pocket_item.item_flags & ABSTRACT))
-			if(HAS_TRAIT(pocket_item, TRAIT_NODROP))
-				to_chat(usr, "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>")
-			to_chat(usr, "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>")
-			log_message("[key_name(src)] is having their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket emptied of [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red")
-			usr.log_message("[key_name(src)] is having their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket emptied of [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red", log_globally=FALSE)
-		else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.item_flags & ABSTRACT))
-			to_chat(usr, "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>")
-			log_message("[key_name(src)] is having their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket filled with [place_item] by [key_name(usr)]", LOG_ATTACK, color="red")
-			usr.log_message("[key_name(src)] is having their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket filled with [place_item] by [key_name(usr)]", LOG_ATTACK, color="red", log_globally=FALSE)
-			delay_denominator = 4
-		else
-			return
-		if(L.enhanced_strip)
-			delay_denominator = POCKET_STRIP_DELAY	//so it's instant 1 tick
-		if(do_mob(usr, src, POCKET_STRIP_DELAY/delay_denominator)) //placing an item into the pocket is 4 times faster
-			if(pocket_item)
-				if(pocket_item == (pocket_id == ITEM_SLOT_RPOCKET ? r_store : l_store)) //item still in the pocket we search
-					dropItemToGround(pocket_item)
-					log_message("[key_name(src)] had their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket emptied of [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red")
-					usr.log_message("[key_name(src)] had their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket emptied of [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red", log_globally=FALSE)
-			else
-				if(place_item)
-					if(place_item.mob_can_equip(src, usr, pocket_id, FALSE, TRUE))
-						usr.temporarilyRemoveItemFromInventory(place_item, TRUE)
-						equip_to_slot(place_item, pocket_id, TRUE)
-						log_message("[key_name(src)] had their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket filled with [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red")
-						usr.log_message("[key_name(src)] had their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket filled with [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red", log_globally=FALSE)
-					//do nothing otherwise
-				//updating inv screen after handled by living/Topic()
-		else
-			// Display a warning if the user mocks up
-			to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
-
-	if(href_list["toggle_uniform"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
-		var/obj/item/clothing/under/U = get_item_by_slot(ITEM_SLOT_ICLOTHING)
-		to_chat(src, "<span class='notice'>[usr.name] is trying to adjust your [U].</span>")
-		if(do_mob(usr, src, U.strip_delay/2))
-			to_chat(src, "<span class='notice'>[usr.name] successfully adjusted your [U].</span>")
-			U.toggle_jumpsuit_adjust()
-			update_inv_w_uniform()
-			update_body()
-
-	var/mob/living/user = usr
-	if(istype(user) && href_list["shoes"] && shoes && (user.mobility_flags & MOBILITY_USE)) // we need to be on the ground, so we'll be a bit looser
-		shoes.handle_tying(usr)
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
-
-///////KARMA//////
+	///////KARMA//////
 	if(href_list["masquerade"])
 		if(!ishuman(usr))
 			return
@@ -585,15 +502,6 @@
 			balloon_alert(src, "remove [target.p_their()] mask first!")
 			return FALSE
 
-<<<<<<< HEAD
-//		if (!getorganslot(ORGAN_SLOT_LUNGS))
-//			to_chat(src, "<span class='warning'>You have no lungs to breathe with, so you cannot perform CPR!</span>")
-//			return FALSE
-
-//		if (HAS_TRAIT(src, TRAIT_NOBREATH))
-//			to_chat(src, "<span class='warning'>You do not breathe, so you cannot perform CPR!</span>")
-//			return FALSE
-=======
 		if(HAS_TRAIT_FROM(src, TRAIT_NOBREATH, DISEASE_TRAIT))
 			to_chat(src, span_warning("you can't breathe!"))
 			return FALSE
@@ -605,7 +513,6 @@
 		if(human_lungs.organ_flags & ORGAN_FAILING)
 			balloon_alert(src, "your lungs are too damaged!")
 			return FALSE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 		visible_message(span_notice("[src] is trying to perform CPR on [target.name]!"), \
 						span_notice("You try to perform CPR on [target.name]... Hold still!"))
@@ -617,9 +524,6 @@
 		if (target.health > target.crit_threshold)
 			return FALSE
 
-<<<<<<< HEAD
-		visible_message("<span class='notice'>[src] performs CPR on [target.name]!</span>", "<span class='notice'>You perform CPR on [target.name].</span>")
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
 		if(last_cpr_exp+1200 < world.time)
 			last_cpr_exp = world.time
 			if(isnpc(target))
@@ -627,20 +531,11 @@
 				if(N.last_damager != src)
 					AdjustHumanity(1, 10)
 					call_dharma("savelife", src)
-//			if(key)
-//				var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
-//				if(P)
-//					var/mode = 1
-//					if(HAS_TRAIT(src, TRAIT_NON_INT))
-//						mode = 2
-//					P.exper = min(calculate_mob_max_exper(src), P.exper+(20/mode))
-=======
 		visible_message(span_notice("[src] performs CPR on [target.name]!"), span_notice("You perform CPR on [target.name]."))
 		if(HAS_MIND_TRAIT(src, TRAIT_MORBID))
 			add_mood_event("morbid_saved_life", /datum/mood_event/morbid_saved_life)
 		else
 			add_mood_event("saved_life", /datum/mood_event/saved_life)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		log_combat(src, target, "CPRed")
 
 		if (HAS_TRAIT(target, TRAIT_NOBREATH))
@@ -798,51 +693,6 @@
 /mob/living/carbon/human/update_health_hud()
 	if(!client || !hud_used)
 		return
-<<<<<<< HEAD
-	if(dna.species.update_health_hud())
-		return
-	else
-		if(hud_used.healths)
-			var/health_amount = min(health, maxHealth - getStaminaLoss())
-			if(..(health_amount)) //not dead
-				switch(hal_screwyhud)
-					if(SCREWYHUD_CRIT)
-						hud_used.healths.icon_state = "health6"
-					if(SCREWYHUD_DEAD)
-						hud_used.healths.icon_state = "health7"
-					if(SCREWYHUD_HEALTHY)
-						hud_used.healths.icon_state = "health0"
-//		if(hud_used.healthdoll)
-//			hud_used.healthdoll.cut_overlays()
-//			if(stat != DEAD)
-//				hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
-//				for(var/X in bodyparts)
-//					var/obj/item/bodypart/BP = X
-//					var/damage = BP.burn_dam + BP.brute_dam
-//					var/comparison = (BP.max_damage/5)
-//					var/icon_num = 0
-//					if(damage)
-//						icon_num = 1
-//					if(damage > (comparison))
-//						icon_num = 2
-//					if(damage > (comparison*2))
-//						icon_num = 3
-//					if(damage > (comparison*3))/
-//						icon_num = 4
-//					if(damage > (comparison*4))
-//						icon_num = 5
-//					if(hal_screwyhud == SCREWYHUD_HEALTHY)
-//						icon_num = 0
-//					if(icon_num)
-//						hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[BP.body_zone][icon_num]"))
-//				for(var/t in get_missing_limbs()) //Missing limbs
-//					hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]6"))
-//				for(var/t in get_disabled_limbs()) //Disabled limbs
-//					hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]7"))
-//			else
-//				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	// Updates the health bar, also sends signal
 	. = ..()

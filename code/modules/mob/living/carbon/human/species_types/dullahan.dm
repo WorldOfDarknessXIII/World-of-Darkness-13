@@ -169,14 +169,7 @@
 	decoy_override = TRUE
 	organ_flags = ORGAN_ORGANIC //not vital
 
-<<<<<<< HEAD
-/obj/item/organ/brain/vampire
-	maxHealth = 1000 * STANDARD_ORGAN_THRESHOLD
-
-/obj/item/organ/tongue/dullahan
-=======
 /obj/item/organ/internal/tongue/dullahan
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	zone = "abstract"
 	modifies_speech = TRUE
 

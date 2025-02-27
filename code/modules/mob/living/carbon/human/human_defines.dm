@@ -20,12 +20,6 @@
 	var/hair_color = COLOR_BLACK
 	var/hairstyle = "Bald"
 
-<<<<<<< HEAD
-///Colour used for the hair gradient.
-	var/grad_color = "000"
-	///Style used for the hair gradient.
-	var/grad_style
-=======
 	///Colours used for hair and facial hair gradients.
 	var/list/grad_color = list(
 		COLOR_BLACK,	//Hair Gradient Color
@@ -36,7 +30,6 @@
 		"None",	//Hair Gradient Style
 		"None",	//Facial Hair Gradient Style
 	)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	//Facial hair colour and style
 	var/facial_hair_color = COLOR_BLACK
@@ -53,14 +46,10 @@
 	var/lip_style = null //no lipstick by default- arguably misleading, as it could be used for general makeup
 	var/lip_color = COLOR_WHITE
 
-<<<<<<< HEAD
 	///Character's biological age
 	var/age = 30
 	///Character's chronological age
 	var/chronological_age = 30
-=======
-	var/age = 30 //Player's age
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	/// Which body type to use
 	var/physique = MALE
@@ -107,7 +96,6 @@
 	///Exposure to damaging heat levels increases stacks, stacks clean over time when temperatures are lower. Stack is consumed to add a wound.
 	var/heat_exposure_stacks = 0
 
-<<<<<<< HEAD
 	//Shitty VtM vars I'm moving here so they're not strewn around the codebase
 	var/datum/vampireclane/clane
 
@@ -157,10 +145,9 @@
 	max_yang_chi = 4
 	yin_chi = 2
 	max_yin_chi = 2
-=======
+
 	/// When an braindead player has their equipment fiddled with, we log that info here for when they come back so they know who took their ID while they were DC'd for 30 seconds
 	var/list/afk_thefts
 
 	/// Height of the mob
 	VAR_PROTECTED/mob_height = HUMAN_HEIGHT_MEDIUM
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

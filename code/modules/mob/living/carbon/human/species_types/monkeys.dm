@@ -25,11 +25,6 @@
 	species_cookie = /obj/item/food/grown/banana
 	inherent_factions = list(FACTION_MONKEY)
 	sexes = FALSE
-<<<<<<< HEAD
-	punchdamagelow = 1
-	punchdamagehigh = 3
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	species_language_holder = /datum/language_holder/monkey
 
 	bodypart_overrides = list(

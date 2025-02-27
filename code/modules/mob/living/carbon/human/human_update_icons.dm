@@ -45,7 +45,6 @@ There are several things that need to be remembered:
 		update_body()				//Calls update_body_parts(), as well as updates mutant bodyparts, the old, not-actually-bodypart system.
 */
 
-<<<<<<< HEAD
 //HAIR OVERLAY
 /mob/living/carbon/human/update_hair()
 	dna.species.handle_hair(src)
@@ -112,8 +111,6 @@ There are several things that need to be remembered:
 	..((fire_stacks > HUMAN_FIRE_STACK_ICON_NUM) ? "Standing" : "Generic_mob_burning")
 
 
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 /* --------------------------------------- */
 //For legacy support.
 /mob/living/carbon/human/regenerate_icons()
@@ -861,38 +858,6 @@ generate/load female uniform sprites matching all previously decided variables
 		else if(isimage(raw_applied))
 			apply_height_offsets(raw_applied, offset_type)
 
-<<<<<<< HEAD
-	if(HD && !(HAS_TRAIT(src, TRAIT_HUSK)))
-		// lipstick
-		if(lip_style && (LIPS in dna.species.species_traits))
-			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[lip_style]", -BODY_LAYER)
-			if(base_body_mod == "s")
-				lip_overlay = mutable_appearance('icons/mob/human_face_f.dmi', "lips_[lip_style]", -BODY_LAYER)
-			lip_overlay.color = lip_color
-			if(OFFSET_FACE in dna.species.offset_features)
-				lip_overlay.pixel_x += dna.species.offset_features[OFFSET_FACE][1]
-				lip_overlay.pixel_y += dna.species.offset_features[OFFSET_FACE][2]
-			add_overlay(lip_overlay)
-
-		// eyes
-		if(!(NOEYESPRITES in dna.species.species_traits))
-			var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
-			var/mutable_appearance/eye_overlay
-			if(!E)
-				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
-				if(base_body_mod == "s")
-					eye_overlay = mutable_appearance('icons/mob/human_face_f.dmi', "eyes_missing", -BODY_LAYER)
-			else
-				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', E.eye_icon_state, -BODY_LAYER)
-				if(base_body_mod == "s")
-					eye_overlay = mutable_appearance('icons/mob/human_face_f.dmi', E.eye_icon_state, -BODY_LAYER)
-			if((EYECOLOR in dna.species.species_traits) && E)
-				eye_overlay.color = "#" + eye_color
-			if(OFFSET_FACE in dna.species.offset_features)
-				eye_overlay.pixel_x += dna.species.offset_features[OFFSET_FACE][1]
-				eye_overlay.pixel_y += dna.species.offset_features[OFFSET_FACE][2]
-			add_overlay(eye_overlay)
-=======
 	return ..()
 
 /**
@@ -1036,7 +1001,6 @@ generate/load female uniform sprites matching all previously decided variables
 					"params" = displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 2),
 				),
 			))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	// Kinda gross but because many humans overlays do not use KEEP_TOGETHER we need to manually propogate the filter
 	// Otherwise overlays, such as worn overlays on icons, won't have the filter "applied", and the effect kinda breaks

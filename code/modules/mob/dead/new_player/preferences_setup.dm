@@ -1,80 +1,11 @@
+// WOD13: TO DO MAKE SURE NOT EVERYTHING IS RANDOMIZED.
+
 /// Fully randomizes everything in the character.
 /datum/preferences/proc/randomise_appearance_prefs(randomize_flags = ALL)
 	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		if (!preference.included_in_randomization_flags(randomize_flags))
 			continue
 
-<<<<<<< HEAD
-	//The mob should have a gender you want before running this proc. Will run fine without H
-/datum/preferences/proc/random_character(gender_override, antag_override = FALSE)
-	if(randomise[RANDOM_SPECIES])
-		random_species()
-	else if(randomise[RANDOM_NAME])
-		real_name = pref_species.random_name(gender,1)
-	if(gender_override && !(randomise[RANDOM_GENDER] || randomise[RANDOM_GENDER_ANTAG] && antag_override))
-		gender = gender_override
-	else
-		gender = pick(MALE,FEMALE)
-	if(randomise[RANDOM_AGE] || randomise[RANDOM_AGE_ANTAG] && antag_override)
-		age = rand(AGE_MIN,AGE_MAX)
-	if(randomise[RANDOM_UNDERWEAR])
-		underwear = random_underwear(gender)
-	if(randomise[RANDOM_UNDERWEAR_COLOR])
-		underwear_color = random_short_color()
-	if(randomise[RANDOM_UNDERSHIRT])
-		undershirt = random_undershirt(gender)
-	if(randomise[RANDOM_SOCKS])
-		socks = random_socks()
-	if(randomise[RANDOM_BACKPACK])
-		backpack = random_backpack()
-	if(randomise[RANDOM_JUMPSUIT_STYLE])
-		jumpsuit_style = pick(GLOB.jumpsuitlist)
-	if(randomise[RANDOM_HAIRSTYLE])
-		if(clane.no_hair)
-			hairstyle = "Bald"
-		else if(clane.haircuts)
-			hairstyle = pick(clane.haircuts)
-		else
-			hairstyle = random_hairstyle(gender)
-	if(randomise[RANDOM_FACIAL_HAIRSTYLE])
-		if(clane.no_facial)
-			facial_hairstyle = "Shaved"
-		else
-			facial_hairstyle = random_facial_hairstyle(gender)
-	if(randomise[RANDOM_HAIR_COLOR])
-		hair_color = random_short_color()
-	if(randomise[RANDOM_FACIAL_HAIR_COLOR])
-		facial_hair_color = random_short_color()
-	if(randomise[RANDOM_SKIN_TONE])
-		skin_tone = random_skin_tone()
-	if(randomise[RANDOM_EYE_COLOR])
-		eye_color = random_eye_color()
-	if(!pref_species)
-		var/rando_race = pick(GLOB.roundstart_races)
-		pref_species = new rando_race()
-	features = random_features()
-	if(gender in list(MALE, FEMALE))
-		body_type = gender
-	else
-		body_type = pick(MALE, FEMALE)
-
-/datum/preferences/proc/random_species()
-	var/random_species_type = GLOB.species_list[pick(GLOB.roundstart_races)]
-	pref_species = new random_species_type
-	if(randomise[RANDOM_NAME])
-		real_name = pref_species.random_name(gender,1)
-	if(pref_species.id == "ghoul")
-		discipline_types = list()
-		discipline_levels = list()
-	if(pref_species.id == "kindred")
-		qdel(clane)
-		clane = new /datum/vampireclane/brujah()
-		discipline_types = list()
-		discipline_levels = list()
-		for (var/i in 1 to clane.clane_disciplines.len)
-			discipline_types += clane.clane_disciplines[i]
-			discipline_levels += 1
-=======
 		if (preference.is_randomizable())
 			write_preference(preference, preference.create_random_value(src))
 
@@ -84,7 +15,6 @@
 		if (RANDOM_ANTAG_ONLY)
 			if (!antag_override)
 				return
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 		if (RANDOM_DISABLED)
 			return
@@ -181,26 +111,7 @@
 			return image('icons/mob/silicon/robots.dmi', icon_state = "robot", dir = SOUTH)
 
 	// Set up the dummy for its photoshoot
-<<<<<<< HEAD
-	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
-	var/mutable_appearance/MAMA = mutable_appearance('code/modules/wod13/64x32.dmi', "slot", layer = SPACE_LAYER)
-	MAMA.pixel_x = -16
-	mannequin.add_overlay(MAMA)
-	copy_to(mannequin, 1, TRUE, TRUE)
-	if(clane.alt_sprite)
-		mannequin.dna.species.limbs_id = clane.alt_sprite
-//	else
-//		mannequin.dna.species.limbs_id = initial(pref_species.limbs_id)
-	if(clane.no_hair)
-		mannequin.facial_hairstyle = "Shaved"
-		mannequin.hairstyle = "Bald"
-		mannequin.update_hair()
-	mannequin.update_body()
-	mannequin.update_body_parts()
-	mannequin.update_icon()
-=======
 	apply_prefs_to(mannequin, TRUE)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	mannequin.job = preview_job.title
 	mannequin.dress_up_as_job(

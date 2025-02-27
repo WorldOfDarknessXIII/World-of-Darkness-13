@@ -206,7 +206,6 @@
 	. = ..()
 	RegisterSignal(receiver, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
-<<<<<<< HEAD
 /obj/effect/proc_holder/spell/targeted/shapeshift/bat
 	name = "Bat Form"
 	desc = "Take on the shape a space bat."
@@ -216,7 +215,7 @@
 	revert_on_death = TRUE
 	die_with_shapeshifted_form = FALSE
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/bat/baali
-=======
+
 /obj/item/organ/internal/heart/vampire/on_mob_remove(mob/living/carbon/heartless)
 	. = ..()
 	UnregisterSignal(heartless, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
@@ -227,4 +226,3 @@
 
 #undef VAMPIRES_PER_HOUSE
 #undef VAMP_DRAIN_AMOUNT
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

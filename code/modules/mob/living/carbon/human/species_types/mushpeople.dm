@@ -8,10 +8,6 @@
 
 	external_organs = list(/obj/item/organ/external/mushroom_cap = "Round")
 
-<<<<<<< HEAD
-	punchdamagelow = 6
-	punchdamagehigh = 14
-=======
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_NOBREATH,
@@ -19,7 +15,6 @@
 		TRAIT_NO_UNDERWEAR,
 	)
 	inherent_factions = list(FACTION_MUSHROOM)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING
 
