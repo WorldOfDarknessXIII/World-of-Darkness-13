@@ -26,49 +26,6 @@
 	)
 
 /datum/auspice/proc/on_gain(var/mob/living/carbon/C)
-	C.update_rage_hud()
-	C.transformator.lupus_form.auspice = src
-	C.transformator.lupus_form.dna = C.dna
-	C.transformator.crinos_form.auspice = src
-	C.transformator.crinos_form.dna = C.dna
-	rage = start_rage
-	if(length(gifts))
-		for(var/i in gifts)
-			var/datum/action/A1 = new i()
-			A1.Grant(C)
-			var/datum/action/A2 = new i()
-			A2.Grant(C.transformator.lupus_form)
-			var/datum/action/A3 = new i()
-			A3.Grant(C.transformator.crinos_form)
-
-	switch(tribe)
-		if("Glasswalkers")
-			for(var/i in 1 to level)
-				var/zalupa = glasswalker[i]
-				var/datum/action/A = new zalupa()
-				A.Grant(C)
-				var/datum/action/A1 = new zalupa()
-				A1.Grant(C.transformator.lupus_form)
-				var/datum/action/A2 = new zalupa()
-				A2.Grant(C.transformator.crinos_form)
-		if("Wendigo")
-			for(var/i in 1 to level)
-				var/zalupa = wendigo[i]
-				var/datum/action/A = new zalupa()
-				A.Grant(C)
-				var/datum/action/A1 = new zalupa()
-				A1.Grant(C.transformator.lupus_form)
-				var/datum/action/A2 = new zalupa()
-				A2.Grant(C.transformator.crinos_form)
-		if("Black Spiral Dancers")
-			for(var/i in 1 to level)
-				var/zalupa = spiral[i]
-				var/datum/action/A = new zalupa()
-				A.Grant(C)
-				var/datum/action/A1 = new zalupa()
-				A1.Grant(C.transformator.lupus_form)
-				var/datum/action/A2 = new zalupa()
-				A2.Grant(C.transformator.crinos_form)
 
 /datum/auspice/ahroun
 	name = "Ahroun"
