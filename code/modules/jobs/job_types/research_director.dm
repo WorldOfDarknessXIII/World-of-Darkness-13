@@ -12,11 +12,7 @@
 	supervisors = SUPERVISOR_CAPTAIN
 	req_admin_notify = 1
 	minimal_player_age = 7
-<<<<<<< HEAD
-	exp_type_department = EXP_TYPE_ANARCH
-=======
 	exp_required_type_department = EXP_TYPE_SCIENCE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	exp_requirements = 180
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW

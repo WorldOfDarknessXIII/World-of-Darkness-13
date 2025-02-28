@@ -25,42 +25,11 @@
 			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * seconds_per_tick)
 			blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * seconds_per_tick), BLOOD_VOLUME_NORMAL)
 
-<<<<<<< HEAD
-		//Effects of bloodloss
-		var/word = pick("dizzy","woozy","faint")
-		if(!iskindred(src))
-			switch(blood_volume)
-				if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
-					if(prob(15))
-						to_chat(src, "<span class='userdanger'>Blood starts to tear your skin apart. You're going to burst!</span>")
-						inflate_gib()
-				if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
-					if(prob(10))
-						to_chat(src, "<span class='warning'>You feel terribly bloated.</span>")
-				if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-					if(prob(5))
-						to_chat(src, "<span class='warning'>You feel [word].</span>")
-					adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.01, 1))
-				if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-					adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
-					if(prob(5))
-						blur_eyes(6)
-						to_chat(src, "<span class='warning'>You feel very [word].</span>")
-				if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-					adjustOxyLoss(5)
-					if(prob(15))
-						Unconscious(rand(20,60))
-						to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
-				if(-INFINITY to BLOOD_VOLUME_SURVIVE)
-					if(!HAS_TRAIT(src, TRAIT_NODEATH))
-						death()
-=======
 	//Bloodloss from wounds
 	var/temp_bleed = 0
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		var/iter_bleed_rate = iter_part.get_modified_bleed_rate()
 		temp_bleed += iter_bleed_rate * seconds_per_tick
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 		if(iter_part.generic_bleedstacks) // If you don't have any bleedstacks, don't try and heal them
 			iter_part.adjustBleedStacks(-1, 0)
@@ -77,62 +46,63 @@
 	var/determined_mod = has_status_effect(/datum/status_effect/determined) ? 0.5 : 0
 
 	var/word = pick("dizzy","woozy","faint")
-	switch(blood_volume)
-		if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
-			if(SPT_PROB(7.5, seconds_per_tick))
-				to_chat(src, span_userdanger("Blood starts to tear your skin apart. You're going to burst!"))
-				investigate_log("has been gibbed by having too much blood.", INVESTIGATE_DEATHS)
-				inflate_gib()
-		// Way too much blood!
-		if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
-			if(SPT_PROB(5, seconds_per_tick))
-				to_chat(src, span_warning("You feel your skin swelling."))
-		// Too much blood
-		if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
-			if(SPT_PROB(5, seconds_per_tick))
-				to_chat(src, span_warning("You feel terribly bloated."))
-		// Low blood but not a big deal in the immediate
-		if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-			if(SPT_PROB(2.5, seconds_per_tick))
-				set_eye_blur_if_lower(2 SECONDS * determined_mod)
-				if(prob(50))
-					to_chat(src, span_danger("You feel [word]. It's getting a bit hard to breathe."))
-					losebreath += 0.5 * determined_mod * seconds_per_tick
-				else if(getStaminaLoss() < 25 * determined_mod)
-					to_chat(src, span_danger("You feel [word]. It's getting a bit hard to focus."))
-					adjustStaminaLoss(10 * determined_mod * REM * seconds_per_tick)
-		// Pretty low blood, getting dangerous!
-		if(BLOOD_VOLUME_RISKY to BLOOD_VOLUME_OKAY)
-			if(SPT_PROB(5, seconds_per_tick))
-				set_eye_blur_if_lower(2 SECONDS * determined_mod)
-				set_dizzy_if_lower(2 SECONDS * determined_mod)
-				if(prob(50))
-					to_chat(src, span_bolddanger("You feel very [word]. It's getting hard to breathe!"))
-					losebreath += 1 * determined_mod * seconds_per_tick
-				else if(getStaminaLoss() < 40 * determined_mod)
-					to_chat(src, span_bolddanger("You feel very [word]. It's getting hard to stay awake!"))
-					adjustStaminaLoss(15 * determined_mod * REM * seconds_per_tick)
-		// Very low blood, danger!!
-		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_RISKY)
-			if(SPT_PROB(5, seconds_per_tick))
-				set_eye_blur_if_lower(4 SECONDS * determined_mod)
-				set_dizzy_if_lower(4 SECONDS * determined_mod)
-				if(prob(50))
-					to_chat(src, span_userdanger("You feel extremely [word]! It's getting very hard to breathe!"))
-					losebreath += 1.5 * determined_mod * seconds_per_tick
-				else if(getStaminaLoss() < 80 * determined_mod)
-					to_chat(src, span_userdanger("You feel extremely [word]! It's getting very hard to stay awake!"))
-					adjustStaminaLoss(20 * determined_mod * REM * seconds_per_tick)
-		// Critically low blood, death is near! Adrenaline won't help you here.
-		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-			if(SPT_PROB(7.5, seconds_per_tick))
-				Unconscious(rand(1 SECONDS, 2 SECONDS))
-				to_chat(src, span_userdanger("You black out for a moment!"))
-		// Instantly die upon this threshold
-		if(-INFINITY to BLOOD_VOLUME_SURVIVE)
-			if(!HAS_TRAIT(src, TRAIT_NODEATH))
-				investigate_log("has died of bloodloss.", INVESTIGATE_DEATHS)
-				death()
+	if(!iskindred(src))
+		switch(blood_volume)
+			if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
+				if(SPT_PROB(7.5, seconds_per_tick))
+					to_chat(src, span_userdanger("Blood starts to tear your skin apart. You're going to burst!"))
+					investigate_log("has been gibbed by having too much blood.", INVESTIGATE_DEATHS)
+					inflate_gib()
+			// Way too much blood!
+			if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
+				if(SPT_PROB(5, seconds_per_tick))
+					to_chat(src, span_warning("You feel your skin swelling."))
+			// Too much blood
+			if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
+				if(SPT_PROB(5, seconds_per_tick))
+					to_chat(src, span_warning("You feel terribly bloated."))
+			// Low blood but not a big deal in the immediate
+			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
+				if(SPT_PROB(2.5, seconds_per_tick))
+					set_eye_blur_if_lower(2 SECONDS * determined_mod)
+					if(prob(50))
+						to_chat(src, span_danger("You feel [word]. It's getting a bit hard to breathe."))
+						losebreath += 0.5 * determined_mod * seconds_per_tick
+					else if(getStaminaLoss() < 25 * determined_mod)
+						to_chat(src, span_danger("You feel [word]. It's getting a bit hard to focus."))
+						adjustStaminaLoss(10 * determined_mod * REM * seconds_per_tick)
+			// Pretty low blood, getting dangerous!
+			if(BLOOD_VOLUME_RISKY to BLOOD_VOLUME_OKAY)
+				if(SPT_PROB(5, seconds_per_tick))
+					set_eye_blur_if_lower(2 SECONDS * determined_mod)
+					set_dizzy_if_lower(2 SECONDS * determined_mod)
+					if(prob(50))
+						to_chat(src, span_bolddanger("You feel very [word]. It's getting hard to breathe!"))
+						losebreath += 1 * determined_mod * seconds_per_tick
+					else if(getStaminaLoss() < 40 * determined_mod)
+						to_chat(src, span_bolddanger("You feel very [word]. It's getting hard to stay awake!"))
+						adjustStaminaLoss(15 * determined_mod * REM * seconds_per_tick)
+			// Very low blood, danger!!
+			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_RISKY)
+				if(SPT_PROB(5, seconds_per_tick))
+					set_eye_blur_if_lower(4 SECONDS * determined_mod)
+					set_dizzy_if_lower(4 SECONDS * determined_mod)
+					if(prob(50))
+						to_chat(src, span_userdanger("You feel extremely [word]! It's getting very hard to breathe!"))
+						losebreath += 1.5 * determined_mod * seconds_per_tick
+					else if(getStaminaLoss() < 80 * determined_mod)
+						to_chat(src, span_userdanger("You feel extremely [word]! It's getting very hard to stay awake!"))
+						adjustStaminaLoss(20 * determined_mod * REM * seconds_per_tick)
+			// Critically low blood, death is near! Adrenaline won't help you here.
+			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
+				if(SPT_PROB(7.5, seconds_per_tick))
+					Unconscious(rand(1 SECONDS, 2 SECONDS))
+					to_chat(src, span_userdanger("You black out for a moment!"))
+			// Instantly die upon this threshold
+			if(-INFINITY to BLOOD_VOLUME_SURVIVE)
+				if(!HAS_TRAIT(src, TRAIT_NODEATH))
+					investigate_log("has died of bloodloss.", INVESTIGATE_DEATHS)
+					death()
 
 	// Blood ratio! if you have 280 blood, this equals 0.5 as that's half of the current value, 560.
 	var/effective_blood_ratio = blood_volume / BLOOD_VOLUME_NORMAL
@@ -153,13 +123,7 @@
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt)
-<<<<<<< HEAD
-	if(NOBLOOD in dna.species.species_traits || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
-		return
-	if(!blood_volume)
-=======
 	if(!blood_volume || (status_flags & GODMODE))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		return
 	if(!iskindred(src))
 		blood_volume = max(blood_volume - amt, 0)
@@ -461,13 +425,6 @@
 
 	new /obj/effect/decal/cleanable/blood/splatter(T, get_static_viruses())
 	var/obj/effect/decal/cleanable/blood/B = locate() in T
-<<<<<<< HEAD
-	if(B)
-		B.bloodiness = min((B.bloodiness + BLOOD_AMOUNT_PER_DECAL), BLOOD_POOL_MAX)
-		B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
-		if(temp_blood_DNA)
-			B.add_blood_DNA(temp_blood_DNA)
-=======
 	if(!B)
 		B = new /obj/effect/decal/cleanable/blood/splatter(T, get_static_viruses())
 	if(QDELETED(B)) //Give it up
@@ -476,7 +433,6 @@
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
 	if(temp_blood_DNA)
 		B.add_blood_DNA(temp_blood_DNA)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /mob/living/carbon/human/add_splatter_floor(turf/T, small_drip)
 	if(!HAS_TRAIT(src, TRAIT_NOBLOOD))

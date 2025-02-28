@@ -18,9 +18,6 @@
 
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
 
-<<<<<<< HEAD
-//	display_order = JOB_DISPLAY_ORDER_PSYCHOLOGIST
-=======
 	display_order = JOB_DISPLAY_ORDER_PSYCHOLOGIST
 	departments_list = list(
 		/datum/job_department/service,
@@ -36,7 +33,6 @@
 	rpg_title = "Snake Oil Salesman"
 	job_flags = STATION_JOB_FLAGS
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /datum/outfit/job/psychologist
 	name = "Psychologist"

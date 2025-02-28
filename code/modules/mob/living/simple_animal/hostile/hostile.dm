@@ -81,21 +81,6 @@
 	///Set us to TRUE to allow us to attack our own faction
 	var/attack_same = FALSE
 
-<<<<<<< HEAD
-	///When a target is found, will the mob attempt to charge at it's target?
-	var/charger = FALSE
-	///Tracks if the target is actively charging.
-	var/charge_state = FALSE
-	///In a charge, how many tiles will the charger travel?
-	var/charge_distance = 3
-	///How often can the charging mob actually charge? Effects the cooldown between charges.
-	var/charge_frequency = 6 SECONDS
-	///If the mob is charging, how long will it stun it's target on success, and itself on failure?
-	var/knockdown_time = 3 SECONDS
-	///Declares a cooldown for potential charges right off the bat.
-	var/mob/living/carbon/human/my_creator
-	COOLDOWN_DECLARE(charge_cooldown)
-=======
 	//Use GET_TARGETS_FROM(mob) to access this
 	//Attempting to call GET_TARGETS_FROM(mob) when this var is null will just return mob as a base
 	///all range/attack/etc. calculations should be done from the atom this weakrefs, useful for Vehicles and such.
@@ -106,7 +91,8 @@
 	var/lose_patience_timer_id
 	///30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
 	var/lose_patience_timeout = 300
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
+	///Declares a cooldown for potential charges right off the bat.
+	var/mob/living/carbon/human/my_creator
 
 /mob/living/simple_animal/hostile/Initialize(mapload)
 	. = ..()
@@ -120,16 +106,12 @@
 /mob/living/simple_animal/hostile/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!.) //dead
-<<<<<<< HEAD
-		walk(src, 0) //stops walking
+		GLOB.move_manager.stop_looping(src)
 	else if(my_creator)
 		if(CheckEyewitness(src, src, 5, FALSE))
 			SEND_SOUND(src, sound('code/modules/wod13/sounds/masquerade_violation.ogg', 0, 0, 75))
 			to_chat(src, "<span class='userdanger'><b>MASQUERADE VIOLATION</b></span>")
 			my_creator.AdjustMasquerade(-1)
-=======
-		GLOB.move_manager.stop_looping(src)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /mob/living/simple_animal/hostile/handle_automated_action()
 	if(AIStatus == AI_OFF || QDELETED(src))

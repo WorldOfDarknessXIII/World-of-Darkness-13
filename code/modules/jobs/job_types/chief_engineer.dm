@@ -12,15 +12,10 @@
 	req_admin_notify = 1
 	minimal_player_age = 7
 	exp_requirements = 180
-<<<<<<< HEAD
-	exp_type = EXP_TYPE_CREW
-	exp_type_department = EXP_TYPE_NEUTRALS
-=======
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_ENGINEERING
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "CHIEF_ENGINEER"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	outfit = /datum/outfit/job/ce
 	plasmaman_outfit = /datum/outfit/plasmaman/chief_engineer

@@ -494,21 +494,17 @@
 	set name = "Examine"
 	set category = "IC"
 
-<<<<<<< HEAD
+	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(run_examinate), examinify))
+
+/mob/proc/run_examinate(atom/examinify)
+
 	if(ishuman(src))
 		if(ishuman(A) || isitem(A))
 			var/mob/living/carbon/human/ueban = src
 			if(!do_mob(src, src, max(1, 15-ueban.mentality*3)))
 				return
 
-	if(isturf(A) && !(sight & SEE_TURFS) && !(A in view(client ? client.view : world.view, src)))
-=======
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(run_examinate), examinify))
-
-/mob/proc/run_examinate(atom/examinify)
-
 	if(isturf(examinify) && !(sight & SEE_TURFS) && !(examinify in view(client ? client.view : world.view, src)))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		// shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
 
@@ -525,21 +521,12 @@
 	var/list/result
 	if(client)
 		LAZYINITLIST(client.recent_examines)
-<<<<<<< HEAD
-		if(isnull(client.recent_examines[A]) || client.recent_examines[A] < world.time)
-			result = A.examine(src)
-			client.recent_examines[A] = world.time + EXAMINE_MORE_TIME // set the value to when the examine cooldown ends
-			RegisterSignal(A, COMSIG_PARENT_QDELETING, PROC_REF(clear_from_recent_examines), override=TRUE) // to flush the value if deleted early
-			addtimer(CALLBACK(src, PROC_REF(clear_from_recent_examines), A), EXAMINE_MORE_TIME)
-			handle_eye_contact(A)
-=======
 		var/ref_to_atom = ref(examinify)
 		var/examine_time = client.recent_examines[ref_to_atom]
 		if(examine_time && (world.time - examine_time < EXAMINE_MORE_WINDOW))
 			result = examinify.examine_more(src)
 			if(!length(result))
 				result += span_notice("<i>You examine [examinify] closer, but find nothing of interest...</i>")
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		else
 			result = examinify.examine(src)
 			SEND_SIGNAL(src, COMSIG_MOB_EXAMINING, examinify, result)
@@ -648,52 +635,12 @@
 
 	// check to see if their face is blocked or, if not, a signal blocks it
 	if(examined_mob.is_face_visible() && SEND_SIGNAL(src, COMSIG_MOB_EYECONTACT, examined_mob, TRUE) != COMSIG_BLOCK_EYECONTACT)
-<<<<<<< HEAD
-		var/msg = "<span class='smallnotice'>You make eye contact with [examined_mob].</span>"
-		addtimer(CALLBACK(GLOBAL_PROC, PROC_REF(to_chat), src, msg), 3) // so the examine signal has time to fire and this will print after
-
-	if(is_face_visible() && SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
-		var/msg = "<span class='smallnotice'>[src] makes eye contact with you.</span>"
-		addtimer(CALLBACK(GLOBAL_PROC, PROC_REF(to_chat), examined_mob, msg), 3)
-
-/**
- * Point at an atom
- *
- * mob verbs are faster than object verbs. See
- * [this byond forum post](https://secure.byond.com/forum/?post=1326139&page=2#comment8198716)
- * for why this isn't atom/verb/pointed()
- *
- * note: ghosts can point, this is intended
- *
- * visible_message will handle invisibility properly
- *
- * overridden here and in /mob/dead/observer for different point span classes and sanity checks
- */
-/mob/verb/pointed(atom/A as mob|obj|turf in view())
-	set name = "Point To"
-	set category = "Object"
-
-	if(client && !(A in view(client.view, src)))
-		return FALSE
-	if(istype(A, /obj/effect/temp_visual/point))
-		return FALSE
-
-	point_at(A)
-
-	if(iscathayan(A))
-		var/mob/living/carbon/human/hum = A
-		if(hum.mind?.dharma?.Po == "Legalist")
-			hum.mind.dharma.roll_po(src, hum)
-
-	return TRUE
-=======
 		var/msg = span_smallnotice("You make eye contact with [examined_mob].")
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), src, msg), 3) // so the examine signal has time to fire and this will print after
 
 	if(!imagined_eye_contact && is_face_visible() && SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
 		var/msg = span_smallnotice("[src] makes eye contact with you.")
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), examined_mob, msg), 0.3 SECONDS)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /**
  * Called by using Activate Held Object with an empty hand/limb
@@ -805,35 +752,7 @@
 	if(!check_respawn_delay())
 		return
 
-<<<<<<< HEAD
-//	if(SSmasquerade.total_level <= 250)
-//		to_chat(usr, "<span class='boldnotice'>Global Masquerade level is too low!</span>")
-//		if(check_rights_for(usr.client, R_ADMIN))
-//			if(alert(usr, "Do you want to respawn faster than usual player? (only admins can)", "Respawn", "Yes", "No") != "Yes")
-//				return
-//		else
-//			return
-
-	if(!usr.can_respawn())
-		if(istype(usr.client.mob, /mob/dead/observer))
-			var/mob/dead/observer/obs = usr.client.mob
-			if(obs.auspex_ghosted)
-				to_chat(usr, "<span class='notice'>You cannot respawn while astrally projecting!</span>")
-				return
-
-		to_chat(usr, "<span class='notice'>You need to wait [DisplayTimeText(GLOB.respawn_timers[usr.client.ckey] + 10 MINUTES - world.time)] before you can respawn.</span>")
-
-		if(check_rights_for(usr.client, R_ADMIN))
-			if(alert(usr, "Do you want to respawn faster than usual player? (only admins can)", "Respawn", "Yes", "No") != "Yes")
-				return
-			GLOB.respawn_timers[usr.client.ckey] = 0
-		else
-			return
-
-	log_game("[key_name(usr)] respawned.")
-=======
 	usr.log_message("used the respawn button.", LOG_GAME)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	to_chat(usr, span_boldnotice("Please roleplay correctly!"))
 
@@ -892,97 +811,6 @@
 	set hidden = TRUE
 	set category = null
 	return
-<<<<<<< HEAD
-/**
- * Topic call back for any mob
- *
- * * Unset machines if "mach_close" sent
- * * refresh the inventory of machines in range if "refresh" sent
- * * handles the strip panel equip and unequip as well if "item" sent
- */
-/mob/Topic(href, href_list)
-	var/mob/user = usr
-
-	if(href_list["mach_close"])
-		var/t1 = text("window=[href_list["mach_close"]]")
-		unset_machine()
-		src << browse(null, t1)
-
-	if(user != src)
-		if(href_list["item"] && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
-			var/slot = text2num(href_list["item"])
-			var/hand_index = text2num(href_list["hand_index"])
-			var/obj/item/what
-			if(hand_index)
-				what = get_item_for_held_index(hand_index)
-				slot = list(slot,hand_index)
-			else
-				what = get_item_by_slot(slot)
-			if(what)
-				if(!(what.item_flags & ABSTRACT))
-					user.stripPanelUnequip(what,src,slot)
-					if(isnpc(src))
-						var/mob/living/carbon/human/npc/N = src
-						N.Aggro(usr, TRUE)
-			else
-				user.stripPanelEquip(what,src,slot)
-				if(isnpc(src))
-					var/mob/living/carbon/human/npc/N = src
-					N.Aggro(usr, TRUE)
-
-		if(user.machine == src)
-			if(Adjacent(user))
-				show_inv(user)
-			else
-				user << browse(null,"window=mob[REF(src)]")
-
-// The src mob is trying to strip an item from someone
-// Defined in living.dm
-/mob/proc/stripPanelUnequip(obj/item/what, mob/who)
-	return
-
-// The src mob is trying to place an item on someone
-// Defined in living.dm
-/mob/proc/stripPanelEquip(obj/item/what, mob/who)
-	return
-
-/**
- * Controls if a mouse drop succeeds (return null if it doesnt)
- */
-/mob/MouseDrop(mob/M)
-	. = ..()
-	if(M != usr)
-		return
-	if(usr == src)
-		return
-	if(!Adjacent(usr))
-		return
-	if(isAI(M))
-		return
-/**
- * Handle the result of a click drag onto this mob
- *
- * For mobs this just shows the inventory
- */
-/mob/MouseDrop_T(atom/dropping, atom/user)
-	. = ..()
-
-	// Our mouse drop has already been handled by something else. Most likely buckling code.
-	// Since it has already been handled, we don't need to show inventory.
-	if(.)
-		return
-
-	if(ismob(dropping) && src == user && dropping != user)
-		var/mob/M = dropping
-		var/mob/U = user
-		if(!iscyborg(U) || U.a_intent == INTENT_HARM)
-			M.show_inv(U)
-
-///Is the mob muzzled (default false)
-/mob/proc/is_muzzled()
-	return FALSE
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /// Adds this list to the output to the stat browser
 /mob/proc/get_status_tab_items()
@@ -1397,7 +1225,11 @@
 /mob/proc/update_mouse_pointer()
 	if(!client)
 		return
-<<<<<<< HEAD
+	if(client.mouse_pointer_icon != initial(client.mouse_pointer_icon))//only send changes to the client if theyre needed
+		client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
+	if(examine_cursor_icon && client.keys_held["Shift"]) //mouse shit is hardcoded, make this non hard-coded once we make mouse modifiers bindable
+		client.mouse_pointer_icon = examine_cursor_icon
+
 	client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
 	var/shootahell = FALSE
 	var/discipliner = FALSE
@@ -1416,13 +1248,6 @@
 		if(M.mouse_pointer)
 			client.mouse_pointer_icon = M.mouse_pointer
 	else if (istype(loc, /obj/vehicle/sealed))
-=======
-	if(client.mouse_pointer_icon != initial(client.mouse_pointer_icon))//only send changes to the client if theyre needed
-		client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
-	if(examine_cursor_icon && client.keys_held["Shift"]) //mouse shit is hardcoded, make this non hard-coded once we make mouse modifiers bindable
-		client.mouse_pointer_icon = examine_cursor_icon
-	if(istype(loc, /obj/vehicle/sealed))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		var/obj/vehicle/sealed/E = loc
 		if(E.mouse_pointer)
 			client.mouse_pointer_icon = E.mouse_pointer

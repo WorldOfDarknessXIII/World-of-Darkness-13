@@ -82,15 +82,10 @@
 	drop_all_held_items()
 
 /mob/living/proc/dust(just_ash, drop_items, force)
-<<<<<<< HEAD
-	if(stat != DEAD)
-		death(TRUE)
-=======
 	if(body_position == STANDING_UP)
 		// keep us upright so the animation fits.
 		ADD_TRAIT(src, TRAIT_FORCED_STANDING, TRAIT_GENERIC)
 	death(TRUE)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	if(drop_items)
 		unequip_epic()
@@ -125,17 +120,6 @@
 
 	set_stat(DEAD)
 	timeofdeath = world.time
-<<<<<<< HEAD
-	if (client?.ckey)
-		GLOB.respawn_timers[client.ckey] = timeofdeath
-	tod = station_time_timestamp()
-	var/turf/T = get_turf(src)
-	if(mind && mind.name && mind.active && !istype(T.loc, /area/ctf))
-		deadchat_broadcast(" has died at <b>[get_area_name(T)]</b>.", "<b>[mind.name]</b>", follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
-	if(mind)
-		mind.store_memory("Time of death: [tod]", 0)
-	set_drugginess(0)
-=======
 	station_timestamp_timeofdeath = station_time_timestamp()
 	var/turf/death_turf = get_turf(src)
 	var/area/death_area = get_area(src)
@@ -149,7 +133,6 @@
 		if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] && !client?.holder)
 			to_chat(src, span_deadsay(span_big("Observer freelook is disabled.\nPlease use Orbit, Teleport, and Jump to look around.")))
 			ghostize(TRUE)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	set_disgust(0)
 	SetSleeping(0, 0)
 	reset_perspective(null)

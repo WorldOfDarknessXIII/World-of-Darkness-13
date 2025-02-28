@@ -19,10 +19,6 @@
 
 	liver_traits = list(TRAIT_ENGINEER_METABOLISM)
 
-<<<<<<< HEAD
-//	display_order = JOB_DISPLAY_ORDER_ATMOSPHERIC_TECHNICIAN
-	bounty_types = CIV_JOB_ENG
-=======
 	display_order = JOB_DISPLAY_ORDER_ATMOSPHERIC_TECHNICIAN
 	bounty_types = CIV_JOB_ATMOS
 	departments_list = list(
@@ -41,7 +37,6 @@
 
 	job_flags = STATION_JOB_FLAGS
 	rpg_title = "Aeromancer"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /datum/outfit/job/atmos
 	name = "Atmospheric Technician"

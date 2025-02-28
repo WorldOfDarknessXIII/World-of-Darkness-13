@@ -21,20 +21,10 @@
 		var/random_zone = check_zone(def_zone || get_random_valid_zone(def_zone))
 		def_zone = get_bodypart(random_zone) || bodyparts[1]
 
-<<<<<<< HEAD
-/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = SHARP_NONE)
-	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
-	var/hit_percent = (100-blocked)/100
-	if(!damage || (!forced && hit_percent <= 0))
-		return 0
-	if(iswerewolf(src))
-		hit_percent = (100-getarmor(def_zone, damagetype))/100
-=======
 	. = ..()
 	// Taking brute or burn to bodyparts gives a damage flash
 	if(def_zone && (damagetype == BRUTE || damagetype == BURN))
 		damageoverlaytemp += .
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	return .
 

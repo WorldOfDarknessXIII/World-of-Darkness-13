@@ -191,10 +191,8 @@
 	///Override for sound_environments. If this is set the user will always hear a specific type of reverb (Instead of the area defined reverb)
 	var/sound_environment_override = SOUND_ENVIRONMENT_NONE
 
-<<<<<<< HEAD
 	//imported variables from all around the code
 	var/taxist = FALSE
-=======
 	/// A mock client, provided by tests and friends
 	var/datum/client_interface/mock_client
 
@@ -207,4 +205,3 @@
 
 	/// A ref of the area we're taking our ambient loop from.
 	var/area/ambience_tracked_area
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

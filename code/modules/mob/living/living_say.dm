@@ -94,30 +94,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	return new_msg
 
-<<<<<<< HEAD
-/mob/living/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	if(length(message) >= 2 && message[1] == "." && message[2] == "r")
-		var/obj/item/p25radio/radio = null
-		if(istype(get_item_by_slot(ITEM_SLOT_BELT), /obj/item/p25radio))
-			radio = get_item_by_slot(ITEM_SLOT_BELT)
-		else if(istype(get_item_by_slot(ITEM_SLOT_EARS), /obj/item/p25radio))
-			radio = get_item_by_slot(ITEM_SLOT_EARS)
-		else if(istype(get_active_held_item(), /obj/item/p25radio))
-			radio = get_active_held_item()
-		else if(istype(get_inactive_held_item(), /obj/item/p25radio))
-			radio = get_inactive_held_item()
 
-		if(radio)
-			var/p25_message = trim(copytext(message, 3))
-			radio.p25_talk_into(src, p25_message, null, spans, language)
-			return FALSE
-
-	var/ic_blocked = FALSE
-	if(client && !forced && CHAT_FILTER_CHECK(message))
-		//The filter doesn't act on the sanitized message, but the raw message.
-		ic_blocked = TRUE
-
-=======
+// WOD13: TO DO FIX SAY CODE AND RADIOS
 /mob/living/say(
 	message,
 	bubble_type,
@@ -131,22 +109,11 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	datum/saymode/saymode,
 	list/message_mods = list(),
 )
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(sanitize)
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message || message == "")
 		return FALSE
 
-<<<<<<< HEAD
-	if(ic_blocked)
-		//The filter warning message shows the sanitized message though.
-		to_chat(src, "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[message]\"</span></span>")
-		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
-		return
-
-	var/list/message_mods = list()
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	var/original_message = message
 	message = get_message_mods(message, message_mods)
 	saymode = SSradio.saymodes[message_mods[RADIO_KEY]]
@@ -157,21 +124,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return FALSE
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
-<<<<<<< HEAD
-		client?.cmd_admin_say(message)
-		return TRUE
-
-	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
-		client?.dsay(message)
-		return TRUE
-=======
 		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, message)
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
 		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/dsay, message)
 		return
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	// dead is the only state you can never emote
 	if(stat != DEAD && check_emote(original_message, forced))
@@ -197,25 +155,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			say_dead(original_message)
 			return TRUE
 
-<<<<<<< HEAD
-	if(!can_speak_basic(original_message, ignore_spam, forced))
-		return FALSE
-
-	language = message_mods[LANGUAGE_EXTENSION]
-
-	if(!language)
-		language = get_selected_language()
-	var/mob/living/carbon/human/H = src
-	if(!can_speak_vocal(message))
-		if (HAS_TRAIT(src, TRAIT_SIGN_LANG) && H.mind.miming)
-			to_chat(src, "<span class='warning'>You stop yourself from signing in favor of the artform of mimery!</span>")
-			return FALSE
-		else
-			to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
-			return FALSE
-
-	var/message_range = 7
-=======
 	if(HAS_TRAIT(src, TRAIT_SOFTSPOKEN) && !HAS_TRAIT(src, TRAIT_SIGN_LANG)) // softspoken trait only applies to spoken languages
 		message_mods[WHISPER_MODE] = MODE_WHISPER
 
@@ -229,7 +168,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return
 
 	language = message_mods[LANGUAGE_EXTENSION] || get_selected_language()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	var/succumbed = FALSE
 
@@ -264,16 +202,11 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args)
 	if(sigreturn & COMPONENT_UPPERCASE_SPEECH)
 		message = uppertext(message)
-<<<<<<< HEAD
-	if(!message)
-		return FALSE
-=======
 
 	var/list/message_data = treat_message(message) // unfortunately we still need this
 	message = message_data["message"]
 	var/tts_message = message_data["tts_message"]
 	var/list/tts_filter = message_data["tts_filter"]
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	spans |= speech_span
 
@@ -299,34 +232,19 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	//This is before anything that sends say a radio message, and after all important message type modifications, so you can scumb in alien chat or something
 	if(saymode && !saymode.handle_message(src, message, language))
-<<<<<<< HEAD
-		return FALSE
-	var/radio_message = message
-	if(message_mods[WHISPER_MODE])
-		// radios don't pick up whispers very well
-		radio_message = stars(radio_message)
-		spans |= SPAN_ITALICS
-	var/radio_return = radio(radio_message, message_mods, spans, language)
-=======
 		return
 
 	var/radio_return = radio(message, message_mods, spans, language)//roughly 27% of living/say()'s total cost
 	if(radio_return & NOPASS)
 		return TRUE
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(radio_return & ITALICS)
 		spans |= SPAN_ITALICS
 	if(radio_return & REDUCE_RANGE)
 		message_range = 1
 		if(!message_mods[WHISPER_MODE])
 			message_mods[WHISPER_MODE] = MODE_WHISPER
-<<<<<<< HEAD
-	if(radio_return & NOPASS)
-		return TRUE
-=======
 			message_mods[SAY_MOD_VERB] = say_mod(message, message_mods)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	//No screams in space, unless you're next to someone.
 	var/turf/T = get_turf(src)

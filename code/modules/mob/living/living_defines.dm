@@ -207,7 +207,6 @@
 	var/body_position_pixel_x_offset = 0
 	///The y amount a mob's sprite should be offset due to the current position they're in or size (e.g. lying down moves your sprite down)
 	var/body_position_pixel_y_offset = 0
-<<<<<<< HEAD
 
 	//Shitty VtM vars I'm moving here so they're not strewn around the codebase
 	var/bloodquality = 1
@@ -330,7 +329,7 @@
 	var/max_demon_chi = 0
 	COOLDOWN_DECLARE(chi_restore)
 	var/datum/action/chi_discipline/chi_ranged
-=======
+
 	///The height offset of a mob's maptext due to their current size.
 	var/body_maptext_height_offset = 0
 
@@ -356,4 +355,3 @@
 
 	/// How long it takes to return to 0 stam
 	var/stamina_regen_time = 10 SECONDS
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

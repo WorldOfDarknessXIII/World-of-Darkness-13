@@ -26,15 +26,10 @@
 
 /datum/antagonist/ashwalker/on_gain()
 	. = ..()
-<<<<<<< HEAD
-	RegisterSignal(owner.current, COMSIG_MOB_EXAMINATE, .proc/on_examinate)
-//	owner.teach_crafting_recipe(/datum/crafting_recipe/skeleton_key)
-=======
 	RegisterSignal(owner.current, COMSIG_MOB_EXAMINATE, PROC_REF(on_examinate))
 	owner.teach_crafting_recipe(/datum/crafting_recipe/skeleton_key)
 	if(FACTION_NEUTRAL in owner.current.faction)
 		owner.current.faction.Remove(FACTION_NEUTRAL) // ashwalkers aren't neutral; they're ashwalker-aligned
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /datum/antagonist/ashwalker/on_removal()
 	. = ..()

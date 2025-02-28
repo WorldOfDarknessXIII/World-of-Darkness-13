@@ -7,7 +7,6 @@ Difficulty: Hard
 */
 
 /mob/living/simple_animal/hostile/megafauna/wendigo
-<<<<<<< HEAD
 	name = "Unknown Antediluvian"
 	desc = "A mythological legendary kindred, you probably aren't going to survive this."
 	health = 2500
@@ -16,16 +15,6 @@ Difficulty: Hard
 	icon_living = "eva"
 	icon_dead = "eva_dead"
 	icon = 'icons/mob/32x64.dmi'
-=======
-	name = "wendigo"
-	desc = "A mythological man-eating legendary creature, the sockets of its eyes track you with an unsatiated hunger."
-	health = 2500
-	maxHealth = 2500
-	icon_state = "wendigo"
-	icon_living = "wendigo"
-	icon_dead = "wendigo_dead"
-	icon = 'icons/mob/simple/icemoon/64x64megafauna.dmi'
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
@@ -45,13 +34,8 @@ Difficulty: Hard
 	gps_name = "Berserk Signal"
 	loot = list()
 	butcher_results = list()
-<<<<<<< HEAD
 	guaranteed_butcher_results = list()
 	crusher_loot = list()
-=======
-	guaranteed_butcher_results = list(/obj/item/wendigo_blood = 1, /obj/item/wendigo_skull = 1)
-	crusher_loot = list(/obj/item/crusher_trophy/wendigo_horn)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	wander = FALSE
 	del_on_death = FALSE
 	blood_volume = BLOOD_VOLUME_NORMAL
@@ -188,14 +172,13 @@ Difficulty: Hard
 			for(var/mob/living/hit_mob in stomp_turf)
 				if(hit_mob == owner || hit_mob.throwing)
 					continue
-<<<<<<< HEAD
-				to_chat(L, "<span class='userdanger'>[src]'s ground slam shockwave sends you flying!</span>")
-				var/turf/thrownat = get_ranged_target_turf_direct(src, L, 8, rand(-10, 10))
-				L.throw_at(thrownat, 8, 2, src, TRUE, force = MOVE_FORCE_OVERPOWERING, gentle = TRUE)
-				L.apply_damage(20, BRUTE, wound_bonus=CANT_WOUND)
-				shake_camera(L, 2, 1)
-			all_turfs -= T
-		sleep(delay)
+				to_chat(hit_mob, span_userdanger("[owner]'s ground slam shockwave sends you flying!"))
+				var/turf/thrownat = get_ranged_target_turf_direct(owner, hit_mob, throw_range, rand(-10, 10))
+				hit_mob.throw_at(thrownat, 8, 2, null, TRUE, force = MOVE_FORCE_OVERPOWERING, gentle = TRUE)
+				hit_mob.apply_damage(20, BRUTE, wound_bonus=CANT_WOUND)
+				shake_camera(hit_mob, 2, 1)
+			all_turfs -= stomp_turf
+		SLEEP_CHECK_DEATH(delay, owner)
 
 /// Larger but slower ground stomp
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/heavy_stomp()
@@ -230,15 +213,6 @@ Difficulty: Hard
 	SLEEP_CHECK_DEATH(12)
 	can_move = TRUE
 	teleport()
-=======
-				to_chat(hit_mob, span_userdanger("[owner]'s ground slam shockwave sends you flying!"))
-				var/turf/thrownat = get_ranged_target_turf_direct(owner, hit_mob, throw_range, rand(-10, 10))
-				hit_mob.throw_at(thrownat, 8, 2, null, TRUE, force = MOVE_FORCE_OVERPOWERING, gentle = TRUE)
-				hit_mob.apply_damage(20, BRUTE, wound_bonus=CANT_WOUND)
-				shake_camera(hit_mob, 2, 1)
-			all_turfs -= stomp_turf
-		SLEEP_CHECK_DEATH(delay, owner)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/death(gibbed, list/force_grant)
 	if(health > 0)

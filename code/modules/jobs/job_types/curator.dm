@@ -16,9 +16,6 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
-<<<<<<< HEAD
-//	display_order = JOB_DISPLAY_ORDER_CURATOR
-=======
 	mind_traits = list(TRAIT_TOWER_OF_BABEL)
 
 	display_order = JOB_DISPLAY_ORDER_CURATOR
@@ -38,7 +35,6 @@
 
 	voice_of_god_silence_power = 3
 	rpg_title = "Veteran Adventurer"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /datum/outfit/job/curator
 	name = "Curator"

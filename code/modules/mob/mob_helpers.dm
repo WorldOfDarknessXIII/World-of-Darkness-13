@@ -129,126 +129,6 @@
 	else
 		num_words = min(rand(3, 5), length(words))
 	. = ""
-<<<<<<< HEAD
-	var/newletter = ""
-	var/rawchar = ""
-	for(var/i = 1, i <= leng, i += length(rawchar))
-		rawchar = newletter = phrase[i]
-		if(rand(1, 3) == 3)
-			var/lowerletter = lowertext(newletter)
-			if(lowerletter == "o")
-				newletter = "u"
-			else if(lowerletter == "s")
-				newletter = "ch"
-			else if(lowerletter == "a")
-				newletter = "ah"
-			else if(lowerletter == "u")
-				newletter = "oo"
-			else if(lowerletter == "c")
-				newletter = "k"
-		if(rand(1, 20) == 20)
-			if(newletter == " ")
-				newletter = "...huuuhhh..."
-			else if(newletter == ".")
-				newletter = " *BURP*."
-		switch(rand(1, 20))
-			if(1)
-				newletter += "'"
-			if(10)
-				newletter += "[newletter]"
-			if(20)
-				newletter += "[newletter][newletter]"
-			else
-				//nothing!
-		. += "[newletter]"
-	return sanitize(.)
-
-/// Makes you talk like you got cult stunned, which is slurring but with some dark messages
-/proc/cultslur(phrase) // Inflicted on victims of a stun talisman
-	phrase = html_decode(phrase)
-	var/leng = length(phrase)
-	. = ""
-	var/newletter = ""
-	var/rawchar = ""
-	for(var/i = 1, i <= leng, i += length(rawchar))
-		rawchar = newletter = phrase[i]
-		if(rand(1, 2) == 2)
-			var/lowerletter = lowertext(newletter)
-			if(lowerletter == "o")
-				newletter = "u"
-			else if(lowerletter == "t")
-				newletter = "ch"
-			else if(lowerletter == "a")
-				newletter = "ah"
-			else if(lowerletter == "u")
-				newletter = "oo"
-			else if(lowerletter == "c")
-				newletter = " NAR "
-			else if(lowerletter == "s")
-				newletter = " SIE "
-		if(rand(1, 4) == 4)
-			if(newletter == " ")
-				newletter = " no hope... "
-			else if(newletter == "H")
-				newletter = " IT COMES... "
-
-		switch(rand(1, 15))
-			if(1)
-				newletter = "'"
-			if(2)
-				newletter += "agn"
-			if(3)
-				newletter = "fth"
-			if(4)
-				newletter = "nglu"
-			if(5)
-				newletter = "glor"
-			else
-				//nothing!
-		. += newletter
-	return sanitize(.)
-
-///Adds stuttering to the message passed in
-/proc/stutter(phrase)
-	phrase = html_decode(phrase)
-	var/leng = length(phrase)
-	. = ""
-	var/newletter = ""
-	var/rawchar = ""
-	var/static/regex/nostutter = regex(@@[aeiouAEIOU "'()[\]{}.!?,:;_`~-]@)
-	for(var/i = 1, i <= leng, i += length(rawchar))
-		rawchar = newletter = phrase[i]
-		if(prob(80) && !nostutter.Find(rawchar))
-			if(prob(10))
-				newletter = "[newletter]-[newletter]-[newletter]-[newletter]"
-			else if(prob(20))
-				newletter = "[newletter]-[newletter]-[newletter]"
-			else if (prob(5))
-				newletter = ""
-			else
-				newletter = "[newletter]-[newletter]"
-		. += newletter
-	return sanitize(.)
-
-///Convert a message to derpy speak
-/proc/derpspeech(message, stuttering)
-	message = replacetext(message, " am ", " ")
-	message = replacetext(message, " is ", " ")
-	message = replacetext(message, " are ", " ")
-	message = replacetext(message, "you", "u")
-	message = replacetext(message, "help", "halp")
-	message = replacetext(message, "grief", "grife")
-	message = replacetext(message, "space", "spess")
-	message = replacetext(message, "carp", "crap")
-	message = replacetext(message, "reason", "raisin")
-	if(prob(50))
-		message = uppertext(message)
-		message += "[stutter(pick("!", "!!", "!!!"))]"
-	if(!stuttering && prob(15))
-		message = stutter(message)
-	return message
-
-=======
 	for(var/i = 1, i <= num_words, i++)
 		if(num_words == i)
 			. += words[i] + "..."
@@ -256,7 +136,6 @@
 			. += words[i] + " ... "
 	return sanitize(.)
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 /**
  * Turn text into complete gibberish!
  *
@@ -517,52 +396,6 @@
 		var/mob/living/T = pick(nearby_mobs)
 		ClickOn(T)
 
-<<<<<<< HEAD
-/// Logs a message in a mob's individual log, and in the global logs as well if log_globally is true
-/mob/log_message(message, message_type, color=null, log_globally = TRUE)
-	if(!LAZYLEN(message))
-		stack_trace("Empty message")
-		return
-
-	// Cannot use the list as a map if the key is a number, so we stringify it (thank you BYOND)
-	var/smessage_type = num2text(message_type)
-
-	if(client)
-		if(!islist(client.player_details.logging[smessage_type]))
-			client.player_details.logging[smessage_type] = list()
-
-	if(!islist(logging[smessage_type]))
-		logging[smessage_type] = list()
-
-	var/colored_message = message
-	if(color)
-		if(color[1] == "#")
-			colored_message = "<font color=[color]>[message]</font>"
-		else
-			colored_message = "<font color='[color]'>[message]</font>"
-
-	//This makes readability a bit better for admins.
-	switch(message_type)
-		if(LOG_WHISPER)
-			colored_message = "(WHISPER) [colored_message]"
-		if(LOG_OOC)
-			colored_message = "(OOC) [colored_message]"
-		if(LOG_ASAY)
-			colored_message = "(ASAY) [colored_message]"
-		if(LOG_EMOTE)
-			colored_message = "(EMOTE) [colored_message]"
-
-	var/list/timestamped_message = list("\[[time_stamp()]\] [key_name(src)] [loc_name(src)] (Event #[LAZYLEN(logging[smessage_type])])" = colored_message)
-
-	logging[smessage_type] += timestamped_message
-
-	if(client)
-		client.player_details.logging[smessage_type] += timestamped_message
-
-	..()
-
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 ///Can the mob hear
 /mob/proc/can_hear()
 	return !HAS_TRAIT(src, TRAIT_DEAF)

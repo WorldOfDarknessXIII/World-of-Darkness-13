@@ -12,15 +12,10 @@
 	req_admin_notify = 1
 	minimal_player_age = 14
 	exp_requirements = 180
-<<<<<<< HEAD
-	exp_type = EXP_TYPE_CREW
-	exp_type_department = EXP_TYPE_CAMARILLIA
-=======
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_COMMAND
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "CAPTAIN"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	outfit = /datum/outfit/job/captain
 	plasmaman_outfit = /datum/outfit/plasmaman/captain

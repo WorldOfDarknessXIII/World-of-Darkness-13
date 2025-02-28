@@ -18,9 +18,6 @@
 	mind_traits = list(TRAIT_NAIVE)
 	liver_traits = list(TRAIT_COMEDY_METABOLISM)
 
-<<<<<<< HEAD
-//	display_order = JOB_DISPLAY_ORDER_CLOWN
-=======
 	display_order = JOB_DISPLAY_ORDER_CLOWN
 	departments_list = list(
 		/datum/job_department/service,
@@ -40,7 +37,6 @@
 	job_flags = STATION_JOB_FLAGS
 
 	job_tone = "honk"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 
 /datum/job/clown/after_spawn(mob/living/spawned, client/player_client)

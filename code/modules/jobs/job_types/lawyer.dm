@@ -18,9 +18,6 @@
 
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
-<<<<<<< HEAD
-//	display_order = JOB_DISPLAY_ORDER_LAWYER
-=======
 	display_order = JOB_DISPLAY_ORDER_LAWYER
 	departments_list = list(
 		/datum/job_department/service,
@@ -32,7 +29,6 @@
 
 	job_tone = "objection"
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /datum/outfit/job/lawyer
 	name = "Lawyer"

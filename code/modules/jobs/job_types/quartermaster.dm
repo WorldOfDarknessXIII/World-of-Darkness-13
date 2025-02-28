@@ -8,17 +8,11 @@
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-<<<<<<< HEAD
-	supervisors = "the head of personnel"
-	selection_color = "#d7b088"
-	exp_type_department = EXP_TYPE_NEUTRALS // This is so the jobs menu can work properly
-=======
 	minimal_player_age = 7
 	supervisors = SUPERVISOR_CAPTAIN
 	exp_required_type_department = EXP_TYPE_SUPPLY
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "QUARTERMASTER"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	outfit = /datum/outfit/job/quartermaster
 	plasmaman_outfit = /datum/outfit/plasmaman/cargo

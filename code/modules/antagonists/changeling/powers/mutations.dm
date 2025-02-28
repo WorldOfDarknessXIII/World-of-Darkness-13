@@ -314,15 +314,9 @@
 	if(charges == 0)
 		qdel(src)
 
-<<<<<<< HEAD
-/obj/item/gun/magic/tentacle/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] coils [src] tightly around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	return (OXYLOSS)
-=======
 /obj/item/gun/magic/tentacle/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] coils [src] tightly around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/ammo_casing/magic/tentacle
 	name = "tentacle"
@@ -351,12 +345,7 @@
 	damage = 25
 	damage_type = BRUTE
 	range = 8
-<<<<<<< HEAD
-	hitsound = 'sound/weapons/thudswoosh.ogg'
-	var/state_icon = "tentacle"
-=======
 	hitsound = 'sound/weapons/shove.ogg'
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	var/chain
 	var/obj/item/ammo_casing/magic/tentacle/source //the item that shot it
 	///Click params that were used to fire the tentacle shot
@@ -368,11 +357,7 @@
 
 /obj/projectile/tentacle/fire(setAngle)
 	if(firer)
-<<<<<<< HEAD
-		chain = firer.Beam(src, icon_state = state_icon)
-=======
 		chain = firer.Beam(src, icon_state = "tentacle", emissive = FALSE)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	..()
 
 /obj/projectile/tentacle/proc/reset_throw(mob/living/carbon/human/H)

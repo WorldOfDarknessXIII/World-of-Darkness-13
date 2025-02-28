@@ -13,9 +13,6 @@
 	outfit = /datum/outfit/job/prisoner
 	plasmaman_outfit = /datum/outfit/plasmaman/prisoner
 
-<<<<<<< HEAD
-//	display_order = JOB_DISPLAY_ORDER_PRISONER
-=======
 	display_order = JOB_DISPLAY_ORDER_PRISONER
 	department_for_prefs = /datum/job_department/security
 
@@ -51,7 +48,6 @@
 	target_record.recreate_manifest_photos(add_height_chart = TRUE)
 	to_chat(crewmember, span_warning("You are imprisoned for \"[crime_name]\"."))
 	crewmember.add_mob_memory(/datum/memory/key/permabrig_crimes, crimes = crime_name)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /datum/outfit/job/prisoner
 	name = "Prisoner"

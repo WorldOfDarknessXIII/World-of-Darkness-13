@@ -46,13 +46,7 @@
 	active = 1
 	COOLDOWN_START(src, activation_cooldown, rand(cooldown_low, cooldown_high))
 
-<<<<<<< HEAD
-/obj/item/organ/heart/gland/proc/update_gland_hud()
-	return
-/*
-=======
 /obj/item/organ/internal/heart/gland/proc/update_gland_hud()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(!owner)
 		return
 	var/image/holder = owner.hud_list[GLAND_HUD]
@@ -64,13 +58,8 @@
 		holder.icon_state = "hudgland_ready"
 	else
 		holder.icon_state = "hudgland_spent"
-<<<<<<< HEAD
-*/
-/obj/item/organ/heart/gland/proc/mind_control(command, mob/living/user)
-=======
 
 /obj/item/organ/internal/heart/gland/proc/mind_control(command, mob/living/user)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(!ownerCheck() || !mind_control_uses || active_mind_control)
 		return FALSE
 	mind_control_uses--

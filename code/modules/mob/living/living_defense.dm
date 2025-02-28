@@ -330,15 +330,8 @@
 
 /mob/living/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()
-<<<<<<< HEAD
-	SEND_SIGNAL(user, COMSIG_MOB_LIVING_ATTACK_HAND, src)
-	SEND_SIGNAL(src, COMSIG_MOB_ATTACKED_HAND, user)
-	if (user.apply_martial_art(src))
-		return TRUE
-=======
 	if(.)
 		return FALSE // looks wrong, but if the attack chain was cancelled we don't propogate it up to children calls. Yeah it's cringe.
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	if(user.melee_damage_upper == 0)
 		if(user != src)

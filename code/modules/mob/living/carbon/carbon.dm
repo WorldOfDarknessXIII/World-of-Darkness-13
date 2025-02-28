@@ -73,19 +73,8 @@
 		var/blocked = FALSE
 		if(victim.movement_type & FLYING)
 			return
-<<<<<<< HEAD
-		if(hurt)
-			victim.take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
-			take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
-			victim.Paralyze(1 SECONDS)
-			Paralyze(1 SECONDS)
-			visible_message("<span class='danger'>[src] crashes into [victim][extra_speed ? " really hard" : ""], knocking them both over!</span>",\
-				"<span class='userdanger'>You violently crash into [victim][extra_speed ? " extra hard" : ""]!</span>")
-		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
-=======
 		if(!hurt)
 			return
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 		if(victim.check_block(src, 0, "[name]", LEAP_ATTACK))
 			blocked = TRUE
@@ -215,8 +204,10 @@
 	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))
 		extra_throw_range += potential_spine.added_throw_range
+		last_jump_time = current_time
+	newtonian_move(get_dir(target, src))
+	thrown_thing.safe_throw_at(target, thrown_thing.throw_range + extra_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force)
 
-<<<<<<< HEAD
 /mob/proc/jump(atom/target) //[Lucifernix] - This is where all the code for jumping is located.
 	SEND_SIGNAL(src, COMSIG_MOB_THROW, target)
 	return
@@ -291,17 +282,6 @@
 		spawn(travel_time)
 			if(get_dist(loc, adjusted_target) <= 1 && H.potential > 0)
 				H.epic_fall(FALSE, FALSE)
-
-
-//		newtonian_move(get_dir(target, src))
-//		thrown_thing.safe_throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed + power_throw, src, null, null, null, move_force)
-//		visible_message("<span class='danger'>[src] jumps towards [target].</span>")
-
-		last_jump_time = current_time
-=======
-	newtonian_move(get_dir(target, src))
-	thrown_thing.safe_throw_at(target, thrown_thing.throw_range + extra_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /mob/living/carbon/proc/canBeHandcuffed()
 	return FALSE
@@ -725,18 +705,8 @@
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
 		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 
-<<<<<<< HEAD
-	if(HAS_TRAIT(src, TRAIT_NIGHT_VISION))
-		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_NV_TRAIT)
-		see_in_dark = max(see_in_dark, 8)
-
-	if(see_override)
-		see_invisible = see_override
-	. = ..()
-=======
 	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
 		new_sight = NONE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	set_sight(new_sight)
 	return ..()
@@ -867,10 +837,6 @@
 	if(!client || !hud_used?.healths)
 		return
 
-<<<<<<< HEAD
-/mob/living/carbon/proc/update_internals_hud_icon(internal_state = 0)
-	return
-=======
 	if(stat == DEAD)
 		hud_used.healths.icon_state = "health7"
 		return
@@ -929,7 +895,6 @@
 			hud_used.stamina.icon_state = "stamina_1"
 		else
 			hud_used.stamina.icon_state = "stamina_full"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state = "empty")
 	hud_used?.spacesuit?.icon_state = "spacesuit_[cell_state]"
@@ -952,27 +917,18 @@
 	if(status_flags & GODMODE)
 		return
 	if(stat != DEAD)
-<<<<<<< HEAD
-		//special death handling for vampires, who don't die until -200 health
 		if (iskindred(src) || iscathayan(src))
 			if(health <= HEALTH_THRESHOLD_VAMPIRE_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 				death()
 				return
 			if((health <= HEALTH_THRESHOLD_VAMPIRE_TORPOR) && !HAS_TRAIT(src, TRAIT_TORPOR))
-				spawn()
-					torpor("damage")
+				INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon, torpor), "damage")
 		else
 			if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 				death()
 				return
-
-=======
-		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
-			death()
-			return
 		if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED, AUTOPSY_TRAIT))
 			REMOVE_TRAIT(src, TRAIT_DISSECTED, AUTOPSY_TRAIT)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
 			set_stat(HARD_CRIT)
 		else if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
@@ -1527,13 +1483,6 @@
 		return
 	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
-<<<<<<< HEAD
-/mob/living/carbon/proc/attach_rot(mapload)
-	AddComponent(/datum/component/rot/corpse)
-
-#undef JUMP_DELAY
-#undef MAX_JUMP_DISTANCE
-=======
 /**
  * This proc is used to determine whether or not the mob can handle touching an acid affected object.
  */
@@ -1616,4 +1565,6 @@
 		return
 	head.adjustBleedStacks(5)
 	visible_message(span_notice("[src] gets a nosebleed."), span_warning("You get a nosebleed."))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
+
+#undef JUMP_DELAY
+#undef MAX_JUMP_DISTANCE

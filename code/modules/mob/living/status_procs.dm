@@ -42,19 +42,6 @@
 /mob/living/proc/Stun(amount, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-<<<<<<< HEAD
-	if(((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		if(absorb_stun(amount, ignore_canstun))
-			return
-		if(HAS_TRAIT(src, TRAIT_TOUGH_FLESH) && !ignore_canstun)
-			return
-		var/datum/status_effect/incapacitating/stun/S = IsStun()
-		if(S)
-			S.duration = max(world.time + amount, S.duration)
-		else if(amount > 0)
-			S = apply_status_effect(STATUS_EFFECT_STUN, amount)
-		return S
-=======
 	if(check_stun_immunity(CANSTUN, ignore_canstun))
 		return
 	var/datum/status_effect/incapacitating/stun/S = IsStun()
@@ -63,7 +50,6 @@
 	else if(amount > 0)
 		S = apply_status_effect(/datum/status_effect/incapacitating/stun, amount)
 	return S
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /mob/living/proc/SetStun(amount, ignore_canstun = FALSE) //Sets remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, ignore_canstun) & COMPONENT_NO_STUN)
@@ -544,15 +530,12 @@
 
 /// Induces fake death on a living mob.
 /mob/living/proc/fakedeath(source, silent = FALSE)
-<<<<<<< HEAD
-	if(stat == DEAD)
-		return FALSE
-	if(!silent)
-		emote("deathgasp")
-	ADD_TRAIT(src, TRAIT_FAKEDEATH, source)
-	ADD_TRAIT(src, TRAIT_DEATHCOMA, source)
-	tod = station_time_timestamp()
-	return TRUE
+	if(stat != DEAD)
+		if(!silent)
+			emote("deathgasp")
+		station_timestamp_timeofdeath = station_time_timestamp()
+
+	add_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
 
 /mob/living/proc/cure_torpor(source)
 	if (!HAS_TRAIT(src, TRAIT_TORPOR))
@@ -618,14 +601,6 @@
 			var/datum/dharma/dharma = cathayan.mind.dharma
 			var/torpor_length = 1 MINUTES * max_yin_chi
 			COOLDOWN_START(dharma, torpor_timer, torpor_length)
-=======
-	if(stat != DEAD)
-		if(!silent)
-			emote("deathgasp")
-		station_timestamp_timeofdeath = station_time_timestamp()
-
-	add_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 ///Unignores all slowdowns that lack the IGNORE_NOSLOW flag.
 /mob/living/proc/unignore_slowdown(source)

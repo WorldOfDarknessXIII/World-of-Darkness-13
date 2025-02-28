@@ -15,9 +15,6 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
-<<<<<<< HEAD
-//	display_order = JOB_DISPLAY_ORDER_JANITOR
-=======
 	display_order = JOB_DISPLAY_ORDER_JANITOR
 	departments_list = list(
 		/datum/job_department/service,
@@ -34,7 +31,6 @@
 	job_flags = STATION_JOB_FLAGS
 
 	job_tone = "slip"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /datum/outfit/job/janitor
 	name = "Janitor"

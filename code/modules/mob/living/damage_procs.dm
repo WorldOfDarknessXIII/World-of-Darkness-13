@@ -426,23 +426,6 @@
 	if(updating_health)
 		updatehealth()
 
-<<<<<<< HEAD
-/mob/living/proc/setFireLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && status_flags & GODMODE)
-		return
-	. = fireloss
-	fireloss = amount
-	if(updating_health)
-		updatehealth()
-
-/mob/living/proc/getCloneLoss()
-	return cloneloss
-
-/mob/living/proc/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && ( (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NOCLONELOSS)) )
-		return FALSE
-	cloneloss = clamp((cloneloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
-=======
 /mob/living/proc/setFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
 	if(!forced && (status_flags & GODMODE))
 		return 0
@@ -451,7 +434,6 @@
 	. -= fireloss
 	if(. == 0) // no change, no need to update
 		return 0
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(updating_health)
 		updatehealth()
 

@@ -28,17 +28,10 @@
 	var/appears_dead = FALSE
 	if (stat == DEAD)
 		appears_dead = TRUE
-<<<<<<< HEAD
-		if(getorgan(/obj/item/organ/brain))
-			. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive, with no signs of life.</span>"
-		else if(get_bodypart(BODY_ZONE_HEAD) && surgeries.len)
-			. += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>"
-=======
 		if(get_organ_by_type(/obj/item/organ/internal/brain))
 			. += span_deadsay("[t_He] [t_is] limp and unresponsive, with no signs of life.")
 		else if(get_bodypart(BODY_ZONE_HEAD))
 			. += span_deadsay("It appears that [t_his] brain is missing...")
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	var/list/msg = list("<span class='warning'>")
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
@@ -123,9 +116,6 @@
 	if (!isnull(trait_exam))
 		. += trait_exam
 
-<<<<<<< HEAD
-		..()
-
 	if (isgarou(user) || iswerewolf(user))
 		if (get_dist(user, src) <= 2)
 			var/wyrm_taint = NONE
@@ -176,15 +166,9 @@
 		else
 			msg += "<span class='purple'><i>[p_they(TRUE)] [p_are()] too far away to sense any taint...</i></span><br>"
 
-	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
-	if(mood)
-		switch(mood.shown_mood)
-			if(-INFINITY to MOOD_LEVEL_SAD4)
-=======
 	if(mob_mood)
 		switch(mob_mood.shown_mood)
 			if(-INFINITY to MOOD_SAD4)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 				. += "[t_He] look[p_s()] depressed."
 			if(MOOD_SAD4 to MOOD_SAD3)
 				. += "[t_He] look[p_s()] very sad."

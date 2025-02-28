@@ -10,16 +10,10 @@
 	req_admin_notify = TRUE
 	minimal_player_age = 30
 	exp_requirements = 180
-<<<<<<< HEAD
-	exp_type = EXP_TYPE_CREW
-	exp_type_department = EXP_TYPE_NEUTRALS
-//	display_order = JOB_DISPLAY_ORDER_AI
-=======
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_SILICON
 	exp_granted_type = EXP_TYPE_CREW
 	display_order = JOB_DISPLAY_ORDER_AI
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	allow_bureaucratic_error = FALSE
 	departments_list = list(
 		/datum/job_department/silicon,

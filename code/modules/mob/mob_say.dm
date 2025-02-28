@@ -1,17 +1,7 @@
 //Speech verbs.
-<<<<<<< HEAD
-/mob/verb/input_say()
-	set name = "inputSay"
-	set category = null
-	var/message = input("What are you trying to say?") as text|null
-	say_verb(message)
-///Say verb
-/mob/verb/say_verb(message as text|null)
-=======
 
 ///what clients use to speak. when you type a message into the chat bar in say mode, this is the first thing that goes off serverside.
 /mob/verb/say_verb(message as text)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	set name = "Say"
 	set category = "IC"
 	set instant = TRUE
@@ -19,10 +9,11 @@
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
-<<<<<<< HEAD
-	if(!message)
-		return
-	say(message)
+
+	//queue this message because verbs are scheduled to process after SendMaps in the tick and speech is pretty expensive when it happens.
+	//by queuing this for next tick the mc can compensate for its cost instead of having speech delay the start of the next tick
+	if(message)
+		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/atom/movable, say), message), SSspeech_controller)
 
 /mob/living/verb/flavor_verb()
 	set name = "Flavor Text"
@@ -30,13 +21,6 @@
 	var/flavor = input("Choose your new flavor text:") as text|null
 	if(flavor)
 		flavor_text = trim(copytext_char(sanitize(flavor), 1, 512))
-=======
-
-	//queue this message because verbs are scheduled to process after SendMaps in the tick and speech is pretty expensive when it happens.
-	//by queuing this for next tick the mc can compensate for its cost instead of having speech delay the start of the next tick
-	if(message)
-		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/atom/movable, say), message), SSspeech_controller)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 ///Whisper verb
 /mob/verb/whisper_verb(message as text)
@@ -175,13 +159,8 @@
 		if(name != real_name)
 			alt_name = " (died as [real_name])"
 
-<<<<<<< HEAD
-	var/spanned = say_quote(message)
-	var/source = "<span class='game'><span class='name'>[name]</span>[alt_name]" //<span class='prefix'>DEAD:</span> [ChillRaccoon] - removed due to a maggot developer
-=======
 	var/spanned = say_quote(say_emphasis(message))
 	var/source = "<span class='game'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name]"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	var/rendered = " <span class='message'>[emoji_parse(spanned)]</span></span>"
 	log_talk(message, LOG_SAY, tag="DEAD")
 	if(SEND_SIGNAL(src, COMSIG_MOB_DEADSAY, message) & MOB_DEADSAY_SIGNAL_INTERCEPT)

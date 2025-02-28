@@ -8,19 +8,11 @@
 		if(L.stat != DEAD)
 			return L
 		else
-<<<<<<< HEAD
-			enemies -= L
-//	else if(ismecha(A))
-//		var/obj/vehicle/sealed/mecha/M = A
-//		if(LAZYLEN(M.occupants))
-//			return A
-=======
 			enemies -= WEAKREF(L)
 	else if(ismecha(A))
 		var/obj/vehicle/sealed/mecha/M = A
 		if(LAZYLEN(M.occupants))
 			return A
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /mob/living/simple_animal/hostile/retaliate/ListTargets()
 	if(!enemies.len)

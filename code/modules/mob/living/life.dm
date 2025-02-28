@@ -54,15 +54,9 @@
 			return
 
 		//Handle temperature/pressure differences between body and environment
-<<<<<<< HEAD
-//		var/datum/gas_mixture/environment = loc.return_air()
-//		if(environment)
-//			handle_environment(environment)
-=======
 		var/datum/gas_mixture/environment = loc.return_air()
 		if(environment)
 			handle_environment(environment, seconds_per_tick, times_fired)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 		handle_gravity(seconds_per_tick, times_fired)
 

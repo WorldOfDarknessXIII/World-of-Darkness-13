@@ -1,17 +1,11 @@
 /mob/living/simple_animal/hostile/zombie
 	name = "Shambling Corpse"
-<<<<<<< HEAD
 	desc = "When there is no more room in Hell, the dead will walk on Earth."
 	icon = 'code/modules/wod13/mobs.dmi'
 	icon_state = "zombie"
 	icon_living = "zombie"
-	mob_biotypes = MOB_UNDEAD
-=======
-	desc = "When there is no more room in hell, the dead will walk in outer space."
-	icon = 'icons/mob/simple/simple_human.dmi'
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	sentience_type = SENTIENCE_HUMANOID
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	speak_chance = 0
 	stat_attack = HARD_CRIT //braains
 	maxHealth = 50
@@ -111,10 +105,16 @@
 	atmos_requirements = null
 	minbodytemp = 0
 	status_flags = CANPUSH
-<<<<<<< HEAD
+	death_message = "collapses, flesh gone in a pile of bones!"
+	del_on_death = TRUE
+	loot = list(/obj/effect/decal/remains/human)
 	faction = list("Giovanni")
 	bloodpool = 0
 	maxbloodpool = 0
+	/// The probability that we give people real zombie infections on hit.
+	var/infection_chance = 0
+	/// Outfit the zombie spawns with for visuals.
+	var/outfit = /datum/outfit/corpse_doctor
 
 /mob/living/simple_animal/hostile/beastmaster/giovanni_zombie/level1
 	name = "ghost"
@@ -155,15 +155,6 @@
 	faction = list("Giovanni")
 	bloodpool = 0
 	maxbloodpool = 0
-=======
-	death_message = "collapses, flesh gone in a pile of bones!"
-	del_on_death = TRUE
-	loot = list(/obj/effect/decal/remains/human)
-	/// The probability that we give people real zombie infections on hit.
-	var/infection_chance = 0
-	/// Outfit the zombie spawns with for visuals.
-	var/outfit = /datum/outfit/corpse_doctor
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /mob/living/simple_animal/hostile/beastmaster/giovanni_zombie/level2
 	maxHealth = 75
@@ -174,7 +165,6 @@
 /*
 /mob/living/simple_animal/hostile/giovanni_zombie/level2/Initialize()
 	. = ..()
-<<<<<<< HEAD
 	give_player()
 */
 /mob/living/simple_animal/hostile/beastmaster/giovanni_zombie/level3
@@ -234,25 +224,3 @@
 		return TRUE
 	visible_message("<span class='warning'>[src] remains unsouled...</span>")
 	return FALSE
-=======
-	apply_dynamic_human_appearance(src, outfit, /datum/species/zombie, bloody_slots = ITEM_SLOT_OCLOTHING)
-
-/mob/living/simple_animal/hostile/zombie/AttackingTarget(atom/attacked_target)
-	. = ..()
-	if(. && ishuman(target) && prob(infection_chance))
-		try_to_zombie_infect(target)
-
-/datum/outfit/corpse_doctor
-	name = "Corpse Doctor"
-	suit = /obj/item/clothing/suit/toggle/labcoat
-	uniform = /obj/item/clothing/under/rank/medical/doctor
-	shoes = /obj/item/clothing/shoes/sneakers/white
-	back = /obj/item/storage/backpack/medic
-
-/datum/outfit/corpse_assistant
-	name = "Corpse Assistant"
-	mask = /obj/item/clothing/mask/gas
-	uniform = /obj/item/clothing/under/color/grey
-	shoes = /obj/item/clothing/shoes/sneakers/black
-	back = /obj/item/storage/backpack
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

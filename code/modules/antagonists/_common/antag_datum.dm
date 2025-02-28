@@ -411,26 +411,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	return report.Join("<br>")
 
-<<<<<<< HEAD
-/datum/antagonist/proc/check_completed()
-	var/objectives_complete = TRUE
-	if(objectives.len)
-		for(var/datum/objective/objective in objectives)
-			if(!objective.check_completion())
-				objectives_complete = FALSE
-	if(objectives.len == 0 || objectives_complete)
-		return TRUE
-	else
-		return FALSE
-
-//Displayed at the start of roundend_category section, default to roundend_category header
-=======
 /**
  * Proc that sends string data for the round-end report.
  * Displayed before roundend_report and roundend_report_footer.
  * Appears at start of roundend_catagory section.
  */
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 /datum/antagonist/proc/roundend_report_header()
 	return "<span class='header'>The [roundend_category] were:</span><br>"
 

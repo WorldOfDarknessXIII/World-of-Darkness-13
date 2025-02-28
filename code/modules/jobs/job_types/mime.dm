@@ -15,9 +15,6 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
-<<<<<<< HEAD
-//	display_order = JOB_DISPLAY_ORDER_MIME
-=======
 	display_order = JOB_DISPLAY_ORDER_MIME
 	departments_list = list(
 		/datum/job_department/service,
@@ -45,7 +42,6 @@
 	if(!ishuman(spawned))
 		return
 	spawned.apply_pref_name(/datum/preference/name/mime, player_client)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 
 /datum/outfit/job/mime

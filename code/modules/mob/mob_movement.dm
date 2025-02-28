@@ -66,23 +66,16 @@
 	if(mob.stat == DEAD)
 		mob.ghostize()
 		return FALSE
-<<<<<<< HEAD
+	if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, new_loc, direct) & COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE)
+		return FALSE
+
 	if(ishuman(mob))
 		var/mob/living/carbon/human/H = mob
 		if(H.in_frenzy)
 			return FALSE
-	if(mob.force_moving)
-		return FALSE
-
-	var/mob/living/L = mob  //Already checked for isliving earlier // [ChillRaccoon] - actually didn't know why does it should work only for living
-	if(L.incorporeal_move)	//Move though walls
-=======
-	if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, new_loc, direct) & COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE)
-		return FALSE
 
 	var/mob/living/L = mob //Already checked for isliving earlier
 	if(L.incorporeal_move && !is_secret_level(mob.z)) //Move though walls
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 		Process_Incorpmove(direct)
 		return FALSE
 
@@ -102,7 +95,6 @@
 	if(!(L.mobility_flags & MOBILITY_MOVE))
 		return FALSE
 
-<<<<<<< HEAD
 	if(isobj(mob.loc) || ismob(mob.loc))	//Inside an object, tell it we moved
 		var/atom/O = mob.loc
 		if(istype(O, /obj/vampire_car))
@@ -113,11 +105,10 @@
 				return FALSE
 		else
 			return O.relaymove(mob, direct)
-=======
+
 	if(ismovable(mob.loc)) //Inside an object, tell it we moved
 		var/atom/loc_atom = mob.loc
 		return loc_atom.relaymove(mob, direct)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	if(!mob.Process_Spacemove(direct))
 		return FALSE
@@ -601,40 +592,8 @@
 		to_chat(src, span_notice("You move down."))
 	return FALSE
 
-<<<<<<< HEAD
-
-/mob/dead/Move()
-	if(!istype(src, /mob/dead))
-		return FALSE
-	if(world.time < move_delay) //do not move anything ahead of this check please
-		return FALSE
-	else
-		next_move_dir_add = 0
-		next_move_dir_sub = 0
-	var/old_move_delay = move_delay
-	move_delay = world.time + world.tick_lag //this is here because Move() can now be called mutiple times per tick
-
-	var/mob/dead/observer/O
-	if(istype(src, /mob/dead/observer))
-		O = src
-
-	var/add_delay = 0.1
-
-	if(O.movement_delay != 0)
-		add_delay = O.movement_delay
-
-	if(old_move_delay + (add_delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
-		move_delay = old_move_delay + add_delay
-	else
-		move_delay = world.time + add_delay
-
-	..()
-
-	glide_size = (world.icon_size / ceil(add_delay / world.tick_lag))
-=======
 /mob/abstract_move(atom/destination)
 	var/turf/new_turf = get_turf(destination)
 	if(new_turf && (istype(new_turf, /turf/cordon/secret) || is_secret_level(new_turf.z)) && !client?.holder)
 		return
 	return ..()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

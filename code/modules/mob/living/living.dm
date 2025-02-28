@@ -52,13 +52,6 @@
 
 	return ..()
 
-<<<<<<< HEAD
-/mob/living/proc/ZImpactDamage(turf/T, levels)
-	visible_message("<span class='danger'>[src] crashes into [T] with a sickening noise!</span>", \
-					"<span class='userdanger'>You crash into [T] with a sickening noise!</span>")
-	adjustBruteLoss((levels * 5) ** 2)
-	Knockdown(levels * 50)
-=======
 /**
  * Called when this mob is receiving damage from falling
  *
@@ -135,7 +128,6 @@
 /datum/movespeed_modifier/landed_on_feet
 	movetypes = GROUND|UPSIDE_DOWN
 	multiplicative_slowdown = CRAWLING_ADD_SLOWDOWN / 2
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A)
@@ -515,11 +507,7 @@
 	log_message("points at [pointing_at]", LOG_EMOTE)
 	visible_message("<span class='infoplain'>[span_name("[src]")] points at [pointing_at].</span>", span_notice("You point at [pointing_at]."))
 
-<<<<<<< HEAD
-/mob/living/verb/succumb(whispered as null)
-=======
 /mob/living/verb/succumb(whispered as num|null)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	set hidden = TRUE
 	if (!CAN_SUCCUMB(src))
 		if(HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
@@ -539,8 +527,9 @@
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
 		updatehealth()
 	if(!whispered)
-<<<<<<< HEAD
-		to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
+		to_chat(src, span_notice("You have given up life and succumbed to death."))
+	investigate_log("has succumbed to death.", INVESTIGATE_DEATHS)
+	death()
 
 /mob/living/verb/untorpor()
 	set hidden = TRUE
@@ -563,11 +552,6 @@
 				to_chat(src, "<span class='notice'>You have awoken from your Little Death.</span>")
 			else
 				to_chat(src, "<span class='warning'>You have no Chi to re-awaken with...</span>")
-=======
-		to_chat(src, span_notice("You have given up life and succumbed to death."))
-	investigate_log("has succumbed to death.", INVESTIGATE_DEATHS)
-	death()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /**
  * Checks if a mob is incapacitated
@@ -1323,92 +1307,6 @@
 	// If we had no gravity alert, or the same alert as before, go home
 	if(!gravity_alert || alerts[ALERT_GRAVITY] == gravity_alert)
 		return
-<<<<<<< HEAD
-	if(!enhanced_strip)
-		who.visible_message("<span class='warning'>[src] tries to remove [who]'s [what.name].</span>", \
-			"<span class='userdanger'>[src] tries to remove your [what.name].</span>", null, null, src)
-	to_chat(src, "<span class='danger'>You try to remove [who]'s [what.name]...</span>")
-	who.log_message("[key_name(who)] is being stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red")
-	log_message("[key_name(who)] is being stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
-	what.add_fingerprint(src)
-	var/strip_delayed = what.strip_delay
-	if(enhanced_strip)
-		strip_delayed = 0.1 SECONDS
-	if(do_mob(src, who, min(strip_delayed, what.strip_delay), interaction_key = what))
-		if(what && (Adjacent(who) || (enhanced_strip && (get_dist(src, who) <= 3))))
-			enhanced_strip = FALSE
-			if(ishuman(src) && isnpc(who))
-				var/mob/living/carbon/human/H = src
-				var/mob/living/carbon/human/NPC = who
-				if(NPC.stat < SOFT_CRIT)
-					if(istype(what, /obj/item/clothing) || istype(what, /obj/item/vamp/keys) || istype(what, /obj/item/stack/dollar))
-						H.AdjustHumanity(-1, 6)
-						call_dharma("steal", H)
-			if(islist(where))
-				var/list/L = where
-				if(what == who.get_item_for_held_index(L[2]))
-					if(what.doStrip(src, who))
-						who.log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red")
-						log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
-			if(what == who.get_item_by_slot(where))
-				if(what.doStrip(src, who))
-					who.log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red")
-					log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
-
-	if(Adjacent(who)) //update inventory window
-		who.show_inv(src)
-	else
-		src << browse(null,"window=mob[REF(who)]")
-
-	who.update_equipment_speed_mods() // Updates speed in case stripped speed affecting item
-
-// The src mob is trying to place an item on someone
-// Override if a certain mob should be behave differently when placing items (can't, for example)
-/mob/living/stripPanelEquip(obj/item/what, mob/who, where)
-	what = src.get_active_held_item()
-	if(what && (HAS_TRAIT(what, TRAIT_NODROP)))
-		to_chat(src, "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>")
-		return
-	if(what)
-		var/list/where_list
-		var/final_where
-
-		if(islist(where))
-			where_list = where
-			final_where = where[1]
-		else
-			final_where = where
-
-		if(!what.mob_can_equip(who, src, final_where, TRUE, TRUE))
-			to_chat(src, "<span class='warning'>\The [what.name] doesn't fit in that place!</span>")
-			return
-		if(istype(what,/obj/item/clothing))
-			var/obj/item/clothing/c = what
-			if(c.clothing_flags & DANGEROUS_OBJECT)
-				who.visible_message("<span class='danger'>[src] tries to put [what] on [who].</span>", \
-							"<span class='userdanger'>[src] tries to put [what] on you.</span>", null, null, src)
-			else
-				who.visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>", \
-							"<span class='notice'>[src] tries to put [what] on you.</span>", null, null, src)
-		to_chat(src, "<span class='notice'>You try to put [what] on [who]...</span>")
-		who.log_message("[key_name(who)] is having [what] put on them by [key_name(src)]", LOG_ATTACK, color="red")
-		log_message("[key_name(who)] is having [what] put on them by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
-		if(do_mob(src, who, what.equip_delay_other))
-			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE, TRUE))
-				if(temporarilyRemoveItemFromInventory(what))
-					if(where_list)
-						if(!who.put_in_hand(what, where_list[2]))
-							what.forceMove(get_turf(who))
-					else
-						who.equip_to_slot(what, where, TRUE)
-					who.log_message("[key_name(who)] had [what] put on them by [key_name(src)]", LOG_ATTACK, color="red")
-					log_message("[key_name(who)] had [what] put on them by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
-
-		if(Adjacent(who)) //update inventory window
-			who.show_inv(src)
-		else
-			src << browse(null,"window=mob[REF(who)]")
-=======
 	// By this point we know that we do not have the same alert as we used to
 	if(istype(gravity_alert, /atom/movable/screen/alert/weightless))
 		REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
@@ -1419,7 +1317,6 @@
 		flipped_matrix.e = -flipped_matrix.e
 		animate(src, transform = flipped_matrix, pixel_y = pixel_y-4, time = 0.5 SECONDS, easing = EASE_OUT)
 		base_pixel_y -= 4
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /mob/living/singularity_pull(S, current_size)
 	..()
@@ -1482,11 +1379,6 @@
 	if(stat != CONSCIOUS)
 		to_chat(src, span_warning("You are not conscious enough for this action!"))
 		return FALSE
-<<<<<<< HEAD
-	if(be_close && !Adjacent(M) && (M.loc != src) && !enhanced_strip)
-		if(no_tk)
-			to_chat(src, "<span class='warning'>You are too far away!</span>")
-=======
 
 	if(!(interaction_flags_atom & INTERACT_ATOM_IGNORE_INCAPACITATED))
 		var/ignore_flags = NONE
@@ -1497,7 +1389,6 @@
 
 		if(incapacitated(ignore_flags))
 			to_chat(src, span_warning("You are incapacitated at the moment!"))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 			return FALSE
 
 	// If the MOBILITY_UI bitflag is not set it indicates the mob's hands are cutoff, blocked, or handcuffed
@@ -2701,49 +2592,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	// for selective behaviors that may or may not prevent data from being written.
 	if(SEND_SIGNAL(src, COMSIG_LIVING_WRITE_MEMORY, dead, gibbed) & COMPONENT_DONT_WRITE_MEMORY)
 		return FALSE
-<<<<<<< HEAD
-	var/datum/martial_art/style = mind?.martial_art
-	var/attack_result = FALSE
-	if (style)
-		switch (a_intent)
-			if (INTENT_GRAB)
-				attack_result = style.grab_act(src, target)
-			if (INTENT_HARM)
-				if (HAS_TRAIT(src, TRAIT_PACIFISM))
-					return FALSE
-				attack_result = style.harm_act(src, target)
-			if (INTENT_DISARM)
-				attack_result = style.disarm_act(src, target)
-			if (INTENT_HELP)
-				attack_result = style.help_act(src, target)
-	return attack_result
-
-//Making a proc for each of these.
-
-/mob/living/proc/get_total_physique()
-	return physique + additional_physique
-
-/mob/living/proc/get_total_dexterity()
-	return dexterity + additional_dexterity
-
-/mob/living/proc/get_total_social()
-	if(iscathayan(src))
-		if(mind?.dharma?.animated == "Yin")
-			return max(0, social + additional_social - 2)
-	return social + additional_social
-
-/mob/living/proc/get_total_mentality()
-	return mentality + additional_mentality
-
-/mob/living/proc/get_total_blood()
-	return blood + additional_blood
-
-/mob/living/proc/get_total_lockpicking()
-	return lockpicking + additional_lockpicking
-
-/mob/living/proc/get_total_athletics()
-	return athletics + additional_athletics
-=======
 	return TRUE
 
 /// Admin only proc for giving a certain speech impediment to this mob
@@ -3007,4 +2855,29 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return "[span_notice("You'd estimate [p_their()] fitness level at about...")] [span_boldwarning("What?!? [our_fitness_level]???")]"
 
 	return span_notice("You'd estimate [p_their()] fitness level at about [our_fitness_level]. [comparative_fitness <= 0.33 ? "Pathetic." : ""]")
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
+
+//Making a proc for each of these.
+
+/mob/living/proc/get_total_physique()
+	return physique + additional_physique
+
+/mob/living/proc/get_total_dexterity()
+	return dexterity + additional_dexterity
+
+/mob/living/proc/get_total_social()
+	if(iscathayan(src))
+		if(mind?.dharma?.animated == "Yin")
+			return max(0, social + additional_social - 2)
+	return social + additional_social
+
+/mob/living/proc/get_total_mentality()
+	return mentality + additional_mentality
+
+/mob/living/proc/get_total_blood()
+	return blood + additional_blood
+
+/mob/living/proc/get_total_lockpicking()
+	return lockpicking + additional_lockpicking
+
+/mob/living/proc/get_total_athletics()
+	return athletics + additional_athletics
