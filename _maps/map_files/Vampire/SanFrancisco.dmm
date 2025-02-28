@@ -1302,6 +1302,10 @@
 /obj/effect/decal/rugs,
 /turf/open/floor/plating/vampcanalplating,
 /area/vtm/sewer)
+"aep" = (
+/obj/machinery/washing_machine,
+/turf/open/floor/plating/parquetry/old,
+/area/vtm/church)
 "aeq" = (
 /obj/structure/vampdoor/old,
 /turf/open/floor/plating/concrete,
@@ -18015,10 +18019,9 @@
 /turf/open/floor/plating/vampdirt,
 /area/vtm/pacificheights)
 "blC" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/turf/open/floor/plating/vampgrass,
-/area/vtm/pacificheights)
+/obj/structure/clothinghanger,
+/turf/open/floor/plating/parquetry/old,
+/area/vtm/church)
 "blD" = (
 /obj/effect/decal/bordur,
 /obj/effect/decal/litter,
@@ -24248,7 +24251,7 @@
 /turf/open/floor/plating/sidewalk/poor,
 /area/vtm/sewer/nosferatu_town)
 "bGk" = (
-/obj/structure/vampstatue/angel,
+/obj/structure/railing,
 /turf/open/floor/plating/vampplating,
 /area/vtm/church)
 "bGm" = (
@@ -24262,12 +24265,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plating/parquetry/old,
-/area/vtm/church)
-"bGo" = (
-/obj/structure/chair/pew{
-	dir = 4
-	},
-/turf/open/floor/plating/vampplating,
 /area/vtm/church)
 "bGp" = (
 /obj/machinery/light{
@@ -24363,11 +24360,11 @@
 /turf/open/floor/plating/rough,
 /area/vtm/interior/mansion)
 "bGI" = (
-/obj/structure/chair/pew/right{
-	dir = 4
+/obj/effect/decal/bordur/corner{
+	dir = 1
 	},
-/turf/open/floor/plating/vampplating,
-/area/vtm/church)
+/turf/open/floor/plating/roofwalk,
+/area/vtm)
 "bGJ" = (
 /obj/structure/table,
 /obj/item/restraints/handcuffs,
@@ -25307,9 +25304,9 @@
 /turf/open/floor/plating/vampplating,
 /area/vtm/interior/millennium_tower/f2)
 "bKG" = (
-/obj/structure/clothinghanger,
-/turf/open/floor/plating/parquetry/old,
-/area/vtm/church)
+/obj/effect/decal/bordur/corner,
+/turf/open/floor/plating/roofwalk,
+/area/vtm)
 "bKH" = (
 /obj/structure/vampfence/corner/rich{
 	dir = 1
@@ -28167,6 +28164,12 @@
 	},
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/interior)
+"dfe" = (
+/obj/effect/decal/bordur/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/roofwalk,
+/area/vtm)
 "dfj" = (
 /obj/effect/decal/bordur{
 	dir = 4
@@ -31421,8 +31424,6 @@
 /area/vtm/interior/chantry)
 "eJn" = (
 /obj/structure/closet/cabinet,
-/obj/item/clothing/suit/chaplainsuit/bishoprobe,
-/obj/item/clothing/head/bishopmitre,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/church)
 "eJC" = (
@@ -37668,14 +37669,11 @@
 /turf/open/floor/plating/rough,
 /area/vtm/anarch)
 "hMt" = (
-/obj/structure/chair/pew/right{
-	dir = 4
+/obj/effect/decal/bordur/corner{
+	dir = 8
 	},
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/plating/vampplating,
-/area/vtm/church)
+/turf/open/floor/plating/roofwalk,
+/area/vtm)
 "hMu" = (
 /obj/effect/decal/litter,
 /obj/structure/trashbag,
@@ -43992,12 +43990,6 @@
 "kXl" = (
 /turf/closed/wall/vampwall/painted/low/window/reinforced,
 /area/vtm/interior)
-"kXm" = (
-/obj/structure/chair/pew/left{
-	dir = 4
-	},
-/turf/open/floor/plating/vampplating,
-/area/vtm/church)
 "kXv" = (
 /obj/effect/decal/bordur{
 	dir = 8
@@ -45500,10 +45492,6 @@
 	},
 /turf/open/floor/plating/sidewalk/poor,
 /area/vtm/interior/chantry)
-"lQQ" = (
-/obj/structure/closet/cabinet,
-/turf/open/floor/plating/parquetry/old,
-/area/vtm/church)
 "lQS" = (
 /obj/structure/rack,
 /obj/item/clothing/gloves/color/yellow,
@@ -46185,13 +46173,10 @@
 /turf/open/floor/plating/vampwood,
 /area/vtm/interior/bianchiBank)
 "mgp" = (
-/obj/structure/chair/pew/left{
-	dir = 4
-	},
 /obj/machinery/light/warm{
 	dir = 8
 	},
-/turf/open/floor/plating/vampplating,
+/turf/open/openspace,
 /area/vtm/church)
 "mgL" = (
 /obj/machinery/mineral/equipment_vendor/fastfood/snacks{
@@ -49575,12 +49560,7 @@
 /turf/closed/wall/vampwall/rich/low,
 /area/vtm/interior/millennium_tower)
 "nWk" = (
-/obj/structure/chair/pew/left{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 4
-	},
+/obj/structure/chair/pew,
 /turf/open/floor/plating/vampplating,
 /area/vtm/church)
 "nWo" = (
@@ -61709,14 +61689,11 @@
 /turf/open/floor/plating/sidewalk/poor,
 /area/vtm/interior)
 "uaJ" = (
-/obj/structure/chair/pew{
-	dir = 4
+/obj/structure/roofstuff/alt3{
+	dir = 8
 	},
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/plating/vampplating,
-/area/vtm/church)
+/turf/open/floor/plating/roofwalk,
+/area/vtm)
 "uaS" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
@@ -62362,6 +62339,10 @@
 	},
 /turf/open/floor/carpet/cyan,
 /area/vtm/clinic)
+"uug" = (
+/obj/structure/chair/pew/right,
+/turf/open/floor/plating/vampplating,
+/area/vtm/church)
 "uur" = (
 /obj/structure/table/wood/poker,
 /turf/open/floor/plating/parquetry/old,
@@ -62529,15 +62510,6 @@
 	},
 /turf/open/floor/carpet,
 /area/vtm/interior/bianchiBank)
-"uyp" = (
-/obj/structure/chair/pew/right{
-	dir = 4
-	},
-/obj/machinery/light/warm{
-	dir = 8
-	},
-/turf/open/floor/plating/vampplating,
-/area/vtm/church)
 "uyt" = (
 /obj/structure/weightmachine/weightlifter,
 /obj/item/clothing/suit/vampire/kasaya,
@@ -64729,11 +64701,10 @@
 /turf/open/floor/plating/sidewalk,
 /area/vtm/cabaret)
 "vFt" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/plating/vampplating,
-/area/vtm/church)
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plating/vampgrass,
+/area/vtm/pacificheights)
 "vFH" = (
 /obj/item/stack/dollar/hundred,
 /obj/item/stack/dollar/hundred,
@@ -69487,8 +69458,8 @@
 /turf/open/floor/plating/granite/black,
 /area/vtm/interior/millennium_tower/ventrue)
 "xOK" = (
-/obj/machinery/washing_machine,
-/turf/open/floor/plating/parquetry/old,
+/obj/structure/chair/pew/left,
+/turf/open/floor/plating/vampplating,
 /area/vtm/church)
 "xOO" = (
 /obj/structure/rack,
@@ -80251,8 +80222,8 @@ bib
 bib
 bib
 eWe
-xOK
-bib
+aep
+aep
 bGx
 nKo
 gdh
@@ -80508,7 +80479,7 @@ bib
 bib
 bib
 eWe
-xOK
+wKz
 bib
 bib
 bib
@@ -81020,7 +80991,7 @@ eWe
 qkx
 bkJ
 ykp
-lQQ
+eJn
 eWe
 eWe
 ukt
@@ -146820,7 +146791,7 @@ bGn
 bib
 bib
 bib
-bib
+taG
 bib
 bib
 bib
@@ -147077,7 +147048,7 @@ bib
 bib
 bib
 qOd
-bib
+eWe
 bib
 bib
 bib
@@ -148609,7 +148580,7 @@ bdW
 bbI
 bbI
 ggm
-bKG
+blC
 bib
 bib
 bib
@@ -149132,7 +149103,7 @@ bib
 bib
 bib
 eWe
-bla
+vIX
 bjk
 bjk
 bjk
@@ -149150,7 +149121,7 @@ bjk
 bjk
 bjk
 bjk
-bla
+vIX
 eWe
 eWe
 eWe
@@ -151208,7 +151179,7 @@ bKW
 bfM
 bfM
 bfM
-blC
+vFt
 bfO
 bfM
 beL
@@ -153008,7 +152979,7 @@ bfM
 bfM
 bga
 bfL
-blC
+vFt
 bfM
 beL
 beL
@@ -212358,7 +212329,7 @@ bib
 bib
 bib
 bib
-bib
+taG
 bib
 bib
 bib
@@ -212615,7 +212586,7 @@ bjv
 bib
 bib
 bib
-bib
+ggm
 bib
 bjv
 bib
@@ -212873,6 +212844,7 @@ eWe
 eWe
 eWe
 eWe
+ukt
 eWe
 eWe
 eWe
@@ -212882,8 +212854,7 @@ eWe
 eWe
 eWe
 eWe
-eWe
-eWe
+ukt
 eWe
 eWe
 eWe
@@ -213131,24 +213102,24 @@ bjk
 bjk
 bjk
 bGk
-bjk
-uyp
-bGo
-kXm
-bjk
-bGI
-bGo
+bGh
 mgp
-bjk
-bGk
+bGh
+bGh
+bGh
+bGh
+bGh
+mgp
+bGh
+ygc
 bjk
 bjk
 bjk
 fVV
 eWe
-bBp
-bBp
-bBp
+aHV
+aHV
+bKG
 aiA
 aiA
 aiA
@@ -213384,29 +213355,29 @@ bib
 bib
 eWe
 bjk
+xOK
 bjk
+xOK
+bGk
+bGh
+bGh
+bGh
+bGh
+bGh
+bGh
+bGh
+bGh
+bGh
+ygc
+gXh
 bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
+gXh
 bjk
 col
 bBp
 bBp
-bBp
-bBp
+diO
+bKG
 aiA
 aiA
 aiA
@@ -213641,29 +213612,29 @@ vdk
 bib
 eWe
 bjk
+nWk
 bjk
+nWk
+bGk
+bGh
+bGh
+bGh
+bGh
+bGh
+bGh
+bGh
+bGh
+bGh
+ygc
+oBA
 bjk
-bjk
-bjk
-bjk
-bGI
-bGo
-kXm
-bjk
-bGI
-bGo
-kXm
-bjk
-bjk
-bjk
-bjk
-bjk
+oBA
 bjk
 col
 bBp
 bBp
 bBp
-bBp
+bBG
 aiA
 aiA
 aiA
@@ -213886,7 +213857,7 @@ aiA
 aiA
 aiA
 aiA
-bBp
+hMt
 eWe
 eWe
 eWe
@@ -213898,29 +213869,29 @@ bib
 bib
 eWe
 bjk
+uug
 bjk
+uug
+bGk
+bGh
+bGh
+bGh
+bGh
+bGh
+bGh
+bGh
+bGh
+bGh
+ygc
+bkK
 bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
+bkK
 bjk
 eWe
 bBp
 bBp
 bBp
-bBp
+bBG
 aiA
 aiA
 aiA
@@ -214143,7 +214114,7 @@ aiA
 aiA
 aiA
 aiA
-bBp
+ica
 ggm
 gVt
 bhy
@@ -214158,17 +214129,17 @@ bjk
 bjk
 bjk
 bjk
-bjk
-bjk
-hMt
-uaJ
-nWk
-vFt
-hMt
-uaJ
-nWk
-bjk
-bjk
+bGk
+bGh
+bGh
+bGh
+bGh
+bGh
+bGh
+bGh
+bGh
+bGh
+ygc
 bjk
 bjk
 bjk
@@ -214177,7 +214148,7 @@ col
 bBp
 bBp
 bBp
-bBp
+bBG
 aiA
 aiA
 aiA
@@ -214400,7 +214371,7 @@ aiA
 aiA
 aiA
 aiA
-bBp
+ica
 ggm
 bLz
 bib
@@ -214410,7 +214381,7 @@ bib
 taG
 bib
 bib
-taG
+eWe
 bjk
 bjk
 bjk
@@ -214433,8 +214404,8 @@ bjk
 col
 bBp
 bBp
-bBp
-bBp
+qBw
+dfe
 aiA
 aiA
 aiA
@@ -214657,7 +214628,7 @@ aiA
 aiA
 aiA
 aiA
-bBp
+ica
 ggm
 bib
 bib
@@ -214688,9 +214659,9 @@ bjk
 bjk
 bla
 eWe
-bBp
-bBp
-bBp
+oPI
+oPI
+dfe
 aiA
 aiA
 aiA
@@ -214914,7 +214885,7 @@ aiA
 aiA
 aiA
 aiA
-bBp
+bGI
 eWe
 eWe
 col
@@ -216713,14 +216684,14 @@ aiA
 aiA
 aiA
 aiA
-bAq
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
+bBz
+aHV
+aHV
+aHV
+aHV
+aHV
+aHV
+cES
 aiA
 aiA
 aiA
@@ -216970,14 +216941,14 @@ aiA
 aiA
 aiA
 aiA
-bxz
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
+ica
+ftd
+bBp
+bBp
+ftd
+bBp
+bBp
+bBG
 aiA
 aiA
 aiA
@@ -217227,14 +217198,14 @@ aiA
 aiA
 aiA
 aiA
-bxz
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
+ica
+uaJ
+bBp
+bBp
+uaJ
+bBp
+bBp
+bBG
 aiA
 aiA
 aiA
@@ -217484,14 +217455,14 @@ aiA
 aiA
 aiA
 aiA
-bxz
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
+ica
+bBp
+bBp
+bBp
+bBp
+bBp
+bBp
+bBG
 aiA
 aiA
 aiA
@@ -217741,14 +217712,14 @@ aiA
 aiA
 aiA
 aiA
-bxz
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
+ica
+bBp
+bBp
+bBp
+bBp
+bBp
+bBp
+bBG
 aiA
 aiA
 aiA
@@ -217998,14 +217969,14 @@ aiA
 aiA
 aiA
 aiA
-bxz
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
+ica
+bBp
+bBp
+bBp
+bBp
+bBp
+bBp
+bBG
 aiA
 aiA
 aiA
@@ -218255,14 +218226,14 @@ aiA
 aiA
 aiA
 aiA
-bxz
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
+ica
+bBp
+bBp
+bBp
+bBp
+bBp
+bBp
+bBG
 aiA
 aiA
 aiA
@@ -218512,14 +218483,14 @@ aiA
 aiA
 aiA
 aiA
-bxz
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
+ica
+bBp
+bBp
+bBp
+bBp
+bBp
+bBp
+bBG
 aiA
 aiA
 aiA
@@ -218769,14 +218740,14 @@ aiA
 aiA
 aiA
 aiA
-bxz
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
+ica
+bBp
+bBp
+bBp
+bBp
+bBp
+bBp
+bBG
 aiA
 aiA
 aiA
@@ -219026,14 +218997,14 @@ aiA
 aiA
 aiA
 aiA
-bxz
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
+ica
+bBp
+bBp
+bBp
+bBp
+bBp
+bBp
+bBG
 aiA
 aiA
 aiA
@@ -219283,14 +219254,14 @@ aiA
 aiA
 aiA
 aiA
-bxz
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
+ica
+bBp
+bBp
+bBp
+bBp
+bBp
+bBp
+bBG
 aiA
 aiA
 aiA
@@ -219540,14 +219511,14 @@ aiA
 aiA
 aiA
 aiA
-bFl
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
-aiA
+fxk
+oPI
+oPI
+oPI
+oPI
+oPI
+oPI
+bBH
 aiA
 aiA
 aiA
