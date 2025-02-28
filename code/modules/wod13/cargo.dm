@@ -217,6 +217,14 @@
 	contains = list(/obj/item/gun/ballistic/automatic/vampire/ar15, /obj/item/ammo_box/magazine/vamp556)
 	crate_name = "weapon crate"
 
+/datum/supply_pack/vampire/huntrifle
+	name = "Weapon (hunting rifle)"
+	desc = "Contains a hunting rifle."
+	cost = 1200
+	contains = list(/obj/item/gun/ballistic/automatic/vampire/huntrifle, 	mag_type = /obj/item/ammo_box/magazine/vamp556/hunt)
+	crate_name = "weapon crate"
+
+
 /datum/supply_pack/vampire/weaponcarbine
 	name = "Weapon (assault carbine)"
 	desc = "Contains an assault carbine."
