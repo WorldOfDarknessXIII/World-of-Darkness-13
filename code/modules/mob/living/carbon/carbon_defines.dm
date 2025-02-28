@@ -112,7 +112,6 @@
 	/// Can other carbons be shoved into this one to make it fall?
 	var/can_be_shoved_into = FALSE
 
-<<<<<<< HEAD
 	//imported from other areas around the code
 	var/last_moon_look = 0
 	var/last_rage_from_attack = 0
@@ -157,7 +156,6 @@
 
 	var/diablerist = FALSE
 	var/antifrenzy = FALSE
-=======
 	/// Only load in visual organs
 	var/visual_only_organs = FALSE
 
@@ -169,6 +167,5 @@
 
 	/// A bitfield of "bodyshapes", updated by /obj/item/bodypart/proc/synchronize_bodyshapes()
 	var/bodyshape = BODYSHAPE_HUMANOID
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	COOLDOWN_DECLARE(bleeding_message_cd)

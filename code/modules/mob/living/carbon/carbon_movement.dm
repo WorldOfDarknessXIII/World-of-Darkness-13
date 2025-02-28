@@ -8,19 +8,6 @@
 
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
-<<<<<<< HEAD
-	if(. && !(movement_type & FLOATING)) //floating is easy
-		if(HAS_TRAIT(src, TRAIT_NOHUNGER))
-			set_nutrition(NUTRITION_LEVEL_FED - 1)	//just less than feeling vigorous
-		else if(nutrition && stat != DEAD)
-			var/plus = 1
-			if(HAS_TRAIT(src, TRAIT_HUNGRY))
-				plus = 2
-			adjust_nutrition(-(HUNGER_FACTOR/(10*plus)))
-			if(m_intent == MOVE_INTENT_RUN)
-				adjust_nutrition(-(HUNGER_FACTOR/(10*plus)))
-
-=======
 	if(!. || (movement_type & FLOATING)) //floating is easy
 		return
 	if(nutrition <= 0 || stat == DEAD)
@@ -29,7 +16,6 @@
 	if(move_intent == MOVE_INTENT_RUN)
 		hunger_loss *= 2
 	adjust_nutrition(-1 * hunger_loss)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /mob/living/carbon/set_usable_legs(new_value)
 	. = ..()

@@ -73,14 +73,9 @@
 		return ..()
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
-<<<<<<< HEAD
-	if(HAS_TRAIT(src, TRAIT_NOBREATH))
-		return
-=======
 	var/obj/item/organ/internal/lungs/human_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(human_lungs)
 		return human_lungs.check_breath(breath, src)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	if(health >= crit_threshold)
 		adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
