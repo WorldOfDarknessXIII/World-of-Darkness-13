@@ -381,6 +381,14 @@
 		new /datum/data/mining_equipment("black overcoat",	/obj/item/clothing/under/vampire/rich,	45),
 		new /datum/data/mining_equipment("burgundy suit",	/obj/item/clothing/under/vampire/tremere,	35),
 		new /datum/data/mining_equipment("burgundy suit skirt",	/obj/item/clothing/under/vampire/tremere/female,	35),
+		new /datum/data/mining_equipment("plain black suit",	 /obj/item/clothing/under/vampire/suit,	50),
+		new /datum/data/mining_equipment("plain black suitskirt",	 /obj/item/clothing/under/vampire/suit/female,	50),
+		new /datum/data/mining_equipment("plain red suit",	 /obj/item/clothing/under/vampire/sheriff,	80),
+		new /datum/data/mining_equipment("plain red suitskirt",	 /obj/item/clothing/under/vampire/sheriff/female,	80),
+		new /datum/data/mining_equipment("plain blue suit",	 /obj/item/clothing/under/vampire/clerk,	90),
+		new /datum/data/mining_equipment("plain blue suitskirt",	 /obj/item/clothing/under/vampire/clerk/female,	90),
+		new /datum/data/mining_equipment("brown suit",	 /obj/item/clothing/under/vampire/archivist,	60),
+		new /datum/data/mining_equipment("brown suitskirt",	 /obj/item/clothing/under/vampire/archivist/female,	60),
 		new /datum/data/mining_equipment("flamboyant outfit",	/obj/item/clothing/under/vampire/toreador,	30),
 		new /datum/data/mining_equipment("female flamboyant outfit",	/obj/item/clothing/under/vampire/toreador/female,	30),
 		new /datum/data/mining_equipment("purple and black outfit",	/obj/item/clothing/under/vampire/sexy,	25),
@@ -391,8 +399,11 @@
 		new /datum/data/mining_equipment("gothic clothes",	/obj/item/clothing/under/vampire/gothic,	20),
 		new /datum/data/mining_equipment("gothic attire",	/obj/item/clothing/under/vampire/brujah,	20),
 		new /datum/data/mining_equipment("female punk attire ",	/obj/item/clothing/under/vampire/brujah/female,	20),
+		new /datum/data/mining_equipment("pentagram shirt",	/obj/item/clothing/under/vampire/baali,	20),
+		new /datum/data/mining_equipment("pentagram skirt",	/obj/item/clothing/under/vampire/baali/female,	20),
 		new /datum/data/mining_equipment("punk outfit",	/obj/item/clothing/under/vampire/emo,	20),
 		new /datum/data/mining_equipment("red hipster outfit",	/obj/item/clothing/under/vampire/red,	20),
+		new /datum/data/mining_equipment("messy shirt",	/obj/item/clothing/under/vampire/bouncer,	15),
 		new /datum/data/mining_equipment("blue overals",	/obj/item/clothing/under/vampire/mechanic,	20),
 		new /datum/data/mining_equipment("black grunge outfit",	/obj/item/clothing/under/vampire/black,	20),
 		new /datum/data/mining_equipment("gimp outfit",	/obj/item/clothing/under/vampire/nosferatu,	15),
@@ -453,16 +464,7 @@
 		new /datum/data/mining_equipment("blue scarf",	/obj/item/clothing/neck/vampire/scarf/blue,	10),
 		new /datum/data/mining_equipment("green scarf",	/obj/item/clothing/neck/vampire/scarf/green,	10),
 		new /datum/data/mining_equipment("white scarf",	/obj/item/clothing/neck/vampire/scarf/white,	10),
-		new /datum/data/mining_equipment("cross",	/obj/item/card/id/hunter,  25),
-		new /datum/data/mining_equipment("white robes",	/obj/item/clothing/suit/hooded/robes,	40),
-		new /datum/data/mining_equipment("black robes",	/obj/item/clothing/suit/hooded/robes/black,	40),
-		new /datum/data/mining_equipment("grey robes",	/obj/item/clothing/suit/hooded/robes/grey,	40),
-		new /datum/data/mining_equipment("dark red robes",	/obj/item/clothing/suit/hooded/robes/darkred,	40),
-		new /datum/data/mining_equipment("yellow robes",	/obj/item/clothing/suit/hooded/robes/yellow,	40),
-		new /datum/data/mining_equipment("green robes",	/obj/item/clothing/suit/hooded/robes/green,	40),
-		new /datum/data/mining_equipment("red robes",	/obj/item/clothing/suit/hooded/robes/red,	40),
-		new /datum/data/mining_equipment("blue robes", /obj/item/clothing/suit/hooded/robes/blue,	40),
-		new /datum/data/mining_equipment("purple robes",	/obj/item/clothing/suit/hooded/robes/purple,	40)
+		new /datum/data/mining_equipment("cross",	/obj/item/card/id/hunter,  25)
 	)
 
 /obj/machinery/mineral/equipment_vendor/fastfood/costumes
@@ -488,16 +490,7 @@
 		new /datum/data/mining_equipment("jester mask",	/obj/item/clothing/mask/vampire/venetian_mask/jester,	50),
 		new /datum/data/mining_equipment("bloody mask",	/obj/item/clothing/mask/vampire/venetian_mask/scary,	30),
 		new /datum/data/mining_equipment("comedy mask", /obj/item/clothing/mask/vampire/comedy,	25),
-		new /datum/data/mining_equipment("tragedy mask", /obj/item/clothing/mask/vampire/tragedy,	25),
-		new /datum/data/mining_equipment("blue wizard hat",	/obj/item/clothing/head/vampire/wizard/blue, 25),
-		new /datum/data/mining_equipment("red wizard hat",	/obj/item/clothing/head/vampire/wizard/red, 25),
-		new /datum/data/mining_equipment("yellow wizard hat",	/obj/item/clothing/head/vampire/wizard/yellow, 25),
-		new /datum/data/mining_equipment("green wizard hat",	/obj/item/clothing/head/vampire/wizard/green, 25),
-		new /datum/data/mining_equipment("dark red wizard hat",	/obj/item/clothing/head/vampire/wizard/darkred, 25),
-		new /datum/data/mining_equipment("grey wizard hat",	/obj/item/clothing/head/vampire/wizard/grey, 25),
-		new /datum/data/mining_equipment("white wizard hat",	/obj/item/clothing/head/vampire/wizard/white, 25),
-		new /datum/data/mining_equipment("black wizard hat",	/obj/item/clothing/head/vampire/wizard/black, 25),
-		new /datum/data/mining_equipment("purple wizard hat",	/obj/item/clothing/head/vampire/wizard/purple, 25)
+		new /datum/data/mining_equipment("tragedy mask", /obj/item/clothing/mask/vampire/tragedy,	25)
 
 	)
 
@@ -589,7 +582,8 @@
 /obj/machinery/mineral/equipment_vendor/fastfood/gas
 	prize_list = list(new /datum/data/mining_equipment("full gas can",	/obj/item/gas_can/full,	250),
 		new /datum/data/mining_equipment("tire iron",		/obj/item/melee/vampirearms/tire,	50),
-		new /datum/data/mining_equipment("Spray Paint",		/obj/item/toy/crayon/spraycan,		25)
+		new /datum/data/mining_equipment("Spray Paint",		/obj/item/toy/crayon/spraycan,		25),
+		new /datum/data/mining_equipment("Hair Spray",		/obj/item/dyespray,		10),
 	)
 
 /obj/machinery/mineral/equipment_vendor/fastfood/library
