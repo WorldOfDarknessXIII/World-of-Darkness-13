@@ -23,7 +23,7 @@
 	SSticker.mode.ape_infectees += owner
 	owner.special_role = "Infected Monkey"
 
-	var/datum/disease/D = new /datum/disease/transformation/jungle_fever/monkeymode
+	var/datum/disease/D = new /datum/disease/anxiety() //Random disease. This is never going to run anyways unless admins decide fuck it we ball.
 	if(!owner.current.HasDisease(D))
 		owner.current.ForceContractDisease(D)
 	else
@@ -41,7 +41,7 @@
 	owner.special_role = null
 	SSticker.mode.ape_infectees -= owner
 
-	var/datum/disease/transformation/jungle_fever/D =  locate() in owner.current.diseases
+	var/datum/disease/anxiety/D =  locate() in owner.current.diseases //Random disease. This is never going to run anyways unless admins decide fuck it we ball.
 	if(D)
 		qdel(D)
 
@@ -143,7 +143,7 @@
 	var/escaped_monkeys = 0
 
 /datum/objective/monkey/check_completion()
-	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
+	var/datum/disease/D = new /datum/disease/anxiety()  //Random disease. This is never going to run anyways unless admins decide fuck it we ball.
 	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
 		if(!ismonkey(M))
 			continue
@@ -163,7 +163,7 @@
 	objectives += O
 
 /datum/team/monkey/proc/infected_monkeys_alive()
-	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
+	var/datum/disease/D = new /datum/disease/anxiety() //Random disease. This is never going to run anyways unless admins decide fuck it we ball.
 	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
 		if(!ismonkey(M))
 			continue
@@ -172,7 +172,7 @@
 	return FALSE
 
 /datum/team/monkey/proc/infected_monkeys_escaped()
-	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
+	var/datum/disease/D = new /datum/disease/anxiety() //Random disease. This is never going to run anyways unless admins decide fuck it we ball.
 	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
 		if(!ismonkey(M))
 			continue
@@ -181,14 +181,14 @@
 	return FALSE
 
 /datum/team/monkey/proc/infected_humans_escaped()
-	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
+	var/datum/disease/D = new /datum/disease/anxiety() //Random disease. This is never going to run anyways unless admins decide fuck it we ball.
 	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
 		if(M.HasDisease(D) && (M.onCentCom() || M.onSyndieBase()))
 			return TRUE
 	return FALSE
 
 /datum/team/monkey/proc/infected_humans_alive()
-	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
+	var/datum/disease/D = new /datum/disease/anxiety() //Random disease. This is never going to run anyways unless admins decide fuck it we ball.
 	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
 		if(M.HasDisease(D))
 			return TRUE

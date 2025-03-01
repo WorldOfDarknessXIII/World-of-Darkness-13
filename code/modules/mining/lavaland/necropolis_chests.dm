@@ -962,23 +962,6 @@
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	qdel(src)
 
-/datum/disease/transformation/dragon
-	name = "dragon transformation"
-	cure_text = "nothing"
-	cures = list(/datum/reagent/medicine/adminordrazine)
-	agent = "dragon's blood"
-	desc = "What do dragons have to do with Space Station 13?"
-	stage_prob = 20
-	severity = DISEASE_SEVERITY_BIOHAZARD
-	visibility_flags = 0
-	stage1	= list("Your bones ache.")
-	stage2	= list("Your skin feels scaly.")
-	stage3	= list("<span class='danger'>You have an overwhelming urge to terrorize some peasants.</span>", "<span class='danger'>Your teeth feel sharper.</span>")
-	stage4	= list("<span class='danger'>Your blood burns.</span>")
-	stage5	= list("<span class='danger'>You're a fucking dragon. However, any previous allegiances you held still apply. It'd be incredibly rude to eat your still human friends for no reason.</span>")
-	new_form = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
-
-
 //Lava Staff
 
 /obj/item/lava_staff

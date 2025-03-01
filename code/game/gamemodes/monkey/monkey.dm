@@ -65,7 +65,7 @@
 			if(monkey_mind.current && monkey_mind.current.stat != DEAD)
 				return FALSE
 
-		var/datum/disease/D = new /datum/disease/transformation/jungle_fever() //ugly but unfortunately needed
+		var/datum/disease/D = new /datum/disease/anxiety() //Random disease. This is never going to run anyways unless admins decide fuck it we ball.
 		for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 			if(!is_station_level(H.z))
 				continue
@@ -78,7 +78,7 @@
 /datum/game_mode/monkey/proc/check_monkey_victory()
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return FALSE
-	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
+	var/datum/disease/D = new /datum/disease/anxiety() //Random disease. This is never going to run anyways unless admins decide fuck it we ball.
 	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
 		if(!ismonkey(M))
 			return
