@@ -35476,19 +35476,6 @@
 /obj/structure/closet/cardboard,
 /turf/open/floor/plating/sidewalk/rich,
 /area/vtm/pacificheights)
-"gFQ" = (
-/obj/structure/closet,
-/obj/item/clothing/suit/vampire/vest/police/fbivest,
-/obj/item/clothing/suit/vampire/vest/police/fbivest,
-/obj/item/clothing/suit/vampire/jacket/fbi,
-/obj/item/clothing/suit/vampire/jacket/fbi,
-/obj/item/clothing/head/fedora/det_hat,
-/obj/item/clothing/gloves/vampire/investigator,
-/obj/item/clothing/gloves/vampire/investigator,
-/obj/item/ammo_box/magazine/glock45acp,
-/obj/item/ammo_box/magazine/glock45acp,
-/turf/open/floor/plating/parquetry/old,
-/area/vtm/interior/police)
 "gFU" = (
 /obj/effect/decal/bordur/corner{
 	dir = 4
@@ -63704,6 +63691,18 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/vtm/cabaret)
+"vcd" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/vampire/vest/police/fbivest,
+/obj/item/clothing/suit/vampire/vest/police/fbivest,
+/obj/item/clothing/suit/vampire/jacket/fbi,
+/obj/item/clothing/suit/vampire/jacket/fbi,
+/obj/item/clothing/gloves/vampire/investigator,
+/obj/item/clothing/gloves/vampire/investigator,
+/obj/item/ammo_box/magazine/glock45acp,
+/obj/item/ammo_box/magazine/glock45acp,
+/turf/open/floor/plating/parquetry/old,
+/area/vtm/interior/police)
 "vcI" = (
 /obj/item/kirbyplants,
 /obj/effect/decal/bordur{
@@ -255045,7 +255044,7 @@ azv
 azv
 gTt
 azu
-gFQ
+vcd
 aAN
 aAN
 aBi
