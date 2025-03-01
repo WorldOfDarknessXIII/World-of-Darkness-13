@@ -7,13 +7,15 @@
 	var/list/linked_bouncers = list()
 	var/actively_guarded = TRUE
 
-	var/guard_recheck_lag = 1 SECONDS
+	var/hint_delivery_lag = 1 SECONDS
 
 	//people the guards have determined can pass anyways
 	var/list/allow_list = list()
 
 	//people the guards have decided to deny no matter what
 	var/list/block_list = list("Unknown")
+
+	var/list/gave_interaction_hint_list = list()
 
 
 /datum/vip_barrier_perm/New(var/protected_zone_id)
@@ -29,6 +31,7 @@
 	linked_barriers += target_barrier
 	RegisterSignal(target_barrier, COMSIG_BARRIER_NOTIFY_GUARD_BLOCKED, PROC_REF(notify_guard_blocked))
 	RegisterSignal(target_barrier, COMSIG_BARRIER_NOTIFY_GUARD_ENTRY, PROC_REF(notify_guard_entry))
+	RegisterSignal(target_barrier, COMSIG_BARRIER_NOTIFY_GUARD_MASKED, PROC_REF(notify_guard_masked_denial))
 
 
 //handles bouncer death
@@ -78,12 +81,22 @@
 		return
 	var/mob/living/carbon/human/npc/bouncer/target_bouncer = pick(linked_bouncers)
 	target_bouncer.speak_seldom(pick(target_bouncer.denial_phrases), target_mob)
+	trigger_hint_interaction(target_mob)
+
+/datum/vip_barrier_perm/proc/notify_guard_masked_denial(datum/source, mob/target_mob)
+	SIGNAL_HANDLER
+	if(!linked_bouncers.len)
+		return
+	var/mob/living/carbon/human/npc/bouncer/target_bouncer = pick(linked_bouncers)
+	target_bouncer.speak_seldom(pick(target_bouncer.unmask_phrases), target_mob)
+	trigger_hint_interaction(target_mob)
 
 /datum/vip_barrier_perm/proc/notify_guard_police_denial(mob/target_mob)
 	if(!linked_bouncers.len)
 		return
 	var/mob/living/carbon/human/npc/bouncer/target_bouncer = pick(linked_bouncers)
 	target_bouncer.speak_seldom(pick(target_bouncer.police_block_phrases), target_mob)
+	trigger_hint_interaction(target_mob)
 
 /datum/vip_barrier_perm/proc/notify_guard_blocked_denial(mob/target_mob)
 	if(!linked_bouncers.len)
@@ -97,6 +110,19 @@
 	var/obj/effect/vip_barrier/target_barrier = linked_barriers[1]
 	target_barrier.handle_social_bypass(user, bouncer, used_badge)
 
+/datum/vip_barrier_perm/proc/notify_barrier_unmask_bypass(mob/user, mob/bouncer)
+	if(!linked_barriers.len)
+		return
+	var/obj/effect/vip_barrier/target_barrier = linked_barriers[1]
+	target_barrier.handle_unmask_bypass(user, bouncer)
 
 //=============================================================================
 
+/datum/vip_barrier_perm/proc/trigger_hint_interaction(mob/living/target_mob)
+	if(!target_mob.mind || LAZYFIND(gave_interaction_hint_list, target_mob))
+		return
+	gave_interaction_hint_list += target_mob
+	addtimer(CALLBACK(src, PROC_REF(give_interact_hint), target_mob), hint_delivery_lag)
+
+/datum/vip_barrier_perm/proc/give_interact_hint(mob/target_mob)
+	to_chat(target_mob, span_notice("Hint: You can interact with a bouncer by moving close and shift-clicking them."))

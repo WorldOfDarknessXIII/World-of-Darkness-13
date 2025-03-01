@@ -226,15 +226,15 @@
 			if ("kiasyd")
 				//masquerade breach if eyes are uncovered, short range
 				if (!H.is_eyes_covered())
-					if (H.CheckEyewitness(H, H, 3, FALSE))
+					if (H.CheckEyewitness(H, H, 3, FALSE, INFRACTION_TYPE_UGLY))
 						H.AdjustMasquerade(-1)
 			if ("rotten3")
 				//slightly less range than if fully decomposed
-				if (H.CheckEyewitness(H, H, 5, FALSE))
+				if (H.CheckEyewitness(H, H, 5, FALSE, INFRACTION_TYPE_UGLY))
 					H.AdjustMasquerade(-1)
 			else
 				//gargoyles, nosferatu, skeletons, that kind of thing
-				if (H.CheckEyewitness(H, H, 7, FALSE))
+				if (H.CheckEyewitness(H, H, 7, FALSE, INFRACTION_TYPE_UGLY))
 					H.AdjustMasquerade(-1)
 
 	if(HAS_TRAIT(H, TRAIT_UNMASQUERADE))
