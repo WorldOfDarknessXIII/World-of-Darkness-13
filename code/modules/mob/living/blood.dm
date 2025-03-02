@@ -6,8 +6,9 @@
 
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood()
+	update_blood_values()
 
-	if(NOBLOOD in dna.species.species_traits || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+	if((NOBLOOD in dna.species.species_traits) || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		return
 
 	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
@@ -29,7 +30,7 @@
 			if(satiety > 80)
 				nutrition_ratio *= 1.25
 			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR)
-			blood_volume = min(BLOOD_VOLUME_NORMAL, blood_volume + 0.5 * nutrition_ratio)
+			adjust_blood_volume(1 * nutrition_ratio)
 
 		//Effects of bloodloss
 		var/word = pick("dizzy","woozy","faint")
@@ -73,31 +74,10 @@
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt)
-	if(NOBLOOD in dna.species.species_traits || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+	if((NOBLOOD in dna.species.species_traits) || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		return
 	if(!blood_volume)
 		return
-	if(!iskindred(src))
-		blood_volume = max(blood_volume - amt, 0)
-
-	var/timing = 100
-	if(blood_volume >= BLOOD_VOLUME_SURVIVE)
-		timing = 10
-	if(blood_volume >= BLOOD_VOLUME_BAD)
-		timing = 25
-	if(blood_volume >= BLOOD_VOLUME_OKAY)
-		timing = 50
-	if(blood_volume >= BLOOD_VOLUME_SAFE)
-		timing = 100
-
-	if(iskindred(src))
-		timing = 100
-		if(!bloodpool)
-			return
-
-	if(last_bloodpool_restore+timing <= world.time)
-		last_bloodpool_restore = world.time
-		bloodpool = max(0, bloodpool-1)
 
 	//Blood loss still happens in locker, floor stays clean
 	if(isturf(loc) && prob(sqrt(amt)*BLOOD_DRIP_RATE_MOD))
@@ -132,7 +112,7 @@
  * * forced-
  */
 /mob/living/carbon/proc/bleed_warn(bleed_amt = 0, forced = FALSE)
-	if(NOBLOOD in dna.species.species_traits || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+	if((NOBLOOD in dna.species.species_traits) || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		return
 	if(!blood_volume || !client)
 		return
@@ -190,10 +170,10 @@
 		return ..()
 
 /mob/living/proc/restore_blood()
-	blood_volume = initial(blood_volume)
+	set_blood_volume(initial(blood_volume))
 
 /mob/living/carbon/restore_blood()
-	blood_volume = BLOOD_VOLUME_NORMAL
+	set_blood_volume(BLOOD_VOLUME_NORMAL)
 	for(var/i in bodyparts)
 		var/obj/item/bodypart/BP = i
 		BP.generic_bleedstacks = 0
@@ -216,7 +196,7 @@
 	if(!blood_id)
 		return FALSE
 
-	blood_volume -= amount
+	adjust_blood_volume(-amount)
 
 	var/list/blood_data = get_blood_data(blood_id)
 
@@ -234,7 +214,7 @@
 					C.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5)
 					return TRUE
 
-			C.blood_volume = min(C.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAX_LETHAL)
+			C.adjust_blood_volume(round(amount, 0.1))
 			return TRUE
 
 	AM.reagents.add_reagent(blood_id, amount, blood_data, bodytemperature)

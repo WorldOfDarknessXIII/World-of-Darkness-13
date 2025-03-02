@@ -12,8 +12,3 @@
 	enlightenment = FALSE
 	whitelisted = FALSE
 	clan_keys = /obj/item/vamp/keys/salubri
-
-/datum/discipline/valeren/post_gain(mob/living/carbon/human/H)
-	if(level >= 4)
-		var/obj/effect/proc_holder/spell/targeted/forcewall/salubri/FW = new(H)
-		H.mind.AddSpell(FW)

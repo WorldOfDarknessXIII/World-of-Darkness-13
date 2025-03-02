@@ -106,12 +106,6 @@
 
 	var/phonevoicetag = 10
 
-	var/hided = FALSE
-	var/additional_hands = FALSE
-	var/additional_wings = FALSE
-	var/additional_centipede = FALSE
-	var/additional_armor = FALSE
-
 	var/unique_body_sprite
 
 	var/image/suckbar
@@ -124,7 +118,7 @@
 	var/base_body_mod = ""
 	var/icon/body_sprite
 
-	bloodquality = 2
+	bloodquality = BLOOD_QUALITY_NORMAL
 
 	var/soul_state = SOUL_PRESENT
 

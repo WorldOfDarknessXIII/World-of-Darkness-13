@@ -45,7 +45,7 @@
 		C.adjustOxyLoss(-4)
 		C.adjustCloneLoss(-4)
 		return
-	C.blood_volume -= 0.25
+	C.adjust_blood_volume(-0.25)
 	if(C.blood_volume <= BLOOD_VOLUME_SURVIVE)
 		to_chat(C, "<span class='danger'>You ran out of blood!</span>")
 		var/obj/shapeshift_holder/H = locate() in C
@@ -111,8 +111,8 @@
 			to_chat(victim, "<span class='danger'>[H] is draining your blood!</span>")
 			to_chat(H, "<span class='notice'>You drain some blood!</span>")
 			playsound(H, 'sound/items/drink.ogg', 30, TRUE, -2)
-			victim.blood_volume = clamp(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
-			H.blood_volume = clamp(H.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
+			victim.adjust_blood_volume(-drained_blood)
+			H.adjust_blood_volume(drained_blood)
 			if(!victim.blood_volume)
 				to_chat(H, "<span class='notice'>You finish off [victim]'s blood supply.</span>")
 

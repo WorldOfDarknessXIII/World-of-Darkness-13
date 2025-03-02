@@ -34,7 +34,7 @@
 		icon_state = "blood0"
 		inhand_icon_state = "blood0"
 		name = "\improper drinkable blood pack (empty)"
-		M.bloodpool = min(M.maxbloodpool, M.bloodpool+amount_of_bloodpoints)
+		M.adjust_blood_points(amount_of_bloodpoints)
 		M.adjustBruteLoss(-20, TRUE)
 		M.adjustFireLoss(-20, TRUE)
 		M.update_damage_overlays()
