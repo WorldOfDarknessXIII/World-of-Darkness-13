@@ -797,6 +797,11 @@
 	icon_state = "sgtvest"
 	desc = "Lightweight, bulletproof vest with SFPD markings, tailored for active duty. This one has sergeant insignia on it."
 
+/obj/item/clothing/suit/vampire/vest/police/fbivest
+	name = "FBI duty vest"
+	icon_state = "fbivest"
+	desc = "Lightweight, bulletproof vest with yellow FBI markings, tailored for active duty. This one has special agent insignia on it."
+
 // They got an Army vest post-PD update. I am just giving them the same, instead coded into their equipment instead of mapped.
 /obj/item/clothing/suit/vampire/vest/police/chief
 	name = "police chief duty vest"
