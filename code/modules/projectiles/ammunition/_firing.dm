@@ -73,6 +73,33 @@
 		return null
 
 	var/firing_dir
+	if(BB.firer)
+		firing_dir = BB.firer.dir
+	if(!BB.suppressed && firing_effect_type)
+		var/witness_count
+		for(var/mob/living/carbon/human/npc/NEPIC in viewers(7, usr))
+			if(NEPIC && NEPIC.stat != DEAD)
+				witness_count++
+			if(witness_count > 1)
+				for(var/obj/item/police_radio/P in GLOB.police_radios)
+					P.announce_crime("shooting", get_turf(user))
+				for(var/obj/machinery/p25transceiver/police/radio in GLOB.p25_tranceivers)
+					if(radio.p25_network == "police")
+						radio.announce_crime("shooting", get_turf(src))
+						break
+		var/atom/A = new firing_effect_type(get_turf(src), firing_dir)
+		var/atom/movable/shit = new(A.loc)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.remove_overlay(FIRING_EFFECT_LAYER)
+			var/mutable_appearance/firing_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "firing", -PROTEAN_LAYER)
+			H.overlays_standing[FIRING_EFFECT_LAYER] = firing_overlay
+			H.apply_overlay(FIRING_EFFECT_LAYER)
+			shit.set_light(3, 2, "#ffedbb")
+			spawn(2)
+				H.remove_overlay(FIRING_EFFECT_LAYER)
+				qdel(shit)
+
 	if(loaded_projectile.firer)
 		firing_dir = get_dir(fired_from, target)
 	if(!loaded_projectile.suppressed && firing_effect_type && !tk_firing(user, fired_from))

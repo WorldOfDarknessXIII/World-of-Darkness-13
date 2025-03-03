@@ -62,7 +62,6 @@
 
 	var/atom/movable/screen/using
 	var/atom/movable/screen/inventory/inv_box
-//	var/atom/movable/screen/inventory/inv_add
 	var/atom/movable/screen/transform_werewolf
 
 	if(isgarou(owner))
@@ -114,9 +113,10 @@
 		static_inventory += demon_chi_icon
 
 	using = new /atom/movable/screen/language_menu(null, src)
-	using.icon = ui_style
+	using.icon = 'code/modules/wod13/UI/buttons_wide.dmi'
 	static_inventory += using
 
+	/*
 	using = new /atom/movable/screen/navigate(null, src)
 	using.icon = ui_style
 	static_inventory += using
@@ -128,6 +128,7 @@
 	using = new /atom/movable/screen/floor_menu(null, src)
 	using.icon = ui_style
 	static_inventory += using
+	*/
 
 	action_intent = new /atom/movable/screen/combattoggle/flashy(null, src)
 	action_intent.icon = ui_style
@@ -136,28 +137,28 @@
 
 
 	using = new /atom/movable/screen/mov_intent(null, src)
-	using.icon = ui_style
+	using.icon = 'code/modules/wod13/UI/buttons32.dmi'
 	using.icon_state = (owner.move_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	using.screen_loc = ui_movi
 	static_inventory += using
 
 	using = new /atom/movable/screen/drop(null, src)
-	using.icon = ui_style
+	using.icon = 'code/modules/wod13/UI/buttons_wide.dmi'
 	using.screen_loc = ui_drop_throw
 	static_inventory += using
 
 	inv_box = new /atom/movable/screen/inventory(null, src)
 	inv_box.name = "uniform"
-	inv_box.icon = ui_style
+	inv_box.icon = 'code/modules/wod13/UI/buttons48.dmi'
 	inv_box.slot_id = ITEM_SLOT_ICLOTHING
 	inv_box.icon_state = "uniform"
-	inv_box.icon_full = "template"
+	inv_box.icon_full = "template1"
 	inv_box.screen_loc = ui_iclothing
 	toggleable_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory(null, src)
 	inv_box.name = "suit"
-	inv_box.icon = ui_style
+	inv_box.icon = 'code/modules/wod13/UI/buttons48.dmi'
 	inv_box.slot_id = ITEM_SLOT_OCLOTHING
 	inv_box.icon_state = "suit"
 	inv_box.icon_full = "template"
@@ -167,13 +168,13 @@
 	build_hand_slots()
 
 	using = new /atom/movable/screen/swap_hand(null, src)
-	using.icon = ui_style
+	using.icon = 'code/modules/wod13/UI/buttons32.dmi'
 	using.icon_state = "swap_1"
 	using.screen_loc = ui_swaphand_position(owner,1)
 	static_inventory += using
 
 	using = new /atom/movable/screen/swap_hand(null, src)
-	using.icon = ui_style
+	using.icon = 'code/modules/wod13/UI/buttons32.dmi'
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand_position(owner,2)
 	static_inventory += using
@@ -216,7 +217,7 @@
 
 	inv_box = new /atom/movable/screen/inventory(null, src)
 	inv_box.name = "left pocket"
-	inv_box.icon = ui_style
+	inv_box.icon = 'code/modules/wod13/UI/buttons32.dmi'
 	inv_box.icon_state = "pocket"
 	inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_storage1
@@ -225,7 +226,7 @@
 
 	inv_box = new /atom/movable/screen/inventory(null, src)
 	inv_box.name = "right pocket"
-	inv_box.icon = ui_style
+	inv_box.icon = 'code/modules/wod13/UI/buttons32.dmi'
 	inv_box.icon_state = "pocket"
 	inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_storage2
@@ -236,25 +237,15 @@
 	inv_box.name = "suit storage"
 	inv_box.icon = 'code/modules/wod13/UI/buttons32.dmi'
 	inv_box.icon_state = "suit_storage"
-	inv_box.icon_full = "template"
+	inv_box.icon_full = "template1"
 	inv_box.screen_loc = ui_sstore1
 	inv_box.slot_id = ITEM_SLOT_SUITSTORE
 	static_inventory += inv_box
 
 	using = new /atom/movable/screen/resist(null, src)
-	using.icon = ui_style
+	using.icon = 'code/modules/wod13/UI/buttons_wide.dmi'
 	using.screen_loc = ui_above_intent
 	hotkeybuttons += using
-
-	using = new /atom/movable/screen/human/toggle(null, src)
-	using.icon = ui_style
-	using.screen_loc = ui_inventory
-	static_inventory += using
-
-	using = new /atom/movable/screen/human/equip()
-	using.icon = ui_style
-	using.screen_loc = ui_equip_position(mymob)
-	static_inventory += using
 
 	inv_box = new /atom/movable/screen/inventory(null, src)
 	inv_box.name = "gloves"
@@ -310,7 +301,6 @@
 	inv_box.slot_id = ITEM_SLOT_BELT
 	static_inventory += inv_box
 
-<<<<<<< HEAD
 	throw_icon = new /atom/movable/screen/throw_catch()
 	throw_icon.icon = 'code/modules/wod13/UI/buttons_wide.dmi'
 	throw_icon.screen_loc = ui_throw
@@ -337,15 +327,15 @@
 	infodisplay += stamina
 
 	pull_icon = new /atom/movable/screen/pull(null, src)
-	pull_icon.icon = ui_style
+	pull_icon.icon = 'code/modules/wod13/UI/buttons_wide.dmi'
 	pull_icon.screen_loc = ui_above_intent
 	pull_icon.update_appearance()
 	static_inventory += pull_icon
 
 	zone_select = new /atom/movable/screen/zone_sel(null, src)
-	zone_select.icon = ui_style
+	zone_select.icon = 'code/modules/wod13/UI/buttons64.dmi'
+	zone_select.hud = src
 	zone_select.update_appearance()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	static_inventory += zone_select
 
 	combo_display = new /atom/movable/screen/combo(null, src)

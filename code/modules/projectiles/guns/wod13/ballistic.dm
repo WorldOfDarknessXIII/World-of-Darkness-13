@@ -298,6 +298,11 @@
 			casing.forceMove(drop_location()) //Eject casing onto ground.
 			if(!QDELETED(casing))
 				casing.bounce_away(TRUE)
+				if(casing.onflooricon && isturf(casing.loc))
+					casing.icon = casing.onflooricon
+					if(casing.onflooricon_state)
+						casing.icon_state = casing.onflooricon_state
+				casing.update_icon()
 				SEND_SIGNAL(casing, COMSIG_CASING_EJECTED)
 		else if(empty_chamber)
 			clear_chambered()

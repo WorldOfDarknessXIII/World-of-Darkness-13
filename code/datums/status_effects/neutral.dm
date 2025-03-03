@@ -78,6 +78,9 @@
 
 /datum/status_effect/in_love/on_creation(mob/living/new_owner, mob/living/date)
 	. = ..()
+	if(.)
+		date = love_interest
+		linked_alert.desc = "You're in blood bond with [date.real_name]! How lovely."
 	if(!.)
 		return
 

@@ -599,6 +599,31 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 	if(!gone.important_recursive_contents?[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		return
+
+	// Ambience goes down here -- make sure to list each area separately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
+	//	if(L.client && !L.client.ambience_playing && L.client.prefs.toggles & SOUND_SHIP_AMBIENCE)
+	//		L.client.ambience_playing = 1
+	if(L)
+		if(L.client)
+			if(istype(get_area(loc), /area/vtm/northbeach))
+				if(!L.client.ambience_playing)
+					L.client.ambience_playing = 1
+					SEND_SOUND(L, sound('code/modules/wod13/sounds/beach.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
+			else if(L.client.ambience_playing)
+				L.client.ambience_playing = 0
+				SEND_SOUND(L, sound(null, channel = CHANNEL_BUZZ))
+
+	if(!(L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))
+		return //General ambience check is below the ship ambience so one can play without the other
+
+	if(prob(50))
+		var/sound = pick(ambientsounds)
+
+		if(!L.client.played)
+			SEND_SOUND(L, sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))
+			L.client.played = TRUE
+			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
+
 	for(var/atom/movable/recipient as anything in gone.important_recursive_contents[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		SEND_SIGNAL(recipient, COMSIG_EXIT_AREA, src)
 

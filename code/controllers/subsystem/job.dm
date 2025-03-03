@@ -824,17 +824,10 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/Recover()
 	set waitfor = FALSE
-<<<<<<< HEAD
-	var/oldjobs = SSjob.occupations
-	sleep(20)
-	for (var/datum/job/J in oldjobs)
-		INVOKE_ASYNC(src, PROC_REF(RecoverJob), J)
-=======
 	var/oldjobs = SSjob.all_occupations
 	sleep(2 SECONDS)
 	for (var/datum/job/job as anything in oldjobs)
 		INVOKE_ASYNC(src, PROC_REF(RecoverJob), job)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /datum/controller/subsystem/job/proc/RecoverJob(datum/job/J)
 	var/datum/job/newjob = GetJob(J.title)
@@ -846,13 +839,9 @@ SUBSYSTEM_DEF(job)
 
 /atom/proc/JoinPlayerHere(mob/joining_mob, buckle)
 	// By default, just place the mob on the same turf as the marker or whatever.
-<<<<<<< HEAD
-	M.forceMove(get_turf(src))
-	if(M.taxist)
-		new /obj/vampire_car/taxi(M.loc)
-=======
 	joining_mob.forceMove(get_turf(src))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
+	if(joining_mob.taxist)
+		new /obj/vampire_car/taxi(joining_mob.loc)
 
 /obj/structure/chair/JoinPlayerHere(mob/joining_mob, buckle)
 	. = ..()

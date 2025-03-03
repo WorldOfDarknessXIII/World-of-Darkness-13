@@ -559,6 +559,22 @@ Behavior that's still missing from this component that original food items had t
 		gourmand.add_mood_event("breakfast", /datum/mood_event/breakfast)
 	last_check_time = world.time
 
+	if(H.dna.species.id == "kindred")
+		if(HAS_TRAIT(H, TRAIT_AGEUSIA))
+			to_chat(H, "<span class='warning'>You don't feel so good...</span>")
+			H.adjust_disgust(11 + 15 * fraction)
+		else
+			to_chat(H,"<span class='notice'>That didn't taste very good...</span>")
+			H.adjust_disgust(25 + 30 * fraction)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "toxic_food", /datum/mood_event/disgusting_food)
+		return	//Don't care later checks cause you are fucking vamp
+
+	if(HAS_TRAIT(H, TRAIT_AGEUSIA))
+		if(foodtypes & H.dna.species.toxic_food)
+			to_chat(H, "<span class='warning'>You don't feel so good...</span>")
+			H.adjust_disgust(25 + 30 * fraction)
+		return // Don't care about the later checks if user has ageusia
+
 	var/food_quality = get_perceived_food_quality(gourmand)
 	if(food_quality <= FOOD_QUALITY_DANGEROUS && (foodtypes & gourmand.get_allergic_foodtypes())) // Only cause anaphylaxis if we're ACTUALLY allergic, otherwise it just tastes horrible
 		if(gourmand.ForceContractDisease(new /datum/disease/anaphylaxis(), make_copy = FALSE, del_on_fail = TRUE))

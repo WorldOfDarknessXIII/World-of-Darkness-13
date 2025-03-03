@@ -17,6 +17,11 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+/obj/structure/window/reinforced/indestructable
+	name = "robust window"
+	flags_1 = NODECONSTRUCT_1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
 /obj/structure/grille/indestructible/screwdriver_act(mob/living/user, obj/item/tool)
 	return NONE
 

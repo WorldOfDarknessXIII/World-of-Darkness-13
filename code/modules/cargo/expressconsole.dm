@@ -108,6 +108,17 @@
 			"desc" = P.desc || P.name // If there is a description, use it. Otherwise use the pack's name.
 		))
 
+/obj/machinery/computer/cargo/express/ui_interact(mob/living/user, datum/tgui/ui)
+	if(iskindred(user))
+		var/mob/living/carbon/human/H = user
+		if(H.clane)
+			if(H.clane.name == "Lasombra")
+				return
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "CargoExpress", name)
+		ui.open()
+
 /obj/machinery/computer/cargo/express/ui_data(mob/user)
 	var/canBeacon = beacon && (isturf(beacon.loc) || ismob(beacon.loc))//is the beacon in a valid location?
 	var/list/data = list()

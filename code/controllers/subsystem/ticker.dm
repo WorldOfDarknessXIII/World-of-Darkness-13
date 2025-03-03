@@ -733,13 +733,13 @@ SUBSYSTEM_DEF(ticker)
 	text2file(login_music, "data/last_round_lobby_music.txt")
 
 /datum/controller/subsystem/ticker/proc/choose_round_end_song()
-	var/list/reboot_sounds = flist("[global.config.directory]/reboot_themes/")
+	var/list/reboot_sounds = flist("sound/roundend/")
 	var/list/possible_themes = list()
 
 	for(var/themes in reboot_sounds)
 		possible_themes += themes
 	if(possible_themes.len)
-		return "[global.config.directory]/reboot_themes/[pick(possible_themes)]"
+		return "sound/roundend/[pick(possible_themes)]"
 
 #undef ROUND_START_MUSIC_LIST
 #undef SS_TICKER_TRAIT
