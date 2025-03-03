@@ -180,15 +180,9 @@
 	invocation = "Ta'gh fara'qha fel d'amar det!"
 
 /datum/action/innate/cult/blood_spell/emp/Activate()
-<<<<<<< HEAD
 	owner.whisper(invocation, language = /datum/language/english)
-	owner.visible_message("<span class='warning'>[owner]'s hand flashes a bright blue!</span>", \
-		"<span class='cultitalic'>You speak the cursed words, emitting an EMP blast from your hand.</span>")
-=======
-	owner.whisper(invocation, language = /datum/language/common)
 	owner.visible_message(span_warning("[owner]'s hand flashes a bright blue!"), \
 		span_cult_italic("You speak the cursed words, emitting an EMP blast from your hand."))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	empulse(owner, 2, 5)
 	charges--
 	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
@@ -225,17 +219,10 @@
 
 /datum/action/innate/cult/blood_spell/dagger/Activate()
 	var/turf/owner_turf = get_turf(owner)
-<<<<<<< HEAD
 	owner.whisper(invocation, language = /datum/language/english)
-	owner.visible_message("<span class='warning'>[owner]'s hand glows red for a moment.</span>", \
-		"<span class='cultitalic'>Your plea for aid is answered, and light begins to shimmer and take form within your hand!</span>")
-	var/obj/item/melee/cultblade/dagger/summoned_blade = new (owner_turf)
-=======
-	owner.whisper(invocation, language = /datum/language/common)
 	owner.visible_message(span_warning("[owner]'s hand glows red for a moment."), \
 		span_cult_italic("Your plea for aid is answered, and light begins to shimmer and take form within your hand!"))
 	var/obj/item/summoned_blade = new summoned_type(owner_turf)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	if(owner.put_in_hands(summoned_blade))
 		to_chat(owner, span_warning("A [summoned_blade] appears in your hand!"))
 	else

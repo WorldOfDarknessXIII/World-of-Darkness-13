@@ -164,19 +164,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/proc/invoke(list/invokers)
 	//This proc contains the effects of the rune as well as things that happen afterwards. If you want it to spawn an object and then delete itself, have both here.
-<<<<<<< HEAD
-	for(var/M in invokers)
-		if(isliving(M))
-			var/mob/living/L = M
-			if(invocation)
-				L.say(invocation, language = /datum/language/english, ignore_spam = TRUE, forced = "cult invocation")
-			if(invoke_damage)
-				L.apply_damage(invoke_damage, BRUTE)
-				to_chat(L, "<span class='cult italic'>[src] saps your strength!</span>")
-		else if(istype(M, /obj/item/toy/plush/narplush))
-			var/obj/item/toy/plush/narplush/P = M
-			P.visible_message("<span class='cult italic'>[P] squeaks loudly!</span>")
-=======
 	for(var/atom/invoker in invokers)
 		if(istype(invoker, /obj/item/toy/plush/narplush))
 			invoker.visible_message(span_cult_italic("[src] squeaks_loudly!"))
@@ -185,12 +172,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 			continue
 		var/mob/living/living_invoker = invoker
 		if(invocation)
-			living_invoker.say(invocation, language = /datum/language/common, ignore_spam = TRUE, forced = "cult invocation")
+			living_invoker.say(invocation, language = /datum/language/english, ignore_spam = TRUE, forced = "cult invocation")
 		if(invoke_damage)
 			living_invoker.apply_damage(invoke_damage, BRUTE)
 			to_chat(living_invoker,  span_cult_italic("[src] saps your strength!"))
 
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	do_invoke_glow()
 
 /obj/effect/rune/proc/do_invoke_glow()

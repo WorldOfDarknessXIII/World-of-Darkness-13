@@ -242,15 +242,6 @@
 /obj/machinery/firealarm/proc/alarm(mob/user)
 	if(!is_operational)
 		return
-<<<<<<< HEAD
-	COOLDOWN_START(src, last_alarm, FIREALARM_COOLDOWN)
-	var/area/A = get_area(src)
-	A.firealert(src)
-	playsound(loc, 'sound/effects/adminhelp.ogg', 75)
-	if(user)
-		log_game("[user] triggered a fire alarm at [COORD(src)]")
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	if(my_area.fire)
 		return //area alarm already active

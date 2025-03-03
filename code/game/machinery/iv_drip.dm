@@ -237,21 +237,11 @@
 	if(!transfer_rate)
 		return
 
-<<<<<<< HEAD
-			// If the human is losing too much blood, beep.
-			if(attached.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
-				visible_message("<span class='hear'>[src] beeps loudly.</span>")
-				playsound(loc, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-			attached.transfer_blood_to(beaker, amount)
-			attached.bloodpool = attached.maxbloodpool
-			update_icon()
-=======
 	// Give reagents
 	if(mode)
 		if(drip_reagents.total_volume)
 			drip_reagents.trans_to(attached, transfer_rate * seconds_per_tick, methods = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
 			update_appearance(UPDATE_ICON)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	// Take blood
 	else if (isliving(attached))

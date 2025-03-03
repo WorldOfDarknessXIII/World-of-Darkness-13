@@ -6,20 +6,9 @@
 	base_icon_state = "jukebox"
 	verb_say = "states"
 	density = TRUE
-<<<<<<< HEAD
-	req_access = null
-	var/active = FALSE
-	var/list/rangers = list()
-	var/stop = 0
-	var/list/songs = list()
-	var/datum/track/selection = null
-	/// Volume of the songs played
-	var/volume = 100
-=======
 	req_access = list(ACCESS_BAR)
 	processing_flags = START_PROCESSING_MANUALLY
 	/// Cooldown between "Error" sound effects being played
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	COOLDOWN_DECLARE(jukebox_error_cd)
 	/// Cooldown between being allowed to play another song
 	COOLDOWN_DECLARE(jukebox_song_cd)
@@ -370,27 +359,6 @@
 	animate(dancer, transform = transforms[num2text(dancer.dir)], time = 1, loop = 0)
 	animate(transform = initial_matrix, time = 2, loop = 0)
 
-<<<<<<< HEAD
-/mob/living/proc/lying_fix()
-	animate(src, transform = null, time = 1, loop = 0)
-	lying_prev = 0
-	if(ischildren)
-		transform = transform.Scale(81/100, 81/100)
-	if(isdwarfy)
-		if(lying_angle != 0)
-			transform = transform.Scale(4/5, 1)
-			transform = transform.Translate(lying_angle == 90 ? 16*((4/5)-1) : -(16*((4/5)-1)), 0) //Makes sure you stand on the tile no matter the size - sand
-		else
-			transform = transform.Scale(1, 4/5)
-			transform = transform.Translate(0, 16*((4/5)-1))
-	if(istower)
-		if(lying_angle != 0)
-			transform = transform.Scale(1.16, 1)
-			transform = transform.Translate(lying_angle == 90 ? 16*(1.16-1) : -(16*(1.16-1)), 0) //Makes sure you stand on the tile no matter the size - sand
-		else
-			transform = transform.Scale(1, 1.16)
-			transform = transform.Translate(0, 16*(1.16-1))
-=======
 /obj/machinery/jukebox/disco/proc/start_dance3(mob/living/dancer, dance_length = 3 SECONDS)
 	var/initially_resting = dancer.resting
 	var/direction_index = 1 //this should allow everyone to dance in the same direction
@@ -401,7 +369,6 @@
 		direction_index++
 		if(direction_index > GLOB.cardinals.len)
 			direction_index = 1
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/machinery/jukebox/disco/proc/dance3(mob/living/dancer, dir)
 	dancer.setDir(dir)

@@ -48,13 +48,8 @@
 	var/my_message
 	if(!message || !user.mind)
 		return
-<<<<<<< HEAD
 	user.whisper("O bidai nabora se[pick("'","`")]sma!", language = /datum/language/english)
-	user.whisper(html_decode(message))
-=======
-	user.whisper("O bidai nabora se[pick("'","`")]sma!", language = /datum/language/common)
 	user.whisper(html_decode(message), filterproof = TRUE)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	var/title = "Acolyte"
 	var/span = "cult italic"
 	var/datum/antagonist/cult/cult_datum = user.mind.has_antag_datum(/datum/antagonist/cult)

@@ -189,52 +189,14 @@
 		return
 	var/list/viable_coworkers = list()
 	var/list/all_coworkers = list()
-<<<<<<< HEAD:code/modules/antagonists/creep/creep.dm
-	var/chosen_department
-	var/their_chosen_department
-	//note that command and sillycone are gone because borgs can't be obsessions and the heads have their respective department. Sorry cap, your place is more with centcom or something
-	if(oldmind.assigned_role in GLOB.ss13)
-		chosen_department = "security"
-	if(oldmind.assigned_role in GLOB.ss13)
-		chosen_department = "engineering"
-	if(oldmind.assigned_role in GLOB.ss13)
-		chosen_department = "medical"
-	if(oldmind.assigned_role in GLOB.anarch_positions)
-		chosen_department = "science"
-	if(oldmind.assigned_role in GLOB.ss13)
-		chosen_department = "supply"
-	if(oldmind.assigned_role in GLOB.neutral_positions)
-		chosen_department = "service"
-	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-		if(!H.mind)
-=======
 	var/our_departments = oldmind.assigned_role.departments_bitflags
 	for(var/mob/living/carbon/human/human_alive in GLOB.alive_mob_list)
 		if(!human_alive.mind)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/modules/antagonists/obsessed/obsessed.dm
 			continue
 		if(human_alive == oldmind.current || human_alive.mind.assigned_role.faction != FACTION_STATION || human_alive.mind.has_antag_datum(/datum/antagonist/obsessed))
 			continue //the jealousy target has to have a job, and not be the obsession or obsessed.
-<<<<<<< HEAD:code/modules/antagonists/creep/creep.dm
-		all_coworkers += H.mind
-		//this won't be called often thankfully.
-		if(H.mind.assigned_role in GLOB.ss13)
-			their_chosen_department = "security"
-		if(H.mind.assigned_role in GLOB.ss13)
-			their_chosen_department = "engineering"
-		if(H.mind.assigned_role in GLOB.ss13)
-			their_chosen_department = "medical"
-		if(H.mind.assigned_role in GLOB.anarch_positions)
-			their_chosen_department = "science"
-		if(H.mind.assigned_role in GLOB.ss13)
-			their_chosen_department = "supply"
-		if(H.mind.assigned_role in GLOB.neutral_positions)
-			their_chosen_department = "service"
-		if(their_chosen_department != chosen_department)
-=======
 		all_coworkers += human_alive.mind
 		if(!(our_departments & human_alive.mind.assigned_role.departments_bitflags))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/modules/antagonists/obsessed/obsessed.dm
 			continue
 		viable_coworkers += human_alive.mind
 

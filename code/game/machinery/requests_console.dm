@@ -200,28 +200,11 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				var/mob/living/L = usr
 				message = L.treat_message(message)["message"]
 
-<<<<<<< HEAD
-		var/radio_freq
-		switch(ckey(to_department))
-			if("bridge")
-				radio_freq = FREQ_COMMAND
-			if("medbay")
-				radio_freq = FREQ_MEDICAL
-			if("science")
-				radio_freq = FREQ_SCIENCE
-			if("engineering")
-				radio_freq = FREQ_ENGINEERING
-			if("security")
-				radio_freq = FREQ_SECURITY
-			if("cargobay", "mining")
-				radio_freq = FREQ_SUPPLY
-=======
 			minor_announce(message, "[department] Announcement:", html_encode = FALSE, sound_override = 'sound/misc/announce_dig.ogg')
 			GLOB.news_network.submit_article(message, department, "Station Announcements", null)
 			usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
 			message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
 			deadchat_broadcast(" made a station announcement from [span_name("[get_area_name(usr, TRUE)]")].", span_name("[usr.real_name]"), usr, message_type=DEADCHAT_ANNOUNCEMENT)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 			COOLDOWN_START(src, announcement_cooldown, ANNOUNCEMENT_COOLDOWN_TIME)
 			announcement_authenticated = FALSE

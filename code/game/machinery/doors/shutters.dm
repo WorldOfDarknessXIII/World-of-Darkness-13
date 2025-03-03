@@ -88,7 +88,6 @@
 	icon_state = "open"
 	density = FALSE
 
-<<<<<<< HEAD
 /obj/machinery/door/poddoor/shutters/armory
 	name = "armory shutters"
 	ertblast = TRUE
@@ -100,7 +99,6 @@
 	ertblast = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	id = 11
-=======
 /obj/machinery/door/poddoor/shutters/window/indestructible
 	name = "hardened windowed shutters"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -109,4 +107,3 @@
 	icon_state = "open"
 	density = FALSE
 	opacity = FALSE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441

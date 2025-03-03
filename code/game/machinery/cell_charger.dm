@@ -3,12 +3,6 @@
 	desc = "It charges power cells."
 	icon = 'icons/obj/machines/cell_charger.dmi'
 	icon_state = "ccharger"
-<<<<<<< HEAD
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 0
-	active_power_usage = 00
-=======
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	power_channel = AREA_USAGE_EQUIP
 	circuit = /obj/item/circuitboard/machine/cell_charger
 	pass_flags = PASSTABLE

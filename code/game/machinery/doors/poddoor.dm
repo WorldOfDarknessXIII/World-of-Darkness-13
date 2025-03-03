@@ -3,14 +3,8 @@
 	desc = "A heavy duty blast door that opens mechanically."
 	icon = 'icons/obj/doors/blastdoor.dmi'
 	icon_state = "closed"
-<<<<<<< HEAD
-	var/id = 1
-	layer = ABOVE_ALL_MOB_LAYER
-	closingLayer = ABOVE_ALL_MOB_LAYER
-=======
 	layer = BLASTDOOR_LAYER
 	closingLayer = CLOSED_BLASTDOOR_LAYER
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	sub_door = TRUE
 	explosion_block = 3
 	heat_proof = TRUE
@@ -38,44 +32,8 @@
 	fire = 100
 	acid = 70
 
-<<<<<<< HEAD
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		if(density)
-			to_chat(user, "<span class='warning'>You need to open [src] before opening its maintenance panel.</span>")
-			return
-		else if(default_deconstruction_screwdriver(user, icon_state, icon_state, W))
-			to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>")
-			return TRUE
-
-	if(panel_open)
-		if(W.tool_behaviour == TOOL_MULTITOOL)
-			var/change_id = input("Set the shutters/blast door/blast door controllers ID. It must be a number between 1 and 100.", "ID", id) as num|null
-			if(change_id)
-				id = clamp(round(change_id, 1), 1, 100)
-				to_chat(user, "<span class='notice'>You change the ID to [id].</span>")
-
-		if(W.tool_behaviour == TOOL_CROWBAR && deconstruction == INTACT)
-			to_chat(user, "<span class='notice'>You start to remove the airlock electronics.</span>")
-			if(do_after(user, 10 SECONDS, target = src))
-				new /obj/item/electronics/airlock(loc)
-				id = null
-				deconstruction = FALSE
-
-		if(W.tool_behaviour == TOOL_WIRECUTTER && deconstruction == FALSE)
-			to_chat(user, "<span class='notice'>You start to remove the internal cables.</span>")
-			if(do_after(user, 10 SECONDS, target = src))
-				deconstruction = TRUE
-
-		if(W.tool_behaviour == TOOL_WELDER && deconstruction == TRUE)
-			to_chat(user, "<span class='notice'>You start tearing apart the [src].</span>")
-			playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
-			if(do_after(user, 15 SECONDS, target = src))
-				new /obj/item/stack/sheet/plasteel(loc, 5)
-				qdel(src)
-=======
 /obj/machinery/door/poddoor/get_save_vars()
 	return ..() + NAMEOF(src, id)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/machinery/door/poddoor/examine(mob/user)
 	. = ..()

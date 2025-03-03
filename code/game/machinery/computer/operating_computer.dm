@@ -9,15 +9,9 @@
 	circuit = /obj/item/circuitboard/computer/operating
 
 	var/obj/structure/table/optable/table
-<<<<<<< HEAD:code/game/machinery/computer/Operating.dm
-	var/obj/machinery/stasis/sbed
 	var/list/advanced_surgeries = list(
 		/datum/surgery/healing/combo/upgraded/femto,
-		/datum/surgery/advanced/lobotomy,
-	)
-=======
-	var/list/advanced_surgeries = list()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441:code/game/machinery/computer/operating_computer.dm
+		/datum/surgery/advanced/lobotomy)
 	var/datum/techweb/linked_techweb
 	light_color = LIGHT_COLOR_BLUE
 

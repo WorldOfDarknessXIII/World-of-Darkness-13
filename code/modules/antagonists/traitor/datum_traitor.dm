@@ -267,29 +267,10 @@
 		kill_objective.find_target()
 		return kill_objective
 
-<<<<<<< HEAD
-/datum/antagonist/traitor/greet()
-	to_chat(owner.current, "<span class='alertsyndie'>You are the [owner.special_role].</span>")
-	owner.announce_objectives()
-	if(should_give_codewords)
-		give_codewords()
-
-/datum/antagonist/traitor/proc/finalize_traitor()
-	switch(traitor_kind)
-		if(TRAITOR_AI)
-			add_law_zero()
-			owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/malf.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
-			//owner.current.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MALF)
-		if(TRAITOR_HUMAN)
-			if(should_equip)
-				equip(silent)
-			owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
-=======
 	var/datum/objective/steal/steal_objective = new()
 	steal_objective.owner = owner
 	steal_objective.find_target()
 	return steal_objective
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /datum/antagonist/traitor/apply_innate_effects(mob/living/mob_override)
 	. = ..()

@@ -262,10 +262,6 @@
 /obj/machinery/recycler/deathtrap
 	name = "dangerous old crusher"
 	obj_flags = CAN_BE_HIT | EMAGGED
-<<<<<<< HEAD
-	crush_damage = 999999
-	flags_1 = NODECONSTRUCT_1
-=======
 	crush_damage = 120
 
 /obj/machinery/recycler/deathtrap/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
@@ -273,7 +269,6 @@
 
 /obj/machinery/recycler/deathtrap/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
 	return NONE
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /obj/item/paper/guides/recycler
 	name = "paper - 'garbage duty instructions'"

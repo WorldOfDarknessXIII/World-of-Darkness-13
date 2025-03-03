@@ -1,29 +1,16 @@
-/datum/antagonist/rev
-<<<<<<< HEAD
+/datum/antagonist/rev //WOD13 TO DO: MAKE SURE THIS WORKS CORRECTLY
 	name = "Kamut"
 	roundend_category = "sabbattites" // if by some miracle revolutionaries without revolution happen
 	antagpanel_category = "Sabbat"
-=======
-	name = "\improper Revolutionary"
-	roundend_category = "revolutionaries" // if by some miracle revolutionaries without revolution happen
-	antagpanel_category = "Revolution"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	job_rank = ROLE_REV
 	antag_moodlet = /datum/mood_event/revolution
 	antag_hud_name = "rev"
-<<<<<<< HEAD
 	var/datum/team/sabbat/sab_team
-
 	/// What message should the player receive when they are being demoted, and the revolution has won?
 	var/victory_message = "The Kamut destroyed Camarillia in San-Francisco."
-=======
-	suicide_cry = "VIVA LA REVOLUTION!!"
-	stinger_sound = 'sound/ambience/antag/revolutionary_tide.ogg'
-	var/datum/team/revolution/rev_team
 
 	/// When this antagonist is being de-antagged, this is the source. Can be a mob (for mindshield/blunt force trauma) or a #define string.
 	var/deconversion_source
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /datum/antagonist/rev/can_be_owned(datum/mind/new_owner)
 	if(new_owner.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
@@ -37,7 +24,7 @@
 /datum/antagonist/rev/admin_add(datum/mind/new_owner, mob/admin)
 	// No revolution exists which means admin adding this will create a new revolution team
 	// This causes problems because revolution teams (currently) require a dynamic datum to process its victory / defeat conditions
-	if(!(locate(/datum/team/revolution) in GLOB.antagonist_teams))
+	if(!(locate(/datum/team/sabbat) in GLOB.antagonist_teams))
 		var/confirm = tgui_alert(admin, "Notice: Revolutions do not function 100% when created via traitor panel instead of dynamic. \
 			The leaders will be able to convert as normal, but the shuttle will not be blocked and there will be no announcements when either side wins. \
 			Are you sure?", "Be Wary", list("Yes", "No"))
@@ -79,12 +66,7 @@
 	. = ..()
 
 /datum/antagonist/rev/greet()
-<<<<<<< HEAD
 	to_chat(owner, "<span class='userdanger'>You are now part of Sabbat! </span>")
-=======
-	. = ..()
-	to_chat(owner, span_userdanger("Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!"))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	owner.announce_objectives()
 
 /datum/antagonist/rev/create_team(datum/team/sabbat/new_team)
@@ -96,15 +78,9 @@
 			if(H.sab_team)
 				sab_team = H.sab_team
 				return
-<<<<<<< HEAD
 		sab_team = new /datum/team/sabbat
 		sab_team.update_objectives()
-		sab_team.update_heads()
-=======
-		rev_team = new /datum/team/revolution
-		rev_team.update_objectives()
-		rev_team.update_rev_heads()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
+		sab_team.update_rev_heads()
 		return
 	if(!istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
@@ -129,11 +105,7 @@
 	new_revhead.silent = TRUE
 	old_owner.add_antag_datum(new_revhead,old_team)
 	new_revhead.silent = FALSE
-<<<<<<< HEAD
 	to_chat(old_owner, "<span class='userdanger'>You are a Ductus now!</span>")
-=======
-	to_chat(old_owner, span_userdanger("You have proved your devotion to revolution! You are a head revolutionary now!"))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /datum/antagonist/rev/get_admin_commands()
 	. = ..()
@@ -198,11 +170,7 @@
 	demote()
 
 /datum/antagonist/rev/head
-<<<<<<< HEAD
 	name = "Ductus"
-=======
-	name = "\improper Head Revolutionary"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	antag_hud_name = "rev_head"
 	job_rank = ROLE_REV_HEAD
 
@@ -323,20 +291,11 @@
 	if(mute)
 		rev_mind.current.set_silence_if_lower(10 SECONDS)
 	if(stun)
-<<<<<<< HEAD
-		if(iscarbon(rev_mind.current))
-			var/mob/living/carbon/carbon_mob = rev_mind.current
-			carbon_mob.silent = max(carbon_mob.silent, 5)
-			carbon_mob.flash_act(1, 1)
-		rev_mind.current.Stun(100)
-	rev_mind.add_antag_datum(/datum/antagonist/rev,sab_team)
-=======
 		rev_mind.current.flash_act(1, 1)
 		rev_mind.current.Stun(10 SECONDS)
 
 	rev_mind.add_memory(/datum/memory/recruited_by_headrev, protagonist = rev_mind.current, antagonist = owner.current)
-	rev_mind.add_antag_datum(/datum/antagonist/rev,rev_team)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
+	rev_mind.add_antag_datum(/datum/antagonist/rev,sab_team)
 	rev_mind.special_role = ROLE_REV
 	return TRUE
 
@@ -349,8 +308,7 @@
 	new_rev.silent = TRUE
 	old_owner.add_antag_datum(new_rev,old_team)
 	new_rev.silent = FALSE
-<<<<<<< HEAD
-	to_chat(old_owner, "<span class='userdanger'>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</span>")
+	to_chat(old_owner, span_userdanger("Revolution has been disappointed of your leader traits! You are a regular revolutionary now!"))
 
 /// Checks if the revolution succeeded, and lets them know.
 /datum/antagonist/rev/proc/announce_victorious()
@@ -363,9 +321,6 @@
 	var/policy = get_policy(ROLE_REV_SUCCESSFUL)
 	if (policy)
 		to_chat(owner, policy)
-=======
-	to_chat(old_owner, span_userdanger("Revolution has been disappointed of your leader traits! You are a regular revolutionary now!"))
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /datum/antagonist/rev/farewell()
 	if(ishuman(owner.current))
@@ -388,20 +343,9 @@
 		owner.current.visible_message(span_deconversion_message("The frame beeps contentedly, suppressing the disloyal personality traits from the MMI before initalizing it."), null, null, null, owner.current)
 		to_chat(owner, span_userdanger("The frame's firmware detects and suppresses your unwanted personality traits! You feel more content with the leadership around these parts."))
 
-<<<<<<< HEAD
 //blunt trauma deconversions call this through species.dm spec_attacked_by()
 /datum/antagonist/rev/proc/remove_revolutionary(borged, deconverter)
 	return
-=======
-/// Handles rev removal via IC methods such as borging, mindshielding, blunt force trauma to the head or revs losing.
-/datum/antagonist/rev/proc/remove_revolutionary(deconverter)
-	owner.current.log_message("has been deconverted from the revolution by [ismob(deconverter) ? key_name(deconverter) : deconverter]!", LOG_ATTACK, color=COLOR_CULT_RED)
-	if(deconverter == DECONVERTER_BORGED)
-		message_admins("[ADMIN_LOOKUPFLW(owner.current)] has been borged while being a [name]")
-	owner.special_role = null
-	deconversion_source = deconverter
-	owner.remove_antag_datum(type)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /// This is for revheads, for which they ordinarily shouldn't be deconverted outside of revs losing. As an exception, forceborging can de-headrev them.
 /datum/antagonist/rev/head/remove_revolutionary(deconverter)
@@ -434,15 +378,8 @@
 		else
 			to_chat(carbon_owner, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
 
-<<<<<<< HEAD
 /datum/team/sabbat
 	name = "Revolution"
-=======
-/datum/team/revolution
-	name = "\improper Revolution"
-
-	/// Maximum number of headrevs
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	var/max_headrevs = 3
 
 	/// List of all ex-headrevs. Useful because dynamic removes antag status when it ends, so this can be kept for the roundend report.
@@ -451,17 +388,13 @@
 	/// List of all ex-revs. Useful because dynamic removes antag status when it ends, so this can be kept for the roundend report.
 	var/list/ex_revs = list()
 
-<<<<<<< HEAD
-/datum/team/sabbat/proc/update_objectives(initial = FALSE)
-=======
 	/// The objective of the heads of staff, aka to kill the headrevs.
 	var/list/datum/objective/mutiny/heads_objective = list()
 
 /// Proc called on periodic timer.
 /// Updates the rev team's objectives to make sure all heads are targets, useful when new heads latejoin.
 /// Propagates all objectives to all revs.
-/datum/team/revolution/proc/update_objectives(initial = FALSE)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
+/datum/team/sabbat/proc/update_objectives(initial = FALSE)
 	var/untracked_heads = SSjob.get_all_heads()
 
 	for(var/datum/objective/mutiny/mutiny_objective in objectives)
@@ -478,19 +411,10 @@
 		var/datum/antagonist/rev/rev_antag = rev_member.has_antag_datum(/datum/antagonist/rev)
 		rev_antag.objectives |= objectives
 
-<<<<<<< HEAD
-/datum/team/sabbat/proc/head_revolutionaries()
-	. = list()
-	for(var/datum/mind/M in members)
-		if(M.has_antag_datum(/datum/antagonist/rev/head))
-			. += M
-
-/datum/team/sabbat/proc/update_heads()
-=======
 	addtimer(CALLBACK(src, PROC_REF(update_objectives)), HEAD_UPDATE_PERIOD, TIMER_UNIQUE)
 
 /// Returns a list of all headrevs.
-/datum/team/revolution/proc/get_head_revolutionaries()
+/datum/team/sabbat/proc/get_head_revolutionaries()
 	var/list/headrev_list = list()
 
 	for(var/datum/mind/revolutionary in members)
@@ -502,8 +426,7 @@
 /// Proc called on periodic timer.
 /// Tries to make sure an appropriate number of headrevs are part of the revolution.
 /// Will promote up revs to headrevs as necessary based on the hard max_headrevs cap and the soft cap based on the number of heads of staff and sec.
-/datum/team/revolution/proc/update_rev_heads()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
+/datum/team/sabbat/proc/update_rev_heads()
 	if(SSticker.HasRoundStarted())
 		var/list/datum/mind/head_revolutionaries = get_head_revolutionaries()
 		var/list/datum/mind/heads = SSjob.get_all_heads()
@@ -529,12 +452,7 @@
 
 	addtimer(CALLBACK(src, PROC_REF(update_rev_heads)),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
 
-<<<<<<< HEAD
 /datum/team/sabbat/proc/save_members()
-=======
-/// Saves a list of all ex-headrevs and a list of all revs.
-/datum/team/revolution/proc/save_members()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	ex_headrevs = get_antag_minds(/datum/antagonist/rev/head, TRUE)
 	ex_revs = get_antag_minds(/datum/antagonist/rev, TRUE)
 
@@ -546,21 +464,7 @@
 	return TRUE
 
 /// Checks if heads have won
-<<<<<<< HEAD
 /datum/team/sabbat/proc/check_heads_victory()
-	for(var/datum/mind/rev_mind in head_revolutionaries())
-		var/turf/rev_turf = get_turf(rev_mind.current)
-		if(!considered_afk(rev_mind) && considered_alive(rev_mind) && is_station_level(rev_turf.z))
-			if(ishuman(rev_mind.current))
-				return FALSE
-	return TRUE
-
-/// Updates the state of the world depending on if revs won or loss.
-/// Returns who won, at which case this method should no longer be called.
-/// If revs_win_injection_amount is passed, then that amount of threat will be added if the revs win.
-/datum/team/sabbat/proc/process_victory(revs_win_injection_amount)
-=======
-/datum/team/revolution/proc/check_heads_victory()
 	// List of headrevs we're currently tracking
 	var/list/included_headrevs = list()
 	// List of current headrevs
@@ -592,8 +496,7 @@
 
 /// Updates the state of the world depending on if revs won or loss.
 /// Returns who won, at which case this method should no longer be called.
-/datum/team/revolution/proc/process_victory()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
+/datum/team/sabbat/proc/process_victory()
 	if (check_rev_victory())
 		victory_effects()
 		return REVOLUTION_VICTORY
@@ -609,66 +512,19 @@
 	save_members()
 
 	// Remove everyone as a revolutionary
-<<<<<<< HEAD
-	for (var/_rev_mind in members)
-		var/datum/mind/rev_mind = _rev_mind
-		if (rev_mind.has_antag_datum(/datum/antagonist/rev))
-			var/datum/antagonist/rev/rev_antag = rev_mind.has_antag_datum(/datum/antagonist/rev)
-			rev_antag.remove_revolutionary(FALSE, . == STATION_VICTORY ? DECONVERTER_STATION_WIN : DECONVERTER_REVS_WIN)
-			LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former [(rev_mind in ex_headrevs) ? "head revolutionary" : "revolutionary"]</span>")
-
-	if (. == STATION_VICTORY)
-		// If the revolution was quelled, make rev heads unable to be revived through pods
-		for (var/_rev_head_mind in ex_revs)
-			var/datum/mind/rev_head_mind = _rev_head_mind
-			var/mob/living/carbon/rev_head_body = rev_head_mind.current
-			if(istype(rev_head_body) && rev_head_body.stat == DEAD)
-				rev_head_body.makeUncloneable()
-
-		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
-		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
-	else
-		for (var/_player in GLOB.player_list)
-			var/mob/player = _player
-			var/datum/mind/mind = player.mind
-
-			if (isnull(mind))
-				continue
-
-			if (!(mind.assigned_role in GLOB.command_positions + GLOB.ss13))
-				continue
-
-			var/mob/living/carbon/target_body = mind.current
-
-			mind.add_antag_datum(/datum/antagonist/revolution_enemy)
-
-			if (!istype(target_body))
-				continue
-
-			if (target_body.stat == DEAD)
-				target_body.makeUncloneable()
-=======
 	for (var/datum/mind/rev_mind as anything in members)
 		var/datum/antagonist/rev/rev_antag = rev_mind.has_antag_datum(/datum/antagonist/rev)
 		if (!isnull(rev_antag))
 			rev_antag.remove_revolutionary(DECONVERTER_STATION_WIN)
 			if(rev_mind in ex_headrevs)
 				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former head revolutionary</span>")
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 			else
 				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former revolutionary</span>")
 
-<<<<<<< HEAD
-		for (var/job_name in GLOB.command_positions + GLOB.ss13)
-			var/datum/job/job = SSjob.GetJob(job_name)
-			job.allow_bureaucratic_error = FALSE
-			job.total_positions = 0
-=======
 	defeat_effects()
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 /// Handles any pre-round-ending effects on rev victory. An example use case is recording memories.
-/datum/team/revolution/proc/victory_effects()
+/datum/team/sabbat/proc/victory_effects()
 	for(var/datum/mind/headrev_mind as anything in ex_headrevs)
 		var/mob/living/real_headrev = headrev_mind.current
 		if(isnull(real_headrev))
@@ -676,7 +532,7 @@
 		add_memory_in_range(real_headrev, 5, /datum/memory/revolution_rev_victory, protagonist = real_headrev)
 
 /// Handles effects of revs losing, such as making ex-headrevs unrevivable and setting up head of staff memories.
-/datum/team/revolution/proc/defeat_effects()
+/datum/team/sabbat/proc/defeat_effects()
 	// If the revolution was quelled, make rev heads unable to be revived through pods
 	for (var/datum/mind/rev_head as anything in ex_headrevs)
 		if(!isnull(rev_head.current))
@@ -790,13 +646,11 @@
 	heads_report += "</table>"
 	return common_part + heads_report
 
-<<<<<<< HEAD
 /datum/team/sabbat/is_gamemode_hero()
 	return SSticker.mode.name == "revolution"
-=======
+
 /datum/outfit/revolutionary
 	name = "Revolutionary (Preview only)"
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 
 	uniform = /obj/item/clothing/under/costume/soviet
 	head = /obj/item/clothing/head/costume/ushanka

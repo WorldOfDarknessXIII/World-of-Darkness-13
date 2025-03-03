@@ -480,15 +480,8 @@
 	if(operating)
 		return FALSE
 	operating = TRUE
-<<<<<<< HEAD
-	var/turf/T = get_turf(src)
-	if(T)
-		T.unpassable -= src
-	do_animate("opening")
-=======
 	use_energy(active_power_usage)
 	run_animation(DOOR_OPENING_ANIMATION)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	set_opacity(0)
 	var/passable_delay = animation_segment_delay(DOOR_OPENING_PASSABLE)
 	SLEEP_NOT_DEL(passable_delay)
@@ -527,15 +520,7 @@
 
 	operating = TRUE
 
-<<<<<<< HEAD
-	var/turf/T = get_turf(src)
-	if(T)
-		T.unpassable += src
-
-	do_animate("closing")
-=======
 	run_animation(DOOR_CLOSING_ANIMATION)
->>>>>>> d1ccb530b21a3c41ef5ec37ef5f9330d6e562441
 	layer = closingLayer
 	var/unpassable_delay = animation_segment_delay(DOOR_CLOSING_UNPASSABLE)
 	SLEEP_NOT_DEL(unpassable_delay)
