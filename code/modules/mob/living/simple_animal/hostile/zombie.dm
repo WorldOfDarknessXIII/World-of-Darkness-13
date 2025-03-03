@@ -224,3 +224,10 @@
 		return TRUE
 	visible_message("<span class='warning'>[src] remains unsouled...</span>")
 	return FALSE
+
+/datum/outfit/corpse_doctor
+	name = "Corpse Doctor"
+	suit = /obj/item/clothing/suit/toggle/labcoat
+	uniform = /obj/item/clothing/under/rank/medical/doctor
+	shoes = /obj/item/clothing/shoes/sneakers/white
+	back = /obj/item/storage/backpack/medic
