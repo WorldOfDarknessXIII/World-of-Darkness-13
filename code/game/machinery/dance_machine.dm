@@ -6,7 +6,7 @@
 	base_icon_state = "jukebox"
 	verb_say = "states"
 	density = TRUE
-	req_access = list(ACCESS_BAR)
+	req_access = null
 	processing_flags = START_PROCESSING_MANUALLY
 	/// Cooldown between "Error" sound effects being played
 	COOLDOWN_DECLARE(jukebox_error_cd)

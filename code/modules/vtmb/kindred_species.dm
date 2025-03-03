@@ -900,3 +900,6 @@
 
 	if(iskindred(being_bitten))
 		return COMPONENT_RESIST_VAMPIRE_KISS
+
+/obj/item/organ/brain/vampire
+	maxHealth = 1000 * STANDARD_ORGAN_THRESHOLD
