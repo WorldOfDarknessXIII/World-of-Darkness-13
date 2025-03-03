@@ -196,7 +196,7 @@
 	invocation_type = INVOCATION_WHISPER
 	range = 20
 	cooldown_min = 20 //10 deciseconds reduction per rank
-	projectile_type = /obj/projectile/magic/aoe/fireball/baali
+	projectile_type = /obj/projectile/magic/fireball/baali
 	base_icon_state = "infernaball"
 	action_icon_state = "infernaball0"
 	sound = 'sound/magic/fireball.ogg'
