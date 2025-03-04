@@ -90,7 +90,7 @@
 
 	. = ..()
 
-	if(ai.client && !ai.multicam_on)
+	if(ai.client)
 		ai.client.set_eye(src)
 	update_ai_detect_hud()
 	//Holopad
@@ -101,8 +101,6 @@
 
 	if(ai.camera_light_on)
 		ai.light_cameras()
-	if(ai.master_multicam)
-		ai.master_multicam.refresh_view()
 
 /mob/eye/camera/ai/update_visibility()
 	if(ai)
@@ -140,7 +138,7 @@
 	if(!isAI(usr))
 		return
 	var/mob/living/silicon/ai/AI = usr
-	if(AI.eyeobj && (AI.multicam_on || (AI.client.eye == AI.eyeobj)) && (AI.eyeobj.z == z))
+	if(AI.eyeobj && ((AI.client.eye == AI.eyeobj)) && (AI.eyeobj.z == z))
 		AI.ai_tracking_tool.reset_tracking()
 		if (isturf(loc) || isturf(src))
 			AI.eyeobj.setLoc(src)

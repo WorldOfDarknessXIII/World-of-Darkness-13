@@ -129,18 +129,6 @@
 	/// Action to deploy to the last shell the AI used
 	VAR_FINAL/datum/action/innate/deploy_last_shell/redeploy_action = new()
 
-
-	/* MULTICAMERA */
-	/// If the AI is in multicamera mode
-	VAR_FINAL/multicam_on = FALSE
-	/// Maximum multicamera windows the AI can have open
-	var/max_multicams = 6
-	/// The multicamera window that the AI is currently using
-	VAR_FINAL/atom/movable/screen/movable/pic_in_pic/ai/master_multicam
-	/// All of the AI's currently open multicamera windows
-	VAR_FINAL/list/atom/movable/screen/movable/pic_in_pic/ai/multicam_screens = list()
-
-
 	/* ROBOT CONTROL */
 	/// UI for robot controls
 	VAR_FINAL/datum/robot_control/robot_control

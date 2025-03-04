@@ -152,17 +152,6 @@ ADMIN_VERB(toggle_enter, R_SERVER, "Toggle Entering", "Toggle the ability to ent
 	message_admins("[key_name_admin(user)] toggled new player game entering [SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "OFF" : "ON"].")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Entering", "[!SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
-ADMIN_VERB(toggle_ai, R_SERVER, "Toggle AI", "Toggle the ability to choose AI jobs.", ADMIN_CATEGORY_SERVER)
-	var/alai = CONFIG_GET(flag/allow_ai)
-	CONFIG_SET(flag/allow_ai, !alai)
-	if (alai)
-		to_chat(world, span_bold("The AI job is no longer chooseable."), confidential = TRUE)
-	else
-		to_chat(world, "<B>The AI job is chooseable now.</B>", confidential = TRUE)
-	log_admin("[key_name(user)] toggled AI allowed.")
-	world.update_status()
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle AI", "[!alai ? "Disabled" : "Enabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
-
 ADMIN_VERB(toggle_respawn, R_SERVER, "Toggle Respawn", "Toggle the ability to respawn.", ADMIN_CATEGORY_SERVER)
 	var/respawn_state = CONFIG_GET(flag/allow_respawn)
 	var/new_state = -1

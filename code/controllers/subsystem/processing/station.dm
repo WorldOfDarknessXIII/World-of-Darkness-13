@@ -111,9 +111,6 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		if(!(initial(trait_typepath.trait_flags) & STATION_TRAIT_SPACE_BOUND) && !SSmapping.is_planetary()) //we're in space but we can't do space ;_;
 			continue
 
-		if(!(initial(trait_typepath.trait_flags) & STATION_TRAIT_REQUIRES_AI) && !CONFIG_GET(flag/allow_ai)) //can't have AI traits without AI
-			continue
-
 		if(ispath(trait_typepath, /datum/station_trait/random_event_weight_modifier)) //Don't add event modifiers for events that can't occur on our map.
 			var/datum/station_trait/random_event_weight_modifier/random_trait_typepath = trait_typepath
 			var/datum/round_event_control/event_to_check = initial(random_trait_typepath.event_control_path)

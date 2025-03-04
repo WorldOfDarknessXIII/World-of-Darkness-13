@@ -174,10 +174,10 @@
 	head_of_staff_access = ACCESS_HOP
 	department_access = list(ACCESS_SERVICE)
 
+//WOD13TODO: kill these
 /datum/job_department/silicon
 	department_name = DEPARTMENT_SILICON
 	department_bitflags = DEPARTMENT_BITFLAG_SILICON
-	department_head = /datum/job/ai
 	department_experience_type = EXP_TYPE_SILICON
 	display_order = 8
 	label_class = "silicon"

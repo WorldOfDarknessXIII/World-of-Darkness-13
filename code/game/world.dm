@@ -394,8 +394,6 @@ GLOBAL_PROTECT(tracy_init_reason)
 			new_status += "<b>[server_name]</b> "
 		if(CONFIG_GET(flag/allow_respawn))
 			features += "respawn" // show "respawn" regardless of "respawn as char" or "free respawn"
-		if(!CONFIG_GET(flag/allow_ai))
-			features += "AI disabled"
 		hostedby = CONFIG_GET(string/hostedby)
 
 	if (CONFIG_GET(flag/station_name_in_hub_entry))

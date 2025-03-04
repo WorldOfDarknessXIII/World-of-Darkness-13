@@ -153,26 +153,6 @@
 	var/mob/living/silicon/S = usr
 	S.toggle_sensors()
 
-/atom/movable/screen/ai/multicam
-	name = "Multicamera Mode"
-	icon_state = "multicam"
-
-/atom/movable/screen/ai/multicam/Click()
-	if(..())
-		return
-	var/mob/living/silicon/ai/AI = usr
-	AI.toggle_multicam()
-
-/atom/movable/screen/ai/add_multicam
-	name = "New Camera"
-	icon_state = "new_cam"
-
-/atom/movable/screen/ai/add_multicam/Click()
-	if(..())
-		return
-	var/mob/living/silicon/ai/AI = usr
-	AI.drop_new_multicam()
-
 /atom/movable/screen/ai/floor_indicator
 	icon_state = "zindicator"
 	screen_loc = ui_ai_floor_indicator
@@ -325,14 +305,4 @@
 //Medical/Security sensors
 	using = new /atom/movable/screen/ai/sensors(null, src)
 	using.screen_loc = ui_ai_sensor
-	static_inventory += using
-
-//Multicamera mode
-	using = new /atom/movable/screen/ai/multicam(null, src)
-	using.screen_loc = ui_ai_multicam
-	static_inventory += using
-
-//Add multicamera camera
-	using = new /atom/movable/screen/ai/add_multicam(null, src)
-	using.screen_loc = ui_ai_add_multicam
 	static_inventory += using

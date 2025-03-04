@@ -31,21 +31,6 @@
 	report_message = "We have introduced a natural countermeasure to reduce the number of rodents on board your station."
 	trait_to_give = STATION_TRAIT_SPIDER_INFESTATION
 
-/datum/station_trait/unique_ai
-	name = "Unique AI"
-	trait_type = STATION_TRAIT_NEUTRAL
-	trait_flags = parent_type::trait_flags | STATION_TRAIT_REQUIRES_AI
-	weight = 5
-	show_in_report = TRUE
-	report_message = "For experimental purposes, this station AI might show divergence from default lawset. Do not meddle with this experiment, we've removed \
-		access to your set of alternative upload modules because we know you're already thinking about meddling with this experiment."
-	trait_to_give = STATION_TRAIT_UNIQUE_AI
-
-/datum/station_trait/unique_ai/on_round_start()
-	. = ..()
-	for(var/mob/living/silicon/ai/ai as anything in GLOB.ai_list)
-		ai.show_laws()
-
 /datum/station_trait/ian_adventure
 	name = "Ian's Adventure"
 	trait_type = STATION_TRAIT_NEUTRAL

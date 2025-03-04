@@ -49,7 +49,6 @@
 	// /mob/living/silicon/ai/apply_prefs_job() uses these to set these procs at mapload
 	// this is used when a person is being inserted into an AI core during a round
 	if(client)
-		INVOKE_ASYNC(src, PROC_REF(apply_pref_name), /datum/preference/name/ai, client)
 		INVOKE_ASYNC(src, PROC_REF(apply_pref_hologram_display), client)
 
 	INVOKE_ASYNC(src, PROC_REF(set_core_display_icon))
@@ -865,12 +864,9 @@
 		return
 
 	if(ismovable(new_eye))
-		if(new_eye != GLOB.ai_camera_room_landmark)
-			end_multicam()
 		client.perspective = EYE_PERSPECTIVE
 		client.set_eye(new_eye)
 	else
-		end_multicam()
 		if(isturf(loc))
 			if(eyeobj)
 				client.set_eye(eyeobj)
@@ -1018,11 +1014,6 @@
 /mob/living/silicon/ai/proc/camera_visibility(mob/eye/camera/ai/moved_eye)
 	GLOB.cameranet.visibility(moved_eye)
 
-/mob/living/silicon/ai/forceMove(atom/destination)
-	. = ..()
-	if(.)
-		end_multicam()
-
 /mob/living/silicon/ai/up()
 	set name = "Move Upwards"
 	set category = "IC"
@@ -1066,14 +1057,6 @@
 
 /mob/living/silicon/on_handsblocked_end()
 	return // AIs have no hands
-
-/mob/living/silicon/ai/get_exp_list(minutes)
-	. = ..()
-
-	var/datum/job/ai/ai_job_ref = SSjob.get_job_type(/datum/job/ai)
-
-	.[ai_job_ref.title] = minutes
-
 
 /mob/living/silicon/ai/GetVoice()
 	. = ..()

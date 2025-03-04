@@ -341,23 +341,6 @@ SUBSYSTEM_DEF(job)
 		if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
 			job_debug("JOBS: Command Job is now full, Job: [job], Positions: [job.current_positions], Limit: [job.spawn_positions]")
 
-/// Attempts to fill out all available AI positions.
-/datum/controller/subsystem/job/proc/fill_ai_positions()
-	var/datum/job/ai_job = get_job(JOB_AI)
-	if(!ai_job)
-		return
-	// In byond for(in to) loops, the iteration is inclusive so we need to stop at ai_job.total_positions - 1
-	for(var/i in ai_job.current_positions to ai_job.total_positions - 1)
-		for(var/level in level_order)
-			var/list/candidates = list()
-			candidates = find_occupation_candidates(ai_job, level)
-			if(candidates.len)
-				var/mob/dead/new_player/candidate = pick(candidates)
-				// Eligibility checks done as part of find_occupation_candidates
-				if(assign_role(candidate, get_job_type(/datum/job/ai), do_eligibility_checks = FALSE))
-					break
-
-
 /** Proc divide_occupations
  *  fills var "assigned_role" for all ready players.
  *  This proc must not have any side effect besides of modifying "assigned_role".
@@ -840,10 +823,6 @@ SUBSYSTEM_DEF(job)
 	// of having at least one leadership role.
 	if(head_count == 0)
 		force_one_head_assignment()
-
-	// Fill out all AI positions.
-	job_debug("APP: Filling all AI positions")
-	fill_ai_positions()
 
 /datum/controller/subsystem/job/proc/assign_all_overflow_positions()
 	job_debug("OVRFLW: Assigning all overflow roles.")

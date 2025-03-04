@@ -63,10 +63,6 @@
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 	)
-	restricted_roles = list(
-		JOB_AI,
-		JOB_CYBORG,
-	)
 	required_candidates = 1
 	weight = 11
 	cost = 5
@@ -86,7 +82,6 @@
 	antag_flag = ROLE_PROVOCATEUR
 	antag_flag_override = ROLE_REV_HEAD
 	restricted_roles = list(
-		JOB_AI,
 		JOB_CAPTAIN,
 		JOB_CHIEF_ENGINEER,
 		JOB_CHIEF_MEDICAL_OFFICER,
@@ -101,7 +96,6 @@
 		JOB_WARDEN,
 	)
 	enemy_roles = list(
-		JOB_AI,
 		JOB_CYBORG,
 		JOB_CAPTAIN,
 		JOB_DETECTIVE,
@@ -194,10 +188,6 @@
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 	)
-	restricted_roles = list(
-		JOB_AI,
-		JOB_CYBORG,
-	)
 	required_candidates = 1
 	weight = 8
 	cost = 6
@@ -235,10 +225,6 @@
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
-	)
-	restricted_roles = list(
-		JOB_AI,
-		JOB_CYBORG,
 	)
 	required_candidates = 1
 	weight = 2

@@ -19,13 +19,6 @@
 	..()
 	last_mind = mind
 
-
-//AI
-/mob/living/silicon/ai/mind_initialize()
-	. = ..()
-	mind.set_assigned_role(SSjob.get_job_type(/datum/job/ai))
-
-
 //BORG
 /mob/living/silicon/robot/mind_initialize()
 	. = ..()

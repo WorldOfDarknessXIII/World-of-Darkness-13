@@ -19,10 +19,6 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 	)
-	restricted_roles = list(
-		JOB_AI,
-		JOB_CYBORG,
-	)
 	required_candidates = 1
 	weight = 5
 	cost = 8 // Avoid raising traitor threat above this, as it is the default low cost ruleset.
@@ -43,52 +39,6 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 		GLOB.pre_setup_antags += M.mind
 	return TRUE
 
-//////////////////////////////////////////////
-//                                          //
-//            MALFUNCTIONING AI             //
-//                                          //
-//////////////////////////////////////////////
-
-/datum/dynamic_ruleset/roundstart/malf_ai
-	name = "Malfunctioning AI"
-	antag_flag = ROLE_MALF
-	antag_datum = /datum/antagonist/malf_ai
-	minimum_required_age = 14
-	exclusive_roles = list(JOB_AI)
-	required_candidates = 1
-	weight = 3
-	cost = 18
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
-	antag_cap = 1
-	flags = HIGH_IMPACT_RULESET
-
-/datum/dynamic_ruleset/roundstart/malf_ai/ready(forced)
-	var/datum/job/ai_job = SSjob.get_job_type(/datum/job/ai)
-
-	// If we're not forced, we're going to make sure we can actually have an AI in this shift,
-	if(!forced && min(ai_job.total_positions - ai_job.current_positions, ai_job.spawn_positions) <= 0)
-		log_dynamic("FAIL: [src] could not run, because there is nobody who wants to be an AI")
-		return FALSE
-
-	return ..()
-
-/datum/dynamic_ruleset/roundstart/malf_ai/pre_execute(population)
-	. = ..()
-
-	var/datum/job/ai_job = SSjob.get_job_type(/datum/job/ai)
-	// Maybe a bit too pedantic, but there should never be more malf AIs than there are available positions, spawn positions or antag cap allocations.
-	var/num_malf = min(get_antag_cap(population), min(ai_job.total_positions - ai_job.current_positions, ai_job.spawn_positions))
-	for (var/i in 1 to num_malf)
-		if(candidates.len <= 0)
-			break
-		var/mob/new_malf = pick_n_take(candidates)
-		assigned += new_malf.mind
-		new_malf.mind.special_role = ROLE_MALF
-		GLOB.pre_setup_antags += new_malf.mind
-		// We need an AI for the malf roundstart ruleset to execute. This means that players who get selected as malf AI get priority, because antag selection comes before role selection.
-		LAZYADDASSOC(SSjob.dynamic_forced_occupations, new_malf, "AI")
-	return TRUE
-
 //////////////////////////////////////////
 //                                      //
 //           BLOOD BROTHERS             //
@@ -106,10 +56,6 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
-	)
-	restricted_roles = list(
-		JOB_AI,
-		JOB_CYBORG,
 	)
 	weight = 5
 	cost = 8
@@ -157,10 +103,6 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 	)
-	restricted_roles = list(
-		JOB_AI,
-		JOB_CYBORG,
-	)
 	required_candidates = 1
 	weight = 3
 	cost = 16
@@ -204,10 +146,6 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
-	)
-	restricted_roles = list(
-		JOB_AI,
-		JOB_CYBORG,
 	)
 	required_candidates = 1
 	weight = 3
@@ -319,7 +257,6 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	antag_datum = /datum/antagonist/cult
 	minimum_required_age = 14
 	restricted_roles = list(
-		JOB_AI,
 		JOB_CAPTAIN,
 		JOB_CHAPLAIN,
 		JOB_CYBORG,
@@ -494,7 +431,6 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	antag_datum = /datum/antagonist/rev/head
 	minimum_required_age = 14
 	restricted_roles = list(
-		JOB_AI,
 		JOB_CAPTAIN,
 		JOB_CHIEF_ENGINEER,
 		JOB_CHIEF_MEDICAL_OFFICER,

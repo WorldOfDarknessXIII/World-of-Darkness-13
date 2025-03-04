@@ -35,7 +35,7 @@
 		balloon_alert(user, "invalid access!")
 		return
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
-		check_jobban = list(ROLE_OPERATIVE, JOB_AI),
+		check_jobban = list(ROLE_OPERATIVE),
 		poll_time = 20 SECONDS,
 		checked_target = src,
 		ignore_category = POLL_IGNORE_SYNDICATE,

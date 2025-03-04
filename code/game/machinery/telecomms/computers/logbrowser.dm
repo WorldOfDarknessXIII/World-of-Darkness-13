@@ -73,10 +73,6 @@
 				else if(ispath(mobtype, /mob/living/basic/slime))
 					race = "Slime"
 
-				// sometimes M gets deleted prematurely for AIs... just check the job
-				else if(ispath(mobtype, /mob/living/silicon) || packet.parameters["job"] == JOB_AI)
-					race = "Artificial Life"
-
 				else if(isobj(mobtype))
 					race = "Machinery"
 

@@ -112,17 +112,6 @@
 /datum/preference/name/cyborg/create_default_value()
 	return DEFAULT_CYBORG_NAME
 
-/datum/preference/name/ai
-	savefile_key = "ai_name"
-
-	allow_numbers = TRUE
-	explanation = "AI name"
-	group = "silicons"
-	relevant_job = /datum/job/ai
-
-/datum/preference/name/ai/create_default_value()
-	return pick(GLOB.ai_names)
-
 /datum/preference/name/religion
 	savefile_key = "religion_name"
 

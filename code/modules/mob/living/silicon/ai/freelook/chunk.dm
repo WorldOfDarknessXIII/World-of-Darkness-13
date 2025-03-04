@@ -56,7 +56,7 @@
 /**
  * Updates the chunk, makes sure that it doesn't update too much. If the chunk isn't being watched it will
  * instead be flagged to update the next time an AI Eye moves near it.
- * 
+ *
  * update_delay_buffer is used for cameras that are moving around, which are cyborg inbuilt cameras and
  * mecha onboard cameras. This buffer should be usually lower than UPDATE_BUFFER_TIME because
  * otherwise a moving camera can run out of its own view before updating static.
@@ -106,7 +106,7 @@
 		obscuredTurfs -= visible_turf
 
 	for(var/turf/obscured_turf as anything in newly_obscured_turfs)
-		if(obscuredTurfs[obscured_turf] || istype(obscured_turf, /turf/open/ai_visible))
+		if(obscuredTurfs[obscured_turf])
 			continue
 
 		var/image/static_image = turfs[obscured_turf]

@@ -270,8 +270,6 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 			switch(new_character.mind.assigned_role.type)
 				if(/datum/job/cyborg)//More rigging to make em' work and check if they're traitor.
 					new_character = new_character.Robotize(TRUE)
-				if(/datum/job/ai)
-					new_character = new_character.AIize()
 				else
 					if(!traitordatum) // Already equipped there.
 						SSjob.equip_rank(new_character, new_character.mind.assigned_role, new_character.client)//Or we simply equip them.

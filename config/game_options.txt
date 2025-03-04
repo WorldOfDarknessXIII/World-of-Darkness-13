@@ -162,14 +162,6 @@ EVENTS_FREQUENCY_LOWER 1500
 ## Defaults to 4200 deciseconds or 7 minutes
 EVENTS_FREQUENCY_UPPER 4200
 
-## AI ###
-
-## Allow the AI job to be picked.
-ALLOW_AI
-
-## Allow the AI Multicamera feature to be used by AI players
-ALLOW_AI_MULTICAM
-
 ## Secborg ###
 ## Uncomment to prevent the security cyborg model from being chosen
 #DISABLE_SECBORG

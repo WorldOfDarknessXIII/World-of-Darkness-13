@@ -337,15 +337,6 @@ const FunTab = (props) => {
           </Stack.Item>
           <Stack.Item>
             <Button
-              icon="robot"
-              lineHeight={lineHeightNormal}
-              width={buttonWidthNormal}
-              content="Triple AI mode"
-              onClick={() => act('tripleAI')}
-            />
-          </Stack.Item>
-          <Stack.Item>
-            <Button
               icon="bullhorn"
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
