@@ -50,7 +50,7 @@
 		/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind = 50,
 		/obj/item/reagent_containers/cup/soda_cans/monkey_energy = 30,
 		/obj/item/reagent_containers/cup/soda_cans/volt_energy = 15,
-		/obj/item/reagent_containers/cup/soda_cans/thirteenloko = 5, 
+		/obj/item/reagent_containers/cup/soda_cans/thirteenloko = 5,
 	)
 
 /obj/item/storage/cans/sixenergydrink/PopulateContents()
@@ -125,7 +125,7 @@
 		/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind = 15,
 		/obj/item/reagent_containers/cup/soda_cans/monkey_energy = 15,
 		/obj/item/reagent_containers/cup/soda_cans/volt_energy = 10,
-		/obj/item/reagent_containers/cup/soda_cans/thirteenloko = 5, 
+		/obj/item/reagent_containers/cup/soda_cans/thirteenloko = 5,
 	)
 
 /obj/item/storage/cans/sixgamerdrink/PopulateContents()
@@ -140,8 +140,7 @@
 		/datum/computer_file/program/themeify,
 		/datum/computer_file/program/filemanager,
 		/datum/computer_file/program/notepad,
-		/datum/computer_file/program/arcade/eazy,
-		/datum/computer_file/program/mafia,
+		/datum/computer_file/program/arcade/eazy
 	)
 	start_open = FALSE
 
