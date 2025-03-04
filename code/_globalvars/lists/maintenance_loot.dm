@@ -1,7 +1,6 @@
 //as of:10/28/2019:
 //boxstation: ~153 loot items spawned
 //metastation: ~183 loot items spawned
-//deltastation: ~165 loot items spawned
 
 //how to balance maint loot spawns:
 // 1) Ensure each category has items of approximately the same power level

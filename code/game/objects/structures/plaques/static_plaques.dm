@@ -115,10 +115,6 @@
 
 //Current stations
 
-// Deltastation: added Dec 17, 2016 (#22066)
-/obj/structure/plaque/static_plaque/golden/commission/delta
-	desc = "Spinward Sector Station SS-13\n'Delta' Class Outpost\nCommissioned 17/12/2556\n'Efficiency Through Redundancy'"
-
 // Icebox Station: added May 13, 2020 (#51090)
 /obj/structure/plaque/static_plaque/golden/commission/icebox
 	desc = "Spinward Sector Station SS-13\n'Box' Class Outpost (Revision 2.2: 'Icebox')\nCommissioned 13/05/2560\n'Cold Reliable'"

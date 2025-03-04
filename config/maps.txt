@@ -15,11 +15,6 @@ endmap
 
 # Production-level maps.
 
-map deltastation
-	minplayers 50
-	votable
-endmap
-
 map icebox
 	minplayers 25
 	votable
@@ -47,9 +42,6 @@ map wawastation
 endmap
 
 # Debug-only maps.
-
-map gateway_test
-endmap
 
 map multiz_debug
 endmap

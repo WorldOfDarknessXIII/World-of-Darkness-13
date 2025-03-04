@@ -317,34 +317,6 @@
 	name = "Charlie Station Storage"
 	icon_state = "os_charlie_storage"
 
-/area/ruin/space/ancientstation/delta
-	icon_state = "deltastation"
-
-/area/ruin/space/ancientstation/delta/hall
-	name = "Delta Station Main Corridor"
-	icon_state = "os_delta_hall"
-
-/area/ruin/space/ancientstation/delta/proto
-	name = "\improper Delta Station Prototype Lab"
-	icon_state = "os_delta_protolab"
-
-/area/ruin/space/ancientstation/delta/rnd
-	name = "Delta Station Research and Development"
-	icon_state = "os_delta_rnd"
-
-/area/ruin/space/ancientstation/delta/ai
-	name = "\improper Delta Station AI Core"
-	icon_state = "os_delta_ai"
-	ambientsounds = list('sound/ambience/misc/ambimalf.ogg', 'sound/ambience/engineering/ambitech.ogg', 'sound/ambience/engineering/ambitech2.ogg', 'sound/ambience/engineering/ambiatmos.ogg', 'sound/ambience/engineering/ambiatmos2.ogg')
-
-/area/ruin/space/ancientstation/delta/storage
-	name = "\improper Delta Station Storage"
-	icon_state = "os_delta_storage"
-
-/area/ruin/space/ancientstation/delta/biolab
-	name = "Delta Station Biolab"
-	icon_state = "os_delta_biolab"
-
 //KC13, aka TheDerelict.dmm
 
 /area/ruin/space/ks13
