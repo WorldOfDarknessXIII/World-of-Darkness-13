@@ -42,14 +42,6 @@ Doing it this way allows for the same framework that the MapMerger is built on t
 
 For a much more comprehensive guide on UpdatePaths, please see the documentation [here](https://github.com/tgstation/tgstation/blob/master/tools/UpdatePaths/readme.md).
 
-## AWAY MISSIONS
-
-/tg/station supports loading away missions however they are disabled by default.
-
-Map files for away missions are located in the `_maps/RandomZLevels` directory. Each away mission includes it's own code definitions located in `/code/modules/awaymissions/mission_code`. These files must be included and compiled with the server beforehand otherwise the server will crash upon trying to load away missions that lack their code.
-
-<ins>Away missions are _disabled_ by default.</ins> Go to the file denoted in the [Configuration](#configuration) section and "untick" (remove the #) in order to enable it for loading. If more than one away mission is uncommented, the away mission loader will randomly select one of the enabled ones to load. We also support functionality for config-only away missions, which can be set up using the `config/away_missions` folder.
-
 ## CONFIGURATION
 
 A majority of maps (outlined below) must be placed in their corresponding configuration file to allow server operators to enable/disable the map for any reason they desire. Follow the chart to see where you should add your new map.
@@ -60,7 +52,6 @@ A majority of maps (outlined below) must be placed in their corresponding config
 | Space Ruins | [`config/spaceruinblacklist.txt`](https://github.com/tgstation/tgstation/blob/master/config/spaceruinblacklist.txt) |
 | Icemoon Ruins | [`config/iceruinblacklist.txt`](https://github.com/tgstation/tgstation/blob/master/config/iceruinblacklist.txt) |
 | Escape Shuttles |  [`config/unbuyableshuttles.txt`](https://github.com/tgstation/tgstation/blob/master/config/unbuyableshuttles.txt) |
-| Away Missions | [`config/awaymissionconfig.txt`](https://github.com/tgstation/tgstation/blob/master/config/awaymissionconfig.txt) |
 
 Each .txt file will have instructions on how to appropriately add your map to the file. If you're unsure about certain values, ask for help during the PR process (or beforehand).
 

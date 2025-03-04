@@ -319,23 +319,6 @@
 	return FALSE
 
 /**
- * Is the atom in an away mission
- *
- * Must be in the away mission z-level to return TRUE
- *
- * Also used in gamemode code for win conditions
- */
-/atom/proc/onAwayMission()
-	var/turf/current_turf = get_turf(src)
-	if(!current_turf)
-		return FALSE
-
-	if(is_away_level(current_turf.z))
-		return TRUE
-
-	return FALSE
-
-/**
  * Ensure a list of atoms/reagents exists inside this atom
  *
  * Goes throught he list of passed in parts, if they're reagents, adds them to our reagent holder

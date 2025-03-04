@@ -109,7 +109,6 @@
 
 	if(gamers[gamer] == ORION_GAMER_PAMPHLET)
 		say("WARNING: Continued antisocial behavior detected: Dispensing self-help literature.")
-		new /obj/item/paper/pamphlet/violent_video_games(drop_location())
 		gamers[gamer]--
 		return
 

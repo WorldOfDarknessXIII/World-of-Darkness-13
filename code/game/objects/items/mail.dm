@@ -213,15 +213,11 @@
 	if(prob(25))
 		special_name = TRUE
 		junk = pick(list(
-			/obj/item/paper/pamphlet/gateway,
-			/obj/item/paper/pamphlet/violent_video_games,
 			/obj/item/paper/fluff/junkmail_redpill,
 			/obj/effect/decal/cleanable/ash,
 		))
 
 	var/list/junk_names = list(
-		/obj/item/paper/pamphlet/gateway = "[initial(name)] for [pick(GLOB.adjectives)] adventurers",
-		/obj/item/paper/pamphlet/violent_video_games = "[initial(name)] for the truth about the arcade centcom doesn't want to hear",
 		/obj/item/paper/fluff/junkmail_redpill = "[initial(name)] for those feeling [pick(GLOB.adjectives)] working at Nanotrasen",
 		/obj/effect/decal/cleanable/ash = "[initial(name)] with INCREDIBLY IMPORTANT ARTIFACT- DELIVER TO SCIENCE DIVISION. HANDLE WITH CARE.",
 	)

@@ -719,3 +719,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/navigate_destination/disposals
 	location = "Disposals"
+
+/obj/effect/landmark/error
+	name = "error"
+	icon_state = "error_room"

@@ -42,6 +42,7 @@ GLOBAL_VAR_INIT(starlight_power, default_starlight_power())
 
 GLOBAL_LIST_EMPTY(starlight)
 
+//WOD13TODO: Get rid of spess
 /turf/open/space
 	icon = 'icons/turf/space.dmi'
 	icon_state = "space"

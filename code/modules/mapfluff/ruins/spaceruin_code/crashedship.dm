@@ -2,6 +2,7 @@
 
 //Areas
 
+//WOD13TODO: Remove these?
 /area/awaymission/bmpship
 	name = "BMP Asteroids"
 	icon_state = "away"

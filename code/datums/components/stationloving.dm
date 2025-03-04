@@ -136,8 +136,7 @@
 	))
 	// Typecache of areas on the centcom Z-level that we allow the disk to stay on
 	var/static/list/disallowed_centcom_areas = typecacheof(list(
-		/area/centcom/abductor_ship,
-		/area/awaymission/errorroom,
+		/area/centcom/abductor_ship
 	))
 
 	// Our loc is a secluded location = not in bounds

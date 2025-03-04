@@ -73,3 +73,5 @@
 
 /turf/cordon/secret/attack_ghost(mob/dead/observer/user)
 	return FALSE
+
+//WOD13TODO: Consider using these areas/turfs for auspex ghosts etc

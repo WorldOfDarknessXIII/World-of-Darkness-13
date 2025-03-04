@@ -403,4 +403,16 @@
 	. = ..()
 	take_damage(max_integrity * 0.6)
 
+/obj/structure/grille/indestructible
+	desc = "A STRONG framework of hardened plasteel rods, that you cannot possibly get through. If you were an engineer you would be drooling over its construction right now."
+	move_resist = MOVE_FORCE_OVERPOWERING
+	obj_flags = CONDUCTS_ELECTRICITY
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/structure/grille/indestructible/screwdriver_act(mob/living/user, obj/item/tool)
+	return NONE
+
+/obj/structure/grille/indestructible/wirecutter_act(mob/living/user, obj/item/tool)
+	return NONE
+
 #undef CLEAR_TILE_MOVE_LIMIT

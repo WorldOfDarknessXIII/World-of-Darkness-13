@@ -8,7 +8,6 @@
 	lose_text = span_notice("Maybe cybernetics aren't so bad. You now feel okay with augmentations and prosthetics.")
 	medical_record_text = "This patient has disclosed an extreme hatred for unnatural bodyparts and augmentations."
 	hardcore_value = 3
-	mail_goodies = list(/obj/item/paper/pamphlet/cybernetics)
 	var/cybernetics_level = 0
 
 /datum/quirk/body_purist/add(client/client_source)

@@ -133,13 +133,6 @@ SUBSYSTEM_DEF(mapping)
 		empty_space = add_new_zlevel("Empty Area [space_levels_so_far+1]", list(ZTRAIT_LINKAGE = CROSSLINKED))
 		++space_levels_so_far
 
-	// Pick a random away mission.
-	if(CONFIG_GET(flag/roundstart_away))
-		createRandomZlevel(prob(CONFIG_GET(number/config_gateway_chance)))
-
-	else if (SSmapping.current_map.load_all_away_missions) // we're likely in a local testing environment, so punch it.
-		load_all_away_missions()
-
 	loading_ruins = TRUE
 	setup_ruins()
 	loading_ruins = FALSE
@@ -495,33 +488,9 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		var/datum/map_template/T = new(path = "[path][map]", rename = "[map]")
 		map_templates[T.name] = T
 
-	preloadRuinTemplates()
 	preloadShuttleTemplates()
 	preloadShelterTemplates()
 	preloadHolodeckTemplates()
-
-/datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
-	// Still supporting bans by filename
-	var/list/banned = generateMapList("spaceruinblacklist.txt")
-	if(current_map.blacklist_file)
-		banned += generateMapList(current_map.blacklist_file)
-
-	for(var/item in sort_list(subtypesof(/datum/map_template/ruin), GLOBAL_PROC_REF(cmp_ruincost_priority)))
-		var/datum/map_template/ruin/ruin_type = item
-		// screen out the abstract subtypes
-		if(!initial(ruin_type.id))
-			continue
-		var/datum/map_template/ruin/R = new ruin_type()
-
-		if(banned.Find(R.mappath))
-			continue
-
-		map_templates[R.name] = R
-		ruins_templates[R.name] = R
-
-		if (!(R.ruin_type in themed_ruins))
-			themed_ruins[R.ruin_type] = list()
-		themed_ruins[R.ruin_type][R.name] = R
 
 /datum/controller/subsystem/mapping/proc/preloadShuttleTemplates()
 	var/list/unbuyable = generateMapList("unbuyableshuttles.txt")
@@ -556,42 +525,6 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		var/datum/map_template/holodeck/holo_template = new holodeck_type()
 
 		holodeck_templates[holo_template.template_id] = holo_template
-
-ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away mission for the station.", ADMIN_CATEGORY_EVENTS)
-	if(!GLOB.the_gateway)
-		if(tgui_alert(user, "There's no home gateway on the station. You sure you want to continue ?", "Uh oh", list("Yes", "No")) != "Yes")
-			return
-
-	var/list/possible_options = GLOB.potentialRandomZlevels + "Custom"
-	var/away_name
-	var/datum/space_level/away_level
-	var/secret = FALSE
-	if(tgui_alert(user, "Do you want your mission secret? (This will prevent ghosts from looking at your map in any way other than through a living player's eyes.)", "Are you $$$ekret?", list("Yes", "No")) == "Yes")
-		secret = TRUE
-	var/answer = input(user, "What kind?","Away") as null|anything in possible_options
-	switch(answer)
-		if("Custom")
-			var/mapfile = input(user, "Pick file:", "File") as null|file
-			if(!mapfile)
-				return
-			away_name = "[mapfile] custom"
-			to_chat(user, span_notice("Loading [away_name]..."), MESSAGE_TYPE_DEBUG)
-			var/datum/map_template/template = new(mapfile, "Away Mission")
-			away_level = template.load_new_z(secret)
-		else
-			if(answer in GLOB.potentialRandomZlevels)
-				away_name = answer
-				to_chat(user, span_notice("Loading [away_name]..."), MESSAGE_TYPE_DEBUG)
-				var/datum/map_template/template = new(away_name, "Away Mission")
-				away_level = template.load_new_z(secret)
-			else
-				return
-
-	message_admins("Admin [key_name_admin(user)] has loaded [away_name] away mission.")
-	log_admin("Admin [key_name(user)] has loaded [away_name] away mission.")
-	if(!away_level)
-		message_admins("Loading [away_name] failed!")
-		return
 
 /// Adds a new reservation z level. A bit of space that can be handed out on request
 /// Of note, reservations default to transit turfs, to make their most common use, shuttles, faster
@@ -867,64 +800,7 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 /datum/controller/subsystem/mapping/proc/is_planetary()
 	return current_map.planetary
 
-/// For debug purposes, will add every single away mission present in a given directory.
-/// You can optionally pass in a string directory to load from instead of the default.
-/datum/controller/subsystem/mapping/proc/load_all_away_missions(map_directory)
-	if(!map_directory)
-		map_directory = "_maps/RandomZLevels/"
-	var/start_time = null // in case we're doing this at runtime, useful to know how much time we're spending loading all these away missions
-	var/confirmation_alert_result = null
-	var/new_wait = 0 // default to always zeroing out the wait time for away missions to be unlocked due to the unit-testery nature of this map
-
-	if(IsAdminAdvancedProcCall())
-		if(!check_rights(R_DEBUG))
-			return
-		var/confirmation_string = "This will load every single away mission in the [map_directory] directory. This might cause a bit of lag that can only be cleared on a world restart. Are you sure you want to do this?"
-		confirmation_alert_result = tgui_alert(usr, confirmation_string, "DEBUG ONLY!!!", list("Yes", "Cancel"))
-		if(confirmation_alert_result != "Yes")
-			return
-
-		var/current_wait_time = CONFIG_GET(number/gateway_delay)
-		switch(tgui_alert(usr, "Do you want to zero out the cooldown for access to these maps? Currently [DisplayTimeText(current_wait_time)]", "OH FUCK!!!", list("Yes", "No", "Cancel")))
-			if("No")
-				new_wait = current_wait_time
-			if("Cancel")
-				return
-
-	else
-		start_time = REALTIMEOFDAY
-		var/beginning_message = "Loading all away missions..."
-		to_chat(world, span_boldannounce(beginning_message), MESSAGE_TYPE_DEBUG)
-		log_world(beginning_message)
-		log_mapping(beginning_message)
-
-	var/list/all_away_missions = generate_map_list_from_directory(map_directory)
-	var/number_of_away_missions = length(all_away_missions)
-	for(var/entry in all_away_missions)
-		load_new_z_level(entry, entry, secret = FALSE) // entry in both fields so we know if something failed to load since it'll log the full file name of what was loaded.
-
-	for(var/datum/gateway_destination/away_datum in GLOB.gateway_destinations)
-		away_datum.wait = new_wait
-		log_mapping("Now loading [away_datum.name]...")
-
-	validate_z_level_loading(all_away_missions)
-
-	if(!isnull(start_time))
-		var/tracked_time = (REALTIMEOFDAY - start_time) / 10
-		var/finished_message = "Loaded [number_of_away_missions] away missions in [tracked_time] second[tracked_time == 1 ? "" : "s"]!"
-		to_chat(world, span_boldannounce(finished_message), MESSAGE_TYPE_DEBUG)
-		log_world(finished_message)
-		log_mapping(finished_message)
-
-	if(isnull(confirmation_alert_result))
-		log_mapping("All away missions have been loaded. List of away missions paired to corresponding Z-Levels are as follows:")
-		log_mapping(gather_z_level_information())
-		return
-
-	message_admins("[key_name_admin(usr)] has loaded every single away mission in the [map_directory] directory. [ADMIN_SEE_ZLEVEL_LAYOUT]")
-	log_game("[key_name(usr)] has loaded every single away mission in the [map_directory] directory.")
-
-/// Lightweight proc that just checks to make sure that all of the expected z-levels were loaded. Split out for clarity from load_all_away_missions()
+/// Lightweight proc that just checks to make sure that all of the expected z-levels were loaded.
 /// Argument "checkable_levels" is just a list of the names (typically the filepaths) of the z-levels we were expected to load, which should correspond to the name on the space level datum.
 /datum/controller/subsystem/mapping/proc/validate_z_level_loading(list/checkable_levels)
 	for(var/z in 1 to max(world.maxz, length(z_list)))
@@ -940,3 +816,34 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 	var/number_of_remaining_levels = length(checkable_levels)
 	if(number_of_remaining_levels > 0)
 		CRASH("The following [number_of_remaining_levels] away mission(s) were not loaded: [checkable_levels.Join("\n")]")
+
+/datum/controller/subsystem/mapping/proc/generateMapList(filename)
+	. = list()
+	filename = "[global.config.directory]/[SANITIZE_FILENAME(filename)]"
+	var/list/Lines = world.file2list(filename)
+
+	if(!Lines.len)
+		return
+	for (var/t in Lines)
+		if (!t)
+			continue
+
+		t = trim(t)
+		if (length(t) == 0)
+			continue
+		else if (t[1] == "#")
+			continue
+
+		var/pos = findtext(t, " ")
+		var/name = null
+
+		if (pos)
+			name = LOWER_TEXT(copytext(t, 1, pos))
+
+		else
+			name = LOWER_TEXT(t)
+
+		if (!name)
+			continue
+
+		. += t

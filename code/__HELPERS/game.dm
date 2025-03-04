@@ -67,7 +67,7 @@
 	if(!ishuman(player_mind?.current))
 		return FALSE
 	for(var/obj/item/implant/implant_check in player_mind.current.implants)
-		if(istype(implant_check, /obj/item/implant/exile && player_mind.current.onAwayMission()))
+		if(istype(implant_check, /obj/item/implant/exile))
 			return TRUE
 
 ///Checks if a player is considered AFK

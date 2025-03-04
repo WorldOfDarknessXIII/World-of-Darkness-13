@@ -1367,14 +1367,6 @@
 /obj/item/storage/dice,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
-"gs" = (
-/obj/item/paper/pamphlet/centcom/visitor_info,
-/obj/item/paper/pamphlet/centcom/visitor_info,
-/obj/item/paper/pamphlet/centcom/visitor_info,
-/obj/structure/table/wood,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/courtroom)
 "gu" = (
 /turf/closed/indestructible/splashscreen,
 /area/misc/start)
@@ -1695,12 +1687,6 @@
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron/smooth_large,
 /area/centcom/central_command_areas/evacuation/ship)
-"ik" = (
-/turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
-	planetary_atmos = 0
-	},
-/area/awaymission/errorroom)
 "il" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/prison)
@@ -3151,9 +3137,6 @@
 /area/centcom/central_command_areas/fore)
 "ox" = (
 /obj/structure/table,
-/obj/item/paper/pamphlet/centcom/visitor_info,
-/obj/item/paper/pamphlet/centcom/visitor_info,
-/obj/item/paper/pamphlet/centcom/visitor_info,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/fore)
@@ -5574,13 +5557,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supply)
-"zi" = (
-/obj/item/rupee,
-/turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
-	planetary_atmos = 0
-	},
-/area/awaymission/errorroom)
 "zk" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Infirmary"
@@ -6445,9 +6421,6 @@
 /area/centcom/central_command_areas/control)
 "CL" = (
 /obj/structure/table,
-/obj/item/paper/pamphlet/centcom/visitor_info,
-/obj/item/paper/pamphlet/centcom/visitor_info,
-/obj/item/paper/pamphlet/centcom/visitor_info,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 4
@@ -6456,9 +6429,6 @@
 /area/centcom/central_command_areas/control)
 "CO" = (
 /obj/structure/table,
-/obj/item/paper/pamphlet/centcom/visitor_info,
-/obj/item/paper/pamphlet/centcom/visitor_info,
-/obj/item/paper/pamphlet/centcom/visitor_info,
 /obj/machinery/status_display/evac/directional/west,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 1
@@ -6984,16 +6954,10 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
 "FM" = (
-/obj/structure/signpost/salvation{
-	icon = 'icons/obj/structures.dmi';
-	icon_state = "ladder10";
-	invisibility = 100
-	},
 /turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0
-	},
-/area/awaymission/errorroom)
+	})
 "FO" = (
 /obj/structure/table/reinforced,
 /obj/item/computer_disk/quartermaster,
@@ -8006,15 +7970,9 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
 "LV" = (
-/turf/closed/indestructible/riveted,
-/area/awaymission/errorroom)
-"LW" = (
-/turf/closed/mineral/ash_rock,
-/area/awaymission/errorroom)
+/turf/closed/indestructible/riveted)
 "LX" = (
-/obj/structure/speaking_tile,
-/turf/closed/mineral/ash_rock,
-/area/awaymission/errorroom)
+/turf/closed/mineral/ash_rock)
 "Mf" = (
 /obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -8774,7 +8732,6 @@
 /area/space)
 "Pz" = (
 /obj/structure/table/reinforced,
-/obj/item/paper/pamphlet/centcom/visitor_info,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod)
 "PD" = (
@@ -8906,10 +8863,6 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_y = 9;
 	pixel_x = 3
-	},
-/obj/item/paper/pamphlet/violent_video_games{
-	pixel_x = -3;
-	pixel_y = -3
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -9327,13 +9280,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/armory)
-"RW" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/item/paper/pamphlet/centcom/visitor_info,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron,
-/area/centcom/tdome/observation)
 "RX" = (
 /obj/item/kirbyplants/organic/plant22,
 /obj/effect/turf_decal/tile/blue,
@@ -10863,8 +10809,7 @@
 /turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0
-	},
-/area/awaymission/errorroom)
+	})
 "ZF" = (
 /obj/structure/dresser,
 /obj/structure/plaque/static_plaque/golden/captain{
@@ -11717,15 +11662,15 @@ aa
 aa
 aa
 LV
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
+LX
+LX
+LX
+LX
+LX
+LX
+LX
+LX
+LX
 LV
 aa
 "}
@@ -11974,15 +11919,15 @@ aa
 aa
 aa
 LV
-LW
-zi
-zi
-zi
-ik
-zi
-zi
-zi
-LW
+LX
+FM
+FM
+FM
+FM
+FM
+FM
+FM
+LX
 LV
 aa
 "}
@@ -12231,15 +12176,15 @@ aa
 aa
 aa
 LV
-LW
-zi
-zi
-zi
-ik
-zi
-zi
-zi
-LW
+LX
+FM
+FM
+FM
+FM
+FM
+FM
+FM
+LX
 LV
 aa
 "}
@@ -12488,15 +12433,15 @@ aa
 aa
 aa
 LV
-LW
-zi
-zi
-zi
-ik
-zi
-zi
-zi
-LW
+LX
+FM
+FM
+FM
+FM
+FM
+FM
+FM
+LX
 LV
 aa
 "}
@@ -12745,15 +12690,15 @@ aa
 aa
 aa
 LV
-LW
-ik
-ik
-ik
-ik
-ik
-ik
-ik
-LW
+LX
+FM
+FM
+FM
+FM
+FM
+FM
+FM
+LX
 LV
 aa
 "}
@@ -13002,15 +12947,15 @@ aa
 aa
 aa
 LV
-LW
-zi
-zi
-zi
-ik
-ik
-ik
-ik
-LW
+LX
+FM
+FM
+FM
+FM
+FM
+FM
+FM
+LX
 LV
 aa
 "}
@@ -13260,14 +13205,14 @@ aa
 aa
 LV
 LX
-zi
-zi
-zi
-ik
-ik
+FM
+FM
+FM
+FM
+FM
 ZE
 FM
-LW
+LX
 LV
 aa
 "}
@@ -13516,15 +13461,15 @@ aa
 aa
 aa
 LV
-LW
-zi
-zi
-zi
-ik
-ik
-ik
-ik
-LW
+LX
+FM
+FM
+FM
+FM
+FM
+FM
+FM
+LX
 LV
 aa
 "}
@@ -13773,15 +13718,15 @@ aa
 aa
 aa
 LV
-LW
-ik
-ik
-ik
-ik
-ik
-ik
-ik
-LW
+LX
+FM
+FM
+FM
+FM
+FM
+FM
+FM
+LX
 LV
 aa
 "}
@@ -14030,15 +13975,15 @@ aa
 aa
 aa
 LV
-LW
-zi
-zi
-zi
-ik
-zi
-zi
-zi
-LW
+LX
+FM
+FM
+FM
+FM
+FM
+FM
+FM
+LX
 LV
 aa
 "}
@@ -14287,15 +14232,15 @@ aa
 aa
 aa
 LV
-LW
-zi
-zi
-zi
-ik
-zi
-zi
-zi
-LW
+LX
+FM
+FM
+FM
+FM
+FM
+FM
+FM
+LX
 LV
 aa
 "}
@@ -14544,15 +14489,15 @@ aa
 aa
 aa
 LV
-LW
-zi
-zi
-zi
-ik
-zi
-zi
-zi
-LW
+LX
+FM
+FM
+FM
+FM
+FM
+FM
+FM
+LX
 LV
 aa
 "}
@@ -14801,15 +14746,15 @@ aa
 aa
 aa
 LV
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
+LX
+LX
+LX
+LX
+LX
+LX
+LX
+LX
+LX
 LV
 aa
 "}
@@ -53553,7 +53498,7 @@ DH
 iu
 in
 Sl
-RW
+Ot
 Sl
 Rh
 PT
@@ -55095,7 +55040,7 @@ DI
 iu
 in
 Sl
-RW
+Ot
 Sl
 Rh
 Ad
@@ -59689,7 +59634,7 @@ lw
 KC
 Hv
 Fk
-gs
+SB
 rw
 qh
 ps

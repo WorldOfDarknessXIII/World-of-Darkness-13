@@ -636,10 +636,7 @@
 					SSid_access.apply_trim_to_card(src, trim)
 
 /obj/item/card/id/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, /obj/item/rupee))
-		to_chat(user, span_warning("Your ID smartly rejects the strange shard of glass. Who knew, apparently it's not ACTUALLY valuable!"))
-		return ITEM_INTERACT_BLOCKING
-	else if(iscash(tool))
+	if(iscash(tool))
 		return insert_money(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 	else if(istype(tool, /obj/item/storage/bag/money))
 		var/obj/item/storage/bag/money/money_bag = tool

@@ -266,28 +266,6 @@
 	movedelay_type = /mob/living/simple_animal
 /////////////////////////////////////////////////
 
-/datum/config_entry/flag/roundstart_away //Will random away mission be loaded.
-
-/datum/config_entry/number/gateway_delay //How long the gateway takes before it activates. Default is half an hour. Only matters if roundstart_away is enabled.
-	default = 30 MINUTES
-	integer = FALSE
-	min_val = 0
-
-/datum/config_entry/number/config_gateway_chance
-	integer = FALSE
-	min_val = 0
-	max_val = 100
-
-///An override to gateway_delay for specific maps or start points
-/datum/config_entry/keyed_list/gateway_delays_by_id
-	default = list(
-		AWAYSTART_BEACH = 5 MINUTES, //Chill RP zone
-		AWAYSTART_MUSEUM = 12 MINUTES, //Chill place with some cool puzzles and effects.
-	)
-	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_NUM
-	lowercase_key = FALSE //The macros are written the exact same way as their values, only without the quotation marks.
-
 /datum/config_entry/flag/ghost_interaction
 
 /datum/config_entry/flag/near_death_experience //If carbons can hear ghosts when unconscious and very close to death

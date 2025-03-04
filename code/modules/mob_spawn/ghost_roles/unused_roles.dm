@@ -231,31 +231,6 @@
 	. = ..()
 	gender = FEMALE
 
-// snow operatives on snowdin - unfortunately seemingly removed in a map remake womp womp
-
-/obj/effect/mob_spawn/ghost_role/human/snow_operative
-	name = "sleeper"
-	prompt_name = "a snow operative"
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
-	faction = list(ROLE_SYNDICATE)
-	outfit = /datum/outfit/snowsyndie
-	you_are_text = "You are a syndicate operative recently awoken from cryostasis in an underground outpost."
-	flavour_text = "Monitor Nanotrasen communications and record information. All intruders should be disposed of \
-	swiftly to assure no gathered information is stolen or lost. Try not to wander too far from the outpost as the \
-	caves can be a deadly place even for a trained operative such as yourself."
-
-/datum/outfit/snowsyndie
-	name = "Syndicate Snow Operative"
-	id = /obj/item/card/id/advanced/chameleon
-	id_trim = /datum/id_trim/chameleon/operative
-	uniform = /obj/item/clothing/under/syndicate/coldres
-	ears = /obj/item/radio/headset/syndicate/alt
-	shoes = /obj/item/clothing/shoes/combat/coldres
-	r_pocket = /obj/item/gun/ballistic/automatic/pistol
-
-	implants = list(/obj/item/implant/exile)
-
 //Forgotten syndicate ship
 
 /obj/effect/mob_spawn/ghost_role/human/syndicatespace
