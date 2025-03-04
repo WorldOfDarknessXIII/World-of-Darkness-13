@@ -1,0 +1,4 @@
+directory = "_maps/map_files/san_francisco/modular_maps/"
+
+[rooms.arrivalsecupper]
+modules = ["arrivalsecupper_1.dmm", "arrivalsecupper_2.dmm", "arrivalsecupper_3.dmm"]
