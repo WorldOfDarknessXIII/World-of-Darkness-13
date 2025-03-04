@@ -106,30 +106,6 @@
 		access |= list(
 			ACCESS_MAINT_TUNNELS)
 
-/datum/id_trim/job/bartender
-	assignment = JOB_BARTENDER
-	trim_state = "trim_bartender"
-	department_color = COLOR_SERVICE_LIME
-	subdepartment_color = COLOR_SERVICE_LIME
-	sechud_icon_state = SECHUD_BARTENDER
-	minimal_access = list(
-		ACCESS_BAR,
-		ACCESS_MINERAL_STOREROOM,
-		ACCESS_SERVICE,
-		ACCESS_THEATRE,
-		ACCESS_WEAPONS,
-		)
-	extra_access = list(
-		ACCESS_HYDROPONICS,
-		ACCESS_KITCHEN,
-		)
-	template_access = list(
-		ACCESS_CAPTAIN,
-		ACCESS_CHANGE_IDS,
-		ACCESS_HOP,
-		)
-	job = /datum/job/bartender
-
 /datum/id_trim/job/pun_pun
 	assignment = "Busser"
 	trim_state = "trim_busser"

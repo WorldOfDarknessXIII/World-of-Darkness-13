@@ -270,11 +270,6 @@
 	name = "cook PDA"
 	greyscale_colors = "#FAFAFA#A92323"
 
-/obj/item/modular_computer/pda/bar
-	name = "bartender PDA"
-	greyscale_colors = "#333333#C7C7C7"
-	inserted_item = /obj/item/pen/fountain
-
 /obj/item/modular_computer/pda/clown
 	name = "clown PDA"
 	inserted_disk = /obj/item/computer_disk/virus/clown

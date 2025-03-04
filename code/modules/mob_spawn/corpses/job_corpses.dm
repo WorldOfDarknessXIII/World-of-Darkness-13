@@ -67,10 +67,6 @@
 	. = ..()
 	spawned_mob.ForceContractDisease(new /datum/disease/fluspanish)
 
-/obj/effect/mob_spawn/corpse/human/bartender
-	name = JOB_BARTENDER
-	outfit = /datum/outfit/spacebartender
-
 /obj/effect/mob_spawn/corpse/human/prisoner
 	name = JOB_PRISONER
 	outfit = /datum/outfit/job/prisoner

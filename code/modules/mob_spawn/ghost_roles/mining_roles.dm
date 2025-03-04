@@ -110,34 +110,6 @@
 	id_trim = /datum/id_trim/lifeguard
 	uniform = /obj/item/clothing/under/shorts/red
 
-/obj/effect/mob_spawn/ghost_role/human/bartender
-	name = "bartender sleeper"
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
-	prompt_name = "a space bartender"
-	you_are_text = "You are a space bartender!"
-	flavour_text = "Time to mix drinks and change lives. Smoking space drugs makes it easier to understand your patrons' odd dialect."
-	spawner_job_path = /datum/job/space_bartender
-	outfit = /datum/outfit/spacebartender
-
-/datum/outfit/spacebartender
-	name = "Space Bartender"
-	id = /obj/item/card/id/advanced
-	id_trim = /datum/id_trim/space_bartender
-	neck = /obj/item/clothing/neck/bowtie
-	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
-	suit = /obj/item/clothing/suit/armor/vest
-	back = /obj/item/storage/backpack
-	glasses = /obj/item/clothing/glasses/sunglasses/reagent
-	shoes = /obj/item/clothing/shoes/sneakers/black
-
-/datum/outfit/spacebartender/post_equip(mob/living/carbon/human/bartender, visuals_only = FALSE)
-	. = ..()
-	var/obj/item/card/id/id_card = bartender.wear_id
-	if(bartender.age < AGE_MINOR)
-		id_card.registered_age = AGE_MINOR
-		to_chat(bartender, span_notice("You're not technically old enough to access or serve alcohol, but your ID has been discreetly modified to display your age as [AGE_MINOR]. Try to keep that a secret!"))
-
 //Preserved terrarium/seed vault: Spawns in seed vault structures in lavaland. Ghosts become plantpeople and are advised to begin growing plants in the room near them.
 /obj/effect/mob_spawn/ghost_role/human/seed_vault
 	name = "preserved terrarium"

@@ -173,52 +173,6 @@
 	. = ..()
 	AddComponentFrom(ROUNDSTART_TRAIT, /datum/component/area_based_godmode, area_type = /area/shuttle/escape, allow_area_subtypes = TRUE)
 
-// Bar table, a wooden table that kicks you in a direction if you're not
-// barstaff (defined as someone who was a roundstart bartender or someone
-// with CENTCOM_BARSTAFF)
-
-/obj/structure/table/wood/shuttle_bar
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	max_integrity = 1000
-	var/boot_dir = 1
-
-/obj/structure/table/wood/shuttle_bar/Initialize(mapload, _buildstack)
-	. = ..()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
-
-/obj/structure/table/wood/shuttle_bar/screwdriver_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/structure/table/wood/shuttle_bar/wrench_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/structure/table/wood/shuttle_bar/proc/on_entered(datum/source, atom/movable/AM)
-	SIGNAL_HANDLER
-	var/mob/living/M = AM
-	if(istype(M) && !M.incorporeal_move && !is_barstaff(M))
-		// No climbing on the bar please
-		var/throwtarget = get_edge_target_turf(src, boot_dir)
-		M.Paralyze(40)
-		M.throw_at(throwtarget, 5, 1)
-		to_chat(M, span_notice("No climbing on the bar please."))
-
-/obj/structure/table/wood/shuttle_bar/proc/is_barstaff(mob/living/user)
-	. = FALSE
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		if(is_bartender_job(human_user.mind?.assigned_role))
-			return TRUE
-
-	if(istype(user, /mob/living/basic/drone/snowflake/bardrone))
-		return TRUE
-
-	var/obj/item/card/id/ID = user.get_idcard(FALSE)
-	if(ID && (ACCESS_CENT_BAR in ID.access))
-		return TRUE
-
 //Luxury Shuttle Blockers
 
 /obj/machinery/scanner_gate/luxury_shuttle

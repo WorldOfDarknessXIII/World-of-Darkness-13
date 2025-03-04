@@ -130,19 +130,6 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 /datum/objective_item/steal/traitor
 	objective_type = OBJECTIVE_ITEM_TYPE_TRAITOR
 
-// Unique-ish low risk objectives
-/datum/objective_item/steal/traitor/bartender_shotgun
-	name = "the bartender's shotgun"
-	targetitem = /obj/item/gun/ballistic/shotgun/doublebarrel
-	excludefromjob = list(JOB_BARTENDER)
-	item_owner = list(JOB_BARTENDER)
-	exists_on_map = TRUE
-	difficulty = 2
-	steal_hint = "A double-barrel shotgun usually found on the bartender's person, or if none are around, in the bar's backroom."
-
-/obj/item/gun/ballistic/shotgun/doublebarrel/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/gun/ballistic/shotgun/doublebarrel)
-
 /datum/objective_item/steal/traitor/fireaxe
 	name = "a fire axe"
 	targetitem = /obj/item/fireaxe

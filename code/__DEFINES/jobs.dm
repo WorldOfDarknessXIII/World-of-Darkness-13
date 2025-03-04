@@ -85,7 +85,6 @@
 #define JOB_CARGO_GORILLA "Cargo Gorilla"
 #define JOB_SHAFT_MINER "Shaft Miner"
 //Service
-#define JOB_BARTENDER "Bartender"
 #define JOB_BOTANIST "Botanist"
 #define JOB_COOK "Cook"
 #define JOB_CHEF "Chef" // Alternate cook title.
@@ -130,11 +129,11 @@
 
 #define JOB_GROUP_ENGINEERS list(JOB_STATION_ENGINEER)
 
+//WOD13TODO: Replace this with our JOB_DISPLAY_ORDER_CIVILIAN	1	and stuff
 #define JOB_DISPLAY_ORDER_ASSISTANT 1
 #define JOB_DISPLAY_ORDER_CAPTAIN 2
 #define JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL 3
 #define JOB_DISPLAY_ORDER_BRIDGE_ASSISTANT 4
-#define JOB_DISPLAY_ORDER_BARTENDER 5
 #define JOB_DISPLAY_ORDER_BOTANIST 6
 #define JOB_DISPLAY_ORDER_COOK 7
 #define JOB_DISPLAY_ORDER_JANITOR 8
@@ -261,6 +260,7 @@ DEFINE_BITFIELD(job_flags, list(
 #define FACTION_STATION "Station"
 
 // Variable macros used to declare who is the supervisor for a given job, announced to the player when they join as any given job.
+//WOD13TODO: kill these
 #define SUPERVISOR_CAPTAIN "the Captain"
 #define SUPERVISOR_CE "the Chief Engineer"
 #define SUPERVISOR_CMO "the Chief Medical Officer"
