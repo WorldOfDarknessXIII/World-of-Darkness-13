@@ -363,11 +363,6 @@ GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 ///Bitfield returned by listeners for COMSIG_LIVING_ENTER_STAMCRIT when they perform some action that prevents a mob going into stamcrit.
 #define STAMCRIT_CANCELLED (1<<0)
 
-///Deathmatch lobby current status
-#define DEATHMATCH_NOT_PLAYING 0
-#define DEATHMATCH_PRE_PLAYING 1
-#define DEATHMATCH_PLAYING 2
-
 /// The amount of energy needed to increase the burn force by 1 damage during electrocution.
 #define JOULES_PER_DAMAGE (25 KILO JOULES)
 /// Calculates the amount of burn force when applying this much energy to a mob via electrocution from an energy source.

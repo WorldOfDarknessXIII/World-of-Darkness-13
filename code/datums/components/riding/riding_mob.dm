@@ -490,9 +490,6 @@
 	vehicle_move_delay = 4
 	rider_traits = list(TRAIT_NO_FLOATING_ANIM, TRAIT_TENTACLE_IMMUNE)
 
-/datum/component/riding/creature/goliath/deathmatch
-	keytype = null
-
 /datum/component/riding/creature/goliath/Initialize(mob/living/riding_mob, force, ride_check_flags)
 	. = ..()
 	var/mob/living/basic/mining/goliath/goliath = parent

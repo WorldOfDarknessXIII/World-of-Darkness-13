@@ -84,22 +84,6 @@
 	r_hand = /obj/item/storage/briefcase/hitchiker
 	internals_slot = ITEM_SLOT_LPOCKET
 
-/datum/shuttle_event/simple_spawner/player_controlled/human/nukie
-	name = "Nuclear Operative (Dangerous as heck)!"
-	spawning_list = list(/mob/living/carbon/human = 1)
-	spawning_flags = SHUTTLE_EVENT_HIT_SHUTTLE
-	outfit = /datum/outfit/deathmatch_loadout/nukie
-
-	event_probability = 0
-	spawn_probability_per_process = 100
-
-	spawn_anyway_if_no_player = FALSE
-	ghost_alert_string = "Would you like to be a nuclear operative to assault the shuttle?"
-	remove_from_list_when_spawned = TRUE
-	self_destruct_when_empty = TRUE
-
-	role_type = ROLE_NUCLEAR_OPERATIVE
-
 /datum/outfit/shuttle_nukie
 	name = "Shuttle Nuclear Operative"
 

@@ -213,13 +213,6 @@
 	if(source.health < source.crit_threshold)
 		INVOKE_ASYNC(src, PROC_REF(activate), "deniability")
 
-/obj/item/implant/explosive/deathmatch
-	name = "deathmatch microbomb implant"
-	delay = 0.5 SECONDS
-	actions_types = null
-	instant_explosion = FALSE
-	notify_ghosts = FALSE
-
 /obj/item/implanter/explosive
 	name = "implanter (microbomb)"
 	imp_type = /obj/item/implant/explosive

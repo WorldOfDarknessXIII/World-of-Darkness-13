@@ -71,15 +71,6 @@
 	bluespace = TRUE
 	explosionSize = list(0,0,0,0)
 
-/obj/structure/closet/supplypod/podspawn/deathmatch
-	desc = "A blood-red styled drop pod."
-	specialised = TRUE
-
-/obj/structure/closet/supplypod/podspawn/deathmatch/preOpen()
-	for(var/mob/living/critter in contents)
-		critter.faction = list(FACTION_HOSTILE) //No infighting, but also KILL!!
-	return ..()
-
 /obj/structure/closet/supplypod/extractionpod
 	name = "Syndicate Extraction Pod"
 	desc = "A specialised, blood-red styled pod for extracting high-value targets out of active mission areas. <b>Targets must be manually stuffed inside the pod for proper delivery.</b>"

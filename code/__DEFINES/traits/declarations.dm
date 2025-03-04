@@ -1153,9 +1153,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_UNNATURAL_ATMOSPHERE "station_trait_unnatural_atmosphere"
 #define STATION_TRAIT_SPIKED_DRINKS "station_trait_spiked_drinks"
 
-///Deathmatch traits
-#define TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS "deathmath_explosive_implants"
-
 /// This atom is currently spinning.
 #define TRAIT_SPINNING "spinning"
 
@@ -1333,7 +1330,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to all participants in a heretic arena
 #define TRAIT_ELDRITCH_ARENA_PARTICIPANT "eldritch_arena_participant"
 
-// These traits are used in IS_X() as an OR, and is utilized for pseudoantags (such as deathmatch or domains) so they don't need to actually get antag status.
+// These traits are used in IS_X() as an OR, and is utilized for pseudoantags (such as domains) so they don't need to actually get antag status.
 // To specifically and only get the antag datum, GET_X() exists now.
 #define TRAIT_ACT_AS_CULTIST "act_as_cultist"
 #define TRAIT_ACT_AS_HERETIC "act_as_heretic"

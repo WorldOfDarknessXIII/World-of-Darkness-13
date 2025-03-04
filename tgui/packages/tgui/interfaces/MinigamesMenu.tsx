@@ -44,16 +44,6 @@ export const MinigamesMenu = (props) => {
                 onClick={() => act('basketball')}
               />
             </Stack.Item>
-            <Stack.Item grow>
-              <Button
-                content="Deathmatch"
-                fluid
-                fontSize={3}
-                textAlign="center"
-                lineHeight="3"
-                onClick={() => act('deathmatch')}
-              />
-            </Stack.Item>
           </Stack>
         </Section>
       </Window.Content>
