@@ -230,38 +230,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 /datum/controller/master/proc/SetRunLevel(new_runlevel)
 	if(new_runlevel == RUNLEVEL_POSTGAME)
 		GLOB.canon_event = FALSE
-		for(var/mob/living/carbon/werewolf/W in GLOB.player_list)
-			if(W)
-				if(W.stat != DEAD)
-					if(W.key)
-						var/datum/preferences/P = GLOB.preferences_datums[ckey(W.key)]
-						if(P)
-							P.add_experience(3)
-		for(var/mob/living/carbon/human/H in GLOB.human_list)
-			if(H)
-				if(H.stat != DEAD)
-					if(H.key)
-						var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
-						if(P)
-							P.add_experience(1)
-							if(H.mind)
-								if("[H.mind.assigned_role]" == "Prince" || "[H.mind.assigned_role]" == "Sheriff" || "[H.mind.assigned_role]" == "Hound" ||  "[H.mind.assigned_role]" == "Seneschal" || "[H.mind.assigned_role]" == "Chantry Regent" || "[H.mind.assigned_role]" == "Baron" || "[H.mind.assigned_role]" == "Dealer")
-									P.add_experience(2)
-							if(H.total_erp > 9000)
-								P.add_experience(2)
-							if(H.total_cleaned > 25)
-								P.add_experience(1)
-								call_dharma("cleangrow", H)
-							if(H.mind)
-								if(H.mind.assigned_role == "Graveyard Keeper")
-									if(SSgraveyard.total_good > SSgraveyard.total_bad)
-										P.add_experience(1)
-								if(H.mind.special_role)
-									var/datum/antagonist/A = H.mind.special_role
-									if(A.check_completed())
-										P.add_experience(3)
-							P.save_preferences()
-							P.save_character()
+		give_players_experience()
+
 	var/old_runlevel = current_runlevel
 	if(isnull(old_runlevel))
 		old_runlevel = "NULL"
