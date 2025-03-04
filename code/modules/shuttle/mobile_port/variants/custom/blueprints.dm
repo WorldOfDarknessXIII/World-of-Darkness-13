@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/lavaland, /area/icemoon, /area/station/asteroid))
+GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/lavaland, /area/icemoon))
 
 /obj/effect/client_image_holder/shuttle_construction_visualization
 	image_icon = 'icons/effects/alphacolors.dmi'

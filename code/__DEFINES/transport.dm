@@ -18,11 +18,6 @@
 #define TRAMSTATION_LINE_1 "tram_1"
 #define HILBERT_LINE_1 "hilb_1"
 
-// Destinations/platforms
-#define TRAMSTATION_WEST 1
-#define TRAMSTATION_CENTRAL 2
-#define TRAMSTATION_EAST 3
-
 #define HILBERT_PORT 1
 #define HILBERT_CENTRAL 2
 #define HILBERT_STARBOARD 3

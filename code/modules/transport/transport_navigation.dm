@@ -34,31 +34,6 @@
 	///what specific id we give to the tram we're placed on, should explicitely set this if its a subtype, or weird things might happen
 	var/specific_transport_id
 
-//tramstation
-
-/obj/effect/landmark/transport/transport_id/tramstation/line_1
-	specific_transport_id = TRAMSTATION_LINE_1
-
-/obj/effect/landmark/transport/nav_beacon/tram/nav/tramstation/main
-	name = TRAMSTATION_LINE_1
-	specific_transport_id = TRAM_NAV_BEACONS
-	dir = WEST
-
-/obj/effect/landmark/transport/nav_beacon/tram/platform/tramstation/west
-	name = "West Wing"
-	platform_code = TRAMSTATION_WEST
-	tgui_icons = list("Arrivals" = "plane-arrival", "Command" = "bullhorn", "Security" = "gavel")
-
-/obj/effect/landmark/transport/nav_beacon/tram/platform/tramstation/central
-	name = "Central Wing"
-	platform_code = TRAMSTATION_CENTRAL
-	tgui_icons = list("Service" = "cocktail", "Medical" = "plus", "Engineering" = "wrench")
-
-/obj/effect/landmark/transport/nav_beacon/tram/platform/tramstation/east
-	name = "East Wing"
-	platform_code = TRAMSTATION_EAST
-	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box", "Science" = "flask")
-
 //map-agnostic landmarks
 
 /obj/effect/landmark/transport/nav_beacon/tram/nav/immovable_rod

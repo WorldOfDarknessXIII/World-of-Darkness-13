@@ -430,32 +430,6 @@
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-//TRAM CONTROLS//
-/obj/machinery/computer/tram_controls/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	var/datum/round_event/tram_malfunction/malfunction_event = locate(/datum/round_event/tram_malfunction) in SSevents.running
-	if(malfunction_event)
-		balloon_alert(ninja, "tram is already malfunctioning!")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-	if(specific_transport_id != TRAMSTATION_LINE_1)
-		balloon_alert(ninja, "cannot hack this tram!")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-	AI_notify_hack()
-
-	if(!do_after(ninja, 20 SECONDS, target = src, hidden = TRUE)) //Shorter due to how incredibly easy it is for someone to (even accidentally) interrupt.
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-	force_event(/datum/round_event_control/tram_malfunction, "ninja interference")
-	malfunction_event = locate(/datum/round_event/tram_malfunction) in SSevents.running
-	malfunction_event.end_when *= 2
-	for(var/obj/machinery/transport/guideway_sensor/sensor as anything in SStransport.sensors)
-		// Since faults are now used instead of straight event end_when var, we make a few of them malfunction
-		if(prob(rand(15, 30)))
-			sensor.local_fault()
-
-	return COMPONENT_CANCEL_ATTACK_CHAIN
-
 //WINDOOR//
 /obj/machinery/door/window/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!operating && density && hasPower() && !(obj_flags & EMAGGED) && hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 5))

@@ -2,7 +2,6 @@
 
 /tg/station currently has six station maps in rotation.
 * [NorthStar](https://tgstation13.org/wiki/The_North_Star)
-* [TramStation](https://tgstation13.org/wiki/Tramstation)
 
 Debug station maps.
 * [RuntimeStation](https://tgstation13.org/wiki/RuntimeStation)

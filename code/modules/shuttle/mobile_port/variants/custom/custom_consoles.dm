@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(custom_shuttle_station_area_whitelist, list(/area/station/asteroid))
+GLOBAL_LIST_INIT(custom_shuttle_station_area_whitelist, list(/area/space))	// WOD13TODO: Do we need this computer? List was originally /area/station/asteroid
 
 /obj/machinery/computer/shuttle/custom_shuttle
 	desc = "A shuttle control computer."

@@ -115,10 +115,6 @@
 
 //Current stations
 
-// Nebulastation: added Nov 6, 2024 (#84826)
-/obj/structure/plaque/static_plaque/golden/commission/nebula
-	desc = "Spinward Sector Station SS-13\n'Nebula' Class Outpost\nCommissioned 06/11/2564\n'The New Future'"
-
 // Tramstation: added Mar 11, 2021 (#56509)
 /obj/structure/plaque/static_plaque/golden/commission/tram
 	desc = "Spinward Sector Station SS-13\n'Tram' Class Outpost\nCommissioned 11/03/2561\n'Making Moves'"
