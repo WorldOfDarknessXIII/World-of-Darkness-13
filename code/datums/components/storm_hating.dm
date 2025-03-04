@@ -4,7 +4,6 @@
 /datum/component/storm_hating
 	/// Types of weather which trigger the effect
 	var/static/list/stormy_weather = list(
-		/datum/weather/ash_storm,
 		/datum/weather/snow_storm,
 		/datum/weather/void_storm,
 	)
