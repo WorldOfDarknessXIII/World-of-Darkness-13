@@ -1,11 +1,11 @@
 //This file is used to contain unique properties of every map, and how we wish to alter them on a per-map basis.
 //Use JSON files that match the datum layout and you should be set from there.
-//Right now, we default to MetaStation to ensure something does indeed load by default.
+//Right now, we default to San Francisco to ensure something does indeed load by default.
 //  -san7890 (with regards to Cyberboss)
 
 /datum/map_config
 	// Metadata
-	var/config_filename = "_maps/metastation.json"
+	var/config_filename = "_maps/san_francisco.json"
 	var/defaulted = TRUE  // set to FALSE by LoadConfig() succeeding
 	// Config from maps.txt
 	var/config_max_users = 0
@@ -14,9 +14,9 @@
 	var/votable = FALSE
 
 	// Config actually from the JSON - should default to Meta
-	var/map_name = "MetaStation"
-	var/map_path = "map_files/MetaStation"
-	var/map_file = "MetaStation.dmm"
+	var/map_name = "San Francisco"
+	var/map_path = "map_files/san_francisco"
+	var/map_file = "san_francisco.dmm"
 
 	var/traits = null
 	var/space_ruin_levels = DEFAULT_SPACE_RUIN_LEVELS
@@ -128,7 +128,6 @@
 	map_path = json["map_path"]
 
 	map_file = json["map_file"]
-	// "map_file": "MetaStation.dmm"
 	if (istext(map_file))
 		if (!fexists("_maps/[map_path]/[map_file]"))
 			log_world("Map file ([map_path]/[map_file]) does not exist!")

@@ -4022,7 +4022,6 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/museum/cafeteria)
 "GE" = (
-/obj/structure/plaque/static_plaque/golden/commission/meta,
 /turf/open/floor/mineral/gold,
 /area/awaymission/museum)
 "GG" = (
@@ -6123,7 +6122,6 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/museum/cafeteria)
 "Zp" = (
-/obj/structure/plaque/static_plaque/golden/commission/icebox,
 /turf/closed/indestructible/reinforced,
 /area/awaymission/museum)
 "Zr" = (

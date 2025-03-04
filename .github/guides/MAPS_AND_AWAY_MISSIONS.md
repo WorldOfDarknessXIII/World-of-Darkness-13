@@ -1,7 +1,6 @@
 ## MAPS
 
 /tg/station currently has six station maps in rotation.
-* [MetaStation](https://tgstation13.org/wiki/MetaStation)
 * [NorthStar](https://tgstation13.org/wiki/The_North_Star)
 * [TramStation](https://tgstation13.org/wiki/Tramstation)
 
@@ -11,7 +10,7 @@ Debug station maps.
 
 All maps have their own code file that is in the base of the `_maps` directory, or elsewhere in the codebase. For example, all of the station maps in rotation each have a corresponding JSON file and are loaded using the server's [configuration](#configuration) passed onto the Mapping subsystem. Maps are loaded dynamically when the game starts. Follow this guideline when adding your own map, to your fork, for easy compatibility.
 
-The map that will be loaded for the upcoming round is determined by reading `data/next_map.json`, which is a copy of the JSON files found in the `_maps` tree. If this file does not exist, the default map from `config/maps.txt` will be loaded. Failing that, MetaStation will be loaded. If you want to set a specific map to load next round you can use the Change Map verb in game before restarting the server or copy a JSON from `_maps` to `data/next_map.json` before starting the server. Also, for debugging purposes, ticking a corresponding map's code file in Dream Maker will force that map to load every round.
+The map that will be loaded for the upcoming round is determined by reading `data/next_map.json`, which is a copy of the JSON files found in the `_maps` tree. If this file does not exist, the default map from `config/maps.txt` will be loaded. Failing that, San Francisco will be loaded. If you want to set a specific map to load next round you can use the Change Map verb in game before restarting the server or copy a JSON from `_maps` to `data/next_map.json` before starting the server. Also, for debugging purposes, ticking a corresponding map's code file in Dream Maker will force that map to load every round.
 
 If you are hosting a server, and want randomly picked maps to be played each round, you can enable map rotation in `config/config.txt` and then set the maps to be picked in the `config/maps.txt` file.
 

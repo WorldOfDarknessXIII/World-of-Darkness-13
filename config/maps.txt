@@ -15,17 +15,6 @@ endmap
 
 # Production-level maps.
 
-map icebox
-	minplayers 25
-	votable
-endmap
-
-map metastation
-	minplayers 25
-	#voteweight 0.5
-	votable
-endmap
-
 map tramstation
 	minplayers 35
 	votable

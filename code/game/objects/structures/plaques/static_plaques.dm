@@ -115,14 +115,6 @@
 
 //Current stations
 
-// Icebox Station: added May 13, 2020 (#51090)
-/obj/structure/plaque/static_plaque/golden/commission/icebox
-	desc = "Spinward Sector Station SS-13\n'Box' Class Outpost (Revision 2.2: 'Icebox')\nCommissioned 13/05/2560\n'Cold Reliable'"
-
-// Metastation: added Mar 11, 2013 (best estimate, pre-git)
-/obj/structure/plaque/static_plaque/golden/commission/meta
-	desc = "Spinward Sector Station SS-13\n'Meta' Class Outpost\nCommissioned 11/03/2553\n'Theseus' Station'"
-
 // Nebulastation: added Nov 6, 2024 (#84826)
 /obj/structure/plaque/static_plaque/golden/commission/nebula
 	desc = "Spinward Sector Station SS-13\n'Nebula' Class Outpost\nCommissioned 06/11/2564\n'The New Future'"

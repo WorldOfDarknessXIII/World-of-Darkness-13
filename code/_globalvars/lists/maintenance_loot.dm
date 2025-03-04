@@ -1,6 +1,5 @@
 //as of:10/28/2019:
 //boxstation: ~153 loot items spawned
-//metastation: ~183 loot items spawned
 
 //how to balance maint loot spawns:
 // 1) Ensure each category has items of approximately the same power level
@@ -389,7 +388,7 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 #define maint_common_weight 4500
 #define maint_uncommon_weight 900
 #define maint_rarity_weight 99
-#define maint_oddity_weight 1 //1 out of 10,000 would give metastation (180 spawns) a 2 in 111 chance of spawning an oddity per round, similar to xeno egg
+#define maint_oddity_weight 1 //1 out of 10,000 would give 180 spawns a 2 in 111 chance of spawning an oddity per round, similar to xeno egg
 #define maint_holiday_weight 3500 // When holiday loot is enabled, it'll give every loot item a 25% chance of being a holiday item
 
 //Loot pool used by default maintenance loot spawners
