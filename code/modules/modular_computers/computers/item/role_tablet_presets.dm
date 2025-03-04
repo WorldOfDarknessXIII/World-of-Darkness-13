@@ -140,16 +140,6 @@
 		/datum/computer_file/program/supermatter_monitor,
 	)
 
-/obj/item/modular_computer/pda/atmos
-	name = "atmospherics PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
-	greyscale_colors = "#EEDC43#00E5DA#727272"
-	starting_programs = list(
-		/datum/computer_file/program/alarm_monitor,
-		/datum/computer_file/program/atmosscan,
-		/datum/computer_file/program/supermatter_monitor,
-	)
-
 /**
  * Science
  */

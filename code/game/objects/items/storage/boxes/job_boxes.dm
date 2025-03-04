@@ -77,17 +77,6 @@
 	new /obj/item/crowbar/red(src)
 	new /obj/item/healthanalyzer/simple/miner(src)
 
-// Engineer survival box
-/obj/item/storage/box/survival/engineer
-	name = "extended-capacity survival box"
-	desc = "A box with the bare essentials of ensuring the survival of you and others. This one is labelled to contain an extended-capacity tank."
-	illustration = "extendedtank"
-	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
-
-/obj/item/storage/box/survival/engineer/radio/PopulateContents()
-	..() // we want the regular items too.
-	new /obj/item/radio/off(src)
-
 // Syndie survival box
 /obj/item/storage/box/survival/syndie
 	name = "operation-ready survival box"
@@ -128,9 +117,6 @@
 	mask_type = /obj/item/clothing/mask/breath/medical
 
 /obj/item/storage/box/survival/crafted
-	crafted = TRUE
-
-/obj/item/storage/box/survival/engineer/crafted
 	crafted = TRUE
 
 //Mime spell boxes

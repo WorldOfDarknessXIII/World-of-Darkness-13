@@ -562,7 +562,6 @@
 	/obj/item/modular_computer/pda/curator = list(REGION_GENERAL), \
 	/obj/item/modular_computer/pda/cook = list(REGION_GENERAL), \
 	/obj/item/modular_computer/pda/bar = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/atmos = list(REGION_ENGINEERING), \
 	/obj/item/modular_computer/pda/chemist = list(REGION_MEDBAY), \
 	/obj/item/modular_computer/pda/geneticist = list(REGION_RESEARCH), \
 )

@@ -78,24 +78,9 @@
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/tank/internals/oxygen
 
-/obj/machinery/suit_storage_unit/captain
-	mask_type = /obj/item/clothing/mask/gas/atmos/captain
-	storage_type = /obj/item/tank/jetpack/oxygen/captain
-	mod_type = /obj/item/mod/control/pre_equipped/magnate
-
-/obj/machinery/suit_storage_unit/centcom
-	mask_type = /obj/item/clothing/mask/gas/atmos/centcom
-	storage_type = /obj/item/tank/jetpack/oxygen/captain
-	mod_type = /obj/item/mod/control/pre_equipped/corporate
-
 /obj/machinery/suit_storage_unit/engine
 	mask_type = /obj/item/clothing/mask/breath
 	mod_type = /obj/item/mod/control/pre_equipped/engineering
-
-/obj/machinery/suit_storage_unit/atmos
-	mask_type = /obj/item/clothing/mask/gas/atmos
-	storage_type = /obj/item/watertank/atmos
-	mod_type = /obj/item/mod/control/pre_equipped/atmospheric
 
 /obj/machinery/suit_storage_unit/ce
 	mask_type = /obj/item/clothing/mask/breath

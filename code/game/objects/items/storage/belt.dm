@@ -145,26 +145,6 @@
 	to_preload += /obj/item/stack/cable_coil
 	return to_preload
 
-/obj/item/storage/belt/utility/atmostech/PopulateContents()
-	SSwardrobe.provide_type(/obj/item/screwdriver, src)
-	SSwardrobe.provide_type(/obj/item/wrench, src)
-	SSwardrobe.provide_type(/obj/item/weldingtool, src)
-	SSwardrobe.provide_type(/obj/item/crowbar, src)
-	SSwardrobe.provide_type(/obj/item/wirecutters, src)
-	SSwardrobe.provide_type(/obj/item/t_scanner, src)
-	SSwardrobe.provide_type(/obj/item/extinguisher/mini, src)
-
-/obj/item/storage/belt/utility/atmostech/get_types_to_preload()
-	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
-	to_preload += /obj/item/screwdriver
-	to_preload += /obj/item/wrench
-	to_preload += /obj/item/weldingtool
-	to_preload += /obj/item/crowbar
-	to_preload += /obj/item/wirecutters
-	to_preload += /obj/item/t_scanner
-	to_preload += /obj/item/extinguisher/mini
-	return to_preload
-
 /obj/item/storage/belt/utility/full/inducer/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/screwdriver, src)
 	SSwardrobe.provide_type(/obj/item/wrench, src)

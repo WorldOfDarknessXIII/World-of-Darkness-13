@@ -163,7 +163,6 @@ GLOBAL_LIST_INIT(autodrobe_other_items, list(
 	/obj/item/clothing/mask/gas/cyborg = 3,
 	/obj/item/clothing/mask/joy = 3,
 	/obj/item/clothing/mask/gas/prop = 4,
-	/obj/item/clothing/mask/gas/atmosprop = 3,
 	/obj/item/clothing/mask/animal/small/tribal = 1,
 ))
 

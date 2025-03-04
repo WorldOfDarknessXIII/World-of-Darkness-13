@@ -70,7 +70,6 @@
 #define JOB_SECURITY_OFFICER_SUPPLY "Security Officer (Cargo)"
 //Engineering
 #define JOB_STATION_ENGINEER "Station Engineer"
-#define JOB_ATMOSPHERIC_TECHNICIAN "Atmospheric Technician"
 //Medical
 #define JOB_CORONER "Coroner"
 #define JOB_MEDICAL_DOCTOR "Medical Doctor"
@@ -129,11 +128,7 @@
 #define JOB_LOSTCREW_CARGO "Visiting Technician"
 #define JOB_LOSTCREW_CIVILLIAN "Visiting Civillian"
 
-#define JOB_GROUP_ENGINEERS list( \
-	JOB_STATION_ENGINEER, \
-	JOB_ATMOSPHERIC_TECHNICIAN, \
-)
-
+#define JOB_GROUP_ENGINEERS list(JOB_STATION_ENGINEER)
 
 #define JOB_DISPLAY_ORDER_ASSISTANT 1
 #define JOB_DISPLAY_ORDER_CAPTAIN 2

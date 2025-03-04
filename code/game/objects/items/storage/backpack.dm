@@ -157,13 +157,6 @@
 	icon_state = "backpack-captain"
 	inhand_icon_state = "captainpack"
 
-/obj/item/storage/backpack/industrial
-	name = "industrial backpack"
-	desc = "It's a tough backpack for the daily grind of station life."
-	icon_state = "backpack-engineering"
-	inhand_icon_state = "engiepack"
-	resistance_flags = FIRE_PROOF
-
 /obj/item/storage/backpack/botany
 	name = "botany backpack"
 	desc = "It's a backpack made of all-natural fibers."
@@ -313,13 +306,6 @@
 	new /obj/item/storage/wallet/random(src)
 
 /obj/item/storage/backpack/satchel/fireproof
-	resistance_flags = FIRE_PROOF
-
-/obj/item/storage/backpack/satchel/eng
-	name = "industrial satchel"
-	desc = "A tough satchel with extra pockets."
-	icon_state = "satchel-engineering"
-	inhand_icon_state = "satchel-eng"
 	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/backpack/satchel/med
@@ -603,13 +589,6 @@
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/blood_filter(src)
 
-/obj/item/storage/backpack/duffelbag/engineering
-	name = "industrial duffel bag"
-	desc = "A large duffel bag for holding extra tools and supplies."
-	icon_state = "duffel-engineering"
-	inhand_icon_state = "duffel-eng"
-	resistance_flags = FIRE_PROOF
-
 /obj/item/storage/backpack/duffelbag/drone
 	name = "drone duffel bag"
 	desc = "A large duffel bag for holding tools and hats."
@@ -821,13 +800,6 @@
 	worn_icon = 'icons/mob/clothing/back/backpack.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
-
-/obj/item/storage/backpack/messenger/eng
-	name = "industrial messenger bag"
-	desc = "A tough messenger bag made of advanced treated leather for fireproofing. It also has more pockets than usual."
-	icon_state = "messenger_engineering"
-	inhand_icon_state = "messenger_engineering"
-	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/backpack/messenger/med
 	name = "medical messenger bag"

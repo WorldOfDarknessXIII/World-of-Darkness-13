@@ -173,40 +173,6 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	var/durability = (current_filters_durability / max_filters_durability) * 100
 	return durability
 
-/obj/item/clothing/mask/gas/atmos
-	name = "atmospheric gas mask"
-	desc = "Improved gas mask utilized by atmospheric technicians. It's flameproof!"
-	icon_state = "gas_atmos"
-	inhand_icon_state = "gas_atmos"
-	armor_type = /datum/armor/gas_atmos
-	resistance_flags = FIRE_PROOF
-	max_filters = 3
-
-/datum/armor/gas_atmos
-	bio = 100
-	fire = 20
-	acid = 10
-
-/obj/item/clothing/mask/gas/atmos/plasmaman
-	starting_filter_type = /obj/item/gas_filter/plasmaman
-
-/obj/item/clothing/mask/gas/atmos/captain
-	name = "captain's gas mask"
-	desc = "Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone."
-	icon_state = "gas_cap"
-	inhand_icon_state = "gasmask_captain"
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-
-/obj/item/clothing/mask/gas/atmos/centcom
-	name = "\improper CentCom gas mask"
-	desc = "Oooh, gold and green. Fancy! This should help as you sit in your office."
-	icon = 'icons/obj/clothing/masks.dmi'
-	worn_icon = 'icons/mob/clothing/mask.dmi'
-	worn_icon_state = "gas_centcom"
-	icon_state = "gas_centcom"
-	inhand_icon_state = "gas_centcom"
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-
 // **** Welding gas mask ****
 
 /obj/item/clothing/mask/gas/welding
@@ -505,17 +471,6 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	desc = "A prop gas mask designed for appearance. Unlike a normal gas mask this does not filter gasses or protect against pepper spray."
 	icon_state = "gas_prop"
 	inhand_icon_state = "gas_prop"
-	clothing_flags = NONE
-	flags_cover = MASKCOVERSMOUTH
-	resistance_flags = FLAMMABLE
-	fishing_modifier = 0
-
-/obj/item/clothing/mask/gas/atmosprop
-	name = "prop atmospheric gas mask"
-	desc = "A prop atmospheric gas mask designed for appearance. Unlike a normal atmospheric gas mask this does not filter gasses or protect against pepper spray."
-	worn_icon_state = "gas_prop_atmos"
-	icon_state = "gas_atmos"
-	inhand_icon_state = "gas_atmos"
 	clothing_flags = NONE
 	flags_cover = MASKCOVERSMOUTH
 	resistance_flags = FLAMMABLE

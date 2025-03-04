@@ -71,25 +71,6 @@
 		/obj/item/mod/module/tether,
 	)
 
-/obj/item/mod/control/pre_equipped/atmospheric
-	theme = /datum/mod_theme/atmospheric
-	applied_modules = list(
-		/obj/item/mod/module/storage,
-		/obj/item/mod/module/welding,
-		/obj/item/mod/module/rad_protection,
-		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/magboot,
-		/obj/item/mod/module/t_ray,
-		/obj/item/mod/module/quick_carry,
-		/obj/item/mod/module/headprotector,
-		/obj/item/mod/module/mister/atmos,
-	)
-	default_pins = list(
-		/obj/item/mod/module/magboot,
-		/obj/item/mod/module/mister/atmos,
-		/obj/item/mod/module/flashlight,
-	)
-
 /obj/item/mod/control/pre_equipped/advanced
 	theme = /datum/mod_theme/advanced
 	applied_cell = /obj/item/stock_parts/power_store/cell/super

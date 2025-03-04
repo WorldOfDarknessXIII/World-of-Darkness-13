@@ -123,5 +123,4 @@
 	back = /obj/item/mod/control/pre_equipped/magnate
 	suit = null
 	head = null
-	mask = /obj/item/clothing/mask/gas/atmos/captain
 	internals_slot = ITEM_SLOT_SUITSTORE

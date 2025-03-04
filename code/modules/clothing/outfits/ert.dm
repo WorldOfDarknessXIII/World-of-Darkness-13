@@ -392,7 +392,6 @@
 		/obj/item/stack/sheet/plasteel/twenty = 1,
 	)
 	head = /obj/item/clothing/head/utility/hardhat/welding
-	mask = /obj/item/clothing/mask/gas/atmos
 	l_hand = /obj/item/blueprints
 
 /datum/outfit/centcom/ert/clown/party
