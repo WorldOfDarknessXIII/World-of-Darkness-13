@@ -28,20 +28,6 @@
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
 	surplus = 5
 
-/datum/uplink_item/role_restricted/bureaucratic_error
-	name = "Organic Capital Disturbance Virus"
-	desc = "Randomizes job positions presented to new hires. May lead to too many/too few security officers and/or clowns. Single use."
-	item = ABSTRACT_UPLINK_ITEM
-	surplus = 0
-	limited_stock = 1
-	cost = 2
-	restricted = TRUE
-	restricted_roles = list(JOB_HEAD_OF_PERSONNEL, JOB_QUARTERMASTER)
-
-/datum/uplink_item/role_restricted/bureaucratic_error/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
-	force_event(/datum/round_event_control/bureaucratic_error, "a syndicate virus")
-	return source
-
 /datum/uplink_item/role_restricted/clumsinessinjector //clown ops can buy this too, but it's in the pointless badassery section for them
 	name = "Clumsiness Injector"
 	desc = "Inject yourself with this to become as clumsy as a clown... or inject someone ELSE with it to make THEM as clumsy as a clown. Useful for clowns who wish to reconnect with their former clownish nature or for clowns who wish to torment and play with their prey before killing them."

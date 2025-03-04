@@ -14,7 +14,6 @@
 	exp_required_type_department = EXP_TYPE_SILICON
 	exp_granted_type = EXP_TYPE_CREW
 	display_order = JOB_DISPLAY_ORDER_AI
-	allow_bureaucratic_error = FALSE
 	departments_list = list(
 		/datum/job_department/silicon,
 		)

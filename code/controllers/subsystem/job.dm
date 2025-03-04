@@ -92,44 +92,7 @@ SUBSYSTEM_DEF(job)
 		setup_occupations()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		load_jobs_from_config()
-	set_overflow_role(CONFIG_GET(string/overflow_job)) // this must always go after load_jobs_from_config() due to how the legacy systems operate, this always takes precedent.
 	return SS_INIT_SUCCESS
-
-/// Returns a list of jobs that we are allowed to fuck with during random events
-/datum/controller/subsystem/job/proc/get_valid_overflow_jobs()
-	var/static/list/overflow_jobs
-	if (!isnull(overflow_jobs))
-		return overflow_jobs
-
-	overflow_jobs = list()
-	for (var/datum/job/check_job in joinable_occupations)
-		if (!check_job.allow_bureaucratic_error)
-			continue
-		overflow_jobs += check_job
-	return overflow_jobs
-
-/datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role)
-	var/datum/job/new_overflow = ispath(new_overflow_role) ? get_job_type(new_overflow_role) : get_job(new_overflow_role)
-	if(!new_overflow)
-		job_debug("SET_OVRFLW: Failed to set new overflow role: [new_overflow_role]")
-		CRASH("set_overflow_role failed | new_overflow_role: [isnull(new_overflow_role) ? "null" : new_overflow_role]")
-	var/cap = CONFIG_GET(number/overflow_cap)
-
-	new_overflow.allow_bureaucratic_error = FALSE
-	new_overflow.spawn_positions = cap
-	new_overflow.total_positions = cap
-	new_overflow.job_flags |= JOB_CANNOT_OPEN_SLOTS
-
-	if(new_overflow.type == overflow_role)
-		return
-	var/datum/job/old_overflow = get_job_type(overflow_role)
-	old_overflow.allow_bureaucratic_error = initial(old_overflow.allow_bureaucratic_error)
-	old_overflow.spawn_positions = initial(old_overflow.spawn_positions)
-	old_overflow.total_positions = initial(old_overflow.total_positions)
-	if(!(initial(old_overflow.job_flags) & JOB_CANNOT_OPEN_SLOTS))
-		old_overflow.job_flags &= ~JOB_CANNOT_OPEN_SLOTS
-	overflow_role = new_overflow.type
-	job_debug("SET_OVRFLW: Overflow role set to: [new_overflow.type]")
 
 /datum/controller/subsystem/job/proc/setup_occupations()
 	name_occupations = list()
@@ -320,7 +283,6 @@ SUBSYSTEM_DEF(job)
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		// Any errors with the configs has already been said, we don't need to repeat them here.
 		load_jobs_from_config(silent = TRUE)
-	set_overflow_role(overflow_role)
 	return
 
 

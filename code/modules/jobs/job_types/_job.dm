@@ -91,9 +91,6 @@
 	/// unless department_for_prefs is set.
 	var/list/departments_list = null
 
-	/// Should this job be allowed to be picked for the bureaucratic error event?
-	var/allow_bureaucratic_error = TRUE
-
 	///Is this job affected by weird spawns like the ones from station traits
 	var/random_spawns_possible = TRUE
 
@@ -131,6 +128,8 @@
 
 	/// If set, look for a policy with this instead of the job title
 	var/policy_override
+
+	//WOD13TODO: Add clan and generation requirements
 
 /datum/job/New()
 	. = ..()

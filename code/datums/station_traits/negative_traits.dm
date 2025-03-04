@@ -122,26 +122,6 @@
 	// This station trait is checked when loot drops initialize, so it's too late
 	can_revert = FALSE
 
-/datum/station_trait/overflow_job_bureaucracy
-	name = "Overflow bureaucracy mistake"
-	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 5
-	show_in_report = TRUE
-	var/chosen_job_name
-
-/datum/station_trait/overflow_job_bureaucracy/New()
-	. = ..()
-	RegisterSignal(SSjob, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(set_overflow_job_override))
-
-/datum/station_trait/overflow_job_bureaucracy/get_report()
-	return "[name] - It seems for some reason we put out the wrong job-listing for the overflow role this shift...I hope you like [chosen_job_name]s."
-
-/datum/station_trait/overflow_job_bureaucracy/proc/set_overflow_job_override(datum/source)
-	SIGNAL_HANDLER
-	var/datum/job/picked_job = pick(SSjob.get_valid_overflow_jobs())
-	chosen_job_name = LOWER_TEXT(picked_job.title) // like Chief Engineers vs like chief engineers
-	SSjob.set_overflow_role(picked_job.type)
-
 /datum/station_trait/slow_shuttle
 	name = "Slow Shuttle"
 	trait_type = STATION_TRAIT_NEGATIVE
