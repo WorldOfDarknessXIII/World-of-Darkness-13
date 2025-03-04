@@ -485,9 +485,3 @@
 	baseturfs = /turf/open/lava/plasma/mafia
 	slowdown = 0
 	fish_source_type = null
-
-//basketball specific lava (normal atmos, no slowdown)
-/turf/open/lava/smooth/basketball
-	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
-	slowdown = 0
-	fish_source_type = null

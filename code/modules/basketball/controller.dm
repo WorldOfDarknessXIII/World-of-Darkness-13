@@ -9,8 +9,6 @@
 GLOBAL_LIST_EMPTY(basketball_signup)
 /// list of ghosts who want to play basketball that have since disconnected. They are kept in the lobby, but not counted for starting a game.
 GLOBAL_LIST_EMPTY(basketball_bad_signup)
-/// the current global basketball game running.
-GLOBAL_VAR(basketball_game)
 
 /**
  * The basketball controller handles the basketball minigame in progress.

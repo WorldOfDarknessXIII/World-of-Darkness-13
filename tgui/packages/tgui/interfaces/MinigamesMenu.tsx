@@ -33,18 +33,6 @@ export const MinigamesMenu = (props) => {
             </Stack.Item>
           </Stack>
           <Divider />
-          <Stack>
-            <Stack.Item grow>
-              <Button
-                content="Basketball"
-                fluid
-                fontSize={3}
-                textAlign="center"
-                lineHeight="3"
-                onClick={() => act('basketball')}
-              />
-            </Stack.Item>
-          </Stack>
         </Section>
       </Window.Content>
     </Window>
