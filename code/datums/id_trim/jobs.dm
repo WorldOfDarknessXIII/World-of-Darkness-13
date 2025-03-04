@@ -186,30 +186,6 @@
 	honorifics = list(", Almighty Scourge")
 	honorific_positions = HONORIFIC_POSITION_LAST_FULL | HONORIFIC_POSITION_NONE
 
-/datum/id_trim/job/bitrunner
-	assignment = JOB_BITRUNNER
-	trim_state = "trim_bitrunner"
-	department_color = COLOR_CARGO_BROWN
-	subdepartment_color = COLOR_CARGO_BROWN
-	sechud_icon_state = SECHUD_BITRUNNER
-	minimal_access = list(
-		ACCESS_BIT_DEN,
-		ACCESS_CARGO,
-		ACCESS_MAINT_TUNNELS,
-		ACCESS_MECH_MINING,
-		ACCESS_MINERAL_STOREROOM,
-	)
-	extra_access = list(
-		ACCESS_MINING,
-		ACCESS_MINING_STATION,
-		)
-	template_access = list(
-		ACCESS_CAPTAIN,
-		ACCESS_CHANGE_IDS,
-		ACCESS_QM,
-	)
-	job = /datum/job/bitrunner
-
 /datum/id_trim/job/botanist
 	assignment = JOB_BOTANIST
 	trim_state = "trim_botanist"
@@ -298,7 +274,6 @@
 		ACCESS_SHIPPING,
 		)
 	extra_access = list(
-		ACCESS_BIT_DEN,
 		ACCESS_MINING,
 		ACCESS_MINING_STATION,
 		)
@@ -684,7 +659,6 @@
 		ACCESS_ALL_PERSONAL_LOCKERS,
 		ACCESS_ARMORY,
 		ACCESS_AUX_BASE,
-		ACCESS_BIT_DEN,
 		ACCESS_BRIG,
 		ACCESS_BRIG_ENTRANCE,
 		ACCESS_CARGO,
@@ -831,7 +805,6 @@
 	subdepartment_color = COLOR_MEDICAL_BLUE
 	sechud_icon_state = SECHUD_PARAMEDIC
 	minimal_access = list(
-		ACCESS_BIT_DEN,
 		ACCESS_CARGO,
 		ACCESS_CONSTRUCTION,
 		ACCESS_HYDROPONICS,
@@ -939,7 +912,6 @@
 	sechud_icon_state = SECHUD_QUARTERMASTER
 	minimal_access = list(
 		ACCESS_AUX_BASE,
-		ACCESS_BIT_DEN,
 		ACCESS_CARGO,
 		ACCESS_MAINT_TUNNELS,
 		ACCESS_MECH_MINING,
@@ -1152,7 +1124,6 @@
 	assignment = JOB_SECURITY_OFFICER_SUPPLY
 	subdepartment_color = COLOR_CARGO_BROWN
 	department_access = list(
-		ACCESS_BIT_DEN,
 		ACCESS_CARGO,
 		ACCESS_MINING,
 		ACCESS_SHIPPING,
@@ -1222,8 +1193,7 @@
 		ACCESS_MINING_STATION,
 		)
 	extra_access = list(
-		ACCESS_BIT_DEN,
-		ACCESS_MAINT_TUNNELS,
+		ACCESS_MAINT_TUNNELS
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,

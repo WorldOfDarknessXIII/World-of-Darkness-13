@@ -260,7 +260,6 @@
 		/datum/job/assistant = /obj/item/organ/heart/cybernetic, //real cardiac
 		/datum/job/atmospheric_technician = /obj/item/organ/cyberimp/mouth/breathing_tube,
 		/datum/job/bartender = /obj/item/organ/liver/cybernetic/tier3,
-		/datum/job/bitrunner = /obj/item/organ/eyes/robotic/thermals,
 		/datum/job/botanist = /obj/item/organ/cyberimp/chest/nutriment,
 		/datum/job/captain = /obj/item/organ/heart/cybernetic/tier3,
 		/datum/job/cargo_technician = /obj/item/organ/stomach/cybernetic/tier2,

@@ -115,12 +115,6 @@
 #define ROLE_VENUSHUMANTRAP "Venus Human Trap"
 #define ROLE_ZOMBIE "Zombie"
 
-// Virtual dom related
-#define ROLE_GLITCH "Glitch" // the parent type of all vdom roles
-#define ROLE_CYBER_POLICE "Cyber Police"
-#define ROLE_CYBER_TAC "Cyber Tac"
-#define ROLE_NETGUARDIAN "NetGuardian Prime"
-
 /// This defines the antagonists you can operate with in the settings.
 /// Keys are the antagonist, values are the number of days since the player's
 /// first connection in order to play.
@@ -166,7 +160,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_STOWAWAY_CHANGELING = 0,
 
 	// I'm not too sure why these are here, but they're not moving.
-	ROLE_GLITCH = 0,
 	ROLE_PAI = 0,
 	ROLE_SENTIENCE = 0,
 	ROLE_RECOVERED_CREW = 0,

@@ -9,7 +9,7 @@
 	)
 	blackbox_key = "chef"
 	announcement_line = "The kitchen has ordered groceries which will arrive on the cargo shuttle! Please make sure it gets to them as soon as possible!"
-	// Discount for items in the chefs category like mining/bitrunning consoles
+	// Discount for items in the chefs category like mining consoles
 	cargo_cost_multiplier =  0.65
 
 /obj/machinery/computer/order_console/cook/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries)

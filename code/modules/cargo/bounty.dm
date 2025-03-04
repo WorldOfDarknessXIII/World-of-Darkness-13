@@ -77,8 +77,6 @@
 				chosen_type = pick(subtypesof(/datum/bounty/item/botany))
 			if(CIV_JOB_ATMOS)
 				chosen_type = pick(subtypesof(/datum/bounty/item/atmospherics))
-			if(CIV_JOB_BITRUN)
-				chosen_type = pick(subtypesof(/datum/bounty/item/bitrunning))
 		bounty_ref = new chosen_type
 		if(bounty_ref.can_get())
 			bounty_succeeded = TRUE

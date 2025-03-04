@@ -63,18 +63,3 @@
 	department_color = COLOR_BLACK
 	subdepartment_color = COLOR_GREEN
 	sechud_icon_state = SECHUD_BITAVATAR
-
-/// Trim for cyber police in the Virtual Domain.
-/datum/id_trim/cyber_police
-	assignment = ROLE_CYBER_POLICE
-	trim_state = "trim_deathcommando"
-	department_color = COLOR_BLACK
-	subdepartment_color = COLOR_GREEN
-	threat_modifier = -1 // Cops recognise cops
-	honorifics = list("CISO")
-	honorific_positions = HONORIFIC_POSITION_FIRST | HONORIFIC_POSITION_LAST | HONORIFIC_POSITION_NONE
-
-/datum/id_trim/cyber_police/New()
-	. = ..()
-
-	access |= SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL))

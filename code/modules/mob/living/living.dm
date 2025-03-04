@@ -1567,7 +1567,6 @@
 				/mob/living/basic/bot/vibebot = 25,
 				/mob/living/basic/hivebot/strong = 50,
 				/mob/living/basic/hivebot/mechanic = 50,
-				/mob/living/basic/netguardian = 1,
 				/mob/living/silicon/robot/model/syndicate = 1,
 				/mob/living/silicon/robot/model/syndicate/medical = 1,
 				/mob/living/silicon/robot/model/syndicate/saboteur = 1,
