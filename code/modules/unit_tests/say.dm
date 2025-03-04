@@ -255,7 +255,7 @@
 	speaker_radio_heard_message = FALSE
 	listener_radio_received_message = FALSE
 
-	speaker_radio.set_frequency(FREQ_CTF_RED)
+	speaker_radio.set_frequency(FREQ_SECURITY)
 	speaker.say(pangram_quote)
 	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired (radio test)")
 	TEST_ASSERT_NULL(handle_hearing_result, "Listener erroneously heard radio message (radio test)")

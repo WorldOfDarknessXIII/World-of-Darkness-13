@@ -149,7 +149,7 @@ GLOBAL_VAR_INIT(ghost_role_flags, ALL)
 #define GHOSTROLE_STATION_SENTIENCE (1<<2)
 //ie pais, posibrains
 #define GHOSTROLE_SILICONS (1<<3)
-//ie mafia, ctf
+//ie mafia
 #define GHOSTROLE_MINIGAME (1<<4)
 
 //smite defines

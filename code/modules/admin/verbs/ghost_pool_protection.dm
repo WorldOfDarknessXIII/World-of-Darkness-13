@@ -16,7 +16,7 @@ ADMIN_VERB(ghost_pool_protection, R_ADMIN, "Ghost Pool Protection", "Choose whic
 	var/events_or_midrounds = TRUE //ie fugitives, space dragon, etc. also includes dynamic midrounds as it's the same deal
 	var/spawners = TRUE //ie ashwalkers, free golems, beach bums
 	var/station_sentience = TRUE //ie posibrains, mind monkeys, sentience potion, etc.
-	var/minigames = TRUE //ie mafia, ctf
+	var/minigames = TRUE //ie mafia
 	var/misc = TRUE //oddities like split personality and any animal ones like spiders, xenos
 	*/
 

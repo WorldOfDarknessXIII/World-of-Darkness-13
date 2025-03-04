@@ -43,17 +43,3 @@
 		if(!Radio)
 			return
 		Radio.set_frequency(team_radio)
-
-/obj/machinery/teambuilder/red
-	name = "Teambuilding Machine (Red)"
-	desc = "A machine that, when passed, colors you based on the color of your team. Go red team!"
-	humans_only = TRUE
-	team_color = COLOR_RED
-	team_radio = FREQ_CTF_RED
-
-/obj/machinery/teambuilder/blue
-	name = "Teambuilding Machine (Blue)"
-	desc = "A machine that, when passed, colors you based on the color of your team. Go blue team!"
-	humans_only = TRUE
-	team_color = COLOR_BLUE
-	team_radio = FREQ_CTF_BLUE

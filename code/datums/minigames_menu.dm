@@ -29,19 +29,9 @@
 			ui.close()
 			mafia()
 			return TRUE
-		if("ctf")
-			ui.close()
-			ctf()
-			return TRUE
 
 /datum/minigames_menu/proc/mafia()
 	var/datum/mafia_controller/game = GLOB.mafia_game //this needs to change if you want multiple mafia games up at once.
 	if(!game)
 		game = create_mafia_game()
 	game.ui_interact(usr)
-
-/datum/minigames_menu/proc/ctf()
-	var/datum/ctf_panel/ctf_panel
-	if(!ctf_panel)
-		ctf_panel = new(src)
-	ctf_panel.ui_interact(usr)

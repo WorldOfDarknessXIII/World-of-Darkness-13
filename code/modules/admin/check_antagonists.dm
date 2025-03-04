@@ -112,7 +112,6 @@
 		dat += "<a href='byond://?_src_=holder;[HrefToken()];undelay_round_end=1'>Undelay Round End</a><br>"
 	else
 		dat += "<a href='byond://?_src_=holder;[HrefToken()];delay_round_end=1'>Delay Round End</a><br>"
-	dat += "<a href='byond://?_src_=holder;[HrefToken()];ctf_toggle=1'>Enable/Disable CTF</a><br>"
 	dat += "<a href='byond://?_src_=holder;[HrefToken()];rebootworld=1'>Reboot World</a><br>"
 	dat += "<a href='byond://?_src_=holder;[HrefToken()];check_teams=1'>Check Teams</a>"
 	var/connected_players = GLOB.clients.len

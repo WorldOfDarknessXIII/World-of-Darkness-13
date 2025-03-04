@@ -214,15 +214,6 @@ const HelpfulTab = (props) => {
         <Stack fill>
           <Stack.Item>
             <Button
-              icon="flag"
-              lineHeight={lineHeightNormal}
-              width={buttonWidthNormal}
-              content="Toggle CTF"
-              onClick={() => act('ctfbutton')}
-            />
-          </Stack.Item>
-          <Stack.Item>
-            <Button
               icon="sync-alt"
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
@@ -289,15 +280,6 @@ const FunTab = (props) => {
               width={buttonWidthNormal}
               content="Make N.E.R.D."
               onClick={() => act('makeNerd')}
-            />
-          </Stack.Item>
-          <Stack.Item>
-            <Button
-              icon="flag"
-              lineHeight={lineHeightNormal}
-              width={buttonWidthNormal}
-              content="CTF Instagib Mode"
-              onClick={() => act('ctf_instagib')}
             />
           </Stack.Item>
           <Stack.Item>

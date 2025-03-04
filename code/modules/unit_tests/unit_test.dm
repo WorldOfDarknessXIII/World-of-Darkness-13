@@ -326,8 +326,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/item/minespawner)
 	//Stacks baseturfs, can't be tested here
 	returnable_list += typesof(/obj/effect/temp_visual/lava_warning)
-	//Stacks baseturfs, can't be tested here
-	returnable_list += typesof(/obj/effect/landmark/ctf)
 	//Our system doesn't support it without warning spam from unregister calls on things that never registered
 	returnable_list += typesof(/obj/docking_port)
 	//Asks for a shuttle that may not exist, let's leave it alone

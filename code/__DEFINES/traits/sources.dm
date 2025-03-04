@@ -90,8 +90,6 @@
 #define MOTOR_LACK_TRAIT "motor-lack"
 /// Trait associated with mafia
 #define MAFIA_TRAIT "mafia"
-/// Trait associated with ctf
-#define CTF_TRAIT "ctf"
 /// Trait associated with highlander
 #define HIGHLANDER_TRAIT "highlander"
 /// Trait given from playing pretend with baguettes

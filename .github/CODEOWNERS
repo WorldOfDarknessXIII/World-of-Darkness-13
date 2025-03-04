@@ -170,11 +170,6 @@
 /code/modules/mob/living/carbon/carbon_update_icons.dm @Kapu1178
 /code/modules/mob/living/carbon/human/human_update_icons.dm @Kapu1178
 
-# NamelessFairy
-
-/code/modules/capture_the_flag/ @NamelessFairy
-/_maps/map_files/CTF/ @NamelessFairy
-
 # Pickle-Coding
 
 /code/__DEFINES/atmospherics/ @Pickle-Coding

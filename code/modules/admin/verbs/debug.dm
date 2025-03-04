@@ -637,9 +637,6 @@ ADMIN_VERB(place_ruin, R_DEBUG, "Spawn Ruin", "Attempt to randomly place a speci
 	else
 		to_chat(user, span_warning("Failed to place [template.name]."), confidential = TRUE)
 
-ADMIN_VERB(unload_ctf, R_DEBUG, "Unload CTF", "Despawns the majority of CTF.", ADMIN_CATEGORY_DEBUG)
-	toggle_id_ctf(user, CTF_GHOST_CTF_GAME_ID, unload=TRUE)
-
 ADMIN_VERB(run_empty_query, R_DEBUG, "Run Empty Query", "Runs a specified number of empty queries.", ADMIN_CATEGORY_DEBUG, val as num)
 	var/list/queries = list()
 	for(var/i in 1 to val)

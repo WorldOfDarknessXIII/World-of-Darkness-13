@@ -182,13 +182,6 @@
 	name = "Luxurious Emergency Shuttle"
 	area_flags = NOTELEPORT
 
-/area/shuttle/escape/simulation
-	name = "Medieval Reality Simulation Dome"
-	icon_state = "shuttlectf"
-	area_flags = NOTELEPORT
-	static_lighting = FALSE
-	base_lighting_alpha = 255
-
 /area/shuttle/escape/arena
 	name = "The Arena"
 	area_flags = NOTELEPORT

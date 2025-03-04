@@ -1302,7 +1302,6 @@
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/evacuation/ship)
 "fZ" = (
-/obj/effect/landmark/ctf,
 /turf/open/space/basic,
 /area/space)
 "ga" = (

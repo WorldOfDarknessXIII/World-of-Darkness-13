@@ -1464,11 +1464,6 @@
 		else if(answer == "no")
 			logger.Log(LOG_CATEGORY_DEBUG_SQL, "no server hang", data)
 
-	else if(href_list["ctf_toggle"])
-		if(!check_rights(R_ADMIN))
-			return
-		toggle_id_ctf(usr, CTF_GHOST_CTF_GAME_ID)
-
 	else if(href_list["rebootworld"])
 		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/restart)
 

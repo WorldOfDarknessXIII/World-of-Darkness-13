@@ -48,17 +48,6 @@
 /area/heretic_sacrifice/flesh : /area/centcom/heretic_sacrifice/flesh
 /area/heretic_sacrifice/rust : /area/centcom/heretic_sacrifice/rust
 
-/area/ctf : /area/centcom/ctf
-/area/ctf/control_room : /area/centcom/ctf/control_room
-/area/ctf/control_room2 : /area/centcom/ctf/control_room2
-/area/ctf/central : /area/centcom/ctf/central
-/area/ctf/main_hall : /area/centcom/ctf/main_hall
-/area/ctf/main_hall2 : /area/centcom/ctf/main_hall2
-/area/ctf/corridor : /area/centcom/ctf/corridor
-/area/ctf/corridor2: /area/centcom/ctf/corridor2
-/area/ctf/flag_room : /area/centcom/ctf/flag_room
-/area/ctf/flag_room2 : /area/centcom/ctf/flag_room2
-
 /area/start : /area/misc/start
 /area/testroom : /area/misc/testroom
 

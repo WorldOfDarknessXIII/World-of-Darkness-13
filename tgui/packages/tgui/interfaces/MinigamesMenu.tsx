@@ -13,16 +13,6 @@ export const MinigamesMenu = (props) => {
           <Stack>
             <Stack.Item grow>
               <Button
-                content="CTF"
-                fluid
-                fontSize={3}
-                textAlign="center"
-                lineHeight="3"
-                onClick={() => act('ctf')}
-              />
-            </Stack.Item>
-            <Stack.Item grow>
-              <Button
                 content="Mafia"
                 fluid
                 fontSize={3}
