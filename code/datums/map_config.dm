@@ -21,7 +21,7 @@
 	var/traits = null
 	var/space_ruin_levels = DEFAULT_SPACE_RUIN_LEVELS
 	var/space_empty_levels = DEFAULT_SPACE_EMPTY_LEVELS
-	/// Boolean that tells us if this is a planetary station. (like IceBoxStation)
+	/// Boolean that tells us if this is a planetary station.
 	var/planetary = FALSE
 
 	///The type of mining Z-level that should be loaded.
