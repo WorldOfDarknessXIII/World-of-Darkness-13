@@ -3489,8 +3489,6 @@
 #include "code\modules\wod13\items\argemia.dm"
 #include "code\modules\wod13\items\blood_hunt.dm"
 #include "code\modules\wod13\items\drinkable_bloodpack.dm"
-#include "code\modules\wod13\items\fusebox.dm"
-#include "code\modules\wod13\items\generator.dm"
 #include "code\modules\wod13\items\masquerade_contract.dm"
 #include "code\modules\wod13\items\phone_book.dm"
 #include "code\modules\wod13\items\quran.dm"
