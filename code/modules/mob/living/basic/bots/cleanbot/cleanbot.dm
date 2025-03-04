@@ -10,7 +10,6 @@
 	light_color = "#99ccff"
 
 	req_one_access = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
-	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE
 	bot_type = CLEAN_BOT
 	hackables = "cleaning software"

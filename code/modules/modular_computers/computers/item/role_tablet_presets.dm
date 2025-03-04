@@ -261,11 +261,6 @@
 	for(var/datum/computer_file/program/messenger/messenger_app in stored_files)
 		messenger_app.spam_mode = TRUE
 
-/obj/item/modular_computer/pda/botanist
-	name = "botanist PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
-	greyscale_colors = "#50E193#E26F41#71A7CA"
-
 /obj/item/modular_computer/pda/cook
 	name = "cook PDA"
 	greyscale_colors = "#FAFAFA#A92323"

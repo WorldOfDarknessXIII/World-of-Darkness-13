@@ -44,6 +44,7 @@
  * and it will hurt the entire time
  */
 
+//WOD13TODO: Add our jobs here
 //No department
 #define JOB_ASSISTANT "Assistant"
 #define JOB_PRISONER "Prisoner"
@@ -85,7 +86,6 @@
 #define JOB_CARGO_GORILLA "Cargo Gorilla"
 #define JOB_SHAFT_MINER "Shaft Miner"
 //Service
-#define JOB_BOTANIST "Botanist"
 #define JOB_COOK "Cook"
 #define JOB_CHEF "Chef" // Alternate cook title.
 #define JOB_JANITOR "Janitor"
@@ -134,7 +134,6 @@
 #define JOB_DISPLAY_ORDER_CAPTAIN 2
 #define JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL 3
 #define JOB_DISPLAY_ORDER_BRIDGE_ASSISTANT 4
-#define JOB_DISPLAY_ORDER_BOTANIST 6
 #define JOB_DISPLAY_ORDER_COOK 7
 #define JOB_DISPLAY_ORDER_JANITOR 8
 #define JOB_DISPLAY_ORDER_CLOWN 9

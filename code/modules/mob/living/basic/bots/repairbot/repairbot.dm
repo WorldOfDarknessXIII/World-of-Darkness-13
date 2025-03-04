@@ -14,7 +14,6 @@
 	path_image_color = "#80dae7"
 	bot_ui = "RepairBot"
 	req_one_access = list(ACCESS_ROBOTICS, ACCESS_ENGINEERING)
-	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = REPAIR_BOT
 	additional_access = /datum/id_trim/job/station_engineer

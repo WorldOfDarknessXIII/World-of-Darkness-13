@@ -190,11 +190,6 @@
 	icon_file = 'icons/obj/devices/circuitry_n_data.dmi'
 	json_config = 'code/datums/greyscale/json_configs/encryptionkey_medical.json'
 
-/datum/greyscale_config/encryptionkey_service
-	name = "Service Encryptionkey"
-	icon_file = 'icons/obj/devices/circuitry_n_data.dmi'
-	json_config = 'code/datums/greyscale/json_configs/encryptionkey_service.json'
-
 /datum/greyscale_config/encryptionkey_engineering
 	name = "Engineering Encryptionkey"
 	icon_file = 'icons/obj/devices/circuitry_n_data.dmi'

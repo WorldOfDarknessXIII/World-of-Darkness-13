@@ -88,21 +88,18 @@
 	name = "law and order radio encryption key"
 	icon_state = "cypherkey_service"
 	channels = list(RADIO_CHANNEL_SERVICE = 1, RADIO_CHANNEL_SECURITY = 1)
-	greyscale_config = /datum/greyscale_config/encryptionkey_service
 	greyscale_colors = "#820a16#3bca5a"
 
 /obj/item/encryptionkey/headset_srvmed
 	name = "psychology radio encryption key"
 	icon_state = "cypherkey_service"
 	channels = list(RADIO_CHANNEL_MEDICAL = 1, RADIO_CHANNEL_SERVICE = 1)
-	greyscale_config = /datum/greyscale_config/encryptionkey_service
 	greyscale_colors = "#ebebeb#3bca5a"
 
 /obj/item/encryptionkey/headset_srvent
 	name = "press radio encryption key"
 	icon_state = "cypherkey_service"
 	channels = list(RADIO_CHANNEL_SERVICE = 1, RADIO_CHANNEL_ENTERTAINMENT = 0)
-	greyscale_config = /datum/greyscale_config/encryptionkey_service
 	greyscale_colors = "#83eb8f#3bca5a"
 
 /obj/item/encryptionkey/headset_com
@@ -174,13 +171,6 @@
 	channels = list(RADIO_CHANNEL_SUPPLY = 1, RADIO_CHANNEL_SCIENCE = 1)
 	greyscale_config = /datum/greyscale_config/encryptionkey_cargo
 	greyscale_colors = "#49241a#bc4a9b"
-
-/obj/item/encryptionkey/headset_service
-	name = "service radio encryption key"
-	icon_state = "cypherkey_service"
-	channels = list(RADIO_CHANNEL_SERVICE = 1)
-	greyscale_config = /datum/greyscale_config/encryptionkey_service
-	greyscale_colors = "#3758c4#3bca5a"
 
 /obj/item/encryptionkey/headset_cent
 	name = "\improper CentCom radio encryption key"

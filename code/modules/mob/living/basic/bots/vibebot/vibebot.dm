@@ -11,7 +11,6 @@
 	light_power = 2
 
 	hackables = "vibing scanners"
-	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE
 	bot_type = VIBE_BOT
 	data_hud_type = DATA_HUD_DIAGNOSTIC

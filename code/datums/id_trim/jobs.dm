@@ -131,29 +131,6 @@
 	honorifics = list(", Almighty Scourge")
 	honorific_positions = HONORIFIC_POSITION_LAST_FULL | HONORIFIC_POSITION_NONE
 
-/datum/id_trim/job/botanist
-	assignment = JOB_BOTANIST
-	trim_state = "trim_botanist"
-	department_color = COLOR_SERVICE_LIME
-	subdepartment_color = COLOR_SERVICE_LIME
-	sechud_icon_state = SECHUD_BOTANIST
-	minimal_access = list(
-		ACCESS_HYDROPONICS,
-		ACCESS_MINERAL_STOREROOM,
-		ACCESS_SERVICE,
-		)
-	extra_access = list(
-		ACCESS_BAR,
-		ACCESS_KITCHEN,
-		ACCESS_MORGUE,
-		)
-	template_access = list(
-		ACCESS_CAPTAIN,
-		ACCESS_CHANGE_IDS,
-		ACCESS_HOP,
-		)
-	job = /datum/job/botanist
-
 /datum/id_trim/job/bridge_assistant
 	assignment = JOB_BRIDGE_ASSISTANT
 	trim_state = "trim_assistant"

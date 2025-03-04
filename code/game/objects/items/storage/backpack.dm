@@ -157,12 +157,6 @@
 	icon_state = "backpack-captain"
 	inhand_icon_state = "captainpack"
 
-/obj/item/storage/backpack/botany
-	name = "botany backpack"
-	desc = "It's a backpack made of all-natural fibers."
-	icon_state = "backpack-hydroponics"
-	inhand_icon_state = "botpack"
-
 /obj/item/storage/backpack/chemistry
 	name = "chemistry backpack"
 	desc = "A backpack specially designed to repel stains and hazardous liquids."
@@ -343,12 +337,6 @@
 	desc = "Useful for holding research materials."
 	icon_state = "satchel-science"
 	inhand_icon_state = "satchel-sci"
-
-/obj/item/storage/backpack/satchel/hyd
-	name = "botanist satchel"
-	desc = "A satchel made of all natural fibers."
-	icon_state = "satchel-hydroponics"
-	inhand_icon_state = "satchel-hyd"
 
 /obj/item/storage/backpack/satchel/sec
 	name = "security satchel"
@@ -536,12 +524,6 @@
 	desc = "A large duffel bag for holding extra exotic treasures."
 	icon_state = "duffel-explorer"
 	inhand_icon_state = "duffel-explorer"
-
-/obj/item/storage/backpack/duffelbag/hydroponics
-	name = "hydroponic's duffel bag"
-	desc = "A large duffel bag for holding extra gardening tools."
-	icon_state = "duffel-hydroponics"
-	inhand_icon_state = "duffel-hydroponics"
 
 /obj/item/storage/backpack/duffelbag/chemistry
 	name = "chemistry duffel bag"
@@ -836,12 +818,6 @@
 	desc = "Useful for holding research materials, and for speeding your way to different scan objectives."
 	icon_state = "messenger_science"
 	inhand_icon_state = "messenger_science"
-
-/obj/item/storage/backpack/messenger/hyd
-	name = "botanist messenger bag"
-	desc = "A messenger bag made of all natural fibers, great for getting to the sesh in time."
-	icon_state = "messenger_hydroponics"
-	inhand_icon_state = "messenger_hydroponics"
 
 /obj/item/storage/backpack/messenger/sec
 	name = "security messenger bag"

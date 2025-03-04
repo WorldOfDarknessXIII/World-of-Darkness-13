@@ -116,26 +116,6 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
-/datum/techweb_node/mod_engi_adv
-	id = TECHWEB_NODE_MOD_ENGI_ADV
-	display_name = "Advanced Engineering Modular Suit"
-	description = "Advanced Engineering suits, for advanced powered engineers."
-	prereq_ids = list(TECHWEB_NODE_MOD_ENGI)
-	design_ids = list(
-		"mod_plating_atmospheric",
-		"mod_jetpack",
-		"mod_rad_protection",
-		"mod_emp_shield",
-		"mod_storage_expanded",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
-	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_ENGINEERING)
-
-/datum/techweb_node/mod_engi_adv/New()
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA)) //we'll really need the rad protection modsuit module
-		starting_node = TRUE
-	return ..()
-
 /datum/techweb_node/mod_anomaly
 	id = TECHWEB_NODE_MOD_ANOMALY
 	display_name = "Anomalock Modular Suit"

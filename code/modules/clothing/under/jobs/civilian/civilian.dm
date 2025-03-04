@@ -60,26 +60,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/under/rank/civilian/hydroponics
-	desc = "It's a jumpsuit designed to protect against minor plant-related hazards."
-	name = "botanist's jumpsuit"
-	icon_state = "hydroponics"
-	inhand_icon_state = "g_suit"
-	armor_type = /datum/armor/clothing_under/civilian_hydroponics
-
-/datum/armor/clothing_under/civilian_hydroponics
-	bio = 50
-
-/obj/item/clothing/under/rank/civilian/hydroponics/skirt
-	name = "botanist's jumpskirt"
-	desc = "It's a jumpskirt designed to protect against minor plant-related hazards."
-	icon_state = "hydroponics_skirt"
-	inhand_icon_state = "g_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
-	dying_key = DYE_REGISTRY_JUMPSKIRT
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
 /obj/item/clothing/under/rank/civilian/janitor
 	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."
 	name = "janitor's jumpsuit"

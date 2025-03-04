@@ -85,7 +85,7 @@
 			The only way to get rid of it if you are holding it is to attack someone else with it, causing it to latch to that person instead."
 	item = /obj/item/hot_potato/syndicate
 	cost = 4
-	restricted_roles = list(JOB_COOK, JOB_BOTANIST, JOB_CLOWN, JOB_MIME)
+	restricted_roles = list(JOB_COOK, JOB_CLOWN, JOB_MIME)
 
 /datum/uplink_item/role_restricted/combat_baking
 	name = "Combat Bakery Kit"
@@ -238,7 +238,7 @@
 	desc = "A heavily modified syringe gun which is capable of synthesizing its own chemical darts using input reagents. Can hold 90u of reagents."
 	item = /obj/item/gun/chem
 	cost = 12
-	restricted_roles = list(JOB_CHEMIST, JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_BOTANIST)
+	restricted_roles = list(JOB_CHEMIST, JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER)
 
 /datum/uplink_item/role_restricted/pie_cannon
 	name = "Banana Cream Pie Cannon"
@@ -333,20 +333,6 @@
 	cost = 14 //High cost because of the potential for extreme damage in the hands of a skilled scientist.
 	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
 	surplus = 5
-
-/datum/uplink_item/role_restricted/evil_seedling
-	name = "Evil Seedling"
-	desc = "A rare seed we have recovered that grows into a dangerous species that will aid you with your tasks!"
-	item = /obj/item/seeds/seedling/evil
-	cost = 8
-	restricted_roles = list(JOB_BOTANIST)
-
-/datum/uplink_item/role_restricted/bee_smoker
-	name = "Bee Smoker"
-	desc = "A device that runs on cannabis, turning it into a gas that can hypnotize bees to follow our commands."
-	item = /obj/item/bee_smoker
-	cost = 4
-	restricted_roles = list(JOB_BOTANIST)
 
 /datum/uplink_item/role_restricted/monkey_agent
 	name = "Simian Agent Reinforcements"

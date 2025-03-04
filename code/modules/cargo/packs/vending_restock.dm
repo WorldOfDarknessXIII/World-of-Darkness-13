@@ -169,13 +169,6 @@
 				)
 	crate_name = "general wardrobes vendor refills"
 
-/datum/supply_pack/vending/wardrobes/hydroponics
-	name = "Hydrobe Supply Crate"
-	desc = "This crate contains a refill for the Hydrobe."
-	cost = CARGO_CRATE_VALUE * 1.5
-	contains = list(/obj/item/vending_refill/wardrobe/hydro_wardrobe)
-	crate_name = "hydrobe supply crate"
-
 /datum/supply_pack/vending/wardrobes/janitor
 	name = "JaniDrobe Supply Crate"
 	desc = "This crate contains a refill for the JaniDrobe."

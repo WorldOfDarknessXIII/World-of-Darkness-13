@@ -84,8 +84,6 @@
 /obj/item/clothing/under/rank/curator/skirt: /obj/item/clothing/under/rank/civilian/curator/skirt
 /obj/item/clothing/under/rank/curator/treasure_hunter : /obj/item/clothing/under/rank/civilian/curator/treasure_hunter
 /obj/item/clothing/under/space : /obj/item/clothing/under/rank/civilian/curator/nasa
-/obj/item/clothing/under/rank/hydroponics : /obj/item/clothing/under/rank/civilian/hydroponics
-/obj/item/clothing/under/rank/hydroponics/skirt : /obj/item/clothing/under/rank/civilian/hydroponics/skirt
 /obj/item/clothing/under/rank/janitor : /obj/item/clothing/under/rank/civilian/janitor
 /obj/item/clothing/under/rank/janitor/skirt : /obj/item/clothing/under/rank/civilian/janitor/skirt
 /obj/item/clothing/under/janimaid : /obj/item/clothing/under/rank/civilian/janitor/maid

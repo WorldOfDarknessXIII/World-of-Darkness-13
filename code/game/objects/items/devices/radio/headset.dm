@@ -357,13 +357,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	. = ..()
 	REMOVE_TRAIT(user, TRAIT_SPEECH_BOOSTER, CLOTHING_TRAIT)
 
-/obj/item/radio/headset/headset_srv
-	name = "service radio headset"
-	desc = "Headset used by the service staff, tasked with keeping the station full, happy and clean."
-	icon_state = "srv_headset"
-	worn_icon_state = "srv_headset"
-	keyslot = /obj/item/encryptionkey/headset_service
-
 /obj/item/radio/headset/headset_cent
 	name = "\improper CentCom headset"
 	desc = "A headset used by the upper echelons of Nanotrasen."

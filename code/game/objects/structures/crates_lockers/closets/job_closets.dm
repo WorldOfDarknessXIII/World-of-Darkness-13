@@ -9,7 +9,6 @@
 	..()
 	var/static/items_inside = list(
 		/obj/item/clothing/head/hats/tophat = 2,
-		/obj/item/radio/headset/headset_srv = 2,
 		/obj/item/clothing/under/costume/buttondown/slacks/service = 2,
 		/obj/item/clothing/accessory/waistcoat = 2,
 		/obj/item/clothing/head/soft/black = 2,
@@ -32,7 +31,6 @@
 	..()
 	var/static/items_inside = list(
 		/obj/item/clothing/under/suit/waiter = 2,
-		/obj/item/radio/headset/headset_srv = 2,
 		/obj/item/clothing/accessory/waistcoat = 2,
 		/obj/item/clothing/suit/apron/chef = 3,
 		/obj/item/clothing/head/soft/mime = 2,
@@ -261,23 +259,6 @@
 		/obj/item/clothing/mask/gas = 3)
 	generate_items_inside(items_inside,src)
 	return
-
-/obj/structure/closet/wardrobe/botanist
-	name = "botanist wardrobe"
-	icon_door = "botany_wardrobe"
-
-/obj/structure/closet/wardrobe/botanist/PopulateContents()
-	var/static/items_inside = list(
-		/obj/item/storage/backpack/botany = 2,
-		/obj/item/storage/backpack/satchel/hyd = 2,
-		/obj/item/storage/backpack/messenger/hyd = 2,
-		/obj/item/storage/backpack/duffelbag/hydroponics = 2,
-		/obj/item/clothing/suit/hooded/wintercoat/hydro = 1,
-		/obj/item/clothing/suit/apron = 2,
-		/obj/item/clothing/suit/apron/overalls = 2,
-		/obj/item/clothing/under/rank/civilian/hydroponics = 3,
-		/obj/item/clothing/mask/bandana/striped/botany = 3)
-	generate_items_inside(items_inside,src)
 
 /obj/structure/closet/wardrobe/curator
 	name = "treasure hunting wardrobe"

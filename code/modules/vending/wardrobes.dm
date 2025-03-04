@@ -220,36 +220,9 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/science_wardrobe
 	payment_department = ACCOUNT_SCI
+
 /obj/item/vending_refill/wardrobe/science_wardrobe
 	machine_name = "SciDrobe"
-
-/obj/machinery/vending/wardrobe/hydro_wardrobe
-	name = "Hydrobe"
-	desc = "A machine with a catchy name. It dispenses botany related clothing and gear."
-	icon_state = "hydrobe"
-	product_ads = "Do you love soil? Then buy our clothes!;Get outfits to match your green thumb here!"
-	vend_reply = "Thank you for using the Hydrobe!"
-	products = list(
-		/obj/item/clothing/accessory/armband/hydro = 3,
-		/obj/item/clothing/mask/bandana/striped/botany = 3,
-		/obj/item/clothing/under/rank/civilian/hydroponics = 3,
-		/obj/item/clothing/under/rank/civilian/hydroponics/skirt = 3,
-		/obj/item/clothing/suit/apron = 3,
-		/obj/item/clothing/suit/apron/overalls = 3,
-		/obj/item/clothing/suit/apron/waders = 3,
-		/obj/item/clothing/suit/hooded/wintercoat/hydro = 3,
-		/obj/item/storage/backpack/botany = 3,
-		/obj/item/storage/backpack/satchel/hyd = 3,
-		/obj/item/storage/backpack/duffelbag/hydroponics = 3,
-		/obj/item/storage/backpack/messenger/hyd = 3,
-		/obj/item/radio/headset/headset_srv = 3,
-	)
-	refill_canister = /obj/item/vending_refill/wardrobe/hydro_wardrobe
-	payment_department = ACCOUNT_SRV
-	light_color = LIGHT_COLOR_ELECTRIC_GREEN
-
-/obj/item/vending_refill/wardrobe/hydro_wardrobe
-	machine_name = "HyDrobe"
 
 /obj/machinery/vending/wardrobe/curator_wardrobe
 	name = "CuraDrobe"
@@ -353,8 +326,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/storage/dice/hazard = 1,
 		/obj/item/storage/box/beanbag = 1,
 		/obj/item/circuitboard/machine/dish_drive = 1,
-		/obj/item/reagent_containers/cup/rag = 2,
-		/obj/item/radio/headset/headset_srv = 2,
+		/obj/item/reagent_containers/cup/rag = 2
 	)
 	premium = list(
 		/obj/item/storage/box/dishdrive = 1,
@@ -387,7 +359,6 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/storage/box/mousetraps = 2,
 		/obj/item/circuitboard/machine/dish_drive = 1,
 		/obj/item/reagent_containers/cup/rag = 2,
-		/obj/item/radio/headset/headset_srv = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -422,8 +393,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/soap/nanotrasen = 2,
 		/obj/item/storage/bag/trash = 2,
 		/obj/item/plunger = 2,
-		/obj/item/wirebrush = 2,
-		/obj/item/radio/headset/headset_srv = 2,
+		/obj/item/wirebrush = 2
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/jani_wardrobe
 	default_price = PAYCHECK_CREW
@@ -466,7 +436,6 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/clothing/under/rank/civilian/lawyer/black = 1,
 		/obj/item/clothing/under/rank/civilian/lawyer/black/skirt = 1,
 		/obj/item/clothing/shoes/laceup = 2,
-		/obj/item/radio/headset/headset_srv = 2,
 		/obj/item/storage/box/evidence = 2,
 		/obj/item/reagent_containers/cup/fish_feed = 1,
 	)
@@ -501,7 +470,6 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/clothing/suit/chaplainsuit/shrinehand = 1,
 		/obj/item/storage/backpack/cultpack = 1,
 		/obj/item/storage/fancy/candle_box = 2,
-		/obj/item/radio/headset/headset_srv = 2,
 		/obj/item/clothing/suit/chaplainsuit/habit = 1,
 		/obj/item/clothing/head/chaplain/habit_veil = 1,
 	)

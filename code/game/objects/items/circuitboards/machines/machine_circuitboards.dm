@@ -677,7 +677,6 @@
 		/obj/machinery/vending/wardrobe/curator_wardrobe = "CuraDrobe",
 		/obj/machinery/vending/wardrobe/det_wardrobe = "DetDrobe",
 		/obj/machinery/vending/wardrobe/gene_wardrobe = "GeneDrobe",
-		/obj/machinery/vending/wardrobe/hydro_wardrobe = "HyDrobe",
 		/obj/machinery/vending/wardrobe/jani_wardrobe = "JaniDrobe",
 		/obj/machinery/vending/wardrobe/law_wardrobe = "LawDrobe",
 		/obj/machinery/vending/wardrobe/medi_wardrobe = "MediDrobe",
