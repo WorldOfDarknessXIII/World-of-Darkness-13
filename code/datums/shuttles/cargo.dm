@@ -15,10 +15,6 @@
 	suffix = "pubby"
 	name = "supply shuttle (Pubby)"
 
-/datum/map_template/shuttle/cargo/birdshot
-	suffix = "birdshot"
-	name = "supply shuttle (Birdshot)"
-
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
 	name = "cargo ferry (Box)"

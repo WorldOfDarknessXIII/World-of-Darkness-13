@@ -252,13 +252,6 @@
 	description = "A train but in space, choo choo!"
 	occupancy_limit = "35"
 
-/datum/map_template/shuttle/emergency/birdshot
-	suffix = "birdshot"
-	name = "Birdshot Station Emergency Shuttle"
-	credit_cost = CARGO_CRATE_VALUE * 2
-	description = "We pulled this one out of Mothball just for you!"
-	occupancy_limit = "40"
-
 /datum/map_template/shuttle/emergency/wawa
 	suffix = "wawa"
 	name = "Wawa Stand-in Emergency Shuttle"

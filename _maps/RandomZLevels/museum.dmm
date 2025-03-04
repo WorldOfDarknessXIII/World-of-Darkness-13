@@ -5110,7 +5110,6 @@
 /turf/open/floor/grass,
 /area/awaymission/museum)
 "QB" = (
-/obj/structure/plaque/static_plaque/golden/commission/birdshot,
 /turf/closed/indestructible/reinforced,
 /area/awaymission/museum)
 "QD" = (

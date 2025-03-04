@@ -10,10 +10,6 @@
 	suffix = "donut"
 	name = "arrival shuttle (Donut)"
 
-/datum/map_template/shuttle/arrival/birdshot
-	suffix = "birdshot"
-	name = "arrival shuttle (Birdshot)"
-
 /datum/map_template/shuttle/arrival/delta
 	suffix = "delta"
 	name = "arrival shuttle (Delta)"

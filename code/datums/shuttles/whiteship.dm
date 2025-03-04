@@ -21,11 +21,6 @@
 	name = "NT Heavy Salvage Vessel"
 	description = "A beefy, well-rounded salvage vessel with a pair of corpses (miner and engineer) and a Captain's hat. Equipped with solar sails and a PACMAN generator."
 
-/datum/map_template/shuttle/whiteship/birdshot
-	suffix = "birdshot"
-	name = "NT Patrol Bee"
-	description = "A small patrol vessel with a central corridor connecting all rooms. Features 2 small cargo bays and a brig. Spawns with an aggressive and deadly Gelatinous Cube"
-
 /datum/map_template/shuttle/whiteship/kilo
 	suffix = "kilo"
 	name = "NT Mining Shuttle"

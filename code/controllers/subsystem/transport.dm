@@ -107,7 +107,7 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 			destination = potential_destination
 			break
 
-	// The platform in the request doesn't exist (ie: Can't send a tram to East Wing when the map is Birdshot)
+	// The platform in the request doesn't exist)
 	if(!destination)
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, INVALID_PLATFORM)
 		log_transport("Sub: Sending response to [source.id_tag]. Contents: [REQUEST_FAIL] [INVALID_PLATFORM]. Info: RD0.")
