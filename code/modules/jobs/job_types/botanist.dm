@@ -10,7 +10,6 @@
 	config_tag = "BOTANIST"
 
 	outfit = /datum/outfit/job/botanist
-	plasmaman_outfit = /datum/outfit/plasmaman/botany
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV

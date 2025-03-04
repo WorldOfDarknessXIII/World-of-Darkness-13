@@ -16,7 +16,6 @@
 	config_tag = "VETERAN_ADVISOR"
 
 	outfit = /datum/outfit/job/veteran_advisor
-	plasmaman_outfit = /datum/outfit/plasmaman/security
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SEC

@@ -50,11 +50,7 @@
 	exit_poof.lifetime = 2 SECONDS
 
 	former_captain.unequip_everything()
-	if(isplasmaman(former_captain))
-		former_captain.equipOutfit(/datum/outfit/plasmaman)
-		former_captain.internal = former_captain.get_item_for_held_index(2)
-	else
-		former_captain.equipOutfit(/datum/outfit/job/assistant)
+	former_captain.equipOutfit(/datum/outfit/job/assistant)
 
 	GLOB.manifest.modify(former_captain.real_name, JOB_ASSISTANT, JOB_ASSISTANT)
 	var/list/valid_turfs = list()

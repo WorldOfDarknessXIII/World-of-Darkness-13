@@ -18,7 +18,6 @@
 	config_tag = "HEAD_OF_SECURITY"
 
 	outfit = /datum/outfit/job/hos
-	plasmaman_outfit = /datum/outfit/plasmaman/head_of_security
 	departments_list = list(
 		/datum/job_department/security,
 		/datum/job_department/command,

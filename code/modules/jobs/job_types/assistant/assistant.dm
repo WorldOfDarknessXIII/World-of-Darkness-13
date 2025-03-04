@@ -12,7 +12,6 @@ Assistant
 	supervisors = "absolutely everyone"
 	exp_granted_type = EXP_TYPE_CREW
 	outfit = /datum/outfit/job/assistant
-	plasmaman_outfit = /datum/outfit/plasmaman
 	paycheck = PAYCHECK_LOWER // Get a job. Job reassignment changes your paycheck now. Get over it.
 
 	paycheck_department = ACCOUNT_CIV

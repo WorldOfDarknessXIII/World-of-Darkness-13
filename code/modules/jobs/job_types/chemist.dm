@@ -13,7 +13,6 @@
 	config_tag = "CHEMIST"
 
 	outfit = /datum/outfit/job/chemist
-	plasmaman_outfit = /datum/outfit/plasmaman/chemist
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_MED

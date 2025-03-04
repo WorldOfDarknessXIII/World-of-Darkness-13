@@ -14,7 +14,6 @@
 	config_tag = "BRIDGE_ASSISTANT"
 
 	outfit = /datum/outfit/job/bridge_assistant
-	plasmaman_outfit = /datum/outfit/plasmaman/bridge_assistant
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CIV

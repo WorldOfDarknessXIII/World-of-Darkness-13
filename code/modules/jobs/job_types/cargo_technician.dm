@@ -12,7 +12,6 @@
 	config_tag = "CARGO_TECHNICIAN"
 
 	outfit = /datum/outfit/job/cargo_tech
-	plasmaman_outfit = /datum/outfit/plasmaman/cargo
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CAR

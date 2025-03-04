@@ -13,7 +13,6 @@
 	config_tag = "STATION_ENGINEER"
 
 	outfit = /datum/outfit/job/engineer
-	plasmaman_outfit = /datum/outfit/plasmaman/engineering
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_ENG

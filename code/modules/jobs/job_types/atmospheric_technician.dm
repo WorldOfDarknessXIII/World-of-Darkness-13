@@ -12,7 +12,6 @@
 	config_tag = "ATMOSPHERIC_TECHNICIAN"
 
 	outfit = /datum/outfit/job/atmos
-	plasmaman_outfit = /datum/outfit/plasmaman/atmospherics
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_ENG

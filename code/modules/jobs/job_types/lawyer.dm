@@ -11,7 +11,6 @@
 	config_tag = "LAWYER"
 
 	outfit = /datum/outfit/job/lawyer
-	plasmaman_outfit = /datum/outfit/plasmaman/bar
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV

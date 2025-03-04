@@ -18,7 +18,6 @@
 	config_tag = "CAPTAIN"
 
 	outfit = /datum/outfit/job/captain
-	plasmaman_outfit = /datum/outfit/plasmaman/captain
 
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SEC

@@ -11,7 +11,6 @@
 	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/curator
-	plasmaman_outfit = /datum/outfit/plasmaman/curator
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV

@@ -11,7 +11,6 @@
 	config_tag = "CHAPLAIN"
 
 	outfit = /datum/outfit/job/chaplain
-	plasmaman_outfit = /datum/outfit/plasmaman/chaplain
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV

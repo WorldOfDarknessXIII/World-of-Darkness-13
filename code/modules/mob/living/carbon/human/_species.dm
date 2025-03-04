@@ -117,8 +117,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/death_sound
 	///Special sound for grabbing
 	var/grab_sound
-	/// A path to an outfit that is important for species life e.g. plasmaman outfit
-	var/datum/outfit/outfit_important_for_life
 
 	/// The natural temperature for a body
 	var/bodytemp_normal = BODYTEMP_NORMAL
@@ -769,15 +767,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		chem.overdose_start(affected)
 		affected.log_message("has started overdosing on [chem.name] at [chem.volume] units.", LOG_GAME)
 	return SEND_SIGNAL(affected, COMSIG_SPECIES_HANDLE_CHEMICAL, chem, seconds_per_tick, times_fired)
-
-/**
- * Equip the outfit required for life. Replaces items currently worn.
- */
-/datum/species/proc/give_important_for_life(mob/living/carbon/human/human_to_equip)
-	if(!outfit_important_for_life)
-		return
-
-	human_to_equip.equipOutfit(outfit_important_for_life)
 
 /**
  * Species based handling for irradiation

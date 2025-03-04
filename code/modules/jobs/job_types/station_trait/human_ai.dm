@@ -16,7 +16,6 @@
 	config_tag = "HUMAN_AI"
 
 	outfit = /datum/outfit/job/human_ai
-	plasmaman_outfit = /datum/outfit/plasmaman/human_ai
 
 	paycheck = null
 	paycheck_department = null
@@ -117,9 +116,6 @@
 		return
 	if(is_safe_turf(equipped.loc, dense_atoms = TRUE)) //skip this if it's safe. We allow dense atoms because we spawn out of the inactive core.
 		return
-	if(isnull(equipped.dna.species.outfit_important_for_life)) //custom species stuff will handle this for us.
-		internals_slot = ITEM_SLOT_SUITSTORE
-		suit_store = /obj/item/tank/internals/oxygen
 	suit = /obj/item/clothing/suit/space/nasavoid
 	head = /obj/item/clothing/head/helmet/space/nasavoid
 

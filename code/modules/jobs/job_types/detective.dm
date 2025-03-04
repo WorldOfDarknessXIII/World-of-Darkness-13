@@ -15,7 +15,6 @@
 	config_tag = "DETECTIVE"
 
 	outfit = /datum/outfit/job/detective
-	plasmaman_outfit = /datum/outfit/plasmaman/detective
 	departments_list = list(
 		/datum/job_department/security,
 		)

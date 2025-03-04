@@ -119,11 +119,6 @@
 	// Handle the pod returning
 	pod.startExitSequence(pod)
 
-	if(ishuman(person_sent))
-		var/mob/living/carbon/human/target = person_sent
-		// After we remove items, at least give them what they need to live.
-		target.dna.species.give_important_for_life(target)
-
 	//we'll start the effects in a few seconds since it takes a moment for the pod to leave.
 	addtimer(CALLBACK(src, PROC_REF(handle_victim_experience), person_sent), 3 SECONDS)
 

@@ -10,7 +10,6 @@
 	config_tag = "JANITOR"
 
 	outfit = /datum/outfit/job/janitor
-	plasmaman_outfit = /datum/outfit/plasmaman/janitor
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV

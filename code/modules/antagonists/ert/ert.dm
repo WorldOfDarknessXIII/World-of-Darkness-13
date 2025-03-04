@@ -17,7 +17,6 @@
 	var/datum/team/ert/ert_team
 	var/leader = FALSE
 	var/datum/outfit/outfit = /datum/outfit/centcom/ert/security
-	var/datum/outfit/plasmaman_outfit = /datum/outfit/plasmaman/centcom_official
 	var/role = "Security Officer"
 	var/list/name_source
 	var/random_names = TRUE
@@ -96,7 +95,6 @@
 /datum/antagonist/ert/commander
 	role = "Commander"
 	outfit = /datum/outfit/centcom/ert/commander
-	plasmaman_outfit = /datum/outfit/plasmaman/centcom_commander
 
 /datum/antagonist/ert/commander/red
 	outfit = /datum/outfit/centcom/ert/commander/alert
@@ -112,7 +110,6 @@
 /datum/antagonist/ert/deathsquad
 	name = "Deathsquad Trooper"
 	outfit = /datum/outfit/centcom/death_commando
-	plasmaman_outfit = /datum/outfit/plasmaman/centcom_commander
 	role = "Trooper"
 	rip_and_tear = TRUE
 
@@ -160,7 +157,6 @@
 /datum/antagonist/ert/intern
 	name = "CentCom Intern"
 	outfit = /datum/outfit/centcom/centcom_intern
-	plasmaman_outfit = /datum/outfit/plasmaman/centcom_intern
 	random_names = FALSE
 	role = "Intern"
 	suicide_cry = "FOR MY INTERNSHIP!!"
@@ -180,7 +176,6 @@
 /datum/antagonist/ert/clown
 	role = "Clown"
 	outfit = /datum/outfit/centcom/ert/clown
-	plasmaman_outfit = /datum/outfit/plasmaman/party_comedian
 
 /datum/antagonist/ert/clown/New()
 	. = ..()
@@ -189,17 +184,14 @@
 /datum/antagonist/ert/janitor/party
 	role = "Party Cleaning Service"
 	outfit = /datum/outfit/centcom/ert/janitor/party
-	plasmaman_outfit = /datum/outfit/plasmaman/party_janitor
 
 /datum/antagonist/ert/security/party
 	role = "Party Bouncer"
 	outfit = /datum/outfit/centcom/ert/security/party
-	plasmaman_outfit = /datum/outfit/plasmaman/party_bouncer
 
 /datum/antagonist/ert/engineer/party
 	role = "Party Constructor"
 	outfit = /datum/outfit/centcom/ert/engineer/party
-	plasmaman_outfit = /datum/outfit/plasmaman/party_constructor
 
 /datum/antagonist/ert/clown/party
 	role = "Party Comedian"
@@ -233,17 +225,7 @@
 	var/mob/living/carbon/human/H = owner.current
 	if(!istype(H))
 		return
-
-	if(isplasmaman(H))
-		H.dna.species.outfit_important_for_life = plasmaman_outfit
-
-	H.dna.species.give_important_for_life(H)
 	H.equipOutfit(outfit)
-
-	if(isplasmaman(H))
-		var/obj/item/mod/control/our_modsuit = locate() in H.get_equipped_items()
-		if(our_modsuit)
-			our_modsuit.install(new /obj/item/mod/module/plasma_stabilizer)
 
 /datum/antagonist/ert/greet()
 	if(!ert_team)
@@ -295,9 +277,7 @@
 /datum/antagonist/ert/medical_commander
 	role = "Chief EMT"
 	outfit = /datum/outfit/centcom/ert/medical_commander
-	plasmaman_outfit = /datum/outfit/plasmaman/medical_commander
 
 /datum/antagonist/ert/medical_technician
 	role = "Emergency Medical Technician"
 	outfit = /datum/outfit/centcom/ert/medical_technician
-	plasmaman_outfit = /datum/outfit/plasmaman/medical_technician

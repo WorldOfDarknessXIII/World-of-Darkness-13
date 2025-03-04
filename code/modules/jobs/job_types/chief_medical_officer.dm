@@ -18,7 +18,6 @@
 	config_tag = "CHIEF_MEDICAL_OFFICER"
 
 	outfit = /datum/outfit/job/cmo
-	plasmaman_outfit = /datum/outfit/plasmaman/chief_medical_officer
 	departments_list = list(
 		/datum/job_department/medical,
 		/datum/job_department/command,
