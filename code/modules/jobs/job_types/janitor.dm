@@ -29,7 +29,7 @@
 
 	job_flags = STATION_JOB_FLAGS
 
-	job_tone = "slip"
+
 
 /datum/outfit/job/janitor
 	name = "Janitor"

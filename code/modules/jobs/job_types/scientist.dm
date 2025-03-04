@@ -33,7 +33,7 @@
 
 	job_flags = STATION_JOB_FLAGS
 
-	job_tone = "boom"
+
 
 
 /datum/outfit/job/scientist

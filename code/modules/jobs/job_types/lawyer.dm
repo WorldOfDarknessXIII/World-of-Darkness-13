@@ -26,7 +26,7 @@
 
 	job_flags = STATION_JOB_FLAGS
 
-	job_tone = "objection"
+
 
 
 /datum/outfit/job/lawyer

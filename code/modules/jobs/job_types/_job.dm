@@ -117,9 +117,6 @@
 	/// You'll probably break someone's config if you change this, so it's best to not to.
 	var/config_tag = ""
 
-	/// custom ringtone for this job
-	var/job_tone
-
 	/// Minimal character age for this job
 	var/required_character_age
 
@@ -410,7 +407,6 @@
 
 	if(istype(pda))
 		pda.imprint_id(equipped.real_name, equipped_job.title)
-		pda.update_ringtone(equipped_job.job_tone)
 		pda.UpdateDisplay()
 
 		var/client/equipped_client = GLOB.directory[ckey(equipped.mind?.key)]

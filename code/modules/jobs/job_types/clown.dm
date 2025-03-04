@@ -34,7 +34,7 @@
 	family_heirlooms = list(/obj/item/bikehorn/golden)
 	job_flags = STATION_JOB_FLAGS
 
-	job_tone = "honk"
+
 
 /datum/job/clown/after_spawn(mob/living/spawned, client/player_client)
 	if (ishuman(spawned))
