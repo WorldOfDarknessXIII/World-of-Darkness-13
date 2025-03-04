@@ -200,7 +200,6 @@
 #include "lootpanel.dm"
 #include "lungs.dm"
 #include "machine_disassembly.dm"
-#include "mafia.dm"
 #include "map_landmarks.dm"
 #include "mapload_space_verification.dm"
 #include "mapping.dm"

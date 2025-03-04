@@ -76,7 +76,7 @@
 		return //lol double rip
 
 	if(HAS_TRAIT(victim, TRAIT_CANNOT_CRYSTALIZE))
-		return // no reviving during mafia, or other inconvenient times.
+		return // no reviving during inconvenient times.
 
 	to_chat(victim, span_nicegreen("Crystals start forming around your dead body."))
 	victim.visible_message(span_notice("Crystals start forming around [victim]."), ignored_mobs = victim)

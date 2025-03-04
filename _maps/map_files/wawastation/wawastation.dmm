@@ -18154,7 +18154,6 @@
 /area/station/engineering/main)
 "guP" = (
 /obj/structure/table,
-/obj/item/modular_computer/laptop/preset/mafia,
 /obj/structure/broken_flooring/side/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)

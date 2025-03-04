@@ -1,7 +1,6 @@
 /*
  * LAVA
  * PLASMA LAVA
- * MAFIA PLASMA LAVA
  */
 
 /turf/open/lava
@@ -478,10 +477,3 @@
 	burn_human.set_species(/datum/species/plasmaman)
 	burn_human.visible_message(span_warning("[burn_human] bursts into flame as the last of [burn_human.p_their()] body is coated in fungus!"), \
 		span_userdanger("Your senses numb as what remains of your flesh sloughs off, revealing the plasma-encrusted bone beneath!"))
-
-//mafia specific tame happy plasma (normal atmos, no slowdown)
-/turf/open/lava/plasma/mafia
-	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
-	baseturfs = /turf/open/lava/plasma/mafia
-	slowdown = 0
-	fish_source_type = null
