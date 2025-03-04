@@ -702,14 +702,6 @@
 			to_chat(src, "<span class='warning'>Remove [p_their()] mask first!</span>")
 			return FALSE
 
-//		if (!getorganslot(ORGAN_SLOT_LUNGS))
-//			to_chat(src, "<span class='warning'>You have no lungs to breathe with, so you cannot perform CPR!</span>")
-//			return FALSE
-
-//		if (HAS_TRAIT(src, TRAIT_NOBREATH))
-//			to_chat(src, "<span class='warning'>You do not breathe, so you cannot perform CPR!</span>")
-//			return FALSE
-
 		visible_message("<span class='notice'>[src] is trying to perform CPR on [target.name]!</span>", \
 						"<span class='notice'>You try to perform CPR on [target.name]... Hold still!</span>")
 
@@ -729,13 +721,6 @@
 				if(N.last_damager != src)
 					AdjustHumanity(1, 10)
 					call_dharma("savelife", src)
-//			if(key)
-//				var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
-//				if(P)
-//					var/mode = 1
-//					if(HAS_TRAIT(src, TRAIT_NON_INT))
-//						mode = 2
-//					P.exper = min(calculate_mob_max_exper(src), P.exper+(20/mode))
 		log_combat(src, target, "CPRed")
 
 		if (HAS_TRAIT(target, TRAIT_NOBREATH))
