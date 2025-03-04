@@ -38,7 +38,7 @@
 		/obj/item/storage/box/rubbershot = 10,
 		/obj/item/storage/box/lethalshot = 5
 	)
-	rpg_title = "Jailor"
+
 	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT
 
 /datum/outfit/job/warden

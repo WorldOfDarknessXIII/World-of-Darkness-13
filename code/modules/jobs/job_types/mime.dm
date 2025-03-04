@@ -27,7 +27,7 @@
 		/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing = 10,
 		/obj/item/book/granter/action/spell/mime/mimery = 1,
 	)
-	rpg_title = "Fool"
+
 	job_flags = STATION_JOB_FLAGS
 
 	voice_of_god_power = 0.5 //Why are you speaking

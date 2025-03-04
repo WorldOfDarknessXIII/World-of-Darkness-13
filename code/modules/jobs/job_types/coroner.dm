@@ -41,7 +41,6 @@
 
 	job_flags = STATION_JOB_FLAGS
 
-	rpg_title = "Undertaker"
 
 /datum/outfit/job/coroner
 	name = "Coroner"

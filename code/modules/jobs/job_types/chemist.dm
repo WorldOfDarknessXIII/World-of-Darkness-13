@@ -33,7 +33,6 @@
 		/obj/item/reagent_containers/cup/bottle/leadacetate = 5,
 		/obj/item/paper/secretrecipe = 1
 	)
-	rpg_title = "Alchemist"
 	job_flags = STATION_JOB_FLAGS
 
 

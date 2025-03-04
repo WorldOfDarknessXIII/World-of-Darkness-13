@@ -24,7 +24,7 @@
 		)
 
 	family_heirlooms = list(/obj/item/pickaxe/mini, /obj/item/shovel)
-	rpg_title = "Adventurer"
+
 	job_flags = STATION_JOB_FLAGS
 
 

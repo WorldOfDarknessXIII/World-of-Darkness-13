@@ -34,7 +34,7 @@
 		/obj/effect/spawner/random/medical/organs = 5,
 		/obj/effect/spawner/random/medical/memeorgans = 1
 	)
-	rpg_title = "Cleric"
+
 	job_flags = STATION_JOB_FLAGS
 
 

@@ -36,7 +36,7 @@
 		/obj/item/clothing/mask/whistle = 5,
 		/obj/item/melee/baton/security/boomerang/loaded = 1
 	)
-	rpg_title = "Guard"
+
 	alternate_titles = list(
 		JOB_SECURITY_OFFICER_MEDICAL,
 		JOB_SECURITY_OFFICER_ENGINEERING,

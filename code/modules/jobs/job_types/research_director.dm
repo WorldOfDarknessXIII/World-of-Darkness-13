@@ -40,7 +40,7 @@
 	)
 
 	family_heirlooms = list(/obj/item/toy/plush/slimeplushie)
-	rpg_title = "Archmagister"
+
 	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS
 
 	human_authority = JOB_AUTHORITY_HUMANS_ONLY

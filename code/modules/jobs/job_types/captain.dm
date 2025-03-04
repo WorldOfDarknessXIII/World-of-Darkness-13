@@ -43,7 +43,6 @@
 	)
 
 	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS
-	rpg_title = "Star Duke"
 
 	human_authority = JOB_AUTHORITY_HUMANS_ONLY
 

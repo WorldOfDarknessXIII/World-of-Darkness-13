@@ -34,7 +34,7 @@
 		/obj/item/reagent_containers/hypospray/medipen/survival/luxury = 5,
 		/obj/item/storage/box/bandages = 5,
 	)
-	rpg_title = "Corpse Runner"
+
 	job_flags = STATION_JOB_FLAGS
 
 

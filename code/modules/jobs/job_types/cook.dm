@@ -44,7 +44,6 @@
 		/obj/item/knife/butcher = 2,
 	)
 
-	rpg_title = "Tavern Chef"
 	alternate_titles = list(
 		JOB_CHEF,
 	)

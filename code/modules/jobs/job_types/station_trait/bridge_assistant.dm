@@ -29,7 +29,7 @@
 		/obj/item/storage/fancy/cigarettes = 1,
 		/obj/item/pen/fountain = 1,
 	)
-	rpg_title = "Royal Guard"
+
 	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS
 	human_authority = JOB_AUTHORITY_NON_HUMANS_ALLOWED
 

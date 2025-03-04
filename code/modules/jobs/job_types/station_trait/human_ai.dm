@@ -35,7 +35,7 @@
 		/obj/item/food/burger/roburger = 1,
 		/obj/item/food/cake/hardware_cake = 1,
 	)
-	rpg_title = "Omnissiah"
+
 	random_spawns_possible = FALSE
 	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS
 	human_authority = JOB_AUTHORITY_NON_HUMANS_ALLOWED //we can safely assume NT doesn't care what species AIs are made of, much less if they can't even afford an AI.

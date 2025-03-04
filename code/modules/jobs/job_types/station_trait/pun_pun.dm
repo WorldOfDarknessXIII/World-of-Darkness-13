@@ -23,7 +23,7 @@
 		/obj/item/book/granter/sign_language = 1,
 		/obj/item/food/monkeycube = 1,
 	)
-	rpg_title = "Homunculus"
+
 	job_flags = (STATION_JOB_FLAGS|STATION_TRAIT_JOB_FLAGS)&~JOB_ASSIGN_QUIRKS
 
 /datum/job/pun_pun/get_spawn_mob(client/player_client, atom/spawn_point)

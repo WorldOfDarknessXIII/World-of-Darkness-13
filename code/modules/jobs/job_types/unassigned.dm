@@ -6,5 +6,5 @@
 
 /datum/job/unassigned
 	title = "Unassigned Crewmember"
-	rpg_title = "Peasant"
+
 	paycheck = PAYCHECK_ZERO

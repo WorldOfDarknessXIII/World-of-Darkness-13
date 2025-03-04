@@ -32,7 +32,7 @@
 		/obj/item/instrument/trumpet = 5,
 		/obj/item/storage/fancy/cigarettes/cigars = 10,
 	)
-	rpg_title = "Royal Advisor"
+
 	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS
 
 /datum/job/veteran_advisor/get_default_roundstart_spawn_point()

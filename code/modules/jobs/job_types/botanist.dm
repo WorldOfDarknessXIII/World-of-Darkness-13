@@ -36,7 +36,6 @@
 	)
 
 	job_flags = STATION_JOB_FLAGS
-	rpg_title = "Gardener"
 
 /datum/outfit/job/botanist
 	name = "Botanist"

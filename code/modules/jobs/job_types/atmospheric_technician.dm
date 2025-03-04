@@ -35,7 +35,6 @@
 	)
 
 	job_flags = STATION_JOB_FLAGS
-	rpg_title = "Aeromancer"
 
 /datum/outfit/job/atmos
 	name = "Atmospheric Technician"

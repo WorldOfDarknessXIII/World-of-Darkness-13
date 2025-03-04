@@ -33,7 +33,7 @@
 	job_flags = STATION_JOB_FLAGS
 
 	voice_of_god_silence_power = 3
-	rpg_title = "Veteran Adventurer"
+
 
 /datum/outfit/job/curator
 	name = "Curator"

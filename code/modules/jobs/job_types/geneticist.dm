@@ -27,7 +27,7 @@
 	)
 
 	family_heirlooms = list(/obj/item/clothing/under/shorts/purple)
-	rpg_title = "Genemancer"
+
 	job_flags = STATION_JOB_FLAGS
 
 

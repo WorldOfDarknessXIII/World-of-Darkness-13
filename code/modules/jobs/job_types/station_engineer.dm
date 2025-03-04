@@ -35,7 +35,7 @@
 		/obj/item/wrench/bolter = 8,
 		/obj/item/clothing/head/utility/hardhat/red/upgraded = 1
 	)
-	rpg_title = "Crystallomancer"
+
 	job_flags = STATION_JOB_FLAGS
 
 
