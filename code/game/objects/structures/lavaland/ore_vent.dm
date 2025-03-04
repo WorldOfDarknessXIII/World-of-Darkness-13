@@ -176,7 +176,7 @@
 	for(var/i in 1 to new_minerals)
 		if(!length(SSore_generation.ore_vent_minerals) && map_loading)
 			// We should prevent this from happening in SSore_generation, but if not then we crash here
-			CRASH("No minerals left to pick from! We may have spawned too many ore vents in init, or the map config in seedRuins may not have enough resources for the mineral budget.")
+			CRASH("No minerals left to pick from! We may have spawned too many ore vents in init.")
 		var/datum/material/new_material
 		if(map_loading)
 			if(length(available_mats))

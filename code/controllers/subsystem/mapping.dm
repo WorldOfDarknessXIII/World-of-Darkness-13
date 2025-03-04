@@ -123,21 +123,6 @@ SUBSYSTEM_DEF(mapping)
 	process_teleport_locs() //Sets up the wizard teleport locations
 	preloadTemplates()
 
-#ifndef LOWMEMORYMODE
-	// Create space ruin levels
-	while (space_levels_so_far < current_map.space_ruin_levels)
-		add_new_zlevel("Ruin Area [space_levels_so_far+1]", ZTRAITS_SPACE)
-		++space_levels_so_far
-	// Create empty space levels
-	while (space_levels_so_far < current_map.space_empty_levels + current_map.space_ruin_levels)
-		empty_space = add_new_zlevel("Empty Area [space_levels_so_far+1]", list(ZTRAIT_LINKAGE = CROSSLINKED))
-		++space_levels_so_far
-
-	loading_ruins = TRUE
-	setup_ruins()
-	loading_ruins = FALSE
-
-#endif
 	// Run map generation after ruin generation to prevent issues
 	run_map_terrain_generation()
 	// Generate our rivers, we do this here so the map doesn't load on top of them
@@ -225,34 +210,6 @@ SUBSYSTEM_DEF(mapping)
 	max_gravity = max_gravity || level_trait(z_level_number, ZTRAIT_GRAVITY) || 0//just to make sure no nulls
 	gravity_by_z_level[z_level_number] = max_gravity
 	return max_gravity
-
-
-/**
- * ##setup_ruins
- *
- * Sets up all of the ruins to be spawned
- */
-/datum/controller/subsystem/mapping/proc/setup_ruins()
-	// Generate mining ruins
-	var/list/lava_ruins = levels_by_trait(ZTRAIT_LAVA_RUINS)
-	if (lava_ruins.len)
-		seedRuins(lava_ruins, CONFIG_GET(number/lavaland_budget), list(/area/lavaland/surface/outdoors/unexplored), themed_ruins[ZTRAIT_LAVA_RUINS], clear_below = TRUE, mineral_budget = 15, mineral_budget_update = OREGEN_PRESET_LAVALAND, ruins_type = ZTRAIT_LAVA_RUINS)
-
-	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
-	if (ice_ruins.len)
-		// needs to be whitelisted for underground too so place_below ruins work
-		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS], clear_below = TRUE, mineral_budget = 4, mineral_budget_update = OREGEN_PRESET_TRIPLE_Z, ruins_type = ZTRAIT_ICE_RUINS)
-
-	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
-	if (ice_ruins_underground.len)
-		seedRuins(ice_ruins_underground, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS_UNDERGROUND], clear_below = TRUE, mineral_budget = 21, ruins_type = ZTRAIT_ICE_RUINS_UNDERGROUND)
-
-	// Generate deep space ruins
-	var/list/space_ruins = levels_by_trait(ZTRAIT_SPACE_RUINS)
-	if (space_ruins.len)
-		// Create a proportional budget by multiplying the amount of space ruin levels in the current map over the default amount
-		var/proportional_budget = round(CONFIG_GET(number/space_budget) * (space_ruins.len / DEFAULT_SPACE_RUIN_LEVELS))
-		seedRuins(space_ruins, proportional_budget, list(/area/space), themed_ruins[ZTRAIT_SPACE_RUINS], mineral_budget = 0, ruins_type = ZTRAIT_SPACE_RUINS)
 
 /// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
 /// It is important that this happens AFTER generating mineral walls and such, since we rely on them for river logic

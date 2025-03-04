@@ -79,9 +79,6 @@
 /proc/cmp_timer(datum/timedevent/a, datum/timedevent/b)
 	return a.timeToRun - b.timeToRun
 
-/proc/cmp_ruincost_priority(datum/map_template/ruin/A, datum/map_template/ruin/B)
-	return initial(A.cost) - initial(B.cost)
-
 /proc/cmp_qdel_item_time(datum/qdel_item/A, datum/qdel_item/B)
 	. = B.hard_delete_time - A.hard_delete_time
 	if (!.)

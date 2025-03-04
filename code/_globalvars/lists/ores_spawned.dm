@@ -1,7 +1,7 @@
 /**
  * Sets of global lists breaking down the base spawning distributions for various maps and stations.
  *
- * Currently used for ore vents on roundstart when the map is generated. (See ore_vent.dm, seedRuins() and ore_generation.dm)
+ * Currently used for ore vents on roundstart when the map is generated. (See ore_vent.dm and ore_generation.dm)
  * Ore vent lists here are copied to ore_vent_minerals on ruin seeding,
  * in order to dynamically adjust the spawn rates as materials are picked and set a global ore distribution from vents.
  *
