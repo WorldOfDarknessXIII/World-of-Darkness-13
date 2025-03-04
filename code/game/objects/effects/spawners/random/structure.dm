@@ -2,7 +2,7 @@
 	name = "structure spawner"
 	desc = "Now you see me, now you don't..."
 
-///12% chance to spawn a ouija board, or a potted plant. Btw, Wawastation has a guaranteed board.
+///12% chance to spawn a ouija board, or a potted plant.
 /obj/effect/spawner/random/structure/twelve_percent_spirit_board
 	name = "12% spirit board"
 	icon_state = "spirit_board"

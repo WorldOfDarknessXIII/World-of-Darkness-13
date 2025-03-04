@@ -7,8 +7,7 @@
 		#include "map_files\debug\multiz.dmm"
 		#include "map_files\debug\runtimestation.dmm"
 		#include "map_files\Mining\Lavaland.dmm"
-		#include "map_files\wawastation\wawastation.dmm"
-
+		#include "map_files\san_francisco\san_francisco.dmm"
 		#ifdef CIBUILDING
 			#include "templates.dm"
 		#endif

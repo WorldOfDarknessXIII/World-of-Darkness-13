@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"map_name": "San Francisco",
+	"map_path": "map_files/san_francisco",
+	"map_file": "san_francisco.dmm",
+	"shuttles": {
+		"cargo": "cargo_box"
+	}
+}
