@@ -1301,9 +1301,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/evacuation/ship)
-"fZ" = (
-/turf/open/space/basic,
-/area/space)
 "ga" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -1378,10 +1375,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
-"gt" = (
-/obj/effect/landmark/mafia_game_area,
-/turf/open/space/basic,
-/area/space)
 "gu" = (
 /turf/closed/indestructible/splashscreen,
 /area/misc/start)
@@ -6910,9 +6903,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
-"Fi" = (
-/turf/open/space/basic,
-/area/space)
 "Fj" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
@@ -36280,7 +36270,7 @@ aa
 aa
 aa
 aa
-Fi
+aa
 aa
 aa
 aa
@@ -42448,7 +42438,7 @@ aa
 aa
 aa
 aa
-gt
+aa
 aa
 aa
 aa
@@ -59098,7 +59088,7 @@ aa
 aa
 aa
 aa
-fZ
+aa
 aa
 aa
 aa

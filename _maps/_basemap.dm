@@ -1,6 +1,6 @@
 //#define LOWMEMORYMODE //uncomment this to load centcom and runtime station and thats it.
 
-#include "map_files\generic\CentCom.dmm"
+#include "map_files\admin\admin_z.dmm"
 
 #ifndef LOWMEMORYMODE
 	#ifdef ALL_MAPS
