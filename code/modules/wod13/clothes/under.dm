@@ -54,7 +54,7 @@
 	icon_state = "toreador_m"
 
 /obj/item/clothing/under/vampire/toreador/female
-	name "dancer's offwear"
+	name = "dancer's offwear"
 	desc = "Do I look like your girlfriend?"
 	icon_state = "toreador_f"
 
@@ -93,7 +93,7 @@
 	icon_state = "salubri_f"
 
 /obj/item/clothing/under/vampire/punk
-	name "punk rocker outfit"
+	name = "punk rocker outfit"
 	desc = "A white, sweat stained shirt with a giant black skull on the front, it makes a statement. Maybe 'I don't use deoderant' but, a statement nontheless."
 	icon_state = "dirty"
 
@@ -213,7 +213,7 @@
 	icon_state = "rich"
 
 /obj/item/clothing/under/vampire/business
-	name "black dress"
+	name = "black dress"
 	desc = "Lesson number one, spelling the word business."
 	icon_state = "business"
 

@@ -3480,6 +3480,7 @@
 #include "code\modules\wod13\clothes\hands.dm"
 #include "code\modules\wod13\clothes\head.dm"
 #include "code\modules\wod13\clothes\mask.dm"
+#include "code\modules\wod13\clothes\neck.dm"
 #include "code\modules\wod13\clothes\suit.dm"
 #include "code\modules\wod13\clothes\under.dm"
 #include "code\modules\wod13\datums\vip_barrier_perm.dm"
