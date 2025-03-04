@@ -203,3 +203,5 @@
 	active_msg = "You prepare to cast your fireball spell!"
 	deactive_msg = "You extinguish your fireball... for now."
 	active = FALSE
+
+//PSEUDO_M come back and replace these procholders
