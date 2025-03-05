@@ -26,7 +26,8 @@
 		"camarilla",
 		"prince",
 		"clerk",
-		"archive",
+		"chantry",
+		"theatre",
 		"milleniumCommon",
 		"primogen"
 	)
@@ -38,7 +39,7 @@
 	accesslocks = list(
 		"camarilla",
 		"prince",
-		"archive",
+		"theatre",
 		"milleniumCommon",
 		"primogen",
 		"clerk"
@@ -50,7 +51,7 @@
 	accesslocks = list(
 		"camarilla",
 		"clerk",
-		"archive",
+		"theatre",
 		"milleniumCommon",
 		"primogen"
 	)
@@ -67,13 +68,13 @@
 /obj/item/vamp/keys/archive
 	name = "Archive keys"
 	accesslocks = list(
-		"archive"
+		"chantry"
 	)
 
 /obj/item/vamp/keys/regent
 	name = "Very archival keys"
 	accesslocks = list(
-		"archive",
+		"chantry",
 		"milleniumCommon",
 		"primogen",
 		"camarilla"

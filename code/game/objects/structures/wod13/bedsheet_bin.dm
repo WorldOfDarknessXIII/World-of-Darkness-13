@@ -153,12 +153,10 @@ LINEN BINS
 	inhand_icon_state = "sheetcmo"
 	dream_messages = list("authority", "a silvery ID", "healing", "life", "surgery", "a cat", "the chief medical officer")
 
-/obj/item/bedsheet/hos
-	name = "head of security's bedsheet"
-	desc = "It is decorated with a shield emblem. While crime doesn't sleep, you do, but you are still THE LAW!"
-	icon_state = "sheethos"
-	inhand_icon_state = "sheethos"
-	dream_messages = list("authority", "a silvery ID", "handcuffs", "a baton", "a flashbang", "sunglasses", "the head of security")
+/obj/item/bedsheet/red
+	name = "red bedsheet"
+	icon_state = "red"
+	inhand_icon_state = "red"
 
 /obj/item/bedsheet/hop
 	name = "head of personnel's bedsheet"

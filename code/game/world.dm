@@ -356,3 +356,36 @@ GLOBAL_VAR(restart_counter)
 
 /world/proc/on_tickrate_change()
 	SStimer?.reset_buckets()
+
+/world/proc/convert_saves_to_json(path_to_save)
+	// Determine the path variables to use based on our host OS
+	var/regex/trimmer
+	var/shell_command
+	var/path_char
+	if(world.system_type == UNIX)
+		trimmer = regex("data/player_saves/.*")
+		shell_command = "find data/player_saves/ -type f"
+		path_char = "/"
+	else // We're on Windows
+		trimmer = regex("data\\\\player_saves\\\\.*")
+		shell_command = "dir /A-D /b /s data\\player_saves\\"
+		path_char = "\\"
+	var/untrimmed_file_list = splittext(world.shelleo("[shell_command]")[2], "\n")
+	// Just in case the whole path gets returned instead of the relative
+	var/list/file_list = list()
+	for(var/file_path in untrimmed_file_list)
+		trimmer.Find(file_path)
+		if(trimmer.match)
+			file_list += trimmer.match
+		trimmer.match = null
+	for(var/trimmed_path in file_list)
+		var/datum/json_savefile/json_son = new
+		var/savefile/S = new(trimmed_path)
+		json_son.import_byond_savefile(S)
+		var/list/split_path = splittext(trimmed_path, path_char)
+		var/dir_name = split_path[split_path.len - 1]
+		var/file_name = replacetext(split_path[split_path.len], ".sav", ".json")
+		// Path to save, first_char as a directory, path separator, file_name
+		// IE: path_to_save/a/apple.json
+		json_son.path = (path_to_save + dir_name[1] + path_char + dir_name + path_char + file_name)
+		json_son.save()

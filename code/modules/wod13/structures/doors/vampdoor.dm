@@ -15,7 +15,7 @@
 
 	var/closed = TRUE
 	var/locked = FALSE
-	var/lock_id = "nothing"
+	var/lock_id = null
 	var/glass = FALSE
 	var/hacking = FALSE
 	var/lockpick_timer = 17 //[Lucifernix] - Never have the lockpick timer lower than 7. At 7 it will unlock instantly!!
@@ -169,7 +169,7 @@
 				hacking = FALSE
 				return
 		else
-			if (closed) //yes, this is a thing you can extremely easily do in real life
+			if (closed && lock_id) //yes, this is a thing you can extremely easily do in real life... FOR DOORS WITH LOCKS!
 				to_chat(user, "<span class='notice'>You re-lock the door with your lockpick.</span>")
 				locked = TRUE
 				playsound(src, 'code/modules/wod13/sounds/hack.ogg', 100, TRUE)

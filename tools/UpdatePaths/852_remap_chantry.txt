@@ -1,0 +1,2 @@
+/area/vtm/theatre : /area/vtm/interior/theatre
+/obj/structure/vampdoor/archive : /obj/structure/vampdoor/chantry{@OLD}
