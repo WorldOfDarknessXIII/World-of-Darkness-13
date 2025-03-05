@@ -109,14 +109,16 @@
 			switch(params["value"])
 				if("C")
 					dialed_number = ""
-					.= TRUE
-					return
+					return TRUE
+
 				if("_")
 					dialed_number += " "
-					.= TRUE
-					return
+					return TRUE
+
 			dialed_number += params["value"]
-			.= TRUE
+			return TRUE
+
+	return FALSE
 
 /obj/item/flip_phone/proc/toggle_screen()
 	is_open = !is_open
