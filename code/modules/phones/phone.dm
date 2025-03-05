@@ -14,6 +14,8 @@
 	var/obj/item/sim_card/sim_card
 	/// Is the phone screen flipped open?
 	var/is_open = FALSE
+	/// The number the user is currently dialing.
+	var/dialed_number
 
 /obj/item/flip_phone/Initialize(mapload)
 	. = ..()
@@ -103,8 +105,18 @@
 		return
 
 	switch(action)
-		if("toggle_screen")
-			return TRUE
+		if("keypad")
+			switch(params["value"])
+				if("C")
+					dialed_number = ""
+					.= TRUE
+					return
+				if("_")
+					dialed_number += " "
+					.= TRUE
+					return
+			dialed_number += params["value"]
+			.= TRUE
 
 /obj/item/flip_phone/proc/toggle_screen()
 	is_open = !is_open
