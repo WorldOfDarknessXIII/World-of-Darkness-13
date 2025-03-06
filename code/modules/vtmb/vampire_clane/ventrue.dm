@@ -11,11 +11,6 @@
 	female_clothes = /obj/item/clothing/under/vampire/ventrue/female
 	clan_keys = /obj/item/vamp/keys/ventrue
 
-/datum/discipline/dominate/post_gain(mob/living/carbon/human/H)
-	if(level >= 1)
-		var/obj/effect/proc_holder/spell/voice_of_god/S = new(H)
-		H.mind.AddSpell(S)
-
 /datum/action/dominate
 	name = "Dominate"
 	desc = "Dominate over other living or un-living beings."

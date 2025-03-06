@@ -122,7 +122,7 @@
 			if(get_dist(frenzy_target, src) <= 1)
 				if(isliving(frenzy_target))
 					var/mob/living/L = frenzy_target
-					if(L.bloodpool && L.stat != DEAD && last_drinkblood_use+95 <= world.time)
+					if(L.bloodpool && (L.stat != DEAD) && ((last_drinkblood_use + 9.5 SECONDS) <= world.time))
 						L.grabbedby(src)
 						if(ishuman(L))
 							L.emote("scream")
@@ -284,9 +284,6 @@
 											else
 												SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
 												to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
-	if(H.hearing_ghosts)
-		H.bloodpool = max(0, H.bloodpool-1)
-		to_chat(H, "<span class='warning'>Necromancy Vision reduces your blood points too sustain itself.</span>")
 
 	if(H.clane?.name == "Tzimisce" || H.clane?.name == "Old Clan Tzimisce")
 		var/datum/vampireclane/tzimisce/TZ = H.clane
@@ -294,7 +291,7 @@
 			if(!(TZ.heirl in H.GetAllContents()))
 				if(prob(5))
 					to_chat(H, "<span class='warning'>You are missing your home soil...</span>")
-					H.bloodpool = max(0, H.bloodpool-1)
+					H.adjust_blood_points(-1)
 	if(H.clane?.name == "Kiasyd")
 		var/datum/vampireclane/kiasyd/kiasyd = H.clane
 		for(var/obj/item/I in H.contents)

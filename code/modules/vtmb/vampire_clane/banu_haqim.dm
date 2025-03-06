@@ -35,7 +35,7 @@
 			to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 			return
 		to_chat(owner, "<span class='notice'>You activate the Quietus Silence.</span>")
-		H.bloodpool = max(0, H.bloodpool-2)
+		H.adjust_blood_points(-2)
 		last_silence = world.time
 		for(var/turf/T in range(7, src))
 			T.silented = TRUE

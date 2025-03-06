@@ -413,9 +413,6 @@
 					H.mind.dharma.roll_po(trigger, H)
 					COOLDOWN_START(H.mind.dharma, po_call, 5 SECONDS)
 	H.nutrition = NUTRITION_LEVEL_START_MAX
-	if((H.last_bloodpool_restore + 60 SECONDS) <= world.time)
-		H.last_bloodpool_restore = world.time
-		H.bloodpool = min(H.maxbloodpool, H.bloodpool+1)
 
 /datum/action/breathe_chi
 	name = "Inhale Chi"
@@ -467,7 +464,7 @@
 
 	//this method of feeding targets splat-specific Quintessence sources first
 	if ((iskindred(victim) || isghoul(victim)) && (victim.bloodpool > 0)) //drain vitae bloodpool
-		victim.bloodpool = max(0, victim.bloodpool - 1)
+		victim.adjust_blood_points(-1)
 		kueijin.yin_chi = min(kueijin.yin_chi + 1, kueijin.max_yin_chi)
 		to_chat(kueijin, "<span class='medradio'>Some bitter <b>Yin</b> Chi enters you...</span>")
 	else if ((isgarou(victim) || iswerewolf(victim)) && has_gnosis) //drain gnosis
