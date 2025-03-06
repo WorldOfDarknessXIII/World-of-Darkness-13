@@ -35,7 +35,7 @@ const CallingWindow = (props) => {
 };
 const NumpadWindow = (props) => {
   const { act, data } = useBackend();
-  const { my_number, choosed_number } = data;
+  const { my_number, dialed_number } = data;
   return (
     <Box m="6px">
       <Flex mb={1.5}>
@@ -71,7 +71,7 @@ const NumpadWindow = (props) => {
       </Flex>
       <Flex ml="3px">
         <Flex.Item>
-          <PhoneKeypad phoneNumber={choosed_number} />
+          <PhoneKeypad phoneNumber={dialed_number} />
         </Flex.Item>
       </Flex>
     </Box>

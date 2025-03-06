@@ -55,6 +55,10 @@
 #define RADIO_KEY_UPLINK "z"
 #define RADIO_TOKEN_UPLINK ":z"
 
+// Uses the frequenices 1-100 for phones.
+// Means we can only ever have a hundred phone calls going on at any point in time.
+#define USABLE_RADIO_FREQUENCIES_FOR_PHONES 100
+
 #define MIN_FREE_FREQ 1201 // -------------------------------------------------
 // Frequencies are always odd numbers and range from 1201 to 1599.
 
