@@ -69,3 +69,13 @@
 	name = "Jazz Club"
 	lock_id = "milleniumCommon"
 	lockpick_difficulty = 8
+
+/obj/structure/vampdoor/glass/setite
+	lock_id = "setite"
+	locked = TRUE
+	lockpick_difficulty = 10
+
+/obj/structure/vampdoor/glass/setite/high_sec
+	lock_id = "setite"
+	locked = TRUE
+	lockpick_difficulty = 15
