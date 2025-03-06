@@ -60758,7 +60758,7 @@
 /obj/machinery/light{
 	pixel_y = 32
 	},
-/obj/item/folder/blue,
+/obj/machinery/mineral/equipment_vendor/fastfood/blood,
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/clinic)
 "tBY" = (
