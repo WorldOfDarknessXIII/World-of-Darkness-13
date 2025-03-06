@@ -119,7 +119,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_LAW = /obj/item/bedsheet/black,
 		DYE_CAPTAIN = /obj/item/bedsheet/captain,
 		DYE_HOP = /obj/item/bedsheet/hop,
-		DYE_HOS = /obj/item/bedsheet/hos,
+		DYE_HOS = /obj/item/bedsheet/red,
 		DYE_CE = /obj/item/bedsheet/ce,
 		DYE_RD = /obj/item/bedsheet/rd,
 		DYE_CMO = /obj/item/bedsheet/cmo,

@@ -18,7 +18,7 @@
 
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Malkavian")
-	minimal_generation = 7	//Uncomment when players get exp enough
+	minimal_generation = 10
 
 	v_duty = "Offer your infinite knowledge to Prince of the City."
 	experience_addition = 20
@@ -69,7 +69,7 @@
 
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Nosferatu")
-	minimal_generation = 7	//Uncomment when players get exp enough
+	minimal_generation = 10
 
 	v_duty = "Offer your infinite knowledge to Prince of the City."
 	experience_addition = 20
@@ -116,7 +116,7 @@
 
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Ventrue")
-	minimal_generation = 7	//Uncomment when players get exp enough
+	minimal_generation = 10
 
 	v_duty = "Offer your infinite knowledge to Prince of the City."
 	experience_addition = 20
@@ -162,7 +162,7 @@
 
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Toreador")
-	minimal_generation = 7	//Uncomment when players get exp enough
+	minimal_generation = 10
 
 	v_duty = "Offer your infinite knowledge to Prince of the City."
 	experience_addition = 20
@@ -210,7 +210,7 @@
 
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Brujah")
-	minimal_generation = 7	//Uncomment when players get exp enough
+	minimal_generation = 10
 
 	v_duty = "Offer your infinite knowledge to Prince of the City."
 	experience_addition = 20
