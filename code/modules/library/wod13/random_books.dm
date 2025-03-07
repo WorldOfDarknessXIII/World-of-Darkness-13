@@ -91,13 +91,12 @@
 		books_to_load--
 		new /obj/item/book/manual/random(src)
 
-// TODO: UPDATE THIS JOB CHECK AFTER TIMELOCKS ARE IN
 /obj/structure/bookcase/random/regent
 	var/animation_delay = 2 SECONDS
 
 /obj/structure/bookcase/random/regent/attack_hand(mob/living/carbon/human/human)
 	. = ..()
-	if(human.job != "Chantry Regent" || !density)
+	if(human.job != JOB_REGENT || !density)
 		return
 	to_chat(human, span_notice("You activate the hidden bookshelf."))
 	fade_out()
