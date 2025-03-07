@@ -5380,7 +5380,7 @@
 #include "code\modules\paperwork\stamps.dm"
 #include "code\modules\paperwork\ticketmachine.dm"
 #include "code\modules\phones\phone.dm"
-#include "code\modules\phones\phone_signals.dm"
+#include "code\modules\phones\phone_defines.dm"
 #include "code\modules\phones\phone_subsystem.dm"
 #include "code\modules\phones\sim_card.dm"
 #include "code\modules\photography\_pictures.dm"

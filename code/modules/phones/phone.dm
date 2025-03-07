@@ -15,12 +15,12 @@
 
 	/// Do we have a SIM card?
 	var/obj/item/sim_card/sim_card
-	/// Is the phone screen flipped open?
-	var/is_open = FALSE
+	/// Phone flags
+	var/phone_flags = NONE
 	/// The number the user is currently dialing.
 	var/dialed_number
 	// The frequency the phone is currently using to call another phone.
-	PRIVATE/var/secure_frequency
+	var/secure_frequency
 
 /obj/item/flip_phone/Initialize(mapload)
 	. = ..()
@@ -63,7 +63,7 @@
 
 /obj/item/flip_phone/attack_self(mob/user, modifiers)
 	. = ..()
-	if(!is_open)
+	if(!(phone_flags & PHONE_OPEN))
 		toggle_screen(user)
 	ui_interact()
 
@@ -83,6 +83,7 @@
 		end_phone_call()
 		user.put_in_hands(sim_card)
 		sim_card = null
+		phone_flags |= PHONE_NO_SIM
 		return CLICK_ACTION_SUCCESS
 	balloon_alert(user, "no sim card!")
 	return CLICK_ACTION_BLOCKING
@@ -95,11 +96,12 @@
 		balloon_alert(user, "you insert \the [attacking_item]!")
 		sim_card = attacking_item
 		user.transferItemToLoc(attacking_item, src)
+		phone_flags &= PHONE_NO_SIM
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /obj/item/flip_phone/ui_status(mob/user, datum/ui_state/state)
-	if(!is_open)
+	if(!(phone_flags & PHONE_OPEN))
 		return UI_CLOSE
 	return ..()
 
@@ -125,36 +127,38 @@
 		if("keypad")
 			switch(params["value"])
 				if("C")
-					dialed_number = ""
-					return TRUE
-				if("_")
-					dialed_number += " "
+					dialed_number = null
 					return TRUE
 			dialed_number += params["value"]
 			return TRUE
 		if("call")
 			initialize_phone_call(usr)
 			return TRUE
-
 	return FALSE
 
 /obj/item/flip_phone/proc/toggle_screen(mob/user)
-	is_open = !is_open
-	icon_state = is_open ? "phone2" : "phone0"
-	inhand_icon_state = is_open ? "phone2" : "phone0"
+	if(phone_flags & PHONE_OPEN)
+		phone_flags &= PHONE_OPEN
+	else
+		phone_flags |= PHONE_OPEN
+	icon_state = (phone_flags & PHONE_OPEN) ? "phone2" : "phone0"
+	inhand_icon_state = (phone_flags & PHONE_OPEN) ? "phone2" : "phone0"
 	update_appearance()
 
 /obj/item/flip_phone/proc/initialize_phone_call(mob/user)
 	if(!sim_card)
 		balloon_alert(user, "no SIM card installed!")
 		return
-	secure_frequency = SSphones.initiate_phone_call(dialed_number)
-	phone_radio.set_frequency(secure_frequency)
-	phone_radio.set_broadcasting(TRUE)
-	phone_radio.set_listening(TRUE)
+	secure_frequency = SSphones.initiate_phone_call(sim_card, dialed_number)
+	if(secure_frequency)
+		phone_radio.set_frequency(secure_frequency)
+		phone_radio.set_broadcasting(TRUE)
+		phone_radio.set_listening(TRUE)
+		phone_flags |= PHONE_IN_CALL
 
 /obj/item/flip_phone/proc/end_phone_call()
 	phone_radio.set_frequency(0)
 	phone_radio.set_broadcasting(FALSE)
 	phone_radio.set_listening(FALSE)
-	SEND_SIGNAL(sim_card, COMSIG_PHONE_CALL_ENDED)
+	SSphones.end_phone_call(sim_card, dialed_number)
+	phone_flags &= PHONE_IN_CALL

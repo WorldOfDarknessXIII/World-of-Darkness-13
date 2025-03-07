@@ -16,7 +16,6 @@
 	. = ..()
 	phone_number = SSphones.generate_phone_number(src)
 	register_context()
-	RegisterSignal(src, COMSIG_PHONE_CALL_STARTED, PROC_REF(number_validation))
 
 /obj/item/sim_card/Destroy(force)
 	. = ..()
@@ -46,7 +45,3 @@
 		return CLICK_ACTION_SUCCESS
 	return CLICK_ACTION_BLOCKING
 
-// Checks if the phone number that is being called is us.
-/obj/item/sim_card/proc/number_validation(incoming_number)
-	if(incoming_number == phone_number) //The phone number that is being called is us. Ring the phone.
-		SEND_SIGNAL(src, COMSIG_PHONE_RING)
