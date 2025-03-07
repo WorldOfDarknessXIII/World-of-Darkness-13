@@ -30,13 +30,18 @@
 	if(growth_stage == 5)
 		growth_stage = 0
 		health = 3
-		to_chat(user, "<span class='notice'>You rip the rotten weed out of [src].</span>")
+		to_chat(user, span_notice("You rip the rotten weed out of [src]."))
 	if(growth_stage == 4)
 		growth_stage = 1
-		to_chat(user, "<span class='notice'>You pull the grown weed out of [src].</span>")
-		var/mob/living/carbon/human/H = user
+		to_chat(user, span_notice("You pull the grown weed out of [src]."))
+		var/mob/living/carbon/H = user
 		var/amount
-		switch(storyteller_roll(H.get_total_mentality(), 6, TRUE))
+		var/result = H.storyteller_roll(
+			dice = attribute_mentality(H),
+			difficulty = 6,
+			numerical = TRUE,
+			)
+		switch(result)
 			if(3 to INFINITY)
 				amount = 4
 			if(2)
