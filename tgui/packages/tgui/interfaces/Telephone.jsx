@@ -42,6 +42,8 @@ const NumpadWindow = (props) => {
         <Flex.Item width="155px">
           <Box height="60px" className="Telephone__displayBox">
             My Number: {my_number}
+          </Box>
+          <Box height="60px" className="Telephone__displayBox">
             Dialed Number: {dialed_number}
           </Box>
         </Flex.Item>

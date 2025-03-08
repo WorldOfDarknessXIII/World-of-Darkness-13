@@ -1,6 +1,6 @@
-@use '../base.scss';
-@use '../colors.scss';
-@use '../functions.scss' as *;
+@use 'sass:base';
+@use 'sass:colors';
+@use 'sass:functions';
 
 $color-clear: colors.bg(colors.$red) !default;
 $color-phone: colors.bg(colors.$green) !default;
@@ -8,15 +8,14 @@ $color-phone: colors.bg(colors.$green) !default;
 $background-beige: #e8e4c9;
 
 .Telephone__displayBox {
-  background-color: #002003;
-  border: 0.167em inset $background-beige;
-  color: #03e017;
-  font-size: 2em;
-  font-family: monospace;
-  padding: 0.25em;
-  white-space: nowrap;
-  overflow: auto;
-  overflow-y: none;
+  @include meta.load-css(
+    '~tgui-core/styles/components/Box',
+    $with: (
+      background-color: #002003 border: 0.167em inset $background-beige color:
+        #03e017 font-size: 2em font-family: monospace padding: 0.25em
+        white-space: nowrap overflow: auto overflow-y: none
+    )
+  );
 }
 
 .Telephone__Button {

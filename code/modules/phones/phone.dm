@@ -27,6 +27,7 @@
 	sim_card = new()
 	phone_radio = new()
 	register_context()
+	RegisterSignal(src, COMSIG_PHONE_RING, PROC_REF(ring))
 
 /obj/item/flip_phone/Destroy(force)
 	. = ..()
@@ -162,3 +163,6 @@
 	phone_radio.set_listening(FALSE)
 	SSphones.end_phone_call(sim_card, dialed_number)
 	phone_flags &= PHONE_IN_CALL
+
+/obj/item/flip_phone/proc/ring()
+	say("RING RING RING")
