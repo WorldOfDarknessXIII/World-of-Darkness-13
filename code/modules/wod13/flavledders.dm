@@ -1,5 +1,5 @@
 /obj/manholeup
-	icon = 'code/modules/wod13/props.dmi'
+	icon = 'icons/wod13/props.dmi'
 	icon_state = "ladder"
 	name = "ladder"
 	plane = GAME_PLANE
@@ -24,7 +24,7 @@
 	..()
 
 /obj/manholedown
-	icon = 'code/modules/wod13/props.dmi'
+	icon = 'icons/wod13/props.dmi'
 	icon_state = "manhole"
 	name = "manhole"
 	plane = GAME_PLANE
@@ -58,7 +58,7 @@
 
 
 /obj/transfer_point_vamp
-	icon = 'code/modules/wod13/props.dmi'
+	icon = 'icons/wod13/props.dmi'
 	icon_state = "matrix_go"
 	name = "transfer point"
 	plane = GAME_PLANE
@@ -86,7 +86,7 @@
 
 /obj/transfer_point_vamp/umbral
 	name = "portal"
-	icon = 'code/modules/wod13/48x48.dmi'
+	icon = 'icons/wod13/48x48.dmi'
 	icon_state = "portal"
 	plane = ABOVE_LIGHTING_PLANE
 	layer = ABOVE_LIGHTING_LAYER

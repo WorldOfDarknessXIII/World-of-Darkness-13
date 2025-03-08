@@ -1,7 +1,7 @@
 /obj/structure/vaultdoor
 	name = "Vault Door"
 	desc = "A heavy duty door that looks like it could withstand a lot of punishment."
-	icon = 'code/modules/wod13/doors.dmi'
+	icon = 'icons/wod13/doors.dmi'
 	icon_state = "vault-1"
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER

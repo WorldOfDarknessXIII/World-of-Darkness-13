@@ -5,10 +5,10 @@
 	has_sensor = NO_SENSORS
 	random_sensor = FALSE
 	can_adjust = FALSE
-	icon = 'code/modules/wod13/clothing.dmi'
-	worn_icon = 'code/modules/wod13/worn.dmi'
+	icon = 'icons/wod13/clothing.dmi'
+	worn_icon = 'icons/wod13/worn.dmi'
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 15)
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	body_worn = TRUE
 	fitted = NO_FEMALE_UNIFORM
 	cost = 10
@@ -377,10 +377,10 @@
 	has_sensor = NO_SENSORS
 	random_sensor = FALSE
 	can_adjust = FALSE
-	icon = 'code/modules/wod13/clothing.dmi'
-	worn_icon = 'code/modules/wod13/worn.dmi'
+	icon = 'icons/wod13/clothing.dmi'
+	worn_icon = 'icons/wod13/worn.dmi'
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 15)
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	body_worn = TRUE
 	fitted = NO_FEMALE_UNIFORM
 	cost = 10
@@ -435,12 +435,12 @@
 /obj/item/clothing/shoes/vampire
 	name = "shoes"
 	desc = "Comfortable-looking shoes."
-	icon = 'code/modules/wod13/clothing.dmi'
-	worn_icon = 'code/modules/wod13/worn.dmi'
+	icon = 'icons/wod13/clothing.dmi'
+	worn_icon = 'icons/wod13/worn.dmi'
 	icon_state = "shoes"
 	gender = PLURAL
 	can_be_tied = FALSE
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	body_worn = TRUE
 	cost = 5
 
@@ -504,9 +504,9 @@
 //SUITS
 
 /obj/item/clothing/suit/vampire
-	icon = 'code/modules/wod13/clothing.dmi'
-	worn_icon = 'code/modules/wod13/worn.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/clothing.dmi'
+	worn_icon = 'icons/wod13/worn.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 
 	body_parts_covered = CHEST
 	cold_protection = CHEST|GROIN
@@ -522,9 +522,9 @@
 /obj/item/clothing/suit/hooded/heisenberg
 	name = "chemical costume"
 	desc = "A costume made for chemical protection."
-	icon = 'code/modules/wod13/clothing.dmi'
-	worn_icon = 'code/modules/wod13/worn.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/clothing.dmi'
+	worn_icon = 'icons/wod13/worn.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	icon_state = "heisenberg"
 	inhand_icon_state = "heisenberg"
 	body_parts_covered = CHEST | GROIN | ARMS
@@ -538,9 +538,9 @@
 	name = "chemical hood"
 	desc = "A hood attached to a cchemical costume."
 	icon_state = "heisenberg_helm"
-	icon = 'code/modules/wod13/clothing.dmi'
-	worn_icon = 'code/modules/wod13/worn.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/clothing.dmi'
+	worn_icon = 'icons/wod13/worn.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
@@ -553,9 +553,9 @@
 	name = "white robe"
 	desc = "Some angelic-looking robes."
 	icon_state = "robes"
-	icon = 'code/modules/wod13/clothing.dmi'
-	worn_icon = 'code/modules/wod13/worn.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/clothing.dmi'
+	worn_icon = 'icons/wod13/worn.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	inhand_icon_state = "robes"
 	flags_inv = HIDEJUMPSUIT
 	body_parts_covered = CHEST | GROIN | LEGS | ARMS
@@ -567,9 +567,9 @@
 	name = "white hood"
 	desc = "The hood of some angelic-looking robes."
 	icon_state = "robes_hood"
-	icon = 'code/modules/wod13/clothing.dmi'
-	worn_icon = 'code/modules/wod13/worn.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/clothing.dmi'
+	worn_icon = 'icons/wod13/worn.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	body_parts_covered = HEAD
 	cold_protection = HEAD
 	flags_inv = HIDEHAIR | HIDEEARS
@@ -901,9 +901,9 @@
 //Pentex Overwear
 
 /obj/item/clothing/suit/pentex
-	icon = 'code/modules/wod13/clothing.dmi'
-	worn_icon = 'code/modules/wod13/worn.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/clothing.dmi'
+	worn_icon = 'icons/wod13/worn.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	body_parts_covered = CHEST
 	cold_protection = CHEST|GROIN
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
@@ -934,9 +934,9 @@
 //GLASSES
 
 /obj/item/clothing/glasses/vampire
-	icon = 'code/modules/wod13/clothing.dmi'
-	worn_icon = 'code/modules/wod13/worn.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/clothing.dmi'
+	worn_icon = 'icons/wod13/worn.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	body_worn = TRUE
 
 /obj/item/clothing/glasses/vampire/yellow
@@ -973,9 +973,9 @@
 //HATS
 
 /obj/item/clothing/head/vampire
-	icon = 'code/modules/wod13/clothing.dmi'
-	worn_icon = 'code/modules/wod13/worn.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/clothing.dmi'
+	worn_icon = 'icons/wod13/worn.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
 	body_worn = TRUE
 	cost = 10
@@ -1218,9 +1218,9 @@
 	dynamic_fhair_suffix = ""
 
 /obj/item/clothing/head/pentex
-	icon = 'code/modules/wod13/clothing.dmi'
-	worn_icon = 'code/modules/wod13/worn.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/clothing.dmi'
+	worn_icon = 'icons/wod13/worn.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
 	body_worn = TRUE
 	cost = 10
@@ -1250,9 +1250,9 @@
 //GLOVES
 
 /obj/item/clothing/gloves/vampire
-	icon = 'code/modules/wod13/clothing.dmi'
-	worn_icon = 'code/modules/wod13/worn.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/clothing.dmi'
+	worn_icon = 'icons/wod13/worn.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	inhand_icon_state = "fingerless"
 	undyeable = TRUE
 	body_worn = TRUE
@@ -1310,9 +1310,9 @@
 //NECK
 
 /obj/item/clothing/neck/vampire
-	icon = 'code/modules/wod13/clothing.dmi'
-	worn_icon = 'code/modules/wod13/worn.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/clothing.dmi'
+	worn_icon = 'icons/wod13/worn.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	inhand_icon_state = ""
 	w_class = WEIGHT_CLASS_SMALL
 	body_worn = TRUE
@@ -1361,9 +1361,9 @@
 	icon_state = "respirator"
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
-	icon = 'code/modules/wod13/clothing.dmi'
-	worn_icon = 'code/modules/wod13/worn.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/clothing.dmi'
+	worn_icon = 'icons/wod13/worn.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	inhand_icon_state = ""
 	w_class = WEIGHT_CLASS_NORMAL
 	gas_transfer_coefficient = 0.01

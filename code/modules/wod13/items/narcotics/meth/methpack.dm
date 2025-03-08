@@ -1,12 +1,12 @@
 /obj/item/reagent_containers/drug/methpack
 	name = "\improper elite blood pack (full)"
 	desc = "Fast way to feed your inner beast."
-	icon = 'code/modules/wod13/items.dmi'
+	icon = 'icons/wod13/items.dmi'
 	icon_state = "blood4"
 	inhand_icon_state = "blood4"
-	lefthand_file = 'code/modules/wod13/lefthand.dmi'
-	righthand_file = 'code/modules/wod13/righthand.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	lefthand_file = 'icons/wod13/lefthand.dmi'
+	righthand_file = 'icons/wod13/righthand.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	list_reagents = list(/datum/reagent/drug/methamphetamine = 15) //some of the source chemicals are lost in the process
 	resistance_flags = FREEZE_PROOF
 	item_flags = NOBLUDGEON

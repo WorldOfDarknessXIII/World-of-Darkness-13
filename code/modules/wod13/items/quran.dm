@@ -2,8 +2,8 @@
 	name = "quran"
 	desc = "Inshallah..."
 	icon_state = "quran"
-	icon = 'code/modules/wod13/items.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon = 'icons/wod13/items.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/quran/attack(mob/living/target, mob/living/user)

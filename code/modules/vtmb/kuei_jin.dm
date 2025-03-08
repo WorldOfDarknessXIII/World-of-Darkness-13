@@ -65,7 +65,7 @@
 	var/fool_fails = 0
 
 /atom/breathing_overlay
-	icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	icon = 'icons/wod13/UI/kuei_jin.dmi'
 	icon_state = "drain"
 	alpha = 64
 	density = FALSE
@@ -86,7 +86,7 @@
 
 /atom/movable/screen/chi_pool
 	name = "Chi Pool"
-	icon = 'code/modules/wod13/UI/chi.dmi'
+	icon = 'icons/wod13/UI/chi.dmi'
 	icon_state = "base"
 	layer = HUD_LAYER
 	plane = HUD_PLANE
@@ -94,35 +94,35 @@
 
 /atom/movable/screen/yang_chi
 	name = "Yang Chi"
-	icon = 'code/modules/wod13/UI/chi.dmi'
+	icon = 'icons/wod13/UI/chi.dmi'
 	icon_state = "yang-0"
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
 /atom/movable/screen/yin_chi
 	name = "Yin Chi"
-	icon = 'code/modules/wod13/UI/chi.dmi'
+	icon = 'icons/wod13/UI/chi.dmi'
 	icon_state = "yin-0"
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
 /atom/movable/screen/imbalance_chi
 	name = "Chi Imbalance"
-	icon = 'code/modules/wod13/UI/chi.dmi'
+	icon = 'icons/wod13/UI/chi.dmi'
 	icon_state = "base"
 	layer = HUD_LAYER-1
 	plane = HUD_PLANE
 
 /atom/movable/screen/demon_chi
 	name = "Demon Chi"
-	icon = 'code/modules/wod13/UI/chi.dmi'
+	icon = 'icons/wod13/UI/chi.dmi'
 	icon_state = "base"
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
 /atom/movable/screen/chi_pool/Initialize()
 	. = ..()
-	upper_layer = image(icon = 'code/modules/wod13/UI/chi.dmi', icon_state = "add", layer = HUD_LAYER+1)
+	upper_layer = image(icon = 'icons/wod13/UI/chi.dmi', icon_state = "add", layer = HUD_LAYER+1)
 	add_overlay(upper_layer)
 
 /atom/movable/screen/chi_pool/Click()
@@ -421,9 +421,9 @@
 	name = "Inhale Chi"
 	desc = "Get chi from a target by inhaling their breathe."
 	button_icon_state = "breathe"
-	button_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	button_icon = 'icons/wod13/UI/kuei_jin.dmi'
 	background_icon_state = "discipline"
-	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	icon_icon = 'icons/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	var/cooldown = 10 SECONDS
 	COOLDOWN_DECLARE(use)
@@ -490,7 +490,7 @@
 	var/atom/movable/chi_particle = new (get_turf(victim))
 	chi_particle.density = FALSE
 	chi_particle.anchored = TRUE
-	chi_particle.icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	chi_particle.icon = 'icons/wod13/UI/kuei_jin.dmi'
 	chi_particle.icon_state = "drain"
 	var/matrix/face_kueijin = matrix()
 	face_kueijin.Turn(get_angle_raw(victim.x, victim.y, 0, 0, owner.x, owner.y, 0, 0))
@@ -504,9 +504,9 @@
 	name = "Area Chi"
 	desc = "Get chi from an area by injecting the tides."
 	button_icon_state = "area"
-	button_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	button_icon = 'icons/wod13/UI/kuei_jin.dmi'
 	background_icon_state = "discipline"
-	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	icon_icon = 'icons/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	var/cooldown = 30 SECONDS
 	COOLDOWN_DECLARE(use)
@@ -538,9 +538,9 @@
 	name = "Yin Reanimate"
 	desc = "Reanimate your body with Yin Chi energy."
 	button_icon_state = "yin"
-	button_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	button_icon = 'icons/wod13/UI/kuei_jin.dmi'
 	background_icon_state = "discipline"
-	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	icon_icon = 'icons/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	vampiric = TRUE
 	var/cooldown = 3 SECONDS
@@ -597,9 +597,9 @@
 	name = "Yang Reanimate"
 	desc = "Reanimate your body with Yang Chi energy."
 	button_icon_state = "yang"
-	button_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	button_icon = 'icons/wod13/UI/kuei_jin.dmi'
 	background_icon_state = "discipline"
-	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	icon_icon = 'icons/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	vampiric = TRUE
 	var/cooldown = 3 SECONDS
@@ -656,9 +656,9 @@
 	name = "Rebalance"
 	desc = "Rebalance Dharma virtues."
 	button_icon_state = "assign"
-	button_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	button_icon = 'icons/wod13/UI/kuei_jin.dmi'
 	background_icon_state = "discipline"
-	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
+	icon_icon = 'icons/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 
 /datum/action/rebalance/Trigger()

@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(die_in_a_fire)
 
 /obj/effect/fire
 	name = "fire"
-	icon = 'code/modules/wod13/icons.dmi'
+	icon = 'icons/wod13/icons.dmi'
 	icon_state = "fire"
 	layer = FLY_LAYER
 	anchored = TRUE
@@ -147,13 +147,13 @@ SUBSYSTEM_DEF(die_in_a_fire)
 			qdel(src)
 		if(1)
 			stage = 1
-			icon = 'code/modules/wod13/icons.dmi'
+			icon = 'icons/wod13/icons.dmi'
 		if(2)
 			stage = 2
-			icon = 'code/modules/wod13/32x48.dmi'
+			icon = 'icons/wod13/32x48.dmi'
 		if(3)
 			stage = 3
-			icon = 'code/modules/wod13/64x64.dmi'
+			icon = 'icons/wod13/64x64.dmi'
 
 /turf/open/floor/Initialize()
 	..()

@@ -1,13 +1,13 @@
 /obj/item/vamp/keys
 	name = "\improper keys"
 	desc = "Those can open some doors."
-	icon = 'code/modules/wod13/items.dmi'
+	icon = 'icons/wod13/items.dmi'
 	icon_state = "keys"
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
 
 	var/list/accesslocks = list(
 		"nothing"
