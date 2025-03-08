@@ -25,13 +25,18 @@
 /obj/item/flip_phone/Initialize(mapload)
 	. = ..()
 	sim_card = new()
+	sim_card.phone_weakref = WEAKREF(src)
 	phone_radio = new()
 	register_context()
-	RegisterSignal(src, COMSIG_PHONE_RING, PROC_REF(ring))
+	RegisterSignal(sim_card, COMSIG_PHONE_RING, PROC_REF(ring))
+	RegisterSignal(sim_card, COMSIG_PHONE_RING_TIMEOUT, PROC_REF(ring_timeout))
 
 /obj/item/flip_phone/Destroy(force)
 	. = ..()
+	UnregisterSignal(COMSIG_PHONE_RING)
+	UnregisterSignal(COMSIG_PHONE_RING_TIMEOUT)
 	if(sim_card)
+		sim_card.phone_weakref = null
 		QDEL_NULL(sim_card)
 	if(phone_radio)
 		QDEL_NULL(phone_radio)
@@ -83,8 +88,11 @@
 		balloon_alert(user, "you remove \the [sim_card]!")
 		end_phone_call()
 		user.put_in_hands(sim_card)
+		sim_card.phone_weakref = null
 		sim_card = null
 		phone_flags |= PHONE_NO_SIM
+		UnregisterSignal(COMSIG_PHONE_RING)
+		UnregisterSignal(COMSIG_PHONE_RING_TIMEOUT)
 		return CLICK_ACTION_SUCCESS
 	balloon_alert(user, "no sim card!")
 	return CLICK_ACTION_BLOCKING
@@ -97,7 +105,10 @@
 		balloon_alert(user, "you insert \the [attacking_item]!")
 		sim_card = attacking_item
 		user.transferItemToLoc(attacking_item, src)
-		phone_flags &= PHONE_NO_SIM
+		sim_card.phone_weakref = WEAKREF(src)
+		phone_flags &= ~PHONE_NO_SIM
+		RegisterSignal(sim_card, COMSIG_PHONE_RING, PROC_REF(ring))
+		RegisterSignal(sim_card, COMSIG_PHONE_RING_TIMEOUT, PROC_REF(ring_timeout))
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 
@@ -139,7 +150,7 @@
 
 /obj/item/flip_phone/proc/toggle_screen(mob/user)
 	if(phone_flags & PHONE_OPEN)
-		phone_flags &= PHONE_OPEN
+		phone_flags &= ~PHONE_OPEN
 	else
 		phone_flags |= PHONE_OPEN
 	icon_state = (phone_flags & PHONE_OPEN) ? "phone2" : "phone0"
@@ -162,7 +173,24 @@
 	phone_radio.set_broadcasting(FALSE)
 	phone_radio.set_listening(FALSE)
 	SSphones.end_phone_call(sim_card, dialed_number)
-	phone_flags &= PHONE_IN_CALL
+	phone_flags &= ~PHONE_IN_CALL
 
-/obj/item/flip_phone/proc/ring()
+
+// sim_card: the SIM card that is being called right now.
+// phone_number: The phone number of who is calling.
+// established_frequency: On what frequency we are being called.
+/obj/item/flip_phone/proc/ring(obj/item/sim_card/sim_card, phone_number, established_frequency)
+	SIGNAL_HANDLER
+
 	say("RING RING RING")
+
+// sim_card: the SIM card that was being called right now.
+// phone_number: The phone number of who was calling.
+// established_frequency: On what frequency we were being called.
+/obj/item/flip_phone/proc/ring_timeout(obj/item/sim_card/sim_card, phone_number, established_frequency)
+	SIGNAL_HANDLER
+
+	say("OH FUCK")
+	if(secure_frequency)
+		end_phone_call()
+		say("NO MORE RING")

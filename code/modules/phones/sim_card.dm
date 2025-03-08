@@ -11,6 +11,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 	var/phone_number
+	var/datum/weakref/phone_weakref = null
 
 /obj/item/sim_card/Initialize(mapload)
 	. = ..()

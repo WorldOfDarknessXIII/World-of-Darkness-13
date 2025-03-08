@@ -40,12 +40,8 @@ const NumpadWindow = (props) => {
     <Box m="6px">
       <Flex mb={1.5}>
         <Flex.Item width="155px">
-          <Box height="60px" className="Telephone__displayBox">
-            My Number: {my_number}
-          </Box>
-          <Box height="60px" className="Telephone__displayBox">
-            Dialed Number: {dialed_number}
-          </Box>
+          <Box height="60px">My Number: {my_number}</Box>
+          <Box height="60px">Dialed Number: {dialed_number}</Box>
         </Flex.Item>
         <Flex.Item>
           <Flex justifyContent="space-between" alignItems="center">

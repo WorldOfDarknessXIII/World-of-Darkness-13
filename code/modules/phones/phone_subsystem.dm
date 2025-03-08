@@ -39,11 +39,23 @@ SUBSYSTEM_DEF(phones)
 
 	var/obj/item/sim_card/called_sim_card = validate_phone_number(phone_number)
 	if(!called_sim_card)
-		to_chat(span_notice("The number you have dialed is not in service."))
+		to_chat(usr, span_notice("The number you have dialed is not in service."))
+		return
+
+	var/obj/item/flip_phone/phone = called_sim_card.phone_weakref?.resolve()
+	if(!phone)
+		CRASH("SIM card without a phone weakref. This should not be happening.")
+	if(phone.phone_flags & PHONE_IN_CALL)
+		to_chat(usr, span_notice("The number you have dialed is currently busy."))
 		return
 
 	SEND_SIGNAL(called_sim_card, COMSIG_PHONE_RING, sim_card.phone_number, established_frequency) // Tell the phone number they are being called.
+	addtimer(CALLBACK(src, PROC_REF(phone_ring_timeout), sim_card, called_sim_card, sim_card.phone_number, established_frequency), TIME_TO_RING)
 	return established_frequency //Give the phone who is calling which frequency to use.
+
+/datum/controller/subsystem/phones/proc/phone_ring_timeout(obj/item/sim_card/sim_card, obj/item/sim_card/called_sim_card, phone_number, established_frequency)
+	SEND_SIGNAL(sim_card, COMSIG_PHONE_RING_TIMEOUT, phone_number, established_frequency)
+	SEND_SIGNAL(called_sim_card, COMSIG_PHONE_RING_TIMEOUT, phone_number, established_frequency)
 
 /datum/controller/subsystem/phones/proc/establish_secure_frequency()
 	var/secure_frequency = pick(usable_frequencies - frequencies_in_use)
@@ -54,12 +66,12 @@ SUBSYSTEM_DEF(phones)
 /datum/controller/subsystem/phones/proc/end_phone_call(obj/item/sim_card/sim_card, phone_number)
 	var/obj/item/sim_card/called_sim_card = validate_phone_number(phone_number)
 	if(called_sim_card)
-		SEND_SIGNAL(called_sim_card, COMSIG_PHONE_CALL_ENDED, sim_card.phone_number) // Tell the phone number they are being called.
+		SEND_SIGNAL(called_sim_card, COMSIG_PHONE_CALL_ENDED, sim_card.phone_number)
 		frequencies_in_use.Remove(sim_card.phone_number)
 
 /datum/controller/subsystem/phones/proc/validate_phone_number(phone_number)
 	var/obj/item/sim_card/called_sim_card
 	for(var/obj/item/sim_card/checking_sim_card as anything in assigned_phone_numbers)
-		if(checking_sim_card.phone_number ~= phone_number)
+		if(checking_sim_card.phone_number == text2num(phone_number))
 			called_sim_card = checking_sim_card
 	return called_sim_card
