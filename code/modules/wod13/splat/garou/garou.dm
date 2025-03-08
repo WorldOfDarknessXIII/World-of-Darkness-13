@@ -18,14 +18,14 @@
 	selectable = TRUE
 	var/glabro = FALSE
 
-/datum/action/garouinfo
+/datum/action/my_info/garou
 	name = "About Me"
 	desc = "Check assigned role, auspice, generation, humanity, masquerade, known disciplines, known contacts etc."
 	button_icon_state = "masquerade"
 	check_flags = NONE
 	var/mob/living/carbon/host
 
-/datum/action/garouinfo/Trigger()
+/datum/action/my_info/garou/Trigger()
 	if(host)
 		var/dat = {"
 			<style type="text/css">
@@ -100,7 +100,7 @@
 //	ADD_TRAIT(C, TRAIT_NOBLEED, HIGHLANDER)
 	C.update_body(0)
 	C.last_experience = world.time + 5 MINUTES
-	var/datum/action/garouinfo/infor = new()
+	var/datum/action/my_info/garou/infor = new()
 	infor.host = C
 	infor.Grant(C)
 	var/datum/action/gift/glabro/glabro = new()
@@ -120,7 +120,7 @@
 	UnregisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED)
 	UnregisterSignal(C.transformator.lupus_form, COMSIG_MOB_VAMPIRE_SUCKED)
 	UnregisterSignal(C.transformator.crinos_form, COMSIG_MOB_VAMPIRE_SUCKED)
-	for(var/datum/action/garouinfo/VI in C.actions)
+	for(var/datum/action/my_info/garou/VI in C.actions)
 		if(VI)
 			VI.Remove(C)
 	for(var/datum/action/gift/G in C.actions)

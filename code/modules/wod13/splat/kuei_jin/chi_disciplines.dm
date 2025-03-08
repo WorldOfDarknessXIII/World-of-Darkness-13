@@ -855,8 +855,6 @@
 			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "flesh_arms", -PROTEAN_LAYER)
 			caster.overlays_standing[PROTEAN_LAYER] = potence_overlay
 			caster.apply_overlay(PROTEAN_LAYER)
-			caster.dna.species.punchdamagelow += 20
-			caster.dna.species.punchdamagehigh += 20
 			caster.dna.species.meleemod += 1
 			caster.dna.species.attack_sound = 'code/modules/wod13/sounds/heavypunch.ogg'
 			tackler = caster.AddComponent(/datum/component/tackler, stamina_cost=0, base_knockdown = 1 SECONDS, range = 2+level_casting, speed = 1, skill_mod = 0, min_distance = 0)
@@ -866,8 +864,6 @@
 				if(caster)
 					caster.remove_overlay(PROTEAN_LAYER)
 					caster.potential = 0
-					caster.dna.species.punchdamagelow -= 20
-					caster.dna.species.punchdamagehigh -= 20
 					caster.dna.species.meleemod -= 1
 					caster.dna.species.attack_sound = initial(caster.dna.species.attack_sound)
 					qdel(tackler)
@@ -1088,15 +1084,11 @@
 			var/mutable_appearance/potence_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "giant", -UNICORN_LAYER)
 			caster.overlays_standing[UNICORN_LAYER] = potence_overlay
 			caster.apply_overlay(UNICORN_LAYER)
-			caster.dna.species.punchdamagelow += mod
-			caster.dna.species.punchdamagehigh += mod
 			caster.dna.species.meleemod += meleemod
 			ADD_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 			spawn((delay)+caster.discipline_time_plus)
 				if(caster)
 					caster.remove_overlay(UNICORN_LAYER)
-					caster.dna.species.punchdamagelow -= mod
-					caster.dna.species.punchdamagehigh -= mod
 					caster.dna.species.meleemod -= meleemod
 					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 					caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/demonshintai_deactivate.ogg', 50, FALSE)
@@ -1712,7 +1704,6 @@
 	..()
 	switch(level_casting)
 		if(1)
-			caster.dna.species.punchdamagehigh += 5
 			caster.physiology.armor.melee += 15
 			caster.physiology.armor.bullet += 15
 			caster.dexterity += 2
@@ -1722,7 +1713,6 @@
 			caster.do_jitter_animation(1 SECONDS)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
-					caster.dna.species.punchdamagehigh -= 5
 					caster.physiology.armor.melee -= 15
 					caster.physiology.armor.bullet -= 15
 					caster.dexterity -= 2
@@ -1775,7 +1765,6 @@
 				to_chat(caster, "<span class='warning'>You put your Demon into your Yang.</span>")
 		if(3)
 			for(var/mob/living/carbon/human/affected_mob in oviewers(5, caster))
-				affected_mob.dna.species.punchdamagehigh += 5
 				affected_mob.physiology.armor.melee += 15
 				affected_mob.physiology.armor.bullet += 15
 				affected_mob.dexterity += 2
@@ -1791,7 +1780,6 @@
 				spawn(delay+caster.discipline_time_plus)
 					qdel(celerity_effect)
 					if(affected_mob)
-						affected_mob.dna.species.punchdamagehigh -= 5
 						affected_mob.physiology.armor.melee -= 15
 						affected_mob.physiology.armor.bullet -= 15
 						affected_mob.dexterity -= 2

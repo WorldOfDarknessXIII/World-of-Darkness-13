@@ -18,8 +18,8 @@
 	limbs_id = "monkey"
 	damage_overlay_type = "monkey"
 	sexes = FALSE
-	punchdamagelow = 1
-	punchdamagehigh = 3
+
+
 	species_language_holder = /datum/language_holder/monkey
 	bodypart_overides = list(
 	BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/monkey,\
@@ -77,7 +77,7 @@
 				"<span class='danger'>You avoid [user]'s bite!</span>", "<span class='hear'>You hear jaws snapping shut!</span>", COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, "<span class='danger'>Your bite misses [victim]!</span>")
 			return TRUE
-		victim.apply_damage(rand(punchdamagelow, punchdamagehigh), BRUTE, affecting, armor)
+
 		victim.visible_message("<span class='danger'>[name] bites [victim]!</span>",
 			"<span class='userdanger'>[name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, name)
 		to_chat(user, "<span class='danger'>You bite [victim]!</span>")

@@ -99,10 +99,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	var/payday_modifier = 1
 	///Type of damage attack does. Ethereals attack with burn damage for example.
 	var/attack_type = BRUTE
-	///Lowest possible punch damage this species can give. If this is set to 0, punches will always miss.
-	var/punchdamagelow = 1
-	///Highest possible punch damage this species can give.
-	var/punchdamagehigh = 10
 	///Base electrocution coefficient.  Basically a multiplier for damage from electrocutions.
 	var/meleemod = 1
 	//For melee damage
@@ -1392,18 +1388,19 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			else
 				user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
-		var/damage = (rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)/3)*(user.get_total_physique())
-		if(user.age < 16)
-			damage = round(damage/2)
+		var/user_phys = user.get_total_physique()
+		var/damage = user_phys * 2
+		if(user.melee_professional)
+			damage += rand(0, damage * 0.5)
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
-		if(user.dna.species.punchdamagelow)
+		if(damage)
 			if(atk_verb == ATTACK_EFFECT_KICK || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER)) //kicks never miss (provided your species deals more than 0 damage)
 				miss_chance = 0
 			else
-				miss_chance = min((user.dna.species.punchdamagehigh/user.dna.species.punchdamagelow) + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
+				var/calculate_miss = SSstoryteller.roll("punch_miss_chance", user, target)
 
 		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 			playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)

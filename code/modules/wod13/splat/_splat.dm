@@ -33,21 +33,23 @@
 	var/splat_flag = null
 	///Our very special lady, gentleman, theydie, gentlethem, or horrifying monstrosity that should not be
 	var/mob/living/my_character = null
+	///Whether this splat can be selected when creating a character
+	var/selectable = FALSE
 	///Artifacts of migrating splats from species, pending a rework of our damage system
 	var/damage_mods = list(
-		"brute" = 1
-		"burn" = 1
-		"tox" = 1
-		"oxy" = 1
-		"clone" = 1
-		"stamina" = 1
-		"brain" = 1
-		"pressure" = 1
-		"heat" = 1
-		"cold" = 1
-		"stun" = 1
-		"bleed" = 1
-		"hunger" = 1
+		"brute" = 1,
+		"burn" = 1,
+		"tox" = 1,
+		"oxy" = 1,
+		"clone" = 1,
+		"stamina" = 1,
+		"brain" = 1,
+		"pressure" = 1,
+		"heat" = 1,
+		"cold" = 1,
+		"stun" = 1,
+		"bleed" = 1,
+		"hunger" = 1,
 	)
 	///refer to code\modules\mob\living\carbon\human\physiology.dm
 
@@ -181,6 +183,3 @@
 
 /// We'll use this for signals to fuck with supernaturals and whatever else
 /datum/splat/supernatural
-
-#warn "implement this"
-/mob/living/carbon/human/proc/AdjustMasquerade()

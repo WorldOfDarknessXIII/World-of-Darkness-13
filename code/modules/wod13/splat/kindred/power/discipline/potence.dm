@@ -34,8 +34,6 @@
 
 /datum/discipline_power/potence/one/activate()
 	. = ..()
-	owner.dna.species.punchdamagelow += 8
-	owner.dna.species.punchdamagehigh += 8
 	owner.dna.species.meleemod += 0.4
 	owner.dna.species.attack_sound = 'code/modules/wod13/sounds/heavypunch.ogg'
 	tackler = owner.AddComponent(/datum/component/tackler, stamina_cost=0, base_knockdown = 1 SECONDS, range = 3, speed = 1, skill_mod = 0, min_distance = 0)
@@ -43,8 +41,6 @@
 
 /datum/discipline_power/potence/one/deactivate()
 	. = ..()
-	owner.dna.species.punchdamagelow -= 8
-	owner.dna.species.punchdamagehigh -= 8
 	owner.dna.species.meleemod -= 0.4
 	owner.dna.species.attack_sound = initial(owner.dna.species.attack_sound)
 	owner.remove_overlay(POTENCE_LAYER)
@@ -67,8 +63,8 @@
 
 /datum/discipline_power/potence/two/activate()
 	. = ..()
-	owner.dna.species.punchdamagelow += 16
-	owner.dna.species.punchdamagehigh += 16
+
+
 	owner.dna.species.meleemod += 0.8
 	owner.dna.species.attack_sound = 'code/modules/wod13/sounds/heavypunch.ogg'
 	tackler = owner.AddComponent(/datum/component/tackler, stamina_cost=0, base_knockdown = 1 SECONDS, range = 4, speed = 1, skill_mod = 0, min_distance = 0)
@@ -76,8 +72,8 @@
 
 /datum/discipline_power/potence/two/deactivate()
 	. = ..()
-	owner.dna.species.punchdamagelow -= 16
-	owner.dna.species.punchdamagehigh -= 16
+
+
 	owner.dna.species.meleemod -= 0.8
 	owner.dna.species.attack_sound = initial(owner.dna.species.attack_sound)
 	owner.remove_overlay(POTENCE_LAYER)
@@ -100,8 +96,8 @@
 
 /datum/discipline_power/potence/three/activate()
 	. = ..()
-	owner.dna.species.punchdamagelow += 24
-	owner.dna.species.punchdamagehigh += 24
+
+
 	owner.dna.species.meleemod += 1.2
 	owner.dna.species.attack_sound = 'code/modules/wod13/sounds/heavypunch.ogg'
 	tackler = owner.AddComponent(/datum/component/tackler, stamina_cost=0, base_knockdown = 1 SECONDS, range = 5, speed = 1, skill_mod = 0, min_distance = 0)
@@ -109,8 +105,8 @@
 
 /datum/discipline_power/potence/three/deactivate()
 	. = ..()
-	owner.dna.species.punchdamagelow -= 24
-	owner.dna.species.punchdamagehigh -= 24
+
+
 	owner.dna.species.meleemod -= 1.2
 	owner.dna.species.attack_sound = initial(owner.dna.species.attack_sound)
 	owner.remove_overlay(POTENCE_LAYER)
@@ -133,8 +129,8 @@
 
 /datum/discipline_power/potence/four/activate()
 	. = ..()
-	owner.dna.species.punchdamagelow += 32
-	owner.dna.species.punchdamagehigh += 32
+
+
 	owner.dna.species.meleemod += 1.6
 	owner.dna.species.attack_sound = 'code/modules/wod13/sounds/heavypunch.ogg'
 	tackler = owner.AddComponent(/datum/component/tackler, stamina_cost=0, base_knockdown = 1 SECONDS, range = 6, speed = 1, skill_mod = 0, min_distance = 0)
@@ -142,8 +138,8 @@
 
 /datum/discipline_power/potence/four/deactivate()
 	. = ..()
-	owner.dna.species.punchdamagelow -= 32
-	owner.dna.species.punchdamagehigh -= 32
+
+
 	owner.dna.species.meleemod -= 1.6
 	owner.dna.species.attack_sound = initial(owner.dna.species.attack_sound)
 	owner.remove_overlay(POTENCE_LAYER)
@@ -166,8 +162,8 @@
 
 /datum/discipline_power/potence/five/activate()
 	. = ..()
-	owner.dna.species.punchdamagelow += 40
-	owner.dna.species.punchdamagehigh += 40
+
+
 	owner.dna.species.meleemod += 2
 	owner.dna.species.attack_sound = 'code/modules/wod13/sounds/heavypunch.ogg'
 	tackler = owner.AddComponent(/datum/component/tackler, stamina_cost=0, base_knockdown = 1 SECONDS, range = 7, speed = 1, skill_mod = 0, min_distance = 0)
@@ -175,8 +171,8 @@
 
 /datum/discipline_power/potence/five/deactivate()
 	. = ..()
-	owner.dna.species.punchdamagelow -= 40
-	owner.dna.species.punchdamagehigh -= 40
+
+
 	owner.dna.species.meleemod -= 2
 	owner.dna.species.attack_sound = initial(owner.dna.species.attack_sound)
 	owner.remove_overlay(POTENCE_LAYER)

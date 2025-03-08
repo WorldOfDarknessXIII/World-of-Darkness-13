@@ -1,5 +1,4 @@
 /datum/splat/supernatural/kindred
-	name = "Vampire"
 	splat_traits = list(
 		TRAIT_VIRUSIMMUNE,	//PSEUDO_M_K kindred can spread disease, amend this
 		TRAIT_NOBLEED,		//PSEUDO_M_K we need to account for losing vitae to massive damage
@@ -8,8 +7,6 @@
 		TRAIT_TOXIMMUNE,
 		TRAIT_NOCRITDAMAGE,
 	)
-	brutemod = 0.5
-	burnmod = 2
 
 	power_stat_name = "Vitae"
 	power_stat_max = 5
@@ -18,8 +15,8 @@
 	integrity_level = 7
 
 	var/generation = 13
-	punchdamagelow = 10
-	punchdamagehigh = 20
+
+
 	dust_anim = "dust-h"
 
 	//splat variables
@@ -30,25 +27,22 @@
 	COOLDOWN_DECLARE(torpor_timer)
 	COOLDOWN_DECLARE(violated_masquerade)
 
-	var/bloodpower_time_plus = 0					//PSEUDO_M_SR
-	var/thaum_damage_plus = 0						//
-	var/discipline_time_plus = 0					//
 	var/dust_anim = "dust-h"						//
 	var/datum/vampireclane/clane					//
-	var/list/datum/discipline/disciplines = list()	//
-	var/last_drinkblood_click = 0					//
 	var/masquerade = 5								//
 	selectable = TRUE
+	brutemod = 0.5
+	burnmod = 2
 
 
-/datum/action/vampireinfo
+/datum/action/my_info/vampire
 	name = "About Me"
 	desc = "Check assigned role, clan, generation, humanity, masquerade, known disciplines, known contacts etc."
 	button_icon_state = "masquerade"
 	check_flags = NONE
 	var/mob/living/carbon/human/host
 
-/datum/action/vampireinfo/Trigger()
+/datum/action/my_info/vampire/Trigger()
 	if(host)
 		var/dat = {"
 			<style type="text/css">
@@ -222,7 +216,7 @@
 
 	initialize_generation(vampire)
 
-	var/datum/action/vampireinfo/infor = new()
+	var/datum/action/my_info/vampire/infor = new()
 	infor.host = vampire
 	infor.Grant(vampire)
 	var/datum/action/give_vitae/vitae = new()
@@ -257,7 +251,7 @@
 /datum/splat/supernatural/kindred/on_splat_loss(mob/living/carbon/human/C, datum/splat/new_splat, pref_load)
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED)
-	for(var/datum/action/vampireinfo/vampire_info_action in C.actions)
+	for(var/datum/action/my_info/vampire/vampire_info_action in C.actions)
 		vampire_info_action.Remove(C)
 	for(var/datum/action/action in C.actions)
 		if(action.vampiric)
@@ -319,7 +313,7 @@
 		var/mob/living/carbon/human/BD = owner
 		to_chat(BD, "<span class='warning'>You feel like your <b>BLOOD</b>-powers slowly decrease.</span>")
 		if(BD.dna.species)
-			BD.dna.species.punchdamagehigh = BD.dna.species.punchdamagehigh-5
+
 			BD.physiology.armor.melee = BD.physiology.armor.melee-15
 			BD.physiology.armor.bullet = BD.physiology.armor.bullet-15
 			if(HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
@@ -558,21 +552,21 @@
 							to_chat(BLOODBONDED, "<span class='userdanger'><b>AS PRECIOUS VITAE ENTER YOUR MOUTH, YOU NOW ARE IN THE BLOODBOND OF [H]. SERVE YOUR REGNANT CORRECTLY, OR YOUR ACTIONS WILL NOT BE TOLERATED.</b></span>")
 							new_master = TRUE
 					if(is_ghoul(BLOODBONDED))
-						var/datum/splat/supernatural/ghoul/G = BLOODBONDED.dna.species
+						var/datum/splat/supernatural/kindred/ghoul/G = BLOODBONDED.dna.species
 						G.master = owner
 						G.last_vitae = world.time
 						if(new_master)
 							G.changed_master = TRUE
 					else if(!is_kindred(BLOODBONDED) && !isnpc(BLOODBONDED))
 						var/save_data_g = FALSE
-						BLOODBONDED.set_species(/datum/splat/supernatural/ghoul)
+						BLOODBONDED.set_species(/datum/splat/supernatural/kindred/ghoul)
 						BLOODBONDED.clane = null
 						var/response_g = input(BLOODBONDED, "Do you wish to keep being a ghoul on your save slot?(Yes will be a permanent choice and you can't go back)") in list("Yes", "No")
 //						if(BLOODBONDED.hud_used)
 //							var/datum/hud/human/HU = BLOODBONDED.hud_used
 //							HU.create_ghoulic()
 						BLOODBONDED.roundstart_vampire = FALSE
-						var/datum/splat/supernatural/ghoul/G = BLOODBONDED.dna.species
+						var/datum/splat/supernatural/kindred/ghoul/G = BLOODBONDED.dna.species
 						G.master = owner
 						G.last_vitae = world.time
 						if(new_master)
@@ -999,3 +993,5 @@
 
 /datum/splat/supernatural/kindred/proc/refresh_spent_blood(amount)
 	spent_blood_turn -= amount
+
+/datum/splat/supernatural/kindred/proc/AdjustMasquerade()

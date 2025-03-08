@@ -3675,6 +3675,7 @@
 #include "code\modules\wod13\splat\kindred.dm"
 #include "code\modules\wod13\areas\interior\strip_elysium.dm"
 #include "code\modules\wod13\status_effects\debuffs.dm"
+#include "code\modules\wod13\subsystems\ssStoryteller.dm"
 #include "code\modules\wod13\subsystems\ssWeed.dm"
 #include "code\modules\wod13\structures\doors\vampdoor_glass.dm"
 #include "code\modules\wod13\structures\doors\vampdoor_misc.dm"

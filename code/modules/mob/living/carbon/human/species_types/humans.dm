@@ -12,14 +12,14 @@
 	payday_modifier = 1
 	selectable = TRUE
 
-/datum/action/humaninfo
+/datum/action/my_info/human
 	name = "About Me"
 	desc = "Check assigned role, clane, generation, humanity, masquerade, known disciplines, known contacts etc."
 	button_icon_state = "masquerade"
 	check_flags = NONE
 	var/mob/living/carbon/human/host
 
-/datum/action/humaninfo/Trigger()
+/datum/action/my_info/human/Trigger()
 	if(host)
 		var/dat = {"
 			<style type="text/css">
@@ -90,22 +90,6 @@
 				break
 		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
 		onclose(host, "vampire", src)
-
-/datum/species/human/on_species_gain(mob/living/carbon/human/C)
-	. = ..()
-//	ADD_TRAIT(C, TRAIT_NOBLEED, HIGHLANDER)
-	C.update_body(0)
-	var/datum/action/humaninfo/infor = new()
-	infor.host = C
-	infor.Grant(C)
-
-/datum/species/human/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
-	. = ..()
-	for(var/datum/action/humaninfo/VI in C.actions)
-		qdel(VI)
-
-/datum/species/human/check_roundstart_eligible()
-	return TRUE
 
 /datum/species/human/felinid/check_roundstart_eligible()
 	return FALSE

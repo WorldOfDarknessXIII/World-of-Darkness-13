@@ -19,7 +19,7 @@
 
 	var/atk_verb = pick("left hook","right hook","straight punch")
 
-	var/damage = 5 + species.punchdamagelow
+	var/damage = 5
 	damage = min(damage, 20)
 	if(!damage)
 		playsound(D.loc, species.miss_sound, 25, TRUE, -1)

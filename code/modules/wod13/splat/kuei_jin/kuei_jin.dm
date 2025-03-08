@@ -129,14 +129,14 @@
 	var/mob/living/C = usr
 	to_chat(usr, "Yin Chi: [C.yin_chi]/[C.max_yin_chi], Yang Chi: [C.yang_chi]/[C.max_yang_chi], Demon Chi: [C.demon_chi]/[C.max_demon_chi]")
 
-/datum/action/kueijininfo
+/datum/action/my_info/kueijin
 	name = "About Me"
 	desc = "Check assigned role, dharma, known disciplines, known contacts etc."
 	button_icon_state = "masquerade"
 	check_flags = NONE
 	var/mob/living/carbon/human/host
 
-/datum/action/kueijininfo/Trigger()
+/datum/action/my_info/kueijin/Trigger()
 	if(host)
 		var/dat = {"
 			<style type="text/css">
@@ -248,7 +248,7 @@
 	. = ..()
 	C.update_body(0)
 	C.last_experience = world.time + 5 MINUTES
-	var/datum/action/kueijininfo/infor = new()
+	var/datum/action/my_info/kueijin/infor = new()
 	infor.host = C
 	infor.Grant(C)
 	var/datum/action/reanimate_yang/YG = new()
@@ -262,7 +262,7 @@
 /datum/splat/supernatural/kuei_jin/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED)
-	for(var/datum/action/kueijininfo/VI in C.actions)
+	for(var/datum/action/my_info/kueijin/VI in C.actions)
 		if(VI)
 			VI.Remove(C)
 	for(var/datum/action/breathe_chi/QI in C.actions)

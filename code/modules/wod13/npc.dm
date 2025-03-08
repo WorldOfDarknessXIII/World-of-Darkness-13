@@ -83,7 +83,7 @@
 				break
 	if(!my_weapon && my_weapon_type)
 		my_weapon = new my_weapon_type(src)
-		
+
 
 
 	if(my_weapon)
@@ -119,7 +119,7 @@
 /mob/living/carbon/human/npc/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	if(I && HAS_TRAIT(I, TRAIT_NODROP))
 		return FALSE
-	. = ..() 
+	. = ..()
 //============================================================
 
 
@@ -669,7 +669,7 @@
 		var/mob/dead/observer/C = pick(candidates)
 		key = C.key
 		ghoulificated = TRUE
-		set_species(/datum/splat/supernatural/ghoul)
+		set_species(/datum/splat/supernatural/kindred/ghoul)
 		if(mind)
 			if(mind.enslaved_to != owner)
 				mind.enslave_mind_to_creator(owner)

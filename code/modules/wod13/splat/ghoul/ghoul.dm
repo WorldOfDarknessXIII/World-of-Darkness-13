@@ -1,34 +1,24 @@
-/datum/splat/supernatural/ghoul
+/datum/splat/supernatural/kindred/ghoul
 
-/datum/splat/supernatural/ghoul
-	name = "Ghoul"
-	id = "ghoul"
-	default_color = "FFFFFF"
-	toxic_food = RAW
-	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, HAS_FLESH, HAS_BONE)
-	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_VIRUSIMMUNE, TRAIT_NOCRITDAMAGE)
-	use_skintones = TRUE
-	limbs_id = "human"
-	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
-	brutemod = 1	//0.8 instead, if changing.
-	burnmod = 1
-	punchdamagelow = 10
-	punchdamagehigh = 20
+/datum/splat/supernatural/kindred/ghoul
+	splat_id = "ghoul"
+	inherent_traits = list(TRAIT_VIRUSIMMUNE, TRAIT_NOCRITDAMAGE)
+
+
 	dust_anim = "dust-h"
 	var/mob/living/carbon/human/master
 	var/changed_master = FALSE
-	var/last_vitae = 0
 	selectable = TRUE
-	var/list/datum/discipline/disciplines = list()
+	splat_flag = GHOUL_SPLAT
 
-/datum/action/ghoulinfo
+/datum/action/my_info/ghoul
 	name = "About Me"
 	desc = "Check assigned role, master, humanity, masquerade, known contacts etc."
 	button_icon_state = "masquerade"
 	check_flags = NONE
 	var/mob/living/carbon/human/host
 
-/datum/action/ghoulinfo/Trigger()
+/datum/action/my_info/ghoul/Trigger()
 	if(host)
 		var/dat = {"
 			<style type="text/css">
@@ -45,7 +35,7 @@
 			dat += "[host.real_name],"
 		if(!host.real_name)
 			dat += "Unknown,"
-		var/datum/splat/supernatural/ghoul/G
+		var/datum/splat/supernatural/kindred/ghoul/ghoul_splat
 		if(host.dna.species.name == "Ghoul")
 			G = host.dna.species
 			dat += " the ghoul"
@@ -81,11 +71,11 @@
 				masquerade_level = "'m danger to the Masquerade and my own kind."
 		dat += "Camarilla thinks I[masquerade_level]<BR>"
 
-/datum/splat/supernatural/ghoul/on_species_gain(mob/living/carbon/human/C)
+/datum/splat/supernatural/kindred/ghoul/on_species_gain(mob/living/carbon/human/C)
 	..()
 	C.update_body(0)
 	C.last_experience = world.time+3000
-	var/datum/action/ghoulinfo/infor = new()
+	var/datum/action/my_info/ghoul/infor = new()
 	infor.host = C
 	infor.Grant(C)
 	var/datum/action/blood_heal/bloodheal = new()
@@ -96,13 +86,13 @@
 	C.maxHealth = 200
 	C.health = 200
 
-/datum/splat/supernatural/ghoul/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+/datum/splat/supernatural/kindred/ghoul/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
 	for(var/datum/action/A in C.actions)
 		if(A)
 			if(A.vampiric)
 				A.Remove(C)
-	for(var/datum/action/ghoulinfo/infor in C.actions)
+	for(var/datum/action/my_info/ghoul/infor in C.actions)
 		if(infor)
 			infor.Remove(C)
 
@@ -225,10 +215,10 @@
 		H.update_blood_hud()
 		H.visible_message("<span class='warning'>Some of [H]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
 
-/datum/splat/supernatural/ghoul/check_roundstart_eligible()
+/datum/splat/supernatural/kindred/ghoul/check_roundstart_eligible()
 	return TRUE
 
-/datum/splat/supernatural/ghoul/spec_life(mob/living/carbon/human/H)
+/datum/splat/supernatural/kindred/ghoul/spec_life(mob/living/carbon/human/H)
 	. = ..()
 	if(HAS_TRAIT(H, TRAIT_UNMASQUERADE))
 		if(H.CheckEyewitness(H, H, 7, FALSE))
@@ -297,7 +287,7 @@
  * Arguments:
  * * searched_discipline - Name or typepath of the Discipline being searched for.
  */
-/datum/splat/supernatural/ghoul/proc/get_discipline(searched_discipline)
+/datum/splat/supernatural/kindred/ghoul/proc/get_discipline(searched_discipline)
 	for(var/datum/discipline/discipline in disciplines)
 		if (ispath(searched_discipline, /datum/discipline))
 			if (istype(discipline, searched_discipline))

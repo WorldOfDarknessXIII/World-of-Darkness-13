@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(splats)
 		"human"		=	/datum/splat/human,
 		"kindred"	=	/datum/splat/supernatural/kindred,
 		"garou"		=	/datum/splat/supernatural/garou,
-		"ghoul"		=	/datum/splat/supernatural/ghoul,
+		"ghoul"		=	/datum/splat/supernatural/kindred/ghoul,
 		"kuei_jin"	=	/datum/splat/supernatural/kuei_jin,
 	)
 	///An associated list of lazy lists for splats applied; keys are the splat owner, values are the splat
