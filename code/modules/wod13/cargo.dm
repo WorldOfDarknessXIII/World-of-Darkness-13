@@ -50,24 +50,6 @@
 	cost = 300
 	contains = list(/obj/item/binoculars)
 
-/datum/supply_pack/vampire/duffel
-	name = "Duffelbags"
-	desc = "Contains three duffelbags."
-	contains = list(/obj/item/storage/backpack/duffelbag, /obj/item/storage/backpack/duffelbag, /obj/item/storage/backpack/duffelbag)
-	cost = 300
-
-/datum/supply_pack/vampire/backpack
-	name = "Backpacks"
-	desc = "Contains three backpacks."
-	contains = list(/obj/item/storage/backpack, /obj/item/storage/backpack, /obj/item/storage/backpack)
-	cost = 300
-
-/datum/supply_pack/vampire/satchel
-	name = "Satchels"
-	desc = "Contains three satchels."
-	contains = list(/obj/item/storage/backpack/satchel, /obj/item/storage/backpack/satchel, /obj/item/storage/backpack/satchel/leather)
-	cost = 300
-
 datum/supply_pack/vampire/medicalsupplies
 	name = "Medical Supplies"
 	desc = "Contains some first aid supplies."
