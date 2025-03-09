@@ -170,19 +170,6 @@
 	worn_icon = 'code/modules/wod13/worn.dmi'
 	worn_icon_state = "id1"
 
-/obj/item/card/id/anarch
-	name = "biker badge"
-	id_type_name = "biker badge"
-	desc = "A badge which shows protest and anarchy."
-	icon = 'code/modules/wod13/items.dmi'
-	icon_state = "id5"
-	inhand_icon_state = "card-id"
-	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
-	worn_icon = 'code/modules/wod13/worn.dmi'
-	worn_icon_state = "id5"
-
 /obj/item/card/id/clinic
 	name = "medical badge"
 	id_type_name = "medical badge"

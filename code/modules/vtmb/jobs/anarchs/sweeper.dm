@@ -31,7 +31,7 @@
 	name = "Sweeper"
 	jobtype = /datum/job/vamp/sweeper
 
-	id = /obj/item/card/id/anarch
+	id = /obj/item/card/id/sweeper
 	uniform = /obj/item/clothing/under/vampire/bouncer
 	suit = /obj/item/clothing/suit/vampire/jacket
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
