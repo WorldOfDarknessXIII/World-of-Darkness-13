@@ -295,6 +295,7 @@
 #include "code\modules\wod13\areas\area.dm"
 #include "code\modules\wod13\splat\garou\garou.dm"
 #include "code\modules\wod13\splat\ghoul\ghoul.dm"
+#include "code\modules\wod13\splat\human\metahuman_subsplat.dm"
 #include "code\modules\wod13\splat\kindred\kindred.dm"
 #include "code\modules\wod13\splat\garou\transformation.dm"
 #include "code\modules\wod13\splat\garou\werewolf_defense.dm"

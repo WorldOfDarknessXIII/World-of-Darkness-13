@@ -8,26 +8,21 @@
 		TRAIT_TOXIMMUNE,
 		TRAIT_NOCRITDAMAGE,
 	)
-
+	splat_flag = KINDRED_SPLAT
+	splat_actions = list(
+		/datum/action/my_info/kindred,
+	)
 	power_stat_name = "Vitae"
 	power_stat_max = 5
 	power_stat_current = 5
-	integrity_name = "Humanity"
-	integrity_level = 7
-
+	integrity = /datum/integrity_tracker/humanity
 	var/generation = 13
-
-
-	dust_anim = "dust-h"
-
-	//splat variables
+	var/dust_anim = "dust-h"
 	var/spend_blood_per_turn = 1
 	var/spent_blood_turn = 0
 	var/datum/vampireclane/clane
 	COOLDOWN_DECLARE(torpor_timer)
 	COOLDOWN_DECLARE(violated_masquerade)
-
-	var/dust_anim = "dust-h"						//
 	var/datum/vampireclane/clane					//
 	var/masquerade = 5								//
 	selectable = TRUE
@@ -35,6 +30,17 @@
 		"brute" = 0.5,
 		"burn" = 2,
 	)
+
+/datum/splat/supernatural/kindred/on_apply()
+	//Special handling here since we subtype the ghoul splat from the kindred splat
+	if(splat_flag & KINDRED_SPLAT)
+		splat_signals = list(
+		PROC_REF(on_vampire_bitten) = COMSIG_MOB_VAMPIRE_SUCKED,
+		PROC_REF(lose_organ) = COMSIG_CARBON_LOSE_ORGAN,
+		PROC_REF(slip_into_torpor) = SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION),
+		)
+	..()
+
 
 ///A proc to handle the special case of a ghoul being turned into a vampire so they don't lose relevant discipline knowledge
 ///And such
@@ -49,172 +55,7 @@
 	check_flags = NONE
 
 /datum/action/my_info/kindred/Trigger()
-	/*if(host)
-		var/dat = {"
-			<style type="text/css">
-
-			body {
-				background-color: #090909; color: white;
-			}
-
-			</style>
-			"}
-		dat += "<center><h2>Memories</h2><BR></center>"
-		dat += "[icon2html(getFlatIcon(host), host)]I am "
-		if(host.real_name)
-			dat += "[host.real_name],"
-		if(!host.real_name)
-			dat += "Unknown,"
-		if(host.clane)
-			dat += " the [host.clane.name]"
-		if(!host.clane)
-			dat += " the caitiff"
-
-		if(host.mind)
-
-			if(host.mind.assigned_role)
-				if(host.mind.special_role)
-					dat += ", carrying the [host.mind.assigned_role] (<font color=red>[host.mind.special_role]</font>) role."
-				else
-					dat += ", carrying the [host.mind.assigned_role] role."
-			if(!host.mind.assigned_role)
-				dat += "."
-			dat += "<BR>"
-			if(host.mind.enslaved_to)
-				dat += "My Regnant is [host.mind.enslaved_to], I should obey their wants.<BR>"
-		if(host.generation)
-			dat += "I'm from [host.generation] generation.<BR>"
-		if(host.mind.special_role)
-			for(var/datum/antagonist/A in host.mind.antag_datums)
-				if(A.objectives)
-					dat += "[printobjectives(A.objectives)]<BR>"
-		var/masquerade_level = " followed the Masquerade Tradition perfectly."
-		switch(host.masquerade)
-			if(4)
-				masquerade_level = " broke the Masquerade rule once."
-			if(3)
-				masquerade_level = " made a couple of Masquerade breaches."
-			if(2)
-				masquerade_level = " provoked a moderate Masquerade breach."
-			if(1)
-				masquerade_level = " almost ruined the Masquerade."
-			if(0)
-				masquerade_level = "'m danger to the Masquerade and my own kind."
-		dat += "Camarilla thinks I[masquerade_level]<BR>"
-		var/humanity = "I'm out of my mind."
-		var/enlight = FALSE
-		if(host.clane)
-			if(host.clane.enlightenment)
-				enlight = TRUE
-
-		if(!enlight)
-			switch(host.humanity)
-				if(8 to 10)
-					humanity = "I'm saintly."
-				if(7)
-					humanity = "I feel as human as when I lived."
-				if(5 to 6)
-					humanity = "I'm feeling distant from my humanity."
-				if(4)
-					humanity = "I don't feel any compassion for the Kine anymore."
-				if(2 to 3)
-					humanity = "I feel hunger for <b>BLOOD</b>. My humanity is slipping away."
-				if(1)
-					humanity = "Blood. Feed. Hunger. It gnaws. Must <b>FEED!</b>"
-
-		else
-			switch(host.humanity)
-				if(8 to 10)
-					humanity = "I'm <b>ENLIGHTENED</b>, my <b>BEAST</b> and I are in complete harmony."
-				if(7)
-					humanity = "I've made great strides in co-existing with my beast."
-				if(5 to 6)
-					humanity = "I'm starting to learn how to share this unlife with my beast."
-				if(4)
-					humanity = "I'm still new to my path, but I'm learning."
-				if(2 to 3)
-					humanity = "I'm a complete novice to my path."
-				if(1)
-					humanity = "I'm losing control over my beast!"
-
-		dat += "[humanity]<BR>"
-
-		if(host.clane.name == "Brujah")
-			if(GLOB.brujahname != "")
-				if(host.real_name != GLOB.brujahname)
-					dat += " My primogen is:  [GLOB.brujahname].<BR>"
-		if(host.clane.name == "Malkavian")
-			if(GLOB.malkavianname != "")
-				if(host.real_name != GLOB.malkavianname)
-					dat += " My primogen is:  [GLOB.malkavianname].<BR>"
-		if(host.clane.name == "Nosferatu")
-			if(GLOB.nosferatuname != "")
-				if(host.real_name != GLOB.nosferatuname)
-					dat += " My primogen is:  [GLOB.nosferatuname].<BR>"
-		if(host.clane.name == "Toreador")
-			if(GLOB.toreadorname != "")
-				if(host.real_name != GLOB.toreadorname)
-					dat += " My primogen is:  [GLOB.toreadorname].<BR>"
-		if(host.clane.name == "Ventrue")
-			if(GLOB.ventruename != "")
-				if(host.real_name != GLOB.ventruename)
-					dat += " My primogen is:  [GLOB.ventruename].<BR>"
-
-		dat += "<b>Physique</b>: [host.physique] + [host.additional_physique]<BR>"
-		dat += "<b>Dexterity</b>: [host.dexterity] + [host.additional_dexterity]<BR>"
-		dat += "<b>Social</b>: [host.social] + [host.additional_social]<BR>"
-		dat += "<b>Mentality</b>: [host.mentality] + [host.additional_mentality]<BR>"
-		dat += "<b>Cruelty</b>: [host.blood] + [host.additional_blood]<BR>"
-		dat += "<b>Lockpicking</b>: [host.lockpicking] + [host.additional_lockpicking]<BR>"
-		dat += "<b>Athletics</b>: [host.athletics] + [host.additional_athletics]<BR>"
-		if(host.hud_used)
-			dat += "<b>Known disciplines:</b><BR>"
-			for(var/datum/action/discipline/D in host.actions)
-				if(D)
-					if(D.discipline)
-						dat += "[D.discipline.name] [D.discipline.level] - [D.discipline.desc]<BR>"
-		if(host.Myself)
-			if(host.Myself.Friend)
-				if(host.Myself.Friend.owner)
-					dat += "<b>My friend's name is [host.Myself.Friend.owner.true_real_name].</b><BR>"
-					if(host.Myself.Friend.phone_number)
-						dat += "Their number is [host.Myself.Friend.phone_number].<BR>"
-					if(host.Myself.Friend.friend_text)
-						dat += "[host.Myself.Friend.friend_text]<BR>"
-			if(host.Myself.Enemy)
-				if(host.Myself.Enemy.owner)
-					dat += "<b>My nemesis is [host.Myself.Enemy.owner.true_real_name]!</b><BR>"
-					if(host.Myself.Enemy.enemy_text)
-						dat += "[host.Myself.Enemy.enemy_text]<BR>"
-			if(host.Myself.Lover)
-				if(host.Myself.Lover.owner)
-					dat += "<b>I'm in love with [host.Myself.Lover.owner.true_real_name].</b><BR>"
-					if(host.Myself.Lover.phone_number)
-						dat += "Their number is [host.Myself.Lover.phone_number].<BR>"
-					if(host.Myself.Lover.lover_text)
-						dat += "[host.Myself.Lover.lover_text]<BR>"
-		var/obj/keypad/armory/K = find_keypad(/obj/keypad/armory)
-		if(K && (host.mind.assigned_role == "Prince" || host.mind.assigned_role == "Sheriff"))
-			dat += "<b>The pincode for the armory keypad is: [K.pincode]</b><BR>"
-		var/obj/structure/vaultdoor/pincode/bank/bankdoor = find_door_pin(/obj/structure/vaultdoor/pincode/bank)
-		if(bankdoor && (host.mind.assigned_role == "Capo"))
-			dat += "<b>The pincode for the bank vault is: [bankdoor.pincode]</b><BR>"
-		if(bankdoor && (host.mind.assigned_role == "La Squadra"))
-			if(prob(50))
-				dat += "<b>The pincode for the bank vault is: [bankdoor.pincode]</b><BR>"
-			else
-				dat += "<b>Unfortunately you don't know the vault code.</b><BR>"
-
-		if(length(host.knowscontacts) > 0)
-			dat += "<b>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
-			for(var/i in host.knowscontacts)
-				dat += "-[i] contact<BR>"
-		for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
-			if(host.bank_id == account.bank_id)
-				dat += "<b>My bank account code is: [account.code]</b><BR>"
-		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
-		onclose(host, "vampire", src)*/
-		#warn "implement this"
+	#warn "implement this"
 
 /datum/splat/supernatural/kindred/on_apply()
 	..()
@@ -229,16 +70,7 @@
 	var/datum/discipline/bloodheal/giving_bloodheal = new(clamp(spend_blood_per_turn, 1, 10))
 	give_discipline(giving_bloodheal)
 
-	//vampires go to -200 damage before dying
 
-	//vampires die instantly upon having their heart removed
-	RegisterSignal(my_character, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(lose_organ))
-
-	//vampires don't die while in crit, they just slip into torpor after 2 minutes of being critted
-	RegisterSignal(my_character, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(slip_into_torpor))
-
-	//vampires resist vampire bites better than mortals
-	RegisterSignal(my_character, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_vampire_bitten))
 
 /datum/splat/supernatural/kindred/on_remove()
 
