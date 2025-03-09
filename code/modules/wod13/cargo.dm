@@ -38,6 +38,34 @@
 	contains = list(/obj/item/drinkable_bloodpack/elite, /obj/item/drinkable_bloodpack/elite, /obj/item/drinkable_bloodpack/elite, /obj/item/drinkable_bloodpack/elite, /obj/item/drinkable_bloodpack/elite)
 	crate_name = "blood crate"
 
+/datum/supply_pack/vampire/camera
+	name = "Camera Kit"
+	desc = "Contains a single camera and a spare roll of film."
+	cost = 200
+	contains = list(/obj/item/camera, /obj/item/camera_film)
+
+/datum/supply_pack/vampire/binoculars
+	name = "Binoculars"
+	desc = "Contains a single pair of binoculars."
+	cost = 300
+	contains = list(/obj/item/binoculars)
+
+/datum/supply_pack/vampire/duffel
+	name = "Duffelbags"
+	desc = "Contains three duffelbags."
+	contains = list(/obj/item/storage/backpack/duffelbag, obj/item/storage/backpack/duffelbag, obj/item/storage/backpack/duffelbag)
+	cost = 300
+
+/datum/supply_pack/vampire/backpack
+	name = "backpacks"
+	desc = "Contains three backpacks."
+	contains = list(/obj/item/storage/backpack, obj/item/storage/backpack, obj/item/storage/backpack)
+
+/datum/supply_pack/vampire/satchel
+	name = "satchels"
+	desc = "Contains three satchels."
+	contains = list(/obj/item/storage/satchel, /obj/item/storage/satchel, /obj/item/storage/backpack/satchel/leather)
+
 /datum/supply_pack/vampire/weaponstake
 	name = "Weapon (stake)"
 	desc = "Contains 3 usable wooden stakes."
@@ -160,6 +188,12 @@
 	cost = 400
 	contains = list(/obj/item/gun/ballistic/automatic/vampire/deagle, /obj/item/ammo_box/magazine/m44)
 	crate_name = "weapon crate"
+
+datum/supply_pack/vampire/weapondeagle50
+	name = "Weapon (desert eagle 50AE)"
+	desc = "Contains a .50 caliber desert eagle."
+	cost = 1000
+	contains = list(/obj/item/gun/ballistic/automatic/pistol/deagle, /obj/item/ammo_box/magazine/m50)
 
 /datum/supply_pack/vampire/glock
 	name = "Weapon (Brokk19)"
@@ -369,6 +403,13 @@
 	cost = 100
 	contains = list(/obj/item/ammo_box/magazine/m44, /obj/item/ammo_box/magazine/m44, /obj/item/ammo_box/magazine/m44)
 	crate_name = "ammo crate"
+
+/datum/supply_pack/vampire/magazine_deagle50
+	name = "Ammo (3x Desert Eagle 50AE magazines)"
+	desc = "Contains three desert eagle 50AE magazines."
+	cost = 600
+	contains = list(/obj/item/ammo_box/magazine/m50, /obj/item/ammo_box/magazine/m50, /obj/item/ammo_box/magazine/m50)
+	crate_name "ammo crate"
 
 /datum/supply_pack/vampire/magazine_mp5
 	name = "Ammo (3x HK MP5 magazines)"
