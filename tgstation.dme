@@ -3366,7 +3366,6 @@
 #include "code\modules\vtmb\gamemodes\masquerade.dm"
 #include "code\modules\vtmb\gamemodes\sarcophagus.dm"
 #include "code\modules\vtmb\gamemodes\subsystem.dm"
-#include "code\modules\vtmb\items\ids.dm"
 #include "code\modules\vtmb\jobs\archivist.dm"
 #include "code\modules\vtmb\jobs\bogatyr.dm"
 #include "code\modules\vtmb\jobs\caitiff.dm"
