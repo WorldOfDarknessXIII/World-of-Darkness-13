@@ -86,7 +86,7 @@
 	M.SetSleeping(0)
 	M.jitteriness = 0
 	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-		M.blood_volume = BLOOD_VOLUME_NORMAL
+		M.set_blood_volume(BLOOD_VOLUME_NORMAL)
 
 	M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	for(var/organ in M.internal_organs)
@@ -292,13 +292,13 @@
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/M)
 	if(last_added)
-		M.blood_volume -= last_added
+		M.adjust_blood_volume(-last_added)
 		last_added = 0
 	if(M.blood_volume < maximum_reachable)	//Can only up to double your effective blood level.
 		var/amount_to_add = min(M.blood_volume, volume*5)
 		var/new_blood_level = min(M.blood_volume + amount_to_add, maximum_reachable)
 		last_added = new_blood_level - M.blood_volume
-		M.blood_volume = new_blood_level + extra_regen
+		M.set_blood_volume(new_blood_level + extra_regen)
 	if(prob(33))
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)

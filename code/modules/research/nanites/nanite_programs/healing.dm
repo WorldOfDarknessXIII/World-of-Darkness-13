@@ -101,7 +101,7 @@
 /datum/nanite_program/blood_restoring/active_effect()
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		C.blood_volume += 2
+		C.adjust_blood_volume(2)
 
 /datum/nanite_program/repairing
 	name = "Mechanical Repair"

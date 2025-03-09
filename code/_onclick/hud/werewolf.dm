@@ -70,7 +70,7 @@
 	if(!V.upper)
 		to_chat(C, "<span class='warning'>You need to be outside to look at the moon!</span>")
 		return
-	if(C.last_moon_look == 0 || C.last_moon_look+600 < world.time)
+	if((C.last_moon_look == 0) || ((C.last_moon_look + 1 MINUTES) < world.time))
 //		last_moon_look = world.time
 		C.transformator.lupus_form.last_moon_look = world.time
 		C.transformator.crinos_form.last_moon_look = world.time

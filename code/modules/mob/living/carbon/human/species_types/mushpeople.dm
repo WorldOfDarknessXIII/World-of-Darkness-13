@@ -14,8 +14,8 @@
 	inherent_factions = list("mushroom")
 	speedmod = 1.5 //faster than golems but not by much
 
-	punchdamagelow = 6
-	punchdamagehigh = 14
+
+
 
 	no_equip = list(ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING)
 

@@ -91,7 +91,7 @@
 		rage_icon.hud = src
 		infodisplay += rage_icon
 
-	if(iscathayan(owner))
+	if(iskuejin(owner))
 		chi_icon = new /atom/movable/screen/chi_pool()
 		chi_icon.screen_loc = ui_chi_pool
 		chi_icon.hud = src

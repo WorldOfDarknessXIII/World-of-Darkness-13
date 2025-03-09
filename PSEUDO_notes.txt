@@ -1,0 +1,8 @@
+PSEUDO_M_K = i need to sort this into kindred splat
+PSEUDO_M = general note to self
+PSEUDO_SR = i need to audit where this is used
+
+changes:
+removed vampires arbitrarily having double punching power
+lasombra can use cargo consoles, lasombra tech problems are for being detected,
+	not pressing a button

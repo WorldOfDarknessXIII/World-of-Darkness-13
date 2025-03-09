@@ -186,7 +186,7 @@ Buildable meters
 			if(prob(20))
 				C.spew_organ()
 			sleep(5)
-		C.blood_volume = 0
+		C.set_blood_volume(0)
 	return(OXYLOSS|BRUTELOSS)
 
 /obj/item/pipe_meter

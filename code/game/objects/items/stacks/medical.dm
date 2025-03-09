@@ -59,10 +59,7 @@
 
 /// Apply the actual effects of the healing if it's a simple animal, goes to [/obj/item/stack/medical/proc/heal_carbon] if it's a carbon, returns TRUE if it works, FALSE if it doesn't
 /obj/item/stack/medical/proc/heal(mob/living/patient, mob/user)
-	if(patient.stat == DEAD)
-		to_chat(user, "<span class='warning'>[patient] is dead! You can not help [patient.p_them()].</span>")
-		return
-	if(iskindred(patient))
+	if(patient.stat == DEAD || iskindred(patient))
 		to_chat(user, "<span class='warning'>[patient] is dead! You can not help [patient.p_them()].</span>")
 		return
 	if(isanimal(patient) && heal_brute) // only brute can heal

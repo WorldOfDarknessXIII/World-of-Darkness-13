@@ -548,7 +548,7 @@
 					for(var/obj/structure/werewolf_totem/S in GLOB.totems)
 						if(S.tribe == H.auspice.tribe)
 							H.forceMove(get_turf(S))
-				if(iscathayan(H))
+				if(iskuejin(H))
 					if(H.mind)
 						H.mind.dharma = new H.client.prefs.dharma_type()
 						H.mind.dharma.level = H.client.prefs.dharma_level

@@ -256,7 +256,7 @@
 		if(last_rage_from_attack == 0 || last_rage_from_attack+50 < world.time)
 			last_rage_from_attack = world.time
 			adjust_rage(1, src, TRUE)
-	if(iscathayan(src))
+	if(iskuejin(src))
 		if(in_frenzy)
 			if(!mind?.dharma?.Po_combat)
 				mind?.dharma?.Po_combat = TRUE

@@ -269,19 +269,8 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		for(var/mob/living/M in conts)
 			if(M.stat != DEAD)
 				M.emote("scream")
-				if(user)
-					if(isnpc(M) && !iskindred(M))
-						var/mob/living/carbon/human/HM = user
-						HM.AdjustHumanity(-1, 0)
-						call_dharma("torture", user)
-						if(!(M in HM.mind.dharma?.deserving))
-							call_dharma("killfirst")
-						call_dharma("kill")
 			if(user)
 				log_combat(user, M, "cremated")
-				if(!iskindred(M) && isnpc(M) && M.stat == DEAD)
-					var/mob/living/carbon/human/HM = user
-					HM.AdjustMasquerade(1)
 			else
 				M.log_message("was cremated", LOG_ATTACK)
 			if(M.stat != DEAD)		//So it's the bug which causes to loose humanity if burning corpses

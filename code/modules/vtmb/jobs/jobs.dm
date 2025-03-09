@@ -318,19 +318,6 @@
 	worn_icon = 'code/modules/wod13/worn.dmi'
 	worn_icon_state = "id13"
 
-/obj/item/card/id/government
-	name = "emergency dispatcher badge"
-	id_type_name = "emergency dispatcher badge"
-	desc = "Sponsored by the Government."
-	icon = 'code/modules/wod13/items.dmi'
-	icon_state = "id1"
-	inhand_icon_state = "card-id"
-	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-	onflooricon = 'code/modules/wod13/onfloor.dmi'
-	worn_icon = 'code/modules/wod13/worn.dmi'
-	worn_icon_state = "id1"
-
 /obj/item/card/id/police/sergeant
 	name = "police sergeant badge"
 	desc = "Sponsored by the Government. This one seems slightly more worn down than all the others."
@@ -398,43 +385,43 @@
 
 //TZIMISCE ROLES
 
-// PRIMOGEN STAFF (Distributed in game by Primogen)
+// PRIMOGEN STAFF (They Distributed these In Game)
 
 /obj/item/card/id/whip
 	name = "primogen's whip badge"
 	id_type_name = "whip badge"
 	desc = "This badge shows your servitude to an important person."
 	icon = 'code/modules/wod13/items.dmi'
-	icon_state = "onyxBadge"
+	icon_state = "id2"
 	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	worn_icon = 'code/modules/wod13/worn.dmi'
-	worn_icon_state = "onyxBadge"
+	worn_icon_state = "id2"
 
 /obj/item/card/id/steward
 	name = "primogen's steward badge"
 	id_type_name = "steward badge"
 	desc = "This badge shows you're very good at taking care of someone else's property."
 	icon = 'code/modules/wod13/items.dmi'
-	icon_state = "emeraldBadge"
+	icon_state = "id8"
 	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	worn_icon = 'code/modules/wod13/worn.dmi'
-	worn_icon_state = "emeraldBadge"
+	worn_icon_state = "id8"
 
 /obj/item/card/id/myrmidon
 	name = "primogen's myrmidon badge"
 	id_type_name = "myrmidon badge"
 	desc = "A badge which shows you're responsible enough to protect someone important but not responsible enough to protect the most important."
 	icon = 'code/modules/wod13/items.dmi'
-	icon_state = "rubyBadge"
+	icon_state = "id4"
 	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	worn_icon = 'code/modules/wod13/worn.dmi'
-	worn_icon_state = "rubyBadge"
+	worn_icon_state = "id4"

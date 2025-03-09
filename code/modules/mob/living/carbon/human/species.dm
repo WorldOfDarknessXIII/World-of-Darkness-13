@@ -99,10 +99,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	var/payday_modifier = 1
 	///Type of damage attack does. Ethereals attack with burn damage for example.
 	var/attack_type = BRUTE
-	///Lowest possible punch damage this species can give. If this is set to 0, punches will always miss.
-	var/punchdamagelow = 1
-	///Highest possible punch damage this species can give.
-	var/punchdamagehigh = 10
 	///Base electrocution coefficient.  Basically a multiplier for damage from electrocutions.
 	var/meleemod = 1
 	//For melee damage
@@ -223,15 +219,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	//[Lucia] TODO: make this good what the fuck is wrong with the previous thing
 	GLOB.roundstart_races = list("human", "kindred", "ghoul")
 	GLOB.selectable_races = list("human", "kindred", "ghoul", "garou", "kuei-jin")
-	/*
-	for(var/I in subtypesof(/datum/species))
-		var/datum/species/S = new I
-		if(S.selectable)
-			GLOB.roundstart_races += S.id
-	if(!GLOB.roundstart_races.len)
-		GLOB.roundstart_races += "kindred"
-	*/
-
+#warn tgui will be the dragon you slay to let people pick splats in chargen
 /**
  * Checks if a species is eligible to be picked at roundstart.
  *
@@ -1017,6 +1005,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		var/takes_crit_damage = (!HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
 		if((H.health < H.crit_threshold) && takes_crit_damage)
 			H.adjustBruteLoss(1)
+
 	if(flying_species)
 		HandleFlight(H)
 
@@ -1183,7 +1172,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 
 /datum/species/proc/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.type == exotic_blood)
-		H.blood_volume = min(H.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+		H.adjust_blood_volume(round(chem.volume, 0.1))
 		H.reagents.del_reagent(chem.type)
 		return TRUE
 	if(chem.overdose_threshold && chem.volume >= chem.overdose_threshold)
@@ -1354,14 +1343,12 @@ GLOBAL_LIST_EMPTY(selectable_races)
 	user.do_cpr(target)
 
 
-/datum/species/proc/grab(mob/living/carbon/human/user, mob/living/target, datum/martial_art/attacker_style)
-	if(ishuman(target))
-		var/mob/living/carbon/human/human = target
-		if(human.check_block())
-			human.visible_message("<span class='warning'>[human] blocks [user]'s grab!</span>", \
-							"<span class='userdanger'>You block [user]'s grab!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, "<span class='warning'>Your grab at [human] was blocked!</span>")
-			return FALSE
+/datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+	if(target.check_block())
+		target.visible_message("<span class='warning'>[target] blocks [user]'s grab!</span>", \
+						"<span class='userdanger'>You block [user]'s grab!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, "<span class='warning'>Your grab at [target] was blocked!</span>")
+		return FALSE
 	if(attacker_style?.grab_act(user,target))
 		return TRUE
 	else
@@ -1401,18 +1388,19 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			else
 				user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
-		var/damage = (rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)/3)*(user.get_total_physique())
-		if(user.age < 16)
-			damage = round(damage/2)
+		var/user_phys = user.get_total_physique()
+		var/damage = user_phys * 2
+		if(user.melee_professional)
+			damage += rand(0, damage * 0.5)
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
-		if(user.dna.species.punchdamagelow)
+		if(damage)
 			if(atk_verb == ATTACK_EFFECT_KICK || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER)) //kicks never miss (provided your species deals more than 0 damage)
 				miss_chance = 0
 			else
-				miss_chance = min((user.dna.species.punchdamagehigh/user.dna.species.punchdamagelow) + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
+				var/calculate_miss = SSstoryteller.roll("punch_miss_chance", user, target)
 
 		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 			playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
@@ -1561,7 +1549,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			if(OC)
 				if(OC.identified)
 					if(H.bloodpool)
-						H.bloodpool = max(0, H.bloodpool-1)
+						H.adjust_blood_points(-1)
 						OC.stored_blood = OC.stored_blood+1
 	apply_damage((I.force*modifikator) * weakness, I.damtype, def_zone, armor_block, H, wound_bonus = Iwound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
 
@@ -2151,9 +2139,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			H.dna.features["wings"] = "None"
 			H.update_body()
 
-/datum/species
-	var/animation_goes_up = FALSE	//
-
 /datum/species/proc/HandleFlight(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)
 		if(!CanFly(H))
@@ -2255,6 +2240,9 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		else
 			to_chat(H, "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>")
 			H.set_resting(FALSE, TRUE)
+
+/datum/movespeed_modifier/wing
+	multiplicative_slowdown = -0.25
 
 /**
  * The human species version of [/mob/living/carbon/proc/get_biological_state]. Depends on the HAS_FLESH and HAS_BONE species traits, having bones lets you have bone wounds, having flesh lets you have burn, slash, and piercing wounds

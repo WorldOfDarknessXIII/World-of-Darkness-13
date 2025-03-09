@@ -10,8 +10,8 @@
 	payday_modifier = 0.75
 	armor = 55
 	siemens_coeff = 0
-	punchdamagelow = 5
-	punchdamagehigh = 14
+
+
 	no_equip = list(ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING, ITEM_SLOT_SUITSTORE)
 	nojumpsuit = 1
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
@@ -186,8 +186,8 @@
 	id = "plasteel golem"
 	fixed_mut_color = "bbb"
 	stunmod = 0.4
-	punchdamagelow = 12
-	punchdamagehigh = 21
+
+
 	speedmod = 4 //pretty fucking slow
 	meat = /obj/item/stack/ore/iron
 	info_text = "As a <span class='danger'>Plasteel Golem</span>, you are slower, but harder to stun, and hit very hard when punching. You also magnetically attach to surfaces and so don't float without gravity and cannot have positions swapped with other beings."
@@ -323,8 +323,8 @@
 	var/active = null
 	armor = 40
 	brutemod = 0.5
-	punchdamagelow = 1
-	punchdamagehigh = 10
+
+
 	prefix = "Uranium"
 	special_names = list("Oxide", "Rod", "Meltdown", "235")
 	COOLDOWN_DECLARE(radiation_emission_cooldown)
@@ -341,7 +341,7 @@
 	var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 	var/radiation_block = target.run_armor_check(affecting, RAD)
 	///standard damage roll for use in determining how much you irradiate per punch
-	var/attacker_irradiate_value = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
+	var/attacker_irradiate_value = 5
 	target.apply_effect(attacker_irradiate_value*5, EFFECT_IRRADIATE, radiation_block)
 
 /datum/species/golem/uranium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
@@ -542,8 +542,8 @@
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NODISMEMBER,
 	)
-	punchdamagelow = 0
-	punchdamagehigh = 1
+
+
 	meat = /obj/item/stack/ore/bananium
 	info_text = "As a <span class='danger'>Bananium Golem</span>, you are made for pranking. Your body emits natural honks, and you can barely even hurt people when punching them. Your skin also bleeds banana peels when damaged."
 	attack_verb = "honk"
@@ -691,8 +691,8 @@
 	armor = 15 //feels no pain, but not too resistant
 	burnmod = 2 // don't get burned
 	speedmod = 1 // not as heavy as stone
-	punchdamagelow = 4
-	punchdamagehigh = 8 // not as heavy as stone
+
+
 	prefix = "Cloth"
 	special_names = null
 
@@ -894,8 +894,8 @@
 	burnmod = 1.25
 	heatmod = 2
 	speedmod = 1.5
-	punchdamagelow = 4
-	punchdamagehigh = 8
+
+
 	var/last_creation = 0
 	var/brother_creation_cooldown = 300
 

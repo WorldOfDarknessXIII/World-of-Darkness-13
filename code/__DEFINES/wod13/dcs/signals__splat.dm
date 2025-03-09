@@ -1,0 +1,5 @@
+#define COMSIG_SPLAT_SPLAT_CHECKED "splat_checked"
+#define COMSIG_SPLAT_SPLAT_APPLIED_TO "splat_applied_to"
+#define COMSIG_SPLAT_SPLAT_REMOVED_FROM "splat_removed_from"
+#define COMSIG_SPLAT_INTEGRITY_INCREASED "splat_integrity_increased"
+#define COMSIG_SPLAT_INTEGRITY_DECREASED "splat_integrity_decreased"

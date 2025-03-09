@@ -411,7 +411,7 @@
 		cuff_resist(I)
 
 
-/mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 600, cuff_break = 0)
+/mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 60 SECONDS, cuff_break = 0)
 	if(I.item_flags & BEING_REMOVED)
 		to_chat(src, "<span class='warning'>You're already attempting to remove [I]!</span>")
 		return
@@ -426,7 +426,7 @@
 			to_chat(src, "<span class='warning'>You fail to remove [I]!</span>")
 
 	else if(cuff_break == FAST_CUFFBREAK)
-		breakouttime = 50
+		breakouttime = 5 SECONDS
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
 		to_chat(src, "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>")
 		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM))
@@ -916,7 +916,7 @@
 		return
 	if(stat != DEAD)
 		//special death handling for vampires, who don't die until -200 health
-		if (iskindred(src) || iscathayan(src))
+		if (iskindred(src) || iskuejin(src))
 			if(health <= HEALTH_THRESHOLD_VAMPIRE_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 				death()
 				return

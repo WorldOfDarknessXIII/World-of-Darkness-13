@@ -23,10 +23,13 @@
 #define BLOOD_VOLUME_MAXIMUM		2000
 #define BLOOD_VOLUME_SLIME_SPLIT	1120
 #define BLOOD_VOLUME_NORMAL			560
-#define BLOOD_VOLUME_SAFE			475
-#define BLOOD_VOLUME_OKAY			336
-#define BLOOD_VOLUME_BAD			224
-#define BLOOD_VOLUME_SURVIVE		122
+#define BLOOD_VOLUME_SAFE (BLOOD_VOLUME_NORMAL * 0.90) // Latter number is percentage of blood remaining, for readability!
+#define BLOOD_VOLUME_OKAY (BLOOD_VOLUME_NORMAL * 0.70)
+#define BLOOD_VOLUME_BAD (BLOOD_VOLUME_NORMAL * 0.50)
+#define BLOOD_VOLUME_SURVIVE (BLOOD_VOLUME_NORMAL * 0.20)
+
+//WoD blood constants
+#define BLOOD_POINT_NORMAL 56
 
 //Sizes of mobs, used by mob/living/var/mob_size
 #define MOB_SIZE_TINY 0

@@ -297,13 +297,7 @@
 					to_chat(H, "<span class='warning'>You have already noted their masquerade breach! Wait some time until you do that again.</span>")
 					return
 				reason = trim(copytext_char(sanitize(reason), 1, MAX_MESSAGE_LEN))
-				masquerade_votes++
 				message_admins("[ADMIN_LOOKUPFLW(H)] spotted [ADMIN_LOOKUPFLW(src)]'s Masquerade violation. Description: [reason]")
-				H.voted_for |= dna.real_name
-				if(masquerade_votes > 1)
-					masquerade_votes = 0
-					last_masquerade_violation = 0
-					AdjustMasquerade(-1)
 ///////HUDs///////
 	if(href_list["hud"])
 		if(!ishuman(usr))
@@ -908,35 +902,6 @@
 						hud_used.healths.icon_state = "health7"
 					if(SCREWYHUD_HEALTHY)
 						hud_used.healths.icon_state = "health0"
-//		if(hud_used.healthdoll)
-//			hud_used.healthdoll.cut_overlays()
-//			if(stat != DEAD)
-//				hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
-//				for(var/X in bodyparts)
-//					var/obj/item/bodypart/BP = X
-//					var/damage = BP.burn_dam + BP.brute_dam
-//					var/comparison = (BP.max_damage/5)
-//					var/icon_num = 0
-//					if(damage)
-//						icon_num = 1
-//					if(damage > (comparison))
-//						icon_num = 2
-//					if(damage > (comparison*2))
-//						icon_num = 3
-//					if(damage > (comparison*3))/
-//						icon_num = 4
-//					if(damage > (comparison*4))
-//						icon_num = 5
-//					if(hal_screwyhud == SCREWYHUD_HEALTHY)
-//						icon_num = 0
-//					if(icon_num)
-//						hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[BP.body_zone][icon_num]"))
-//				for(var/t in get_missing_limbs()) //Missing limbs
-//					hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]6"))
-//				for(var/t in get_disabled_limbs()) //Disabled limbs
-//					hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]7"))
-//			else
-//				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
 /mob/living/carbon/human/fully_heal(admin_revive = FALSE)
 	dna?.species.spec_fully_heal(src)
@@ -1308,11 +1273,11 @@
 	if(use_random_name)
 		fully_replace_character_name(real_name, dna.species.random_name())
 
-/mob/living/carbon/human/species/kindred
-	race = /datum/species/kindred
+/mob/living/carbon/human/kindred
 
-/mob/living/carbon/human/species/vamp_mannequin
-	race = /datum/species/vamp_mannequin
+/mob/living/carbon/human/kindred/Initialize(mapload)
+	. = ..()
+	SSsplats.give_splat(src, /datum/splat/supernatural/kindred)
 
 /mob/living/carbon/human/species/vamp_mannequin/napoleon
 

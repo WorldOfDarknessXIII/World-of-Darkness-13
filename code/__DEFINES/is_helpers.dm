@@ -78,18 +78,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isvampire(A) (is_species(A,/datum/species/vampire))
 #define isdullahan(A) (is_species(A, /datum/species/dullahan))
 #define ismonkey(A) (is_species(A, /datum/species/monkey))
-#define iskindred(A) (is_species(A,/datum/species/kindred))
-#define iscathayan(A) (is_species(A,/datum/species/kuei_jin))
-#define isghoul(A) (is_species(A,/datum/species/ghoul))
-#define isgarou(A) (is_species(A,/datum/species/garou))
-
-//more carbon mobs
-
-#define iswerewolf(A) (istype(A, /mob/living/carbon/werewolf))
-
-#define iscrinos(A) (istype(A, /mob/living/carbon/werewolf/crinos))
-
-#define islupus(A) (istype(A, /mob/living/carbon/werewolf/lupus))
 
 #define isalien(A) (istype(A, /mob/living/carbon/alien))
 

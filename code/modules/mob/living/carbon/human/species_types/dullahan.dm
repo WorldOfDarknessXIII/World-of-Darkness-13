@@ -70,9 +70,6 @@
 	decoy_override = TRUE
 	organ_flags = 0
 
-/obj/item/organ/brain/vampire
-	maxHealth = 1000 * STANDARD_ORGAN_THRESHOLD
-
 /obj/item/organ/tongue/dullahan
 	zone = "abstract"
 	modifies_speech = TRUE
