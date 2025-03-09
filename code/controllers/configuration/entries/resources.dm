@@ -28,3 +28,4 @@
 	if (str_var && str_var[length(str_var)] != "/")
 		str_var += "/"
 	return ..(str_var)
+

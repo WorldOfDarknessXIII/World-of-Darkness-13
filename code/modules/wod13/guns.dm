@@ -708,25 +708,39 @@
 	icon = 'code/modules/wod13/weapons.dmi'
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	var/active = FALSE
 	masquerade_violating = TRUE
+	var/active = FALSE
+	var/explode_timer
 
 /obj/item/molotov/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
 	call_dharma("grief", throwingdatum.thrower)
-	for(var/turf/open/floor/F in range(2, hit_atom))
-		if(F)
-			new /obj/effect/decal/cleanable/gasoline(F)
-	if(active)
-		new /obj/effect/fire(get_turf(hit_atom))
-	playsound(get_turf(hit_atom), 'code/modules/wod13/sounds/explode.ogg', 100, TRUE)
-	qdel(src)
-	..()
+	explode()
 
 /obj/item/molotov/attackby(obj/item/I, mob/user, params)
 	if(I.get_temperature() && !active)
-		active = TRUE
-		log_bomber(user, "has primed a", src, "for detonation")
-		icon_state = "molotov_flamed"
+		activate()
+
+/obj/item/molotov/proc/activate(mob/user)
+	active = TRUE
+	log_bomber(user, "has primed a", src, "for detonation")
+	icon_state = "molotov_flamed"
+
+	explode_timer = addtimer(CALLBACK(src, PROC_REF(explode)), rand(15 SECONDS, 45 SECONDS), TIMER_STOPPABLE | TIMER_DELETE_ME)
+
+/obj/item/molotov/proc/explode()
+	deltimer(explode_timer)
+
+	var/atom/explode_location = get_turf(src)
+
+	for(var/turf/open/floor/floor in range(2, explode_location))
+		new /obj/effect/decal/cleanable/gasoline(floor)
+
+	if(active)
+		new /obj/effect/fire(explode_location)
+
+	playsound(explode_location, 'code/modules/wod13/sounds/explode.ogg', 100, TRUE)
+	qdel(src)
 
 /obj/item/vampire_flamethrower
 	name = "flamethrower"

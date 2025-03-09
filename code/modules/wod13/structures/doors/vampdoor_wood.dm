@@ -24,3 +24,17 @@
 	locked = TRUE
 	lock_id = "madman"
 	lockpick_difficulty = 10
+
+/obj/structure/vampdoor/wood/theatre
+	name = "Theatre"
+	locked = TRUE
+	lock_id = "theatre"
+	lockpick_difficulty = 15
+
+/obj/structure/vampdoor/wood/theatre/unlocked
+	locked = FALSE
+
+/obj/structure/vampdoor/wood/jazz_club
+	name = "Jazz Club"
+	lock_id = "milleniumCommon"
+	lockpick_difficulty = 8

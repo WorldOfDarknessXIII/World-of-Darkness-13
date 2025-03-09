@@ -627,6 +627,10 @@ SUBSYSTEM_DEF(ticker)
 	set waitfor = FALSE
 	if(usr && !check_rights(R_SERVER, TRUE))
 		return
+	// Make sure to set json_conversion_path in config/config.txt! You can't set this in-game!
+	if(CONFIG_GET(string/json_conversion_path))
+		// Buckle up, we're gonna json it...
+		world.convert_saves_to_json(CONFIG_GET(string/json_conversion_path))
 
 	if(!delay)
 		delay = CONFIG_GET(number/round_end_countdown) * 10
