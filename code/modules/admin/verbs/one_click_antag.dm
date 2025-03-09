@@ -13,6 +13,7 @@
 	var/dat = {"
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=nationalguard'>Make National Guard Team (Requires Ghosts)</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=swat'>Make SWAT Team (Requires Ghosts)</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];makeAntag=blacksuit'>Make Technocracy Team (Requires Ghosts)</a><br>
 		"}
 
 /*	THESE WERE THE OPTIONS IN one_click_antag() previously. I kept them here only just in case...
@@ -285,6 +286,74 @@
 			swat_team.objectives += missionobj
 				// Assign the selected objective to the new team
 
+			return TRUE
+		else
+			return FALSE
+
+
+/datum/admins/proc/makeBlacksuit()
+	var/list/settings = list(
+		"mainsettings" = list(
+			"objective" = list("desc" = "Objective", "type" = "string", "value" = "Default Objective")
+		)
+	)
+
+	var/list/prefreturn = presentpreflikepicker(usr, "Customize MIB", "Customize MIB", Button1="Ok", width = 400, StealFocus = 1, Timeout = 0, settings=settings)
+
+	if (isnull(prefreturn))
+		return FALSE
+
+	if (prefreturn["button"] == 1)
+		var/list/prefs = settings["mainsettings"]
+		var/selected_objective = prefs["objective"]["value"]
+
+		var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for a Technocracy blacksuit team?", ROLE_BLACKSUIT, null)
+		var/list/mob/dead/observer/chosen = list()
+
+		if(candidates.len)
+			var/numagents = 8
+			var/agentcount = 0
+
+			for(var/i = 0, i<numagents,i++)
+				shuffle_inplace(candidates) //More shuffles means more randoms
+				for(var/mob/j in candidates)
+					if(!j || !j.client)
+						candidates.Remove(j)
+						continue
+
+					// Add the selected candidate to the chosen list
+					chosen += j
+					agentcount++
+
+					// Remove the candidate from the list to avoid duplicates
+					candidates.Remove(j)
+
+					// Break if we have enough agents
+					if(agentcount >= numagents)
+						break
+
+			// Ensure we have enough agents
+			if(agentcount < 1)
+				return FALSE
+
+			// Let's find the spawn locations
+			var/leader_chosen = FALSE
+			var/datum/team/blacksuit_team
+			for(var/mob/c in chosen)
+				var/mob/living/carbon/human/new_character = makeBody(c)
+				if(!leader_chosen)
+					leader_chosen = TRUE
+					var/datum/antagonist/blacksuit/A = new_character.mind.add_antag_datum(/datum/antagonist/blacksuit/leader)
+					blacksuit_team = A.blacksuit_team
+				else
+					new_character.mind.add_antag_datum(/datum/antagonist/blacksuit, blacksuit_team)
+
+			var/datum/objective/missionobj = new
+			missionobj.team = blacksuit_team
+			missionobj.explanation_text = selected_objective
+			missionobj.completed = TRUE
+			blacksuit_team.objectives += missionobj
+				// Assign the selected objective to the new team
 			return TRUE
 		else
 			return FALSE

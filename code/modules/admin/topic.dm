@@ -78,6 +78,13 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create national guard squad. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create national guard squad.")
+			if ("blacksuit")
+				if(src.makeBlacksuit())
+					message_admins("[key_name(usr)] created Technocracy men in black.")
+					log_admin("[key_name(usr)] created Technocracy men in black.")
+				else
+					message_admins("[key_name_admin(usr)] tried to create Technocracy men in black. Unfortunately, there were no candidates available.")
+					log_admin("[key_name(usr)] failed to create Technocracy men in black.")
 			if("traitors")
 				if(src.makeTraitors())
 					message_admins("[key_name_admin(usr)] created traitors.")
