@@ -35,22 +35,8 @@
 	var/mob/living/my_character = null
 	///Whether this splat can be selected when creating a character
 	var/selectable = FALSE
-	///Artifacts of migrating splats from species, pending a rework of our damage system
-	var/damage_mods = list(
-		"brute" = 1,
-		"burn" = 1,
-		"tox" = 1,
-		"oxy" = 1,
-		"clone" = 1,
-		"stamina" = 1,
-		"brain" = 1,
-		"pressure" = 1,
-		"heat" = 1,
-		"cold" = 1,
-		"stun" = 1,
-		"bleed" = 1,
-		"hunger" = 1,
-	)
+	///Damage mods that this splat gives the user (vamps take more burn, less brute, no cold, etc)
+	var/list/damage_mods = null
 	///refer to code\modules\mob\living\carbon\human\physiology.dm
 
 /* Primarily for signal registration and a handle for SSsplats to make and apply a new splat, we want to do most of the effect
@@ -82,9 +68,13 @@
 	name = "[my_character]'s [splat_id] splat"
 	for(var/trait in splat_traits)
 		ADD_TRAIT(my_character, trait, splat_id)
-	for(var/mod in list(brutemod, burnmod))
-		if(mod != 1)
-
+	//Only fuss with applying damage mods to humanoids, who are (in our current code) the only ones with physiology
+	if(ishuman(my_character) && !isnull(damage_mods))
+		handle_damage_mods(my_character, /*applying =*/TRUE)
+		var/mob/living/carbon/human/my_human = my_character
+		var/datum/physiology/my_physiology = my_human.physiology
+		for(var/mod in damage_mods)
+			my_physiology.vars["[mod]_mod"] *= damage_mods[mod]
 	SEND_SIGNAL(my_character, COMSIG_SPLAT_SPLAT_APPLIED_TO, src)
 	SPLATTED(my_character, src)
 
@@ -93,12 +83,28 @@
 	SHOULD_CALL_PARENT(TRUE)
 	for(var/trait in splat_traits)
 		REMOVE_TRAIT(my_character, trait, splat_id)
+	if(ishuman(my_character)) && !isnull(damage_mods)
+		handle_damage_mods(my_character, /*applying =*/FALSE)
 	SEND_SIGNAL(my_character, COMSIG_SPLAT_SPLAT_REMOVED_FROM, src)
 	UNSPLATTED(my_character, src)
 	my_character = null
 	qdel(src)
-
 #undef SPLATTED
+
+#define CRASH_IF_UNHANDLED "CRASH THIS PLANE WITH NO SURVIVORS IF THIS IS NOT HANDLED SPECIFICALLY"
+/datum/splat/proc/handle_damage_mods(mob/living/carbon/human/modding_character, applying = CRASH_IF_UNHANDLED)
+	if(applying == CRASH_IF_UNHANDLED)
+		CRASH("[src]/handle_damage_mods() did not have its applying parameter handled correctly!")
+	if(applying)
+		for(var/mod in damage_mods)
+			modding_character.physiology.vars["[mod]_mod"] *= damage_mods[mod]
+		return TRUE
+	else
+		for(var/mod in damage_mods)
+			modding_character.physiology.vars["[mod]_mod"] /= damage_mods[mod]
+		return TRUE
+	CRASH("[src]/handle_damage_mods() has reached an undefined state!")
+#undef CRASH_IF_UNHANDLED
 
 /datum/splat/proc/splat_response(datum/source)
 	SIGNAL_HANDLER
@@ -135,7 +141,7 @@
 		return
 	if(!isnum(associated_level))
 		if(!admin_override)
-			CRASH("[src]/adjust_integrity needs to be called with a level correlated to a given sinful or virtuous act.")
+			CRASH("[src]/adjust_integrity() needs to be called with a level correlated to a given sinful or virtuous act.")
 		log_admin("[usr] adjusted [my_character]'s [integrity_name] by [value].")
 	if(value > 1 || value < -1)
 		log_admin("[my_character]'s [integrity_name] was adjusted by more than one level.")

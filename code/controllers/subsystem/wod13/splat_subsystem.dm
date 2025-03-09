@@ -7,7 +7,6 @@ SUBSYSTEM_DEF(splats)
 	init_order = INIT_ORDER_SPLATS
 	flags = SS_NO_FIRE
 
-	///To save a headache on contributors trying to remember the paths
 	var/list/splat_types = list(
 		"human"		=	/datum/splat/human,
 		"kindred"	=	/datum/splat/supernatural/kindred,
