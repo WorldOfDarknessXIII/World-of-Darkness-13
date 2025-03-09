@@ -53,19 +53,19 @@
 /datum/supply_pack/vampire/duffel
 	name = "Duffelbags"
 	desc = "Contains three duffelbags."
-	contains = list(/obj/item/storage/backpack/duffelbag, obj/item/storage/backpack/duffelbag, obj/item/storage/backpack/duffelbag)
+	contains = list(/obj/item/storage/backpack/duffelbag, /obj/item/storage/backpack/duffelbag, /obj/item/storage/backpack/duffelbag)
 	cost = 300
 
 /datum/supply_pack/vampire/backpack
-	name = "backpacks"
+	name = "Backpacks"
 	desc = "Contains three backpacks."
-	contains = list(/obj/item/storage/backpack, obj/item/storage/backpack, obj/item/storage/backpack)
+	contains = list(/obj/item/storage/backpack, /obj/item/storage/backpack, /obj/item/storage/backpack)
 	cost = 300
 
 /datum/supply_pack/vampire/satchel
-	name = "satchels"
+	name = "Satchels"
 	desc = "Contains three satchels."
-	contains = list(/obj/item/storage/satchel, /obj/item/storage/satchel, /obj/item/storage/backpack/satchel/leather)
+	contains = list(/obj/item/storage/backpack/satchel, /obj/item/storage/backpack/satchel, /obj/item/storage/backpack/satchel/leather)
 	cost = 300
 
 datum/supply_pack/vampire/medicalsupplies
@@ -417,7 +417,7 @@ datum/supply_pack/vampire/weapondeagle50
 	desc = "Contains three desert eagle 50AE magazines."
 	cost = 600
 	contains = list(/obj/item/ammo_box/magazine/m50, /obj/item/ammo_box/magazine/m50, /obj/item/ammo_box/magazine/m50)
-	crate_name "ammo crate"
+	crate_name = "ammo crate"
 
 /datum/supply_pack/vampire/magazine_mp5
 	name = "Ammo (3x HK MP5 magazines)"
