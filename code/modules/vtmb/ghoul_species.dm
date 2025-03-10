@@ -137,8 +137,10 @@
 	var/datum/action/ghoulinfo/infor = new()
 	infor.host = C
 	infor.Grant(C)
-	var/datum/action/blood_heal/bloodheal = new()
-	bloodheal.Grant(C)
+
+	var/datum/discipline/bloodheal/giving_bloodheal = new(1)
+	C.give_discipline(giving_bloodheal)
+
 	C.generation = 13
 	C.bloodpool = 10
 	C.maxbloodpool = 10

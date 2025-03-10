@@ -301,11 +301,9 @@
 	. = ..()
 	if(allowed_to_proceed)
 		var/mob/living/carbon/C = owner
-		C.obfuscate_level = 3
 		C.alpha = 36
 		playsound(get_turf(owner), 'code/modules/wod13/sounds/milky_blur.ogg', 75, FALSE)
-		spawn(200)
-			C.obfuscate_level = 0
+		spawn(20 SECONDS)
 			C.alpha = 255
 
 /datum/action/gift/open_seal

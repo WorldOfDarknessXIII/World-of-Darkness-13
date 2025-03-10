@@ -8,41 +8,6 @@
 			var/area/A = get_area(H)
 			to_chat(usr, "[icon2html(getFlatIcon(H), usr)][H.true_real_name], [H.mind ? H.mind.assigned_role : "Citizen"]. Was last seen at [A.name]")
 
-/*/mob/living/proc/check_elysium(var/instant = FALSE)
-	if(ishuman(src))
-		var/mob/living/carbon/human/human = src
-		if(human.obfuscate_level < 5)
-			if(alpha != 255)
-				playsound(loc, 'code/modules/wod13/sounds/obfuscate_deactivate.ogg', 50, FALSE)
-				alpha = 255
-	if(!HAS_TRAIT(src, TRAIT_ELYSIUM))
-		return
-	if(!ishuman(src))
-		return
-	if(!client)
-		return
-	var/area/vtm/V
-	if(istype(get_area(src), /area/vtm))
-		V = get_area(src)
-		var/mob/living/carbon/human/H = src
-		if(V.zone_owner == H.vampire_faction)
-			return
-		for(var/mob/living/carbon/human/HU in SSbloodhunt.hunted)
-			if(HU)
-				if(HU.true_real_name == H.true_real_name)
-					return
-	to_chat(src, "<span class='userdanger'><b>You feel like your actions are against the rules...</b></span>")
-	if(instant)
-		SSbloodhunt.announce_hunted(src)
-		if(V)
-			V.break_elysium()
-	else
-		elysium_checks = elysium_checks+1
-		if(elysium_checks > 2)
-			SSbloodhunt.announce_hunted(src)
-			if(V)
-				V.break_elysium()
-*/
 SUBSYSTEM_DEF(bloodhunt)
 	name = "Blood Hunt"
 	init_order = INIT_ORDER_DEFAULT

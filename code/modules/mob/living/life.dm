@@ -12,7 +12,6 @@
 			message_admins(msg)
 			send2tgs_adminless_only("Mob", msg, R_ADMIN)
 			log_game("[key_name(src)] was found to have no .loc with an attached client.")
-
 		// This is a temporary error tracker to make sure we've caught everything
 		else if (registered_z != T.z)
 #ifdef TESTING
