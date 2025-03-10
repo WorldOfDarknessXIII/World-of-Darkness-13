@@ -294,9 +294,6 @@
 	if(operating)
 		return
 	operating = TRUE
-	var/turf/T = get_turf(src)
-	if(T)
-		T.unpassable -= src
 	do_animate("opening")
 	set_opacity(0)
 	sleep(5)
@@ -326,10 +323,6 @@
 				return
 
 	operating = TRUE
-
-	var/turf/T = get_turf(src)
-	if(T)
-		T.unpassable += src
 
 	do_animate("closing")
 	layer = closingLayer
