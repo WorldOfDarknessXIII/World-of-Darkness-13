@@ -120,7 +120,7 @@
 				if(BD.clane)
 					var/special_clan = FALSE
 					if(BD.clane.name == "Salubri")
-						if(!PB.IsSleeping())
+						if(!PB.IsSleeping() && PB.stat != DEAD)
 							to_chat(BD, "<span class='warning'>You can't drink from aware targets!</span>")
 							return
 						special_clan = TRUE
