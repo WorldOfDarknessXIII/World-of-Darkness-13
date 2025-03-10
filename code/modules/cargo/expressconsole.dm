@@ -7,7 +7,7 @@
 #define SP_UNREADY 5
 
 /obj/machinery/computer/cargo/express
-	name = "Cargo Computer" //was named express supply console
+	name = "Cargo Computer"
 	desc = "A computer used by the cargo staff to order supplies via a train."
 	icon_screen = "supply_express"
 	circuit = /obj/item/circuitboard/computer/cargo/express
@@ -28,15 +28,15 @@
 	var/usingBeacon = TRUE //is the console in beacon mode? exists to let beacon know when a pod may come in
 	var/account_balance = 100
 	var/max_orders = 10
+	var/processing_order = FALSE
 
 /obj/machinery/computer/cargo/express/Initialize()
 	. = ..()
 	packin_up()
 	for(var/obj/item/supplypod_beacon/sb in range(20, src))
-		if(sb)
-			if(sb.express_console != src)
-				sb.altlink_console(src)
-				sb.anchored = TRUE
+		if(sb && sb.express_console != src)
+			sb.altlink_console(src)
+			sb.anchored = TRUE
 
 /obj/machinery/computer/cargo/express/on_construction()
 	. = ..()
@@ -171,12 +171,11 @@
 	if(.)
 		return
 
-	switch(action)
-//		if("LZCargo")
-//			usingBeacon = FALSE
-//			if (beacon)
-//				beacon.update_status(SP_UNREADY) //ready light on beacon will turn off
+	if(processing_order)
+		to_chat(usr, span_warning("An order is already being finalized. Please wait."))
+		return
 
+	switch(action)
 		if("add_to_queue")
 			var/id = text2path(params["id"])
 			var/datum/supply_pack/vampire/pack = supply_packs[id]
@@ -185,7 +184,6 @@
 			order_queue += list(pack)
 			to_chat(usr, "Added [pack.name] to the order queue.")
 			return TRUE
-
 		if("remove_from_queue")
 			var/id = text2path(params["id"])
 			var/datum/supply_pack/vampire/pack = supply_packs[id]
@@ -209,6 +207,8 @@
 			if(account_balance < total_order_cost())
 				to_chat(usr, "Insufficient funds.")
 				return
+
+			processing_order = TRUE
 			account_balance -= total_order_cost()
 			var/LZ
 			if(istype(beacon) && usingBeacon)
@@ -233,6 +233,7 @@
 					spawn(trackLength)
 						qdel(train)
 					order_queue = list()
+					processing_order = FALSE
 				return
 
 /obj/machinery/computer/cargo/express/proc/total_order_cost()
@@ -240,116 +241,3 @@
 	for(var/datum/supply_pack/vampire/pack in order_queue)
 		total += pack.cost
 	return total
-
-/*		if("LZBeacon")
-			usingBeacon = TRUE
-			if (beacon)
-				beacon.update_status(SP_READY) //turns on the beacon's ready light
-//		if("printBeacon")
-//			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-//			if(D)
-//				if(D.adjust_money(-BEACON_COST))
-//					cooldown = 10//a ~ten second cooldown for printing beacons to prevent spam
-//					var/obj/item/supplypod_beacon/C = new /obj/item/supplypod_beacon(drop_location())
-//					C.link_console(src, usr)//rather than in beacon's Initialize(), we can assign the computer to the beacon by reusing this proc)
-//					printed_beacons++//printed_beacons starts at 0, so the first one out will be called beacon # 1
-//					beacon.name = "Supply Pod Beacon #[printed_beacons]"
-
-
-		if("add")//Generate Supply Order first
-			if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_EXPRESSPOD_CONSOLE))
-				say("Railgun recalibrating. Stand by.")
-				return
-			var/id = text2path(params["id"])
-			var/datum/supply_pack/vampire/pack = supply_packs[id]
-			if(!istype(pack))
-				return
-			var/name = "*None Provided*"
-			var/rank = "*None Provided*"
-			var/ckey = usr.ckey
-			if(ishuman(usr))
-				var/mob/living/carbon/human/H = usr
-				name = H.get_authentification_name()
-				rank = H.get_assignment(hand_first = TRUE)
-			else if(issilicon(usr))
-				name = usr.real_name
-				rank = "Silicon"
-			var/reason = ""
-			var/list/empty_turfs
-			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason)
-			var/points_to_check = account_balance
-			if(!(obj_flags & EMAGGED))
-				if(SO.pack.cost <= points_to_check)
-					var/LZ
-					if (istype(beacon) && usingBeacon)//prioritize beacons over landing in cargobay
-						LZ = get_turf(beacon)
-						beacon.update_status(SP_LAUNCH)
-//					else if (!usingBeacon)//find a suitable supplypod landing zone in cargobay
-//						landingzone = GLOB.areas_by_type[/area/vtm/supply]
-//						if (!landingzone)
-//							WARNING("[src] couldnt find a Quartermaster/Storage (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
-//							landingzone = get_area(src)
-//						for(var/turf/open/floor/T in landingzone.contents)//uses default landing zone
-//							if(T.is_blocked_turf())
-//								continue
-//							LAZYADD(empty_turfs, T)
-//							CHECK_TICK
-//						if(empty_turfs?.len)
-//							LZ = pick(empty_turfs)
-					if (SO.pack.cost <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
-						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 5 SECONDS)
-						account_balance = max(0, account_balance-SO.pack.cost)
-						var/obj/cargotrain/train = new(get_nearest_free_turf(LZ))
-						train.starter = usr
-						train.glide_size = (32 / 3) * world.tick_lag
-						walk_to(train, LZ, 1, 3)
-						playsound(train, 'code/modules/wod13/sounds/train_arrive.ogg', 50, FALSE)
-						var/trackLength = get_dist(get_nearest_free_turf(LZ), LZ)*5
-						spawn(trackLength)
-							SO.generate(get_turf(train))
-							playsound(train, 'code/modules/wod13/sounds/train_depart.ogg', 50, FALSE)
-							walk_to(train, get_nearest_free_turf(LZ), 1, 3)
-							spawn(trackLength)
-								qdel(train)
-//						if(pack.special_pod)
-//							new /obj/effect/pod_landingzone(LZ, pack.special_pod, SO)
-//						else
-//							new /obj/effect/pod_landingzone(LZ, podType, SO)
-						. = TRUE
-						update_icon()
-			else
-				if(SO.pack.cost * (0.72*MAX_EMAG_ROCKETS) <= points_to_check) // bulk discount :^)
-					landingzone = GLOB.areas_by_type[pick(GLOB.the_station_areas)]  //override default landing zone
-					for(var/turf/open/floor/T in landingzone.contents)
-						if(T.is_blocked_turf())
-							continue
-						LAZYADD(empty_turfs, T)
-						CHECK_TICK
-					if(empty_turfs?.len)
-						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 10 SECONDS)
-						account_balance = max(0, account_balance-(SO.pack.cost*(0.72*MAX_EMAG_ROCKETS)))
-
-						SO.generateRequisition(get_turf(src))
-						for(var/i in 1 to MAX_EMAG_ROCKETS)
-							var/LZ = pick(empty_turfs)
-							LAZYREMOVE(empty_turfs, LZ)
-							var/obj/cargotrain/train = new(get_nearest_free_turf(LZ))
-							train.starter = usr
-							train.glide_size = (32 / 3) * world.tick_lag
-							walk_to(train, LZ, 1, 3)
-							playsound(train, 'code/modules/wod13/sounds/train_arrive.ogg', 50, FALSE)
-							var/trackLength = get_dist(get_nearest_free_turf(LZ), LZ)*5
-							spawn(trackLength)
-								playsound(train, 'code/modules/wod13/sounds/train_depart.ogg', 50, FALSE)
-								SO.generate(get_turf(train))
-								walk_to(train, get_nearest_free_turf(LZ), 1, 3)
-								spawn(trackLength)
-									qdel(train)
-//							if(pack.special_pod)
-//								new /obj/effect/pod_landingzone(LZ, pack.special_pod, SO)
-//							else
-//								new /obj/effect/pod_landingzone(LZ, podType, SO)
-							. = TRUE
-							update_icon()
-							CHECK_TICK
-*/
