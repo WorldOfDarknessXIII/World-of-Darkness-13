@@ -346,7 +346,7 @@
 			L.adjustFireLoss(-25)
 		if(istype(H.pulling, /mob/living/carbon/human))
 			var/mob/living/carbon/human/BLOODBONDED = H.pulling
-			if(iscathayan(BLOODBONDED))
+			if(iscathayan(BLOODBONDED) || ((isgarou(BLOODBONDED) || iswerewolf(BLOODBONDED)) && BLOODBONDED.stat != DEAD ))
 				to_chat(owner, "<span class='warning'>[BLOODBONDED] vomits the vitae back!</span>")
 				return
 			if(!BLOODBONDED.client && !istype(H.pulling, /mob/living/carbon/human/npc))
