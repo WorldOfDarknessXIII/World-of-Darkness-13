@@ -221,6 +221,17 @@
 	fire_sound_volume = 100
 	cost = 55
 
+/obj/item/gun/ballistic/automatic/vampire/m1911/suppress
+	name = "\improper Colt 1911"
+	desc = "A reliable .45 ACP handgun with a suppressor attached."
+	icon = 'code/modules/wod13/48x32weapons.dmi'
+	icon_state = "m1911_suppress"
+	suppressed = TRUE
+	recoil = 1
+	cost = 65
+	fire_sound_volume = 40
+	suppressed_volume = 40
+
 /obj/item/ammo_box/magazine/glock9mm
 	name = "automatic pistol magazine (9mm)"
 	icon = 'code/modules/wod13/ammo.dmi'
@@ -456,6 +467,7 @@
 	worn_icon_state = "huntrifle"
 	w_class = WEIGHT_CLASS_BULKY
 	mag_type = /obj/item/ammo_box/magazine/vamp556/hunt
+	actions_types = list()
 	burst_size = 1
 	fire_delay = 1
 	spread = 2
@@ -612,6 +624,14 @@
 	max_ammo = 6
 	masquerade_violating = FALSE
 
+obj/item/ammo_box/magazine/internal/vampdouble
+	name = "shotgun internal magazine"
+	ammo_type = /obj/item/ammo_casing/vampire/c12g
+	caliber = CALIBER_12G
+	multiload = FALSE
+	max_ammo = 2
+	masquerade_violating = FALSE
+
 /obj/item/gun/ballistic/shotgun/vampire
 	name = "shotgun"
 	desc = "A traditional shotgun with wood furniture and a six-round tube magazine."
@@ -632,6 +652,24 @@
 	recoil = 4
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
+
+/obj/item/gun/ballistic/shotgun/vampiredouble
+	name = "double barreled shotgun"
+	desc = "A traditional double-barreled shotgun with wood furniture. For hunting bunny wabbits."
+	icon = 'code/modules/wod13/48x32weapons.dmi'
+	lefthand_file = 'code/modules/wod13/righthand.dmi'
+	righthand_file = 'code/modules/wod13/lefthand.dmi'
+	worn_icon = 'code/modules/wod13/worn.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
+	icon_state = "doubleshot"
+	inhand_icon_state = "doubleshot"
+	worn_icon_state = "doubleshot"
+	mag_type = /obj/item/ammo_box/magazine/internal/vampdouble
+	bolt_type = BOLT_TYPE_NO_BOLT
+	can_be_sawn_off	= FALSE
+	semi_auto = TRUE
+	recoil = 6
+	fire_delay = 0 //both barrels
 
 /obj/item/ammo_box/magazine/vampautoshot
 	name = "shotgun magazine (12ga)"
