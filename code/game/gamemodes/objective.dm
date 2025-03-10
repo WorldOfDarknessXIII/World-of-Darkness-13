@@ -543,6 +543,11 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	explanation_text = "Follow the orders of your commander."
 	martyr_compatible = TRUE
 
+/datum/objective/blacksuit
+	name = "blacksuit"
+	explanation_text = "Follow the orders of your supervisor. Eliminate reality deviants, restore the consensus."
+	martyr_compatible = TRUE
+
 /datum/objective/nuclear/check_completion()
 	if(SSticker && SSticker.mode && SSticker.mode.station_was_nuked)
 		return TRUE
