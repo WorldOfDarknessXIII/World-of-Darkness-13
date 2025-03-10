@@ -48872,6 +48872,14 @@
 	dir = 9
 	},
 /obj/structure/table,
+/obj/item/reagent_containers/food/drinks/shaker{
+	pixel_y = 10;
+	pixel_x = 3
+	},
+/obj/item/reagent_containers/glass/rag{
+	pixel_x = -8;
+	pixel_y = 10
+	},
 /turf/open/floor/light,
 /area/vtm/interior/strip)
 "nzx" = (
