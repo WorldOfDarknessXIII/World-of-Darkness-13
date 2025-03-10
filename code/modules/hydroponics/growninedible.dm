@@ -31,6 +31,8 @@
 		transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5
 		add_juice()
 
+	AddElement(/datum/element/seed_extractable, src)
+
 
 /obj/item/grown/attackby(obj/item/O, mob/user, params)
 	..()
