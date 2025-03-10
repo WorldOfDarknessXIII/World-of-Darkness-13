@@ -1077,7 +1077,6 @@
 
 	min_age = 18
 	max_age = 45
-	preferedgender = MALE
 	male_names = null
 	surnames = null
 
@@ -1091,9 +1090,8 @@
 										"802400",	//Ginger
 										"a5380e",	//Ginger alt
 										"ffeace",	//Albino
-										"650b0b",	//Punk Red
-										"14350e",	//Punk Green
-										"080918")	//Punk Blue
+										)
+
 	male_hair = list("Balding Hair",
 										"Bedhead",
 										"Bedhead 2",
@@ -1112,7 +1110,32 @@
 										"Joestar",
 										"Keanu Hair",
 										"Oxton",
+										"Volaju",)
+
+	female_hair = list("Ahoge",
+										"Bob Hair",
+										"Bob Hair 2",
+										"Bob Hair 3",
+										"Bob Hair 4",
+										"Bobcurl",
+										"Braided",
+										"Braided Front",
+										"Braid (Short)",
+										"Braid (Low)",
+										"Bun Head",
+										"Bun Head 2",
+										"Bun Head 3",
+										"Bun (Large)",
+										"Bun (Tight)",
+										"Gentle",
+										"Long Hair 1",
+										"Long Hair 2",
+										"Long Hair 3",
+										"Short Hair Rosa",
+										"Shoulder-length Hair",
 										"Volaju")
+
+
 	male_facial = list("Beard (Abraham Lincoln)",
 											"Beard (Chinstrap)",
 											"Beard (Full)",
@@ -1126,7 +1149,7 @@
 											"Moustache (Watson)",
 											"Sideburns (Elvis)",
 											"Sideburns",
-											"Shaved")
+											"Shaved",)
 
 	shoes = list(/obj/item/clothing/shoes/vampire/jackboots)
 	uniforms = list(/obj/item/clothing/under/vampire/police)
@@ -1138,23 +1161,46 @@
 											"Looking suspicious...",
 											"Don't try anything stupid.",
 											"Nothing to see here.",
-											"Have you seen a man in black coat with black hair?")
+											"We're watching you...Scum.",
+											"Have you seen a man in a black coat with black hair?",
+											"Citizen.",
+											"You catch the game last night?" )
+
 	neutral_phrases = list("I see you.",
 											"Looking suspicious...",
 											"Don't try anything stupid.",
 											"Nothing to see here.",
-											"Have you seen a man in black coat with black hair?")
+											"We're watching you...Scum.",
+											"Have you seen a man in a black coat with black hair?",
+											"Citizen.",
+											"You catch the game last night?")
+
+	female_phrases = list("I see you.",
+											"Looking suspicious...",
+											"Don't try anything stupid.",
+											"Nothing to see here.",
+											"We're watching you...Scum.",
+											"Have you seen a man in a black coat with black hair?",
+											"Citizen.",
+											"You catch the game last night?" )
+
 	random_phrases = list("I see you.",
 											"Looking suspicious...",
 											"Don't try anything stupid.",
 											"Nothing to see here.",
-											"Have you seen a man in black coat with black hair?")
+											"We're watching you...Scum.",
+											"Have you seen a man in a black coat with black hair?",
+											"Citizen.",
+											"You catch the game last night?",)
 	answer_phrases = list("I'm here to protect you.")
 	help_phrases = list("Lay down!",
 											"Stop right there!!",
 											"Drop your weapon!",
 											"Stop there right now!!",
-											"This is SFPD, stay down!")
+											"This is SFPD, hands on your head!",
+											"You have the right to remain silent!",
+											"Bush gave me the right to kick your head in!",
+											"I'm gonna beat you harder than the Eagles got beat by the Patriots!",)
 
 /mob/living/carbon/human/npc/police
 	fights_anyway = TRUE
@@ -1175,6 +1221,7 @@
 				if(H)
 					if(H.warrant)
 						Aggro(H, FALSE)
+
 
 /datum/socialrole/guard
 	s_tones = list(
