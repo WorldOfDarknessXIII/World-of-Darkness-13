@@ -111,6 +111,19 @@
 	yin_chi = 2
 	wall_rating = LOW_WALL_RATING
 
+/area/vtm/interior/community_center
+	name = "Community Center"
+	icon_state = "hotel"
+	upper = FALSE
+	fire_controled = TRUE
+	wall_rating = HIGH_WALL_RATING
+
+/area/vtm/interior/community_center/basement
+	name = "Community Center Basement"
+	zone_type = "elysium"
+	yang_chi = 0
+	yin_chi = 2
+
 /area/vtm/financialdistrict
 	name = "Financial District"
 	icon_state = "financialdistrict"
