@@ -1,0 +1,5 @@
+#define CRIME_GENERIC 1
+#define CRIME_SHOOTING 2
+#define CRIME_MURDER 3
+#define CRIME_ASSAULT 4
+#define CRIME_KIDNAPPING 5
