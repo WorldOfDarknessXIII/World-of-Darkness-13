@@ -182,7 +182,7 @@ datum/supply_pack/vampire/medicalsupplies
 datum/supply_pack/vampire/weapondeagle50
 	name = "Weapon (desert eagle 50AE)"
 	desc = "Contains a .50 caliber desert eagle."
-	cost = 1000
+	cost = 2000
 	contains = list(/obj/item/gun/ballistic/automatic/pistol/deagle, /obj/item/ammo_box/magazine/m50)
 
 /datum/supply_pack/vampire/glock
@@ -397,8 +397,8 @@ datum/supply_pack/vampire/weapondeagle50
 /datum/supply_pack/vampire/magazine_deagle50
 	name = "Ammo (3x Desert Eagle 50AE magazines)"
 	desc = "Contains three desert eagle 50AE magazines."
-	cost = 600
-	contains = list(/obj/item/ammo_box/magazine/m50, /obj/item/ammo_box/magazine/m50, /obj/item/ammo_box/magazine/m50)
+	cost = 1200
+	contains = list(/obj/item/ammo_box/magazine/m50, /obj/item/ammo_box/magazine/m50)
 	crate_name = "ammo crate"
 
 /datum/supply_pack/vampire/magazine_mp5
