@@ -26,6 +26,13 @@
 	if(climbable)
 		AddElement(/datum/element/climbable)
 
+/obj/structure/railing/MouseDrop_T(atom/dropping, mob/user, params)
+	. = ..()
+
+	if(!climbable)
+		//Adds the component only once. We do it here & not in Initialize() because there are tons of windows & we don't want to add to their init times
+		LoadComponent(/datum/component/leanable, dropping)
+
 /obj/structure/railing/attackby(obj/item/I, mob/living/user, params)
 	..()
 	add_fingerprint(user)

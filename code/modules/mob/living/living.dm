@@ -1418,6 +1418,9 @@
 		if(M.can_be_held && U.pulling == M)
 			M.mob_try_pickup(U)//blame kevinz
 			return//dont open the mobs inventory if you are picking them up
+		else
+			LoadComponent(/datum/component/leanable, dropping)
+
 	. = ..()
 
 /mob/living/proc/mob_pickup(mob/living/L)
