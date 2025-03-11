@@ -27,7 +27,7 @@
 	///The mob that owns and is using this Discipline.
 	var/mob/living/carbon/human/owner
 	///If this Discipline has been assigned before and post_gain effects have already been applied.
-	var/initialized
+	var/post_gain_applied
 
 //TODO: rework this and set_level to use proper loadouts instead of a default set every time
 /datum/discipline/New(level)
@@ -86,9 +86,9 @@
 	for (var/datum/discipline_power/power in known_powers)
 		power.owner = owner
 
-	if (!initialized)
+	if (!post_gain_applied)
 		post_gain()
-	initialized = TRUE
+	post_gain_applied = TRUE
 
 /**
  * Returns a known Discipline power in this Discipline
