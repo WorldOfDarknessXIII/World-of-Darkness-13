@@ -1201,11 +1201,11 @@
 
 	return
 
-/mob/living/carbon/human/MouseDrop(atom/over_object)
+/mob/living/carbon/human/MouseDrop_T(atom/dropping, atom/user)
 	. = ..()
-	if(src == usr)
-		if(istype(over_object, /turf/closed/wall/vampwall))
-			if(get_dist(src, over_object) < 2)
+	if(src == usr && a_intent == INTENT_HARM)
+		if(istype(dropping, /turf/closed/wall/vampwall))
+			if(get_dist(src, dropping) < 2)
 				var/turf/above_turf = locate(x, y, z + 1)
 				if(above_turf && istype(above_turf, /turf/open/openspace))
 					climb_wall(above_turf)
