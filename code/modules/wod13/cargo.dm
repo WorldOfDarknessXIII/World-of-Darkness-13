@@ -50,7 +50,7 @@
 	cost = 300
 	contains = list(/obj/item/binoculars)
 
-datum/supply_pack/vampire/medicalsupplies
+/datum/supply_pack/vampire/medicalsupplies
 	name = "Medical Supplies"
 	desc = "Contains some first aid supplies."
 	cost = 500
@@ -179,7 +179,7 @@ datum/supply_pack/vampire/medicalsupplies
 	contains = list(/obj/item/gun/ballistic/automatic/vampire/deagle, /obj/item/ammo_box/magazine/m44)
 	crate_name = "weapon crate"
 
-datum/supply_pack/vampire/weapondeagle50
+/datum/supply_pack/vampire/weapondeagle50
 	name = "Weapon (desert eagle 50AE)"
 	desc = "Contains a .50 caliber desert eagle."
 	cost = 2000
@@ -398,7 +398,7 @@ datum/supply_pack/vampire/weapondeagle50
 	name = "Ammo (3x Desert Eagle 50AE magazines)"
 	desc = "Contains three desert eagle 50AE magazines."
 	cost = 1200
-	contains = list(/obj/item/ammo_box/magazine/m50, /obj/item/ammo_box/magazine/m50)
+	contains = list(/obj/item/ammo_box/magazine/m50, /obj/item/ammo_box/magazine/m50, /obj/item/ammo_box/magazine/m50)
 	crate_name = "ammo crate"
 
 /datum/supply_pack/vampire/magazine_mp5
