@@ -197,3 +197,38 @@ config/dbconfig.txt
 #tgs_test thats generated @ obj & bin
 /tools/tgs_test/obj*
 /tools/tgs_test/bin*
+
+# Built auxtools libraries and intermediate files
+aux*.dll
+libaux*.so
+*.pdb
+
+# byond-tracy, we intentionally do not ship this and do not want to maintain it
+# https://github.com/mafemergency/byond-tracy/
+prof.dll
+libprof.so
+
+# Tracy can read source files when it is in the root folder, even without absolute paths.
+# If you're interested, run this hack:
+# https://gist.github.com/Mothblocks/db5462aa84d7d6b1d1b1276b820f62da
+Tracy.exe
+
+# JavaScript tools
+**/node_modules
+
+# Screenshot tests
+/artifacts
+
+# named byond versions config
+/tools/build/dm_versions.json
+
+# From /tools/define_sanity/check.py - potential output file that we load onto the user's machine that we don't want to have committed.
+define_sanity_output.txt
+
+# ezdb
+/db/
+/config/ezdb.txt
+
+# Running OpenDream locally
+tgstation.json
+rust_g64.dll
