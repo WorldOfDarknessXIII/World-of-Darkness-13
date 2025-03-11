@@ -46,7 +46,7 @@
 	/// If this power uses its own cooldown handling rather than the default handling
 	var/cooldown_override = FALSE
 	/// List of Discipline power types that cannot be activated alongside this power and share a cooldown with it.
-	var/list/grouped_powers = list()
+	var/list/grouped_powers
 
 	/* NOT MEANT TO BE OVERRIDDEN */
 	/// Timer(s) tracking the duration of the power. Can have multiple if multi_activate is true.
@@ -137,24 +137,25 @@
 		return FALSE
 
 	//a mutually exclusive power is already active or on cooldown
-	for (var/exclude_power in grouped_powers)
-		var/datum/discipline_power/found_power = discipline.get_power(exclude_power)
-		if (!found_power || (found_power == src))
-			continue
+	if (islist(grouped_powers))
+		for (var/exclude_power in grouped_powers)
+			var/datum/discipline_power/found_power = discipline.get_power(exclude_power)
+			if (!found_power || (found_power == src))
+				continue
 
-		if (found_power.active)
-			if (found_power.cancelable || found_power.toggled)
+			if (found_power.active)
+				if (found_power.cancelable || found_power.toggled)
+					if (alert)
+						found_power.try_deactivate(direct = TRUE, alert = TRUE)
+					return TRUE
+				else
+					if (alert)
+						to_chat(owner, span_warning("You cannot have [src] and [found_power] active at the same time!"))
+					return FALSE
+			if (found_power.get_cooldown())
 				if (alert)
-					found_power.try_deactivate(direct = TRUE, alert = TRUE)
-				return TRUE
-			else
-				if (alert)
-					to_chat(owner, span_warning("You cannot have [src] and [found_power] active at the same time!"))
+					to_chat(owner, span_warning("You cannot activate [src] before [found_power]'s cooldown expires in [DisplayTimeText(found_power.get_cooldown())]."))
 				return FALSE
-		if (found_power.get_cooldown())
-			if (alert)
-				to_chat(owner, span_warning("You cannot activate [src] before [found_power]'s cooldown expires in [DisplayTimeText(found_power.get_cooldown())]."))
-			return FALSE
 
 	//the user cannot afford the power's vitae expenditure
 	if (!can_afford())

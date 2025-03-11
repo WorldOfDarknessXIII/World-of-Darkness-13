@@ -102,8 +102,8 @@
 	if(icon_icon && button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))
 		current_button.cut_overlays(TRUE)
 		if(discipline)
-			current_button.name = discipline.name
-			current_button.desc = discipline.desc
+			current_button.name = discipline.current_power.name
+			current_button.desc = discipline.current_power.desc
 			current_button.add_overlay(mutable_appearance(icon_icon, "[discipline.icon_state]"))
 			current_button.button_icon_state = "[discipline.icon_state]"
 			current_button.add_overlay(mutable_appearance(icon_icon, "[discipline.level_casting]"))
