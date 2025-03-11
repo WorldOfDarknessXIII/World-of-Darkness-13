@@ -61,9 +61,11 @@
 	var/mob/living/carbon/human/owner
 
 /datum/discipline_power/New(datum/discipline/discipline)
-	if (discipline)
-		src.discipline = discipline
-		src.owner = discipline.owner
+	if(!discipline)
+		CRASH("discipline_power [src.name] created without a parent discipline!")
+
+	src.discipline = discipline
+	src.owner = discipline.owner
 
 /**
  * Returns the time left the cooldown timer, or
