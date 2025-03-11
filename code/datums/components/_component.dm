@@ -204,6 +204,15 @@
 
 	signal_enabled = TRUE
 
+/// Registers multiple signals to the same proc.
+/datum/proc/RegisterSignals(datum/target, list/signal_types, proctype, override = FALSE)
+	if(!islist(signal_types))
+		stack_trace("[target] called RegisterSignals() with non-list signal: [signal_types]")
+		RegisterSignal(target, signal_types, proctype, override)
+		return
+	for (var/signal_type in signal_types)
+		RegisterSignal(target, signal_type, proctype, override)
+
 /**
  * Stop listening to a given signal from target
  *

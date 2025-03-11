@@ -286,3 +286,6 @@
 	var/max_demon_chi = 0
 	COOLDOWN_DECLARE(chi_restore)
 	var/datum/action/chi_discipline/chi_ranged
+
+	//If we are currently leaning on something, and what that object is
+	var/atom/leaned_object
