@@ -1,5 +1,5 @@
-#define HEAL_BASHING_LETHAL 25
-#define HEAL_AGGRAVATED 5
+#define HEAL_BASHING_LETHAL 30
+#define HEAL_AGGRAVATED 6
 
 /datum/discipline/bloodheal
 	name = "Bloodheal"
