@@ -24,6 +24,9 @@
 ///Targets mobs only if they are vampires/Kindred
 #define TARGET_VAMPIRE (1<<8)
 
+//Aggregated targeting for /mob/living
+#define MOB_LIVING_TARGETING (TARGET_MOB | TARGET_LIVING | TARGET_HUMAN | TARGET_PLAYER | TARGET_VAMPIRE)
+
 //bitflags to check for certain conditions determining ability to actually cast a discipline
 //flags overlap, like DISC_CHECK_CAPABLE covers DISC_CHECK_CONSCIOUS and DISC_CHECK_TORPOR
 ///Caster must not be in Torpor

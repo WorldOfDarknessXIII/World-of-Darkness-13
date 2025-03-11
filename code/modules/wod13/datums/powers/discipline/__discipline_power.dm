@@ -275,7 +275,7 @@
 
 	//check target type
 	// mob/living with a bunch of extra conditions
-	if ((target_type & (TARGET_MOB | TARGET_LIVING | TARGET_HUMAN | TARGET_PLAYER | TARGET_VAMPIRE)) && isliving(target))
+	if ((target_type & MOB_LIVING_TARGETING) && isliving(target))
 		//make sure our LIVING target isn't DEAD
 		var/mob/living/living_target = target
 		if ((target_type & TARGET_LIVING) && (living_target.stat == DEAD))
