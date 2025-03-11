@@ -15,7 +15,7 @@ export NODE_VERSION=12
 export NODE_VERSION_PRECISE=12.20.0
 
 # SpacemanDMM git tag
-export SPACEMAN_DMM_VERSION=suite-1.6
+export SPACEMAN_DMM_VERSION=suite-1.9
 
 # Extools git tag
 export EXTOOLS_VERSION=v0.0.7
@@ -28,3 +28,9 @@ export DREAMLUAU_REPO="tgstation/dreamluau"
 
 #dreamluau git tag
 export DREAMLUAU_VERSION=0.1.2
+
+#hypnagogic repo
+export CUTTER_REPO=spacestation13/hypnagogic
+
+#hypnagogic git tag
+export CUTTER_VERSION=v4.0.0
