@@ -125,8 +125,6 @@
 	var/celerity_visual = FALSE
 	var/potential = 0
 
-	var/obfuscate_level = 0
-
 	var/in_frenzy = FALSE
 	var/frenzy_hardness = 1
 	var/last_frenzy_check = 0

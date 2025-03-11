@@ -152,7 +152,7 @@
 	if(target.stat == DEAD && dead_restricted)
 		return FALSE
 
-	if(target.resistant_to_disciplines || target.spell_immunity)
+	if(target.resistant_to_disciplines)
 		to_chat(caster, "<span class='danger'>[target] resists your powers!</span>")
 		return FALSE
 
@@ -417,11 +417,9 @@
 		if(3)
 			ADD_TRAIT(caster, TRAIT_PASS_THROUGH_WALLS, "jade shintai 3")
 			caster.alpha = 128
-			caster.obfuscate_level = 3
 			caster.add_movespeed_modifier(/datum/movespeed_modifier/wall_passing)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
-					caster.obfuscate_level = 0
 					caster.alpha = 255
 					REMOVE_TRAIT(caster, TRAIT_PASS_THROUGH_WALLS, "jade shintai 3")
 					caster.remove_movespeed_modifier(/datum/movespeed_modifier/wall_passing)
@@ -1172,7 +1170,7 @@
 /datum/chi_discipline/hellweaving/activate(mob/living/target, mob/living/carbon/human/caster)
 	..()
 	var/mypower = caster.get_total_social()
-	var/theirpower = caster.get_total_mentality()
+	var/theirpower = target.get_total_mentality()
 	if(theirpower >= mypower)
 		to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to cause flashbacks for!</span>")
 		return
@@ -1269,7 +1267,7 @@
 	caster.emote("scream")
 	playsound(caster.loc, sound_gender, 100, FALSE)
 	var/mypower = caster.get_total_social()
-	var/theirpower = caster.get_total_mentality()
+	var/theirpower = target.get_total_mentality()
 	if(theirpower >= mypower)
 		to_chat(caster, "<span class='warning'>[target]'s mind is too powerful to affect!</span>")
 		return
@@ -2159,10 +2157,8 @@
 	switch(level_casting)
 		if(1)
 			animate(caster, alpha = 10, time = 1 SECONDS)
-			caster.obfuscate_level = 3
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
-					caster.obfuscate_level = 0
 					if(caster.alpha != 255)
 						caster.playsound_local(caster.loc, 'code/modules/wod13/sounds/obfuscate_deactivate.ogg', 50, FALSE)
 						caster.alpha = 255

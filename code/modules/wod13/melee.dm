@@ -429,25 +429,6 @@
 		L.apply_damage(16, CLONE)
 		L.apply_damage(7, BURN)
 
-/obj/item/melee/touch_attack/quietus
-	name = "\improper poison touch"
-	desc = "This is kind of like when you rub your feet on a shag rug so you can zap your friends, only a lot less safe."
-	icon = 'code/modules/wod13/weapons.dmi'
-	catchphrase = null
-	on_use_sound = 'sound/magic/disintegrate.ogg'
-	icon_state = "quietus"
-	inhand_icon_state = "mansus"
-
-/obj/item/melee/touch_attack/quietus/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(!proximity)
-		return
-	if(isliving(target))
-		var/mob/living/L = target
-		L.adjustFireLoss(10)
-		L.AdjustKnockdown(3 SECONDS)
-		L.adjustStaminaLoss(50)
-	return ..()
-
 /obj/item/melee/touch_attack/werewolf
 	name = "\improper falling touch"
 	desc = "This is kind of like when you rub your feet on a shag rug so you can zap your friends, only a lot less safe."
@@ -468,24 +449,6 @@
 		if(L.body_position != LYING_DOWN)
 			L.toggle_resting()
 	return ..()
-
-/obj/item/quietus_upgrade
-	name = "poison for weapons"
-	desc = "Upgrade your melee weapons with it."
-	icon_state = "quietus"
-	icon = 'code/modules/wod13/items.dmi'
-	w_class = WEIGHT_CLASS_SMALL
-	item_flags = DROPDEL
-
-/obj/item/melee/vampirearms/attackby(obj/item/I, mob/living/user, params)
-	. = ..()
-	if(istype(I, /obj/item/quietus_upgrade))
-		if(!quieted)
-			quieted = TRUE
-			armour_penetration = min(100, armour_penetration+30)
-			force += 20
-			color = "#72b27c"
-			qdel(I)
 
 /obj/item/melee/vampirearms/knife/gangrel/Initialize()
 	. = ..()

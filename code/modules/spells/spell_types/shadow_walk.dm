@@ -20,26 +20,6 @@
 /obj/effect/proc_holder/spell/targeted/shadowwalk/cast(list/targets,mob/living/user = usr)
 	var/L = user.loc
 
-	//If used in front of a mirror, allows you to teleport through it to other non-broken mirrors
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(locate(/obj/structure/mirror) in L)
-			var/new_mirror = input(user, "Choose the mirror to travel:","Enter Mirror",null) as null|anything in GLOB.las_mirrors
-			if(new_mirror)
-				if(istype(new_mirror, /obj/structure/mirror))
-					var/obj/structure/mirror/M = new_mirror
-					H.bloodpool = max(0, H.bloodpool-2)
-					H.Stun(10)
-					animate(H, color = "#000000", time = 10)
-					playsound(user.loc, 'code/modules/wod13/sounds/necromancy.ogg', 50, FALSE)
-					spawn(10)
-						H.forceMove(M.loc)
-						H.Stun(10)
-						animate(H, color = initial(H.color), time = 10)
-						playsound(L, 'code/modules/wod13/sounds/necromancy.ogg', 50, FALSE)
-					return
-			//Proceed to normal activation if they didn't select a mirror
-
 	if(istype(user.loc, /obj/effect/dummy/phased_mob/shadow))
 		var/obj/effect/dummy/phased_mob/shadow/S = L
 		S.end_jaunt(FALSE)

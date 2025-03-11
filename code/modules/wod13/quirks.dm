@@ -645,18 +645,6 @@ Dancer
 		return
 	if(isturf(quirk_holder.loc))
 		SSbloodhunt.announce_hunted(quirk_holder, "Camarilla Wanted List")
-/*
-/datum/quirk/diablerist
-	name = "Black Secret"
-	desc = "You have a small, ancient secret, somehow related to Diablerie, and this decreases your chance to survive another one. <b>This isn't a licence to diablerie anyone you want!</b>"
-	value = -3
-	allowed_species = list("Vampire")
-*/
-/datum/quirk/diablerist/on_spawn()
-	if(iswerewolf(quirk_holder) || isgarou(quirk_holder))
-		return
-	var/mob/living/carbon/human/H = quirk_holder
-	H.diablerist = TRUE
 
 /datum/quirk/badvision
 	name = "Nearsighted"

@@ -36,11 +36,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return 1
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language = null, list/message_mods = list())
-	var/turf/T = get_turf(src)
 	var/ending = copytext_char(message, -1)	//Better not to do like that..
-	if(T)
-		if(T.silented)
-			return
 	var/rendered = compose_message(src, message_language, message, , spans, message_mods)
 	if(ending == "!")
 		range = 15
