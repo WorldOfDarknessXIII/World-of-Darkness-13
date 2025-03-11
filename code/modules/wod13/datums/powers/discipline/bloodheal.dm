@@ -65,8 +65,8 @@
 	if (eyes)
 		eyes.applyOrganDamage(-HEAL_BASHING_LETHAL * vitae_cost)
 
-		owner.adjust_blindness(-5 * vitae_cost)
-		owner.adjust_blurriness(-5 * vitae_cost)
+		owner.adjust_blindness(-HEAL_AGGRAVATED * vitae_cost)
+		owner.adjust_blurriness(-HEAL_AGGRAVATED * vitae_cost)
 
 	//healing too quickly attracts attention
 	if (violates_masquerade)
@@ -91,8 +91,8 @@
 	var/total_aggravated_damage = owner.getCloneLoss() + owner.getFireLoss()
 
 	//lower blood expenditure to what's necessary
-	var/vitae_to_heal_bashing_lethal = ceil(total_bashing_lethal_damage * 0.05)
-	var/vitae_to_heal_aggravated = ceil(total_aggravated_damage * 0.0125)
+	var/vitae_to_heal_bashing_lethal = ceil(total_bashing_lethal_damage / HEAL_BASHING_LETHAL)
+	var/vitae_to_heal_aggravated = ceil(total_aggravated_damage / HEAL_AGGRAVATED)
 
 	var/vitae_needed = max(vitae_to_heal_bashing_lethal, vitae_to_heal_aggravated)
 
