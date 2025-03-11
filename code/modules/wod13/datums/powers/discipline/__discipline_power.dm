@@ -497,6 +497,9 @@
  * try_deactivate(direct = TRUE).
  */
 /datum/discipline_power/proc/do_duration(atom/target)
+	if (toggled && (duration_length == 0))
+		return
+
 	duration_timers.Add(addtimer(CALLBACK(src, PROC_REF(duration_expire), target), duration_length, TIMER_STOPPABLE | TIMER_DELETE_ME))
 
 /**
@@ -537,8 +540,7 @@
  */
 /datum/discipline_power/proc/duration_expire(atom/target)
 	//clean up the expired timer, which SHOULD be the first in the list
-	deltimer(duration_timers[1])
-	duration_timers.Cut(1, 2)
+	clear_duration_timer()
 
 	//proceed to deactivation or refreshing
 	if (toggled)
@@ -618,8 +620,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if (direct)
-		deltimer(duration_timers[1])
-		duration_timers.Cut(1, 2)
+		clear_duration_timer()
 
 	SEND_SIGNAL(src, COMSIG_POWER_DEACTIVATE, src, target)
 	SEND_SIGNAL(owner, COMSIG_POWER_DEACTIVATE, src, target)
@@ -697,3 +698,15 @@
  */
 /datum/discipline_power/proc/do_refresh_checks(atom/target)
 	return TRUE
+
+/**
+ * Clears the last active timer (usually the first in the list).
+ * If called before it expires, this immediately makes the
+ * duration_timer expire without calling the relevant proc.
+ */
+/datum/discipline_power/proc/clear_duration_timer(to_clear = 1)
+	if (toggled && (duration_length == 0))
+		return
+
+	deltimer(duration_timers[to_clear])
+	duration_timers.Cut(to_clear, to_clear + 1)
