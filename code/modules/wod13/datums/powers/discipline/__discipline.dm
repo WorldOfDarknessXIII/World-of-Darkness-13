@@ -92,19 +92,17 @@
 
 /**
  * Returns a known Discipline power in this Discipline
- * searching by name or type.
+ * searching by type.
  *
  * Arguments:
- * * power - the power name or type to search for
+ * * power - the power type to search for
  */
 /datum/discipline/proc/get_power(power)
+	if (!ispath(power))
+		return
 	for (var/datum/discipline_power/found_power in known_powers)
-		if (istext(power))
-			if (found_power.name == power)
-				return found_power
-		else if (ispath(power))
-			if (found_power.type == power)
-				return found_power
+		if (found_power.type == power)
+			return found_power
 
 /datum/discipline/proc/can_activate(atom/target)
 	return current_power.can_activate(target)
