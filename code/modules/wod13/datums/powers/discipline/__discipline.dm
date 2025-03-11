@@ -104,30 +104,6 @@
 		if (found_power.type == power)
 			return found_power
 
-/datum/discipline/proc/can_activate(atom/target)
-	return current_power.can_activate(target)
-
-/datum/discipline/proc/can_activate_untargeted(alert)
-	return current_power.can_activate_untargeted(alert)
-
-/datum/discipline/proc/pre_activation(atom/target)
-	current_power.pre_activation(target)
-
-/datum/discipline/proc/activate(atom/target)
-	current_power.activate(target)
-
-/datum/discipline/proc/try_activate(atom/target)
-	return current_power.try_activate(target)
-
-/datum/discipline/proc/can_deactivate(atom/target)
-	return current_power.can_deactivate(target)
-
-/datum/discipline/proc/can_deactivate_untargeted()
-	return current_power.can_deactivate_untargeted()
-
-/datum/discipline/proc/deactivate(atom/target)
-	current_power.deactivate(target)
-
 /**
  * Applies effects specific to the Discipline to
  * its owner. Also triggers post_gain effects of all

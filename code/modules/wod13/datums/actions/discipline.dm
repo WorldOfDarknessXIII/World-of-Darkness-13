@@ -56,7 +56,7 @@
 	RegisterSignal(owner, relevant_signals, TYPE_PROC_REF(/mob, update_action_buttons))
 
 /datum/action/discipline/IsAvailable()
-	return discipline.can_activate_untargeted()
+	return discipline.current_power.can_activate_untargeted()
 
 /datum/action/discipline/Trigger()
 	. = ..()
@@ -155,7 +155,7 @@
 
 	//actually try to use the Discipline on the target
 	spawn()
-		if (discipline.try_activate(target))
+		if (discipline.current_power.try_activate(target))
 			end_targeting()
 
 	return COMSIG_MOB_CANCEL_CLICKON
@@ -166,7 +166,7 @@
 		return
 	if (targeting)
 		return
-	if (!discipline.can_activate_untargeted(TRUE))
+	if (!discipline.current_power.can_activate_untargeted(TRUE))
 		return
 	SEND_SOUND(owner, sound('code/modules/wod13/sounds/highlight.ogg', 0, 0, 50))
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(handle_click))
