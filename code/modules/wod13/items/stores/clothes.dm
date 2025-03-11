@@ -25,6 +25,7 @@
 		new /datum/data/mining_equipment("shemagh",	 /obj/item/clothing/mask/vampire/shemagh,	20),
 	)
 
+
 /obj/machinery/mineral/equipment_vendor/fastfood/clothing
 	desc = "Purchase all the finest outfits.. Or don't wagie.."
 	prize_list = list(new /datum/data/mining_equipment("crimson red dress",	/obj/item/clothing/under/vampire/primogen_toreador/female	,	350),
@@ -121,5 +122,9 @@
 		new /datum/data/mining_equipment("blue scarf",	/obj/item/clothing/neck/vampire/scarf/blue,	10),
 		new /datum/data/mining_equipment("green scarf",	/obj/item/clothing/neck/vampire/scarf/green,	10),
 		new /datum/data/mining_equipment("white scarf",	/obj/item/clothing/neck/vampire/scarf/white,	10),
-		new /datum/data/mining_equipment("cross",	/obj/item/card/id/hunter,  25)
+		new /datum/data/mining_equipment("cross",	/obj/item/card/id/hunter,  25),
+		new /datum/data/mining_equipment("duffelbag",	/obj/item/storage/backpack/duffelbag,	100),
+		new /datum/data/mining_equipment("backpack",	/obj/item/storage/backpack,		100),
+		new /datum/data/mining_equipment("satchel",		/obj/item/storage/backpack/satchel,		100),
+		new /datum/data/mining_equipment("leather satchel",		/obj/item/storage/backpack/satchel/leather,		150),
 	)

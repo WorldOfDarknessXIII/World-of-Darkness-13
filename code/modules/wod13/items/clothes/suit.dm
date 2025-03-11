@@ -295,6 +295,11 @@
 	icon_state = "medieval"
 	armor = list(MELEE = 55, BULLET = 55, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 0, RAD = 0, FIRE = 45, ACID = 10, WOUND = 25)
 
+/obj/item/clothing/suit/vampire/vest/police/fbivest
+	name = "FBI duty vest"
+	icon_state = "fbivest"
+	desc = "Lightweight, bulletproof vest with yellow FBI markings, tailored for active duty. This one has special agent insignia on it."
+
 //Police + Army
 /obj/item/clothing/suit/vampire/vest/police
 	name = "police duty vest"

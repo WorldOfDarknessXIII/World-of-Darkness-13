@@ -1,5 +1,3 @@
-//--------VENDING MACHINES AND CLERKS--------//
-
 /obj/machinery/mineral/equipment_vendor/fastfood
 	name = "Clerk Catalogue"
 	desc = "Order some fastfood here."
@@ -99,4 +97,4 @@
 		new /datum/data/mining_equipment("candle pack",	/obj/item/storage/fancy/candle_box,	12),
 		new /datum/data/mining_equipment("bruise pack", /obj/item/stack/medical/bruise_pack, 100),
 		new /datum/data/mining_equipment("respirator",	/obj/item/clothing/mask/vampire,	35)
-		)
+	)
