@@ -176,7 +176,7 @@
 		/datum/discipline_power/obfuscate/cloak_the_gathering
 	)
 
-/datum/discipline_power/obfuscate/mask_of_a_thousand_faces/activate()
+/datum/discipline_power/obfuscate/vanish_from_the_minds_eye/activate()
 	. = ..()
 	RegisterSignal(owner, aggressive_signals, PROC_REF(on_combat_signal), override = TRUE)
 
@@ -185,7 +185,7 @@
 			NPC.danger_source = null
 	owner.alpha = 10
 
-/datum/discipline_power/obfuscate/mask_of_a_thousand_faces/deactivate()
+/datum/discipline_power/obfuscate/vanish_from_the_minds_eye/deactivate()
 	. = ..()
 	UnregisterSignal(owner, aggressive_signals)
 
