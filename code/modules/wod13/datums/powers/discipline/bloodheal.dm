@@ -58,7 +58,7 @@
 
 		for (var/i in 1 to min(vitae_cost, length(brain.get_traumas_type())))
 			var/datum/brain_trauma/healing_trauma = pick(brain.get_traumas_type())
-			brain.cure_trauma_type(healing_trauma)
+			brain.cure_trauma_type(healing_trauma, resilience = TRAUMA_RESILIENCE_WOUND)
 
 	//miscellaneous organ damage healing
 	var/obj/item/organ/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
