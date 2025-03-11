@@ -38,6 +38,24 @@
 	contains = list(/obj/item/drinkable_bloodpack/elite, /obj/item/drinkable_bloodpack/elite, /obj/item/drinkable_bloodpack/elite, /obj/item/drinkable_bloodpack/elite, /obj/item/drinkable_bloodpack/elite)
 	crate_name = "blood crate"
 
+/datum/supply_pack/vampire/camera
+	name = "Camera Kit"
+	desc = "Contains a single camera and a spare roll of film."
+	cost = 200
+	contains = list(/obj/item/camera, /obj/item/camera_film)
+
+/datum/supply_pack/vampire/binoculars
+	name = "Binoculars"
+	desc = "Contains a single pair of binoculars."
+	cost = 300
+	contains = list(/obj/item/binoculars)
+
+datum/supply_pack/vampire/medicalsupplies
+	name = "Medical Supplies"
+	desc = "Contains some first aid supplies."
+	cost = 500
+	contains = list(/obj/item/stack/medical/gauze, /obj/item/stack/medical/bruise_pack, /obj/item/stack/medical/suture, /obj/item/stack/medical/ointment)
+
 /datum/supply_pack/vampire/weaponstake
 	name = "Weapon (stake)"
 	desc = "Contains 3 usable wooden stakes."
@@ -160,6 +178,12 @@
 	cost = 400
 	contains = list(/obj/item/gun/ballistic/automatic/vampire/deagle, /obj/item/ammo_box/magazine/m44)
 	crate_name = "weapon crate"
+
+datum/supply_pack/vampire/weapondeagle50
+	name = "Weapon (desert eagle 50AE)"
+	desc = "Contains a .50 caliber desert eagle."
+	cost = 2000
+	contains = list(/obj/item/gun/ballistic/automatic/pistol/deagle, /obj/item/ammo_box/magazine/m50)
 
 /datum/supply_pack/vampire/glock
 	name = "Weapon (Brokk19)"
@@ -368,6 +392,13 @@
 	desc = "Contains three desert eagle magazine."
 	cost = 100
 	contains = list(/obj/item/ammo_box/magazine/m44, /obj/item/ammo_box/magazine/m44, /obj/item/ammo_box/magazine/m44)
+	crate_name = "ammo crate"
+
+/datum/supply_pack/vampire/magazine_deagle50
+	name = "Ammo (3x Desert Eagle 50AE magazines)"
+	desc = "Contains three desert eagle 50AE magazines."
+	cost = 1200
+	contains = list(/obj/item/ammo_box/magazine/m50, /obj/item/ammo_box/magazine/m50)
 	crate_name = "ammo crate"
 
 /datum/supply_pack/vampire/magazine_mp5

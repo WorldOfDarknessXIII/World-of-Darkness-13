@@ -265,10 +265,9 @@
 /obj/item/reagent_containers/food/condiment/vampiremilk/malk
 	desc = "a carton of fish-brand milk, a subsidary of malk incorporated."
 
-
 /obj/food_cart
 	name = "food cart"
-	desc = "Ding-aling ding dong. Get your cholesterine!"
+	desc = "Ding-aling ding dong. Get your cholesterol!"
 	icon = 'code/modules/wod13/32x48.dmi'
 	icon_state = "vat1"
 	density = TRUE
