@@ -22,3 +22,9 @@ export EXTOOLS_VERSION=v0.0.7
 
 # Python version for mapmerge and other tools
 export PYTHON_VERSION=3.9.0
+
+#dreamluau repo
+export DREAMLUAU_REPO="tgstation/dreamluau"
+
+#dreamluau git tag
+export DREAMLUAU_VERSION=0.1.2
