@@ -536,6 +536,7 @@
 				to_chat(src, "<span class='notice'>You stand up.</span>")
 			get_up(instant)
 
+	SEND_SIGNAL(src, COMSIG_LIVING_RESTING, new_resting, silent, instant)
 	update_resting()
 
 
@@ -1939,13 +1940,13 @@
 		set_lying_angle(pick(90, 270))
 		set_body_position(LYING_DOWN)
 		on_fall()
-
+	SEND_SIGNAL(src, COMSIG_LIVING_RESTING_UPDATED)
 
 /// Proc to append behavior to the condition of being floored. Called when the condition ends.
 /mob/living/proc/on_floored_end()
 	if(!resting)
 		get_up()
-
+	SEND_SIGNAL(src, COMSIG_LIVING_RESTING_UPDATED)
 
 /// Proc to append behavior to the condition of being handsblocked. Called when the condition starts.
 /mob/living/proc/on_handsblocked_start()

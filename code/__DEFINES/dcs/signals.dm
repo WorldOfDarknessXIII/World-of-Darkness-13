@@ -246,6 +246,9 @@
 #define COMSIG_MOVABLE_PULLED "movable_pulled"						//! signal sent out by an atom when it is being pulled by something else : (atom/puller)
 #define COMSIG_MOVABLE_NO_LONGER_PULLED "movable_no_longer_pulled"	//! signal sent out by an atom when it is no longer being pulled by something else : (atom/puller)
 
+///From living/set_resting(): (new_resting, silent, instant)
+#define COMSIG_LIVING_RESTING "living_resting"
+
 /////////////////
 
 ///from base of area/Entered(): (/area)

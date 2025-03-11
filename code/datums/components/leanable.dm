@@ -145,5 +145,5 @@
 /mob/living/proc/fall_forced(location)
 	stop_leaning() // Make sure we unregister signal handlers and reset animation
 	forceMove(location)
-	visible_message(span_notice("[src] falls flat on [p_their()] face from losing [p_their()] balance!"), span_warning("You fall suddenly as the airlock you were leaning on opens!"))
+	visible_message(span_notice("[src] falls flat on [p_their()] face from losing [p_their()] balance!"), span_warning("You fall suddenly as the door you were leaning on opens!"))
 	Knockdown(3 SECONDS) //boowomp

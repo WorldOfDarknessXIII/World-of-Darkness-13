@@ -123,12 +123,6 @@
 		else
 			new /obj/effect/decal/lamplight(loc)
 
-/obj/structure/lamppost/MouseDrop_T(atom/dropping, mob/user, params)
-	. = ..()
-
-	//Adds the component only once. We do it here & not in Initialize() because there are tons of windows & we don't want to add to their init times
-	LoadComponent(/datum/component/leanable, dropping)
-
 /obj/structure/lamppost/one
 	icon_state = "one"
 	number_of_lamps = 1

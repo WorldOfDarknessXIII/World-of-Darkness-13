@@ -1201,20 +1201,6 @@
 
 	return
 
-/mob/living/carbon/human/MouseDrop_T(atom/dropping, atom/user)
-	. = ..()
-	if(a_intent == INTENT_HARM)
-		if(!istype(dropping, /turf/closed/wall/vampwall))
-			return
-		if(get_dist(src, dropping) < 2)
-			var/turf/above_turf = locate(x, y, z + 1)
-			if(above_turf && istype(above_turf, /turf/open/openspace))
-				climb_wall(above_turf)
-			else
-				to_chat(src, "<span class='warning'>You can't climb there!</span>")
-	else
-		LoadComponent(/datum/component/leanable, dropping)
-
 /mob/living/carbon/human/proc/climb_down(turf/open/openspace/target_turf)
 	if(body_position != STANDING_UP)
 		return
