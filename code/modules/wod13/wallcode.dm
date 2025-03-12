@@ -75,7 +75,7 @@
 		LoadComponent(/datum/component/leanable, dropping)
 	else
 		if(get_dist(user, src) < 2)
-			var/turf/above_turf = locate(x, y, z + 1)
+			var/turf/above_turf = locate(user.x, user.y, user.z + 1)
 			if(above_turf && istype(above_turf, /turf/open/openspace))
 				var/mob/living/carbon/human/carbon_human = user
 				carbon_human.climb_wall(above_turf)
