@@ -13,7 +13,7 @@
  *
  * @returns {any[]}
  */
-export const toArray = collection => {
+export const toArray = (collection) => {
   if (Array.isArray(collection)) {
     return collection;
   }
@@ -72,7 +72,7 @@ export const toKeyedArray = (obj, keyProp = 'key') => {
  *
  * @returns {any[]}
  */
-export const filter = iterateeFn => collection => {
+export const filter = (iterateeFn) => (collection) => {
   if (collection === null || collection === undefined) {
     return collection;
   }
@@ -99,7 +99,7 @@ export const filter = iterateeFn => collection => {
  *
  * @returns {any[]}
  */
-export const map = iterateeFn => collection => {
+export const map = (iterateeFn) => (collection) => {
   if (collection === null || collection === undefined) {
     return collection;
   }
@@ -148,41 +148,42 @@ const COMPARATOR = (objA, objB) => {
  *
  * @returns {any[]}
  */
-export const sortBy = (...iterateeFns) => array => {
-  if (!Array.isArray(array)) {
-    return array;
-  }
-  let length = array.length;
-  // Iterate over the array to collect criteria to sort it by
-  let mappedArray = [];
-  for (let i = 0; i < length; i++) {
-    const value = array[i];
-    mappedArray.push({
-      criteria: iterateeFns.map(fn => fn(value)),
-      value,
-    });
-  }
-  // Sort criteria using the base comparator
-  mappedArray.sort(COMPARATOR);
-  // Unwrap values
-  while (length--) {
-    mappedArray[length] = mappedArray[length].value;
-  }
-  return mappedArray;
-};
+export const sortBy =
+  (...iterateeFns) =>
+  (array) => {
+    if (!Array.isArray(array)) {
+      return array;
+    }
+    let length = array.length;
+    // Iterate over the array to collect criteria to sort it by
+    let mappedArray = [];
+    for (let i = 0; i < length; i++) {
+      const value = array[i];
+      mappedArray.push({
+        criteria: iterateeFns.map((fn) => fn(value)),
+        value,
+      });
+    }
+    // Sort criteria using the base comparator
+    mappedArray.sort(COMPARATOR);
+    // Unwrap values
+    while (length--) {
+      mappedArray[length] = mappedArray[length].value;
+    }
+    return mappedArray;
+  };
 
 /**
  * A fast implementation of reduce.
  */
-export const reduce = (reducerFn, initialValue) => array => {
+export const reduce = (reducerFn, initialValue) => (array) => {
   const length = array.length;
   let i;
   let result;
   if (initialValue === undefined) {
     i = 1;
     result = array[0];
-  }
-  else {
+  } else {
     i = 0;
     result = initialValue;
   }
@@ -203,13 +204,12 @@ export const reduce = (reducerFn, initialValue) => array => {
  * is determined by the order they occur in the array. The iteratee is
  * invoked with one argument: value.
  */
-export const uniqBy = iterateeFn => array => {
+export const uniqBy = (iterateeFn) => (array) => {
   const { length } = array;
   const result = [];
   const seen = iterateeFn ? [] : result;
   let index = -1;
-  outer:
-  while (++index < length) {
+  outer: while (++index < length) {
     let value = array[index];
     const computed = iterateeFn ? iterateeFn(value) : value;
     value = value !== 0 ? value : 0;
@@ -224,8 +224,7 @@ export const uniqBy = iterateeFn => array => {
         seen.push(computed);
       }
       result.push(value);
-    }
-    else if (!seen.includes(computed)) {
+    } else if (!seen.includes(computed)) {
       if (seen !== result) {
         seen.push(computed);
       }
@@ -266,6 +265,8 @@ export const zip = (...arrays) => {
  *
  * @returns {any[]}
  */
-export const zipWith = iterateeFn => (...arrays) => {
-  return map(values => iterateeFn(...values))(zip(...arrays));
-};
+export const zipWith =
+  (iterateeFn) =>
+  (...arrays) => {
+    return map((values) => iterateeFn(...values))(zip(...arrays));
+  };

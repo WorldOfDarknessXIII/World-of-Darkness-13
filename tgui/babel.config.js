@@ -4,18 +4,21 @@
  * @license MIT
  */
 
-const createBabelConfig = options => {
+const createBabelConfig = (options) => {
   const { mode, presets = [], plugins = [] } = options;
   return {
     presets: [
-      ['@babel/preset-env', {
-        modules: 'commonjs',
-        useBuiltIns: 'entry',
-        corejs: '3.8',
-        spec: false,
-        loose: true,
-        targets: [],
-      }],
+      [
+        '@babel/preset-env',
+        {
+          modules: 'commonjs',
+          useBuiltIns: 'entry',
+          corejs: '3.8',
+          spec: false,
+          loose: true,
+          targets: [],
+        },
+      ],
       ...presets,
     ],
     plugins: [

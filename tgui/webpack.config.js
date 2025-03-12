@@ -9,7 +9,7 @@ const path = require('path');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
 const { createBabelConfig } = require('./babel.config.js');
 
-const createStats = verbose => ({
+const createStats = (verbose) => ({
   assets: verbose,
   builtAt: verbose,
   cached: false,
@@ -31,14 +31,8 @@ module.exports = (env = {}, argv) => {
     context: path.resolve(__dirname),
     target: ['web', 'es3', 'browserslist:ie 8'],
     entry: {
-      'tgui': [
-        './packages/tgui-polyfill',
-        './packages/tgui',
-      ],
-      'tgui-panel': [
-        './packages/tgui-polyfill',
-        './packages/tgui-panel',
-      ],
+      tgui: ['./packages/tgui-polyfill', './packages/tgui'],
+      'tgui-panel': ['./packages/tgui-polyfill', './packages/tgui-panel'],
     },
     output: {
       path: argv.useTmpFolder
@@ -85,9 +79,7 @@ module.exports = (env = {}, argv) => {
         },
         {
           test: /\.(png|jpg|svg)$/,
-          use: [
-            'url-loader',
-          ],
+          use: ['url-loader'],
         },
       ],
     },
@@ -123,10 +115,7 @@ module.exports = (env = {}, argv) => {
   // Add a bundle analyzer to the plugins array
   if (argv.analyze) {
     const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-    config.plugins = [
-      ...config.plugins,
-      new BundleAnalyzerPlugin(),
-    ];
+    config.plugins = [...config.plugins, new BundleAnalyzerPlugin()];
   }
 
   // Production build specific options

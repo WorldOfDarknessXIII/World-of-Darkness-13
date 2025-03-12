@@ -41,15 +41,13 @@ export class Section extends Component {
       ...rest
     } = this.props;
     const hasTitle = canRender(title) || canRender(buttons);
-    const content = fitted
-      ? children
-      : (
-        <div
-          ref={this.ref}
-          className="Section__content">
-          {children}
-        </div>
-      );
+    const content = fitted ? (
+      children
+    ) : (
+      <div ref={this.ref} className="Section__content">
+        {children}
+      </div>
+    );
     return (
       <div
         ref={fitted ? this.ref : undefined}
@@ -63,20 +61,15 @@ export class Section extends Component {
           className,
           ...computeBoxClassName(rest),
         ])}
-        {...computeBoxProps(rest)}>
+        {...computeBoxProps(rest)}
+      >
         {hasTitle && (
           <div className="Section__title">
-            <span className="Section__titleText">
-              {title}
-            </span>
-            <div className="Section__buttons">
-              {buttons}
-            </div>
+            <span className="Section__titleText">{title}</span>
+            <div className="Section__buttons">{buttons}</div>
           </div>
         )}
-        <div className="Section__rest">
-          {content}
-        </div>
+        <div className="Section__rest">{content}</div>
       </div>
     );
   }
