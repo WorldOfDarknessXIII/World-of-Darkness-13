@@ -273,6 +273,7 @@
 		new /datum/data/mining_equipment("magnifier", /obj/item/detective_scanner, 2),
 		new /datum/data/mining_equipment("body bags", /obj/item/storage/box/bodybags, 5),
 		new /datum/data/mining_equipment("police vest", /obj/item/clothing/suit/vampire/vest/police, 5),
+		new /datum/data/mining_equipment("smoke grenade",			/obj/item/grenade/smokebomb, 5),
 		new /datum/data/mining_equipment("Colt M1911 magazine",		/obj/item/ammo_box/magazine/vamp45acp,	10),
 		new /datum/data/mining_equipment("AUG Magazines",			/obj/item/ammo_box/magazine/vampaug,	10),
 		new /datum/data/mining_equipment("AR-15 Magazines",			/obj/item/ammo_box/magazine/vamp556,	10),
@@ -283,15 +284,12 @@
 		new /datum/data/mining_equipment("mp5 magazine",			/obj/item/ammo_box/magazine/vamp9mp5, 20),
 		new /datum/data/mining_equipment("Glock19",					/obj/item/gun/ballistic/automatic/vampire/glock19,	25),
 		new /datum/data/mining_equipment("Colt M1911",				/obj/item/gun/ballistic/automatic/vampire/m1911,	25),
-		new /datum/data/mining_equipment("SPAS15 magazine",			/obj/item/ammo_box/magazine/vampautoshot,	30),
 		new /datum/data/mining_equipment("12ga slug",				/obj/item/ammo_box/vampire/c12g,	35),
 		new /datum/data/mining_equipment("PD Radio", 				/obj/item/p25radio/police, 50),
 		new /datum/data/mining_equipment("shotgun",					/obj/item/gun/ballistic/shotgun/vampire, 50),
 		new /datum/data/mining_equipment("submachine gun",			/obj/item/gun/ballistic/automatic/vampire/mp5, 100),
 		new /datum/data/mining_equipment("assault rifle",			/obj/item/gun/ballistic/automatic/vampire/ar15, 125),
-		new /datum/data/mining_equipment("SPAS15",					/obj/item/gun/ballistic/automatic/vampire/autoshotgun, 200),
-		new /datum/data/mining_equipment("sniper rifle",			/obj/item/gun/ballistic/automatic/vampire/sniper, 300),
-	)	//PSEUDO_M todo: add .50 ammo to this list
+	)	//Removing the SPAS15 and moving the Sniper to the Armoury because I hate fun
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/mining_voucher/voucher, mob/redeemer)
 	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator Kit", "Minebot Kit", "Extraction and Rescue Kit", "Crusher Kit", "Mining Conscription Kit")
