@@ -122,13 +122,11 @@
 #include "range_return.dm"
 #include "reagent_mod_procs.dm"
 #include "reagent_names.dm"
-
 #include "reagent_transfer.dm"
 #include "resist.dm"
 #include "screenshot_basic.dm"
 #include "screenshot_humanoids.dm"
 #include "screenshot_husk.dm"
-#include "simple_animal_freeze.dm"
 #include "siunit.dm"
 #include "slips.dm"
 #include "species_config_sanity.dm"
