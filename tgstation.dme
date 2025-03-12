@@ -154,7 +154,6 @@
 #include "code\__DEFINES\wod13\discipline.dm"
 #include "code\__DEFINES\wod13\lockpick_difficulty.dm"
 #include "code\__DEFINES\wod13\signals_kindred.dm"
-#include "code\__DEFINES\wod13\status_effects.dm"
 #include "code\__DEFINES\wod13\status_effects_debuffs.dm"
 #include "code\__DEFINES\wod13\subsystems.dm"
 #include "code\__DEFINES\wod13\traits.dm"
