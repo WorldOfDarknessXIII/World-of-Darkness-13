@@ -70,11 +70,11 @@
 
 /turf/closed/wall/vampwall/MouseDrop_T(atom/dropping, mob/user, params)
 	. = ..()
-	if(user.m_intent != INTENT_HARM)
+	if(user.a_intent != INTENT_HARM)
 		//Adds the component only once. We do it here & not in Initialize() because there are tons of windows & we don't want to add to their init times
 		LoadComponent(/datum/component/leanable, dropping)
 	else
-		if(get_dist(user, dropping) < 2)
+		if(get_dist(user, src) < 2)
 			var/turf/above_turf = locate(x, y, z + 1)
 			if(above_turf && istype(above_turf, /turf/open/openspace))
 				var/mob/living/carbon/human/carbon_human = user

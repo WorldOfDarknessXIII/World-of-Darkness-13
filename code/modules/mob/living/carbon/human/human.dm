@@ -1166,8 +1166,8 @@
 		var/total_athletics = get_total_athletics()
 		to_chat(src, "<span class='notice'>You start climbing up...</span>")
 
-		var/result = do_after(src, 50 - (total_dexterity + total_athletics * 5), above_turf)
-		if(!result)
+		var/result = do_after(src, 50 - (total_dexterity + total_athletics * 5), src)
+		if(!result || HAS_TRAIT(src, TRAIT_LEANING))
 			to_chat(src, "<span class='warning'>You were interrupted and failed to climb up.</span>")
 			return
 
