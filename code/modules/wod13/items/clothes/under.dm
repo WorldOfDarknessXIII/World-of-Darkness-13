@@ -11,7 +11,10 @@
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	body_worn = TRUE
 	fitted = NO_FEMALE_UNIFORM
-	cost = 10
+
+/obj/item/clothing/under/vampire/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 10, "undersuit", FALSE)
 
 /obj/item/clothing/under/vampire/brujah
 	name = "punk attire"
@@ -407,7 +410,10 @@
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	body_worn = TRUE
 	fitted = NO_FEMALE_UNIFORM
-	cost = 10
+
+/obj/item/clothing/under/pentex/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 10, "undersuit", FALSE)
 
 /obj/item/clothing/under/pentex/pentex_janitor
 	name = "Ardus Enterprises custodian jumpsuit"

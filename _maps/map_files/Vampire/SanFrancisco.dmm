@@ -674,21 +674,9 @@
 "ack" = (
 /obj/structure/table/wood,
 /obj/item/vamp/keys/hack,
-/obj/item/weedpack{
-	cost = 150;
-	desc = "Green and smelly... It's a special one, maybe costs hundreds of dollars...";
-	name = "Unique green package"
-	},
-/obj/item/weedpack{
-	cost = 150;
-	desc = "Green and smelly... It's a special one, maybe costs hundreds of dollars...";
-	name = "Unique green package"
-	},
-/obj/item/weedpack{
-	cost = 150;
-	desc = "Green and smelly... It's a special one, maybe costs hundreds of dollars...";
-	name = "Unique green package"
-	},
+/obj/item/weedpack,
+/obj/item/weedpack,
+/obj/item/weedpack,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/sewer/nosferatu_town)
 "acm" = (
@@ -20108,7 +20096,6 @@
 /obj/structure/rack,
 /obj/item/melee/vampirearms/katana{
 	color = "#ccffff";
-	cost = 500;
 	desc = "I don't know, but somehow the Prince managed to convince the police that the Sheriff is a big fan of Japanese animation, and this katana is a replica. You can wear it without breaking the masquerade";
 	force = 50;
 	name = "Sheriff's special";
@@ -21226,7 +21213,6 @@
 /obj/item/ammo_box/vampire/c556/incendiary,
 /obj/structure/guncase,
 /obj/item/gun/ballistic/automatic/vampire/ar15{
-	cost = 700;
 	desc = "This rifle has an official hunting license and 'supposed' modifications. The underclass should keep their heads down.";
 	masquerade_violating = 0;
 	name = "Licensed AR-15 Carbine";
@@ -26421,19 +26407,16 @@
 	pixel_y = 10
 	},
 /obj/item/gun/ballistic/automatic/vampire/ar15{
-	cost = 0;
 	desc = "A shiny new SFPD Carbine, courtesy of improved budgets and a dire need to clean these streets.";
 	masquerade_violating = 1;
 	name = "Police Issue CAR-15"
 	},
 /obj/item/gun/ballistic/automatic/vampire/ar15{
-	cost = 0;
 	desc = "A shiny new SFPD Carbine, courtesy of improved budgets and a dire need to clean these streets.";
 	masquerade_violating = 1;
 	name = "Police Issue CAR-15"
 	},
 /obj/item/gun/ballistic/automatic/vampire/ar15{
-	cost = 0;
 	desc = "A shiny new SFPD Carbine, courtesy of improved budgets and a dire need to clean these streets.";
 	masquerade_violating = 1;
 	name = "Police Issue CAR-15"
@@ -28121,11 +28104,7 @@
 /obj/machinery/light/small/pink{
 	pixel_y = 32
 	},
-/obj/item/weedpack{
-	cost = 150;
-	desc = "Green and smelly... It's a special one, maybe costs hundreds of dollars...";
-	name = "Unique green package"
-	},
+/obj/item/weedpack,
 /obj/effect/decal/pallet,
 /turf/open/floor/plating/concrete,
 /area/vtm/interior)
@@ -33837,7 +33816,6 @@
 "fOR" = (
 /obj/structure/table/wood/fancy,
 /obj/item/claymore/weak/ceremonial{
-	cost = 1200;
 	desc = "A rusted claymore, once at the heart of a powerful clan struck down and oppressed by tyrants, it has been passed down the ages as a symbol of defiance."
 	},
 /turf/open/floor/plating/parquetry/rich,
@@ -36940,22 +36918,18 @@
 	},
 /obj/manholedown,
 /obj/item/clothing/head/vampire/helmet{
-	cost = 0;
 	masquerade_violating = 1;
 	name = "SFPD Riot helmet"
 	},
 /obj/item/clothing/head/vampire/helmet{
-	cost = 0;
 	masquerade_violating = 1;
 	name = "SFPD Riot helmet"
 	},
 /obj/item/clothing/head/vampire/helmet{
-	cost = 0;
 	masquerade_violating = 1;
 	name = "SFPD Riot helmet"
 	},
 /obj/item/clothing/head/vampire/helmet{
-	cost = 0;
 	masquerade_violating = 1;
 	name = "SFPD Riot helmet"
 	},
@@ -47949,56 +47923,16 @@
 /area/vtm/sewer)
 "naK" = (
 /obj/structure/closet/crate/large,
-/obj/item/weedpack{
-	cost = 30;
-	desc = "Green and TOO smelly... Don't worth so much...";
-	name = "strange green package"
-	},
-/obj/item/weedpack{
-	cost = 30;
-	desc = "Green and TOO smelly... Don't worth so much...";
-	name = "strange green package"
-	},
-/obj/item/weedpack{
-	cost = 30;
-	desc = "Green and TOO smelly... Don't worth so much...";
-	name = "strange green package"
-	},
-/obj/item/weedpack{
-	cost = 30;
-	desc = "Green and TOO smelly... Don't worth so much...";
-	name = "strange green package"
-	},
-/obj/item/weedpack{
-	cost = 30;
-	desc = "Green and TOO smelly... Don't worth so much...";
-	name = "strange green package"
-	},
-/obj/item/weedpack{
-	cost = 30;
-	desc = "Green and TOO smelly... Don't worth so much...";
-	name = "strange green package"
-	},
-/obj/item/weedpack{
-	cost = 30;
-	desc = "Green and TOO smelly... Don't worth so much...";
-	name = "strange green package"
-	},
-/obj/item/weedpack{
-	cost = 30;
-	desc = "Green and TOO smelly... Don't worth so much...";
-	name = "strange green package"
-	},
-/obj/item/weedpack{
-	cost = 30;
-	desc = "Green and TOO smelly... Don't worth so much...";
-	name = "strange green package"
-	},
-/obj/item/weedpack{
-	cost = 30;
-	desc = "Green and TOO smelly... Don't worth so much...";
-	name = "strange green package"
-	},
+/obj/item/weedpack,
+/obj/item/weedpack,
+/obj/item/weedpack,
+/obj/item/weedpack,
+/obj/item/weedpack,
+/obj/item/weedpack,
+/obj/item/weedpack,
+/obj/item/weedpack,
+/obj/item/weedpack,
+/obj/item/weedpack,
 /turf/open/floor/plating/sidewalk/poor,
 /area/vtm/interior)
 "naV" = (
@@ -52014,11 +51948,7 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/anarch)
 "pff" = (
-/obj/item/weedpack{
-	cost = 30;
-	desc = "Green and TOO smelly... Don't worth so much...";
-	name = "strange green package"
-	},
+/obj/item/weedpack,
 /turf/closed/wall/vampwall/rich/old/low,
 /area/vtm/interior/strip)
 "pfo" = (
@@ -53806,7 +53736,6 @@
 /obj/item/melee/vampirearms/baseball{
 	armour_penetration = 10;
 	block_chance = 15;
-	cost = 500;
 	force = 45;
 	max_integrity = 1000;
 	name = "That bat"
@@ -54605,9 +54534,7 @@
 /area/vtm/sewer/nosferatu_town)
 "qzf" = (
 /obj/structure/table/wood,
-/obj/item/documents{
-	cost = 500
-	},
+/obj/item/documents,
 /turf/open/floor/plating/vampplating/stone,
 /area/vtm/interior/bianchiBank)
 "qzi" = (
@@ -61816,7 +61743,6 @@
 /obj/item/melee/vampirearms/baseball{
 	armour_penetration = 10;
 	block_chance = 15;
-	cost = 500;
 	force = 45;
 	max_integrity = 1000;
 	name = "That bat"
@@ -63529,11 +63455,7 @@
 /area/vtm/interior/police)
 "uYP" = (
 /obj/structure/glowshroom/single,
-/obj/item/weedpack{
-	cost = 150;
-	desc = "Green and smelly... It's a special one, maybe costs hundreds of dollars...";
-	name = "Unique green package"
-	},
+/obj/item/weedpack,
 /turf/open/floor/plating/rough/cave,
 /area/vtm/interior)
 "uYQ" = (
@@ -65872,11 +65794,7 @@
 "wjg" = (
 /obj/structure/table,
 /obj/item/evidencebag,
-/obj/item/weedpack{
-	cost = 30;
-	desc = "Green and TOO smelly... Don't worth so much...";
-	name = "strange green package"
-	},
+/obj/item/weedpack,
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/interior/police)
 "wjy" = (
@@ -66232,7 +66150,6 @@
 "wtR" = (
 /obj/structure/table/wood/fancy,
 /obj/item/gun/ballistic/automatic/vampire/thompson{
-	cost = 1000;
 	desc = "As perfectly cared for as the day you met her. The pride of the family, with antique ownership license and a polished sheen. No one can stop you out walking with your wife.";
 	masquerade_violating = 0;
 	name = "The Dontessa";

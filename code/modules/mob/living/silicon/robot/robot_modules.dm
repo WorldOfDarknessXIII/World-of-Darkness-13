@@ -47,7 +47,6 @@
 				rglass_module.glasource = get_or_create_estorage(rglass_module.glasource)
 
 		if(istype(sheet_module.source))
-			sheet_module.cost = max(sheet_module.cost, 1) // Must not cost 0 to prevent div/0 errors.
 			sheet_module.is_cyborg = TRUE
 
 	if(I.loc != src)

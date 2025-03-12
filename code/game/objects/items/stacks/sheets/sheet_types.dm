@@ -130,7 +130,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	tableVariant = /obj/structure/table
 	material_type = /datum/material/iron
 	matter_amount = 4
-	cost = 500
 	source = /datum/robot_energy_storage/metal
 
 /obj/item/stack/sheet/metal/narsie_act()
