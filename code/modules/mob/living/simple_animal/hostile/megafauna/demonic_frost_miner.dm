@@ -322,12 +322,12 @@ Difficulty: Extremely Hard
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/equipped(mob/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_FEET)
-		ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+		ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(src))
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/dropped(mob/user)
 	. = ..()
 	// Could have been blown off in an explosion from the previous owner
-	REMOVE_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(src))
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/ui_action_click(mob/user)
 	on = !on

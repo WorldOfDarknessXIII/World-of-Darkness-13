@@ -22,3 +22,9 @@
 #define LANGUAGE_STONER			"stoner"
 #define LANGUAGE_VOICECHANGE	"voicechange"
 
+
+// Language flags. Used in granting and removing languages.
+/// This language can be spoken.
+#define SPOKEN_LANGUAGE (1<<0)
+/// This language can be understood.
+#define UNDERSTOOD_LANGUAGE (1<<1)

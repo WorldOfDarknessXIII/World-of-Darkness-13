@@ -989,6 +989,15 @@
 	var/datum/language_holder/LH = get_language_holder()
 	return LH.copy_languages(from_holder, source_override)
 
+/// Sets the passed path as the active language
+/// Returns the currently selected language if successful, if the language was not valid, returns null
+/atom/movable/proc/set_active_language(language_path)
+	var/datum/language_holder/our_holder = get_language_holder()
+	our_holder.selected_language = language_path
+
+	return our_holder.get_selected_language() // verifies its validity, returns it if successful.
+
+
 /// Empties out the atom specific languages and updates them according to the current atoms language holder.
 /// As a side effect, it also creates missing language holders in the process.
 /atom/movable/proc/update_atom_languages()

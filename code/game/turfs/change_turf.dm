@@ -165,28 +165,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			flags |= CHANGETURF_RECALC_ADJACENT
 		return ..()
 
-// Take off the top layer turf and replace it with the next baseturf down
-/turf/proc/ScrapeAway(amount=1, flags)
-	if(!amount)
-		return
-	if(length(baseturfs))
-		var/list/new_baseturfs = baseturfs.Copy()
-		var/turf_type = new_baseturfs[max(1, new_baseturfs.len - amount + 1)]
-		while(ispath(turf_type, /turf/baseturf_skipover))
-			amount++
-			if(amount > new_baseturfs.len)
-				CRASH("The bottommost baseturf of a turf is a skipover [src]([type])")
-			turf_type = new_baseturfs[max(1, new_baseturfs.len - amount + 1)]
-		new_baseturfs.len -= min(amount, new_baseturfs.len - 1) // No removing the very bottom
-		if(new_baseturfs.len == 1)
-			new_baseturfs = new_baseturfs[1]
-		return ChangeTurf(turf_type, new_baseturfs, flags)
-
-	if(baseturfs == type)
-		return src
-
-	return ChangeTurf(baseturfs, baseturfs, flags) // The bottom baseturf will never go away
-
 // Take the input as baseturfs and put it underneath the current baseturfs
 // If fake_turf_type is provided and new_baseturfs is not the baseturfs list will be created identical to the turf type's
 // If both or just new_baseturfs is provided they will be inserted below the existing baseturfs
@@ -257,30 +235,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	else
 		change_type = new_baseturfs
 	return ChangeTurf(change_type, null, flags)
-
-// Copy an existing turf and put it on top
-// Returns the new turf
-/turf/proc/CopyOnTop(turf/copytarget, ignore_bottom=1, depth=INFINITY, copy_air = FALSE)
-	var/list/new_baseturfs = list()
-	new_baseturfs += baseturfs
-	new_baseturfs += type
-
-	if(depth)
-		var/list/target_baseturfs
-		if(length(copytarget.baseturfs))
-			// with default inputs this would be Copy(clamp(2, -INFINITY, baseturfs.len))
-			// Don't forget a lower index is lower in the baseturfs stack, the bottom is baseturfs[1]
-			target_baseturfs = copytarget.baseturfs.Copy(clamp(1 + ignore_bottom, 1 + copytarget.baseturfs.len - depth, copytarget.baseturfs.len))
-		else if(!ignore_bottom)
-			target_baseturfs = list(copytarget.baseturfs)
-		if(target_baseturfs)
-			target_baseturfs -= new_baseturfs & GLOB.blacklisted_automated_baseturfs
-			new_baseturfs += target_baseturfs
-
-	var/turf/newT = copytarget.copyTurf(src, copy_air)
-	newT.baseturfs = baseturfs_string_list(new_baseturfs, newT)
-	return newT
-
 
 //If you modify this function, ensure it works correctly with lateloaded map templates.
 /turf/proc/AfterChange(flags, oldType) //called after a turf has been replaced in ChangeTurf()

@@ -452,7 +452,7 @@
 
 /obj/item/melee/vampirearms/knife/gangrel/Initialize()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(src))
 
 /obj/item/melee/vampirearms/chainsaw
 	name = "chainsaw"

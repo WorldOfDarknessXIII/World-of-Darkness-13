@@ -1,5 +1,36 @@
 GLOBAL_VAR(log_directory)
 GLOBAL_PROTECT(log_directory)
+
+#define DECLARE_LOG_NAMED(log_var_name, log_file_name, start)\
+GLOBAL_VAR(##log_var_name);\
+GLOBAL_PROTECT(##log_var_name);\
+/world/_initialize_log_files(temp_log_override = null){\
+	..();\
+	GLOB.##log_var_name = temp_log_override || "[GLOB.log_directory]/[##log_file_name].log";\
+	if(!temp_log_override && ##start){\
+		start_log(GLOB.##log_var_name);\
+	}\
+}
+
+#define DECLARE_LOG(log_name, start) DECLARE_LOG_NAMED(##log_name, "[copytext(#log_name, 1, length(#log_name) - 3)]", start)
+#define START_LOG TRUE
+#define DONT_START_LOG FALSE
+
+/// Populated by log declaration macros to set log file names and start messages
+/world/proc/_initialize_log_files(temp_log_override = null)
+	// Needs to be here to avoid compiler warnings
+	SHOULD_CALL_PARENT(TRUE)
+	return
+
+#ifdef REFERENCE_TRACKING_LOG_APART
+DECLARE_LOG_NAMED(harddel_log, "harddels", START_LOG)
+#endif
+
+#if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
+DECLARE_LOG_NAMED(test_log, "tests", START_LOG)
+#endif
+
+
 GLOBAL_VAR(world_game_log)
 GLOBAL_PROTECT(world_game_log)
 GLOBAL_VAR(world_runtime_log)
@@ -82,3 +113,9 @@ GLOBAL_PROTECT(picture_logging_id)
 GLOBAL_VAR(picture_logging_prefix)
 GLOBAL_PROTECT(picture_logging_prefix)
 /////
+
+
+#undef DECLARE_LOG
+#undef DECLARE_LOG_NAMED
+#undef START_LOG
+#undef DONT_START_LOG
