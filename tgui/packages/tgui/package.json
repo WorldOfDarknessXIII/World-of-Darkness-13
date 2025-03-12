@@ -5,6 +5,7 @@
   "dependencies": {
     "common": "workspace:*",
     "dompurify": "^2.2.6",
+    "file-extension-icon-js": "^1.1.6",
     "inferno": "^7.4.7",
     "inferno-vnode-flags": "^7.4.7",
     "marked": "^1.2.7",
