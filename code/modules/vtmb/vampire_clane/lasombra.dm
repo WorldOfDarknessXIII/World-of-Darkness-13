@@ -10,7 +10,6 @@
 	male_clothes = /obj/item/clothing/under/vampire/emo
 	female_clothes = /obj/item/clothing/under/vampire/business
 	enlightenment = TRUE
-	whitelisted = TRUE
 
 /datum/vampireclane/lasombra/post_gain(mob/living/carbon/human/H)
 	..()
