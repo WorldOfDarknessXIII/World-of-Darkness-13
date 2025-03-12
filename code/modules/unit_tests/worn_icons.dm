@@ -56,12 +56,6 @@
 				already_warned_icons += icon_state
 				TEST_FAIL("[item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\" in '[icon_file]'[match_message]")
 
-		if(cached_slot_flags & ITEM_SLOT_ID)
-			icon_file = 'icons/mob/clothing/id.dmi'
-			if(!(icon_state in icon_states(icon_file, 1)))
-				already_warned_icons += icon_state
-				TEST_FAIL("[item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\" in '[icon_file]'[match_message]")
-
 		if(cached_slot_flags & ITEM_SLOT_GLOVES)
 			icon_file = 'icons/mob/clothing/hands.dmi'
 			if(!(icon_state in icon_states(icon_file, 1)))

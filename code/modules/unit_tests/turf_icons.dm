@@ -26,7 +26,4 @@
 
 	var/turf/initial_turf_type = run_loc_floor_bottom_left.type
 
-	var/list/ignored_types = list()
-	//ignored_types += typesof(YOUR_DOWNSTREAM_TYPEPATH(s)_HERE) //MODULARITY SUPPORT. If you have snowflake typepaths that are blacklisted in, for example, create & destroy unit test because they require certain SS's being init, use this to blacklist them.
-
 	run_loc_floor_bottom_left = run_loc_floor_bottom_left.ChangeTurf(initial_turf_type) //cleanup.

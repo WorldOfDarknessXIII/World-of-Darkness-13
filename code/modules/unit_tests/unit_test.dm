@@ -166,7 +166,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
  * * clicked_on: The atom that will be clicked
  * * passed_params: A list of parameters to pass to the click
  */
-/datum/unit_test/proc/click_wrapper(mob/living/clicker, atom/clicked_on, list/passed_params = list(LEFT_CLICK = 1, BUTTON = LEFT_CLICK))
+/datum/unit_test/proc/click_wrapper(mob/living/clicker, atom/clicked_on, list/passed_params = list("left" = 1, "button" = "left"))
 	clicker.next_click = -1
 	clicker.next_move = -1
 	clicker.ClickOn(clicked_on, list2params(passed_params))
