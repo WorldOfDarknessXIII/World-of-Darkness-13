@@ -14,7 +14,12 @@
 
 # MAINTAINERS
 
-# Dominion/Cyberboss
+# Lucia/The Weaver/TheCarnalest
+
+/code/modules/wod13/datums/actions/discipline.dm @TheCarnalest
+/code/modules/wod13/datums/powers/ @TheCarnalest
+/code/__DEFINES/wod13/dcs/power_signals.dm @TheCarnalest
+/code/__DEFINES/wod13/discipline.dm @TheCarnalest
 
 
 # CONTRIBUTORS
@@ -23,8 +28,5 @@
 
 # Expensive files that touching basically always cause performance problems
 ## Init times
-**/*_EXPENSIVE.dm @Mothblocks @LemonInTheDark
 
 # SIC SEMPER TYRANNIS
-
-/code/modules/hydroponics/grown/citrus.dm @LemonInTheDark @optimumtact
