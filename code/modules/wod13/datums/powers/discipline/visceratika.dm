@@ -85,14 +85,12 @@
 	cooldown_length = 2 MINUTES
 	duration_length = 1 MINUTES
 
-	///toggle if it's a statue or not
+	///is the statue toggled or not
 	var/is_statue = FALSE
 
 /datum/discipline_power/visceratika/armor_of_terra/activate()
 	. = ..()
-	is_statue = !is_statue //toggles it
-
-	if(is_statue)
+	if(!is_statue)
 		addtimer(CALLBACK(src, PROC_REF(deactivate)), duration_length * 3) //failsafe
 		to_chat(owner, span_warning("You harden your skin far more than you're able to take for long!"))
 		ADD_TRAIT(owner, TRAIT_STUNIMMUNE, MAGIC)
@@ -103,7 +101,7 @@
 		ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, MAGIC_TRAIT)
 
 		owner.name = "Statue of [owner.real_name]"
-		owner.status_flags ^= GODMODE
+		owner.status_flags |= GODMODE
 		var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 		owner.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 
@@ -111,6 +109,8 @@
 			ADD_TRAIT(stuff, TRAIT_NODROP, MAGIC)
 	else
 		unpetrify()
+
+	is_statue = !is_statue //toggles it
 
 /datum/discipline_power/visceratika/armor_of_terra/deactivate()
 	. = ..()
@@ -128,7 +128,7 @@
 	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, MAGIC_TRAIT)
 
 	owner.name = owner.real_name
-	owner.status_flags ^= GODMODE
+	owner.status_flags &= GODMODE
 	owner.remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
 	for(var/obj/item/stuff in owner.contents)
