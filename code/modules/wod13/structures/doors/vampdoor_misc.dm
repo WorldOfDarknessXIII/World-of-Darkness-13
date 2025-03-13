@@ -82,3 +82,11 @@
 	locked = TRUE
 	lock_id = "strip"
 	lockpick_difficulty = 4
+
+/obj/structure/vampdoor/simple/triad
+	locked = TRUE
+	lock_id = "triad"
+	lockpick_difficulty = 8
+
+/obj/structure/vampdoor/simple/triad/high_security
+	lockpick_difficulty = 16
