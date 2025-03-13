@@ -348,6 +348,21 @@ Key procs
 	understood_languages = list(/datum/language/english = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/english = list(LANGUAGE_ATOM))
 
+/datum/language_holder/werewolf
+	understood_languages = list(/datum/language/garou_tongue = list(LANGUAGE_ATOM),
+								/datum/language/english = list(LANGUAGE_ATOM),
+								/datum/language/primal_tongue = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/garou_tongue = list(LANGUAGE_ATOM),
+							/datum/language/english = list(LANGUAGE_ATOM))
+
+/datum/language_holder/werewolf_transformed
+	understood_languages = list(/datum/language/garou_tongue = list(LANGUAGE_ATOM),
+								/datum/language/english = list(LANGUAGE_ATOM),
+								/datum/language/primal_tongue = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/garou_tongue = list(LANGUAGE_ATOM),
+								/datum/language/english = list(LANGUAGE_ATOM),
+								/datum/language/primal_tongue = list(LANGUAGE_ATOM))
+
 /datum/language_holder/empty
 	understood_languages = list()
 	spoken_languages = list()
@@ -355,3 +370,6 @@ Key procs
 /datum/language_holder/universal/New()
 	..()
 	grant_all_languages()
+
+/datum/language_holder/get_random_understood_language()
+	. = ..()
