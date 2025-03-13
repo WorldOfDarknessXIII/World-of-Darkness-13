@@ -85,13 +85,9 @@
 	cooldown_length = 1 MINUTES
 	duration_length = 1 MINUTES
 
-	///is the statue toggled or not
-	var/is_statue = FALSE
-
 /datum/discipline_power/visceratika/armor_of_terra/activate()
-	. = ..()
-	if(!is_statue)
-		addtimer(CALLBACK(src, PROC_REF(deactivate)), duration_length * 3) //failsafe
+	if(!active)
+		addtimer(CALLBACK(src, PROC_REF(deactivate)), duration_length * 3) //failsafe (no, you can't stay in statue mode forever, 3 mins is enough)
 		to_chat(owner, span_warning("You harden your skin far more than you're able to take for long!"))
 		ADD_TRAIT(owner, TRAIT_STUNIMMUNE, MAGIC)
 		ADD_TRAIT(owner, TRAIT_PUSHIMMUNE, MAGIC)
@@ -110,11 +106,10 @@
 	else
 		deactivate()
 
-	is_statue = !is_statue //toggles it
+	. = ..()
 
 /datum/discipline_power/visceratika/armor_of_terra/deactivate()
-	. = ..()
-	if(is_statue)
+	if(active)
 		to_chat(owner, span_warning("You soften your skin, to your normal hardness."))
 		REMOVE_TRAIT(owner, TRAIT_STUNIMMUNE, MAGIC)
 		REMOVE_TRAIT(owner, TRAIT_PUSHIMMUNE, MAGIC)
@@ -129,7 +124,7 @@
 
 		for(var/obj/item/stuff in owner.contents)
 			REMOVE_TRAIT(stuff, TRAIT_NODROP, MAGIC)
-			is_statue = FALSE
+	. = ..()
 
 //FLOW WITHIN THE MOUNTAIN
 /datum/discipline_power/visceratika/flow_within_the_mountain
