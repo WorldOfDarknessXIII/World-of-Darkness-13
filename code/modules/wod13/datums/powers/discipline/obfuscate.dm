@@ -39,6 +39,10 @@
 		if (!istype(viewer, /mob/living/carbon) && !viewer.client)
 			continue
 
+		//the corpses are not watching you
+		if (HAS_TRAIT(viewer, TRAIT_BLIND) || viewer.stat >= UNCONSCIOUS)
+			continue
+
 		to_chat(owner, span_warning("You cannot use [src] while you're being observed!"))
 		return FALSE
 
