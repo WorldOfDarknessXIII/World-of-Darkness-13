@@ -21,7 +21,7 @@
 	check_flags = DISC_CHECK_CONSCIOUS
 
 	toggled = TRUE
-	duration_length = DURATION_TURN
+	duration_length = 2 TURNS
 
 	grouped_powers = list(
 		/datum/discipline_power/fortitude/two,
@@ -52,7 +52,7 @@
 	check_flags = DISC_CHECK_CONSCIOUS
 
 	toggled = TRUE
-	duration_length = DURATION_TURN
+	duration_length = 2 TURNS
 
 	grouped_powers = list(
 		/datum/discipline_power/fortitude/one,
@@ -83,7 +83,7 @@
 	check_flags = DISC_CHECK_CONSCIOUS
 
 	toggled = TRUE
-	duration_length = DURATION_TURN
+	duration_length = 2 TURNS
 
 	grouped_powers = list(
 		/datum/discipline_power/fortitude/one,
@@ -114,7 +114,7 @@
 	check_flags = DISC_CHECK_CONSCIOUS
 
 	toggled = TRUE
-	duration_length = DURATION_TURN
+	duration_length = 2 TURNS
 
 	grouped_powers = list(
 		/datum/discipline_power/fortitude/one,
@@ -145,7 +145,7 @@
 	check_flags = DISC_CHECK_CONSCIOUS
 
 	toggled = TRUE
-	duration_length = DURATION_TURN
+	duration_length = 2 TURNS
 
 	grouped_powers = list(
 		/datum/discipline_power/fortitude/one,

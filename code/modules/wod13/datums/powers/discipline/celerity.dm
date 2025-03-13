@@ -56,7 +56,7 @@
 	check_flags = DISC_CHECK_LYING | DISC_CHECK_IMMOBILE
 
 	toggled = TRUE
-	duration_length = DURATION_TURN
+	duration_length = 2 TURNS
 
 	grouped_powers = list(
 		/datum/discipline_power/celerity/two,
@@ -93,7 +93,7 @@
 	check_flags = DISC_CHECK_LYING | DISC_CHECK_IMMOBILE
 
 	toggled = TRUE
-	duration_length = DURATION_TURN
+	duration_length = 2 TURNS
 
 	grouped_powers = list(
 		/datum/discipline_power/celerity/one,
@@ -129,7 +129,7 @@
 	check_flags = DISC_CHECK_LYING | DISC_CHECK_IMMOBILE
 
 	toggled = TRUE
-	duration_length = DURATION_TURN
+	duration_length = 2 TURNS
 
 	grouped_powers = list(
 		/datum/discipline_power/celerity/one,
@@ -165,7 +165,7 @@
 	check_flags = DISC_CHECK_LYING | DISC_CHECK_IMMOBILE
 
 	toggled = TRUE
-	duration_length = DURATION_TURN
+	duration_length = 2 TURNS
 
 	grouped_powers = list(
 		/datum/discipline_power/celerity/one,
@@ -201,7 +201,7 @@
 	check_flags = DISC_CHECK_LYING | DISC_CHECK_IMMOBILE
 
 	toggled = TRUE
-	duration_length = DURATION_TURN
+	duration_length = 2 TURNS
 
 	grouped_powers = list(
 		/datum/discipline_power/celerity/one,

@@ -21,7 +21,7 @@
 	check_flags = DISC_CHECK_CAPABLE
 
 	toggled = TRUE
-	duration_length = DURATION_TURN
+	duration_length = 2 TURNS
 
 	var/datum/component/tackler
 
@@ -61,7 +61,7 @@
 	check_flags = DISC_CHECK_CAPABLE
 
 	toggled = TRUE
-	duration_length = DURATION_TURN
+	duration_length = 2 TURNS
 
 	var/datum/component/tackler
 
@@ -101,7 +101,7 @@
 	check_flags = DISC_CHECK_CAPABLE
 
 	toggled = TRUE
-	duration_length = DURATION_TURN
+	duration_length = 2 TURNS
 
 	var/datum/component/tackler
 
@@ -141,7 +141,7 @@
 	check_flags = DISC_CHECK_CAPABLE
 
 	toggled = TRUE
-	duration_length = DURATION_TURN
+	duration_length = 2 TURNS
 
 	var/datum/component/tackler
 
@@ -181,7 +181,7 @@
 	check_flags = DISC_CHECK_CAPABLE
 
 	toggled = TRUE
-	duration_length = DURATION_TURN
+	duration_length = 2 TURNS
 
 	var/datum/component/tackler
 
