@@ -77,7 +77,6 @@
 	desc = "Solidify into stone and become invulnerable."
 
 	level = 4
-	vitae_cost = 2
 	check_flags = DISC_CHECK_CONSCIOUS | DISC_CHECK_CAPABLE | DISC_CHECK_LYING
 
 	violates_masquerade = TRUE
@@ -94,7 +93,7 @@
 	is_statue = !is_statue //toggles it
 
 	if(is_statue)
-		addtimer(CALLBACK(src, PROC_REF(deactivate)), cooldown_length) //failsafe
+		addtimer(CALLBACK(src, PROC_REF(deactivate)), duration_length * 3) //failsafe
 		to_chat(owner, span_warning("You harden your skin far more than you're able to take for long!"))
 		ADD_TRAIT(owner, TRAIT_STUNIMMUNE, MAGIC)
 		ADD_TRAIT(owner, TRAIT_PUSHIMMUNE, MAGIC)
