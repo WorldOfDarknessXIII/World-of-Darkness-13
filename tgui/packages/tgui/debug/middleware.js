@@ -4,16 +4,21 @@
  * @license MIT
  */
 
-import { KEY_BACKSPACE, KEY_F10, KEY_F11, KEY_F12 } from 'common/keycodes';
-import { globalEvents } from '../events';
-import { acquireHotKey } from '../hotkeys';
+import { globalEvents } from 'tgui-core/events';
+import { acquireHotKey } from 'tgui-core/hotkeys';
+import { KEY_BACKSPACE, KEY_F10, KEY_F11, KEY_F12 } from 'tgui-core/keycodes';
+
 import {
   openExternalBrowser,
   toggleDebugLayout,
   toggleKitchenSink,
 } from './actions';
 
-const relayedTypes = ['backend/update', 'chat/message'];
+// prettier-ignore
+const relayedTypes = [
+  'backend/update',
+  'chat/message',
+];
 
 export const debugMiddleware = (store) => {
   acquireHotKey(KEY_F11);
@@ -29,11 +34,11 @@ export const debugMiddleware = (store) => {
       // NOTE: We need to call this in a timeout, because we need a clean
       // stack in order for this to be a fatal error.
       setTimeout(() => {
+        // prettier-ignore
         throw new Error(
-          'OOPSIE WOOPSIE!! UwU We made a fucky wucky!! A wittle' +
-            ' fucko boingo! The code monkeys at our headquarters are' +
-            ' working VEWY HAWD to fix this!',
-        );
+          'OOPSIE WOOPSIE!! UwU We made a fucky wucky!! A wittle'
+          + ' fucko boingo! The code monkeys at our headquarters are'
+          + ' working VEWY HAWD to fix this!');
       });
     }
   });
@@ -41,12 +46,12 @@ export const debugMiddleware = (store) => {
 };
 
 export const relayMiddleware = (store) => {
-  const devServer = require('tgui-dev-server/link/client');
+  const devServer = require('tgui-dev-server/link/client.cjs');
   const externalBrowser = location.search === '?external';
   if (externalBrowser) {
     devServer.subscribe((msg) => {
       const { type, payload } = msg;
-      if (type === 'relay' && payload.windowId === window.__windowId__) {
+      if (type === 'relay' && payload.windowId === Byond.windowId) {
         store.dispatch({
           ...payload.action,
           relayed: true,
@@ -71,7 +76,7 @@ export const relayMiddleware = (store) => {
       devServer.sendMessage({
         type: 'relay',
         payload: {
-          windowId: window.__windowId__,
+          windowId: Byond.windowId,
           action,
         },
       });

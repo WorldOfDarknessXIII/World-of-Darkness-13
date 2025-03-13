@@ -1,5 +1,5 @@
-//#define LOWMEMORYMODE //uncomment this to load just titlescreen and runtime town
-
+#define LOWMEMORYMODE //uncomment this to load just titlescreen and runtime town
+#define OKEY 1
 #include "map_files\generic\titlescreen.dmm"
 // #include "map_files\Mining\Lavaland.dmm"
 
