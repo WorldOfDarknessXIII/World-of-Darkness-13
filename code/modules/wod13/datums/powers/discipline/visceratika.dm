@@ -87,7 +87,7 @@
 
 /datum/discipline_power/visceratika/armor_of_terra/activate()
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(deactivate)), duration_length * 2) //failsafe (no, you can't stay in statue mode forever, 3 mins is enough)
+	addtimer(CALLBACK(src, PROC_REF(try_deactivate), null, TRUE), duration_length * 2) //failsafe (no, you can't stay in statue mode forever, 3 mins is enough)
 	to_chat(owner, span_warning("You harden your skin far more than you're able to take for long!"))
 	ADD_TRAIT(owner, TRAIT_STUNIMMUNE, MAGIC)
 	ADD_TRAIT(owner, TRAIT_PUSHIMMUNE, MAGIC)
