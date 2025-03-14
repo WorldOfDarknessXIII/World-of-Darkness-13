@@ -129,7 +129,7 @@
 			spawn(150)
 				H.melee_damage_lower = initial(H.melee_damage_lower)
 				H.melee_damage_upper = initial(H.melee_damage_upper)
-				H.tox_damage_plus = 0
+				H.agg_damage_plus = 0
 				to_chat(owner, "<span class='warning'>Your claws are not sharp anymore...</span>")
 
 /datum/action/gift/beast_speech
