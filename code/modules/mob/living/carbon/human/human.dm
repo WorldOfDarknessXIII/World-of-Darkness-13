@@ -1166,8 +1166,8 @@
 		var/total_athletics = get_total_athletics()
 		to_chat(src, "<span class='notice'>You start climbing up...</span>")
 
-		var/result = do_after(src, 50 - (total_dexterity + total_athletics * 5), 0)
-		if(!result)
+		var/result = do_after(src, 50 - (total_dexterity + total_athletics * 5), src)
+		if(!result || HAS_TRAIT(src, TRAIT_LEANING))
 			to_chat(src, "<span class='warning'>You were interrupted and failed to climb up.</span>")
 			return
 
@@ -1198,19 +1198,6 @@
 			// Reset pixel offsets if failed
 		else
 			to_chat(src, "<span class='warning'>You fail to climb up.</span>")
-
-	return
-
-/mob/living/carbon/human/MouseDrop(atom/over_object)
-	. = ..()
-	if(src == usr)
-		if(istype(over_object, /turf/closed/wall/vampwall))
-			if(get_dist(src, over_object) < 2)
-				var/turf/above_turf = locate(x, y, z + 1)
-				if(above_turf && istype(above_turf, /turf/open/openspace))
-					climb_wall(above_turf)
-				else
-					to_chat(src, "<span class='warning'>You can't climb there!</span>")
 
 	return
 

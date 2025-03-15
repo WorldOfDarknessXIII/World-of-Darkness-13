@@ -26,6 +26,12 @@
 	if(climbable)
 		AddElement(/datum/element/climbable)
 
+/obj/structure/railing/MouseDrop_T(atom/dropping, mob/user, params)
+	. = ..()
+
+	if(!climbable)
+		LoadComponent(/datum/component/leanable, dropping)
+
 /obj/structure/railing/attackby(obj/item/I, mob/living/user, params)
 	..()
 	add_fingerprint(user)

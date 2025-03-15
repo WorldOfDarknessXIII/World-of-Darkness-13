@@ -21,8 +21,6 @@
 // receive a mousedrop
 /atom/proc/MouseDrop_T(atom/dropping, mob/user)
 	SEND_SIGNAL(src, COMSIG_MOUSEDROPPED_ONTO, dropping, user)
-	return
-
 
 /client/MouseDown(object, location, control, params)
 	if (mouse_down_icon)

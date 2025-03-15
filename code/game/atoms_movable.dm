@@ -264,14 +264,15 @@
 		if(!supress_message)
 			M.visible_message("<span class='warning'>[src] grabs [M] passively.</span>", \
 				"<span class='danger'>[src] grabs you passively.</span>")
+	SEND_SIGNAL(pulling, COMSIG_MOVABLE_PULLED)
 	return TRUE
 
 /atom/movable/proc/stop_pulling()
 	if(pulling)
 		pulling.set_pulledby(null)
 		setGrabState(GRAB_PASSIVE)
+		SEND_SIGNAL(pulling, COMSIG_MOVABLE_NO_LONGER_PULLED)
 		pulling = null
-
 
 ///Reports the event of the change in value of the pulledby variable.
 /atom/movable/proc/set_pulledby(new_pulledby)

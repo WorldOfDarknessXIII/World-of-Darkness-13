@@ -52,3 +52,8 @@
 	if(dna.species.space_move(src))
 		return TRUE
 	return ..()
+
+/mob/living/carbon/human/MouseDrop_T(atom/dropping, atom/user)
+	. = ..()
+	if(dropping != src)
+		LoadComponent(/datum/component/leanable, dropping)

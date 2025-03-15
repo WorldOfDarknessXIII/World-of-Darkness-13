@@ -80,6 +80,12 @@
 		var/odds = value ? clamp((value/max_rand_value), 0, 1) : 0
 		. += "<span class='notice'>As an expert in lockpicking, you estimate that you have a [round(odds*100, 1)]% chance to lockpick this door successfully.</span>"
 
+/obj/structure/vampdoor/MouseDrop_T(atom/dropping, mob/user, params)
+	. = ..()
+
+	//Adds the component only once. We do it here & not in Initialize() because there are tons of windows & we don't want to add to their init times
+	LoadComponent(/datum/component/leanable, dropping)
+
 /obj/structure/vampdoor/attack_hand(mob/user)
 	. = ..()
 	var/mob/living/N = user
@@ -124,6 +130,7 @@
 		layer = OPEN_DOOR_LAYER
 		to_chat(user, "<span class='notice'>You open [src].</span>")
 		closed = FALSE
+		SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN)
 	else
 		for(var/mob/living/L in src.loc)
 			if(L)
