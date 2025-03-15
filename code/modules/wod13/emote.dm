@@ -490,7 +490,7 @@
 
 /datum/emote/living/growl/run_emote(mob/user, params , type_override, intentional)
 	. = ..()
-	if(isgarou(user))
+	if(is_garou(user))
 		var/mob/living/carbon/human/wolf = user
 		if(wolf.gender == FEMALE)
 			playsound(get_turf(wolf), 'code/modules/wod13/sounds/female_growl.ogg', 75, FALSE)

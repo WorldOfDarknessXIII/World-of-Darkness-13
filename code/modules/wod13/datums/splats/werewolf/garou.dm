@@ -1,0 +1,1 @@
+/datum/splat/werewolf/garou

@@ -167,5 +167,5 @@
 /datum/species/garou/proc/on_garou_bitten(datum/source, mob/living/carbon/being_bitten)
 	SIGNAL_HANDLER
 
-	if(isgarou(being_bitten) || iswerewolf(being_bitten))
+	if(is_garou(being_bitten) || iswerewolf(being_bitten))
 		return COMPONENT_RESIST_VAMPIRE_KISS

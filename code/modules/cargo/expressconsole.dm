@@ -114,7 +114,7 @@
 		))
 
 /obj/machinery/computer/cargo/express/ui_interact(mob/living/user, datum/tgui/ui)
-	if(iskindred(user))
+	if(is_kindred(user))
 		var/mob/living/carbon/human/H = user
 		if(H.clane)
 			if(H.clane.name == "Lasombra")

@@ -544,11 +544,11 @@
 					H.add_quirk(/datum/quirk/skittish)
 					H.add_quirk(/datum/quirk/pushover)
 				H.create_disciplines()
-				if(isgarou(H))
+				if(is_garou(H))
 					for(var/obj/structure/werewolf_totem/S in GLOB.totems)
 						if(S.tribe == H.auspice.tribe)
 							H.forceMove(get_turf(S))
-				if(iscathayan(H))
+				if(is_kuei_jin(H))
 					if(H.mind)
 						H.mind.dharma = new H.client.prefs.dharma_type()
 						H.mind.dharma.level = H.client.prefs.dharma_level

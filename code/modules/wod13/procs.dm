@@ -5,7 +5,7 @@
 				if("judgement" in H.mind.dharma.tenets)
 					to_chat(H, "<span class='warning'>[src] is doing something bad, I need to punish them!")
 					H.mind.dharma.judgement |= real_name
-	if(!iskindred(src))
+	if(!is_kindred(src))
 		return
 	if(!GLOB.canon_event)
 		return
@@ -57,7 +57,7 @@
 						to_chat(src, "<span class='userhelp'><b>HUMANITY INCREASED!</b></span>")
 
 /mob/living/carbon/human/proc/AdjustMasquerade(var/value, var/forced = FALSE)
-	if(!iskindred(src) && !isghoul(src) && !iscathayan(src))
+	if(!is_kindred(src) && !is_ghoul(src) && !is_kuei_jin(src))
 		return
 	if(!GLOB.canon_event)
 		return

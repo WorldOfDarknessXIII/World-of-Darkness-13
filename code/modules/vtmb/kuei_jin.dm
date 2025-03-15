@@ -1,5 +1,5 @@
 /mob/living/carbon/human/proc/check_kuei_jin_alive()
-	if(iscathayan(src))
+	if(is_kuei_jin(src))
 		if(mind?.dharma)
 			if(mind.dharma.animated == "Yang")
 				return TRUE
@@ -13,7 +13,7 @@
 /mob/living/Life()
 	. = ..()
 
-	if(!iscathayan(src))
+	if(!is_kuei_jin(src))
 		if((yang_chi == 0 && max_yang_chi != 0) && (yang_chi == 0 && max_yang_chi != 0))
 			to_chat(src, "<span clas='warning'>Your vital energies seem to disappear...</span>")
 			adjustCloneLoss(5, TRUE)
@@ -34,7 +34,7 @@
 				to_chat(src, "<span clas='warning'>Your vital energies seem to disappear...</span>")
 				adjustCloneLoss(5, TRUE)
 
-	if(!iscathayan(src))
+	if(!is_kuei_jin(src))
 		if (COOLDOWN_FINISHED(src, chi_restore))
 			COOLDOWN_START(src, chi_restore, 30 SECONDS)
 			if(yang_chi < max_yang_chi)
@@ -73,7 +73,7 @@
 /mob/living/proc/update_chi_hud()
 	if(!client || !hud_used)
 		return
-	if(iscathayan(src))
+	if(is_kuei_jin(src))
 		hud_used.yin_chi_icon.icon_state = "yin-[round((yin_chi/max_yin_chi)*12)]"
 		hud_used.yang_chi_icon.icon_state = "yang-[round((yang_chi/max_yang_chi)*12)]"
 		hud_used.demon_chi_icon.icon_state = "demon-[round((demon_chi/max_demon_chi)*12)]"
@@ -466,11 +466,11 @@
 			has_gnosis = TRUE
 
 	//this method of feeding targets splat-specific Quintessence sources first
-	if ((iskindred(victim) || isghoul(victim)) && (victim.bloodpool > 0)) //drain vitae bloodpool
+	if ((is_kindred(victim) || is_ghoul(victim)) && (victim.bloodpool > 0)) //drain vitae bloodpool
 		victim.bloodpool = max(0, victim.bloodpool - 1)
 		kueijin.yin_chi = min(kueijin.yin_chi + 1, kueijin.max_yin_chi)
 		to_chat(kueijin, "<span class='medradio'>Some bitter <b>Yin</b> Chi enters you...</span>")
-	else if ((isgarou(victim) || iswerewolf(victim)) && has_gnosis) //drain gnosis
+	else if ((is_garou(victim) || iswerewolf(victim)) && has_gnosis) //drain gnosis
 		adjust_gnosis(-1, victim, sound = TRUE)
 		kueijin.yang_chi = min(kueijin.yang_chi + 1, kueijin.max_yang_chi)
 		to_chat(kueijin, "<span class='engradio'>Some fiery <b>Yang</b> Chi enters you...</span>")
@@ -691,5 +691,5 @@
 /datum/species/kuei_jin/proc/on_kuei_jin_bitten(datum/source, mob/living/carbon/being_bitten)
 	SIGNAL_HANDLER
 
-	if(iscathayan(being_bitten))
+	if(is_kuei_jin(being_bitten))
 		return COMPONENT_RESIST_VAMPIRE_KISS

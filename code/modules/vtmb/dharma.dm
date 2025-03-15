@@ -178,7 +178,7 @@
 		return
 
 	for(var/mob/living/carbon/human/cathayan in viewers(6, source))
-		if(iscathayan(cathayan))
+		if(is_kuei_jin(cathayan))
 			if(cathayan.mind.dharma?.Po == po_type)
 				cathayan.mind.dharma?.roll_po(source, cathayan)
 
@@ -195,7 +195,7 @@
 
 //good luck to whoever wants to fix this thing
 /mob/living/carbon/human/frenzystep()
-	if(!iscathayan(src))
+	if(!is_kuei_jin(src))
 		return ..()
 
 	if(!mind?.dharma?.Po_combat)

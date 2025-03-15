@@ -46,7 +46,11 @@
 /obj/item/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!proximity)
 		return
-	if(iskindred(target) && is_iron)
+
+	. = ..()
+
+	// TODO: [Lucia] this here? signals
+	if(is_kindred(target) && is_iron)
 		var/mob/living/carbon/human/L = target
 		if(L.clane?.name == "Kiasyd")
 			var/datum/vampireclane/kiasyd/kiasyd = L.clane
@@ -54,14 +58,15 @@
 				COOLDOWN_START(kiasyd, cold_iron_frenzy, 10 SECONDS)
 				to_chat(L, "<span class='danger'><b>COLD IRON!</b></span>")
 				L.rollfrenzy()
-	if(iscathayan(target) && is_iron)
+
+	if(is_kuei_jin(target) && is_iron)
 		var/mob/living/carbon/human/L = target
 		if(L.max_yang_chi > L.max_yin_chi + 2)
 			to_chat(L, "<span class='danger'><b>COLD METAL!</b></span>")
 			L.adjustBruteLoss(15, TRUE)
-	if(iscathayan(target) && is_wood)
+
+	if(is_kuei_jin(target) && is_wood)
 		var/mob/living/carbon/human/L = target
 		if(L.max_yin_chi > L.max_yang_chi + 2)
 			to_chat(L, "<span class='danger'><b>WOOD!</b></span>")
 			L.adjustBruteLoss(15, TRUE)
-	..()

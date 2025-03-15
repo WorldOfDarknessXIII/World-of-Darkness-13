@@ -44,7 +44,7 @@
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 
 	//faction, job, etc
-	if(iskindred(user) && iskindred(src) && is_face_visible())
+	if(is_kindred(user) && is_kindred(src) && is_face_visible())
 		var/mob/living/carbon/human/vampire = user
 		var/same_clan = vampire.clane == clane
 		switch(info_known)
@@ -390,7 +390,7 @@
 					msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
 		//examine text for unusual appearances
-		if (iskindred(src) && is_face_visible())
+		if (is_kindred(src) && is_face_visible())
 			switch(clane.alt_sprite)
 				if ("nosferatu")
 					msg += "<span class='danger'><b>[p_they(TRUE)] look[p_s()] utterly deformed and inhuman!</b></span><br>"
@@ -419,17 +419,17 @@
 				msg += "<span class='deadsay'>[t_He] [t_is] staring blanky into space, [t_his] eyes are slightly grayed out.</span>\n"
 
 	//examine text for garou detecting Triatic influences on others
-	if (isgarou(user) || iswerewolf(user))
+	if (is_garou(user) || iswerewolf(user))
 		if (get_dist(user, src) <= 2)
 			var/wyrm_taint = NONE
 			var/weaver_taint = NONE
 			var/wyld_taint = NONE
 
-			if(iscathayan(src))
+			if(is_kuei_jin(src))
 				if(!check_kuei_jin_alive())
 					wyrm_taint++
 
-			if (iskindred(src))
+			if (is_kindred(src))
 				var/mob/living/carbon/human/vampire = src
 				weaver_taint++
 
@@ -439,7 +439,7 @@
 				if ((vampire.clane?.name == "Baali") || ( (client?.prefs?.enlightenment && (humanity > 7)) || (!client?.prefs?.enlightenment && (humanity < 4)) ))
 					wyrm_taint++
 
-			if (isgarou(src) || iswerewolf(src)) //werewolves have the taint of whatever Triat member they venerate most
+			if (is_garou(src) || iswerewolf(src)) //werewolves have the taint of whatever Triat member they venerate most
 				var/mob/living/carbon/wolf = src
 
 				switch(wolf.auspice.tribe)

@@ -16,31 +16,31 @@
 		if(ishuman(src))
 			H = src
 
-		if(isgarou(src) || iswerewolf(src))
+		if(is_garou(src) || iswerewolf(src))
 			to_chat(src, "I'm full of <span class='danger'><b>ANGER</b></span>, and I'm about to flare up in <span class='danger'><b>RAGE</b></span>. Rolling...")
-		else if(iskindred(src))
+		else if(is_kindred(src))
 			to_chat(src, "I need <span class='danger'><b>BLOOD</b></span>. The <span class='danger'><b>BEAST</b></span> is calling. Rolling...")
-		else if(iscathayan(src))
+		else if(is_kuei_jin(src))
 			to_chat(src, "My <span class='danger'><b>P'o</b></span> is awakening. Rolling...")
 		else
 			to_chat(src, "I'm too <span class='danger'><b>AFRAID</b></span> to continue doing this. Rolling...")
 		SEND_SOUND(src, sound('code/modules/wod13/sounds/bloodneed.ogg', 0, 0, 50))
 		var/check
-		if(iscathayan(src))
+		if(is_kuei_jin(src))
 			check = vampireroll(max(1, mind.dharma.Hun), min(10, (mind.dharma.level*2)-max_demon_chi), src)
 		else
 			check = vampireroll(max(1, round(humanity/2)), min(frenzy_chance_boost, frenzy_hardness), src)
 		switch(check)
 			if(DICE_FAILURE)
 				enter_frenzymod()
-				if(iskindred(src))
+				if(is_kindred(src))
 					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 100*H.clane.frenzymod)
 				else
 					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 100)
 				frenzy_hardness = 1
 			if(DICE_CRIT_FAILURE)
 				enter_frenzymod()
-				if(iskindred(src))
+				if(is_kindred(src))
 					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 200*H.clane.frenzymod)
 				else
 					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 200)
@@ -112,7 +112,7 @@
 //	if(!fear && !frenzy_target)
 //		return
 
-	if(iskindred(src))
+	if(is_kindred(src))
 		if(fear)
 			step_away(src,fear,99)
 			if(prob(25))
@@ -152,9 +152,9 @@
 
 /mob/living/carbon/proc/get_frenzy_targets()
 	var/list/targets = list()
-	if(iskindred(src))
+	if(is_kindred(src))
 		for(var/mob/living/L in oviewers(7, src))
-			if(!iskindred(L) && L.bloodpool && L.stat != DEAD)
+			if(!is_kindred(L) && L.bloodpool && L.stat != DEAD)
 				targets += L
 				if(L == frenzy_target)
 					return L

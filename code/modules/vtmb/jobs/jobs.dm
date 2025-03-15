@@ -90,7 +90,7 @@
 				if(H.mind)
 					if(H.mind.holy_role == HOLY_ROLE_PRIEST)
 						return
-		if(iskindred(H))
+		if(is_kindred(H))
 			if(H.clane)
 				if(H.clane.name == "Baali")
 					H.emote("scream")
@@ -107,7 +107,7 @@
 		return
 	if(last_detonated+300 > world.time)
 		return
-	if(iskindred(target))
+	if(is_kindred(target))
 		var/mob/living/carbon/human/H = target
 		if(H.clane)
 			if(H.clane.name == "Baali")

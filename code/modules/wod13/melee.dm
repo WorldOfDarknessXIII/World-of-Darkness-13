@@ -537,11 +537,11 @@
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		return
-	if(isgarou(target) || iswerewolf(target) || isanimal(target))
+	if(is_garou(target) || iswerewolf(target) || isanimal(target))
 		return
 	if(target.IsParalyzed() || target.IsKnockdown() || target.IsStun())
 		return
-	if(!target.IsParalyzed() && iskindred(target) && !target.stakeimmune)
+	if(!target.IsParalyzed() && is_kindred(target) && !target.stakeimmune)
 		if(HAS_TRAIT(target, TRAIT_STAKE_RESISTANT))
 			visible_message("<span class='warning'>[user]'s stake splinters as it touches [target]'s heart!</span>", "<span class='warning'>Your stake splinters as it touches [target]'s heart!</span>")
 			REMOVE_TRAIT(target, TRAIT_STAKE_RESISTANT, MAGIC_TRAIT)

@@ -39,7 +39,7 @@
 
 	if(mob.bloodpool <= 1 && mob.maxbloodpool > 1)
 		to_chat(src, "<span class='warning'>You feel small amount of <b>BLOOD</b> in your victim.</span>")
-		if(iskindred(mob) && iskindred(src))
+		if(is_kindred(mob) && is_kindred(src))
 			if(!mob.client)
 				to_chat(src, "<span class='warning'>You need [mob]'s attention to do that...</span>")
 				return
@@ -92,9 +92,9 @@
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			drunked_of |= "[H.dna.real_name]"
-			if(!iskindred(mob))
+			if(!is_kindred(mob))
 				H.blood_volume = max(H.blood_volume-50, 150)
-			if(iscathayan(src))
+			if(is_kuei_jin(src))
 				if(mob.yang_chi > 0 || mob.yin_chi > 0)
 					if(mob.yang_chi > mob.yin_chi)
 						mob.yang_chi = mob.yang_chi-1
@@ -126,7 +126,7 @@
 					client.images -= suckbar
 				qdel(suckbar)
 				return
-		if(iskindred(mob))
+		if(is_kindred(mob))
 			to_chat(src, "<span class='userlove'>[mob]'s blood tastes HEAVENLY...</span>")
 			adjustBruteLoss(-25, TRUE)
 			adjustFireLoss(-25, TRUE)
@@ -141,7 +141,7 @@
 		if(mob.bloodpool <= 0)
 			if(ishuman(mob))
 				var/mob/living/carbon/human/K = mob
-				if(iskindred(mob) && iskindred(src))
+				if(is_kindred(mob) && is_kindred(src))
 					var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
 					var/datum/preferences/P2 = GLOB.preferences_datums[ckey(mob.key)]
 					AdjustHumanity(-1, 0)
@@ -204,7 +204,7 @@
 					return
 				else
 					K.blood_volume = 0
-			if(ishuman(mob) && !iskindred(mob))
+			if(ishuman(mob) && !is_kindred(mob))
 				if(mob.stat != DEAD)
 					if(isnpc(mob))
 						var/mob/living/carbon/human/npc/Npc = mob

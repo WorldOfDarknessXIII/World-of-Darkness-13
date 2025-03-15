@@ -37,7 +37,7 @@
 		StartCooldown()
 		new_thought = trim(copytext_char(sanitize(new_thought), 1, MAX_MESSAGE_LEN))
 		for(var/mob/living/carbon/human/H in GLOB.malkavian_list)
-			if (iskindred(H) && (H.stat != DEAD))
+			if (is_kindred(H) && (H.stat != DEAD))
 				to_chat(H, "<span class='ghostalert'>[new_thought]</span>")
 
 		message_admins("[ADMIN_LOOKUPFLW(usr)] said \"[new_thought]\" through the Madness Network.")

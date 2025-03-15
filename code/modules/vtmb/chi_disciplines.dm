@@ -772,10 +772,9 @@
 /obj/projectile/flesh_shintai/fire(setAngle)
 	if(firer)
 		chain = firer.Beam(src, icon_state = "arm")
-		if(iscathayan(firer))
-			var/mob/living/carbon/human/H = firer
-			if(H.CheckEyewitness(H, H, 7, FALSE))
-				H.AdjustMasquerade(-1)
+		var/mob/living/carbon/human/H = firer
+		if(H.CheckEyewitness(H, H, 7, FALSE))
+			H.AdjustMasquerade(-1)
 	..()
 
 /obj/projectile/flesh_shintai/on_hit(atom/target)
@@ -1608,10 +1607,9 @@
 /obj/projectile/storm_shintai/fire(setAngle)
 	if(firer)
 		chain = firer.Beam(src, icon_state="lightning[rand(1,12)]")
-		if(iscathayan(firer))
-			var/mob/living/carbon/human/H = firer
-			if(H.CheckEyewitness(H, H, 7, FALSE))
-				H.AdjustMasquerade(-1)
+		var/mob/living/carbon/human/H = firer
+		if(H.CheckEyewitness(H, H, 7, FALSE))
+			H.AdjustMasquerade(-1)
 	..()
 
 /obj/projectile/storm_shintai/on_hit(atom/target)
@@ -1878,9 +1876,9 @@
 				if(isliving(caster.lastattacked))
 					var/mob/living/cursing_mob = caster.lastattacked
 					to_chat(cursing_mob, "<span class='warning'>You feel bigger hunger than usual.</span>")
-					if(iskindred(cursing_mob))
+					if(is_kindred(cursing_mob))
 						cursing_mob.bloodpool = max(0, cursing_mob.bloodpool-3)
-					else if(iscathayan(cursing_mob))
+					else if(is_kuei_jin(cursing_mob))
 						cursing_mob.yang_chi = max(0, cursing_mob.yang_chi-2)
 						cursing_mob.yin_chi = max(0, cursing_mob.yin_chi-2)
 					else

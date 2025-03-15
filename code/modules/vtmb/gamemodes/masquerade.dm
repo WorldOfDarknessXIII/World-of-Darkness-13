@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(masquerade)
 	var/total_level = 1000
 	var/dead_level = 0
 	var/last_level = "stable"
-	var/manual_adjustment = 0 
+	var/manual_adjustment = 0
 
 /datum/controller/subsystem/masquerade/proc/get_description()
 	switch(total_level)
@@ -45,7 +45,7 @@ SUBSYSTEM_DEF(masquerade)
 		last_level = shit_happens
 		for(var/mob/living/carbon/human/H in GLOB.player_list)
 			if(H)
-				if(iskindred(H) || isghoul(H))
+				if(is_kindred(H) || is_ghoul(H))
 					switch(last_level)
 						if("stable")
 							to_chat(H, "The night becomes clear. Nothing can threaten the Masquerade.")
@@ -59,7 +59,7 @@ SUBSYSTEM_DEF(masquerade)
 	if(total_level <= 250)
 		for(var/mob/living/carbon/human/H in GLOB.player_list)
 			if(H)
-				if(iskindred(H))
+				if(is_kindred(H))
 					if(!H.warrant && !H.ignores_warrant)
 						H.last_nonraid = world.time
 						H.warrant = TRUE

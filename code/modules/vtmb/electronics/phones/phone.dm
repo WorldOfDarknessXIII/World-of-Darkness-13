@@ -89,7 +89,7 @@
 
 /obj/item/vamp/phone/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
-//	if(iskindred(user))
+//	if(is_kindred(user))
 //		var/mob/living/carbon/human/H = user
 //		if(H.clane)
 //			if(H.clane.name == "Lasombra")
@@ -286,7 +286,7 @@
 
 			.= TRUE
 		if("call")
-//			if((iskindred(V) && V.clane.name == "Lasombra"))
+//			if((is_kindred(V) && V.clane.name == "Lasombra"))
 //				return
 //			else
 			choosed_number = replacetext(choosed_number, " ", "")

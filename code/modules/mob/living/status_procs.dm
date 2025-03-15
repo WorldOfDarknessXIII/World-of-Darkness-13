@@ -485,9 +485,9 @@
 
 	cure_fakedeath(source)
 	REMOVE_TRAIT(src, TRAIT_TORPOR, source)
-	if(iskindred(src))
+	if(is_kindred(src))
 		to_chat(src, "<span class='notice'>You have awoken from your Torpor.</span>")
-	if(iscathayan(src))
+	if(is_kuei_jin(src))
 		to_chat(src, "<span class='notice'>You have awoken from your Little Death.</span>")
 
 /mob/living/proc/torpor(source)
@@ -496,7 +496,7 @@
 	if (fakedeath(source))
 		to_chat(src, "<span class='danger'>You have fallen into Torpor. Use the button in the top right to learn more, or attempt to wake up.</span>")
 		ADD_TRAIT(src, TRAIT_TORPOR, source)
-		if (iskindred(src))
+		if (is_kindred(src))
 			var/mob/living/carbon/human/vampire = src
 			var/datum/species/kindred/vampire_species = vampire.dna.species
 			var/torpor_length = 0 SECONDS
@@ -524,7 +524,7 @@
 				else
 					torpor_length = 5 HOURS
 			COOLDOWN_START(vampire_species, torpor_timer, torpor_length)
-		if (iscathayan(src))
+		if (is_kuei_jin(src))
 			var/mob/living/carbon/human/cathayan = src
 			var/datum/dharma/dharma = cathayan.mind.dharma
 			var/torpor_length = 1 MINUTES * max_yin_chi

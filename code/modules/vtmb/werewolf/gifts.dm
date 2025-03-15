@@ -88,7 +88,7 @@
 		H.emote("scream")
 		for(var/mob/living/carbon/C in range(5, owner))
 			if(C)
-				if(iswerewolf(C) || isgarou(C))
+				if(iswerewolf(C) || is_garou(C))
 					if(C.auspice.tribe == H.auspice.tribe)
 						C.inspired()
 
@@ -171,7 +171,7 @@
 		playsound(get_turf(C), pick('code/modules/wod13/sounds/awo1.ogg', 'code/modules/wod13/sounds/awo2.ogg'), 100, FALSE)
 		for(var/mob/living/carbon/A in orange(6, owner))
 			if(A)
-				if(isgarou(A) || iswerewolf(A))
+				if(is_garou(A) || iswerewolf(A))
 					A.emote("howl")
 					playsound(get_turf(A), pick('code/modules/wod13/sounds/awo1.ogg', 'code/modules/wod13/sounds/awo2.ogg'), 100, FALSE)
 					spawn(10)
@@ -193,7 +193,7 @@
 			to_chat(C, "You transfer this message to your tribe members nearby: <b>[sanitize_text(new_thought)]</b>")
 			for(var/mob/living/carbon/A in orange(9, owner))
 				if(A)
-					if(isgarou(A) || iswerewolf(A))
+					if(is_garou(A) || iswerewolf(A))
 						if(A.auspice.tribe == C.auspice.tribe)
 							to_chat(A, "You hear a message in your head... <b>[sanitize_text(new_thought)]</b>")
 

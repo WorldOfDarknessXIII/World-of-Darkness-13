@@ -352,7 +352,7 @@
 			L.adjustFireLoss(-25)
 		if(istype(H.pulling, /mob/living/carbon/human))
 			var/mob/living/carbon/human/BLOODBONDED = H.pulling
-			if(iscathayan(BLOODBONDED))
+			if(is_kuei_jin(BLOODBONDED))
 				to_chat(owner, "<span class='warning'>[BLOODBONDED] vomits the vitae back!</span>")
 				return
 			if(!BLOODBONDED.client && !istype(H.pulling, /mob/living/carbon/human/npc))
@@ -374,7 +374,7 @@
 				var/new_master = FALSE
 				BLOODBONDED.drunked_of |= "[H.dna.real_name]"
 
-				if(BLOODBONDED.stat == DEAD && !iskindred(BLOODBONDED))
+				if(BLOODBONDED.stat == DEAD && !is_kindred(BLOODBONDED))
 					if (!BLOODBONDED.can_be_embraced)
 						to_chat(H, "<span class='notice'>[BLOODBONDED.name] doesn't respond to your Vitae.</span>")
 						return
@@ -462,7 +462,7 @@
 							BLOODBONDED.clane = new /datum/vampireclane/caitiff()
 
 						//Verify if they accepted to save being a vampire
-						if (iskindred(BLOODBONDED) && save_data_v)
+						if (is_kindred(BLOODBONDED) && save_data_v)
 							var/datum/preferences/BLOODBONDED_prefs_v = BLOODBONDED.client.prefs
 
 							BLOODBONDED_prefs_v.pref_species.id = "kindred"
@@ -523,12 +523,12 @@
 					BLOODBONDED.bloodpool = min(BLOODBONDED.maxbloodpool, BLOODBONDED.bloodpool+2)
 					giving = FALSE
 
-					if (iskindred(BLOODBONDED))
+					if (is_kindred(BLOODBONDED))
 						var/datum/species/kindred/species = BLOODBONDED.dna.species
 						if (HAS_TRAIT(BLOODBONDED, TRAIT_TORPOR) && COOLDOWN_FINISHED(species, torpor_timer))
 							BLOODBONDED.untorpor()
 
-					if(!isghoul(H.pulling) && istype(H.pulling, /mob/living/carbon/human/npc))
+					if(!is_ghoul(BLOODBONDED) && istype(BLOODBONDED, /mob/living/carbon/human/npc))
 						var/mob/living/carbon/human/npc/NPC = H.pulling
 						if(NPC.ghoulificate(owner))
 							new_master = TRUE
@@ -541,13 +541,13 @@
 							BLOODBONDED.mind.enslave_mind_to_creator(owner)
 							to_chat(BLOODBONDED, "<span class='userdanger'><b>AS PRECIOUS VITAE ENTER YOUR MOUTH, YOU NOW ARE IN THE BLOODBOND OF [H]. SERVE YOUR REGNANT CORRECTLY, OR YOUR ACTIONS WILL NOT BE TOLERATED.</b></span>")
 							new_master = TRUE
-					if(isghoul(BLOODBONDED))
+					if(is_ghoul(BLOODBONDED))
 						var/datum/species/ghoul/G = BLOODBONDED.dna.species
 						G.master = owner
 						G.last_vitae = world.time
 						if(new_master)
 							G.changed_master = TRUE
-					else if(!iskindred(BLOODBONDED) && !isnpc(BLOODBONDED))
+					else if(!is_kindred(BLOODBONDED) && !isnpc(BLOODBONDED))
 						var/save_data_g = FALSE
 						BLOODBONDED.set_species(/datum/species/ghoul)
 						BLOODBONDED.clane = null
@@ -749,7 +749,7 @@
 		return
 	var/datum/preferences/student_prefs = student.client.prefs
 
-	if (!iskindred(student))
+	if (!is_kindred(student))
 		to_chat(teacher, "<span class='warning'>Your student needs to be a vampire!</span>")
 		return
 	if (student.stat >= SOFT_CRIT)
@@ -857,9 +857,9 @@
  * * discipline_checking - The Discipline type that access to is being checked.
  */
 /proc/can_access_discipline(mob/living/carbon/human/vampire_checking, discipline_checking)
-	if (isghoul(vampire_checking))
+	if (is_ghoul(vampire_checking))
 		return TRUE
-	if (!iskindred(vampire_checking))
+	if (!is_kindred(vampire_checking))
 		return FALSE
 	if (!vampire_checking.client)
 		return FALSE
@@ -902,5 +902,5 @@
 /datum/species/kindred/proc/on_vampire_bitten(datum/source, mob/living/carbon/being_bitten)
 	SIGNAL_HANDLER
 
-	if(iskindred(being_bitten))
+	if(is_kindred(being_bitten))
 		return COMPONENT_RESIST_VAMPIRE_KISS

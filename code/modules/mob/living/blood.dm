@@ -33,7 +33,7 @@
 
 		//Effects of bloodloss
 		var/word = pick("dizzy","woozy","faint")
-		if(!iskindred(src))
+		if(!is_kindred(src))
 			switch(blood_volume)
 				if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
 					if(prob(15))
@@ -77,7 +77,7 @@
 		return
 	if(!blood_volume)
 		return
-	if(!iskindred(src))
+	if(!is_kindred(src))
 		blood_volume = max(blood_volume - amt, 0)
 
 	var/timing = 100
@@ -90,7 +90,7 @@
 	if(blood_volume >= BLOOD_VOLUME_SAFE)
 		timing = 100
 
-	if(iskindred(src))
+	if(is_kindred(src))
 		timing = 100
 		if(!bloodpool)
 			return

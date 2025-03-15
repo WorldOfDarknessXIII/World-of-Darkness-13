@@ -21,7 +21,7 @@
 
 /obj/item/reagent_containers/drug/cokepack/attack(mob/living/M, mob/living/user)
 	. = ..()
-	if(!iskindred(M))
+	if(!is_kindred(M))
 		if(!vitae)
 			return
 	if(empty)
@@ -39,7 +39,7 @@
 		M.adjustFireLoss(-20, TRUE)
 		M.update_damage_overlays()
 		M.update_health_hud()
-		if(iskindred(M))
+		if(is_kindred(M))
 			M.update_blood_hud()
 			H.reagents.trans_to(M, min(10, H.reagents.total_volume), transfered_by = H, methods = VAMPIRE) //calling the earlier variable to transfer to target, M
 		playsound(M.loc,'sound/items/drink.ogg', 50, TRUE)

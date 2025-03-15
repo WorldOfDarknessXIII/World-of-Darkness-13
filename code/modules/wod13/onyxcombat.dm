@@ -4,7 +4,7 @@
 /mob/living/carbon/human/death()
 	. = ..()
 
-	if(iskindred(src))
+	if(is_kindred(src))
 		SSmasquerade.dead_level = min(1000, SSmasquerade.dead_level+50)
 	else
 		if(istype(get_area(src), /area/vtm))
@@ -34,7 +34,7 @@
 	yin_chi = min(max_yin_chi, yin_chi+yang_chi)
 	yang_chi = 0
 
-	if(iskindred(src) || iscathayan(src))
+	if(is_kindred(src) || is_kuei_jin(src))
 		can_be_embraced = FALSE
 		var/obj/item/organ/brain/brain = getorganslot(ORGAN_SLOT_BRAIN) //NO REVIVAL EVER
 		if (brain)
@@ -45,7 +45,7 @@
 		SEND_SOUND(src, sound('code/modules/wod13/sounds/final_death.ogg', 0, 0, 50))
 
 		//annoying code that depends on clan doesn't work for Kuei-jin
-		if (iscathayan(src))
+		if (is_kuei_jin(src))
 			return
 
 		var/years_undead = chronological_age - age
@@ -73,9 +73,9 @@
 				update_body()
 				update_body()
 			if (200 to INFINITY)
-				if (iskindred(src))
+				if (is_kindred(src))
 					playsound(src, 'code/modules/wod13/sounds/burning_death.ogg', 80, TRUE)
-				else if (iscathayan(src))
+				else if (is_kuei_jin(src))
 					playsound(src, 'code/modules/wod13/sounds/vicissitude.ogg', 80, TRUE)
 				lying_fix()
 				dir = SOUTH
@@ -316,20 +316,20 @@
 		if(BD.grab_state > GRAB_PASSIVE)
 			if(ishuman(BD.pulling))
 				var/mob/living/carbon/human/PB = BD.pulling
-				if(isghoul(BD))
-					if(!iskindred(PB))
+				if(is_ghoul(BD))
+					if(!is_kindred(PB))
 						SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 						to_chat(BD, "<span class='warning'>Eww, that is <b>GROSS</b>.</span>")
 						return
-				if(!isghoul(BD) && !iskindred(BD) && !iscathayan(BD))
+				if(!is_ghoul(BD) && !is_kindred(BD) && !is_kuei_jin(BD))
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>Eww, that is <b>GROSS</b>.</span>")
 					return
-				if(PB.stat == DEAD && !HAS_TRAIT(BD, TRAIT_GULLET) && !iscathayan(BD))
+				if(PB.stat == DEAD && !HAS_TRAIT(BD, TRAIT_GULLET) && !is_kuei_jin(BD))
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
 					return
-				if(PB.bloodpool <= 0 && (!iskindred(BD.pulling) || !iskindred(BD)))
+				if(PB.bloodpool <= 0 && (!is_kindred(PB) || !is_kindred(BD)))
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
@@ -348,16 +348,16 @@
 						PB.emote("groan")
 				PB.add_bite_animation()
 			if(isliving(BD.pulling))
-				if(!iskindred(BD) && !iscathayan(BD))
+				if(!is_kindred(BD) && !is_kuei_jin(BD))
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>Eww, that is <b>GROSS</b>.</span>")
 					return
 				var/mob/living/LV = BD.pulling
-				if(LV.bloodpool <= 0 && (!iskindred(BD.pulling) || !iskindred(BD)))
+				if(LV.bloodpool <= 0 && (!is_kindred(LV) || !is_kindred(BD)))
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
-				if(LV.stat == DEAD && !HAS_TRAIT(BD, TRAIT_GULLET) && !iscathayan(BD))
+				if(LV.stat == DEAD && !HAS_TRAIT(BD, TRAIT_GULLET) && !is_kuei_jin(BD))
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
 					return
@@ -372,7 +372,7 @@
 					else
 						playsound(BD, 'code/modules/wod13/sounds/kiss.ogg', 50, TRUE)
 						LV.visible_message("<span class='italics'><b>[BD] kisses [LV]!</b></span>", "<span class='userlove'><b>[BD] kisses you!</b></span>")
-					if(iskindred(LV))
+					if(is_kindred(LV))
 						var/mob/living/carbon/human/HV = BD.pulling
 						if(HV.stakeimmune)
 							to_chat(BD, "<span class='warning'>There is no <b>HEART</b> in this creature.</span>")
@@ -640,7 +640,7 @@
 	update_auspex_hud()
 
 /mob/living/carbon/human/Life()
-	if(!iskindred(src) && !iscathayan(src))
+	if(!is_kindred(src) && !is_kuei_jin(src))
 		if(prob(5))
 			adjustCloneLoss(-5, TRUE)
 	update_blood_hud()
@@ -689,7 +689,7 @@
 /mob/living/proc/update_rage_hud()
 	if(!client || !hud_used)
 		return
-	if(isgarou(src) || iswerewolf(src))
+	if(is_garou(src) || iswerewolf(src))
 		if(hud_used.rage_icon)
 			hud_used.rage_icon.overlays -= gnosis
 			var/mob/living/carbon/C = src
