@@ -237,6 +237,13 @@
 	)
 	color = "#e8ff29"
 
+/obj/item/vamp/keys/setite
+	name = "Serpentine keys"
+	accesslocks = list(
+		"setite"
+	)
+	color = "#1805db"
+
 //===========================CLINIC KEYS===========================
 /obj/item/vamp/keys/clinic
 	name = "Clinic keys"
