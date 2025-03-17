@@ -16,7 +16,7 @@
 	desc = "Dominate over other living or un-living beings."
 	button_icon_state = "dominate"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	vampiric = TRUE
+	spell_button = TRUE
 	var/cool_down = 0
 
 /datum/action/dominate/Trigger()

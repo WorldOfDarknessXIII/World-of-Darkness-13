@@ -1,0 +1,1 @@
+/* Signals sent for the World of Darkness splat system */

@@ -363,6 +363,7 @@
 		return
 
 	// TODO: [Lucia] this here? signals
+	/*
 	var/allowed_to_kindred = FALSE
 	if(is_kindred(target))
 		if(methods & VAMPIRE)
@@ -375,6 +376,7 @@
 				call_dharma("desire", target)
 			if(istype(i, /datum/reagent/drug))
 				call_dharma("desire", target)
+	*/
 
 
 	var/atom/target_atom

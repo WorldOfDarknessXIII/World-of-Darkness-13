@@ -151,7 +151,7 @@
 	. = ..()
 	for(var/datum/action/A in C.actions)
 		if(A)
-			if(A.vampiric)
+			if(A.spell_button)
 				A.Remove(C)
 	for(var/datum/action/ghoulinfo/infor in C.actions)
 		if(infor)
@@ -204,7 +204,7 @@
 	background_icon_state = "discipline"
 	icon_icon = 'code/modules/wod13/UI/actions.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	vampiric = TRUE
+	spell_button = TRUE
 	var/last_heal = 0
 	var/level = 1
 

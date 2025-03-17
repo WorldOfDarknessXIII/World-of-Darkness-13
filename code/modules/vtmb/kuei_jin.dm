@@ -542,7 +542,7 @@
 	background_icon_state = "discipline"
 	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	vampiric = TRUE
+	spell_button = TRUE
 	var/cooldown = 3 SECONDS
 
 /datum/action/reanimate_yin/Trigger()
@@ -601,7 +601,7 @@
 	background_icon_state = "discipline"
 	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	vampiric = TRUE
+	spell_button = TRUE
 	var/cooldown = 3 SECONDS
 
 /datum/action/reanimate_yang/Trigger()

@@ -36,7 +36,7 @@
 	var/my_surname = pick(GLOB.last_names)
 	H.fully_replace_character_name(null,"[my_name] [my_surname]")*/
 	for(var/datum/action/A in H.actions)
-		if(A.vampiric)
+		if(A.spell_button)
 			A.Remove(H)
 	H.thaumaturgy_knowledge = FALSE
 	QDEL_NULL(H.clane)

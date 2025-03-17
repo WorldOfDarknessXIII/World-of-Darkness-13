@@ -329,7 +329,7 @@
 
 //obj/item/ammo_casing/vampire/c12g/buck/silver/on_hit(atom/target, blocked = FALSE)
 //	. = ..()
-//	if(iswerewolf(target) || isgarou(target))
+//	if(iswerewolf(target) || is_garou(target))
 //		var/mob/living/carbon/M = target
 //		if(M.auspice.gnosis)
 //			if(prob(40))
@@ -345,7 +345,8 @@
 /obj/projectile/beam/beam_rifle/vampire/vamp556mm/silver/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	// TODO: [Lucia] this here? uhhhh I think signals?
-	if(iswerewolf(target) || isgarou(target))
+	/*
+	if(iswerewolf(target) || is_garou(target))
 		var/mob/living/carbon/M = target
 		if(M.auspice.gnosis)
 			if(prob(50))
@@ -353,13 +354,15 @@
 
 		M.apply_damage(20, CLONE)
 		M.apply_status_effect(STATUS_EFFECT_SILVER_SLOWDOWN)
+	*/
 
 /obj/projectile/beam/beam_rifle/vampire/vamp9mm/silver
 	name = "9mm silver bullet"
 
 /obj/projectile/beam/beam_rifle/vampire/vamp9mm/silver/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(iswerewolf(target) || isgarou(target))
+	/*
+	if(iswerewolf(target) || is_garou(target))
 		var/mob/living/carbon/M = target
 		if(M.auspice.gnosis)
 			if(prob(50))
@@ -367,13 +370,15 @@
 
 		M.apply_damage(10, CLONE)
 		M.apply_status_effect(STATUS_EFFECT_SILVER_SLOWDOWN)
+	*/
 
 /obj/projectile/beam/beam_rifle/vampire/vamp45acp/silver
 	name = ".45 ACP silver bullet"
 
 /obj/projectile/beam/beam_rifle/vampire/vamp45acp/silver/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(iswerewolf(target) || isgarou(target))
+	/*
+	if(iswerewolf(target) || is_garou(target))
 		var/mob/living/carbon/M = target
 		if(M.auspice.gnosis)
 			if(prob(50))
@@ -381,6 +386,7 @@
 
 		M.apply_damage(15, CLONE)
 		M.apply_status_effect(STATUS_EFFECT_SILVER_SLOWDOWN)
+	*/
 
 /obj/projectile/beam/beam_rifle/vampire/vamp44/silver
 	name = ".44 silver bullet"
@@ -388,7 +394,8 @@
 
 /obj/projectile/beam/beam_rifle/vampire/vamp44/silver/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(iswerewolf(target) || isgarou(target))
+	/*
+	if(iswerewolf(target) || is_garou(target))
 		var/mob/living/carbon/M = target
 		if(M.auspice.gnosis)
 			if(prob(50))
@@ -396,6 +403,7 @@
 
 		M.apply_damage(20, CLONE)
 		M.apply_status_effect(STATUS_EFFECT_SILVER_SLOWDOWN)
+	*/
 
 /obj/item/ammo_casing/vampire/c9mm/silver
 	name = "9mm silver bullet casing"

@@ -41,7 +41,7 @@
 //	for(var/atom/movable/screen/disciplines/DI in H.hud_used.static_inventory)
 //		DI.icon_state = null
 	for(var/datum/action/A in H.actions)
-		if(A.vampiric)
+		if(A.spell_button)
 			A.Remove(H)
 	H.thaumaturgy_knowledge = FALSE
 	QDEL_NULL(H.clane)

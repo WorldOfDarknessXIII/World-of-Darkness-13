@@ -1,3 +1,5 @@
+#define SPLAT_TRAIT "splat_trait"
+
 #define is_splat(character, splat_type) (character.get_splat(splat_type))
 
 #define is_innocent(character) (!is_splat(character, /datum/splat))

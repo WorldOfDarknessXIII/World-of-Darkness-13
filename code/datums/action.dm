@@ -21,7 +21,7 @@
 	var/mob/owner
 
 	//imported from clane.dm
-	var/vampiric = FALSE
+	var/spell_button = FALSE
 
 /datum/action/New(Target)
 	link_to(Target)

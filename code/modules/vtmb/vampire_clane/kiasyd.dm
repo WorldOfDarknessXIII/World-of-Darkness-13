@@ -50,6 +50,7 @@
 	. = ..()
 
 	// TODO: [Lucia] this here? signals
+	/*
 	if(is_kindred(target) && is_iron)
 		var/mob/living/carbon/human/L = target
 		if(L.clane?.name == "Kiasyd")
@@ -70,3 +71,4 @@
 		if(L.max_yin_chi > L.max_yang_chi + 2)
 			to_chat(L, "<span class='danger'><b>WOOD!</b></span>")
 			L.adjustBruteLoss(15, TRUE)
+	*/

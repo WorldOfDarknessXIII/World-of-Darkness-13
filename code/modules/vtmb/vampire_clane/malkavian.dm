@@ -24,7 +24,7 @@
 	desc = "Talk"
 	button_icon_state = "hivemind"
 	check_flags = AB_CHECK_CONSCIOUS
-	vampiric = TRUE
+	spell_button = TRUE
 	cooldown_time = 5 SECONDS
 
 /datum/action/cooldown/malk_hivemind/Trigger()
@@ -48,7 +48,7 @@
 	desc = "Unleash your innermost thoughts"
 	button_icon_state = "malk_speech"
 	check_flags = AB_CHECK_CONSCIOUS
-	vampiric = TRUE
+	spell_button = TRUE
 	cooldown_time = 5 MINUTES
 	///clane datum
 	var/datum/vampireclane/malkavian/clane_datum

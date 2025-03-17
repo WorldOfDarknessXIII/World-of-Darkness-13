@@ -393,7 +393,7 @@
 			if(H.stat > SOFT_CRIT)
 				for(var/datum/action/A in H.actions)
 					if(A)
-						if(A.vampiric)
+						if(A.spell_button)
 							A.Remove(H)
 				H.revive(TRUE)
 				H.set_species(/datum/species/kindred)

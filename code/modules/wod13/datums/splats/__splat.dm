@@ -1,10 +1,17 @@
 /datum/splat
 	var/name = "Splat"
 	var/desc = "A game line in the World of Darkness franchise."
+
 	var/splat_traits = list()
 	var/splat_species_traits = list()
 	var/splat_actions = list()
+
+	var/list/max_resources = list()
+	var/list/resources = list()
 	var/power_type = /datum/discipline
+	var/list/replace_splats = list()
+	var/list/incompatible_splats = list()
+
 	var/list/datum/discipline/powers = list()
 	var/mob/living/owner
 
@@ -12,16 +19,98 @@
 	src.owner = owner
 	on_gain()
 
-/datum/splat/proc/unassign()
-	owner.splats -= src
+/datum/splat/proc/on_gain()
+	SHOULD_CALL_PARENT(TRUE)
+
+	add_species_traits()
+
+	add_traits()
+
+	add_actions()
+
+/datum/splat/proc/add_species_traits()
+	var/datum/dna/owner_dna = owner.has_dna()
+	if (!owner_dna)
+		return
+
+	for (var/species_trait in splat_species_traits)
+		owner_dna.species.species_traits |= species_trait
+
+/datum/splat/proc/add_traits()
+	for (var/trait in splat_traits)
+		ADD_TRAIT(owner, trait, SPLAT_TRAIT)
+
+/datum/splat/proc/add_actions()
+	for (var/adding_action in splat_actions)
+		var/datum/action/new_action = new adding_action
+		new_action.Grant(owner)
+
+/datum/splat/proc/unassign(annihilate = TRUE)
 	on_lose()
+
+	owner.splats -= src
+
+	// this clears out every single instantiated datum on this splat, very dangerous
+	if (annihilate)
+		QDEL_LIST(powers)
+
 	qdel(src)
 
-/datum/splat/proc/on_gain()
-	var/datum/dna/owner_dna = owner.has_dna()
-
 /datum/splat/proc/on_lose()
+	SHOULD_CALL_PARENT(TRUE)
+
+	remove_species_traits()
+
+	remove_traits()
+
+	remove_actions()
+
+/datum/splat/proc/remove_species_traits()
 	var/datum/dna/owner_dna = owner.has_dna()
+	if (!owner_dna)
+		return
+
+	// to make sure we don't remove another splat's species traits
+	var/list/other_splat_species_traits = list()
+	for (var/datum/splat/splat in (owner.splats - src))
+		other_splat_species_traits += splat.splat_species_traits
+
+	// remove this splat's species traits
+	for (var/species_trait in splat_species_traits)
+		if (species_trait in other_splat_species_traits)
+			continue
+
+		owner_dna.species.species_traits -= species_trait
+
+/datum/splat/proc/remove_traits()
+	// to make sure we don't remove another splat's traits
+	var/list/other_splat_traits = list()
+	for (var/datum/splat/splat in (owner.splats - src))
+		other_splat_traits += splat.splat_traits
+
+	// remove this splat's traits
+	for (var/trait in splat_traits)
+		if (trait in other_splat_traits)
+			continue
+
+		REMOVE_TRAIT(owner, trait, SPLAT_TRAIT)
+
+/datum/splat/proc/remove_actions()
+	// to make sure we don't remove another splat's actions
+	var/list/other_splat_actions = list()
+	for (var/datum/splat/splat in (owner.splats - src))
+		other_splat_actions |= splat.splat_actions
+
+	// actually remove the actions
+	for (var/removing_action in splat_actions)
+		if (removing_action in other_splat_actions)
+			continue
+
+		for (var/datum/action/action in owner.actions)
+			if (!istype(action, removing_action))
+				continue
+
+			action.Remove()
 
 /mob/proc/add_splat(splat_type)
 	return

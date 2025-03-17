@@ -283,7 +283,7 @@
 	desc = "Upgrade your body..."
 	button_icon_state = "basic"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	vampiric = TRUE
+	spell_button = TRUE
 	var/selected_upgrade
 	var/mutable_appearance/upgrade_overlay
 	var/original_skin_tone
