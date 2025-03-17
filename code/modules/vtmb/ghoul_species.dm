@@ -150,12 +150,10 @@
 /datum/species/ghoul/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
 	for(var/datum/action/A in C.actions)
-		if(A)
-			if(A.spell_button)
-				A.Remove(C)
+		if(A.spell_button)
+			A.Remove(C)
 	for(var/datum/action/ghoulinfo/infor in C.actions)
-		if(infor)
-			infor.Remove(C)
+		infor.Remove(C)
 
 /datum/action/take_vitae
 	name = "Take Vitae"
@@ -165,105 +163,41 @@
 	var/taking = FALSE
 
 /datum/action/take_vitae/Trigger()
-	if(istype(owner, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = owner
-		if(istype(H.pulling, /mob/living/carbon/human))
-			var/mob/living/carbon/human/VIT = H.pulling
-			if(is_kindred(VIT))
-				if(VIT.bloodpool)
-					if(VIT.getBruteLoss() > 30)
-						taking = TRUE
-						if(do_mob(owner, VIT, 10 SECONDS))
-							taking = FALSE
-							H.drunked_of |= "[VIT.dna.real_name]"
-							H.adjustBruteLoss(-25, TRUE)
-							H.adjustFireLoss(-25, TRUE)
-							VIT.bloodpool = max(0, VIT.bloodpool-1)
-							H.bloodpool = min(H.maxbloodpool, H.bloodpool+1)
-							H.update_blood_hud()
-							to_chat(owner, "<span class='warning'>You feel precious <b>VITAE</b> entering your mouth and suspending your addiction.</span>")
-							return
-						else
-							taking = FALSE
-							return
-					else
-						to_chat(owner, "<span class='warning'>Damage [VIT] before taking vitae.</span>")
-						return
-				else
-					to_chat(owner, "<span class='warning'>There is not enough <b>VITAE</b> in [VIT] to feed your addiction.</span>")
-					return
-			else
-				to_chat(owner, "<span class='warning'>You don't sense the <b>VITAE</b> in [VIT].</span>")
-				return
+	if (taking)
+		to_chat(owner, span_warning("You're already collecting vitae!"))
+		return
 
-/datum/action/blood_heal
-	name = "Blood Heal"
-	desc = "Use vitae in your blood to heal your wounds."
-	button_icon_state = "bloodheal"
-	button_icon = 'code/modules/wod13/UI/actions.dmi'
-	background_icon_state = "discipline"
-	icon_icon = 'code/modules/wod13/UI/actions.dmi'
-	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	spell_button = TRUE
-	var/last_heal = 0
-	var/level = 1
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/ghoul = owner
 
-/datum/action/blood_heal/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
-	if(owner)
-		if(owner.client)
-			if(owner.client.prefs)
-				if(owner.client.prefs.old_discipline)
-					button_icon = 'code/modules/wod13/disciplines.dmi'
-					icon_icon = 'code/modules/wod13/disciplines.dmi'
-				else
-					button_icon = 'code/modules/wod13/UI/actions.dmi'
-					icon_icon = 'code/modules/wod13/UI/actions.dmi'
-	. = ..()
+	if(!ishuman(ghoul.pulling))
+		return
+	var/mob/living/carbon/human/victim = ghoul.pulling
 
-/datum/action/blood_heal/Trigger()
-	if(istype(owner, /mob/living/carbon/human))
-		if (HAS_TRAIT(owner, TRAIT_TORPOR))
-			return
-		var/mob/living/carbon/human/H = owner
-		level = clamp(13-H.generation, 1, 4)
-		if(HAS_TRAIT(H, TRAIT_COFFIN_THERAPY))
-			if(!istype(H.loc, /obj/structure/closet/crate/coffin))
-				to_chat(usr, "<span class='warning'>You need to be in a coffin to use that!</span>")
-				return
-		if(H.bloodpool < 1)
-			to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
-			SEND_SOUND(H, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
-			return
-		if((last_heal + 30) >= world.time)
-			return
-		last_heal = world.time
-		H.bloodpool = max(0, H.bloodpool-1)
-		SEND_SOUND(H, sound('code/modules/wod13/sounds/bloodhealing.ogg', 0, 0, 50))
-		H.heal_overall_damage(15*level, 2.5*level, 20*level)
-		H.adjustBruteLoss(-15*level, TRUE)
-		H.adjustFireLoss(-2.5*level, TRUE)
-		H.adjustOxyLoss(-20*level, TRUE)
-		H.adjustToxLoss(-20*level, TRUE)
-		H.blood_volume = min(H.blood_volume + 56, 560)
-		button.color = "#970000"
-		animate(button, color = "#ffffff", time = 20, loop = 1)
-		if(length(H.all_wounds))
-			for(var/i in 1 to min(5, length(H.all_wounds)))
-				var/datum/wound/W = pick(H.all_wounds)
-				W.remove_wound()
-		H.adjustCloneLoss(-5, TRUE)
-		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
-		if(eyes)
-			H.adjust_blindness(-2)
-			H.adjust_blurriness(-2)
-			eyes.applyOrganDamage(-5)
-		var/obj/item/organ/brain/brain = H.getorganslot(ORGAN_SLOT_BRAIN)
-		if(brain)
-			brain.applyOrganDamage(-100)
-		H.update_damage_overlays()
-		H.update_health_hud()
-		H.update_blood_hud()
-		H.visible_message("<span class='warning'>Some of [H]'s visible injuries disappear!</span>", "<span class='warning'>Some of your injuries disappear!</span>")
+	if(!is_kindred(victim))
+		to_chat(owner, span_warning("You don't sense the <b>VITAE</b> in [victim]."))
+		return
+
+	if(victim.bloodpool < 1)
+		to_chat(owner, "<span class='warning'>There is not enough <b>VITAE</b> in [victim] to feed your addiction.</span>")
+		return
+
+	if(victim.getBruteLoss() < 30)
+		to_chat(owner, "<span class='warning'>Damage [victim] before taking vitae.</span>")
+		return
+
+	taking = TRUE
+	if(!do_mob(owner, victim, 10 SECONDS))
+		taking = FALSE
+		return
+	taking = FALSE
+
+	ghoul.drunked_of |= "[victim.dna.real_name]"
+	victim.bloodpool = max(0, victim.bloodpool - 1)
+	ghoul.bloodpool = min(ghoul.bloodpool + 1, ghoul.maxbloodpool)
+	ghoul.update_blood_hud()
+	to_chat(owner, span_warning("You feel precious <b>VITAE</b> entering your mouth and sustaining your addiction."))
 
 /datum/species/ghoul/check_roundstart_eligible()
 	return TRUE
@@ -407,22 +341,21 @@
 											SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
 											to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (corpse)</b></span>")
 			for(var/obj/item/I in H.contents)
-				if(I)
-					if(I.masquerade_violating)
-						if(I.loc == H)
-							if(H.CheckEyewitness(H, H, 7, FALSE))
-								if(H.last_loot_check+50 <= world.time)
-									H.last_loot_check = world.time
-									H.last_nonraid = world.time
-									H.killed_count = H.killed_count+1
-									if(!H.warrant && !H.ignores_warrant)
-										if(H.killed_count >= 5)
-											H.warrant = TRUE
-											SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
-											to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
-										else
-											SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
-											to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
+				if(I.masquerade_violating)
+					if(I.loc == H)
+						if(H.CheckEyewitness(H, H, 7, FALSE))
+							if(H.last_loot_check+50 <= world.time)
+								H.last_loot_check = world.time
+								H.last_nonraid = world.time
+								H.killed_count = H.killed_count+1
+								if(!H.warrant && !H.ignores_warrant)
+									if(H.killed_count >= 5)
+										H.warrant = TRUE
+										SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
+										to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
+									else
+										SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
+										to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
 	if((H.last_bloodpool_restore + 60 SECONDS) <= world.time)
 		H.last_bloodpool_restore = world.time
 		H.bloodpool = min(H.maxbloodpool, H.bloodpool+1)
