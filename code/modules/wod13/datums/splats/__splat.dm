@@ -73,7 +73,7 @@
 	// to make sure we don't remove another splat's species traits
 	var/list/other_splat_species_traits = list()
 	for (var/datum/splat/splat in (owner.splats - src))
-		other_splat_species_traits += splat.splat_species_traits
+		other_splat_species_traits |= splat.splat_species_traits
 
 	// remove this splat's species traits
 	for (var/species_trait in splat_species_traits)
@@ -86,7 +86,7 @@
 	// to make sure we don't remove another splat's traits
 	var/list/other_splat_traits = list()
 	for (var/datum/splat/splat in (owner.splats - src))
-		other_splat_traits += splat.splat_traits
+		other_splat_traits |= splat.splat_traits
 
 	// remove this splat's traits
 	for (var/trait in splat_traits)
