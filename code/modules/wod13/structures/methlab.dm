@@ -129,3 +129,4 @@
 				added_iod = 0
 				added_gas = FALSE
 				troll_explode = FALSE
+	return
