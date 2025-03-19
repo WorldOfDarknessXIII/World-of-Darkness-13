@@ -117,10 +117,11 @@
 				to_chat(user, "Something may be going wrong, or may not...")
 	if(added_ephed == 3 && added_iod == 2 && added_gas == TRUE)
 		playsound(src, 'code/modules/wod13/sounds/methcook.ogg', 50, TRUE)
-		spawn(3 SECONDS)
+		//spawn(3 SECONDS)
 			playsound(src, 'code/modules/wod13/sounds/methcook.ogg', 100, TRUE)
 			if(troll_explode)
 				explosion(loc,0,1,3,4)
+			return FALSE
 			else
 				var/amount = 4
 				for(var/i = 1 to amount)
@@ -129,4 +130,4 @@
 				added_iod = 0
 				added_gas = FALSE
 				troll_explode = FALSE
-	return
+				return TRUE
