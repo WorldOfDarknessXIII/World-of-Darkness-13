@@ -118,7 +118,7 @@
 	if(added_ephed == 3 && added_iod == 2 && added_gas == TRUE)
 		playsound(src, 'code/modules/wod13/sounds/methcook.ogg', 50, TRUE)
 		//spawn(3 SECONDS)
-			playsound(src, 'code/modules/wod13/sounds/methcook.ogg', 100, TRUE)
+			//playsound(src, 'code/modules/wod13/sounds/methcook.ogg', 100, TRUE)
 			if(troll_explode)
 				explosion(loc,0,1,3,4)
 			return FALSE
