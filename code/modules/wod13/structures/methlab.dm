@@ -119,15 +119,15 @@
 		playsound(src, 'code/modules/wod13/sounds/methcook.ogg', 50, TRUE)
 		//spawn(3 SECONDS)
 			//playsound(src, 'code/modules/wod13/sounds/methcook.ogg', 100, TRUE)
-			if(troll_explode)
-				explosion(loc,0,1,3,4)
+		if(troll_explode)
+			explosion(loc,0,1,3,4)
 			return FALSE
-			else
-				var/amount = 4
-				for(var/i = 1 to amount)
-					new /obj/item/reagent_containers/food/drinks/meth(get_turf(src))
-				added_ephed = 0
-				added_iod = 0
-				added_gas = FALSE
-				troll_explode = FALSE
-				return TRUE
+		else
+			var/amount = 4
+			for(var/i = 1 to amount)
+				new /obj/item/reagent_containers/food/drinks/meth(get_turf(src))
+			added_ephed = 0
+			added_iod = 0
+			added_gas = FALSE
+			troll_explode = FALSE
+			return TRUE
