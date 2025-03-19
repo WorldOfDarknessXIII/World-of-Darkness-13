@@ -49,6 +49,8 @@
 			if(last_shooting_victims + 15 SECONDS < world.time)
 				last_shooting_victims = world.time
 				message = "Active firefight in progress at [crime_location.name], wounded civilians, the [direction], [location.x]:[location.y]..."
+		if("kidnapping")
+			message = "Attempting kidnapping reported at [crime_location.name], to the [direction], [location.x]:[location.y]..."
 		if("murder")
 			message = "Murder at [crime_location.name], to the [direction], [location.x]:[location.y]..."
 
