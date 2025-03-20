@@ -272,3 +272,8 @@
 
 /obj/item/crusher_trophy/broodmother_tongue/proc/remove_lavaproofing(mob/living/user)
 	LAZYREMOVE(user.weather_immunities, "lava")
+
+#undef TENTACLE_PATCH
+#undef SPAWN_CHILDREN
+#undef RAGE
+#undef CALL_CHILDREN

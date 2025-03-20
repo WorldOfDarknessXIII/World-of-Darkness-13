@@ -180,11 +180,11 @@
 		return
 
 	if(victim.bloodpool < 1)
-		to_chat(owner, "<span class='warning'>There is not enough <b>VITAE</b> in [victim] to feed your addiction.</span>")
+		to_chat(owner, span_warning("There is not enough <b>VITAE</b> in [victim] to feed your addiction."))
 		return
 
 	if(victim.getBruteLoss() < 30)
-		to_chat(owner, "<span class='warning'>Damage [victim] before taking vitae.</span>")
+		to_chat(owner, span_warning("Damage [victim] before taking vitae."))
 		return
 
 	taking = TRUE

@@ -35,7 +35,7 @@
 	yang_chi = 0
 
 	if(is_kindred(src) || is_kuei_jin(src))
-		can_be_embraced = FALSE
+		ADD_TRAIT(src, TRAIT_CANNOT_BE_EMBRACED, VAMPIRE_TRAIT)
 		var/obj/item/organ/brain/brain = getorganslot(ORGAN_SLOT_BRAIN) //NO REVIVAL EVER
 		if (brain)
 			brain.organ_flags |= ORGAN_FAILING

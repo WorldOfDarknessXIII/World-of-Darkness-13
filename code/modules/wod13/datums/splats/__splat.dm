@@ -112,6 +112,34 @@
 
 			action.Remove()
 
+/datum/splat/proc/add_resource(resource, amount = 1)
+	if (!resource || (amount <= 0))
+		return FALSE
+
+	if (!(resource in resources) || !(resource in max_resources))
+		return FALSE
+
+	if (resources[resource] == max_resources[resource])
+		return FALSE
+
+	resources[resource] = min(resources[resource] + amount, max_resources[resource])
+
+	return TRUE
+
+/datum/splat/proc/remove_resource(resource, amount = 1)
+	if (!resource || (amount <= 0))
+		return FALSE
+
+	if (!(resource in resources) || !(resource in max_resources))
+		return FALSE
+
+	if ((resources[resource] - amount) < 0)
+		return FALSE
+
+	resources[resource] -= amount
+
+	return TRUE
+
 /mob/proc/add_splat(splat_type)
 	return
 
@@ -127,9 +155,13 @@
 	removing_splat.unassign()
 
 /mob/proc/get_splat(splat_type)
+	RETURN_TYPE(/datum/splat)
+
 	return
 
 /mob/living/get_splat(splat_type)
+	RETURN_TYPE(/datum/splat)
+
 	for (var/datum/splat/splat in splats)
 		if (!istype(splat, splat_type))
 			continue
