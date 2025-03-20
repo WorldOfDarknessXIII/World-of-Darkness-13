@@ -26233,7 +26233,7 @@
 /obj/structure/vampdoor/strip{
 	dir = 8;
 	lock_id = "toreador3";
-	name = "room3"
+	name = "Room 3"
 	},
 /turf/open/floor/plating/sidewalk/poor,
 /area/vtm/interior)
@@ -26531,6 +26531,12 @@
 /obj/effect/landmark/npcability,
 /turf/open/floor/plating/asphalt,
 /area/vtm/chinatown)
+"cej" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plating/parquetry/old,
+/area/vtm/interior)
 "ceU" = (
 /obj/effect/decal/bordur{
 	dir = 8
@@ -28018,6 +28024,16 @@
 /obj/structure/closet/crate,
 /turf/open/floor/plating/rough,
 /area/vtm/sewer/nosferatu_town)
+"cWf" = (
+/obj/structure/railing{
+	dir = 1;
+	pixel_y = 16
+	},
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plating/parquetry/old,
+/area/vtm/interior)
 "cWy" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 8;
@@ -33900,7 +33916,9 @@
 /area/vtm/interior/wyrm_corrupted)
 "fRN" = (
 /obj/effect/turf_decal/siding/white,
-/obj/structure/vampdoor/npc,
+/obj/structure/vampdoor/npc{
+	name = "Room 6"
+	},
 /turf/open/floor/plating/rough,
 /area/vtm/interior)
 "fRQ" = (
@@ -34594,6 +34612,15 @@
 "gkD" = (
 /obj/effect/decal/wallpaper/paper/darkred,
 /turf/closed/wall/vampwall/painted,
+/area/vtm/interior)
+"gkQ" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/obj/structure/vampdoor/glass/primogen_toreador{
+	dir = 8
+	},
+/turf/open/floor/plating/parquetry/old,
 /area/vtm/interior)
 "gkW" = (
 /obj/effect/turf_decal/siding/white{
@@ -38473,6 +38500,13 @@
 /obj/effect/decal/bordur,
 /turf/open/floor/plating/rough,
 /area/vtm/interior/millennium_tower/f5)
+"ibA" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = 16
+	},
+/turf/open/floor/carpet/blue,
+/area/vtm/interior)
 "ibD" = (
 /obj/fusebox,
 /obj/effect/decal/cleanable/dirt,
@@ -38827,10 +38861,6 @@
 	},
 /turf/open/floor/plating/rough,
 /area/vtm/sewer)
-"ijS" = (
-/obj/structure/railing,
-/turf/open/floor/plating/rough,
-/area/vtm/interior)
 "ijV" = (
 /obj/structure/rack,
 /obj/item/wire_cutters,
@@ -39933,7 +39963,7 @@
 "iOI" = (
 /obj/structure/railing{
 	dir = 8;
-	pixel_y = 9
+	pixel_y = 16
 	},
 /turf/open/floor/plating/rough,
 /area/vtm/interior)
@@ -45535,8 +45565,10 @@
 /turf/closed/wall/vampwall/painted/low/window/reinforced,
 /area/vtm/interior/police)
 "lNz" = (
-/obj/structure/vampdoor/npc,
 /obj/effect/turf_decal/siding/white,
+/obj/structure/vampdoor/npc{
+	name = "Room 5"
+	},
 /turf/open/floor/plating/rough,
 /area/vtm/interior)
 "lNB" = (
@@ -47082,11 +47114,14 @@
 /turf/open/floor/plating/vampwood,
 /area/vtm/cabaret)
 "mBI" = (
+/obj/structure/stairs/south{
+	dir = 1
+	},
 /obj/effect/bump_teleporter{
 	id = 2;
 	id_target = 4
 	},
-/turf/open/floor/plasteel/stairs/right,
+/turf/open/floor/plating/rough,
 /area/vtm/interior)
 "mBP" = (
 /obj/structure/table/wood/fancy/royalblack,
@@ -48282,6 +48317,13 @@
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/graveyard/interior)
+"nlU" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/structure/vampdoor/wood,
+/turf/open/floor/plating/parquetry/old,
+/area/vtm/interior)
 "nmm" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -49458,7 +49500,7 @@
 "nQH" = (
 /obj/effect/bump_teleporter{
 	density = 0;
-	id = 7;
+	id = 6;
 	mouse_opacity = 0
 	},
 /obj/machinery/light/small{
@@ -56084,14 +56126,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/plating/rough,
 /area/vtm/sewer/nosferatu_town)
-"riU" = (
-/obj/structure/railing{
-	dir = 8;
-	pixel_y = 9
-	},
-/obj/effect/decal/wallpaper/light,
-/turf/closed/wall/vampwall/rich/old,
-/area/vtm/interior)
 "rje" = (
 /obj/machinery/light/prince{
 	dir = 4
@@ -57038,24 +57072,13 @@
 /turf/open/floor/plating/sidewalk,
 /area/vtm/financialdistrict)
 "rLJ" = (
-/obj/structure/railing{
-	dir = 8;
-	pixel_y = 9
+/obj/effect/bump_teleporter{
+	id = 5;
+	id_target = 6
 	},
-/obj/structure/vampstatue{
-	layer = 2.1
-	},
-/obj/effect/turf_decal/siding/white{
+/turf/open/floor/plasteel/stairs/left{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/white{
-	dir = 4
-	},
-/obj/effect/turf_decal/siding/white{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/white,
-/turf/open/floor/plating/parquetry/old,
 /area/vtm/interior)
 "rLW" = (
 /obj/effect/decal/bordur{
@@ -57076,7 +57099,8 @@
 /area/vtm/interior)
 "rMo" = (
 /obj/structure/railing{
-	dir = 4
+	dir = 8;
+	layer = 4
 	},
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/interior)
@@ -57532,15 +57556,6 @@
 /obj/structure/small_vamprocks,
 /turf/open/floor/plating/vampgrass,
 /area/vtm/pacificheights)
-"rXo" = (
-/obj/effect/bump_teleporter{
-	id = 5;
-	id_target = 7
-	},
-/turf/open/floor/plasteel/stairs/left{
-	dir = 1
-	},
-/area/vtm/interior)
 "rXE" = (
 /obj/effect/decal/pallet,
 /obj/item/vtm_artifact/rand,
@@ -58044,22 +58059,6 @@
 "sjU" = (
 /turf/open/floor/plating/rust,
 /area/vtm/sewer)
-"skw" = (
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = -16
-	},
-/turf/open/floor/carpet/blue,
-/area/vtm/interior)
-"sky" = (
-/obj/effect/turf_decal/siding/white{
-	dir = 8
-	},
-/obj/structure/vampdoor/glass/primogen_toreador{
-	dir = 4
-	},
-/turf/open/floor/plating/parquetry/old,
-/area/vtm/interior)
 "skC" = (
 /obj/structure/vampdoor/glass/clinic,
 /turf/open/floor/plating/vampplating/mono,
@@ -58132,16 +58131,6 @@
 	},
 /turf/closed/wall/vampwall/painted/low,
 /area/vtm/interior/bianchiBank)
-"smn" = (
-/obj/structure/railing{
-	dir = 1;
-	pixel_y = 16
-	},
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plating/parquetry/old,
-/area/vtm/interior)
 "smO" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 1
@@ -58802,11 +58791,14 @@
 /turf/open/floor/plating/vampgrass,
 /area/vtm/financialdistrict)
 "sEB" = (
+/obj/structure/stairs/south{
+	dir = 1
+	},
 /obj/effect/bump_teleporter{
 	id = 1;
 	id_target = 3
 	},
-/turf/open/floor/plasteel/stairs/left,
+/turf/open/floor/plating/rough,
 /area/vtm/interior)
 "sEC" = (
 /obj/effect/landmark/npcability,
@@ -59132,6 +59124,26 @@
 /obj/effect/landmark/npcability,
 /turf/open/floor/plating/sidewalk,
 /area/vtm/pacificheights)
+"sMS" = (
+/obj/structure/railing{
+	dir = 4;
+	pixel_y = 9
+	},
+/obj/structure/vampstatue{
+	layer = 2.1
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white,
+/turf/open/floor/plating/parquetry/old,
+/area/vtm/interior)
 "sNb" = (
 /turf/closed/wall/vampwall/rich/old,
 /area/vtm/financialdistrict)
@@ -59294,10 +59306,6 @@
 /obj/item/reagent_containers/food/drinks/bottle/vampirecola/summer_thaw,
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/endron_facility)
-"sRG" = (
-/obj/effect/decal/wallpaper/paper/rich,
-/turf/closed/wall/vampwall,
-/area/vtm/interior)
 "sRT" = (
 /obj/item/toy/beach_ball/holoball,
 /turf/open/floor/plating/sidewalk/poor,
@@ -59407,7 +59415,7 @@
 	lock_id = "hideout";
 	locked = 1;
 	lockpick_difficulty = 10;
-	name = "door"
+	name = "Room 2"
 	},
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/plating/parquetry/old,
@@ -65898,6 +65906,14 @@
 /obj/item/clothing/under/pentex/pentex_janitor,
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/interior/endron_facility)
+"wkL" = (
+/obj/structure/railing{
+	dir = 4;
+	pixel_y = 9
+	},
+/obj/effect/decal/wallpaper/light,
+/turf/closed/wall/vampwall/rich/old,
+/area/vtm/interior)
 "wkP" = (
 /obj/structure/window/reinforced/indestructable{
 	alpha = 0
@@ -67336,7 +67352,7 @@
 	dir = 1;
 	lock_id = "toreador3";
 	lockpick_difficulty = 6;
-	name = "room3"
+	name = "Room 3"
 	},
 /obj/effect/turf_decal/siding/white{
 	dir = 1
@@ -212622,7 +212638,7 @@ bAv
 bAv
 bAv
 bAv
-qwb
+bAv
 qwb
 qwb
 bAv
@@ -212879,7 +212895,7 @@ tqV
 sOI
 umw
 aaS
-ijS
+bAv
 sEB
 nQH
 aaS
@@ -213136,7 +213152,7 @@ iYh
 iYh
 wTn
 aaS
-ijS
+bAv
 mBI
 gqO
 aaS
@@ -270786,21 +270802,21 @@ aaa
 aaa
 aaa
 aaa
-acJ
-acJ
-acJ
-acJ
-acJ
-acJ
-acJ
-acJ
-acJ
-acJ
-acJ
-acJ
-acJ
-acJ
-acJ
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 acJ
 pAd
 pAd
@@ -271044,21 +271060,21 @@ aaa
 aaa
 aaa
 acJ
-bAv
-bAv
-bAv
-bAv
-bAv
-bAv
-bAv
-bAv
-bAv
-bAv
-bAv
-bAv
-bAv
-bAv
-bAv
+acJ
+acJ
+acJ
+acJ
+acJ
+acJ
+acJ
+acJ
+acJ
+acJ
+acJ
+acJ
+acJ
+acJ
+acJ
 bAv
 kIJ
 kIJ
@@ -271265,7 +271281,7 @@ aaa
 aaa
 aaa
 acJ
-ajs
+bAv
 bAv
 bAv
 bAv
@@ -271301,21 +271317,21 @@ aaa
 aaa
 aaa
 acJ
-nng
-npQ
-ohG
-anO
-anO
-pjY
-anO
-anO
-ajD
-qPB
-reh
-ris
-rDp
-skw
-bsG
+bAv
+bAv
+bAv
+bAv
+bAv
+bAv
+bAv
+bAv
+bAv
+bAv
+bAv
+bAv
+bAv
+bAv
+bAv
 bAv
 tiv
 tVJ
@@ -271522,8 +271538,8 @@ aaa
 aaa
 aaa
 acJ
-sRG
-uOG
+ait
+pQL
 fFw
 ctJ
 ajD
@@ -271559,20 +271575,20 @@ aaa
 aaa
 acJ
 nng
-nwM
+npQ
+ohG
 anO
-oqC
-oRH
-nng
-pIt
 anO
+pjY
+anO
+anO
+qPB
+umw
 ajD
-bAv
-bAv
-riU
+rwH
 rLJ
-bsa
-sBA
+cWf
+cej
 bAv
 ajS
 alY
@@ -271779,8 +271795,8 @@ aaa
 aaa
 aaa
 acJ
-sRG
-kSG
+ait
+pTd
 fFw
 ctJ
 ajD
@@ -271816,20 +271832,20 @@ aaa
 aaa
 acJ
 nng
-nyx
+nwM
 anO
-ovV
-arg
+oqC
+oRH
 nng
-pJb
+pIt
 anO
+ajD
+umw
+aoc
+rzV
+rYR
+skK
 anK
-umw
-amn
-bAv
-umw
-sky
-bAv
 bAv
 bAv
 tVY
@@ -272036,7 +272052,7 @@ aaa
 aaa
 aaa
 acJ
-ajs
+bAv
 bAv
 bAv
 bAv
@@ -272072,13 +272088,13 @@ aaa
 aaa
 aaa
 acJ
-bAv
-bAv
-bAv
-bAv
-bAv
 nng
-pKj
+nyx
+anO
+ovV
+arg
+nng
+pJb
 anO
 ajD
 qQq
@@ -272328,22 +272344,22 @@ aaa
 aaa
 aaa
 aaa
-ail
 acJ
-nOH
-bmK
-ajO
-qWA
-bmg
+bAv
+bAv
+bAv
+bAv
+bAv
+nng
+pKj
 anO
-anO
-ajD
-umw
-aoc
-rwH
-rXo
-skK
 anK
+umw
+amn
+bAv
+umw
+gkQ
+bAv
 sVk
 tkF
 tjB
@@ -272585,22 +272601,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
+ail
 acJ
 nOH
-ajS
-owq
-nng
-pyV
-pNp
-gsU
-qxB
-umw
+bmK
+ajO
+nlU
 ajD
-rzV
-rYR
-smn
-egw
+anO
+anO
+ajD
+bAv
+bAv
+wkL
+sMS
+bsa
+sBA
 sVk
 tlu
 tjB
@@ -272844,20 +272860,20 @@ aaa
 aaa
 aaa
 acJ
-bAv
-bAv
-bAv
-bAv
-bAv
-kIJ
-kIJ
-bAv
-bAv
-bAv
-bAv
-bAv
-bAv
-bAv
+nOH
+ajS
+owq
+nng
+pyV
+pNp
+gsU
+ajD
+qxB
+reh
+ris
+rDp
+ibA
+bsG
 sVk
 tmt
 tWW
@@ -273101,20 +273117,20 @@ aaa
 aaa
 aaa
 acJ
-acJ
-acJ
-acJ
-acJ
-pAd
-pAd
-pAd
-pAd
-acJ
-acJ
-acJ
-acJ
-acJ
-acJ
+bAv
+bAv
+bAv
+bAv
+bAv
+kIJ
+kIJ
+bAv
+bAv
+bAv
+bAv
+bAv
+bAv
+bAv
 bAv
 bAv
 kIJ
@@ -273357,20 +273373,20 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+acJ
+acJ
+acJ
+acJ
 acJ
 pAd
 pAd
 pAd
 pAd
 acJ
-aaa
-aaa
-aaa
-aaa
+acJ
+acJ
+acJ
+acJ
 acJ
 acJ
 acJ
@@ -273875,11 +273891,11 @@ aaa
 aaa
 aaa
 aaa
-ail
 acJ
-acJ
-acJ
-acJ
+pAd
+pAd
+pAd
+pAd
 acJ
 aaa
 aaa
@@ -274132,12 +274148,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ail
+acJ
+acJ
+acJ
+acJ
+acJ
 aaa
 aaa
 aaa
@@ -277989,7 +278005,7 @@ acJ
 ail
 oTH
 ait
-pQL
+uOG
 fFw
 qBR
 ajD
