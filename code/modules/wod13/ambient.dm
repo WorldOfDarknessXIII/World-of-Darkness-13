@@ -56,6 +56,22 @@
 	fire_controled = TRUE
 	wall_rating = LOW_WALL_RATING
 
+/area/vtm/interior/restaurant
+	name = "Restaurant"
+	icon_state = "shop"
+	fire_controled = TRUE
+	wall_rating = LOW_WALL_RATING
+
+/area/vtm/interior/casino
+	name = "Casino"
+	icon_state = "shop"
+	fire_controled = TRUE
+	wall_rating = LOW_WALL_RATING
+
+/area/vtm/interior/chinatown_basement
+	name = "chinatown Basement"
+	ambience_index = AMBIENCE_SEWER
+
 /area/vtm/interior/giovanni
 	name = "Giovanni Mansion"
 	icon_state = "giovanni"
