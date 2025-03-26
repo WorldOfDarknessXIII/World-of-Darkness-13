@@ -38,13 +38,21 @@
 	desc = "This is a Container that should not be seen by the player. Oopsie!"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "dresser"
+	anchored = 1
 	var/area/vtm/dwelling/area_reference
 	var/search_tries = 0
 	var/search_hits_left = 0 // These should be automated by the system, btu tries typically are double the hits.
 	var/currently_searched = 0 // Terminator for when in use
 
-/obj/structure/vtm/dwelling_container/proc/roll_for_loot()
-	if(search_hits_left > search_tries)
+/obj/structure/vtm/dwelling_container/Initialize()
+	var/area/vtm/dwelling/current_area = get_area(src)
+	if(current_area)
+		current_area.loot_containers.Add(src)
+	. = ..()
+
+
+/obj/structure/vtm/dwelling_container/proc/roll_for_loot() // This assumes that there are still tries left and outputs loot value to be turned into loot. Also does some self-repairing should it detect an impossible value.
+	if(search_hits_left > search_tries) // Self-maitnenance. Ammount of tries can't be lower than ammount of assigned sucesses, so they are equalized in case this state is detected. This should not happen unless vars where changed by hand.
 		search_tries = search_hits_left
 	if(search_hits_left == search_tries)
 		search_tries -= 1
@@ -59,7 +67,7 @@
 			search_hits_left -= 1
 			return(area_reference.return_loot_value())
 
-/obj/structure/vtm/dwelling_container/proc/dispense_loot(loot_type)
+/obj/structure/vtm/dwelling_container/proc/dispense_loot(loot_type) // This proc creates the actual loot item. Pulling it out like this allows to individualize loot tables per specific item.
 	switch(loot_type)
 		if(null)
 			return
@@ -76,12 +84,13 @@
 		to_chat(user, span_warning("Error: No area reference detected. This is a bug."))
 		return
 	if(search_tries == 0)
-		to_chat(user, span_warning("This container was already throughly searched. Nothing is left."))
+		to_chat(user, span_warning("This container does not seem to have anything of note inside."))
 		return
 	if(currently_searched == 1)
 		to_chat(user, span_warning("Someone is currently using this object."))
 		return
 	currently_searched = 1 // Starts searching
+	area_reference.add_heat(5)
 	var/search_time = search_tries * 30
 	if(do_mob(user, src, search_time))
 		var/loot_roll = roll_for_loot()
