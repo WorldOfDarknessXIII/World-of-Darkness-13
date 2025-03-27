@@ -4,7 +4,6 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	wall_rating = 3
-	var/area_id = 0
 	var/area_heat = 0
 	var/alarm_trigerred = 0
 	var/alarm_disabled = 0
@@ -61,6 +60,7 @@
 		if(GLOB.dwelling_number_major > 0)
 			GLOB.dwelling_number_major -= 1
 			setup_loot_table("major")
+	if(loot_list["type"] == "none")
 		if(GLOB.dwelling_number_moderate > 0)
 			GLOB.dwelling_number_moderate -= 1
 			setup_loot_table("moderate")
@@ -71,7 +71,7 @@
 	setup_loot_containers()
 	loot_spawned = 1
 	GLOB.dwelling_list.Add(src)
-	message_admins("Area [area_id] initialized. Doors: [dwelling_doors.len], Loot Containers: [loot_containers.len], [alarm_panel] linked.")
+	message_admins("Area [name] initialized. Doors: [dwelling_doors.len], Loot Containers: [loot_containers.len], [alarm_panel] linked.")
 	message_admins("Loot distirbution: Type: [loot_list["type"]], Minor: [loot_list["minor"]], Moderate: [loot_list["moderate"]], Major: [loot_list["major"]]")
 	return
 
@@ -95,7 +95,6 @@
 /area/vtm/dwelling/Initialize(mapload)
 	. = ..()
 	GLOB.dwelling_area_list.Add(src)
-	area_id = GLOB.dwelling_area_list.len
 
 /area/vtm/dwelling/Destroy()
 	. = ..()

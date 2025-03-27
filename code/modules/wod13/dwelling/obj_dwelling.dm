@@ -203,6 +203,8 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl"
 	density = 0
+	anchored = 1
+	pixel_y = 32
 	var/area/vtm/dwelling/area_reference
 	var/alarm_timer = 0
 	var/alarm_active = 0

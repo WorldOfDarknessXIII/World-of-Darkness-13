@@ -1,5 +1,5 @@
-GLOBAL_VAR_INIT (dwelling_number_major, 2)
-GLOBAL_VAR_INIT (dwelling_number_moderate, 6)
+GLOBAL_VAR_INIT (dwelling_number_major, 1)
+GLOBAL_VAR_INIT (dwelling_number_moderate, 1)
 GLOBAL_LIST_EMPTY (dwelling_list)
 GLOBAL_LIST_EMPTY (dwelling_area_list)
 

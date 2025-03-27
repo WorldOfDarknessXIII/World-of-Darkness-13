@@ -3509,6 +3509,7 @@
 #include "code\modules\wod13\dwelling\_dwelling_gvars_defines.dm"
 #include "code\modules\wod13\dwelling\area_dwelling.dm"
 #include "code\modules\wod13\dwelling\obj_dwelling.dm"
+#include "code\modules\wod13\dwelling\areas\area_dwelling_instances.dm"
 #include "code\modules\wod13\effects\elysium_barrier.dm"
 #include "code\modules\wod13\effects\elysium_stripclub_barrier.dm"
 #include "code\modules\wod13\effects\fake_steam.dm"
