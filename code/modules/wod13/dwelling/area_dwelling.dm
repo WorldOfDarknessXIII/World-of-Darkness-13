@@ -13,6 +13,7 @@
 	var/obj/structure/vtm/dwelling_alarm/alarm_panel
 	var/list/dwelling_doors = list()
 	var/list/loot_containers = list()
+	var/forced_loot
 	var/list/loot_list = list("type" = "none",
 		"minor" = 0,
 		"moderate" = 0,
@@ -25,6 +26,24 @@
 	if(area_heat >= 50 && alarm_panel.alarm_active == 0)
 		alarm_panel.alarm_arm()
 
+/area/vtm/dwelling/proc/setup_loot_table(type)
+	switch(type)
+		if("major")
+			loot_list["type"] = "major"
+			loot_list["minor"] = rand(3,6)
+			loot_list["moderate"] = rand(3,6)
+			loot_list["major"] = rand(2,4)
+		if("moderate")
+			loot_list["type"] = "moderate"
+			loot_list["minor"] = rand(2,4)
+			loot_list["moderate"] = rand(2,3)
+			loot_list["major"] = rand(1,2)
+		if("minor")
+			loot_list["type"] = "minor"
+			loot_list["minor"] = rand(4,6)
+			loot_list["moderate"] = rand(1,2)
+			loot_list["major"] = rand(0,1)
+
 /area/vtm/dwelling/proc/setup_loot_containers()
 	var/loot_sum = loot_list["minor"] + loot_list["moderate"] + loot_list["major"]
 	while(loot_sum > 0)
@@ -36,24 +55,17 @@
 		loot_sum -= 1
 
 /area/vtm/dwelling/proc/setup_loot()
-	if(GLOB.dwelling_number_major > 0)
-		GLOB.dwelling_number_major -= 1
-		loot_list["type"] = "major"
-		loot_list["minor"] = rand(3,6)
-		loot_list["moderate"] = rand(3,6)
-		loot_list["major"] = rand(2,4)
-	else if(GLOB.dwelling_number_moderate > 0)
-		GLOB.dwelling_number_moderate -= 1
-		loot_list["type"] = "moderate"
-		loot_list["minor"] = rand(2,4)
-		loot_list["moderate"] = rand(2,3)
-		loot_list["major"] = rand(1,2)
-		return
-	else
-		loot_list["type"] = "minor"
-		loot_list["minor"] = rand(4,6)
-		loot_list["moderate"] = rand(1,2)
-		loot_list["major"] = rand(0,1)
+	if(forced_loot)
+		setup_loot_table(forced_loot)
+	if(loot_list["type"] == "none")
+		if(GLOB.dwelling_number_major > 0)
+			GLOB.dwelling_number_major -= 1
+			setup_loot_table("major")
+		if(GLOB.dwelling_number_moderate > 0)
+			GLOB.dwelling_number_moderate -= 1
+			setup_loot_table("moderate")
+	if(loot_list["type"] == "none")
+		setup_loot_table("minor")
 	for (var/obj/structure/vampdoor/dwelling/dwelling_door in dwelling_doors)
 		dwelling_door.set_security(loot_list["type"])
 	setup_loot_containers()

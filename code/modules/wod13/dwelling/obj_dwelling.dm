@@ -182,9 +182,6 @@
 /turf/closed/wall/vampwall/city/low/window/dwelling
 	window = /obj/structure/window/fulltile/dwelling
 
-
-
-
 /obj/item/vtm/dwelling_alarm_card
 	name = "alarm disabler card"
 	desc = "A small card with a magnetic strip. Can be used to disable triggered security systems. Does not work on systems that have not sent an alarm signal yet."
