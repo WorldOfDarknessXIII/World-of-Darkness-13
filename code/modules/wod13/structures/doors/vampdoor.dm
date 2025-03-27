@@ -86,6 +86,9 @@
 	//Adds the component only once. We do it here & not in Initialize() because there are tons of windows & we don't want to add to their init times
 	LoadComponent(/datum/component/leanable, dropping)
 
+/obj/structure/vampdoor/proc/proc_unlock(method) //I am here so that dwelling doors can call me to properly process their alarms.
+	return
+
 /obj/structure/vampdoor/attack_hand(mob/user)
 	. = ..()
 	var/mob/living/N = user
@@ -103,11 +106,13 @@
 						D.icon_state = baseicon
 						var/atom/throw_target = get_edge_target_turf(src, user.dir)
 						D.throw_at(throw_target, rand(2, 4), 4, user)
+						proc_unlock(50)
 						qdel(src)
 					else
 						pixel_z = pixel_z+rand(-1, 1)
 						pixel_w = pixel_w+rand(-1, 1)
 						playsound(get_turf(src), 'code/modules/wod13/sounds/get_bent.ogg', 50, TRUE)
+						proc_unlock(5)
 						to_chat(user, "<span class='warning'>[src] is locked, and you aren't strong enough to break it down!</span>")
 						spawn(2)
 							pixel_z = initial(pixel_z)
@@ -150,6 +155,7 @@
 	if(istype(W, /obj/item/vamp/keys/hack))
 		if(locked)
 			hacking = TRUE
+			proc_unlock(5)
 			playsound(src, 'code/modules/wod13/sounds/hack.ogg', 100, TRUE)
 			for(var/mob/living/carbon/human/npc/police/P in oviewers(7, src))
 				if(P)
@@ -196,4 +202,5 @@
 					else
 						playsound(src, lock_sound, 75, TRUE)
 						to_chat(user, "[src] is now unlocked.")
+						proc_unlock("key")
 						locked = FALSE

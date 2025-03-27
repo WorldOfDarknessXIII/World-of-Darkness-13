@@ -4,37 +4,26 @@
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
 	wall_rating = 3
+	var/area_id = 0
 	var/area_heat = 0
+	var/alarm_trigerred = 0
+	var/alarm_disabled = 0
+	var/list/cased_by = list()
 	var/loot_spawned = 0
+	var/obj/structure/vtm/dwelling_alarm/alarm_panel
+	var/list/dwelling_doors = list()
 	var/list/loot_containers = list()
-	var/list/loot_list = list("minor" = 0,
+	var/list/loot_list = list("type" = "none",
+		"minor" = 0,
 		"moderate" = 0,
 		"major" = 0,
 		)
 
 /area/vtm/dwelling/proc/add_heat(ammount = 0)
+	if(alarm_disabled == 1) return
 	area_heat += ammount
-
-/area/vtm/dwelling/proc/setup_loot()
-	if(GLOB.dwelling_number_rich > 0)
-		GLOB.dwelling_number_rich -= 1
-		loot_list["minor"] = rand(3,6)
-		loot_list["moderate"] = rand(3,6)
-		loot_list["major"] = rand(2,4)
-		return
-	else if(GLOB.dwelling_number_moderate > 0)
-		GLOB.dwelling_number_moderate -= 1
-		loot_list["minor"] = rand(2,4)
-		loot_list["moderate"] = rand(2,3)
-		loot_list["major"] = rand(1,2)
-		return
-	else
-		loot_list["minor"] = rand(4,6)
-		loot_list["moderate"] = rand(1,2)
-		loot_list["major"] = rand(0,1)
-	loot_spawned = 1
-	GLOB.dwelling_list.Add(src)
-	return
+	if(area_heat >= 50 && alarm_panel.alarm_active == 0)
+		alarm_panel.alarm_arm()
 
 /area/vtm/dwelling/proc/setup_loot_containers()
 	var/loot_sum = loot_list["minor"] + loot_list["moderate"] + loot_list["major"]
@@ -46,11 +35,33 @@
 		picked_container.search_hits_left += 1
 		loot_sum -= 1
 
-/area/vtm/dwelling/Initialize(mapload)
-	. = ..()
-	if(loot_spawned == 0)
-		setup_loot()
-
+/area/vtm/dwelling/proc/setup_loot()
+	if(GLOB.dwelling_number_major > 0)
+		GLOB.dwelling_number_major -= 1
+		loot_list["type"] = "major"
+		loot_list["minor"] = rand(3,6)
+		loot_list["moderate"] = rand(3,6)
+		loot_list["major"] = rand(2,4)
+	else if(GLOB.dwelling_number_moderate > 0)
+		GLOB.dwelling_number_moderate -= 1
+		loot_list["type"] = "moderate"
+		loot_list["minor"] = rand(2,4)
+		loot_list["moderate"] = rand(2,3)
+		loot_list["major"] = rand(1,2)
+		return
+	else
+		loot_list["type"] = "minor"
+		loot_list["minor"] = rand(4,6)
+		loot_list["moderate"] = rand(1,2)
+		loot_list["major"] = rand(0,1)
+	for (var/obj/structure/vampdoor/dwelling/dwelling_door in dwelling_doors)
+		dwelling_door.set_security(loot_list["type"])
+	setup_loot_containers()
+	loot_spawned = 1
+	GLOB.dwelling_list.Add(src)
+	message_admins("Area [area_id] initialized. Doors: [dwelling_doors.len], Loot Containers: [loot_containers.len], [alarm_panel] linked.")
+	message_admins("Loot distirbution: Type: [loot_list["type"]], Minor: [loot_list["minor"]], Moderate: [loot_list["moderate"]], Major: [loot_list["major"]]")
+	return
 
 /area/vtm/dwelling/proc/return_loot_value()
 	var/list/pick_list = list()
@@ -68,3 +79,16 @@
 			var/list_choice = pick(pick_list)
 			loot_list[list_choice] -= 1
 			return list_choice
+
+/area/vtm/dwelling/Initialize(mapload)
+	. = ..()
+	GLOB.dwelling_area_list.Add(src)
+	area_id = GLOB.dwelling_area_list.len
+
+/area/vtm/dwelling/Destroy()
+	. = ..()
+	GLOB.dwelling_area_list.Remove(src)
+	alarm_panel = null
+	cased_by = null
+	dwelling_doors = null
+	loot_containers = null
