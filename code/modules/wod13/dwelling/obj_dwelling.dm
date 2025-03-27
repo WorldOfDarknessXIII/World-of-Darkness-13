@@ -7,6 +7,8 @@
 	desc = "If you can see this with the base description, someone did a funny. Please report this as a bug."
 	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "bronze"
+	layer = OBJ_LAYER
+	w_class = WEIGHT_CLASS_NORMAL
 	var/loot_value = 0 // From 1 to 3 assings value and changes description. This should be replaced by a full proc at some point, but will do for a first implementation.
 
 /obj/item/vtm/dwelling_loot/Initialize()
@@ -24,18 +26,24 @@
 	desc = "A small trinket of low value. Can be fenced for some money."
 	icon_state = "bronze"
 	loot_value = 1
+	grid_width = 1 GRID_BOXES
+	grid_height = 1 GRID_BOXES
 
 /obj/item/vtm/dwelling_loot/moderate
 	name = "moderate valuable"
 	desc = "A small trinket of decent value. Can be fenced for money."
 	icon_state = "silver"
 	loot_value = 2
+	grid_width = 2 GRID_BOXES
+	grid_height = 1 GRID_BOXES
 
 /obj/item/vtm/dwelling_loot/major
 	name = "major valuable"
 	desc = "A small trinket of excellent value. Can be fenced for good money."
 	icon_state = "gold"
 	loot_value = 3
+	grid_width = 2 GRID_BOXES
+	grid_height = 2 GRID_BOXES
 
 // Loot Containers
 
@@ -44,6 +52,7 @@
 	desc = "A container full of personal items. Can be serched to reveal the items within."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "dresser"
+	layer = BELOW_OBJ_LAYER
 	anchored = 1
 	var/area/vtm/dwelling/area_reference
 	var/search_tries = 0
@@ -75,15 +84,16 @@
 			return(area_reference.return_loot_value())
 
 /obj/structure/vtm/dwelling_container/proc/dispense_loot(loot_type) // This proc creates the actual loot item. Pulling it out like this allows to individualize loot tables per specific item.
+	var/container_turf = get_turf(src)
 	switch(loot_type)
 		if(null)
 			return
 		if("minor")
-			new /obj/item/vtm/dwelling_loot/minor(src)
+			new /obj/item/vtm/dwelling_loot/minor(container_turf)
 		if("moderate")
-			new /obj/item/vtm/dwelling_loot/moderate(src)
+			new /obj/item/vtm/dwelling_loot/moderate(container_turf)
 		if("major")
-			new /obj/item/vtm/dwelling_loot/major(src)
+			new /obj/item/vtm/dwelling_loot/major(container_turf)
 
 /obj/structure/vtm/dwelling_container/attack_hand(mob/living/user)
 	add_fingerprint(user) // For frorencics, adds user fingerprints
@@ -121,7 +131,10 @@
 
 /obj/structure/vampdoor/dwelling
 
+	baseicon = "wood"
+	icon_state = "wood-1"
 	var/area/vtm/dwelling/area_reference
+	locked = 1
 
 /obj/structure/vampdoor/dwelling/proc/set_security(sec_type)
 	switch(sec_type)
@@ -134,6 +147,7 @@
 		if("major")
 			lockpick_difficulty = LOCKDIFFICULTY_7
 			lockpick_timer = LOCKTIMER_7
+	lock_id = area_reference.area_tag
 
 /obj/structure/vampdoor/dwelling/proc/start_casing(mob/user)
 	if(area_reference.alarm_trigerred == 1) //Eliminator if the alarm was already trigerred
@@ -179,8 +193,29 @@
 	if(!area_reference) return
 	area_reference.add_heat(severity)
 
+/obj/structure/window/fulltile/dwelling/Initialize(mapload, direct)
+	. = ..()
+	var/area/vtm/dwelling/current_area = get_area(src)
+	if(current_area)
+		area_reference = current_area
+
 /turf/closed/wall/vampwall/city/low/window/dwelling
 	window = /obj/structure/window/fulltile/dwelling
+
+/obj/structure/curtain/dwelling
+	name = "plain curtains"
+	icon_type = "bounty"
+	icon_state = "bounty-closed"
+	open = FALSE
+	opacity = TRUE
+	density = FALSE
+	opaque_closed = TRUE
+	color = null
+	alpha = 255
+	base_pixel_y = 12
+	pixel_y = 12
+	check_area = TRUE
+
 
 /obj/item/vtm/dwelling_alarm_card
 	name = "alarm disabler card"
@@ -222,6 +257,10 @@
 	sleep(randomized_response_time)
 	for(var/obj/item/police_radio/radio in GLOB.police_radios)
 		radio.announce_crime("burglary", get_turf(src))
+	for(var/obj/machinery/p25transceiver/police/transciever in GLOB.p25_tranceivers)
+		if(transciever.p25_network == "police")
+			transciever.announce_crime("burglary", get_turf(src))
+			break
 
 /obj/structure/vtm/dwelling_alarm/proc/alarm_trigger()
 	area_reference.alarm_trigerred = 1
@@ -236,7 +275,8 @@
 	while(alarm_timer > world.time)
 		if(area_reference.alarm_disabled == 1 || alarm_timer == 0) return
 		stoplag(10)
-	if(area_reference.alarm_disabled == 0)
+	if(area_reference.alarm_trigerred == 0)
+		if(area_reference.alarm_disabled == 1 || alarm_timer == 0) return
 		alarm_trigger()
 		return
 
@@ -251,12 +291,12 @@
 		if("major")
 			blink_time = 10
 	while(alarm_timer > world.time)
-		if(area_reference.alarm_trigerred != 1 || alarm_timer == 0) return
+		if(area_reference.alarm_trigerred == 1 || alarm_timer == 0) return
 		icon_state = "doorctrl1"
 		alarm_safety = 0
 		update_icon()
 		sleep(light_time)
-		if(area_reference.alarm_trigerred != 1 || alarm_timer == 0) return
+		if(area_reference.alarm_trigerred == 1 || alarm_timer == 0) return
 		icon_state = "doorctrl-p"
 		update_icon()
 		alarm_safety = 1
@@ -274,9 +314,7 @@
 	return
 
 /obj/structure/vtm/dwelling_alarm/proc/alarm_arm()
-	icon_state = "doorctrl1"
 	desc = "A small console with a display and small keyboard. It seems to be running a security check.  A small hole to the side of the panel looks like it would just fit a lockpick."
-	update_icon()
 	say("Intrusion detected. Performing detailed scan.")
 	playsound(src, 'sound/ambience/signal.ogg', 25)
 	restart_alarm()
@@ -302,8 +340,11 @@
 			say("Error. Fluctuation in power supply. Restarting security scan...")
 			restart_alarm()
 
-/obj/structure/vtm/dwelling_alarm/attacked_by(obj/item/I, mob/living/user)
+/obj/structure/vtm/dwelling_alarm/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/vamp/keys/hack))
+		if(area_reference.alarm_disabled == 1)
+			to_chat(user, span_warning("The alarm is disabled and nothing seems to be able to change that."))
+			return
 		if(alarm_active == 0)
 			to_chat(user, span_warning("You start to wiggle the lockpick in the opening. This will likely turn the alarm on if you do not stop!"))
 			if(do_mob(user, src, 10 SECONDS))
@@ -319,7 +360,7 @@
 				return
 			if(alarm_safety == 1)
 				to_chat(user, span_notice("You feel a button depress at the end of the opening. The display on the alarm flickers briefly!"))
-				restart_alarm()
+				alarm_reset()
 				return
 	if(istype(I, /obj/item/vtm/dwelling_alarm_card))
 		if(area_reference.alarm_trigerred == 0)

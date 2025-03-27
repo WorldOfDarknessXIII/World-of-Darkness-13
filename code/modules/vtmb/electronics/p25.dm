@@ -404,6 +404,8 @@ GLOBAL_LIST_EMPTY(p25_tranceivers)
 		if("murder")
 			message = "Murder at [A.name], [coords]"
 			should_announce = TRUE
+		if("burglary")
+			message = "Burglary at [A.name], [coords]"
 
 	if(should_announce)
 		var/formatted = "[icon2html(src, world)]\[<b>DISPATCH</b>\]: <span class='robot'>[message]</span>"

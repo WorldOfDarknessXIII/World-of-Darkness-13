@@ -3,8 +3,10 @@
 	icon_state = "interior"
 	ambience_index = AMBIENCE_INTERIOR
 	upper = FALSE
-	wall_rating = 3
+	wall_rating = 1
+	var/area_tag = "default"
 	var/area_heat = 0
+	var/area_heat_max
 	var/alarm_trigerred = 0
 	var/alarm_disabled = 0
 	var/list/cased_by = list()
@@ -21,27 +23,34 @@
 
 /area/vtm/dwelling/proc/add_heat(ammount = 0)
 	if(alarm_disabled == 1) return
+	if(alarm_trigerred == 1)
+		INVOKE_ASYNC(alarm_panel, TYPE_PROC_REF(/obj/structure/vtm/dwelling_alarm/, contact_cops))
+		return
 	area_heat += ammount
-	if(area_heat >= 50 && alarm_panel.alarm_active == 0)
+	if(area_heat >= area_heat_max && alarm_panel.alarm_active == 0)
 		alarm_panel.alarm_arm()
+		return
 
 /area/vtm/dwelling/proc/setup_loot_table(type)
 	switch(type)
 		if("major")
 			loot_list["type"] = "major"
-			loot_list["minor"] = rand(3,6)
-			loot_list["moderate"] = rand(3,6)
-			loot_list["major"] = rand(2,4)
+			loot_list["minor"] = rand(1,2)
+			loot_list["moderate"] = rand(4,6)
+			loot_list["major"] = rand(3,6)
+			area_heat_max = 20
 		if("moderate")
 			loot_list["type"] = "moderate"
-			loot_list["minor"] = rand(2,4)
-			loot_list["moderate"] = rand(2,3)
+			loot_list["minor"] = rand(4,6)
+			loot_list["moderate"] = rand(3,6)
 			loot_list["major"] = rand(1,2)
+			area_heat_max = 50
 		if("minor")
 			loot_list["type"] = "minor"
 			loot_list["minor"] = rand(4,6)
 			loot_list["moderate"] = rand(1,2)
 			loot_list["major"] = rand(0,1)
+			area_heat_max = 50
 
 /area/vtm/dwelling/proc/setup_loot_containers()
 	var/loot_sum = loot_list["minor"] + loot_list["moderate"] + loot_list["major"]
@@ -52,6 +61,9 @@
 		picked_container.search_tries += 2
 		picked_container.search_hits_left += 1
 		loot_sum -= 1
+	for(var/obj/structure/vtm/dwelling_container/loot_container in loot_containers)
+		if(loot_container.search_tries <= 4) loot_container.search_tries += 2
+	return
 
 /area/vtm/dwelling/proc/setup_loot()
 	if(forced_loot)

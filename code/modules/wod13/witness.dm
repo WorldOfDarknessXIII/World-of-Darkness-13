@@ -52,7 +52,7 @@
 		if("murder")
 			message = "Murder at [crime_location.name], to the [direction], [location.x]:[location.y]..."
 		if("burglary")
-			message = "Burglary reported by automated security device at [crime_location.name], to the [direction], [location.x]:[location.y]..."
+			message = "Burglary reported by automated security device at [crime_location.name], the [direction], [location.x]:[location.y]..."
 
 	if(message != "")
 		for(var/obj/item/police_radio/radio in GLOB.police_radios)
