@@ -50,9 +50,11 @@
 /obj/structure/vtm/dwelling_container
 	name = "Personal storage"
 	desc = "A container full of personal items. Can be serched to reveal the items within."
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "dresser"
+	icon = 'icons/obj/crates.dmi'
+	icon_state = "crate"
 	layer = BELOW_OBJ_LAYER
+	color = "#A17037"
+	density = 1
 	anchored = 1
 	var/area/vtm/dwelling/area_reference
 	var/search_tries = 0
@@ -66,10 +68,12 @@
 		area_reference = current_area
 	. = ..()
 
-
 /obj/structure/vtm/dwelling_container/proc/roll_for_loot() // This assumes that there are still tries left and outputs loot value to be turned into loot. Also does some self-repairing should it detect an impossible value.
 	if(search_hits_left > search_tries) // Self-maitnenance. Ammount of tries can't be lower than ammount of assigned sucesses, so they are equalized in case this state is detected. This should not happen unless vars where changed by hand.
 		search_tries = search_hits_left
+	if(search_hits_left == 0)
+		search_tries = 0
+		return 0
 	if(search_hits_left == search_tries)
 		search_tries -= 1
 		search_hits_left -= 1
@@ -94,6 +98,7 @@
 			new /obj/item/vtm/dwelling_loot/moderate(container_turf)
 		if("major")
 			new /obj/item/vtm/dwelling_loot/major(container_turf)
+
 
 /obj/structure/vtm/dwelling_container/attack_hand(mob/living/user)
 	add_fingerprint(user) // For frorencics, adds user fingerprints
@@ -120,6 +125,9 @@
 			if("minor","moderate","major")
 				to_chat(user, span_notice("You find an item of [loot_roll] value!"))
 				dispense_loot(loot_roll)
+	if(search_tries == 0)
+		icon_state = "crateopen"
+		update_icon()
 	currently_searched = 0
 
 /obj/structure/vtm/dwelling_container/Destroy()
