@@ -112,19 +112,21 @@
 		to_chat(user, span_warning("Someone is currently using this object."))
 		return
 	currently_searched = 1 // Starts searching
-	area_reference.add_heat(5)
-	var/search_time = search_tries * 30
-	if(do_mob(user, src, search_time))
-		var/loot_roll = roll_for_loot()
-		switch(loot_roll)
-			if(0)
-				search_hits_left = 0
-				to_chat(user, span_warning("You search through the container, but don't find anything of value. You doubt you will be able to find much else here."))
-			if("fail")
-				to_chat(user, span_warning("You search through the container, but don't find anything of value."))
-			if("minor","moderate","major")
-				to_chat(user, span_notice("You find an item of [loot_roll] value!"))
-				dispense_loot(loot_roll)
+	while(search_tries > 0)
+		area_reference.add_heat(5)
+		var/search_time = search_tries * 30
+		if(do_mob(user, src, search_time))
+			var/loot_roll = roll_for_loot()
+			switch(loot_roll)
+				if(0)
+					search_hits_left = 0
+					to_chat(user, span_warning("You search through the container, but don't find anything of value. You doubt you will be able to find much else here."))
+				if("fail")
+					to_chat(user, span_warning("You search through the container, but don't find anything of value."))
+				if("minor","moderate","major")
+					to_chat(user, span_notice("You find an item of [loot_roll] value!"))
+					dispense_loot(loot_roll)
+		else break
 	if(search_tries == 0)
 		icon_state = "crateopen"
 		update_icon()
@@ -196,6 +198,7 @@
 
 /obj/structure/window/fulltile/dwelling
 	var/area/vtm/dwelling/area_reference
+	var/obj/structure/curtain/dwelling/curtain_reference
 
 /obj/structure/window/fulltile/dwelling/process_break_in(severity)
 	if(!area_reference) return
@@ -207,11 +210,16 @@
 	if(current_area)
 		area_reference = current_area
 		area_reference.dwelling_windows.Add(src)
+	var/obj/structure/curtain/dwelling/curtain = new(get_turf(src))
+	curtain_reference = curtain
 
 /obj/structure/window/fulltile/dwelling/Destroy()
 	if(area_reference)
 		area_reference.dwelling_windows.Remove(src)
 		area_reference = null
+	if(curtain_reference)
+		curtain_reference.check_area = FALSE
+		curtain_reference = null
 	. = ..()
 
 
@@ -290,7 +298,7 @@
 /obj/structure/vtm/dwelling_alarm/proc/alarm_loop() //Alarm loop
 	while(alarm_timer > world.time)
 		if(area_reference.alarm_disabled == 1 || alarm_timer == 0) return
-		stoplag(10)
+		stoplag(1)
 	if(area_reference.alarm_trigerred == 0)
 		if(area_reference.alarm_disabled == 1 || alarm_timer == 0) return
 		alarm_trigger()
@@ -323,7 +331,7 @@
 	var/alarm_delay
 	switch(area_reference.loot_list["type"])
 		if("minor","moderate")
-			alarm_delay = 120 SECONDS
+			alarm_delay = 60 SECONDS
 		if("major")
 			alarm_delay = 30 SECONDS
 	alarm_timer = world.time + alarm_delay

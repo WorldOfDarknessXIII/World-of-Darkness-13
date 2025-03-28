@@ -4208,7 +4208,6 @@
 /turf/open/floor/plating/vampdirt,
 /area/vtm/ghetto)
 "apr" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/junk,
 /area/vtm/dwelling/ghetto18)
 "aps" = (
@@ -4460,7 +4459,6 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/dwelling/chinatown08)
 "aqi" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/junk,
 /area/vtm/dwelling/pacific03)
 "aqj" = (
@@ -9113,7 +9111,6 @@
 /area/vtm/anarch)
 "aFz" = (
 /obj/effect/decal/wallpaper/paper/low,
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/old/low/window,
 /area/vtm/dwelling/ghetto07)
 "aFA" = (
@@ -26194,7 +26191,6 @@
 /area/vtm)
 "bUB" = (
 /obj/effect/decal/wallpaper/paper/stripe/low,
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/old,
 /area/vtm/dwelling/chinatown03)
 "bUT" = (
@@ -27544,7 +27540,6 @@
 /turf/open/floor/plating/rough,
 /area/vtm/interior/glasswalker)
 "czI" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/junk,
 /area/vtm/dwelling/ghetto15)
 "czW" = (
@@ -28079,7 +28074,6 @@
 /turf/open/floor/plating/asphalt,
 /area/vtm/chinatown)
 "cQw" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/old,
 /area/vtm/dwelling/pacific01)
 "cQA" = (
@@ -29381,7 +29375,6 @@
 /turf/open/floor/carpet/green,
 /area/vtm/jazzclub)
 "duH" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/junk,
 /area/vtm/dwelling/ghetto10)
 "dvn" = (
@@ -30591,7 +30584,6 @@
 "dWH" = (
 /obj/effect/decal/wallpaper/paper/darkgreen/low,
 /obj/effect/decal/wallpaper/paper/green/low,
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/old,
 /area/vtm/dwelling/chinatown01)
 "dWU" = (
@@ -33761,7 +33753,6 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/sewer/nosferatu_town)
 "ftR" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling,
 /area/vtm/dwelling/ghetto11)
 "ftY" = (
@@ -34584,7 +34575,6 @@
 /turf/open/openspace,
 /area/vtm/interior/millennium_tower/f2)
 "fMX" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling,
 /area/vtm/dwelling/ghetto02)
 "fNi" = (
@@ -37507,7 +37497,6 @@
 /turf/open/floor/plating/vampdirt,
 /area/vtm/park)
 "hcL" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling,
 /area/vtm/dwelling/ghetto14)
 "hcM" = (
@@ -39245,7 +39234,6 @@
 /turf/open/floor/plating/rough,
 /area/vtm/interior/millennium_tower/f5)
 "hPM" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling,
 /area/vtm/dwelling/chinatown08)
 "hPV" = (
@@ -40595,7 +40583,6 @@
 /turf/open/floor/carpet/purple,
 /area/vtm/interior/millennium_tower/ventrue)
 "itI" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/junk,
 /area/vtm/dwelling/ghetto20)
 "itK" = (
@@ -41790,7 +41777,6 @@
 /area/vtm/pacificheights)
 "iVs" = (
 /obj/effect/decal/wallpaper/paper/stripe/low,
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/junk,
 /area/vtm/dwelling/ghetto03)
 "iVt" = (
@@ -42204,7 +42190,6 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/dwelling/ghetto12)
 "jco" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/old,
 /area/vtm/dwelling/chinatown07)
 "jcL" = (
@@ -44038,7 +44023,6 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/dwelling/ghetto11)
 "jVM" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling,
 /area/vtm/dwelling/chinatown04)
 "jWm" = (
@@ -46659,7 +46643,6 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/interior/mansion)
 "lkn" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/junk,
 /area/vtm/dwelling/ghetto16)
 "lko" = (
@@ -46823,7 +46806,6 @@
 /turf/closed/wall/vampwall/rich/low,
 /area/vtm/interior/millennium_tower)
 "lon" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/old,
 /area/vtm/dwelling/chinatown06)
 "loq" = (
@@ -48269,7 +48251,6 @@
 /area/vtm/interior/bianchiBank)
 "maz" = (
 /obj/effect/decal/wallpaper/paper/green/low,
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/old,
 /area/vtm/dwelling/chinatown01)
 "maD" = (
@@ -49109,7 +49090,6 @@
 /area/vtm/church)
 "msX" = (
 /obj/effect/decal/wallpaper/paper/low,
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/old,
 /area/vtm/dwelling/ghetto01)
 "mti" = (
@@ -49263,7 +49243,6 @@
 /area/vtm/dwelling/chinatown03)
 "mwz" = (
 /obj/effect/decal/wallpaper/paper/low,
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling,
 /area/vtm/dwelling/ghetto14)
 "mwU" = (
@@ -51023,7 +51002,6 @@
 /turf/open/floor/plating/vampcarpet,
 /area/vtm/interior/millennium_tower)
 "nse" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/old,
 /area/vtm/dwelling/chinatown05)
 "nsl" = (
@@ -51460,7 +51438,6 @@
 /turf/closed/wall/vampwall/city,
 /area/vtm/dwelling/chinatown04)
 "nDO" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/junk,
 /area/vtm/dwelling/ghetto08)
 "nDX" = (
@@ -53166,7 +53143,6 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/dwelling/ghetto20)
 "ouC" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/junk,
 /area/vtm/dwelling/ghetto06)
 "ouH" = (
@@ -56400,7 +56376,6 @@
 /turf/open/floor/plating/parquetry,
 /area/vtm/interior/strip_elysium)
 "pSY" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/junk/alt/low/window,
 /area/vtm/dwelling/ghetto12)
 "pTd" = (
@@ -57687,7 +57662,6 @@
 /turf/open/floor/plating/parquetry,
 /area/vtm/interior/old_clan_tzimisce_manor)
 "qzz" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling,
 /area/vtm/dwelling/ghetto05)
 "qzH" = (
@@ -58423,7 +58397,6 @@
 /turf/open/floor/plating/rough,
 /area/vtm/anarch)
 "qOl" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/old,
 /area/vtm/dwelling/chinatown02)
 "qOm" = (
@@ -60924,7 +60897,6 @@
 /turf/closed/wall/vampwall/painted,
 /area/vtm/interior/police)
 "rVu" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/junk,
 /area/vtm/dwelling/ghetto12)
 "rVC" = (
@@ -61986,7 +61958,6 @@
 /turf/open/floor/plating/roofwalk,
 /area/vtm/park)
 "sua" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/junk,
 /area/vtm/dwelling/ghetto13)
 "suc" = (
@@ -62105,7 +62076,6 @@
 /turf/open/floor/plating/sidewalk,
 /area/vtm/financialdistrict)
 "sxF" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/old,
 /area/vtm/dwelling/chinatown01)
 "sxH" = (
@@ -63434,7 +63404,6 @@
 /area/vtm/ghetto)
 "taA" = (
 /obj/effect/decal/wallpaper/paper/low,
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/junk,
 /area/vtm/dwelling/ghetto10)
 "taC" = (
@@ -64080,7 +64049,6 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/graveyard/interior)
 "tpS" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/old,
 /area/vtm/dwelling/ghetto07)
 "tpT" = (
@@ -64339,7 +64307,6 @@
 /turf/open/floor/plating/vampgrass,
 /area/vtm/pacificheights)
 "tuR" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/old,
 /area/vtm/dwelling/pacific02)
 "tuZ" = (
@@ -64558,7 +64525,6 @@
 /area/vtm/clinic)
 "tBX" = (
 /obj/effect/decal/wallpaper/paper/green/low,
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/old,
 /area/vtm/dwelling/chinatown02)
 "tBY" = (
@@ -65877,7 +65843,6 @@
 /area/vtm/interior)
 "uiA" = (
 /obj/effect/decal/wallpaper/paper/low,
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling,
 /area/vtm/dwelling/chinatown04)
 "uiG" = (
@@ -67708,7 +67673,6 @@
 /area/vtm/interior/bianchiBank)
 "uZG" = (
 /obj/effect/decal/wallpaper/paper/green/low,
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/old,
 /area/vtm/dwelling/chinatown05)
 "uZK" = (
@@ -67891,7 +67855,6 @@
 /turf/open/floor/plating/vampcanalplating,
 /area/vtm/interior)
 "ver" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/old,
 /area/vtm/dwelling/ghetto01)
 "veI" = (
@@ -68057,7 +68020,6 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/dwelling/ghetto20)
 "vim" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling,
 /area/vtm/dwelling/ghetto04)
 "vin" = (
@@ -68530,7 +68492,6 @@
 /area/vtm/supply)
 "vtX" = (
 /obj/effect/decal/wallpaper/paper/green/low,
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/junk,
 /area/vtm/dwelling/ghetto13)
 "vus" = (
@@ -68556,7 +68517,6 @@
 /area/vtm/dwelling/ghetto18)
 "vuL" = (
 /obj/effect/decal/wallpaper/paper/stripe/low,
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/junk,
 /area/vtm/dwelling/ghetto15)
 "vuQ" = (
@@ -68916,7 +68876,6 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/dwelling/chinatown07)
 "vEd" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/junk,
 /area/vtm/dwelling/ghetto03)
 "vEe" = (
@@ -69009,7 +68968,6 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/anarch)
 "vFZ" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/old,
 /area/vtm/dwelling/ghetto09)
 "vGj" = (
@@ -70247,7 +70205,6 @@
 /turf/closed/wall/vampwall/junk,
 /area/vtm/sewer/nosferatu_town)
 "wiz" = (
-/obj/structure/curtain/dwelling,
 /obj/effect/decal/wallpaper/paper/low,
 /turf/closed/wall/vampwall/city/low/window/dwelling/old,
 /area/vtm/dwelling/pacific02)
@@ -71239,7 +71196,6 @@
 /turf/open/floor/plating/vampwood,
 /area/vtm/forest)
 "wEa" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling,
 /area/vtm/dwelling/ghetto17)
 "wEc" = (
@@ -71728,7 +71684,6 @@
 /area/vtm/dwelling/ghetto11)
 "wNP" = (
 /obj/effect/decal/wallpaper/paper/low,
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling,
 /area/vtm/dwelling/chinatown08)
 "wNX" = (
@@ -72010,7 +71965,6 @@
 /turf/open/floor/plating/bacotell,
 /area/vtm/interior/police)
 "wUP" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/junk,
 /area/vtm/dwelling/ghetto19)
 "wUS" = (
@@ -74711,7 +74665,6 @@
 /turf/open/floor/plating/rough/cave,
 /area/vtm/interior)
 "yaY" = (
-/obj/structure/curtain/dwelling,
 /turf/closed/wall/vampwall/city/low/window/dwelling/old,
 /area/vtm/dwelling/chinatown03)
 "ybe" = (
