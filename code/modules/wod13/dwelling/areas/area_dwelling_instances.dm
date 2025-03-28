@@ -74,6 +74,10 @@
 	name = "Civilian Residence No. 4, North Ghetto."
 	area_tag = "gh-n-4"
 
+/area/vtm/dwelling/ghetto20
+	name = "Civilian Residence No. 5, North Ghetto."
+	area_tag = "gh-n-5"
+
 //Chinatown
 
 /area/vtm/dwelling/chinatown01

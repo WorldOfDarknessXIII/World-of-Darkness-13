@@ -13,6 +13,7 @@
 	var/loot_spawned = 0
 	var/obj/structure/vtm/dwelling_alarm/alarm_panel
 	var/list/dwelling_doors = list()
+	var/list/dwelling_windows = list()
 	var/list/loot_containers = list()
 	var/forced_loot
 	var/list/loot_list = list("type" = "none",
@@ -21,7 +22,7 @@
 		"major" = 0,
 		)
 
-/area/vtm/dwelling/proc/add_heat(ammount = 0)
+/area/vtm/dwelling/proc/add_heat(ammount = 0) //Adds heat to given area, then checks if alarm shoudl be trigerred
 	if(alarm_disabled == 1) return
 	if(alarm_trigerred == 1)
 		INVOKE_ASYNC(alarm_panel, TYPE_PROC_REF(/obj/structure/vtm/dwelling_alarm/, contact_cops))
@@ -31,7 +32,7 @@
 		alarm_panel.alarm_arm()
 		return
 
-/area/vtm/dwelling/proc/setup_loot_table(type)
+/area/vtm/dwelling/proc/setup_loot_table(type) //Called during setup, this proc contains the look drop values
 	switch(type)
 		if("major")
 			loot_list["type"] = "major"
@@ -52,7 +53,7 @@
 			loot_list["major"] = rand(0,1)
 			area_heat_max = 50
 
-/area/vtm/dwelling/proc/setup_loot_containers()
+/area/vtm/dwelling/proc/setup_loot_containers() // Called during setup
 	var/loot_sum = loot_list["minor"] + loot_list["moderate"] + loot_list["major"]
 	while(loot_sum > 0)
 		var/obj/structure/vtm/dwelling_container/picked_container = pick(loot_containers)
@@ -65,7 +66,7 @@
 		if(loot_container.search_tries <= 4) loot_container.search_tries += 2
 	return
 
-/area/vtm/dwelling/proc/setup_loot()
+/area/vtm/dwelling/proc/setup_loot() //Primary setup proc
 	if(forced_loot)
 		setup_loot_table(forced_loot)
 	if(loot_list["type"] == "none")
@@ -83,11 +84,9 @@
 	setup_loot_containers()
 	loot_spawned = 1
 	GLOB.dwelling_list.Add(src)
-	message_admins("Area [name] initialized. Doors: [dwelling_doors.len], Loot Containers: [loot_containers.len], [alarm_panel] linked.")
-	message_admins("Loot distirbution: Type: [loot_list["type"]], Minor: [loot_list["minor"]], Moderate: [loot_list["moderate"]], Major: [loot_list["major"]]")
 	return
 
-/area/vtm/dwelling/proc/return_loot_value()
+/area/vtm/dwelling/proc/return_loot_value() //Used during seeding
 	var/list/pick_list = list()
 	if(loot_list["minor"] > 0)
 		pick_list.Add("minor")
@@ -115,3 +114,4 @@
 	cased_by = null
 	dwelling_doors = null
 	loot_containers = null
+	dwelling_windows = null

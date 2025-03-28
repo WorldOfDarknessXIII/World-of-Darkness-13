@@ -157,7 +157,7 @@
 			lockpick_timer = LOCKTIMER_7
 	lock_id = area_reference.area_tag
 
-/obj/structure/vampdoor/dwelling/proc/start_casing(mob/user)
+/obj/structure/vampdoor/dwelling/proc/start_casing(mob/user) //Returns casing and lockpick infromation after a while.
 	if(area_reference.alarm_trigerred == 1) //Eliminator if the alarm was already trigerred
 		to_chat(user, span_warning("This house has already been breached and the alarm triggered. Casing is no longer possible."))
 		return
@@ -206,6 +206,14 @@
 	var/area/vtm/dwelling/current_area = get_area(src)
 	if(current_area)
 		area_reference = current_area
+		area_reference.dwelling_windows.Add(src)
+
+/obj/structure/window/fulltile/dwelling/Destroy()
+	if(area_reference)
+		area_reference.dwelling_windows.Remove(src)
+		area_reference = null
+	. = ..()
+
 
 /turf/closed/wall/vampwall/city/low/window/dwelling
 	window = /obj/structure/window/fulltile/dwelling
@@ -260,7 +268,7 @@
 		area_reference = current_area
 	. = ..()
 
-/obj/structure/vtm/dwelling_alarm/proc/contact_cops()
+/obj/structure/vtm/dwelling_alarm/proc/contact_cops() //Contains the actual act of yelling at cops
 	var/randomized_response_time = rand(1 SECONDS, 30 SECONDS)
 	sleep(randomized_response_time)
 	for(var/obj/item/police_radio/radio in GLOB.police_radios)
@@ -270,7 +278,7 @@
 			transciever.announce_crime("burglary", get_turf(src))
 			break
 
-/obj/structure/vtm/dwelling_alarm/proc/alarm_trigger()
+/obj/structure/vtm/dwelling_alarm/proc/alarm_trigger() //Starts the alarm for the house, calls cops
 	area_reference.alarm_trigerred = 1
 	icon_state = "doorctrl-denied"
 	update_icon()
@@ -279,7 +287,7 @@
 	playsound(src, 'sound/effects/alert.ogg', 50)
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/structure/vtm/dwelling_alarm/, contact_cops))
 
-/obj/structure/vtm/dwelling_alarm/proc/alarm_loop()
+/obj/structure/vtm/dwelling_alarm/proc/alarm_loop() //Alarm loop
 	while(alarm_timer > world.time)
 		if(area_reference.alarm_disabled == 1 || alarm_timer == 0) return
 		stoplag(10)
@@ -288,7 +296,7 @@
 		alarm_trigger()
 		return
 
-/obj/structure/vtm/dwelling_alarm/proc/minigame_loop()
+/obj/structure/vtm/dwelling_alarm/proc/minigame_loop() // Second alarm loop.
 	var/light_time = rand(3 SECONDS, 6 SECONDS)
 	var/blink_time
 	switch(area_reference.loot_list["type"])
@@ -311,7 +319,7 @@
 		sleep(blink_time)
 
 
-/obj/structure/vtm/dwelling_alarm/proc/restart_alarm()
+/obj/structure/vtm/dwelling_alarm/proc/restart_alarm() //Delays triggering on an activated alarm
 	var/alarm_delay
 	switch(area_reference.loot_list["type"])
 		if("minor","moderate")
@@ -321,7 +329,7 @@
 	alarm_timer = world.time + alarm_delay
 	return
 
-/obj/structure/vtm/dwelling_alarm/proc/alarm_arm()
+/obj/structure/vtm/dwelling_alarm/proc/alarm_arm() //Arms itself and starts the alarm/minigame loops
 	desc = "A small console with a display and small keyboard. It seems to be running a security check.  A small hole to the side of the panel looks like it would just fit a lockpick."
 	say("Intrusion detected. Performing detailed scan.")
 	playsound(src, 'sound/ambience/signal.ogg', 25)
@@ -330,7 +338,7 @@
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/structure/vtm/dwelling_alarm/, alarm_loop))
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/structure/vtm/dwelling_alarm/, minigame_loop))
 
-/obj/structure/vtm/dwelling_alarm/proc/alarm_disarm()
+/obj/structure/vtm/dwelling_alarm/proc/alarm_disarm() //Shuts the alarm down
 	say("Alarm disarmed. Have a nice day.")
 	desc = initial(desc)
 	icon_state = "doorctrl-p"
@@ -340,7 +348,7 @@
 	alarm_timer = 0
 	return
 
-/obj/structure/vtm/dwelling_alarm/proc/alarm_reset()
+/obj/structure/vtm/dwelling_alarm/proc/alarm_reset() // Decides what to do during sucessful reset.
 	switch(area_reference.loot_list["type"])
 		if("minor")
 			alarm_disarm()
