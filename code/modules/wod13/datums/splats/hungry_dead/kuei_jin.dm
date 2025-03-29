@@ -10,7 +10,8 @@
 		TRAIT_NOBREATH,
 		TRAIT_TOXIMMUNE,
 		TRAIT_NOCRITDAMAGE,
-		TRAIT_ROTS_IN_SUNLIGHT
+		TRAIT_ROTS_IN_SUNLIGHT,
+		TRAIT_CAN_TORPOR
 	)
 	splat_species_traits = list(
 		DRINKSBLOOD
@@ -37,3 +38,17 @@
 	)
 
 	var/datum/dharma/dharma
+	COOLDOWN_DECLARE(torpor_timer)
+
+/mob/living/carbon/human/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	. = ..()
+	if(!message)
+		return
+	if(say_mod(message) != verb_yell)
+		return
+
+	for(var/mob/living/carbon/human/hearer in ohearers(5, src))
+		var/datum/splat/hungry_dead/kuei_jin/kuei_jin = is_kuei_jin(hearer)
+		if(kuei_jin?.dharma.Po != "Legalist")
+			continue
+		kuei_jin.dharma.roll_po(src, hearer)

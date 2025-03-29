@@ -917,10 +917,10 @@
 	if(stat != DEAD)
 		//special death handling for vampires, who don't die until -200 health
 		if (is_kindred(src) || is_kuei_jin(src))
-			if(health <= HEALTH_THRESHOLD_VAMPIRE_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
+			if(health <= HEALTH_THRESHOLD_FINAL_DEATH && !HAS_TRAIT(src, TRAIT_NODEATH))
 				death()
 				return
-			if((health <= HEALTH_THRESHOLD_VAMPIRE_TORPOR) && !HAS_TRAIT(src, TRAIT_TORPOR))
+			if((health <= HEALTH_THRESHOLD_TORPOR) && !HAS_TRAIT(src, TRAIT_TORPOR))
 				spawn()
 					torpor("damage")
 		else

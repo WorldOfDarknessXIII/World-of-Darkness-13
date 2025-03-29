@@ -84,7 +84,7 @@
 	var/list/special_statuses
 
 	//Dharma path
-	var/datum/dharma/dharma
+	var/list/datum/splat/splats
 
 /datum/mind/New(_key)
 	key = _key

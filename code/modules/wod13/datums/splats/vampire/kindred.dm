@@ -10,7 +10,8 @@
 		TRAIT_NOBREATH,
 		TRAIT_TOXIMMUNE,
 		TRAIT_NOCRITDAMAGE,
-		TRAIT_BURNS_IN_SUNLIGHT
+		TRAIT_BURNS_IN_SUNLIGHT,
+		TRAIT_CAN_TORPOR
 	)
 	splat_species_traits = list(
 		DRINKSBLOOD
@@ -21,12 +22,10 @@
 	)
 
 	max_resources = list(
-		RESOURCE_VITAE = 10,
-		RESOURCE_HUMANITY = 10
+		RESOURCE_VITAE = 10
 	)
 	resources = list(
-		RESOURCE_VITAE = 10,
-		RESOURCE_HUMANITY = 7
+		RESOURCE_VITAE = 10
 	)
 	power_type = /datum/discipline
 	replace_splats = list(
@@ -37,6 +36,7 @@
 	)
 
 	var/datum/vampireclane/clan
+	COOLDOWN_DECLARE(torpor_timer)
 
 /datum/splat/vampire/kindred/proc/give_vitae(mob/living/victim, to_give = 1)
 

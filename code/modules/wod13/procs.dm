@@ -1,7 +1,7 @@
 /mob/living/carbon/human/proc/AdjustHumanity(var/value, var/limit, var/forced = FALSE)
 	if(value < 0)
-		for(var/mob/living/carbon/human/H in viewers(7, src))
-			if(H != src && H.mind?.dharma)
+		for(var/mob/living/carbon/human/H in oviewers(7, src))
+			if(H.mind?.dharma)
 				if("judgement" in H.mind.dharma.tenets)
 					to_chat(H, "<span class='warning'>[src] is doing something bad, I need to punish them!")
 					H.mind.dharma.judgement |= real_name

@@ -3211,8 +3211,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				character.transformator.lupus_form.health = character.transformator.lupus_form.maxHealth
 				character.transformator.crinos_form.maxHealth = round((initial(character.transformator.crinos_form.maxHealth)+(initial(character.maxHealth)/4)*(character.physique + character.additional_physique )))+(character.auspice.level-1)*50
 				character.transformator.crinos_form.health = character.transformator.crinos_form.maxHealth
-//		character.transformator.crinos_form.update_icons()
-//		character.transformator.lupus_form.update_icons()
+
 	if(pref_species.mutant_bodyparts["tail_lizard"])
 		character.dna.species.mutant_bodyparts["tail_lizard"] = pref_species.mutant_bodyparts["tail_lizard"]
 	if(pref_species.mutant_bodyparts["spines"])

@@ -40,6 +40,8 @@
 #define TRAIT_BURNS_IN_SUNLIGHT "burns_in_sunlight"
 /// Mob rots alive under exposure to sunlight
 #define TRAIT_ROTS_IN_SUNLIGHT "rots_in_sunlight"
+/// Instead of dying at -100 health, enters a deathlike coma until actually dying at -200
+#define TRAIT_CAN_TORPOR "can_torpor"
 
 /* TRAIT SOURCES */
 #define SPLAT_TRAIT "splat_trait"

@@ -51,6 +51,7 @@
 	on_lose()
 
 	owner.splats -= src
+	owner.mind?.splats -= src
 
 	// this clears out every single instantiated datum on this splat, very dangerous
 	if (annihilate)
@@ -115,6 +116,9 @@
 			action.Remove()
 
 /* RESOURCE MANAGEMENT */
+/datum/splat/proc/get_resource(resource)
+	return resources[resource]
+
 /datum/splat/proc/add_resource(resource, amount = 1)
 	if (!resource || (amount <= 0))
 		return FALSE
@@ -157,16 +161,6 @@
 			continue
 
 		return splat
-
-/mob/proc/get_splat_resource(resource)
-	return
-
-/mob/living/get_splat_resource(splat_type, resource)
-	var/datum/splat/splat = get_splat(splat_type)
-	if (!splat)
-		return
-
-	return splat.resources[resource]
 
 /mob/proc/is_splat_incompatible(splat_type)
 	return

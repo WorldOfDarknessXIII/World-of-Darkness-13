@@ -618,13 +618,6 @@
 					var/mob/living/carbon/human/HM = user
 					HM.AdjustHumanity(1, 10)
 					call_dharma("savelife", HM)
-//					if(user.key)
-//						var/datum/preferences/P = GLOB.preferences_datums[ckey(user.key)]
-//						if(P)
-//							var/mode = 1
-//							if(HAS_TRAIT(user, TRAIT_NON_INT))
-//								mode = 2
-//							P.exper = min(calculate_mob_max_exper(user), P.exper+100/mode)
 					log_combat(user, H, "revived", defib)
 				if(req_defib)
 					defib.deductcharge(revivecost)

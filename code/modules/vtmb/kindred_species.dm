@@ -342,11 +342,11 @@
 		return
 	var/mob/living/carbon/human/vampire = owner
 
-	var/datum/splat/vampire/kindred/vampirism = is_kindred(vampire)
+	var/datum/splat/vampire/kindred/vampirism = vampire.is_kindred()
 	if (!vampirism)
 		return
 
-	if(vampire.bloodpool < 2)
+	if(vampirism.get_vitae() < 2)
 		to_chat(owner, "<span class='warning'>You don't have enough <b>BLOOD</b> to do that!</span>")
 		return
 

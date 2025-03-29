@@ -19,6 +19,20 @@
 	malk_font.Grant(malky)
 	GLOB.malkavian_list += malky
 
+/mob/living/carbon/human/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	. = ..()
+	if(message)
+		var/datum/splat/vampire/kindred/vampirism = is_kindred(src)
+		if (!vampirism?.clan)
+			return
+		if (!prob(25))
+			return
+		if (vampirism.clan.type != /datum/vampireclane/malkavian)
+			return
+
+		for (var/mob/living/carbon/human/malkavian in (GLOB.malkavian_list - src))
+			to_chat(malkavian, "<span class='ghostalert'>[message]</span>")
+
 /datum/action/cooldown/malk_hivemind
 	name = "Hivemind"
 	desc = "Talk"
