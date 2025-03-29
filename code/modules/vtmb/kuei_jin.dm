@@ -251,10 +251,6 @@
 	var/datum/action/kueijininfo/infor = new()
 	infor.host = C
 	infor.Grant(C)
-	var/datum/action/reanimate_yang/YG = new()
-	YG.Grant(C)
-	var/datum/action/reanimate_yin/YN = new()
-	YN.Grant(C)
 
 	//Kuei-jin resist vampire bites better than mortals
 	RegisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_kuei_jin_bitten))

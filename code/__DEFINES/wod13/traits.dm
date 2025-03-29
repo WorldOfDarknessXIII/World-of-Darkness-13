@@ -36,6 +36,10 @@
 #define TRAIT_TORPOR "torpor"
 /// Makes mob immune to being turned into a Kindred through the Embrace
 #define TRAIT_CANNOT_BE_EMBRACED "cannot_be_embraced"
+/// Mob is severely burnt by exposure to sunlight
+#define TRAIT_BURNS_IN_SUNLIGHT "burns_in_sunlight"
+/// Mob rots alive under exposure to sunlight
+#define TRAIT_ROTS_IN_SUNLIGHT "rots_in_sunlight"
 
 /* TRAIT SOURCES */
 #define SPLAT_TRAIT "splat_trait"
