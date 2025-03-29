@@ -15,6 +15,7 @@
 	var/list/datum/discipline/powers = list()
 	var/mob/living/owner
 
+/* GAINING SPLATS */
 /datum/splat/proc/assign(mob/living/owner)
 	src.owner = owner
 	on_gain()
@@ -45,6 +46,7 @@
 		var/datum/action/new_action = new adding_action
 		new_action.Grant(owner)
 
+/* LOSING SPLATS */
 /datum/splat/proc/unassign(annihilate = TRUE)
 	on_lose()
 
@@ -112,6 +114,7 @@
 
 			action.Remove()
 
+/* RESOURCE MANAGEMENT */
 /datum/splat/proc/add_resource(resource, amount = 1)
 	if (!resource || (amount <= 0))
 		return FALSE
@@ -140,20 +143,7 @@
 
 	return TRUE
 
-/mob/proc/add_splat(splat_type)
-	return
-
-/mob/living/add_splat(splat_type)
-	var/datum/splat/new_splat = new splat_type
-	new_splat.assign(src)
-
-/mob/proc/remove_splat(splat_type)
-	return
-
-/mob/living/remove_splat(splat_type)
-	var/datum/splat/removing_splat = get_splat(splat_type)
-	removing_splat.unassign()
-
+/* DIRECT SPLAT INTERACTION */
 /mob/proc/get_splat(splat_type)
 	RETURN_TYPE(/datum/splat)
 
@@ -167,3 +157,13 @@
 			continue
 
 		return splat
+
+/mob/proc/get_splat_resource(resource)
+	return
+
+/mob/living/get_splat_resource(splat_type, resource)
+	var/datum/splat/splat = get_splat(splat_type)
+	if (!splat)
+		return
+
+	return splat.resources[resource]
