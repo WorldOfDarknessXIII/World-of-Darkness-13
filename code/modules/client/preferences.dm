@@ -196,7 +196,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/splat
 
 	// Vampire preferences
-	var/datum/vampireclane/clane = /datum/vampireclane/brujah
+	var/clane = /datum/vampireclane/brujah
 
 	var/diablerist = FALSE
 
@@ -213,7 +213,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	// Garou preferences
 	var/breed = "Homid"
 	var/tribe = "Wendigo"
-	var/datum/auspice/auspice = new /datum/auspice/ahroun()
+	var/auspice = /datum/auspice/ahroun
 	var/werewolf_color = "black"
 	var/werewolf_scar = 0
 	var/werewolf_hair = 0
@@ -2989,24 +2989,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.additional_athletics = A.archetype_additional_athletics
 	A.special_skill(character)
 
-	character.maxHealth = 100 + 25 * (character.physique + character.additional_physique)
+	character.maxHealth = MAX_LIVING_HEALTH + (MAX_LIVING_HEALTH / 4) * (character.physique + character.additional_physique)
 	character.health = character.maxHealth
 
 	if (splat == /datum/splat/vampire/kindred)
-		var/datum/splat/vampire/kindred/vampirism = new splat
+		var/datum/splat/vampire/kindred/vampirism = new splat(generation, clane)
+		vampirism.clan.current_accessory = clane_accessory
+		vampirism.clan.enlightenment = enlightenment
+		vampirism.assign(character)
 
-		var/datum/vampireclane/character_clan = vampirism.set_clan(clane)
-		vampirism.generation = generation
-		character_clan.current_accessory = clane_accessory
-		character_clan.enlightenment = enlightenment
-
-		character.maxbloodpool = 10 + ((13 - generation) * 3)
+		character.maxbloodpool = 10 + ((13 - vampirism.generation) * 3)
 		character.bloodpool = rand(2, character.maxbloodpool)
 
 		character.max_yin_chi = character.maxbloodpool
 		character.yin_chi = character.max_yin_chi
 		character.humanity = humanity
-		if(clane.alt_sprite && !clane.alt_sprite_greyscale)
+		if(vampirism.clan.alt_sprite && !vampirism.clan.alt_sprite_greyscale)
 			character.skin_tone = "albino"
 		else
 			character.skin_tone = get_vamp_skin_color(skin_tone)
@@ -3033,6 +3031,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				character.auspice.gnosis = 3
 				character.auspice.start_gnosis = 3
 				character.auspice.base_breed = "Crinos"
+
 		if(character.transformator)
 			if(character.transformator.crinos_form && character.transformator.lupus_form)
 				character.transformator.crinos_form.sprite_color = werewolf_color

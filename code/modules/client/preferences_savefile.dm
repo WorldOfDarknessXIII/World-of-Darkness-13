@@ -356,13 +356,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(newtype)
 			pref_species = new newtype
 
-
-	var/clane_id
-	READ_FILE(S["clane"], clane_id)
-	if(clane_id)
-		var/newtype = GLOB.clanes_list[clane_id]
-		if(newtype)
-			clane = new newtype
+	READ_FILE(S["clane"], clane)
 
 	var/auspice_id
 	READ_FILE(S["auspice"], auspice_id)

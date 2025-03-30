@@ -1,8 +1,6 @@
 
 	//The mob should have a gender you want before running this proc. Will run fine without H
 /datum/preferences/proc/random_character(gender_override, antag_override = FALSE)
-	if(randomise[RANDOM_SPECIES])
-		random_species()
 	else if(randomise[RANDOM_NAME])
 		real_name = pref_species.random_name(gender,1)
 	if(gender_override && !(randomise[RANDOM_GENDER] || randomise[RANDOM_GENDER_ANTAG] && antag_override))

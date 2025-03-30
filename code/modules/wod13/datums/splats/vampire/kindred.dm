@@ -39,15 +39,10 @@
 	var/datum/vampireclane/clan
 	COOLDOWN_DECLARE(torpor_timer)
 
-/datum/splat/vampire/kindred/proc/set_clan(clan_type = /datum/vampireclane/brujah)
-	RETURN_TYPE(/datum/vampireclane)
-
-	src.clan = new clan_type
-	if (owner)
-		clan.on_gain()
-		clan.post_gain()
-
-	return clan
+/datum/splat/vampire/kindred/New(generation = 13, clan = /datum/vampireclane/brujah)
+	. = ..()
+	src.generation = generation
+	clan = new clan
 
 /datum/splat/vampire/kindred/on_gain()
 	. = ..()
