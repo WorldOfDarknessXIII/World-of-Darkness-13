@@ -43,6 +43,10 @@
 	RETURN_TYPE(/datum/vampireclane)
 
 	src.clan = new clan_type
+	if (owner)
+		clan.on_gain()
+		clan.post_gain()
+
 	return clan
 
 /datum/splat/vampire/kindred/on_gain()
