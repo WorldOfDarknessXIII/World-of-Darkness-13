@@ -34,7 +34,7 @@ And it also helps for the character set panel
 	var/current_accessory
 	var/clan_keys //Keys to your hideout
 
-/datum/vampireclane/proc/on_gain(var/mob/living/carbon/human/H)
+/datum/vampireclane/proc/on_gain(mob/living/carbon/human/H)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(length(accessories))
@@ -43,6 +43,7 @@ And it also helps for the character set panel
 			var/mutable_appearance/acc_overlay = mutable_appearance('code/modules/wod13/icons.dmi', current_accessory, -accessories_layers[current_accessory])
 			H.overlays_standing[accessories_layers[current_accessory]] = acc_overlay
 			H.apply_overlay(accessories_layers[current_accessory])
+
 	if(alt_sprite)
 		if (!alt_sprite_greyscale)
 			H.skin_tone = "albino"
@@ -51,7 +52,7 @@ And it also helps for the character set panel
 		H.update_body()
 		H.update_icon()
 
-/datum/vampireclane/proc/post_gain(var/mob/living/carbon/human/H)
+/datum/vampireclane/proc/post_gain(mob/living/carbon/human/H)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(violating_appearance && H.roundstart_vampire)

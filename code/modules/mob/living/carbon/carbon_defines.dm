@@ -109,7 +109,6 @@
 
 	//imported from other areas around the code
 	var/last_moon_look = 0
-	var/last_rage_from_attack = 0
 
 	var/last_jump_time = 0
 	var/jump_range = 1

@@ -37,8 +37,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/see_chat_non_mob = TRUE
 	///Whether emotes will be displayed on runechat. Requires chat_on_map to have effect. Boolean.
 	var/see_rc_emotes = TRUE
-	//Клан вампиров
-	var/datum/vampireclane/clane = new /datum/vampireclane/brujah()
 	// Custom Keybindings
 	var/list/key_bindings = list()
 
@@ -63,7 +61,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	//character preferences
 	var/slot_randomized					//keeps track of round-to-round randomization of the character slot, prevents overwriting
-	var/slotlocked = 0
+	var/slotlocked = FALSE
 	var/real_name						//our character's name
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
@@ -144,16 +142,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///If we want to broadcast deadchat connect/disconnect messages
 	var/broadcast_login_logout = TRUE
 
-	//Generation
-	var/generation = 13
-	var/generation_bonus = 0
-
-	//Masquerade
-	var/masquerade = 5
-
-	var/enlightenment = FALSE
-	var/humanity = 7
-
 	//Legacy
 	var/exper = 1440
 	var/exper_plus = 0
@@ -178,6 +166,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///Ranks of the Disciplines this character knows, corresponding to discipline_types.
 	var/list/discipline_levels = list()
 
+	var/archetype = /datum/archetype/average
+
 	var/physique = 1
 	var/dexterity = 1
 	var/social = 1
@@ -200,12 +190,27 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/enemy_text
 	var/lover_text
 
-	var/diablerist = 0
-
 	var/reason_of_death = "None"
 
-	var/archetype = /datum/archetype/average
+	/// Type of the splat (game line, supernatural type) this character falls under
+	var/splat
 
+	// Vampire preferences
+	var/datum/vampireclane/clane = /datum/vampireclane/brujah
+
+	var/diablerist = FALSE
+
+	var/generation = 13
+	var/generation_bonus = 0
+
+	var/masquerade = 5
+
+	var/enlightenment = FALSE
+	var/humanity = 7
+
+	var/clane_accessory
+
+	// Garou preferences
 	var/breed = "Homid"
 	var/tribe = "Wendigo"
 	var/datum/auspice/auspice = new /datum/auspice/ahroun()
@@ -219,8 +224,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/werewolf_name
 	var/auspice_level = 1
 
-	var/clane_accessory
-
+	// Kuei-jin preferences
 	var/dharma_type = /datum/dharma
 	var/dharma_level = 1
 	var/po_type = "Rebel"
@@ -235,17 +239,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	true_experience = clamp(true_experience + amount, 0, 1000)
 
 /datum/preferences/proc/reset_character()
-	slotlocked = 0
-	diablerist = 0
+	slotlocked = FALSE
+	diablerist = FALSE
 	torpor_count = 0
 	generation_bonus = 0
-	physique = 1
-	dexterity = 1
-	mentality = 1
-	social = 1
-	blood = 1
-	lockpicking = 0
-	athletics = 0
 	info_known = INFO_KNOWN_UNKNOWN
 	masquerade = initial(masquerade)
 	generation = initial(generation)
@@ -265,8 +262,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	blood = A.start_blood
 	lockpicking = A.start_lockpicking
 	athletics = A.start_athletics
-	qdel(clane)
-	clane = new /datum/vampireclane/brujah()
+	clane = /datum/vampireclane/brujah
 	discipline_types = list()
 	discipline_levels = list()
 	for (var/i in 1 to clane.clane_disciplines.len)
@@ -274,18 +270,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		discipline_levels += 1
 	humanity = clane.start_humanity
 	enlightenment = clane.enlightenment
-	random_species()
 	random_character()
 	body_model = rand(1, 3)
 	true_experience = 50
 	real_name = random_unique_name(gender)
 	save_character()
-
-/proc/reset_shit(mob/M)
-	if(M.key)
-		var/datum/preferences/P = GLOB.preferences_datums[ckey(M.key)]
-		if(P)
-			P.reset_character()
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -297,20 +286,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
-//			unlock_content = C.IsByondMember()
-//			if(unlock_content)
-//				max_save_slots = 8
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
 			return
 	//we couldn't load character data so just randomize the character appearance + name
-	random_species()
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
-	reset_shit()
+	reset_character()
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
 	C?.set_macros()
-//	pref_species = new /datum/species/kindred()
 	real_name = pref_species.random_name(gender,1)
 	if(!loaded_preferences_successfully)
 		save_preferences()
@@ -414,53 +398,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "</tr></table>"
 
 			dat += "<h2>[make_font_cool("BODY")]</h2>"
-			/*
-			dat += "<BR>"
-			var/max_death = 6
-			if(pref_species.name == "Vampire")
-				switch(generation)
-					if(13)
-						max_death = 6
-					if(12)
-						max_death = 6
-					if(11)
-						max_death = 5
-					if(10)
-						max_death = 4
-					if(9)
-						max_death = 3
-					if(8)
-						max_death = 2
-					if(7)
-						max_death = 2
-					if(6)
-						max_death = 1
-					if(5)
-						max_death = 1
-					if(4)
-						max_death = 1
-					if(3)
-						max_death = 1
 
-			dat += "<b>[pref_species.name == "Vampire" ? "Torpor" : "Clinical Death"] Count:</b> [torpor_count]/[max_death]"
-			if(true_experience >= 3*(14-generation) && torpor_count > 0)
-				dat += " <a href='?_src_=prefs;preference=torpor_restore;task=input'>Restore ([5*(14-generation)])</a><BR>"
-			dat += "<BR>"
-			*/
 			dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
 
 			dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
 			dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
-			if(pref_species.name == "Vampire")
+
+			if (pref_species.name == "Vampire")
 				dat += "<b>Path of [enlightenment ? "Enlightenment" : "Humanity"]:</b> [humanity]/10"
-				//if(SSwhitelists.is_whitelisted(parent.ckey, "enlightenment") && !slotlocked)
 				if ((true_experience >= (humanity * 2)) && (humanity < 10))
 					dat += " <a href='?_src_=prefs;preference=path;task=input'>Increase [enlightenment ? "Enlightenment" : "Humanity"] ([humanity * 2])</a>"
 				dat += "<br>"
 				if(!slotlocked)
 					dat += "<a href='?_src_=prefs;preference=pathof;task=input'>Switch Path</a><BR>"
-			if(pref_species.name == "Kuei-Jin")
+
+			if (pref_species.name == "Kuei-Jin")
 				var/datum/dharma/D = new dharma_type()
 				dat += "<b>Dharma:</b> [D.name] [dharma_level]/6 <a href='?_src_=prefs;preference=dharmatype;task=input'>Switch</a><BR>"
 				dat += "[D.desc]<BR>"
@@ -471,11 +424,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Awareness:</b> [masquerade]/5<BR>"
 				dat += "<b>Yin/Yang</b>: [yin]/[yang] <a href='?_src_=prefs;preference=chibalance;task=input'>Adjust</a><BR>"
 				dat += "<b>Hun/P'o</b>: [hun]/[po] <a href='?_src_=prefs;preference=demonbalance;task=input'>Adjust</a><BR>"
-			if(pref_species.name == "Werewolf")
+
+			if (pref_species.name == "Werewolf")
 				dat += "<b>Veil:</b> [masquerade]/5<BR>"
-			if(pref_species.name == "Vampire" || pref_species.name == "Ghoul")
+
+			if (pref_species.name == "Vampire" || pref_species.name == "Ghoul")
 				dat += "<b>Masquerade:</b> [masquerade]/5<BR>"
-			if(pref_species.name == "Vampire")
+
+			if (pref_species.name == "Vampire")
 				dat += "<b>Generation:</b> [generation]"
 				var/generation_allowed = TRUE
 				if(clane)
@@ -490,6 +446,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "<BR>"
 				else
 					dat += "<BR>"
+
 			dat += "<h2>[make_font_cool("ATTRIBUTES")]</h2>"
 
 			dat += "<b>Archetype</b><BR>"
@@ -1732,8 +1689,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					eye_color = random_eye_color()
 				if("s_tone")
 					skin_tone = random_skin_tone()
-//				if("species")
-//					random_species()
 				if("bag")
 					backpack = pick(GLOB.backpacklist)
 				if("suit")
@@ -2139,8 +2094,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						qdel(V)
 					var/result = input(user, "Select a clane", "Clane Selection") as null|anything in available_clans
 					if(result)
-						var/newtype = GLOB.clanes_list[result]
-						clane = new newtype()
+						clane = GLOB.clanes_list[result]
 						discipline_types = list()
 						discipline_levels = list()
 						if(result == "Caitiff")
@@ -2434,7 +2388,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							discipline_levels = list()
 						if(pref_species.id == "kindred")
 							qdel(clane)
-							clane = new /datum/vampireclane/brujah()
+							clane = /datum/vampireclane/brujah
 							discipline_types = list()
 							discipline_levels = list()
 							for (var/i in 1 to clane.clane_disciplines.len)
@@ -2988,12 +2942,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return TRUE
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE, is_latejoiner = TRUE)
-
 	hardcore_survival_score = 0 //Set to 0 to prevent you getting points from last another time.
-
-	if((randomise[RANDOM_SPECIES] || randomise[RANDOM_HARDCORE]) && !character_setup)
-
-		random_species()
 
 	if((randomise[RANDOM_BODY] || (randomise[RANDOM_BODY_ANTAG] && antagonist) || randomise[RANDOM_HARDCORE]) && !character_setup)
 		slot_randomized = TRUE
@@ -3040,126 +2989,32 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.additional_athletics = A.archetype_additional_athletics
 	A.special_skill(character)
 
-	if(pref_species.name == "Vampire")
-		var/datum/vampireclane/CLN = new clane.type()
-		character.clane = CLN
-		character.clane.current_accessory = clane_accessory
+	character.maxHealth = 100 + 25 * (character.physique + character.additional_physique)
+	character.health = character.maxHealth
+
+	if (splat == /datum/splat/vampire/kindred)
+		var/datum/splat/vampire/kindred/vampirism = new splat
+
+		var/datum/vampireclane/character_clan = vampirism.set_clan(clane)
+		vampirism.generation = generation
+		character_clan.current_accessory = clane_accessory
+		character_clan.enlightenment = enlightenment
+
 		character.maxbloodpool = 10 + ((13 - generation) * 3)
 		character.bloodpool = rand(2, character.maxbloodpool)
-		character.generation = generation
+
 		character.max_yin_chi = character.maxbloodpool
 		character.yin_chi = character.max_yin_chi
-		character.clane.enlightenment = enlightenment
-	else
-		character.clane = null
-		character.generation = 13
-		character.bloodpool = character.maxbloodpool
-		if(pref_species.name == "Kuei-Jin")
-			character.yang_chi = yang
-			character.max_yang_chi = yang
-			character.yin_chi = yin
-			character.max_yin_chi = yin
-			character.max_demon_chi = po
-		else
-			character.yang_chi = 3
-			character.max_yang_chi = 3
-			character.yin_chi = 2
-			character.max_yin_chi = 2
-
-	if(pref_species.name == "Werewolf")
-		character.maxHealth = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*(character.physique + character.additional_physique)))
-		character.health = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*(character.physique + character.additional_physique )))
-		switch(tribe)
-			if("Wendigo")
-				character.yin_chi = 1
-				character.max_yin_chi = 1
-				character.yang_chi = 5 + (auspice_level * 2)
-				character.max_yang_chi = 5 + (auspice_level * 2)
-			if("Glasswalkers")
-				character.yin_chi = 1 + auspice_level
-				character.max_yin_chi = 1 + auspice_level
-				character.yang_chi = 5 + auspice_level
-				character.max_yang_chi = 5 + auspice_level
-			if("Black Spiral Dancers")
-				character.yin_chi = 1 + auspice_level * 2
-				character.max_yin_chi = 1 + auspice_level * 2
-				character.yang_chi = 5
-				character.max_yang_chi = 5
-	else
-		var/dharma_bonus = 0
-		if(pref_species.name == "Kuei-Jin")
-			dharma_bonus = dharma_level
-		character.maxHealth = round((initial(character.maxHealth)-initial(character.maxHealth)/4)+(initial(character.maxHealth)/4)*((character.physique+character.additional_physique)+dharma_bonus))
-		character.health = character.maxHealth
-	if(pref_species.name == "Vampire")
 		character.humanity = humanity
-	character.masquerade = masquerade
-	if(!character_setup)
-		if(character in GLOB.masquerade_breakers_list)
-			if(character.masquerade > 2)
-				GLOB.masquerade_breakers_list -= character
-		else if(character.masquerade < 3)
-			GLOB.masquerade_breakers_list += character
-
-	character.flavor_text = sanitize_text(flavor_text)
-	character.gender = gender
-	character.age = age
-	character.chronological_age = total_age
-	if(gender == MALE || gender == FEMALE)
-		character.body_type = gender
-	else
-		character.body_type = body_type
-
-	switch(body_model)
-		if(1)
-			character.base_body_mod = "s"
-		if(2)
-			character.base_body_mod = ""
-		if(3)
-			character.base_body_mod = "f"
-
-	character.eye_color = eye_color
-	var/obj/item/organ/eyes/organ_eyes = character.getorgan(/obj/item/organ/eyes)
-	if(organ_eyes)
-		if(!initial(organ_eyes.eye_color))
-			organ_eyes.eye_color = eye_color
-		organ_eyes.old_eye_color = eye_color
-	character.hair_color = hair_color
-	character.facial_hair_color = facial_hair_color
-
-	if(pref_species.name == "Vampire")
 		if(clane.alt_sprite && !clane.alt_sprite_greyscale)
 			character.skin_tone = "albino"
 		else
 			character.skin_tone = get_vamp_skin_color(skin_tone)
 	else
+		character.bloodpool = character.maxbloodpool
 		character.skin_tone = skin_tone
 
-	character.hairstyle = hairstyle
-	if(character.age < 16)
-		facial_hairstyle = "Shaved"
-		character.facial_hairstyle = facial_hairstyle
-	else
-		character.facial_hairstyle = facial_hairstyle
-	character.underwear = underwear
-	character.underwear_color = underwear_color
-	character.undershirt = undershirt
-	character.socks = socks
-
-	character.backpack = backpack
-
-	character.jumpsuit_style = jumpsuit_style
-
-	var/datum/species/chosen_species
-	chosen_species = pref_species.type
-
-	character.dna.features = features.Copy()
-	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
-	character.dna.real_name = character.real_name
-	if(character.clane)
-		character.clane.on_gain(character)
-
-	if(pref_species.name == "Werewolf")
+	if (splat == /datum/splat/werewolf/garou)
 		var/datum/auspice/CLN = new auspice.type()
 		character.auspice = CLN
 		character.auspice.level = auspice_level
@@ -3207,10 +3062,99 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				character.transformator.lupus_form.social = social
 				character.transformator.lupus_form.blood = blood
 
-				character.transformator.lupus_form.maxHealth = round((initial(character.transformator.lupus_form.maxHealth)+(initial(character.maxHealth)/4)*(character.physique + character.additional_physique )))+(character.auspice.level-1)*50
-				character.transformator.lupus_form.health = character.transformator.lupus_form.maxHealth
-				character.transformator.crinos_form.maxHealth = round((initial(character.transformator.crinos_form.maxHealth)+(initial(character.maxHealth)/4)*(character.physique + character.additional_physique )))+(character.auspice.level-1)*50
-				character.transformator.crinos_form.health = character.transformator.crinos_form.maxHealth
+				character.transformator.lupus_form.maxHealth = character.maxHealth
+				character.transformator.lupus_form.health = character.maxHealth
+				character.transformator.crinos_form.maxHealth = character.maxHealth
+				character.transformator.crinos_form.health = character.maxHealth
+
+		switch(tribe)
+			if("Wendigo")
+				character.yin_chi = 1
+				character.max_yin_chi = 1
+				character.yang_chi = 5 + (auspice_level * 2)
+				character.max_yang_chi = 5 + (auspice_level * 2)
+			if("Glasswalkers")
+				character.yin_chi = 1 + auspice_level
+				character.max_yin_chi = 1 + auspice_level
+				character.yang_chi = 5 + auspice_level
+				character.max_yang_chi = 5 + auspice_level
+			if("Black Spiral Dancers")
+				character.yin_chi = 1 + auspice_level * 2
+				character.max_yin_chi = 1 + auspice_level * 2
+				character.yang_chi = 5
+				character.max_yang_chi = 5
+
+	if (splat == /datum/splat/hungry_dead/kuei_jin)
+		character.yang_chi = yang
+		character.max_yang_chi = yang
+		character.yin_chi = yin
+		character.max_yin_chi = yin
+		character.max_demon_chi = po
+
+		character.maxHealth = round((initial(character.maxHealth)-initial(character.maxHealth)/4)+(initial(character.maxHealth)/4)*((character.physique+character.additional_physique)+dharma_level))
+		character.health = character.maxHealth
+	else
+		character.yang_chi = 3
+		character.max_yang_chi = 3
+		character.yin_chi = 2
+		character.max_yin_chi = 2
+
+	character.masquerade = masquerade
+
+	if(!character_setup)
+		if(character in GLOB.masquerade_breakers_list)
+			if(character.masquerade > 2)
+				GLOB.masquerade_breakers_list -= character
+		else if(character.masquerade < 3)
+			GLOB.masquerade_breakers_list += character
+
+	character.flavor_text = sanitize_text(flavor_text)
+	character.gender = gender
+	character.age = age
+	character.chronological_age = total_age
+	if(gender == MALE || gender == FEMALE)
+		character.body_type = gender
+	else
+		character.body_type = body_type
+
+	switch(body_model)
+		if(1)
+			character.base_body_mod = "s"
+		if(2)
+			character.base_body_mod = ""
+		if(3)
+			character.base_body_mod = "f"
+
+	character.eye_color = eye_color
+	var/obj/item/organ/eyes/organ_eyes = character.getorgan(/obj/item/organ/eyes)
+	if(organ_eyes)
+		if(!initial(organ_eyes.eye_color))
+			organ_eyes.eye_color = eye_color
+		organ_eyes.old_eye_color = eye_color
+	character.hair_color = hair_color
+	character.facial_hair_color = facial_hair_color
+
+	character.hairstyle = hairstyle
+	if(character.age < 16)
+		facial_hairstyle = "Shaved"
+		character.facial_hairstyle = facial_hairstyle
+	else
+		character.facial_hairstyle = facial_hairstyle
+	character.underwear = underwear
+	character.underwear_color = underwear_color
+	character.undershirt = undershirt
+	character.socks = socks
+
+	character.backpack = backpack
+
+	character.jumpsuit_style = jumpsuit_style
+
+	var/datum/species/chosen_species
+	chosen_species = pref_species.type
+
+	character.dna.features = features.Copy()
+	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
+	character.dna.real_name = character.real_name
 
 	if(pref_species.mutant_bodyparts["tail_lizard"])
 		character.dna.species.mutant_bodyparts["tail_lizard"] = pref_species.mutant_bodyparts["tail_lizard"]

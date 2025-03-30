@@ -19,11 +19,17 @@
 	plane = HUD_PLANE
 
 /atom/movable/screen/transform_homid/Click()
-	var/mob/living/carbon/C = usr
-	if(C.stat >= SOFT_CRIT || C.IsSleeping() || C.IsUnconscious() || C.IsParalyzed() || C.IsKnockdown() || C.IsStun())
+	var/mob/living/carbon/werewolf = usr
+	if (!iscarbon(werewolf))
 		return
-	if(C.transformator)
-		C.transformator.trans_gender(C, "Homid")
+	if (werewolf.stat >= SOFT_CRIT || werewolf.IsSleeping() || werewolf.IsUnconscious() || werewolf.IsParalyzed() || werewolf.IsKnockdown() || werewolf.IsStun())
+		return
+
+	var/datum/splat/werewolf/garou/lycanthropy = is_garou(werewolf)
+	if (!lycanthropy?.transformator)
+		return
+
+	lycanthropy.transformator.trans_gender(werewolf, "Homid")
 
 /atom/movable/screen/transform_crinos
 	name = "Crinos"
@@ -33,11 +39,17 @@
 	plane = HUD_PLANE
 
 /atom/movable/screen/transform_crinos/Click()
-	var/mob/living/carbon/C = usr
-	if(C.stat >= SOFT_CRIT || C.IsSleeping() || C.IsUnconscious() || C.IsParalyzed() || C.IsKnockdown() || C.IsStun())
+	var/mob/living/carbon/werewolf = usr
+	if (!iscarbon(werewolf))
 		return
-	if(C.transformator)
-		C.transformator.trans_gender(C, "Crinos")
+	if (werewolf.stat >= SOFT_CRIT || werewolf.IsSleeping() || werewolf.IsUnconscious() || werewolf.IsParalyzed() || werewolf.IsKnockdown() || werewolf.IsStun())
+		return
+
+	var/datum/splat/werewolf/garou/lycanthropy = is_garou(werewolf)
+	if (!lycanthropy?.transformator)
+		return
+
+	lycanthropy.transformator.trans_gender(werewolf, "Crinos")
 
 /atom/movable/screen/transform_lupus
 	name = "Lupus"
@@ -47,11 +59,17 @@
 	plane = HUD_PLANE
 
 /atom/movable/screen/transform_lupus/Click()
-	var/mob/living/carbon/C = usr
-	if(C.stat >= SOFT_CRIT || C.IsSleeping() || C.IsUnconscious() || C.IsParalyzed() || C.IsKnockdown() || C.IsStun())
+	var/mob/living/carbon/werewolf = usr
+	if (!iscarbon(werewolf))
 		return
-	if(C.transformator)
-		C.transformator.trans_gender(C, "Lupus")
+	if (werewolf.stat >= SOFT_CRIT || werewolf.IsSleeping() || werewolf.IsUnconscious() || werewolf.IsParalyzed() || werewolf.IsKnockdown() || werewolf.IsStun())
+		return
+
+	var/datum/splat/werewolf/garou/lycanthropy = is_garou(werewolf)
+	if (!lycanthropy?.transformator)
+		return
+
+	lycanthropy.transformator.trans_gender(werewolf, "Lupus")
 
 /atom/movable/screen/auspice
 	name = "Auspice"
@@ -63,25 +81,30 @@
 /atom/movable/screen/auspice/Click()
 	if(!GLOB.moon_state)
 		GLOB.moon_state = pick("Full", "Gibbous", "Half", "Crescent", "New")
-	var/mob/living/carbon/C = usr
-	if(C.stat >= SOFT_CRIT || C.IsSleeping() || C.IsUnconscious() || C.IsParalyzed() || C.IsKnockdown() || C.IsStun())
+
+	var/mob/living/carbon/werewolf = usr
+	if(werewolf.stat >= SOFT_CRIT || werewolf.IsSleeping() || werewolf.IsUnconscious() || werewolf.IsParalyzed() || werewolf.IsKnockdown() || werewolf.IsStun())
 		return
-	var/area/vtm/V = get_area(C)
-	if(!V.upper)
-		to_chat(C, "<span class='warning'>You need to be outside to look at the moon!</span>")
+
+	var/datum/splat/werewolf/garou/lycanthropy = is_garou(werewolf)
+	if (!lycanthropy)
 		return
-	if(C.last_moon_look == 0 || C.last_moon_look+600 < world.time)
-//		last_moon_look = world.time
-		C.transformator.lupus_form.last_moon_look = world.time
-		C.transformator.crinos_form.last_moon_look = world.time
-		C.transformator.human_form.last_moon_look = world.time
-		to_chat(C, "<span class='notice'>The Moon is [GLOB.moon_state].</span>")
-//		icon_state = "[GLOB.moon_state]"
-		C.emote("howl")
-		playsound(get_turf(C), pick('code/modules/wod13/sounds/awo1.ogg', 'code/modules/wod13/sounds/awo2.ogg'), 100, FALSE)
+
+	var/area/vtm/area = get_area(werewolf)
+	if (!istype(area, /area/vtm))
+		return
+	if(!area.upper)
+		to_chat(werewolf, span_warning("You need to be outside to look at the moon!"))
+		return
+
+	if(COOLDOWN_FINISHED(lycanthropy, look_at_moon))
+		COOLDOWN_START(lycanthropy, look_at_moon, 2 MINUTES)
+
+		to_chat(werewolf, "<span class='notice'>The Moon is [GLOB.moon_state].</span>")
+		werewolf.emote("howl")
+		playsound(get_turf(werewolf), pick('code/modules/wod13/sounds/awo1.ogg', 'code/modules/wod13/sounds/awo2.ogg'), 100, FALSE)
 		icon_state = "[GLOB.moon_state]"
-		spawn(10)
-			adjust_rage(1, C, TRUE)
+		adjust_rage(1, werewolf, TRUE)
 
 /datum/hud
 	var/atom/movable/screen/auspice_icon

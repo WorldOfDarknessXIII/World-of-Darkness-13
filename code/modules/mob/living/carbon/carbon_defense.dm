@@ -251,22 +251,33 @@
  * or another carbon.
 */
 
-/mob/living/carbon/proc/do_rage_from_attack(var/mob/living/target)
-	if(is_garou(src) || iswerewolf(src))
-		if(last_rage_from_attack == 0 || last_rage_from_attack+50 < world.time)
-			last_rage_from_attack = world.time
+/mob/living/carbon/proc/do_rage_from_attack(mob/living/target)
+	if (!target)
+		return
+	if (target == src)
+		return
+
+	var/datum/splat/werewolf/garou/lycanthropy = is_garou(src)
+	if (lycanthropy)
+		if (COOLDOWN_FINISHED(lycanthropy, rage_from_attack))
+			COOLDOWN_START(lycanthropy, rage_from_attack, 5 SECONDS)
 			adjust_rage(1, src, TRUE)
-	if(is_kuei_jin(src))
-		if(in_frenzy)
-			if(!mind?.dharma?.Po_combat)
-				mind?.dharma?.Po_combat = TRUE
+
+	var/datum/splat/hungry_dead/kuei_jin/kuei_jin = is_kuei_jin(src)
+	if (kuei_jin)
+		var/datum/dharma/dharma = kuei_jin.dharma
+
+		if (in_frenzy)
+			if (!dharma.Po_combat)
+				dharma.Po_combat = TRUE
 				call_dharma("letpo", src)
-		if(mind?.dharma?.Po == "Rebel")
+
+		if (dharma.Po == "Rebel")
 			emit_po_call(src, "Rebel")
-		if(target)
-			if("judgement" in mind?.dharma?.tenets)
-				if(target.lastattacker != src)
-					mind?.dharma?.deserving |= target.real_name
+
+		if ("judgement" in dharma.tenets)
+			if (target.lastattacker != src)
+				dharma.deserving |= target.real_name
 
 /mob/living/carbon/proc/disarm(mob/living/carbon/target)
 	target.do_rage_from_attack(src)

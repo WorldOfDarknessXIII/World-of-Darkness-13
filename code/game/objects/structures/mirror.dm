@@ -57,14 +57,12 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 		return
 	if(broken || !Adjacent(user))
 		return
+	//Sorry, you can't see yourself in front of the mirror!
+	if (is_kindred(user)?.clan.type == /datum/vampireclane/lasombra)
+		return
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-
-		//Sorry, you can't see yourself in front of the mirror!
-		if(H.clane)
-			if(H.clane.name == "Lasombra")
-				return
 
 		//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
 		//this is largely copypasted from there.

@@ -37,14 +37,13 @@
 	if(light_system == STATIC_LIGHT)
 		update_light()
 
-
 /obj/item/flashlight/attack_self(mob/user)
-	if(is_kindred(user))
-		var/mob/living/carbon/human/H = user
-		if(H.clane)
-			if(H.clane.name == "Lasombra")
-				return
+	var/datum/splat/vampire/kindred/vampirism = is_kindred(user)
+	if (vampirism?.clan.type == /datum/vampireclane/lasombra)
+		return
+
 	..()
+
 	on = !on
 	playsound(user, on ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
 	update_brightness(user)

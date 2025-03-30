@@ -62,7 +62,7 @@
 		discipline_levels = list()
 	if(pref_species.id == "kindred")
 		qdel(clane)
-		clane = new /datum/vampireclane/brujah()
+		clane = /datum/vampireclane/brujah
 		discipline_types = list()
 		discipline_levels = list()
 		for (var/i in 1 to clane.clane_disciplines.len)

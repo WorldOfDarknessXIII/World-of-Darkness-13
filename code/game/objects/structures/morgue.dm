@@ -274,7 +274,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 						var/mob/living/carbon/human/HM = user
 						HM.AdjustHumanity(-1, 0)
 						call_dharma("torture", user)
-						if(!(M in HM.mind.dharma?.deserving))
+						if(!(M in is_kuei_jin(HM)?.dharma.deserving))
 							call_dharma("killfirst")
 						call_dharma("kill")
 			if(user)
