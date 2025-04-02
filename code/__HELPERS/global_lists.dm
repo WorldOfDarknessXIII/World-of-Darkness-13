@@ -45,8 +45,8 @@ GLOBAL_LIST_EMPTY(auspices_list)
 		GLOB.species_list[S.id] = spath
 	sortList(GLOB.species_list, GLOBAL_PROC_REF(cmp_typepaths_asc))
 
-	for(var/spath in subtypesof(/datum/vampireclane))
-		var/datum/vampireclane/S = new spath()
+	for(var/spath in subtypesof(/datum/vampireclan))
+		var/datum/vampireclan/S = new spath()
 		GLOB.clanes_list[S.name] = spath
 	sortList(GLOB.clanes_list, GLOBAL_PROC_REF(cmp_typepaths_asc))
 
