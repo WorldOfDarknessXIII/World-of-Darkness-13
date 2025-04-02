@@ -4,16 +4,16 @@
 #Final authority on what's required to fully build the project
 
 # byond version
-export BYOND_MAJOR=515
-export BYOND_MINOR=1647
+export BYOND_MAJOR=516
+export BYOND_MINOR=1659
 
 #rust_g git tag
-export RUST_G_VERSION=3.5.1
+export RUST_G_VERSION=3.8.0
 
 #node version
-export NODE_VERSION=18
-export NODE_VERSION_PRECISE=18.12.0
-export NODE_VERSION_LTS=18.12.0
+export NODE_VERSION=22
+export NODE_VERSION_PRECISE=22.14.0
+export NODE_VERSION_LTS=22.14.0
 
 # SpacemanDMM git tag
 export SPACEMAN_DMM_VERSION=suite-1.6

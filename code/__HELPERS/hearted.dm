@@ -77,6 +77,6 @@
 	if(!mind || !client)
 		return
 	to_chat(src, "<span class='nicegreen'>Commendation sent!</span>")
-	message_admins("[key_name(src)] commended [key_name(heart_recepient)] (<a href='?src=[REF(SSticker)];cancel_heart=1;heart_source=[REF(src)];heart_target=[REF(heart_recepient)]'>CANCEL</a>)") // cancel is probably unnecessary without messages
+	message_admins("[key_name(src)] commended [key_name(heart_recepient)] (<a href='byond://?src=[REF(SSticker)];cancel_heart=1;heart_source=[REF(src)];heart_target=[REF(heart_recepient)]'>CANCEL</a>)") // cancel is probably unnecessary without messages
 	log_admin("[key_name(src)] commended [key_name(heart_recepient)]")
 	LAZYADD(SSticker.hearts, heart_recepient)

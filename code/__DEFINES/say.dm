@@ -77,9 +77,9 @@
 #define MODE_RANGE_INTERCOM 1
 
 // A link given to ghost alice to follow bob
-#define FOLLOW_LINK(alice, bob) "<a href=?src=[REF(alice)];follow=[REF(bob)]>(F)</a>" //<a href=?src=[REF(alice)];follow=[REF(bob)]>(F)</a> //! [ChillRaccoon] - REWORK OR REMOVE
-#define TURF_LINK(alice, turfy) "<a href=?src=[REF(alice)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a>" //<a href=?src=[REF(alice)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a> //! [ChillRaccoon] - REWORK OR REMOVE
-#define FOLLOW_OR_TURF_LINK(alice, bob, turfy) "<a href=?src=[REF(alice)];follow=[REF(bob)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a>" //<a href=?src=[REF(alice)];follow=[REF(bob)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a> //! [ChillRaccoon] - REWORK OR REMOVE
+#define FOLLOW_LINK(alice, bob) "<a href=byond://?src=[REF(alice)];follow=[REF(bob)]>(F)</a>" //<a href=byond://?src=[REF(alice)];follow=[REF(bob)]>(F)</a> //! [ChillRaccoon] - REWORK OR REMOVE
+#define TURF_LINK(alice, turfy) "<a href=byond://?src=[REF(alice)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a>" //<a href=byond://?src=[REF(alice)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a> //! [ChillRaccoon] - REWORK OR REMOVE
+#define FOLLOW_OR_TURF_LINK(alice, bob, turfy) "<a href=byond://?src=[REF(alice)];follow=[REF(bob)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a>" //<a href=byond://?src=[REF(alice)];follow=[REF(bob)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a> //! [ChillRaccoon] - REWORK OR REMOVE
 
 //Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
 #define MAX_MESSAGE_LEN			1024

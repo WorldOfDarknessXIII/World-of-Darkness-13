@@ -242,7 +242,7 @@
 			if(host.bank_id == account.bank_id)
 				dat += "<b>My bank account code is: [account.code]</b><BR>"
 		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
-		onclose(host, "vampire", src)
+		onclose(HTML_SKELETON(host), "vampire", src)
 
 /datum/species/kuei_jin/on_species_gain(mob/living/carbon/human/C)
 	. = ..()

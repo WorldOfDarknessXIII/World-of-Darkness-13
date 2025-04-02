@@ -45,6 +45,10 @@
 
 	/// Datum level flags
 	var/datum_flags = NONE
+	/// A cached version of our \ref
+	/// The brunt of \ref costs are in creating entries in the string tree (a tree of immutable strings)
+	/// This avoids doing that more then once per datum by ensuring ref strings always have a reference to them after they're first pulled
+	var/cached_ref
 
 	/// A weak reference to another datum
 	var/datum/weakref/weak_reference
@@ -99,9 +103,9 @@
 
 	var/list/timers = active_timers
 	active_timers = null
-	for(var/thing in timers)
-		var/datum/timedevent/timer = thing
-		if (timer.spent && !(timer.flags & TIMER_DELETE_ME))
+
+	for(var/datum/timedevent/timer as anything in timers)
+		if (timer?.spent && !(timer.flags & TIMER_DELETE_ME))
 			continue
 		qdel(timer)
 

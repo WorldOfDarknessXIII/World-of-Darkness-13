@@ -1206,11 +1206,12 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 
 	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
 	var/atom/A = thing
-	var/key = "[istype(A.icon, /icon) ? "[REF(A.icon)]" : A.icon]:[A.icon_state]"
+	var/icon/the_icon = A.icon
+	var/key = "[istype(the_icon) ? "[FAST_REF(the_icon)]" : the_icon]:[A.icon_state]"
 
 
 	if (!bicon_cache[key]) // Doesn't exist, make it.
-		var/icon/I = icon(A.icon, A.icon_state, SOUTH, 1)
+		var/icon/I = icon(the_icon, A.icon_state, SOUTH, 1)
 		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
 			var/icon/temp = I
 			I = icon()

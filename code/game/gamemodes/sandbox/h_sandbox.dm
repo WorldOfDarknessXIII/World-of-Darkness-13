@@ -24,7 +24,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 	//items that shouldn't spawn on the floor because they would bug or act weird
 	var/static/list/spawn_forbidden = list(
 		/obj/item/tk_grab, /obj/item/implant, // not implanter, the actual thing that is inside you
-		/obj/item/assembly, /obj/item/onetankbomb, /obj/item/pda/ai,
+		/obj/item/assembly, /obj/item/pda/ai,
 		/obj/item/small_delivery, /obj/projectile,
 		/obj/item/borg/sight, /obj/item/borg/stun, /obj/item/robot_model)
 
@@ -33,7 +33,6 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			"Space Gear",
 			"Suit Up (Space Travel Gear)"		= "hsbsuit",
 			"Spawn Gas Mask"					= "hsbspawn&path=[/obj/item/clothing/mask/gas]",
-			"Spawn Emergency Air Tank"			= "hsbspawn&path=[/obj/item/tank/internals/emergency_oxygen/double]",
 
 			"Standard Tools",
 			"Spawn Flashlight"					= "hsbspawn&path=[/obj/item/flashlight]",
@@ -66,37 +65,29 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			"Bots",
 			"Spawn Cleanbot"					= "hsbspawn&path=[/mob/living/simple_animal/bot/cleanbot]",
 			"Spawn Floorbot"					= "hsbspawn&path=[/mob/living/simple_animal/bot/floorbot]",
-			"Spawn Medbot"						= "hsbspawn&path=[/mob/living/simple_animal/bot/medbot]",
-
-			"Canisters",
-			"Spawn O2 Canister" 				= "hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/oxygen]",
-			"Spawn Air Canister"				= "hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/air]")
+			"Spawn Medbot"						= "hsbspawn&path=[/mob/living/simple_animal/bot/medbot]")
 
 
 	if(!hsbinfo)
 		hsbinfo = "<center><b>Sandbox Panel</b></center><hr>"
 		if(admin)
 			hsbinfo += "<b>Administration</b><br>"
-			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbtobj'>Toggle Object Spawning</a><br>"
-			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbtac'>Toggle Item Spawn Panel Auto-close</a><br>"
+			hsbinfo += "- <a href='byond://?src=[REF(src)];hsb=hsbtobj'>Toggle Object Spawning</a><br>"
+			hsbinfo += "- <a href='byond://?src=[REF(src)];hsb=hsbtac'>Toggle Item Spawn Panel Auto-close</a><br>"
 			hsbinfo += "<b>Canister Spawning</b><br>"
-			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/toxins]'>Spawn Plasma Canister</a><br>"
-			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/carbon_dioxide]'>Spawn CO2 Canister</a><br>"
-			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/nitrogen]'>Spawn Nitrogen Canister</a><br>"
-			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/nitrous_oxide]'>Spawn N2O Canister</a><hr>"
 		else
 			hsbinfo += "<i>Some item spawning may be disabled by the administrators.</i><br>"
 			hsbinfo += "<i>Only administrators may spawn dangerous canisters.</i><br>"
 		for(var/T in hrefs)
 			var/href = hrefs[T]
 			if(href)
-				hsbinfo += "- <a href='?[REF(src)];hsb=[hrefs[T]]'>[T]</a><br>"
+				hsbinfo += "- <a href='byond://?[REF(src)];hsb=[hrefs[T]]'>[T]</a><br>"
 			else
 				hsbinfo += "<br><b>[T]</b><br>"
 		hsbinfo += "<hr>"
-		hsbinfo += "- <a href='?[REF(src)];hsb=hsbcloth'>Spawn Clothing...</a><br>"
-		hsbinfo += "- <a href='?[REF(src)];hsb=hsbreag'>Spawn Reagent Container...</a><br>"
-		hsbinfo += "- <a href='?[REF(src)];hsb=hsbobj'>Spawn Other Item...</a><br><br>"
+		hsbinfo += "- <a href='byond://?[REF(src)];hsb=hsbcloth'>Spawn Clothing...</a><br>"
+		hsbinfo += "- <a href='byond://?[REF(src)];hsb=hsbreag'>Spawn Reagent Container...</a><br>"
+		hsbinfo += "- <a href='byond://?[REF(src)];hsb=hsbobj'>Spawn Other Item...</a><br><br>"
 
 	usr << browse(hsbinfo, "window=hsbpanel")
 
@@ -178,10 +169,6 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				P.internal = P.back
 				P.update_internals_hud_icon(1)
 
-			if("hsbscrubber") // This is beyond its normal capability but this is sandbox and you spawned one, I assume you need it
-				var/obj/hsb = new/obj/machinery/portable_atmospherics/scrubber{volume_rate=50*ONE_ATMOSPHERE;on=1}(usr.loc)
-				hsb.update_icon() // hackish but it wasn't meant to be spawned I guess?
-
 			//
 			// Stacked Materials
 			//
@@ -235,12 +222,12 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				if(!GLOB.hsboxspawn) return
 
 				if(!clothinfo)
-					clothinfo = "<b>Clothing</b> <a href='?[REF(src)];hsb=hsbreag'>(Reagent Containers)</a> <a href='?[REF(src)];hsb=hsbobj'>(Other Items)</a><hr><br>"
+					clothinfo = "<b>Clothing</b> <a href='byond://?[REF(src)];hsb=hsbreag'>(Reagent Containers)</a> <a href='byond://?[REF(src)];hsb=hsbobj'>(Other Items)</a><hr><br>"
 					var/list/all_items = subtypesof(/obj/item/clothing)
 					for(var/typekey in spawn_forbidden)
 						all_items -= typesof(typekey)
 					for(var/O in reverseRange(all_items))
-						clothinfo += "<a href='?src=[REF(src)];hsb=hsb_safespawn&path=[O]'>[O]</a><br>"
+						clothinfo += "<a href='byond://?src=[REF(src)];hsb=hsb_safespawn&path=[O]'>[O]</a><br>"
 
 				usr << browse(clothinfo,"window=sandbox")
 
@@ -249,12 +236,12 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				if(!GLOB.hsboxspawn) return
 
 				if(!reaginfo)
-					reaginfo = "<b>Reagent Containers</b> <a href='?[REF(src)];hsb=hsbcloth'>(Clothing)</a> <a href='?[REF(src)];hsb=hsbobj'>(Other Items)</a><hr><br>"
+					reaginfo = "<b>Reagent Containers</b> <a href='byond://?[REF(src)];hsb=hsbcloth'>(Clothing)</a> <a href='byond://?[REF(src)];hsb=hsbobj'>(Other Items)</a><hr><br>"
 					var/list/all_items = subtypesof(/obj/item/reagent_containers)
 					for(var/typekey in spawn_forbidden)
 						all_items -= typesof(typekey)
 					for(var/O in reverseRange(all_items))
-						reaginfo += "<a href='?src=[REF(src)];hsb=hsb_safespawn&path=[O]'>[O]</a><br>"
+						reaginfo += "<a href='byond://?src=[REF(src)];hsb=hsb_safespawn&path=[O]'>[O]</a><br>"
 
 				usr << browse(reaginfo,"window=sandbox")
 
@@ -263,13 +250,13 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				if(!GLOB.hsboxspawn) return
 
 				if(!objinfo)
-					objinfo = "<b>Other Items</b> <a href='?[REF(src)];hsb=hsbcloth'>(Clothing)</a> <a href='?[REF(src)];hsb=hsbreag'>(Reagent Containers)</a><hr><br>"
+					objinfo = "<b>Other Items</b> <a href='byond://?[REF(src)];hsb=hsbcloth'>(Clothing)</a> <a href='byond://?[REF(src)];hsb=hsbreag'>(Reagent Containers)</a><hr><br>"
 					var/list/all_items = subtypesof(/obj/item/) - typesof(/obj/item/clothing) - typesof(/obj/item/reagent_containers)
 					for(var/typekey in spawn_forbidden)
 						all_items -= typesof(typekey)
 
 					for(var/O in reverseRange(all_items))
-						objinfo += "<a href='?src=[REF(src)];hsb=hsb_safespawn&path=[O]'>[O]</a><br>"
+						objinfo += "<a href='byond://?src=[REF(src)];hsb=hsb_safespawn&path=[O]'>[O]</a><br>"
 
 				usr << browse(objinfo,"window=sandbox")
 

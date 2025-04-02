@@ -31,4 +31,12 @@
 		tgui_panel = new(src)
 	tgui_panel.initialize(force = TRUE)
 	// Force show the panel to see if there are any errors
-	winset(src, "legacy_output_selector", "left=output_browser")
+	winset(src, "output", "is-disabled=1&is-visible=0")
+	winset(src, "browseroutput", "is-disabled=0;is-visible=1")
+	if(byond_version >= 516)
+		winset(src, null, list("browser-options" = "find,refresh,byondstorage"))
+
+/client/verb/panel_devtools()
+	set name = "Enable TGUI Devtools"
+	set category = "OOC"
+	winset(src, "", "browser-options=devtools")

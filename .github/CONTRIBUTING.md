@@ -122,6 +122,8 @@ Our team is entirely voluntary, as such we extend our thanks to maintainers, iss
 - [UI Development](../tgui/README.md)
 - [Visual Effects and Systems](./guides/VISUALS.md)
 
+[MC Tab Guide](./guides/MC_tab.md)
+
 ## Pull Request Process
 
 There is no strict process when it comes to merging pull requests. Pull requests will sometimes take a while before they are looked at by a maintainer; the bigger the change, the more time it will take before they are accepted into the code. Every team member is a volunteer who is giving up their own time to help maintain and contribute, so please be courteous and respectful. Here are some helpful ways to make it easier for you and for the maintainers when making a pull request.

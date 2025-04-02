@@ -13,9 +13,9 @@
 	var/broken = FALSE
 	var/initialized_at
 
-/datum/tgui_panel/New(client/client)
+/datum/tgui_panel/New(client/client, id)
 	src.client = client
-	window = new(client, "browseroutput")
+	window = new(client, id)
 	window.subscribe(src, PROC_REF(on_message))
 
 /datum/tgui_panel/Del()
@@ -61,7 +61,7 @@
  */
 /datum/tgui_panel/proc/on_initialize_timed_out()
 	// Currently does nothing but sending a message to old chat.
-	SEND_TEXT(client, "<span class=\"userdanger\">Failed to load fancy chat, click <a href='?src=[REF(src)];reload_tguipanel=1'>HERE</a> to attempt to reload it.</span>")
+	SEND_TEXT(client, "<span class=\"userdanger\">Failed to load fancy chat, click <a href='byond://?src=[REF(src)];reload_tguipanel=1'>HERE</a> to attempt to reload it.</span>")
 
 /**
  * private

@@ -60,11 +60,14 @@
   })();
 
   // Basic checks to detect whether this page runs in BYOND
-  var isByond = (Byond.TRIDENT !== null || Byond.BLINK !== null || window.cef_to_byond)
-    && location.hostname === '127.0.0.1'
-    && location.search !== '?external';
-    //As of BYOND 515 the path doesn't seem to include tmp dir anymore if you're trying to open tgui in external browser and looking why it doesn't work
-    //&& location.pathname.indexOf('/tmp') === 0
+  var isByond =
+    (Byond.TRIDENT !== null ||
+      Byond.BLINK !== null ||
+      window.cef_to_byond) &&
+    location.hostname === '127.0.0.1' &&
+    location.search !== '?external';
+  //As of BYOND 515 the path doesn't seem to include tmp dir anymore if you're trying to open tgui in external browser and looking why it doesn't work
+  //&& location.pathname.indexOf('/tmp') === 0
 
   // Version constants
   Byond.IS_BYOND = isByond;
@@ -417,7 +420,7 @@ window.onerror = function (msg, url, line, col, error) {
       else {
         window.onerror.__stack__ = stack;
       }
-      var textProp = 'textContent';
+      var textProp = Byond.IS_LTE_IE8 ? 'innerText' : 'textContent';
       errorStack[textProp] = window.onerror.__stack__;
     }
     // Set window geometry
