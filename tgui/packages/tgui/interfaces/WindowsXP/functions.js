@@ -9,18 +9,17 @@ import { Error } from './Apps/Error';
 import { Gmail } from './Apps/Gmail';
 import { News } from './Apps/News';
 
-
-export const GetIconByName = name => {
+export const GetIconByName = (name) => {
   switch (name) {
-    case "icq":
+    case 'icq':
       return icqIcon;
-    case "notepad":
+    case 'notepad':
       return notepadIcon;
-    case "error":
+    case 'error':
       return errorIcon;
-    case "gmail":
+    case 'gmail':
       return gmailicon;
-    case "news":
+    case 'news':
       return newsIcon;
     default:
       return null;
@@ -29,15 +28,15 @@ export const GetIconByName = name => {
 
 export const GetAppByName = (app, act) => {
   switch (app.type) {
-    case "icq":
+    case 'icq':
       return <Icq app={app} act={act} />;
-    case "notepad":
+    case 'notepad':
       return <Notepad app={app} act={act} />;
-    case "error":
+    case 'error':
       return <Error app={app} act={act} />;
-    case "gmail":
+    case 'gmail':
       return <Gmail app={app} act={act} />;
-    case "news":
+    case 'news':
       return <News app={app} act={act} />;
     default:
       return null;

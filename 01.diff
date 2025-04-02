@@ -1,0 +1,13 @@
+diff --git a/tgui/packages/tgui/interfaces/ListInputModal.tsx b/tgui/packages/tgui/interfaces/ListInputModal.tsx
+index c20174f651..fbd49f9f84 100644
+--- a/tgui/packages/tgui/interfaces/ListInputModal.tsx
++++ b/tgui/packages/tgui/interfaces/ListInputModal.tsx
+@@ -195,7 +195,7 @@ const ListDisplay = (props) => {
+             id={index}
+             key={index}
+             onClick={() => onClick(index)}
+-            onDblClick={(event) => {
++            onDoubleClick={(event) => {
+               event.preventDefault();
+               act('submit', { entry: filteredItems[selected] });
+             }}
