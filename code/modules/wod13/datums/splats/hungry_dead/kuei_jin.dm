@@ -37,6 +37,9 @@
 		/datum/splat/werewolf
 	)
 
+	selectable = TRUE
+	whitelisted = TRUE
+
 	var/datum/dharma/dharma
 	COOLDOWN_DECLARE(torpor_timer)
 

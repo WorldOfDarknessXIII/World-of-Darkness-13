@@ -4,7 +4,7 @@ GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //write h
 This datum stores a declarative description of clans, in order to make an instance of the clan component from this implementation in runtime
 And it also helps for the character set panel
 */
-/datum/vampireclane
+/datum/vampireclan
 	var/name = "Caitiff"
 	var/desc = "The clanless. The rabble. Of no importance."
 	var/list/clane_disciplines = list() //discipline datums
@@ -34,7 +34,7 @@ And it also helps for the character set panel
 	var/current_accessory
 	var/clan_keys //Keys to your hideout
 
-/datum/vampireclane/proc/on_gain(mob/living/carbon/human/H)
+/datum/vampireclan/proc/on_gain(mob/living/carbon/human/H)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(length(accessories))
@@ -52,7 +52,7 @@ And it also helps for the character set panel
 		H.update_body()
 		H.update_icon()
 
-/datum/vampireclane/proc/post_gain(mob/living/carbon/human/H)
+/datum/vampireclan/proc/post_gain(mob/living/carbon/human/H)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(violating_appearance && H.roundstart_vampire)
@@ -144,7 +144,7 @@ And it also helps for the character set panel
  * Arguments
  * * rot_stage - how much to rot the vampire, on a scale from 1 to 4.
  */
-/datum/vampireclane/proc/rot_body(rot_stage)
+/datum/vampireclan/proc/rot_body(rot_stage)
 	if (alt_sprite)
 		if (!findtext(alt_sprite, "rotten") && (rot_stage <= 2))
 			return

@@ -35,14 +35,17 @@
 		/datum/splat/hungry_dead/kuei_jin
 	)
 
+	selectable = TRUE
+	whitelisted = FALSE
+
 	var/generation = 13
-	var/datum/vampireclane/clan
+	var/datum/vampireclan/clan
 	COOLDOWN_DECLARE(torpor_timer)
 
-/datum/splat/vampire/kindred/New(generation = 13, clan = /datum/vampireclane/brujah)
+/datum/splat/vampire/kindred/New(generation = 13, clan = /datum/vampireclan/brujah)
 	. = ..()
 	src.generation = generation
-	clan = new clan
+	src.clan = new clan
 
 /datum/splat/vampire/kindred/on_gain()
 	. = ..()
@@ -181,32 +184,32 @@
 					save_data_v = FALSE
 			victim.roundstart_vampire = FALSE
 			victim.set_species(/datum/species/kindred)
-			victim.clane = null
+			victim.clan = null
 			if(vampire.generation < 13)
 				victim.generation = 13
 				victim.skin_tone = get_vamp_skin_color(victim.skin_tone)
 				victim.update_body()
-				if (vampire.clane.whitelisted)
-					if (!SSwhitelists.is_whitelisted(victim.ckey, vampire.clane.name))
-						if(vampire.clane.name == "True Brujah")
-							victim.clane = new /datum/vampireclane/brujah()
+				if (vampire.clan.whitelisted)
+					if (!SSwhitelists.is_whitelisted(victim.ckey, vampire.clan.name))
+						if(vampire.clan.name == "True Brujah")
+							victim.clan = new /datum/vampireclan/brujah()
 							to_chat(victim,"<span class='warning'> You don't got that whitelist! Changing to the non WL Brujah</span>")
-						else if(vampire.clane.name == "Tzimisce")
-							victim.clane = new /datum/vampireclane/old_clan_tzimisce()
+						else if(vampire.clan.name == "Tzimisce")
+							victim.clan = new /datum/vampireclan/old_clan_tzimisce()
 							to_chat(victim,"<span class='warning'> You don't got that whitelist! Changing to the non WL Old Tzmisce</span>")
 						else
 							to_chat(victim,"<span class='warning'> You don't got that whitelist! Changing to a random non WL clan.</span>")
-							var/list/non_whitelisted_clans = list(/datum/vampireclane/brujah,/datum/vampireclane/malkavian,/datum/vampireclane/nosferatu,/datum/vampireclane/gangrel,/datum/vampireclane/giovanni,/datum/vampireclane/ministry,/datum/vampireclane/salubri,/datum/vampireclane/toreador,/datum/vampireclane/tremere,/datum/vampireclane/ventrue)
+							var/list/non_whitelisted_clans = list(/datum/vampireclan/brujah,/datum/vampireclan/malkavian,/datum/vampireclan/nosferatu,/datum/vampireclan/gangrel,/datum/vampireclan/giovanni,/datum/vampireclan/ministry,/datum/vampireclan/salubri,/datum/vampireclan/toreador,/datum/vampireclan/tremere,/datum/vampireclan/ventrue)
 							var/random_clan = pick(non_whitelisted_clans)
-							victim.clane = new random_clan
+							victim.clan = new random_clan
 					else
-						victim.clane = new vampire.clane.type()
+						victim.clan = new vampire.clan.type()
 				else
-					victim.clane = new vampire.clane.type()
+					victim.clan = new vampire.clan.type()
 
-				victim.clane.on_gain(victim)
-				victim.clane.post_gain(victim)
-				if(victim.clane.alt_sprite)
+				victim.clan.on_gain(victim)
+				victim.clan.post_gain(victim)
+				if(victim.clan.alt_sprite)
 					victim.skin_tone = "albino"
 					victim.update_body()
 
@@ -218,11 +221,11 @@
 				victim.create_disciplines(FALSE, disciplines_to_give)
 
 				victim.maxbloodpool = 10+((13-min(13, victim.generation))*3)
-				victim.clane.enlightenment = vampire.clane.enlightenment
+				victim.clan.enlightenment = vampire.clan.enlightenment
 			else
 				victim.maxbloodpool = 10+((13-min(13, victim.generation))*3)
 				victim.generation = 14
-				victim.clane = new /datum/vampireclane/caitiff()
+				victim.clan = new /datum/vampireclan/caitiff()
 
 			//Verify if they accepted to save being a vampire
 			if (is_kindred(victim) && save_data_v)
@@ -232,10 +235,10 @@
 				BLOODBONDED_prefs_v.pref_species.name = "Vampire"
 				if(vampire.generation < 13)
 
-					BLOODBONDED_prefs_v.clane = victim.clane
+					BLOODBONDED_prefs_v.clan = victim.clan
 					BLOODBONDED_prefs_v.generation = 13
 					BLOODBONDED_prefs_v.skin_tone = get_vamp_skin_color(victim.skin_tone)
-					BLOODBONDED_prefs_v.clane.enlightenment = vampire.clane.enlightenment
+					BLOODBONDED_prefs_v.clan.enlightenment = vampire.clan.enlightenment
 
 
 					//Rarely the new mid round vampires get the 3 brujah skil(it is default)
@@ -251,13 +254,13 @@
 
 					if(BLOODBONDED_prefs_v.discipline_types.len == 0)
 						for (var/i in 1 to 3)
-							BLOODBONDED_prefs_v.discipline_types += BLOODBONDED_prefs_v.clane.clane_disciplines[i]
+							BLOODBONDED_prefs_v.discipline_types += BLOODBONDED_prefs_v.clan.clane_disciplines[i]
 							BLOODBONDED_prefs_v.discipline_levels += 1
 					BLOODBONDED_prefs_v.save_character()
 
 				else
 					BLOODBONDED_prefs_v.generation = 13 // Game always set to 13 anyways, 14 is not possible.
-					BLOODBONDED_prefs_v.clane = new /datum/vampireclane/caitiff()
+					BLOODBONDED_prefs_v.clan = new /datum/vampireclan/caitiff()
 					BLOODBONDED_prefs_v.save_character()
 
 		else
@@ -310,7 +313,7 @@
 		else if(!is_kindred(victim) && !isnpc(victim))
 			var/save_data_g = FALSE
 			victim.set_species(/datum/species/ghoul)
-			victim.clane = null
+			victim.clan = null
 			var/response_g = input(victim, "Do you wish to keep being a ghoul on your save slot?(Yes will be a permanent choice and you can't go back)") in list("Yes", "No")
 			victim.roundstart_vampire = FALSE
 			var/datum/species/ghoul/G = victim.dna.species

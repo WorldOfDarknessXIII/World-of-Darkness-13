@@ -12,6 +12,9 @@
 	var/list/replace_splats = list()
 	var/list/incompatible_splats = list()
 
+	var/selectable = FALSE
+	var/whitelisted = FALSE
+
 	var/list/datum/discipline/powers = list()
 	var/mob/living/owner
 

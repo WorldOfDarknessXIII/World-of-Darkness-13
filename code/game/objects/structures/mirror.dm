@@ -36,8 +36,8 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 	. = ..()
 //	if(ishuman(AM) && ref)
 //		var/mob/living/carbon/human/H = AM
-//		if(H.clane)
-//			if(H.clane.name == "Lasombra")
+//		if(H.clan)
+//			if(H.clan.name == "Lasombra")
 //				var/obj/effect/reflection/reflection = ref.resolve()
 //				if(istype(reflection))
 //					qdel(reflection)
@@ -58,7 +58,7 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 	if(broken || !Adjacent(user))
 		return
 	//Sorry, you can't see yourself in front of the mirror!
-	if (is_kindred(user)?.clan.type == /datum/vampireclane/lasombra)
+	if (is_kindred(user)?.clan.type == /datum/vampireclan/lasombra)
 		return
 
 	if(ishuman(user))

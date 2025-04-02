@@ -14,33 +14,28 @@
 					P.save_preferences()
 					P.save_character()
 
-
 		if(stat != DEAD)
 			var/gaining_rage = TRUE
 			for(var/obj/structure/werewolf_totem/W in GLOB.totems)
-				if(W)
-					if(W.totem_health)
-						if(W.tribe == auspice.tribe)
-							if(get_area(W) == get_area(src) && client)
-								gaining_rage = FALSE
-								if(last_gnosis_buff+300 < world.time)
-									last_gnosis_buff = world.time
-									adjust_gnosis(1, src, TRUE)
+				if (W.totem_health)
+					if (W.tribe == auspice.tribe)
+						if (get_area(W) == get_area(src) && client)
+							gaining_rage = FALSE
+							if (last_gnosis_buff + 30 SECONDS < world.time)
+								last_gnosis_buff = world.time
+								adjust_gnosis(1, src, TRUE)
+
 			if(iscrinos(src))
 				if(auspice.base_breed == "Crinos")
 					gaining_rage = FALSE
-			//else if(auspice.rage == 0) //! [ChillRaccoon] - FIXME
-			//	transformator.trans_gender(src, auspice.base_breed)
+
 			if(islupus(src))
 				if(auspice.base_breed == "Lupus")
 					gaining_rage = FALSE
-			//else if(auspice.rage == 0)
-			//	transformator.trans_gender(src, auspice.base_breed)
+
 			if(ishuman(src))
 				if(auspice.base_breed == "Homid")
 					gaining_rage = FALSE
-			//else if(auspice.rage == 0)
-			//	transformator.trans_gender(src, auspice.base_breed)
 
 			if(gaining_rage && client)
 				if((last_rage_gain + 1 MINUTES) < world.time)

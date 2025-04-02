@@ -55,7 +55,7 @@
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		if(human_target.clane?.name == "Gargoyle")
+		if(human_target.clan?.name == "Gargoyle")
 			return TRUE
 
 	if((theirpower >= mypower) || (owner.generation > target.generation))
@@ -94,7 +94,7 @@
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		if(human_target.clane?.name == "Gargoyle")
+		if(human_target.clan?.name == "Gargoyle")
 			return TRUE
 
 	if((theirpower >= mypower) || (owner.generation > target.generation))
@@ -135,7 +135,7 @@
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		if(human_target.clane?.name == "Gargoyle")
+		if(human_target.clan?.name == "Gargoyle")
 			return TRUE
 
 	if((theirpower >= mypower) || (owner.generation > target.generation))
@@ -175,7 +175,7 @@
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		if(human_target.clane?.name == "Gargoyle")
+		if(human_target.clan?.name == "Gargoyle")
 			return TRUE
 
 	if((theirpower >= mypower) || (owner.generation > target.generation))
@@ -214,7 +214,7 @@
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		if(human_target.clane?.name == "Gargoyle")
+		if(human_target.clan?.name == "Gargoyle")
 			return TRUE
 
 	if((theirpower >= mypower) || (owner.generation > target.generation))

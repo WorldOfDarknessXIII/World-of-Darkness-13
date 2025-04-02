@@ -152,10 +152,10 @@ SUBSYSTEM_DEF(job)
 			JobDebug("FOC player species limit overrun, Player: [player]")
 			continue
 		if(player.client.prefs.pref_species.name == "Vampire")
-			if(player.client.prefs.clane)
+			if(player.client.prefs.clan)
 				var/alloww = FALSE
 				for(var/i in job.allowed_bloodlines)
-					if(i == player.client.prefs.clane.name)
+					if(i == player.client.prefs.clan.name)
 						alloww = TRUE
 				if(!alloww && !bypass)
 					JobDebug("FOC player clan not allowed, Player: [player]")
@@ -216,10 +216,10 @@ SUBSYSTEM_DEF(job)
 			continue
 
 		if(player.client.prefs.pref_species.name == "Vampire")
-			if(player.client.prefs.clane)
+			if(player.client.prefs.clan)
 				var/alloww = FALSE
 				for(var/i in job.allowed_bloodlines)
-					if(i == player.client.prefs.clane.name)
+					if(i == player.client.prefs.clan.name)
 						alloww = TRUE
 				if(!alloww)
 					JobDebug("GRJ player clan not allowed, Player: [player]")
@@ -426,10 +426,10 @@ SUBSYSTEM_DEF(job)
 					continue
 
 				if(player.client.prefs.pref_species.name == "Vampire")
-					if(player.client.prefs.clane)
+					if(player.client.prefs.clan)
 						var/alloww = FALSE
 						for(var/i in job.allowed_bloodlines)
-							if(i == player.client.prefs.clane.name)
+							if(i == player.client.prefs.clan.name)
 								alloww = TRUE
 						if(!alloww && !bypass)
 							JobDebug("DO player clan not allowed, Player: [player]")

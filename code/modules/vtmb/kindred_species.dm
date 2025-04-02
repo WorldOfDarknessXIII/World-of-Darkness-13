@@ -30,7 +30,7 @@
 	punchdamagelow = 10
 	punchdamagehigh = 20
 	dust_anim = "dust-h"
-	var/datum/vampireclane/clane
+	var/datum/vampireclan/clan
 	var/list/datum/discipline/disciplines = list()
 	selectable = TRUE
 	COOLDOWN_DECLARE(torpor_timer)
@@ -59,9 +59,9 @@
 			dat += "[host.real_name],"
 		if(!host.real_name)
 			dat += "Unknown,"
-		if(host.clane)
-			dat += " the [host.clane.name]"
-		if(!host.clane)
+		if(host.clan)
+			dat += " the [host.clan.name]"
+		if(!host.clan)
 			dat += " the caitiff"
 
 		if(host.mind)
@@ -97,8 +97,8 @@
 		dat += "Camarilla thinks I[masquerade_level]<BR>"
 		var/humanity = "I'm out of my mind."
 		var/enlight = FALSE
-		if(host.clane)
-			if(host.clane.enlightenment)
+		if(host.clan)
+			if(host.clan.enlightenment)
 				enlight = TRUE
 
 		if(!enlight)
@@ -133,23 +133,23 @@
 
 		dat += "[humanity]<BR>"
 
-		if(host.clane.name == "Brujah")
+		if(host.clan.name == "Brujah")
 			if(GLOB.brujahname != "")
 				if(host.real_name != GLOB.brujahname)
 					dat += " My primogen is:  [GLOB.brujahname].<BR>"
-		if(host.clane.name == "Malkavian")
+		if(host.clan.name == "Malkavian")
 			if(GLOB.malkavianname != "")
 				if(host.real_name != GLOB.malkavianname)
 					dat += " My primogen is:  [GLOB.malkavianname].<BR>"
-		if(host.clane.name == "Nosferatu")
+		if(host.clan.name == "Nosferatu")
 			if(GLOB.nosferatuname != "")
 				if(host.real_name != GLOB.nosferatuname)
 					dat += " My primogen is:  [GLOB.nosferatuname].<BR>"
-		if(host.clane.name == "Toreador")
+		if(host.clan.name == "Toreador")
 			if(GLOB.toreadorname != "")
 				if(host.real_name != GLOB.toreadorname)
 					dat += " My primogen is:  [GLOB.toreadorname].<BR>"
-		if(host.clane.name == "Ventrue")
+		if(host.clan.name == "Ventrue")
 			if(GLOB.ventruename != "")
 				if(host.real_name != GLOB.ventruename)
 					dat += " My primogen is:  [GLOB.ventruename].<BR>"
@@ -248,120 +248,24 @@
 		if (A.spell_button)
 			A.Remove(C)
 
-/**
- * Initialises Disciplines for new vampire mobs, applying effects and creating action buttons.
- *
- * If discipline_pref is true, it grabs all of the source's Disciplines from their preferences
- * and applies those using the give_discipline() proc. If false, it instead grabs a given list
- * of Discipline typepaths and initialises those for the character. Only works for ghouls and
- * vampires, and it also applies the Clan's post_gain() effects
- *
- * Arguments:
- * * discipline_pref - Whether Disciplines will be taken from preferences. True by default.
- * * disciplines - list of Discipline typepaths to grant if discipline_pref is false.
- */
-/mob/living/carbon/human/proc/create_disciplines(discipline_pref = TRUE, list/disciplines)	//EMBRACE BASIC
-	if(client)
-		client.prefs.slotlocked = TRUE
-		client.prefs.save_preferences()
-		client.prefs.save_character()
-
-	if(is_vtm(src)) //only splats that have Disciplines qualify
-		var/list/datum/discipline/adding_disciplines = list()
-
-		if (discipline_pref) //initialise player's own disciplines
-			for (var/i in 1 to client.prefs.discipline_types.len)
-				var/type_to_create = client.prefs.discipline_types[i]
-				var/level = client.prefs.discipline_levels[i]
-				var/datum/discipline/discipline = new type_to_create(level)
-
-				//prevent Disciplines from being used if not whitelisted for them
-				if (discipline.clan_restricted)
-					if (!can_access_discipline(src, type_to_create))
-						qdel(discipline)
-						continue
-
-				adding_disciplines += discipline
-		else if (disciplines.len) //initialise given disciplines
-			for (var/i in 1 to disciplines.len)
-				var/type_to_create = disciplines[i]
-				var/datum/discipline/discipline = new type_to_create(1)
-				adding_disciplines += discipline
-
-		for (var/datum/discipline/discipline in adding_disciplines)
-			give_discipline(discipline)
-
-		if(clane)
-			clane.post_gain(src)
-
-	if((dna.species.id == "kuei-jin")) //only splats that have Disciplines qualify
-		var/list/datum/chi_discipline/adding_disciplines = list()
-
-		if (discipline_pref) //initialise character's own disciplines
-			for (var/i in 1 to client.prefs.discipline_types.len)
-				var/type_to_create = client.prefs.discipline_types[i]
-				var/datum/chi_discipline/discipline = new type_to_create
-				discipline.level = client.prefs.discipline_levels[i]
-				adding_disciplines += discipline
-
-		for (var/datum/chi_discipline/discipline in adding_disciplines)
-			give_chi_discipline(discipline)
-
-/**
- * Creates an action button and applies post_gain effects of the given Discipline.
- *
- * Arguments:
- * * discipline - Discipline datum that is being given to this mob.
- */
-/mob/living/carbon/human/proc/give_discipline(datum/discipline/discipline)
-	if (discipline.level > 0)
-		var/datum/action/discipline/action = new(discipline)
-		action.Grant(src)
-	var/datum/species/kindred/species = dna.species
-	species.disciplines += discipline
-
-/mob/living/carbon/human/proc/give_chi_discipline(datum/chi_discipline/discipline)
-	if (discipline.level > 0)
-		var/datum/action/chi_discipline/action = new
-		action.discipline = discipline
-		action.Grant(src)
-	discipline.post_gain(src)
-
-/**
- * Accesses a certain Discipline that a Kindred has. Returns false if they don't.
- *
- * Arguments:
- * * searched_discipline - Name or typepath of the Discipline being searched for.
- */
-/datum/species/kindred/proc/get_discipline(searched_discipline)
-	for(var/datum/discipline/discipline in disciplines)
-		if (ispath(searched_discipline, /datum/discipline))
-			if (istype(discipline, searched_discipline))
-				return discipline
-		else if (istext(searched_discipline))
-			if (discipline.name == searched_discipline)
-				return discipline
-
-	return FALSE
-
 /datum/species/kindred/check_roundstart_eligible()
 	return TRUE
 
 /datum/species/kindred/handle_body(mob/living/carbon/human/H)
-	if (!H.clane)
+	if (!H.clan)
 		return ..()
 
 	//deflate people if they're super rotten
-	if ((H.clane.alt_sprite == "rotten4") && (H.base_body_mod == "f"))
+	if ((H.clan.alt_sprite == "rotten4") && (H.base_body_mod == "f"))
 		H.base_body_mod = ""
 
-	if(H.clane.alt_sprite)
-		H.dna.species.limbs_id = "[H.base_body_mod][H.clane.alt_sprite]"
+	if(H.clan.alt_sprite)
+		H.dna.species.limbs_id = "[H.base_body_mod][H.clan.alt_sprite]"
 
-	if (H.clane.no_hair)
+	if (H.clan.no_hair)
 		H.hairstyle = "Bald"
 
-	if (H.clane.no_facial)
+	if (H.clan.no_facial)
 		H.facial_hairstyle = "Shaved"
 
 	..()
@@ -462,8 +366,8 @@
 				return
 
 		var/alienation = FALSE
-		if (student.clane.restricted_disciplines.Find(teaching_discipline))
-			if (alert(student, "Learning [giving_discipline] will alienate you from the rest of the [student.clane], making you just like the false Clan. Do you wish to continue?", "Confirmation", "Yes", "No") != "Yes")
+		if (student.clan.restricted_disciplines.Find(teaching_discipline))
+			if (alert(student, "Learning [giving_discipline] will alienate you from the rest of the [student.clan], making you just like the false Clan. Do you wish to continue?", "Confirmation", "Yes", "No") != "Yes")
 				visible_message("<span class='warning'>[student] refuses [teacher]'s mentoring!</span>")
 				qdel(giving_discipline)
 				return
@@ -484,15 +388,15 @@
 			student_prefs.discipline_levels += 0
 
 			if (alienation)
-				var/datum/vampireclane/main_clan
-				switch(student.clane.type)
-					if (/datum/vampireclane/true_brujah)
-						main_clan = new /datum/vampireclane/brujah
-					if (/datum/vampireclane/old_clan_tzimisce)
-						main_clan = new /datum/vampireclane/tzimisce
+				var/datum/vampireclan/main_clan
+				switch(student.clan.type)
+					if (/datum/vampireclan/true_brujah)
+						main_clan = new /datum/vampireclan/brujah
+					if (/datum/vampireclan/old_clan_tzimisce)
+						main_clan = new /datum/vampireclan/tzimisce
 
-				student_prefs.clane = main_clan
-				student.clane = main_clan
+				student_prefs.clan = main_clan
+				student.clan = main_clan
 
 			student_prefs.save_character()
 			teacher_prefs.save_character()
@@ -540,12 +444,12 @@
 	qdel(discipline_object_checking)
 
 	//first, check their Clan Disciplines to see if that gives them access
-	if (vampire_checking.clane.clane_disciplines.Find(discipline_checking))
+	if (vampire_checking.clan.clane_disciplines.Find(discipline_checking))
 		return TRUE
 
 	//next, go through all Clans to check if they have access to any with the Discipline
-	for (var/clan_type in subtypesof(/datum/vampireclane))
-		var/datum/vampireclane/clan_checking = new clan_type
+	for (var/clan_type in subtypesof(/datum/vampireclan))
+		var/datum/vampireclan/clan_checking = new clan_type
 
 		//skip this if they can't access it due to whitelists
 		if (clan_checking.whitelisted)

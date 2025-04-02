@@ -356,15 +356,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(newtype)
 			pref_species = new newtype
 
-	READ_FILE(S["clane"], clane)
+	READ_FILE(S["clane"], clan)
 
-	var/auspice_id
-	READ_FILE(S["auspice"], auspice_id)
-	if(auspice_id)
-		var/newtype = GLOB.auspices_list[auspice_id]
-		if(newtype)
-			auspice = new newtype
-
+	READ_FILE(S["auspice"], auspice)
 	READ_FILE(S["breed"], breed)
 	READ_FILE(S["tribe"], tribe)
 	READ_FILE(S["werewolf_color"], werewolf_color)
@@ -601,7 +595,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	backpack			= sanitize_inlist(backpack, GLOB.backpacklist, initial(backpack))
 	jumpsuit_style	= sanitize_inlist(jumpsuit_style, GLOB.jumpsuitlist, initial(jumpsuit_style))
 	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
-	clane_accessory = sanitize_inlist(clane_accessory, clane.accessories, null)
+	clane_accessory = sanitize_inlist(clane_accessory, clan.accessories, null)
 	playtime_reward_cloak = sanitize_integer(playtime_reward_cloak)
 	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, 0)
 	features["ethcolor"]	= copytext_char(features["ethcolor"], 1, 7)
@@ -716,7 +710,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["enemy_text"]			, enemy_text)
 	WRITE_FILE(S["lover_text"]			, lover_text)
 	WRITE_FILE(S["reason_of_death"]			, reason_of_death)
-	WRITE_FILE(S["clane"]			, clane.name)
+	WRITE_FILE(S["clane"]			, clan)
 	WRITE_FILE(S["generation"]			, generation)
 	WRITE_FILE(S["generation_bonus"]			, generation_bonus)
 	WRITE_FILE(S["masquerade"]			, masquerade)

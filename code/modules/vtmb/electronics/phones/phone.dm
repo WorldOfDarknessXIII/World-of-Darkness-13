@@ -91,8 +91,8 @@
 	. = ..()
 //	if(is_kindred(user))
 //		var/mob/living/carbon/human/H = user
-//		if(H.clane)
-//			if(H.clane.name == "Lasombra")
+//		if(H.clan)
+//			if(H.clan.name == "Lasombra")
 //				return
 	if(closed)
 		closed = FALSE
@@ -286,7 +286,7 @@
 
 			.= TRUE
 		if("call")
-//			if((is_kindred(V) && V.clane.name == "Lasombra"))
+//			if((is_kindred(V) && V.clan.name == "Lasombra"))
 //				return
 //			else
 			choosed_number = replacetext(choosed_number, " ", "")
@@ -758,13 +758,13 @@
 					var/mob/living/carbon/human/SPK = hearing_args[HEARING_SPEAKER]
 					voice_saying = "[age2agedescription(SPK.age)] [SPK.gender] voice ([SPK.phonevoicetag])"
 
-					if(SPK.clane && SPK.clane.name == "Lasombra")
+					if(SPK.clan && SPK.clan.name == "Lasombra")
 						message = scramble_lasombra_message(message)
 						playsound(online, 'code/modules/wod13/sounds/lasombra_whisper.ogg', 50, FALSE)
 					else
 						playsound(online, 'code/modules/wod13/sounds/phonetalk.ogg', 50, FALSE)
-//					if(SPK.clane)
-//						if(SPK.clane.name == "Lasombra")
+//					if(SPK.clan)
+//						if(SPK.clan.name == "Lasombra")
 //							return
 				var/obj/phonevoice/VOIC = new(online)
 				VOIC.name = voice_saying

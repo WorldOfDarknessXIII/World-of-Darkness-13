@@ -1,4 +1,4 @@
-/datum/vampireclane/nosferatu
+/datum/vampireclan/nosferatu
 	name = "Nosferatu"
 	desc = "The Nosferatu wear their curse on the outside. Their bodies horribly twisted and deformed through the Embrace, they lurk on the fringes of most cities, acting as spies and brokers of information. Using animals and their own supernatural capacity to hide, nothing escapes the eyes of the so-called Sewer Rats."
 	curse = "Masquerade-violating appearance."
@@ -17,7 +17,7 @@
 	current_accessory = "nosferatu_ears"
 	clan_keys = /obj/item/vamp/keys/nosferatu
 
-/datum/vampireclane/nosferatu/on_gain(mob/living/carbon/human/H)
+/datum/vampireclan/nosferatu/on_gain(mob/living/carbon/human/H)
 	..()
 	var/obj/item/organ/eyes/night_vision/NV = new()
 	NV.Insert(H, TRUE, FALSE)

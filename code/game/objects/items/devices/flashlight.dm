@@ -39,7 +39,7 @@
 
 /obj/item/flashlight/attack_self(mob/user)
 	var/datum/splat/vampire/kindred/vampirism = is_kindred(user)
-	if (vampirism?.clan.type == /datum/vampireclane/lasombra)
+	if (vampirism?.clan.type == /datum/vampireclan/lasombra)
 		return
 
 	..()
