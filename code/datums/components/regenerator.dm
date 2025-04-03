@@ -19,8 +19,6 @@
 	var/oxy_per_second
 	/// If TRUE, we'll try to heal wounds as well. Useless for non-humans.
 	var/heals_wounds = FALSE
-	/// List of damage types we don't care about, in case you want to only remove this with fire damage or something
-	var/list/ignore_damage_types
 	/// Colour of regeneration animation, or none if you don't want one
 	var/outline_colour
 	/// When this timer completes we start restoring health, it is a timer rather than a cooldown so we can do something on its completion
@@ -33,7 +31,6 @@
 	tox_per_second = 0,
 	oxy_per_second = 0,
 	heals_wounds = FALSE,
-	ignore_damage_types = list(STAMINA),
 	outline_colour = COLOR_PALE_GREEN,
 )
 	if (!isliving(parent))
@@ -45,18 +42,15 @@
 	src.tox_per_second = tox_per_second
 	src.oxy_per_second = oxy_per_second
 	src.heals_wounds = heals_wounds
-	src.ignore_damage_types = ignore_damage_types
 	src.outline_colour = outline_colour
 
 /datum/component/regenerator/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_take_damage))
 
 /datum/component/regenerator/UnregisterFromParent()
 	. = ..()
 	if(regeneration_start_timer)
 		deltimer(regeneration_start_timer)
-	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
 	stop_regenerating()
 
 /datum/component/regenerator/Destroy(force)
@@ -64,15 +58,6 @@
 	. = ..()
 	if(regeneration_start_timer)
 		deltimer(regeneration_start_timer)
-
-/// When you take damage, reset the cooldown and start processing
-/datum/component/regenerator/proc/on_take_damage(datum/source, damage, damagetype, ...)
-	SIGNAL_HANDLER
-
-	if (damagetype in ignore_damage_types)
-		return
-	stop_regenerating()
-	regeneration_start_timer = addtimer(CALLBACK(src, PROC_REF(start_regenerating)), regeneration_delay, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 
 /// Start processing health regeneration, and show animation if provided
 /datum/component/regenerator/proc/start_regenerating()
