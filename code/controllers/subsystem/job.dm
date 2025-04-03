@@ -739,7 +739,7 @@ SUBSYSTEM_DEF(job)
 		var/datum/splat/werewolf/garou/lycanthropy = is_garou(M)
 		if (lycanthropy)
 			for(var/obj/structure/werewolf_totem/totem in GLOB.totems)
-				if (totem.tribe != lycanthropy.auspice.tribe)
+				if (totem.tribe != lycanthropy.tribe)
 					continue
 
 				destination = totem

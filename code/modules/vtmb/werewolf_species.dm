@@ -102,10 +102,6 @@
 	var/datum/action/garouinfo/infor = new()
 	infor.host = C
 	infor.Grant(C)
-	var/datum/action/gift/glabro/glabro = new()
-	glabro.Grant(C)
-	var/datum/action/gift/rage_heal/GH = new()
-	GH.Grant(C)
 	C.transformator = new(C)
 	C.transformator.human_form = C
 
@@ -129,7 +125,7 @@
 /datum/species/garou/check_roundstart_eligible()
 	return FALSE
 
-/proc/adjust_rage(var/amount, var/mob/living/carbon/C, var/sound = TRUE)
+/proc/adjust_rage(amount, mob/living/carbon/C, sound = TRUE)
 	if(amount > 0)
 		if(C.auspice.rage < 10)
 			if(sound)
@@ -144,7 +140,7 @@
 			to_chat(C, "<span class='userdanger'><b>RAGE DECREASES</b></span>")
 	C.update_rage_hud()
 
-/proc/adjust_gnosis(var/amount, var/mob/living/carbon/C, var/sound = TRUE)
+/proc/adjust_gnosis(amount, mob/living/carbon/C, sound = TRUE)
 	if(amount > 0)
 		if(C.auspice.gnosis < C.auspice.start_gnosis)
 			if(sound)

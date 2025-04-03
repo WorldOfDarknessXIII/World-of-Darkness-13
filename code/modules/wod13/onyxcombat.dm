@@ -427,10 +427,6 @@
 				REMOVE_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
 	icon_state = initial(icon_state)
 
-//Na budushee
-//	H.physiology.armor.melee += 25
-//	H.physiology.armor.bullet += 20
-
 /atom/movable/screen/disciplines
 	layer = HUD_LAYER
 	plane = HUD_PLANE
@@ -483,24 +479,7 @@
 	else
 		harm_focus = dir
 
-//mob/living/Click()
-//	if(ishuman(usr) && usr != src)
-//		var/mob/living/carbon/human/SH = usr
-//		for(var/atom/movable/screen/disciplines/DISCP in SH.hud_used.static_inventory)
-//			if(DISCP)
-//				if(DISCP.active)
-//					DISCP.range_activate(src, SH)
-//					SH.face_atom(src)
-//					return
-//	..()
-
 /atom/Click(location,control,params)
-/*
-	if(!isobserver(usr))
-		usr.client.show_popup_menus = FALSE
-	else
-		usr.client.show_popup_menus = TRUE
-*/
 	if(ishuman(usr))
 		if(isopenturf(src.loc) || isopenturf(src))
 			var/list/modifiers = params2list(params)
@@ -531,108 +510,7 @@
 							HUY.put_in_active_hand(item_to_pick)
 						return
 	..()
-/*
-/atom/movable/screen/disciplines/Initialize()
-	. = ..()
 
-/atom/movable/screen/disciplines/Click(location,control,params)
-	var/dadelay = dscpln.delay
-	if(dscpln.leveldelay)
-		dadelay = dscpln.delay*dscpln.level_casting
-	SEND_SOUND(usr, sound('code/modules/wod13/sounds/highlight.ogg', 0, 0, 50))
-	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, "right"))
-		if(dscpln)
-			if(dscpln.level > 1)
-				if(dscpln.level_casting < dscpln.level)
-					dscpln.level_casting = min(dscpln.level_casting+1, dscpln.level)
-				else
-					dscpln.level_casting = 1
-			else
-				dscpln.level_casting = 1
-			switch(dscpln.level_casting)
-				if(1)
-					overlays -= level2
-					overlays -= level3
-					overlays -= level4
-					overlays -= level5
-				if(2)
-					overlays |= level2
-					overlays -= level3
-					overlays -= level4
-					overlays -= level5
-				if(3)
-					overlays -= level2
-					overlays |= level3
-					overlays -= level4
-					overlays -= level5
-				if(4)
-					overlays -= level2
-					overlays -= level3
-					overlays |= level4
-					overlays -= level5
-				if(5)
-					overlays -= level2
-					overlays -= level3
-					overlays -= level4
-					overlays |= level5
-			to_chat(usr, "[dscpln.name] [dscpln.level_casting]/[dscpln.level] - [dscpln.desc]")
-		return
-
-	if(ishuman(usr))
-		var/mob/living/carbon/human/BD = usr
-		if(world.time < last_discipline_click+5)
-			return
-		if(world.time < last_discipline_use+dadelay+5)
-			return
-		last_discipline_click = world.time
-		if(active)
-			active = FALSE
-			BD.toggled = null
-			icon_state = main_state
-			return
-		var/plus = 0
-		if(HAS_TRAIT(BD, TRAIT_HUNGRY))
-			plus = 1
-		if(BD.bloodpool < dscpln.cost+plus)
-			SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
-			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to use this discipline.</span>")
-			return
-		if(dscpln.ranged)
-			for(var/atom/movable/screen/disciplines/DISCP in BD.hud_used.static_inventory)
-				if(DISCP)
-					if(DISCP.active && DISCP != src && DISCP.dscpln.ranged)
-						DISCP.active = FALSE
-						BD.toggled = null
-						DISCP.icon_state = DISCP.main_state
-			active = TRUE
-			BD.toggled = src
-			icon_state = "[main_state]-on"
-		else if(!dscpln.ranged)
-			last_discipline_use = world.time
-			if(dscpln.check_activated(BD, BD))
-				icon_state = "[main_state]-on"
-				dscpln.activate(BD, BD)
-				spawn(dadelay+BD.discipline_time_plus)
-					icon_state = main_state
-
-/atom/movable/screen/disciplines/proc/range_activate(var/mob/living/trgt, var/mob/living/carbon/human/cstr)
-	var/plus = 0
-	if(HAS_TRAIT(cstr, TRAIT_HUNGRY))
-		plus = 1
-	if(cstr.bloodpool < dscpln.cost+plus)
-		icon_state = main_state
-		active = FALSE
-		SEND_SOUND(cstr, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
-		to_chat(cstr, "<span class='warning'>You don't have enough <b>BLOOD</b> to use this discipline.</span>")
-		return
-
-	if(dscpln.check_activated(trgt, cstr))
-		dscpln.activate(trgt, cstr)
-		last_discipline_use = world.time
-	active = FALSE
-	icon_state = main_state
-*/
 /mob/living/carbon/werewolf/Life()
 	. = ..()
 	update_blood_hud()
@@ -647,7 +525,6 @@
 	update_zone_hud()
 	update_rage_hud()
 	update_shadow()
-	handle_vampire_music()
 	update_auspex_hud()
 	if(warrant)
 		last_nonraid = world.time
@@ -657,13 +534,13 @@
 					var/area/vtm/V = get_area(src)
 					if(V.upper)
 						last_showed = world.time
-						if(last_raid+600 < world.time)
+						if(last_raid + 60 SECONDS < world.time)
 							last_raid = world.time
 							for(var/turf/open/O in range(1, src))
 								if(prob(25))
 									new /obj/effect/temp_visual/desant(O)
 							playsound(loc, 'code/modules/wod13/sounds/helicopter.ogg', 50, TRUE)
-				if(last_showed+9000 < world.time)
+				if(last_showed + 15 MINUTES < world.time)
 					to_chat(src, "<b>POLICE STOPPED SEARCHING</b>")
 					SEND_SOUND(src, sound('code/modules/wod13/sounds/humanity_gain.ogg', 0, 0, 75))
 					killed_count = 0
@@ -673,7 +550,7 @@
 		else
 			warrant = FALSE
 	else
-		if(last_nonraid+1800 < world.time)
+		if(last_nonraid + 3 MINUTES < world.time)
 			last_nonraid = world.time
 			killed_count = max(0, killed_count-1)
 

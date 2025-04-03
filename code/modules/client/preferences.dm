@@ -222,7 +222,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/werewolf_apparel
 
 	var/werewolf_name
-	var/auspice_level = 1
+	var/werewolf_level = 1
 
 	// Kuei-jin preferences
 	var/dharma_type = /datum/dharma
@@ -475,15 +475,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h2>[make_font_cool("TRIBE")]</h2>"
 				dat += "<br><b>Werewolf Name:</b> "
 				dat += "<a href='?_src_=prefs;preference=werewolf_name;task=input'>[werewolf_name]</a><BR>"
-				dat += "<b>Auspice:</b> <a href='?_src_=prefs;preference=auspice;task=input'>[auspice.name]</a><BR>"
-				dat += "Description: [auspice.desc]<BR>"
-				dat += "<b>Power:</b> •[auspice_level > 1 ? "•" : "o"][auspice_level > 2 ? "•" : "o"]([auspice_level])"
-				if(true_experience >= 10*auspice_level && auspice_level != 3)
-					dat += "<a href='?_src_=prefs;preference=auspice_level;task=input'>Increase ([10*auspice_level])</a>"
-				dat += "<b>Initial Rage:</b> •[auspice.start_rage > 1 ? "•" : "o"][auspice.start_rage > 2 ? "•" : "o"][auspice.start_rage > 3 ? "•" : "o"][auspice.start_rage > 4 ? "•" : "o"]([auspice.start_rage])<BR>"
+				dat += "<b>Auspice:</b> <a href='?_src_=prefs;preference=auspice;task=input'>[auspice:name]</a><BR>"
+				dat += "Description: [auspice:desc]<BR>"
+				dat += "<b>Power:</b> •[werewolf_level > 1 ? "•" : "o"][werewolf_level > 2 ? "•" : "o"]([werewolf_level])"
+				if(true_experience >= 10*werewolf_level && werewolf_level != 3)
+					dat += "<a href='?_src_=prefs;preference=werewolf_level;task=input'>Increase ([10*werewolf_level])</a>"
+				dat += "<b>Initial Rage:</b> •[auspice:start_rage > 1 ? "•" : "o"][auspice:start_rage > 2 ? "•" : "o"][auspice:start_rage > 3 ? "•" : "o"][auspice:start_rage > 4 ? "•" : "o"]([auspice:start_rage])<BR>"
 				var/gifts_text = ""
 				var/num_of_gifts = 0
-				for(var/i in 1 to auspice_level)
+				for(var/i in 1 to werewolf_level)
 					var/zalupa
 					switch (tribe)
 						if ("Glasswalkers")
@@ -2125,13 +2125,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 								clane_accessory = "none"
 							else
 								clane_accessory = pick(clan.accessories)
-				if("auspice_level")
-					var/cost = max(10, auspice_level * 10)
-					if ((true_experience < cost) || (auspice_level >= 3))
+				if("werewolf_level")
+					var/cost = max(10, werewolf_level * 10)
+					if ((true_experience < cost) || (werewolf_level >= 3))
 						return
 
 					true_experience -= cost
-					auspice_level = max(1, auspice_level + 1)
+					werewolf_level = max(1, werewolf_level + 1)
 
 				if("physique")
 					if(handle_upgrade(physique, physique * 4))
@@ -3013,73 +3013,23 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.skin_tone = skin_tone
 
 	if (splat == /datum/splat/werewolf/garou)
-		var/datum/auspice/CLN = new auspice.type()
-		character.auspice = CLN
-		character.auspice.level = auspice_level
-		character.auspice.tribe = tribe
-		character.auspice.on_gain(character)
-		switch(breed)
-			if("Homid")
-				character.auspice.gnosis = 1
-				character.auspice.start_gnosis = 1
-				character.auspice.base_breed = "Homid"
-			if("Lupus")
-				character.auspice.gnosis = 5
-				character.auspice.start_gnosis = 5
-				character.auspice.base_breed = "Lupus"
-			if("Metis")
-				character.auspice.gnosis = 3
-				character.auspice.start_gnosis = 3
-				character.auspice.base_breed = "Crinos"
-
-		if(character.transformator)
-			if(character.transformator.crinos_form && character.transformator.lupus_form)
-				character.transformator.crinos_form.sprite_color = werewolf_color
-				character.transformator.crinos_form.sprite_scar = werewolf_scar
-				character.transformator.crinos_form.sprite_hair = werewolf_hair
-				character.transformator.crinos_form.sprite_hair_color = werewolf_hair_color
-				character.transformator.crinos_form.sprite_eye_color = werewolf_eye_color
-				character.transformator.lupus_form.sprite_color = werewolf_color
-				character.transformator.lupus_form.sprite_eye_color = werewolf_eye_color
-
-				if(werewolf_name)
-					character.transformator.crinos_form.name = werewolf_name
-					character.transformator.lupus_form.name = werewolf_name
-				else
-					character.transformator.crinos_form.name = real_name
-					character.transformator.lupus_form.name = real_name
-
-				character.transformator.crinos_form.physique = physique
-				character.transformator.crinos_form.dexterity = dexterity
-				character.transformator.crinos_form.mentality = mentality
-				character.transformator.crinos_form.social = social
-				character.transformator.crinos_form.blood = blood
-
-				character.transformator.lupus_form.physique = physique
-				character.transformator.lupus_form.dexterity = dexterity
-				character.transformator.lupus_form.mentality = mentality
-				character.transformator.lupus_form.social = social
-				character.transformator.lupus_form.blood = blood
-
-				character.transformator.lupus_form.maxHealth = character.maxHealth
-				character.transformator.lupus_form.health = character.maxHealth
-				character.transformator.crinos_form.maxHealth = character.maxHealth
-				character.transformator.crinos_form.health = character.maxHealth
+		var/datum/splat/werewolf/garou/lycanthropy = new splat(werewolf_level, auspice, tribe, breed)
+		lycanthropy.assign(character)
 
 		switch(tribe)
 			if("Wendigo")
 				character.yin_chi = 1
 				character.max_yin_chi = 1
-				character.yang_chi = 5 + (auspice_level * 2)
-				character.max_yang_chi = 5 + (auspice_level * 2)
+				character.yang_chi = 5 + (werewolf_level * 2)
+				character.max_yang_chi = 5 + (werewolf_level * 2)
 			if("Glasswalkers")
-				character.yin_chi = 1 + auspice_level
-				character.max_yin_chi = 1 + auspice_level
-				character.yang_chi = 5 + auspice_level
-				character.max_yang_chi = 5 + auspice_level
+				character.yin_chi = 1 + werewolf_level
+				character.max_yin_chi = 1 + werewolf_level
+				character.yang_chi = 5 + werewolf_level
+				character.max_yang_chi = 5 + werewolf_level
 			if("Black Spiral Dancers")
-				character.yin_chi = 1 + auspice_level * 2
-				character.max_yin_chi = 1 + auspice_level * 2
+				character.yin_chi = 1 + werewolf_level * 2
+				character.max_yin_chi = 1 + werewolf_level * 2
 				character.yang_chi = 5
 				character.max_yang_chi = 5
 
