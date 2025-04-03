@@ -94,14 +94,14 @@
 	name = "Wendigo Totem"
 	desc = "Gives power to all Garou of that tribe and steals it from others."
 	icon_state = "wendigo"
-	tribe = "Wendigo"
+	tribe = /datum/tribe/wendigo
 	totem_overlay_color = "#81ff4f"
 
 /obj/structure/werewolf_totem/glasswalker
 	name = "Glasswalker Totem"
 	desc = "Gives power to all Garou of that tribe and steals it from others."
 	icon_state = "glassw"
-	tribe = "Glasswalkers"
+	tribe = /datum/tribe/glass_walkers
 	totem_overlay_color = "#35b0ff"
 
 /obj/structure/werewolf_totem/spiral
@@ -109,7 +109,7 @@
 	desc = "Gives power to all Garou of that tribe and steals it from others."
 	icon = 'code/modules/wod13/64x32.dmi'
 	icon_state = "spiral"
-	tribe = "Black Spiral Dancers"
+	tribe = /datum/tribe/black_spiral_dancers
 	totem_overlay_color = "#ff5235"
 
 /obj/effect/landmark/teleport_mark

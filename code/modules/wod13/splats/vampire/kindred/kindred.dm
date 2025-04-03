@@ -146,14 +146,15 @@
 			return
 
 		if((victim.timeofdeath + 5 MINUTES) > world.time)
-			if (victim.auspice?.level) //here be Abominations
-				if (victim.auspice.force_abomination)
+			var/datum/splat/werewolf/garou/lycanthropy = is_garou(victim)
+			if (lycanthropy) //here be Abominations
+				if (HAS_TRAIT(victim, TRAIT_EMBRACE_ALWAYS_SUCCEEDS))
 					to_chat(vampire, "<span class='danger'>Something terrible is happening.</span>")
 					to_chat(victim, "<span class='userdanger'>Gaia has forsaken you.</span>")
 					message_admins("[ADMIN_LOOKUPFLW(vampire)] has turned [ADMIN_LOOKUPFLW(victim)] into an Abomination through an admin setting the force_abomination var.")
 					log_game("[key_name(vampire)] has turned [key_name(victim)] into an Abomination through an admin setting the force_abomination var.")
 				else
-					switch(storyteller_roll(victim.auspice.level))
+					switch(storyteller_roll(lycanthropy.level))
 						if (ROLL_BOTCH)
 							to_chat(vampire, "<span class='danger'>Something terrible is happening.</span>")
 							to_chat(victim, "<span class='userdanger'>Gaia has forsaken you.</span>")

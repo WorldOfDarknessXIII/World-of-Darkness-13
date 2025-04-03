@@ -3,7 +3,6 @@
 	var/desc = "Furry ebaka"
 	var/starting_rage = 1
 	var/list/gifts = list()
-	var/force_abomination = FALSE
 
 /datum/auspice/ahroun
 	name = "Ahroun"

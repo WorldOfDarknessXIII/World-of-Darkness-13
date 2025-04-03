@@ -2052,17 +2052,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(slotlocked || !(pref_species.id == "garou"))
 						return
 
-					var/list/auspice_choices = list()
-					for(var/i in GLOB.auspices_list)
-						var/a = GLOB.auspices_list[i]
-						var/datum/auspice/V = new a
-						auspice_choices[V.name] += GLOB.auspices_list[i]
-						qdel(V)
-					var/result = input(user, "Select an Auspice", "Auspice Selection") as null|anything in auspice_choices
+					var/datum/auspice/result = input(user, "Select an Auspice", "Auspice Selection") as null|anything in GLOB.auspices
 					if(result)
-						var/newtype = GLOB.auspices_list[result]
-						var/datum/auspice/Auspic = new newtype()
-						auspice = Auspic
+						auspice = result.type
 
 				if("clane_acc")
 					if(pref_species.id != "kindred")	//Due to a lot of people being locked to furries

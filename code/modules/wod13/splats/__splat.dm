@@ -21,6 +21,7 @@
 /* GAINING SPLATS */
 /datum/splat/proc/assign(mob/living/owner)
 	src.owner = owner
+	owner.splats += src
 	on_gain()
 
 /datum/splat/proc/on_gain()

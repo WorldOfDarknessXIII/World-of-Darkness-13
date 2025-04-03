@@ -42,6 +42,8 @@
 #define TRAIT_ROTS_IN_SUNLIGHT "rots_in_sunlight"
 /// Instead of dying at -100 health, enters a deathlike coma until actually dying at -200
 #define TRAIT_CAN_TORPOR "can_torpor"
+/// If it's at all possible for this mob to become a vampire, the Embrace will always succeed
+#define TRAIT_EMBRACE_ALWAYS_SUCCEEDS "embrace_always_succeeds"
 
 /* TRAIT SOURCES */
 #define SPLAT_TRAIT "splat_trait"

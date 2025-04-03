@@ -534,36 +534,37 @@
 		new_character.key = key		//Manually transfer the key to log them in,
 		new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 		if(ishuman(new_character))
-			var/mob/living/carbon/human/H = new_character
-			if(H.client)
-				H.true_real_name = H.client.prefs.real_name
-				if(H.age < 16)
-					H.add_quirk(/datum/quirk/freerunning)
-					H.add_quirk(/datum/quirk/light_step)
-					H.add_quirk(/datum/quirk/skittish)
-					H.add_quirk(/datum/quirk/pushover)
-				H.create_disciplines()
-				if(is_garou(H))
-					for(var/obj/structure/werewolf_totem/S in GLOB.totems)
-						if(S.tribe == H.auspice.tribe)
-							H.forceMove(get_turf(S))
-				if(is_kuei_jin(H))
-					if(H.mind)
-						H.mind.dharma = new H.client.prefs.dharma_type()
-						H.mind.dharma.level = H.client.prefs.dharma_level
-						H.mind.dharma.Po = H.client.prefs.po_type
-						H.mind.dharma.Hun = H.client.prefs.hun
-						H.mind.dharma.on_gain(H)
-				GLOB.fucking_joined |= H.client.prefs.real_name
+			var/mob/living/carbon/human/new_human = new_character
+			if(new_human.client)
+				new_human.true_real_name = new_human.client.prefs.real_name
+
+				new_human.create_disciplines()
+
+				var/datum/splat/werewolf/garou/lycanthropy = is_garou(new_human)
+				if (lycanthropy)
+					for (var/obj/structure/werewolf_totem/totem in GLOB.totems)
+						if (totem.tribe == lycanthropy.tribe)
+							new_human.forceMove(get_turf(totem))
+
+				var/datum/splat/werewolf/garou/kuei_jin = is_kuei_jin(new_human)
+				if (kuei_jin)
+					if (new_human.mind)
+						new_human.mind.dharma = new new_human.client.prefs.dharma_type()
+						new_human.mind.dharma.level = new_human.client.prefs.dharma_level
+						new_human.mind.dharma.Po = new_human.client.prefs.po_type
+						new_human.mind.dharma.Hun = new_human.client.prefs.hun
+						new_human.mind.dharma.on_gain(new_human)
+
+				GLOB.fucking_joined |= new_human.client.prefs.real_name
 				var/datum/relationship/R = new ()
-				H.Myself = R
-				R.owner = H
-				R.need_friend = H.client.prefs.friend
-				R.need_enemy = H.client.prefs.enemy
-				R.need_lover = H.client.prefs.lover
-				R.friend_text = H.client.prefs.friend_text
-				R.enemy_text = H.client.prefs.enemy_text
-				R.lover_text = H.client.prefs.lover_text
+				new_human.Myself = R
+				R.owner = new_human
+				R.need_friend = new_human.client.prefs.friend
+				R.need_enemy = new_human.client.prefs.enemy
+				R.need_lover = new_human.client.prefs.lover
+				R.friend_text = new_human.client.prefs.friend_text
+				R.enemy_text = new_human.client.prefs.enemy_text
+				R.lover_text = new_human.client.prefs.lover_text
 				R.publish()
 		new_character = null
 		qdel(src)

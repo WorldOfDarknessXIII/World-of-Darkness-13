@@ -98,7 +98,7 @@
 	. = ..()
 //	ADD_TRAIT(C, TRAIT_NOBLEED, HIGHLANDER)
 	C.update_body(0)
-	C.last_experience = world.time+3000
+	C.last_experience = world.time + 5 MINUTES
 	var/datum/action/garouinfo/infor = new()
 	infor.host = C
 	infor.Grant(C)
@@ -123,36 +123,6 @@
 /datum/species/garou/check_roundstart_eligible()
 	return FALSE
 
-/proc/adjust_rage(amount, mob/living/carbon/C, sound = TRUE)
-	if(amount > 0)
-		if(C.auspice.rage < 10)
-			if(sound)
-				SEND_SOUND(C, sound('code/modules/wod13/sounds/rage_increase.ogg', 0, 0, 75))
-			to_chat(C, "<span class='userdanger'><b>RAGE INCREASES</b></span>")
-			C.auspice.rage = min(10, C.auspice.rage+amount)
-	if(amount < 0)
-		if(C.auspice.rage > 0)
-			C.auspice.rage = max(0, C.auspice.rage+amount)
-			if(sound)
-				SEND_SOUND(C, sound('code/modules/wod13/sounds/rage_decrease.ogg', 0, 0, 75))
-			to_chat(C, "<span class='userdanger'><b>RAGE DECREASES</b></span>")
-	C.update_rage_hud()
-
-/proc/adjust_gnosis(amount, mob/living/carbon/C, sound = TRUE)
-	if(amount > 0)
-		if(C.auspice.gnosis < C.auspice.start_gnosis)
-			if(sound)
-				SEND_SOUND(C, sound('code/modules/wod13/sounds/humanity_gain.ogg', 0, 0, 75))
-			to_chat(C, "<span class='boldnotice'><b>GNOSIS INCREASES</b></span>")
-			C.auspice.gnosis = min(C.auspice.start_gnosis, C.auspice.gnosis+amount)
-	if(amount < 0)
-		if(C.auspice.gnosis > 0)
-			C.auspice.gnosis = max(0, C.auspice.gnosis+amount)
-			if(sound)
-				SEND_SOUND(C, sound('code/modules/wod13/sounds/rage_decrease.ogg', 0, 0, 75))
-			to_chat(C, "<span class='boldnotice'><b>GNOSIS DECREASES</b></span>")
-	C.update_rage_hud()
-
 /**
  * On being bit by a vampire
  *
@@ -161,5 +131,5 @@
 /datum/species/garou/proc/on_garou_bitten(datum/source, mob/living/carbon/being_bitten)
 	SIGNAL_HANDLER
 
-	if(is_garou(being_bitten) || iswerewolf(being_bitten))
+	if (is_garou(being_bitten) || iswerewolf(being_bitten))
 		return COMPONENT_RESIST_VAMPIRE_KISS

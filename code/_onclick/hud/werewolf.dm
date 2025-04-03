@@ -104,7 +104,8 @@
 		werewolf.emote("howl")
 		playsound(get_turf(werewolf), pick('code/modules/wod13/sounds/awo1.ogg', 'code/modules/wod13/sounds/awo2.ogg'), 100, FALSE)
 		icon_state = "[GLOB.moon_state]"
-		adjust_rage(1, werewolf, TRUE)
+
+		lycanthropy.add_rage(1)
 
 /datum/hud
 	var/atom/movable/screen/auspice_icon
