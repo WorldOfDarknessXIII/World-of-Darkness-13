@@ -180,15 +180,13 @@
 			if(is_garou(A) || iswerewolf(A))
 				A.emote("howl")
 				playsound(get_turf(A), pick('code/modules/wod13/sounds/awo1.ogg', 'code/modules/wod13/sounds/awo2.ogg'), 100, FALSE)
-				spawn(10)
+				spawn(1 SECONDS)
 					adjust_gnosis(1, A, TRUE)
-//	awo1
 
 /datum/action/gift/mindspeak
 	name = "Mindspeak"
 	desc = "By invoking the power of waking dreams, the Garou can place any chosen characters into silent communion."
 	button_icon_state = "mindspeak"
-//	gnosis_req = 1
 
 /datum/action/gift/mindspeak/Trigger()
 	. = ..()
@@ -235,28 +233,25 @@
 	desc = "This Gift allows the Garou to determine the true nature of a person."
 	button_icon_state = "scent_of_the_true_form"
 	rage_req = 1
-	//gnosis_req = 1
 
 /datum/action/gift/scent_of_the_true_form/Trigger()
 	. = ..()
 	if(allowed_to_proceed)
 		var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]
 		abductor_hud.add_hud_to(owner)
-		spawn(200)
+		spawn(20 SECONDS)
 			abductor_hud.remove_hud_from(owner)
 
 /datum/action/gift/truth_of_gaia
 	name = "Truth Of Gaia"
 	desc = "As judges of the Litany, Philodox have the ability to sense whether others have spoken truth or falsehood."
 	button_icon_state = "truth_of_gaia"
-//	rage_req = 1
 
 /datum/action/gift/mothers_touch
 	name = "Mother's Touch"
 	desc = "The Garou is able to heal the wounds of any living creature, aggravated or otherwise, simply by laying hands over the afflicted area."
 	button_icon_state = "mothers_touch"
 	rage_req = 2
-	//gnosis_req = 1
 
 /datum/action/gift/mothers_touch/Trigger()
 	. = ..()
@@ -277,7 +272,7 @@
 		C.sight = SEE_MOBS|SEE_OBJS
 		playsound(get_turf(owner), 'code/modules/wod13/sounds/sense_wyrm.ogg', 75, FALSE)
 		to_chat(owner, "<span class='notice'>You feel your sense sharpening...</span>")
-		spawn(200)
+		spawn(20 SECONDS)
 			C.sight = initial(C.sight)
 			to_chat(owner, "<span class='warning'>You no longer sense anything more than normal...</span>")
 
@@ -292,7 +287,7 @@
 	if(allowed_to_proceed)
 		var/mob/living/carbon/C = owner
 		C.see_invisible = SEE_INVISIBLE_OBSERVER
-		spawn(200)
+		spawn(20 SECONDS)
 			C.see_invisible = initial(C.see_invisible)
 
 /datum/action/gift/blur_of_the_milky_eye
@@ -315,7 +310,6 @@
 	name = "Open Seal"
 	desc = "With this Gift, the Garou can open nearly any sort of closed or locked physical device."
 	button_icon_state = "open_seal"
-//	gnosis_req = 1
 
 /datum/action/gift/open_seal/Trigger()
 	. = ..()
@@ -437,7 +431,7 @@
 			H.remove_overlay(PROTEAN_LAYER)
 			G.punchdamagelow -= 15
 			G.punchdamagehigh -= 15
-			H.physique = H.physique-2
+			H.physique -= 2
 			H.physiology.armor.melee -= 15
 			H.physiology.armor.bullet -= 15
 			var/matrix/M = matrix()
@@ -452,7 +446,7 @@
 			H.apply_overlay(PROTEAN_LAYER)
 			G.punchdamagelow += 15
 			G.punchdamagehigh += 15
-			H.physique = H.physique+2
+			H.physique += 2
 			H.physiology.armor.melee += 15
 			H.physiology.armor.bullet += 15
 			var/matrix/M = matrix()

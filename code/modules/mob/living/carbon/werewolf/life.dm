@@ -8,11 +8,10 @@
 	if(is_garou(src) || iswerewolf(src))
 		if(key && stat <= HARD_CRIT)
 			var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
-			if(P)
-				if(P.masquerade != masquerade)
-					P.masquerade = masquerade
-					P.save_preferences()
-					P.save_character()
+			if (P.masquerade != masquerade)
+				P.masquerade = masquerade
+				P.save_preferences()
+				P.save_character()
 
 		if(stat != DEAD)
 			var/gaining_rage = TRUE
