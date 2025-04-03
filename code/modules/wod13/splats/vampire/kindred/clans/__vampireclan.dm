@@ -7,7 +7,7 @@ And it also helps for the character set panel
 /datum/vampireclan
 	var/name = "Caitiff"
 	var/desc = "The clanless. The rabble. Of no importance."
-	var/list/clane_disciplines = list() //discipline datums
+	var/list/clan_disciplines = list() //discipline datums
 	var/list/restricted_disciplines = list()
 	var/datum/outfit/clane_outfit
 	var/curse = "None."

@@ -63,8 +63,8 @@
 		clan = /datum/vampireclan/brujah
 		discipline_types = list()
 		discipline_levels = list()
-		for (var/i in 1 to clan.clane_disciplines.len)
-			discipline_types += clan.clane_disciplines[i]
+		for (var/i in 1 to clan.clan_disciplines.len)
+			discipline_types += clan.clan_disciplines[i]
 			discipline_levels += 1
 
 ///Setup a hardcore random character and calculate their hardcore random score

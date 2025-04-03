@@ -254,7 +254,7 @@
 
 					if(BLOODBONDED_prefs_v.discipline_types.len == 0)
 						for (var/i in 1 to 3)
-							BLOODBONDED_prefs_v.discipline_types += BLOODBONDED_prefs_v.clan.clane_disciplines[i]
+							BLOODBONDED_prefs_v.discipline_types += BLOODBONDED_prefs_v.clan.clan_disciplines[i]
 							BLOODBONDED_prefs_v.discipline_levels += 1
 					BLOODBONDED_prefs_v.save_character()
 

@@ -401,7 +401,7 @@
 				H.clan.on_gain(H)
 				H.clan.post_gain(H)
 				H.forceMove(get_turf(src))
-				H.create_disciplines(FALSE, H.clan.clane_disciplines)
+				H.create_disciplines(FALSE, H.clan.clan_disciplines)
 				if(!H.key)
 					var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you wish to play as Sentient Gargoyle?", null, null, null, 50, src)
 					for(var/mob/dead/observer/G in GLOB.player_list)

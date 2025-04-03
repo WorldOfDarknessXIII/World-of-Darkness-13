@@ -2,7 +2,7 @@
 	name = "Ministry"
 	desc = "The Ministry, also called the Ministry of Set, Followers of Set, or Setites, are a clan of vampires who believe their founder was the Egyptian god Set."
 	curse = "Decreased moving speed in lighted areas."
-	clane_disciplines = list(
+	clan_disciplines = list(
 		/datum/discipline/obfuscate,
 		/datum/discipline/presence,
 		/datum/discipline/serpentis

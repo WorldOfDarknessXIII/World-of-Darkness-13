@@ -265,8 +265,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	clan = /datum/vampireclan/brujah
 	discipline_types = list()
 	discipline_levels = list()
-	for (var/i in 1 to clan.clane_disciplines.len)
-		discipline_types += clan.clane_disciplines[i]
+	for (var/i in 1 to clan.clan_disciplines.len)
+		discipline_types += clan.clan_disciplines[i]
 		discipline_levels += 1
 	humanity = clan.start_humanity
 	enlightenment = clan.enlightenment
@@ -576,7 +576,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						cost = 10
 					else if (clan.name == "Caitiff")
 						cost = discipline_level * 6
-					else if (clan.clane_disciplines.Find(discipline_type))
+					else if (clan.clan_disciplines.Find(discipline_type))
 						cost = discipline_level * 5
 					else
 						cost = discipline_level * 7
@@ -2099,10 +2099,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						discipline_levels = list()
 						if(result == "Caitiff")
 							generation = 13
-							for (var/i = clan.clane_disciplines.len; i < 3; i++)
+							for (var/i = clan.clan_disciplines.len; i < 3; i++)
 								if (slotlocked)
 									break
-								var/list/possible_new_disciplines = subtypesof(/datum/discipline) - clan.clane_disciplines - /datum/discipline/bloodheal
+								var/list/possible_new_disciplines = subtypesof(/datum/discipline) - clan.clan_disciplines - /datum/discipline/bloodheal
 								for (var/discipline_type in possible_new_disciplines)
 									var/datum/discipline/discipline = new discipline_type
 									if (discipline.clan_restricted)
@@ -2110,9 +2110,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 									qdel(discipline)
 								var/new_discipline = input(user, "Select a Discipline", "Discipline Selection") as null|anything in possible_new_disciplines
 								if (new_discipline)
-									clan.clane_disciplines += new_discipline
-						for (var/i in 1 to clan.clane_disciplines.len)
-							discipline_types += clan.clane_disciplines[i]
+									clan.clan_disciplines += new_discipline
+						for (var/i in 1 to clan.clan_disciplines.len)
+							discipline_types += clan.clan_disciplines[i]
 							discipline_levels += 1
 						humanity = clan.start_humanity
 						enlightenment = clan.enlightenment
@@ -2209,7 +2209,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							cost = 10
 						else if (clan.name == "Caitiff")
 							cost = discipline_level * 6
-						else if (clan.clane_disciplines.Find(discipline_types[i]))
+						else if (clan.clan_disciplines.Find(discipline_types[i]))
 							cost = discipline_level * 5
 
 						if ((true_experience < cost) || (discipline_level >= 5))
@@ -2391,8 +2391,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							clan = /datum/vampireclan/brujah
 							discipline_types = list()
 							discipline_levels = list()
-							for (var/i in 1 to clan.clane_disciplines.len)
-								discipline_types += clan.clane_disciplines[i]
+							for (var/i in 1 to clan.clan_disciplines.len)
+								discipline_types += clan.clan_disciplines[i]
 								discipline_levels += 1
 						//Now that we changed our species, we must verify that the mutant colour is still allowed.
 						var/temp_hsv = RGBtoHSV(features["mcolor"])

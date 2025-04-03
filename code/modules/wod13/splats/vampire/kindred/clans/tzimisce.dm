@@ -5,7 +5,7 @@
 //	alt_sprite = "tzi"
 //	no_hair = TRUE
 //	no_facial = TRUE	//FUCK WRONG RULEBOOK
-	clane_disciplines = list(
+	clan_disciplines = list(
 		/datum/discipline/auspex,
 		/datum/discipline/animalism,
 		/datum/discipline/vicissitude
