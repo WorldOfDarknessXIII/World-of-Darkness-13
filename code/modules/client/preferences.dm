@@ -464,7 +464,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			switch(pref_species.name)
 				if("Vampire")
 					dat += "<b>Masquerade:</b> [masquerade]/5<BR>"
-					dat += "<b>Generation:</b> [generation]"
+					dat += "<b>Generation:</b> [generation]<BR>"
 					dat += "<b>Path of [enlightenment ? "Enlightenment" : "Humanity"]:</b> [humanity]/10"
 					//if(SSwhitelists.is_whitelisted(parent.ckey, "enlightenment") && !slotlocked)
 					if ((true_experience >= (humanity * 2)) && (humanity < 10))
