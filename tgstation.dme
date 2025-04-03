@@ -3568,7 +3568,6 @@
 #include "code\modules\wod13\splats\werewolf\garou\tribes\__tribe.dm"
 #include "code\modules\wod13\splats\werewolf\garou\tribes\black_spiral_dancers.dm"
 #include "code\modules\wod13\splats\werewolf\garou\tribes\glass_walkers.dm"
-#include "code\modules\wod13\splats\werewolf\garou\tribes\tribes.dm"
 #include "code\modules\wod13\splats\werewolf\garou\tribes\wendigo.dm"
 #include "code\modules\wod13\status_effects\debuffs.dm"
 #include "code\modules\wod13\structures\hydroponics.dm"

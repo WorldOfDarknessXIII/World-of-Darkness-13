@@ -102,8 +102,6 @@
 	var/datum/action/garouinfo/infor = new()
 	infor.host = C
 	infor.Grant(C)
-	C.transformator = new(C)
-	C.transformator.human_form = C
 
 	//garou resist vampire bites better than mortals
 	RegisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_garou_bitten))

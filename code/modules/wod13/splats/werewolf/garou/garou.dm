@@ -54,42 +54,49 @@
 	. = ..()
 
 	owner.update_rage_hud()
+
+	transformator = new
+	transformator.human_form = owner
+
+	// i need character sheet datums yesterday
 	transformator.lupus_form.splats = owner.splats
 	transformator.crinos_form.splats = owner.splats
+
+	transformator.crinos_form.physique = owner.physique
+	transformator.crinos_form.dexterity = owner.dexterity
+	transformator.crinos_form.mentality = owner.mentality
+	transformator.crinos_form.social = owner.social
+	transformator.crinos_form.blood = owner.blood
+
+	transformator.lupus_form.physique = owner.physique
+	transformator.lupus_form.dexterity = owner.dexterity
+	transformator.lupus_form.mentality = owner.mentality
+	transformator.lupus_form.social = owner.social
+	transformator.lupus_form.blood = owner.blood
+
+	transformator.lupus_form.maxHealth = owner.maxHealth
+	transformator.lupus_form.health = owner.maxHealth
+	transformator.crinos_form.maxHealth = owner.maxHealth
+	transformator.crinos_form.health = owner.maxHealth
 
 	for (var/gift_type in (auspice.gifts + tribe.gifts))
 		var/datum/action/gift/giving_gift = new gift_type
 		giving_gift.Grant(owner)
 
-	if (character.transformator.crinos_form && character.transformator.lupus_form)
-		character.transformator.crinos_form.sprite_color = werewolf_color
-		character.transformator.crinos_form.sprite_scar = werewolf_scar
-		character.transformator.crinos_form.sprite_hair = werewolf_hair
-		character.transformator.crinos_form.sprite_hair_color = werewolf_hair_color
-		character.transformator.crinos_form.sprite_eye_color = werewolf_eye_color
-		character.transformator.lupus_form.sprite_color = werewolf_color
-		character.transformator.lupus_form.sprite_eye_color = werewolf_eye_color
+/datum/splat/werewolf/garou/proc/apply_preferences(werewolf_color, werewolf_scar, werewolf_hair, werewolf_hair_color, werewolf_eye_color, werewolf_color, werewolf_eye_color, werewolf_name)
+	transformator.crinos_form.sprite_color = werewolf_color
+	transformator.lupus_form.sprite_color = werewolf_color
 
-		if(werewolf_name)
-			character.transformator.crinos_form.name = werewolf_name
-			character.transformator.lupus_form.name = werewolf_name
-		else
-			character.transformator.crinos_form.name = real_name
-			character.transformator.lupus_form.name = real_name
+	transformator.crinos_form.sprite_scar = werewolf_scar
+	transformator.crinos_form.sprite_hair = werewolf_hair
+	transformator.crinos_form.sprite_hair_color = werewolf_hair_color
 
-		character.transformator.crinos_form.physique = physique
-		character.transformator.crinos_form.dexterity = dexterity
-		character.transformator.crinos_form.mentality = mentality
-		character.transformator.crinos_form.social = social
-		character.transformator.crinos_form.blood = blood
+	transformator.crinos_form.sprite_eye_color = werewolf_eye_color
+	transformator.lupus_form.sprite_eye_color = werewolf_eye_color
 
-		character.transformator.lupus_form.physique = physique
-		character.transformator.lupus_form.dexterity = dexterity
-		character.transformator.lupus_form.mentality = mentality
-		character.transformator.lupus_form.social = social
-		character.transformator.lupus_form.blood = blood
-
-		character.transformator.lupus_form.maxHealth = character.maxHealth
-		character.transformator.lupus_form.health = character.maxHealth
-		character.transformator.crinos_form.maxHealth = character.maxHealth
-		character.transformator.crinos_form.health = character.maxHealth
+	if (werewolf_name)
+		transformator.crinos_form.name = werewolf_name
+		transformator.lupus_form.name = werewolf_name
+	else
+		transformator.crinos_form.name = owner.real_name
+		transformator.lupus_form.name = owner.real_name

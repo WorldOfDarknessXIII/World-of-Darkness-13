@@ -3,3 +3,6 @@
 	var/desc = "A tribe of Garou in Werewolf: The Apocalypse."
 
 	var/list/gifts
+
+/datum/tribe/proc/on_gain(/mob/living/character, level)
+	return

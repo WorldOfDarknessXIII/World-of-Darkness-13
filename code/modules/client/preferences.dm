@@ -3015,23 +3015,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if (splat == /datum/splat/werewolf/garou)
 		var/datum/splat/werewolf/garou/lycanthropy = new splat(werewolf_level, auspice, tribe, breed)
 		lycanthropy.assign(character)
-
-		switch(tribe)
-			if("Wendigo")
-				character.yin_chi = 1
-				character.max_yin_chi = 1
-				character.yang_chi = 5 + (werewolf_level * 2)
-				character.max_yang_chi = 5 + (werewolf_level * 2)
-			if("Glasswalkers")
-				character.yin_chi = 1 + werewolf_level
-				character.max_yin_chi = 1 + werewolf_level
-				character.yang_chi = 5 + werewolf_level
-				character.max_yang_chi = 5 + werewolf_level
-			if("Black Spiral Dancers")
-				character.yin_chi = 1 + werewolf_level * 2
-				character.max_yin_chi = 1 + werewolf_level * 2
-				character.yang_chi = 5
-				character.max_yang_chi = 5
+		lycanthropy.apply_preferences(werewolf_color, werewolf_scar, werewolf_hair, werewolf_hair_color, werewolf_eye_color, werewolf_color, werewolf_eye_color, werewolf_name)
 
 	if (splat == /datum/splat/hungry_dead/kuei_jin)
 		character.yang_chi = yang
@@ -3039,9 +3023,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.yin_chi = yin
 		character.max_yin_chi = yin
 		character.max_demon_chi = po
-
-		character.maxHealth = round((initial(character.maxHealth)-initial(character.maxHealth)/4)+(initial(character.maxHealth)/4)*((character.physique+character.additional_physique)+dharma_level))
-		character.health = character.maxHealth
 	else
 		character.yang_chi = 3
 		character.max_yang_chi = 3
@@ -3066,12 +3047,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	else
 		character.body_type = body_type
 
-	switch(body_model)
-		if(1)
+	switch (body_model)
+		if (1)
 			character.base_body_mod = "s"
-		if(2)
+		if (2)
 			character.base_body_mod = ""
-		if(3)
+		if (3)
 			character.base_body_mod = "f"
 
 	character.eye_color = eye_color

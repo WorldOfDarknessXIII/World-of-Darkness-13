@@ -393,7 +393,7 @@
 		return
 	log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!", LOG_ATTACK)
 
-	if(HAS_TRAIT(src, TRAIT_CAN_TORPOR))
+	if (HAS_TRAIT(src, TRAIT_CAN_TORPOR))
 		if (HAS_TRAIT(src, TRAIT_TORPOR))
 			adjustOxyLoss(health - HEALTH_THRESHOLD_FINAL_DEATH)
 		else
