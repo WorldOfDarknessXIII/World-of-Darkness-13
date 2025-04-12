@@ -50,3 +50,4 @@
 #define VAMPIRE_TRAIT "vampire_trait"
 #define WEREWOLF_TRAIT "werewolf_trait"
 #define HUNGRY_DEAD_TRAIT "hungry_dead_trait"
+#define CLAN_TRAIT "clan_trait"

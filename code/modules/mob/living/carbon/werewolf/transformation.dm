@@ -8,10 +8,8 @@
 
 /obj/werewolf_holder/transformation/Initialize()
 	. = ..()
-	crinos_form = new()
-	crinos_form.transformator = src
-	lupus_form = new()
-	lupus_form.transformator = src
+	crinos_form = new
+	lupus_form = new
 
 /obj/werewolf_holder/transformation/proc/transfer_damage(mob/living/carbon/first, mob/living/carbon/second)
 	second.masquerade = first.masquerade
@@ -23,13 +21,8 @@
 
 /obj/werewolf_holder/transformation/proc/trans_gender(mob/living/carbon/trans, form)
 	if(!given_quirks)
-		given_quirks = TRUE/*
-		if(HAS_TRAIT(trans, TRAIT_ACROBATIC))
-			var/datum/action/acrobate/DA = new()
-			DA.Grant(lupus_form)
-			var/datum/action/acrobate/NE = new()
-			NE.Grant(crinos_form)
-			*/
+		given_quirks = TRUE
+
 		if(HAS_TRAIT(trans, TRAIT_DANCER))
 			var/datum/action/dance/DA = new()
 			DA.Grant(lupus_form)
@@ -48,11 +41,11 @@
 		var/mob/living/carbon/human/H = trans
 		if(G.glabro)
 			H.remove_overlay(PROTEAN_LAYER)
-			G.punchdamagelow = G.punchdamagelow-15
-			G.punchdamagehigh = G.punchdamagehigh-15
-			H.physique = H.physique-2
-			H.physiology.armor.melee = H.physiology.armor.melee-15
-			H.physiology.armor.bullet = H.physiology.armor.bullet-15
+			G.punchdamagelow -= 15
+			G.punchdamagehigh -= 15
+			H.physique -= 2
+			H.physiology.armor.melee -= 15
+			H.physiology.armor.bullet -= 15
 			var/matrix/M = matrix()
 			M.Scale(1)
 			H.transform = M
@@ -84,9 +77,8 @@
 				animate(trans, transform = ntransform, color = "#000000", time = 30)
 				playsound(get_turf(trans), 'code/modules/wod13/sounds/transform.ogg', 50, FALSE)
 				for(var/mob/living/simple_animal/hostile/beastmaster/B in trans.beastmaster)
-					if(B)
-						qdel(B)
-				spawn(30)
+					qdel(B)
+				spawn(3 SECONDS)
 					if(trans.stat == DEAD || !trans.client) // [ChillRaccoon] - preventing non-player transform issues
 						animate(trans, transform = null, color = "#FFFFFF")
 						return
@@ -120,9 +112,8 @@
 				animate(trans, transform = ntransform, color = "#000000", time = 30)
 				playsound(get_turf(trans), 'code/modules/wod13/sounds/transform.ogg', 50, FALSE)
 				for(var/mob/living/simple_animal/hostile/beastmaster/B in trans.beastmaster)
-					if(B)
-						qdel(B)
-				spawn(30)
+					qdel(B)
+				spawn(3 SECONDS)
 					if(trans.stat == DEAD || !trans.client) // [ChillRaccoon] - preventing non-player transform issues
 						animate(trans, transform = null, color = "#FFFFFF")
 						return
@@ -141,7 +132,7 @@
 					crinos_form.bloodpool = trans.bloodpool
 					crinos_form.masquerade = trans.masquerade
 					crinos_form.nutrition = trans.nutrition
-					crinos_form.mind = trans.mind
+					trans.mind.transfer_to(crinos_form)
 					crinos_form.update_blood_hud()
 					crinos_form.physique = crinos_form.physique+3
 					transfer_damage(trans, crinos_form)
@@ -157,9 +148,8 @@
 				animate(trans, transform = ntransform, color = "#000000", time = 30)
 				playsound(get_turf(trans), 'code/modules/wod13/sounds/transform.ogg', 50, FALSE)
 				for(var/mob/living/simple_animal/hostile/beastmaster/B in trans.beastmaster)
-					if(B)
-						qdel(B)
-				spawn(30)
+					qdel(B)
+				spawn(3 SECONDS)
 					if(trans.stat == DEAD || !trans.client) // [ChillRaccoon] - preventing non-player transform issues
 						animate(trans, transform = null, color = "#FFFFFF")
 						return
