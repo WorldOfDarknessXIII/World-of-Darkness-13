@@ -1,0 +1,828 @@
+---
+ .github/workflows/ci_suite.yml                |    40 +-
+ .github/workflows/run_integration_tests.yml   |     2 +-
+ BUILD.cmd                                     |     2 +
+ Build.bat                                     |     2 -
+ _maps/runtimestation.json                     |     9 -
+ bin/build.cmd                                 |     2 +
+ bin/clean.cmd                                 |     2 +
+ bin/server.cmd                                |     2 +
+ bin/test.cmd                                  |     2 +
+ bin/tgfont.cmd                                |     2 +
+ bin/tgui-bench.cmd                            |     3 +
+ bin/tgui-build.cmd                            |     2 +
+ bin/tgui-dev.cmd                              |     2 +
+ bin/tgui-sonar.cmd                            |     2 +
+ dependencies.sh                               |    17 +-
+ tgui/.prettierignore                          |    16 +
+ tgui/.prettierrc.yml                          |     1 +
+ tgui/.yarn/releases/yarn-4.5.1.cjs            |   934 ++
+ tgui/.yarn/sdks/eslint/bin/eslint.js          |    20 -
+ tgui/.yarn/sdks/eslint/package.json           |     9 -
+ tgui/.yarn/sdks/integrations.yml              |     5 -
+ tgui/.yarnrc.yml                              |    14 +-
+ tgui/babel.config.js                          |    21 +-
+ tgui/package.json                             |    26 +-
+ tgui/packages/common/collections.js           |    73 +-
+ tgui/packages/common/color.js                 |    12 +-
+ tgui/packages/common/events.js                |     7 +-
+ tgui/packages/common/fp.js                    |    34 +-
+ tgui/packages/common/logging.js               |    13 +-
+ tgui/packages/common/math.js                  |     8 +-
+ tgui/packages/common/perf.js                  |    11 +-
+ tgui/packages/common/react.js                 |    12 +-
+ tgui/packages/common/redux.js                 |    57 +-
+ tgui/packages/common/storage.js               |    34 +-
+ tgui/packages/common/string.babel-plugin.cjs  |     8 +-
+ tgui/packages/common/string.js                |   101 +-
+ tgui/packages/common/timer.js                 |     5 +-
+ tgui/packages/common/uuid.js                  |     4 +-
+ tgui/packages/common/vector.js                |    10 +-
+ tgui/packages/tgui-dev-server/dreamseeker.js  |    21 +-
+ tgui/packages/tgui-dev-server/link/client.js  |    36 +-
+ tgui/packages/tgui-dev-server/link/retrace.js |    16 +-
+ tgui/packages/tgui-dev-server/link/server.js  |    31 +-
+ tgui/packages/tgui-dev-server/reloader.js     |    37 +-
+ tgui/packages/tgui-dev-server/util.js         |    12 +-
+ tgui/packages/tgui-dev-server/webpack.js      |     6 +-
+ tgui/packages/tgui-dev-server/winreg.js       |     7 +-
+ tgui/packages/tgui-panel/Notifications.js     |    27 +-
+ tgui/packages/tgui-panel/Panel.js             |    39 +-
+ .../tgui-panel/audio/NowPlayingWidget.js      |    34 +-
+ tgui/packages/tgui-panel/audio/hooks.js       |     2 +-
+ tgui/packages/tgui-panel/audio/middleware.js  |     4 +-
+ tgui/packages/tgui-panel/audio/player.js      |     6 +-
+ tgui/packages/tgui-panel/audio/selectors.js   |     2 +-
+ .../tgui-panel/chat/ChatPageSettings.js       |    88 +-
+ tgui/packages/tgui-panel/chat/ChatPanel.js    |    33 +-
+ tgui/packages/tgui-panel/chat/ChatTabs.js     |    31 +-
+ tgui/packages/tgui-panel/chat/constants.js    |     6 +-
+ tgui/packages/tgui-panel/chat/middleware.js   |    52 +-
+ tgui/packages/tgui-panel/chat/model.js        |    18 +-
+ tgui/packages/tgui-panel/chat/reducer.js      |    19 +-
+ tgui/packages/tgui-panel/chat/renderer.js     |   139 +-
+ .../tgui-panel/chat/replaceInTextNode.js      |    34 +-
+ tgui/packages/tgui-panel/chat/selectors.js    |    16 +-
+ tgui/packages/tgui-panel/game/hooks.js        |     2 +-
+ tgui/packages/tgui-panel/game/middleware.js   |    10 +-
+ tgui/packages/tgui-panel/game/selectors.js    |     2 +-
+ tgui/packages/tgui-panel/index.js             |    37 +-
+ tgui/packages/tgui-panel/panelFocus.js        |     8 +-
+ .../packages/tgui-panel/ping/PingIndicator.js |     8 +-
+ tgui/packages/tgui-panel/ping/actions.js      |    25 +-
+ tgui/packages/tgui-panel/ping/middleware.js   |     4 +-
+ tgui/packages/tgui-panel/ping/reducer.js      |    15 +-
+ tgui/packages/tgui-panel/ping/selectors.js    |     2 +-
+ .../tgui-panel/settings/SettingsPanel.js      |   117 +-
+ tgui/packages/tgui-panel/settings/hooks.js    |     4 +-
+ .../tgui-panel/settings/middleware.js         |    14 +-
+ tgui/packages/tgui-panel/settings/reducer.js  |     8 +-
+ .../packages/tgui-panel/settings/selectors.js |     4 +-
+ .../tgui-panel/styles/goon/chat-dark.scss     |   101 +-
+ .../tgui-panel/styles/goon/chat-light.scss    |   112 +-
+ tgui/packages/tgui-panel/styles/main.scss     |     2 +-
+ .../tgui-panel/styles/themes/light.scss       |    86 +-
+ tgui/packages/tgui-panel/telemetry.js         |    23 +-
+ tgui/packages/tgui-panel/themes.js            |     2 +-
+ tgui/packages/tgui/assets.js                  |     8 +-
+ tgui/packages/tgui/backend.js                 |    65 +-
+ .../tgui/components/AnimatedNumber.js         |     8 +-
+ tgui/packages/tgui/components/Blink.js        |    14 +-
+ tgui/packages/tgui/components/BlockQuote.js   |    11 +-
+ tgui/packages/tgui/components/Box.js          |    69 +-
+ tgui/packages/tgui/components/Button.js       |    75 +-
+ tgui/packages/tgui/components/ByondUi.js      |    40 +-
+ tgui/packages/tgui/components/Chart.js        |    16 +-
+ tgui/packages/tgui/components/Collapsible.js  |    21 +-
+ tgui/packages/tgui/components/ColorBox.js     |    21 +-
+ tgui/packages/tgui/components/Dimmer.js       |    13 +-
+ tgui/packages/tgui/components/Divider.js      |    14 +-
+ .../tgui/components/DraggableControl.js       |   112 +-
+ tgui/packages/tgui/components/Dropdown.js     |    33 +-
+ tgui/packages/tgui/components/Flex.js         |    31 +-
+ tgui/packages/tgui/components/Grid.js         |    11 +-
+ tgui/packages/tgui/components/Icon.js         |    24 +-
+ tgui/packages/tgui/components/Input.js        |    32 +-
+ tgui/packages/tgui/components/Knob.js         |    57 +-
+ .../tgui/components/LabeledControls.js        |    31 +-
+ tgui/packages/tgui/components/LabeledList.js  |    43 +-
+ tgui/packages/tgui/components/Modal.js        |    17 +-
+ tgui/packages/tgui/components/NoticeBox.js    |    15 +-
+ tgui/packages/tgui/components/NumberInput.js  |    95 +-
+ tgui/packages/tgui/components/ProgressBar.js  |    17 +-
+ tgui/packages/tgui/components/RoundGauge.js   |    75 +-
+ tgui/packages/tgui/components/Section.js      |    31 +-
+ tgui/packages/tgui/components/Slider.js       |    57 +-
+ tgui/packages/tgui/components/Stack.js        |    23 +-
+ tgui/packages/tgui/components/Table.js        |    39 +-
+ tgui/packages/tgui/components/Tabs.js         |    47 +-
+ tgui/packages/tgui/components/TextArea.js     |    42 +-
+ tgui/packages/tgui/components/TimeDisplay.js  |    22 +-
+ tgui/packages/tgui/components/Tooltip.js      |    15 +-
+ tgui/packages/tgui/constants.js               |   130 +-
+ tgui/packages/tgui/debug/KitchenSink.js       |    16 +-
+ tgui/packages/tgui/debug/hooks.js             |     2 +-
+ tgui/packages/tgui/debug/middleware.js        |    35 +-
+ tgui/packages/tgui/debug/selectors.js         |     2 +-
+ tgui/packages/tgui/drag.js                    |    79 +-
+ tgui/packages/tgui/events.js                  |    41 +-
+ tgui/packages/tgui/format.js                  |    43 +-
+ tgui/packages/tgui/hotkeys.js                 |    39 +-
+ tgui/packages/tgui/index.js                   |    16 +-
+ .../tgui/interfaces/AbductorConsole.js        |    86 +-
+ tgui/packages/tgui/interfaces/Achievements.js |   111 +-
+ tgui/packages/tgui/interfaces/AiAirlock.js    |   128 +-
+ tgui/packages/tgui/interfaces/AiRestorer.js   |    54 +-
+ tgui/packages/tgui/interfaces/AirAlarm.js     |   139 +-
+ .../tgui/interfaces/AirlockElectronics.js     |    79 +-
+ tgui/packages/tgui/interfaces/AlertModal.js   |   161 +-
+ tgui/packages/tgui/interfaces/Apc.js          |   141 +-
+ tgui/packages/tgui/interfaces/ApcControl.js   |   144 +-
+ tgui/packages/tgui/interfaces/Aquarium.js     |    32 +-
+ tgui/packages/tgui/interfaces/Atm/AtmLogin.js |    14 +-
+ tgui/packages/tgui/interfaces/Atm/AtmMain.js  |   107 +-
+ tgui/packages/tgui/interfaces/Atm/index.js    |    10 +-
+ .../tgui/interfaces/AtmosAlertConsole.js      |    23 +-
+ .../tgui/interfaces/AtmosControlConsole.js    |    45 +-
+ .../tgui/interfaces/AtmosControlPanel.js      |   103 +-
+ tgui/packages/tgui/interfaces/AtmosFilter.js  |    36 +-
+ tgui/packages/tgui/interfaces/AtmosMixer.js   |    43 +-
+ tgui/packages/tgui/interfaces/AtmosPump.js    |    43 +-
+ .../packages/tgui/interfaces/AtmosTempGate.js |    25 +-
+ .../packages/tgui/interfaces/AtmosTempPump.js |    25 +-
+ .../tgui/interfaces/AutomatedAnnouncement.js  |    62 +-
+ .../tgui/interfaces/AuxBaseConsole.js         |    68 +-
+ tgui/packages/tgui/interfaces/BankMachine.js  |    33 +-
+ tgui/packages/tgui/interfaces/Bepis.js        |    71 +-
+ tgui/packages/tgui/interfaces/Biogenerator.js |   149 +-
+ .../tgui/interfaces/BlackMarketUplink.js      |   109 +-
+ .../tgui/interfaces/BluespaceArtillery.js     |    39 +-
+ .../tgui/interfaces/BluespaceLocator.js       |    79 +-
+ tgui/packages/tgui/interfaces/BorgPanel.js    |   105 +-
+ tgui/packages/tgui/interfaces/BrigTimer.js    |    42 +-
+ .../packages/tgui/interfaces/CameraConsole.js |    95 +-
+ tgui/packages/tgui/interfaces/Canister.js     |   142 +-
+ tgui/packages/tgui/interfaces/Canvas.js       |    33 +-
+ tgui/packages/tgui/interfaces/Cargo.js        |   289 +-
+ tgui/packages/tgui/interfaces/CargoExpress.js |    52 +-
+ .../tgui/interfaces/CargoHoldTerminal.js      |    43 +-
+ .../tgui/interfaces/CellularEmporium.js       |    36 +-
+ .../tgui/interfaces/CentcomPodLauncher.js     |   524 +-
+ .../tgui/interfaces/ChemAcclimator.js         |    35 +-
+ .../tgui/interfaces/ChemDebugSynthesizer.js   |    87 +-
+ .../packages/tgui/interfaces/ChemDispenser.js |   204 +-
+ tgui/packages/tgui/interfaces/ChemFilter.js   |    48 +-
+ tgui/packages/tgui/interfaces/ChemHeater.js   |    72 +-
+ tgui/packages/tgui/interfaces/ChemMaster.js   |   313 +-
+ tgui/packages/tgui/interfaces/ChemPress.js    |    78 +-
+ .../tgui/interfaces/ChemReactionChamber.js    |    86 +-
+ tgui/packages/tgui/interfaces/ChemSplitter.js |    36 +-
+ .../tgui/interfaces/ChemSynthesizer.js        |    26 +-
+ .../tgui/interfaces/CivCargoHoldTerminal.js   |   118 +-
+ tgui/packages/tgui/interfaces/CodexGigas.js   |    95 +-
+ .../tgui/interfaces/CommunicationsConsole.js  |   572 +-
+ .../tgui/interfaces/ComputerFabricator.js     |   293 +-
+ tgui/packages/tgui/interfaces/Crayon.js       |    32 +-
+ tgui/packages/tgui/interfaces/CrewConsole.js  |    63 +-
+ tgui/packages/tgui/interfaces/Cryo.js         |    87 +-
+ .../tgui/interfaces/CyborgBootDebug.js        |   111 +-
+ tgui/packages/tgui/interfaces/DecalPainter.js |    65 +-
+ tgui/packages/tgui/interfaces/DisposalUnit.js |    46 +-
+ tgui/packages/tgui/interfaces/DnaConsole.js   |  1020 +-
+ tgui/packages/tgui/interfaces/DnaVault.js     |    45 +-
+ .../packages/tgui/interfaces/EightBallVote.js |    45 +-
+ tgui/packages/tgui/interfaces/Electrolyzer.js |    27 +-
+ tgui/packages/tgui/interfaces/Electropack.js  |    63 +-
+ .../interfaces/EmergencyShuttleConsole.js     |    59 +-
+ .../tgui/interfaces/EngravedMessage.js        |    36 +-
+ .../tgui/interfaces/ExosuitControlConsole.js  |   113 +-
+ .../tgui/interfaces/ExosuitFabricator.js      |   405 +-
+ tgui/packages/tgui/interfaces/Filteriffic.js  |   265 +-
+ tgui/packages/tgui/interfaces/FishCatalog.js  |    47 +-
+ .../packages/tgui/interfaces/ForbiddenLore.js |    46 +-
+ tgui/packages/tgui/interfaces/Gateway.js      |    60 +-
+ .../tgui/interfaces/GhostPoolProtection.js    |    47 +-
+ .../tgui/interfaces/GlandDispenser.js         |    22 +-
+ tgui/packages/tgui/interfaces/Gps.js          |    84 +-
+ .../tgui/interfaces/GravityGenerator.js       |    74 +-
+ .../tgui/interfaces/GulagItemReclaimer.js     |    30 +-
+ .../tgui/interfaces/GulagTeleporterConsole.js |    53 +-
+ tgui/packages/tgui/interfaces/Holodeck.js     |    43 +-
+ tgui/packages/tgui/interfaces/Holopad.js      |   114 +-
+ tgui/packages/tgui/interfaces/Hypertorus.js   |   185 +-
+ tgui/packages/tgui/interfaces/HypnoChair.js   |    66 +-
+ tgui/packages/tgui/interfaces/ImplantChair.js |    51 +-
+ .../tgui/interfaces/InfraredEmitter.js        |    15 +-
+ tgui/packages/tgui/interfaces/Intellicard.js  |    49 +-
+ tgui/packages/tgui/interfaces/Interview.js    |   100 +-
+ .../tgui/interfaces/InterviewManager.js       |    35 +-
+ tgui/packages/tgui/interfaces/Jukebox.js      |    90 +-
+ tgui/packages/tgui/interfaces/KeycardAuth.js  |    16 +-
+ .../tgui/interfaces/LaborClaimConsole.js      |    41 +-
+ tgui/packages/tgui/interfaces/LanguageMenu.js |    99 +-
+ .../tgui/interfaces/LaunchpadConsole.js       |   202 +-
+ .../tgui/interfaces/LaunchpadRemote.js        |    23 +-
+ tgui/packages/tgui/interfaces/ListInput.js    |   219 +
+ tgui/packages/tgui/interfaces/MafiaPanel.js   |   254 +-
+ .../interfaces/MalfunctionModulePicker.js     |    14 +-
+ .../tgui/interfaces/MassDriverControl.js      |    71 +-
+ .../tgui/interfaces/MechBayPowerConsole.js    |    92 +-
+ .../tgui/interfaces/MechpadConsole.js         |    82 +-
+ tgui/packages/tgui/interfaces/MedicalKiosk.js |   209 +-
+ tgui/packages/tgui/interfaces/Microscope.js   |    49 +-
+ tgui/packages/tgui/interfaces/MiningVendor.js |    42 +-
+ tgui/packages/tgui/interfaces/Mule.js         |    80 +-
+ .../tgui/interfaces/NaniteChamberControl.js   |   149 +-
+ .../tgui/interfaces/NaniteCloudControl.js     |   230 +-
+ .../tgui/interfaces/NaniteProgramHub.js       |   106 +-
+ .../tgui/interfaces/NaniteProgrammer.js       |   237 +-
+ tgui/packages/tgui/interfaces/NaniteRemote.js |   147 +-
+ .../interfaces/NotificationPreferences.js     |    11 +-
+ tgui/packages/tgui/interfaces/NtnetRelay.js   |    51 +-
+ .../tgui/interfaces/NtosAiRestorer.js         |     5 +-
+ tgui/packages/tgui/interfaces/NtosArcade.js   |    58 +-
+ tgui/packages/tgui/interfaces/NtosAtmos.js    |    29 +-
+ tgui/packages/tgui/interfaces/NtosCard.js     |   131 +-
+ tgui/packages/tgui/interfaces/NtosCargo.js    |     5 +-
+ .../tgui/interfaces/NtosConfiguration.js      |    50 +-
+ .../tgui/interfaces/NtosCrewManifest.js       |    37 +-
+ .../interfaces/NtosCyborgRemoteMonitor.js     |    80 +-
+ .../NtosCyborgRemoteMonitorSyndicate.js       |     5 +-
+ .../tgui/interfaces/NtosFileManager.js        |    89 +-
+ .../tgui/interfaces/NtosJobManager.js         |    61 +-
+ tgui/packages/tgui/interfaces/NtosMain.js     |    53 +-
+ tgui/packages/tgui/interfaces/NtosNetChat.js  |   139 +-
+ tgui/packages/tgui/interfaces/NtosNetDos.js   |    59 +-
+ .../tgui/interfaces/NtosNetDownloader.js      |    74 +-
+ .../tgui/interfaces/NtosNetMonitor.js         |    99 +-
+ .../tgui/interfaces/NtosPowerMonitor.js       |     5 +-
+ tgui/packages/tgui/interfaces/NtosRadar.js    |   143 +-
+ .../tgui/interfaces/NtosRadarSyndicate.js     |     7 +-
+ .../tgui/interfaces/NtosRequestKiosk.js       |     5 +-
+ .../tgui/interfaces/NtosRevelation.js         |    27 +-
+ .../tgui/interfaces/NtosRoboControl.js        |   218 +-
+ tgui/packages/tgui/interfaces/NtosRobotact.js |   211 +-
+ tgui/packages/tgui/interfaces/NtosSecurEye.js |    46 +-
+ tgui/packages/tgui/interfaces/NtosShipping.js |    31 +-
+ .../interfaces/NtosStationAlertConsole.js     |     5 +-
+ .../tgui/interfaces/NtosSupermatterMonitor.js |    98 +-
+ tgui/packages/tgui/interfaces/NuclearBomb.js  |    45 +-
+ .../tgui/interfaces/OperatingComputer.js      |    88 +-
+ tgui/packages/tgui/interfaces/Orbit.js        |   156 +-
+ tgui/packages/tgui/interfaces/OreBox.js       |    22 +-
+ .../tgui/interfaces/OreRedemptionMachine.js   |    96 +-
+ tgui/packages/tgui/interfaces/Pandemic.js     |   282 +-
+ tgui/packages/tgui/interfaces/PaperSheet.js   |   469 +-
+ .../tgui/interfaces/PersonalCrafting.js       |    90 +-
+ tgui/packages/tgui/interfaces/Photocopier.js  |   107 +-
+ .../tgui/interfaces/PortableChemMixer.js      |   143 +-
+ .../tgui/interfaces/PortableGenerator.js      |    70 +-
+ tgui/packages/tgui/interfaces/PortablePump.js |    48 +-
+ .../tgui/interfaces/PortableScrubber.js       |    15 +-
+ .../tgui/interfaces/PortableTurret.js         |    62 +-
+ .../tgui/interfaces/PortraitPicker.js         |    54 +-
+ tgui/packages/tgui/interfaces/PowerMonitor.js |   144 +-
+ .../tgui/interfaces/ProbingConsole.js         |    73 +-
+ .../tgui/interfaces/ProximitySensor.js        |    52 +-
+ tgui/packages/tgui/interfaces/Radio.js        |    50 +-
+ .../tgui/interfaces/RadioactiveMicrolaser.js  |    50 +-
+ .../tgui/interfaces/RapidPipeDispenser.js     |   133 +-
+ .../tgui/interfaces/RemoteRobotControl.js     |    68 +-
+ tgui/packages/tgui/interfaces/RequestKiosk.js |   139 +-
+ .../tgui/interfaces/RoboticsControlConsole.js |   142 +-
+ tgui/packages/tgui/interfaces/Roulette.js     |   157 +-
+ tgui/packages/tgui/interfaces/Safe.js         |    98 +-
+ .../tgui/interfaces/SatelliteControl.js       |    36 +-
+ tgui/packages/tgui/interfaces/ScannerGate.js  |   138 +-
+ tgui/packages/tgui/interfaces/Secrets.js      |   264 +-
+ .../packages/tgui/interfaces/SeedExtractor.js |    26 +-
+ .../tgui/interfaces/ShuttleConsole.js         |   174 +-
+ .../tgui/interfaces/ShuttleManipulator.js     |   179 +-
+ tgui/packages/tgui/interfaces/Signaler.js     |    52 +-
+ tgui/packages/tgui/interfaces/SkillPanel.js   |    67 +-
+ tgui/packages/tgui/interfaces/SkillStation.js |   256 +-
+ tgui/packages/tgui/interfaces/Sleeper.js      |    63 +-
+ .../tgui/interfaces/SlimeBodySwapper.js       |    49 +-
+ tgui/packages/tgui/interfaces/SmartVend.js    |    59 +-
+ tgui/packages/tgui/interfaces/Smes.js         |   143 +-
+ tgui/packages/tgui/interfaces/SmokeMachine.js |    58 +-
+ tgui/packages/tgui/interfaces/SolarControl.js |    52 +-
+ tgui/packages/tgui/interfaces/SpaceHeater.js  |    94 +-
+ tgui/packages/tgui/interfaces/SpawnersMenu.js |    46 +-
+ tgui/packages/tgui/interfaces/Stack.js        |   169 +-
+ .../tgui/interfaces/StackingConsole.js        |    42 +-
+ .../tgui/interfaces/StationAlertConsole.js    |    25 +-
+ .../tgui/interfaces/SyndContractor.js         |   316 +-
+ tgui/packages/tgui/interfaces/TachyonArray.js |    88 +-
+ tgui/packages/tgui/interfaces/Tank.js         |    60 +-
+ .../packages/tgui/interfaces/TankDispenser.js |    20 +-
+ tgui/packages/tgui/interfaces/Telecomms.js    |   251 +-
+ tgui/packages/tgui/interfaces/Telephone.js    |    94 +-
+ tgui/packages/tgui/interfaces/Teleporter.js   |    81 +-
+ .../packages/tgui/interfaces/ThermoMachine.js |    65 +-
+ tgui/packages/tgui/interfaces/Timer.js        |    41 +-
+ .../tgui/interfaces/TrackedPlaytime.js        |    62 +-
+ .../tgui/interfaces/TrainingMachine.js        |    32 +-
+ .../packages/tgui/interfaces/TransferValve.js |    55 +-
+ .../tgui/interfaces/TurbineComputer.js        |    49 +-
+ .../packages/tgui/interfaces/TurretControl.js |    21 +-
+ tgui/packages/tgui/interfaces/Uplink.js       |   153 +-
+ .../tgui/interfaces/VaultController.js        |    25 +-
+ tgui/packages/tgui/interfaces/VaultDoor.js    |     8 +-
+ tgui/packages/tgui/interfaces/Vendatray.js    |    69 +-
+ tgui/packages/tgui/interfaces/Vending.js      |   133 +-
+ .../tgui/interfaces/WindowsXP/Apps/Error.js   |     9 +-
+ .../tgui/interfaces/WindowsXP/Apps/Gmail.js   |    43 +-
+ .../tgui/interfaces/WindowsXP/Apps/ICQ.js     |     8 +-
+ .../tgui/interfaces/WindowsXP/Apps/Notepad.js |    13 +-
+ .../tgui/interfaces/WindowsXP/Components.js   |    10 +-
+ .../tgui/interfaces/WindowsXP/Desktop.js      |    12 +-
+ .../tgui/interfaces/WindowsXP/Footer.js       |    33 +-
+ .../tgui/interfaces/WindowsXP/Icons.js        |    65 +-
+ .../tgui/interfaces/WindowsXP/LoginScreen.js  |    23 +-
+ .../WindowsXP/Windows/HeaderButtons.js        |    51 +-
+ .../interfaces/WindowsXP/Windows/Window.js    |    46 +-
+ .../interfaces/WindowsXP/Windows/Windows.js   |    22 +-
+ .../tgui/interfaces/WindowsXP/functions.js    |    23 +-
+ .../tgui/interfaces/WindowsXP/index.js        |    12 +-
+ tgui/packages/tgui/interfaces/Wires.js        |    55 +-
+ .../tgui/interfaces/common/AccessList.js      |    58 +-
+ .../tgui/interfaces/common/AtmosControls.js   |   160 +-
+ .../tgui/interfaces/common/BeakerContents.js  |    17 +-
+ .../common/InterfaceLockNoticeBox.js          |    10 +-
+ .../tgui/interfaces/common/PortableAtmos.js   |    46 +-
+ tgui/packages/tgui/layouts/Layout.js          |    34 +-
+ tgui/packages/tgui/layouts/NtosWindow.js      |    32 +-
+ tgui/packages/tgui/layouts/Pane.js            |    42 +-
+ tgui/packages/tgui/layouts/Window.js          |   134 +-
+ tgui/packages/tgui/links.js                   |     6 +-
+ tgui/packages/tgui/logging.js                 |    30 +-
+ tgui/packages/tgui/renderer.js                |    29 +-
+ tgui/packages/tgui/routes.js                  |    13 +-
+ tgui/packages/tgui/store.js                   |    27 +-
+ tgui/packages/tgui/stories/Blink.stories.js   |     4 +-
+ tgui/packages/tgui/stories/Box.stories.js     |    32 +-
+ tgui/packages/tgui/stories/Button.stories.js  |    32 +-
+ tgui/packages/tgui/stories/ByondUi.stories.js |    46 +-
+ .../tgui/stories/Collapsible.stories.js       |     6 +-
+ tgui/packages/tgui/stories/Flex.stories.js    |    51 +-
+ tgui/packages/tgui/stories/Input.stories.js   |    53 +-
+ .../tgui/stories/ProgressBar.stories.js       |    16 +-
+ tgui/packages/tgui/stories/Storage.stories.js |    14 +-
+ tgui/packages/tgui/stories/Tabs.stories.js    |   103 +-
+ tgui/packages/tgui/stories/Themes.stories.js  |     3 +-
+ tgui/packages/tgui/stories/Tooltip.stories.js |    11 +-
+ tgui/packages/tgui/stories/common.js          |    11 +-
+ .../tgui/styles/atomic/debug-layout.scss      |     8 +-
+ tgui/packages/tgui/styles/base.scss           |     8 +-
+ tgui/packages/tgui/styles/colors.scss         |    18 +-
+ .../tgui/styles/components/Button.scss        |    28 +-
+ .../tgui/styles/components/Dropdown.scss      |     2 +-
+ .../packages/tgui/styles/components/Icon.scss |     1 -
+ .../packages/tgui/styles/components/Knob.scss |     6 +-
+ .../tgui/styles/components/NoticeBox.scss     |    18 +-
+ .../tgui/styles/components/ProgressBar.scss   |     4 +-
+ .../tgui/styles/components/RoundGauge.scss    |    21 +-
+ .../packages/tgui/styles/components/Tabs.scss |     5 +-
+ .../tgui/styles/components/Telephone.scss     |     2 +-
+ tgui/packages/tgui/styles/functions.scss      |    26 +-
+ .../tgui/styles/interfaces/AlertModal.scss    |     4 +-
+ .../tgui/styles/interfaces/ListInput.scss     |    31 +-
+ .../tgui/styles/interfaces/NuclearBomb.scss   |     8 +-
+ .../tgui/styles/interfaces/Roulette.scss      |     2 +-
+ .../packages/tgui/styles/interfaces/Safe.scss |    12 +-
+ .../tgui/styles/interfaces/Telephone.scss     |     2 +-
+ .../interfaces/WindowsXP/Components.scss      |    22 +-
+ .../styles/interfaces/WindowsXP/Error.scss    |     1 -
+ .../tgui/styles/interfaces/WindowsXP/ICQ.scss |     4 +-
+ .../styles/interfaces/WindowsXP/Notepad.scss  |     4 +-
+ .../styles/interfaces/WindowsXP/System.scss   |    47 +-
+ tgui/packages/tgui/styles/layouts/Layout.scss |    21 +-
+ .../tgui/styles/layouts/TitleBar.scss         |    10 +-
+ tgui/packages/tgui/styles/layouts/Window.scss |     6 +-
+ tgui/packages/tgui/styles/reset.scss          |    17 +-
+ .../packages/tgui/styles/themes/abductor.scss |    63 +-
+ .../tgui/styles/themes/cardtable.scss         |    42 +-
+ .../tgui/styles/themes/hackerman.scss         |    35 +-
+ .../tgui/styles/themes/malfunction.scss       |    63 +-
+ tgui/packages/tgui/styles/themes/neutral.scss |    73 +-
+ tgui/packages/tgui/styles/themes/ntos.scss    |    33 +-
+ tgui/packages/tgui/styles/themes/paper.scss   |    57 +-
+ tgui/packages/tgui/styles/themes/retro.scss   |    39 +-
+ .../tgui/styles/themes/syndicate.scss         |    63 +-
+ tgui/webpack.config.js                        |    21 +-
+ tgui/yarn.lock                                | 10126 ++++++++++------
+ tools/bootstrap/node.bat                      |     0
+ tools/bootstrap/node_.ps1                     |     0
+ tools/bootstrap/python.bat                    |     0
+ tools/bootstrap/python_.ps1                   |     0
+ tools/build/.editorconfig                     |     0
+ tools/build/README.md                         |     0
+ tools/build/build.bat                         |     3 +-
+ tools/build/build.js                          |   567 +-
+ tools/build/juke/index.d.ts                   |   248 +
+ tools/build/juke/index.js                     |  5128 ++++++++
+ tools/build/juke/package.json                 |     4 +
+ tools/build/lib/byond.js                      |   209 +
+ tools/build/lib/winreg.js                     |    42 +
+ tools/build/lib/yarn.js                       |    16 +
+ tools/build/package.json                      |     4 +
+ tools/ci/build.ps1                            |     4 +-
+ tools/ci/check_changelogs.sh                  |     4 +-
+ tools/ci/check_grep.sh                        |   322 +-
+ tools/ci/ci_config.txt                        |     3 +-
+ tools/ci/install_byond.sh                     |     5 +-
+ tools/ci/install_dreamluau.sh                 |     9 +
+ tools/ci/install_node.sh                      |     4 +-
+ tools/ci/install_rust_g.sh                    |     2 +-
+ tools/ci/od_lints.dm                          |    34 +
+ tools/ci/run_server.sh                        |    14 +
+ tools/ci/show_screenshot_test_results.js      |   236 +
+ tools/dm_annotator/__main__.py                |    51 +
+ tools/maplint/README.md                       |   186 +
+ .../maplint/lints/admin_library_computer.yml  |     3 +
+ tools/maplint/lints/apc_pixel_shifts.yml      |     7 +
+ tools/maplint/lints/area_varedits.yml         |     3 +
+ tools/maplint/lints/atmos_var_edits.yml       |     4 +
+ tools/maplint/lints/banned_obj_vars.yml       |     4 +
+ tools/maplint/lints/base_turf.yml             |     2 +
+ tools/maplint/lints/cable_varedits.yml        |     7 +
+ tools/maplint/lints/colorless_decals.yml      |     6 +
+ .../lints/conveyor_cardinal_inversion.yml     |     5 +
+ tools/maplint/lints/custom_icon_helper.yml    |     3 +
+ tools/maplint/lints/docking_port_varedits.yml |     7 +
+ .../lints/door_name_capitalization.yml        |     5 +
+ tools/maplint/lints/grille_stacking.yml       |     7 +
+ tools/maplint/lints/heat_capacity.yml         |     4 +
+ tools/maplint/lints/identical_barricades.yml  |     4 +
+ tools/maplint/lints/identical_cables.yml      |     4 +
+ .../lints/identical_disposal_pipes.yml        |     4 +
+ tools/maplint/lints/identical_pipes.yml       |     4 +
+ tools/maplint/lints/merge_conflict_marker.yml |     5 +
+ tools/maplint/lints/multiple_airlocks.yml     |     3 +
+ tools/maplint/lints/multiple_area.yml         |     3 +
+ tools/maplint/lints/multiple_chairs.yml       |     3 +
+ tools/maplint/lints/multiple_closets.yml      |     3 +
+ tools/maplint/lints/multiple_firelocks.yml    |     3 +
+ tools/maplint/lints/multiple_girders.yml      |     3 +
+ tools/maplint/lints/multiple_grilles.yml      |     3 +
+ tools/maplint/lints/multiple_lattice.yml      |     3 +
+ tools/maplint/lints/multiple_machinery.yml    |     4 +
+ tools/maplint/lints/multiple_stairs.yml       |     3 +
+ tools/maplint/lints/multiple_tables.yml       |     3 +
+ tools/maplint/lints/multiple_turf.yml         |     3 +
+ .../lints/multiple_unary_components.yml       |     3 +
+ tools/maplint/lints/multiple_windows.yml      |     4 +
+ tools/maplint/lints/pixel_varedits.yml        |     4 +
+ tools/maplint/lints/posters_directionals.yml  |     5 +
+ tools/maplint/lints/smartfridges_in_walls.yml |     4 +
+ tools/maplint/lints/stairs_with_genturf.yml   |     4 +
+ tools/maplint/lints/stray_item.yml            |     3 +
+ tools/maplint/lints/telescreen_varedits.yml   |     8 +
+ tools/maplint/lints/wall_stacking.yml         |     5 +
+ tools/maplint/lints/windoor_var_edits.yml     |     6 +
+ tools/maplint/lints/window_pane_varedits.yml  |     5 +
+ tools/maplint/source/__init__.py              |     0
+ tools/maplint/source/__main__.py              |   123 +
+ tools/maplint/source/common.py                |    40 +
+ tools/maplint/source/dmm.py                   |   184 +
+ tools/maplint/source/error.py                 |    28 +
+ tools/maplint/source/lint.py                  |   449 +
+ tools/requirements.txt                        |     2 +-
+ tools/trait_validity/check.py                 |     4 +
+ 491 files changed, 28715 insertions(+), 16197 deletions(-)
+ create mode 100644 BUILD.cmd
+ delete mode 100644 Build.bat
+ delete mode 100644 _maps/runtimestation.json
+ create mode 100644 bin/build.cmd
+ create mode 100644 bin/clean.cmd
+ create mode 100644 bin/server.cmd
+ create mode 100644 bin/test.cmd
+ create mode 100644 bin/tgfont.cmd
+ create mode 100644 bin/tgui-bench.cmd
+ create mode 100644 bin/tgui-build.cmd
+ create mode 100644 bin/tgui-dev.cmd
+ create mode 100644 bin/tgui-sonar.cmd
+ create mode 100644 tgui/.prettierignore
+ create mode 100644 tgui/.prettierrc.yml
+ create mode 100644 tgui/.yarn/releases/yarn-4.5.1.cjs
+ delete mode 100644 tgui/.yarn/sdks/eslint/bin/eslint.js
+ delete mode 100644 tgui/.yarn/sdks/eslint/package.json
+ delete mode 100644 tgui/.yarn/sdks/integrations.yml
+ create mode 100644 tgui/packages/tgui/interfaces/ListInput.js
+ mode change 100644 => 100755 tools/bootstrap/node.bat
+ mode change 100644 => 100755 tools/bootstrap/node_.ps1
+ mode change 100644 => 100755 tools/bootstrap/python.bat
+ mode change 100644 => 100755 tools/bootstrap/python_.ps1
+ mode change 100644 => 100755 tools/build/.editorconfig
+ mode change 100644 => 100755 tools/build/README.md
+ mode change 100644 => 100755 tools/build/build.bat
+ create mode 100644 tools/build/juke/index.d.ts
+ create mode 100644 tools/build/juke/index.js
+ create mode 100644 tools/build/juke/package.json
+ create mode 100644 tools/build/lib/byond.js
+ create mode 100644 tools/build/lib/winreg.js
+ create mode 100644 tools/build/lib/yarn.js
+ create mode 100644 tools/build/package.json
+ create mode 100644 tools/ci/install_dreamluau.sh
+ create mode 100644 tools/ci/od_lints.dm
+ create mode 100644 tools/ci/show_screenshot_test_results.js
+ create mode 100644 tools/dm_annotator/__main__.py
+ create mode 100644 tools/maplint/README.md
+ create mode 100644 tools/maplint/lints/admin_library_computer.yml
+ create mode 100644 tools/maplint/lints/apc_pixel_shifts.yml
+ create mode 100644 tools/maplint/lints/area_varedits.yml
+ create mode 100644 tools/maplint/lints/atmos_var_edits.yml
+ create mode 100644 tools/maplint/lints/banned_obj_vars.yml
+ create mode 100644 tools/maplint/lints/base_turf.yml
+ create mode 100644 tools/maplint/lints/cable_varedits.yml
+ create mode 100644 tools/maplint/lints/colorless_decals.yml
+ create mode 100644 tools/maplint/lints/conveyor_cardinal_inversion.yml
+ create mode 100644 tools/maplint/lints/custom_icon_helper.yml
+ create mode 100644 tools/maplint/lints/docking_port_varedits.yml
+ create mode 100644 tools/maplint/lints/door_name_capitalization.yml
+ create mode 100644 tools/maplint/lints/grille_stacking.yml
+ create mode 100644 tools/maplint/lints/heat_capacity.yml
+ create mode 100644 tools/maplint/lints/identical_barricades.yml
+ create mode 100644 tools/maplint/lints/identical_cables.yml
+ create mode 100644 tools/maplint/lints/identical_disposal_pipes.yml
+ create mode 100644 tools/maplint/lints/identical_pipes.yml
+ create mode 100644 tools/maplint/lints/merge_conflict_marker.yml
+ create mode 100644 tools/maplint/lints/multiple_airlocks.yml
+ create mode 100644 tools/maplint/lints/multiple_area.yml
+ create mode 100644 tools/maplint/lints/multiple_chairs.yml
+ create mode 100644 tools/maplint/lints/multiple_closets.yml
+ create mode 100644 tools/maplint/lints/multiple_firelocks.yml
+ create mode 100644 tools/maplint/lints/multiple_girders.yml
+ create mode 100644 tools/maplint/lints/multiple_grilles.yml
+ create mode 100644 tools/maplint/lints/multiple_lattice.yml
+ create mode 100644 tools/maplint/lints/multiple_machinery.yml
+ create mode 100644 tools/maplint/lints/multiple_stairs.yml
+ create mode 100644 tools/maplint/lints/multiple_tables.yml
+ create mode 100644 tools/maplint/lints/multiple_turf.yml
+ create mode 100644 tools/maplint/lints/multiple_unary_components.yml
+ create mode 100644 tools/maplint/lints/multiple_windows.yml
+ create mode 100644 tools/maplint/lints/pixel_varedits.yml
+ create mode 100644 tools/maplint/lints/posters_directionals.yml
+ create mode 100644 tools/maplint/lints/smartfridges_in_walls.yml
+ create mode 100644 tools/maplint/lints/stairs_with_genturf.yml
+ create mode 100644 tools/maplint/lints/stray_item.yml
+ create mode 100644 tools/maplint/lints/telescreen_varedits.yml
+ create mode 100644 tools/maplint/lints/wall_stacking.yml
+ create mode 100644 tools/maplint/lints/windoor_var_edits.yml
+ create mode 100644 tools/maplint/lints/window_pane_varedits.yml
+ create mode 100644 tools/maplint/source/__init__.py
+ create mode 100644 tools/maplint/source/__main__.py
+ create mode 100644 tools/maplint/source/common.py
+ create mode 100644 tools/maplint/source/dmm.py
+ create mode 100644 tools/maplint/source/error.py
+ create mode 100644 tools/maplint/source/lint.py
+
+diff --git a/.github/workflows/ci_suite.yml b/.github/workflows/ci_suite.yml
+index ef876f23ba4..77ee01ed377 100644
+--- a/.github/workflows/ci_suite.yml
++++ b/.github/workflows/ci_suite.yml
+@@ -115,9 +115,13 @@ jobs:
+         if: steps.linter-setup.conclusion == 'success' && !cancelled()
+         shell: bash
+         run: ~/dreamchecker 2>&1 | bash tools/ci/annotate_dm.sh
++      - name: Run TGUI Checks
++        if: steps.linter-setup.conclusion == 'success' && !cancelled()
++        run: tools/build/build --ci lint tgui-test  # we build tgui here because asset_cache relies on its output
+       - name: Run OpenDream
+         if: steps.linter-setup.conclusion == 'success' && !cancelled()
+-        run: ./DMCompiler_linux-x64/DMCompiler tgstation.dme --suppress-unimplemented --define=CIBUILDING | bash tools/ci/annotate_od.sh
++        run: |
++          ./DMCompiler_linux-x64/DMCompiler tgstation.dme --suppress-unimplemented --define=CIBUILDING | bash tools/ci/annotate_od.sh
+       - name: Run Map Checks
+         if: steps.linter-setup.conclusion == 'success' && !cancelled()
+         run: |
+@@ -139,9 +143,6 @@ jobs:
+       - name: Check Miscellaneous Files
+         if: steps.linter-setup.conclusion == 'success' && !cancelled()
+         run: bash tools/ci/check_misc.sh
+-      - name: Run TGUI Checks
+-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+-        run: tools/build/build --ci lint tgui-test
+ 
+   compile_all_maps:
+     name: Compile Maps
+@@ -151,6 +152,28 @@ jobs:
+ 
+     steps:
+       - uses: actions/checkout@v4
++      - name: Restore Yarn cache
++        uses: actions/cache@v4
++        with:
++          path: tgui/.yarn/cache
++          key: ${{ runner.os }}-yarn-${{ hashFiles('tgui/yarn.lock') }}
++          restore-keys: |
++            ${{ runner.os }}-yarn-
++      - name: Restore Node cache
++        uses: actions/cache@v4
++        with:
++          path: ~/.nvm
++          key: ${{ runner.os }}-node-${{ hashFiles('dependencies.sh') }}
++          restore-keys: |
++            ${{ runner.os }}-node-
++      - name: Restore Bootstrap cache
++        uses: actions/cache@v4
++        with:
++          path: tools/bootstrap/.cache
++          key: ${{ runner.os }}-bootstrap-${{ hashFiles('tools/requirements.txt') }}
++          restore-keys: |
++            ${{ runner.os }}-bootstrap-
++
+       - name: Restore BYOND cache
+         uses: actions/cache@v4
+         with:
+@@ -160,7 +183,7 @@ jobs:
+         run: |
+           bash tools/ci/install_byond.sh
+           source $HOME/BYOND/byond/bin/byondsetup
+-          tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
++          tools/build/build --ci -DCIBUILDING -DCITESTING -DALL_MAPS
+       - name: Check client Compatibility
+         uses: tgstation/byond-client-compatibility-check@v3
+         with:
+@@ -280,6 +303,13 @@ jobs:
+           key: ${{ runner.os }}-yarn-${{ hashFiles('tgui/yarn.lock') }}
+           restore-keys: |
+             ${{ runner.os }}-yarn-
++      - name: Restore tgui cache
++        uses: actions/cache@v4
++        with:
++          path: tgui/public
++          key: ${{ runner.os }}-tgui-${{ hashFiles('tgui/public') }}
++          restore-keys: |
++            ${{ runner.os }}-tgui-
+       - name: Compile
+         run: pwsh tools/ci/build.ps1
+         env:
+diff --git a/.github/workflows/run_integration_tests.yml b/.github/workflows/run_integration_tests.yml
+index 3485b90d474..ce50513100f 100644
+--- a/.github/workflows/run_integration_tests.yml
++++ b/.github/workflows/run_integration_tests.yml
+@@ -59,7 +59,7 @@ jobs:
+         run: |
+           bash tools/ci/install_byond.sh
+           source $HOME/BYOND/byond/bin/byondsetup
+-          tools/build/build --ci dm -DCIBUILDING -DANSICOLORS -Werror -ITG0001 -I"loop_checks"
++          tools/build/build --ci -DCIBUILDING -DANSICOLORS -Werror -ITG0001 -I"loop_checks"
+       - name: Run Tests
+         run: |
+           source $HOME/BYOND/byond/bin/byondsetup
+diff --git a/BUILD.cmd b/BUILD.cmd
+new file mode 100644
+index 00000000000..dc791f60c9b
+--- /dev/null
++++ b/BUILD.cmd
+@@ -0,0 +1,2 @@
++@echo off
++call "%~dp0\tools\build\build.bat" --wait-on-error build %*
+diff --git a/Build.bat b/Build.bat
+deleted file mode 100644
+index dd3a6fd9d98..00000000000
+--- a/Build.bat
++++ /dev/null
+@@ -1,2 +0,0 @@
+-@call tools\build\build
+-@pause
+diff --git a/_maps/runtimestation.json b/_maps/runtimestation.json
+deleted file mode 100644
+index 98c73c5dd55..00000000000
+--- a/_maps/runtimestation.json
++++ /dev/null
+@@ -1,9 +0,0 @@
+-{
+-	"version": 1,
+-	"map_name": "Runtime Station",
+-	"map_path": "map_files/debug",
+-	"map_file": "runtimestation.dmm",
+-	"shuttles": {
+-		"cargo": "cargo_delta"
+-	}
+-}
+diff --git a/bin/build.cmd b/bin/build.cmd
+new file mode 100644
+index 00000000000..98c2ef45e15
+--- /dev/null
++++ b/bin/build.cmd
+@@ -0,0 +1,2 @@
++@echo off
++call "%~dp0\..\tools\build\build.bat" --wait-on-error build %*
+diff --git a/bin/clean.cmd b/bin/clean.cmd
+new file mode 100644
+index 00000000000..8eacd92ebd7
+--- /dev/null
++++ b/bin/clean.cmd
+@@ -0,0 +1,2 @@
++@echo off
++call "%~dp0\..\tools\build\build.bat" --wait-on-error clean-all %*
+diff --git a/bin/server.cmd b/bin/server.cmd
+new file mode 100644
+index 00000000000..c6e6642baf4
+--- /dev/null
++++ b/bin/server.cmd
+@@ -0,0 +1,2 @@
++@echo off
++call "%~dp0\..\tools\build\build.bat" --wait-on-error server %*
+diff --git a/bin/test.cmd b/bin/test.cmd
+new file mode 100644
+index 00000000000..a76a9c6745c
+--- /dev/null
++++ b/bin/test.cmd
+@@ -0,0 +1,2 @@
++@echo off
++call "%~dp0\..\tools\build\build.bat" --wait-on-error dm-test %*
+diff --git a/bin/tgfont.cmd b/bin/tgfont.cmd
+new file mode 100644
+index 00000000000..b768c81d653
+--- /dev/null
++++ b/bin/tgfont.cmd
+@@ -0,0 +1,2 @@
++@echo off
++call "%~dp0\..\tools\build\build.bat" --wait-on-error tg-font %*
+diff --git a/bin/tgui-bench.cmd b/bin/tgui-bench.cmd
+new file mode 100644
+index 00000000000..333115f7954
+--- /dev/null
++++ b/bin/tgui-bench.cmd
+@@ -0,0 +1,3 @@
++@echo off
++call "%~dp0\..\tools\build\build.bat" --wait-on-error tgui-bench %*
++pause
+diff --git a/bin/tgui-build.cmd b/bin/tgui-build.cmd
+new file mode 100644
+index 00000000000..7804fc6daaa
+--- /dev/null
++++ b/bin/tgui-build.cmd
+@@ -0,0 +1,2 @@
++@echo off
++call "%~dp0\..\tools\build\build.bat" --wait-on-error tgui tgui-lint tgui-test %*
+diff --git a/bin/tgui-dev.cmd b/bin/tgui-dev.cmd
+new file mode 100644
+index 00000000000..25ff3495d42
+--- /dev/null
++++ b/bin/tgui-dev.cmd
+@@ -0,0 +1,2 @@
++@echo off
++call "%~dp0\..\tools\build\build.bat" --wait-on-error tgui-dev %*
+diff --git a/bin/tgui-sonar.cmd b/bin/tgui-sonar.cmd
+new file mode 100644
+index 00000000000..e083f65362a
+--- /dev/null
++++ b/bin/tgui-sonar.cmd
+@@ -0,0 +1,2 @@
++@echo off
++call "%~dp0\..\tools\build\build.bat" --wait-on-error tgui-sonar %*
+diff --git a/dependencies.sh b/dependencies.sh
+index 575f5712d3e..9179e20fad4 100644
+--- a/dependencies.sh
++++ b/dependencies.sh
+@@ -11,8 +11,9 @@ export BYOND_MINOR=1645
+ export RUST_G_VERSION=3.5.1
+ 
+ #node version
+-export NODE_VERSION=14
+-export NODE_VERSION_PRECISE=14.16.1
++export NODE_VERSION=18
++export NODE_VERSION_PRECISE=18.12.0
++export NODE_VERSION_LTS=18.12.0
+ 
+ # SpacemanDMM git tag
+ export SPACEMAN_DMM_VERSION=suite-1.9
+@@ -22,3 +23,15 @@ export EXTOOLS_VERSION=v0.0.7
+ 
+ # Python version for mapmerge and other tools
+ export PYTHON_VERSION=3.9.0
++
++#dreamluau repo
++export DREAMLUAU_REPO="tgstation/dreamluau"
++
++#dreamluau git tag
++export DREAMLUAU_VERSION=0.1.2
++
++#hypnagogic repo
++export CUTTER_REPO=spacestation13/hypnagogic
++
++#hypnagogic git tag
++export CUTTER_VERSION=v4.0.0
+diff --git a/tgui/.prettierignore b/tgui/.prettierignore
+new file mode 100644
+index 00000000000..a91324ebe6e
+--- /dev/null
++++ b/tgui/.prettierignore
+@@ -0,0 +1,16 @@
++## NPM
++/**/node_modules
++
++## Yarn
++/.yarn
++/yarn.lock
++/.pnp.*
++
++.swcrc
++/docs
++/public
++/packages/t

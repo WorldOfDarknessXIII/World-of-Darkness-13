@@ -526,17 +526,10 @@
 		if(get_dist(src, CPN.walktarget) <= getaway)
 			walk(src,0)
 			CPN.walktarget = null
-//		for(var/obj/effect/decal/cleanable/blood/B in NewLoc)
-//			if(B)
-//				if(B.bloodiness)
-//					walk(src,0)
-//					CPN.walktarget = null
-//					if(!CPN.CheckMove())
-//						step_away(CPN, B)
 	if(HAS_TRAIT(src, TRAIT_RUBICON))
 		if(istype(NewLoc, /turf/open/floor/plating/shit))
 			return
-	..()
+	. = ..()
 
 
 /mob/living/carbon/human/toggle_resting()

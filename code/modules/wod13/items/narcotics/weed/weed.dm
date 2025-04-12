@@ -9,5 +9,7 @@
 	foodtypes = VEGETABLES
 	food_reagents = list(/datum/reagent/drug/cannabis = 20, /datum/reagent/toxin/lipolicide = 20)
 	eat_time = 10
-	illegal = TRUE
-	cost = 50
+
+/obj/item/food/vampire/weed/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/selling, 50, "weed", TRUE, -1, 7)

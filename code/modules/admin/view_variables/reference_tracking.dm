@@ -32,7 +32,7 @@ GLOBAL_LIST_EMPTY(deletion_failures)
 
 	var/list/frontrefs = get_forward_references(D)
 	var/list/dat = list()
-	dat += "<h1>References of \ref[D] - [D]</h1><br><a href='?_src_=vars;[HrefToken()];[VV_HK_VIEW_REFERENCES]=TRUE;[VV_HK_TARGET]=[REF(D)]'>\[Refresh\]</a><hr>"
+	dat += "<h1>References of \ref[D] - [D]</h1><br><a href='byond://?_src_=vars;[HrefToken()];[VV_HK_VIEW_REFERENCES]=TRUE;[VV_HK_TARGET]=[REF(D)]'>\[Refresh\]</a><hr>"
 	dat += "<h3>Back references - these things hold references to this object.</h3>"
 	dat += "<table>"
 	dat += "<tr><th>Ref</th><th>Type</th><th>Variable Name</th><th>Follow</th>"
@@ -41,9 +41,9 @@ GLOBAL_LIST_EMPTY(deletion_failures)
 		if(isnull(backreference))
 			dat += "<tr><td>GC'd Reference</td></tr>"
 		if(istype(backreference))
-			dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=[REF(backreference)]'>[REF(backreference)]</td><td>[backreference.type]</td><td>[backrefs[backreference]]</td><td><a href='?_src_=vars;[HrefToken()];[VV_HK_VIEW_REFERENCES]=TRUE;[VV_HK_TARGET]=[REF(backreference)]'>\[Follow\]</a></td></tr>"
+			dat += "<tr><td><a href='byond://?_src_=vars;[HrefToken()];Vars=[REF(backreference)]'>[REF(backreference)]</td><td>[backreference.type]</td><td>[backrefs[backreference]]</td><td><a href='byond://?_src_=vars;[HrefToken()];[VV_HK_VIEW_REFERENCES]=TRUE;[VV_HK_TARGET]=[REF(backreference)]'>\[Follow\]</a></td></tr>"
 		else if(islist(backreference))
-			dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=[REF(backreference)]'>[REF(backreference)]</td><td>list</td><td>[backrefs[backreference]]</td><td><a href='?_src_=vars;[HrefToken()];[VV_HK_VIEW_REFERENCES]=TRUE;[VV_HK_TARGET]=[REF(backreference)]'>\[Follow\]</a></td></tr>"
+			dat += "<tr><td><a href='byond://?_src_=vars;[HrefToken()];Vars=[REF(backreference)]'>[REF(backreference)]</td><td>list</td><td>[backrefs[backreference]]</td><td><a href='byond://?_src_=vars;[HrefToken()];[VV_HK_VIEW_REFERENCES]=TRUE;[VV_HK_TARGET]=[REF(backreference)]'>\[Follow\]</a></td></tr>"
 		else
 			dat += "<tr><td>Weird reference type. Add more debugging checks.</td></tr>"
 	dat += "</table><hr>"
@@ -52,7 +52,7 @@ GLOBAL_LIST_EMPTY(deletion_failures)
 	dat += "<tr><th>Variable name</th><th>Ref</th><th>Type</th><th>Follow</th>"
 	for(var/ref in frontrefs)
 		var/datum/backreference = frontrefs[ref]
-		dat += "<tr><td>[ref]</td><td><a href='?_src_=vars;[HrefToken()];Vars=[REF(backreference)]'>[REF(backreference)]</a></td><td>[backreference.type]</td><td><a href='?_src_=vars;[HrefToken()];[VV_HK_VIEW_REFERENCES]=TRUE;[VV_HK_TARGET]=[REF(backreference)]'>\[Follow\]</a></td></tr>"
+		dat += "<tr><td>[ref]</td><td><a href='byond://?_src_=vars;[HrefToken()];Vars=[REF(backreference)]'>[REF(backreference)]</a></td><td>[backreference.type]</td><td><a href='byond://?_src_=vars;[HrefToken()];[VV_HK_VIEW_REFERENCES]=TRUE;[VV_HK_TARGET]=[REF(backreference)]'>\[Follow\]</a></td></tr>"
 	dat += "</table><hr>"
 	dat = dat.Join()
 
@@ -197,19 +197,19 @@ GLOBAL_LIST_EMPTY(deletion_failures)
 			var/variable = vars_list[varname]
 
 			if(variable == src)
-				testing("Found [type] \ref[src] in [datum_container.type]'s [varname] var. [container_name]")
+				testing("Found [type] [FAST_REF(src)] in [datum_container.type]'s [FAST_REF(datum_container)] [varname] var. [container_name]")
 
 			else if(islist(variable))
-				DoSearchVar(variable, "[container_name] -> list", recursive_limit - 1)
+				DoSearchVar(variable, "[container_name] [FAST_REF(datum_container)] -> [varname] (list)", recursive_limit - 1)
 
 	else if(islist(potential_container))
 		var/normal = IS_NORMAL_LIST(potential_container)
 		for(var/element_in_list in potential_container)
 			if(element_in_list == src)
-				testing("Found [type] \ref[src] in list [container_name].")
+				testing("Found [type] [FAST_REF(src)] in list [container_name].")
 
 			else if(element_in_list && !isnum(element_in_list) && normal && potential_container[element_in_list] == src)
-				testing("Found [type] \ref[src] in list [container_name]\[[element_in_list]\]")
+				testing("Found [type] [FAST_REF(src)] in list [container_name]\[[element_in_list]\]")
 
 			else if(islist(element_in_list))
 				DoSearchVar(element_in_list, "[container_name] -> list", recursive_limit - 1)
@@ -220,7 +220,10 @@ GLOBAL_LIST_EMPTY(deletion_failures)
 
 
 /proc/qdel_and_find_ref_if_fail(datum/thing_to_del, force = FALSE)
-	SSgarbage.reference_find_on_fail[REF(thing_to_del)] = TRUE
-	qdel(thing_to_del, force)
+	thing_to_del.qdel_and_find_ref_if_fail(force)
+
+/datum/proc/qdel_and_find_ref_if_fail(force = FALSE)
+	SSgarbage.reference_find_on_fail[FAST_REF(src)] = TRUE
+	qdel(src, force)
 
 #endif

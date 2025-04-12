@@ -18,7 +18,10 @@
 	resistance_flags = NONE
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
 	body_worn = TRUE
-	cost = 15
+
+/obj/item/clothing/suit/vampire/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 15, "suit", FALSE)
 
 /obj/item/clothing/suit/vampire/trench/malkav
 	icon_state = "malkav_coat"
@@ -428,7 +431,10 @@
 	resistance_flags = NONE
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 10, WOUND = 10)
 	body_worn = TRUE
-	cost = 15
+
+/obj/item/clothing/suit/pentex/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 15, "suit", FALSE)
 
 /obj/item/clothing/suit/pentex/pentex_labcoat
 	name = "Endron labcoat"

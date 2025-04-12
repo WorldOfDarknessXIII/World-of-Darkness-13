@@ -172,7 +172,7 @@
 	if(stage == END_STAGE)
 		return 1
 	stage = END_STAGE
-	STOP_PROCESSING(SSweather, src)
+	//STOP_PROCESSING(SSweather, src)
 	update_areas()
 
 /**

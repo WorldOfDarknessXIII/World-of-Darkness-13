@@ -97,6 +97,11 @@
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 
+/obj/structure/window/MouseDrop_T(atom/dropping, mob/user)
+	. = ..()
+
+	LoadComponent(/datum/component/leanable, dropping)
+
 /obj/structure/window/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(.)

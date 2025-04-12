@@ -2,8 +2,6 @@
 	name = "ears"
 	icon_state = "ears"
 	desc = "There are three parts to the ear. Inner, middle and outer. Only one of these parts should be normally visible."
-	illegal = TRUE
-	cost = 100
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EARS
 	gender = PLURAL
@@ -28,6 +26,10 @@
 	var/bang_protect = 0
 	// Multiplier for both long term and short term ear damage
 	var/damage_multiplier = 1
+
+/obj/item/organ/ears/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling/organ, 100, "organ", TRUE, -1, 0)
 
 /obj/item/organ/ears/on_life()
 	// only inform when things got worse, needs to happen before we heal

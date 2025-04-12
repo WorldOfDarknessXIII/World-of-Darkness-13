@@ -286,4 +286,7 @@
 	COOLDOWN_DECLARE(chi_restore)
 	var/datum/action/chi_discipline/chi_ranged
 
+	//If we are currently leaning on something, and what that object is
+	var/atom/leaned_object
+
 	var/list/datum/splat/splats

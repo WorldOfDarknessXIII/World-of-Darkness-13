@@ -5,5 +5,7 @@
 	icon = 'code/modules/wod13/items.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	onflooricon = 'code/modules/wod13/onfloor.dmi'
-	illegal = TRUE
-	cost = 150
+
+/obj/item/weedpack/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/selling, 150, "weed_pack", TRUE, -1, 7)

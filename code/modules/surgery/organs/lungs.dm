@@ -3,8 +3,6 @@
 	var/operated = FALSE	//whether we can still have our damages fixed through surgery
 	name = "lungs"
 	icon_state = "lungs"
-	illegal = TRUE
-	cost = 450
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LUNGS
 	gender = PLURAL
@@ -77,6 +75,9 @@
 
 	var/crit_stabilizing_reagent = /datum/reagent/medicine/epinephrine
 
+/obj/item/organ/lungs/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling/organ, 450, "organ", TRUE, -1, 0)
 
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 	if(H.status_flags & GODMODE)

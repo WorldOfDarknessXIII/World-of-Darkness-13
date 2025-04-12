@@ -40,9 +40,12 @@
 	internal_magazine = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT
 	tac_reloads = FALSE
-	cost = 25
 	var/spin_delay = 10
 	var/recent_spin = 0
+
+/obj/item/gun/ballistic/vampire/revolver/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 25, "revolver", FALSE)
 
 /obj/item/gun/ballistic/vampire/revolver/chamber_round(keep_bullet, spin_cylinder = TRUE, replace_new_round)
 	if(!magazine) //if it mag was qdel'd somehow.
@@ -114,7 +117,10 @@
 	initial_caliber = CALIBER_9MM
 	fire_sound_volume = 65
 	projectile_damage_multiplier = 1.2 //21.6 damage, slightly higher than the m1911, just so it is possible to kill NPCs within 6 bullets
-	cost = 20
+
+/obj/item/gun/ballistic/vampire/revolver/snub/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 20, "revolver_snub", FALSE)
 
 /obj/item/ammo_box/magazine/internal/cylinder/rev9mm
 	name = "revolver cylinder"
@@ -159,7 +165,10 @@
 	lock_back_sound = 'sound/weapons/gun/pistol/lock_small.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
 	fire_sound_volume = 75
-	cost = 75
+
+/obj/item/gun/ballistic/automatic/vampire/deagle/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 75, "deagle", FALSE)
 
 /obj/item/ammo_box/magazine/m50
 	name = "handgun magazine (.50)"
@@ -219,7 +228,10 @@
 	lock_back_sound = 'sound/weapons/gun/pistol/lock_small.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
 	fire_sound_volume = 100
-	cost = 55
+
+/obj/item/gun/ballistic/automatic/vampire/m1911/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 55, "colt1911", FALSE)
 
 /obj/item/ammo_box/magazine/glock9mm
 	name = "automatic pistol magazine (9mm)"
@@ -257,7 +269,10 @@
 	lock_back_sound = 'sound/weapons/gun/pistol/lock_small.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
 	fire_sound_volume = 100
-	cost = 70
+
+/obj/item/gun/ballistic/automatic/vampire/glock19/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 70, "glock19", FALSE)
 
 /obj/item/ammo_box/magazine/glock45acp
 	name = "automatic pistol magazine (.45 ACP)"
@@ -295,7 +310,10 @@
 	lock_back_sound = 'sound/weapons/gun/pistol/lock_small.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
 	fire_sound_volume = 100
-	cost = 150
+
+/obj/item/gun/ballistic/automatic/vampire/glock21/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 150, "glock21", FALSE)
 
 /obj/item/gun/ballistic/automatic/vampire/beretta
 	name = "\improper Elite 92G"
@@ -321,7 +339,10 @@
 	lock_back_sound = 'sound/weapons/gun/pistol/lock_small.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
 	fire_sound_volume = 75
-	cost = 70
+
+/obj/item/gun/ballistic/automatic/vampire/beretta/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 70, "beretta", FALSE)
 
 /obj/item/gun/ballistic/automatic/vampire/beretta/toreador
 	name = "\improper Sword Series S 9mm"
@@ -331,7 +352,10 @@
 	worn_icon_state = "beretta"
 	projectile_damage_multiplier = 2.5
 	fire_sound_volume = 110
-	cost = 666
+
+/obj/item/gun/ballistic/automatic/vampire/beretta/toreador/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 666, "toreador_beretta", FALSE)
 
 /obj/item/ammo_box/magazine/semi9mm
 	name = "pistol magazine (9mm)"
@@ -378,7 +402,10 @@
 	mag_display = TRUE
 	rack_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
 	fire_sound = 'code/modules/wod13/sounds/uzi.ogg'
-	cost = 175
+
+/obj/item/gun/ballistic/automatic/vampire/uzi/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 175, "uzi", FALSE)
 
 /obj/item/ammo_box/magazine/vamp9mp5
 	name = "mp5 magazine (9mm)"
@@ -408,7 +435,10 @@
 	mag_display = TRUE
 	rack_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
 	fire_sound = 'code/modules/wod13/sounds/mp5.ogg'
-	cost = 200
+
+/obj/item/gun/ballistic/automatic/vampire/mp5/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 200, "mp5", FALSE)
 
 /obj/item/ammo_box/magazine/vamp556
 	name = "carbine magazine (5.56mm)"
@@ -445,7 +475,10 @@
 	mag_display = TRUE
 	fire_sound = 'code/modules/wod13/sounds/rifle.ogg'
 	masquerade_violating = TRUE
-	cost = 250
+
+/obj/item/gun/ballistic/automatic/vampire/ar15/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 75, "ar15", FALSE)
 
 /obj/item/gun/ballistic/automatic/vampire/huntrifle
 	name = "hunting rifle"
@@ -464,7 +497,10 @@
 	mag_display = TRUE
 	fire_sound = 'code/modules/wod13/sounds/rifle.ogg'
 	masquerade_violating = FALSE
-	cost = 150
+
+/obj/item/gun/ballistic/automatic/vampire/huntrifle/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 70, "hunting_rifle", FALSE)
 
 /obj/item/ammo_box/magazine/vamp545
 	name = "rifle magazine (5.45mm)"
@@ -497,7 +533,10 @@
 	mag_display = TRUE
 	fire_sound = 'code/modules/wod13/sounds/ak.ogg'
 	masquerade_violating = TRUE
-	cost = 225
+
+/obj/item/gun/ballistic/automatic/vampire/ak74/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 225, "ak74", FALSE)
 
 /obj/item/ammo_box/magazine/vampaug
 	name = "AUG magazine (5.56mm)"
@@ -529,8 +568,11 @@
 	mag_display = TRUE
 	fire_sound = 'code/modules/wod13/sounds/rifle.ogg'
 	masquerade_violating = TRUE
-	cost = 350
 	is_iron = FALSE
+
+/obj/item/gun/ballistic/automatic/vampire/aug/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 350, "aug", FALSE)
 
 /obj/item/ammo_box/magazine/vampthompson
 	name = "tommy gun magazine (.45 ACP)"
@@ -563,7 +605,10 @@
 	mag_display = TRUE
 	fire_sound = 'code/modules/wod13/sounds/thompson.ogg'
 	masquerade_violating = TRUE
-	cost = 250
+
+/obj/item/gun/ballistic/automatic/vampire/thompson/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 250, "thompson", FALSE)
 
 /obj/item/ammo_box/magazine/internal/vampire/sniper
 	name = "sniper rifle internal magazine"
@@ -602,7 +647,10 @@
 	projectile_damage_multiplier = 2 //140 damage. Nice.
 	actions_types = list()
 	masquerade_violating = TRUE
-	cost = 250
+
+/obj/item/gun/ballistic/automatic/vampire/sniper/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 75, "sniper", FALSE)
 
 /obj/item/ammo_box/magazine/internal/vampshotgun
 	name = "shotgun internal magazine"
@@ -666,7 +714,10 @@
 	projectile_damage_multiplier = 0.9
 	masquerade_violating = TRUE
 	recoil = 6
-	cost = 500
+
+/obj/item/gun/ballistic/automatic/vampire/autoshotgun/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 75, "autoshotgun", FALSE)
 
 /obj/item/gun/ballistic/shotgun/toy/crossbow/vampire
 	name = "crossbow"

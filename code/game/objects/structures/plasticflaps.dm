@@ -56,15 +56,15 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/plasticflaps/CanAStarPass(ID, to_dir, caller)
-	if(isliving(caller))
-		if(isbot(caller))
+/obj/structure/plasticflaps/CanAStarPass(ID, to_dir, pathfinding_atom)
+	if(isliving(pathfinding_atom))
+		if(isbot(pathfinding_atom))
 			return TRUE
 
-		var/mob/living/M = caller
+		var/mob/living/M = pathfinding_atom
 		if(!M.ventcrawler && M.mob_size != MOB_SIZE_TINY)
 			return FALSE
-	var/atom/movable/M = caller
+	var/atom/movable/M = pathfinding_atom
 	if(M?.pulling)
 		return CanAStarPass(ID, to_dir, M.pulling)
 	return TRUE //diseases, stings, etc can pass

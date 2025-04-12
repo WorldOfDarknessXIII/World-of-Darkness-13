@@ -197,3 +197,6 @@ config/dbconfig.txt
 #tgs_test thats generated @ obj & bin
 /tools/tgs_test/obj*
 /tools/tgs_test/bin*
+
+# User environment setup for building with specific versions of BYOND
+/tools/build/dm_versions.json
