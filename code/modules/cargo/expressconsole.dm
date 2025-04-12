@@ -114,7 +114,7 @@
 		))
 
 /obj/machinery/computer/cargo/express/ui_interact(mob/living/user, datum/tgui/ui)
-	if (is_kindred(user)?.clan.name == "Lasombra")
+	if (HAS_TRAIT(user, TRAIT_REJECTED_BY_TECHNOLOGY))
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)

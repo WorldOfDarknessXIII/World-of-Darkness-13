@@ -7,7 +7,6 @@
 		/datum/discipline/fortitude,
 		/datum/discipline/necromancy
 	)
-	violating_appearance = FALSE
 	alt_sprite = "rotten1"
 	alt_sprite_greyscale = TRUE
 

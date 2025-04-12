@@ -7,8 +7,7 @@
 		if(H.clan.name == "Ventrue")
 			var/obj/item/stack/dollar/hundred/HUN = new(H.loc)
 			for(var/obj/item/storage/backpack/B in H)
-				if(B)
-					HUN.forceMove(B)
+				HUN.forceMove(B)
 
 	var/obj/item/storage/backpack/b = locate() in H
 	if(b)

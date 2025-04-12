@@ -7,6 +7,7 @@
 		/datum/discipline/fortitude,
 		/datum/discipline/presence
 	)
+	clan_traits = list(TRAIT_FEEDING_RESTRICTION)
 	male_clothes = /obj/item/clothing/under/vampire/ventrue
 	female_clothes = /obj/item/clothing/under/vampire/ventrue/female
 	clan_keys = /obj/item/vamp/keys/ventrue

@@ -42,10 +42,6 @@
 		if(!host.real_name)
 			dat += "Unknown,"
 		dat += " [host.auspice.tribe] [host.auspice.base_breed]"
-//		if(host.clan)
-//			dat += " the [host.clan.name]"
-//		if(!host.clan)
-//			dat += " the caitiff"
 
 		if(host.mind)
 
@@ -96,7 +92,6 @@
 
 /datum/species/garou/on_species_gain(mob/living/carbon/human/C)
 	. = ..()
-//	ADD_TRAIT(C, TRAIT_NOBLEED, HIGHLANDER)
 	C.update_body(0)
 	C.last_experience = world.time + 5 MINUTES
 	var/datum/action/garouinfo/infor = new()
@@ -114,8 +109,7 @@
 	UnregisterSignal(C.transformator.lupus_form, COMSIG_MOB_VAMPIRE_SUCKED)
 	UnregisterSignal(C.transformator.crinos_form, COMSIG_MOB_VAMPIRE_SUCKED)
 	for(var/datum/action/garouinfo/VI in C.actions)
-		if(VI)
-			VI.Remove(C)
+		VI.Remove(C)
 
 /datum/species/garou/check_roundstart_eligible()
 	return FALSE

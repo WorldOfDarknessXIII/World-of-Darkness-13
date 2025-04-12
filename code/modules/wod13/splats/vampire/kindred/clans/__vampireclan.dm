@@ -35,35 +35,44 @@ And it also helps for the character set panel
 	var/current_accessory
 	var/clan_keys //Keys to your hideout
 
-/datum/vampireclan/proc/on_gain(mob/living/carbon/human/H)
+/datum/vampireclan/proc/on_gain(mob/living/carbon/human/vampire)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(length(accessories))
-		if(current_accessory)
-			H.remove_overlay(accessories_layers[current_accessory])
+	for (var/trait in clan_traits)
+		ADD_TRAIT(vampire, trait, CLAN_TRAIT)
+
+	if (length(accessories))
+		if (current_accessory)
+			vampire.remove_overlay(accessories_layers[current_accessory])
 			var/mutable_appearance/acc_overlay = mutable_appearance('code/modules/wod13/icons.dmi', current_accessory, -accessories_layers[current_accessory])
-			H.overlays_standing[accessories_layers[current_accessory]] = acc_overlay
-			H.apply_overlay(accessories_layers[current_accessory])
+			vampire.overlays_standing[accessories_layers[current_accessory]] = acc_overlay
+			vampire.apply_overlay(accessories_layers[current_accessory])
 
-	if(alt_sprite)
+	if (alt_sprite)
 		if (!alt_sprite_greyscale)
-			H.skin_tone = "albino"
-		H.dna.species.limbs_id = alt_sprite
-		H.update_body_parts()
-		H.update_body()
-		H.update_icon()
+			vampire.skin_tone = "albino"
+		vampire.dna.species.limbs_id = alt_sprite
+		vampire.update_body_parts()
+		vampire.update_body()
+		vampire.update_icon()
 
-/datum/vampireclan/proc/post_gain(mob/living/carbon/human/H)
+	if (clan_keys)
+		vampire.put_in_r_hand(new clan_keys(vampire))
+
+/datum/vampireclan/proc/on_loss(mob/living/carbon/human/vampire)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(violating_appearance && H.roundstart_vampire)
-		if(length(GLOB.masquerade_latejoin))
+	for (var/trait in clan_traits)
+		REMOVE_TRAIT(vampire, trait, CLAN_TRAIT)
+
+/datum/vampireclan/proc/post_gain(mob/living/carbon/human/vampire)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if ((TRAIT_MASQUERADE_VIOLATING_FACE in clan_traits) && vampire.roundstart_vampire)
+		if (length(GLOB.masquerade_latejoin))
 			var/obj/effect/landmark/latejoin_masquerade/LM = pick(GLOB.masquerade_latejoin)
 			if(LM)
-				H.forceMove(LM.loc)
-
-	if(clan_keys)
-		H.put_in_r_hand(new clan_keys(H))
+				vampire.forceMove(LM.loc)
 
 /mob/living/carbon
 	var/datum/relationship/Myself

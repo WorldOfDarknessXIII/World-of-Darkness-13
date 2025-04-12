@@ -733,7 +733,7 @@ SUBSYSTEM_DEF(job)
 		destination = pick(latejoin_trackers)
 
 		var/datum/splat/vampire/kindred/vampirism = is_kindred(M)
-		if (vampirism.clan.violating_appearance)
+		if (TRAIT_MASQUERADE_VIOLATING_FACE in vampirism.clan.clan_traits)
 			destination = pick(GLOB.masquerade_latejoin)
 
 		var/datum/splat/werewolf/garou/lycanthropy = is_garou(M)

@@ -38,8 +38,7 @@
 		update_light()
 
 /obj/item/flashlight/attack_self(mob/user)
-	var/datum/splat/vampire/kindred/vampirism = is_kindred(user)
-	if (vampirism?.clan.type == /datum/vampireclan/lasombra)
+	if (HAS_TRAIT(user, TRAIT_REJECTED_BY_TECHNOLOGY))
 		return
 
 	..()

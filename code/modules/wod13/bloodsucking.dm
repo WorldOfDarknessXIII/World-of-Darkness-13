@@ -3,11 +3,11 @@
 	var/mutable_appearance/bite_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "bite", -BITE_LAYER)
 	overlays_standing[BITE_LAYER] = bite_overlay
 	apply_overlay(BITE_LAYER)
-	spawn(15)
+	spawn(1.5 SECONDS)
 		if(src)
 			remove_overlay(BITE_LAYER)
 
-/proc/get_needed_difference_between_numbers(var/number1, var/number2)
+/proc/get_needed_difference_between_numbers(number1, number2)
 	if(number1 > number2)
 		return number1 - number2
 	else if(number1 < number2)
@@ -15,7 +15,7 @@
 	else
 		return 1
 
-/mob/living/carbon/human/proc/drinksomeblood(var/mob/living/mob)
+/mob/living/carbon/human/proc/drinksomeblood(mob/living/mob)
 	last_drinkblood_use = world.time
 	if(client)
 		client.images -= suckbar
@@ -47,28 +47,22 @@
 			log_attack("[key_name(src)] is attempting to Diablerize [key_name(mob)].")
 			if(mob.key)
 				var/vse_taki = FALSE
-				if(clan)
-					var/salubri_allowed = FALSE
-					var/mob/living/carbon/human/H = mob
-					if(H.clan)
-						if(H.clan.name == "Salubri")
-							salubri_allowed = TRUE
-					if(clan.name != "Banu Haqim" && clan.name != "Caitiff")
-						if(!salubri_allowed)
-							if(!mind.special_role)
-								to_chat(src, "<span class='warning'>You find the idea of drinking your own <b>KIND's</b> blood disgusting!</span>")
-								last_drinkblood_use = 0
-								if(client)
-									client.images -= suckbar
-								qdel(suckbar)
-								stop_sound_channel(CHANNEL_BLOOD)
-								return
-							else
-								vse_taki = TRUE
+				if (!HAS_TRAIT(src, TRAIT_CAN_DIABLERIZE))
+					if (!HAS_TRAIT(mob, TRAIT_IRRESISTIBLE_VITAE))
+						if (!mind.special_role)
+							to_chat(src, span_warning("You find the idea of drinking your own <b>KIND's</b> blood disgusting!"))
+							last_drinkblood_use = 0
+							if(client)
+								client.images -= suckbar
+							qdel(suckbar)
+							stop_sound_channel(CHANNEL_BLOOD)
+							return
 						else
 							vse_taki = TRUE
 					else
 						vse_taki = TRUE
+				else
+					vse_taki = TRUE
 
 				if(!GLOB.canon_event)
 					to_chat(src, "<span class='warning'>It's not a canon event!</span>")
@@ -83,10 +77,11 @@
 				to_chat(src, "<span class='warning'>You need [mob]'s attention to do that...</span>")
 				return
 
-	if(!HAS_TRAIT(src, TRAIT_BLOODY_LOVER))
+	if (!HAS_TRAIT(src, TRAIT_BLOODY_LOVER))
 		if(CheckEyewitness(src, src, 7, FALSE))
 			AdjustMasquerade(-1)
-	if(do_after(src, 30, target = mob, timed_action_flags = NONE, progress = FALSE))
+
+	if (do_after(src, 3 SECONDS, target = mob, timed_action_flags = NONE, progress = FALSE))
 		mob.bloodpool = max(0, mob.bloodpool-1)
 		suckbar.icon_state = "[round(14*(mob.bloodpool/mob.maxbloodpool))]"
 		if(ishuman(mob))
@@ -112,26 +107,30 @@
 				if(length(H.reagents.reagent_list))
 					if(prob(50))
 						H.reagents.trans_to(src, min(10, H.reagents.total_volume), transfered_by = mob, methods = VAMPIRE)
-		if(clan)
-			if(clan.name == "Giovanni")
-				mob.adjustBruteLoss(20, TRUE)
-			if(clan.name == "Ventrue" && mob.bloodquality < BLOOD_QUALITY_NORMAL)	//Ventrue can suck on normal people, but not homeless people and animals. BLOOD_QUALITY_LOV - 1, BLOOD_QUALITY_NORMAL - 2, BLOOD_QUALITY_HIGH - 3. Blue blood gives +1 to suction
-				to_chat(src, "<span class='warning'>You are too privileged to drink that awful <b>BLOOD</b>. Go get something better.</span>")
-				visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
-				playsound(get_turf(src), 'code/modules/wod13/sounds/vomit.ogg', 75, TRUE)
-				if(isturf(loc))
-					add_splatter_floor(loc)
-				stop_sound_channel(CHANNEL_BLOOD)
-				if(client)
-					client.images -= suckbar
-				qdel(suckbar)
-				return
+
+		if (HAS_TRAIT(src, TRAIT_PAINFUL_VAMPIRE_KISS))
+			mob.adjustBruteLoss(20, TRUE)
+			to_chat(mob, span_userdanger("IT HURTS!"))
+
+		if (HAS_TRAIT(src, TRAIT_FEEDING_RESTRICTION) && mob.bloodquality < BLOOD_QUALITY_NORMAL)	//Ventrue can suck on normal people, but not homeless people and animals. BLOOD_QUALITY_LOV - 1, BLOOD_QUALITY_NORMAL - 2, BLOOD_QUALITY_HIGH - 3. Blue blood gives +1 to suction
+			to_chat(src, span_warning("You are too privileged to drink that awful <b>BLOOD</b>. Go get something better."))
+			visible_message(span_danger("[src] throws up!"), span_userdanger("You throw up!"))
+			playsound(get_turf(src), 'code/modules/wod13/sounds/vomit.ogg', 75, TRUE)
+			if(isturf(loc))
+				add_splatter_floor(loc)
+			stop_sound_channel(CHANNEL_BLOOD)
+			if(client)
+				client.images -= suckbar
+			qdel(suckbar)
+			return
+
 		if(is_kindred(mob))
 			to_chat(src, "<span class='userlove'>[mob]'s blood tastes HEAVENLY...</span>")
 			adjustBruteLoss(-25, TRUE)
 			adjustFireLoss(-25, TRUE)
 		else
 			to_chat(src, "<span class='warning'>You sip some <b>BLOOD</b> from your victim. It feels good.</span>")
+
 		bloodpool = min(maxbloodpool, bloodpool+1*max(1, mob.bloodquality-1))
 		adjustBruteLoss(-10, TRUE)
 		adjustFireLoss(-10, TRUE)
@@ -173,12 +172,6 @@
 							death()
 							if(P)
 								P.reason_of_death = "Failed the Diablerie ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
-//							ghostize(FALSE)
-//							key = K.key
-//							generation = K.generation
-//							maxHealth = initial(maxHealth)+100*(13-generation)
-//							health = initial(health)+100*(13-generation)
-//							mob.death()
 						else
 							message_admins("[ADMIN_LOOKUPFLW(src)] successfully Diablerized [ADMIN_LOOKUPFLW(mob)]")
 							log_attack("[key_name(src)] successfully Diablerized [key_name(mob)].")
@@ -211,7 +204,6 @@
 						Npc.last_attacker = null
 						killed_count = killed_count+1
 						if(killed_count >= 5)
-//							GLOB.fuckers |= src
 							SEND_SOUND(src, sound('code/modules/wod13/sounds/humanity_loss.ogg', 0, 0, 75))
 							to_chat(src, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
 					SEND_SOUND(src, sound('code/modules/wod13/sounds/feed_failed.ogg', 0, 0, 75))

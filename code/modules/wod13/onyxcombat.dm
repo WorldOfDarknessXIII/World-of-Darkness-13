@@ -296,7 +296,6 @@
 /atom/movable/screen/drinkblood
 	name = "Drink Blood"
 	icon = 'code/modules/wod13/disciplines.dmi'
-//	icon_state = "drink"
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 

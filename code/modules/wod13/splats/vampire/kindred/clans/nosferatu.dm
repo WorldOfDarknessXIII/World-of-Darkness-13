@@ -8,8 +8,9 @@
 		/datum/discipline/potence,
 		/datum/discipline/obfuscate
 	)
-
-	violating_appearance = TRUE
+	clan_traits = list(
+		TRAIT_MASQUERADE_VIOLATING_FACE
+	)
 	male_clothes = /obj/item/clothing/under/vampire/nosferatu
 	female_clothes = /obj/item/clothing/under/vampire/nosferatu/female
 	accessories = list("nosferatu_ears", "none")

@@ -200,7 +200,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/splat
 
 	// Vampire preferences
-	var/clan = /datum/vampireclan/brujah
+	var/datum/vampireclan/clan = /datum/vampireclan/brujah
 
 	var/diablerist = FALSE
 
@@ -212,12 +212,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/enlightenment = FALSE
 	var/humanity = 7
 
-	var/clane_accessory
+	var/clan_accessory
 
 	// Garou preferences
 	var/breed = "Homid"
 	var/tribe = "Wendigo"
-	var/auspice = /datum/auspice/ahroun
+	var/datum/auspice/auspice = /datum/auspice/ahroun
 	var/werewolf_color = "black"
 	var/werewolf_scar = 0
 	var/werewolf_hair = 0
@@ -425,7 +425,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(!slotlocked)
 						dat += "<a href='byond://?_src_=prefs;preference=pathof;task=input'>Switch Path</a><BR>"
 					var/generation_allowed = TRUE
-					if(clane?.name == "Caitiff")
+					if(clan?.name == "Caitiff")
 						generation_allowed = FALSE
 					if(generation_allowed)
 						if(generation_bonus)
@@ -485,7 +485,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Power:</b> •[werewolf_level > 1 ? "•" : "o"][werewolf_level > 2 ? "•" : "o"]([werewolf_level])"
 				if(true_experience >= 10*werewolf_level && werewolf_level != 3)
 					dat += "<a href='byond://?_src_=prefs;preference=werewolf_level;task=input'>Increase ([10*werewolf_level])</a>"
-				dat += "<b>Initial Rage:</b> •[auspice::start_rage > 1 ? "•" : "o"][auspice::start_rage > 2 ? "•" : "o"][auspice::start_rage > 3 ? "•" : "o"][auspice::start_rage > 4 ? "•" : "o"]([auspice::start_rage])<BR>"
+				dat += "<b>Initial Rage:</b> •[auspice::starting_rage > 1 ? "•" : "o"][auspice::starting_rage > 2 ? "•" : "o"][auspice::starting_rage > 3 ? "•" : "o"][auspice::starting_rage > 4 ? "•" : "o"]([auspice::starting_rage])<BR>"
 				var/gifts_text = ""
 				var/num_of_gifts = 0
 				for(var/i in 1 to werewolf_level)
@@ -555,21 +555,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "Hair Color: <a href='byond://?_src_=prefs;preference=werewolf_hair_color;task=input'>[werewolf_hair_color]</a><BR>"
 				dat += "Eyes: <a href='byond://?_src_=prefs;preference=werewolf_eye_color;task=input'>[werewolf_eye_color]</a><BR>"
 			if(pref_species.name == "Vampire")
-				dat += "<h2>[make_font_cool("CLANE")]</h2>"
-				dat += "<b>Clane/Bloodline:</b> <a href='byond://?_src_=prefs;preference=clan;task=input'>[clan.name]</a><BR>"
+				dat += "<h2>[make_font_cool("clan")]</h2>"
+				dat += "<b>clan/Bloodline:</b> <a href='byond://?_src_=prefs;preference=clan;task=input'>[clan.name]</a><BR>"
 				dat += "<b>Description:</b> [clan.desc]<BR>"
 				dat += "<b>Curse:</b> [clan.curse]<BR>"
 				if(length(clan.accessories))
-					if(clane_accessory in clan.accessories)
-						dat += "<b>Marks:</b> <a href='byond://?_src_=prefs;preference=clane_acc;task=input'>[clane_accessory]</a><BR>"
+					if(clan_accessory in clan.accessories)
+						dat += "<b>Marks:</b> <a href='byond://?_src_=prefs;preference=clan_acc;task=input'>[clan_accessory]</a><BR>"
 					else
-						if("none" in clane_accessory)
-							clane_accessory = "none"
+						if("none" in clan_accessory)
+							clan_accessory = "none"
 						else
-							clane_accessory = pick(clan.accessories)
-						dat += "<b>Marks:</b> <a href='byond://?_src_=prefs;preference=clane_acc;task=input'>[clane_accessory]</a><BR>"
+							clan_accessory = pick(clan.accessories)
+						dat += "<b>Marks:</b> <a href='byond://?_src_=prefs;preference=clan_acc;task=input'>[clan_accessory]</a><BR>"
 				else
-					clane_accessory = null
+					clan_accessory = null
 				dat += "<h2>[make_font_cool("DISCIPLINES")]</h2>"
 
 				for (var/i in 1 to discipline_types.len)
@@ -2065,16 +2065,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(result)
 						auspice = result.type
 
-				if("clane_acc")
+				if("clan_acc")
 					if(pref_species.id != "kindred")	//Due to a lot of people being locked to furries
 						return
 
 					if(!length(clan.accessories))
-						clane_accessory = null
+						clan_accessory = null
 						return
 					var/result = tgui_input_list(user, "Select a mark", "Marks", clan.accessories)
 					if(result)
-						clane_accessory = result
+						clan_accessory = result
 
 				if("clan")
 					if(slotlocked || !(pref_species.id == "kindred"))
@@ -2084,18 +2084,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						return
 
 					var/list/available_clans = list()
-					for(var/i in GLOB.clanes_list)
-						var/a = GLOB.clanes_list[i]
+					for(var/i in GLOB.clans_list)
+						var/a = GLOB.clans_list[i]
 						var/datum/vampireclan/V = new a
 						if (V.whitelisted)
 							if (SSwhitelists.is_whitelisted(user.ckey, V.name))
-								available_clans[V.name] += GLOB.clanes_list
+								available_clans[V.name] += GLOB.clans_list
 						else
-							available_clans[V.name] += GLOB.clanes_list[i]
+							available_clans[V.name] += GLOB.clans_list[i]
 						qdel(V)
-					var/result = tgui_input_list(user, "Select a clan", "Clane Selection", sortList(available_clans))
+					var/result = tgui_input_list(user, "Select a clan", "clan Selection", sortList(available_clans))
 					if(result)
-						clan = GLOB.clanes_list[result]
+						clan = GLOB.clans_list[result]
 						discipline_types = list()
 						discipline_levels = list()
 						if(result == "Caitiff")
@@ -2123,9 +2123,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							facial_hairstyle = "Shaved"
 						if(length(clan.accessories))
 							if("none" in clan.accessories)
-								clane_accessory = "none"
+								clan_accessory = "none"
 							else
-								clane_accessory = pick(clan.accessories)
+								clan_accessory = pick(clan.accessories)
 				if("werewolf_level")
 					var/cost = max(10, werewolf_level * 10)
 					if ((true_experience < cost) || (werewolf_level >= 3))
@@ -3013,7 +3013,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	if (splat == /datum/splat/vampire/kindred)
 		var/datum/splat/vampire/kindred/vampirism = new splat(generation, clan)
-		vampirism.clan.current_accessory = clane_accessory
+		vampirism.clan.current_accessory = clan_accessory
 		vampirism.clan.enlightenment = enlightenment
 		vampirism.assign(character)
 

@@ -34,14 +34,7 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 
 /obj/structure/mirror/Crossed(atom/movable/AM)
 	. = ..()
-//	if(ishuman(AM) && ref)
-//		var/mob/living/carbon/human/H = AM
-//		if(H.clan)
-//			if(H.clan.name == "Lasombra")
-//				var/obj/effect/reflection/reflection = ref.resolve()
-//				if(istype(reflection))
-//					qdel(reflection)
-//					ref = null
+
 	if(!ref)
 		var/obj/effect/reflection/reflection = new(src.loc)
 		reflection.setup_visuals(src)
@@ -57,8 +50,9 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 		return
 	if(broken || !Adjacent(user))
 		return
+
 	//Sorry, you can't see yourself in front of the mirror!
-	if (is_kindred(user)?.clan.type == /datum/vampireclan/lasombra)
+	if (HAS_TRAIT(user, TRAIT_NO_REFLECTION))
 		return
 
 	if(ishuman(user))

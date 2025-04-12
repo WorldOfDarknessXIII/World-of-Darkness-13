@@ -7,8 +7,11 @@
 		/datum/discipline/potence,
 		/datum/discipline/visceratika
 	)
+	clan_traits = list(
+		TRAIT_MASQUERADE_VIOLATING_FACE,
+		TRAIT_CANNOT_RESIST_MIND_CONTROL
+	)
 	alt_sprite = "gargoyle"
-	violating_appearance = TRUE
 	male_clothes = /obj/item/clothing/under/vampire/malkavian
 	female_clothes = /obj/item/clothing/under/vampire/malkavian
 	current_accessory = "gargoyle_full"
