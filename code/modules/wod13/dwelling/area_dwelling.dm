@@ -110,6 +110,7 @@
 /area/vtm/dwelling/Destroy()
 	. = ..()
 	GLOB.dwelling_area_list.Remove(src)
+	if(GLOB.dwelling_list.Find(src) != 0) GLOB.dwelling_list.Remove(src)
 	alarm_panel = null
 	cased_by = null
 	dwelling_doors = null
