@@ -1,8 +1,8 @@
 /datum/admins/proc/whitelist_panel(searchkey)
 	var/ckey
-	var/list/output = list("All whitelists<br>To edit, use the New/Delete Whitelist verbs.<br><a href='?_src_=holder;[HrefToken()];newwhitelist=1'>New Whitelist</a><a href='?_src_=holder;[HrefToken()];reloadwhitelists=1'>Reload Whitelists</a><hr>")
+	var/list/output = list("All whitelists<br>To edit, use the New/Delete Whitelist verbs.<br><a href='byond://?_src_=holder;[HrefToken()];newwhitelist=1'>New Whitelist</a><a href='byond://?_src_=holder;[HrefToken()];reloadwhitelists=1'>Reload Whitelists</a><hr>")
 	output += {"
-		<form method='get' action='?src=[REF(src)]'>[HrefTokenFormField()]
+		<form method='get' action='byond://?src=[REF(src)]'>[HrefTokenFormField()]
 		<input type='hidden' name='src' value='[REF(src)]'>
 		CKey:<input type='text' name='searchwhitelistckey' size='18' value='[ckey]'>
 		<input type='submit' value='Search'>
@@ -20,7 +20,7 @@
 			<br>Approval Reason: [current_whitelist.approval_reason]
 			<br>Date Whitelisted: [current_whitelist.date_whitelisted]
 		"}
-		output += "<br><a href='?_src_=holder;[HrefToken()];deletewhitelist=[REF(current_whitelist)]'> Delete Whitelist</a>"
+		output += "<br><a href='byond://?_src_=holder;[HrefToken()];deletewhitelist=[REF(current_whitelist)]'> Delete Whitelist</a>"
 		output += "<hr style='background:#000000; border:0; height:3px'>"
 	var/datum/browser/panel = new(usr, "wlpanel", "Whitelist Panel", 700, 400)
 	panel.set_content(jointext(output, ""))

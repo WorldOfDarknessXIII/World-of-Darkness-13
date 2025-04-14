@@ -11,6 +11,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset
 	var/_abstract = /datum/asset
+	var/cached_serialized_url_mappings
+	var/cached_serialized_url_mappings_transport_type
 
 /datum/asset/New()
 	GLOB.asset_datums[type] = src
@@ -18,6 +20,14 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset/proc/get_url_mappings()
 	return list()
+
+/// Returns a cached tgui message of URL mappings
+/datum/asset/proc/get_serialized_url_mappings()
+	if (isnull(cached_serialized_url_mappings) || cached_serialized_url_mappings_transport_type != SSassets.transport.type)
+		cached_serialized_url_mappings = TGUI_CREATE_MESSAGE("asset/mappings", get_url_mappings())
+		cached_serialized_url_mappings_transport_type = SSassets.transport.type
+
+	return cached_serialized_url_mappings
 
 /datum/asset/proc/register()
 	return
@@ -147,7 +157,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	for (var/size_id in sizes)
 		var/size = sizes[size_id]
 		var/icon/tiny = size[SPRSZ_ICON]
-		out += ".[name][size_id]{display:inline-block;width:[tiny.Width()]px;height:[tiny.Height()]px;background:url('[SSassets.transport.get_asset_url("[name]_[size_id].png")]') no-repeat;}"
+		out += ".[name][size_id]{display:inline-block;width:[tiny.Width()]px;height:[tiny.Height()]px;background-image:url('[SSassets.transport.get_asset_url("[name]_[size_id].png")]');background-repeat: no-repeat;}"
 
 	for (var/sprite_id in sprites)
 		var/sprite = sprites[sprite_id]

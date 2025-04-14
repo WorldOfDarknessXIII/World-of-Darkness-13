@@ -219,9 +219,9 @@
 /obj/get_dumping_location(datum/component/storage/source,mob/user)
 	return get_turf(src)
 
-/obj/proc/CanAStarPass(ID, dir, caller)
-	if(ismovable(caller))
-		var/atom/movable/AM = caller
+/obj/proc/CanAStarPass(ID, dir, pathfinding_atom)
+	if(ismovable(pathfinding_atom))
+		var/atom/movable/AM = pathfinding_atom
 		if(AM.pass_flags & pass_flags_self)
 			return TRUE
 	. = !density

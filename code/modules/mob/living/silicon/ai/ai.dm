@@ -285,7 +285,7 @@
 
 /mob/living/silicon/ai/proc/ai_alerts()
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
-	dat += "<A HREF='?src=[REF(src)];mach_close=aialerts'>Close</A><BR><BR>"
+	dat += "<A HREF='byond://?src=[REF(src)];mach_close=aialerts'>Close</A><BR><BR>"
 	for (var/cat in alarms)
 		dat += text("<B>[]</B><BR>\n", cat)
 		var/list/L = alarms[cat]
@@ -299,11 +299,11 @@
 				if (C && istype(C, /list))
 					var/dat2 = ""
 					for (var/obj/machinery/camera/I in C)
-						dat2 += text("[]<A HREF=?src=[REF(src)];switchcamera=[REF(I)]>[]</A>", (dat2=="") ? "" : " | ", I.c_tag)
+						dat2 += text("[]<A HREF=byond://?src=[REF(src)];switchcamera=[REF(I)]>[]</A>", (dat2=="") ? "" : " | ", I.c_tag)
 					dat += text("-- [] ([])", A.name, (dat2!="") ? dat2 : "No Camera")
 				else if (C && istype(C, /obj/machinery/camera))
 					var/obj/machinery/camera/Ctmp = C
-					dat += text("-- [] (<A HREF=?src=[REF(src)];switchcamera=[REF(C)]>[]</A>)", A.name, Ctmp.c_tag)
+					dat += text("-- [] (<A HREF=byond://?src=[REF(src)];switchcamera=[REF(C)]>[]</A>)", A.name, Ctmp.c_tag)
 				else
 					dat += text("-- [] (No Camera)", A.name)
 				if (sources.len > 1)
@@ -542,12 +542,12 @@
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
 	if (O)
 		if (C?.can_use())
-			queueAlarm("--- [class] alarm detected in [A.name]! (<A HREF=?src=[REF(src)];switchcamera=[REF(C)]>[C.c_tag]</A>)", class)
+			queueAlarm("--- [class] alarm detected in [A.name]! (<A HREF=byond://?src=[REF(src)];switchcamera=[REF(C)]>[C.c_tag]</A>)", class)
 		else if (CL?.len)
 			var/foo = 0
 			var/dat2 = ""
 			for (var/obj/machinery/camera/I in CL)
-				dat2 += text("[]<A HREF=?src=[REF(src)];switchcamera=[REF(I)]>[]</A>", (!foo) ? "" : " | ", I.c_tag)	//I'm not fixing this shit...
+				dat2 += text("[]<A HREF=byond://?src=[REF(src)];switchcamera=[REF(I)]>[]</A>", (!foo) ? "" : " | ", I.c_tag)	//I'm not fixing this shit...
 				foo = 1
 			queueAlarm(text ("--- [] alarm detected in []! ([])", class, A.name, dat2), class)
 		else
@@ -811,7 +811,7 @@
 	var/treated_message = lang_treat(speaker, message_language, raw_message, spans, message_mods)
 	var/start = "Relayed Speech: "
 	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
-	var/hrefpart = "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
+	var/hrefpart = "<a href='byond://?src=[REF(src)];track=[html_encode(namepart)]'>"
 	var/jobpart = "Unknown"
 
 	if (iscarbon(speaker))

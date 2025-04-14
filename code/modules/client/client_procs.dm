@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(href_list["reload_tguipanel"])
 		nuke_chat()
 	if(href_list["reload_statbrowser"])
-		src << browse(file('html/statbrowser.html'), "window=statbrowser")
+		stat_panel.reinitialize()
 	// Log all hrefs
 	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
 
@@ -208,8 +208,17 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
 
+	if(byond_version >= 516)
+		winset(src, null, list("browser-options" = "find,refresh,byondstorage"))
+
+	// Instantiate stat panel
+	stat_panel = new(src, "statbrowser")
+	stat_panel.subscribe(src, PROC_REF(on_stat_panel_message))
+
 	// Instantiate tgui panel
-	tgui_panel = new(src)
+	tgui_panel = new(src, "browseroutput")
+
+	set_right_click_menu_mode(TRUE)
 
 	GLOB.ahelp_tickets.ClientLogin(src)
 	GLOB.interviews.client_login(src)
@@ -319,9 +328,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(SSinput.initialized)
 		set_macros()
 
-	// Initialize tgui panel
-	src << browse(file('html/statbrowser.html'), "window=statbrowser")
+	// Initialize stat panel
+	stat_panel.initialize(
+		inline_html = file2text('html/statbrowser.html'),
+		inline_js = file2text('html/statbrowser.js'),
+		inline_css = file2text('html/statbrowser.css'),
+	)
 	addtimer(CALLBACK(src, PROC_REF(check_panel_loaded)), 30 SECONDS)
+
+	// Initialize tgui panel
 	tgui_panel.initialize()
 
 	if(alert_mob_dupe_login)
@@ -353,7 +368,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			msg += "Your version: [byond_version]<br>"
 			msg += "Required version to remove this message: [cwv] or later<br>"
 			msg += "Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest version of BYOND.<br>"
-			src << browse(msg, "window=warning_popup")
+			src << browse(HTML_SKELETON(msg), "window=warning_popup")
 		else
 			to_chat(src, "<span class='danger'><b>Your version of byond may be getting out of date:</b></span>")
 			to_chat(src, CONFIG_GET(string/client_warn_message))
@@ -1039,12 +1054,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/list/verbstoprocess = verbs.Copy()
 	if(mob)
 		verbstoprocess += mob.verbs
-		for(var/AM in mob.contents)
-			var/atom/movable/thing = AM
+		for(var/atom/movable/thing as anything in mob.contents)
 			verbstoprocess += thing.verbs
 	panel_tabs.Cut() // panel_tabs get reset in init_verbs on JS side anyway
-	for(var/thing in verbstoprocess)
-		var/procpath/verb_to_init = thing
+	for(var/procpath/verb_to_init as anything in verbstoprocess)
 		if(!verb_to_init)
 			continue
 		if(verb_to_init.hidden)
@@ -1053,12 +1066,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			continue
 		panel_tabs |= verb_to_init.category
 		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
-	src << output("[url_encode(json_encode(panel_tabs))];[url_encode(json_encode(verblist))]", "statbrowser:init_verbs")
+	src.stat_panel.send_message("init_verbs", list(panel_tabs = panel_tabs, verblist = verblist))
 
 /client/proc/check_panel_loaded()
-	if(statbrowser_ready)
+	if(stat_panel.is_ready())
 		return
-	to_chat(src, "<span class='userdanger'>Statpanel failed to load, click <a href='?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel </span>")
+	to_chat(src, "<span class='userdanger'>Statpanel failed to load, click <a href='byond://?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel </span>")
 
 /**
  * Initializes dropdown menus on client
@@ -1090,21 +1103,76 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		holder.filteriffic = new /datum/filter_editor(in_atom)
 		holder.filteriffic.ui_interact(mob)
 
-/client/verb/toggle_fullscreen()
-	set name = "Toggle Fullscreen"
-	set category = "OOC"
-
-	fullscreen = !fullscreen
-
-	if (fullscreen)
-		winset(usr, "mainwindow", "menu=\"\"")
-		winset(usr, "mainwindow","titlebar=false")
-		winset(usr, "mainwindow","can-resize=false")
-		winset(usr, "mainwindow","is-minimized=true")
-		winset(usr, "mainwindow","is-maximized=true")
-		winset(usr, null, "split.size=mainwindow.size")
+/client/proc/set_right_click_menu_mode(shift_only)
+	if(shift_only)
+		winset(src, "mapwindow.map", "right-click=true")
+		winset(src, "ShiftUp", "is-disabled=false")
+		winset(src, "Shift", "is-disabled=false")
 	else
-		winset(usr, "mainwindow", "menu=\"menu\"")
-		winset(usr, "mainwindow","titlebar=true")
-		winset(usr, "mainwindow","can-resize=true")
-	fit_viewport()
+		winset(src, "mapwindow.map", "right-click=false")
+		winset(src, "default.Shift", "is-disabled=true")
+		winset(src, "default.ShiftUp", "is-disabled=true")
+
+/*
+/client/proc/update_ambience_pref()
+	if(prefs.toggles & SOUND_AMBIENCE)
+		if(SSambience.ambience_listening_clients[src] > world.time)
+			return // If already properly set we don't want to reset the timer.
+		SSambience.ambience_listening_clients[src] = world.time + 10 SECONDS //Just wait 10 seconds before the next one aight mate? cheers.
+	else
+		SSambience.remove_ambience_client(src)
+*/
+
+/**
+ * Handles incoming messages from the stat-panel TGUI.
+ */
+/client/proc/on_stat_panel_message(type, payload)
+	switch(type)
+		if("Update-Verbs")
+			init_verbs()
+		if("Remove-Tabs")
+			panel_tabs -= payload["tab"]
+		if("Send-Tabs")
+			panel_tabs |= payload["tab"]
+		if("Reset-Tabs")
+			panel_tabs = list()
+		if("Set-Tab")
+			stat_tab = payload["tab"]
+			SSstatpanels.immediate_send_stat_data(src)
+
+/// Checks if this client has met the days requirement passed in, or if
+/// they are exempt from it.
+/// Returns the number of days left, or 0.
+/client/proc/get_remaining_days(days_needed)
+	if(!CONFIG_GET(flag/use_age_restriction_for_jobs))
+		return 0
+
+	if(!isnum(player_age))
+		return 0 //This is only a number if the db connection is established, otherwise it is text: "Requires database", meaning these restrictions cannot be enforced
+
+	if(!isnum(days_needed))
+		return 0
+
+	return max(0, days_needed - player_age)
+
+/// Attempts to make the client orbit the given object, for administrative purposes.
+/// If they are not an observer, will try to aghost them.
+/client/proc/admin_follow(atom/movable/target)
+	var/can_ghost = TRUE
+
+	if (!isobserver(mob))
+		can_ghost = admin_ghost()
+
+	if(!can_ghost)
+		return FALSE
+
+	var/mob/dead/observer/observer = mob
+	observer.ManualFollow(target)
+
+/client/verb/stop_client_sounds()
+	set name = "Stop Sounds"
+	set category = "OOC"
+	set desc = "Stop Current Sounds"
+	SEND_SOUND(usr, sound(null))
+	tgui_panel?.stop_music()
+	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds"))

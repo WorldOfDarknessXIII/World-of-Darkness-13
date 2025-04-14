@@ -407,7 +407,7 @@
 		confidential = TRUE)
 	to_chat(C,
 		type = MESSAGE_TYPE_ADMINPM,
-		html = "<span class='adminsay'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]</span>",
+		html = "<span class='adminsay'>Admin PM from-<b><a href='byond://?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]</span>",
 		confidential = TRUE)
 	to_chat(C,
 		type = MESSAGE_TYPE_ADMINPM,

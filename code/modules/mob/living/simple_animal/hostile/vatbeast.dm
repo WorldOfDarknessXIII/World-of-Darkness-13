@@ -74,7 +74,7 @@
 	else
 		add_ranged_ability(user, "<span class='notice'>You prepare your pimp-tentacle. <B>Left-click to slap a target!</B></span>", TRUE)
 
-/obj/effect/proc_holder/tentacle_slap/InterceptClickOn(mob/living/caller, params, atom/target)
+/obj/effect/proc_holder/tentacle_slap/InterceptClickOn(mob/living/clicker, params, atom/target)
 	. = ..()
 	if(.)
 		return
@@ -83,7 +83,7 @@
 		remove_ranged_ability()
 		return
 
-	if(!caller.Adjacent(target))
+	if(!clicker.Adjacent(target))
 		return
 
 	if(!isliving(target))

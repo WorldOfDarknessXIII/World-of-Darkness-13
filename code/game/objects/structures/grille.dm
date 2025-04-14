@@ -128,10 +128,10 @@
 	if(!. && istype(mover, /obj/projectile))
 		return prob(30)
 
-/obj/structure/grille/CanAStarPass(ID, dir, caller)
+/obj/structure/grille/CanAStarPass(ID, dir, pathfinding_atom)
 	. = !density
-	if(ismovable(caller))
-		var/atom/movable/mover = caller
+	if(ismovable(pathfinding_atom))
+		var/atom/movable/mover = pathfinding_atom
 		. = . || (mover.pass_flags & PASSGRILLE)
 
 /obj/structure/grille/attackby(obj/item/W, mob/user, params)

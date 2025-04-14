@@ -1073,29 +1073,6 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 	. = stack_trace_storage
 	stack_trace_storage = null
 
-//Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
-
-//Increases delay as the server gets more overloaded,
-//as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful
-#define DELTA_CALC max(((max(TICK_USAGE, world.cpu) / 100) * max(Master.sleep_delta-1,1)), 1)
-
-//returns the number of ticks slept
-/proc/stoplag(initial_delay)
-	if (!Master || !(Master.current_runlevel & RUNLEVELS_DEFAULT))
-		sleep(world.tick_lag)
-		return 1
-	if (!initial_delay)
-		initial_delay = world.tick_lag
-	. = 0
-	var/i = DS2TICKS(initial_delay)
-	do
-		. += CEILING(i*DELTA_CALC, 1)
-		sleep(i*world.tick_lag*DELTA_CALC)
-		i *= 2
-	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))
-
-#undef DELTA_CALC
-
 /proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
 	var/client/C
 	if(ismob(mob_or_client))
@@ -1230,8 +1207,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 				return FALSE
 	return TRUE
 
-#define UNTIL(X) while(!(X)) stoplag()
-
 /proc/pass(...)
 	return
 
@@ -1276,20 +1251,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	var/time_clock = num2hex(TICK_DELTA_TO_MS(world.tick_usage), 3)
 
 	return "{[time_high]-[time_mid]-[GUID_VERSION][time_low]-[GUID_VARIANT][time_clock]-[node_id]}"
-
-// \ref behaviour got changed in 512 so this is necesary to replicate old behaviour.
-// If it ever becomes necesary to get a more performant REF(), this lies here in wait
-// #define REF(thing) (thing && istype(thing, /datum) && (thing:datum_flags & DF_USE_TAG) && thing:tag ? "[thing:tag]" : "\ref[thing]")
-/proc/REF(input)
-	if(istype(input, /datum))
-		var/datum/thing = input
-		if(thing.datum_flags & DF_USE_TAG)
-			if(!thing.tag)
-				stack_trace("A ref was requested of an object with DF_USE_TAG set but no tag: [thing]")
-				thing.datum_flags &= ~DF_USE_TAG
-			else
-				return "\[[url_encode(thing.tag)]\]"
-	return "\ref[input]"
 
 // Makes a call in the context of a different usr
 // Use sparingly
