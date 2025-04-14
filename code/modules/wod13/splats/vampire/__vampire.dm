@@ -1,13 +1,21 @@
 /datum/splat/vampire
 
 /datum/splat/vampire/proc/get_vitae()
-	return get_resource(RESOURCE_VITAE)
+	return owner.bloodpool
 
 /datum/splat/vampire/proc/add_vitae(amount = 1)
-	add_resource(RESOURCE_VITAE, amount)
+	if (owner.bloodpool == owner.maxbloodpool)
+		return FALSE
+
+	owner.bloodpool = clamp(owner.bloodpool + amount, 0, owner.maxbloodpool)
+	return TRUE
 
 /datum/splat/vampire/proc/remove_vitae(amount = 1)
-	remove_resource(RESOURCE_VITAE, amount)
+	if (owner.bloodpool < amount)
+		return FALSE
+
+	owner.bloodpool = clamp(owner.bloodpool - amount, 0, owner.maxbloodpool)
+	return TRUE
 
 /datum/action/blood_power
 	name = "Blood Power"

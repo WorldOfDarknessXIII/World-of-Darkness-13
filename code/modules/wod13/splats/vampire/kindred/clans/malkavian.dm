@@ -11,23 +11,33 @@
 	female_clothes = /obj/item/clothing/under/vampire/malkavian/female
 	clan_keys = /obj/item/vamp/keys/malkav
 
-/datum/vampireclan/malkavian/post_gain(mob/living/carbon/human/malky)
+/datum/vampireclan/malkavian/on_gain(mob/living/carbon/human/malky)
 	. = ..()
+
 	var/datum/action/cooldown/malk_hivemind/hivemind = new()
 	var/datum/action/cooldown/malk_speech/malk_font = new()
 	hivemind.Grant(malky)
 	malk_font.Grant(malky)
+
 	GLOB.malkavian_list += malky
+
+/datum/vampireclan/malkavian/on_lose(mob/living/carbon/human/vampire)
+	. = ..()
+
+	for (var/datum/action/action in vampire.actions)
+		if (!istype(action, /datum/action/cooldown/malk_hivemind) && !istype(action, /datum/action/cooldown/malk_speech))
+			continue
+
+		action.Destroy()
+
+	GLOB.malkavian_list -= vampire
 
 /mob/living/carbon/human/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	. = ..()
 	if(message)
-		var/datum/splat/vampire/kindred/vampirism = is_kindred(src)
-		if (!vampirism?.clan)
+		if (!(src in GLOB.malkavian_list))
 			return
 		if (!prob(25))
-			return
-		if (vampirism.clan.type != /datum/vampireclan/malkavian)
 			return
 
 		for (var/mob/living/carbon/human/malkavian in (GLOB.malkavian_list - src))
@@ -64,8 +74,6 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	spell_button = TRUE
 	cooldown_time = 5 MINUTES
-	///clan datum
-	var/datum/vampireclan/malkavian/clane_datum
 
 /datum/action/cooldown/malk_speech/Trigger()
 	. = ..()

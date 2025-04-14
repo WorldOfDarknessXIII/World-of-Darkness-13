@@ -21,12 +21,6 @@
 		/datum/action/blood_power
 	)
 
-	max_resources = list(
-		RESOURCE_VITAE = 10
-	)
-	resources = list(
-		RESOURCE_VITAE = 10
-	)
 	power_type = /datum/discipline
 	replace_splats = list(
 		/datum/splat/vampire
@@ -50,15 +44,21 @@
 /datum/splat/vampire/kindred/on_gain()
 	. = ..()
 
-	//damn you flavrius
-	clan.on_gain(owner)
-	clan.post_gain(owner)
+	set_generation(generation)
+	set_clan(clan)
 
 	//this needs to be adjusted to be more accurate for blood spending rates
 	var/datum/discipline/bloodheal/giving_bloodheal = new(clamp(11 - generation, 1, 10))
 	owner.give_discipline(giving_bloodheal)
 
 	add_verb(owner, TYPE_VERB_REF(/mob/living/carbon/human, teach_discipline))
+
+/datum/splat/vampire/kindred/on_lose()
+	. = ..()
+
+	owner.maxbloodpool = HUMAN_MAXBLOODPOOL
+	owner.bloodpool = clamp(owner.bloodpool, 0, owner.maxbloodpool)
+	clan.on_lose(owner)
 
 /datum/splat/vampire/kindred/proc/give_vitae(mob/living/victim, to_give = 1)
 
@@ -67,6 +67,18 @@
 /datum/splat/vampire/kindred/proc/ghoul(mob/living/victim)
 
 /datum/splat/vampire/kindred/proc/bloodbond(mob/living/victim)
+
+/datum/splat/vampire/kindred/proc/set_generation(generation = 13)
+	src.generation = generation
+	owner.maxbloodpool = HUMAN_MAXBLOODPOOL + ((13 - generation) * 3)
+
+/datum/splat/vampire/kindred/proc/set_clan(datum/vampireclan/clan)
+	if (src.clan != clan)
+		src.clan.on_lose(owner)
+
+	src.clan = clan
+	clan.on_gain(owner)
+	clan.post_gain(owner)
 
 /mob/proc/can_embrace()
 	if (HAS_TRAIT(src, TRAIT_CANNOT_BE_EMBRACED))

@@ -3017,12 +3017,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		vampirism.clan.enlightenment = enlightenment
 		vampirism.assign(character)
 
-		character.maxbloodpool = 10 + ((13 - vampirism.generation) * 3)
 		character.bloodpool = rand(2, character.maxbloodpool)
 
 		character.max_yin_chi = character.maxbloodpool
 		character.yin_chi = character.max_yin_chi
 		character.humanity = humanity
+
 		if(vampirism.clan.alt_sprite && !vampirism.clan.alt_sprite_greyscale)
 			character.skin_tone = "albino"
 		else

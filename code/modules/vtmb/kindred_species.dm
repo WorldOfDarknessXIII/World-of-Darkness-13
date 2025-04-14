@@ -251,26 +251,6 @@
 /datum/species/kindred/check_roundstart_eligible()
 	return TRUE
 
-/datum/species/kindred/handle_body(mob/living/carbon/human/H)
-	if (!H.clan)
-		return ..()
-
-	//deflate people if they're super rotten
-	if ((H.clan.alt_sprite == "rotten4") && (H.base_body_mod == "f"))
-		H.base_body_mod = ""
-
-	if(H.clan.alt_sprite)
-		H.dna.species.limbs_id = "[H.base_body_mod][H.clan.alt_sprite]"
-
-	if (H.clan.no_hair)
-		H.hairstyle = "Bald"
-
-	if (H.clan.no_facial)
-		H.facial_hairstyle = "Shaved"
-
-	..()
-
-
 /**
  * Signal handler for lose_organ to near-instantly kill Kindred whose hearts have been removed.
  *
@@ -278,18 +258,17 @@
  * * source - The Kindred whose organ has been removed.
  * * organ - The organ which has been removed.
  */
-/datum/species/kindred/proc/lose_organ(var/mob/living/carbon/human/source, var/obj/item/organ/organ)
+/datum/species/kindred/proc/lose_organ(mob/living/carbon/human/source, obj/item/organ/organ)
 	SIGNAL_HANDLER
 
 	if (istype(organ, /obj/item/organ/heart))
-		spawn()
-			if (!source.getorganslot(ORGAN_SLOT_HEART))
-				source.death()
+		if (!source.getorganslot(ORGAN_SLOT_HEART))
+			INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living/carbon/human, death))
 
-/datum/species/kindred/proc/slip_into_torpor(var/mob/living/carbon/human/source)
+/datum/species/kindred/proc/slip_into_torpor(mob/living/carbon/human/source)
 	SIGNAL_HANDLER
 
-	to_chat(source, "<span class='warning'>You can feel yourself slipping into Torpor. You can use succumb to immediately sleep...</span>")
+	to_chat(source, span_warning("You can feel yourself slipping into Torpor. You can use succumb to immediately sleep..."))
 	spawn(2 MINUTES)
 		if (source.stat >= SOFT_CRIT)
 			source.torpor("damage")

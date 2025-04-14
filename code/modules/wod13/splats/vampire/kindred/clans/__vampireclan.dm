@@ -51,19 +51,28 @@ And it also helps for the character set panel
 	if (alt_sprite)
 		if (!alt_sprite_greyscale)
 			vampire.skin_tone = "albino"
-		vampire.dna.species.limbs_id = alt_sprite
+		vampire.dna.species.limbs_id = "[vampire.base_body_mod][alt_sprite]"
 		vampire.update_body_parts()
 		vampire.update_body()
 		vampire.update_icon()
 
+	if (no_facial)
+		vampire.facial_hairstyle = "Shaved"
+
+	if (no_hair)
+		vampire.hairstyle = "Bald"
+
 	if (clan_keys)
 		vampire.put_in_r_hand(new clan_keys(vampire))
 
-/datum/vampireclan/proc/on_loss(mob/living/carbon/human/vampire)
+/datum/vampireclan/proc/on_lose(mob/living/carbon/human/vampire)
 	SHOULD_CALL_PARENT(TRUE)
 
 	for (var/trait in clan_traits)
 		REMOVE_TRAIT(vampire, trait, CLAN_TRAIT)
+
+	if (alt_sprite)
+		vampire.dna.species.limbs_id = "[vampire.base_body_mod]human"
 
 /datum/vampireclan/proc/post_gain(mob/living/carbon/human/vampire)
 	SHOULD_CALL_PARENT(TRUE)

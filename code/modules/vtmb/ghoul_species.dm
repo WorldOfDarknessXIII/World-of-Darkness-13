@@ -118,19 +118,13 @@
 /datum/species/ghoul/on_species_gain(mob/living/carbon/human/C)
 	..()
 	C.update_body(0)
-	C.last_experience = world.time+3000
+	C.last_experience = world.time + 5 MINUTES
 	var/datum/action/ghoulinfo/infor = new()
 	infor.host = C
 	infor.Grant(C)
 
 	var/datum/discipline/bloodheal/giving_bloodheal = new(1)
 	C.give_discipline(giving_bloodheal)
-
-	C.generation = 13
-	C.bloodpool = 10
-	C.maxbloodpool = 10
-	C.maxHealth = 200
-	C.health = 200
 
 /datum/species/ghoul/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
