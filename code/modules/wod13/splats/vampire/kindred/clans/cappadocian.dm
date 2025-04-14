@@ -16,13 +16,13 @@
 	var/years_undead = H.chronological_age - H.age
 	switch(years_undead)
 		if (-INFINITY to 100)
-			rot_body(1)
+			H.rot_body(1)
 		if (100 to 300)
-			rot_body(2)
+			H.rot_body(2)
 		if (300 to 500)
-			rot_body(3)
+			H.rot_body(3)
 		if (500 to INFINITY)
-			rot_body(4)
+			H.rot_body(4)
 
 	..()
 

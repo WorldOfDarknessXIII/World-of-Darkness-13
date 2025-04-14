@@ -41,9 +41,9 @@
 /datum/splat/werewolf/garou/New(level = 1, auspice = /datum/auspice/ahroun, tribe = /datum/tribe/wendigo, breed = /datum/breed/homid)
 	. = ..()
 	src.level = level
-	src.auspice = GLOB.auspices[auspice]
-	src.tribe = GLOB.tribes[tribe]
-	src.breed = GLOB.breeds[breed]
+	src.auspice = GLOB.werewolf_auspices[auspice]
+	src.tribe = GLOB.werewolf_tribes[tribe]
+	src.breed = GLOB.werewolf_breeds[breed]
 
 	max_resources[RESOURCE_GNOSIS] = src.breed.starting_gnosis
 	resources[RESOURCE_GNOSIS] = max_resources[RESOURCE_GNOSIS]

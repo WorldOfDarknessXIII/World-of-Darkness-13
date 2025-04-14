@@ -149,6 +149,8 @@
 #include "code\__DEFINES\research\anomalies.dm"
 #include "code\__DEFINES\wod13\discipline.dm"
 #include "code\__DEFINES\wod13\garou.dm"
+#include "code\__DEFINES\wod13\kindred.dm"
+#include "code\__DEFINES\wod13\kuei_jin.dm"
 #include "code\__DEFINES\wod13\living.dm"
 #include "code\__DEFINES\wod13\lockpick_difficulty.dm"
 #include "code\__DEFINES\wod13\signals_kindred.dm"

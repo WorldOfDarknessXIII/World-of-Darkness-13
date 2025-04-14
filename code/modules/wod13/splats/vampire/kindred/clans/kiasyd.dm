@@ -22,7 +22,8 @@
 	COOLDOWN_DECLARE(cold_iron_frenzy)
 
 /datum/vampireclan/kiasyd/on_gain(mob/living/carbon/human/H)
-	..()
+	. = ..()
+
 	//This was messing with the visualiser in the character setup menu somehow
 	if (H.clan?.type != /datum/vampireclan/kiasyd)
 		return

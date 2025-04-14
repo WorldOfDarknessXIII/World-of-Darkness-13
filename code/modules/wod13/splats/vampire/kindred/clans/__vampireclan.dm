@@ -163,33 +163,31 @@ And it also helps for the character set panel
  * Arguments
  * * rot_stage - how much to rot the vampire, on a scale from 1 to 4.
  */
-/datum/vampireclan/proc/rot_body(rot_stage)
-	if (alt_sprite)
-		if (!findtext(alt_sprite, "rotten") && (rot_stage <= 2))
+/mob/living/carbon/human/proc/rot_body(rot_stage)
+	var/datum/splat/vampire/kindred/vampirism = is_kindred(src)
+	if (vampirism?.clan?.alt_sprite)
+		if (!findtext(vampirism.clan.alt_sprite, "rotten") && (rot_stage <= 2))
 			return
 
 	switch (rot_stage)
 		if (1)
-			alt_sprite = "rotten1"
-			alt_sprite_greyscale = TRUE
-			violating_appearance = FALSE
-			no_hair = FALSE
-			no_facial = FALSE
+			dna.species.limbs_id = "rotten1"
 		if (2)
-			alt_sprite = "rotten2"
-			alt_sprite_greyscale = TRUE
-			violating_appearance = FALSE
-			no_hair = FALSE
-			no_facial = TRUE
+			dna.species.limbs_id = "rotten2"
 		if (3)
-			alt_sprite = "rotten3"
-			alt_sprite_greyscale = FALSE
-			violating_appearance = TRUE
-			no_hair = TRUE
-			no_facial = TRUE
+			dna.species.limbs_id = "rotten3"
+			skin_tone = "albino"
+			ADD_TRAIT(src, TRAIT_MASQUERADE_VIOLATING_FACE, CLAN_TRAIT)
+			hairstyle = "Bald"
+			facial_hairstyle = "Shaved"
 		if (4)
-			alt_sprite = "rotten4"
-			alt_sprite_greyscale = FALSE
-			violating_appearance = TRUE
-			no_hair = TRUE
-			no_facial = TRUE
+			dna.species.limbs_id = "rotten4"
+			skin_tone = "albino"
+			ADD_TRAIT(src, TRAIT_MASQUERADE_VIOLATING_FACE, CLAN_TRAIT)
+			hairstyle = "Bald"
+			facial_hairstyle = "Shaved"
+
+			if (base_body_mod == "f")
+				base_body_mod = ""
+			else if (base_body_mod == "")
+				base_body_mod = "s"

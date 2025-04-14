@@ -13,8 +13,8 @@
 
 	movement_type = GROUND // [ChillRaccoon] - fucking flying werewolfes is a meme
 
-	bloodpool = WEREWOLF_MAXBLOODPOOL
-	maxbloodpool = WEREWOLF_MAXBLOODPOOL
+	bloodpool = GAROU_MAXBLOODPOOL
+	maxbloodpool = GAROU_MAXBLOODPOOL
 
 	var/move_delay_add = 0 // movement delay to add
 

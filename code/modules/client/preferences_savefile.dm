@@ -351,16 +351,27 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Species
 	var/species_id
 	READ_FILE(S["species"], species_id)
-	if(species_id)
+	if (species_id)
 		var/newtype = GLOB.species_list[species_id]
 		if(newtype)
 			pref_species = new newtype
 
 	READ_FILE(S["clane"], clan)
+	if (clan)
+		clan = GLOB.vampire_clans[clan]
 
 	READ_FILE(S["auspice"], auspice)
+	if (auspice)
+		auspice = GLOB.werewolf_auspices[auspice]
+
 	READ_FILE(S["breed"], breed)
+	if (breed)
+		breed = GLOB.werewolf_breeds[breed]
+
 	READ_FILE(S["tribe"], tribe)
+	if (tribe)
+		tribe = GLOB.werewolf_tribes[tribe]
+
 	READ_FILE(S["werewolf_color"], werewolf_color)
 	READ_FILE(S["werewolf_scar"], werewolf_scar)
 	READ_FILE(S["werewolf_hair"], werewolf_hair)
@@ -445,7 +456,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["feature_moth_antennae"], features["moth_antennae"])
 	READ_FILE(S["feature_moth_markings"], features["moth_markings"])
 	READ_FILE(S["persistent_scars"] , persistent_scars)
-	READ_FILE(S["dharma_type"], dharma_type)
+
+	READ_FILE(S["dharma_type"], dharma)
+	if (dharma)
+		dharma = GLOB.hungry_dead_dharmas[dharma]
+
 	READ_FILE(S["dharma_level"], dharma_level)
 	READ_FILE(S["po_type"], po_type)
 	READ_FILE(S["po"], po)
@@ -530,8 +545,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	archetype 		= sanitize_inlist(archetype, subtypesof(/datum/archetype))
 
-	breed			= sanitize_inlist(breed, list("Homid", "Lupus", "Metis"))
-	tribe			= sanitize_inlist(tribe, list("Wendigo", "Glasswalkers", "Black Spiral Dancers"))
 	werewolf_color	= sanitize_inlist(werewolf_color, list("black", "gray", "red", "white", "ginger", "brown"))
 	werewolf_scar	= sanitize_integer(werewolf_scar, 0, 7, initial(werewolf_scar))
 	werewolf_hair	= sanitize_integer(werewolf_hair, 0, 4, initial(werewolf_hair))
@@ -574,7 +587,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	discipline_types = sanitize_islist(discipline_types, list())
 	discipline_levels = sanitize_islist(discipline_levels, list())
 	dharma_level = sanitize_integer(dharma_level, 0, 6, initial(dharma_level))
-	dharma_type = sanitize_inlist(dharma_type, subtypesof(/datum/dharma))
 	po_type = sanitize_inlist(po_type, list("Rebel", "Legalist", "Demon", "Monkey", "Fool"))
 	po = sanitize_integer(po, 1, 12, initial(po))
 	hun = sanitize_integer(hun, 1, 12, initial(hun))
@@ -667,14 +679,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	WRITE_FILE(S["version"]			, SAVEFILE_VERSION_MAX)	//load_character will sanitize any bad data, so assume up-to-date.)
 
-	WRITE_FILE(S["breed"], breed)
-	WRITE_FILE(S["tribe"], tribe)
+	WRITE_FILE(S["breed"], breed.type)
+	WRITE_FILE(S["tribe"], tribe.type)
 	WRITE_FILE(S["werewolf_color"], werewolf_color)
 	WRITE_FILE(S["werewolf_scar"], werewolf_scar)
 	WRITE_FILE(S["werewolf_hair"], werewolf_hair)
 	WRITE_FILE(S["werewolf_hair_color"], werewolf_hair_color)
 	WRITE_FILE(S["werewolf_eye_color"], werewolf_eye_color)
-	WRITE_FILE(S["auspice"]			, auspice)
+	WRITE_FILE(S["auspice"]			, auspice.type)
 
 	//Character
 	WRITE_FILE(S["slotlocked"]			, slotlocked)
@@ -713,7 +725,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["enemy_text"]			, enemy_text)
 	WRITE_FILE(S["lover_text"]			, lover_text)
 	WRITE_FILE(S["reason_of_death"]			, reason_of_death)
-	WRITE_FILE(S["clane"]			, clan)
+	WRITE_FILE(S["clane"]			, clan.type)
 	WRITE_FILE(S["generation"]			, generation)
 	WRITE_FILE(S["generation_bonus"]			, generation_bonus)
 	WRITE_FILE(S["masquerade"]			, masquerade)
@@ -758,7 +770,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_moth_antennae"]			, features["moth_antennae"])
 	WRITE_FILE(S["feature_moth_markings"]		, features["moth_markings"])
 	WRITE_FILE(S["persistent_scars"]			, persistent_scars)
-	WRITE_FILE(S["dharma_type"], dharma_type)
+	WRITE_FILE(S["dharma_type"], dharma.type)
 	WRITE_FILE(S["dharma_level"], dharma_level)
 	WRITE_FILE(S["po_type"], po_type)
 	WRITE_FILE(S["po"], po)

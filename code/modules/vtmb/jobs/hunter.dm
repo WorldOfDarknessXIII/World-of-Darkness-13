@@ -28,18 +28,6 @@
 		my_name = pick(GLOB.first_names_female)
 	var/my_surname = pick(GLOB.last_names)
 	H.fully_replace_character_name(null,"[my_name] [my_surname]")
-//	for(var/atom/movable/screen/blood/B in H.hud_used.infodisplay)
-//		B.icon_state = null
-//	for(var/atom/movable/screen/healths/HE in H.hud_used.infodisplay)
-//		HE.icon = 'code/modules/wod13/ghoul_health.dmi'
-//	for(var/atom/movable/screen/drinkblood/DB in H.hud_used.static_inventory)
-//		DB.icon_state = null
-//	for(var/atom/movable/screen/bloodheal/BH in H.hud_used.static_inventory)
-//		BH.icon_state = null
-//	for(var/atom/movable/screen/bloodpower/BP in H.hud_used.static_inventory)
-//		BP.icon_state = null
-//	for(var/atom/movable/screen/disciplines/DI in H.hud_used.static_inventory)
-//		DI.icon_state = null
 	for(var/datum/action/A in H.actions)
 		if(A.spell_button)
 			A.Remove(H)

@@ -32,6 +32,7 @@
 	selectable = TRUE
 	whitelisted = FALSE
 
+	var/enlightenment = FALSE
 	var/generation = 13
 	var/datum/vampireclan/clan
 	COOLDOWN_DECLARE(torpor_timer)

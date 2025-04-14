@@ -53,24 +53,20 @@
 			if (-INFINITY to 10) //normal corpse
 				return
 			if (10 to 50)
-				clan.rot_body(1) //skin takes on a weird colouration
+				rot_body(1) //skin takes on a weird colouration
 				visible_message("<span class='notice'>[src]'s skin loses some of its colour.</span>")
 				update_body()
-				update_body() //this seems to be necessary due to stuff being set on update_body() and then only refreshing with a new call
 			if (50 to 100)
-				clan.rot_body(2) //looks slightly decayed
+				rot_body(2) //looks slightly decayed
 				visible_message("<span class='notice'>[src]'s skin rapidly decays.</span>")
 				update_body()
-				update_body()
 			if (100 to 150)
-				clan.rot_body(3) //looks very decayed
+				rot_body(3) //looks very decayed
 				visible_message("<span class='warning'>[src]'s body rapidly decomposes!</span>")
 				update_body()
-				update_body()
 			if (150 to 200)
-				clan.rot_body(4) //mummified skeletonised corpse
+				rot_body(4) //mummified skeletonised corpse
 				visible_message("<span class='warning'>[src]'s body rapidly skeletonises!</span>")
-				update_body()
 				update_body()
 			if (200 to INFINITY)
 				if (is_kindred(src))
