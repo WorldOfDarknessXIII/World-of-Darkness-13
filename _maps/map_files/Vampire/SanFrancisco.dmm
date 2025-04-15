@@ -28147,6 +28147,11 @@
 	},
 /turf/open/floor/plating/vampplating,
 /area/vtm/interior/police)
+"cRt" = (
+/obj/effect/landmark/npcwall,
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/plating/vampgrass,
+/area/vtm/park)
 "cRJ" = (
 /turf/closed/wall/vampwall/old/low/window,
 /area/vtm/interior/chantry)
@@ -28562,6 +28567,11 @@
 /obj/structure/curtain/bounty,
 /turf/closed/wall/vampwall/rich/low/window/reinforced,
 /area/vtm/interior/giovanni)
+"dbW" = (
+/obj/effect/landmark/npcwall,
+/obj/structure/flora/ausbushes,
+/turf/open/floor/plating/vampgrass,
+/area/vtm/park)
 "dbY" = (
 /obj/structure/chair/wood/wings,
 /turf/open/floor/carpet/royalblack,
@@ -29986,6 +29996,12 @@
 	},
 /turf/open/floor/plating/toilet,
 /area/vtm/dwelling/ghetto12)
+"dJu" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/effect/landmark/npcwall,
+/obj/structure/vamptree,
+/turf/open/floor/plating/vampgrass,
+/area/vtm/park)
 "dJD" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -41119,6 +41135,15 @@
 	},
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/interior/endron_facility)
+"iJc" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/effect/decal/bordur,
+/obj/effect/decal/bordur{
+	dir = 4
+	},
+/obj/effect/landmark/npcwall,
+/turf/open/floor/plating/sidewalk/old,
+/area/vtm/park)
 "iJf" = (
 /obj/structure/table/reinforced,
 /obj/item/melee/vampirearms/shovel,
@@ -55407,6 +55432,14 @@
 /obj/structure/table/wood,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/interior/mansion)
+"pvM" = (
+/obj/effect/landmark/npcwall,
+/obj/effect/decal/bordur{
+	dir = 8
+	},
+/obj/effect/decal/bordur,
+/turf/open/floor/plating/sidewalk/old,
+/area/vtm/park)
 "pvW" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -169167,7 +169200,7 @@ bgD
 beU
 jIO
 jIO
-bfv
+pvM
 bfp
 biK
 beq
@@ -169424,7 +169457,7 @@ bgD
 rJq
 bgD
 bgD
-bfv
+kyS
 bfw
 beb
 beq
@@ -169681,8 +169714,8 @@ bgD
 rli
 urs
 bgD
-bfw
-bfw
+kyS
+wWC
 beb
 beq
 beq
@@ -169938,7 +169971,7 @@ bgD
 gCG
 iQB
 bgD
-aNf
+kyS
 bgn
 biG
 beq
@@ -170195,7 +170228,7 @@ bgD
 urs
 vZS
 bgD
-bfw
+kyS
 bfx
 beb
 beq
@@ -170452,8 +170485,8 @@ vVw
 urs
 uAL
 bgD
-bgn
-bfw
+kyS
+dbW
 beb
 beq
 beq
@@ -170709,7 +170742,7 @@ bgD
 ceX
 xPM
 bgD
-bfw
+kyS
 bfp
 beb
 beq
@@ -170966,8 +170999,8 @@ bgD
 igi
 urs
 bgD
-aNf
-bfw
+kyS
+wWC
 beb
 beq
 beq
@@ -171223,7 +171256,7 @@ bgD
 rJq
 bgD
 bgD
-bfw
+kyS
 bfv
 beb
 beq
@@ -171480,7 +171513,7 @@ umX
 xXY
 tNK
 bgD
-bfw
+kyS
 bfv
 biJ
 beq
@@ -171737,8 +171770,8 @@ bgD
 rMK
 bgD
 bgD
-bgn
-bfw
+kyS
+dbW
 biK
 beq
 beq
@@ -171994,8 +172027,8 @@ bgD
 eLk
 umY
 bgD
-aNf
-bfw
+kyS
+cRt
 beb
 beq
 beq
@@ -172251,8 +172284,8 @@ bgD
 rJq
 bgD
 bgD
-bfw
-bfv
+kyS
+dJu
 beb
 beq
 beq
@@ -172508,7 +172541,7 @@ bgD
 srP
 uVq
 uVq
-lEh
+iJc
 lEh
 biG
 beq
@@ -172766,7 +172799,7 @@ cvB
 vfF
 xHA
 hUB
-jrP
+iYD
 beb
 beq
 beq
