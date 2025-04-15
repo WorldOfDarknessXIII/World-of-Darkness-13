@@ -92,7 +92,6 @@
 	var/mob/living/caster
 
 	var/datum/job/JOB
-	var/roundstart_vampire = FALSE
 	var/last_loot_check = 0
 
 	var/phonevoicetag = 10

@@ -14,7 +14,6 @@
 	punchdamagehigh = 20
 	dust_anim = "dust-h"
 	var/mob/living/carbon/human/master
-	var/changed_master = FALSE
 	var/last_vitae = 0
 	var/list/datum/discipline/disciplines = list()
 	selectable = TRUE
@@ -172,7 +171,6 @@
 		return
 	taking = FALSE
 
-	ghoul.drunked_of |= "[victim.dna.real_name]"
 	victim.bloodpool = max(0, victim.bloodpool - 1)
 	ghoul.bloodpool = min(ghoul.bloodpool + 1, ghoul.maxbloodpool)
 	ghoul.update_blood_hud()

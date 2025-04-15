@@ -3085,7 +3085,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_hair()
 		character.update_body_parts()
 	if(!character_setup)
-		character.roundstart_vampire = TRUE
 		if(character.age < 16)
 			if(!character.ischildren)
 				character.ischildren = TRUE

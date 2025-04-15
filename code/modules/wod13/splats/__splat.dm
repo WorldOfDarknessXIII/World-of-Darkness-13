@@ -172,6 +172,6 @@
 /mob/living/is_splat_incompatible(splat_type)
 	for (var/datum/splat/splat in splats)
 		if (splat_type in splat.incompatible_splats)
-			return FALSE
+			return TRUE
 
-	return TRUE
+	return FALSE

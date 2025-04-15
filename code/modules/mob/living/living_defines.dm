@@ -172,8 +172,6 @@
 	//Shitty VtM vars I'm moving here so they're not strewn around the codebase
 	var/bloodquality = 1
 
-	var/list/drunked_of = list()
-
 	var/total_cleaned = 0
 
 	var/physique = 1

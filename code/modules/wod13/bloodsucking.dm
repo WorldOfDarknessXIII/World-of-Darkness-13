@@ -86,7 +86,6 @@
 		suckbar.icon_state = "[round(14*(mob.bloodpool/mob.maxbloodpool))]"
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
-			drunked_of |= "[H.dna.real_name]"
 			if(!is_kindred(mob))
 				H.blood_volume = max(H.blood_volume-50, 150)
 			if(is_kuei_jin(src))

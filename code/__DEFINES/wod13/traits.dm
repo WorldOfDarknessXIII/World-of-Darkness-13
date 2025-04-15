@@ -68,6 +68,12 @@
 #define TRAIT_MASQUERADE_VIOLATING_EYES "masquerade_violating_eyes"
 /// If face is uncovered, they will be obviously supernatural to everyone nearby
 #define TRAIT_MASQUERADE_VIOLATING_FACE "masquerade_violating_face"
+/// Cannot be fed Vitae, will simply vomit it back up
+#define TRAIT_ALLERGIC_TO_VITAE "allergic_to_vitae"
+/// Vampire can give others Vitae, but cannot successfully Embrace anyone
+#define TRAIT_CANNOT_EMBRACE "cannot_embrace"
+/// Can drink Vitae and suffer its effects despite not normally being able to
+#define TRAIT_TOLERATES_VITAE "tolerates_vitae"
 
 /* TRAIT SOURCES */
 #define SPLAT_TRAIT "splat_trait"

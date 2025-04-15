@@ -77,12 +77,6 @@ And it also helps for the character set panel
 /datum/vampireclan/proc/post_gain(mob/living/carbon/human/vampire)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if ((TRAIT_MASQUERADE_VIOLATING_FACE in clan_traits) && vampire.roundstart_vampire)
-		if (length(GLOB.masquerade_latejoin))
-			var/obj/effect/landmark/latejoin_masquerade/LM = pick(GLOB.masquerade_latejoin)
-			if(LM)
-				vampire.forceMove(LM.loc)
-
 /mob/living/carbon
 	var/datum/relationship/Myself
 

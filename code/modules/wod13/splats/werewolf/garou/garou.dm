@@ -38,12 +38,12 @@
 	COOLDOWN_DECLARE(rage_from_attack)
 	COOLDOWN_DECLARE(look_at_moon)
 
-/datum/splat/werewolf/garou/New(level = 1, auspice = /datum/auspice/ahroun, tribe = /datum/tribe/wendigo, breed = /datum/breed/homid)
+/datum/splat/werewolf/garou/New(level, datum/auspice/auspice, datum/tribe/tribe, datum/breed/breed)
 	. = ..()
 	src.level = level
-	src.auspice = GLOB.werewolf_auspices[auspice]
-	src.tribe = GLOB.werewolf_tribes[tribe]
-	src.breed = GLOB.werewolf_breeds[breed]
+	src.auspice = auspice
+	src.tribe = auspice
+	src.breed = auspice
 
 	max_resources[RESOURCE_GNOSIS] = src.breed.starting_gnosis
 	resources[RESOURCE_GNOSIS] = max_resources[RESOURCE_GNOSIS]
@@ -52,6 +52,9 @@
 
 /datum/splat/werewolf/garou/on_gain()
 	. = ..()
+
+	RegisterSignal(owner, COMSIG_MOB_DRINK_VITAE, PROC_REF(handle_drinking_vitae))
+	RegisterSignal(owner, COMSIG_MOB_EMBRACED, PROC_REF(handle_embrace))
 
 	owner.update_rage_hud()
 
@@ -100,3 +103,49 @@
 	else
 		transformator.crinos_form.name = owner.real_name
 		transformator.lupus_form.name = owner.real_name
+
+/datum/splat/werewolf/garou/proc/handle_drinking_vitae(mob/living/carbon/source, mob/living/vampire, amount)
+	SIGNAL_HANDLER
+
+	// This isn't just drinking Vitae, this Garou is being EMBRACED!! And special handling applies instead
+	if (source.stat == DEAD)
+		return
+
+	// Has already been handled before, no need to repeat the roll
+	if (HAS_TRAIT(source, TRAIT_ALLERGIC_TO_VITAE) || HAS_TRAIT(source, TRAIT_TOLERATES_VITAE))
+		return
+
+	// Roll to determine if the Garou tolerates Vitae or not
+	switch (storyteller_roll(dice = max_resources[RESOURCE_GNOSIS], difficulty = 3))
+		if (ROLL_BOTCH, ROLL_FAILURE)
+			ADD_TRAIT(source, TRAIT_TOLERATES_VITAE, WEREWOLF_TRAIT)
+		if (ROLL_SUCCESS)
+			ADD_TRAIT(source, TRAIT_ALLERGIC_TO_VITAE, WEREWOLF_TRAIT)
+
+/datum/splat/werewolf/garou/proc/handle_embrace(mob/living/carbon/source, mob/living/vampire)
+	SIGNAL_HANDLER
+
+	if (HAS_TRAIT(owner, TRAIT_EMBRACE_ALWAYS_SUCCEEDS))
+		to_chat(vampire, span_danger("Something terrible is happening."))
+		to_chat(owner, span_userdanger("Gaia has forsaken you."))
+		message_admins("[ADMIN_LOOKUPFLW(vampire)] has turned [ADMIN_LOOKUPFLW(owner)] into an Abomination through TRAIT_EMBRACE_ALWAYS_SUCEEDS.")
+		log_game("[key_name(vampire)] has turned [key_name(owner)] into an Abomination through TRAIT_EMBRACE_ALWAYS_SUCCEEDS.")
+		return
+
+	// this should be rolling permanent Gnosis, which we... don't really have.
+	switch (storyteller_roll(dice = max_resources[RESOURCE_GNOSIS], difficulty = 6))
+		if (ROLL_BOTCH)
+			to_chat(vampire, span_danger("Something terrible is happening."))
+			to_chat(owner, span_userdanger("Gaia has forsaken you."))
+			message_admins("[ADMIN_LOOKUPFLW(vampire)] has turned [ADMIN_LOOKUPFLW(owner)] into an Abomination.")
+			log_game("[key_name(vampire)] has turned [key_name(owner)] into an Abomination.")
+		if (ROLL_FAILURE)
+			owner.visible_message(span_warning("[owner] convulses in sheer agony!"))
+			owner.do_jitter_animation(30)
+			playsound(owner, 'code/modules/wod13/sounds/vicissitude.ogg', 100, TRUE)
+			ADD_TRAIT(owner, TRAIT_CANNOT_BE_EMBRACED, WEREWOLF_TRAIT)
+			return CANCEL_EMBRACE
+		if (ROLL_SUCCESS)
+			to_chat(vampire, span_notice("[owner] does not respond to your Vitae..."))
+			ADD_TRAIT(owner, TRAIT_CANNOT_BE_EMBRACED, WEREWOLF_TRAIT)
+			return CANCEL_EMBRACE
