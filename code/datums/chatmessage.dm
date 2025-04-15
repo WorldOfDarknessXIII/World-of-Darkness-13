@@ -199,6 +199,7 @@
 	// View the message
 	LAZYADDASSOC(owned_by.seen_messages, message_loc, src)
 	owned_by.images |= message
+	animate(message, alpha = 0, time = 0) // Temp fix for chat flickering issue
 	animate(message, alpha = 255, time = CHAT_MESSAGE_SPAWN_TIME)
 
 	// Register with the runechat SS to handle EOL and destruction

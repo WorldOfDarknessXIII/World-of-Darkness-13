@@ -114,6 +114,7 @@
 	bar.pixel_y = 0
 	bar.alpha = 0
 	user_client.images += bar
+	animate(bar, alpha = 0, time = 0) // temporary fix to flickering issue
 	animate(bar, pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 
 
