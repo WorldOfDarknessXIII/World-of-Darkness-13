@@ -9111,7 +9111,7 @@
 /area/vtm/anarch)
 "aFz" = (
 /obj/effect/decal/wallpaper/paper/low,
-/turf/closed/wall/vampwall/old/low/window,
+/turf/closed/wall/vampwall/city/low/window/dwelling/old,
 /area/vtm/dwelling/ghetto07)
 "aFA" = (
 /obj/effect/decal/graffiti,
@@ -56375,9 +56375,6 @@
 /obj/structure/stairs/east,
 /turf/open/floor/plating/parquetry,
 /area/vtm/interior/strip_elysium)
-"pSY" = (
-/turf/closed/wall/vampwall/junk/alt/low/window,
-/area/vtm/dwelling/ghetto12)
 "pTd" = (
 /obj/machinery/light{
 	pixel_x = -16;
@@ -198181,11 +198178,11 @@ anb
 ajU
 tTE
 tTE
-pSY
+rVu
 tTE
-pSY
+rVu
 tTE
-pSY
+rVu
 tTE
 tTE
 tTE
