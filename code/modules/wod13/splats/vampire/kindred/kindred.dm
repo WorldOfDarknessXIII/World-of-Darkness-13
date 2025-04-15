@@ -178,39 +178,14 @@
 	INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob/living, save_embraced_character_prompt), owner)
 
 	var/childe_generation = generation + 1
-	var/datum/vampireclan/childe_clan
+	var/datum/vampireclan/childe_clan = clan
 	// Thinbloods are counted as especially sucky Caitiff
 	if (childe_generation > 13)
+		childe_clan = GLOB.vampire_clans[/datum/vampireclan/caitiff]
 
-	var/datum/splat/vampire/kindred/childe_vampirism = new SPLAT_KINDRED(generation, clan)
+	var/datum/splat/vampire/kindred/childe_vampirism = new SPLAT_KINDRED(childe_generation, childe_clan)
 	childe_vampirism.assign(victim)
 
-	victim.set_species(/datum/species/kindred)
-	victim.clan = null
-	if(vampire.generation < 13)
-		victim.generation = 13
-		victim.skin_tone = get_vamp_skin_color(victim.skin_tone)
-		victim.update_body()
-		if (vampire.clan.whitelisted)
-			if (!SSwhitelists.is_whitelisted(victim.ckey, vampire.clan.name))
-				if(vampire.clan.name == "True Brujah")
-					victim.clan = new /datum/vampireclan/brujah()
-					to_chat(victim,span_warning(" You don't got that whitelist! Changing to the non WL Brujah"))
-				else if(vampire.clan.name == "Tzimisce")
-					victim.clan = new /datum/vampireclan/old_clan_tzimisce()
-					to_chat(victim,span_warning(" You don't got that whitelist! Changing to the non WL Old Tzmisce"))
-				else
-					to_chat(victim,span_warning(" You don't got that whitelist! Changing to a random non WL clan."))
-					var/list/non_whitelisted_clans = list(/datum/vampireclan/brujah,/datum/vampireclan/malkavian,/datum/vampireclan/nosferatu,/datum/vampireclan/gangrel,/datum/vampireclan/giovanni,/datum/vampireclan/ministry,/datum/vampireclan/salubri,/datum/vampireclan/toreador,/datum/vampireclan/tremere,/datum/vampireclan/ventrue)
-					var/random_clan = pick(non_whitelisted_clans)
-					victim.clan = new random_clan
-			else
-				victim.clan = new vampire.clan.type()
-		else
-			victim.clan = new vampire.clan.type()
-
-		victim.clan.on_gain(victim)
-		victim.clan.post_gain(victim)
 		if(victim.clan.alt_sprite)
 			victim.skin_tone = "albino"
 			victim.update_body()
@@ -266,14 +241,15 @@
 			BLOODBONDED_prefs_v.save_character()
 
 /mob/living/proc/save_embraced_character_prompt(mob/living/sire)
-	if (!is_kindred(src))
+	var/datum/splat/vampire/kindred/vampirism = is_kindred(src)
+	if (!vampirism)
 		return
 
 	// Prompt asking if they want to save this
 	var/response = tgui_alert(
-		user = victim,
+		user = src,
 		message = "Do you wish to keep being a vampire on your save slot? \
-		(This will replace your saved supernatural type and reset relevant stats!)",
+		(This will replace your saved supernatural type and reset supernatural stats!)",
 		title = "Stay A Vampire?",
 		buttons = list("Yes", "No")
 	)
@@ -281,9 +257,29 @@
 	if (response != "Yes")
 		return
 
+	var/datum/preferences/preferences = client.prefs
+
+	// Save splat
+
+	// Save Clan
+	if (vampirism.clan.whitelisted && !SSwhitelists.is_whitelisted(ckey, vampirism.clan.name))
+		if (sire.clan.name == "True Brujah")
+			victim.clan = new /datum/vampireclan/brujah()
+			to_chat(victim, span_warning("You don't got that whitelist! Changing to the non WL Brujah"))
+		else if (vampire.clan.name == "Tzimisce")
+			victim.clan = new /datum/vampireclan/old_clan_tzimisce()
+			to_chat(victim,span_warning("You don't got that whitelist! Changing to the non WL Old Tzmisce"))
+		else
+			to_chat(victim,span_warning("You don't got that whitelist! Changing to a random non WL clan."))
+			var/list/non_whitelisted_clans = list(/datum/vampireclan/brujah,/datum/vampireclan/malkavian,/datum/vampireclan/nosferatu,/datum/vampireclan/gangrel,/datum/vampireclan/giovanni,/datum/vampireclan/ministry,/datum/vampireclan/salubri,/datum/vampireclan/toreador,/datum/vampireclan/tremere,/datum/vampireclan/ventrue)
+			var/random_clan = pick(non_whitelisted_clans)
+			victim.clan = new random_clan
+	else
+		preferences.clan = vampirism.clan
+
 /datum/splat/vampire/kindred/proc/ghoul(mob/living/carbon/victim)
 	if (!is_ghoul(victim) && istype(victim, /mob/living/carbon/human/npc))
-		var/mob/living/carbon/human/npc/NPC = vampire.pulling
+		var/mob/living/carbon/human/npc/NPC = owner.pulling
 		NPC.ghoulificate(owner)
 
 /datum/splat/vampire/kindred/proc/bloodbond(mob/living/carbon/victim)
