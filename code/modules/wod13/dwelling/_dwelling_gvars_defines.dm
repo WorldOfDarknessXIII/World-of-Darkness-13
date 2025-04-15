@@ -54,5 +54,6 @@ GLOBAL_LIST_EMPTY (dwelling_area_list)
 			if(new_number > total_dwellings) new_number = total_dwellings
 			adjust_dwelling_loot("moderate",new_number)
 			msg = "Dwelling Loot Distribution type moderate adjusted to [new_number] by [key_name_admin(usr)] "
-	log_admin(msg)
-	message_admins(msg)
+	if(msg)
+		log_admin(msg)
+		message_admins(msg)
