@@ -266,7 +266,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	blood = A.start_blood
 	lockpicking = A.start_lockpicking
 	athletics = A.start_athletics
-	clan = /datum/vampireclan/brujah
+	clan = GLOB.vampire_clans[/datum/vampireclan/brujah]
 	discipline_types = list()
 	discipline_levels = list()
 	for (var/i in 1 to clan.clan_disciplines.len)

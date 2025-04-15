@@ -118,39 +118,6 @@
 		if (HAS_TRAIT(victim, TRAIT_TORPOR) && COOLDOWN_FINISHED(species, torpor_timer))
 			victim.untorpor()
 
-	if (victim.mind)
-		if(victim.mind.enslaved_to != owner)
-			victim.mind.enslave_mind_to_creator(owner)
-			to_chat(victim, span_userdanger("<b>AS PRECIOUS VITAE ENTERS YOUR MOUTH, YOU ARE BLOODBOUND TO [vampire]. SERVE YOUR REGNANT CORRECTLY, OR YOUR ACTIONS WILL NOT BE TOLERATED.</b>"))
-	if (is_ghoul(victim))
-		var/datum/species/ghoul/G = victim.dna.species
-		G.master = owner
-		G.last_vitae = world.time
-	else if (!is_kindred(victim) && !isnpc(victim))
-		var/save_data_g = FALSE
-		victim.set_species(/datum/species/ghoul)
-		victim.clan = null
-		var/response_g = input(victim, "Do you wish to keep being a ghoul on your save slot?(Yes will be a permanent choice and you can't go back)") in list("Yes", "No")
-		var/datum/species/ghoul/G = victim.dna.species
-		G.master = owner
-		G.last_vitae = world.time
-		if(response_g == "Yes")
-			save_data_g = TRUE
-		else
-			save_data_g = FALSE
-		if(save_data_g)
-			var/datum/preferences/BLOODBONDED_prefs_g = victim.client.prefs
-			if(BLOODBONDED_prefs_g.discipline_types.len == 3)
-				for (var/i in 1 to 3)
-					var/removing_discipline = BLOODBONDED_prefs_g.discipline_types[1]
-					if (removing_discipline)
-						var/index = BLOODBONDED_prefs_g.discipline_types.Find(removing_discipline)
-						BLOODBONDED_prefs_g.discipline_types.Cut(index, index + 1)
-						BLOODBONDED_prefs_g.discipline_levels.Cut(index, index + 1)
-			BLOODBONDED_prefs_g.pref_species.name = "Ghoul"
-			BLOODBONDED_prefs_g.pref_species.id = "ghoul"
-			BLOODBONDED_prefs_g.save_character()
-
 /datum/splat/vampire/kindred/proc/embrace(mob/living/carbon/victim)
 	// Check if the victim can be Embraced
 	if (!victim.can_embrace())
@@ -177,6 +144,7 @@
 	// Prompt the victim on if they want to stay a vampire in subsequent rounds
 	INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob/living, save_embraced_character_prompt), owner)
 
+	// Create vampire splat for the childe
 	var/childe_generation = generation + 1
 	var/datum/vampireclan/childe_clan = clan
 	// Thinbloods are counted as especially sucky Caitiff
@@ -186,63 +154,20 @@
 	var/datum/splat/vampire/kindred/childe_vampirism = new SPLAT_KINDRED(childe_generation, childe_clan)
 	childe_vampirism.assign(victim)
 
-		if(victim.clan.alt_sprite)
-			victim.skin_tone = "albino"
-			victim.update_body()
+	//Gives the Childe the Sire's first three Disciplines
+	var/list/disciplines_to_give = list()
+	for (var/i in 1 to min(3, powers.len))
+		disciplines_to_give += powers[i].type
 
-		//Gives the Childe the Sire's first three Disciplines
-
-		var/list/disciplines_to_give = list()
-		for (var/i in 1 to min(3, vampire.client.prefs.discipline_types.len))
-			disciplines_to_give += vampire.client.prefs.discipline_types[i]
-		victim.create_disciplines(FALSE, disciplines_to_give)
-
-		victim.maxbloodpool = 10+((13-min(13, victim.generation))*3)
-		victim.clan.enlightenment = vampire.clan.enlightenment
-	else
-		victim.maxbloodpool = 10+((13-min(13, victim.generation))*3)
-		victim.generation = 14
-		victim.clan = new /datum/vampireclan/caitiff()
-
-	//Verify if they accepted to save being a vampire
-	if (is_kindred(victim) && save_data_v)
-		var/datum/preferences/BLOODBONDED_prefs_v = victim.client.prefs
-
-		BLOODBONDED_prefs_v.pref_species.id = "kindred"
-		BLOODBONDED_prefs_v.pref_species.name = "Vampire"
-		if(vampire.generation < 13)
-
-			BLOODBONDED_prefs_v.clan = victim.clan
-			BLOODBONDED_prefs_v.generation = 13
-			BLOODBONDED_prefs_v.skin_tone = get_vamp_skin_color(victim.skin_tone)
-			BLOODBONDED_prefs_v.clan.enlightenment = vampire.clan.enlightenment
-
-
-			//Rarely the new mid round vampires get the 3 brujah skil(it is default)
-			//This will remove if it happens
-			// Or if they are a ghoul with abunch of disciplines
-			if(BLOODBONDED_prefs_v.discipline_types.len > 0)
-				for (var/i in 1 to BLOODBONDED_prefs_v.discipline_types.len)
-					var/removing_discipline = BLOODBONDED_prefs_v.discipline_types[1]
-					if (removing_discipline)
-						var/index = BLOODBONDED_prefs_v.discipline_types.Find(removing_discipline)
-						BLOODBONDED_prefs_v.discipline_types.Cut(index, index + 1)
-						BLOODBONDED_prefs_v.discipline_levels.Cut(index, index + 1)
-
-			if(BLOODBONDED_prefs_v.discipline_types.len == 0)
-				for (var/i in 1 to 3)
-					BLOODBONDED_prefs_v.discipline_types += BLOODBONDED_prefs_v.clan.clan_disciplines[i]
-					BLOODBONDED_prefs_v.discipline_levels += 1
-			BLOODBONDED_prefs_v.save_character()
-
-		else
-			BLOODBONDED_prefs_v.generation = 13 // Game always set to 13 anyways, 14 is not possible.
-			BLOODBONDED_prefs_v.clan = new /datum/vampireclan/caitiff()
-			BLOODBONDED_prefs_v.save_character()
+	victim.create_disciplines(FALSE, disciplines_to_give)
 
 /mob/living/proc/save_embraced_character_prompt(mob/living/sire)
 	var/datum/splat/vampire/kindred/vampirism = is_kindred(src)
 	if (!vampirism)
+		return
+
+	var/datum/splat/vampire/kindred/sire_vampirism = is_kindred(sire)
+	if (!sire_vampirism)
 		return
 
 	// Prompt asking if they want to save this
@@ -260,27 +185,54 @@
 	var/datum/preferences/preferences = client.prefs
 
 	// Save splat
+	preferences.splat = SPLAT_KINDRED
+	preferences.generation = max(13, vampirism.generation)
 
 	// Save Clan
 	if (vampirism.clan.whitelisted && !SSwhitelists.is_whitelisted(ckey, vampirism.clan.name))
-		if (sire.clan.name == "True Brujah")
-			victim.clan = new /datum/vampireclan/brujah()
-			to_chat(victim, span_warning("You don't got that whitelist! Changing to the non WL Brujah"))
-		else if (vampire.clan.name == "Tzimisce")
-			victim.clan = new /datum/vampireclan/old_clan_tzimisce()
-			to_chat(victim,span_warning("You don't got that whitelist! Changing to the non WL Old Tzmisce"))
-		else
-			to_chat(victim,span_warning("You don't got that whitelist! Changing to a random non WL clan."))
-			var/list/non_whitelisted_clans = list(/datum/vampireclan/brujah,/datum/vampireclan/malkavian,/datum/vampireclan/nosferatu,/datum/vampireclan/gangrel,/datum/vampireclan/giovanni,/datum/vampireclan/ministry,/datum/vampireclan/salubri,/datum/vampireclan/toreador,/datum/vampireclan/tremere,/datum/vampireclan/ventrue)
-			var/random_clan = pick(non_whitelisted_clans)
-			victim.clan = new random_clan
+		var/list/datum/vampireclan/available_clans = list()
+		for (var/datum/vampireclan/checking_clan in GLOB.vampire_clans)
+			if (checking_clan.whitelisted)
+				if (!SSwhitelists.is_whitelisted(ckey, checking_clan.name))
+					continue
+
+			available_clans += checking_clan
+
+		var/datum/vampireclan/choice = tgui_input_list(
+			user = src,
+			message = "You aren't whitelisted for your sire's Clan. Choose a Clan instead.",
+			title = "Clan Selection",
+			items = available_clans,
+			default = GLOB.vampire_clans[/datum/vampireclan/caitiff]
+		)
+
+		preferences.clan = choice
 	else
 		preferences.clan = vampirism.clan
+
+	// Save Disciplines
+	preferences.discipline_types = list(vampirism.powers[1].type, vampirism.powers[2].type, vampirism.powers[3].type)
+	preferences.discipline_levels = list(1, 1, 1)
+
+	// Finalise
+	preferences.save_character()
 
 /datum/splat/vampire/kindred/proc/ghoul(mob/living/carbon/victim)
 	if (!is_ghoul(victim) && istype(victim, /mob/living/carbon/human/npc))
 		var/mob/living/carbon/human/npc/NPC = owner.pulling
-		NPC.ghoulificate(owner)
+
+	if (is_ghoul(victim))
+		var/datum/species/ghoul/G = victim.dna.species
+		G.master = owner
+		G.last_vitae = world.time
+	else if (!is_kindred(victim) && !isnpc(victim))
+		var/save_data_g = FALSE
+		victim.set_species(/datum/species/ghoul)
+		victim.clan = null
+		var/response_g = input(victim, "Do you wish to keep being a ghoul on your save slot?(Yes will be a permanent choice and you can't go back)") in list("Yes", "No")
+		var/datum/species/ghoul/G = victim.dna.species
+		G.regnant = owner
+		G.last_vitae = world.time
 
 /datum/splat/vampire/kindred/proc/bloodbond(mob/living/carbon/victim)
 	if (victim.has_status_effect(STATUS_EFFECT_INLOVE))
@@ -289,6 +241,10 @@
 
 	message_admins("[ADMIN_LOOKUPFLW(owner)] has bloodbonded [ADMIN_LOOKUPFLW(victim)].")
 	log_game("[key_name(owner)] has bloodbonded [key_name(victim)].")
+
+	if (victim.mind?.enslaved_to != owner)
+		victim.mind.enslave_mind_to_creator(owner)
+		to_chat(victim, span_userdanger("<b>AS PRECIOUS VITAE ENTERS YOUR MOUTH, YOU ARE BLOODBOUND TO [owner]. SERVE YOUR REGNANT CORRECTLY, OR YOUR ACTIONS WILL NOT BE TOLERATED.</b>"))
 
 /datum/splat/vampire/kindred/proc/set_generation(generation = 13)
 	src.generation = generation
