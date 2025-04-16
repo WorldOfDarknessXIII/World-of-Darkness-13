@@ -16,8 +16,8 @@ SUBSYSTEM_DEF(whitelists)
 		return ..()
 	whitelists_enabled = TRUE
 
-	for (var/key in subtypesof(/datum/vampireclane))
-		var/datum/vampireclane/clan = new key
+	for (var/key in subtypesof(/datum/vampireclan))
+		var/datum/vampireclan/clan = new key
 		if (clan.whitelisted)
 			possible_whitelists += clan.name
 		qdel(clan)

@@ -113,18 +113,7 @@ var/list/CMNoir = list(0.3,0.3,0.3,0,\
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 		set_suicide(body.suiciding) // Transfer whether they committed suicide.
 
-//		if(ishuman(body))
-//			var/mob/living/carbon/human/body_human = body
-//			if(HAIR in body_human.dna.species.species_traits)
-//				hairstyle = body_human.hairstyle
-//				hair_color = brighten_color(body_human.hair_color)
-//			if(FACEHAIR in body_human.dna.species.species_traits)
-//				facial_hairstyle = body_human.facial_hairstyle
-//				facial_hair_color = brighten_color(body_human.facial_hair_color)
-
 	update_icon()
-//	appearance = body.appearance
-//	alpha = 130
 
 	if(!T)
 		var/list/turfs = get_area_turfs(/area/shuttle/arrival)
@@ -139,8 +128,6 @@ var/list/CMNoir = list(0.3,0.3,0.3,0,\
 		name = random_unique_name(gender)
 	real_name = name
 
-//	if(!fun_verbs)
-//		remove_verb(src, TYPE_VERB_REF(/mob/dead/observer, boo))
 	remove_verb(src, /mob/dead/observer/verb/possess)
 
 	add_to_dead_mob_list()
@@ -170,7 +157,6 @@ var/list/CMNoir = list(0.3,0.3,0.3,0,\
 		remove_verb(src, /mob/dead/observer/verb/register_pai_candidate)
 		remove_verb(src, /mob/dead/observer/proc/open_spawners_menu)
 		remove_verb(src, /mob/dead/observer/verb/stay_dead)
-
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
@@ -237,25 +223,6 @@ var/list/CMNoir = list(0.3,0.3,0.3,0,\
 	else
 		updatedir = 0	//stop updating the dir in case we want to show accessories with dirs on a ghost sprite without dirs
 		setDir(2 		)//reset the dir to its default so the sprites all properly align up
-
-//	if(ghost_accs == GHOST_ACCS_FULL && (icon_state in GLOB.ghost_forms_with_accessories_list)) //check if this form supports accessories and if the client wants to show them
-//		var/datum/sprite_accessory/S
-//		if(facial_hairstyle)
-//			S = GLOB.facial_hairstyles_list[facial_hairstyle]
-//			if(S)
-//				facial_hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
-//				if(facial_hair_color)
-//					facial_hair_overlay.color = "#" + facial_hair_color
-//				facial_hair_overlay.alpha = 200
-//				add_overlay(facial_hair_overlay)
-//		if(hairstyle)
-//			S = GLOB.hairstyles_list[hairstyle]
-//			if(S)
-//				hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
-//				if(hair_color)
-//					hair_overlay.color = "#" + hair_color
-//				hair_overlay.alpha = 200
-//				add_overlay(hair_overlay)
 
 /*
  * Increase the brightness of a color by calculating the average distance between the R, G and B values,

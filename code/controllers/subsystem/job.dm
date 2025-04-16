@@ -152,10 +152,10 @@ SUBSYSTEM_DEF(job)
 			JobDebug("FOC player species limit overrun, Player: [player]")
 			continue
 		if(player.client.prefs.pref_species.name == "Vampire")
-			if(player.client.prefs.clane)
+			if(player.client.prefs.clan)
 				var/alloww = FALSE
 				for(var/i in job.allowed_bloodlines)
-					if(i == player.client.prefs.clane.name)
+					if(i == player.client.prefs.clan.name)
 						alloww = TRUE
 				if(!alloww && !bypass)
 					JobDebug("FOC player clan not allowed, Player: [player]")
@@ -216,10 +216,10 @@ SUBSYSTEM_DEF(job)
 			continue
 
 		if(player.client.prefs.pref_species.name == "Vampire")
-			if(player.client.prefs.clane)
+			if(player.client.prefs.clan)
 				var/alloww = FALSE
 				for(var/i in job.allowed_bloodlines)
-					if(i == player.client.prefs.clane.name)
+					if(i == player.client.prefs.clan.name)
 						alloww = TRUE
 				if(!alloww)
 					JobDebug("GRJ player clan not allowed, Player: [player]")
@@ -426,10 +426,10 @@ SUBSYSTEM_DEF(job)
 					continue
 
 				if(player.client.prefs.pref_species.name == "Vampire")
-					if(player.client.prefs.clane)
+					if(player.client.prefs.clan)
 						var/alloww = FALSE
 						for(var/i in job.allowed_bloodlines)
-							if(i == player.client.prefs.clane.name)
+							if(i == player.client.prefs.clan.name)
 								alloww = TRUE
 						if(!alloww && !bypass)
 							JobDebug("DO player clan not allowed, Player: [player]")
@@ -568,7 +568,7 @@ SUBSYSTEM_DEF(job)
 
 		to_chat(M, "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
 		var/mob/living/carbon/human/human = living_mob
-		if((iskindred(human) && human.clane) || iscathayan(human) || isgarou(human))
+		if (is_supernatural(human))
 			if(job.v_duty && job.v_duty != "")
 				to_chat(M, "<span class='notice'><b>[job.v_duty]</b></span>")
 			if(job.title != "Prince")
@@ -577,18 +577,8 @@ SUBSYSTEM_DEF(job)
 				to_chat(M, "<span class='notice'><b>As a member of the Chantry, you are part of the Tremere Pyramid and are blood bonded to the Regent. Always be loyal.</b></span>")
 		else if(job.duty && job.duty != "")
 			to_chat(M, "<span class='notice'><b>[job.duty]</b></span>")
-//		job.radio_help_message(M)
 		if(job.req_admin_notify)
 			to_chat(M, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
-//		if(CONFIG_GET(number/minimal_access_threshold))
-//			to_chat(M, "<span class='notice'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></span>")
-
-//	var/related_policy = get_policy(rank)
-//	if(related_policy)
-//		to_chat(M,related_policy)
-//	if(ishuman(living_mob))
-//		var/mob/living/carbon/human/wageslave = living_mob
-//		living_mob.add_memory("Your account ID is [wageslave.account_id].")
 	if(job && living_mob)
 		job.after_spawn(living_mob, M, joined_late) // note: this happens before the mob has a key! M will always have a client, H might not.
 
@@ -734,22 +724,26 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/SendToLateJoin(mob/M, buckle = TRUE)
 	var/atom/destination
-	if(M.mind && M.mind.assigned_role && length(GLOB.jobspawn_overrides[M.mind.assigned_role])) //We're doing something special today.
+	if(M.mind?.assigned_role && length(GLOB.jobspawn_overrides[M.mind.assigned_role])) //We're doing something special today.
 		destination = pick(GLOB.jobspawn_overrides[M.mind.assigned_role])
 		destination.JoinPlayerHere(M, FALSE)
 		return TRUE
 
 	if(latejoin_trackers.len)
 		destination = pick(latejoin_trackers)
-		var/mob/living/carbon/human/H = M
-		if(H.clane)
-			if(H.clane.violating_appearance)
-				destination = pick(GLOB.masquerade_latejoin)
-		if(isgarou(H))
-			for(var/obj/structure/werewolf_totem/W in GLOB.totems)
-				if(W)
-					if(W.tribe == H.auspice.tribe)
-						destination = W
+
+		var/datum/splat/vampire/kindred/vampirism = is_kindred(M)
+		if (TRAIT_MASQUERADE_VIOLATING_FACE in vampirism.clan.clan_traits)
+			destination = pick(GLOB.masquerade_latejoin)
+
+		var/datum/splat/werewolf/garou/lycanthropy = is_garou(M)
+		if (lycanthropy)
+			for(var/obj/structure/werewolf_totem/totem in GLOB.totems)
+				if (totem.tribe != lycanthropy.tribe)
+					continue
+
+				destination = totem
+
 		destination.JoinPlayerHere(M, buckle)
 		return TRUE
 

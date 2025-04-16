@@ -58,6 +58,13 @@
 	var/obj/item/ammo_casing/magic/tentacle/lasombra/casing = new (owner.loc)
 	casing.fire_casing(target, owner, null, null, null, ran_zone(), 0,  owner)
 
+/obj/item/ammo_casing/magic/tentacle/lasombra
+	projectile_type = /obj/projectile/tentacle/lasombra
+
+/obj/projectile/tentacle/lasombra
+	damage_type = BURN
+	state_icon = "curse0"
+
 //ARMS OF THE ABYSS
 /datum/discipline_power/obtenebration/arms_of_the_abyss
 	name = "Arms of the Abyss"
@@ -151,7 +158,7 @@
 	desc = "Abyss Mysticism rune drawing."
 	button_icon_state = "thaumaturgy"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	vampiric = TRUE
+	spell_button = TRUE
 	var/drawing = FALSE
 	var/level = 1
 

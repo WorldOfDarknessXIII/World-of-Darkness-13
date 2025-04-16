@@ -60,8 +60,6 @@
 
 	var/spawned_backup_weapon = FALSE
 
-	var/ghoulificated = FALSE
-
 	var/staying = FALSE
 
 	var/lifespan = 0	//How many cycles. He'll be deleted if over than a ten thousand
@@ -645,20 +643,30 @@
 					N.is_talking = FALSE
 					N.RealisticSay(pick(N.socialrole.answer_phrases))
 
-/mob/living/carbon/human/npc/proc/ghoulificate(mob/owner)
-	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]`s ghoul?", null, null, null, 50, src)
-	for(var/mob/dead/observer/G in GLOB.player_list)
-		if(G.key)
-			to_chat(G, "<span class='ghostalert'>[owner] is ghoulificating [src].</span>")
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		key = C.key
-		ghoulificated = TRUE
-		set_species(/datum/species/ghoul)
-		if(mind)
-			if(mind.enslaved_to != owner)
-				mind.enslave_mind_to_creator(owner)
-				to_chat(src, "<span class='userdanger'><b>AS PRECIOUS VITAE ENTER YOUR MOUTH, YOU NOW ARE IN THE BLOODBOND OF [owner]. SERVE YOUR REGNANT CORRECTLY, OR YOUR ACTIONS WILL NOT BE TOLERATED.</b></span>")
-				return TRUE
-	return FALSE
+/mob/living/carbon/human/npc/proc/poll_ghosts_for_ghoul(mob/living/regnant)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob(
+		Question = "Do you want to play as [regnant]'s ghoul?",
+		poll_time = 15 SECONDS,
+		M = src
+	)
+
+	if (LAZYLEN(candidates))
+		var/mob/dead/observer/chosen_candidate = pick(candidates)
+		chosen_candidate.mind.current = src
+		client = chosen_candidate.client
+		mind.enslave_mind_to_creator(regnant)
+		to_chat(src, span_userdanger("<b>AS PRECIOUS VITAE ENTERS YOUR MOUTH, YOU ARE BLOODBOUND TO [regnant]. SERVE YOUR REGNANT CORRECTLY, OR YOUR ACTIONS WILL NOT BE TOLERATED.</b>"))
+
+/mob/living/carbon/human/npc/proc/poll_ghosts_for_kindred(mob/living/sire)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob(
+		Question = "Do you want to play as [sire]'s vampiric childe?",
+		poll_time = 15 SECONDS,
+		M = src
+	)
+
+	if (LAZYLEN(candidates))
+		var/mob/dead/observer/chosen_candidate = pick(candidates)
+		chosen_candidate.mind.current = src
+		client = chosen_candidate.client
+		mind.enslave_mind_to_creator(sire)
+		to_chat(src, span_userdanger("You wake up. What happened? Why are you so hungry? Why is your heart not beating?"))

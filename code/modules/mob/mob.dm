@@ -584,10 +584,13 @@
 
 	point_at(A)
 
-	if(iscathayan(A))
+	// TODO: [Lucia] this here? signals
+	/*
+	if(is_kuei_jin(A))
 		var/mob/living/carbon/human/hum = A
 		if(hum.mind?.dharma?.Po == "Legalist")
 			hum.mind.dharma.roll_po(src, hum)
+	*/
 
 	return TRUE
 

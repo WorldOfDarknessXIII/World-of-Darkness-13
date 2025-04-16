@@ -44,12 +44,13 @@
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 
 	//faction, job, etc
-	if(iskindred(user) && iskindred(src) && is_face_visible())
-		var/mob/living/carbon/human/vampire = user
-		var/same_clan = vampire.clane == clane
+	var/datum/splat/vampire/kindred/user_vampirism = is_kindred(user)
+	var/datum/splat/vampire/kindred/vampirism = is_kindred(src)
+	if (vampirism && user_vampirism && is_face_visible())
+		var/same_clan = vampirism.clan == user_vampirism.clan
 		switch(info_known)
 			if(INFO_KNOWN_PUBLIC)
-				. += "<b>You know [p_them()] as a [job] of the [clane] bloodline.</b>"
+				. += "<b>You know [p_them()] as a [job] of the [vampirism.clan] bloodline.</b>"
 			if(INFO_KNOWN_CLAN_ONLY)
 				if(same_clan)
 					. += "<b>You know [p_them()] as a [job]. You are of the same bloodline.</b>"
@@ -390,8 +391,8 @@
 					msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
 		//examine text for unusual appearances
-		if (iskindred(src) && is_face_visible())
-			switch(clane.alt_sprite)
+		if (is_kindred(src) && is_face_visible())
+			switch(dna.species.limbs_id)
 				if ("nosferatu")
 					msg += "<span class='danger'><b>[p_they(TRUE)] look[p_s()] utterly deformed and inhuman!</b></span><br>"
 				if ("gargoyle")
@@ -419,35 +420,33 @@
 				msg += "<span class='deadsay'>[t_He] [t_is] staring blanky into space, [t_his] eyes are slightly grayed out.</span>\n"
 
 	//examine text for garou detecting Triatic influences on others
-	if (isgarou(user) || iswerewolf(user))
+	if (is_garou(user) || iswerewolf(user))
 		if (get_dist(user, src) <= 2)
 			var/wyrm_taint = NONE
 			var/weaver_taint = NONE
 			var/wyld_taint = NONE
 
-			if(iscathayan(src))
+			if(is_kuei_jin(src))
 				if(!check_kuei_jin_alive())
 					wyrm_taint++
 
-			if (iskindred(src))
-				var/mob/living/carbon/human/vampire = src
+			if (vampirism)
 				weaver_taint++
 
-				if ((humanity < 7) || client?.prefs?.enlightenment)
+				if ((humanity < 7) || vampirism.enlightenment)
 					wyrm_taint++
 
-				if ((vampire.clane?.name == "Baali") || ( (client?.prefs?.enlightenment && (humanity > 7)) || (!client?.prefs?.enlightenment && (humanity < 4)) ))
+				if ((istype(vampirism.clan, /datum/vampireclan/baali)) || ( (vampirism.enlightenment && (humanity > 7)) || (!vampirism.enlightenment && (humanity < 4)) ))
 					wyrm_taint++
 
-			if (isgarou(src) || iswerewolf(src)) //werewolves have the taint of whatever Triat member they venerate most
-				var/mob/living/carbon/wolf = src
-
-				switch(wolf.auspice.tribe)
-					if ("Wendigo")
+			var/datum/splat/werewolf/garou/lycanthropy = is_garou(src)
+			if (lycanthropy) //werewolves have the taint of whatever Triat member they venerate most
+				switch(lycanthropy.tribe.type)
+					if (/datum/tribe/wendigo)
 						wyld_taint++
-					if ("Glasswalkers")
+					if (/datum/tribe/glass_walkers)
 						weaver_taint++
-					if ("Black Spiral Dancers")
+					if (/datum/tribe/black_spiral_dancers)
 						wyrm_taint = VERY_TAINTED
 
 			if (wyrm_taint == TAINTED)

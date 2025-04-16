@@ -193,8 +193,6 @@
 		return TRUE
 	if(last_grab+15 > world.time)
 		return TRUE
-	if(ghoulificated)
-		return TRUE
 	if(key)
 		return TRUE
 	if(IsSleeping())

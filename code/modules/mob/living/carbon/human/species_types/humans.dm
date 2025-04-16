@@ -14,7 +14,7 @@
 
 /datum/action/humaninfo
 	name = "About Me"
-	desc = "Check assigned role, clane, generation, humanity, masquerade, known disciplines, known contacts etc."
+	desc = "Check assigned role, clan, generation, humanity, masquerade, known disciplines, known contacts etc."
 	button_icon_state = "masquerade"
 	check_flags = NONE
 	var/mob/living/carbon/human/host

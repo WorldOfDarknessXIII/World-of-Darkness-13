@@ -146,7 +146,7 @@
 	desc = "Create a trap."
 	button_icon_state = "mytherceria"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	vampiric = TRUE
+	spell_button = TRUE
 
 /datum/action/mytherceria/Trigger()
 	. = ..()

@@ -173,7 +173,7 @@
 	desc = "Resist Frenzy and Rotshreck by signing a contract with Demons."
 	button_icon_state = "resist"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	vampiric = TRUE
+	spell_button = TRUE
 	var/used = FALSE
 
 /datum/action/antifrenzy/Trigger()

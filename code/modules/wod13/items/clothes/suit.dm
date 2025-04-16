@@ -327,7 +327,6 @@
 	icon_state = "army"
 	w_class = WEIGHT_CLASS_BULKY
 	armor = list(MELEE = 70, BULLET = 70, LASER = 10, ENERGY = 10, BOMB = 55, BIO = 0, RAD = 0, FIRE = 45, ACID = 10, WOUND = 25)
-//	clothing_traits = list(TRAIT_UNMASQUERADE)
 	masquerade_violating = TRUE
 
 /obj/item/clothing/suit/vampire/eod
@@ -342,7 +341,6 @@
 	slowdown = 2
 	w_class = WEIGHT_CLASS_BULKY
 	armor = list(MELEE = 90, BULLET = 90, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 0, RAD = 0, FIRE = 70, ACID = 90, WOUND = 50)
-//	clothing_traits = list(TRAIT_UNMASQUERADE)
 	masquerade_violating = TRUE
 
 /obj/item/clothing/suit/vampire/bogatyr
@@ -357,7 +355,6 @@
 	slowdown = 1
 	w_class = WEIGHT_CLASS_BULKY
 	armor = list(MELEE = 75, BULLET = 75, LASER = 15, ENERGY = 15, BOMB = 20, BIO = 0, RAD = 0, FIRE = 55, ACID = 70, WOUND = 35)
-//	clothing_traits = list(TRAIT_UNMASQUERADE)
 
 /obj/item/clothing/suit/vampire/labcoat
 	name = "labcoat"

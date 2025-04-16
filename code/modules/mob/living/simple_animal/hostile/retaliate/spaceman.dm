@@ -188,47 +188,8 @@
 	addtimer(CALLBACK(src, PROC_REF(attempt_handcuff), C), 4 SECONDS)
 
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire/proc/attempt_handcuff(mob/living/carbon/C)
-	if( !Adjacent(C) || !isturf(C.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
+	if(!Adjacent(C) || !isturf(C.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 		return
 	if(!C.handcuffed)
 		C.set_handcuffed(new /obj/item/restraints/handcuffs/cable/zipties/used(C))
 		C.update_handcuffed()
-
-
-/mob/living/simple_animal/hostile/retaliate/dementia
-	name = "Literally Me"
-	desc = "Literally me..."
-	turns_per_move = 5
-	speed = 0
-	stat_attack = HARD_CRIT
-	robust_searching = 1
-	vision_range = 3
-	maxHealth = 1
-	health = 1
-	harm_intent_damage = 5
-	melee_damage_lower = 20
-	melee_damage_upper = 20
-	attack_verb_continuous = "punches"
-	attack_verb_simple = "punch"
-	attack_sound = 'sound/weapons/punch1.ogg'
-	faction = list("Malkavian")
-	a_intent = INTENT_HARM
-	loot = list()
-	del_on_death = 1
-	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
-	unsuitable_atmos_damage = 15
-	status_flags = CANPUSH
-	search_objects = 1
-
-/mob/living/simple_animal/hostile/retaliate/dementia/Retaliate()
-	for(var/mob/living/carbon/human/H in oviewers(9, src))
-		if(H)
-			if(H.dementia)
-				var/image/I = image(icon = 'icons/mob/simple_human.dmi', icon_state = "skeleton", layer = ABOVE_MOB_LAYER, loc = src)
-				I.override = 1
-				I.appearance = H.appearance
-				H.client.images += I
-				enemies |= H
-				spawn(20)
-					H.client.images -= I
-					qdel(src)

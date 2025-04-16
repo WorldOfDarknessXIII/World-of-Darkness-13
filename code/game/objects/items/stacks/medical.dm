@@ -62,7 +62,7 @@
 	if(patient.stat == DEAD)
 		to_chat(user, "<span class='warning'>[patient] is dead! You can not help [patient.p_them()].</span>")
 		return
-	if(iskindred(patient))
+	if(is_kindred(patient))
 		to_chat(user, "<span class='warning'>[patient] is dead! You can not help [patient.p_them()].</span>")
 		return
 	if(isanimal(patient) && heal_brute) // only brute can heal

@@ -1,11 +1,11 @@
 /mob/living/carbon/human/proc/AdjustHumanity(var/value, var/limit, var/forced = FALSE)
 	if(value < 0)
-		for(var/mob/living/carbon/human/H in viewers(7, src))
-			if(H != src && H.mind?.dharma)
+		for(var/mob/living/carbon/human/H in oviewers(7, src))
+			if(H.mind?.dharma)
 				if("judgement" in H.mind.dharma.tenets)
 					to_chat(H, "<span class='warning'>[src] is doing something bad, I need to punish them!")
 					H.mind.dharma.judgement |= real_name
-	if(!iskindred(src))
+	if(!is_kindred(src))
 		return
 	if(!GLOB.canon_event)
 		return
@@ -13,9 +13,9 @@
 		if(!in_frenzy || forced)
 			var/mod = 1
 			var/enlight = FALSE
-			if(clane)
-				mod = clane.humanitymod
-				enlight = clane.enlightenment
+			if(clan)
+				mod = clan.humanitymod
+				enlight = clan.enlightenment
 			if(enlight)
 				if(value < 0)
 					if(humanity < 10)
@@ -57,7 +57,7 @@
 						to_chat(src, "<span class='userhelp'><b>HUMANITY INCREASED!</b></span>")
 
 /mob/living/carbon/human/proc/AdjustMasquerade(var/value, var/forced = FALSE)
-	if(!iskindred(src) && !isghoul(src) && !iscathayan(src))
+	if(!is_kindred(src) && !is_ghoul(src) && !is_kuei_jin(src))
 		return
 	if(!GLOB.canon_event)
 		return
@@ -79,7 +79,7 @@
 					to_chat(src, "<span class='userdanger'><b>MASQUERADE VIOLATION!</b></span>")
 				SSbad_guys_party.next_fire = max(world.time, SSbad_guys_party.next_fire - 2 MINUTES)
 			if(value > 0)
-				if(clane?.enlightenment && !forced)
+				if(clan?.enlightenment && !forced)
 					AdjustHumanity(1, 10)
 				for(var/mob/living/carbon/human/H in GLOB.player_list)
 					H.voted_for -= dna.real_name

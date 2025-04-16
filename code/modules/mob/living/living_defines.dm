@@ -172,8 +172,6 @@
 	//Shitty VtM vars I'm moving here so they're not strewn around the codebase
 	var/bloodquality = 1
 
-	var/list/drunked_of = list()
-
 	var/total_cleaned = 0
 
 	var/physique = 1
@@ -256,7 +254,6 @@
 
 	var/bloodpool = 5
 	var/maxbloodpool = 5
-	var/generation = 13
 	var/humanity = 7
 	var/masquerade = 5
 	var/last_masquerade_violation = 0
@@ -289,3 +286,5 @@
 
 	//If we are currently leaning on something, and what that object is
 	var/atom/leaned_object
+
+	var/list/datum/splat/splats

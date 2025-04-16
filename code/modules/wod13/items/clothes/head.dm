@@ -152,7 +152,6 @@
 	dynamic_fhair_suffix = ""
 	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 40, BOMB = 20, BIO = 0, RAD = 0, FIRE = 20, ACID = 40, WOUND = 25)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-//	clothing_traits = list(TRAIT_UNMASQUERADE)
 	masquerade_violating = TRUE
 
 /obj/item/clothing/head/vampire/helmet/egorium
@@ -182,7 +181,6 @@
 	dynamic_hair_suffix = ""
 	dynamic_fhair_suffix = ""
 	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 40, BIO = 0, RAD = 0, FIRE = 20, ACID = 40, WOUND = 25)
-//	clothing_traits = list(TRAIT_UNMASQUERADE)
 	masquerade_violating = TRUE
 
 /obj/item/clothing/head/vampire/hardhat
@@ -203,7 +201,6 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	w_class = WEIGHT_CLASS_BULKY
-//	clothing_traits = list(TRAIT_UNMASQUERADE)
 	masquerade_violating = TRUE
 
 /obj/item/clothing/head/vampire/bogatyr
@@ -218,7 +215,6 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	w_class = WEIGHT_CLASS_BULKY
-//	clothing_traits = list(TRAIT_UNMASQUERADE)
 
 /obj/item/clothing/head/vampire/bahari_mask
 	name = "Dark mother's mask"

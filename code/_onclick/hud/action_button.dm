@@ -211,11 +211,11 @@
 			if(B.moved)
 				B.screen_loc = B.moved
 			else
-				if(A.vampiric)
-					B.screen_loc = hud_used.ButtonNumberToScreenCoords(hud_used.spellbuttons, A.vampiric)
+				if(A.spell_button)
+					B.screen_loc = hud_used.ButtonNumberToScreenCoords(hud_used.spellbuttons, A.spell_button)
 					hud_used.spellbuttons = hud_used.spellbuttons+1
 				else
-					B.screen_loc = hud_used.ButtonNumberToScreenCoords(hud_used.actionbuttons, A.vampiric)
+					B.screen_loc = hud_used.ButtonNumberToScreenCoords(hud_used.actionbuttons, A.spell_button)
 					hud_used.actionbuttons = hud_used.actionbuttons+1
 			if(reload_screen)
 				client.screen += B
