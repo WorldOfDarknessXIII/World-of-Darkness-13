@@ -1318,6 +1318,37 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	popup.open(FALSE)
 	onclose(user, "capturekeypress", src)
 
+/datum/preferences/proc/return_job_color(mob/user, datum/job/job, rank)
+	var/bypass = FALSE
+	if (check_rights_for(user.client, R_ADMIN))
+		bypass = TRUE
+	if(is_banned_from(user.ckey, rank))
+		return "<font color=red>[rank]</font></td><td><a href='byond://?_src_=prefs;bancheck=[rank]'> BANNED</a></td></tr>"
+	var/required_playtime_remaining = job.required_playtime_remaining(user.client)
+	if(required_playtime_remaining && !bypass)
+		return "<font color=#290204>[rank]</font></td><td><font color=#290204> \[ [get_exp_format(required_playtime_remaining)] as [job.get_exp_req_type()] \]</font></td></tr>"
+	if(!job.player_old_enough(user.client) && !bypass)
+		var/available_in_days = job.available_in_days(user.client)
+		return "<font color=#290204>[rank]</font></td><td><font color=#290204> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
+	if((generation > job.minimal_generation) && !bypass)
+		return "<font color=#290204>[rank]</font></td><td><font color=#290204> \[FROM [job.minimal_generation] GENERATION AND OLDER\]</font></td></tr>"
+	if((masquerade < job.minimal_masquerade) && !bypass)
+		return "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[job.minimal_masquerade] MASQUERADE POINTS REQUIRED\]</font></td></tr>"
+	if(!job.allowed_species.Find(pref_species.name) && !bypass)
+		return "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[pref_species.name] RESTRICTED\]</font></td></tr>"
+	if(pref_species.name == "Vampire")
+		if(clane)
+			var/alloww = FALSE
+			for(var/i in job.allowed_bloodlines)
+				if(i == clane.name)
+					alloww = TRUE
+			if(!alloww && !bypass)
+				return "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[clane.name] RESTRICTED\]</font></td></tr>"
+	if((job_preferences[SSjob.overflow_role] == JP_LOW) && (rank != SSjob.overflow_role) && !is_banned_from(user.ckey, SSjob.overflow_role))
+		return "<font color=orange>[rank]</font></td>"
+
+	return "<font color=black>[rank]</font></td>"
+
 /datum/preferences/proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), widthPerColumn = 295, height = 620)
 	if(!SSjob)
 		return
@@ -1346,10 +1377,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
 		var/datum/job/lastJob
 
-		var/bypass = FALSE
-		if (check_rights_for(user.client, R_ADMIN))
-			bypass = TRUE
-
 		for(var/datum/job/job in sortList(SSjob.occupations, GLOBAL_PROC_REF(cmp_job_display_asc)))
 
 			index += 1
@@ -1366,39 +1393,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			HTML += "<tr bgcolor='[job.selection_color]'><td width='60%' align='right'>"
 			var/rank = job.title
 			lastJob = job
-			if(is_banned_from(user.ckey, rank))
-				HTML += "<font color=red>[rank]</font></td><td><a href='byond://?_src_=prefs;bancheck=[rank]'> BANNED</a></td></tr>"
-				continue
-			var/required_playtime_remaining = job.required_playtime_remaining(user.client)
-			//<font color=red>text</font> (Zamenil potomu chto slishkom rezhet glaza
-			if(required_playtime_remaining && !bypass)
-				HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[ [get_exp_format(required_playtime_remaining)] as [job.get_exp_req_type()] \]</font></td></tr>"
-				continue
-			if(!job.player_old_enough(user.client) && !bypass)
-				var/available_in_days = job.available_in_days(user.client)
-				HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
-				continue
-			if((generation > job.minimal_generation) && !bypass)
-				HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[FROM [job.minimal_generation] GENERATION AND OLDER\]</font></td></tr>"
-				continue
-			if((masquerade < job.minimal_masquerade) && !bypass)
-				HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[job.minimal_masquerade] MASQUERADE POINTS REQUIRED\]</font></td></tr>"
-				continue
-			if(!job.allowed_species.Find(pref_species.name) && !bypass)
-				HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[pref_species.name] RESTRICTED\]</font></td></tr>"
-				continue
-			if(pref_species.name == "Vampire")
-				if(clane)
-					var/alloww = FALSE
-					for(var/i in job.allowed_bloodlines)
-						if(i == clane.name)
-							alloww = TRUE
-					if(!alloww && !bypass)
-						HTML += "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[clane.name] RESTRICTED\]</font></td></tr>"
-						continue
-			if((job_preferences[SSjob.overflow_role] == JP_LOW) && (rank != SSjob.overflow_role) && !is_banned_from(user.ckey, SSjob.overflow_role))
-				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
-				continue
+
+			var/rank_color = return_job_color(user, job, rank)
+			HTML += rank_color
 
 			HTML += "</td><td width='40%'>"
 
