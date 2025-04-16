@@ -161,13 +161,12 @@
 
 	victim.create_disciplines(FALSE, disciplines_to_give)
 
-/mob/living/proc/save_embraced_character_prompt(mob/living/sire)
-	var/datum/splat/vampire/kindred/vampirism = is_kindred(src)
-	if (!vampirism)
+/mob/living/proc/save_embraced_character_prompt()
+	if (!client)
 		return
 
-	var/datum/splat/vampire/kindred/sire_vampirism = is_kindred(sire)
-	if (!sire_vampirism)
+	var/datum/splat/vampire/kindred/vampirism = is_kindred(src)
+	if (!vampirism)
 		return
 
 	// Prompt asking if they want to save this

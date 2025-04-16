@@ -34,16 +34,16 @@
 			if(DICE_FAILURE)
 				enter_frenzymod()
 				if(is_kindred(src))
-					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 100*H.clan.frenzymod)
+					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 10 SECONDS * H.clan.frenzymod)
 				else
-					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 100)
+					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 10 SECONDS)
 				frenzy_hardness = 1
 			if(DICE_CRIT_FAILURE)
 				enter_frenzymod()
 				if(is_kindred(src))
-					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 200*H.clan.frenzymod)
+					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 20 SECONDS * H.clan.frenzymod)
 				else
-					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 200)
+					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 20 SECONDS)
 				frenzy_hardness = 1
 			if(DICE_CRIT_WIN)
 				frenzy_hardness = max(1, frenzy_hardness-1)
@@ -94,23 +94,19 @@
 
 	var/atom/fear
 	for(var/obj/effect/fire/F in GLOB.fires_list)
-		if(F)
-			if(get_dist(src, F) < 7 && F.z == src.z)
-				if(get_dist(src, F) < 6)
-					fear = F
-				if(get_dist(src, F) < 5)
-					fear = F
-				if(get_dist(src, F) < 4)
-					fear = F
-				if(get_dist(src, F) < 3)
-					fear = F
-				if(get_dist(src, F) < 2)
-					fear = F
-				if(get_dist(src, F) < 1)
-					fear = F
-
-//	if(!fear && !frenzy_target)
-//		return
+		if(get_dist(src, F) < 7 && F.z == src.z)
+			if(get_dist(src, F) < 6)
+				fear = F
+			if(get_dist(src, F) < 5)
+				fear = F
+			if(get_dist(src, F) < 4)
+				fear = F
+			if(get_dist(src, F) < 3)
+				fear = F
+			if(get_dist(src, F) < 2)
+				fear = F
+			if(get_dist(src, F) < 1)
+				fear = F
 
 	if(is_kindred(src))
 		if(fear)

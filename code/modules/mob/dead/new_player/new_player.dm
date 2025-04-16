@@ -546,7 +546,7 @@
 						if (totem.tribe == lycanthropy.tribe)
 							new_human.forceMove(get_turf(totem))
 
-				var/datum/splat/werewolf/garou/kuei_jin = is_kuei_jin(new_human)
+				var/datum/splat/hungry_dead/kuei_jin/kuei_jin = is_kuei_jin(new_human)
 				if (kuei_jin)
 					if (new_human.mind)
 						new_human.mind.dharma = new new_human.client.prefs.dharma_type()
