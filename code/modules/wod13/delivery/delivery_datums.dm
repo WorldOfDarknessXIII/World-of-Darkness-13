@@ -1,5 +1,6 @@
 /datum/delivery_datum/
 	var/delivery_employer_tag
+	var/contract_difficulty
 	var/obj/structure/delivery_board/board
 	var/obj/item/delivery_contract/contract
 	var/mob/original_owner
@@ -113,10 +114,19 @@
 	for (var/mob/living/carbon/human/mob in contract_takers)
 		to_chat(mob, span_notice(message))
 
+/datum/delivery_datum/proc/reciever_complete(obj/reciever)
+	var/obj/structure/delivery_reciever/target_reciever
+	delivery_recievers.Remove(target_reciever)
+	delivery_score["completed_recievers"] += 1
+	if(check_complete() == 1)
+		broadcast_to_holders("All deliveries have been complete. Please return the truck and any outstanding cargo back to the office to finalize the contract!")
+	else
+		broadcast_to_holders("Delivery to [target_reciever.chute_name] complete. [num2text(delivery_recievers.len)] chutes remain.")
+
 /datum/delivery_datum/proc/assign_dispenser(tag)
 	for(var/obj/structure/delivery_dispenser/dispenser in GLOB.delivery_available_dispensers)
-		if(dispenser.delivery == null)
-			dispenser.delivery = src
+		if(dispenser.dispenser_active == 0)
+			dispenser.dispenser_active = 1
 			dispenser.crate_type = tag
 			switch(tag)
 				if("red")
@@ -149,7 +159,7 @@
 	if(!ammount_min || !ammount_max) return
 	if(delivery_recievers.len == 0) return
 	for(var/obj/structure/delivery_reciever/reciever in delivery_recievers)
-		reciever.delivery = src
+		reciever.delivery_in_use = 1
 		var/crate_number = rand(ammount_min,ammount_max)
 		while(crate_number > 0)
 			var/picked_type = pick("red","green","yellow","blue")
@@ -158,15 +168,17 @@
 		INVOKE_ASYNC(reciever, TYPE_PROC_REF(/obj/structure/delivery_reciever/,display_reciever))
 
 /datum/delivery_datum/proc/assign_garage(id)
-	if(!id) return
+	if(!id) return 0
 	for(var/area/vtm/interior/delivery_garage/potential_garage_area in GLOB.delivery_garage_areas)
 		if(potential_garage_area.delivery_employer_tag == id)
 			garage_area = potential_garage_area
 			break
+	if(!garage_area) return 0
 	for(var/obj/effect/landmark/delivery_truck_beacon/potential_truck_spawner in GLOB.delivery_available_veh_spawners)
 		if(potential_truck_spawner.delivery_employer_tag == id)
 			truck_spawner = potential_truck_spawner
 			break
+	if(!truck_spawner) return 0
 
 /datum/delivery_datum/proc/spawn_truck()
 	if(active_truck) return 0
@@ -186,10 +198,9 @@
 	delivery_score["timeout_timestamp"] = timer_value
 	addtimer(CALLBACK(src,PROC_REF(delivery_timeout)),delay + 10)
 
-/datum/delivery_datum/proc/check_conditions(difficulty)
-	if(!difficulty) return
+/datum/delivery_datum/proc/check_conditions()
 	var/receiver_number
-	switch(difficulty)
+	switch(contract_difficulty)
 		if(1)
 			receiver_number = 3
 		if(2)
@@ -199,27 +210,21 @@
 	var/list/reciever_list = list()
 	reciever_list = GLOB.delivery_available_recievers.Copy()
 	for(var/obj/structure/delivery_reciever/potential_reciever in reciever_list)
-		if(potential_reciever.delivery != null) reciever_list.Remove(potential_reciever)
+		if(potential_reciever.delivery_in_use == 1) reciever_list.Remove(potential_reciever)
 	if(reciever_list.len < receiver_number)
 		broadcast_to_holders("Error: Not enough delivery recievers. Too many deliveries in progress. Contract aborted.")
 		return 0
 	return 1
 
-/datum/delivery_datum/New(mob/user,obj/board_ref,difficulty = 2)
-	original_owner = user
-	add_owner(user)
-	if(check_conditions(difficulty) == 0)
-		qdel(src)
-		return
-	board = board_ref
-	delivery_employer_tag = board.delivery_employer_tag
-	assign_garage(delivery_employer_tag)
-	assign_dispenser("red")
-	assign_dispenser("blue")
-	assign_dispenser("yellow")
-	assign_dispenser("green")
-	spawn_truck()
-	switch(difficulty)
+/datum/delivery_datum/proc/start_contract()
+	if(check_conditions(contract_difficulty) == 0) return "fail_reci"
+	if(assign_garage(delivery_employer_tag) == 0) return "fail_garage"
+	if(assign_dispenser("red") == 0) return "fail_disp"
+	if(assign_dispenser("blue") == 0) return "fail_disp"
+	if(assign_dispenser("yellow") == 0) return "fail_disp"
+	if(assign_dispenser("green") == 0) return "fail_disp"
+	if(spawn_truck() == 0) return "fail_truck"
+	switch(contract_difficulty)
 		if(1)
 			assign_recievers(3)
 			assign_crates(3,6)
@@ -232,14 +237,21 @@
 			assign_recievers(7)
 			assign_crates(9,15)
 			delivery_set_timer(30 MINUTES)
+	return 1
+
+/datum/delivery_datum/New(mob/user,obj/board_ref,difficulty)
+	original_owner = user
+	add_owner(user)
+	board = board_ref
+	delivery_employer_tag = board.delivery_employer_tag
+	contract_difficulty = difficulty
 
 /datum/delivery_datum/Destroy(force, ...)
-
-	board.delivery = null
-	board.delivery_cooldown(5 MINUTES)
+	if(board)
+		if(board.delivery_started == 1) board.delivery_cooldown(5 MINUTES)
+		board.delivery_started = 0
 	board = null
-	if(contract)
-		qdel(contract)
+	contract = null
 	original_owner = null
 	contract_takers = list()
 	garage_area = null
@@ -385,6 +397,11 @@
 		"time_left" = "none",
 		)
 
+/datum/delivery_manifest/New(datum/delivery_datum)
+	delivery = delivery_datum
+	save_data(init = TRUE)
+	. = ..()
+
 /datum/delivery_manifest/Destroy(force, ...)
 	delivery = null
 	saved_recievers = list()
@@ -403,6 +420,7 @@
 		saved_data["time_left"] = "TIMED OUT"
 	else
 		saved_data["time_left"] = time2text(time_left_raw,"mm:ss")
+	if(init) read_data(delivery.original_owner)
 
 /datum/delivery_manifest/proc/read_data(mob/user)
 	if(!user) return

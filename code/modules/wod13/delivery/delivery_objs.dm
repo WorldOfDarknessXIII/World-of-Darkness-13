@@ -11,11 +11,10 @@
 	var/datum/delivery_datum/delivery
 	var/datum/delivery_manifest/manifest
 
-/obj/item/delivery_contract/New(loc, datum/del_datum)
-	if(del_datum)
-		delivery = del_datum
-		delivery.contract = src
-		manifest.save_data(init = 1)
+/obj/item/delivery_contract/New(mob/user, obj/board,difficulty)
+	delivery = new(user,board,difficulty)
+	delivery.contract = src
+	manifest = new(delivery)
 	. = ..()
 
 /obj/item/delivery_contract/attack_hand(mob/user)
@@ -57,10 +56,8 @@
 	. = ..()
 
 /obj/item/delivery_contract/Destroy()
-	if(delivery)
-		delivery.contract = null
-		delivery = null
-	qdel(manifest)
+	if(delivery) qdel(delivery)
+	if(manifest) qdel(manifest)
 	. = ..()
 
 
@@ -71,7 +68,7 @@
 	icon_state = "nboard02"
 	anchored = 1
 	density = 0
-	var/datum/delivery_datum/delivery
+	var/delivery_started = 0
 	var/delivery_employer_tag = "default"
 	var/next_delivery_timestamp
 
@@ -86,27 +83,44 @@
 
 /obj/structure/delivery_board/attack_hand(mob/living/user)
 	. = ..()
-	if(!delivery)
+	if(!delivery_started)
 		if(world.time > next_delivery_timestamp)
 			if(tgui_alert(user,"A new contract is available. Do you wish to start a delivery?","Delivery available",list("Yes","No"),timeout = 10 SECONDS) == "Yes")
 				var/picked_difficulty
+				var/difficulty_text
 				switch(tgui_input_list(user,"Select a contract length, details will be outlined before accepting.","Contract Selection",list("Short","Medium","Long"),timeout = 10 SECONDS))
 					if("Short")
 						picked_difficulty = 1
-						to_chat(user,span_notice("A short contract involves 3 locations with up to 6 crates each, meaning the entire delivery can be completed with one truck. The time limit is 15 minutes."))
+						difficulty_text = "A short contract involves 3 locations with up to 6 crates each, meaning the entire delivery can be completed with one truck. The time limit is 15 minutes."
 					if("Medium")
 						picked_difficulty = 2
-						to_chat(user,span_notice("A medium contract involves 5 locations with up to 10 crates each, the entire delivery should be completed in 3 runs. The time limit is 20 minutes. "))
+						difficulty_text = "A medium contract involves 5 locations with up to 10 crates each, the entire delivery should be completed in 3 runs. The time limit is 20 minutes. "
 					if("Long")
 						picked_difficulty = 3
-						to_chat(user,span_notice("A long contract involves 7 locations with up to 15 crates each, meaning that without partial loads each delivery will require a restock. The timie limit is 30 minutes."))
-				if(tgui_alert(user,"Do you want to start the contract?","Confirm Contract",list("Yes","No"),timeout = 10 SECONDS) == "Yes")
-					delivery = new(user,src,picked_difficulty)
-					if(!delivery) return
-					var/obj/item/delivery_contract/contract = new(get_turf(user),delivery)
-					user.put_in_hands(contract)
-					icon_state = "nboard00"
-					update_icon()
+						difficulty_text = "A long contract involves 7 locations with up to 15 crates each, meaning that without partial loads each delivery will require a restock. The timie limit is 30 minutes."
+				if(tgui_alert(user,difficulty_text,"Confirm Contract",list("Yes","No"),timeout = 10 SECONDS) == "Yes")
+					var/obj/item/delivery_contract/contract = new(get_turf(user),user,src,picked_difficulty)
+					switch(contract.delivery.start_contract())
+						if(1)
+							user.put_in_hands(contract)
+							icon_state = "nboard00"
+							update_icon()
+							to_chat(user,span_notice("Success! A new contract was created and aprorpiate items have been created and dispensed. Check the cotnract item for information about your delivery."))
+							delivery_started = 1
+							return
+						if("fail_reci")
+							to_chat(user, span_warning("Not enough recievers avaialble in the game world. This is most likley because too many cotnracts are active at the same time, but is very likely a mapping bug."))
+							qdel(contract)
+						if("fail_garage")
+							to_chat(user, span_warning("No garage area found. This is a mapping bug and should be reported."))
+							qdel(contract)
+						if("fail_disp")
+							to_chat(user, span_warning("Not enough dispensers. This is a mapping bug and should be reported."))
+							qdel(contract)
+						if("fail_truck")
+							to_chat(user, span_warning("Truck spawning failed. This is a mapping bug and should be reported."))
+							qdel(contract)
+					return
 		else
 			(to_chat(user,span_notice("A contract was just concluded. There are [time2text((next_delivery_timestamp - world.time),"mm:ss")] left until the next contract can be picked.")))
 	else
@@ -115,18 +129,18 @@
 /obj/structure/delivery_board/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I,/obj/item/delivery_contract/))
 		var/obj/item/delivery_contract/contract_item = I
-		if(contract_item == delivery.contract)
-			if(delivery.check_owner(user) == 1)
+		if(contract_item == contract_item.delivery.contract)
+			if(contract_item.delivery.check_owner(user) == 1)
 				if(tgui_alert(user,"Do you wish to update the information on the contract?","Contract Update",list("Yes","No"),timeout = 10 SECONDS) == "Yes")
 					contract_item.manifest.save_data()
-				if(delivery.delivery_recievers.len == 0)
+				if(contract_item.delivery.delivery_recievers.len == 0)
 					to_chat(user,span_notice("The contract is concluded. You may safely finialize it."))
 				else
 					to_chat(user,span_notice("This contract is not complete. You may wrap it early if you wish."))
-				if(get_area(delivery.active_truck) != delivery.garage_area)
+				if(get_area(contract_item.delivery.active_truck) != contract_item.delivery.garage_area)
 					to_chat(user,span_warning("Warning: Truck outside of garage area."))
 				if(tgui_alert(user,"Do you wish to finalize the contract?","Finalize Confirm",list("Yes","No"),timeout = 10 SECONDS) == "Yes")
-					delivery.delivery_finish()
+					contract_item.delivery.delivery_finish()
 		else
 			to_chat(user,span_warning("This contract does not seem to be from this board."))
 			return
@@ -142,7 +156,7 @@
 	icon = 'code/modules/wod13/props.dmi'
 	icon_state = "box_put"
 	var/chute_name = "default"
-	var/datum/delivery_datum/delivery
+	var/delivery_in_use = 0
 	var/list/delivery_status = list(
 		"red" = 0,
 		"blue" = 0,
@@ -151,8 +165,7 @@
 		)
 
 /obj/structure/delivery_reciever/proc/reset_reciever()
-	delivery.delivery_recievers.Remove(src)
-	delivery = null
+	delivery_in_use = 0
 	delivery_status = list(
 		"red" = 0,
 		"blue" = 0,
@@ -162,39 +175,34 @@
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/structure/delivery_reciever,display_reciever))
 
 /obj/structure/delivery_reciever/proc/check_deliveries()
-	if(delivery_status["red"] != 0 || delivery_status["blue"] != 0 || delivery_status["yellow"] != 0 || delivery_status["green"] != 0) return
-	delivery.delivery_score["completed_recievers"] += 1
-	if(delivery.check_complete() == 1)
-		delivery.broadcast_to_holders("All deliveries have been complete. Please return the truck and any outstanding cargo back to the office to finalize the contract!")
-	else
-		delivery.broadcast_to_holders("Delivery to [chute_name] complete. [num2text(delivery.delivery_recievers.len)] chutes remain.")
-	reset_reciever()
+	if(delivery_status["red"] != 0 || delivery_status["blue"] != 0 || delivery_status["yellow"] != 0 || delivery_status["green"] != 0) return 0
+	return 1
 
 /obj/structure/delivery_reciever/Initialize()
 	. = ..()
 	alpha = 0
 	GLOB.delivery_available_recievers.Add(src)
+	name = "[initial(name)] - [capitalize(chute_name)]"
 
 /obj/structure/delivery_reciever/Destroy()
 	. = ..()
 	GLOB.delivery_available_recievers.Remove(src)
-	if(delivery)
-		delivery.delivery_recievers.Remove(src)
-		delivery = null
 
 /obj/structure/delivery_reciever/attack_hand(mob/living/user)
 	. = ..()
 	if(user.pulling)
-		if(!delivery) return
-		var/obj/structure/delivery_crate/pulled_crate = user.pulling
-		if(pulled_crate)
+		if(delivery_in_use == 0) return
+		if(istype(user.pulling,/obj/structure/delivery_crate/))
+			var/obj/structure/delivery_crate/pulled_crate = user.pulling
 			if(do_after(user, 5 SECONDS, src))
 				if(delivery_status[pulled_crate.crate_type] > 0)
 					delivery_status[pulled_crate.crate_type] =- 1
-					delivery.delivery_score["delivered_crates"] += 1
-					check_deliveries()
+					pulled_crate.delivery.delivery_score["delivered_crates"] += 1
+					if(check_deliveries() == 1)
+						pulled_crate.delivery.reciever_complete(src)
+						reset_reciever()
 				else
-					delivery.delivery_score["misdelivered_crates"] += 1
+					pulled_crate.delivery.delivery_score["misdelivered_crates"] += 1
 				qdel(pulled_crate)
 
 /obj/structure/delivery_reciever/proc/check_for_clients()
@@ -210,9 +218,12 @@
 
 /obj/structure/delivery_reciever/proc/display_reciever()
 	var/check_result = check_for_clients()
+	var/loops = 0
 	while(check_result == 1)
 		stoplag(10 SECONDS)
 		check_result = check_for_clients()
+		loops += 1
+		if(loops > 10) break
 	if (alpha == 0)
 		alpha = 255
 	else
@@ -227,7 +238,7 @@
 	icon = 'code/modules/wod13/props.dmi'
 	icon_state = "box_take"
 	var/delivery_employer_tag = "default"
-	var/datum/delivery_datum/delivery
+	var/dispenser_active = 0
 	var/crate_type
 
 /obj/structure/delivery_dispenser/Initialize()
@@ -237,54 +248,50 @@
 /obj/structure/delivery_dispenser/Destroy()
 	. = ..()
 	GLOB.delivery_available_dispensers.Remove(src)
-	if(delivery)
-		delivery = null
 
 /obj/structure/delivery_dispenser/proc/reset_dispenser()
-	if(delivery)
-		delivery.delivery_dispensers.Remove(src)
-		delivery = null
+	dispenser_active = 0
 	crate_type = null
 
-/obj/structure/delivery_dispenser/proc/dispense_cargo()
+/obj/structure/delivery_dispenser/proc/dispense_cargo(obj/contract)
+	if(!contract) return
+	var/obj/item/delivery_contract/contract_item = contract
 	var/target_turf = get_turf(src)
 	switch(crate_type)
 		if("red")
 			var/obj/structure/delivery_crate/red/dispensed_crate = new(target_turf)
-			dispensed_crate.delivery = delivery
-			delivery.active_crates.Add(dispensed_crate)
+			dispensed_crate.delivery = contract_item.delivery
+			contract_item.delivery.active_crates.Add(dispensed_crate)
+			dispensed_crate.source_dispenser = src
 		if("blue")
 			var/obj/structure/delivery_crate/blue/dispensed_crate = new(target_turf)
-			dispensed_crate.delivery = delivery
-			delivery.active_crates.Add(dispensed_crate)
+			dispensed_crate.delivery = contract_item.delivery
+			contract_item.delivery.active_crates.Add(dispensed_crate)
+			dispensed_crate.source_dispenser = src
 		if("yellow")
 			var/obj/structure/delivery_crate/yellow/dispensed_crate = new(target_turf)
-			dispensed_crate.delivery = delivery
-			delivery.active_crates.Add(dispensed_crate)
+			dispensed_crate.delivery = contract_item.delivery
+			contract_item.delivery.active_crates.Add(dispensed_crate)
+			dispensed_crate.source_dispenser = src
 		if("green")
 			var/obj/structure/delivery_crate/green/dispensed_crate = new(target_turf)
-			dispensed_crate.delivery = delivery
-			delivery.active_crates.Add(dispensed_crate)
-	delivery.delivery_score["dispensed_crates"] += 1
+			dispensed_crate.delivery = contract_item.delivery
+			contract_item.delivery.active_crates.Add(dispensed_crate)
+			dispensed_crate.source_dispenser = src
+	contract_item.delivery.delivery_score["dispensed_crates"] += 1
 
 /obj/structure/delivery_dispenser/attack_hand(mob/living/user)
 	. = ..()
-	if(!delivery)
+	if(dispenser_active == 0)
 		to_chat(user, span_notice("The device seems to be offline."))
 		return
-	if(delivery.check_owner(user) == 0)
-		to_chat(user, span_notice("The device is active, but nothing happens when you try to use it."))
-		return
-	if(delivery.check_owner(user) == 1)
-		if(user.pulling == null)
-			if(do_after(user, 5 SECONDS, src))
-				dispense_cargo(crate_type)
-		else
+	if(user.pulling != null)
+		if(istype(user.pulling, /obj/structure/delivery_crate))
 			var/obj/structure/delivery_crate/pulled_crate = user.pulling
-			if(pulled_crate)
-				if(pulled_crate.crate_type == crate_type)
+			if(pulled_crate.source_dispenser == src)
+				if(do_after(user, 5 SECONDS, src))
+					pulled_crate.delivery.delivery_score["dispensed_crates"] -= 1
 					qdel(pulled_crate)
-					delivery.delivery_score["dispensed_crates"] -= 1
 
 /obj/structure/delivery_crate
 
@@ -295,6 +302,7 @@
 	icon = 'icons/obj/crates.dmi'
 	icon_state = "crate"
 	var/datum/delivery_datum/delivery
+	var/obj/structure/delivery_dispenser/source_dispenser
 	var/crate_type
 
 /obj/structure/delivery_crate/Initialize()
@@ -308,10 +316,11 @@
 		delivery = null
 	. = ..()
 
-
 /obj/vampire_car/delivery_truck
 	name = "delivery truck"
 	desc = "A truck with specially prepared racks in the back allowing for easy storage and retrieval of delivery packages."
+	icon_state = "track"
+	max_passengers = 4
 	component_type = null
 	baggage_limit = null
 	baggage_max = null
@@ -365,12 +374,14 @@
 	icon_state = "x4"
 	invisibility = 101
 	density = 0
+	var/spawn_dir = NORTH
 	var/delivery_employer_tag = "default"
 
 /obj/effect/landmark/delivery_truck_beacon/proc/spawn_truck(datum/linked_datum)
 	if(!linked_datum) return
 	var/turf/local_turf = get_turf(src)
 	var/obj/vampire_car/delivery_truck/spawned_truck = new(local_turf)
+	spawned_truck.dir = spawn_dir
 	spawned_truck.delivery = linked_datum
 	spawned_truck.locked = TRUE
 	spawned_truck.access = spawned_truck.delivery.delivery_employer_tag
