@@ -668,5 +668,4 @@
 		var/mob/dead/observer/chosen_candidate = pick(candidates)
 		chosen_candidate.mind.current = src
 		client = chosen_candidate.client
-		mind.enslave_mind_to_creator(sire)
 		to_chat(src, span_userdanger("You wake up. What happened? Why are you so hungry? Why is your heart not beating?"))

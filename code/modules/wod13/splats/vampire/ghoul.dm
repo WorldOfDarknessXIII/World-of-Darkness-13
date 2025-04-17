@@ -3,4 +3,8 @@
 	whitelisted = FALSE
 
 	var/mob/living/regnant
-	var/last_fed_vitae = 0
+
+/datum/splat/vampire/ghoul/New(mob/living/regnant)
+	. = ..()
+
+	src.regnant = regnant

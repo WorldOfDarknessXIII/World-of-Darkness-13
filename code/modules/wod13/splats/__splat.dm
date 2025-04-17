@@ -173,5 +173,7 @@
 	for (var/datum/splat/splat in splats)
 		if (splat_type in splat.incompatible_splats)
 			return TRUE
+		if (splat.type == splat_type)
+			return TRUE
 
 	return FALSE

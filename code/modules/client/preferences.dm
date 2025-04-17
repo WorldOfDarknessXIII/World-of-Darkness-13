@@ -2077,7 +2077,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 						available_clans += checking_clan
 
-					var/datum/vampireclan/result = tgui_input_list(user, "Select a clan", "clan Selection", sortList(available_clans))
+					var/datum/vampireclan/result = tgui_input_list(user, "Select a Clan", "Clan Selection", sortList(available_clans))
 					if(result)
 						clan = result
 						discipline_types = list()

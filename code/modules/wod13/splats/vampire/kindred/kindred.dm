@@ -48,6 +48,9 @@
 	set_generation(generation)
 	set_clan(clan)
 
+	// Register relevant signals
+	RegisterSignal(owner, COMSIG_MOB_DRINK_VITAE, PROC_REF(handle_drinking_vitae))
+
 	//this needs to be adjusted to be more accurate for blood spending rates
 	var/datum/discipline/bloodheal/giving_bloodheal = new(clamp(11 - generation, 1, 10))
 	owner.give_discipline(giving_bloodheal)
@@ -110,13 +113,7 @@
 		embrace(victim)
 	else
 		ghoul(victim)
-
-	bloodbond(victim)
-
-	if (is_kindred(victim))
-		var/datum/species/kindred/species = victim.dna.species
-		if (HAS_TRAIT(victim, TRAIT_TORPOR) && COOLDOWN_FINISHED(species, torpor_timer))
-			victim.untorpor()
+		bloodbond(victim)
 
 /datum/splat/vampire/kindred/proc/embrace(mob/living/carbon/victim)
 	// Check if the victim can be Embraced
@@ -136,20 +133,25 @@
 		return
 	victim.grab_ghost(force = TRUE)
 
+	to_chat(victim, span_userdanger("You wake up. What happened? Why are you so hungry? Why is your heart not beating?"))
+
 	log_game("[key_name(owner)] has Embraced [key_name(victim)].")
 	message_admins("[ADMIN_LOOKUPFLW(owner)] has Embraced [ADMIN_LOOKUPFLW(victim)].")
 
-	to_chat(victim, span_userdanger("You wake up. What happened? Why are you so hungry? Why is your heart not beating?"))
-
 	// Prompt the victim on if they want to stay a vampire in subsequent rounds
 	INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob/living, save_embraced_character_prompt), owner)
+
+	// If an NPC was Embraced, prompt ghosts to play as them
+	if (isnpc(victim))
+		var/mob/living/carbon/human/npc/npc_victim = victim
+		INVOKE_ASYNC(npc_victim, TYPE_PROC_REF(/mob/living/carbon/human/npc, poll_ghosts_for_kindred), owner)
 
 	// Create vampire splat for the childe
 	var/childe_generation = generation + 1
 	var/datum/vampireclan/childe_clan = clan
 	// Thinbloods are counted as especially sucky Caitiff
 	if (childe_generation > 13)
-		childe_clan = GLOB.vampire_clans[/datum/vampireclan/caitiff]
+		childe_clan = /datum/vampireclan/caitiff
 
 	var/datum/splat/vampire/kindred/childe_vampirism = new SPLAT_KINDRED(childe_generation, childe_clan)
 	childe_vampirism.assign(victim)
@@ -177,7 +179,6 @@
 		title = "Stay A Vampire?",
 		buttons = list("Yes", "No")
 	)
-
 	if (response != "Yes")
 		return
 
@@ -185,7 +186,7 @@
 
 	// Save splat
 	preferences.splat = SPLAT_KINDRED
-	preferences.generation = max(13, vampirism.generation)
+	preferences.generation = 13
 
 	// Save Clan
 	if (vampirism.clan.whitelisted && !SSwhitelists.is_whitelisted(ckey, vampirism.clan.name))
@@ -202,7 +203,7 @@
 			message = "You aren't whitelisted for your sire's Clan. Choose a Clan instead.",
 			title = "Clan Selection",
 			items = available_clans,
-			default = GLOB.vampire_clans[/datum/vampireclan/caitiff]
+			default = /datum/vampireclan/caitiff
 		)
 
 		preferences.clan = choice
@@ -217,21 +218,47 @@
 	preferences.save_character()
 
 /datum/splat/vampire/kindred/proc/ghoul(mob/living/carbon/victim)
-	if (!is_ghoul(victim) && istype(victim, /mob/living/carbon/human/npc))
-		var/mob/living/carbon/human/npc/NPC = owner.pulling
+	if (victim.is_splat_incompatible(SPLAT_GHOUL))
+		return
 
-	if (is_ghoul(victim))
-		var/datum/species/ghoul/G = victim.dna.species
-		G.master = owner
-		G.last_vitae = world.time
-	else if (!is_kindred(victim) && !isnpc(victim))
-		var/save_data_g = FALSE
-		victim.set_species(/datum/species/ghoul)
-		victim.clan = null
-		var/response_g = input(victim, "Do you wish to keep being a ghoul on your save slot?(Yes will be a permanent choice and you can't go back)") in list("Yes", "No")
-		var/datum/species/ghoul/G = victim.dna.species
-		G.regnant = owner
-		G.last_vitae = world.time
+	// Invite ghosts to play as the new ghoul
+	if (isnpc(victim))
+		var/mob/living/carbon/human/npc/npc_victim = victim
+		INVOKE_ASYNC(npc_victim, TYPE_PROC_REF(/mob/living/carbon/human/npc, poll_ghosts_for_ghoul), owner)
+
+	// Ask the ghouled player if they want to stay a ghoul on their save slot
+	INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob/living, save_ghouled_character_prompt))
+
+	// Apply the splat
+	var/datum/splat/vampire/ghoul/ghoul = new(owner)
+	ghoul.assign(victim)
+
+/mob/living/proc/save_ghouled_character_prompt()
+	if (!client)
+		return
+
+	var/datum/splat/vampire/ghoul/ghoul = is_ghoul(src)
+	if (!ghoul)
+		return
+
+	// Prompt asking if they want to save this
+	var/response = tgui_alert(
+		user = src,
+		message = "Do you wish to keep being a ghoul on your save slot? \
+		(This will replace your saved supernatural type and reset supernatural stats!)",
+		title = "Stay A Ghoul?",
+		buttons = list("Yes", "No")
+	)
+	if (response != "Yes")
+		return
+
+	var/datum/preferences/preferences = client.prefs
+
+	// Save splat
+	preferences.splat = SPLAT_GHOUL
+
+	// Finalise
+	preferences.save_character()
 
 /datum/splat/vampire/kindred/proc/bloodbond(mob/living/carbon/victim)
 	if (victim.has_status_effect(STATUS_EFFECT_INLOVE))
@@ -257,20 +284,25 @@
 	clan.on_gain(owner)
 	clan.post_gain(owner)
 
-/mob/proc/can_embrace()
+/datum/splat/vampire/kindred/proc/handle_drinking_vitae(mob/living/source, mob/living/vampire, amount)
+	SIGNAL_HANDLER
+
+	// If they can leave Torpor, drinking Vitae will force them out of it
+	if (HAS_TRAIT(owner, TRAIT_TORPOR) && COOLDOWN_FINISHED(src, torpor_timer))
+		owner.untorpor()
+
+/mob/living/carbon/can_embrace()
+	// Can only Embrace humans and shapeshifted Garou
+	if (!istype(src, /mob/living/carbon/werewolf) && !ishuman(src))
+		return FALSE
+
 	if (HAS_TRAIT(src, TRAIT_CANNOT_BE_EMBRACED))
 		return FALSE
 
 	if (stat != DEAD)
 		return FALSE
 
-	return TRUE
-
-/mob/living/can_embrace()
-	. = ..()
-	if (!.)
-		return .
-
+	// Cannot Embrace more than 5 minutes after death
 	if (timeofdeath + 5 MINUTES <= world.time)
 		return FALSE
 

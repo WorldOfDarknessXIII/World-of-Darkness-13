@@ -357,21 +357,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			pref_species = new newtype
 
 	READ_FILE(S["clane"], clan)
-	if (clan)
-		clan = GLOB.vampire_clans[clan]
 
 	READ_FILE(S["auspice"], auspice)
-	if (auspice)
-		auspice = GLOB.werewolf_auspices[auspice]
-
 	READ_FILE(S["breed"], breed)
-	if (breed)
-		breed = GLOB.werewolf_breeds[breed]
-
 	READ_FILE(S["tribe"], tribe)
-	if (tribe)
-		tribe = GLOB.werewolf_tribes[tribe]
-
 	READ_FILE(S["werewolf_color"], werewolf_color)
 	READ_FILE(S["werewolf_scar"], werewolf_scar)
 	READ_FILE(S["werewolf_hair"], werewolf_hair)
@@ -458,9 +447,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["persistent_scars"] , persistent_scars)
 
 	READ_FILE(S["dharma_type"], dharma)
-	if (dharma)
-		dharma = GLOB.hungry_dead_dharmas[dharma]
-
 	READ_FILE(S["dharma_level"], dharma_level)
 	READ_FILE(S["po_type"], po_type)
 	READ_FILE(S["po"], po)
