@@ -1,5 +1,14 @@
 /datum/splat/vampire
 
+/datum/splat/vampire/add_power(power_type, level)
+	. = ..()
+
+	var/datum/discipline/giving_discipline = new power_type(level)
+
+/datum/splat/vampire/remove_power(power_type)
+	. = ..()
+
+
 /datum/splat/vampire/proc/get_vitae()
 	return owner.bloodpool
 

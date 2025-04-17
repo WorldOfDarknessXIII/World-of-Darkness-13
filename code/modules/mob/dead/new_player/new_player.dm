@@ -538,8 +538,6 @@
 			if(new_human.client)
 				new_human.true_real_name = new_human.client.prefs.real_name
 
-				new_human.create_disciplines()
-
 				var/datum/splat/werewolf/garou/lycanthropy = is_garou(new_human)
 				if (lycanthropy)
 					for (var/obj/structure/werewolf_totem/totem in GLOB.totems)

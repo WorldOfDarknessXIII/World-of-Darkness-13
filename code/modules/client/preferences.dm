@@ -2986,6 +2986,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		vampirism.clan.enlightenment = enlightenment
 		vampirism.assign(character)
 
+		for (var/i in 1 to len(discipline_types))
+			var/datum/discipline/giving_discipline
+
 		character.bloodpool = rand(2, character.maxbloodpool)
 
 		character.max_yin_chi = character.maxbloodpool

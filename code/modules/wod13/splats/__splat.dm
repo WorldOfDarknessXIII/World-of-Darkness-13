@@ -119,6 +119,14 @@
 
 			action.Remove()
 
+/* POWER MANAGEMENT */
+// standardise this all when the power system is made universal
+/datum/splat/proc/add_power(power_type, level)
+	return
+
+/datum/splat/proc/remove_power(power_type)
+	return
+
 /* RESOURCE MANAGEMENT */
 /datum/splat/proc/get_resource(resource)
 	return resources[resource]
