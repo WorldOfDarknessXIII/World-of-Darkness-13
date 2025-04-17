@@ -538,17 +538,10 @@
 			if(new_human.client)
 				new_human.true_real_name = new_human.client.prefs.real_name
 
-				var/datum/splat/werewolf/garou/lycanthropy = is_garou(new_human)
-				if (lycanthropy)
-					for (var/obj/structure/werewolf_totem/totem in GLOB.totems)
-						if (totem.tribe == lycanthropy.tribe)
-							new_human.forceMove(get_turf(totem))
-
 				var/datum/splat/hungry_dead/kuei_jin/kuei_jin = is_kuei_jin(new_human)
 				if (kuei_jin)
 					if (new_human.mind)
 						new_human.mind.dharma = new new_human.client.prefs.dharma_type()
-						new_human.mind.dharma.level = new_human.client.prefs.dharma_level
 						new_human.mind.dharma.Po = new_human.client.prefs.po_type
 						new_human.mind.dharma.Hun = new_human.client.prefs.hun
 						new_human.mind.dharma.on_gain(new_human)
