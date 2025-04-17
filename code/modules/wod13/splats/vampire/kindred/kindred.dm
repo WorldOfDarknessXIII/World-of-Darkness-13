@@ -153,7 +153,7 @@
 	if (childe_generation > 13)
 		childe_clan = /datum/vampireclan/caitiff
 
-	var/datum/splat/vampire/kindred/childe_vampirism = new SPLAT_KINDRED(childe_generation, childe_clan)
+	var/datum/splat/vampire/kindred/childe_vampirism = new /datum/splat/vampire/kindred(childe_generation, childe_clan)
 	childe_vampirism.assign(victim)
 
 	//Gives the Childe the Sire's first three Disciplines
@@ -185,7 +185,7 @@
 	var/datum/preferences/preferences = client.prefs
 
 	// Save splat
-	preferences.splat = SPLAT_KINDRED
+	preferences.splat = /datum/splat/vampire/kindred
 	preferences.generation = 13
 
 	// Save Clan
@@ -202,7 +202,7 @@
 			user = src,
 			message = "You aren't whitelisted for your sire's Clan. Choose a Clan instead.",
 			title = "Clan Selection",
-			items = available_clans,
+			items = sortList(available_clans),
 			default = /datum/vampireclan/caitiff
 		)
 
@@ -218,7 +218,11 @@
 	preferences.save_character()
 
 /datum/splat/vampire/kindred/proc/ghoul(mob/living/carbon/victim)
-	if (victim.is_splat_incompatible(SPLAT_GHOUL))
+	if (victim.is_splat_incompatible(/datum/splat/vampire/ghoul))
+		return
+
+	var/signal_return = SEND_SIGNAL(owner, COMSIG_MOB_GHOUL, victim) | SEND_SIGNAL(victim, COMSIG_MOB_GHOULED, owner)
+	if (signal_return & CANCEL_GHOUL)
 		return
 
 	// Invite ghosts to play as the new ghoul
@@ -255,22 +259,36 @@
 	var/datum/preferences/preferences = client.prefs
 
 	// Save splat
-	preferences.splat = SPLAT_GHOUL
+	preferences.splat = /datum/splat/vampire/ghoul
 
 	// Finalise
 	preferences.save_character()
 
-/datum/splat/vampire/kindred/proc/bloodbond(mob/living/carbon/victim)
+/datum/splat/vampire/kindred/proc/bloodbond(mob/living/victim)
+	if (!victim.mind)
+		return
+	if (victim.mind.enslaved_to == owner)
+		return
+
+	// Send signals on vampire and victim
+	var/signal_return = SEND_SIGNAL(owner, COMSIG_MOB_BLOODBOND, victim) | SEND_SIGNAL(victim, COMSIG_MOB_BLOODBONDED, owner)
+	if (signal_return & CANCEL_BLOODBOND)
+		return
+
 	if (victim.has_status_effect(STATUS_EFFECT_INLOVE))
 		victim.remove_status_effect(STATUS_EFFECT_INLOVE)
 	victim.apply_status_effect(STATUS_EFFECT_INLOVE, owner)
 
+	victim.mind.enslave_mind_to_creator(owner)
+	to_chat(victim, span_userdanger("<b>AS PRECIOUS VITAE ENTERS YOUR MOUTH, YOU ARE BLOODBOUND TO [owner]. SERVE YOUR REGNANT CORRECTLY, OR YOUR ACTIONS WILL NOT BE TOLERATED.</b>"))
+
 	message_admins("[ADMIN_LOOKUPFLW(owner)] has bloodbonded [ADMIN_LOOKUPFLW(victim)].")
 	log_game("[key_name(owner)] has bloodbonded [key_name(victim)].")
 
-	if (victim.mind?.enslaved_to != owner)
-		victim.mind.enslave_mind_to_creator(owner)
-		to_chat(victim, span_userdanger("<b>AS PRECIOUS VITAE ENTERS YOUR MOUTH, YOU ARE BLOODBOUND TO [owner]. SERVE YOUR REGNANT CORRECTLY, OR YOUR ACTIONS WILL NOT BE TOLERATED.</b>"))
+	// Reassign Ghoul's regnant on being blood bonded by another Kindred
+	var/datum/splat/vampire/ghoul/ghoul = is_ghoul(victim)
+	if (ghoul)
+		ghoul.regnant = owner
 
 /datum/splat/vampire/kindred/proc/set_generation(generation = 13)
 	src.generation = generation
@@ -306,7 +324,7 @@
 	if (timeofdeath + 5 MINUTES <= world.time)
 		return FALSE
 
-	if (is_splat_incompatible(SPLAT_KINDRED))
+	if (is_splat_incompatible(/datum/splat/vampire/kindred))
 		return FALSE
 
 	return TRUE

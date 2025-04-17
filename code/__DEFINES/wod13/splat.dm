@@ -2,11 +2,6 @@
 #define is_supernatural(character) (length(character.splats))
 #define is_innocent(character) (!is_supernatural(character))
 
-#define SPLAT_KINDRED /datum/splat/vampire/kindred
-#define SPLAT_GHOUL /datum/splat/vampire/ghoul
-#define SPLAT_GAROU /datum/splat/werewolf/garou
-#define SPLAT_KUEI_JIN /datum/splat/hungry_dead/kuei_jin
-
 /* RESOURCE DEFINES */
 // annihilate these when refactored into Storyteller system traits
 #define RESOURCE_VITAE "resource_vitae"
