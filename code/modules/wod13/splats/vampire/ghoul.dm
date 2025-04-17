@@ -8,3 +8,9 @@
 	. = ..()
 
 	src.regnant = regnant
+
+/datum/splat/vampire/ghoul/on_gain()
+	. = ..()
+
+	// Ghouls get 1st rank bloodheal
+	add_power(/datum/discipline/bloodheal, 1)

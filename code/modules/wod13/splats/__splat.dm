@@ -27,6 +27,8 @@
 /datum/splat/proc/on_gain()
 	SHOULD_CALL_PARENT(TRUE)
 
+	SEND_SIGNAL(owner, COMSIG_MOB_GAIN_SPLAT, src)
+
 	add_species_traits()
 
 	add_traits()
@@ -65,6 +67,8 @@
 
 /datum/splat/proc/on_lose()
 	SHOULD_CALL_PARENT(TRUE)
+
+	SEND_SIGNAL(owner, COMSIG_MOB_LOSE_SPLAT, src)
 
 	remove_species_traits()
 
@@ -121,6 +125,9 @@
 
 /* POWER MANAGEMENT */
 // standardise this all when the power system is made universal
+/datum/splat/proc/create_powers(list/power_types, list/levels)
+	return
+
 /datum/splat/proc/add_power(power_type, level)
 	return
 

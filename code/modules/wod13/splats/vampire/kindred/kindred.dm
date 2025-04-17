@@ -52,8 +52,7 @@
 	RegisterSignal(owner, COMSIG_MOB_DRINK_VITAE, PROC_REF(handle_drinking_vitae))
 
 	//this needs to be adjusted to be more accurate for blood spending rates
-	var/datum/discipline/bloodheal/giving_bloodheal = new(clamp(11 - generation, 1, 10))
-	owner.give_discipline(giving_bloodheal)
+	add_power(/datum/discipline/bloodheal, clamp(11 - generation, 1, 10))
 
 	add_verb(owner, TYPE_VERB_REF(/mob/living/carbon/human, teach_discipline))
 
@@ -159,9 +158,7 @@
 	//Gives the Childe the Sire's first three Disciplines
 	var/list/disciplines_to_give = list()
 	for (var/i in 1 to min(3, powers.len))
-		disciplines_to_give += powers[i].type
-
-	victim.create_disciplines(FALSE, disciplines_to_give)
+		childe_vampirism.add_power(powers[i].type, 1)
 
 /mob/living/proc/save_embraced_character_prompt()
 	if (!client)

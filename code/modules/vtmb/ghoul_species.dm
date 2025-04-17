@@ -122,9 +122,6 @@
 	infor.host = C
 	infor.Grant(C)
 
-	var/datum/discipline/bloodheal/giving_bloodheal = new(1)
-	C.give_discipline(giving_bloodheal)
-
 /datum/species/ghoul/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
 	for(var/datum/action/A in C.actions)

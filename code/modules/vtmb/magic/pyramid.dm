@@ -394,12 +394,11 @@
 				if (A.spell_button)
 					A.Remove(H)
 			H.revive(TRUE)
-			H.set_species(/datum/species/kindred)
-			H.clan = new /datum/vampireclan/gargoyle()
-			H.clan.on_gain(H)
-			H.clan.post_gain(H)
-			H.forceMove(get_turf(src))
-			H.create_disciplines(FALSE, H.clan.clan_disciplines)
+
+			var/datum/splat/vampire/kindred/gargoyle_vampirism = new(clan = /datum/vampireclan/gargoyle)
+			gargoyle_vampirism.assign(H)
+			gargoyle_vampirism.create_powers(gargoyle_vampirism.clan.clan_disciplines, list(1, 1, 1))
+
 			if(!H.key)
 				var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you wish to play as Sentient Gargoyle?", null, null, null, 50, src)
 				for(var/mob/dead/observer/G in GLOB.player_list)

@@ -36,13 +36,22 @@
 	selectable = TRUE
 	whitelisted = TRUE
 
+	var/dharma_level
 	var/datum/dharma/dharma
 	COOLDOWN_DECLARE(torpor_timer)
+
+/datum/splat/hungry_dead/kuei_jin/New(dharma_level = 1, dharma)
+	. = ..()
+
+	src.dharma_level = dharma_level
+	src.dharma = dharma
 
 /datum/splat/hungry_dead/kuei_jin/on_gain()
 	. = ..()
 
 	RegisterSignal(owner, COMSIG_MOB_DRINK_VITAE, PROC_REF(handle_drinking_vitae))
+
+	dharma.on_gain(owner)
 
 /datum/splat/hungry_dead/kuei_jin/proc/handle_drinking_vitae(mob/living/source, mob/living/vampire, amount)
 	SIGNAL_HANDLER

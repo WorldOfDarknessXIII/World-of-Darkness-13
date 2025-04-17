@@ -1,13 +1,33 @@
 /datum/splat/vampire
 
+/datum/splat/vampire/create_powers(list/power_types, list/levels)
+	. = ..()
+
+	if (length(power_types) != length(levels))
+		return
+
+	for (var/i in 1 to length(power_types))
+		add_power(power_types[i], levels[i])
+
 /datum/splat/vampire/add_power(power_type, level)
 	. = ..()
 
 	var/datum/discipline/giving_discipline = new power_type(level)
+	powers += giving_discipline
+
+	var/datum/action/discipline/giving_action = new(giving_discipline)
+	giving_action.Grant(owner)
 
 /datum/splat/vampire/remove_power(power_type)
 	. = ..()
 
+	for (var/datum/action/discipline/discipline_action in owner.actions)
+		if (!istype(discipline_action.discipline, power_type))
+			continue
+
+		powers -= discipline_action.discipline
+		qdel(discipline_action.discipline)
+		discipline_action.Destroy()
 
 /datum/splat/vampire/proc/get_vitae()
 	return owner.bloodpool
@@ -96,62 +116,6 @@
 		BD.lockpicking = BD.lockpicking-2
 
 /**
- * Initialises Disciplines for new vampire mobs, applying effects and creating action buttons.
- *
- * If discipline_pref is true, it grabs all of the source's Disciplines from their preferences
- * and applies those using the give_discipline() proc. If false, it instead grabs a given list
- * of Discipline typepaths and initialises those for the character. Only works for ghouls and
- * vampires, and it also applies the Clan's post_gain() effects
- *
- * Arguments:
- * * discipline_pref - Whether Disciplines will be taken from preferences. True by default.
- * * disciplines - list of Discipline typepaths to grant if discipline_pref is false.
- */
-/mob/living/proc/create_disciplines(discipline_pref = TRUE, list/disciplines)	//EMBRACE BASIC
-	if(client)
-		client.prefs.slotlocked = TRUE
-		client.prefs.save_preferences()
-		client.prefs.save_character()
-
-	if (is_vtm(src)) //only splats that have Disciplines qualify
-		var/list/datum/discipline/adding_disciplines = list()
-
-		if (discipline_pref) //initialise player's own disciplines
-			for (var/i in 1 to client.prefs.discipline_types.len)
-				var/type_to_create = client.prefs.discipline_types[i]
-				var/level = client.prefs.discipline_levels[i]
-				var/datum/discipline/discipline = new type_to_create(level)
-
-				//prevent Disciplines from being used if not whitelisted for them
-				if (discipline.clan_restricted)
-					if (!can_access_discipline(src, type_to_create))
-						qdel(discipline)
-						continue
-
-				adding_disciplines += discipline
-		else if (disciplines.len) //initialise given disciplines
-			for (var/i in 1 to disciplines.len)
-				var/type_to_create = disciplines[i]
-				var/datum/discipline/discipline = new type_to_create(1)
-				adding_disciplines += discipline
-
-		for (var/datum/discipline/discipline in adding_disciplines)
-			give_discipline(discipline)
-
-	if (is_kote(src)) //only splats that have Disciplines qualify
-		var/list/datum/chi_discipline/adding_disciplines = list()
-
-		if (discipline_pref) //initialise character's own disciplines
-			for (var/i in 1 to client.prefs.discipline_types.len)
-				var/type_to_create = client.prefs.discipline_types[i]
-				var/datum/chi_discipline/discipline = new type_to_create
-				discipline.level = client.prefs.discipline_levels[i]
-				adding_disciplines += discipline
-
-		for (var/datum/chi_discipline/discipline in adding_disciplines)
-			give_chi_discipline(discipline)
-
-/**
  * Creates an action button and applies post_gain effects of the given Discipline.
  *
  * Arguments:
@@ -163,13 +127,6 @@
 		action.Grant(src)
 	var/datum/species/kindred/species = dna.species
 	species.disciplines += discipline
-
-/mob/living/proc/give_chi_discipline(datum/chi_discipline/discipline)
-	if (discipline.level > 0)
-		var/datum/action/chi_discipline/action = new
-		action.discipline = discipline
-		action.Grant(src)
-	discipline.post_gain(src)
 
 /**
  * Accesses a certain Discipline that a Kindred has. Returns false if they don't.

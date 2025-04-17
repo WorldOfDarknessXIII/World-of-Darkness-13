@@ -2985,9 +2985,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		vampirism.clan.current_accessory = clan_accessory
 		vampirism.clan.enlightenment = enlightenment
 		vampirism.assign(character)
-
-		for (var/i in 1 to len(discipline_types))
-			var/datum/discipline/giving_discipline
+		vampirism.create_powers(discipline_types, discipline_levels)
 
 		character.bloodpool = rand(2, character.maxbloodpool)
 
@@ -3009,6 +3007,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		lycanthropy.apply_preferences(werewolf_color, werewolf_scar, werewolf_hair, werewolf_hair_color, werewolf_eye_color, werewolf_color, werewolf_eye_color, werewolf_name)
 
 	if (splat == /datum/splat/hungry_dead/kuei_jin)
+		var/datum/splat/hungry_dead/kuei_jin/kuei_jin = new splat(dharma_level, dharma)
+		kuei_jin.assign(character)
+		kuei_jin.create_powers(discipline_types, discipline_levels)
+
 		character.yang_chi = yang
 		character.max_yang_chi = yang
 		character.yin_chi = yin

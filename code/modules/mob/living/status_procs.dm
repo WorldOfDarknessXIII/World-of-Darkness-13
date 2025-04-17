@@ -494,11 +494,11 @@
 	if (HAS_TRAIT(src, TRAIT_TORPOR))
 		return
 	if (fakedeath(source))
-		to_chat(src, "<span class='danger'>You have fallen into Torpor. Use the button in the top right to learn more, or attempt to wake up.</span>")
+		to_chat(src, span_danger("You have fallen into Torpor. Use the button in the top right to learn more, or attempt to wake up."))
 		ADD_TRAIT(src, TRAIT_TORPOR, source)
-		if (is_kindred(src))
-			var/mob/living/carbon/human/vampire = src
-			var/datum/species/kindred/vampire_species = vampire.dna.species
+		var/datum/splat/vampire/kindred/vampirism = is_kindred(src)
+		var/datum/splat/hungry_dead/kuei_jin/kuei_jin = is_kuei_jin(src)
+		if (vampirism)
 			var/torpor_length = 0 SECONDS
 			switch(humanity)
 				if(10)
@@ -523,12 +523,10 @@
 					torpor_length = 3 HOURS
 				else
 					torpor_length = 5 HOURS
-			COOLDOWN_START(vampire_species, torpor_timer, torpor_length)
-		if (is_kuei_jin(src))
-			var/mob/living/carbon/human/cathayan = src
-			var/datum/dharma/dharma = cathayan.mind.dharma
+			COOLDOWN_START(vampirism, torpor_timer, torpor_length)
+		else if (kuei_jin)
 			var/torpor_length = 1 MINUTES * max_yin_chi
-			COOLDOWN_START(dharma, torpor_timer, torpor_length)
+			COOLDOWN_START(kuei_jin, torpor_timer, torpor_length)
 
 ///Unignores all slowdowns that lack the IGNORE_NOSLOW flag.
 /mob/living/proc/unignore_slowdown(source)
