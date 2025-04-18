@@ -5,78 +5,69 @@
 
 /mob/living/carbon/Life()
 	. = ..()
-	if(is_garou(src) || iswerewolf(src))
-		if(key && stat <= HARD_CRIT)
-			var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
-			if (P.masquerade != masquerade)
-				P.masquerade = masquerade
-				P.save_preferences()
-				P.save_character()
+	var/datum/splat/werewolf/garou/lycanthropy = is_garou(src)
+	if(!lycanthropy)
+		return
 
-		if(stat != DEAD)
-			var/gaining_rage = TRUE
-			for(var/obj/structure/werewolf_totem/W in GLOB.totems)
-				if (W.totem_health)
-					if (W.tribe == auspice.tribe)
-						if (get_area(W) == get_area(src) && client)
-							gaining_rage = FALSE
-							if (last_gnosis_buff + 30 SECONDS < world.time)
-								last_gnosis_buff = world.time
-								adjust_gnosis(1, src, TRUE)
+	if(key && stat <= HARD_CRIT)
+		var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
+		if (P.masquerade != masquerade)
+			P.masquerade = masquerade
+			P.save_preferences()
+			P.save_character()
 
-			if(iscrinos(src))
-				if(auspice.base_breed == "Crinos")
-					gaining_rage = FALSE
+	if(stat == DEAD)
+		return
 
-			if(islupus(src))
-				if(auspice.base_breed == "Lupus")
-					gaining_rage = FALSE
+	var/area/current_area = get_area(src)
 
-			if(ishuman(src))
-				if(auspice.base_breed == "Homid")
-					gaining_rage = FALSE
+	var/gaining_rage = TRUE
+	for(var/obj/structure/werewolf_totem/W in GLOB.totems)
+		if (!W.totem_health)
+			continue
 
-			if(gaining_rage && client)
-				if((last_rage_gain + 1 MINUTES) < world.time)
-					last_rage_gain = world.time
-					adjust_rage(1, src, TRUE)
+		if (W.tribe != lycanthropy.tribe)
+			continue
 
-			if(masquerade == 0)
-				if(!is_special_character(src))
-					if(auspice.gnosis)
-						to_chat(src, "<span class='warning'>My Veil is too low to connect with the spirits of Umbra!</span>")
-						adjust_gnosis(-1, src, FALSE)
+		if (get_area(W) != current_area || !client)
+			continue
 
-			if(auspice.rage >= 9)
-				if(!HAS_TRAIT(src, TRAIT_IN_FRENZY))
-					if((last_frenzy_check + 40 SECONDS) <= world.time)
-						last_frenzy_check = world.time
-						rollfrenzy()
+		gaining_rage = FALSE
 
-			if(istype(get_area(src), /area/vtm/interior/penumbra))
-				if((last_veil_restore + 40 SECONDS) < world.time)
-					adjust_veil(1, src, TRUE)
-					last_veil_restore = world.time
+		if (last_gnosis_buff + 30 SECONDS <= world.time)
+			continue
 
-			switch(auspice.tribe)
-				if("Wendigo")
-					if(istype(get_area(src), /area/vtm/forest))
-						if((last_veil_restore + 50 SECONDS) <= world.time)
-							adjust_veil(1, src, TRUE)
-							last_veil_restore = world.time
+		last_gnosis_buff = world.time
+		lycanthropy.add_gnosis(1, TRUE)
 
-				if("Glasswalkers")
-					if(istype(get_area(src), /area/vtm/interior/glasswalker))
-						if((last_veil_restore + 50 SECONDS) <= world.time)
-							adjust_veil(1, src, TRUE)
-							last_veil_restore = world.time
+	if (istype(src, lycanthropy.breed.form))
+		gaining_rage = FALSE
 
-				if("Black Spiral Dancers")
-					if(istype(get_area(src), /area/vtm/interior/endron_facility))
-						if((last_veil_restore + 50 SECONDS) <= world.time)
-							adjust_veil(1, src, TRUE)
-							last_veil_restore = world.time
+	if(gaining_rage && client)
+		if((last_rage_gain + 1 MINUTES) < world.time)
+			last_rage_gain = world.time
+			lycanthropy.add_rage(1, TRUE)
 
+	if(masquerade == 0)
+		if(!is_special_character(src))
+			if(lycanthropy.get_gnosis())
+				to_chat(src, span_warning("My Veil is too low to connect with the spirits of Umbra!"))
+				lycanthropy.remove_gnosis(-1, FALSE)
+
+	if(lycanthropy.get_rage() >= 9)
+		if(!HAS_TRAIT(src, TRAIT_IN_FRENZY))
+			if((last_frenzy_check + 40 SECONDS) <= world.time)
+				last_frenzy_check = world.time
+				rollfrenzy()
+
+	if (istype(current_area, /area/vtm/interior/penumbra))
+		if((last_veil_restore + 40 SECONDS) < world.time)
+			adjust_veil(1, src, TRUE)
+			last_veil_restore = world.time
+	else if (istype(current_area, lycanthropy.tribe.caern_area))
+		if((last_veil_restore + 50 SECONDS) <= world.time)
+			adjust_veil(1, src, TRUE)
+			last_veil_restore = world.time
 
 /mob/living/carbon/werewolf/crinos/Life()
 	. = ..()

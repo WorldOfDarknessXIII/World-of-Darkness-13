@@ -8,6 +8,8 @@
 		/datum/action/gift/burning_scars
 	)
 
+	caern_area = /area/vtm/interior/endron_facility
+
 /datum/tribe/black_spiral_dancers/on_gain(/mob/living/character, level)
 	. = ..()
 

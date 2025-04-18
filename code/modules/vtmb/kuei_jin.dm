@@ -338,7 +338,7 @@
 
 		H.update_chi_hud()
 		if(!HAS_TRAIT(H, TRAIT_IN_FRENZY))
-			H.mind.dharma.Po_combat = FALSE
+			H.mind.dharma.po_combat = FALSE
 		if(H.demon_chi == H.max_demon_chi && H.max_demon_chi != 0 && !HAS_TRAIT(H, TRAIT_IN_FRENZY))
 			H.rollfrenzy()
 

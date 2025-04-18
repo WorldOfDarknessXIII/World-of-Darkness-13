@@ -261,15 +261,14 @@
 	if (lycanthropy)
 		if (COOLDOWN_FINISHED(lycanthropy, rage_from_attack))
 			COOLDOWN_START(lycanthropy, rage_from_attack, 5 SECONDS)
-			adjust_rage(1, src, TRUE)
+			lycanthropy.remove_rage(1)
 
 	var/datum/splat/hungry_dead/kuei_jin/kuei_jin = is_kuei_jin(src)
 	if (kuei_jin)
 		var/datum/dharma/dharma = kuei_jin.dharma
 
 		if (HAS_TRAIT(src, TRAIT_IN_FRENZY))
-			if (!dharma.Po_combat)
-				dharma.Po_combat = TRUE
+			kuei_jin.po_combat = TRUE
 
 		if (kuei_jin.po == "Rebel")
 			emit_po_call(src, "Rebel")

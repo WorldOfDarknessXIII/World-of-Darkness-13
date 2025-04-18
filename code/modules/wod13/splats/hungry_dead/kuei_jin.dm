@@ -35,7 +35,7 @@
 	var/hun
 
 	//Is P'o doing it's thing or defending the host
-	var/Po_combat = FALSE
+	var/po_combat = FALSE
 	//Which Chi is used to animate last
 	var/animated = "None"
 	var/atom/po_focus

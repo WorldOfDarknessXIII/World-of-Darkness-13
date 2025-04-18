@@ -8,6 +8,8 @@
 		/datum/action/gift/elemental_improvement
 	)
 
+	caern_area = /area/vtm/interior/glasswalker
+
 /datum/tribe/glass_walkers/on_gain(mob/living/character, level)
 	. = ..()
 

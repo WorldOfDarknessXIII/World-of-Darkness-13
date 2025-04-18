@@ -42,53 +42,76 @@
 	totem_light_overlay.color = totem_overlay_color
 	overlays |= totem_light_overlay
 
-/obj/structure/werewolf_totem/proc/adjust_totem_health(var/amount)
+/obj/structure/werewolf_totem/proc/adjust_totem_health(amount)
 	if(amount > 0)
 		if(totem_health == 0)
 			return
-		totem_health = max(0, totem_health-amount)
-		if(totem_health == 0)
+		totem_health = max(0, totem_health - amount)
+		if (totem_health == 0)
 			icon_state = "[initial(icon_state)]_broken"
 			overlays -= totem_light_overlay
 			totem_light_overlay.icon_state = "[icon_state]_overlay"
 			overlays |= totem_light_overlay
 			for(var/mob/living/carbon/C in GLOB.player_list)
-				if(iswerewolf(C) || is_garou(C))
-					if(C.stat != DEAD)
-						if(C.auspice.tribe == tribe)
-							set_light(0)
-							to_chat(C, "<span class='userdanger'><b>YOUR TOTEM IS DESTROYED</b></span>")
-							SEND_SOUND(C, sound('sound/effects/tendril_destroyed.ogg', 0, 0, 75))
-							adjust_gnosis(-5, C, FALSE)
-							var/obj/umbra_portal/prev = locate() in get_step(src, SOUTH)
-							if(prev)
-								qdel(prev.exit)
-								qdel(prev)
+				if (C.stat == DEAD)
+					continue
+
+				var/datum/splat/werewolf/garou/lycanthropy = is_garou(C)
+				if (!lycanthropy)
+					continue
+				if (lycanthropy.tribe != tribe)
+					continue
+
+				set_light(0)
+				to_chat(C, span_userdanger("<b>YOUR TOTEM IS DESTROYED</b>"))
+				SEND_SOUND(C, sound('sound/effects/tendril_destroyed.ogg', 0, 0, 75))
+				lycanthropy.remove_gnosis(5, FALSE)
+
+				var/obj/umbra_portal/prev = locate() in get_step(src, SOUTH)
+				if(prev)
+					qdel(prev.exit)
+					qdel(prev)
 		else
 			for(var/mob/living/carbon/C in GLOB.player_list)
-				if(iswerewolf(C) || is_garou(C))
-					if(C.stat != DEAD)
-						if(C.auspice.tribe == tribe)
-							if(last_rage+50 < world.time)
-								last_rage = world.time
-								to_chat(C, "<span class='userdanger'><b>YOUR TOTEM IS BREAKING DOWN</b></span>")
-								SEND_SOUND(C, sound('code/modules/wod13/sounds/bumps.ogg', 0, 0, 75))
-								adjust_rage(1, C, FALSE)
+				if (C.stat == DEAD)
+					continue
+
+				var/datum/splat/werewolf/garou/lycanthropy = is_garou(C)
+				if (!lycanthropy)
+					continue
+				if (lycanthropy.tribe != tribe)
+					continue
+
+				if(last_rage + 5 SECONDS >= world.time)
+					continue
+				last_rage = world.time
+				to_chat(C, span_userdanger("<b>YOUR TOTEM IS BREAKING DOWN</b>"))
+				SEND_SOUND(C, sound('code/modules/wod13/sounds/bumps.ogg', 0, 0, 75))
+				lycanthropy.add_rage(1, FALSE)
 	if(amount < 0)
 		totem_health = min(initial(totem_health), totem_health-amount)
-		if(totem_health > 0)
-			if(icon_state != initial(icon_state))
-				for(var/mob/living/carbon/C in GLOB.player_list)
-					if(iswerewolf(C) || is_garou(C))
-						if(C.stat != DEAD)
-							if(C.auspice.tribe == tribe)
-								to_chat(C, "<span class='userhelp'><b>YOUR TOTEM IS RESTORED</b></span>")
-								SEND_SOUND(C, sound('code/modules/wod13/sounds/inspire.ogg', 0, 0, 75))
-								adjust_gnosis(1, C, FALSE)
-				icon_state = "[initial(icon_state)]"
-				overlays -= totem_light_overlay
-				totem_light_overlay.icon_state = "[icon_state]_overlay"
-				overlays |= totem_light_overlay
+		if(totem_health <= 0)
+			return
+
+		if(icon_state == initial(icon_state))
+			return
+
+		for(var/mob/living/carbon/C in GLOB.player_list)
+			if(C.stat == DEAD)
+				continue
+
+			var/datum/splat/werewolf/garou/lycanthropy = is_garou(C)
+			if(!lycanthropy)
+				continue
+			if(lycanthropy.tribe != tribe)
+				continue
+			to_chat(C, "<span class='userhelp'><b>YOUR TOTEM IS RESTORED</b></span>")
+			SEND_SOUND(C, sound('code/modules/wod13/sounds/inspire.ogg', 0, 0, 75))
+			lycanthropy.add_gnosis(1, FALSE)
+		icon_state = "[initial(icon_state)]"
+		overlays -= totem_light_overlay
+		totem_light_overlay.icon_state = "[icon_state]_overlay"
+		overlays |= totem_light_overlay
 
 /obj/structure/werewolf_totem/wendigo
 	name = "Wendigo Totem"

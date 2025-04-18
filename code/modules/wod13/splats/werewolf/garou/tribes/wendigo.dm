@@ -8,6 +8,8 @@
 		/datum/action/gift/bloody_feast
 	)
 
+	caern_area = /area/vtm/forest
+
 /datum/tribe/wendigo/on_gain(mob/living/character, level)
 	. = ..()
 

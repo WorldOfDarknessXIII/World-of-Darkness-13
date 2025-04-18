@@ -63,7 +63,7 @@
 		return
 
 	REMOVE_TRAIT(src, TRAIT_IN_FRENZY, VAMPIRE_TRAIT)
-	mind?.dharma?.Po_combat = FALSE
+	mind?.dharma?.po_combat = FALSE
 	remove_client_colour(/datum/client_colour/glass_colour/red)
 	GLOB.frenzy_list -= src
 

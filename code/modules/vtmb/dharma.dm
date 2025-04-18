@@ -51,7 +51,7 @@
 	if(!is_kuei_jin(src))
 		return ..()
 
-	if(!mind?.dharma?.Po_combat)
+	if(!mind?.dharma?.po_combat)
 		switch(mind?.dharma?.po)
 			if("Rebel")
 				if(frenzy_target)

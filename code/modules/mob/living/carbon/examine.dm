@@ -137,34 +137,31 @@
 
 		..()
 
-	if (is_garou(user) || iswerewolf(user))
+	if (is_garou(user))
 		if (get_dist(user, src) <= 2)
 			var/wyrm_taint = NONE
 			var/weaver_taint = NONE
 			var/wyld_taint = NONE
 
-			if (is_kindred(src)) //vampires are static, and may be Wyrm-tainted depending on behaviour
-				var/mob/living/carbon/human/vampire = src
-				weaver_taint++
-
-				if ((humanity < 7) || client?.prefs?.enlightenment)
+			var/datum/splat/vampire/kindred/vampirism = is_kindred(src)
+			if (vampirism) //vampires may be Wyrm-tainted depending on behaviour
+				if ((humanity < 7) || vampirism.enlightenment)
 					wyrm_taint++
 
-				if ((vampire.clan.name == "Baali") || ( (client?.prefs?.enlightenment && (humanity > 7)) || (!client?.prefs?.enlightenment && (humanity < 4)) ))
+				if ((vampirism.clan == /datum/vampireclan/baali) || ( (vampirism.enlightenment && (humanity > 7)) || (!vampirism.enlightenment && (humanity < 4)) ))
 					wyrm_taint++
 
-				if (istype(vampire.clan, /datum/vampireclan/kiasyd)) //the fae are Wyld-tainted by default
+				if (vampirism.clan == /datum/vampireclan/kiasyd) //the fae are Wyld-tainted by default
 					wyld_taint++
 
-			if (is_garou(src) || iswerewolf(src)) //werewolves have the taint of whatever Triat member they venerate most
-				var/mob/living/carbon/wolf = src
-
-				switch(wolf.auspice.tribe)
-					if ("Wendigo")
+			var/datum/splat/werewolf/garou/lycanthropy = is_garou(src)
+			if (lycanthropy) //werewolves have the taint of whatever Triat member they venerate most
+				switch(lycanthropy.tribe)
+					if (/datum/tribe/wendigo)
 						wyld_taint++
-					if ("Glasswalkers")
+					if (/datum/tribe/glass_walkers)
 						weaver_taint++
-					if ("Black Spiral Dancers")
+					if (/datum/tribe/black_spiral_dancers)
 						wyrm_taint = VERY_TAINTED
 
 			if (wyrm_taint == TAINTED)

@@ -24,8 +24,8 @@
 /datum/vampireclan/kiasyd/on_gain(mob/living/carbon/human/H)
 	. = ..()
 
-	//This was messing with the visualiser in the character setup menu somehow
-	if (H.clan?.type != /datum/vampireclan/kiasyd)
+	var/datum/splat/vampire/kindred/vampirism = is_kindred(H)
+	if (!vampirism || vampirism.clan != /datum/vampireclan/kiasyd)
 		return
 	if(H.isdwarfy)
 		H.RemoveElement(/datum/element/dwarfism, COMSIG_PARENT_PREQDELETED, src)

@@ -4,5 +4,7 @@
 
 	var/list/gifts
 
+	var/area/caern_area
+
 /datum/tribe/proc/on_gain(/mob/living/character, level)
 	return
