@@ -88,7 +88,7 @@
 					LV.visible_message("<span class='italics'><b>[BD] kisses [LV]!</b></span>", "<span class='userlove'><b>[BD] kisses you!</b></span>")
 				if(is_kindred(LV))
 					var/mob/living/carbon/human/HV = BD.pulling
-					if(HV.stakeimmune)
+					if(HAS_TRAIT(HV, TRAIT_REMOVED_HEART))
 						to_chat(BD, "<span class='warning'>There is no <b>HEART</b> in this creature.</span>")
 						return
 				BD.drinksomeblood(LV)

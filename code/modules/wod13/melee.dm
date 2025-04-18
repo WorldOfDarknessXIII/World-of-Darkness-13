@@ -572,7 +572,7 @@
 		return
 	if(target.IsParalyzed() || target.IsKnockdown() || target.IsStun())
 		return
-	if(!target.IsParalyzed() && is_kindred(target) && !target.stakeimmune)
+	if(!target.IsParalyzed() && is_kindred(target) && !HAS_TRAIT(target, TRAIT_REMOVED_HEART))
 		if(HAS_TRAIT(target, TRAIT_STAKE_RESISTANT))
 			visible_message("<span class='warning'>[user]'s stake splinters as it touches [target]'s heart!</span>", "<span class='warning'>Your stake splinters as it touches [target]'s heart!</span>")
 			REMOVE_TRAIT(target, TRAIT_STAKE_RESISTANT, MAGIC_TRAIT)

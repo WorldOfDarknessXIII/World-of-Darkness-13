@@ -74,6 +74,10 @@
 #define TRAIT_CANNOT_EMBRACE "cannot_embrace"
 /// Can drink Vitae and suffer its effects despite not normally being able to
 #define TRAIT_TOLERATES_VITAE "tolerates_vitae"
+/// Lost control to the Beast, the P'o, their Rage, or whatever
+#define TRAIT_IN_FRENZY "in_frenzy"
+/// Their heart has been removed but is magically linked to their body, keeping them alive
+#define TRAIT_REMOVED_HEART "removed_heart"
 
 /* TRAIT SOURCES */
 #define SPLAT_TRAIT "splat_trait"

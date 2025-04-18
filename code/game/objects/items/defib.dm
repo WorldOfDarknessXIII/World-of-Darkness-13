@@ -617,7 +617,6 @@
 					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
 					var/mob/living/carbon/human/HM = user
 					HM.AdjustHumanity(1, 10)
-					call_dharma("savelife", HM)
 					log_combat(user, H, "revived", defib)
 				if(req_defib)
 					defib.deductcharge(revivecost)

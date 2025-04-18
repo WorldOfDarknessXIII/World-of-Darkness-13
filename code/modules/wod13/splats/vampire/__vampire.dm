@@ -116,19 +116,6 @@
 		BD.lockpicking = BD.lockpicking-2
 
 /**
- * Creates an action button and applies post_gain effects of the given Discipline.
- *
- * Arguments:
- * * discipline - Discipline datum that is being given to this mob.
- */
-/mob/living/proc/give_discipline(datum/discipline/discipline)
-	if (discipline.level > 0)
-		var/datum/action/discipline/action = new(discipline)
-		action.Grant(src)
-	var/datum/species/kindred/species = dna.species
-	species.disciplines += discipline
-
-/**
  * Accesses a certain Discipline that a Kindred has. Returns false if they don't.
  *
  * Arguments:

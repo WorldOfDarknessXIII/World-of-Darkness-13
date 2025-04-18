@@ -48,7 +48,7 @@
 						adjust_gnosis(-1, src, FALSE)
 
 			if(auspice.rage >= 9)
-				if(!in_frenzy)
+				if(!HAS_TRAIT(src, TRAIT_IN_FRENZY))
 					if((last_frenzy_check + 40 SECONDS) <= world.time)
 						last_frenzy_check = world.time
 						rollfrenzy()

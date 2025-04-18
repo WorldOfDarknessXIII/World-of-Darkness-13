@@ -4,10 +4,8 @@
 //remove_client_colour(/datum/client_colour/glass_colour/red)
 /client/Click(object,location,control,params)
 	if(isatom(object))
-		if(ishuman(mob))
-			var/mob/living/carbon/human/H = mob
-			if(H.in_frenzy)
-				return
+		if (HAS_TRAIT(H, TRAIT_IN_FRENZY))
+			return
 	..()
 
 /mob/living/carbon/proc/rollfrenzy()
@@ -51,20 +49,20 @@
 				frenzy_hardness = min(10, frenzy_hardness+1)
 
 /mob/living/carbon/proc/enter_frenzymod()
-	if (in_frenzy)
+	if (HAS_TRAIT(src, TRAIT_IN_FRENZY))
 		return
 
 	SEND_SOUND(src, sound('code/modules/wod13/sounds/frenzy.ogg', 0, 0, 50))
-	in_frenzy = TRUE
+	ADD_TRAIT(src, TRAIT_IN_FRENZY, VAMPIRE_TRAIT)
 	add_client_colour(/datum/client_colour/glass_colour/red)
 	demon_chi = 0
 	GLOB.frenzy_list += src
 
 /mob/living/carbon/proc/exit_frenzymod()
-	if (!in_frenzy)
+	if (!HAS_TRAIT(src, TRAIT_IN_FRENZY))
 		return
 
-	in_frenzy = FALSE
+	REMOVE_TRAIT(src, TRAIT_IN_FRENZY, VAMPIRE_TRAIT)
 	mind?.dharma?.Po_combat = FALSE
 	remove_client_colour(/datum/client_colour/glass_colour/red)
 	GLOB.frenzy_list -= src
@@ -208,7 +206,7 @@
 				H.do_jitter_animation(10)
 				if(fearstack > 20)
 					if(prob(fearstack))
-						if(!H.in_frenzy)
+						if(!HAS_TRAIT(H, TRAIT_IN_FRENZY))
 							H.rollfrenzy()
 			if(!H.has_status_effect(STATUS_EFFECT_FEAR))
 				H.apply_status_effect(STATUS_EFFECT_FEAR)
@@ -268,9 +266,6 @@
 									else
 										SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
 										to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
-	if(H.hearing_ghosts)
-		H.bloodpool = max(0, H.bloodpool-1)
-		to_chat(H, "<span class='warning'>Necromancy Vision reduces your blood points too sustain itself.</span>")
 
 	if (H.clan?.name == "Tzimisce" || H.clan?.name == "Old Clan Tzimisce")
 		var/datum/vampireclan/tzimisce/TZ = H.clan
@@ -315,14 +310,14 @@
 						to_chat(H, "<span class='warning'><b>As you are far from [H.mind.enslaved_to], you feel the desire to drink more vitae!<b></span>")
 						H.last_frenzy_check = world.time
 						H.rollfrenzy()
-				else if (H.bloodpool > 1 || H.in_frenzy)
+				else if (H.bloodpool > 1 || HAS_TRAIT(H, TRAIT_IN_FRENZY))
 					H.last_frenzy_check = world.time
 		else
-			if(H.bloodpool > 1 || H.in_frenzy)
+			if(H.bloodpool > 1 || HAS_TRAIT(H, TRAIT_IN_FRENZY))
 				H.last_frenzy_check = world.time
 
 	if(!H.antifrenzy && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
-		if(H.bloodpool <= 1 && !H.in_frenzy)
+		if(H.bloodpool <= 1 && !HAS_TRAIT(H, TRAIT_IN_FRENZY))
 			if((H.last_frenzy_check + 40 SECONDS) <= world.time)
 				H.last_frenzy_check = world.time
 				H.rollfrenzy()

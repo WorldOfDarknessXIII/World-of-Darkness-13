@@ -3007,7 +3007,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		lycanthropy.apply_preferences(werewolf_color, werewolf_scar, werewolf_hair, werewolf_hair_color, werewolf_eye_color, werewolf_color, werewolf_eye_color, werewolf_name)
 
 	if (splat == /datum/splat/hungry_dead/kuei_jin)
-		var/datum/splat/hungry_dead/kuei_jin/kuei_jin = new splat(dharma_level, dharma)
+		var/datum/splat/hungry_dead/kuei_jin/kuei_jin = new splat(dharma_level, dharma, po, hun)
 		kuei_jin.assign(character)
 		kuei_jin.create_powers(discipline_types, discipline_levels)
 
@@ -3090,11 +3090,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_hair()
 		character.update_body_parts()
 	if(!character_setup)
-		if(character.age < 16)
-			if(!character.ischildren)
-				character.ischildren = TRUE
-				character.AddElement(/datum/element/children, COMSIG_PARENT_PREQDELETED, src)
-
 		parent << browse(null, "window=preferences_window")
 		parent << browse(null, "window=preferences_browser")
 

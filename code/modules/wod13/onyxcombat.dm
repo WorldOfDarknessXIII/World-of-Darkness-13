@@ -40,13 +40,9 @@
 		if (brain)
 			brain.organ_flags |= ORGAN_FAILING
 
-		if(in_frenzy)
+		if(HAS_TRAIT(src, TRAIT_IN_FRENZY))
 			exit_frenzymod()
 		SEND_SOUND(src, sound('code/modules/wod13/sounds/final_death.ogg', 0, 0, 50))
-
-		//annoying code that depends on clan doesn't work for Kuei-jin
-		if (is_kuei_jin(src))
-			return
 
 		var/years_undead = chronological_age - age
 		switch (years_undead)
@@ -369,7 +365,7 @@
 						LV.visible_message("<span class='italics'><b>[BD] kisses [LV]!</b></span>", "<span class='userlove'><b>[BD] kisses you!</b></span>")
 					if(is_kindred(LV))
 						var/mob/living/carbon/human/HV = BD.pulling
-						if(HV.stakeimmune)
+						if (HAS_TRAIT(HV, TRAIT_REMOVED_HEART))
 							to_chat(BD, "<span class='warning'>There is no <b>HEART</b> in this creature.</span>")
 							return
 					BD.drinksomeblood(LV)

@@ -1,15 +1,3 @@
-/mob/living/carbon/human/proc/check_kuei_jin_alive()
-	if(is_kuei_jin(src))
-		if(mind?.dharma)
-			if(mind.dharma.animated == "Yang")
-				return TRUE
-			else if (max_yang_chi > max_yin_chi + 2)
-				return TRUE
-	else
-		return FALSE
-
-	return TRUE
-
 /mob/living/Life()
 	. = ..()
 
@@ -300,24 +288,23 @@
 											SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
 											to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (corpse)</b></span>")
 			for(var/obj/item/I in H.contents)
-				if(I)
-					if(I.masquerade_violating)
-						if(I.loc == H)
-							var/obj/item/card/id/id_card = H.get_idcard(FALSE)
-							if(!istype(id_card, /obj/item/card/id/clinic) && !istype(id_card, /obj/item/card/id/police) && !istype(id_card, /obj/item/card/id/sheriff) && !istype(id_card, /obj/item/card/id/prince) && !istype(id_card, /obj/item/card/id/camarilla))
-								if(H.CheckEyewitness(H, H, 7, FALSE))
-									if(H.last_loot_check+50 <= world.time)
-										H.last_loot_check = world.time
-										H.last_nonraid = world.time
-										H.killed_count = H.killed_count+1
-										if(!H.warrant && !H.ignores_warrant)
-											if(H.killed_count >= 5)
-												H.warrant = TRUE
-												SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
-												to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
-											else
-												SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
-												to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
+				if(I.masquerade_violating)
+					if(I.loc == H)
+						var/obj/item/card/id/id_card = H.get_idcard(FALSE)
+						if(!istype(id_card, /obj/item/card/id/clinic) && !istype(id_card, /obj/item/card/id/police) && !istype(id_card, /obj/item/card/id/sheriff) && !istype(id_card, /obj/item/card/id/prince) && !istype(id_card, /obj/item/card/id/camarilla))
+							if(H.CheckEyewitness(H, H, 7, FALSE))
+								if(H.last_loot_check+50 <= world.time)
+									H.last_loot_check = world.time
+									H.last_nonraid = world.time
+									H.killed_count = H.killed_count+1
+									if(!H.warrant && !H.ignores_warrant)
+										if(H.killed_count >= 5)
+											H.warrant = TRUE
+											SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
+											to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
+										else
+											SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
+											to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
 
 	if(H.key && (H.stat <= HARD_CRIT) && H.mind.dharma)
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
@@ -350,9 +337,9 @@
 				P.save_character()
 
 		H.update_chi_hud()
-		if(!H.in_frenzy)
+		if(!HAS_TRAIT(H, TRAIT_IN_FRENZY))
 			H.mind.dharma.Po_combat = FALSE
-		if(H.demon_chi == H.max_demon_chi && H.max_demon_chi != 0 && !H.in_frenzy)
+		if(H.demon_chi == H.max_demon_chi && H.max_demon_chi != 0 && !HAS_TRAIT(H, TRAIT_IN_FRENZY))
 			H.rollfrenzy()
 
 		if(H.mind.dharma.Po == "Monkey")
@@ -421,9 +408,9 @@
 
 /datum/action/breathe_chi/Trigger()
 	if(!COOLDOWN_FINISHED(src, use))
-		to_chat(usr, "<span class='warning'>You need to wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, use))] to Inhale Chi again!</span>")
+		to_chat(usr, span_warning("You need to wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, use))] to Inhale Chi again!"))
 		return
-	if(!istype(owner, /mob/living/carbon/human))
+	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/kueijin = usr
 	COOLDOWN_START(src, use, cooldown)
@@ -432,14 +419,14 @@
 	for (var/mob/living/adding_victim in oviewers(3, kueijin))
 		victims_list += adding_victim
 	if(!length(victims_list))
-		to_chat(owner, "<span class='warning'>There's no one with <b>Chi</b> around...</span>")
+		to_chat(owner, span_warning("There's no one with <b>Chi</b> around...</span>"))
 		return
 
 	var/mob/living/victim
 	if (length(victims_list) == 1)
 		victim = victims_list[1]
 	else
-		victim = input(owner, "Choose whose breath to inhale", "Inhale Chi") as null|anything in victims_list
+		victim = tgui_input_list(owner, "Choose whose breath to inhale", "Inhale Chi", victims_list)
 	if(!victim)
 		return
 

@@ -100,9 +100,9 @@
 		if (diablerist)
 			holder.icon_state = "diablerie_aura"
 
-	if(is_kuei_jin(src))
-		var/mob/living/carbon/human/H = src
-		if(!H.check_kuei_jin_alive())
+	var/datum/splat/hungry_dead/kuei_jin/kuei_jin = is_kuei_jin(src)
+	if (kuei_jin)
+		if ((kuei_jin.check_balance() == "Yin") || (kuei_jin.animated == "Yin"))
 			holder.color = "#ffffff"
 
 	if (is_garou(src) || iswerewolf(src))

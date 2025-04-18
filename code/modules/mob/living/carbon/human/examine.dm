@@ -391,7 +391,7 @@
 					msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
 		//examine text for unusual appearances
-		if (is_kindred(src) && is_face_visible())
+		if (is_face_visible())
 			switch(dna.species.limbs_id)
 				if ("nosferatu")
 					msg += "<span class='danger'><b>[p_they(TRUE)] look[p_s()] utterly deformed and inhuman!</b></span><br>"
@@ -426,9 +426,20 @@
 			var/weaver_taint = NONE
 			var/wyld_taint = NONE
 
-			if(is_kuei_jin(src))
-				if(!check_kuei_jin_alive())
+			var/datum/splat/hungry_dead/kuei_jin/kuei_jin = is_kuei_jin(src)
+			if (kuei_jin)
+				if (kuei_jin.dharma_level < 6)
 					wyrm_taint++
+
+				if (kuei_jin.dharma == /datum/dharma/thrashing_dragon)
+					wyld_taint++
+					if (kuei_jin.dharma_level >= 6)
+						wyld_taint++
+
+				if (kuei_jin.dharma == /datum/dharma/resplendent_crane)
+					weaver_taint++
+					if (kuei_jin.dharma_level >= 6)
+						weaver_taint++
 
 			if (vampirism)
 				weaver_taint++

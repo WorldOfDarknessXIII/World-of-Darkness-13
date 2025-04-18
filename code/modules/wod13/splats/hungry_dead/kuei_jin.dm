@@ -21,16 +21,9 @@
 		/datum/action/reanimate_yin
 	)
 
-	max_resources = list(
-		RESOURCE_DEMON_CHI = 5
-	)
-	resources = list(
-		RESOURCE_DEMON_CHI = 5
-	)
 	power_type = /datum/chi_discipline
 	replace_splats = list(
-		/datum/splat/vampire,
-		/datum/splat/werewolf
+		/datum/splat
 	)
 
 	selectable = TRUE
@@ -38,20 +31,106 @@
 
 	var/dharma_level
 	var/datum/dharma/dharma
-	COOLDOWN_DECLARE(torpor_timer)
+	var/po
+	var/hun
 
-/datum/splat/hungry_dead/kuei_jin/New(dharma_level = 1, dharma)
+	//Is P'o doing it's thing or defending the host
+	var/Po_combat = FALSE
+	//Which Chi is used to animate last
+	var/animated = "None"
+	var/atom/po_focus
+
+	COOLDOWN_DECLARE(torpor_timer)
+	COOLDOWN_DECLARE(po_call)
+	COOLDOWN_DECLARE(chi_heal)
+
+/datum/splat/hungry_dead/kuei_jin/New(dharma_level = 1, dharma, po, hun)
 	. = ..()
 
 	src.dharma_level = dharma_level
 	src.dharma = dharma
+	src.po = po
+	src.hun = hun
 
 /datum/splat/hungry_dead/kuei_jin/on_gain()
 	. = ..()
 
+	set_dharma_level(dharma_level)
+
+	// Register relevant signals
 	RegisterSignal(owner, COMSIG_MOB_DRINK_VITAE, PROC_REF(handle_drinking_vitae))
 
-	dharma.on_gain(owner)
+/datum/splat/hungry_dead/kuei_jin/proc/set_dharma_level(dharma_level)
+	src.dharma_level = dharma_level
+
+	// Makes Yin Chi, Yang Chi, Hun, and Po conform to maximums
+	update_virtues()
+
+	// Handle draining breath action, which is only available at Dharma 5+
+	if (dharma_level >= 5)
+		var/datum/action/breathe_chi/drain_breath
+		for (var/datum/action/breathe_chi/found_action in owner.actions)
+			drain_breath = found_action
+
+		if (!drain_breath)
+			drain_breath = new
+			drain_breath.Grant(owner)
+	else
+		for (var/datum/action/breathe_chi/breathe_chi_action in owner.actions)
+			breathe_chi_action.Destroy()
+
+	// Handle draining chi through osmosis, which is only available at Dharma 6+
+	if (dharma_level >= 6)
+		var/datum/action/area_chi/osmosis
+		for (var/datum/action/area_chi/found_action in owner.actions)
+			osmosis = found_action
+
+		if (!osmosis)
+			osmosis = new
+			osmosis.Grant(owner)
+	else
+		for (var/datum/action/area_chi/osmosis in owner.actions)
+			osmosis.Destroy()
+
+/datum/splat/hungry_dead/kuei_jin/proc/update_virtues()
+	var/virtue_pair_limit = max(10, dharma_level * 2)
+
+	var/total_chi = owner.max_yin_chi + owner.max_yang_chi
+	var/total_virtues = hun + owner.max_demon_chi
+
+	var/chi_discrepancy = virtue_pair_limit - total_chi
+	var/virtue_discrepancy = virtue_pair_limit - total_virtues
+
+	if ((chi_discrepancy == 0) && (virtue_discrepancy == 0))
+		return
+
+	owner.max_yin_chi += chi_discrepancy / 2
+	owner.max_yang_chi += chi_discrepancy / 2
+	owner.yin_chi = min(owner.yin_chi, owner.max_yin_chi)
+	owner.yang_chi = min(owner.yang_chi, owner.max_yang_chi)
+
+	hun += virtue_discrepancy / 2
+	owner.max_demon_chi += virtue_discrepancy / 2
+	owner.demon_chi = min(owner.demon_chi, owner.max_demon_chi)
+
+/datum/splat/hungry_dead/kuei_jin/proc/po_trigger(atom/source, affected_type)
+	if(HAS_TRAIT(owner, TRAIT_IN_FRENZY))
+		return
+	if(!COOLDOWN_FINISHED(src, po_call))
+		return
+	COOLDOWN_START(src, po_call, 10 SECONDS)
+
+	po_focus = source
+	owner.demon_chi = min(owner.demon_chi + 1, owner.max_demon_chi)
+	to_chat(owner, span_warning("Some <b>DEMON</b> Chi fills you..."))
+
+/datum/splat/hungry_dead/kuei_jin/proc/check_balance()
+	if (owner.max_yin_chi > owner.max_yang_chi + 3)
+		return "Yin"
+	else if (owner.max_yang_chi > owner.max_yin_chi + 3)
+		return "Yang"
+
+	return "Balanced"
 
 /datum/splat/hungry_dead/kuei_jin/proc/handle_drinking_vitae(mob/living/source, mob/living/vampire, amount)
 	SIGNAL_HANDLER
@@ -72,6 +151,7 @@
 
 	for(var/mob/living/carbon/human/hearer in ohearers(5, src))
 		var/datum/splat/hungry_dead/kuei_jin/kuei_jin = is_kuei_jin(hearer)
-		if(kuei_jin?.dharma.Po != "Legalist")
+		if (kuei_jin.po != "Legalist")
 			continue
+
 		kuei_jin.dharma.roll_po(src, hearer)

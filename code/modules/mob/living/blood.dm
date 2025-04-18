@@ -244,11 +244,10 @@
 		blood_data["donor"] = src
 		blood_data["viruses"] = list()
 
-		blood_data["generation"] = src.generation
-		if(istype(src, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = src
-			if(H.clan)
-				blood_data["clan"] = H.clan.name
+		var/datum/splat/vampire/kindred/vampirism = is_kindred(src)
+		if (vampirism)
+			blood_data["generation"] = vampirism.generation
+			blood_data["clan"] = vampirism.clan.name
 
 		for(var/thing in diseases)
 			var/datum/disease/D = thing

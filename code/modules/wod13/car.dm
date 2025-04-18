@@ -224,7 +224,6 @@ SUBSYSTEM_DEF(carpool)
 						if(ishuman(user))
 							var/mob/living/carbon/human/H = user
 							H.AdjustHumanity(-1, 6)
-							call_dharma("steal", H)
 						return
 				else
 					to_chat(user, "<span class='warning'>You've failed to open [src]'s lock.</span>")
