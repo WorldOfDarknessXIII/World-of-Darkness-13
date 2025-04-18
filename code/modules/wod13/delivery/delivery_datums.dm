@@ -8,6 +8,7 @@
 	var/area/vtm/interior/delivery_garage/garage_area
 	var/obj/effect/landmark/delivery_truck_beacon/truck_spawner
 	var/obj/vampire_car/delivery_truck/active_truck
+	var/list/spawned_keys = list()
 	var/list/delivery_dispensers = list()
 	var/list/delivery_recievers = list()
 	var/list/active_crates = list()
@@ -167,15 +168,15 @@
 			crate_number -= 1
 		INVOKE_ASYNC(reciever, TYPE_PROC_REF(/obj/structure/delivery_reciever/,display_reciever))
 
-/datum/delivery_datum/proc/assign_garage(id)
-	if(!id) return 0
+/datum/delivery_datum/proc/assign_garage()
+	if(!delivery_employer_tag) return 0
 	for(var/area/vtm/interior/delivery_garage/potential_garage_area in GLOB.delivery_garage_areas)
-		if(potential_garage_area.delivery_employer_tag == id)
+		if(potential_garage_area.delivery_employer_tag == delivery_employer_tag)
 			garage_area = potential_garage_area
 			break
 	if(!garage_area) return 0
 	for(var/obj/effect/landmark/delivery_truck_beacon/potential_truck_spawner in GLOB.delivery_available_veh_spawners)
-		if(potential_truck_spawner.delivery_employer_tag == id)
+		if(potential_truck_spawner.delivery_employer_tag == delivery_employer_tag)
 			truck_spawner = potential_truck_spawner
 			break
 	if(!truck_spawner) return 0
@@ -184,6 +185,7 @@
 	if(active_truck) return 0
 	if(!truck_spawner) return "err"
 	truck_spawner.spawn_truck(src)
+	delivery_score["trucks_used"] += 1
 
 /datum/delivery_datum/proc/delivery_timeout()
 	broadcast_to_holders("Delivery timer expired. Deactivating any outstanding recievers. You have five minutes to return the truck and any outstanding cargo.")
@@ -218,7 +220,7 @@
 
 /datum/delivery_datum/proc/start_contract()
 	if(check_conditions(contract_difficulty) == 0) return "fail_reci"
-	if(assign_garage(delivery_employer_tag) == 0) return "fail_garage"
+	if(assign_garage() == 0) return "fail_garage"
 	if(assign_dispenser("red") == 0) return "fail_disp"
 	if(assign_dispenser("blue") == 0) return "fail_disp"
 	if(assign_dispenser("yellow") == 0) return "fail_disp"
@@ -270,6 +272,9 @@
 		for(var/obj/structure/delivery_crate/crate in active_crates)
 			qdel(crate)
 	active_crates = list()
+	if(spawned_keys.len != 0)
+		for(var/obj/item/vamp/keys/cargo_truck/truck_key in spawned_keys)
+			qdel(truck_key)
 	. = ..()
 
 
@@ -332,21 +337,6 @@
 	var/timer_calc = crate_position * search_delay
 	return timer_calc
 
-/datum/delivery_storage/proc/rem_from_storage(obj/crate)
-	storage.Remove(crate)
-	var/turf/owner_turf = get_turf(owner)
-	var/turf/destination_turf
-	switch(owner.dir)
-		if(NORTHEAST,NORTH,NORTHWEST)
-			destination_turf = locate(owner_turf.x, owner_turf.y - 1, owner_turf.z)
-		if(EAST)
-			destination_turf = locate(owner_turf.x + 3, owner_turf.y, owner_turf.z)
-		if(WEST)
-			destination_turf = locate(owner_turf.x - 1, owner_turf.y, owner_turf.z)
-		if(SOUTHEAST,SOUTH,SOUTHWEST)
-			destination_turf = locate(owner_turf.x, owner_turf.y + 3, owner_turf.z)
-	crate.forceMove(destination_turf)
-
 /datum/delivery_storage/proc/retrieval_menu(mob/user)
 	if(!user) return
 	switch(check_use(1,user))
@@ -357,7 +347,7 @@
 			to_chat(user, span_warning("You are already using the truck."))
 		if(1)
 			var/list/available_tags = list()
-			var/picked_crate
+			var/obj/structure/delivery_crate/picked_crate
 			var/chosen_tag
 			for (var/obj/structure/delivery_crate/crate in storage)
 				if(!crate)
@@ -373,7 +363,7 @@
 					picked_crate = crate_to_ret
 					chosen_tag = crate_to_ret.crate_type
 			if(!picked_crate)
-				chosen_tag = tgui_input_list(user, "The following crate types are available:","Crate choice",available_tags,timeout = 20 SECONDS)
+				chosen_tag = tgui_input_list(user, "Current load: [storage.len] / [capacity], Available Crates:","Crate choice",available_tags,timeout = 20 SECONDS)
 			if(!chosen_tag)
 				check_use(2,user)
 				return
@@ -383,8 +373,11 @@
 					break
 			var/ret_delay = 4 SECONDS + calculate_ret_time(chosen_tag)
 			if(do_after(user, ret_delay, owner))
-				rem_from_storage(picked_crate)
-				check_use(2,user)
+				var/turf/user_turf = get_turf(user)
+				storage.Remove(picked_crate)
+				picked_crate.forceMove(user_turf)
+			check_use(2,user)
+
 
 /datum/delivery_manifest/
 
@@ -399,7 +392,6 @@
 
 /datum/delivery_manifest/New(datum/delivery_datum)
 	delivery = delivery_datum
-	save_data(init = TRUE)
 	. = ..()
 
 /datum/delivery_manifest/Destroy(force, ...)
@@ -420,29 +412,50 @@
 		saved_data["time_left"] = "TIMED OUT"
 	else
 		saved_data["time_left"] = time2text(time_left_raw,"mm:ss")
-	if(init) read_data(delivery.original_owner)
+
+/datum/delivery_manifest/proc/get_cargo_color_value(tag)
+	switch(tag)
+		if("red")
+			return "#7c1313"
+		if("blue")
+			return "#202bca"
+		if("yellow")
+			return "#b8ac3f"
+		if("green")
+			return "#165f29"
+		else
+			return "#000000"
+
 
 /datum/delivery_manifest/proc/read_data(mob/user)
 	if(!user) return
 	var/turf/user_turf = get_turf(user)
-	to_chat(user,span_notice("Current coordinates: X:[user_turf.x] Y:[user_turf.y] Z: [user_turf.z]<br><hr>"))
+	var/html
+	html += "<p><b>Current coordinates:</b> X:[user_turf.x] Y:[user_turf.y] Z: [user_turf.z]<br></p>"
 	if(saved_recievers.len == 0)
-		to_chat(user, span_notice("No recievers found. Return the truck to the garage and any outstanding crates to their dispensers, then return the contract to the board.<br><hr>"))
+		html += "<p><b>o recievers found. Return the truck to the garage and any outstanding crates to their dispensers, then return the contract to the board.</b></p>"
 	else
 		for(var/obj/structure/delivery_reciever/reciever in saved_recievers)
 			var/turf/reciever_turf = get_turf(reciever)
-			to_chat(user,span_notice("Reciever [reciever.chute_name] - X:[reciever_turf.x] Y:[reciever_turf.y] Z:[reciever_turf.z]"))
-			if(reciever.delivery_status["red"] >= 0) to_chat(user,span_notice({"<span style="color: #7c1313;">RED</span> crates remaining: [reciever.delivery_status["red"]]"}))
-			if(reciever.delivery_status["blue"] >= 0) to_chat(user,span_notice({"<span style="color: #202bca;">BLUE</span> crates remaining: [reciever.delivery_status["red"]]"}))
-			if(reciever.delivery_status["yellow"] >= 0) to_chat(user,span_notice({"<span style="color: #b8ac3f;">YELLOW</span> crates remaining: [reciever.delivery_status["red"]]"}))
-			if(reciever.delivery_status["green"] >= 0) to_chat(user,span_notice({"<span style="color: #165f29;">GREEN</span> crates remaining: [reciever.delivery_status["red"]]"}))
-			to_chat(user, "<br><hr>")
+			html += "<p><b>Reciever [reciever.chute_name] - X:[reciever_turf.x] Y:[reciever_turf.y] Z:[reciever_turf.z]</b><br>"
+			if(reciever.delivery_status["red"] > 0)
+				var/html_color = get_cargo_color_value("red")
+				html += {"<span style="color: [html_color];">RED</span> crates remaining: [reciever.delivery_status["red"]]<br>"}
+			if(reciever.delivery_status["blue"] > 0)
+				var/html_color = get_cargo_color_value("blue")
+				html += {"<span style="color: [html_color];">BLUE</span> crates remaining: [reciever.delivery_status["blue"]]<br>"}
+			if(reciever.delivery_status["yellow"] > 0)
+				var/html_color = get_cargo_color_value("yellow")
+				html += {"<span style="color: [html_color];">YELLOW</span> crates remaining: [reciever.delivery_status["yellow"]]<br>"}
+			if(reciever.delivery_status["green"] > 0)
+				var/html_color = get_cargo_color_value("green")
+				html += {"<span style="color: [html_color];">GREEN</span> crates remaining: [reciever.delivery_status["green"]]<br>"}
+			html += "</p>"
 	if(delivery.active_truck)
 		var/turf/truck_turf = get_turf(delivery.active_truck)
-		to_chat(user,span_notice("Truck Active - X:[truck_turf.x] Y:[truck_turf.y] Z:[truck_turf.z]"))
+		html += "<p><b>Truck Active</b> - X:[truck_turf.x] Y:[truck_turf.y] Z:[truck_turf.z]</p>"
 	else
-		to_chat(user,span_notice("No truck found."))
-	to_chat(user,"<br><hr>")
+		html += "<p><b>No truck found.</b></p>"
 	if(delivery.active_crates.len != 0)
 		var/list/turf_list = list()
 		for(var/obj/structure/delivery_crate/crate in delivery.active_crates)
@@ -451,16 +464,17 @@
 				if(turf_list.Find(tested_turf) == 0)
 					turf_list.Add(tested_turf)
 		if(turf_list.len != 0)
-			to_chat(user,span_notice("Active Crates:"))
+			html += "<p><b>Active Crates:</b>"
 			for(var/turf/picked_turf in turf_list)
-				to_chat(user,span_notice("X:[picked_turf.x] Y:[picked_turf.y] Z:[picked_turf.z]"))
+				html += "X:[picked_turf.x] Y:[picked_turf.y] Z:[picked_turf.z]<br>"
+				html += "</p>"
 	else
-		to_chat(user, span_notice("No active crates."))
-	to_chat(user, "<br><hr>")
+		html += "<b><p>No active crates.</b></p>"
 	if(delivery.delivery_dispensers.len != 0)
 		for(var/obj/structure/delivery_dispenser/dispenser in delivery.delivery_dispensers)
 			var/turf/dispenser_turf = get_turf(dispenser)
-			to_chat(user, span_notice("Dispenser for crate type [capitalize(dispenser.crate_type)] available at X:[dispenser_turf.x] Y:[dispenser_turf.y] Z:[dispenser_turf.z]"))
+			var/html_color = get_cargo_color_value(dispenser.crate_type)
+			html += {"<p><b>Dispenser</b> for <b>crate type <span style="color: [html_color];">[capitalize(dispenser.crate_type)]</span></b> available at X:[dispenser_turf.x] Y:[dispenser_turf.y] Z:[dispenser_turf.z]</p>"}
 	else
-		to_chat(user,span_notice("Dispensers not found."))
-	to_chat(user, "<br><hr>")
+		html += "<p><b>Dispensers not found.</p></b>"
+	to_chat(user, html)

@@ -17,19 +17,18 @@
 	manifest = new(delivery)
 	. = ..()
 
-/obj/item/delivery_contract/attack_hand(mob/user)
-	if(!delivery) return "no_datum"
-	if(!manifest) return "no_manifest"
-	if(delivery.check_owner(user) == 0)
-		to_chat(user, span_warning("You are not listed on this manifest. Before you can use it, one of its owners needs to add you to the crew handling it by using the manifest on you."))
-		return
-	else
-		manifest.read_data(user)
-
 /obj/item/delivery_contract/attack(mob/living/M, mob/living/user)
 	if(!delivery)
 		to_chat(user,span_notice("Error: No delivery datum attached. This is most likely a bug."))
 		return
+	if(!manifest) return "no_manifest"
+	if(M == user)
+		if(delivery.check_owner(user) == 0)
+			to_chat(user, span_warning("You are not listed on this manifest. Before you can use it, one of its owners needs to add you to the crew handling it by using the manifest on you."))
+			return
+		else
+			manifest.read_data(user)
+			return
 	if(M.client == null)
 		to_chat(user,span_notice("Error: Target mob has no client. This is not a player mob."))
 		return
@@ -40,6 +39,10 @@
 		if(delivery.check_owner(M) == 0)
 			if(tgui_alert(user,"Do you want to add [M] to the delivery contract?","Contract add confirmation",list("Yes","No"),timeout = 10 SECONDS) == "Yes")
 				delivery.add_owner(M)
+				var/obj/item/vamp/keys/cargo_truck/truck_keys = new(src)
+				truck_keys.delivery = delivery
+				truck_keys.owner = M
+				M.put_in_hands(truck_keys)
 				to_chat(user, span_notice("Success! User [M] added."))
 			return
 		if(delivery.check_owner(M) == 1)
@@ -50,6 +53,9 @@
 			else
 				if(tgui_alert(user,"Do you want to remove [M] from the delivery contract?","Contract remove confirmation",list("Yes","No"),timeout = 10 SECONDS) == "Yes")
 					delivery.contract_takers.Remove(M)
+					for(var/obj/item/vamp/keys/cargo_truck/truck_keys in delivery.spawned_keys)
+						if(truck_keys.owner == M)
+							qdel(truck_keys)
 					to_chat(user, span_notice("Success! User [M] removed."))
 				return
 
@@ -99,13 +105,15 @@
 						picked_difficulty = 3
 						difficulty_text = "A long contract involves 7 locations with up to 15 crates each, meaning that without partial loads each delivery will require a restock. The timie limit is 30 minutes."
 				if(tgui_alert(user,difficulty_text,"Confirm Contract",list("Yes","No"),timeout = 10 SECONDS) == "Yes")
-					var/obj/item/delivery_contract/contract = new(get_turf(user),user,src,picked_difficulty)
+					var/obj/item/delivery_contract/contract = new(user,src,picked_difficulty)
 					switch(contract.delivery.start_contract())
 						if(1)
 							user.put_in_hands(contract)
 							icon_state = "nboard00"
 							update_icon()
 							to_chat(user,span_notice("Success! A new contract was created and aprorpiate items have been created and dispensed. Check the cotnract item for information about your delivery."))
+							contract.manifest.save_data(init = TRUE)
+							contract.manifest.read_data(contract.delivery.original_owner)
 							delivery_started = 1
 							return
 						if("fail_reci")
@@ -194,7 +202,7 @@
 		if(delivery_in_use == 0) return
 		if(istype(user.pulling,/obj/structure/delivery_crate/))
 			var/obj/structure/delivery_crate/pulled_crate = user.pulling
-			if(do_after(user, 5 SECONDS, src))
+			if(do_after(user, 3 SECONDS, src))
 				if(delivery_status[pulled_crate.crate_type] > 0)
 					delivery_status[pulled_crate.crate_type] =- 1
 					pulled_crate.delivery.delivery_score["delivered_crates"] += 1
@@ -253,32 +261,31 @@
 	dispenser_active = 0
 	crate_type = null
 
-/obj/structure/delivery_dispenser/proc/dispense_cargo(obj/contract)
-	if(!contract) return
-	var/obj/item/delivery_contract/contract_item = contract
-	var/target_turf = get_turf(src)
+/obj/structure/delivery_dispenser/proc/dispense_cargo(obj/truck_key, turf/target_turf)
+	if(!truck_key) return
+	var/obj/item/vamp/keys/cargo_truck/key_item = truck_key
 	switch(crate_type)
 		if("red")
 			var/obj/structure/delivery_crate/red/dispensed_crate = new(target_turf)
-			dispensed_crate.delivery = contract_item.delivery
-			contract_item.delivery.active_crates.Add(dispensed_crate)
+			dispensed_crate.delivery = key_item.delivery
+			key_item.delivery.active_crates.Add(dispensed_crate)
 			dispensed_crate.source_dispenser = src
 		if("blue")
 			var/obj/structure/delivery_crate/blue/dispensed_crate = new(target_turf)
-			dispensed_crate.delivery = contract_item.delivery
-			contract_item.delivery.active_crates.Add(dispensed_crate)
+			dispensed_crate.delivery = key_item.delivery
+			key_item.delivery.active_crates.Add(dispensed_crate)
 			dispensed_crate.source_dispenser = src
 		if("yellow")
 			var/obj/structure/delivery_crate/yellow/dispensed_crate = new(target_turf)
-			dispensed_crate.delivery = contract_item.delivery
-			contract_item.delivery.active_crates.Add(dispensed_crate)
+			dispensed_crate.delivery = key_item.delivery
+			key_item.delivery.active_crates.Add(dispensed_crate)
 			dispensed_crate.source_dispenser = src
 		if("green")
 			var/obj/structure/delivery_crate/green/dispensed_crate = new(target_turf)
-			dispensed_crate.delivery = contract_item.delivery
-			contract_item.delivery.active_crates.Add(dispensed_crate)
+			dispensed_crate.delivery = key_item.delivery
+			key_item.delivery.active_crates.Add(dispensed_crate)
 			dispensed_crate.source_dispenser = src
-	contract_item.delivery.delivery_score["dispensed_crates"] += 1
+	key_item.delivery.delivery_score["dispensed_crates"] += 1
 
 /obj/structure/delivery_dispenser/attack_hand(mob/living/user)
 	. = ..()
@@ -289,9 +296,24 @@
 		if(istype(user.pulling, /obj/structure/delivery_crate))
 			var/obj/structure/delivery_crate/pulled_crate = user.pulling
 			if(pulled_crate.source_dispenser == src)
-				if(do_after(user, 5 SECONDS, src))
+				if(do_after(user, 3 SECONDS, src))
 					pulled_crate.delivery.delivery_score["dispensed_crates"] -= 1
 					qdel(pulled_crate)
+
+/obj/structure/delivery_dispenser/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	if(istype(I,/obj/item/vamp/keys/cargo_truck))
+		var/obj/item/vamp/keys/cargo_truck/truck_key = I
+		if(truck_key.delivery == null)
+			to_chat(user,span_warning("Error, delivery data missing. This is a bug."))
+			return
+		if(truck_key.delivery.spawned_keys.Find(truck_key) == 0)
+			to_chat(user,span_notice("They key does not seem to work in this dispenser."))
+		else
+			to_chat(user, span_notice("You put the key into the dispenser and start to retrieve a crate."))
+			if(do_after(user, 3 SECONDS, src))
+				var/user_turf = get_turf(user)
+				dispense_cargo(truck_key,user_turf)
 
 /obj/structure/delivery_crate
 
@@ -330,7 +352,10 @@
 
 /obj/vampire_car/delivery_truck/Destroy()
 	if(delivery)
-		delivery.active_truck = null
+		if(delivery.active_truck == src)
+			if(get_area(src) == delivery.garage_area)
+				delivery.delivery_score["trucks_used"] -= 1
+			delivery.active_truck = null
 		delivery = null
 	qdel(delivery_trunk)
 	. = ..()
@@ -339,15 +364,6 @@
 /obj/vampire_car/delivery_truck/Initialize()
 	. = ..()
 	delivery_trunk = new(src,delivery_capacity)
-
-/obj/vampire_car/delivery_truck/Destroy()
-	. = ..()
-	if(delivery)
-		if(delivery.active_truck == src)
-			if(get_area(src) == delivery.garage_area)
-				delivery.delivery_score["trucks_used"] -= 1
-			delivery.active_truck = null
-		delivery = null
 
 /obj/vampire_car/delivery_truck/ComponentInitialize()
 	return
@@ -366,7 +382,7 @@
 				to_chat(user, span_warning("The special compartments in the back dont really fit anything other than delivery crates. Use a nomral truck for other cargo."))
 				return
 			else
-				if(do_after(user, 5 SECONDS, pulled_crate)) delivery_trunk.add_to_storage(user,pulled_crate)
+				if(do_after(user, 3 SECONDS, pulled_crate)) delivery_trunk.add_to_storage(user,pulled_crate)
 
 /obj/effect/landmark/delivery_truck_beacon
 	name = "delivery truck spawner"
@@ -382,9 +398,39 @@
 	var/turf/local_turf = get_turf(src)
 	var/obj/vampire_car/delivery_truck/spawned_truck = new(local_turf)
 	spawned_truck.dir = spawn_dir
+	switch(spawn_dir)
+		if(SOUTH)
+			spawned_truck.movement_vector = 180
+		if(EAST)
+			spawned_truck.movement_vector = 90
+		if(WEST)
+			spawned_truck.movement_vector = 270
 	spawned_truck.delivery = linked_datum
+	spawned_truck.delivery.active_truck = spawned_truck
 	spawned_truck.locked = TRUE
 	spawned_truck.access = spawned_truck.delivery.delivery_employer_tag
-	var/obj/item/vamp/keys/spawned_keys = new(local_turf)
+	var/obj/item/vamp/keys/cargo_truck/spawned_keys = new(local_turf)
+	spawned_keys.delivery = linked_datum
+	spawned_keys.owner = spawned_keys.delivery.original_owner
 	spawned_keys.accesslocks = list(spawned_truck.delivery.delivery_employer_tag)
+	spawned_truck.delivery.spawned_keys.Add(spawned_keys)
 	spawned_truck.delivery.original_owner.put_in_hands(spawned_keys)
+
+/obj/effect/landmark/delivery_truck_beacon/Initialize()
+	GLOB.delivery_available_veh_spawners.Add(src)
+	. = ..()
+
+/obj/effect/landmark/delivery_truck_beacon/Destroy()
+	GLOB.delivery_available_veh_spawners.Remove(src)
+	. = ..()
+
+/obj/item/vamp/keys/cargo_truck
+
+	var/datum/delivery_datum/delivery
+	var/mob/living/owner
+
+/obj/item/vamp/keys/cargo_truck/Destroy()
+	if(delivery)
+		delivery.spawned_keys.Remove(src)
+		delivery = null
+	. = ..()

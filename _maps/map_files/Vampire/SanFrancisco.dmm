@@ -32163,6 +32163,10 @@
 	},
 /turf/open/floor/plating/rough,
 /area/vtm/interior/mansion)
+"eIy" = (
+/obj/structure/delivery_reciever/test2,
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/fishermanswharf)
 "eIA" = (
 /obj/effect/decal/cardboard,
 /obj/structure/railing{
@@ -37169,6 +37173,11 @@
 	},
 /turf/open/floor/plating/toilet,
 /area/vtm/interior/theatre)
+"gUj" = (
+/obj/structure/delivery_reciever/test4,
+/obj/structure/delivery_reciever/test4,
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/ghetto)
 "gUl" = (
 /obj/structure/vampipe{
 	icon_state = "piping31"
@@ -45384,6 +45393,10 @@
 /obj/effect/decal/shadow,
 /turf/open/floor/plating/rough,
 /area/vtm/interior)
+"kEz" = (
+/obj/effect/landmark/observer_start,
+/turf/open/floor/plating/concrete,
+/area/vtm/interior/delivery/oops_office)
 "kEB" = (
 /obj/effect/decal/bordur{
 	dir = 1
@@ -47994,6 +48007,7 @@
 "lVR" = (
 /obj/structure/table/wood,
 /obj/machinery/mineral/equipment_vendor/fastfood/pharmacy,
+/obj/structure/delivery_reciever/test4,
 /turf/closed/wall/vampwall/painted/low,
 /area/vtm/interior)
 "lWf" = (
@@ -53492,9 +53506,9 @@
 /turf/open/floor/plating/sidewalk/poor,
 /area/vtm/interior/police)
 "oCz" = (
-/obj/structure/delivery_reciever/test3,
-/turf/open/floor/plating/sidewalk/poor,
-/area/vtm/ghetto)
+/obj/effect/landmark/delivery_truck_beacon/oops_office,
+/turf/open/floor/plating/rough,
+/area/vtm/interior/delivery_garage/oops_office)
 "oCE" = (
 /obj/structure/lattice,
 /obj/structure/railing,
@@ -61003,9 +61017,12 @@
 /turf/open/floor/plating/concrete,
 /area/vtm/interior)
 "rXG" = (
-/obj/structure/delivery_reciever/test2,
-/turf/open/floor/plating/sidewalk,
-/area/vtm/fishermanswharf)
+/obj/effect/decal/bordur{
+	dir = 4
+	},
+/obj/structure/delivery_reciever/test4,
+/turf/open/floor/plating/sidewalk/poor,
+/area/vtm/ghetto)
 "rXI" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -63842,9 +63859,9 @@
 /turf/open/floor/carpet/green,
 /area/vtm/interior)
 "tkS" = (
-/obj/effect/landmark/observer_start,
-/turf/open/floor/plating/concrete,
-/area/vtm/interior/delivery/oops_office)
+/obj/structure/delivery_reciever/test3,
+/turf/open/floor/plating/sidewalk,
+/area/vtm/ghetto)
 "tlc" = (
 /obj/structure/chair/sofa/corp/right{
 	dir = 1
@@ -64340,10 +64357,6 @@
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/green,
 /area/vtm/jazzclub)
-"tvw" = (
-/obj/effect/landmark/delivery_truck_beacon/oops_office,
-/turf/open/floor/plating/rough,
-/area/vtm/interior/delivery_garage/oops_office)
 "tvD" = (
 /obj/structure/vampfence/rich{
 	pixel_y = 13
@@ -69675,6 +69688,11 @@
 /obj/structure/closet/body_bag,
 /turf/open/water,
 /area/vtm/interior/bianchiBank)
+"vUS" = (
+/obj/structure/table/wood,
+/obj/structure/delivery_reciever/test4,
+/turf/closed/wall/vampwall/painted/low,
+/area/vtm/interior)
 "vVj" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -147393,7 +147411,7 @@ asy
 aoS
 aoS
 aoS
-aoS
+oia
 aoS
 aoS
 gDT
@@ -149455,7 +149473,7 @@ aoS
 aoS
 aoS
 aoS
-oia
+aoS
 bCp
 aoS
 aoS
@@ -149937,7 +149955,7 @@ oAa
 ajf
 ajj
 ajj
-ajj
+eIy
 aow
 aoS
 aoS
@@ -154566,7 +154584,7 @@ aII
 aII
 aoy
 aog
-rXG
+aoS
 apk
 apx
 apM
@@ -180898,7 +180916,7 @@ lmZ
 lmZ
 fWd
 fWd
-tvw
+fWd
 fWd
 lmZ
 lmZ
@@ -181155,7 +181173,7 @@ lmZ
 lmZ
 fWd
 fWd
-fWd
+oCz
 fWd
 lmZ
 lmZ
@@ -181420,7 +181438,7 @@ uhW
 kgh
 kgh
 kgh
-tkS
+kEz
 kgh
 kgh
 kgh
@@ -185066,7 +185084,7 @@ ajK
 ajK
 ajK
 fin
-ajK
+tkS
 jrx
 ajK
 ajK
@@ -186357,7 +186375,7 @@ aoy
 aoy
 aoy
 aoq
-oCz
+ajU
 alT
 aiI
 aso
@@ -195628,8 +195646,8 @@ aJR
 ufk
 aoP
 qsH
-eBu
-ajU
+vUS
+dtU
 ajU
 ajU
 ajU
@@ -195885,7 +195903,7 @@ bHD
 bHD
 eBu
 lVR
-eBu
+vUS
 ajU
 ajU
 ajU
@@ -196131,6 +196149,9 @@ aiI
 wXt
 vRY
 fYN
+gUj
+dtU
+dtU
 dtU
 ajU
 ajU
@@ -196138,10 +196159,7 @@ ajU
 ajU
 ajU
 ajU
-ajU
-ajU
-ajU
-ajU
+dtU
 ajU
 arO
 ajU
@@ -196392,12 +196410,12 @@ amG
 amG
 amG
 amG
-amG
-amG
-amG
-amG
-amG
-amG
+rXG
+rXG
+rXG
+rXG
+rXG
+rXG
 amG
 amG
 amG
