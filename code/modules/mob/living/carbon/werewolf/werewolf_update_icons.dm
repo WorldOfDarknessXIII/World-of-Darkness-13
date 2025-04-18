@@ -39,14 +39,14 @@
 			add_overlay(damage_overlay)
 
 	if(sprite_apparel)
-		switch(auspice.tribe)
-			if("Wendigo")
+		switch(is_garou(src).tribe)
+			if(/datum/tribe/wendigo)
 				var/mutable_appearance/clothing_overlay = mutable_appearance(icon, "wendigo[sprite_apparel][laid_down ? "_rest" : ""]")
 				add_overlay(clothing_overlay)
-			if("Glasswalkers")
+			if(/datum/tribe/glass_walkers)
 				var/mutable_appearance/clothing_overlay = mutable_appearance(icon, "glasswalker[sprite_apparel][laid_down ? "_rest" : ""]")
 				add_overlay(clothing_overlay)
-			if("Black Spiral Dancers")
+			if(/datum/tribe/black_spiral_dancers)
 				var/mutable_appearance/clothing_overlay = mutable_appearance(icon, "spiral[sprite_apparel][laid_down ? "_rest" : ""]")
 				add_overlay(clothing_overlay)
 

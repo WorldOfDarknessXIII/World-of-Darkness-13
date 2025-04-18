@@ -50,7 +50,7 @@
 						SEND_SOUND(src, sound('code/modules/wod13/sounds/humanity_gain.ogg', 0, 0, 75))
 						to_chat(src, "<span class='userhelp'><b>HUMANITY INCREASED!</b></span>")
 
-/mob/living/carbon/human/proc/AdjustMasquerade(var/value, var/forced = FALSE)
+/mob/living/carbon/human/proc/AdjustMasquerade(value, forced = FALSE)
 	if(!is_kindred(src) && !is_ghoul(src) && !is_kuei_jin(src))
 		return
 	if(!GLOB.canon_event)

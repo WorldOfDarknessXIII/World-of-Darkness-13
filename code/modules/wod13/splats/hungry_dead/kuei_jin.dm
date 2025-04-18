@@ -114,6 +114,8 @@
 	owner.demon_chi = min(owner.demon_chi, owner.max_demon_chi)
 
 /datum/splat/hungry_dead/kuei_jin/proc/po_trigger(atom/source, affected_type)
+	if (affected_type && (po != affected_type))
+		return
 	if(HAS_TRAIT(owner, TRAIT_IN_FRENZY))
 		return
 	if(!COOLDOWN_FINISHED(src, po_call))
@@ -151,7 +153,4 @@
 
 	for(var/mob/living/carbon/human/hearer in ohearers(5, src))
 		var/datum/splat/hungry_dead/kuei_jin/kuei_jin = is_kuei_jin(hearer)
-		if (kuei_jin.po != "Legalist")
-			continue
-
-		kuei_jin.dharma.roll_po(src, hearer)
+		kuei_jin.po_trigger(src, "Legalist")

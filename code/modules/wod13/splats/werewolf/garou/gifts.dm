@@ -90,14 +90,23 @@
 
 /datum/action/gift/inspiration/Trigger()
 	. = ..()
-	if(allowed_to_proceed)
-		var/mob/living/carbon/H = owner
-		playsound(get_turf(owner), 'code/modules/wod13/sounds/inspiration.ogg', 75, FALSE)
-		H.emote("scream")
-		for(var/mob/living/carbon/C in range(5, owner))
-			if(iswerewolf(C) || is_garou(C))
-				if(C.auspice.tribe == H.auspice.tribe)
-					C.inspired()
+	if (!allowed_to_proceed)
+		return
+
+	var/mob/living/carbon/H = owner
+	playsound(get_turf(owner), 'code/modules/wod13/sounds/inspiration.ogg', 75, FALSE)
+	H.emote("scream")
+	var/datum/splat/werewolf/garou/lycanthropy = is_garou(owner)
+
+	for(var/mob/living/carbon/C in range(5, owner))
+		var/datum/splat/werewolf/garou/target_lycanthropy = is_garou(C)
+		if (!target_lycanthropy)
+			continue
+
+		if (target_lycanthropy.tribe != lycanthropy.tribe)
+			continue
+
+		C.inspired()
 
 /datum/action/gift/razor_claws
 	name = "Razor Claws"
@@ -172,16 +181,20 @@
 
 /datum/action/gift/call_of_the_wyld/Trigger()
 	. = ..()
-	if(allowed_to_proceed)
-		var/mob/living/carbon/C = owner
-		C.emote("howl")
-		playsound(get_turf(C), pick('code/modules/wod13/sounds/awo1.ogg', 'code/modules/wod13/sounds/awo2.ogg'), 100, FALSE)
-		for(var/mob/living/carbon/A in orange(6, owner))
-			if(is_garou(A) || iswerewolf(A))
-				A.emote("howl")
-				playsound(get_turf(A), pick('code/modules/wod13/sounds/awo1.ogg', 'code/modules/wod13/sounds/awo2.ogg'), 100, FALSE)
-				spawn(1 SECONDS)
-					adjust_gnosis(1, A, TRUE)
+	if (!allowed_to_proceed)
+		return
+
+	var/mob/living/carbon/C = owner
+	C.emote("howl")
+	playsound(get_turf(C), pick('code/modules/wod13/sounds/awo1.ogg', 'code/modules/wod13/sounds/awo2.ogg'), 100, FALSE)
+	for (var/mob/living/carbon/A in orange(6, owner))
+		var/datum/splat/werewolf/garou/lycanthropy = is_garou(A)
+		if (!lycanthropy)
+			continue
+
+		A.emote("howl")
+		playsound(get_turf(A), pick('code/modules/wod13/sounds/awo1.ogg', 'code/modules/wod13/sounds/awo2.ogg'), 100, FALSE)
+		lycanthropy.add_gnosis(1, TRUE)
 
 /datum/action/gift/mindspeak
 	name = "Mindspeak"
@@ -190,15 +203,24 @@
 
 /datum/action/gift/mindspeak/Trigger()
 	. = ..()
-	if(allowed_to_proceed)
-		var/new_thought = input(owner, "What do you want to tell to your Tribe?") as text|null
-		if(new_thought)
-			var/mob/living/carbon/C = owner
-			to_chat(C, "You transfer this message to your tribe members nearby: <b>[sanitize_text(new_thought)]</b>")
-			for(var/mob/living/carbon/A in orange(9, owner))
-				if(is_garou(A) || iswerewolf(A))
-					if(A.auspice.tribe == C.auspice.tribe)
-						to_chat(A, "You hear a message in your head... <b>[sanitize_text(new_thought)]</b>")
+	if (allowed_to_proceed)
+		return
+
+	var/new_thought = tgui_input_text(owner, "What do you want to tell to your Tribe?", "Mindspeak")
+	if (!new_thought)
+		return
+
+	var/datum/splat/werewolf/garou/lycanthropy = is_garou(owner)
+	to_chat(owner, "You transfer this message to your tribe members nearby: <b>[sanitize_text(new_thought)]</b>")
+	for (var/mob/living/carbon/A in orange(9, owner))
+		var/datum/splat/werewolf/garou/target_lycanthropy = is_garou(A)
+		if (!target_lycanthropy)
+			return
+
+		if (target_lycanthropy.tribe != lycanthropy.tribe)
+			return
+
+		to_chat(A, "You hear a message in your head... <b>[sanitize_text(new_thought)]</b>")
 
 /datum/action/gift/resist_pain
 	name = "Resist Pain"
@@ -352,22 +374,33 @@
 
 /datum/action/gift/rage_heal/Trigger()
 	. = ..()
-	if(allowed_to_proceed)
-		var/mob/living/carbon/C = owner
-		if(C.stat != DEAD)
-			SEND_SOUND(owner, sound('code/modules/wod13/sounds/rage_heal.ogg', 0, 0, 75))
-			C.adjustBruteLoss(-40*C.auspice.level, TRUE)
-			C.adjustFireLoss(-30*C.auspice.level, TRUE)
-			C.adjustCloneLoss(-10*C.auspice.level, TRUE)
-			C.adjustToxLoss(-10*C.auspice.level, TRUE)
-			C.adjustOxyLoss(-20*C.auspice.level, TRUE)
-			C.bloodpool = min(C.bloodpool + C.auspice.level, C.maxbloodpool)
-			C.blood_volume = min(C.blood_volume + 56 * C.auspice.level, BLOOD_VOLUME_NORMAL)
-			if(ishuman(owner))
-				var/mob/living/carbon/human/BD = owner
-				for (var/i in 1 to length(BD.all_wounds))
-					var/datum/wound/W = pick(BD.all_wounds)
-					W.remove_wound()
+	if (!allowed_to_proceed)
+		return
+
+	var/mob/living/carbon/C = owner
+	if(C.stat == DEAD)
+		return
+
+	var/datum/splat/werewolf/garou/lycanthropy = is_garou(owner)
+	if (!lycanthropy)
+		return
+
+	SEND_SOUND(owner, sound('code/modules/wod13/sounds/rage_heal.ogg', 0, 0, 75))
+	C.adjustBruteLoss(-40 * lycanthropy.level, TRUE)
+	C.adjustFireLoss(-30 * lycanthropy.level, TRUE)
+	C.adjustCloneLoss(-10 * lycanthropy.level, TRUE)
+	C.adjustToxLoss(-10 * lycanthropy.level, TRUE)
+	C.adjustOxyLoss(-20 * lycanthropy.level, TRUE)
+	C.bloodpool = min(C.bloodpool + lycanthropy.level, C.maxbloodpool)
+	C.blood_volume = min(C.blood_volume + 56 * lycanthropy.level, BLOOD_VOLUME_NORMAL)
+
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/BD = owner
+
+	for (var/i in 1 to length(BD.all_wounds))
+		var/datum/wound/W = pick(BD.all_wounds)
+		W.remove_wound()
 
 /datum/action/change_apparel
 	name = "Change Apparel"
@@ -423,34 +456,36 @@
 
 /datum/action/gift/glabro/Trigger()
 	. = ..()
-	if(allowed_to_proceed)
-		var/mob/living/carbon/human/H = owner
-		var/datum/species/garou/G = H.dna.species
-		playsound(get_turf(owner), 'code/modules/wod13/sounds/transform.ogg', 50, FALSE)
-		if(G.glabro)
-			H.remove_overlay(PROTEAN_LAYER)
-			G.punchdamagelow -= 15
-			G.punchdamagehigh -= 15
-			H.physique -= 2
-			H.physiology.armor.melee -= 15
-			H.physiology.armor.bullet -= 15
-			var/matrix/M = matrix()
-			M.Scale(1)
-			animate(H, transform = M, time = 1 SECONDS)
-			G.glabro = FALSE
-			H.update_icons()
-		else
-			H.remove_overlay(PROTEAN_LAYER)
-			var/mutable_appearance/glabro_overlay = mutable_appearance('code/modules/wod13/werewolf_abilities.dmi', H.transformator.crinos_form?.sprite_color, -PROTEAN_LAYER)
-			H.overlays_standing[PROTEAN_LAYER] = glabro_overlay
-			H.apply_overlay(PROTEAN_LAYER)
-			G.punchdamagelow += 15
-			G.punchdamagehigh += 15
-			H.physique += 2
-			H.physiology.armor.melee += 15
-			H.physiology.armor.bullet += 15
-			var/matrix/M = matrix()
-			M.Scale(1.23)
-			animate(H, transform = M, time = 1 SECONDS)
-			G.glabro = TRUE
-			H.update_icons()
+	if (!allowed_to_proceed)
+		return
+
+	var/mob/living/carbon/human/H = owner
+	var/datum/splat/werewolf/garou/lycanthropy = is_garou(owner)
+	playsound(get_turf(owner), 'code/modules/wod13/sounds/transform.ogg', 50, FALSE)
+	if (lycanthropy.glabro)
+		H.remove_overlay(PROTEAN_LAYER)
+		H.dna.species.punchdamagelow -= 15
+		H.dna.species.punchdamagehigh -= 15
+		H.physique -= 2
+		H.physiology.armor.melee -= 15
+		H.physiology.armor.bullet -= 15
+		var/matrix/M = matrix()
+		M.Scale(1)
+		animate(H, transform = M, time = 1 SECONDS)
+		lycanthropy.glabro = FALSE
+		H.update_icons()
+	else
+		H.remove_overlay(PROTEAN_LAYER)
+		var/mutable_appearance/glabro_overlay = mutable_appearance('code/modules/wod13/werewolf_abilities.dmi', lycanthropy.transformator.crinos_form?.sprite_color, -PROTEAN_LAYER)
+		H.overlays_standing[PROTEAN_LAYER] = glabro_overlay
+		H.apply_overlay(PROTEAN_LAYER)
+		H.dna.species.punchdamagelow += 15
+		H.dna.species.punchdamagehigh += 15
+		H.physique += 2
+		H.physiology.armor.melee += 15
+		H.physiology.armor.bullet += 15
+		var/matrix/M = matrix()
+		M.Scale(1.23)
+		animate(H, transform = M, time = 1 SECONDS)
+		lycanthropy.glabro = TRUE
+		H.update_icons()

@@ -35,6 +35,9 @@
 	var/datum/auspice/auspice
 	var/obj/werewolf_holder/transformation/transformator
 
+	var/glabro
+	var/hispo
+
 	COOLDOWN_DECLARE(rage_from_attack)
 	COOLDOWN_DECLARE(look_at_moon)
 

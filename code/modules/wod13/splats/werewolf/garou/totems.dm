@@ -43,8 +43,8 @@
 	overlays |= totem_light_overlay
 
 /obj/structure/werewolf_totem/proc/adjust_totem_health(amount)
-	if(amount > 0)
-		if(totem_health == 0)
+	if (amount > 0)
+		if (totem_health == 0)
 			return
 		totem_health = max(0, totem_health - amount)
 		if (totem_health == 0)
@@ -72,7 +72,7 @@
 					qdel(prev.exit)
 					qdel(prev)
 		else
-			for(var/mob/living/carbon/C in GLOB.player_list)
+			for (var/mob/living/carbon/C in GLOB.player_list)
 				if (C.stat == DEAD)
 					continue
 
@@ -82,21 +82,22 @@
 				if (lycanthropy.tribe != tribe)
 					continue
 
-				if(last_rage + 5 SECONDS >= world.time)
+				if (last_rage + 5 SECONDS >= world.time)
 					continue
 				last_rage = world.time
+
 				to_chat(C, span_userdanger("<b>YOUR TOTEM IS BREAKING DOWN</b>"))
 				SEND_SOUND(C, sound('code/modules/wod13/sounds/bumps.ogg', 0, 0, 75))
 				lycanthropy.add_rage(1, FALSE)
-	if(amount < 0)
+	if (amount < 0)
 		totem_health = min(initial(totem_health), totem_health-amount)
-		if(totem_health <= 0)
+		if (totem_health <= 0)
 			return
 
-		if(icon_state == initial(icon_state))
+		if (icon_state == initial(icon_state))
 			return
 
-		for(var/mob/living/carbon/C in GLOB.player_list)
+		for (var/mob/living/carbon/C in GLOB.player_list)
 			if(C.stat == DEAD)
 				continue
 
@@ -105,9 +106,11 @@
 				continue
 			if(lycanthropy.tribe != tribe)
 				continue
+
 			to_chat(C, "<span class='userhelp'><b>YOUR TOTEM IS RESTORED</b></span>")
 			SEND_SOUND(C, sound('code/modules/wod13/sounds/inspire.ogg', 0, 0, 75))
 			lycanthropy.add_gnosis(1, FALSE)
+
 		icon_state = "[initial(icon_state)]"
 		overlays -= totem_light_overlay
 		totem_light_overlay.icon_state = "[icon_state]_overlay"
@@ -142,34 +145,46 @@
 
 /obj/structure/werewolf_totem/attack_hand(mob/user)
 	. = ..()
-	if(iswerewolf(user) || is_garou(user))
-		var/mob/living/carbon/C = user
-		if(C.a_intent != INTENT_HARM)
-			if(totem_health <= 0)
-				to_chat(C, "<span class='warning'>[src] is broken!</span>")
-				return
-			var/obj/umbra_portal/prev = locate() in get_step(src, SOUTH)
-			if(!prev)
-				if(C.auspice.name == "Theurge")
-					if(!opening)
-						opening = TRUE
-						if(do_mob(user, src, 10 SECONDS))
-							playsound(loc, 'code/modules/wod13/sounds/portal.ogg', 75, FALSE)
-							var/obj/umbra_portal/U = new (get_step(src, SOUTH))
-							U.id = "[tribe][rand(1, 999)]"
-							U.later_initialize()
-							var/obj/umbra_portal/P = new (teleport_turf)
-							P.id = U.id
-							P.later_initialize()
-							opening = FALSE
-						else
-							opening = FALSE
-				else
-					to_chat(C, "<span class='warning'>You need a Theurge to open the Moon Gates!</span>")
-			else
-				if(C.auspice.name == "Theurge")
-					playsound(loc, 'code/modules/wod13/sounds/portal.ogg', 75, FALSE)
-					qdel(prev.exit)
-					qdel(prev)
-		else
-			adjust_totem_health(round(C.melee_damage_lower/2))
+	var/datum/splat/werewolf/garou/lycanthropy = is_garou(user)
+	if (!lycanthropy)
+		return
+
+	var/mob/living/carbon/C = user
+	if(C.a_intent == INTENT_HARM)
+		adjust_totem_health(round(C.melee_damage_lower/2))
+		return
+
+	if(totem_health <= 0)
+		to_chat(C, span_warning("[src] is broken!"))
+		return
+
+	var/obj/umbra_portal/prev = locate() in get_step(src, SOUTH)
+	if (prev && (lycanthropy.auspice == /datum/auspice/theurge))
+		playsound(loc, 'code/modules/wod13/sounds/portal.ogg', 75, FALSE)
+		qdel(prev.exit)
+		qdel(prev)
+		return
+
+	if (lycanthropy.auspice != /datum/auspice/theurge)
+		to_chat(C, span_warning("You need a Theurge to open the Moon Gates!"))
+		return
+
+	if (opening)
+		return
+
+	opening = TRUE
+	if (!do_mob(user, src, 10 SECONDS))
+		opening = FALSE
+		return
+
+	playsound(loc, 'code/modules/wod13/sounds/portal.ogg', 75, FALSE)
+
+	var/obj/umbra_portal/U = new (get_step(src, SOUTH))
+	U.id = "[tribe][rand(1, 999)]"
+	U.later_initialize()
+
+	var/obj/umbra_portal/P = new (teleport_turf)
+	P.id = U.id
+	P.later_initialize()
+
+	opening = FALSE
