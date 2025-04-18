@@ -27310,7 +27310,8 @@
 /area/vtm/interior)
 "cuN" = (
 /obj/machinery/button/door{
-	id = "oops_office"
+	id = "oops_office";
+	pixel_y = 28
 	},
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/delivery_garage/oops_office)
@@ -29305,10 +29306,6 @@
 /obj/vampire_computer,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/interior)
-"dtU" = (
-/obj/structure/delivery_reciever/test4,
-/turf/open/floor/plating/sidewalk/poor,
-/area/vtm/ghetto)
 "dud" = (
 /obj/effect/mob_spawn/human/corpse/ciz4,
 /turf/open/floor/plating/rough/cave,
@@ -31824,10 +31821,6 @@
 "eCy" = (
 /turf/closed/wall/vampwall/rock,
 /area/vtm/forest)
-"eCA" = (
-/obj/structure/delivery_dispenser,
-/turf/open/floor/plating/concrete,
-/area/vtm/interior/delivery_garage/oops_office)
 "eCL" = (
 /obj/effect/decal/wallpaper/paper,
 /turf/closed/wall/vampwall/junk,
@@ -32163,10 +32156,6 @@
 	},
 /turf/open/floor/plating/rough,
 /area/vtm/interior/mansion)
-"eIy" = (
-/obj/structure/delivery_reciever/test2,
-/turf/open/floor/plating/sidewalk/poor,
-/area/vtm/fishermanswharf)
 "eIA" = (
 /obj/effect/decal/cardboard,
 /obj/structure/railing{
@@ -37173,11 +37162,6 @@
 	},
 /turf/open/floor/plating/toilet,
 /area/vtm/interior/theatre)
-"gUj" = (
-/obj/structure/delivery_reciever/test4,
-/obj/structure/delivery_reciever/test4,
-/turf/open/floor/plating/sidewalk/poor,
-/area/vtm/ghetto)
 "gUl" = (
 /obj/structure/vampipe{
 	icon_state = "piping31"
@@ -45393,10 +45377,6 @@
 /obj/effect/decal/shadow,
 /turf/open/floor/plating/rough,
 /area/vtm/interior)
-"kEz" = (
-/obj/effect/landmark/observer_start,
-/turf/open/floor/plating/concrete,
-/area/vtm/interior/delivery/oops_office)
 "kEB" = (
 /obj/effect/decal/bordur{
 	dir = 1
@@ -48007,7 +47987,6 @@
 "lVR" = (
 /obj/structure/table/wood,
 /obj/machinery/mineral/equipment_vendor/fastfood/pharmacy,
-/obj/structure/delivery_reciever/test4,
 /turf/closed/wall/vampwall/painted/low,
 /area/vtm/interior)
 "lWf" = (
@@ -50509,12 +50488,9 @@
 /turf/open/floor/plating/vampdirt,
 /area/vtm/graveyard)
 "nfS" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/delivery_dispenser,
-/turf/open/floor/plating/concrete,
-/area/vtm/interior/delivery_garage/oops_office)
+/obj/effect/landmark/observer_start,
+/turf/open/floor/plating/sidewalk/rich,
+/area/vtm/financialdistrict)
 "nfW" = (
 /obj/effect/decal/litter,
 /turf/open/floor/plating/sidewalk/poor,
@@ -52692,10 +52668,6 @@
 /obj/item/bedsheet/random,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/dwelling/pacific02)
-"oia" = (
-/obj/structure/delivery_reciever/test1,
-/turf/open/floor/plating/sidewalk,
-/area/vtm/fishermanswharf)
 "oic" = (
 /obj/structure/table/wood,
 /obj/item/gun/ballistic/automatic/vampire/thompson,
@@ -61016,13 +60988,6 @@
 /obj/item/vtm_artifact/rand,
 /turf/open/floor/plating/concrete,
 /area/vtm/interior)
-"rXG" = (
-/obj/effect/decal/bordur{
-	dir = 4
-	},
-/obj/structure/delivery_reciever/test4,
-/turf/open/floor/plating/sidewalk/poor,
-/area/vtm/ghetto)
 "rXI" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -63858,10 +63823,6 @@
 /obj/structure/chair/sofa/corp/right,
 /turf/open/floor/carpet/green,
 /area/vtm/interior)
-"tkS" = (
-/obj/structure/delivery_reciever/test3,
-/turf/open/floor/plating/sidewalk,
-/area/vtm/ghetto)
 "tlc" = (
 /obj/structure/chair/sofa/corp/right{
 	dir = 1
@@ -69688,11 +69649,6 @@
 /obj/structure/closet/body_bag,
 /turf/open/water,
 /area/vtm/interior/bianchiBank)
-"vUS" = (
-/obj/structure/table/wood,
-/obj/structure/delivery_reciever/test4,
-/turf/closed/wall/vampwall/painted/low,
-/area/vtm/interior)
 "vVj" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -147411,7 +147367,7 @@ asy
 aoS
 aoS
 aoS
-oia
+aoS
 aoS
 aoS
 gDT
@@ -149955,7 +149911,7 @@ oAa
 ajf
 ajj
 ajj
-eIy
+ajj
 aow
 aoS
 aoS
@@ -171324,7 +171280,7 @@ nEx
 aQd
 nEx
 bct
-aGM
+nfS
 bMb
 aGv
 aGv
@@ -181438,7 +181394,7 @@ uhW
 kgh
 kgh
 kgh
-kEz
+kgh
 kgh
 kgh
 kgh
@@ -181682,7 +181638,7 @@ brc
 brc
 bqG
 xhZ
-eCA
+lmZ
 lmZ
 lmZ
 fWd
@@ -182453,13 +182409,13 @@ brc
 brL
 hqN
 xhZ
-eCA
 lmZ
 lmZ
-nfS
+lmZ
+rIr
 lmZ
 lmZ
-eCA
+lmZ
 rIr
 lmZ
 bIx
@@ -185084,7 +185040,7 @@ ajK
 ajK
 ajK
 fin
-tkS
+ajK
 jrx
 ajK
 ajK
@@ -195646,8 +195602,8 @@ aJR
 ufk
 aoP
 qsH
-vUS
-dtU
+eBu
+ajU
 ajU
 ajU
 ajU
@@ -195903,7 +195859,7 @@ bHD
 bHD
 eBu
 lVR
-vUS
+eBu
 ajU
 ajU
 ajU
@@ -196149,17 +196105,17 @@ aiI
 wXt
 vRY
 fYN
-gUj
-dtU
-dtU
-dtU
 ajU
 ajU
 ajU
 ajU
 ajU
 ajU
-dtU
+ajU
+ajU
+ajU
+ajU
+ajU
 ajU
 arO
 ajU
@@ -196410,12 +196366,12 @@ amG
 amG
 amG
 amG
-rXG
-rXG
-rXG
-rXG
-rXG
-rXG
+amG
+amG
+amG
+amG
+amG
+amG
 amG
 amG
 amG

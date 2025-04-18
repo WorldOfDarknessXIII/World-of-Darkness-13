@@ -3522,6 +3522,7 @@
 #include "code\modules\wod13\delivery\delivery_datums.dm"
 #include "code\modules\wod13\delivery\delivery_objs.dm"
 #include "code\modules\wod13\delivery\delivery_obj\delivery_crates.dm"
+#include "code\modules\wod13\delivery\delivery_obj\delivery_dispensers.dm"
 #include "code\modules\wod13\delivery\delivery_obj\delivery_map_defines.dm"
 #include "code\modules\wod13\delivery\delivery_obj\delivery_recievers.dm"
 #include "code\modules\wod13\dwelling\_dwelling_gvars_defines.dm"

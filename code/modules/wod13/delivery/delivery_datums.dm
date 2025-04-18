@@ -14,6 +14,7 @@
 	var/list/active_crates = list()
 	var/list/delivery_score = list(
 		"trucks_used" = 0,
+		"truck_returned" = 0,
 		"dispensed_crates" = 0,
 		"delivered_crates" = 0,
 		"misdelivered_crates" = 0,
@@ -44,7 +45,7 @@
 			payout_multiplier = 0.5
 	payout_quota *= payout_multiplier
 	var/final_payout = round((payout_quota / contract_takers.len),1)
-	broadcast_to_holders("Delivery Complete. [final_payout] paid to the accounts of all participants.")
+	broadcast_to_holders("<b>Delivery Complete.</b> <b>[final_payout]</b> paid to the accounts of all participants.")
 	for(var/mob/living/carbon/human/payee in contract_takers)
 		var/datum/vtm_bank_account/payee_account
 		var/p_bank_id = payee.bank_id
@@ -77,8 +78,10 @@
 	var/final_grade = 7
 	if(world.time > delivery_score["timeout_timestamp"])
 		final_grade -= 3
-	if(delivery_score["trucks_used"] > 0)
-		final_grade -= 2
+	if(delivery_score["trucks_used"] > 1)
+		final_grade -= 1
+	if(delivery_score["trucks_returned"] == 0)
+		final_grade -= 1
 	if(delivery_score["dispensed_crates"] > delivery_score["delivered_crates"])
 		final_grade -= 1
 	if(delivery_score["misdelivered_crates"] > 0)
@@ -86,8 +89,8 @@
 	if(delivery_score["manifest_refresh"] > 3)
 		final_grade -= 1
 	if(final_grade < 1) final_grade = 1
-	broadcast_to_holders("Delivery Grade: [parse_grade(final_grade)]")
-	process_payouts()
+	broadcast_to_holders("Delivery Grade: <b>[parse_grade(final_grade)]</b>")
+	process_payouts(final_grade)
 	qdel(src)
 
 
@@ -113,39 +116,46 @@
 /datum/delivery_datum/proc/broadcast_to_holders(message)
 	if(!message) return
 	for (var/mob/living/carbon/human/mob in contract_takers)
-		to_chat(mob, span_notice(message))
+		to_chat(mob, "<p>[message]</p>")
 
 /datum/delivery_datum/proc/reciever_complete(obj/reciever)
-	var/obj/structure/delivery_reciever/target_reciever
+	var/obj/structure/delivery_reciever/target_reciever = reciever
 	delivery_recievers.Remove(target_reciever)
 	delivery_score["completed_recievers"] += 1
 	if(check_complete() == 1)
-		broadcast_to_holders("All deliveries have been complete. Please return the truck and any outstanding cargo back to the office to finalize the contract!")
+		broadcast_to_holders("<b>All deliveries have been completed.</b> Please return the truck and any outstanding cargo back to the office to finalize the contract!")
 	else
-		broadcast_to_holders("Delivery to [target_reciever.chute_name] complete. [num2text(delivery_recievers.len)] chutes remain.")
+		broadcast_to_holders("<b>Delivery to [target_reciever.chute_name] complete.</b> [num2text(delivery_recievers.len)] chutes remain.")
 
 /datum/delivery_datum/proc/assign_dispenser(tag)
-	for(var/obj/structure/delivery_dispenser/dispenser in GLOB.delivery_available_dispensers)
-		if(dispenser.dispenser_active == 0)
-			dispenser.dispenser_active = 1
-			dispenser.crate_type = tag
-			switch(tag)
-				if("red")
-					dispenser.color = "#7c1313"
-				if("blue")
-					dispenser.color = "#202bca"
-				if("yellow")
-					dispenser.color = "#b8ac3f"
-				if("green")
-					dispenser.color = "#165f29"
-			delivery_dispensers.Add(dispenser)
-			return 1
-	return 0
+	var/list/dispenser_candidates = list()
+	for(var/obj/structure/delivery_dispenser/dispenser_candidate in GLOB.delivery_available_dispensers)
+		if(dispenser_candidate.dispenser_active == 0 && dispenser_candidate.delivery_employer_tag == delivery_employer_tag)
+			dispenser_candidates.Add(dispenser_candidate)
+	if(dispenser_candidates.len == 0) return 0
+	var/obj/structure/delivery_dispenser/picked_dispenser = pick(dispenser_candidates)
+	picked_dispenser.dispenser_active = 1
+	picked_dispenser.crate_type = tag
+	switch(tag)
+		if("red")
+			picked_dispenser.color = "#7c1313"
+		if("blue")
+			picked_dispenser.color = "#202bca"
+		if("yellow")
+			picked_dispenser.color = "#b8ac3f"
+		if("green")
+			picked_dispenser.color = "#165f29"
+	delivery_dispensers.Add(picked_dispenser)
+	animate(picked_dispenser,alpha = 255,time = 5 SECONDS)
+	picked_dispenser.mouse_opacity = 1
+	return 1
 
 /datum/delivery_datum/proc/assign_recievers(ammount)
 	var/recievers_to_assign
 	var/list/reciever_list = list()
 	reciever_list = GLOB.delivery_available_recievers.Copy()
+	for(var/obj/structure/delivery_reciever/reciever_candidate in reciever_list)
+		if(reciever_candidate.delivery_in_use == 1)	reciever_list.Remove(reciever_candidate)
 	if(!ammount)
 		recievers_to_assign = 5
 	else
@@ -166,7 +176,8 @@
 			var/picked_type = pick("red","green","yellow","blue")
 			reciever.delivery_status[picked_type] += 1
 			crate_number -= 1
-		INVOKE_ASYNC(reciever, TYPE_PROC_REF(/obj/structure/delivery_reciever/,display_reciever))
+		animate(reciever,alpha = 255, time = 5 SECONDS)
+		reciever.mouse_opacity = 1
 
 /datum/delivery_datum/proc/assign_garage()
 	if(!delivery_employer_tag) return 0
@@ -188,7 +199,7 @@
 	delivery_score["trucks_used"] += 1
 
 /datum/delivery_datum/proc/delivery_timeout()
-	broadcast_to_holders("Delivery timer expired. Deactivating any outstanding recievers. You have five minutes to return the truck and any outstanding cargo.")
+	broadcast_to_holders("<b>Delivery timer expired.</b> Deactivating any outstanding recievers. You have <b>five minutes</b> to return the truck and any outstanding cargo.")
 	if(delivery_recievers.len != 0)
 		for(var/obj/structure/delivery_reciever/reciever in delivery_recievers)
 			reciever.reset_reciever()
@@ -275,6 +286,8 @@
 	if(spawned_keys.len != 0)
 		for(var/obj/item/vamp/keys/cargo_truck/truck_key in spawned_keys)
 			qdel(truck_key)
+	if(contract)
+		qdel(contract)
 	. = ..()
 
 
@@ -371,8 +384,9 @@
 				if(crate_to_ret.crate_type == chosen_tag)
 					picked_crate = crate_to_ret
 					break
-			var/ret_delay = 4 SECONDS + calculate_ret_time(chosen_tag)
+			var/ret_delay = 2 SECONDS + calculate_ret_time(chosen_tag)
 			if(do_after(user, ret_delay, owner))
+				playsound(,'sound/effects/pressureplate.ogg',50, 10)
 				var/turf/user_turf = get_turf(user)
 				storage.Remove(picked_crate)
 				picked_crate.forceMove(user_turf)
@@ -474,7 +488,7 @@
 		for(var/obj/structure/delivery_dispenser/dispenser in delivery.delivery_dispensers)
 			var/turf/dispenser_turf = get_turf(dispenser)
 			var/html_color = get_cargo_color_value(dispenser.crate_type)
-			html += {"<p><b>Dispenser</b> for <b>crate type <span style="color: [html_color];">[capitalize(dispenser.crate_type)]</span></b> available at X:[dispenser_turf.x] Y:[dispenser_turf.y] Z:[dispenser_turf.z]</p>"}
+			html += {"<p><b>Dispenser [dispenser.chute_name]</b> for <b>crate type <span style="color: [html_color];">[capitalize(dispenser.crate_type)]</span></b> available at X:[dispenser_turf.x] Y:[dispenser_turf.y] Z:[dispenser_turf.z]</p>"}
 	else
 		html += "<p><b>Dispensers not found.</p></b>"
 	to_chat(user, html)

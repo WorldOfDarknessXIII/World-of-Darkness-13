@@ -51,6 +51,9 @@
 				to_chat(user,span_notice("Only the original owner of the contract, [delivery.original_owner] can remove people from the contract."))
 				return
 			else
+				if(delivery.delivery_recievers.len == 0)
+					to_chat(user,span_warning("This delivery is complete and should be handed in. Removing users is no longer possibe."))
+					return
 				if(tgui_alert(user,"Do you want to remove [M] from the delivery contract?","Contract remove confirmation",list("Yes","No"),timeout = 10 SECONDS) == "Yes")
 					delivery.contract_takers.Remove(M)
 					for(var/obj/item/vamp/keys/cargo_truck/truck_keys in delivery.spawned_keys)
@@ -137,20 +140,25 @@
 /obj/structure/delivery_board/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I,/obj/item/delivery_contract/))
 		var/obj/item/delivery_contract/contract_item = I
-		if(contract_item == contract_item.delivery.contract)
-			if(contract_item.delivery.check_owner(user) == 1)
-				if(tgui_alert(user,"Do you wish to update the information on the contract?","Contract Update",list("Yes","No"),timeout = 10 SECONDS) == "Yes")
-					contract_item.manifest.save_data()
-				if(contract_item.delivery.delivery_recievers.len == 0)
-					to_chat(user,span_notice("The contract is concluded. You may safely finialize it."))
-				else
-					to_chat(user,span_notice("This contract is not complete. You may wrap it early if you wish."))
-				if(get_area(contract_item.delivery.active_truck) != contract_item.delivery.garage_area)
-					to_chat(user,span_warning("Warning: Truck outside of garage area."))
-				if(tgui_alert(user,"Do you wish to finalize the contract?","Finalize Confirm",list("Yes","No"),timeout = 10 SECONDS) == "Yes")
-					contract_item.delivery.delivery_finish()
-		else
+		if(contract_item.delivery.delivery_employer_tag != delivery_employer_tag)
 			to_chat(user,span_warning("This contract does not seem to be from this board."))
+			return
+		if(contract_item.delivery.check_owner(user) == 0)
+			to_chat(user,span_warning("You don't seem to be on this contract. Only the person who signed the cotract can add you."))
+			return
+		if(contract_item.delivery.delivery_recievers.len == 0)
+			if(get_area(contract_item.delivery.active_truck) != contract_item.delivery.garage_area)
+				to_chat(user,span_warning("Warning: Truck outside of garage area."))
+			if(tgui_alert(user,"Do you wish to finalize the contract?","Finalize Confirm",list("Yes","No"),timeout = 10 SECONDS) == "Yes")
+				contract_item.delivery.delivery_finish()
+				return
+		if(tgui_alert(user,"Do you wish to update the information on the contract?","Contract Update",list("Yes","No"),timeout = 10 SECONDS) == "Yes")
+			contract_item.manifest.save_data()
+			return
+		if(get_area(contract_item.delivery.active_truck) != contract_item.delivery.garage_area)
+			to_chat(user,span_warning("Warning: Truck outside of garage area."))
+		if(tgui_alert(user,"Do you wish to finalize the contract early?","Finalize Confirm",list("Yes","No"),timeout = 10 SECONDS) == "Yes")
+			contract_item.delivery.delivery_finish()
 			return
 	. = ..()
 
@@ -165,6 +173,7 @@
 	icon_state = "box_put"
 	var/chute_name = "default"
 	var/delivery_in_use = 0
+	var/reciever_in_use = 0
 	var/list/delivery_status = list(
 		"red" = 0,
 		"blue" = 0,
@@ -180,7 +189,8 @@
 		"yellow" = 0,
 		"green" = 0,
 		)
-	INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/structure/delivery_reciever,display_reciever))
+	animate(src, alpha = 0, time = 5 SECONDS)
+	mouse_opacity = 0
 
 /obj/structure/delivery_reciever/proc/check_deliveries()
 	if(delivery_status["red"] != 0 || delivery_status["blue"] != 0 || delivery_status["yellow"] != 0 || delivery_status["green"] != 0) return 0
@@ -189,6 +199,7 @@
 /obj/structure/delivery_reciever/Initialize()
 	. = ..()
 	alpha = 0
+	mouse_opacity = 0
 	GLOB.delivery_available_recievers.Add(src)
 	name = "[initial(name)] - [capitalize(chute_name)]"
 
@@ -198,20 +209,28 @@
 
 /obj/structure/delivery_reciever/attack_hand(mob/living/user)
 	. = ..()
+	if(reciever_in_use == 1)
+		to_chat(user, span_warning("Someone is already operating this reciever!"))
 	if(user.pulling)
 		if(delivery_in_use == 0) return
 		if(istype(user.pulling,/obj/structure/delivery_crate/))
 			var/obj/structure/delivery_crate/pulled_crate = user.pulling
+			if(pulled_crate.delivery.check_owner(user) == 0)
+				to_chat(user, span_warning("You aren't authorized to handle this delivery. For security reasons, the reciever denies the package."))
+				return
+			reciever_in_use = 1
 			if(do_after(user, 3 SECONDS, src))
 				if(delivery_status[pulled_crate.crate_type] > 0)
-					delivery_status[pulled_crate.crate_type] =- 1
+					delivery_status[pulled_crate.crate_type] -= 1
 					pulled_crate.delivery.delivery_score["delivered_crates"] += 1
 					if(check_deliveries() == 1)
 						pulled_crate.delivery.reciever_complete(src)
 						reset_reciever()
 				else
 					pulled_crate.delivery.delivery_score["misdelivered_crates"] += 1
+				playsound(src,'sound/effects/pressureplate.ogg',50, 10)
 				qdel(pulled_crate)
+			reciever_in_use = 0
 
 /obj/structure/delivery_reciever/proc/check_for_clients()
 	var/client_detected = 0
@@ -224,34 +243,26 @@
 			continue
 	return client_detected
 
-/obj/structure/delivery_reciever/proc/display_reciever()
-	var/check_result = check_for_clients()
-	var/loops = 0
-	while(check_result == 1)
-		stoplag(10 SECONDS)
-		check_result = check_for_clients()
-		loops += 1
-		if(loops > 10) break
-	if (alpha == 0)
-		alpha = 255
-	else
-		alpha = 0
-
 /obj/structure/delivery_dispenser
 
-	name = "delivery dispenser"
+	name = "Cargo Dispenser"
 	desc = "A chute used to handle bulk deliveries. A small button can be used to dispense a crate."
 	anchored = 1
 	density = 0
 	icon = 'code/modules/wod13/props.dmi'
 	icon_state = "box_take"
-	var/delivery_employer_tag = "default"
+	var/chute_name = "default"
 	var/dispenser_active = 0
+	var/dispenser_in_use
+	var/delivery_employer_tag
 	var/crate_type
 
 /obj/structure/delivery_dispenser/Initialize()
 	. = ..()
 	GLOB.delivery_available_dispensers.Add(src)
+	alpha = 0
+	mouse_opacity = 0
+	name = "[initial(name)] - [capitalize(chute_name)]]"
 
 /obj/structure/delivery_dispenser/Destroy()
 	. = ..()
@@ -260,6 +271,8 @@
 /obj/structure/delivery_dispenser/proc/reset_dispenser()
 	dispenser_active = 0
 	crate_type = null
+	animate(src,alpha = 0,5 SECONDS)
+	mouse_opacity = 0
 
 /obj/structure/delivery_dispenser/proc/dispense_cargo(obj/truck_key, turf/target_turf)
 	if(!truck_key) return
@@ -285,6 +298,7 @@
 			dispensed_crate.delivery = key_item.delivery
 			key_item.delivery.active_crates.Add(dispensed_crate)
 			dispensed_crate.source_dispenser = src
+	playsound(src,'sound/effects/pressureplate.ogg',50, 10)
 	key_item.delivery.delivery_score["dispensed_crates"] += 1
 
 /obj/structure/delivery_dispenser/attack_hand(mob/living/user)
@@ -292,28 +306,39 @@
 	if(dispenser_active == 0)
 		to_chat(user, span_notice("The device seems to be offline."))
 		return
+	if(dispenser_in_use == 1)
+		to_chat(user, span_warning("Someone is already using this dispenser!"))
+		return
 	if(user.pulling != null)
 		if(istype(user.pulling, /obj/structure/delivery_crate))
 			var/obj/structure/delivery_crate/pulled_crate = user.pulling
 			if(pulled_crate.source_dispenser == src)
+				dispenser_in_use = 1
 				if(do_after(user, 3 SECONDS, src))
 					pulled_crate.delivery.delivery_score["dispensed_crates"] -= 1
+					playsound(src,'sound/effects/pressureplate.ogg',50, 10)
 					qdel(pulled_crate)
+				dispenser_in_use = 0
 
 /obj/structure/delivery_dispenser/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
+	if(dispenser_in_use == 1)
+		to_chat(user, span_warning("Someone is already using this dispenser!"))
+		return
 	if(istype(I,/obj/item/vamp/keys/cargo_truck))
 		var/obj/item/vamp/keys/cargo_truck/truck_key = I
 		if(truck_key.delivery == null)
 			to_chat(user,span_warning("Error, delivery data missing. This is a bug."))
 			return
-		if(truck_key.delivery.spawned_keys.Find(truck_key) == 0)
+		if(truck_key.delivery.delivery_dispensers.Find(src) == 0)
 			to_chat(user,span_notice("They key does not seem to work in this dispenser."))
-		else
-			to_chat(user, span_notice("You put the key into the dispenser and start to retrieve a crate."))
-			if(do_after(user, 3 SECONDS, src))
-				var/user_turf = get_turf(user)
-				dispense_cargo(truck_key,user_turf)
+			return
+		to_chat(user, span_notice("You put the key into the dispenser and start to retrieve a crate."))
+		dispenser_in_use = 1
+		if(do_after(user, 3 SECONDS, src))
+			var/user_turf = get_turf(user)
+			dispense_cargo(truck_key,user_turf)
+		dispenser_in_use = 0
 
 /obj/structure/delivery_crate
 
@@ -352,10 +377,7 @@
 
 /obj/vampire_car/delivery_truck/Destroy()
 	if(delivery)
-		if(delivery.active_truck == src)
-			if(get_area(src) == delivery.garage_area)
-				delivery.delivery_score["trucks_used"] -= 1
-			delivery.active_truck = null
+		if(delivery.active_truck == src) delivery.active_truck = null
 		delivery = null
 	qdel(delivery_trunk)
 	. = ..()
@@ -382,7 +404,9 @@
 				to_chat(user, span_warning("The special compartments in the back dont really fit anything other than delivery crates. Use a nomral truck for other cargo."))
 				return
 			else
-				if(do_after(user, 3 SECONDS, pulled_crate)) delivery_trunk.add_to_storage(user,pulled_crate)
+				if(do_after(user, 3 SECONDS, pulled_crate))
+					playsound(src,'sound/effects/pressureplate.ogg',50, 10)
+					delivery_trunk.add_to_storage(user,pulled_crate)
 
 /obj/effect/landmark/delivery_truck_beacon
 	name = "delivery truck spawner"
