@@ -103,10 +103,10 @@
 						difficulty_text = "A short contract involves 3 locations with up to 6 crates each, meaning the entire delivery can be completed with one truck. The time limit is 15 minutes."
 					if("Medium")
 						picked_difficulty = 2
-						difficulty_text = "A medium contract involves 5 locations with up to 10 crates each, the entire delivery should be completed in 3 runs. The time limit is 20 minutes. "
+						difficulty_text = "A medium contract involves 5 locations with up to 10 crates each, the entire delivery should be completed in 3 runs. The time limit is 25 minutes. "
 					if("Long")
 						picked_difficulty = 3
-						difficulty_text = "A long contract involves 7 locations with up to 15 crates each, meaning that without partial loads each delivery will require a restock. The timie limit is 30 minutes."
+						difficulty_text = "A long contract involves 7 locations with up to 15 crates each, meaning that without partial loads each delivery will require a restock. The timie limit is 40 minutes."
 				if(tgui_alert(user,difficulty_text,"Confirm Contract",list("Yes","No"),timeout = 10 SECONDS) == "Yes")
 					var/obj/item/delivery_contract/contract = new(user,src,picked_difficulty)
 					switch(contract.delivery.start_contract())

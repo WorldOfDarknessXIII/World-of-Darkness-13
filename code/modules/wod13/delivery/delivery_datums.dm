@@ -23,6 +23,25 @@
 		"timeout_timestamp" = 0,
 		)
 
+/datum/delivery_datum/proc/track_stats(grade)
+	if(!grade) return
+	if(GLOB.delivery_stats.Find(delivery_employer_tag) == 0)
+		var/list/list_to_add = list("[delivery_employer_tag]" = list(
+				"grade" = grade,
+				"completed" = 1,
+				"completed_recievers" = delivery_score["completed_recievers"],
+				"delivered" = delivery_score["delivered_crates"]
+				)
+			)
+		GLOB.delivery_stats.Add(list_to_add)
+		return
+	if(GLOB.delivery_stats.Find(delivery_employer_tag) != 0)
+		GLOB.delivery_stats[delivery_employer_tag]["grade"] += grade
+		GLOB.delivery_stats[delivery_employer_tag]["completed"] += 1
+		GLOB.delivery_stats[delivery_employer_tag]["completed_recievers"] += delivery_score["completed_recievers"]
+		GLOB.delivery_stats[delivery_employer_tag]["delivered_crates"] += delivery_score["delivered_crates"]
+		return
+
 /datum/delivery_datum/proc/process_payouts(grade)
 	var/payout_quota = 0
 	payout_quota += delivery_score["delivered_crates"] * 100
@@ -90,6 +109,7 @@
 		final_grade -= 1
 	if(final_grade < 1) final_grade = 1
 	broadcast_to_holders("Delivery Grade: <b>[parse_grade(final_grade)]</b>")
+	track_stats(final_grade)
 	process_payouts(final_grade)
 	qdel(src)
 
@@ -245,11 +265,11 @@
 		if(2)
 			assign_recievers(5)
 			assign_crates(7,10)
-			delivery_set_timer(20 MINUTES)
+			delivery_set_timer(25 MINUTES)
 		if(3)
 			assign_recievers(7)
 			assign_crates(9,15)
-			delivery_set_timer(30 MINUTES)
+			delivery_set_timer(40 MINUTES)
 	return 1
 
 /datum/delivery_datum/New(mob/user,obj/board_ref,difficulty)
@@ -492,3 +512,32 @@
 	else
 		html += "<p><b>Dispensers not found.</p></b>"
 	to_chat(user, html)
+
+/datum/controller/subsystem/ticker/proc/transportation_report()
+	var/list/parts = list()
+	parts += "<p>"
+
+	if(GLOB.delivery_stats.len == 0)
+		parts += "No deliveries were made this round!</p>"
+		return parts.Join()
+
+	var/current_position = 1
+
+	while(current_position <= GLOB.delivery_stats.len)
+		switch(GLOB.delivery_stats[current_position])
+			if("oops")
+				parts += "<b>OOPS Delivery Service:</b><br>"
+			if("millenium_delivery")
+				parts += "<b>Millenium Tower Delivery Service:</b><br>"
+			if("bar_delivery")
+				parts += "<b>Bar Delivery Service:</b><br>"
+
+		var/grade_average = round((GLOB.delivery_stats[current_position]["grade"] / GLOB.delivery_stats[current_position]["completed"]),0.1)
+
+		parts += "Grade Average: <b>[grade_average]</b><br>"
+		parts += "Orders Complete: <b>[GLOB.delivery_stats[current_position]["completed"]]"
+		parts += "Crates Delivered: <b>[GLOB.delivery_stats[current_position]["delivered_crates"]]</b>"
+
+	parts += "</p>"
+
+	return parts.Join()
