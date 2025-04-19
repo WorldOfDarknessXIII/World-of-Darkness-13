@@ -333,10 +333,14 @@
 		if(truck_key.delivery.delivery_dispensers.Find(src) == 0)
 			to_chat(user,span_notice("They key does not seem to work in this dispenser."))
 			return
+		var/turf/user_turf = get_turf(user)
+		for(var/obj/structure/delivery_crate/blue/potential_crate in user_turf.contents)
+			if(potential_crate)
+				to_chat(user, span_warning("There is already a crate on the ground here!"))
+				return
 		to_chat(user, span_notice("You put the key into the dispenser and start to retrieve a crate."))
 		dispenser_in_use = 1
 		if(do_after(user, 3 SECONDS, src))
-			var/user_turf = get_turf(user)
 			dispense_cargo(truck_key,user_turf)
 		dispenser_in_use = 0
 
@@ -392,21 +396,28 @@
 
 /obj/vampire_car/delivery_truck/attack_hand(mob/user)
 	. = ..()
-	if(locked == FALSE)
-		if(user.pulling == null)
-			if(delivery_trunk.storage.len == 0)
-				to_chat(user, span_notice("There is nothing in the back of the truck."))
-			else
-				delivery_trunk.retrieval_menu(user)
-		else
-			var/obj/structure/delivery_crate/pulled_crate = user.pulling
-			if(!pulled_crate)
-				to_chat(user, span_warning("The special compartments in the back dont really fit anything other than delivery crates. Use a nomral truck for other cargo."))
+	if(locked == TRUE)
+		to_chat(user,span_warning("The truck is locked!"))
+		return
+	if(user.pulling == null)
+		if(delivery_trunk.storage.len == 0)
+			to_chat(user, span_notice("There is nothing in the back of the truck."))
+			return
+		var/turf/user_turf = get_turf(user)
+		for(var/obj/structure/delivery_crate/blue/potential_crate in user_turf.contents)
+			if(potential_crate)
+				to_chat(user, span_warning("There is already a crate on the ground here!"))
 				return
-			else
-				if(do_after(user, 3 SECONDS, pulled_crate))
-					playsound(src,'sound/effects/pressureplate.ogg',50, 10)
-					delivery_trunk.add_to_storage(user,pulled_crate)
+		delivery_trunk.retrieval_menu(user)
+	else
+		var/obj/structure/delivery_crate/pulled_crate = user.pulling
+		if(!pulled_crate)
+			to_chat(user, span_warning("The special compartments in the back dont really fit anything other than delivery crates. Use a nomral truck for other cargo."))
+			return
+		else
+			if(do_after(user, 3 SECONDS, pulled_crate))
+				playsound(src,'sound/effects/pressureplate.ogg',50, 10)
+				delivery_trunk.add_to_storage(user,pulled_crate)
 
 /obj/effect/landmark/delivery_truck_beacon
 	name = "delivery truck spawner"
