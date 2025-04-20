@@ -151,29 +151,30 @@
 		if (CheckEyewitness(src, src, 7, FALSE))
 			AdjustMasquerade(-1)
 
+	// Transfer a percentage of total reagents equal to percentage of bloodpool drank
+	if (victim.reagents && length(victim.reagents.reagent_list) && prob(50))
+		victim.reagents.trans_to(src, (1 / victim.bloodpool) * victim.reagents.total_volume, transfered_by = victim, methods = VAMPIRE)
+
 	victim.bloodpool = clamp(victim.bloodpool - 1, 0, victim.maxbloodpool)
+	victim.blood_volume = clamp(victim.blood_volume - 50, BLOOD_VOLUME_SURVIVE, BLOOD_VOLUME_NORMAL)
+
 	suckbar.icon_state = "[round(14*(victim.bloodpool / victim.maxbloodpool))]"
 
-	if (ishuman(victim))
-		var/mob/living/carbon/human/H = victim
-		if(!victim_vampirism)
-			H.blood_volume = max(H.blood_volume-50, 150)
-		if (kuei_jin)
-			if(victim.yang_chi > 0 || victim.yin_chi > 0)
-				if(victim.yang_chi > victim.yin_chi)
-					victim.yang_chi = victim.yang_chi-1
-					yang_chi = min(yang_chi+1, max_yang_chi)
-					to_chat(src, "<span class='engradio'>Some <b>Yang</b> Chi energy enters you...</span>")
-				else
-					victim.yin_chi = victim.yin_chi-1
-					yin_chi = min(yin_chi+1, max_yin_chi)
-					to_chat(src, "<span class='medradio'>Some <b>Yin</b> Chi energy enters you...</span>")
-				COOLDOWN_START(victim, chi_restore, 30 SECONDS)
-				update_chi_hud()
+	// Drain Chi through blood
+	if (kuei_jin)
+		if (victim.yang_chi > 0 || victim.yin_chi > 0)
+			if (victim.yang_chi > victim.yin_chi)
+				victim.yang_chi = clamp(victim.yang_chi - 1, 0, victim.max_yang_chi)
+				yang_chi = clamp(yang_chi + 1, 0, max_yang_chi)
+				to_chat(src, span_engradio("Some <b>Yang</b> Chi energy enters you..."))
 			else
-				to_chat(src, "<span class='warning'>The <b>BLOOD</b> feels tasteless...</span>")
-		if (H.reagents && length(H.reagents.reagent_list) && prob(50))
-			H.reagents.trans_to(src, min(10, H.reagents.total_volume), transfered_by = victim, methods = VAMPIRE)
+				victim.yin_chi = clamp(victim.yin_chi - 1, 0, victim.max_yin_chi)
+				yin_chi = clamp(yin_chi + 1, 0, max_yin_chi)
+				to_chat(src, span_medradio("Some <b>Yin</b> Chi energy enters you..."))
+			COOLDOWN_START(victim, chi_restore, 30 SECONDS)
+			update_chi_hud()
+		else
+			to_chat(src, span_warning("The <b>BLOOD</b> feels tasteless..."))
 
 	// Inflict damage and extreme pain with the appropriate trait
 	if (HAS_TRAIT(src, TRAIT_PAINFUL_VAMPIRE_KISS))
