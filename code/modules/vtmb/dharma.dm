@@ -58,7 +58,7 @@
 			return
 
 		if (get_dist(frenzy_target, src) > 1)
-			step_to(src,frenzy_target,0)
+			step_to(src, frenzy_target, 1)
 			face_atom(frenzy_target)
 			return
 
@@ -68,7 +68,7 @@
 		if(target.stat == DEAD)
 			return
 
-		if ((last_rage_hit + 0.5 SECONDS) <= world.time)
+		if ((last_rage_hit + 0.5 SECONDS) > world.time)
 			return
 		last_rage_hit = world.time
 
@@ -93,7 +93,7 @@
 			if(target.stat == DEAD)
 				return
 
-			if ((last_rage_hit + 0.5 SECONDS) >= world.time)
+			if ((last_rage_hit + 0.5 SECONDS) > world.time)
 				return
 			last_rage_hit = world.time
 
@@ -119,7 +119,7 @@
 			if (target.stat == DEAD)
 				return
 
-			if (last_rage_hit + 0.5 SECONDS >= world.time)
+			if (last_rage_hit + 0.5 SECONDS > world.time)
 				return
 			last_rage_hit = world.time
 
@@ -163,7 +163,7 @@
 			a_intent = INTENT_GRAB
 			dropItemToGround(get_active_held_item())
 
-			if ((last_rage_hit + 0.5 SECONDS) >= world.time)
+			if ((last_rage_hit + 0.5 SECONDS) > world.time)
 				return
 			last_rage_hit = world.time
 
