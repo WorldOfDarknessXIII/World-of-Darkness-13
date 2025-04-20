@@ -59,6 +59,7 @@
 
 	// Register relevant signals
 	RegisterSignal(owner, COMSIG_MOB_DRINK_VITAE, PROC_REF(handle_drinking_vitae))
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(handle_death))
 
 /datum/splat/hungry_dead/kuei_jin/proc/set_dharma_level(dharma_level)
 	src.dharma_level = dharma_level
@@ -143,6 +144,44 @@
 
 	// flavour for Kuei-jin drinking Vitae
 	to_chat(owner, span_medradio("The Kin-jin's blood becomes bitter <b>Yin Chi</b> in your body."))
+
+/datum/splat/hungry_dead/kuei_jin/proc/handle_death(mob/living/source, gibbed)
+	SIGNAL_HANDLER
+
+	ADD_TRAIT(source, TRAIT_CANNOT_BE_EMBRACED, VAMPIRE_TRAIT)
+
+	SEND_SOUND(source, sound('code/modules/wod13/sounds/final_death.ogg', 0, 0, 50))
+
+	source.ghostize(FALSE)
+
+	if (!ishuman(source))
+		return
+	var/mob/living/carbon/human/kuei_jin = source
+
+	if (HAS_TRAIT(kuei_jin, TRAIT_IN_FRENZY))
+		kuei_jin.exit_frenzymod()
+
+	var/years_undead = kuei_jin.chronological_age - kuei_jin.age
+	switch (years_undead)
+		if (-INFINITY to 10) //normal corpse
+			return
+		if (10 to 50)
+			kuei_jin.rot_body(1) //skin takes on a weird colouration
+			kuei_jin.visible_message(span_notice("[src]'s skin loses some of its colour."))
+		if (50 to 100)
+			kuei_jin.rot_body(2) //looks slightly decayed
+			kuei_jin.visible_message(span_notice("[src]'s skin rapidly decays."))
+		if (100 to 150)
+			kuei_jin.rot_body(3) //looks very decayed
+			kuei_jin.visible_message(span_warning("[src]'s body rapidly decomposes!"))
+		if (150 to 200)
+			kuei_jin.rot_body(4) //mummified skeletonised corpse
+			kuei_jin.visible_message(span_warning("[src]'s body rapidly skeletonises!"))
+		if (200 to INFINITY)
+			playsound(kuei_jin, 'code/modules/wod13/sounds/vicissitude.ogg', 80, TRUE)
+			kuei_jin.lying_fix()
+			kuei_jin.dir = SOUTH
+			INVOKE_ASYNC(kuei_jin, TYPE_PROC_REF(/mob/living/carbon/human, dust), TRUE, TRUE)
 
 /mob/living/carbon/human/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	. = ..()

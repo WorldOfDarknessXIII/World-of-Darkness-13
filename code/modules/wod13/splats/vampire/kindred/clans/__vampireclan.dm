@@ -185,3 +185,5 @@ And it also helps for the character set panel
 				base_body_mod = ""
 			else if (base_body_mod == "")
 				base_body_mod = "s"
+
+	update_body()

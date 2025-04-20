@@ -34,46 +34,6 @@
 	yin_chi = min(max_yin_chi, yin_chi+yang_chi)
 	yang_chi = 0
 
-	if(is_kindred(src) || is_kuei_jin(src))
-		ADD_TRAIT(src, TRAIT_CANNOT_BE_EMBRACED, VAMPIRE_TRAIT)
-		var/obj/item/organ/brain/brain = getorganslot(ORGAN_SLOT_BRAIN) //NO REVIVAL EVER
-		if (brain)
-			brain.organ_flags |= ORGAN_FAILING
-
-		if(HAS_TRAIT(src, TRAIT_IN_FRENZY))
-			exit_frenzymod()
-		SEND_SOUND(src, sound('code/modules/wod13/sounds/final_death.ogg', 0, 0, 50))
-
-		var/years_undead = chronological_age - age
-		switch (years_undead)
-			if (-INFINITY to 10) //normal corpse
-				return
-			if (10 to 50)
-				rot_body(1) //skin takes on a weird colouration
-				visible_message("<span class='notice'>[src]'s skin loses some of its colour.</span>")
-				update_body()
-			if (50 to 100)
-				rot_body(2) //looks slightly decayed
-				visible_message("<span class='notice'>[src]'s skin rapidly decays.</span>")
-				update_body()
-			if (100 to 150)
-				rot_body(3) //looks very decayed
-				visible_message("<span class='warning'>[src]'s body rapidly decomposes!</span>")
-				update_body()
-			if (150 to 200)
-				rot_body(4) //mummified skeletonised corpse
-				visible_message("<span class='warning'>[src]'s body rapidly skeletonises!</span>")
-				update_body()
-			if (200 to INFINITY)
-				if (is_kindred(src))
-					playsound(src, 'code/modules/wod13/sounds/burning_death.ogg', 80, TRUE)
-				else if (is_kuei_jin(src))
-					playsound(src, 'code/modules/wod13/sounds/vicissitude.ogg', 80, TRUE)
-				lying_fix()
-				dir = SOUTH
-				spawn(1 SECONDS)
-					dust(TRUE, TRUE) //turn to ash
-
 /mob/living/carbon/human/toggle_move_intent(mob/living/user)
 	if(blocking && m_intent == MOVE_INTENT_WALK)
 		return

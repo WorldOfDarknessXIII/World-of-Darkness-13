@@ -50,6 +50,7 @@
 
 	// Register relevant signals
 	RegisterSignal(owner, COMSIG_MOB_DRINK_VITAE, PROC_REF(handle_drinking_vitae))
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(handle_death))
 
 	//this needs to be adjusted to be more accurate for blood spending rates
 	add_power(/datum/discipline/bloodheal, clamp(11 - generation, 1, 10))
@@ -305,6 +306,50 @@
 	// If they can leave Torpor, drinking Vitae will force them out of it
 	if (HAS_TRAIT(owner, TRAIT_TORPOR) && COOLDOWN_FINISHED(src, torpor_timer))
 		owner.untorpor()
+
+/datum/splat/vampire/kindred/proc/handle_death(mob/living/source, gibbed)
+	SIGNAL_HANDLER
+
+	ADD_TRAIT(source, TRAIT_CANNOT_BE_EMBRACED, VAMPIRE_TRAIT)
+
+	SEND_SOUND(source, sound('code/modules/wod13/sounds/final_death.ogg', 0, 0, 50))
+
+	source.ghostize(FALSE)
+
+	if (!ishuman(source))
+		return
+	var/mob/living/carbon/human/vampire = source
+
+	if (HAS_TRAIT(vampire, TRAIT_IN_FRENZY))
+		vampire.exit_frenzymod()
+
+	var/years_undead = vampire.chronological_age - vampire.age
+	switch (years_undead)
+		if (-INFINITY to 10) //normal corpse
+			return
+		if (10 to 50)
+			vampire.rot_body(1) //skin takes on a weird colouration
+			vampire.visible_message(span_notice("[src]'s skin loses some of its colour."))
+			vampire.update_body()
+		if (50 to 100)
+			vampire.rot_body(2) //looks slightly decayed
+			vampire.visible_message(span_notice("[src]'s skin rapidly decays."))
+			vampire.update_body()
+		if (100 to 150)
+			vampire.rot_body(3) //looks very decayed
+			vampire.visible_message(span_warning("[src]'s body rapidly decomposes!"))
+			vampire.update_body()
+		if (150 to 200)
+			vampire.rot_body(4) //mummified skeletonised corpse
+			vampire.visible_message(span_warning("[src]'s body rapidly skeletonises!"))
+			vampire.update_body()
+		if (200 to INFINITY)
+			playsound(vampire, 'code/modules/wod13/sounds/burning_death.ogg', 80, TRUE)
+			if (is_kuei_jin(vampire))
+				playsound(vampire, 'code/modules/wod13/sounds/vicissitude.ogg', 80, TRUE)
+			vampire.lying_fix()
+			vampire.dir = SOUTH
+			INVOKE_ASYNC(vampire, TYPE_PROC_REF(/mob/living/carbon/human, dust), TRUE, TRUE)
 
 /mob/living/carbon/can_embrace()
 	// Can only Embrace humans and shapeshifted Garou
