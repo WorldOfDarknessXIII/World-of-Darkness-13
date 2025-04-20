@@ -8,7 +8,6 @@
 		/datum/discipline/quietus
 	)
 	clan_traits = list(
-		TRAIT_CAN_DIABLERIZE,
 		TRAIT_VITAE_ADDICTION
 	)
 	male_clothes = /obj/item/clothing/under/vampire/bandit

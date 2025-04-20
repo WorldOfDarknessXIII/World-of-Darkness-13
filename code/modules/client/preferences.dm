@@ -202,8 +202,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	// Vampire preferences
 	var/datum/vampireclan/clan
 
-	var/diablerist = FALSE
-
 	var/generation = 13
 	var/generation_bonus = 0
 
@@ -244,7 +242,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/proc/reset_character()
 	slotlocked = FALSE
-	diablerist = FALSE
 	torpor_count = 0
 	generation_bonus = 0
 	info_known = INFO_KNOWN_UNKNOWN
@@ -2957,7 +2954,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.real_name = real_name
 	character.true_real_name = real_name
 	character.name = character.real_name
-	character.diablerist = diablerist
 	character.physique = physique
 	character.dexterity = dexterity
 	character.social = social

@@ -288,6 +288,63 @@
 	if (ghoul)
 		ghoul.regnant = owner
 
+/datum/splat/vampire/kindred/proc/diablerize(mob/living/victim)
+	var/datum/splat/vampire/kindred/victim_vampirism = is_kindred(victim)
+	if (!victim_vampirism)
+		return
+
+	var/mob/living/carbon/human/human_owner
+	if (ishuman(owner))
+		human_owner = owner
+		human_owner.AdjustHumanity(-1, 0)
+
+	// Difference in Generation between the Diablerist and victim, meaningless if less than 1
+	var/generation_difference = generation - victim_vampirism.generation
+
+	// Determine success or failure of Diablerie
+	var/mob/living/winner
+	var/mob/living/loser
+
+	// Base success chance of 90%
+	var/success_probability = 90
+	// Success chance is a flat 20% lower if this isn't their first Diablerie
+	if (HAS_TRAIT(owner, TRAIT_DIABLERIST))
+		success_probability -= 20
+	// Success chance is 10% lower for every Generation lower the victim is than the Diablerist, or increases chance of success if lower Generation than victim
+	success_probability -= generation_difference
+
+	// Success or failure handling
+	var/successful_diablerie
+	if (prob(success_probability))
+		successful_diablerie = TRUE
+		message_admins("[ADMIN_LOOKUPFLW(owner)] successfully Diablerized [ADMIN_LOOKUPFLW(victim)]")
+		log_combat(owner, victim, "Diablerized")
+		winner = owner
+		loser = victim
+	else
+		successful_diablerie = FALSE
+		message_admins("[ADMIN_LOOKUPFLW(owner)] unsuccessfully Diablerized [ADMIN_LOOKUPFLW(victim)] and was possessed.")
+		log_combat(owner, victim, "unsuccessfully Diablerized")
+		winner = victim
+		loser = owner
+
+	// Lower Generation if victim was of lower Generation
+	if (generation_difference > 0)
+		// Lower one Generation, plus another for every 3 Generations the victim was lower than you
+		var/losing_generation = 1 + floor(generation_difference / 3)
+		set_generation(generation - losing_generation)
+
+	ADD_TRAIT(owner, TRAIT_DIABLERIST, VAMPIRE_TRAIT)
+
+	// Loser becomes an imaginary friend, winner gets the owner's body
+	if (loser.key && human_owner)
+		human_owner.gain_trauma(/datum/brain_trauma/special/imaginary_friend/consumed_soul, TRAUMA_RESILIENCE_MAGIC, loser)
+
+	if ((winner != owner) && winner.key)
+		winner.mind.transfer_to(loser, TRUE)
+
+	victim.death()
+
 /datum/splat/vampire/kindred/proc/set_generation(generation = 13)
 	src.generation = generation
 	owner.maxbloodpool = HUMAN_MAXBLOODPOOL + ((13 - generation) * 3)

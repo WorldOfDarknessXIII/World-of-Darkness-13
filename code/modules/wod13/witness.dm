@@ -97,7 +97,7 @@
 		if (antifrenzy)
 			holder.icon = 'icons/effects/32x64.dmi'
 		//black aura for diablerists
-		if (diablerist)
+		if (HAS_TRAIT(src, TRAIT_DIABLERIST))
 			holder.icon_state = "diablerie_aura"
 
 	var/datum/splat/hungry_dead/kuei_jin/kuei_jin = is_kuei_jin(src)

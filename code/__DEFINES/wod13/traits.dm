@@ -15,7 +15,7 @@
 #define TRAIT_HOMOSEXUAL "homosexual"
 #define TRAIT_HUNTED "hunted"
 #define TRAIT_VIOLATOR "violator"
-#define TRAIT_DIABLERIE "diablerie"
+#define TRAIT_DIABLERIST "diablerist"
 #define TRAIT_GULLET "gullet"
 #define TRAIT_CHARMER "charmer"
 #define TRAIT_UNMASQUERADE "unmasquerade"	//For tzi clothing
@@ -56,8 +56,6 @@
 #define TRAIT_IRRESISTIBLE_VITAE "irresistible_vitae"
 /// Vampire cannot feed from poor people
 #define TRAIT_FEEDING_RESTRICTION "feeding_restriction"
-/// Vampire can Diablerize other vampires
-#define TRAIT_CAN_DIABLERIZE "can_diablerize"
 /// Will always fail to resist supernatural mind-influencing powers
 #define TRAIT_CANNOT_RESIST_MIND_CONTROL "cannot_resist_mind_control"
 /// Cannot leave the vicinity of whoever's vitae you've drank

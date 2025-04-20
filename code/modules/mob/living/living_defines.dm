@@ -223,7 +223,6 @@
 
 	var/thaumaturgy_knowledge = FALSE
 
-	var/elysium_checks = 0
 	var/bloodhunted = FALSE
 
 	var/last_vampire_ambience = 0
@@ -239,8 +238,6 @@
 	var/last_m_intent = MOVE_INTENT_RUN
 	var/last_bloodpower_use = 0
 	var/last_drinkblood_use = 0
-	var/last_bloodpower_click = 0
-	var/last_drinkblood_click = 0
 	var/harm_focus = SOUTH
 	var/masquerade_votes = 0
 	var/list/voted_for = list()

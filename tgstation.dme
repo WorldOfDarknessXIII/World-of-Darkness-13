@@ -3474,6 +3474,7 @@
 #include "code\modules\wod13\datums\bouncer_roles\bouncer_elysium_role.dm"
 #include "code\modules\wod13\datums\bouncer_roles\bouncer_giovanni_role.dm"
 #include "code\modules\wod13\datums\bouncer_roles\bouncer_mob_role.dm"
+#include "code\modules\wod13\datums\brain_damage\consumed_soul.dm"
 #include "code\modules\wod13\datums\crafting_recipes\weed\weed_blunt.dm"
 #include "code\modules\wod13\datums\crafting_recipes\weed\weedpack.dm"
 #include "code\modules\wod13\datums\keybinding\human.dm"

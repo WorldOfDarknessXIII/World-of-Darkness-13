@@ -1,6 +1,3 @@
-/datum/preferences
-	var/last_torpor = 0
-
 /mob/living/carbon/human/death()
 	. = ..()
 
@@ -169,13 +166,12 @@
 	return
 
 /mob/living/carbon/human/proc/clear_parrying()
-	if(parrying)
-		parrying = null
-		remove_overlay(FIGHT_LAYER)
-		to_chat(src, "<span class='warning'>You lower your defense.</span>")
-//	update_icon()
+	if (!parrying)
+		return
 
-//(source.pulledby && source.pulledby.grab_state > GRAB_PASSIVE)
+	parrying = null
+	remove_overlay(FIGHT_LAYER)
+	to_chat(src, span_warning("You lower your defense."))
 
 /atom/movable/screen/jump
 	name = "jump"
@@ -186,7 +182,7 @@
 
 /atom/movable/screen/jump/Click()
 	var/mob/living/L = usr
-	if(!L.prepared_to_jump)
+	if (!L.prepared_to_jump)
 		L.prepared_to_jump = TRUE
 		icon_state = "act_jump_on"
 		to_chat(usr, "<span class='notice'>You prepare to jump.</span>")
@@ -198,10 +194,14 @@
 
 /atom/Click()
 	. = ..()
-	if(isliving(usr) && usr != src)
-		var/mob/living/L = usr
-		if(L.prepared_to_jump)
-			L.jump(src)
+	if (!isliving(usr) || (usr == src))
+		return
+
+	var/mob/living/L = usr
+	if (!L.prepared_to_jump)
+		return
+
+	L.jump(src)
 
 /atom/movable/screen/block
 	name = "block"
@@ -211,10 +211,13 @@
 	plane = HUD_PLANE
 
 /atom/movable/screen/block/Click()
-	if(ishuman(usr))
-		var/mob/living/carbon/human/BL = usr
-		BL.SwitchBlocking()
-	..()
+	if (!ishuman(usr))
+		return ..()
+
+	var/mob/living/carbon/human/BL = usr
+	BL.SwitchBlocking()
+
+	. = ..()
 
 /atom/movable/screen/vtm_zone
 	name = "zone"
@@ -236,14 +239,17 @@
 	plane = HUD_PLANE
 
 /atom/movable/screen/blood/Click()
-	if(iscarbon(usr))
-		var/mob/living/carbon/human/BD = usr
-		BD.update_blood_hud()
-		if(BD.bloodpool > 0)
-			to_chat(BD, "<span class='notice'>You've got [BD.bloodpool]/[BD.maxbloodpool] blood points.</span>")
-		else
-			to_chat(BD, "<span class='warning'>You've got [BD.bloodpool]/[BD.maxbloodpool] blood points.</span>")
-	..()
+	if (!iscarbon(usr))
+		return ..()
+
+	var/mob/living/carbon/human/BD = usr
+	BD.update_blood_hud()
+	if (BD.bloodpool > 0)
+		to_chat(BD, span_notice("You've got [BD.bloodpool]/[BD.maxbloodpool] blood points."))
+	else
+		to_chat(BD, span_warning("You've got [BD.bloodpool]/[BD.maxbloodpool] blood points!"))
+
+	. = ..()
 
 /atom/movable/screen/drinkblood
 	name = "Drink Blood"
@@ -253,214 +259,87 @@
 
 /atom/movable/screen/drinkblood/Click()
 	bite()
+
 	. = ..()
 
 /atom/movable/screen/drinkblood/proc/bite()
-	if(ishuman(usr))
-		var/mob/living/carbon/human/BD = usr
-		BD.update_blood_hud()
-		if(world.time < BD.last_drinkblood_use+30)
-			return
-		if(world.time < BD.last_drinkblood_click+10)
-			return
-		BD.last_drinkblood_click = world.time
-		if(BD.grab_state > GRAB_PASSIVE)
-			if(ishuman(BD.pulling))
-				var/mob/living/carbon/human/PB = BD.pulling
-				if(is_ghoul(BD))
-					if(!is_kindred(PB))
-						SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
-						to_chat(BD, "<span class='warning'>Eww, that is <b>GROSS</b>.</span>")
-						return
-				if(!is_ghoul(BD) && !is_kindred(BD) && !is_kuei_jin(BD))
-					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
-					to_chat(BD, "<span class='warning'>Eww, that is <b>GROSS</b>.</span>")
-					return
-				if(PB.stat == DEAD && !HAS_TRAIT(BD, TRAIT_GULLET) && !is_kuei_jin(BD))
-					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
-					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
-					return
-				if(PB.bloodpool <= 0 && (!is_kindred(PB) || !is_kindred(BD)))
-					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
-					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
-					return
-				if(BD.clan)
-					var/special_clan = FALSE
-					if(BD.clan.name == "Salubri")
-						if(!PB.IsSleeping())
-							to_chat(BD, "<span class='warning'>You can't drink from aware targets!</span>")
-							return
-						special_clan = TRUE
-						PB.emote("moan")
-					if(BD.clan.name == "Giovanni")
-						PB.emote("scream")
-						special_clan = TRUE
-					if(!special_clan)
-						PB.emote("groan")
-				PB.add_bite_animation()
-			if(isliving(BD.pulling))
-				if(!is_kindred(BD) && !is_kuei_jin(BD))
-					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
-					to_chat(BD, "<span class='warning'>Eww, that is <b>GROSS</b>.</span>")
-					return
-				var/mob/living/LV = BD.pulling
-				if(LV.bloodpool <= 0 && (!is_kindred(LV) || !is_kindred(BD)))
-					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
-					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
-					return
-				if(LV.stat == DEAD && !HAS_TRAIT(BD, TRAIT_GULLET) && !is_kuei_jin(BD))
-					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
-					to_chat(BD, "<span class='warning'>This creature is <b>DEAD</b>.</span>")
-					return
-				var/skipface = (BD.wear_mask && (BD.wear_mask.flags_inv & HIDEFACE)) || (BD.head && (BD.head.flags_inv & HIDEFACE))
-				if(!skipface)
-					if(!HAS_TRAIT(BD, TRAIT_BLOODY_LOVER))
-						playsound(BD, 'code/modules/wod13/sounds/drinkblood1.ogg', 50, TRUE)
-						LV.visible_message("<span class='warning'><b>[BD] bites [LV]'s neck!</b></span>", "<span class='warning'><b>[BD] bites your neck!</b></span>")
-					if(!HAS_TRAIT(BD, TRAIT_BLOODY_LOVER))
-						if(BD.CheckEyewitness(LV, BD, 7, FALSE))
-							BD.AdjustMasquerade(-1)
-					else
-						playsound(BD, 'code/modules/wod13/sounds/kiss.ogg', 50, TRUE)
-						LV.visible_message("<span class='italics'><b>[BD] kisses [LV]!</b></span>", "<span class='userlove'><b>[BD] kisses you!</b></span>")
-					if(is_kindred(LV))
-						var/mob/living/carbon/human/HV = BD.pulling
-						if (HAS_TRAIT(HV, TRAIT_REMOVED_HEART))
-							to_chat(BD, "<span class='warning'>There is no <b>HEART</b> in this creature.</span>")
-							return
-					BD.drinksomeblood(LV)
+	if (!ishuman(usr))
+		return
+	var/mob/living/carbon/human/drinker = usr
 
-/atom/movable/screen/bloodpower
-	name = "Bloodpower"
-	icon = 'code/modules/wod13/disciplines.dmi'
-	icon_state = "bloodpower"
-	layer = HUD_LAYER
-	plane = HUD_PLANE
+	if (drinker.grab_state < GRAB_AGGRESSIVE)
+		return
+	if (!isliving(drinker.pulling))
+		return
+	var/mob/living/victim = drinker.pulling
 
-/atom/movable/screen/bloodpower/Click()
-	SEND_SOUND(usr, sound('code/modules/wod13/sounds/highlight.ogg', 0, 0, 50))
-	if(ishuman(usr))
-		var/mob/living/carbon/human/BD = usr
-		if(world.time < BD.last_bloodpower_use+110)
-			return
-		if(world.time < BD.last_bloodpower_click+10)
-			return
-		BD.last_bloodpower_click = world.time
-		var/plus = 0
-		if(HAS_TRAIT(BD, TRAIT_HUNGRY))
-			plus = 1
-		if(BD.bloodpool >= 3+plus)
-			playsound(usr, 'code/modules/wod13/sounds/bloodhealing.ogg', 50, FALSE)
-			BD.last_bloodpower_use = world.time
-			BD.bloodpool = max(0, BD.bloodpool-(3+plus))
-			icon_state = "[initial(icon_state)]-on"
-			to_chat(BD, "<span class='notice'>You use blood to become more powerful.</span>")
-			BD.dna.species.punchdamagehigh = BD.dna.species.punchdamagehigh+5
-			BD.physiology.armor.melee = BD.physiology.armor.melee+15
-			BD.physiology.armor.bullet = BD.physiology.armor.bullet+15
-			if(!HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
-				ADD_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
-			BD.update_blood_hud()
-			addtimer(CALLBACK(src, PROC_REF(end_bloodpower)), 100+BD.discipline_time_plus+BD.bloodpower_time_plus)
-		else
-			SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
-			to_chat(BD, "<span class='warning'>You don't have enough <b>BLOOD</b> to become more powerful.</span>")
-
-/atom/movable/screen/bloodpower/proc/end_bloodpower()
-	if(ishuman(usr))
-		var/mob/living/carbon/human/BD = usr
-		to_chat(BD, "<span class='warning'>You feel like your <b>BLOOD</b>-powers slowly decrease.</span>")
-		if(BD.dna.species)
-			BD.dna.species.punchdamagehigh = BD.dna.species.punchdamagehigh-5
-			BD.physiology.armor.melee = BD.physiology.armor.melee-15
-			BD.physiology.armor.bullet = BD.physiology.armor.bullet-15
-			if(HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
-				REMOVE_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
-	icon_state = initial(icon_state)
-
-/atom/movable/screen/disciplines
-	layer = HUD_LAYER
-	plane = HUD_PLANE
-	var/datum/discipline/dscpln
-	var/last_discipline_click = 0
-	var/last_discipline_use = 0
-	var/main_state = ""
-	var/active = FALSE
-	var/obj/overlay/level2
-	var/obj/overlay/level3
-	var/obj/overlay/level4
-	var/obj/overlay/level5
-
-/atom/movable/screen/disciplines/Initialize()
-	. = ..()
-	level2 = new(src)
-	level2.icon = 'code/modules/wod13/disciplines.dmi'
-	level2.icon_state = "2"
-	level2.layer = ABOVE_HUD_LAYER+5
-	level2.plane = HUD_PLANE
-	level3 = new(src)
-	level3.icon = 'code/modules/wod13/disciplines.dmi'
-	level3.icon_state = "3"
-	level3.layer = ABOVE_HUD_LAYER+5
-	level3.plane = HUD_PLANE
-	level4 = new(src)
-	level4.icon = 'code/modules/wod13/disciplines.dmi'
-	level4.icon_state = "4"
-	level4.layer = ABOVE_HUD_LAYER+5
-	level4.plane = HUD_PLANE
-	level5 = new(src)
-	level5.icon = 'code/modules/wod13/disciplines.dmi'
-	level5.icon_state = "5"
-	level5.layer = ABOVE_HUD_LAYER+5
-	level5.plane = HUD_PLANE
+	drinker.bite(victim)
 
 /atom/MouseEntered(location,control,params)
-	if(isturf(src) || ismob(src) || isobj(src))
-		if(loc && iscarbon(usr))
-			var/mob/living/carbon/H = usr
-			if(H.a_intent == INTENT_HARM)
-				if(!H.IsSleeping() && !H.IsUnconscious() && !H.IsParalyzed() && !H.IsKnockdown() && !H.IsStun() && !HAS_TRAIT(H, TRAIT_RESTRAINED))
-					H.face_atom(src)
-					H.harm_focus = H.dir
+	if (!isturf(src) && !ismob(src) && !isobj(src))
+		return
+	if (!loc || !iscarbon(usr))
+		return
+	var/mob/living/carbon/H = usr
+	if(H.a_intent != INTENT_HARM)
+		return
+	if (H.IsSleeping() || H.IsUnconscious() || H.IsParalyzed() || H.IsKnockdown() || H.IsStun() || HAS_TRAIT(H, TRAIT_RESTRAINED))
+		return
+
+	H.face_atom(src)
+	H.harm_focus = H.dir
 
 /mob/living/carbon/Move(atom/newloc, direct, glide_size_override)
 	. = ..()
-	if(a_intent == INTENT_HARM && client)
+
+	if (a_intent == INTENT_HARM && client)
 		setDir(harm_focus)
 	else
 		harm_focus = dir
 
 /atom/Click(location,control,params)
-	if(ishuman(usr))
-		if(isopenturf(src.loc) || isopenturf(src))
-			var/list/modifiers = params2list(params)
-			var/mob/living/carbon/human/HUY = usr
-			if(!HUY.get_active_held_item() && Adjacent(usr))
-				if(LAZYACCESS(modifiers, "right"))
-					var/list/shit = list()
-					var/obj/item/item_to_pick
-					var/turf/T
-					if(isturf(src))
-						T = src
-					else
-						T = src.loc
-					for(var/obj/item/I in T)
-						if(I)
-							if(!I.anchored)
-								shit[I.name] = I
-						if(length(shit) == 1)
-							item_to_pick = I
-					if(length(shit) >= 2)
-						var/result = input(usr, "Select the item you want to pick up.", "Pick up") as null|anything in shit
-						if(result)
-							item_to_pick = shit[result]
-						else
-							return
-					if(item_to_pick)
-						if(HUY.CanReach(item_to_pick))
-							HUY.put_in_active_hand(item_to_pick)
-						return
-	..()
+	if (!ishuman(usr))
+		return ..()
+
+	if (!isopenturf(src.loc) && !isopenturf(src))
+		return ..()
+
+	var/list/modifiers = params2list(params)
+	var/mob/living/carbon/human/HUY = usr
+	if (HUY.get_active_held_item() || !Adjacent(usr))
+		return ..()
+
+	if (!LAZYACCESS(modifiers, "right"))
+		return ..()
+
+	var/list/items_on_turf = list()
+	var/obj/item/item_to_pick
+	var/turf/T
+
+	if (isturf(src))
+		T = src
+	else
+		T = src.loc
+
+	for (var/obj/item/I in T)
+		if (!I.anchored)
+			items_on_turf[I.name] = I
+		if (length(items_on_turf) == 1)
+			item_to_pick = I
+
+	if (length(items_on_turf) >= 2)
+		var/result = tgui_input_list(usr, "Select the item you want to pick up.", "Pick up", sortList(items_on_turf))
+		if (result)
+			item_to_pick = items_on_turf[result]
+		else
+			return
+
+	if (item_to_pick)
+		if (HUY.CanReach(item_to_pick))
+			HUY.put_in_active_hand(item_to_pick)
+		return
+
+	. = ..()
 
 /mob/living/carbon/werewolf/Life()
 	. = ..()
@@ -469,41 +348,42 @@
 	update_auspex_hud()
 
 /mob/living/carbon/human/Life()
-	if(!is_kindred(src) && !is_kuei_jin(src))
-		if(prob(5))
+	if (!is_kindred(src) && !is_kuei_jin(src))
+		if (prob(5))
 			adjustCloneLoss(-5, TRUE)
 	update_blood_hud()
 	update_zone_hud()
 	update_rage_hud()
 	update_shadow()
 	update_auspex_hud()
-	if(warrant)
-		last_nonraid = world.time
-		if(key)
-			if(stat != DEAD)
-				if(istype(get_area(src), /area/vtm))
-					var/area/vtm/V = get_area(src)
-					if(V.upper)
-						last_showed = world.time
-						if(last_raid + 60 SECONDS < world.time)
-							last_raid = world.time
-							for(var/turf/open/O in range(1, src))
-								if(prob(25))
-									new /obj/effect/temp_visual/desant(O)
-							playsound(loc, 'code/modules/wod13/sounds/helicopter.ogg', 50, TRUE)
-				if(last_showed + 15 MINUTES < world.time)
-					to_chat(src, "<b>POLICE STOPPED SEARCHING</b>")
-					SEND_SOUND(src, sound('code/modules/wod13/sounds/humanity_gain.ogg', 0, 0, 75))
-					killed_count = 0
-					warrant = FALSE
-			else
-				warrant = FALSE
-		else
-			warrant = FALSE
-	else
-		if(last_nonraid + 3 MINUTES < world.time)
+
+	if (!warrant)
+		if (last_nonraid + 3 MINUTES < world.time)
 			last_nonraid = world.time
 			killed_count = max(0, killed_count-1)
+		return ..()
+
+	last_nonraid = world.time
+	if (!key || (stat == DEAD))
+		warrant = FALSE
+		return ..()
+
+	if (istype(get_area(src), /area/vtm))
+		var/area/vtm/V = get_area(src)
+		if (V.upper)
+			last_showed = world.time
+			if(last_raid + 60 SECONDS < world.time)
+				last_raid = world.time
+				for(var/turf/open/O in range(1, src))
+					if(prob(25))
+						new /obj/effect/temp_visual/desant(O)
+				playsound(loc, 'code/modules/wod13/sounds/helicopter.ogg', 50, TRUE)
+
+	if (last_showed + 15 MINUTES < world.time)
+		to_chat(src, "<b>POLICE STOPPED SEARCHING</b>")
+		SEND_SOUND(src, sound('code/modules/wod13/sounds/humanity_gain.ogg', 0, 0, 75))
+		killed_count = 0
+		warrant = FALSE
 
 	..()
 
@@ -517,42 +397,41 @@
 /mob/living/proc/update_rage_hud()
 	if(!client || !hud_used)
 		return
-	if(is_garou(src) || iswerewolf(src))
-		if(hud_used.rage_icon)
-			hud_used.rage_icon.overlays -= gnosis
-			var/mob/living/carbon/C = src
-			hud_used.rage_icon.icon_state = "rage[C.auspice.rage]"
-			gnosis.icon_state = "gnosis[C.auspice.gnosis]"
-			hud_used.rage_icon.overlays |= gnosis
-		if(hud_used.auspice_icon)
-			var/mob/living/carbon/C = src
-			if(C.last_moon_look != 0)
-				hud_used.auspice_icon.icon_state = "[GLOB.moon_state]"
+
+	var/datum/splat/werewolf/garou/lycanthropy = is_garou(src)
+	if (!lycanthropy)
+		return
+
+	if (hud_used.rage_icon)
+		hud_used.rage_icon.overlays -= gnosis
+		hud_used.rage_icon.icon_state = "rage[lycanthropy.get_rage()]"
+		gnosis.icon_state = "gnosis[lycanthropy.get_gnosis()]"
+		hud_used.rage_icon.overlays |= gnosis
+
+	if (hud_used.auspice_icon)
+		if (lycanthropy.look_at_moon != 0)
+			hud_used.auspice_icon.icon_state = "[GLOB.moon_state]"
 
 /mob/living/proc/update_blood_hud()
-	if(!client || !hud_used)
+	if (!client || !hud_used)
 		return
-	maxbloodpool = 10+((13-generation)*3)
-	if(hud_used.blood_icon)
-		var/emm = round((bloodpool/maxbloodpool)*10)
-		if(emm > 10)
-			hud_used.blood_icon.icon_state = "blood10"
-		if(emm < 0)
-			hud_used.blood_icon.icon_state = "blood0"
-		else
-			hud_used.blood_icon.icon_state = "blood[emm]"
+	if (!hud_used.blood_icon)
+		return
+
+	var/percentage_full = clamp(round((bloodpool / maxbloodpool) * 10), 0, 10)
+	hud_used.blood_icon.icon_state = "blood[percentage_full]"
 
 /mob/living/proc/update_zone_hud()
-	if(!client || !hud_used)
+	if (!client || !hud_used)
 		return
-	if(hud_used.zone_icon)
-		if(istype(get_area(src), /area/vtm))
-			var/area/vtm/V = get_area(src)
-			hud_used.zone_icon.icon_state = "[V.zone_type]"
-			if(V.zone_type == "elysium")
-				if(!HAS_TRAIT(src, TRAIT_ELYSIUM))
-					ADD_TRAIT(src, TRAIT_ELYSIUM, "elysium")
-			else
-				elysium_checks = 0
-				if(HAS_TRAIT(src, TRAIT_ELYSIUM))
-					REMOVE_TRAIT(src, TRAIT_ELYSIUM, "elysium")
+	if (!hud_used.zone_icon)
+		return
+	if (!istype(get_area(src), /area/vtm))
+		return
+
+	var/area/vtm/current_zone = get_area(src)
+	hud_used.zone_icon.icon_state = "[current_zone.zone_type]"
+	if (current_zone.zone_type == "elysium")
+		ADD_TRAIT(src, TRAIT_ELYSIUM, "elysium")
+	else
+		REMOVE_TRAIT(src, TRAIT_ELYSIUM, "elysium")

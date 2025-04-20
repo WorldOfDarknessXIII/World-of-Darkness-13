@@ -2010,9 +2010,6 @@
 	return dexterity + additional_dexterity
 
 /mob/living/proc/get_total_social()
-	if(is_kuei_jin(src))
-		if(mind?.dharma?.animated == "Yin")
-			return max(0, social + additional_social - 2)
 	return social + additional_social
 
 /mob/living/proc/get_total_mentality()
