@@ -2,51 +2,55 @@
 
 //add_client_colour(/datum/client_colour/glass_colour/red)
 //remove_client_colour(/datum/client_colour/glass_colour/red)
-/client/Click(object,location,control,params)
-	if(isatom(object))
-		if (HAS_TRAIT(H, TRAIT_IN_FRENZY))
-			return
-	..()
+/client/Click(object, location, control, params)
+	if (isatom(object) && HAS_TRAIT(mob, TRAIT_IN_FRENZY))
+		return
+	. = ..()
 
 /mob/living/carbon/proc/rollfrenzy()
-	if(client)
-		var/mob/living/carbon/human/H
-		if(ishuman(src))
-			H = src
+	if (!client)
+		return
 
-		if(is_garou(src) || iswerewolf(src))
-			to_chat(src, "I'm full of <span class='danger'><b>ANGER</b></span>, and I'm about to flare up in <span class='danger'><b>RAGE</b></span>. Rolling...")
-		else if(is_kindred(src))
-			to_chat(src, "I need <span class='danger'><b>BLOOD</b></span>. The <span class='danger'><b>BEAST</b></span> is calling. Rolling...")
-		else if(is_kuei_jin(src))
-			to_chat(src, "My <span class='danger'><b>P'o</b></span> is awakening. Rolling...")
-		else
-			to_chat(src, "I'm too <span class='danger'><b>AFRAID</b></span> to continue doing this. Rolling...")
-		SEND_SOUND(src, sound('code/modules/wod13/sounds/bloodneed.ogg', 0, 0, 50))
-		var/check
-		if(is_kuei_jin(src))
-			check = vampireroll(max(1, mind.dharma.Hun), min(10, (mind.dharma.level*2)-max_demon_chi), src)
-		else
-			check = vampireroll(max(1, round(humanity/2)), min(frenzy_chance_boost, frenzy_hardness), src)
-		switch(check)
-			if(DICE_FAILURE)
-				enter_frenzymod()
-				if(is_kindred(src))
-					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 10 SECONDS * H.clan.frenzymod)
-				else
-					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 10 SECONDS)
-				frenzy_hardness = 1
-			if(DICE_CRIT_FAILURE)
-				enter_frenzymod()
-				if(is_kindred(src))
-					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 20 SECONDS * H.clan.frenzymod)
-				else
-					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 20 SECONDS)
-				frenzy_hardness = 1
-			if(DICE_CRIT_WIN)
-				frenzy_hardness = max(1, frenzy_hardness-1)
+	var/datum/splat/
+	if (is_garou(src))
+		to_chat(src, "I'm full of <span class='danger'><b>ANGER</b></span>, and I'm about to flare up in <span class='danger'><b>RAGE</b></span>. Rolling...")
+	else if (is_kindred(src))
+		to_chat(src, "I need <span class='danger'><b>BLOOD</b></span>. The <span class='danger'><b>BEAST</b></span> is calling. Rolling...")
+	else if (is_kuei_jin(src))
+		to_chat(src, "My <span class='danger'><b>P'o</b></span> is awakening. Rolling...")
+	else
+		to_chat(src, "I'm too <span class='danger'><b>AFRAID</b></span> to continue doing this. Rolling...")
+
+	SEND_SOUND(src, sound('code/modules/wod13/sounds/bloodneed.ogg', 0, 0, 50))
+
+	var/check
+	if(is_kuei_jin(src))
+		check = vampireroll(max(1, mind.dharma.Hun), min(10, (mind.dharma.level*2)-max_demon_chi), src)
+	else
+		check = vampireroll(max(1, round(humanity/2)), min(frenzy_chance_boost, frenzy_hardness), src)
+
+	switch(check)
+		if (DICE_CRIT_WIN)
+			frenzy_hardness = max(1, frenzy_hardness-1)
+
+		if (DICE_FAILURE)
+			enter_frenzymod()
+			if(is_kindred(src))
+				addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 10 SECONDS * H.clan.frenzymod)
 			else
-				frenzy_hardness = min(10, frenzy_hardness+1)
+				addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 10 SECONDS)
+			frenzy_hardness = 1
+
+		if (DICE_CRIT_FAILURE)
+			enter_frenzymod()
+			if(is_kindred(src))
+				addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 20 SECONDS * H.clan.frenzymod)
+			else
+				addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 20 SECONDS)
+			frenzy_hardness = 1
+
+		else
+			frenzy_hardness = min(10, frenzy_hardness+1)
 
 /mob/living/carbon/proc/enter_frenzymod()
 	if (HAS_TRAIT(src, TRAIT_IN_FRENZY))
@@ -63,7 +67,7 @@
 		return
 
 	REMOVE_TRAIT(src, TRAIT_IN_FRENZY, VAMPIRE_TRAIT)
-	mind?.dharma?.po_combat = FALSE
+	is_kuei_jin(src)?.po_combat = FALSE
 	remove_client_colour(/datum/client_colour/glass_colour/red)
 	GLOB.frenzy_list -= src
 

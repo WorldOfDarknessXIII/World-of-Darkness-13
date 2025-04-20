@@ -699,11 +699,6 @@
 					REMOVE_TRAIT(caster, TRAIT_PERMANENTLY_ONFIRE, MAGIC_TRAIT)
 					REMOVE_TRAIT(caster, TRAIT_RESISTHEAT, MAGIC_TRAIT)
 					caster.extinguish_mob()
-					switch(is_kuei_jin(caster).dharma.animated)
-						if("Yang")
-							caster.dna.species.burnmod = 0.5
-						if("Yin")
-							caster.dna.species.burnmod = initial(caster.dna.species.burnmod)
 					caster.bodytemperature = BODYTEMP_NORMAL
 					caster.coretemperature = BODYTEMP_NORMAL
 
