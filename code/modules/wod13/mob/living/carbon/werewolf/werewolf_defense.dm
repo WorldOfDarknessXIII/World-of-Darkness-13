@@ -45,6 +45,28 @@
 			if(STAMINA)
 				adjustStaminaLoss(damage)
 
+/mob/living/carbon/proc/do_rage_from_attack(mob/living/target)
+	if (!target)
+		return
+	if (target == src)
+		return
+
+	var/datum/splat/werewolf/garou/lycanthropy = is_garou(src)
+	if (lycanthropy)
+		if (COOLDOWN_FINISHED(lycanthropy, rage_from_attack))
+			COOLDOWN_START(lycanthropy, rage_from_attack, 5 SECONDS)
+			lycanthropy.remove_rage(1)
+
+	var/datum/splat/hungry_dead/kuei_jin/kuei_jin = is_kuei_jin(src)
+	if (kuei_jin)
+		var/datum/dharma/dharma = kuei_jin.dharma
+
+		if (HAS_TRAIT(src, TRAIT_IN_FRENZY))
+			kuei_jin.po_combat = TRUE
+
+		if (kuei_jin.po == "Rebel")
+			emit_po_call(src, "Rebel")
+
 /mob/living/carbon/werewolf/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return
