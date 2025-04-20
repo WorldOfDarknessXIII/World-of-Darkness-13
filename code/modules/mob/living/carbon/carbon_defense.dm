@@ -245,12 +245,6 @@
 		return affecting.body_zone
 	return dam_zone
 
-/**
- * Attempt to disarm the target mob.
- * Will shove the target mob back, and drop them if they're in front of something dense
- * or another carbon.
-*/
-
 /mob/living/carbon/proc/do_rage_from_attack(mob/living/target)
 	if (!target)
 		return
@@ -273,6 +267,11 @@
 		if (kuei_jin.po == "Rebel")
 			emit_po_call(src, "Rebel")
 
+/**
+ * Attempt to disarm the target mob.
+ * Will shove the target mob back, and drop them if they're in front of something dense
+ * or another carbon.
+*/
 /mob/living/carbon/proc/disarm(mob/living/carbon/target)
 	target.do_rage_from_attack(src)
 	if(zone_selected == BODY_ZONE_PRECISE_MOUTH)
