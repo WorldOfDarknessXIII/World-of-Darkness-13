@@ -152,7 +152,7 @@
 			AdjustMasquerade(-1)
 
 	// Transfer a percentage of total reagents equal to percentage of bloodpool drank
-	if (victim.reagents && length(victim.reagents.reagent_list) && prob(50))
+	if (victim.reagents && length(victim.reagents.reagent_list) && (victim.bloodpool > 0) && prob(50))
 		victim.reagents.trans_to(src, (1 / victim.bloodpool) * victim.reagents.total_volume, transfered_by = victim, methods = VAMPIRE)
 
 	victim.bloodpool = clamp(victim.bloodpool - 1, 0, victim.maxbloodpool)
