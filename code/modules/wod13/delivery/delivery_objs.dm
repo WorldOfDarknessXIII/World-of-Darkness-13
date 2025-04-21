@@ -64,6 +64,19 @@
 
 	. = ..()
 
+/obj/item/delivery_contract/attack_hand(mob/user)
+	if(!delivery)
+		to_chat(user,span_notice("Error: No delivery datum attached. This is most likely a bug."))
+		return
+	if(!manifest) return "no_manifest"
+
+	if(delivery.check_owner(user) == 0)
+		to_chat(user, span_warning("You are not listed on this manifest. Before you can use it, one of its owners needs to add you to the crew handling it by using the manifest on you."))
+	else
+		manifest.read_data(user)
+	. = ..()
+
+
 /obj/item/delivery_contract/Destroy()
 	. = ..()
 	if(delivery) qdel(delivery)
@@ -101,13 +114,13 @@
 				switch(tgui_input_list(user,"Select a contract length, details will be outlined before accepting.","Contract Selection",list("Short","Medium","Long"),timeout = 10 SECONDS))
 					if("Short")
 						picked_difficulty = 1
-						difficulty_text = "A short contract involves 3 locations with up to 6 crates each, meaning the entire delivery can be completed with one truck. The time limit is 15 minutes."
+						difficulty_text = "A short contract involves 3 locations with up to 6 crates each, meaning the entire delivery can be completed with one truck. The time limit is 20 minutes."
 					if("Medium")
 						picked_difficulty = 2
-						difficulty_text = "A medium contract involves 5 locations with up to 10 crates each, the entire delivery should be completed in 3 runs. The time limit is 25 minutes. "
+						difficulty_text = "A medium contract involves 5 locations with up to 10 crates each, the entire delivery should be completed in 3 runs. The time limit is 45 minutes. "
 					if("Long")
 						picked_difficulty = 3
-						difficulty_text = "A long contract involves 7 locations with up to 15 crates each, meaning that without partial loads each delivery will require a restock. The timie limit is 40 minutes."
+						difficulty_text = "A long contract involves 7 locations with up to 15 crates each, meaning that without partial loads each delivery will require a restock. The timie limit is 90 minutes."
 				if(tgui_alert(user,difficulty_text,"Confirm Contract",list("Yes","No"),timeout = 10 SECONDS) == "Yes")
 					var/obj/item/delivery_contract/contract = new(user,src,picked_difficulty)
 					switch(contract.delivery.start_contract())
@@ -317,6 +330,9 @@
 		return
 	if(dispenser_in_use == 1)
 		to_chat(user, span_warning("Someone is already using this dispenser!"))
+		return
+	if(user.pulling == null)
+		to_chat(user, span_notice("It appears that you need to use a key to operate this dispenser. If you are on a delivery, use the key you got when you signed up or were added to the contract."))
 		return
 	if(user.pulling != null)
 		if(istype(user.pulling, /obj/structure/delivery_crate))

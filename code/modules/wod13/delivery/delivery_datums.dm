@@ -283,15 +283,15 @@
 		if(1)
 			assign_recievers(3)
 			assign_crates(3,6)
-			delivery_set_timer(15 MINUTES)
+			delivery_set_timer(20 MINUTES)
 		if(2)
 			assign_recievers(5)
 			assign_crates(7,10)
-			delivery_set_timer(25 MINUTES)
+			delivery_set_timer(45 MINUTES)
 		if(3)
 			assign_recievers(7)
 			assign_crates(9,15)
-			delivery_set_timer(40 MINUTES)
+			delivery_set_timer(90 MINUTES)
 	return 1
 
 /datum/delivery_datum/New(mob/user,obj/board_ref,difficulty)
@@ -542,7 +542,7 @@
 				if(turf_list.Find(tested_turf) == 0)
 					turf_list.Add(tested_turf)
 		if(turf_list.len != 0)
-			html += "<p><b>Active Crates:</b>"
+			html += "<p><b>Active Crates:</b><br>"
 			for(var/turf/picked_turf in turf_list)
 				html += "X:[picked_turf.x] Y:[picked_turf.y] Z:[picked_turf.z]<br>"
 				html += "</p>"
