@@ -1,6 +1,6 @@
 /obj/item/delivery_contract
 	name = "delivery contract"
-	desc = "A delivery contract issued by the OOPS delivery company. Use it in your hand to scan it for details. If your name is on the contract, use it on someone else to add them to it."
+	desc = "A delivery contract issued by a delivery company. Use it in your hand to scan it for details. If your name is on the contract, use it on someone else to add them to it."
 	icon = 'code/modules/wod13/onfloor.dmi'
 	icon_state = "masquerade"
 	color = "#bbb95c"
@@ -65,12 +65,13 @@
 	. = ..()
 
 /obj/item/delivery_contract/Destroy()
+	. = ..()
 	if(delivery) qdel(delivery)
 	if(manifest) qdel(manifest)
-	. = ..()
 
 
 /obj/structure/delivery_board
+	color = "#ffb171"
 	name = "delivery assignment board"
 	desc = "A board made out of cork where delivery contracts are pinned. Use it with an emtpy hand to see if any are available."
 	icon = 'icons/obj/stationobjs.dmi'
@@ -160,6 +161,17 @@
 		if(tgui_alert(user,"Do you wish to finalize the contract early?","Finalize Confirm",list("Yes","No"),timeout = 10 SECONDS) == "Yes")
 			contract_item.delivery.delivery_finish()
 			return
+
+	if(istype(I,/obj/item/vamp/keys/cargo_truck))
+		var/obj/item/vamp/keys/cargo_truck/truck_keys = I
+		if(truck_keys.delivery.delivery_employer_tag != delivery_employer_tag)
+			to_chat(user,span_warning("These keys dont's eem to be oes not seem to be from this board."))
+			return
+		if(tgui_alert(user,"Are you SURE you want to respawn the delivery truck? This will reduce your final grade.","Respawn Truck", list("Yes","No"), timeout = 10 SECONDS) == "Yes")
+			var/obj/old_truck = truck_keys.delivery.active_truck
+			var/obj/effect/landmark/delivery_truck_beacon/truck_beacon = truck_keys.delivery.truck_spawner
+			qdel(old_truck)
+			truck_beacon.spawn_truck(truck_keys.delivery)
 	. = ..()
 
 
@@ -180,6 +192,8 @@
 		"yellow" = 0,
 		"green" = 0,
 		)
+	light_color = "#ffffff"
+	light_power = 2
 
 /obj/structure/delivery_reciever/proc/reset_reciever()
 	delivery_in_use = 0
@@ -191,6 +205,7 @@
 		)
 	animate(src, alpha = 0, time = 5 SECONDS)
 	mouse_opacity = 0
+	set_light(0)
 
 /obj/structure/delivery_reciever/proc/check_deliveries()
 	if(delivery_status["red"] != 0 || delivery_status["blue"] != 0 || delivery_status["yellow"] != 0 || delivery_status["green"] != 0) return 0
@@ -219,7 +234,8 @@
 				to_chat(user, span_warning("You aren't authorized to handle this delivery. For security reasons, the reciever denies the package."))
 				return
 			reciever_in_use = 1
-			if(do_after(user, 3 SECONDS, src))
+			playsound(src,'sound/effects/cargocrate_move.ogg',50,10)
+			if(do_after(user, 2 SECONDS, src))
 				if(delivery_status[pulled_crate.crate_type] > 0)
 					delivery_status[pulled_crate.crate_type] -= 1
 					pulled_crate.delivery.delivery_score["delivered_crates"] += 1
@@ -228,25 +244,14 @@
 						reset_reciever()
 				else
 					pulled_crate.delivery.delivery_score["misdelivered_crates"] += 1
-				playsound(src,'sound/effects/pressureplate.ogg',50, 10)
+				playsound(src,'sound/effects/cargocrate_load.ogg',50,10)
 				qdel(pulled_crate)
 			reciever_in_use = 0
-
-/obj/structure/delivery_reciever/proc/check_for_clients()
-	var/client_detected = 0
-	for(var/mob/living/carbon/human/human_in_range in viewers(src))
-		if(!human_in_range) break
-		if(human_in_range.client != null)
-			client_detected = 1
-			break
-		else
-			continue
-	return client_detected
 
 /obj/structure/delivery_dispenser
 
 	name = "Cargo Dispenser"
-	desc = "A chute used to handle bulk deliveries. A small button can be used to dispense a crate."
+	desc = "A chute used to handle bulk deliveries. There is a visible keyhole and a small button to push."
 	anchored = 1
 	density = 0
 	icon = 'code/modules/wod13/props.dmi'
@@ -256,6 +261,8 @@
 	var/dispenser_in_use
 	var/delivery_employer_tag
 	var/crate_type
+	light_color = "#ffffff"
+	light_power = 20
 
 /obj/structure/delivery_dispenser/Initialize()
 	. = ..()
@@ -271,6 +278,8 @@
 /obj/structure/delivery_dispenser/proc/reset_dispenser()
 	dispenser_active = 0
 	crate_type = null
+	light_color = initial(light_color)
+	set_light(0)
 	animate(src,alpha = 0,5 SECONDS)
 	mouse_opacity = 0
 
@@ -298,7 +307,7 @@
 			dispensed_crate.delivery = key_item.delivery
 			key_item.delivery.active_crates.Add(dispensed_crate)
 			dispensed_crate.source_dispenser = src
-	playsound(src,'sound/effects/pressureplate.ogg',50, 10)
+	playsound(src,'sound/effects/cargocrate_unload.ogg',50,10)
 	key_item.delivery.delivery_score["dispensed_crates"] += 1
 
 /obj/structure/delivery_dispenser/attack_hand(mob/living/user)
@@ -314,9 +323,10 @@
 			var/obj/structure/delivery_crate/pulled_crate = user.pulling
 			if(pulled_crate.source_dispenser == src)
 				dispenser_in_use = 1
-				if(do_after(user, 3 SECONDS, src))
+				playsound(src,'sound/effects/cargocrate_move.ogg',50,10)
+				if(do_after(user, 2 SECONDS, src))
 					pulled_crate.delivery.delivery_score["dispensed_crates"] -= 1
-					playsound(src,'sound/effects/pressureplate.ogg',50, 10)
+					playsound(src,'sound/effects/cargocrate_load.ogg',50,10)
 					qdel(pulled_crate)
 				dispenser_in_use = 0
 
@@ -338,9 +348,9 @@
 			if(potential_crate)
 				to_chat(user, span_warning("There is already a crate on the ground here!"))
 				return
-		to_chat(user, span_notice("You put the key into the dispenser and start to retrieve a crate."))
 		dispenser_in_use = 1
-		if(do_after(user, 3 SECONDS, src))
+		playsound(src,'sound/effects/cargocrate_move.ogg',50,10)
+		if(do_after(user, 2 SECONDS, src))
 			dispense_cargo(truck_key,user_turf)
 		dispenser_in_use = 0
 
@@ -373,7 +383,7 @@
 	icon_state = "track"
 	max_passengers = 4
 	component_type = null
-	baggage_limit = null
+	baggage_limit = 0
 	baggage_max = null
 	var/delivery_capacity = 20
 	var/datum/delivery_datum/delivery
@@ -415,8 +425,9 @@
 			to_chat(user, span_warning("The special compartments in the back dont really fit anything other than delivery crates. Use a nomral truck for other cargo."))
 			return
 		else
-			if(do_after(user, 3 SECONDS, pulled_crate))
-				playsound(src,'sound/effects/pressureplate.ogg',50, 10)
+			playsound(src,'sound/effects/cargocrate_move.ogg',50,10)
+			if(do_after(user, 2 SECONDS, pulled_crate))
+				playsound(src,'sound/effects/cargocrate_load.ogg',50,10)
 				delivery_trunk.add_to_storage(user,pulled_crate)
 
 /obj/effect/landmark/delivery_truck_beacon
@@ -434,6 +445,8 @@
 	var/obj/vampire_car/delivery_truck/spawned_truck = new(local_turf)
 	spawned_truck.dir = spawn_dir
 	switch(spawn_dir)
+		if(NORTH)
+			spawned_truck.movement_vector = 0
 		if(SOUTH)
 			spawned_truck.movement_vector = 180
 		if(EAST)

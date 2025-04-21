@@ -23,24 +23,35 @@
 		"timeout_timestamp" = 0,
 		)
 
+/datum/delivery_datum/proc/create_stats_table()
+	GLOB.delivery_stats = list(
+		"oops" = list(
+			"grade" = 0,
+			"completed" = 0,
+			"completed_recievers" = 0,
+			"delivered_crates" = 0,
+		),
+		"millenium_delivery" = list(
+			"grade" = 0,
+			"completed" = 0,
+			"completed_recievers" = 0,
+			"delivered_crates" = 0,
+		),
+		"bar_delivery" = list(
+			"grade" = 0,
+			"completed" = 0,
+			"completed_recievers" = 0,
+			"delivered_crates" = 0,
+		),
+	)
+
 /datum/delivery_datum/proc/track_stats(grade)
-	if(!grade) return
-	if(GLOB.delivery_stats.Find(delivery_employer_tag) == 0)
-		var/list/list_to_add = list("[delivery_employer_tag]" = list(
-				"grade" = grade,
-				"completed" = 1,
-				"completed_recievers" = delivery_score["completed_recievers"],
-				"delivered" = delivery_score["delivered_crates"]
-				)
-			)
-		GLOB.delivery_stats.Add(list_to_add)
-		return
-	if(GLOB.delivery_stats.Find(delivery_employer_tag) != 0)
-		GLOB.delivery_stats[delivery_employer_tag]["grade"] += grade
-		GLOB.delivery_stats[delivery_employer_tag]["completed"] += 1
-		GLOB.delivery_stats[delivery_employer_tag]["completed_recievers"] += delivery_score["completed_recievers"]
-		GLOB.delivery_stats[delivery_employer_tag]["delivered_crates"] += delivery_score["delivered_crates"]
-		return
+	if(GLOB.delivery_stats.len == 0) create_stats_table()
+	GLOB.delivery_stats["[delivery_employer_tag]"]["grade"] += grade
+	GLOB.delivery_stats["[delivery_employer_tag]"]["completed"] += 1
+	GLOB.delivery_stats["[delivery_employer_tag]"]["completed_recievers"] += delivery_score["completed_recievers"]
+	GLOB.delivery_stats["[delivery_employer_tag]"]["delivered_crates"] += delivery_score["delivered_crates"]
+	return
 
 /datum/delivery_datum/proc/process_payouts(grade)
 	var/payout_quota = 0
@@ -94,12 +105,17 @@
 			return "F"
 
 /datum/delivery_datum/proc/delivery_finish()
+	if(active_truck)
+		var/area/truck_area = get_area(active_truck)
+		if(truck_area == garage_area) delivery_score["truck_returned"] = 1
 	var/final_grade = 7
 	if(world.time > delivery_score["timeout_timestamp"])
 		final_grade -= 3
+	if(delivery_recievers.len > 0)
+		final_grade -= 5
 	if(delivery_score["trucks_used"] > 1)
 		final_grade -= 1
-	if(delivery_score["trucks_returned"] == 0)
+	if(delivery_score["truck_returned"] == 0)
 		final_grade -= 1
 	if(delivery_score["dispensed_crates"] > delivery_score["delivered_crates"])
 		final_grade -= 1
@@ -111,6 +127,7 @@
 	broadcast_to_holders("Delivery Grade: <b>[parse_grade(final_grade)]</b>")
 	track_stats(final_grade)
 	process_payouts(final_grade)
+	qdel(contract)
 	qdel(src)
 
 
@@ -158,13 +175,17 @@
 	picked_dispenser.crate_type = tag
 	switch(tag)
 		if("red")
-			picked_dispenser.color = "#7c1313"
+			picked_dispenser.light_color = "#e71a1a"
+			picked_dispenser.set_light(1)
 		if("blue")
-			picked_dispenser.color = "#202bca"
+			picked_dispenser.light_color = "#1725e9"
+			picked_dispenser.set_light(1)
 		if("yellow")
-			picked_dispenser.color = "#b8ac3f"
+			picked_dispenser.light_color = "#f5df1e"
+			picked_dispenser.set_light(1)
 		if("green")
-			picked_dispenser.color = "#165f29"
+			picked_dispenser.light_color = "#25eb13"
+			picked_dispenser.set_light(1)
 	delivery_dispensers.Add(picked_dispenser)
 	animate(picked_dispenser,alpha = 255,time = 5 SECONDS)
 	picked_dispenser.mouse_opacity = 1
@@ -197,6 +218,7 @@
 			reciever.delivery_status[picked_type] += 1
 			crate_number -= 1
 		animate(reciever,alpha = 255, time = 5 SECONDS)
+		reciever.set_light(2)
 		reciever.mouse_opacity = 1
 
 /datum/delivery_datum/proc/assign_garage()
@@ -365,8 +387,8 @@
 			crate.forceMove(owner)
 	check_use(2,user)
 
-/datum/delivery_storage/proc/calculate_ret_time(tag)
-	var/crate_position = storage.Find(tag)
+/datum/delivery_storage/proc/calculate_ret_time(obj/crate)
+	var/crate_position = storage.Find(crate)
 	var/timer_calc = crate_position * search_delay
 	return timer_calc
 
@@ -404,9 +426,10 @@
 				if(crate_to_ret.crate_type == chosen_tag)
 					picked_crate = crate_to_ret
 					break
-			var/ret_delay = 2 SECONDS + calculate_ret_time(chosen_tag)
+			playsound(owner,'sound/effects/cargocrate_move.ogg',50, 10)
+			var/ret_delay = 1 SECONDS + calculate_ret_time(picked_crate)
 			if(do_after(user, ret_delay, owner))
-				playsound(,'sound/effects/pressureplate.ogg',50, 10)
+				playsound(owner,'sound/effects/cargocrate_unload.ogg',50, 10)
 				var/turf/user_turf = get_turf(user)
 				storage.Remove(picked_crate)
 				picked_crate.forceMove(user_turf)
@@ -436,7 +459,27 @@
 
 /datum/delivery_manifest/proc/save_data(init)
 	if(!delivery) return
-	saved_recievers = delivery.delivery_recievers.Copy()
+	saved_recievers = list()
+	if(delivery.delivery_recievers.len > 0)
+		var/current_position = 1
+		while(current_position <= delivery.delivery_recievers.len)
+			var/obj/structure/delivery_reciever/reciever_saved = delivery.delivery_recievers[current_position]
+			var/turf/reciever_turf = get_turf(reciever_saved)
+
+			var/list/list_saved = list("[current_position]" = list(
+					"chute_name" = reciever_saved.chute_name,
+					"red" = reciever_saved.delivery_status["red"],
+					"blue" = reciever_saved.delivery_status["blue"],
+					"yellow" = reciever_saved.delivery_status["yellow"],
+					"green" = reciever_saved.delivery_status["green"],
+					"x" = reciever_turf.x,
+					"y" = reciever_turf.y,
+					"z" = reciever_turf.z,
+				)
+			)
+			saved_recievers.Add(list_saved)
+			current_position += 1
+
 	if(!init) delivery.delivery_score["manifest_refresh"] += 1
 	saved_data["dispensed_crates"] = delivery.delivery_score["dispensed_crates"]
 	saved_data["delivered_crates"] = delivery.delivery_score["delivered_crates"]
@@ -469,22 +512,23 @@
 	if(saved_recievers.len == 0)
 		html += "<p><b>o recievers found. Return the truck to the garage and any outstanding crates to their dispensers, then return the contract to the board.</b></p>"
 	else
-		for(var/obj/structure/delivery_reciever/reciever in saved_recievers)
-			var/turf/reciever_turf = get_turf(reciever)
-			html += "<p><b>Reciever [reciever.chute_name] - X:[reciever_turf.x] Y:[reciever_turf.y] Z:[reciever_turf.z]</b><br>"
-			if(reciever.delivery_status["red"] > 0)
+		var/current_position = 1
+		while(current_position <= saved_recievers.len)
+			html += {"<p><b>Reciever [saved_recievers["[current_position]"]["chute_name"]] - X:[saved_recievers["[current_position]"]["x"]] Y:[saved_recievers["[current_position]"]["y"]] Z:[saved_recievers["[current_position]"]["z"]]</b><br>"}
+			if(saved_recievers["[current_position]"]["red"] > 0)
 				var/html_color = get_cargo_color_value("red")
-				html += {"<span style="color: [html_color];">RED</span> crates remaining: [reciever.delivery_status["red"]]<br>"}
-			if(reciever.delivery_status["blue"] > 0)
+				html += {"<span style="color: [html_color];">RED</span> crates remaining: [saved_recievers["[current_position]"]["red"]]<br>"}
+			if(saved_recievers["[current_position]"]["blue"] > 0)
 				var/html_color = get_cargo_color_value("blue")
-				html += {"<span style="color: [html_color];">BLUE</span> crates remaining: [reciever.delivery_status["blue"]]<br>"}
-			if(reciever.delivery_status["yellow"] > 0)
+				html += {"<span style="color: [html_color];">BLUE</span> crates remaining: [saved_recievers["[current_position]"]["blue"]]<br>"}
+			if(saved_recievers["[current_position]"]["yellow"] > 0)
 				var/html_color = get_cargo_color_value("yellow")
-				html += {"<span style="color: [html_color];">YELLOW</span> crates remaining: [reciever.delivery_status["yellow"]]<br>"}
-			if(reciever.delivery_status["green"] > 0)
+				html += {"<span style="color: [html_color];">YELLOW</span> crates remaining: [saved_recievers["[current_position]"]["yellow"]]<br>"}
+			if(saved_recievers["[current_position]"]["green"] > 0)
 				var/html_color = get_cargo_color_value("green")
-				html += {"<span style="color: [html_color];">GREEN</span> crates remaining: [reciever.delivery_status["green"]]<br>"}
+				html += {"<span style="color: [html_color];">GREEN</span> crates remaining: [saved_recievers["[current_position]"]["green"]]<br>"}
 			html += "</p>"
+			current_position += 1
 	if(delivery.active_truck)
 		var/turf/truck_turf = get_turf(delivery.active_truck)
 		html += "<p><b>Truck Active</b> - X:[truck_turf.x] Y:[truck_turf.y] Z:[truck_turf.z]</p>"
@@ -513,30 +557,149 @@
 		html += "<p><b>Dispensers not found.</p></b>"
 	to_chat(user, html)
 
+/datum/controller/subsystem/ticker/proc/calculate_transportation_winners()
+	var/list/results_array = list(
+		"averages" = list(
+			"oops" = 0,
+			"millenium_delivery" = 0,
+			"bar_delivery" = 0,
+		),
+		"completed_recievers" = list(
+			"oops" = GLOB.delivery_stats["oops"]["completed_recievers"],
+			"millenium_delivery" = GLOB.delivery_stats["millenium_delivery"]["completed_recievers"],
+			"bar_delivery" = GLOB.delivery_stats["bar_delivery"]["completed_recievers"],
+		),
+		"crates" = list(
+			"oops" = GLOB.delivery_stats["oops"]["delivered_crates"],
+			"millenium_delivery" = GLOB.delivery_stats["millenium_delivery"]["delivered_crates"],
+			"bar_delivery" = GLOB.delivery_stats["bar_delivery"]["delivered_crates"],
+		)
+	)
+
+	if(GLOB.delivery_stats["oops"]["completed"] > 0)
+		results_array["averages"]["oops"] = round((GLOB.delivery_stats["oops"]["grade"] / GLOB.delivery_stats["oops"]["completed"]),0.1)
+	if(GLOB.delivery_stats["millenium_delivery"]["completed"] > 0)
+		results_array["averages"]["millenium_delivery"] = round((GLOB.delivery_stats["millenium_delivery"]["grade"] / GLOB.delivery_stats["millenium_delivery"]["completed"]),0.1)
+	if(GLOB.delivery_stats["bar_delivery"]["completed"] > 0)
+		results_array["averages"]["bar_delivery"] = round((GLOB.delivery_stats["millenium_delivery"]["grade"] / GLOB.delivery_stats["millenium_delivery"]["completed"]),0.1)
+
+	var/list/winners = list(
+		"averages" = "none",
+		"completed_recievers" = "none",
+		"crates" = "none",
+		"wins" = list(
+			"oops" = 0,
+			"millenium_delivery" = 0,
+			"bar_delivery" = 0,
+			),
+		"majority" = "none",
+		)
+
+	if(results_array["averages"]["oops"] > results_array["averages"]["millenium_delivery"] && results_array["averages"]["oops"] > results_array["averages"]["bar_delivery"])
+		winners["averages"] = "oops"
+		winners["wins"]["oops"] += 1
+	if(results_array["completed_recievers"]["oops"] > results_array["completed_recievers"]["millenium_delivery"] && results_array["completed_recievers"]["oops"] > results_array["completed_recievers"]["bar_delivery"])
+		winners["completed_recievers"] = "oops"
+		winners["wins"]["oops"] += 1
+	if(results_array["crates"]["oops"] > results_array["crates"]["millenium_delivery"] && results_array["crates"]["oops"] > results_array["crates"]["bar_delivery"])
+		winners["crates"] = "oops"
+		winners["wins"]["oops"] += 1
+
+	if(results_array["averages"]["millenium_delivery"] > results_array["averages"]["oops"] && results_array["averages"]["millenium_delivery"] > results_array["averages"]["bar_delivery"])
+		winners["averages"] = "millenium_delivery"
+		winners["wins"]["millenium_delivery"] += 1
+	if(results_array["completed_recievers"]["millenium_delivery"] > results_array["completed_recievers"]["oops"] && results_array["completed_recievers"]["millenium_delivery"] > results_array["completed_recievers"]["bar_delivery"])
+		winners["completed_recievers"] = "millenium_delivery"
+		winners["wins"]["millenium_delivery"] += 1
+	if(results_array["crates"]["millenium_delivery"] > results_array["crates"]["oops"] && results_array["crates"]["millenium_delivery"] > results_array["crates"]["bar_delivery"])
+		winners["crates"] = "millenium_delivery"
+		winners["wins"]["millenium_delivery"] += 1
+
+	if(results_array["averages"]["bar_delivery"] > results_array["averages"]["millenium_delivery"] && results_array["averages"]["bar_delivery"] > results_array["averages"]["oops"])
+		winners["averages"] = "bar_delivery"
+		winners["wins"]["bar_delivery"] += 1
+	if(results_array["completed_recievers"]["bar_delivery"] > results_array["completed_recievers"]["millenium_delivery"] && results_array["completed_recievers"]["bar_delivery"] > results_array["completed_recievers"]["oops"])
+		winners["completed_recievers"] = "bar_delivery"
+		winners["wins"]["bar_delivery"] += 1
+	if(results_array["crates"]["bar_delivery"] > results_array["crates"]["millenium_delivery"] && results_array["crates"]["bar_delivery"] > results_array["crates"]["oops"])
+		winners["crates"] = "bar_delivery"
+		winners["wins"]["bar_delivery"] += 1
+
+	if(winners["wins"]["oops"] > 1) winners["majority"] = "oops"
+	if(winners["wins"]["millenium_delivery"] > 1) winners["majority"] = "millenium_delivery"
+	if(winners["wins"]["bar_delivery"] > 1) winners["majority"] = "bar_delivery"
+
+	return winners
+
 /datum/controller/subsystem/ticker/proc/transportation_report()
 	var/list/parts = list()
-	parts += "<p>"
+	parts += "<p><b>DELIVERY SERVICE REPORT</b></p><p>"
 
 	if(GLOB.delivery_stats.len == 0)
 		parts += "No deliveries were made this round!</p>"
 		return parts.Join()
 
-	var/current_position = 1
+	var/list/winner_array = calculate_transportation_winners()
 
-	while(current_position <= GLOB.delivery_stats.len)
-		switch(GLOB.delivery_stats[current_position])
-			if("oops")
-				parts += "<b>OOPS Delivery Service:</b><br>"
-			if("millenium_delivery")
-				parts += "<b>Millenium Tower Delivery Service:</b><br>"
-			if("bar_delivery")
-				parts += "<b>Bar Delivery Service:</b><br>"
+	if(GLOB.delivery_stats["oops"]["delivered_crates"] > 0)
 
-		var/grade_average = round((GLOB.delivery_stats[current_position]["grade"] / GLOB.delivery_stats[current_position]["completed"]),0.1)
+		parts += "<b>OOPS Delivery Service</b><br>"
+		var/text_color = "#ffffff"
+		if(GLOB.delivery_stats["oops"]["completed"] > 0)
+			if(winner_array["averages"] == "oops") text_color = "#fffb2b"
+			parts += {"<span style="color: [text_color];">Grade Average: <b>[GLOB.delivery_stats["oops"]["grade"] / GLOB.delivery_stats["oops"]["completed"]]</span></b><br>"}
+			text_color = "#ffffff"
+		if(winner_array["completed_recievers"] == "oops") text_color = "#fffb2b"
+		parts += {"<span style="color: [text_color];">Recievers Completed: <b>[GLOB.delivery_stats["oops"]["completed_recievers"]]</span></b><br>"}
+		text_color = "#ffffff"
+		if(winner_array["delivered_crates"] == "oops") text_color = "#fffb2b"
+		parts += {"<span style="color: [text_color];">Crates Delivered: <b>[GLOB.delivery_stats["oops"]["delivered_crates"]]</span></b><br>"}
 
-		parts += "Grade Average: <b>[grade_average]</b><br>"
-		parts += "Orders Complete: <b>[GLOB.delivery_stats[current_position]["completed"]]"
-		parts += "Crates Delivered: <b>[GLOB.delivery_stats[current_position]["delivered_crates"]]</b>"
+	parts += "</p><p>"
+
+	if(GLOB.delivery_stats["millenium_delivery"]["delivered_crates"] > 0)
+
+		parts += "<b>Millenium Tower Delivery Service</b><br>"
+
+		var/text_color = "#ffffff"
+		if(GLOB.delivery_stats["millenium_delivery"]["completed"] > 0)
+			if(winner_array["averages"] == "millenium_delivery") text_color = "#fffb2b"
+			parts += {"<span style="color: [text_color];">Grade Average: <b>[GLOB.delivery_stats["millenium_delivery"]["grade"] / GLOB.delivery_stats["millenium_delivery"]["completed"]]</span></b><br>"}
+			text_color = "#ffffff"
+		if(winner_array["completed_recievers"] == "millenium_delivery") text_color = "#fffb2b"
+		parts += {"<span style="color: [text_color];">Recievers Completed: <b>[GLOB.delivery_stats["millenium_delivery"]["completed_recievers"]]</span></b><br>"}
+		text_color = "#ffffff"
+		if(winner_array["delivered_crates"] == "millenium_delivery") text_color = "#fffb2b"
+		parts += {"<span style="color: [text_color];">Crates Delivered: <b>[GLOB.delivery_stats["millenium_delivery"]["delivered_crates"]]</span></b><br>"}
+
+	parts += "</p><p>"
+
+	if(GLOB.delivery_stats["bar_delivery"]["delivered_crates"] > 0)
+
+		parts += "<b>Bar Delivery Service</b><br>"
+
+		var/text_color = "#ffffff"
+		if(GLOB.delivery_stats["bar_delivery"]["completed"] > 0)
+			if(winner_array["averages"] == "bar_delivery") text_color = "#fffb2b"
+			parts += {"<span style="color: [text_color];">Grade Average: <b>[GLOB.delivery_stats["bar_delivery"]["grade"] / GLOB.delivery_stats["bar_delivery"]["completed"]]</span></b><br>"}
+			text_color = "#ffffff"
+		if(winner_array["completed_recievers"] == "bar_delivery") text_color = "#fffb2b"
+		parts += {"<span style="color: [text_color];">Recievers Completed: <b>[GLOB.delivery_stats["bar_delivery"]["completed_recievers"]]</span></b><br>"}
+		text_color = "#ffffff"
+		if(winner_array["delivered_crates"] == "bar_delivery") text_color = "#fffb2b"
+		parts += {"<span style="color: [text_color];">Crates Delivered: <b>[GLOB.delivery_stats["bar_delivery"]["delivered_crates"]]</span></b><br>"}
+
+	parts += "</p><p>"
+
+	switch(winner_array["majority"])
+		if("none")
+			parts += "Commercial interests in the city continue as they were, without any significant influence over them.<br>"
+		if("oops")
+			parts += "The OOPS delivery service continues to monopolize the overnight distribution of goods, <b>its profits benefit the unknown benefactors behind the organization</b> and the whole delivery market.<br>"
+		if("millenium_delivery")
+			parts += "Contacts established via the Millenium Tower delivery service strengthen the Camarillas coffers and spread its influence. <b>A surplus of profits is sent to Camarilla aligned interests outside of the city.</b><br>"
+		if("bar_delivery")
+			parts += "Thanks to the contacts established via the Bar delivery service, the Anarch movement is able to secure a surplus of supplies and resources, </b>which are then shared according to need across the movement's allies outside of the city.<b><br>"
 
 	parts += "</p>"
 
