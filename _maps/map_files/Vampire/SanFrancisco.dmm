@@ -43076,7 +43076,8 @@
 /area/vtm/sewer)
 "juR" = (
 /obj/machinery/vending/sustenance{
-	pixel_y = 18
+	pixel_y = 18;
+	density = 0
 	},
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/interior/millennium_tower)
@@ -56583,7 +56584,8 @@
 "pSP" = (
 /obj/structure/reagent_dispensers/water_cooler{
 	pixel_x = -6;
-	pixel_y = 20
+	pixel_y = 20;
+	density = 0
 	},
 /turf/open/floor/plating/vampplating,
 /area/vtm/interior/millennium_tower)
