@@ -64,7 +64,7 @@
 
 	. = ..()
 
-/obj/item/delivery_contract/attack_hand(mob/user)
+/obj/item/delivery_contract/attack_self(mob/user)
 	if(!delivery)
 		to_chat(user,span_notice("Error: No delivery datum attached. This is most likely a bug."))
 		return
