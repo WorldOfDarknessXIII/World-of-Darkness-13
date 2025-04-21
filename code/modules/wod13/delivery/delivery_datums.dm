@@ -652,7 +652,7 @@
 		if(winner_array["completed_recievers"] == "oops") text_color = "#fffb2b"
 		parts += {"<span style="color: [text_color];">Recievers Completed: <b>[GLOB.delivery_stats["oops"]["completed_recievers"]]</span></b><br>"}
 		text_color = "#ffffff"
-		if(winner_array["delivered_crates"] == "oops") text_color = "#fffb2b"
+		if(winner_array["crates"] == "oops") text_color = "#fffb2b"
 		parts += {"<span style="color: [text_color];">Crates Delivered: <b>[GLOB.delivery_stats["oops"]["delivered_crates"]]</span></b><br>"}
 
 	parts += "</p><p>"
@@ -669,7 +669,7 @@
 		if(winner_array["completed_recievers"] == "millenium_delivery") text_color = "#fffb2b"
 		parts += {"<span style="color: [text_color];">Recievers Completed: <b>[GLOB.delivery_stats["millenium_delivery"]["completed_recievers"]]</span></b><br>"}
 		text_color = "#ffffff"
-		if(winner_array["delivered_crates"] == "millenium_delivery") text_color = "#fffb2b"
+		if(winner_array["crates"] == "millenium_delivery") text_color = "#fffb2b"
 		parts += {"<span style="color: [text_color];">Crates Delivered: <b>[GLOB.delivery_stats["millenium_delivery"]["delivered_crates"]]</span></b><br>"}
 
 	parts += "</p><p>"
@@ -686,7 +686,7 @@
 		if(winner_array["completed_recievers"] == "bar_delivery") text_color = "#fffb2b"
 		parts += {"<span style="color: [text_color];">Recievers Completed: <b>[GLOB.delivery_stats["bar_delivery"]["completed_recievers"]]</span></b><br>"}
 		text_color = "#ffffff"
-		if(winner_array["delivered_crates"] == "bar_delivery") text_color = "#fffb2b"
+		if(winner_array["crates"] == "bar_delivery") text_color = "#fffb2b"
 		parts += {"<span style="color: [text_color];">Crates Delivered: <b>[GLOB.delivery_stats["bar_delivery"]["delivered_crates"]]</span></b><br>"}
 
 	parts += "</p><p>"
