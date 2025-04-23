@@ -324,6 +324,7 @@
 	var/obj/structure/delivery_crate/dispensed_crate = new(target_turf)
 	dispensed_crate.crate_type = crate_type
 	dispensed_crate.delivery = key_item.delivery
+	dispensed_crate.source_dispenser = src
 	dispensed_crate.name += " - [key_item.delivery.crate_designations["[crate_type]"]["cargo_name"]]"
 	dispensed_crate.color = key_item.delivery.crate_designations["[crate_type]"]["color"]
 	dispensed_crate.desc += " [key_item.delivery.crate_designations["[crate_type]"]["desc"]]"
