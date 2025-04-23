@@ -94,6 +94,28 @@
 	var/delivery_started = 0
 	var/delivery_employer_tag = "default"
 	var/next_delivery_timestamp
+	var/list/crate_types = list(
+		"red" = list(
+			"cargo_name" = "Cleaning Supplies",
+			"color" = "#7c1313",
+			"desc" = "Red tinted crates typically contain cleaning supplies, including cleaning chemicals, replacement mops, rags and personal safety equipment.",
+			),
+		"blue" = list(
+			"cargo_name" = "Maintenance Supplies",
+			"color" = "#202bca",
+			"desc" = "Anything and everything related to maintaining electronics in a store or house - replacement batteries, light bulbs, electronic components as well as tools needed to replace and fix devices using them. ",
+			),
+		"yellow" = list(
+			"cargo_name" = "Equipment and Electronics",
+			"color" = "#b8ac3f",
+			"desc" = "Large items like computers and other electronics, lightning and ventilation systems, AC units as well as shelving and furniture typically in separate elements and needing further assembly. Also, tools required for the assembly of the above.",
+			),
+		"green" = list(
+			"cargo_name" = "Personal Items",
+			"color" = "#165f29",
+			"desc" = "Private correspondence and deliveries marked as private. It could be cargo belonging to other crates but earmarked for private delivery due to private reselling or personal use. Typically, just mail but shipped in bulk. ",
+			),
+		)
 
 /obj/structure/delivery_board/proc/delivery_icon()
 	icon_state = "nboard02"
@@ -299,27 +321,13 @@
 /obj/structure/delivery_dispenser/proc/dispense_cargo(obj/truck_key, turf/target_turf)
 	if(!truck_key) return
 	var/obj/item/vamp/keys/cargo_truck/key_item = truck_key
-	switch(crate_type)
-		if("red")
-			var/obj/structure/delivery_crate/red/dispensed_crate = new(target_turf)
-			dispensed_crate.delivery = key_item.delivery
-			key_item.delivery.active_crates.Add(dispensed_crate)
-			dispensed_crate.source_dispenser = src
-		if("blue")
-			var/obj/structure/delivery_crate/blue/dispensed_crate = new(target_turf)
-			dispensed_crate.delivery = key_item.delivery
-			key_item.delivery.active_crates.Add(dispensed_crate)
-			dispensed_crate.source_dispenser = src
-		if("yellow")
-			var/obj/structure/delivery_crate/yellow/dispensed_crate = new(target_turf)
-			dispensed_crate.delivery = key_item.delivery
-			key_item.delivery.active_crates.Add(dispensed_crate)
-			dispensed_crate.source_dispenser = src
-		if("green")
-			var/obj/structure/delivery_crate/green/dispensed_crate = new(target_turf)
-			dispensed_crate.delivery = key_item.delivery
-			key_item.delivery.active_crates.Add(dispensed_crate)
-			dispensed_crate.source_dispenser = src
+	var/obj/structure/delivery_crate/dispensed_crate = new(target_turf)
+	dispensed_crate.crate_type = crate_type
+	dispensed_crate.delivery = key_item.delivery
+	dispensed_crate.name += " - [key_item.delivery.crate_designations["[crate_type]"]["cargo_name"]]"
+	dispensed_crate.color = key_item.delivery.crate_designations["[crate_type]"]["color"]
+	dispensed_crate.desc += " [key_item.delivery.crate_designations["[crate_type]"]["desc"]]"
+	dispensed_crate.update_icon()
 	playsound(src,'sound/effects/cargocrate_unload.ogg',50,10)
 	key_item.delivery.delivery_score["dispensed_crates"] += 1
 
@@ -360,7 +368,7 @@
 			to_chat(user,span_notice("They key does not seem to work in this dispenser."))
 			return
 		var/turf/user_turf = get_turf(user)
-		for(var/obj/structure/delivery_crate/blue/potential_crate in user_turf.contents)
+		for(var/obj/structure/delivery_crate/potential_crate in user_turf.contents)
 			if(potential_crate)
 				to_chat(user, span_warning("There is already a crate on the ground here!"))
 				return
@@ -430,7 +438,7 @@
 			to_chat(user, span_notice("There is nothing in the back of the truck."))
 			return
 		var/turf/user_turf = get_turf(user)
-		for(var/obj/structure/delivery_crate/blue/potential_crate in user_turf.contents)
+		for(var/obj/structure/delivery_crate/potential_crate in user_turf.contents)
 			if(potential_crate)
 				to_chat(user, span_warning("There is already a crate on the ground here!"))
 				return
