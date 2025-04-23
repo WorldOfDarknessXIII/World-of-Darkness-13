@@ -19,6 +19,7 @@
     text-align: center;
     outline: none;
     display: inline-block;
+	font-weight: bold;
 }
 
 .long {
@@ -71,4 +72,37 @@
 
 .antagonistpositions {
     background-color: #6d3f40;
+}
+
+.camarilla {
+	background-color: #00008B
+}
+
+.primogencouncil{
+	background-color: #FF8C00
+}
+
+.tremere {
+	background-color: #B22222
+}
+
+.giovanni {
+	background-image: linear-gradient(to right, #009246,white,#CE2B37);
+	color: black
+}
+
+.clantzimisce {
+	background-color: #6d2d77
+}
+
+.lawenforcement {
+	background-color: #009fd4
+}
+
+.warehouse {
+	background-color: #964B00
+}
+
+.triad {
+	background-color: #C69DD2
 }
