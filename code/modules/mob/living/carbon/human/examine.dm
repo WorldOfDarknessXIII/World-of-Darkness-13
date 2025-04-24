@@ -503,7 +503,7 @@
 	var/face_obscured = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	. += "*---------*"
 	if (!(face_obscured))
-		if(ooc_notes) flavor_text_link = span_notice("<a href='byond://?src=[REF(src)];view_flavortext=1'>\[OOC Information\]</a>")
+		if(ooc_notes) flavor_text_link = span_notice("<br><a href='byond://?src=[REF(src)];view_flavortext=1'>\[OOC Information\]</a>")
 	else
 		flavor_text_link = span_notice("<a href='byond://?src=[REF(src)];view_flavortext=1'>\[Examine closely...\]</a>")
 	if (flavor_text_link)
