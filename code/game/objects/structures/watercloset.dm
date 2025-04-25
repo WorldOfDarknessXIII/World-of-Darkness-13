@@ -640,8 +640,8 @@
 	var/open = TRUE
 	/// if it can be seen through when closed
 	var/opaque_closed = FALSE
-	//Checks if the user is in the same area before toggling, for 'interior' curtains wihtout graphic bugs.
-	var/check_area = FALSE
+	//For window curtains, direction the window is "facing"; determines what side the curtain can't be used for.
+	var/use_restrict_dir // 1 for NORTH 2 for SOUTH 4 for EAST 8 for WEST
 
 /obj/structure/curtain/proc/toggle()
 	open = !open
@@ -651,16 +651,15 @@
 	if(!open)
 		icon_state = "[icon_type]-closed"
 		layer = ABOVE_ALL_MOB_LAYERS_LAYER
-		density = TRUE
 		open = FALSE
 		if(opaque_closed)
 			set_opacity(TRUE)
 	else
 		icon_state = "[icon_type]-open"
 		layer = ABOVE_ALL_MOB_LAYERS_LAYER
-		density = FALSE
 		open = TRUE
-		set_opacity(FALSE)
+		if(opaque_closed)
+			set_opacity(FALSE)
 
 /obj/structure/curtain/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/toy/crayon))
@@ -691,8 +690,44 @@
 	. = ..()
 	if(.)
 		return
-	if(check_area == TRUE)
-		if(get_area(user) != get_area(src)) return
+	var/current_turf = get_turf(src)
+	for(var/obj/structure/window/potential_window in current_turf)
+		if(use_restrict_dir && potential_window)
+			var/turf/restricted_turf
+			var/list/restricted_turfs = list()
+			var/turf/window_turf = get_turf(src)
+			switch(use_restrict_dir)
+				if(NORTH)
+					restricted_turf = locate(window_turf.x,window_turf.y + 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+					restricted_turf = locate(window_turf.x + 1,window_turf.y + 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+					restricted_turf = locate(window_turf.x - 1,window_turf.y + 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+				if(SOUTH)
+					restricted_turf = locate(window_turf.x,window_turf.y - 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+					restricted_turf = locate(window_turf.x + 1,window_turf.y - 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+					restricted_turf = locate(window_turf.x - 1,window_turf.y - 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+				if(WEST)
+					restricted_turf = locate(window_turf.x - 1,window_turf.y,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+					restricted_turf = locate(window_turf.x - 1,window_turf.y + 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+					restricted_turf = locate(window_turf.x - 1,window_turf.y - 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+				if(EAST)
+					restricted_turf = locate(window_turf.x + 1,window_turf.y,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+					restricted_turf = locate(window_turf.x + 1,window_turf.y + 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+					restricted_turf = locate(window_turf.x + 1,window_turf.y - 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+			var/turf/user_turf = get_turf(user)
+			if(restricted_turfs.Find(user_turf) != 0) return
+
 	playsound(loc, 'sound/effects/curtain.ogg', 50, TRUE)
 	toggle()
 

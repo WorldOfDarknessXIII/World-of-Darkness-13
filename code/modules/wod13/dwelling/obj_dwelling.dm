@@ -198,7 +198,6 @@
 
 /obj/structure/window/fulltile/dwelling
 	var/area/vtm/dwelling/area_reference
-	var/obj/structure/curtain/dwelling/curtain_reference
 
 /obj/structure/window/fulltile/dwelling/process_break_in(severity)
 	if(!area_reference) return
@@ -210,18 +209,12 @@
 	if(current_area)
 		area_reference = current_area
 		area_reference.dwelling_windows.Add(src)
-	var/obj/structure/curtain/dwelling/curtain = new(get_turf(src))
-	curtain_reference = curtain
 
 /obj/structure/window/fulltile/dwelling/Destroy()
 	if(area_reference)
 		area_reference.dwelling_windows.Remove(src)
 		area_reference = null
-	if(curtain_reference)
-		curtain_reference.check_area = FALSE
-		curtain_reference = null
 	. = ..()
-
 
 /turf/closed/wall/vampwall/city/low/window/dwelling
 	window = /obj/structure/window/fulltile/dwelling
@@ -238,8 +231,6 @@
 	alpha = 255
 	base_pixel_y = 12
 	pixel_y = 12
-	check_area = TRUE
-
 
 /obj/item/vtm/dwelling_alarm_card
 	name = "alarm disabler card"

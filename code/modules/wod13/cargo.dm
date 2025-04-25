@@ -24,6 +24,12 @@
 	contains = list(/obj/item/wire_cutters, /obj/item/storage/box/lights/mixed)
 	crate_name = "weapon crate"
 
+/datum/supply_pack/vampire/window_kit
+	name = "Window Repair Kit"
+	desc = "Contains a window repair kit, good for 10 window replacements."
+	cost = 250
+	contains = list(/obj/item/window_repair_kit)
+
 /datum/supply_pack/vampire/bloodpack
 	name = "Blood Pack"
 	desc = "Contains 5 default blood packs."

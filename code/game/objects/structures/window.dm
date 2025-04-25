@@ -619,6 +619,19 @@
 	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	glass_amount = 2
+	var/curtain = 0 // Spawns a curtain on init. This likely won't be used much if at all since the frame itself creates its own curtain, but just in case its needed for edge cases
+	var/curtain_dir // 1 for NORTH 2 for SOUTH 4 for EAST 8 for WEST; For directional restrictions on curtains
+
+/obj/structure/window/fulltile/proc/create_curtain()
+	var/obj/structure/curtain/dwelling/new_curtain = new(get_turf(src))
+	if(curtain_dir) new_curtain.use_restrict_dir = curtain_dir
+
+/obj/structure/window/fulltile/Initialize(mapload, direct)
+	. = ..()
+	if(curtain) create_curtain()
+
+/obj/structure/window/fulltile/curtain
+	curtain = 1
 
 /obj/structure/window/fulltile/unanchored
 	anchored = FALSE
