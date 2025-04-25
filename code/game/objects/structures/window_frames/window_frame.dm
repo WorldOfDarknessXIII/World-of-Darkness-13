@@ -59,12 +59,16 @@
 			if(window)
 				to_chat(user,span_warning("There already seems to be a window panel here!"))
 				return
-		visible_message(span_notice("[user] starts to replace a window."),span_notice("You start replacing a window"),span_warning("You hear glass scraping against something!"))
-		if(do_after(user, 5 SECONDS))
-			playsound(src, 'sound/items/deconstruct.ogg', 50)
-			repair_kit.process_use(1)
-			var/obj/W = new window(get_turf(src))
-			W.plane = GAME_PLANE
-			W.layer = ABOVE_ALL_MOB_LAYER
-			return
+		if(in_use == 0)
+			visible_message(span_notice("[user] starts to replace a window."),span_notice("You start replacing a window"),span_warning("You hear glass scraping against something!"))
+			in_use = 1
+			if(do_after(user, 5 SECONDS))
+				in_use = 0
+				playsound(src, 'sound/items/deconstruct.ogg', 50)
+				repair_kit.process_use(1)
+				var/obj/W = new window(get_turf(src))
+				W.plane = GAME_PLANE
+				W.layer = ABOVE_ALL_MOB_LAYER
+				return
+			in_use = 0
 	. = ..()
