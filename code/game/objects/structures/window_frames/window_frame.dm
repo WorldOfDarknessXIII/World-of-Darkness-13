@@ -10,6 +10,8 @@
 	var/in_use = 0
 	var/curtain_dir
 	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_WALLS)
 	layer = CLOSED_TURF_LAYER
 	resistance_flags = 	INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	density = 1
