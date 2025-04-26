@@ -109,7 +109,7 @@
 	door_broken = 0
 	density = 1
 	if(!glass) opacity = 1
-	layer = OPEN_DOOR_LAYER
+	layer = ABOVE_ALL_MOB_LAYER
 	closed = TRUE
 	locked = FALSE
 	icon_state = "[baseicon]-1"
