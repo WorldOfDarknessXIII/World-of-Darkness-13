@@ -30,6 +30,12 @@
 	cost = 250
 	contains = list(/obj/item/window_repair_kit)
 
+/datum/supply_pack/vampire/door_kit
+	name = "Door Repair Kit"
+	desc = "Contains a door repair kit that can be used to replace a broken door."
+	cost = 1000
+	contains = list(/obj/item/door_repair_kit)
+
 /datum/supply_pack/vampire/bloodpack
 	name = "Blood Pack"
 	desc = "Contains 5 default blood packs."

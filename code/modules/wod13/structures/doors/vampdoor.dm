@@ -16,6 +16,7 @@
 	var/closed = TRUE
 	var/locked = FALSE
 	var/door_broken = FALSE
+	var/door_layer = ABOVE_ALL_MOB_LAYER
 	var/lock_id = null
 	var/glass = FALSE
 	var/hacking = FALSE
@@ -91,6 +92,8 @@
 	return
 
 /obj/structure/vampdoor/proc/break_door()
+	name = "door frame"
+	desc = "An empty door frame. Someone removed the door by force. A special door repair kit should be able to fix this."
 	door_broken = 1
 	density = 0
 	opacity = 0
@@ -101,6 +104,8 @@
 	update_icon()
 
 /obj/structure/vampdoor/proc/fix_door()
+	name = initial(name)
+	desc = initial(desc)
 	door_broken = 0
 	density = 1
 	if(!glass) opacity = 1

@@ -161,18 +161,20 @@
 	density = FALSE
 	opacity = FALSE
 	plane = GAME_PLANE
-	layer = ABOVE_ALL_MOB_LAYER
+	layer = OPEN_DOOR_LAYER
 	pixel_w = -16
 
 /obj/elevator_door/proc/close()
 	icon_state = "elevator-1"
 	density = TRUE
 	opacity = TRUE
+	layer = ABOVE_ALL_MOB_LAYER
 
 /obj/elevator_door/proc/open()
 	icon_state = "elevator-0"
 	density = FALSE
 	opacity = FALSE
+	layer = OPEN_DOOR_LAYER
 
 /obj/elevator_door/start_closed
 	name = "elevator door"
@@ -180,3 +182,4 @@
 	icon_state = "elevator-1"
 	density = TRUE
 	opacity = TRUE
+	layer = ABOVE_ALL_MOB_LAYER
