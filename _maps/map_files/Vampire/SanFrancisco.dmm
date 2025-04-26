@@ -72813,6 +72813,15 @@
 /obj/structure/table/wood,
 /turf/open/floor/plating/sidewalk/poor,
 /area/vtm/financialdistrict)
+"wQY" = (
+/obj/structure/closet/crate,
+/obj/item/door_repair_kit,
+/obj/item/door_repair_kit,
+/obj/item/door_repair_kit,
+/obj/item/door_repair_kit,
+/obj/item/door_repair_kit,
+/turf/open/floor/plating/concrete,
+/area/vtm/interior/vjanitor)
 "wRk" = (
 /obj/structure/vampdoor/graveyard{
 	dir = 4;
@@ -176138,7 +176147,7 @@ qpc
 qpc
 amh
 rcA
-amh
+wQY
 amg
 ajG
 ani

@@ -15,6 +15,7 @@
 
 	var/closed = TRUE
 	var/locked = FALSE
+	var/door_broken = FALSE
 	var/lock_id = null
 	var/glass = FALSE
 	var/hacking = FALSE
@@ -89,9 +90,32 @@
 /obj/structure/vampdoor/proc/proc_unlock(method) //I am here so that dwelling doors can call me to properly process their alarms.
 	return
 
+/obj/structure/vampdoor/proc/break_door()
+	door_broken = 1
+	density = 0
+	opacity = 0
+	layer = OPEN_DOOR_LAYER
+	closed = FALSE
+	locked = FALSE
+	icon_state = "[baseicon]-b"
+	update_icon()
+
+/obj/structure/vampdoor/proc/fix_door()
+	door_broken = 0
+	density = 1
+	if(!glass) opacity = 1
+	layer = OPEN_DOOR_LAYER
+	closed = TRUE
+	locked = FALSE
+	icon_state = "[baseicon]-1"
+	update_icon()
+
 /obj/structure/vampdoor/attack_hand(mob/user)
 	. = ..()
 	var/mob/living/N = user
+	if(door_broken)
+		to_chat(user,span_warning("There is no door to use here."))
+		return
 	if(locked)
 		if(N.a_intent != INTENT_HARM)
 			playsound(src, lock_sound, 75, TRUE)
@@ -107,7 +131,7 @@
 						var/atom/throw_target = get_edge_target_turf(src, user.dir)
 						D.throw_at(throw_target, rand(2, 4), 4, user)
 						proc_unlock(50)
-						qdel(src)
+						break_door()
 					else
 						pixel_z = pixel_z+rand(-1, 1)
 						pixel_w = pixel_w+rand(-1, 1)
@@ -152,7 +176,25 @@
 		closed = TRUE
 
 /obj/structure/vampdoor/attackby(obj/item/W, mob/living/user, params)
+	if(istype(W, /obj/item/door_repair_kit))
+		if(!door_broken)
+			to_chat(user,span_warning("This door does not seem to be broken."))
+			return
+		var/obj/item/door_repair_kit/repair_kit = W
+		if(hacking == TRUE) //This is basically an in-use indicator already
+			to_chat(user,span_warning("Someone else seems to be using this door already."))
+			return
+		playsound(src, 'sound/items/ratchet.ogg', 50)
+		hacking = 1
+		if(do_after(user, 10 SECONDS,src))
+			playsound(src, 'sound/items/deconstruct.ogg', 50)
+			fix_door()
+			qdel(repair_kit)
+		hacking = 0
 	if(istype(W, /obj/item/vamp/keys/hack))
+		if(door_broken)
+			to_chat(user,span_warning("There is no door to pick here."))
+			return
 		if(locked)
 			hacking = TRUE
 			proc_unlock(5)
@@ -189,6 +231,9 @@
 				return
 	else if(istype(W, /obj/item/vamp/keys))
 		var/obj/item/vamp/keys/KEY = W
+		if(door_broken)
+			to_chat(user,span_warning("There is no door to open/close here."))
+			return
 		if(KEY.roundstart_fix)
 			lock_id = pick(KEY.accesslocks)
 			KEY.roundstart_fix = FALSE
