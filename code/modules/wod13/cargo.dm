@@ -50,7 +50,7 @@
 /datum/supply_pack/vampire/hydro_supplies
 	name = "Hydroponics Tool Kit"
 	desc = "All the tools you need to cultivate plants at home."
-	cost = 200
+	cost = 400
 	contains = list(/obj/item/secateurs,
 		/obj/item/cultivator/rake,
 		/obj/item/hatchet,
@@ -60,6 +60,7 @@
 		/obj/item/reagent_containers/spray/pestspray,
 		/obj/item/reagent_containers/spray/plantbgone,
 		/obj/item/storage/bag/plants,
+		/obj/item/bailer,
 		)
 	crate_name = "hydro crate"
 

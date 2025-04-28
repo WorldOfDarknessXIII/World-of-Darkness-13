@@ -22,7 +22,7 @@
 	chute_name = "Seaside Arcade - Fisherman's Wharf"
 
 /obj/structure/delivery_reciever/store8
-	chute_name = "Seaside Grocery Store - Fisherman's Wharf"
+	chute_name = "Community Garden - Fisherman's Wharf"
 
 /obj/structure/delivery_reciever/store9
 	chute_name = "Convineance Store - Fisherman's Wharf"

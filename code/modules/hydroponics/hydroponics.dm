@@ -2,7 +2,7 @@
 /obj/machinery/hydroponics
 	name = "hydroponics tray"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
-	icon_state = "hydrotray"
+	icon_state = "hydrotray4"
 	density = TRUE
 	pixel_z = 8
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
@@ -53,7 +53,7 @@
 	///If the tray generates nutrients and water on its own
 	var/self_sustaining = FALSE
 	//If the tray can be removed with right clicking, intended for map terminals
-	var/removable = 0
+	var/removable = 1
 
 /obj/machinery/hydroponics/Initialize()
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
