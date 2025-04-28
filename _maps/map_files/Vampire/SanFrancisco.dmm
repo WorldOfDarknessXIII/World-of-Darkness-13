@@ -41071,6 +41071,10 @@
 /obj/item/vtm_artifact/rand,
 /turf/open/floor/plating/rough/cave,
 /area/vtm/interior)
+"iwM" = (
+/obj/effect/turf_decal/siding/white,
+/turf/open/floor/plating/concrete,
+/area/vtm/interior/shop)
 "iwQ" = (
 /obj/structure/table,
 /obj/structure/railing{
@@ -57632,6 +57636,12 @@
 	},
 /turf/open/floor/plating/vampgrass,
 /area/vtm/pacificheights)
+"qhz" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/plating/concrete,
+/area/vtm/interior/shop)
 "qhJ" = (
 /turf/open/floor/plating/sidewalk/old,
 /area/vtm/financialdistrict)
@@ -153690,13 +153700,13 @@ aoS
 aoS
 aGf
 aGy
+iwM
 aoy
 aoy
 aoy
 aoy
 aoy
-aoy
-aoy
+qhz
 aoS
 aoS
 aoS
@@ -153947,13 +153957,13 @@ aoS
 aoS
 aGf
 aGy
+iwM
 aoy
 aoy
 aoy
 aoy
 aoy
-aoy
-aoy
+qhz
 jfc
 aoS
 aoS
