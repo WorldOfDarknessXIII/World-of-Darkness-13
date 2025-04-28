@@ -579,27 +579,25 @@
 				/obj/item/radio = 1)
 	tools = list(TOOL_WIRECUTTER)
 	category = CAT_CLOTHING
-
+*/
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
 	result = /obj/item/bouquet
-	reqs = list(/obj/item/food/grown/poppy/lily =2,
-				/obj/item/grown/sunflower = 2,
-				/obj/item/food/grown/poppy/geranium = 2)
+	reqs = list(/obj/item/food/grown/flower = 3)
 	category = CAT_MISC
 
 /datum/crafting_recipe/sunbouquet
 	name = "Sunflower bouquet"
 	result = /obj/item/bouquet/sunflower
-	reqs = list(/obj/item/grown/sunflower = 6)
+	reqs = list(/obj/item/grown/flower/sunflower = 3)
 	category = CAT_MISC
 
 /datum/crafting_recipe/poppybouquet
 	name = "Poppy bouquet"
 	result = /obj/item/bouquet/poppy
-	reqs = list (/obj/item/food/grown/poppy = 6)
+	reqs = list (/obj/item/food/grown/flower/poppy = 3)
 	category = CAT_MISC
-
+/*
 /datum/crafting_recipe/spooky_camera
 	name = "Camera Obscura"
 	result = /obj/item/camera/spooky

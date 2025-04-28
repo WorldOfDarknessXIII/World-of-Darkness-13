@@ -1,3 +1,46 @@
+/datum/supply_pack/vampire/vegetable_supplies //behold, ordering legal things.
+	name = "Community Seed Pack" //aimed at helping the poorest members of community.
+	desc = "Contains a selection of seeds intended for use with the community or personal gardens. No trays."
+	cost = 20 //As of 22/04/2025 the irl price of this would be $7 in California. I've made it 20 to account for the watering can.
+	contains = list(
+		/obj/item/seeds/cabbage,
+		/obj/item/seeds/carrot,
+		/obj/item/seeds/corn,
+		/obj/item/seeds/onion,
+		/obj/item/seeds/carrot/parsnip,
+		/obj/item/seeds/peas,
+		/obj/item/seeds/potato,
+		/obj/item/seeds/pumpkin,
+		/obj/item/seeds/soya,
+		/obj/item/seeds/tomato,
+	)
+	crate_name = "veggie crate"
+
+/datum/supply_pack/vampire/flower_supplies
+	name = "Community Flower Pack" //verified as local, non-invasive from https://calscape.org/ & https://plants.usda.gov/
+	desc = "Contains a selection of flower seeds. No trays."
+	cost = 20
+	contains = list(
+		/obj/item/seeds/poppy,
+		/obj/item/seeds/poppy/sunflower,
+		/obj/item/seeds/poppy/geranium,
+		/obj/item/seeds/poppy/lily,
+	)
+	crate_name = "flower crate"
+
+/datum/supply_pack/vampire/hydro_tray
+	name = "Magadon™ Hydroponics Tray"
+	desc = "Contains a high-tech hydroponics tray. Oddly, it lacks an auto-watering feature."
+	cost = 200
+	contains = list(/obj/machinery/hydroponics)
+	crate_name = "hydro crate"
+
+/datum/supply_pack/vampire/weed_supplies
+	desc = "Contains a bailer and some seeds. No trays."
+	cost = 100
+	contains = list(/obj/item/bailer, /obj/item/weedseed, /obj/item/weedseed, /obj/item/weedseed, /obj/item/weedseed, /obj/item/weedseed)
+	crate_name = "hydro crate"
+
 /datum/supply_pack/vampire/weed_supplies
 	desc = "Contains a bailer and some seeds. No trays."
 	cost = 100

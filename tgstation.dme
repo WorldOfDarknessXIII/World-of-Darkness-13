@@ -3570,6 +3570,7 @@
 #include "code\modules\wod13\items\narcotics\weed\weedpack.dm"
 #include "code\modules\wod13\items\narcotics\weed\weedseed.dm"
 #include "code\modules\wod13\items\stores\clothes.dm"
+#include "code\modules\wod13\items\stores\flowers.dm"
 #include "code\modules\wod13\items\stores\food.dm"
 #include "code\modules\wod13\items\stores\guns.dm"
 #include "code\modules\wod13\items\stores\misc.dm"

@@ -1069,6 +1069,50 @@
 		base_body_mod = "f"
 	AssignSocialRole(/datum/socialrole/shop/gummaguts)
 
+/datum/socialrole/shop/nightbloom //flower shop
+	s_tones = list("caucasian1")
+	min_age = 27
+	max_age = 28
+	preferedgender = FEMALE
+	female_names = list("Poppy")
+	surnames = list("Laurier")
+
+	hair_colors = list("ad924e")	//Blonde
+	female_hair = list("Ponytail 5")
+
+	shoes = list(/obj/item/clothing/shoes/vampire/jackboots/work)
+	uniforms = list(/obj/item/clothing/under/vampire/bouncer)
+	pockets = list(/obj/item/vamp/keys/npc,
+					/obj/item/stack/dollar/rand)
+
+	female_phrases = list("Would you like to buy something?",
+											"Everything is non-invasive and climate appropriate!",
+											"Welcome to Unfettered Nightbloom.",
+											"Sorry, we're out of bags.")
+	neutral_phrases = list("Would you like to buy something?",
+											"Everything is non-invasive and climate appropriate!",
+											"Sorry, we're out of bags.")
+	random_phrases = list("I haven't seen my Auntie lately.",
+												"Just let me know when you're ready.",
+												"Next, here, please!",
+												"My Auntie helped pick this look. What do you think?",
+												"Most of this stuff is from Allemand Farms.")
+	answer_phrases = list("You'd have to ask the owner, sorry.")
+	help_phrases = list("Why would you do that?!",
+											"Take what you want, let me go!",
+											"The owner's going to be pissed...",
+											"Someone, get a doctor!")
+
+/mob/living/carbon/human/npc/nightbloom
+	staying = TRUE
+	is_talking = TRUE
+
+/mob/living/carbon/human/npc/nightbloom/Initialize()
+	. = ..()
+	if(prob(66))
+		base_body_mod = "f"
+	AssignSocialRole(/datum/socialrole/shop/nightbloom)
+
 /datum/socialrole/police
 	s_tones = list("albino",
 								"caucasian1",
