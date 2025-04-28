@@ -253,7 +253,7 @@
 
 
 /obj/item/reagent_containers/glass/bottle/nutrient/ez
-	name = "Advanced Fertilizer"
+	name = "Basic Fertilizer"
 	desc = "Contains a fertilizer that causes mild mutations and gradual plant growth with each harvest."
 	list_reagents = list(/datum/reagent/plantnutriment/eznutriment = 50)
 
@@ -263,7 +263,7 @@
 	list_reagents = list(/datum/reagent/plantnutriment/left4zednutriment = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/rh
-	name = "Potent Fertilizer"
+	name = "Advanced Fertilizer"
 	desc = "Contains a fertilizer that increases the yield of a plant while gradually preventing mutations."
 	list_reagents = list(/datum/reagent/plantnutriment/robustharvestnutriment = 50)
 

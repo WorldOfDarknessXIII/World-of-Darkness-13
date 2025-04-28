@@ -60,19 +60,18 @@
 		/obj/item/reagent_containers/spray/pestspray,
 		/obj/item/reagent_containers/spray/plantbgone,
 		/obj/item/storage/bag/plants,
-		/obj/item/bailer,
+		/obj/item/reagent_containers/glass/bucket/wooden,
 		)
 	crate_name = "hydro crate"
 
 /datum/supply_pack/vampire/hydro_adv_supplies
-	name = "Hydroponics Fertilizer Set"
-	desc = "Basic and high grade/experimental fertilizers for your home garden."
+	name = "Advanced Fertilizer"
+	desc = "Customized fertilizer mixed for the superior homegrown botanist."
 	cost = 500
-	contains = list(/obj/item/reagent_containers/glass/bottle/nutrient,
-		/obj/item/reagent_containers/glass/bottle/nutrient,
-		/obj/item/reagent_containers/glass/bottle/nutrient,
-		/obj/item/reagent_containers/glass/bottle/nutrient/ez,
-		/obj/item/reagent_containers/glass/bottle/nutrient/ez,
+	contains = list(
+		/obj/item/reagent_containers/glass/bottle/nutrient/rh,
+		/obj/item/reagent_containers/glass/bottle/nutrient/rh,
+		/obj/item/reagent_containers/glass/bottle/nutrient/rh,
 		/obj/item/reagent_containers/glass/bottle/nutrient/rh,
 		/obj/item/reagent_containers/glass/bottle/nutrient/rh,
 		)
