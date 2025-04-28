@@ -52,6 +52,8 @@
 	var/datum/weakref/lastuser
 	///If the tray generates nutrients and water on its own
 	var/self_sustaining = FALSE
+	//If the tray can be removed with right clicking, intended for map terminals
+	var/removable = 0
 
 /obj/machinery/hydroponics/Initialize()
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
@@ -818,7 +820,7 @@
 	if(!modifiers["right"])
 		return ..()
 
-	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
+	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE) || !removable)
 		return
 	var/mob/living/carbon/human/user = usr
 	if(do_after(user, 15))
