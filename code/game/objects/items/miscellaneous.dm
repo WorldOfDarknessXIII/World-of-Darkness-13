@@ -401,7 +401,7 @@
 
 /obj/item/bouquet/Initialize()
 	. = ..()
-	AddComponent(/datum/component/selling, 150, "bouquet", FALSE)
+	AddComponent(/datum/component/selling, 100, "bouquet", FALSE)
 
 /obj/item/bouquet/sunflower
 	name = "sunflower bouquet"

@@ -589,7 +589,7 @@
 /datum/crafting_recipe/sunbouquet
 	name = "Sunflower bouquet"
 	result = /obj/item/bouquet/sunflower
-	reqs = list(/obj/item/grown/flower/sunflower = 3)
+	reqs = list(/obj/item/food/grown/flower/sunflower = 3)
 	category = CAT_MISC
 
 /datum/crafting_recipe/poppybouquet

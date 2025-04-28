@@ -228,7 +228,7 @@
 	icon_state = "seed-sunflower"
 	species = "sunflower"
 	plantname = "Sunflowers"
-	product = /obj/item/grown/flower/sunflower
+	product = /obj/item/food/grown/flower/sunflower
 	endurance = 20
 	production = 2
 	yield = 2
@@ -240,7 +240,7 @@
 	mutatelist = list(/obj/item/seeds/sunflower/moonflower, /* /obj/item/seeds/sunflower/novaflower */)
 	reagents_add = list(/datum/reagent/consumable/cornoil = 0.08, /datum/reagent/consumable/nutriment = 0.04)
 
-/obj/item/grown/flower/sunflower // FLOWER POWER!
+/obj/item/food/grown/flower/sunflower // FLOWER POWER!
 	seed = /obj/item/seeds/poppy/sunflower
 	name = "sunflower"
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
@@ -255,11 +255,12 @@
 	throw_speed = 1
 	throw_range = 3
 
-/obj/item/grown/flower/sunflower/attack(mob/M, mob/user)
+/obj/item/food/grown/flower/sunflower/attack(mob/living/M, mob/living/user)
 	to_chat(M, "<font color='green'>[user] smacks you with a sunflower!<font color='orange'><b>FLOWER POWER!</b></font></font>")
 	to_chat(user, "<font color='green'>Your sunflower's <font color='orange'><b>FLOWER POWER</b></font> strikes [M]!</font>")
+	. = ..()
 
-/obj/item/grown/flower/sunflower/examine(mob/user)
+/obj/item/food/grown/grown/flower/sunflower/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_FLOWER_LANGUAGE))
 		. += span_notice("Floriography tells you, if short, this flower speaks of devout adoration. If notably tall, this flower speaks of Pride.</span>")

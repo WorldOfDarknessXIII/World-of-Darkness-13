@@ -52,7 +52,7 @@
 
 	seed.prepare_result(src)
 	transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
-	AddComponent(/datum/component/selling, 30, "produce", FALSE)
+	AddComponent(/datum/component/selling, 20, "produce", FALSE)
 
 /obj/item/food/grown/MakeEdible()
 	AddComponent(/datum/component/edible,\
