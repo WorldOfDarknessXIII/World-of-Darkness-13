@@ -35,6 +35,7 @@
 	new /obj/item/reagent_containers/glass/bottle/nutrient/ez(src)
 	new /obj/item/reagent_containers/spray/weedspray(src)
 	new /obj/item/reagent_containers/spray/pestspray(src)
+	new	/obj/item/shovel/spade(src)
 	new	/obj/item/cultivator(src)
 	new	/obj/item/clothing/gloves/botanic_leather(src)
 	new	/obj/item/bailer(src)

@@ -53,12 +53,10 @@
 	cost = 400
 	contains = list(/obj/item/secateurs,
 		/obj/item/cultivator/rake,
-		/obj/item/hatchet,
-		/obj/item/scythe,
 		/obj/item/cultivator,
 		/obj/item/reagent_containers/spray/weedspray,
 		/obj/item/reagent_containers/spray/pestspray,
-		/obj/item/reagent_containers/spray/plantbgone,
+		/obj/item/shovel/spade,
 		/obj/item/storage/bag/plants,
 		/obj/item/reagent_containers/glass/bucket/wooden,
 		)

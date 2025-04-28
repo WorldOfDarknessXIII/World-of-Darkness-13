@@ -55082,7 +55082,9 @@
 /turf/open/floor/plating/sidewalk/rich,
 /area/vtm/financialdistrict)
 "oWN" = (
-/obj/machinery/hydroponics,
+/obj/machinery/hydroponics{
+	removable = 0
+	},
 /turf/open/floor/plating/vampplating/mono,
 /area/vtm/interior/shop)
 "oWW" = (
