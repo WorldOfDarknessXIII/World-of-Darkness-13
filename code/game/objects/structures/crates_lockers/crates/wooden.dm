@@ -32,7 +32,7 @@
 /obj/structure/closet/crate/wooden/communitygardens/tools/PopulateContents()
 	. = ..()
 	new /obj/item/storage/bag/plants(src)
-	new /obj/item/reagent_containers/glass/bottle/nutrient/(src)
+	new /obj/item/reagent_containers/glass/bottle/nutrient/ez(src)
 	new /obj/item/reagent_containers/spray/weedspray(src)
 	new /obj/item/reagent_containers/spray/pestspray(src)
 	new	/obj/item/cultivator(src)
