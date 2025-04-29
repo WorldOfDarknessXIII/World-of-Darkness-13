@@ -25,7 +25,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
-	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
+	mutatelist = list(/obj/item/seeds/geranium, /obj/item/seeds/lily)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
 
 // Poppy
@@ -45,7 +45,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
-	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
+	mutatelist = list(/obj/item/seeds/geranium, /obj/item/seeds/lily)
 	reagents_add = list(/datum/reagent/medicine/c2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/food/grown/flower/poppy
@@ -66,19 +66,29 @@
 		. += span_notice("Hanakotoba expresses being Fun-loving.") //output into examine description if has Hanakotoba
 
 // Lily
-/obj/item/seeds/poppy/lily
+/obj/item/seeds/lily/
 	name = "pack of lily seeds"
 	desc = "These seeds grow into lilies."
 	icon_state = "seed-lily"
 	species = "lily"
 	plantname = "Lily Plants"
 	product = /obj/item/food/grown/flower/lily
+	endurance = 10
+	maturation = 8
+	yield = 6
+	potency = 20
+	instability = 1 //Flowers have 1 instability, if you want to breed out instability, crossbreed with flowers.
+	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	icon_grow = "lily-grow"
+	icon_dead = "lily-dead"
+	reagents_add = list(/datum/reagent/medicine/c2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05)
 	mutatelist = list(/obj/item/seeds/poppy/lily/clusterlily)
 
 /obj/item/food/grown/flower/lily
 	seed = /obj/item/seeds/poppy/lily
 	name = "lily"
-	desc = "A beautiful orange flower."
+	desc = "A beautiful white flower."
 	icon_state = "lily"
 
 /obj/item/food/grown/flower/lily/examine(mob/user)
@@ -136,19 +146,29 @@
 		. += span_notice("Hanakotoba expresses being love-drunk.")
 
 // Geranium
-/obj/item/seeds/poppy/geranium
+/obj/item/seeds/geranium
 	name = "pack of geranium seeds"
 	desc = "These seeds grow into geranium."
 	icon_state = "seed-geranium"
 	species = "geranium"
 	plantname = "Geranium Plants"
 	product = /obj/item/food/grown/flower/geranium
-	mutatelist = list(/obj/item/seeds/poppy/geranium/fraxinella)
+	endurance = 10
+	maturation = 8
+	yield = 6
+	potency = 20
+	instability = 1 //Flowers have 1 instability, if you want to breed out instability, crossbreed with flowers.
+	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	icon_grow = "geranium-grow"
+	icon_dead = "geranium-dead"
+	reagents_add = list(/datum/reagent/medicine/c2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05)
+	mutatelist = list(/obj/item/seeds/geranium/fraxinella)
 
 /obj/item/food/grown/flower/geranium
-	seed = /obj/item/seeds/poppy/geranium
+	seed = /obj/item/seeds/geranium
 	name = "geranium"
-	desc = "A beautiful blue flower."
+	desc = "A beautiful purple flower."
 	icon_state = "geranium"
 
 /obj/item/food/grown/flower/geranium/examine(mob/user)
@@ -159,7 +179,7 @@
 		. += span_notice("Hanakotoba expresses Friendship.")
 
 ///Fraxinella seeds.
-/obj/item/seeds/poppy/geranium/fraxinella
+/obj/item/seeds/geranium/fraxinella
 	name = "pack of fraxinella seeds"
 	desc = "These seeds grow into fraxinella."
 	icon_state = "seed-fraxinella"
@@ -172,7 +192,7 @@
 
 ///Fraxinella Flowers.
 /obj/item/food/grown/flower/geranium/fraxinella //typically not found in America and thus lacks US Victorian Floriography. A modern subsitute was applied.
-	seed = /obj/item/seeds/poppy/geranium/fraxinella
+	seed = /obj/item/seeds/geranium/fraxinella
 	name = "fraxinella"
 	desc = "A beautiful light pink flower."
 	icon_state = "fraxinella"
@@ -222,7 +242,7 @@
 		. += span_notice("Hanakotoba expresses Gratefulness.")
 
 // Sunflower
-/obj/item/seeds/poppy/sunflower
+/obj/item/seeds/sunflower
 	name = "pack of sunflower seeds"
 	desc = "These seeds grow into sunflowers."
 	icon_state = "seed-sunflower"
@@ -241,7 +261,7 @@
 	reagents_add = list(/datum/reagent/consumable/cornoil = 0.08, /datum/reagent/consumable/nutriment = 0.04)
 
 /obj/item/food/grown/flower/sunflower // FLOWER POWER!
-	seed = /obj/item/seeds/poppy/sunflower
+	seed = /obj/item/seeds/sunflower
 	name = "sunflower"
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
 	icon_state = "sunflower"
@@ -369,3 +389,61 @@ Choosing not to delete it in case the example of its code is useful for somethin
 		user.adjustFireLoss(rand(1, 5))
 */
 
+/obj/item/seeds/forgetmenot
+	name = "pack of forget-me-not seeds"
+	desc = "These seeds grow into forget-me-nots."
+	icon_state = "seed-forget_me_not"
+	species = "forget_me_not"
+	plantname = "Forget Me Not Plants"
+	product = /obj/item/food/grown/flower/forgetmenot
+	endurance = 10
+	maturation = 8
+	yield = 6
+	potency = 20
+	instability = 1 //Flowers have 1 instability, if you want to breed out instability, crossbreed with flowers.
+	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	icon_grow = "forget_me_not-grow"
+	icon_dead = "forget_me_not-dead"
+	reagents_add = list(/datum/reagent/medicine/c2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05)
+
+/obj/item/food/grown/flower/forgetmenot
+	seed = /obj/item/seeds/forgetmenot
+	name = "forget-me-not"
+	desc = "A beautiful blue flower."
+	icon_state = "forget_me_not"
+
+/obj/item/food/grown/flower/geranium/examine(mob/user)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_FLOWER_LANGUAGE))
+		. += span_notice("Floriography speaks to you of True love, Fidelity and a Lasting Connection.")
+	if(HAS_TRAIT(user, TRAIT_FLOWER_LANGUAGE_JAPANESE))
+		. += span_notice("Hanakotoba expresses True love.")
+
+/obj/item/flower_crown
+	name = "variety flower crown"
+	desc = "A flower crown woven out of an assortment of flowers."
+	icon = 'icons/obj/clothing/hats.dmi'
+	icon_state = "variety_crown"
+	slot_flags = ITEM_SLOT_HEAD
+	grid_width = 2 GRID_BOXES
+	grid_height = 2 GRID_BOXES
+
+/obj/item/flower_crown/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 150, "flower_crown", FALSE)
+
+/obj/item/flower_crown/sunflower
+	name = "sunflower flower crown"
+	desc = "A flower crown woven out of sunflowers."
+	icon_state = "sunflower_crown"
+
+/obj/item/flower_crown/poppy
+	name = "poppy flower crown"
+	desc = "A flower crown woven out of poppies."
+	icon_state = "poppy_crown"
+
+/obj/item/flower_crown/lily
+	name = "lily flower crown"
+	desc = "A flower crown woven out of lillies."
+	icon_state = "lily_crown"
