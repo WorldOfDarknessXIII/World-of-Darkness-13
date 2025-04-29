@@ -390,8 +390,8 @@ Choosing not to delete it in case the example of its code is useful for somethin
 */
 
 /obj/item/seeds/forgetmenot
-	name = "pack of forget-me-not seeds"
-	desc = "These seeds grow into forget-me-nots."
+	name = "pack of forget me not seeds"
+	desc = "These seeds grow into forget me nots."
 	icon_state = "seed-forget_me_not"
 	species = "forget_me_not"
 	plantname = "Forget Me Not Plants"
@@ -409,7 +409,7 @@ Choosing not to delete it in case the example of its code is useful for somethin
 
 /obj/item/food/grown/flower/forgetmenot
 	seed = /obj/item/seeds/forgetmenot
-	name = "forget-me-not"
+	name = "forget me not"
 	desc = "A beautiful blue flower."
 	icon_state = "forget_me_not"
 

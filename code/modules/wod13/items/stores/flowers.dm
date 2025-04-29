@@ -17,7 +17,7 @@
 		new /datum/data/mining_equipment("Sunflower seeds", /obj/item/seeds/sunflower, 50),
 		new /datum/data/mining_equipment("Geranium seeds", /obj/item/seeds/geranium, 50),
 		new /datum/data/mining_equipment("Lily seeds", /obj/item/seeds/lily, 50),
-		new /datum/data/mining_equipment("Forget-me-not seeds", /obj/item/seeds/forgetmenot, 50),
+		new /datum/data/mining_equipment("Forget me not seeds", /obj/item/seeds/forgetmenot, 50),
 		new /datum/data/mining_equipment("Aloe seeds", /obj/item/seeds/aloe, 50),
 		new /datum/data/mining_equipment("Apple seeds", /obj/item/seeds/apple, 50),
 		new /datum/data/mining_equipment("Cabbage seeds", /obj/item/seeds/cabbage, 50),
