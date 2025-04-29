@@ -9644,10 +9644,10 @@
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/shop)
 "aHn" = (
-/obj/item/kirbyplants/random,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
 	},
+/obj/structure/closet/crate/wooden/communitygardens/flower_seeds,
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/shop)
 "aHo" = (
@@ -27267,11 +27267,8 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/interior/police)
 "csI" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/structure/closet/crate/wooden/communitygardens/flower_seeds,
-/turf/open/floor/plating/vampplating/mono,
+/obj/structure/closet/crate/wooden/communitygardens/tools,
+/turf/open/floor/plating/concrete,
 /area/vtm/interior/shop)
 "csS" = (
 /obj/item/vtm_artifact/rand,
@@ -29550,14 +29547,6 @@
 /obj/structure/closet/crate/bin,
 /turf/open/floor/carpet/royalblack,
 /area/vtm/interior)
-"dvz" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
-/turf/open/floor/plating/vampplating,
-/area/vtm/interior/shop)
 "dvX" = (
 /obj/structure/railing{
 	dir = 1;
@@ -34411,11 +34400,8 @@
 /turf/open/floor/plating/sidewalk,
 /area/vtm/financialdistrict)
 "fEe" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/structure/closet/crate/wooden/communitygardens/seeds,
-/turf/open/floor/plating/vampplating/mono,
+/turf/open/floor/plating/concrete,
 /area/vtm/interior/shop)
 "fEo" = (
 /obj/effect/decal/pallet,
@@ -47087,7 +47073,8 @@
 /obj/structure/sink{
 	dir = 4;
 	pixel_x = -12;
-	pixel_y = 2
+	pixel_y = 2;
+	reclaim_rate = 20
 	},
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/shop)
@@ -76006,13 +75993,6 @@
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating/concrete,
 /area/vtm/interior/techshop)
-"ydR" = (
-/obj/machinery/light{
-	pixel_y = 32
-	},
-/obj/structure/closet/crate/wooden/communitygardens/tools,
-/turf/open/floor/plating/vampplating/mono,
-/area/vtm/interior/shop)
 "ydU" = (
 /obj/machinery/light/prince{
 	dir = 4
@@ -150360,11 +150340,11 @@ aqm
 aqm
 arn
 aoh
-aoy
+apm
 aoy
 aoy
 ljz
-dvz
+ljz
 aog
 aID
 ajj
@@ -150619,9 +150599,9 @@ aqm
 aoh
 aoy
 aoB
+csI
 aoy
-kuX
-nty
+aoy
 aog
 aIE
 ajj
@@ -150877,8 +150857,8 @@ aBx
 aoy
 aoB
 aoy
-kuX
-kuX
+aoy
+aoy
 aog
 aIF
 akq
@@ -151135,7 +151115,7 @@ aHl
 uJa
 aoy
 aoy
-oAo
+apA
 aog
 aji
 aIT
@@ -151391,8 +151371,8 @@ aoh
 aHm
 aoB
 aoy
-kuX
-kuX
+aoy
+aoy
 aog
 aog
 aog
@@ -151646,10 +151626,10 @@ aog
 aog
 aoh
 aHn
+fEe
 aoy
 aoy
-kuX
-kuX
+aoy
 auu
 aIG
 aII
@@ -151903,9 +151883,9 @@ aGf
 aGx
 aoh
 wpx
-aoy
-aoy
-aoy
+nty
+kuX
+nty
 oAo
 auu
 aIH
@@ -152159,11 +152139,11 @@ aoS
 bIz
 aGy
 aGT
+nty
 oWN
-kuX
-aoy
-kuX
+nty
 oWN
+nty
 auu
 aII
 aII
@@ -152416,11 +152396,11 @@ aBs
 aGf
 aGy
 aGT
+nty
 oWN
-kuX
-aoy
-aoy
+nty
 oWN
+nty
 auu
 aqm
 ard
@@ -152673,11 +152653,11 @@ aoS
 aGh
 aGy
 aoh
-ydR
-aoy
-aoy
-aoy
-csI
+wpx
+nty
+kuX
+nty
+oAo
 auu
 aqj
 aqm
@@ -152930,11 +152910,11 @@ aoS
 aGf
 aGy
 aGT
+nty
 oWN
-kuX
-aoy
-kuX
+nty
 oWN
+nty
 aog
 aog
 aog
@@ -153187,11 +153167,11 @@ aoS
 aGf
 aGy
 aGT
+nty
 oWN
-kuX
-aoy
-kuX
+nty
 oWN
+nty
 aog
 aFA
 aoS
@@ -153445,9 +153425,9 @@ aGf
 aGy
 aoh
 wpx
-aoy
-aoy
-aoy
+nty
+kuX
+nty
 oAo
 aog
 aHo
@@ -154216,9 +154196,9 @@ aGf
 aGy
 aoh
 wpx
-aoy
-aoy
-aoy
+nty
+kuX
+nty
 oAo
 aog
 apv
@@ -154472,11 +154452,11 @@ aoS
 aGf
 aGy
 aGT
+nty
 oWN
-kuX
-aoy
-kuX
+nty
 oWN
+nty
 apO
 aoS
 aoS
@@ -154729,11 +154709,11 @@ aoS
 aGf
 aGy
 aGT
+nty
 oWN
-kuX
-aoy
-kuX
+nty
 oWN
+nty
 apO
 xuI
 aoS
@@ -154986,11 +154966,11 @@ aoS
 aGf
 aGy
 aoh
-ydR
-aoy
-aoy
-aoy
-fEe
+wpx
+nty
+kuX
+nty
+oAo
 aog
 apv
 aoS
@@ -155243,11 +155223,11 @@ aoS
 aGf
 aGy
 aGT
+nty
 oWN
-kuX
-aoy
-kuX
+nty
 oWN
+nty
 apO
 aoS
 aoS
@@ -155500,11 +155480,11 @@ aoS
 aGf
 aGy
 aGT
+nty
 oWN
-kuX
-aoy
-kuX
+nty
 oWN
+nty
 apO
 aoS
 aoS
@@ -155758,9 +155738,9 @@ aGf
 aGy
 aoh
 wpx
-aoy
-aoy
-aoy
+nty
+kuX
+nty
 oAo
 aog
 pLG
