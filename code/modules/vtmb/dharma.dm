@@ -88,9 +88,6 @@
 			var/datum/action/area_chi/areac = new()
 			areac.Grant(mob)
 
-	mob.maxHealth = FLOOR(initial(mob.maxHealth)-(initial(mob.maxHealth)/4)+(initial(mob.maxHealth)/4*((mob.physique+mob.additional_physique)+level)), 1)
-	mob.health = mob.maxHealth
-
 /**
  * Updates virtues to new temporary and permanent ratings with a Dharma level change.
  *
