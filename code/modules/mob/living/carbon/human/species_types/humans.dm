@@ -30,8 +30,8 @@
 
 			</style>
 			"}
-		dat += "<center><h2>Memories</h2><BR></center>"
-		dat += "[icon2html(getFlatIcon(host), host)]I am "
+		dat += "<p><center><h2>Memories</h2></center></p>"
+		dat += "<p>[icon2html(getFlatIcon(host), host)]I am "
 		if(host.real_name)
 			dat += "[host.real_name],"
 		if(!host.real_name)
@@ -46,13 +46,18 @@
 					dat += ", carrying the [host.mind.assigned_role] role."
 			if(!host.mind.assigned_role)
 				dat += "."
-			dat += "<BR>"
+			dat += "</p>"
 			if(host.mind.enslaved_to)
-				dat += "My Regnant is [host.mind.enslaved_to], I should obey their wants.<BR>"
+				dat += "<p>My Regnant is [host.mind.enslaved_to], I should obey their wants.</p>"
+		for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
+			if(host.bank_id == account.bank_id)
+				dat += "<p>My bank account code is: [account.code]</b></p>"
+				break
 		if(host.mind.special_role)
 			for(var/datum/antagonist/A in host.mind.antag_datums)
 				if(A.objectives)
-					dat += "[printobjectives(A.objectives)]<BR>"
+					dat += "<p>[printobjectives(A.objectives)]</p>"
+		dat += "<p>"
 		dat += "<b>Physique</b>: [host.physique] + [host.additional_physique]<BR>"
 		dat += "<b>Dexterity</b>: [host.dexterity] + [host.additional_dexterity]<BR>"
 		dat += "<b>Social</b>: [host.social] + [host.additional_social]<BR>"
@@ -60,30 +65,28 @@
 		dat += "<b>Cruelty</b>: [host.blood] + [host.additional_blood]<BR>"
 		dat += "<b>Lockpicking</b>: [host.lockpicking] + [host.additional_lockpicking]<BR>"
 		dat += "<b>Athletics</b>: [host.athletics] + [host.additional_athletics]<BR>"
+		dat += "</p>"
 		if(host.Myself?.Friend?.owner)
-			dat += "<b>My friend's name is [host.Myself.Friend.owner.true_real_name].</b><BR>"
+			dat += "<p><b>My friend's name is [host.Myself.Friend.owner.true_real_name].</b><BR>"
 			if(host.Myself.Friend.phone_number)
 				dat += "Their number is [host.Myself.Friend.phone_number].<BR>"
 			if(host.Myself.Friend.friend_text)
-				dat += "[host.Myself.Friend.friend_text]<BR>"
+				dat += "[host.Myself.Friend.friend_text]</p>"
 		if(host.Myself?.Enemy?.owner)
-			dat += "<b>My nemesis is [host.Myself.Enemy.owner.true_real_name]!</b><BR>"
+			dat += "<p><b>My nemesis is [host.Myself.Enemy.owner.true_real_name]!</b><BR>"
 			if(host.Myself.Enemy.enemy_text)
-				dat += "[host.Myself.Enemy.enemy_text]<BR>"
+				dat += "[host.Myself.Enemy.enemy_text]</p>"
 		if(host.Myself?.Lover?.owner)
-			dat += "<b>I'm in love with [host.Myself.Lover.owner.true_real_name].</b><BR>"
+			dat += "<p><b>I'm in love with [host.Myself.Lover.owner.true_real_name].</b><BR>"
 			if(host.Myself.Lover.phone_number)
 				dat += "Their number is [host.Myself.Lover.phone_number].<BR>"
 			if(host.Myself.Lover.lover_text)
-				dat += "[host.Myself.Lover.lover_text]<BR>"
+				dat += "[host.Myself.Lover.lover_text]</p>"
 		if(length(host.knowscontacts) > 0)
-			dat += "<b>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
+			dat += "<p>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
 			for(var/i in host.knowscontacts)
 				dat += "-[i] contact<BR>"
-		for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
-			if(host.bank_id == account.bank_id)
-				dat += "<b>My bank account code is: [account.code]</b><BR>"
-				break
+			dat += "</p>"
 		host << browse(HTML_SKELETON(dat), "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
 		onclose(host, "vampire", src)
 

@@ -48,13 +48,14 @@
 			<style type="text/css">
 
 			body {
+				padding: 1em;
 				background-color: #090909; color: white;
 			}
 
 			</style>
 			"}
-		dat += "<center><h2>Memories</h2><BR></center>"
-		dat += "[icon2html(getFlatIcon(host), host)]I am "
+		dat += "<p><center><h2>Memories</h2></center></p>"
+		dat += "<p>[icon2html(getFlatIcon(host), host)]I am "
 		if(host.real_name)
 			dat += "[host.real_name],"
 		if(!host.real_name)
@@ -73,15 +74,33 @@
 					dat += ", carrying the [host.mind.assigned_role] role."
 			if(!host.mind.assigned_role)
 				dat += "."
-			dat += "<BR>"
+			dat += "</p>"
 			if(host.mind.enslaved_to)
-				dat += "My Regnant is [host.mind.enslaved_to], I should obey their wants.<BR>"
+				dat += "<p>My Regnant is [host.mind.enslaved_to], I should obey their wants.</p>"
+		for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
+			if(host.bank_id == account.bank_id)
+				dat += "<p>My bank account code is: [account.code]</b></p>"
+				break
+		var/obj/keypad/armory/armory = find_keypad(/obj/keypad/armory)
+		if(armory && (host.mind.assigned_role == "Prince" || host.mind.assigned_role == "Sheriff" || host.mind.assigned_role == "Seneschal"))
+			dat += "<p>The pincode for the armory keypad is<b>: [armory.pincode]</b></p>"
+		var/obj/keypad/panic_room/panic = find_keypad(/obj/keypad/panic_room)
+		if(panic && (host.mind.assigned_role == "Prince" || host.mind.assigned_role == "Sheriff" || host.mind.assigned_role == "Seneschal"))
+			dat += "<p>The pincode for the panic room keypad is<b>: [panic.pincode]</b></p>"
+		var/obj/structure/vaultdoor/pincode/bank/bankdoor = find_door_pin(/obj/structure/vaultdoor/pincode/bank)
+		if(bankdoor && (host.mind.assigned_role == "Capo"))
+			dat += "<p>The pincode for the bank vault is <b>: [bankdoor.pincode]</b></p>"
+		if(bankdoor && (host.mind.assigned_role == "La Squadra"))
+			if(prob(50))
+				dat += "<p>The pincode for the bank vault is: [bankdoor.pincode]</b></p>"
+			else
+				dat += "<p>Unfortunately you don't know the vault code.</b></p>"
 		if(host.generation)
-			dat += "I'm from [host.generation] generation.<BR>"
+			dat += "</p>I'm from the [host.generation] generation.</p>"
 		if(host.mind.special_role)
 			for(var/datum/antagonist/A in host.mind.antag_datums)
 				if(A.objectives)
-					dat += "[printobjectives(A.objectives)]<BR>"
+					dat += "<p>[printobjectives(A.objectives)]</p>"
 		var/masquerade_level = " followed the Masquerade Tradition perfectly."
 		switch(host.masquerade)
 			if(4)
@@ -94,7 +113,7 @@
 				masquerade_level = " almost ruined the Masquerade."
 			if(0)
 				masquerade_level = "'m danger to the Masquerade and my own kind."
-		dat += "Camarilla thinks I[masquerade_level]<BR>"
+		dat += "<p>Camarilla thinks I[masquerade_level]</p>"
 		var/humanity = "I'm out of my mind."
 		var/enlight = FALSE
 		if(host.clane)
@@ -131,29 +150,30 @@
 				if(1)
 					humanity = "I'm losing control over my beast!"
 
-		dat += "[humanity]<BR>"
+		dat += "<p>[humanity]</p>"
 
 		if(host.clane.name == "Brujah")
 			if(GLOB.brujahname != "")
 				if(host.real_name != GLOB.brujahname)
-					dat += " My primogen is:  [GLOB.brujahname].<BR>"
+					dat += "<p> My primogen is:  [GLOB.brujahname].</p>"
 		if(host.clane.name == "Malkavian")
 			if(GLOB.malkavianname != "")
 				if(host.real_name != GLOB.malkavianname)
-					dat += " My primogen is:  [GLOB.malkavianname].<BR>"
+					dat += "<p> My primogen is:  [GLOB.malkavianname].</p>"
 		if(host.clane.name == "Nosferatu")
 			if(GLOB.nosferatuname != "")
 				if(host.real_name != GLOB.nosferatuname)
-					dat += " My primogen is:  [GLOB.nosferatuname].<BR>"
+					dat += "<p> My primogen is:  [GLOB.nosferatuname].</p>"
 		if(host.clane.name == "Toreador")
 			if(GLOB.toreadorname != "")
 				if(host.real_name != GLOB.toreadorname)
-					dat += " My primogen is:  [GLOB.toreadorname].<BR>"
+					dat += "<p> My primogen is:  [GLOB.toreadorname].</p>"
 		if(host.clane.name == "Ventrue")
 			if(GLOB.ventruename != "")
 				if(host.real_name != GLOB.ventruename)
-					dat += " My primogen is:  [GLOB.ventruename].<BR>"
+					dat += "<p> My primogen is:  [GLOB.ventruename].</p>"
 
+		dat += "<p>"
 		dat += "<b>Physique</b>: [host.physique] + [host.additional_physique]<BR>"
 		dat += "<b>Dexterity</b>: [host.dexterity] + [host.additional_dexterity]<BR>"
 		dat += "<b>Social</b>: [host.social] + [host.additional_social]<BR>"
@@ -161,54 +181,40 @@
 		dat += "<b>Cruelty</b>: [host.blood] + [host.additional_blood]<BR>"
 		dat += "<b>Lockpicking</b>: [host.lockpicking] + [host.additional_lockpicking]<BR>"
 		dat += "<b>Athletics</b>: [host.athletics] + [host.additional_athletics]<BR>"
+		dat += "</p>"
 		if(host.hud_used)
-			dat += "<b>Known disciplines:</b><BR>"
+			dat += "<p><b>Known disciplines:</b><BR>"
 			for(var/datum/action/discipline/D in host.actions)
 				if(D)
 					if(D.discipline)
 						dat += "[D.discipline.name] [D.discipline.level] - [D.discipline.desc]<BR>"
+			dat += "</p>"
 		if(host.Myself)
 			if(host.Myself.Friend)
 				if(host.Myself.Friend.owner)
-					dat += "<b>My friend's name is [host.Myself.Friend.owner.true_real_name].</b><BR>"
+					dat += "<p><b>My friend's name is [host.Myself.Friend.owner.true_real_name].</b><BR>"
 					if(host.Myself.Friend.phone_number)
 						dat += "Their number is [host.Myself.Friend.phone_number].<BR>"
 					if(host.Myself.Friend.friend_text)
-						dat += "[host.Myself.Friend.friend_text]<BR>"
+						dat += "[host.Myself.Friend.friend_text]</p>"
 			if(host.Myself.Enemy)
 				if(host.Myself.Enemy.owner)
-					dat += "<b>My nemesis is [host.Myself.Enemy.owner.true_real_name]!</b><BR>"
+					dat += "<p><b>My nemesis is [host.Myself.Enemy.owner.true_real_name]!</b><BR>"
 					if(host.Myself.Enemy.enemy_text)
-						dat += "[host.Myself.Enemy.enemy_text]<BR>"
+						dat += "[host.Myself.Enemy.enemy_text]</p>"
 			if(host.Myself.Lover)
 				if(host.Myself.Lover.owner)
-					dat += "<b>I'm in love with [host.Myself.Lover.owner.true_real_name].</b><BR>"
+					dat += "<p><b>I'm in love with [host.Myself.Lover.owner.true_real_name].</b><BR>"
 					if(host.Myself.Lover.phone_number)
 						dat += "Their number is [host.Myself.Lover.phone_number].<BR>"
 					if(host.Myself.Lover.lover_text)
-						dat += "[host.Myself.Lover.lover_text]<BR>"
-		var/obj/keypad/armory/armory = find_keypad(/obj/keypad/armory)
-		if(armory && (host.mind.assigned_role == "Prince" || host.mind.assigned_role == "Sheriff" || host.mind.assigned_role == "Seneschal"))
-			dat += "The pincode for the armory keypad is<b>: [armory.pincode]</b><BR>"
-		var/obj/keypad/panic_room/panic = find_keypad(/obj/keypad/panic_room)
-		if(panic && (host.mind.assigned_role == "Prince" || host.mind.assigned_role == "Sheriff" || host.mind.assigned_role == "Seneschal"))
-			dat += "The pincode for the panic room keypad is<b>: [panic.pincode]</b><BR>"
-		var/obj/structure/vaultdoor/pincode/bank/bankdoor = find_door_pin(/obj/structure/vaultdoor/pincode/bank)
-		if(bankdoor && (host.mind.assigned_role == "Capo"))
-			dat += "The pincode for the bank vault is <b>: [bankdoor.pincode]</b><BR>"
-		if(bankdoor && (host.mind.assigned_role == "La Squadra"))
-			if(prob(50))
-				dat += "<b>The pincode for the bank vault is: [bankdoor.pincode]</b><BR>"
-			else
-				dat += "<b>Unfortunately you don't know the vault code.</b><BR>"
+						dat += "[host.Myself.Lover.lover_text]</p>"
 
 		if(length(host.knowscontacts) > 0)
-			dat += "<b>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
+			dat += "<p><b>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
 			for(var/i in host.knowscontacts)
 				dat += "-[i] contact<BR>"
-		for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
-			if(host.bank_id == account.bank_id)
-				dat += "<b>My bank account code is: [account.code]</b><BR>"
+			dat += "</p>"
 		host << browse(HTML_SKELETON(dat), "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
 		onclose(host, "vampire", src)
 
