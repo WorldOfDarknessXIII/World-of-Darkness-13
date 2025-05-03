@@ -22,7 +22,7 @@
 	desc = "Check assigned role, auspice, generation, humanity, masquerade, known disciplines, known contacts etc."
 	button_icon_state = "masquerade"
 	check_flags = NONE
-	var/mob/living/carbon/host
+	var/mob/living/carbon/human/host
 
 /datum/action/garouinfo/Trigger()
 	if(host)
@@ -91,6 +91,9 @@
 			dat += "<b>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
 			for(var/i in host.knowscontacts)
 				dat += "-[i] contact<BR>"
+		for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
+			if(host.bank_id == account.bank_id)
+				dat += "<b>My bank account code is: [account.code]</b><BR>"
 		host << browse(dat, "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
 		onclose(HTML_SKELETON(host), "vampire", src)
 
