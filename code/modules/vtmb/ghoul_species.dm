@@ -32,6 +32,7 @@
 			<style type="text/css">
 
 			body {
+				padding: 1em;
 				background-color: #090909; color: white;
 			}
 
