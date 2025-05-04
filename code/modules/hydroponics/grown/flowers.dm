@@ -198,7 +198,7 @@
 	icon_state = "fraxinella"
 	distill_reagent = /datum/reagent/ash
 
-/obj/item/food/grown/flower/fraxinella/examine(mob/user)
+/obj/item/food/grown/flower/geranium/fraxinella/examine(mob/user)
 	if(HAS_TRAIT(user, TRAIT_FLOWER_LANGUAGE))
 		. += span_notice("Floriography speaks to you of Fire.")
 	if(HAS_TRAIT(user, TRAIT_FLOWER_LANGUAGE_JAPANESE))
@@ -316,7 +316,7 @@
 	bite_consumption_mod = 2
 	distill_reagent = /datum/reagent/consumable/ethanol/absinthe //It's made from flowers.
 
-/obj/item/seeds/sunflower/moonflower/examine(mob/user)
+/obj/item/food/grown/flower/moonflower/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_FLOWER_LANGUAGE))
 		. += span_notice("Floriography speaks to you of mortality, of love in vain.</span>")
