@@ -33,6 +33,8 @@
 				my_gender = "lady"
 			if(24 to INFINITY)
 				my_gender = "woman"
+	if(gender == PLURAL || gender == NEUTER)
+		my_gender = "person"
 	if(my_shape == "s")
 		my_shape = "slim"
 	if(my_shape == "f")
