@@ -280,7 +280,7 @@
 	to_chat(user, "<font color='green'>Your sunflower's <font color='orange'><b>FLOWER POWER</b></font> strikes [M]!</font>")
 	. = ..()
 
-/obj/item/food/grown/grown/flower/sunflower/examine(mob/user)
+/obj/item/food/grown/flower/sunflower/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_FLOWER_LANGUAGE))
 		. += span_notice("Floriography tells you, if short, this flower speaks of devout adoration. If notably tall, this flower speaks of Pride.</span>")
@@ -413,7 +413,7 @@ Choosing not to delete it in case the example of its code is useful for somethin
 	desc = "A beautiful blue flower."
 	icon_state = "forget_me_not"
 
-/obj/item/food/grown/flower/geranium/examine(mob/user)
+/obj/item/food/grown/flower/forgetmenot/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_FLOWER_LANGUAGE))
 		. += span_notice("Floriography speaks to you of True love, Fidelity and a Lasting Connection.")
