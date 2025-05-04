@@ -7820,7 +7820,7 @@
 /obj/structure/table,
 /obj/item/restraints/handcuffs,
 /obj/machinery/button/door{
-	id = "armouryaccess";
+	id = "police";
 	name = "Parking Shutters Control"
 	},
 /turf/open/floor/plating/asphalt,
@@ -8448,7 +8448,7 @@
 "aDk" = (
 /obj/machinery/door/poddoor/shutters{
 	damage_deflection = 60;
-	id = "armouryaccess";
+	id = "police";
 	max_integrity = 300;
 	name = "Parking Shutter"
 	},
@@ -14046,7 +14046,7 @@
 "aWD" = (
 /obj/structure/table,
 /obj/machinery/button/door{
-	id = "prince";
+	id = "camarilla";
 	name = "Parking Shutters Control"
 	},
 /obj/effect/decal/rugs,
@@ -33583,7 +33583,9 @@
 /turf/open/floor/plating/vampgrass,
 /area/vtm/pacificheights)
 "fgN" = (
-/obj/vampire_car/limousine/camarilla,
+/obj/vampire_car/limousine/camarilla{
+	access = "theatre"
+	},
 /turf/open/floor/plating/asphalt,
 /area/vtm/interior/millennium_tower)
 "fgX" = (
@@ -52763,7 +52765,7 @@
 "nUJ" = (
 /obj/machinery/door/poddoor/shutters{
 	damage_deflection = 60;
-	id = "prince";
+	id = "camarilla";
 	max_integrity = 300;
 	name = "Parking Shutter"
 	},
