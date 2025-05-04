@@ -114,6 +114,8 @@
 	glabro.Grant(C)
 	var/datum/action/gift/rage_heal/GH = new()
 	GH.Grant(C)
+	var/datum/action/gift/howling/howl = new()
+	howl.Grant(C)
 	C.transformator = new(C)
 	C.transformator.human_form = C
 
