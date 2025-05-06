@@ -204,4 +204,74 @@
 
 
 
-	owner.appearance = finished_icon
+	owner.overlays += finished_icon
+
+/datum/combat_ai/
+
+	var/mob/living/owner
+	var/loop_terminator = 0
+
+	var/movement_delay = 10
+
+	var/armor = 0
+	var/poise = 10
+	var/health = 10
+
+	var/turf/anchor_turf
+	var/mob/living/target_player
+	var/last_attack = 0
+	var/attack_delay = 17
+
+	var/return_override
+	var/return_distance = 14
+
+/datum/combat_ai/New(mob/owner_mob)
+	. = ..()
+	if(!owner_mob) return
+	owner = owner_mob
+	anchor_turf = get_turf(owner)
+	INVOKE_ASYNC(src,PROC_REF(ai_loop))
+
+/datum/combat_ai/proc/attack_turf(turf/turf_target,time)
+	var/obj/blink_obj = new()
+	blink_obj.appearance = turf_target.appearance
+	blink_obj.mouse_opacity = 0
+	blink_obj.layer = EFFECTS_LAYER
+	blink_obj.alpha = 0
+	animate(blink_obj,alpha = 255,color = "#ff0000", time = 5)
+	animate(alpha = 0, color = "#000000", time = 5)
+	turf_target.vis_contents += blink_obj
+	sleep(5)
+	if(get_turf(target_player) == turf_target)
+		target_player.apply_damage(rand(owner.melee_damage_lower,owner.melee_damage_upper))
+
+/datum/combat_ai/proc/ai_loop()
+	while(loop_terminator == 0)
+		if(return_override == 1)
+			if((get_turf(owner)) != anchor_turf)
+				step_towards(owner, anchor_turf)
+				sleep(movement_delay)
+				continue
+			else
+				return_override = 0
+		if(!target_player)
+			for(var/mob/living/mob_in_range in range(7,owner))
+				if (mob_in_range.client)
+					target_player = mob_in_range
+		if(!target_player)
+			sleep(movement_delay)
+			continue
+		else
+			var/turf/own_turf = get_turf(owner)
+			var/turf/target_turf = get_turf(target_player)
+			if(get_dist(own_turf,anchor_turf) > return_distance)
+				return_override = 1
+				continue
+			if(get_dist(own_turf,target_turf) > 1)
+				step_towards(owner,target_player)
+				sleep(movement_delay)
+				continue
+			else
+				INVOKE_ASYNC(src,PROC_REF(attack_turf),target_turf)
+				sleep(attack_delay)
+				continue
