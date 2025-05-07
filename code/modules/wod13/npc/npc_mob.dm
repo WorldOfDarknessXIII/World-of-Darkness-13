@@ -16,3 +16,7 @@
 	var/datum/icon_generator/generator_datum = new icon_generator_datum(src)
 	generator_datum.generate_icon()
 	ai_datum = new(src)
+
+/mob/living/npc/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, bare_wound_bonus, sharpness)
+	if(!damage || !damagetype) return
+	ai_datum.process_damage(1, damagetype)
