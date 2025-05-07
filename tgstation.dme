@@ -3574,6 +3574,8 @@
 #include "code\modules\wod13\items\stores\food.dm"
 #include "code\modules\wod13\items\stores\guns.dm"
 #include "code\modules\wod13\items\stores\misc.dm"
+#include "code\modules\wod13\npc\npc_datums.dm"
+#include "code\modules\wod13\npc\npc_mob.dm"
 #include "code\modules\wod13\npcs\bouncer_elysium.dm"
 #include "code\modules\wod13\npcs\bouncer_giovanni.dm"
 #include "code\modules\wod13\npcs\bouncer_mob.dm"
