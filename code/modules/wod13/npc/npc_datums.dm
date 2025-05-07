@@ -232,8 +232,78 @@
 	anchor_turf = get_turf(owner)
 	INVOKE_ASYNC(src,PROC_REF(ai_loop))
 
+/datum/combat_ai/proc/combat_stun()
+	loop_terminator = 1
+	sleep(25)
+	INVOKE_ASYNC(src, PROC_REF(combat_animation),"poise_restore")
+	sleep(5)
+	loop_terminator = 0
+	poise = (floor(initial(poise) / 3))
+	INVOKE_ASYNC(src, PROC_REF(ai_loop))
+
+/datum/combat_ai/proc/combat_animation(type)
+	switch(type)
+		if(null)
+			return
+		if("poise_restore")
+			var/obj/icon_obj = new()
+			icon_obj.mouse_opacity = 1
+			icon_obj.appearance = owner.appearance
+			icon_obj.dir = owner.dir
+			icon_obj.layer = EFFECTS_LAYER
+			icon_obj.alpha = 0
+			var/matrix/M = new
+			M.Scale(1.6)
+			icon_obj.transform = M
+			var/matrix/N = new
+			N.Scale(1)
+			animate(icon_obj, time = 5, alpha = 255, transform = N)
+			owner.vis_contents += icon_obj
+			sleep(6)
+			owner.vis_contents -= icon_obj
+		if("poise_break")
+			var/obj/icon_obj = new()
+			icon_obj.mouse_opacity = 1
+			icon_obj.appearance = owner.appearance
+			icon_obj.layer = EFFECTS_LAYER
+			icon_obj.dir = owner.dir
+			var/matrix/M = new
+			M.Scale(1.6)
+			animate(icon_obj, time = 5, alpha = 0, transform = M)
+			owner.vis_contents += icon_obj
+			sleep(6)
+			owner.vis_contents -= icon_obj
+		if("poise_hit")
+			var/obj/icon_obj = new()
+			icon_obj.mouse_opacity = 1
+			icon_obj.appearance = owner.appearance
+			icon_obj.layer = EFFECTS_LAYER
+			var/matrix/M = new
+			M.Scale(1.2 + (0.01 * ((initial(poise) + 1) - poise)))
+			animate(icon_obj, time = 3, alpha = 0, transform = M)
+			owner.vis_contents += icon_obj
+			sleep(4)
+			owner.vis_contents -= icon_obj
+
+/datum/combat_ai/proc/process_damage(damage_number,damage_type)
+	if(!damage_number) return
+	var/damage_to_deal = damage_number - armor
+	if(damage_type == "poise")
+		if(poise >= 0)
+			poise -= damage_to_deal
+			if(poise <= 0)
+				poise = 0
+				INVOKE_ASYNC(src,PROC_REF(combat_animation),"poise_break")
+				INVOKE_ASYNC(src,PROC_REF(combat_stun))
+				return
+			else
+				INVOKE_ASYNC(src,PROC_REF(combat_animation),"poise_hit")
+		return
+
+
 /datum/combat_ai/proc/attack_turf(turf/turf_target,time)
 	var/obj/blink_obj = new()
+	var/mob/living/carbon/human/human_mob_target = target_player
 	blink_obj.appearance = turf_target.appearance
 	blink_obj.mouse_opacity = 0
 	blink_obj.layer = EFFECTS_LAYER
@@ -243,7 +313,13 @@
 	turf_target.vis_contents += blink_obj
 	sleep(5)
 	if(get_turf(target_player) == turf_target)
-		target_player.apply_damage(rand(owner.melee_damage_lower,owner.melee_damage_upper))
+		if(world.time > target_player.blocking_timestamp + 5)
+			target_player.apply_damage(rand(owner.melee_damage_lower,owner.melee_damage_upper))
+		else
+			process_damage(2,"poise")
+		if(human_mob_target && human_mob_target.blocking)
+			human_mob_target.SwitchBlocking()
+		if(target_player.blocking == TRUE) target_player.blocking = FALSE // This is a failsafe in case the above is not trigerred on player mobs.
 
 /datum/combat_ai/proc/ai_loop()
 	while(loop_terminator == 0)

@@ -242,6 +242,7 @@
 	var/parry_class = WEIGHT_CLASS_TINY
 	var/parry_cd = 0
 	var/blocking = FALSE
+	var/blocking_timestamp = 0
 	var/last_m_intent = MOVE_INTENT_RUN
 	var/last_bloodpower_use = 0
 	var/last_drinkblood_use = 0
