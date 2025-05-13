@@ -10,7 +10,7 @@
 	icon = 'icons/obj/vtm_atm.dmi'
 	icon_state = "atm"
 	plane = GAME_PLANE
-	layer = CAR_LAYER
+	layer = BELOW_MOB_LAYER
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	var/logged_in = FALSE

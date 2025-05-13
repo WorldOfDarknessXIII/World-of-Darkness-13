@@ -579,27 +579,50 @@
 				/obj/item/radio = 1)
 	tools = list(TOOL_WIRECUTTER)
 	category = CAT_CLOTHING
-
+*/
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
 	result = /obj/item/bouquet
-	reqs = list(/obj/item/food/grown/poppy/lily =2,
-				/obj/item/grown/sunflower = 2,
-				/obj/item/food/grown/poppy/geranium = 2)
+	reqs = list(/obj/item/food/grown/flower = 3)
 	category = CAT_MISC
 
 /datum/crafting_recipe/sunbouquet
 	name = "Sunflower bouquet"
 	result = /obj/item/bouquet/sunflower
-	reqs = list(/obj/item/grown/sunflower = 6)
+	reqs = list(/obj/item/food/grown/flower/sunflower = 3)
 	category = CAT_MISC
 
 /datum/crafting_recipe/poppybouquet
 	name = "Poppy bouquet"
 	result = /obj/item/bouquet/poppy
-	reqs = list (/obj/item/food/grown/poppy = 6)
+	reqs = list (/obj/item/food/grown/flower/poppy = 3)
 	category = CAT_MISC
 
+/datum/crafting_recipe/flowercrown_mixed
+	name = "Mixed flower crown"
+	result = /obj/item/flower_crown
+	reqs = list (/obj/item/food/grown/flower/ = 5)
+	category = CAT_MISC
+
+/datum/crafting_recipe/flowercrown_sunflower
+	name = "Sunflower flower crown"
+	result = /obj/item/flower_crown/sunflower
+	reqs = list (/obj/item/food/grown/flower/sunflower = 5)
+	category = CAT_MISC
+
+/datum/crafting_recipe/flowercrown_poppy
+	name = "Poppy flower crown"
+	result = /obj/item/flower_crown/poppy
+	reqs = list (/obj/item/food/grown/flower/poppy = 5)
+	category = CAT_MISC
+
+/datum/crafting_recipe/flowercrown_lily
+	name = "Lily flower crown"
+	result = /obj/item/flower_crown/lily
+	reqs = list (/obj/item/food/grown/flower/lily = 5)
+	category = CAT_MISC
+
+/*
 /datum/crafting_recipe/spooky_camera
 	name = "Camera Obscura"
 	result = /obj/item/camera/spooky

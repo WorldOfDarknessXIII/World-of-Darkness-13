@@ -395,9 +395,13 @@
 // Bouquets
 /obj/item/bouquet
 	name = "mixed bouquet"
-	desc = "A bouquet of sunflowers, lilies, and geraniums. How delightful."
+	desc = "A bouquet of mixed flowers. How delightful!"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "mixedbouquet"
+
+/obj/item/bouquet/Initialize()
+	. = ..()
+	AddComponent(/datum/component/selling, 100, "bouquet", FALSE)
 
 /obj/item/bouquet/sunflower
 	name = "sunflower bouquet"

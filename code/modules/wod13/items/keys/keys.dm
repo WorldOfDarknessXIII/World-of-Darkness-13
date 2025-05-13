@@ -29,7 +29,8 @@
 		"chantry",
 		"theatre",
 		"milleniumCommon",
-		"primogen"
+		"primogen",
+		"millenium_delivery",
 	)
 	color = "#bd3327"
 
@@ -42,7 +43,8 @@
 		"theatre",
 		"milleniumCommon",
 		"primogen",
-		"clerk"
+		"clerk",
+		"millenium_delivery",
 	)
 	color = "#bd3327"
 
@@ -53,7 +55,8 @@
 		"clerk",
 		"theatre",
 		"milleniumCommon",
-		"primogen"
+		"primogen",
+		"millenium_delivery",
 	)
 	color = "#bd3327"
 
@@ -62,7 +65,8 @@
 	accesslocks = list(
 		"milleniumCommon",
 		"clerk",
-		"camarilla"
+		"camarilla",
+		"millenium_delivery",
 	)
 
 /obj/item/vamp/keys/archive
@@ -77,13 +81,15 @@
 		"chantry",
 		"milleniumCommon",
 		"primogen",
-		"camarilla"
+		"camarilla",
+		"millenium_delivery",
 	)
 
 /obj/item/vamp/keys/anarch
 	name = "Anarch keys"
 	accesslocks = list(
-		"anarch"
+		"anarch",
+		"bar_delivery",
 	)
 	color = "#434343"
 
@@ -92,6 +98,7 @@
 	accesslocks = list(
 		"bar",
 		"anarch",
+		"bar_delivery",
 	)
 	color = "#434343"
 
@@ -149,7 +156,8 @@
 		"malkav",
 		"primogen",
 		"milleniumCommon",
-		"camarilla"
+		"camarilla",
+		"millenium_delivery",
 	)
 	color = "#2c92ff"
 
@@ -178,7 +186,8 @@
 		"toreador",
 		"primogen",
 		"milleniumCommon",
-		"camarilla"
+		"camarilla",
+		"millenium_delivery",
 	)
 	color = "#ff2fc4"
 
@@ -196,7 +205,8 @@
 		"nosferatu",
 		"primogen",
 		"milleniumCommon",
-		"camarilla"
+		"camarilla",
+		"millenium_delivery",
 	)
 	color = "#367c31"
 
@@ -233,7 +243,8 @@
 		"ventrue",
 		"milleniumCommon",
 		"primogen",
-		"camarilla"
+		"camarilla",
+		"millenium_delivery",
 	)
 	color = "#e8ff29"
 

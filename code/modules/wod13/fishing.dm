@@ -17,7 +17,7 @@
 	AddComponent(/datum/component/selling, 400, "fish", FALSE)
 
 /obj/item/food/fish/tune
-	name = "tune"
+	name = "tuna"
 	icon_state = "fish2"
 
 /obj/item/food/fish/tune/Initialize()

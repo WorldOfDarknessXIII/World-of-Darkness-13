@@ -314,6 +314,10 @@
 	parts += hardcore_random_report()
 
 	CHECK_TICK
+
+	parts += transportation_report()
+
+	CHECK_TICK
 	//Medals
 	parts += medal_report()
 	//Station Goals

@@ -1069,6 +1069,27 @@
 		base_body_mod = "f"
 	AssignSocialRole(/datum/socialrole/shop/gummaguts)
 
+/datum/socialrole/shop/garden //community garden
+	neutral_phrases = list("Would you like to buy something?",
+											"Everything is non-invasive and climate appropriate!",
+											"Sorry, we're out of bags.")
+	random_phrases = list("Just let me know when you're ready.",
+												"Next, here, please!",
+												)
+	help_phrases = list("Why would you do that?!",
+											"Take what you want, let me go!",
+											"Someone, get a doctor!")
+
+/mob/living/carbon/human/npc/garden
+	staying = TRUE
+	is_talking = TRUE
+
+/mob/living/carbon/human/npc/garden/Initialize()
+	. = ..()
+	if(prob(66))
+		base_body_mod = "f"
+	AssignSocialRole(/datum/socialrole/shop/garden)
+
 /datum/socialrole/police
 	s_tones = list("albino",
 								"caucasian1",

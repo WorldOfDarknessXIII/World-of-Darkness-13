@@ -15,6 +15,8 @@
 
 	var/closed = TRUE
 	var/locked = FALSE
+	var/door_broken = FALSE
+	var/door_layer = ABOVE_ALL_MOB_LAYER
 	var/lock_id = null
 	var/glass = FALSE
 	var/hacking = FALSE
@@ -86,9 +88,39 @@
 	//Adds the component only once. We do it here & not in Initialize() because there are tons of windows & we don't want to add to their init times
 	LoadComponent(/datum/component/leanable, dropping)
 
+/obj/structure/vampdoor/proc/proc_unlock(method) //I am here so that dwelling doors can call me to properly process their alarms.
+	return
+
+/obj/structure/vampdoor/proc/break_door()
+	name = "door frame"
+	desc = "An empty door frame. Someone removed the door by force. A special door repair kit should be able to fix this."
+	door_broken = 1
+	density = 0
+	opacity = 0
+	layer = OPEN_DOOR_LAYER
+	closed = FALSE
+	locked = FALSE
+	icon_state = "[baseicon]-b"
+	update_icon()
+
+/obj/structure/vampdoor/proc/fix_door()
+	name = initial(name)
+	desc = initial(desc)
+	door_broken = 0
+	density = 1
+	if(!glass) opacity = 1
+	layer = ABOVE_ALL_MOB_LAYER
+	closed = TRUE
+	locked = FALSE
+	icon_state = "[baseicon]-1"
+	update_icon()
+
 /obj/structure/vampdoor/attack_hand(mob/user)
 	. = ..()
 	var/mob/living/N = user
+	if(door_broken)
+		to_chat(user,span_warning("There is no door to use here."))
+		return
 	if(locked)
 		if(N.a_intent != INTENT_HARM)
 			playsound(src, lock_sound, 75, TRUE)
@@ -103,11 +135,13 @@
 						D.icon_state = baseicon
 						var/atom/throw_target = get_edge_target_turf(src, user.dir)
 						D.throw_at(throw_target, rand(2, 4), 4, user)
-						qdel(src)
+						proc_unlock(50)
+						break_door()
 					else
 						pixel_z = pixel_z+rand(-1, 1)
 						pixel_w = pixel_w+rand(-1, 1)
 						playsound(get_turf(src), 'code/modules/wod13/sounds/get_bent.ogg', 50, TRUE)
+						proc_unlock(5)
 						to_chat(user, "<span class='warning'>[src] is locked, and you aren't strong enough to break it down!</span>")
 						spawn(2)
 							pixel_z = initial(pixel_z)
@@ -147,9 +181,28 @@
 		closed = TRUE
 
 /obj/structure/vampdoor/attackby(obj/item/W, mob/living/user, params)
+	if(istype(W, /obj/item/door_repair_kit))
+		if(!door_broken)
+			to_chat(user,span_warning("This door does not seem to be broken."))
+			return
+		var/obj/item/door_repair_kit/repair_kit = W
+		if(hacking == TRUE) //This is basically an in-use indicator already
+			to_chat(user,span_warning("Someone else seems to be using this door already."))
+			return
+		playsound(src, 'sound/items/ratchet.ogg', 50)
+		hacking = 1
+		if(do_after(user, 10 SECONDS,src))
+			playsound(src, 'sound/items/deconstruct.ogg', 50)
+			fix_door()
+			qdel(repair_kit)
+		hacking = 0
 	if(istype(W, /obj/item/vamp/keys/hack))
+		if(door_broken)
+			to_chat(user,span_warning("There is no door to pick here."))
+			return
 		if(locked)
 			hacking = TRUE
+			proc_unlock(5)
 			playsound(src, 'code/modules/wod13/sounds/hack.ogg', 100, TRUE)
 			for(var/mob/living/carbon/human/npc/police/P in oviewers(7, src))
 				if(P)
@@ -183,6 +236,9 @@
 				return
 	else if(istype(W, /obj/item/vamp/keys))
 		var/obj/item/vamp/keys/KEY = W
+		if(door_broken)
+			to_chat(user,span_warning("There is no door to open/close here."))
+			return
 		if(KEY.roundstart_fix)
 			lock_id = pick(KEY.accesslocks)
 			KEY.roundstart_fix = FALSE
@@ -196,4 +252,5 @@
 					else
 						playsound(src, lock_sound, 75, TRUE)
 						to_chat(user, "[src] is now unlocked.")
+						proc_unlock("key")
 						locked = FALSE

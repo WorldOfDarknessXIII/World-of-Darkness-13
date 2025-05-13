@@ -39,7 +39,7 @@
 /obj/item/reagent_containers/spray/weedspray // -- Skie
 	desc = "It's a toxic mixture, in spray form, to kill small weeds."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
-	name = "weed spray"
+	name = "herbicide"
 	icon_state = "weedspray"
 	inhand_icon_state = "spraycan"
 	worn_icon_state = "spraycan"
@@ -55,7 +55,7 @@
 /obj/item/reagent_containers/spray/pestspray // -- Skie
 	desc = "It's some pest eliminator spray! <I>Do not inhale!</I>"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
-	name = "pest spray"
+	name = "pesticide"
 	icon_state = "pestspray"
 	inhand_icon_state = "plantbgone"
 	worn_icon_state = "spraycan"
@@ -63,11 +63,11 @@
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
 	list_reagents = list(/datum/reagent/toxin/pestkiller = 100)
-
+/*
 /obj/item/reagent_containers/spray/pestspray/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (TOXLOSS)
-
+*/
 /obj/item/cultivator
 	name = "cultivator"
 	desc = "It's used for removing weeds or scratching your back."
@@ -110,7 +110,7 @@
 		H.Stun(20)
 		playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 		H.visible_message("<span class='warning'>[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!</span>", \
-						  "<span class='userdanger'>You step on [src] causing the handle to hit you right in the face!</span>")
+						"<span class='userdanger'>You step on [src] causing the handle to hit you right in the face!</span>")
 
 /obj/item/hatchet
 	name = "hatchet"
@@ -241,7 +241,7 @@
 
 
 /obj/item/reagent_containers/glass/bottle/nutrient
-	name = "bottle of nutrient"
+	name = "basic fertilizer"
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
@@ -253,7 +253,7 @@
 
 
 /obj/item/reagent_containers/glass/bottle/nutrient/ez
-	name = "bottle of E-Z-Nutrient"
+	name = "Basic Fertilizer"
 	desc = "Contains a fertilizer that causes mild mutations and gradual plant growth with each harvest."
 	list_reagents = list(/datum/reagent/plantnutriment/eznutriment = 50)
 
@@ -263,7 +263,7 @@
 	list_reagents = list(/datum/reagent/plantnutriment/left4zednutriment = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/rh
-	name = "bottle of Robust Harvest"
+	name = "Advanced Fertilizer"
 	desc = "Contains a fertilizer that increases the yield of a plant while gradually preventing mutations."
 	list_reagents = list(/datum/reagent/plantnutriment/robustharvestnutriment = 50)
 
@@ -276,11 +276,11 @@
 	possible_transfer_amounts = list(1,2,5)
 
 /obj/item/reagent_containers/glass/bottle/killer/weedkiller
-	name = "bottle of weed killer"
+	name = "herbicide"
 	desc = "Contains a herbicide."
 	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 30)
 
 /obj/item/reagent_containers/glass/bottle/killer/pestkiller
-	name = "bottle of pest spray"
+	name = "pesticide"
 	desc = "Contains a pesticide."
 	list_reagents = list(/datum/reagent/toxin/pestkiller = 30)

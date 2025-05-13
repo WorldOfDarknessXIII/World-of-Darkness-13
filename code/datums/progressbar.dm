@@ -106,13 +106,15 @@
 	if(!user.client) //Clients can vanish at any time, the bastards.
 		return
 	user_client = user.client
-	add_prog_bar_image_to_client()
+	INVOKE_ASYNC(src, PROC_REF(add_prog_bar_image_to_client))
 
 
 ///Adds a smoothly-appearing progress bar image to the player's screen.
 /datum/progressbar/proc/add_prog_bar_image_to_client()
 	bar.pixel_y = 0
 	bar.alpha = 0
+	animate(bar, alpha = 0, pixel_y = 0, time = 1)
+	sleep(1) // temporary fix to flickering issue
 	user_client.images += bar
 	animate(bar, pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 
