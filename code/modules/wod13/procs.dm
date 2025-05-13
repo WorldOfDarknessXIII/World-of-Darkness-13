@@ -1,63 +1,60 @@
 /mob/living/carbon/human/proc/AdjustHumanity(var/value, var/limit, var/forced = FALSE)
-	if(value < 0)
-		for(var/mob/living/carbon/human/H in viewers(7, src))
-			if(H != src && H.mind?.dharma)
-				if("judgement" in H.mind.dharma.tenets)
-					to_chat(H, "<span class='warning'>[src] is doing something bad, I need to punish them!")
-					H.mind.dharma.judgement |= real_name
-	if(!iskindred(src))
+	if (!is_kindred(src))
 		return
-	if(!GLOB.canon_event)
+	if (!GLOB.canon_event)
 		return
-	if(!is_special_character(src) || forced)
-		if(!in_frenzy || forced)
-			var/mod = 1
-			var/enlight = FALSE
-			if(clane)
-				mod = clane.humanitymod
-				enlight = clane.enlightenment
-			if(enlight)
-				if(value < 0)
-					if(humanity < 10)
-						if (forced)
-							humanity = max(0, humanity-(value * mod))
-						else
-							humanity = max(limit, humanity-(value*mod))
-						SEND_SOUND(src, sound('code/modules/wod13/sounds/humanity_gain.ogg', 0, 0, 75))
-						to_chat(src, "<span class='userhelp'><b>ENLIGHTENMENT INCREASED!</b></span>")
-				if(value > 0)
-					if(humanity > 0)
-						if (forced)
-							humanity = min(10, humanity-(value * mod))
-						else
-							humanity = min(limit, humanity-(value*mod))
-						SEND_SOUND(src, sound('code/modules/wod13/sounds/humanity_loss.ogg', 0, 0, 75))
-						to_chat(src, "<span class='userdanger'><b>ENLIGHTENMENT DECREASED!</b></span>")
-			else
-				if(value < 0)
-					if((humanity > limit) || forced)
-						if (forced)
-							humanity = max(0, humanity+(value * mod))
-						else
-							humanity = max(limit, humanity+(value*mod))
-						SEND_SOUND(src, sound('code/modules/wod13/sounds/humanity_loss.ogg', 0, 0, 75))
-						to_chat(src, "<span class='userdanger'><b>HUMANITY DECREASED!</b></span>")
-						if(humanity == limit)
-							to_chat(src, "<span class='userdanger'><b>If I don't stop, I will succumb to the Beast.</b></span>")
-					else
-						var/msgShit = pick("<span class='userdanger'><b>I can barely control the Beast!</b></span>", "<span class='userdanger'><b>I SHOULD STOP.</b></span>", "<span class='userdanger'><b>I'm succumbing to the Beast!</b></span>")
-						to_chat(src, msgShit) // [ChillRaccoon] - I think we should make's players more scared
-				if(value > 0)				  // so please, do not say about that, they're in safety after they're humanity drops to limit
-					if((humanity < limit) || forced)
-						if (forced)
-							humanity = min(10, humanity+(value * mod))
-						else
-							humanity = min(limit, humanity+(value*mod))
-						SEND_SOUND(src, sound('code/modules/wod13/sounds/humanity_gain.ogg', 0, 0, 75))
-						to_chat(src, "<span class='userhelp'><b>HUMANITY INCREASED!</b></span>")
+	if (is_special_character(src) && !forced)
+		return
+	if (HAS_TRAIT(src, TRAIT_IN_FRENZY) && !forced)
+		return
 
-/mob/living/carbon/human/proc/AdjustMasquerade(var/value, var/forced = FALSE)
-	if(!iskindred(src) && !isghoul(src) && !iscathayan(src))
+	var/mod = HAS_TRAIT(src, TRAIT_SENSITIVE_HUMANITY) ? 2 : 1
+	var/enlightenment = FALSE
+	if(clan)
+		enlightenment = clan.enlightenmentenment
+
+	if(enlightenment)
+		if(value < 0)
+			if(humanity < 10)
+				if (forced)
+					humanity = max(0, humanity-(value * mod))
+				else
+					humanity = max(limit, humanity-(value*mod))
+				SEND_SOUND(src, sound('code/modules/wod13/sounds/humanity_gain.ogg', 0, 0, 75))
+				to_chat(src, "<span class='userhelp'><b>ENLIGHTENMENT INCREASED!</b></span>")
+		if(value > 0)
+			if(humanity > 0)
+				if (forced)
+					humanity = min(10, humanity-(value * mod))
+				else
+					humanity = min(limit, humanity-(value*mod))
+				SEND_SOUND(src, sound('code/modules/wod13/sounds/humanity_loss.ogg', 0, 0, 75))
+				to_chat(src, "<span class='userdanger'><b>ENLIGHTENMENT DECREASED!</b></span>")
+	else
+		if(value < 0)
+			if((humanity > limit) || forced)
+				if (forced)
+					humanity = max(0, humanity+(value * mod))
+				else
+					humanity = max(limit, humanity+(value*mod))
+				SEND_SOUND(src, sound('code/modules/wod13/sounds/humanity_loss.ogg', 0, 0, 75))
+				to_chat(src, "<span class='userdanger'><b>HUMANITY DECREASED!</b></span>")
+				if(humanity == limit)
+					to_chat(src, "<span class='userdanger'><b>If I don't stop, I will succumb to the Beast.</b></span>")
+			else
+				var/msgShit = pick("<span class='userdanger'><b>I can barely control the Beast!</b></span>", "<span class='userdanger'><b>I SHOULD STOP.</b></span>", "<span class='userdanger'><b>I'm succumbing to the Beast!</b></span>")
+				to_chat(src, msgShit) // [ChillRaccoon] - I think we should make's players more scared
+		if(value > 0)				  // so please, do not say about that, they're in safety after they're humanity drops to limit
+			if((humanity < limit) || forced)
+				if (forced)
+					humanity = min(10, humanity+(value * mod))
+				else
+					humanity = min(limit, humanity+(value*mod))
+				SEND_SOUND(src, sound('code/modules/wod13/sounds/humanity_gain.ogg', 0, 0, 75))
+				to_chat(src, "<span class='userhelp'><b>HUMANITY INCREASED!</b></span>")
+
+/mob/living/carbon/human/proc/AdjustMasquerade(value, forced = FALSE)
+	if(!is_kindred(src) && !is_ghoul(src) && !is_kuei_jin(src))
 		return
 	if(!GLOB.canon_event)
 		return
@@ -79,7 +76,7 @@
 					to_chat(src, "<span class='userdanger'><b>MASQUERADE VIOLATION!</b></span>")
 				SSbad_guys_party.next_fire = max(world.time, SSbad_guys_party.next_fire - 2 MINUTES)
 			if(value > 0)
-				if(clane?.enlightenment && !forced)
+				if(clan?.enlightenment && !forced)
 					AdjustHumanity(1, 10)
 				for(var/mob/living/carbon/human/H in GLOB.player_list)
 					H.voted_for -= dna.real_name

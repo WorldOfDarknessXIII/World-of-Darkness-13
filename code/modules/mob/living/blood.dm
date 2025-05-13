@@ -6,8 +6,7 @@
 
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood()
-
-	if(NOBLOOD in dna.species.species_traits || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+	if((NOBLOOD in dna.species.species_traits) || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		return
 
 	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
@@ -33,32 +32,31 @@
 
 		//Effects of bloodloss
 		var/word = pick("dizzy","woozy","faint")
-		if(!iskindred(src))
-			switch(blood_volume)
-				if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
-					if(prob(15))
-						to_chat(src, "<span class='userdanger'>Blood starts to tear your skin apart. You're going to burst!</span>")
-						inflate_gib()
-				if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
-					if(prob(10))
-						to_chat(src, "<span class='warning'>You feel terribly bloated.</span>")
-				if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-					if(prob(5))
-						to_chat(src, "<span class='warning'>You feel [word].</span>")
-					adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.01, 1))
-				if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-					adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
-					if(prob(5))
-						blur_eyes(6)
-						to_chat(src, "<span class='warning'>You feel very [word].</span>")
-				if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-					adjustOxyLoss(5)
-					if(prob(15))
-						Unconscious(rand(20,60))
-						to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
-				if(-INFINITY to BLOOD_VOLUME_SURVIVE)
-					if(!HAS_TRAIT(src, TRAIT_NODEATH))
-						death()
+		switch(blood_volume)
+			if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
+				if(prob(15))
+					to_chat(src, "<span class='userdanger'>Blood starts to tear your skin apart. You're going to burst!</span>")
+					inflate_gib()
+			if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
+				if(prob(10))
+					to_chat(src, "<span class='warning'>You feel terribly bloated.</span>")
+			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
+				if(prob(5))
+					to_chat(src, "<span class='warning'>You feel [word].</span>")
+				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.01, 1))
+			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
+				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
+				if(prob(5))
+					blur_eyes(6)
+					to_chat(src, "<span class='warning'>You feel very [word].</span>")
+			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
+				adjustOxyLoss(5)
+				if(prob(15))
+					Unconscious(rand(20,60))
+					to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
+			if(-INFINITY to BLOOD_VOLUME_SURVIVE)
+				if(!HAS_TRAIT(src, TRAIT_NODEATH))
+					death()
 
 		var/temp_bleed = 0
 		//Bleeding out
@@ -73,12 +71,12 @@
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt)
-	if(NOBLOOD in dna.species.species_traits || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+	if((NOBLOOD in dna.species.species_traits) || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		return
 	if(!blood_volume)
 		return
-	if(!iskindred(src))
-		blood_volume = max(blood_volume - amt, 0)
+
+	blood_volume = max(blood_volume - amt, 0)
 
 	var/timing = 100
 	if(blood_volume >= BLOOD_VOLUME_SURVIVE)
@@ -89,11 +87,6 @@
 		timing = 50
 	if(blood_volume >= BLOOD_VOLUME_SAFE)
 		timing = 100
-
-	if(iskindred(src))
-		timing = 100
-		if(!bloodpool)
-			return
 
 	if(last_bloodpool_restore+timing <= world.time)
 		last_bloodpool_restore = world.time
@@ -119,7 +112,7 @@
 	return bleed_amt
 
 /mob/living/carbon/human/get_bleed_rate()
-	if((NOBLOOD in dna.species.species_traits))
+	if(NOBLOOD in dna.species.species_traits)
 		return
 	. = ..()
 	. *= physiology.bleed_mod
@@ -132,7 +125,7 @@
  * * forced-
  */
 /mob/living/carbon/proc/bleed_warn(bleed_amt = 0, forced = FALSE)
-	if(NOBLOOD in dna.species.species_traits || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+	if((NOBLOOD in dna.species.species_traits) || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		return
 	if(!blood_volume || !client)
 		return
@@ -251,11 +244,10 @@
 		blood_data["donor"] = src
 		blood_data["viruses"] = list()
 
-		blood_data["generation"] = src.generation
-		if(istype(src, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = src
-			if(H.clane)
-				blood_data["clan"] = H.clane.name
+		var/datum/splat/vampire/kindred/vampirism = is_kindred(src)
+		if (vampirism)
+			blood_data["generation"] = vampirism.generation
+			blood_data["clan"] = vampirism.clan.name
 
 		for(var/thing in diseases)
 			var/datum/disease/D = thing

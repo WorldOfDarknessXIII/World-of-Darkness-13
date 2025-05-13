@@ -250,24 +250,6 @@
  * Will shove the target mob back, and drop them if they're in front of something dense
  * or another carbon.
 */
-
-/mob/living/carbon/proc/do_rage_from_attack(var/mob/living/target)
-	if(isgarou(src) || iswerewolf(src))
-		if(last_rage_from_attack == 0 || last_rage_from_attack+50 < world.time)
-			last_rage_from_attack = world.time
-			adjust_rage(1, src, TRUE)
-	if(iscathayan(src))
-		if(in_frenzy)
-			if(!mind?.dharma?.Po_combat)
-				mind?.dharma?.Po_combat = TRUE
-				call_dharma("letpo", src)
-		if(mind?.dharma?.Po == "Rebel")
-			emit_po_call(src, "Rebel")
-		if(target)
-			if("judgement" in mind?.dharma?.tenets)
-				if(target.lastattacker != src)
-					mind?.dharma?.deserving |= target.real_name
-
 /mob/living/carbon/proc/disarm(mob/living/carbon/target)
 	target.do_rage_from_attack(src)
 	if(zone_selected == BODY_ZONE_PRECISE_MOUTH)
@@ -461,13 +443,6 @@
 	if(M == src && check_self_for_injuries())
 		return
 
-	if(ishuman(M))
-		var/mob/living/carbon/human/human = M
-		if(human.Myself?.Lover?.owner == src)
-			call_dharma("meet", M)
-		if(human.Myself?.Friend?.owner == src)
-			call_dharma("meet", M)
-
 	if(body_position == LYING_DOWN)
 		if(buckled)
 			to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!</span>")
@@ -476,9 +451,6 @@
 						null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
 		to_chat(M, "<span class='notice'>You shake [src] trying to pick [p_them()] up!</span>")
 		to_chat(src, "<span class='notice'>[M] shakes you to get you up!</span>")
-		if(mind?.dharma?.name == M.mind?.dharma?.name)
-			if(IsStun() || IsKnockdown() || stat > CONSCIOUS)
-				call_dharma("protect", M)
 
 	else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD) //Headpats!
 		SEND_SIGNAL(src, COMSIG_CARBON_HEADPAT, M)

@@ -107,7 +107,7 @@
 //	if(ishuman(owner))
 //		C = owner
 //	if(..())
-//		if(!iskindred(C))
+//		if(!is_kindred(C))
 //			if(owner.bloodpool)
 //			C.remove_overlay(DECAPITATION_BLOOD_LAYER)
 //			var/mutable_appearance/blood_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "decapitation", -DECAPITATION_BLOOD_LAYER)

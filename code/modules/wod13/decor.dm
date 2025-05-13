@@ -761,7 +761,7 @@
 			if(bloodpool < 2)
 				V.visible_message("<span class='warning'>[V] can't find enough blood in [src]!</span>")
 				return
-			if(iskindred(src))
+			if(is_kindred(src))
 				if(bloodpool < 4)
 					V.visible_message("<span class='warning'>[V] can't find enough blood in [src]!</span>")
 					return
@@ -769,7 +769,7 @@
 				V.visible_message("<span class='warning'>[V] isn't ready!</span>")
 				return
 			V.last_extracted = world.time
-			if(!iskindred(src))
+			if(!is_kindred(src))
 				new /obj/item/drinkable_bloodpack(get_step(V, SOUTH))
 				bloodpool = max(0, bloodpool-2)
 			else
@@ -937,10 +937,6 @@
 /proc/cryoMob(mob/living/mob_occupant, obj/pod)
 	if(isnpc(mob_occupant))
 		return
-	if(iscarbon(mob_occupant))
-		var/mob/living/carbon/C = mob_occupant
-		if(C.transformator)
-			qdel(C.transformator)
 	var/list/crew_member = list()
 	crew_member["name"] = mob_occupant.real_name
 
@@ -949,8 +945,6 @@
 		var/job = mob_occupant.mind.assigned_role
 		crew_member["job"] = job
 		SSjob.FreeRole(job, mob_occupant)
-//		if(LAZYLEN(mob_occupant.mind.objectives))
-//			mob_occupant.mind.objectives.Cut()
 		mob_occupant.mind.special_role = null
 	else
 		crew_member["job"] = "N/A"
@@ -1550,25 +1544,15 @@
 			if(do_mob(user, src, 10 SECONDS))
 				burying = FALSE
 				if(icon_state == "pit0")
-					var/dead_amongst = FALSE
 					for(var/mob/living/L in get_turf(src))
 						L.forceMove(src)
-						if(L.stat == DEAD)
-							dead_amongst = TRUE
 						icon_state = "pit1"
 						user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
-						if(dead_amongst)
-							call_dharma("respect", user)
 				else
-					var/dead_amongst = FALSE
 					for(var/mob/living/L in src)
 						L.forceMove(get_turf(src))
-						if(L.stat == DEAD)
-							dead_amongst = TRUE
 					icon_state = "pit0"
 					user.visible_message("<span class='warning'>[user] digs a hole in [src].</span>", "<span class='warning'>You dig a hole in [src].</span>")
-					if(dead_amongst)
-						call_dharma("disrespect", user)
 			else
 				burying = FALSE
 

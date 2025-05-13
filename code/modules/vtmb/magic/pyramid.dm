@@ -389,37 +389,32 @@
 
 /obj/ritualrune/gargoyle/complete()
 	for(var/mob/living/carbon/human/H in loc)
-		if(H)
-			if(H.stat > SOFT_CRIT)
-				for(var/datum/action/A in H.actions)
-					if(A)
-						if(A.vampiric)
-							A.Remove(H)
-				H.revive(TRUE)
-				H.set_species(/datum/species/kindred)
-				H.clane = new /datum/vampireclane/gargoyle()
-				H.clane.on_gain(H)
-				H.clane.post_gain(H)
-				H.forceMove(get_turf(src))
-				H.create_disciplines(FALSE, H.clane.clane_disciplines)
-				if(!H.key)
-					var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you wish to play as Sentient Gargoyle?", null, null, null, 50, src)
-					for(var/mob/dead/observer/G in GLOB.player_list)
-						if(G.key)
-							to_chat(G, "<span class='ghostalert'>Gargoyle Transformation rune has been triggered.</span>")
-					if(LAZYLEN(candidates))
-						var/mob/dead/observer/C = pick(candidates)
-						H.key = C.key
-//					Y.key = C.key
-//					Y.my_creator = last_activator
-				playsound(loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
-				qdel(src)
-				return
-			else
-				playsound(loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
-				H.adjustBruteLoss(25)
-				H.emote("scream")
-				return
+		if (H.stat > SOFT_CRIT)
+			for (var/datum/action/A in H.actions)
+				if (A.spell_button)
+					A.Remove(H)
+			H.revive(TRUE)
+
+			var/datum/splat/vampire/kindred/gargoyle_vampirism = new(clan = /datum/vampireclan/gargoyle)
+			gargoyle_vampirism.assign(H)
+			gargoyle_vampirism.create_powers(gargoyle_vampirism.clan.clan_disciplines, list(1, 1, 1))
+
+			if(!H.key)
+				var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you wish to play as Sentient Gargoyle?", null, null, null, 50, src)
+				for(var/mob/dead/observer/G in GLOB.player_list)
+					if(G.key)
+						to_chat(G, "<span class='ghostalert'>Gargoyle Transformation rune has been triggered.</span>")
+				if(LAZYLEN(candidates))
+					var/mob/dead/observer/C = pick(candidates)
+					H.key = C.key
+			playsound(loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
+			qdel(src)
+			return
+		else
+			playsound(loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
+			H.adjustBruteLoss(25)
+			H.emote("scream")
+			return
 
 //Deflection of the Wooden Doom ritual
 //Protects you from being staked for a single hit. Is it useful? Marginally. But it is a level 1 rite.
@@ -432,11 +427,10 @@
 	sacrifices = list(/obj/item/vampire_stake)
 
 /obj/ritualrune/deflection_stake/complete()
-	for(var/mob/living/carbon/human/H in loc)
-		if(H)
-			if(!HAS_TRAIT(H, TRAIT_STAKE_RESISTANT))
-				ADD_TRAIT(H, TRAIT_STAKE_RESISTANT, MAGIC_TRAIT)
-				qdel(src)
+	for (var/mob/living/carbon/human/H in loc)
+		if (!HAS_TRAIT(H, TRAIT_STAKE_RESISTANT))
+			ADD_TRAIT(H, TRAIT_STAKE_RESISTANT, MAGIC_TRAIT)
+			qdel(src)
 		playsound(loc, 'code/modules/wod13/sounds/thaum.ogg', 50, FALSE)
 		color = rgb(255,0,0)
 		activated = TRUE

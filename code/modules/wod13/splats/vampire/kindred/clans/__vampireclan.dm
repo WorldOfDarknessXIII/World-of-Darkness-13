@@ -1,0 +1,188 @@
+//Additional game logic should be stored in the component
+GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //write here the main disciplines when I do them [Lucia] - god fucking damn it flavrius
+/*
+This datum stores a declarative description of clans, in order to make an instance of the clan component from this implementation in runtime
+And it also helps for the character set panel
+*/
+/datum/vampireclan
+	var/name = "Caitiff"
+	var/desc = "The clanless. The rabble. Of no importance."
+	var/list/clan_disciplines = list() //discipline datums
+	var/list/clan_traits = list()
+	var/list/restricted_disciplines = list()
+	var/datum/outfit/clane_outfit
+	var/curse = "None."
+	var/list/allowed_jobs = list()
+	var/list/denied_jobs = list()
+	var/clane_curse //There should be a reference here.
+	///The Clan's unique body sprite
+	var/alt_sprite
+	///If the Clan's unique body sprites need to account for skintone
+	var/alt_sprite_greyscale = FALSE
+	var/no_hair
+	var/no_facial
+	var/frenzymod = 1
+	var/start_humanity = 7
+	var/haircuts
+	var/violating_appearance
+	var/male_clothes
+	var/female_clothes
+	var/enlightenment = FALSE
+	var/whitelisted = FALSE
+	var/accessories = list()
+	var/accessories_layers = list()
+	var/current_accessory
+	var/clan_keys //Keys to your hideout
+
+/datum/vampireclan/proc/on_gain(mob/living/carbon/human/vampire)
+	SHOULD_CALL_PARENT(TRUE)
+
+	for (var/trait in clan_traits)
+		ADD_TRAIT(vampire, trait, CLAN_TRAIT)
+
+	if (length(accessories))
+		if (current_accessory)
+			vampire.remove_overlay(accessories_layers[current_accessory])
+			var/mutable_appearance/acc_overlay = mutable_appearance('code/modules/wod13/icons.dmi', current_accessory, -accessories_layers[current_accessory])
+			vampire.overlays_standing[accessories_layers[current_accessory]] = acc_overlay
+			vampire.apply_overlay(accessories_layers[current_accessory])
+
+	if (alt_sprite)
+		if (!alt_sprite_greyscale)
+			vampire.skin_tone = "albino"
+		vampire.dna.species.limbs_id = "[vampire.base_body_mod][alt_sprite]"
+		vampire.update_body_parts()
+		vampire.update_body()
+		vampire.update_icon()
+
+	if (no_facial)
+		vampire.facial_hairstyle = "Shaved"
+
+	if (no_hair)
+		vampire.hairstyle = "Bald"
+
+	if (clan_keys)
+		vampire.put_in_r_hand(new clan_keys(vampire))
+
+/datum/vampireclan/proc/on_lose(mob/living/carbon/human/vampire)
+	SHOULD_CALL_PARENT(TRUE)
+
+	for (var/trait in clan_traits)
+		REMOVE_TRAIT(vampire, trait, CLAN_TRAIT)
+
+	if (alt_sprite)
+		vampire.dna.species.limbs_id = "[vampire.base_body_mod]human"
+
+/datum/vampireclan/proc/post_gain(mob/living/carbon/human/vampire)
+	SHOULD_CALL_PARENT(TRUE)
+
+/mob/living/carbon
+	var/datum/relationship/Myself
+
+/datum/relationship/proc/publish()
+	GLOB.relationship_list += src
+	generate_relationships()
+
+/datum/relationship
+	var/need_friend = FALSE
+	var/need_enemy = FALSE
+	var/need_lover = FALSE
+
+	var/datum/relationship/Friend
+	var/datum/relationship/Enemy
+	var/datum/relationship/Lover
+
+	var/friend_text
+	var/enemy_text
+	var/lover_text
+
+	var/phone_number
+
+	var/mob/living/carbon/human/owner
+
+/datum/relationship/proc/generate_relationships()
+	if(!owner)
+		return
+	if(need_friend)
+		for(var/datum/relationship/R in GLOB.relationship_list)
+			if(R)
+				if(R != src)
+					if(R.need_friend && need_friend && !R.Friend && !Friend && R.Enemy != src && Enemy != R && R.Lover != src && Lover != R)
+						Friend = R
+						R.Friend = src
+						to_chat(owner, "Your friend, <b>[R.owner.real_name]</b>, is now in the city!")
+						to_chat(R.owner, "Your friend, <b>[owner.real_name]</b>, is now in the city!")
+						need_friend = FALSE
+	if(need_enemy)
+		for(var/datum/relationship/R in GLOB.relationship_list)
+			if(R)
+				if(R != src)
+					if(R.need_enemy && need_enemy && !R.Enemy && !Enemy && R.Friend != src && Friend != R && R.Lover != src && Lover != R)
+						Enemy = R
+						R.Enemy = src
+						to_chat(owner, "Your enemy, <b>[R.owner.real_name]</b>, is now in the city!")
+						to_chat(R.owner, "Your enemy, <b>[owner.real_name]</b>, is now in the city!")
+						need_enemy = FALSE
+	if(need_lover)
+		for(var/datum/relationship/R in GLOB.relationship_list)
+			if(R)
+				if(R != src)
+					if(R.need_lover && need_lover && !R.Lover && !Lover && R.Friend != src && Friend != R && R.Enemy != src && Enemy != R)
+						if((R.owner.gender == owner.gender) && HAS_TRAIT(R.owner, TRAIT_HOMOSEXUAL) && HAS_TRAIT(owner, TRAIT_HOMOSEXUAL))
+							Lover = R
+							R.Lover = src
+							to_chat(owner, "Your lover, <b>[R.owner.real_name]</b>, is now in the city!")
+							to_chat(R.owner, "Your lover, <b>[owner.real_name]</b>, is now in the city!")
+							need_lover = FALSE
+						else if(!HAS_TRAIT(R.owner, TRAIT_HOMOSEXUAL) && !HAS_TRAIT(owner, TRAIT_HOMOSEXUAL) && (R.owner.gender != owner.gender))
+							Lover = R
+							R.Lover = src
+							to_chat(owner, "Your lover, <b>[R.owner.real_name]</b>, is now in the city!")
+							to_chat(R.owner, "Your lover, <b>[owner.real_name]</b>, is now in the city!")
+							need_lover = FALSE
+
+/**
+ * Rots the vampire's body along four stages of decay.
+ *
+ * Vampire bodies are either pre-decayed if they're Cappadocians,
+ * or they decay on death to what their body should naturally
+ * be according to their chronological age. Stage 1 is
+ * fairly normal looking with discoloured skin, stage 2 is
+ * somewhat decayed-looking, stage 3 is very decayed, and stage
+ * 4 is a long-dead completely decayed corpse. This has no effect
+ * on Clans that already have alt_sprites unless they're being
+ * rotted to stage 3 and above.
+ *
+ * Arguments
+ * * rot_stage - how much to rot the vampire, on a scale from 1 to 4.
+ */
+/mob/living/carbon/human/proc/rot_body(rot_stage)
+	var/datum/splat/vampire/kindred/vampirism = is_kindred(src)
+	if (vampirism?.clan?.alt_sprite)
+		if (!findtext(vampirism.clan.alt_sprite, "rotten") && (rot_stage <= 2))
+			return
+
+	switch (rot_stage)
+		if (1)
+			dna.species.limbs_id = "rotten1"
+		if (2)
+			dna.species.limbs_id = "rotten2"
+		if (3)
+			dna.species.limbs_id = "rotten3"
+			skin_tone = "albino"
+			ADD_TRAIT(src, TRAIT_MASQUERADE_VIOLATING_FACE, CLAN_TRAIT)
+			hairstyle = "Bald"
+			facial_hairstyle = "Shaved"
+		if (4)
+			dna.species.limbs_id = "rotten4"
+			skin_tone = "albino"
+			ADD_TRAIT(src, TRAIT_MASQUERADE_VIOLATING_FACE, CLAN_TRAIT)
+			hairstyle = "Bald"
+			facial_hairstyle = "Shaved"
+
+			if (base_body_mod == "f")
+				base_body_mod = ""
+			else if (base_body_mod == "")
+				base_body_mod = "s"
+
+	update_body()

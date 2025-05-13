@@ -92,26 +92,26 @@
 		else
 			holder.color = "#0000ff"
 
-	if (iskindred(src))
+	if (is_kindred(src))
 		//pale aura for vampires
 		holder.color = "#ffffff"
 		//only Baali can get antifrenzy through selling their soul, so this gives them the unholy halo (MAKE THIS BETTER)
 		if (antifrenzy)
 			holder.icon = 'icons/effects/32x64.dmi'
 		//black aura for diablerists
-		if (diablerist)
+		if (HAS_TRAIT(src, TRAIT_DIABLERIST))
 			holder.icon_state = "diablerie_aura"
 
-	if(iscathayan(src))
-		var/mob/living/carbon/human/H = src
-		if(!H.check_kuei_jin_alive())
+	var/datum/splat/hungry_dead/kuei_jin/kuei_jin = is_kuei_jin(src)
+	if (kuei_jin)
+		if ((kuei_jin.check_balance() == "Yin") || (kuei_jin.animated == "Yin"))
 			holder.color = "#ffffff"
 
-	if (isgarou(src) || iswerewolf(src))
+	if (is_garou(src) || iswerewolf(src))
 		//garou have bright auras due to their spiritual potence
 		holder.icon_state = "aura_bright"
 
-	if (isghoul(src))
+	if (is_ghoul(src))
 		//Pale spots in the aura, had to be done manually since holder.color will show only a type of color
 		holder.overlays = null
 		holder.color = null

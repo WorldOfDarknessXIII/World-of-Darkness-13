@@ -362,18 +362,15 @@
 	if(amount < 0)
 		return
 
+	// TODO: [Lucia] this here? signals
+	/*
 	var/allowed_to_kindred = FALSE
-	if(iskindred(target))
+	if(is_kindred(target))
 		if(methods & VAMPIRE)
 			allowed_to_kindred = TRUE
 		if(!allowed_to_kindred)
 			return
-	if(iscathayan(target))
-		for(var/i in reagent_list)
-			if(istype(i, /datum/reagent/consumable/ethanol))
-				call_dharma("desire", target)
-			if(istype(i, /datum/reagent/drug))
-				call_dharma("desire", target)
+	*/
 
 
 	var/atom/target_atom

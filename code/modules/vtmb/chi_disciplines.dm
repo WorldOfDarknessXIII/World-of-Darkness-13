@@ -5,7 +5,7 @@
 
 	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi' //This is the file for the ACTION icon
 	button_icon_state = "discipline" //And this is the state for the action icon
-	vampiric = TRUE
+	spell_button = TRUE
 	var/level_icon_state = "1" //And this is the state for the action icon
 	var/datum/chi_discipline/discipline
 	var/active_check = FALSE
@@ -699,14 +699,6 @@
 					REMOVE_TRAIT(caster, TRAIT_PERMANENTLY_ONFIRE, MAGIC_TRAIT)
 					REMOVE_TRAIT(caster, TRAIT_RESISTHEAT, MAGIC_TRAIT)
 					caster.extinguish_mob()
-					if(caster.mind.dharma)
-						switch(caster.mind.dharma.animated)
-							if("Yang")
-								caster.dna.species.burnmod = 0.5
-							if("Yin")
-								caster.dna.species.burnmod = initial(caster.dna.species.burnmod)
-					else
-						caster.dna.species.burnmod = initial(caster.dna.species.burnmod)
 					caster.bodytemperature = BODYTEMP_NORMAL
 					caster.coretemperature = BODYTEMP_NORMAL
 
@@ -772,10 +764,9 @@
 /obj/projectile/flesh_shintai/fire(setAngle)
 	if(firer)
 		chain = firer.Beam(src, icon_state = "arm")
-		if(iscathayan(firer))
-			var/mob/living/carbon/human/H = firer
-			if(H.CheckEyewitness(H, H, 7, FALSE))
-				H.AdjustMasquerade(-1)
+		var/mob/living/carbon/human/H = firer
+		if(H.CheckEyewitness(H, H, 7, FALSE))
+			H.AdjustMasquerade(-1)
 	..()
 
 /obj/projectile/flesh_shintai/on_hit(atom/target)
@@ -1608,10 +1599,9 @@
 /obj/projectile/storm_shintai/fire(setAngle)
 	if(firer)
 		chain = firer.Beam(src, icon_state="lightning[rand(1,12)]")
-		if(iscathayan(firer))
-			var/mob/living/carbon/human/H = firer
-			if(H.CheckEyewitness(H, H, 7, FALSE))
-				H.AdjustMasquerade(-1)
+		var/mob/living/carbon/human/H = firer
+		if(H.CheckEyewitness(H, H, 7, FALSE))
+			H.AdjustMasquerade(-1)
 	..()
 
 /obj/projectile/storm_shintai/on_hit(atom/target)
@@ -1878,9 +1868,9 @@
 				if(isliving(caster.lastattacked))
 					var/mob/living/cursing_mob = caster.lastattacked
 					to_chat(cursing_mob, "<span class='warning'>You feel bigger hunger than usual.</span>")
-					if(iskindred(cursing_mob))
+					if(is_kindred(cursing_mob))
 						cursing_mob.bloodpool = max(0, cursing_mob.bloodpool-3)
-					else if(iscathayan(cursing_mob))
+					else if(is_kuei_jin(cursing_mob))
 						cursing_mob.yang_chi = max(0, cursing_mob.yang_chi-2)
 						cursing_mob.yin_chi = max(0, cursing_mob.yin_chi-2)
 					else

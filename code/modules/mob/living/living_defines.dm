@@ -172,8 +172,6 @@
 	//Shitty VtM vars I'm moving here so they're not strewn around the codebase
 	var/bloodquality = 1
 
-	var/list/drunked_of = list()
-
 	var/total_cleaned = 0
 
 	var/physique = 1
@@ -225,12 +223,7 @@
 
 	var/thaumaturgy_knowledge = FALSE
 
-	var/elysium_checks = 0
 	var/bloodhunted = FALSE
-
-	var/hearing_ghosts = FALSE
-
-	var/stakeimmune = FALSE
 
 	var/last_vampire_ambience = 0
 	var/wait_for_music = 30
@@ -245,8 +238,6 @@
 	var/last_m_intent = MOVE_INTENT_RUN
 	var/last_bloodpower_use = 0
 	var/last_drinkblood_use = 0
-	var/last_bloodpower_click = 0
-	var/last_drinkblood_click = 0
 	var/harm_focus = SOUTH
 	var/masquerade_votes = 0
 	var/list/voted_for = list()
@@ -256,7 +247,6 @@
 
 	var/bloodpool = 5
 	var/maxbloodpool = 5
-	var/generation = 13
 	var/humanity = 7
 	var/masquerade = 5
 	var/last_masquerade_violation = 0
@@ -289,3 +279,5 @@
 
 	//If we are currently leaning on something, and what that object is
 	var/atom/leaned_object
+
+	var/list/datum/splat/splats

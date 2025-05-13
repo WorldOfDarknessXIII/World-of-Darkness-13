@@ -1,19 +1,7 @@
-/mob/living/carbon/human/proc/check_kuei_jin_alive()
-	if(iscathayan(src))
-		if(mind?.dharma)
-			if(mind.dharma.animated == "Yang")
-				return TRUE
-			else if (max_yang_chi > max_yin_chi + 2)
-				return TRUE
-	else
-		return FALSE
-
-	return TRUE
-
 /mob/living/Life()
 	. = ..()
 
-	if(!iscathayan(src))
+	if(!is_kuei_jin(src))
 		if((yang_chi == 0 && max_yang_chi != 0) && (yang_chi == 0 && max_yang_chi != 0))
 			to_chat(src, "<span clas='warning'>Your vital energies seem to disappear...</span>")
 			adjustCloneLoss(5, TRUE)
@@ -34,7 +22,7 @@
 				to_chat(src, "<span clas='warning'>Your vital energies seem to disappear...</span>")
 				adjustCloneLoss(5, TRUE)
 
-	if(!iscathayan(src))
+	if(!is_kuei_jin(src))
 		if (COOLDOWN_FINISHED(src, chi_restore))
 			COOLDOWN_START(src, chi_restore, 30 SECONDS)
 			if(yang_chi < max_yang_chi)
@@ -73,7 +61,7 @@
 /mob/living/proc/update_chi_hud()
 	if(!client || !hud_used)
 		return
-	if(iscathayan(src))
+	if(is_kuei_jin(src))
 		hud_used.yin_chi_icon.icon_state = "yin-[round((yin_chi/max_yin_chi)*12)]"
 		hud_used.yang_chi_icon.icon_state = "yang-[round((yang_chi/max_yang_chi)*12)]"
 		hud_used.demon_chi_icon.icon_state = "demon-[round((demon_chi/max_demon_chi)*12)]"
@@ -174,6 +162,7 @@
 			for(var/datum/antagonist/A in host.mind.antag_datums)
 				if(A.objectives)
 					dat += "<p>[printobjectives(A.objectives)]</p>"
+
 		var/masquerade_level = " is clueless about my presence."
 		switch(host.masquerade)
 			if(4)
@@ -187,6 +176,7 @@
 			if(0)
 				masquerade_level = " thinks I'm a monster and is hunting me."
 		dat += "<p>West[masquerade_level]</p>"
+
 		var/dharma = "I'm mindless carrion-eater!"
 		switch(host.mind.dharma?.level)
 			if(1)
@@ -197,7 +187,6 @@
 				dharma = "I'm so enlighted I can be a guru."
 			if(6)
 				dharma = "I have mastered the Dharma so far!"
-
 		dat += "<p>[dharma]</p>"
 
 		dat += "<p>"
@@ -216,12 +205,7 @@
 		dat += "<b>Lockpicking</b>: [host.lockpicking] + [host.additional_lockpicking]<BR>"
 		dat += "<b>Athletics</b>: [host.athletics] + [host.additional_athletics]<BR>"
 		dat += "</p>"
-//		if(host.hud_used)
-//			dat += "<b>Known disciplines:</b><BR>"
-//			for(var/datum/action/discipline/D in host.actions)
-//				if(D)
-//					if(D.discipline)
-//						dat += "[D.discipline.name] [D.discipline.level] - [D.discipline.desc]<BR>"
+
 		if(host.Myself)
 			if(host.Myself.Friend)
 				if(host.Myself.Friend.owner)
@@ -258,10 +242,6 @@
 	var/datum/action/kueijininfo/infor = new()
 	infor.host = C
 	infor.Grant(C)
-	var/datum/action/reanimate_yang/YG = new()
-	YG.Grant(C)
-	var/datum/action/reanimate_yin/YN = new()
-	YN.Grant(C)
 
 	//Kuei-jin resist vampire bites better than mortals
 	RegisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_kuei_jin_bitten))
@@ -315,25 +295,34 @@
 										else
 											SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
 											to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (corpse)</b></span>")
-			for(var/obj/item/I in H.contents)
-				if(I)
-					if(I.masquerade_violating)
-						if(I.loc == H)
-							var/obj/item/card/id/id_card = H.get_idcard(FALSE)
-							if(!istype(id_card, /obj/item/card/id/clinic) && !istype(id_card, /obj/item/card/id/police) && !istype(id_card, /obj/item/card/id/sheriff) && !istype(id_card, /obj/item/card/id/prince) && !istype(id_card, /obj/item/card/id/camarilla))
-								if(H.CheckEyewitness(H, H, 7, FALSE))
-									if(H.last_loot_check+50 <= world.time)
-										H.last_loot_check = world.time
-										H.last_nonraid = world.time
-										H.killed_count = H.killed_count+1
-										if(!H.warrant && !H.ignores_warrant)
-											if(H.killed_count >= 5)
-												H.warrant = TRUE
-												SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
-												to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
-											else
-												SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
-												to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
+			for (var/obj/item/I in H.contents)
+				if (!I.masquerade_violating)
+					continue
+				if(I.loc != H)
+					continue
+
+				var/obj/item/card/id/id_card = H.get_idcard(FALSE)
+				if (istype(id_card, /obj/item/card/id/clinic) || istype(id_card, /obj/item/card/id/police) || istype(id_card, /obj/item/card/id/sheriff) || istype(id_card, /obj/item/card/id/prince) || istype(id_card, /obj/item/card/id/camarilla))
+					continue
+
+				if (!H.CheckEyewitness(H, H, 7, FALSE))
+					continue
+
+				if (H.last_loot_check + 5 SECONDS > world.time)
+					continue
+				H.last_loot_check = world.time
+				H.last_nonraid = world.time
+				H.killed_count++
+
+				if (H.warrant || H.ignores_warrant)
+					continue
+				if (H.killed_count >= 5)
+					H.warrant = TRUE
+					SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
+					to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
+				else
+					SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
+					to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
 
 	if(H.key && (H.stat <= HARD_CRIT) && H.mind.dharma)
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
@@ -366,9 +355,9 @@
 				P.save_character()
 
 		H.update_chi_hud()
-		if(!H.in_frenzy)
-			H.mind.dharma.Po_combat = FALSE
-		if(H.demon_chi == H.max_demon_chi && H.max_demon_chi != 0 && !H.in_frenzy)
+		if(!HAS_TRAIT(H, TRAIT_IN_FRENZY))
+			H.mind.dharma.po_combat = FALSE
+		if(H.demon_chi == H.max_demon_chi && H.max_demon_chi != 0 && !HAS_TRAIT(H, TRAIT_IN_FRENZY))
 			H.rollfrenzy()
 
 		if(H.mind.dharma.Po == "Monkey")
@@ -437,9 +426,9 @@
 
 /datum/action/breathe_chi/Trigger()
 	if(!COOLDOWN_FINISHED(src, use))
-		to_chat(usr, "<span class='warning'>You need to wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, use))] to Inhale Chi again!</span>")
+		to_chat(usr, span_warning("You need to wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, use))] to Inhale Chi again!"))
 		return
-	if(!istype(owner, /mob/living/carbon/human))
+	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/kueijin = usr
 	COOLDOWN_START(src, use, cooldown)
@@ -448,14 +437,14 @@
 	for (var/mob/living/adding_victim in oviewers(3, kueijin))
 		victims_list += adding_victim
 	if(!length(victims_list))
-		to_chat(owner, "<span class='warning'>There's no one with <b>Chi</b> around...</span>")
+		to_chat(owner, span_warning("There's no one with <b>Chi</b> around...</span>"))
 		return
 
 	var/mob/living/victim
 	if (length(victims_list) == 1)
 		victim = victims_list[1]
 	else
-		victim = input(owner, "Choose whose breath to inhale", "Inhale Chi") as null|anything in victims_list
+		victim = tgui_input_list(owner, "Choose whose breath to inhale", "Inhale Chi", victims_list)
 	if(!victim)
 		return
 
@@ -473,11 +462,11 @@
 			has_gnosis = TRUE
 
 	//this method of feeding targets splat-specific Quintessence sources first
-	if ((iskindred(victim) || isghoul(victim)) && (victim.bloodpool > 0)) //drain vitae bloodpool
+	if ((is_kindred(victim) || is_ghoul(victim)) && (victim.bloodpool > 0)) //drain vitae bloodpool
 		victim.bloodpool = max(0, victim.bloodpool - 1)
 		kueijin.yin_chi = min(kueijin.yin_chi + 1, kueijin.max_yin_chi)
 		to_chat(kueijin, "<span class='medradio'>Some bitter <b>Yin</b> Chi enters you...</span>")
-	else if ((isgarou(victim) || iswerewolf(victim)) && has_gnosis) //drain gnosis
+	else if ((is_garou(victim) || iswerewolf(victim)) && has_gnosis) //drain gnosis
 		adjust_gnosis(-1, victim, sound = TRUE)
 		kueijin.yang_chi = min(kueijin.yang_chi + 1, kueijin.max_yang_chi)
 		to_chat(kueijin, "<span class='engradio'>Some fiery <b>Yang</b> Chi enters you...</span>")
@@ -549,7 +538,7 @@
 	background_icon_state = "discipline"
 	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	vampiric = TRUE
+	spell_button = TRUE
 	var/cooldown = 3 SECONDS
 
 /datum/action/reanimate_yin/Trigger()
@@ -608,7 +597,7 @@
 	background_icon_state = "discipline"
 	icon_icon = 'code/modules/wod13/UI/kuei_jin.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	vampiric = TRUE
+	spell_button = TRUE
 	var/cooldown = 3 SECONDS
 
 /datum/action/reanimate_yang/Trigger()
@@ -698,5 +687,5 @@
 /datum/species/kuei_jin/proc/on_kuei_jin_bitten(datum/source, mob/living/carbon/being_bitten)
 	SIGNAL_HANDLER
 
-	if(iscathayan(being_bitten))
+	if(is_kuei_jin(being_bitten))
 		return COMPONENT_RESIST_VAMPIRE_KISS

@@ -265,21 +265,16 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		locked = TRUE
 		update_icon()
 
-		call_dharma("disrespect", user)
 		for(var/mob/living/M in conts)
 			if(M.stat != DEAD)
 				M.emote("scream")
 				if(user)
-					if(isnpc(M) && !iskindred(M))
+					if(isnpc(M) && !is_kindred(M))
 						var/mob/living/carbon/human/HM = user
 						HM.AdjustHumanity(-1, 0)
-						call_dharma("torture", user)
-						if(!(M in HM.mind.dharma?.deserving))
-							call_dharma("killfirst")
-						call_dharma("kill")
 			if(user)
 				log_combat(user, M, "cremated")
-				if(!iskindred(M) && isnpc(M) && M.stat == DEAD)
+				if(!is_kindred(M) && isnpc(M) && M.stat == DEAD)
 					var/mob/living/carbon/human/HM = user
 					HM.AdjustMasquerade(1)
 			else

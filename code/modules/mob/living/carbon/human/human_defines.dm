@@ -86,22 +86,12 @@
 	var/heat_exposure_stacks = 0
 
 	//Shitty VtM vars I'm moving here so they're not strewn around the codebase
-	var/datum/vampireclane/clane
-
-	var/last_repainted_mark
-
-	//var/given_penis = FALSE
-
-	///Performs CPR on the target after a delay. //[Lucia] what does this mean?
-	var/last_cpr_exp = 0
-
-	var/dementia = FALSE
+	COOLDOWN_DECLARE(cpr_humanity_gain)
 
 	//[Lucia] I have no clue why this is necessary, TODO: remove
 	var/mob/living/caster
 
 	var/datum/job/JOB
-	var/roundstart_vampire = FALSE
 	var/last_loot_check = 0
 
 	var/phonevoicetag = 10
@@ -127,8 +117,6 @@
 	bloodquality = 2
 
 	var/soul_state = SOUL_PRESENT
-
-	var/can_be_embraced = TRUE
 
 	yang_chi = 4
 	max_yang_chi = 4

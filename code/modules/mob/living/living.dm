@@ -392,38 +392,46 @@
 		to_chat(src, text="You are unable to succumb to death! This life continues.", type=MESSAGE_TYPE_INFO)
 		return
 	log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!", LOG_ATTACK)
-	if((iskindred(src) || iscathayan(src)) && !HAS_TRAIT(src, TRAIT_TORPOR))
-		adjustOxyLoss(health - HEALTH_THRESHOLD_VAMPIRE_TORPOR)
-		updatehealth()
-	if((iskindred(src) || iscathayan(src)) && HAS_TRAIT(src, TRAIT_TORPOR))
-		adjustOxyLoss(health - HEALTH_THRESHOLD_VAMPIRE_DEAD)
-	if(!iskindred(src) && !iscathayan(src))
+
+	if (HAS_TRAIT(src, TRAIT_CAN_TORPOR))
+		if (HAS_TRAIT(src, TRAIT_TORPOR))
+			adjustOxyLoss(health - HEALTH_THRESHOLD_FINAL_DEATH)
+		else
+			adjustOxyLoss(health - HEALTH_THRESHOLD_TORPOR)
+			updatehealth()
+	else
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
 		updatehealth()
+
 	if(!whispered)
 		to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 
 /mob/living/verb/untorpor()
 	set hidden = TRUE
-	if(HAS_TRAIT(src, TRAIT_TORPOR))
-		if(iskindred(src))
-			if (bloodpool > 0)
-				bloodpool -= 1
-				cure_torpor()
-				to_chat(src, "<span class='notice'>You have awoken from your Torpor.</span>")
-			else
-				to_chat(src, "<span class='warning'>You have no blood to re-awaken with...</span>")
-		if(iscathayan(src))
-			if (yang_chi > 0)
-				yang_chi -= 1
-				cure_torpor()
-				to_chat(src, "<span class='notice'>You have awoken from your Little Death.</span>")
-			else if (yin_chi > 0)
-				yin_chi -= 1
-				cure_torpor()
-				to_chat(src, "<span class='notice'>You have awoken from your Little Death.</span>")
-			else
-				to_chat(src, "<span class='warning'>You have no Chi to re-awaken with...</span>")
+	if (!HAS_TRAIT(src, TRAIT_TORPOR))
+		return
+	if (stat >= DEAD)
+		to_chat(src, span_warning("You're dead, you can't wake up!"))
+		return
+
+	if(is_kindred(src))
+		if (bloodpool > 0)
+			bloodpool -= 1
+			cure_torpor()
+			to_chat(src, "<span class='notice'>You have awoken from your Torpor.</span>")
+		else
+			to_chat(src, "<span class='warning'>You have no blood to re-awaken with...</span>")
+	else if(is_kuei_jin(src))
+		if (yang_chi > 0)
+			yang_chi -= 1
+			cure_torpor()
+			to_chat(src, "<span class='notice'>You have awoken from your Little Death.</span>")
+		else if (yin_chi > 0)
+			yin_chi -= 1
+			cure_torpor()
+			to_chat(src, "<span class='notice'>You have awoken from your Little Death.</span>")
+		else
+			to_chat(src, "<span class='warning'>You have no Chi to re-awaken with...</span>")
 
 /mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
 	if(HAS_TRAIT(src, TRAIT_INCAPACITATED) || (!ignore_restraints && (HAS_TRAIT(src, TRAIT_RESTRAINED) || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))) || (!ignore_stasis && IS_IN_STASIS(src)))
@@ -1035,7 +1043,6 @@
 				if(NPC.stat < SOFT_CRIT)
 					if(istype(what, /obj/item/clothing) || istype(what, /obj/item/vamp/keys) || istype(what, /obj/item/stack/dollar))
 						H.AdjustHumanity(-1, 6)
-						call_dharma("steal", H)
 			if(islist(where))
 				var/list/L = where
 				if(what == who.get_item_for_held_index(L[2]))
@@ -2003,9 +2010,6 @@
 	return dexterity + additional_dexterity
 
 /mob/living/proc/get_total_social()
-	if(iscathayan(src))
-		if(mind?.dharma?.animated == "Yin")
-			return max(0, social + additional_social - 2)
 	return social + additional_social
 
 /mob/living/proc/get_total_mentality()

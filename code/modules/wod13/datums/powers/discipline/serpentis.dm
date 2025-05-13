@@ -200,7 +200,7 @@
 			owner.dna.species.inherent_traits |= TRAIT_STUNIMMUNE
 			owner.dna.species.inherent_traits |= TRAIT_SLEEPIMMUNE
 			owner.dna.species.inherent_traits |= TRAIT_NOSOFTCRIT
-			owner.stakeimmune = TRUE
+			ADD_TRAIT(owner, TRAIT_REMOVED_HEART, VAMPIRE_TRAIT)
 			urn = new(owner.loc)
 			urn.own = owner
 			var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
@@ -210,7 +210,7 @@
 			owner.dna.species.inherent_traits -= TRAIT_STUNIMMUNE
 			owner.dna.species.inherent_traits -= TRAIT_SLEEPIMMUNE
 			owner.dna.species.inherent_traits -= TRAIT_NOSOFTCRIT
-			owner.stakeimmune = FALSE
+			REMOVE_TRAIT(owner, TRAIT_REMOVED_HEART, VAMPIRE_TRAIT)
 			for(var/obj/item/organ/heart/heart in urn)
 				heart.forceMove(owner)
 				heart.Insert(owner)

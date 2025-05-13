@@ -32,29 +32,29 @@
 	id = /obj/item/cockclock
 
 /datum/outfit/job/citizen/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.clane)
+	. = ..()
+
+	var/datum/splat/vampire/kindred/vampirism = is_kindred(H)
+	if (vampirism?.clan)
 		if(H.gender == MALE)
 			shoes = /obj/item/clothing/shoes/vampire
-			if(H.clane.male_clothes)
-				uniform = H.clane.male_clothes
+			if (vampirism.clan.male_clothes)
+				uniform = vampirism.clan.male_clothes
 		else
 			shoes = /obj/item/clothing/shoes/vampire/heels
-			if(H.clane.female_clothes)
-				uniform = H.clane.female_clothes
+			if (vampirism.clan.female_clothes)
+				uniform = vampirism.clan.female_clothes
 	else
 		uniform = /obj/item/clothing/under/vampire/emo
-		if(H.gender == MALE)
+		if (H.gender == MALE)
 			shoes = /obj/item/clothing/shoes/vampire
 		else
 			shoes = /obj/item/clothing/shoes/vampire/heels
-	if(H.clane)
-		if(H.clane.name == "Lasombra")
-			backpack_contents = list(/obj/item/passport =1, /obj/item/vamp/creditcard=1)
-	if(!H.clane)
-		backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
-	if(H.clane && H.clane.name != "Lasombra")
-		backpack_contents = list(/obj/item/passport=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
+
+	if (HAS_TRAIT(H, TRAIT_REJECTED_BY_TECHNOLOGY))
+		backpack_contents = list(/obj/item/passport = 1, /obj/item/vamp/creditcard = 1)
+	else
+		backpack_contents = list(/obj/item/passport = 1, /obj/item/flashlight = 1, /obj/item/vamp/creditcard = 1)
 
 /obj/effect/landmark/start/citizen
 	name = "Citizen"

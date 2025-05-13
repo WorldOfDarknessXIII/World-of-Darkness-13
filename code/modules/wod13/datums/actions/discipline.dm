@@ -5,7 +5,7 @@
 	icon_icon = 'code/modules/wod13/UI/actions.dmi' //This is the file for the ACTION icon
 	button_icon_state = "discipline" //And this is the state for the action icon
 
-	vampiric = TRUE
+	spell_button = TRUE
 	var/level_icon_state = "1" //And this is the state for the action icon
 	var/datum/discipline/discipline
 	var/targeting = FALSE

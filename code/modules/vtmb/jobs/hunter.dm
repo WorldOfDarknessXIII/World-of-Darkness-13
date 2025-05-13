@@ -15,12 +15,11 @@
 
 /datum/outfit/job/hunter/post_equip(mob/living/carbon/human/H)
 	..()
-	if(H.clane)
-		qdel(H.clane)
-	H.set_species(/datum/species/human)
-	H.generation = 13
-	H.maxHealth = round((initial(H.maxHealth)-initial(H.maxHealth)/4)+(initial(H.maxHealth)/4)*(H.physique+13-H.generation))
-	H.health = round((initial(H.health)-initial(H.health)/4)+(initial(H.health)/4)*(H.physique+13-H.generation))
+
+	// Turn the hunter into a regular human
+	for (var/datum/splat/splat in H.splats)
+		splat.unassign()
+
 	var/my_name = "Tyler"
 	if(H.gender == MALE)
 		my_name = pick(GLOB.first_names_male)
@@ -28,25 +27,10 @@
 		my_name = pick(GLOB.first_names_female)
 	var/my_surname = pick(GLOB.last_names)
 	H.fully_replace_character_name(null,"[my_name] [my_surname]")
-//	for(var/atom/movable/screen/blood/B in H.hud_used.infodisplay)
-//		B.icon_state = null
-//	for(var/atom/movable/screen/healths/HE in H.hud_used.infodisplay)
-//		HE.icon = 'code/modules/wod13/ghoul_health.dmi'
-//	for(var/atom/movable/screen/drinkblood/DB in H.hud_used.static_inventory)
-//		DB.icon_state = null
-//	for(var/atom/movable/screen/bloodheal/BH in H.hud_used.static_inventory)
-//		BH.icon_state = null
-//	for(var/atom/movable/screen/bloodpower/BP in H.hud_used.static_inventory)
-//		BP.icon_state = null
-//	for(var/atom/movable/screen/disciplines/DI in H.hud_used.static_inventory)
-//		DI.icon_state = null
-	for(var/datum/action/A in H.actions)
-		if(A.vampiric)
-			A.Remove(H)
-	H.thaumaturgy_knowledge = FALSE
-	QDEL_NULL(H.clane)
+
 	var/obj/item/organ/eyes/NV = new()
 	NV.Insert(H, TRUE, FALSE)
+
 	if(H.mind)
 		H.mind.add_antag_datum(/datum/antagonist/hunter)
 

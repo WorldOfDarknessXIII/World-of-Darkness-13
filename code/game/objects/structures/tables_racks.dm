@@ -75,8 +75,6 @@
 					return
 				if(user.grab_state >= GRAB_NECK)
 					tablelimbsmash(user, pushed_mob)
-					if(ishuman(pushed_mob) && pushed_mob.stat != DEAD)
-						call_dharma("torture", user)
 				else
 					tablepush(user, pushed_mob)
 			if(user.a_intent == INTENT_HELP)

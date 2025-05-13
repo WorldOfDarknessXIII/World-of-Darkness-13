@@ -80,7 +80,7 @@
 /mob/living/carbon/human/petrify(statue_timer, clane_type)
 	if(!isturf(loc))
 		return FALSE
-	if(iskindred(src))
+	if(is_kindred(src))
 		if(clane_type)
 			if(clane_type == "Serpentis")
 				ADD_TRAIT(src, TRAIT_NOBLEED, MAGIC_TRAIT)

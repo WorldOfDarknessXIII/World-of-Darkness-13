@@ -285,9 +285,6 @@
 	var/obj/item/gun/magic/tentacle/gun //the item that shot it
 	item_flags = DROPDEL
 
-/obj/item/ammo_casing/magic/tentacle/lasombra
-	projectile_type = /obj/projectile/tentacle/lasombra
-
 /obj/item/ammo_casing/magic/tentacle/Initialize()
 	gun = loc
 	. = ..()
@@ -395,10 +392,6 @@
 				L.visible_message("<span class='danger'>[L] is pulled by [H]'s tentacle!</span>","<span class='userdanger'>A tentacle grabs you and pulls you towards [H]!</span>")
 				L.throw_at(get_step_towards(H,L), 8, 2)
 				. = BULLET_ACT_HIT
-
-/obj/projectile/tentacle/lasombra
-	damage_type = BURN
-	state_icon = "curse0"
 
 /obj/projectile/tentacle/Destroy()
 	qdel(chain)

@@ -71,7 +71,7 @@
 		var/mob/living/carbon/human/VH = firer
 		if(isliving(target))
 			var/mob/living/VL = target
-			if(isgarou(VL))
+			if(is_garou(VL))
 				if(VL.bloodpool >= 1 && VL.stat != DEAD)
 					var/sucked = min(VL.bloodpool, 2)
 					VL.bloodpool = max(VL.bloodpool - sucked, 0)
@@ -79,7 +79,7 @@
 					VL.visible_message(span_danger("[target]'s wounds spray boiling hot blood!"), "<span class='userdanger'>Your blood boils!</span>")
 					VL.add_splatter_floor(get_turf(target))
 					VL.add_splatter_floor(get_turf(get_step(target, target.dir)))
-				if(!iskindred(target))
+				if(!is_kindred(VL))
 					if(VL.bloodpool >= 1 && VL.stat != DEAD)
 						var/sucked = min(VL.bloodpool, 2)
 						VL.bloodpool = max(VL.bloodpool - sucked, 0)
@@ -242,7 +242,7 @@
 	desc = "Blood magic rune drawing."
 	button_icon_state = "thaumaturgy"
 	check_flags = AB_CHECK_HANDS_BLOCKED | AB_CHECK_IMMOBILE | AB_CHECK_LYING | AB_CHECK_CONSCIOUS
-	vampiric = TRUE
+	spell_button = TRUE
 	var/drawing = FALSE
 	var/level = 1
 
@@ -298,7 +298,7 @@
 	desc = "Gain armor with blood."
 	button_icon_state = "bloodshield"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	vampiric = TRUE
+	spell_button = TRUE
 	var/abuse_fix = 0
 
 /datum/action/bloodshield/Trigger()

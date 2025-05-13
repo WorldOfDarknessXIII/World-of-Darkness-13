@@ -3,22 +3,10 @@
 
 /datum/outfit/job/post_equip(mob/living/carbon/human/H)
 	. = ..()
-	if(H.clane)
-		if(H.clane.name == "Ventrue")
-			var/obj/item/stack/dollar/hundred/HUN = new(H.loc)
-			for(var/obj/item/storage/backpack/B in H)
-				if(B)
-					HUN.forceMove(B)
 
-	var/obj/item/storage/backpack/b = locate() in H
-	if(b)
-		var/obj/item/vamp/creditcard/card = locate() in b.contents
-		if(card && card.has_checked == FALSE)
-			for(var/obj/item/vamp/creditcard/caard in b.contents)
-				if(caard)
-					H.bank_id = caard.account.bank_id
-					caard.account.account_owner = H.true_real_name
-					caard.has_checked = TRUE
+	for(var/obj/item/vamp/creditcard/card in H.get_contents())
+		H.bank_id = card.account.bank_id
+		card.account.account_owner = H.true_real_name
 
 //ID
 
@@ -90,9 +78,9 @@
 				if(H.mind)
 					if(H.mind.holy_role == HOLY_ROLE_PRIEST)
 						return
-		if(iskindred(H))
-			if(H.clane)
-				if(H.clane.name == "Baali")
+		if(is_kindred(H))
+			if(H.clan)
+				if(H.clan.name == "Baali")
 					H.emote("scream")
 					H.pointed(user)
 	M.show_message("<span class='warning'><b>GOD SEES YOU!</b></span>", MSG_AUDIBLE)
@@ -107,10 +95,10 @@
 		return
 	if(last_detonated+300 > world.time)
 		return
-	if(iskindred(target))
+	if(is_kindred(target))
 		var/mob/living/carbon/human/H = target
-		if(H.clane)
-			if(H.clane.name == "Baali")
+		if(H.clan)
+			if(H.clan.name == "Baali")
 				last_detonated = world.time
 				var/turf/lightning_source = get_step(get_step(H, NORTH), NORTH)
 				lightning_source.Beam(H, icon_state="lightning[rand(1,12)]", time = 5)

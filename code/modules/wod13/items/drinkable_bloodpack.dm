@@ -19,8 +19,8 @@
 
 /obj/item/drinkable_bloodpack/attack(mob/living/M, mob/living/user)
 	. = ..()
-	if(!iskindred(M))
-		if(!vitae || iscathayan(M))
+	if(!is_kindred(M))
+		if(!vitae || is_kuei_jin(M))
 			return
 	if(empty)
 		return
@@ -36,7 +36,7 @@
 		M.adjustFireLoss(-20, TRUE)
 		M.update_damage_overlays()
 		M.update_health_hud()
-		if(iskindred(M))
+		if(is_kindred(M))
 			M.update_blood_hud()
 		playsound(M.loc,'sound/items/drink.ogg', 50, TRUE)
 		return

@@ -351,26 +351,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Species
 	var/species_id
 	READ_FILE(S["species"], species_id)
-	if(species_id)
+	if (species_id)
 		var/newtype = GLOB.species_list[species_id]
 		if(newtype)
 			pref_species = new newtype
 
+	READ_FILE(S["clane"], clan)
 
-	var/clane_id
-	READ_FILE(S["clane"], clane_id)
-	if(clane_id)
-		var/newtype = GLOB.clanes_list[clane_id]
-		if(newtype)
-			clane = new newtype
-
-	var/auspice_id
-	READ_FILE(S["auspice"], auspice_id)
-	if(auspice_id)
-		var/newtype = GLOB.auspices_list[auspice_id]
-		if(newtype)
-			auspice = new newtype
-
+	READ_FILE(S["auspice"], auspice)
 	READ_FILE(S["breed"], breed)
 	READ_FILE(S["tribe"], tribe)
 	READ_FILE(S["werewolf_color"], werewolf_color)
@@ -381,8 +369,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Character
 	READ_FILE(S["slotlocked"], slotlocked)
-	READ_FILE(S["diablerist"], diablerist)
-	READ_FILE(S["auspice_level"], auspice_level)
+	READ_FILE(S["auspice_level"], werewolf_level)
 	READ_FILE(S["humanity"], humanity)
 	READ_FILE(S["enlightement"], enlightenment)
 	READ_FILE(S["exper"], exper)
@@ -440,7 +427,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["backpack"], backpack)
 	READ_FILE(S["jumpsuit_style"], jumpsuit_style)
 	READ_FILE(S["uplink_loc"], uplink_spawn_loc)
-	READ_FILE(S["clane_accessory"], clane_accessory)
+	READ_FILE(S["clane_accessory"], clan_accessory)
 	READ_FILE(S["playtime_reward_cloak"], playtime_reward_cloak)
 	READ_FILE(S["phobia"], phobia)
 	READ_FILE(S["randomise"],  randomise)
@@ -457,7 +444,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["feature_moth_antennae"], features["moth_antennae"])
 	READ_FILE(S["feature_moth_markings"], features["moth_markings"])
 	READ_FILE(S["persistent_scars"] , persistent_scars)
-	READ_FILE(S["dharma_type"], dharma_type)
+
+	READ_FILE(S["dharma_type"], dharma)
 	READ_FILE(S["dharma_level"], dharma_level)
 	READ_FILE(S["po_type"], po_type)
 	READ_FILE(S["po"], po)
@@ -502,9 +490,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	body_model = sanitize_integer(body_model, 1, 3, initial(body_model))
 	if(!real_name)
 		real_name = random_unique_name(gender)
-//	if(!clane)
-//		var/newtype = GLOB.clanes_list["Brujah"]
-//		clane = new newtype()
 
 	//Prevent Wighting upon joining a round
 	if(humanity <= 0)
@@ -545,8 +530,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	archetype 		= sanitize_inlist(archetype, subtypesof(/datum/archetype))
 
-	breed			= sanitize_inlist(breed, list("Homid", "Lupus", "Metis"))
-	tribe			= sanitize_inlist(tribe, list("Wendigo", "Glasswalkers", "Black Spiral Dancers"))
 	werewolf_color	= sanitize_inlist(werewolf_color, list("black", "gray", "red", "white", "ginger", "brown"))
 	werewolf_scar	= sanitize_integer(werewolf_scar, 0, 7, initial(werewolf_scar))
 	werewolf_hair	= sanitize_integer(werewolf_hair, 0, 4, initial(werewolf_hair))
@@ -556,7 +539,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ooc_notes = sanitize_text(ooc_notes)
 	socks			= sanitize_inlist(socks, GLOB.socks_list)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
-	diablerist				= sanitize_integer(diablerist, 0, 1, initial(diablerist))
 	friend_text		= sanitize_text(friend_text)
 	enemy_text		= sanitize_text(enemy_text)
 	lover_text		= sanitize_text(lover_text)
@@ -576,7 +558,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	lockpicking				= sanitize_integer(lockpicking, 1, 10, initial(lockpicking))
 	athletics				= sanitize_integer(athletics, 1, 10, initial(athletics))
 	blood					= sanitize_integer(blood, 1, 10, initial(blood))
-	auspice_level			= sanitize_integer(auspice_level, 1, 5, initial(auspice_level))
+	werewolf_level			= sanitize_integer(werewolf_level, 1, 5, initial(werewolf_level))
 	discipline1level				= sanitize_integer(discipline1level, 1, 5, initial(discipline1level))
 	discipline2level				= sanitize_integer(discipline2level, 1, 5, initial(discipline2level))
 	discipline3level				= sanitize_integer(discipline3level, 1, 5, initial(discipline3level))
@@ -589,7 +571,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	discipline_types = sanitize_islist(discipline_types, list())
 	discipline_levels = sanitize_islist(discipline_levels, list())
 	dharma_level = sanitize_integer(dharma_level, 0, 6, initial(dharma_level))
-	dharma_type = sanitize_inlist(dharma_type, subtypesof(/datum/dharma))
 	po_type = sanitize_inlist(po_type, list("Rebel", "Legalist", "Demon", "Monkey", "Fool"))
 	po = sanitize_integer(po, 1, 12, initial(po))
 	hun = sanitize_integer(hun, 1, 12, initial(hun))
@@ -612,7 +593,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	backpack			= sanitize_inlist(backpack, GLOB.backpacklist, initial(backpack))
 	jumpsuit_style	= sanitize_inlist(jumpsuit_style, GLOB.jumpsuitlist, initial(jumpsuit_style))
 	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
-	clane_accessory = sanitize_inlist(clane_accessory, clane.accessories, null)
+	clan_accessory = sanitize_inlist(clan_accessory, clan.accessories, null)
 	playtime_reward_cloak = sanitize_integer(playtime_reward_cloak)
 	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, 0)
 	features["ethcolor"]	= copytext_char(features["ethcolor"], 1, 7)
@@ -682,24 +663,23 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	WRITE_FILE(S["version"]			, SAVEFILE_VERSION_MAX)	//load_character will sanitize any bad data, so assume up-to-date.)
 
-	WRITE_FILE(S["breed"], breed)
-	WRITE_FILE(S["tribe"], tribe)
+	WRITE_FILE(S["breed"], breed.type)
+	WRITE_FILE(S["tribe"], tribe.type)
 	WRITE_FILE(S["werewolf_color"], werewolf_color)
 	WRITE_FILE(S["werewolf_scar"], werewolf_scar)
 	WRITE_FILE(S["werewolf_hair"], werewolf_hair)
 	WRITE_FILE(S["werewolf_hair_color"], werewolf_hair_color)
 	WRITE_FILE(S["werewolf_eye_color"], werewolf_eye_color)
-	WRITE_FILE(S["auspice"]			, auspice.name)
+	WRITE_FILE(S["auspice"]			, auspice.type)
 
 	//Character
 	WRITE_FILE(S["slotlocked"]			, slotlocked)
-	WRITE_FILE(S["diablerist"]			, diablerist)
 	WRITE_FILE(S["humanity"]			, humanity)
 	WRITE_FILE(S["enlightement"]			, enlightenment)
 	WRITE_FILE(S["exper"]			, exper)
 	WRITE_FILE(S["exper_plus"]			, exper_plus)
 	WRITE_FILE(S["true_experience"]			, true_experience)
-	WRITE_FILE(S["auspice_level"]			, auspice_level)
+	WRITE_FILE(S["auspice_level"]			, werewolf_level)
 	WRITE_FILE(S["physique"]		, physique)
 	WRITE_FILE(S["dexterity"]		, dexterity)
 	WRITE_FILE(S["social"]			, social)
@@ -728,7 +708,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["enemy_text"]			, enemy_text)
 	WRITE_FILE(S["lover_text"]			, lover_text)
 	WRITE_FILE(S["reason_of_death"]			, reason_of_death)
-	WRITE_FILE(S["clane"]			, clane.name)
+	WRITE_FILE(S["clane"]			, clan.type)
 	WRITE_FILE(S["generation"]			, generation)
 	WRITE_FILE(S["generation_bonus"]			, generation_bonus)
 	WRITE_FILE(S["masquerade"]			, masquerade)
@@ -753,7 +733,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["backpack"]			, backpack)
 	WRITE_FILE(S["jumpsuit_style"]			, jumpsuit_style)
 	WRITE_FILE(S["uplink_loc"]			, uplink_spawn_loc)
-	WRITE_FILE(S["clane_accessory"]			, clane_accessory)
+	WRITE_FILE(S["clane_accessory"]			, clan_accessory)
 	WRITE_FILE(S["playtime_reward_cloak"]			, playtime_reward_cloak)
 	WRITE_FILE(S["randomise"]		, randomise)
 	WRITE_FILE(S["species"]			, pref_species.id)
@@ -773,7 +753,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_moth_antennae"]			, features["moth_antennae"])
 	WRITE_FILE(S["feature_moth_markings"]		, features["moth_markings"])
 	WRITE_FILE(S["persistent_scars"]			, persistent_scars)
-	WRITE_FILE(S["dharma_type"], dharma_type)
+	WRITE_FILE(S["dharma_type"], dharma.type)
 	WRITE_FILE(S["dharma_level"], dharma_level)
 	WRITE_FILE(S["po_type"], po_type)
 	WRITE_FILE(S["po"], po)

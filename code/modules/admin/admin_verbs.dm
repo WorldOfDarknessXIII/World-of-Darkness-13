@@ -609,43 +609,58 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if (!check_rights(R_ADMIN))
 		return
 
-	var/client/player = input("What player do you want to give a Discipline?") as null|anything in GLOB.clients
-	if (player)
-		if (!player.prefs)
-			to_chat(usr, "<span class='warning'>Could not find preferences for [player].")
-			return
-		var/datum/preferences/preferences = player.prefs
-		if ((preferences.pref_species.id != "kindred") && (preferences.pref_species.id != "ghoul"))
-			to_chat(usr, "<span class='warning'>Your target is not a vampire or a ghoul.</span>")
-			return
-		var/giving_discipline = input("What Discipline do you want to give [player]?") as null|anything in (subtypesof(/datum/discipline) - preferences.discipline_types - /datum/discipline/bloodheal)
-		if (giving_discipline)
-			var/giving_discipline_level = input("What rank of this Discipline do you want to give [player]?") as null|anything in list(0, 1, 2, 3, 4, 5)
-			if (!isnull(giving_discipline_level))
-				if ((giving_discipline_level > 1) && (preferences.pref_species.id == "ghoul"))
-					to_chat(usr, "<span class='warning'>Giving Discipline at level 1 because ghouls cannot have Disciplines higher.</span>")
-					giving_discipline_level = 1
-				var/reason = input("Why are you giving [player] this Discipline?") as null|text
-				if (reason)
-					preferences.discipline_types += giving_discipline
-					preferences.discipline_levels += giving_discipline_level
-					preferences.save_character()
+	var/client/player = tgui_input_list(usr, "What player do you want to give a Discipline?", "Player Selection", sortList(GLOB.clients))
+	if (!player)
+		return
 
-					var/datum/discipline/discipline = new giving_discipline(giving_discipline_level)
+	var/datum/preferences/preferences = player.prefs
+	if (!preferences)
+		to_chat(usr, span_warning("Could not find preferences for [player]."))
+		return
 
-					message_admins("[ADMIN_LOOKUPFLW(usr)] gave [ADMIN_LOOKUPFLW(player)] the Discipline [discipline.name] at rank [discipline.level]. Reason: [reason]")
-					log_admin("[key_name(usr)] gave [key_name(player)] the Discipline [discipline.name] at rank [discipline.level]. Reason: [reason]")
+	if (!ispath(preferences.splat, /datum/splat/vampire) && !ispath(preferences.splat, /datum/splat/hungry_dead))
+		to_chat(usr, span_warning("Your target is not a vampire or a ghoul."))
+		return
 
-					if ((giving_discipline_level > 0) && player.mob)
-						if (ishuman(player.mob))
-							var/mob/living/carbon/human/human = player.mob
-							human.give_discipline(discipline)
-						else
-							qdel(discipline)
-					else
-						qdel(discipline)
+	// refactor when power system is made universal
+	var/datum/discipline/giving_discipline
+	if (ispath(preferences.splat, /datum/splat/vampire))
+		giving_discipline = tgui_input_list(usr, "What Discipline do you want to give [player]?", "Discipline Selection", sortList(subtypesof(/datum/discipline) - preferences.discipline_types - /datum/discipline/bloodheal))
+	else if (ispath(preferences.splat, /datum/splat/hungry_dead))
+		giving_discipline = tgui_input_list(usr, "What Chi Art do you want to give [player]?", "Chi Art Selection", sortList(subtypesof(/datum/chi_discipline)))
+	if (!giving_discipline)
+		return
+
+	var/giving_discipline_level = tgui_input_number(usr, "What rank of this power do you want to give [player]?", "Rank Selection", 1, 5, 1)
+	if (isnull(giving_discipline_level))
+		return
+
+	if ((giving_discipline_level > 1) && (preferences.splat == /datum/splat/vampire/ghoul))
+		to_chat(usr, span_warning("Giving Discipline at level 1 because ghouls cannot have Disciplines higher."))
+		giving_discipline_level = 1
+
+	var/reason = tgui_input_text(usr, "Why are you giving [player] this power?", "Reason")
+	if (!reason)
+		return
+
+	preferences.discipline_types += giving_discipline
+	preferences.discipline_levels += giving_discipline_level
+	preferences.save_character()
+
+	message_admins("[ADMIN_LOOKUPFLW(usr)] gave [ADMIN_LOOKUPFLW(player)] the Discipline [giving_discipline.name] at rank [giving_discipline_level]. Reason: [reason]")
+	log_admin("[key_name(usr)] gave [key_name(player)] the Discipline [giving_discipline.name] at rank [giving_discipline_level]. Reason: [reason]")
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Grant Discipline") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+	if ((giving_discipline_level <= 0) || !player.mob)
+		return
+
+	var/datum/splat/vampire/kindred/vampirism = is_kindred(player.mob)
+	var/datum/splat/hungry_dead/kuei_jin/kuei_jin = is_kuei_jin(player.mob)
+	if (vampirism)
+		vampirism.add_power(giving_discipline, giving_discipline_level)
+	else if (kuei_jin)
+		kuei_jin.add_power(giving_discipline, giving_discipline_level)
 
 /client/proc/remove_discipline()
 	set name = "Remove Discipline"

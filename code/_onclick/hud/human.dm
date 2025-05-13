@@ -65,7 +65,7 @@
 //	var/atom/movable/screen/inventory/inv_add
 	var/atom/movable/screen/transform_werewolf
 
-	if(isgarou(owner))
+	if(is_garou(owner))
 		transform_werewolf = new /atom/movable/screen/transform_lupus()
 		transform_werewolf.screen_loc = ui_werewolf_lupus
 		transform_werewolf.hud = src
@@ -91,7 +91,7 @@
 		rage_icon.hud = src
 		infodisplay += rage_icon
 
-	if(iscathayan(owner))
+	if(is_kuei_jin(owner))
 		chi_icon = new /atom/movable/screen/chi_pool()
 		chi_icon.screen_loc = ui_chi_pool
 		chi_icon.hud = src
