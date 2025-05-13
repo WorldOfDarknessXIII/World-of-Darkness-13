@@ -11,7 +11,6 @@
 	if (!client)
 		return
 
-	var/datum/splat/
 	if (is_garou(src))
 		to_chat(src, "I'm full of <span class='danger'><b>ANGER</b></span>, and I'm about to flare up in <span class='danger'><b>RAGE</b></span>. Rolling...")
 	else if (is_kindred(src))

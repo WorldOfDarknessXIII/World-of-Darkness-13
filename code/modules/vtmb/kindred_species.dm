@@ -43,174 +43,185 @@
 	var/mob/living/carbon/human/host
 
 /datum/action/vampireinfo/Trigger()
-	if(host)
-		var/dat = {"
-			<style type="text/css">
+	if (!host)
+		return
 
-			body {
-				background-color: #090909; color: white;
-			}
+	var/dat = {"
+		<style type="text/css">
 
-			</style>
-			"}
-		dat += "<center><h2>Memories</h2><BR></center>"
-		dat += "[icon2html(getFlatIcon(host), host)]I am "
-		if(host.real_name)
-			dat += "[host.real_name],"
-		if(!host.real_name)
-			dat += "Unknown,"
-		if(host.clan)
-			dat += " the [host.clan.name]"
-		if(!host.clan)
-			dat += " the caitiff"
+		body {
+			background-color: #090909; color: white;
+		}
 
-		if(host.mind)
+		</style>
+		"}
 
-			if(host.mind.assigned_role)
-				if(host.mind.special_role)
-					dat += ", carrying the [host.mind.assigned_role] (<font color=red>[host.mind.special_role]</font>) role."
-				else
-					dat += ", carrying the [host.mind.assigned_role] role."
-			if(!host.mind.assigned_role)
-				dat += "."
-			dat += "<BR>"
-			if(host.mind.enslaved_to)
-				dat += "My Regnant is [host.mind.enslaved_to], I should obey their wants.<BR>"
-		if(host.generation)
-			dat += "I'm from [host.generation] generation.<BR>"
-		if(host.mind.special_role)
-			for(var/datum/antagonist/A in host.mind.antag_datums)
-				if(A.objectives)
-					dat += "[printobjectives(A.objectives)]<BR>"
-		var/masquerade_level = " followed the Masquerade Tradition perfectly."
-		switch(host.masquerade)
-			if(4)
-				masquerade_level = " broke the Masquerade rule once."
-			if(3)
-				masquerade_level = " made a couple of Masquerade breaches."
-			if(2)
-				masquerade_level = " provoked a moderate Masquerade breach."
-			if(1)
-				masquerade_level = " almost ruined the Masquerade."
-			if(0)
-				masquerade_level = "'m danger to the Masquerade and my own kind."
-		dat += "Camarilla thinks I[masquerade_level]<BR>"
-		var/humanity = "I'm out of my mind."
-		var/enlight = FALSE
-		if(host.clan)
-			if(host.clan.enlightenment)
-				enlight = TRUE
+	dat += "<center><h2>Memories</h2><BR></center>"
+	dat += "[icon2html(getFlatIcon(host), host)]I am "
+	if(host.real_name)
+		dat += "[host.real_name],"
+	if(!host.real_name)
+		dat += "Unknown,"
+	if(host.clan)
+		dat += " the [host.clan.name]"
+	if(!host.clan)
+		dat += " the caitiff"
 
-		if(!enlight)
-			switch(host.humanity)
-				if(8 to 10)
-					humanity = "I'm saintly."
-				if(7)
-					humanity = "I feel as human as when I lived."
-				if(5 to 6)
-					humanity = "I'm feeling distant from my humanity."
-				if(4)
-					humanity = "I don't feel any compassion for the Kine anymore."
-				if(2 to 3)
-					humanity = "I feel hunger for <b>BLOOD</b>. My humanity is slipping away."
-				if(1)
-					humanity = "Blood. Feed. Hunger. It gnaws. Must <b>FEED!</b>"
-
-		else
-			switch(host.humanity)
-				if(8 to 10)
-					humanity = "I'm <b>ENLIGHTENED</b>, my <b>BEAST</b> and I are in complete harmony."
-				if(7)
-					humanity = "I've made great strides in co-existing with my beast."
-				if(5 to 6)
-					humanity = "I'm starting to learn how to share this unlife with my beast."
-				if(4)
-					humanity = "I'm still new to my path, but I'm learning."
-				if(2 to 3)
-					humanity = "I'm a complete novice to my path."
-				if(1)
-					humanity = "I'm losing control over my beast!"
-
-		dat += "[humanity]<BR>"
-
-		if(host.clan.name == "Brujah")
-			if(GLOB.brujahname != "")
-				if(host.real_name != GLOB.brujahname)
-					dat += " My primogen is:  [GLOB.brujahname].<BR>"
-		if(host.clan.name == "Malkavian")
-			if(GLOB.malkavianname != "")
-				if(host.real_name != GLOB.malkavianname)
-					dat += " My primogen is:  [GLOB.malkavianname].<BR>"
-		if(host.clan.name == "Nosferatu")
-			if(GLOB.nosferatuname != "")
-				if(host.real_name != GLOB.nosferatuname)
-					dat += " My primogen is:  [GLOB.nosferatuname].<BR>"
-		if(host.clan.name == "Toreador")
-			if(GLOB.toreadorname != "")
-				if(host.real_name != GLOB.toreadorname)
-					dat += " My primogen is:  [GLOB.toreadorname].<BR>"
-		if(host.clan.name == "Ventrue")
-			if(GLOB.ventruename != "")
-				if(host.real_name != GLOB.ventruename)
-					dat += " My primogen is:  [GLOB.ventruename].<BR>"
-
-		dat += "<b>Physique</b>: [host.physique] + [host.additional_physique]<BR>"
-		dat += "<b>Dexterity</b>: [host.dexterity] + [host.additional_dexterity]<BR>"
-		dat += "<b>Social</b>: [host.social] + [host.additional_social]<BR>"
-		dat += "<b>Mentality</b>: [host.mentality] + [host.additional_mentality]<BR>"
-		dat += "<b>Cruelty</b>: [host.blood] + [host.additional_blood]<BR>"
-		dat += "<b>Lockpicking</b>: [host.lockpicking] + [host.additional_lockpicking]<BR>"
-		dat += "<b>Athletics</b>: [host.athletics] + [host.additional_athletics]<BR>"
-		if(host.hud_used)
-			dat += "<b>Known disciplines:</b><BR>"
-			for(var/datum/action/discipline/D in host.actions)
-				if(D)
-					if(D.discipline)
-						dat += "[D.discipline.name] [D.discipline.level] - [D.discipline.desc]<BR>"
-		if(host.Myself)
-			if(host.Myself.Friend)
-				if(host.Myself.Friend.owner)
-					dat += "<b>My friend's name is [host.Myself.Friend.owner.true_real_name].</b><BR>"
-					if(host.Myself.Friend.phone_number)
-						dat += "Their number is [host.Myself.Friend.phone_number].<BR>"
-					if(host.Myself.Friend.friend_text)
-						dat += "[host.Myself.Friend.friend_text]<BR>"
-			if(host.Myself.Enemy)
-				if(host.Myself.Enemy.owner)
-					dat += "<b>My nemesis is [host.Myself.Enemy.owner.true_real_name]!</b><BR>"
-					if(host.Myself.Enemy.enemy_text)
-						dat += "[host.Myself.Enemy.enemy_text]<BR>"
-			if(host.Myself.Lover)
-				if(host.Myself.Lover.owner)
-					dat += "<b>I'm in love with [host.Myself.Lover.owner.true_real_name].</b><BR>"
-					if(host.Myself.Lover.phone_number)
-						dat += "Their number is [host.Myself.Lover.phone_number].<BR>"
-					if(host.Myself.Lover.lover_text)
-						dat += "[host.Myself.Lover.lover_text]<BR>"
-		var/obj/keypad/armory/armory = find_keypad(/obj/keypad/armory)
-		if(armory && (host.mind.assigned_role == "Prince" || host.mind.assigned_role == "Sheriff" || host.mind.assigned_role == "Seneschal"))
-			dat += "The pincode for the armory keypad is<b>: [armory.pincode]</b><BR>"
-		var/obj/keypad/panic_room/panic = find_keypad(/obj/keypad/panic_room)
-		if(panic && (host.mind.assigned_role == "Prince" || host.mind.assigned_role == "Sheriff" || host.mind.assigned_role == "Seneschal"))
-			dat += "The pincode for the panic room keypad is<b>: [panic.pincode]</b><BR>"
-		var/obj/structure/vaultdoor/pincode/bank/bankdoor = find_door_pin(/obj/structure/vaultdoor/pincode/bank)
-		if(bankdoor && (host.mind.assigned_role == "Capo"))
-			dat += "The pincode for the bank vault is <b>: [bankdoor.pincode]</b><BR>"
-		if(bankdoor && (host.mind.assigned_role == "La Squadra"))
-			if(prob(50))
-				dat += "<b>The pincode for the bank vault is: [bankdoor.pincode]</b><BR>"
+	if (host.mind)
+		if (host.mind.assigned_role)
+			if(host.mind.special_role)
+				dat += ", carrying the [host.mind.assigned_role] (<font color=red>[host.mind.special_role]</font>) role."
 			else
-				dat += "<b>Unfortunately you don't know the vault code.</b><BR>"
+				dat += ", carrying the [host.mind.assigned_role] role."
+		if (!host.mind.assigned_role)
+			dat += "."
+		dat += "<BR>"
+		if (host.mind.enslaved_to)
+			dat += "My Regnant is [host.mind.enslaved_to], I should obey their wants.<BR>"
 
-		if(length(host.knowscontacts) > 0)
-			dat += "<b>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
-			for(var/i in host.knowscontacts)
-				dat += "-[i] contact<BR>"
-		for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
-			if(host.bank_id == account.bank_id)
-				dat += "<b>My bank account code is: [account.code]</b><BR>"
-		host << browse(HTML_SKELETON(dat), "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
-		onclose(host, "vampire", src)
+	if (host.generation)
+		dat += "I'm from [host.generation] generation.<BR>"
+
+	if (host.mind.special_role)
+		for(var/datum/antagonist/A in host.mind.antag_datums)
+			if(A.objectives)
+				dat += "[printobjectives(A.objectives)]<BR>"
+
+	var/masquerade_level = " followed the Masquerade Tradition perfectly."
+	switch(host.masquerade)
+		if(4)
+			masquerade_level = " broke the Masquerade rule once."
+		if(3)
+			masquerade_level = " made a couple of Masquerade breaches."
+		if(2)
+			masquerade_level = " provoked a moderate Masquerade breach."
+		if(1)
+			masquerade_level = " almost ruined the Masquerade."
+		if(0)
+			masquerade_level = "'m danger to the Masquerade and my own kind."
+	dat += "Camarilla thinks I[masquerade_level]<BR>"
+	var/humanity = "I'm out of my mind."
+	var/enlight = FALSE
+	if(host.clan)
+		if(host.clan.enlightenment)
+			enlight = TRUE
+
+	if (!enlight)
+		switch (host.humanity)
+			if (8 to 10)
+				humanity = "I'm saintly."
+			if (7)
+				humanity = "I feel as human as when I lived."
+			if (5 to 6)
+				humanity = "I'm feeling distant from my humanity."
+			if (4)
+				humanity = "I don't feel any compassion for the Kine anymore."
+			if (2 to 3)
+				humanity = "I feel hunger for <b>BLOOD</b>. My humanity is slipping away."
+			if (1)
+				humanity = "Blood. Feed. Hunger. It gnaws. Must <b>FEED!</b>"
+	else
+		switch (host.humanity)
+			if (8 to 10)
+				humanity = "I'm <b>ENLIGHTENED</b>, my <b>BEAST</b> and I are in complete harmony."
+			if (7)
+				humanity = "I've made great strides in co-existing with my beast."
+			if (5 to 6)
+				humanity = "I'm starting to learn how to share this unlife with my beast."
+			if (4)
+				humanity = "I'm still new to my path, but I'm learning."
+			if (2 to 3)
+				humanity = "I'm a complete novice to my path."
+			if (1)
+				humanity = "I'm losing control over my beast!"
+
+	dat += "[humanity]<BR>"
+
+	if(host.clan.name == "Brujah")
+		if(GLOB.brujahname != "")
+			if(host.real_name != GLOB.brujahname)
+				dat += " My primogen is:  [GLOB.brujahname].<BR>"
+	if(host.clan.name == "Malkavian")
+		if(GLOB.malkavianname != "")
+			if(host.real_name != GLOB.malkavianname)
+				dat += " My primogen is:  [GLOB.malkavianname].<BR>"
+	if(host.clan.name == "Nosferatu")
+		if(GLOB.nosferatuname != "")
+			if(host.real_name != GLOB.nosferatuname)
+				dat += " My primogen is:  [GLOB.nosferatuname].<BR>"
+	if(host.clan.name == "Toreador")
+		if(GLOB.toreadorname != "")
+			if(host.real_name != GLOB.toreadorname)
+				dat += " My primogen is:  [GLOB.toreadorname].<BR>"
+	if(host.clan.name == "Ventrue")
+		if(GLOB.ventruename != "")
+			if(host.real_name != GLOB.ventruename)
+				dat += " My primogen is:  [GLOB.ventruename].<BR>"
+
+	dat += "<b>Physique</b>: [host.physique] + [host.additional_physique]<BR>"
+	dat += "<b>Dexterity</b>: [host.dexterity] + [host.additional_dexterity]<BR>"
+	dat += "<b>Social</b>: [host.social] + [host.additional_social]<BR>"
+	dat += "<b>Mentality</b>: [host.mentality] + [host.additional_mentality]<BR>"
+	dat += "<b>Cruelty</b>: [host.blood] + [host.additional_blood]<BR>"
+	dat += "<b>Lockpicking</b>: [host.lockpicking] + [host.additional_lockpicking]<BR>"
+	dat += "<b>Athletics</b>: [host.athletics] + [host.additional_athletics]<BR>"
+
+	if(host.hud_used)
+		dat += "<b>Known disciplines:</b><BR>"
+		for (var/datum/action/discipline/D in host.actions)
+			if (!D.discipline)
+				continue
+
+			dat += "[D.discipline.name] [D.discipline.level] - [D.discipline.desc]<BR>"
+
+	if (host.Myself)
+		if (host.Myself.Friend)
+			if (host.Myself.Friend.owner)
+				dat += "<b>My friend's name is [host.Myself.Friend.owner.true_real_name].</b><BR>"
+				if (host.Myself.Friend.phone_number)
+					dat += "Their number is [host.Myself.Friend.phone_number].<BR>"
+				if (host.Myself.Friend.friend_text)
+					dat += "[host.Myself.Friend.friend_text]<BR>"
+		if (host.Myself.Enemy)
+			if (host.Myself.Enemy.owner)
+				dat += "<b>My nemesis is [host.Myself.Enemy.owner.true_real_name]!</b><BR>"
+				if (host.Myself.Enemy.enemy_text)
+					dat += "[host.Myself.Enemy.enemy_text]<BR>"
+		if (host.Myself.Lover?.owner)
+			dat += "<b>I'm in love with [host.Myself.Lover.owner.true_real_name].</b><BR>"
+			if (host.Myself.Lover.phone_number)
+				dat += "Their number is [host.Myself.Lover.phone_number].<BR>"
+			if (host.Myself.Lover.lover_text)
+				dat += "[host.Myself.Lover.lover_text]<BR>"
+
+	var/obj/keypad/armory/armory = find_keypad(/obj/keypad/armory)
+	if (armory && (host.mind.assigned_role == "Prince" || host.mind.assigned_role == "Sheriff" || host.mind.assigned_role == "Seneschal"))
+		dat += "The pincode for the armory keypad is<b>: [armory.pincode]</b><BR>"
+
+	var/obj/keypad/panic_room/panic = find_keypad(/obj/keypad/panic_room)
+	if (panic && (host.mind.assigned_role == "Prince" || host.mind.assigned_role == "Sheriff" || host.mind.assigned_role == "Seneschal"))
+		dat += "The pincode for the panic room keypad is<b>: [panic.pincode]</b><BR>"
+
+	var/obj/structure/vaultdoor/pincode/bank/bankdoor = find_door_pin(/obj/structure/vaultdoor/pincode/bank)
+	if (bankdoor && (host.mind.assigned_role == "Capo"))
+		dat += "The pincode for the bank vault is <b>: [bankdoor.pincode]</b><BR>"
+	if (bankdoor && (host.mind.assigned_role == "La Squadra"))
+		if(prob(50))
+			dat += "<b>The pincode for the bank vault is: [bankdoor.pincode]</b><BR>"
+		else
+			dat += "<b>Unfortunately you don't know the vault code.</b><BR>"
+
+	if (length(host.knowscontacts) > 0)
+		dat += "<b>I know some other of my kind in this city. Need to check my phone, there definetely should be:</b><BR>"
+		for(var/i in host.knowscontacts)
+			dat += "-[i] contact<BR>"
+
+	for (var/datum/vtm_bank_account/account in GLOB.bank_account_list)
+		if(host.bank_id == account.bank_id)
+			dat += "<b>My bank account code is: [account.code]</b><BR>"
+
+	host << browse(HTML_SKELETON(dat), "window=vampire;size=400x450;border=1;can_resize=1;can_minimize=0")
+	onclose(host, "vampire", src)
 
 /datum/species/kindred/on_species_gain(mob/living/carbon/human/C)
 	. = ..()
@@ -261,9 +272,11 @@
 /datum/species/kindred/proc/lose_organ(mob/living/carbon/human/source, obj/item/organ/organ)
 	SIGNAL_HANDLER
 
-	if (istype(organ, /obj/item/organ/heart))
-		if (!source.getorganslot(ORGAN_SLOT_HEART))
-			INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living/carbon/human, death))
+	if (!istype(organ, /obj/item/organ/heart))
+		return
+
+	if (!source.getorgan(/obj/item/organ/heart))
+		INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living/carbon/human, death))
 
 /datum/species/kindred/proc/slip_into_torpor(mob/living/carbon/human/source)
 	SIGNAL_HANDLER

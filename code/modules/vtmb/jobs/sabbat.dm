@@ -8,16 +8,15 @@
 
 /datum/outfit/job/sabbatist/pre_equip(mob/living/carbon/human/H)
 	..()
-	if(H.gender == MALE)
+	var/datum/splat/vampire/kindred/vampirism = is_kindred(H)
+	if (H.gender == MALE)
 		shoes = /obj/item/clothing/shoes/vampire
-		if(H.clan)
-			if(H.clan.male_clothes)
-				uniform = H.clan.male_clothes
+		if (vampirism?.clan?.male_clothes)
+			uniform = vampirism.clan.male_clothes
 	else
 		shoes = /obj/item/clothing/shoes/vampire/heels
-		if(H.clan)
-			if(H.clan.female_clothes)
-				uniform = H.clan.female_clothes
+		if (vampirism?.clan?.female_clothes)
+			uniform = vampirism.clan.female_clothes
 
 /datum/outfit/job/sabbatist/post_equip(mob/living/carbon/human/H)
 	..()

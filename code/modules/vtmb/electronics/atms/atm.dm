@@ -66,7 +66,6 @@ var/mob/living/carbon/human/H
 	var/datum/vtm_bank_account/account
 	var/code
 	var/balance = 0
-	var/has_checked = FALSE
 
 /obj/item/vamp/creditcard/prince
 	icon_state = "card2"

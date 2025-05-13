@@ -937,10 +937,6 @@
 /proc/cryoMob(mob/living/mob_occupant, obj/pod)
 	if(isnpc(mob_occupant))
 		return
-	if(iscarbon(mob_occupant))
-		var/mob/living/carbon/C = mob_occupant
-		if(C.transformator)
-			qdel(C.transformator)
 	var/list/crew_member = list()
 	crew_member["name"] = mob_occupant.real_name
 
@@ -949,8 +945,6 @@
 		var/job = mob_occupant.mind.assigned_role
 		crew_member["job"] = job
 		SSjob.FreeRole(job, mob_occupant)
-//		if(LAZYLEN(mob_occupant.mind.objectives))
-//			mob_occupant.mind.objectives.Cut()
 		mob_occupant.mind.special_role = null
 	else
 		crew_member["job"] = "N/A"

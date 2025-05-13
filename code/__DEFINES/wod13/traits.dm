@@ -76,6 +76,8 @@
 #define TRAIT_IN_FRENZY "in_frenzy"
 /// Their heart has been removed but is magically linked to their body, keeping them alive
 #define TRAIT_REMOVED_HEART "removed_heart"
+/// Any changes in this Kindred's Humanity will be doubled
+#define TRAIT_SENSITIVE_HUMANITY "sensitive_humanity"
 
 /* TRAIT SOURCES */
 #define SPLAT_TRAIT "splat_trait"
