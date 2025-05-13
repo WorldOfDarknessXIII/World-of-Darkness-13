@@ -1271,13 +1271,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(!job.allowed_species.Find(pref_species.name) && !bypass)
 		return "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[pref_species.name] RESTRICTED\]</font></td></tr>"
 	if(pref_species.name == "Vampire")
-		if(clane)
+		if(clan)
 			var/alloww = FALSE
 			for(var/i in job.allowed_bloodlines)
-				if(i == clane.name)
+				if(i == clan.name)
 					alloww = TRUE
 			if(!alloww && !bypass)
-				return "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[clane.name] RESTRICTED\]</font></td></tr>"
+				return "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[clan.name] RESTRICTED\]</font></td></tr>"
 	if((job_preferences[SSjob.overflow_role] == JP_LOW) && (rank != SSjob.overflow_role) && !is_banned_from(user.ckey, SSjob.overflow_role))
 		return "<font color=orange>[rank]</font></td>"
 
