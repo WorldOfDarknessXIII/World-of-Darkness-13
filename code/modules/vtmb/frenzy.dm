@@ -188,7 +188,7 @@
 
 /datum/species/kindred/spec_life(mob/living/carbon/human/H)
 	. = ..()
-	if(H.clane?.name == "Baali")
+	if(HAS_TRAIT(H, TRAIT_REPELLED_BY_HOLINESS))
 		if(istype(get_area(H), /area/vtm/church))
 			if(prob(25))
 				to_chat(H, "<span class='warning'>You don't belong here!</span>")
