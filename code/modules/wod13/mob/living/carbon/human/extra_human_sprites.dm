@@ -77,7 +77,6 @@
 		if (!findtext(clane.alt_sprite, "rotten") && (rot_stage <= 2))
 			return
 
-	// TODO: [Lucia] add TRAIT_MASQUERADE_VIOLATING_FACE here
 	// Apply rotten sprite and rotting effects
 	switch (rot_stage)
 		if (1)
