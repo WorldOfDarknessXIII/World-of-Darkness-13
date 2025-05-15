@@ -111,7 +111,7 @@
 		if(clane)
 			if(HAS_TRAIT(src, TRAIT_PAINFUL_VAMPIRE_KISS))
 				mob.adjustBruteLoss(20, TRUE)
-			if(clane.name == "Ventrue" && mob.bloodquality < BLOOD_QUALITY_NORMAL)	//Ventrue can suck on normal people, but not homeless people and animals. BLOOD_QUALITY_LOV - 1, BLOOD_QUALITY_NORMAL - 2, BLOOD_QUALITY_HIGH - 3. Blue blood gives +1 to suction
+			if(HAS_TRAIT(src, TRAIT_FEEDING_RESTRICTION) && mob.bloodquality < BLOOD_QUALITY_NORMAL)	//Ventrue can suck on normal people, but not homeless people and animals. BLOOD_QUALITY_LOV - 1, BLOOD_QUALITY_NORMAL - 2, BLOOD_QUALITY_HIGH - 3. Blue blood gives +1 to suction
 				to_chat(src, "<span class='warning'>You are too privileged to drink that awful <b>BLOOD</b>. Go get something better.</span>")
 				visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
 				playsound(get_turf(src), 'code/modules/wod13/sounds/vomit.ogg', 75, TRUE)
