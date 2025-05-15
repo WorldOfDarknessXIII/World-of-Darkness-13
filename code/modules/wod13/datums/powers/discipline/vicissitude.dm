@@ -142,7 +142,7 @@
 		owner.hair_color = original_haircolor
 		owner.facial_hair_color = original_facialhaircolor
 		owner.eye_color = original_eyecolor
-		owner.base_body_mod = original_body_mod
+		owner.set_body_model(original_body_mod)
 		owner.clane?.alt_sprite = original_alt_sprite
 		owner.clane?.alt_sprite_greyscale = original_alt_sprite_greyscale
 		is_shapeshifted = FALSE
@@ -159,7 +159,7 @@
 		owner.hair_color = impersonating_haircolor
 		owner.facial_hair_color = impersonating_facialhaircolor
 		owner.eye_color = impersonating_eyecolor
-		owner.base_body_mod = impersonating_body_mod
+		owner.set_body_model(impersonating_body_mod)
 		owner.clane?.alt_sprite = impersonating_alt_sprite
 		owner.clane?.alt_sprite_greyscale = impersonating_alt_sprite_greyscale
 		is_shapeshifted = TRUE
@@ -174,7 +174,7 @@
 	if (!owner.clane)
 		return
 
-	owner.base_body_mod = original_body_mod
+	owner.set_body_model(original_body_mod)
 	owner.clane.alt_sprite = original_alt_sprite
 	owner.clane.alt_sprite_greyscale = original_alt_sprite_greyscale
 
@@ -319,7 +319,7 @@
 			original_hairstyle = user.hairstyle
 			user.hairstyle = "Bald"
 			original_body_mod = user.base_body_mod
-			user.base_body_mod = ""
+			user.set_body_model(NORMAL_BODY_MODEL)
 			user.physiology.armor.melee += 20
 			user.physiology.armor.bullet += 20
 		if ("Centipede legs")
@@ -357,7 +357,7 @@
 			user.unique_body_sprite = null
 			user.skin_tone = original_skin_tone
 			user.hairstyle = original_hairstyle
-			user.base_body_mod = original_body_mod
+			user.set_body_model(original_body_mod)
 			user.physiology.armor.melee -= 20
 			user.physiology.armor.bullet -= 20
 		if ("Centipede legs")

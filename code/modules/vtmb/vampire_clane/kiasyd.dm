@@ -32,8 +32,8 @@
 		H.istower = TRUE
 	var/obj/item/organ/eyes/night_vision/kiasyd/NV = new()
 	NV.Insert(H, TRUE, FALSE)
-	if(H.base_body_mod == "f")
-		H.base_body_mod = ""
+	if(H.base_body_mod == FAT_BODY_MODEL)
+		H.set_body_model(NORMAL_BODY_MODEL)
 	H.update_body()
 
 /datum/vampireclane/kiasyd/post_gain(mob/living/carbon/human/H)

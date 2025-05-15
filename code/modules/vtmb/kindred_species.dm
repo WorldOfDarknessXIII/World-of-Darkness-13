@@ -691,8 +691,8 @@
 
 	// TODO: [Lucia] kill this
 	//deflate people if they're super rotten
-	if ((H.clane.alt_sprite == "rotten4") && (H.base_body_mod == "f"))
-		H.base_body_mod = ""
+	if ((H.clane.alt_sprite == "rotten4") && (H.base_body_mod == FAT_BODY_MODEL))
+		H.set_body_model(NORMAL_BODY_MODEL)
 
 	..()
 
