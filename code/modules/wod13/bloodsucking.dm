@@ -48,13 +48,9 @@
 			if(mob.key)
 				var/vse_taki = FALSE
 				if(clane)
-					var/salubri_allowed = FALSE
 					var/mob/living/carbon/human/H = mob
-					if(H.clane)
-						if(H.clane.name == "Salubri")
-							salubri_allowed = TRUE
 					if(clane.name != "Banu Haqim" && clane.name != "Caitiff")
-						if(!salubri_allowed)
+						if(!HAS_TRAIT(H, TRAIT_IRRESISTIBLE_VITAE))
 							if(!mind.special_role)
 								to_chat(src, "<span class='warning'>You find the idea of drinking your own <b>KIND's</b> blood disgusting!</span>")
 								last_drinkblood_use = 0

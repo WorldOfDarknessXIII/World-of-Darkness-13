@@ -119,7 +119,7 @@
 					return
 				if(BD.clane)
 					var/special_clan = FALSE
-					if(BD.clane.name == "Salubri")
+					if (HAS_TRAIT(BD, TRAIT_CONSENSUAL_FEEDING_ONLY))
 						if(!PB.IsSleeping() && PB.stat != DEAD)
 							to_chat(BD, "<span class='warning'>You can't drink from aware targets!</span>")
 							return
