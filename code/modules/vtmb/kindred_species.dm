@@ -685,17 +685,6 @@
 /datum/species/kindred/check_roundstart_eligible()
 	return TRUE
 
-/datum/species/kindred/handle_body(mob/living/carbon/human/H)
-	if (!H.clane)
-		return ..()
-
-	// TODO: [Lucia] kill this
-	//deflate people if they're super rotten
-	if ((H.clane.alt_sprite == "rotten4") && (H.base_body_mod == FAT_BODY_MODEL))
-		H.set_body_model(NORMAL_BODY_MODEL)
-
-	..()
-
 /**
  * Signal handler for lose_organ to near-instantly kill Kindred whose hearts have been removed.
  *

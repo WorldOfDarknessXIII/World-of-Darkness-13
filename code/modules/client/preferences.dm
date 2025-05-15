@@ -3178,6 +3178,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.features = features.Copy()
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
 	character.dna.real_name = character.real_name
+
+	switch (body_model)
+		if (SLIM_BODY_MODEL_NUMBER)
+			character.set_body_model(SLIM_BODY_MODEL)
+		if (NORMAL_BODY_MODEL_NUMBER)
+			character.set_body_model(NORMAL_BODY_MODEL)
+		if (FAT_BODY_MODEL_NUMBER)
+			character.set_body_model(FAT_BODY_MODEL)
+
 	if(character.clane)
 		character.clane.on_gain(character)
 
@@ -3238,14 +3247,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.dna.species.mutant_bodyparts["tail_lizard"] = pref_species.mutant_bodyparts["tail_lizard"]
 	if(pref_species.mutant_bodyparts["spines"])
 		character.dna.species.mutant_bodyparts["spines"] = pref_species.mutant_bodyparts["spines"]
-
-	switch (body_model)
-		if (SLIM_BODY_MODEL_NUMBER)
-			character.set_body_model(SLIM_BODY_MODEL)
-		if (NORMAL_BODY_MODEL_NUMBER)
-			character.set_body_model(NORMAL_BODY_MODEL)
-		if (FAT_BODY_MODEL_NUMBER)
-			character.set_body_model(FAT_BODY_MODEL)
 
 	if(icon_updates)
 		character.update_body()

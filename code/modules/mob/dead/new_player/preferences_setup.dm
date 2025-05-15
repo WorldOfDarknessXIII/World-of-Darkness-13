@@ -152,14 +152,6 @@
 	MAMA.pixel_x = -16
 	mannequin.add_overlay(MAMA)
 	copy_to(mannequin, 1, TRUE, TRUE)
-	if(clane.alt_sprite)
-		mannequin.dna.species.limbs_id = clane.alt_sprite
-//	else
-//		mannequin.dna.species.limbs_id = initial(pref_species.limbs_id)
-	if(clane.no_hair)
-		mannequin.facial_hairstyle = "Shaved"
-		mannequin.hairstyle = "Bald"
-		mannequin.update_hair()
 	mannequin.update_body()
 	mannequin.update_body_parts()
 	mannequin.update_icon()
