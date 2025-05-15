@@ -11,10 +11,9 @@
 		return
 	if(!is_special_character(src) || forced)
 		if(!in_frenzy || forced)
-			var/mod = 1
+			var/mod = HAS_TRAIT(src, TRAIT_SENSITIVE_HUMANITY) ? 2 : 1
 			var/enlight = FALSE
 			if(clane)
-				mod = clane.humanitymod
 				enlight = clane.enlightenment
 			if(enlight)
 				if(value < 0)

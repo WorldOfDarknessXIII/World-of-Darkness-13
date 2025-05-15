@@ -16,7 +16,6 @@ And it also helps for the character set panel
 	var/alt_sprite_greyscale = FALSE
 	var/no_hair
 	var/no_facial
-	var/humanitymod = 1
 	var/frenzymod = 1
 	var/start_humanity = 7
 	var/haircuts
