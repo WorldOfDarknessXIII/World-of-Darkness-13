@@ -89,11 +89,7 @@
 
 /obj/item/vamp/phone/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
-//	if(iskindred(user))
-//		var/mob/living/carbon/human/H = user
-//		if(H.clane)
-//			if(H.clane.name == "Lasombra")
-//				return
+
 	if(closed)
 		closed = FALSE
 		icon_state = open_state
@@ -101,30 +97,6 @@
 	if(!ui)
 		ui = new(user, src, interface, interface)
 		ui.open()
-/*
-	else
-		closed = TRUE
-		icon_state = "phone0"
-		talking = FALSE
-		if(online)
-			online.online = null
-			online.talking = FALSE
-			online = null
-			ui.close()
-
-
-/obj/item/vamp/phone/attack_self(mob/user)
-	if(!closed)
-		closed = TRUE
-		icon_state = "phone0"
-		talking = FALSE
-		if(online)
-			online.online = null
-			online.talking = FALSE
-			online = null
-	else
-		return ..()
-*/
 
 /obj/item/vamp/phone/AltClick(mob/user)
 	if(can_fold && !closed)
@@ -286,9 +258,6 @@
 
 			.= TRUE
 		if("call")
-//			if((iskindred(V) && V.clane.name == "Lasombra"))
-//				return
-//			else
 			choosed_number = replacetext(choosed_number, " ", "")
 			for(var/obj/item/vamp/phone/PHN in GLOB.phones_list)
 			//Loop through the Phone Global List
@@ -758,19 +727,17 @@
 					var/mob/living/carbon/human/SPK = hearing_args[HEARING_SPEAKER]
 					voice_saying = "[age2agedescription(SPK.age)] [SPK.gender] voice ([SPK.phonevoicetag])"
 
-					if(SPK.clane && SPK.clane.name == "Lasombra")
+					// Speech will be scrambled if the speaker doesn't work well with technology
+					if (HAS_TRAIT(SPK, TRAIT_REJECTED_BY_TECHNOLOGY))
 						message = scramble_lasombra_message(message)
 						playsound(online, 'code/modules/wod13/sounds/lasombra_whisper.ogg', 50, FALSE)
 					else
 						playsound(online, 'code/modules/wod13/sounds/phonetalk.ogg', 50, FALSE)
-//					if(SPK.clane)
-//						if(SPK.clane.name == "Lasombra")
-//							return
+
 				var/obj/phonevoice/VOIC = new(online)
 				VOIC.name = voice_saying
 				VOIC.speech_span = spchspn
 				VOIC.say("[message]")
-//				playsound(online, 'code/modules/wod13/sounds/phonetalk.ogg', 50, FALSE)
 				qdel(VOIC)
 
 /obj/item/vamp/phone/street
