@@ -12,10 +12,6 @@
 
 /mob/living/carbon/proc/rollfrenzy()
 	if(client)
-		var/mob/living/carbon/human/H
-		if(ishuman(src))
-			H = src
-
 		if(isgarou(src) || iswerewolf(src))
 			to_chat(src, "I'm full of <span class='danger'><b>ANGER</b></span>, and I'm about to flare up in <span class='danger'><b>RAGE</b></span>. Rolling...")
 		else if(iskindred(src))
@@ -25,30 +21,29 @@
 		else
 			to_chat(src, "I'm too <span class='danger'><b>AFRAID</b></span> to continue doing this. Rolling...")
 		SEND_SOUND(src, sound('code/modules/wod13/sounds/bloodneed.ogg', 0, 0, 50))
+
 		var/check
 		if(iscathayan(src))
 			check = vampireroll(max(1, mind.dharma.Hun), min(10, (mind.dharma.level*2)-max_demon_chi), src)
 		else
 			check = vampireroll(max(1, round(humanity/2)), min(frenzy_chance_boost, frenzy_hardness), src)
+
+		// Modifier for frenzy duration
+		var/length_modifier = HAS_TRAIT(src, TRAIT_LONGER_FRENZY) ? 2 : 1
+
 		switch(check)
-			if(DICE_FAILURE)
+			if (DICE_CRIT_FAILURE)
 				enter_frenzymod()
-				if(iskindred(src))
-					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 100*H.clane.frenzymod)
-				else
-					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 100)
+				addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 20 SECONDS * length_modifier)
 				frenzy_hardness = 1
-			if(DICE_CRIT_FAILURE)
+			if (DICE_FAILURE)
 				enter_frenzymod()
-				if(iskindred(src))
-					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 200*H.clane.frenzymod)
-				else
-					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 200)
+				addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 10 SECONDS * length_modifier)
 				frenzy_hardness = 1
-			if(DICE_CRIT_WIN)
-				frenzy_hardness = max(1, frenzy_hardness-1)
+			if (DICE_CRIT_WIN)
+				frenzy_hardness = max(1, frenzy_hardness - 1)
 			else
-				frenzy_hardness = min(10, frenzy_hardness+1)
+				frenzy_hardness = min(10, frenzy_hardness + 1)
 
 /mob/living/carbon/proc/enter_frenzymod()
 	if (in_frenzy)

@@ -49,12 +49,10 @@
 #define TRAIT_VITAE_ADDICTION "vitae_addiction"
 /// Is hurt by holiness/holy symbols and repelled by them
 #define TRAIT_REPELLED_BY_HOLINESS "repelled_by_holiness"
-/// If eyes are uncovered, they will be obviously supernatural to everyone nearby
-#define TRAIT_MASQUERADE_VIOLATING_EYES "masquerade_violating_eyes"
-/// If face is uncovered, they will be obviously supernatural to everyone nearby
-#define TRAIT_MASQUERADE_VIOLATING_FACE "masquerade_violating_face"
 /// Any changes in this Kindred's Humanity will be doubled
 #define TRAIT_SENSITIVE_HUMANITY "sensitive_humanity"
+/// Duration of frenzy is doubled
+#define TRAIT_LONGER_FRENZY "longer_frenzy"
 
 /// Trait given by a vampire's Clan
 #define CLAN_TRAIT "clan"
