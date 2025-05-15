@@ -283,6 +283,7 @@
 		H.bloodpool = max(0, H.bloodpool-1)
 		to_chat(H, "<span class='warning'>Necromancy Vision reduces your blood points too sustain itself.</span>")
 
+	// TODO: [Lucia] this needs to be a component or something
 	if(H.clane?.name == "Tzimisce" || H.clane?.name == "Old Clan Tzimisce")
 		var/datum/vampireclane/tzimisce/TZ = H.clane
 		if(TZ.heirl)
@@ -290,6 +291,8 @@
 				if(prob(5))
 					to_chat(H, "<span class='warning'>You are missing your home soil...</span>")
 					H.bloodpool = max(0, H.bloodpool-1)
+
+	// TODO: [Lucia] this needs to be a component
 	if(H.clane?.name == "Kiasyd")
 		var/datum/vampireclane/kiasyd/kiasyd = H.clane
 		for(var/obj/item/I in H.contents)
@@ -298,15 +301,6 @@
 					COOLDOWN_START(kiasyd, cold_iron_frenzy, 10 SECONDS)
 					H.rollfrenzy()
 					to_chat(H, "<span class='warning'>[I] is <b>COLD IRON</b>!")
-
-/*
-	if(!H in GLOB.masquerade_breakers_list)
-		if(H.masquerade < 4)
-			GLOB.masquerade_breakers_list += H
-	else if(H in GLOB.masquerade_breakers_list)
-		if(H.masquerade > 3)
-			GLOB.masquerade_breakers_list -= H
-*/
 
 	if(H.key && (H.stat <= HARD_CRIT))
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
