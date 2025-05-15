@@ -1,33 +1,50 @@
-/*
-This datum stores a declarative description of clans, in order to make an instance of the clan component from this implementation in runtime
-And it also helps for the character set panel
-*/
 /datum/vampireclane
-	var/name = "Caitiff"
-	var/desc = "The clanless. The rabble. Of no importance."
-	var/curse = "None."
-	var/list/clane_disciplines = list() //discipline datums
-	var/list/restricted_disciplines = list()
+	/// Name of the Clan
+	var/name
+	/// Description of the Clan
+	var/desc
+	/// Description of the Clan's supernatural curse
+	var/curse
+
+	/// List of Disciplines that are innate to this Clan
+	var/list/clane_disciplines
+	/// List of Disciplines that are rejected by this Clan
+	var/list/restricted_disciplines
+	/// List of traits that are applied to members of this Clan
 	var/list/clan_traits
-	var/datum/outfit/clane_outfit
-	///The Clan's unique body sprite
-	var/alt_sprite
-	///If the Clan's unique body sprites need to account for skintone
-	var/alt_sprite_greyscale = FALSE
-	var/no_hair
-	var/no_facial
-	var/frenzymod = 1
-	var/start_humanity = 7
-	var/haircuts
+
+	/// If members of this Clan look obviously supernatural and are walking Masquerade breaches
 	var/violating_appearance
+	/// The Clan's unique body sprite
+	var/alt_sprite
+	/// If the Clan's unique body sprites need to account for skintone
+	var/alt_sprite_greyscale
+	/// If members of this Clan can't have hair
+	var/no_hair
+	/// If members of this Clan can't have facial hair
+	var/no_facial
+
+	/// Default clothing for male members of this Clan
 	var/male_clothes
+	/// Default clothing for female members of this Clan
 	var/female_clothes
-	var/enlightenment = FALSE
-	var/whitelisted = FALSE
-	var/accessories = list()
-	var/accessories_layers = list()
+	/// Keys for this Clan's exclusive hideout
+	var/clan_keys
+
+	/// List of unnatural features that members of this Clan can choose
+	var/accessories
+	/// Associative list of layers for unnatural features that members of this Clan can choose
+	var/accessories_layers
+	/// Currently applied accessory
 	var/current_accessory
-	var/clan_keys //Keys to your hideout
+
+	/// Morality level that characters of this Clan start with
+	var/start_humanity = 7
+	/// If members of this Clan are on a Path of Enlightenment by default
+	var/enlightenment
+
+	/// If this Clan needs a whitelist to select and play
+	var/whitelisted
 
 /datum/vampireclane/proc/on_gain(mob/living/carbon/human/vampire)
 	SHOULD_CALL_PARENT(TRUE)

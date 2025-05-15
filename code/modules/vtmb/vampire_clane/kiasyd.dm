@@ -43,6 +43,7 @@
 	var/obj/item/clothing/glasses/vampire/sun/new_glasses = new(H.loc)
 	H.equip_to_appropriate_slot(new_glasses, TRUE)
 
+// TODO: [Lucia] this needs to become a component and/or signals
 /obj/item/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!proximity)
 		return

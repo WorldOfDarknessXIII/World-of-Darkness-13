@@ -1717,8 +1717,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("hairstyle")
 					if(clane.no_hair)
 						hairstyle = "Bald"
-					else if(clane.haircuts)
-						hairstyle = pick(clane.haircuts)
 					else
 						hairstyle = random_hairstyle(gender)
 				if("facial")
@@ -1854,15 +1852,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						hairstyle = "Bald"
 					else
 						var/new_hairstyle
-						if(clane.haircuts)
-							new_hairstyle = tgui_input_list(user, "Choose your character's hairstyle:", "Character Preference", clane.haircuts)
+						if(gender == MALE)
+							new_hairstyle = tgui_input_list(user, "Choose your character's hairstyle:", "Character Preference", GLOB.hairstyles_male_list)
+						else if(gender == FEMALE)
+							new_hairstyle = tgui_input_list(user, "Choose your character's hairstyle:", "Character Preference", GLOB.hairstyles_female_list)
 						else
-							if(gender == MALE)
-								new_hairstyle = tgui_input_list(user, "Choose your character's hairstyle:", "Character Preference", GLOB.hairstyles_male_list)
-							else if(gender == FEMALE)
-								new_hairstyle = tgui_input_list(user, "Choose your character's hairstyle:", "Character Preference", GLOB.hairstyles_female_list)
-							else
-								new_hairstyle = tgui_input_list(user, "Choose your character's hairstyle:", "Character Preference", GLOB.hairstyles_list)
+							new_hairstyle = tgui_input_list(user, "Choose your character's hairstyle:", "Character Preference", GLOB.hairstyles_list)
 						if(new_hairstyle)
 							hairstyle = new_hairstyle
 
@@ -1872,8 +1867,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 					if(clane.no_hair)
 						hairstyle = "Bald"
-					else if(clane.haircuts)
-						hairstyle = next_list_item(hairstyle, clane.haircuts)
 					else
 						if (gender == MALE)
 							hairstyle = next_list_item(hairstyle, GLOB.hairstyles_male_list)
@@ -1888,8 +1881,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 					if(clane.no_hair)
 						hairstyle = "Bald"
-					else if(clane.haircuts)
-						hairstyle = previous_list_item(hairstyle, clane.haircuts)
 					else
 						if (gender == MALE)
 							hairstyle = previous_list_item(hairstyle, GLOB.hairstyles_male_list)

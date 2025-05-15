@@ -49,11 +49,7 @@
 		else
 			shoes = /obj/item/clothing/shoes/vampire/heels
 
-	// Can't use flashlights if technology rejects you, so you arrive without one
-	if (HAS_TRAIT(H, TRAIT_REJECTED_BY_TECHNOLOGY))
-		backpack_contents = list(/obj/item/passport, /obj/item/vamp/creditcard)
-	else
-		backpack_contents = list(/obj/item/passport, /obj/item/flashlight, /obj/item/vamp/creditcard)
+	backpack_contents = list(/obj/item/passport, /obj/item/flashlight, /obj/item/vamp/creditcard)
 
 /obj/effect/landmark/start/citizen
 	name = "Citizen"
