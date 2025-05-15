@@ -313,7 +313,7 @@
 	ADD_TRAIT(user, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 	switch (upgrade)
 		if ("Skin armor")
-			user.unique_body_sprite = "tziarmor"
+			user.set_body_sprite("tziarmor")
 			original_skin_tone = user.skin_tone
 			user.skin_tone = "albino"
 			original_hairstyle = user.hairstyle
@@ -354,7 +354,7 @@
 	REMOVE_TRAIT(user, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 	switch (selected_upgrade)
 		if ("Skin armor")
-			user.unique_body_sprite = null
+			user.set_body_sprite()
 			user.skin_tone = original_skin_tone
 			user.hairstyle = original_hairstyle
 			user.set_body_model(original_body_mod)

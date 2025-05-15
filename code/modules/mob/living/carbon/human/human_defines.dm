@@ -112,8 +112,6 @@
 	var/additional_centipede = FALSE
 	var/additional_armor = FALSE
 
-	var/unique_body_sprite
-
 	var/image/suckbar
 	var/atom/suckbar_loc
 

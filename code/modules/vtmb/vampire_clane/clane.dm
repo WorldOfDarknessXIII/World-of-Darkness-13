@@ -39,14 +39,17 @@ And it also helps for the character set panel
 		vampire.overlays_standing[accessories_layers[current_accessory]] = acc_overlay
 		vampire.apply_overlay(accessories_layers[current_accessory])
 
+	// Apply alternative sprites
 	if (alt_sprite)
 		if (!alt_sprite_greyscale)
 			vampire.skin_tone = "albino"
-		vampire.unique_body_sprite = alt_sprite
+		vampire.set_body_sprite(alt_sprite)
 
+	// Remove hair if the Clan demands it
 	if (no_hair)
 		vampire.hairstyle = "Bald"
 
+	// Remove facial hair if the Clan demands it
 	if (no_facial)
 		vampire.facial_hairstyle = "Shaved"
 
