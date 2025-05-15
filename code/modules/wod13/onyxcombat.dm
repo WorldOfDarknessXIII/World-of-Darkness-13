@@ -332,7 +332,7 @@
 							return
 						special_clan = TRUE
 						PB.emote("moan")
-					if(BD.clane.name == "Giovanni")
+					if(HAS_TRAIT(BD, TRAIT_PAINFUL_VAMPIRE_KISS))
 						PB.emote("scream")
 						special_clan = TRUE
 					if(!special_clan)
