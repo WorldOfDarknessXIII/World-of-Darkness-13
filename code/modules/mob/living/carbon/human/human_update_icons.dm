@@ -57,27 +57,25 @@ There are several things that need to be remembered:
 	dna.species.handle_mutant_bodyparts(src)
 
 /mob/living/carbon/human/update_body()
-	if(dna.species.id == "mannequin")
-		base_body_mod = ""
-		dna.species.limbs_id = "[base_body_mod]mannequin"
-	else
-		dna.species.limbs_id = "[base_body_mod]human"
-
-	if(unique_body_sprite)
+	if (unique_body_sprite)
 		dna.species.limbs_id = "[base_body_mod][unique_body_sprite]"
+	else
+		dna.species.limbs_id = base_body_mod + initial(dna.species.limbs_id)
 
-	if(base_body_mod == "s")
-		if(gender == FEMALE)
-			body_sprite = 'code/modules/wod13/worn_slim_f.dmi'
-		else
-			body_sprite = 'code/modules/wod13/worn_slim_m.dmi'
-	if(base_body_mod == "f")
-		body_sprite = 'code/modules/wod13/worn_fat.dmi'
-	if(base_body_mod == "")
-		body_sprite = null
+	switch (base_body_mod)
+		if ("s")
+			if (gender == FEMALE)
+				body_sprite = 'code/modules/wod13/worn_slim_f.dmi'
+			else
+				body_sprite = 'code/modules/wod13/worn_slim_m.dmi'
+		if ("")
+			body_sprite = null
+		if ("f")
+			body_sprite = 'code/modules/wod13/worn_fat.dmi'
+
 	for(var/obj/item/I in GetAllContents())
-		if(I)
-			I.update_bodyfied(src)
+		I.update_bodyfied(src)
+
 	update_inv_w_uniform()
 	update_inv_wear_id()
 	update_inv_gloves()
@@ -92,22 +90,9 @@ There are several things that need to be remembered:
 	update_inv_wear_suit()
 	update_inv_pockets()
 	update_inv_neck()
-//	update_body_parts_head_only()
 	remove_overlay(BODY_LAYER)
 	dna.species.handle_body(src)
-	/*
-	if(gender == MALE)
-		if(!given_penis)
-			var/obj/item/organ/replacement = new /obj/item/organ/penis()
-			replacement.Insert(src, TRUE, FALSE)
-			given_penis = TRUE
-	else
-		given_penis = FALSE
-		var/obj/item/organ/I = getorgan(/obj/item/organ/penis)
-		if(I)
-			I.Remove(src)
-			QDEL_NULL(I)
-	*/
+
 	..()
 
 /mob/living/carbon/human/update_fire()

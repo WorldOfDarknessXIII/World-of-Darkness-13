@@ -1,5 +1,3 @@
-//Additional game logic should be stored in the component
-GLOBAL_LIST_INIT(basic_disciplines, list(/datum/discipline/animalism)) //write here the main disciplines when I do them [Lucia] - god fucking damn it flavrius
 /*
 This datum stores a declarative description of clans, in order to make an instance of the clan component from this implementation in runtime
 And it also helps for the character set panel
@@ -7,13 +5,11 @@ And it also helps for the character set panel
 /datum/vampireclane
 	var/name = "Caitiff"
 	var/desc = "The clanless. The rabble. Of no importance."
+	var/curse = "None."
 	var/list/clane_disciplines = list() //discipline datums
 	var/list/restricted_disciplines = list()
+	var/list/clan_traits
 	var/datum/outfit/clane_outfit
-	var/curse = "None."
-	var/list/allowed_jobs = list()
-	var/list/denied_jobs = list()
-	var/clane_curse //There should be a reference here.
 	///The Clan's unique body sprite
 	var/alt_sprite
 	///If the Clan's unique body sprites need to account for skintone
@@ -34,34 +30,45 @@ And it also helps for the character set panel
 	var/current_accessory
 	var/clan_keys //Keys to your hideout
 
-/datum/vampireclane/proc/on_gain(var/mob/living/carbon/human/H)
+/datum/vampireclane/proc/on_gain(mob/living/carbon/human/vampire)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(length(accessories))
-		if(current_accessory)
-			H.remove_overlay(accessories_layers[current_accessory])
-			var/mutable_appearance/acc_overlay = mutable_appearance('code/modules/wod13/icons.dmi', current_accessory, -accessories_layers[current_accessory])
-			H.overlays_standing[accessories_layers[current_accessory]] = acc_overlay
-			H.apply_overlay(accessories_layers[current_accessory])
-	if(alt_sprite)
+	if (length(accessories) && current_accessory)
+		vampire.remove_overlay(accessories_layers[current_accessory])
+		var/mutable_appearance/acc_overlay = mutable_appearance('code/modules/wod13/icons.dmi', current_accessory, -accessories_layers[current_accessory])
+		vampire.overlays_standing[accessories_layers[current_accessory]] = acc_overlay
+		vampire.apply_overlay(accessories_layers[current_accessory])
+
+	if (alt_sprite)
 		if (!alt_sprite_greyscale)
-			H.skin_tone = "albino"
-		H.dna.species.limbs_id = alt_sprite
-		H.update_body_parts()
-		H.update_body()
-		H.update_icon()
+			vampire.skin_tone = "albino"
+		vampire.unique_body_sprite = alt_sprite
 
-/datum/vampireclane/proc/post_gain(var/mob/living/carbon/human/H)
+	if (no_hair)
+		vampire.hairstyle = "Bald"
+
+	if (no_facial)
+		vampire.facial_hairstyle = "Shaved"
+
+	// Add unique Clan features as traits
+	for (var/trait in clan_traits)
+		ADD_TRAIT(vampire, trait, CLAN_TRAIT)
+
+	vampire.update_body_parts()
+	vampire.update_body()
+	vampire.update_icon()
+
+/datum/vampireclane/proc/post_gain(mob/living/carbon/human/vampire)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(violating_appearance && H.roundstart_vampire)
+	if(violating_appearance && vampire.roundstart_vampire)
 		if(length(GLOB.masquerade_latejoin))
 			var/obj/effect/landmark/latejoin_masquerade/LM = pick(GLOB.masquerade_latejoin)
 			if(LM)
-				H.forceMove(LM.loc)
+				vampire.forceMove(LM.loc)
 
 	if(clan_keys)
-		H.put_in_r_hand(new clan_keys(H))
+		vampire.put_in_r_hand(new clan_keys(vampire))
 
 /mob/living/carbon
 	var/datum/relationship/Myself
