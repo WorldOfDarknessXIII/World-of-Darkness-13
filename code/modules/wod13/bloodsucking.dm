@@ -49,7 +49,7 @@
 				var/vse_taki = FALSE
 				if(clane)
 					var/mob/living/carbon/human/H = mob
-					if(clane.name != "Banu Haqim" && clane.name != "Caitiff")
+					if(!HAS_TRAIT(src, TRAIT_VITAE_ADDICTION) && clane.name != "Caitiff")
 						if(!HAS_TRAIT(H, TRAIT_IRRESISTIBLE_VITAE))
 							if(!mind.special_role)
 								to_chat(src, "<span class='warning'>You find the idea of drinking your own <b>KIND's</b> blood disgusting!</span>")

@@ -349,7 +349,7 @@
 					P.reason_of_death = "Lost control to the Beast ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 
 	if(H.clane && !H.antifrenzy && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
-		if(H.clane.name == "Banu Haqim")
+		if(HAS_TRAIT(H, TRAIT_VITAE_ADDICTION))
 			if(H.mind)
 				if(H.mind.enslaved_to)
 					if(get_dist(H, H.mind.enslaved_to) > 10)
