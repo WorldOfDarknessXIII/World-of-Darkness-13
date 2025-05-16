@@ -34,14 +34,7 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 
 /obj/structure/mirror/Crossed(atom/movable/AM)
 	. = ..()
-//	if(ishuman(AM) && ref)
-//		var/mob/living/carbon/human/H = AM
-//		if(H.clane)
-//			if(H.clane.name == "Lasombra")
-//				var/obj/effect/reflection/reflection = ref.resolve()
-//				if(istype(reflection))
-//					qdel(reflection)
-//					ref = null
+
 	if(!ref)
 		var/obj/effect/reflection/reflection = new(src.loc)
 		reflection.setup_visuals(src)
@@ -62,9 +55,8 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 		var/mob/living/carbon/human/H = user
 
 		//Sorry, you can't see yourself in front of the mirror!
-		if(H.clane)
-			if(H.clane.name == "Lasombra")
-				return
+		if (HAS_TRAIT(user, TRAIT_NO_REFLECTION))
+			return
 
 		//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
 		//this is largely copypasted from there.

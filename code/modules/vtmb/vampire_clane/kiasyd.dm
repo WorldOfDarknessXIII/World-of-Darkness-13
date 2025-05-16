@@ -17,8 +17,6 @@
 	accessories = list("fae_ears", "none")
 	accessories_layers = list("fae_ears" = UPPER_EARS_LAYER, "none" = UPPER_EARS_LAYER)
 
-	COOLDOWN_DECLARE(cold_iron_frenzy)
-
 /datum/vampireclane/kiasyd/on_gain(mob/living/carbon/human/H)
 	..()
 	//This was messing with the visualiser in the character setup menu somehow
@@ -32,9 +30,12 @@
 		H.istower = TRUE
 	var/obj/item/organ/eyes/night_vision/kiasyd/NV = new()
 	NV.Insert(H, TRUE, FALSE)
-	if(H.base_body_mod == "f")
-		H.base_body_mod = ""
+	if(H.base_body_mod == FAT_BODY_MODEL)
+		H.set_body_model(NORMAL_BODY_MODEL)
 	H.update_body()
+
+	// Add curse component
+	H.AddComponent(/datum/component/kiasyd_iron_weakness)
 
 /datum/vampireclane/kiasyd/post_gain(mob/living/carbon/human/H)
 	. = ..()
@@ -43,17 +44,10 @@
 	var/obj/item/clothing/glasses/vampire/sun/new_glasses = new(H.loc)
 	H.equip_to_appropriate_slot(new_glasses, TRUE)
 
+// TODO: [Lucia] this needs to become a component and/or signals
 /obj/item/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!proximity)
 		return
-	if(iskindred(target) && is_iron)
-		var/mob/living/carbon/human/L = target
-		if(L.clane?.name == "Kiasyd")
-			var/datum/vampireclane/kiasyd/kiasyd = L.clane
-			if (COOLDOWN_FINISHED(kiasyd, cold_iron_frenzy))
-				COOLDOWN_START(kiasyd, cold_iron_frenzy, 10 SECONDS)
-				to_chat(L, "<span class='danger'><b>COLD IRON!</b></span>")
-				L.rollfrenzy()
 	if(iscathayan(target) && is_iron)
 		var/mob/living/carbon/human/L = target
 		if(L.max_yang_chi > L.max_yin_chi + 2)

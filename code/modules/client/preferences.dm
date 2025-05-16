@@ -141,7 +141,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/hearted_until
 	/// Agendered spessmen can choose whether to have a male or female bodytype
 	var/body_type
-	var/body_model = 2
+	var/body_model = NORMAL_BODY_MODEL_NUMBER
 	/// If we have persistent scars enabled
 	var/persistent_scars = TRUE
 	///If we want to broadcast deadchat connect/disconnect messages
@@ -280,7 +280,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	enlightenment = clane.enlightenment
 	random_species()
 	random_character()
-	body_model = rand(1, 3)
+	body_model = rand(SLIM_BODY_MODEL_NUMBER, FAT_BODY_MODEL_NUMBER)
 	true_experience = 50
 	real_name = random_unique_name(gender)
 	save_character()
@@ -1717,8 +1717,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("hairstyle")
 					if(clane.no_hair)
 						hairstyle = "Bald"
-					else if(clane.haircuts)
-						hairstyle = pick(clane.haircuts)
 					else
 						hairstyle = random_hairstyle(gender)
 				if("facial")
@@ -1854,15 +1852,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						hairstyle = "Bald"
 					else
 						var/new_hairstyle
-						if(clane.haircuts)
-							new_hairstyle = tgui_input_list(user, "Choose your character's hairstyle:", "Character Preference", clane.haircuts)
+						if(gender == MALE)
+							new_hairstyle = tgui_input_list(user, "Choose your character's hairstyle:", "Character Preference", GLOB.hairstyles_male_list)
+						else if(gender == FEMALE)
+							new_hairstyle = tgui_input_list(user, "Choose your character's hairstyle:", "Character Preference", GLOB.hairstyles_female_list)
 						else
-							if(gender == MALE)
-								new_hairstyle = tgui_input_list(user, "Choose your character's hairstyle:", "Character Preference", GLOB.hairstyles_male_list)
-							else if(gender == FEMALE)
-								new_hairstyle = tgui_input_list(user, "Choose your character's hairstyle:", "Character Preference", GLOB.hairstyles_female_list)
-							else
-								new_hairstyle = tgui_input_list(user, "Choose your character's hairstyle:", "Character Preference", GLOB.hairstyles_list)
+							new_hairstyle = tgui_input_list(user, "Choose your character's hairstyle:", "Character Preference", GLOB.hairstyles_list)
 						if(new_hairstyle)
 							hairstyle = new_hairstyle
 
@@ -1872,8 +1867,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 					if(clane.no_hair)
 						hairstyle = "Bald"
-					else if(clane.haircuts)
-						hairstyle = next_list_item(hairstyle, clane.haircuts)
 					else
 						if (gender == MALE)
 							hairstyle = next_list_item(hairstyle, GLOB.hairstyles_male_list)
@@ -1888,8 +1881,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 					if(clane.no_hair)
 						hairstyle = "Bald"
-					else if(clane.haircuts)
-						hairstyle = previous_list_item(hairstyle, clane.haircuts)
 					else
 						if (gender == MALE)
 							hairstyle = previous_list_item(hairstyle, GLOB.hairstyles_male_list)
@@ -2696,12 +2687,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(slotlocked)
 						return
 
-					if(body_model == 1)
-						body_model = 2
-					else if(body_model == 2)
-						body_model = 3
-					else if(body_model == 3)
-						body_model = 1
+					if(body_model == SLIM_BODY_MODEL_NUMBER)
+						body_model = NORMAL_BODY_MODEL_NUMBER
+					else if(body_model == NORMAL_BODY_MODEL_NUMBER)
+						body_model = FAT_BODY_MODEL_NUMBER
+					else if(body_model == FAT_BODY_MODEL_NUMBER)
+						body_model = SLIM_BODY_MODEL_NUMBER
 				if("hotkeys")
 					hotkeys = !hotkeys
 					if(hotkeys)
@@ -3140,14 +3131,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	else
 		character.body_type = body_type
 
-	switch(body_model)
-		if(1)
-			character.base_body_mod = "s"
-		if(2)
-			character.base_body_mod = ""
-		if(3)
-			character.base_body_mod = "f"
-
 	character.eye_color = eye_color
 	var/obj/item/organ/eyes/organ_eyes = character.getorgan(/obj/item/organ/eyes)
 	if(organ_eyes)
@@ -3186,6 +3169,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.features = features.Copy()
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
 	character.dna.real_name = character.real_name
+
+	switch (body_model)
+		if (SLIM_BODY_MODEL_NUMBER)
+			character.set_body_model(SLIM_BODY_MODEL)
+		if (NORMAL_BODY_MODEL_NUMBER)
+			character.set_body_model(NORMAL_BODY_MODEL)
+		if (FAT_BODY_MODEL_NUMBER)
+			character.set_body_model(FAT_BODY_MODEL)
+
 	if(character.clane)
 		character.clane.on_gain(character)
 
@@ -3241,8 +3233,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				character.transformator.lupus_form.health = character.transformator.lupus_form.maxHealth
 				character.transformator.crinos_form.maxHealth = round((initial(character.transformator.crinos_form.maxHealth)+(initial(character.maxHealth)/4)*(character.physique + character.additional_physique )))+(character.auspice.level-1)*50
 				character.transformator.crinos_form.health = character.transformator.crinos_form.maxHealth
-//		character.transformator.crinos_form.update_icons()
-//		character.transformator.lupus_form.update_icons()
+
 	if(pref_species.mutant_bodyparts["tail_lizard"])
 		character.dna.species.mutant_bodyparts["tail_lizard"] = pref_species.mutant_bodyparts["tail_lizard"]
 	if(pref_species.mutant_bodyparts["spines"])

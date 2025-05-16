@@ -7,6 +7,9 @@
 		/datum/discipline/presence,
 		/datum/discipline/daimonion
 	)
+	clan_traits = list(
+		TRAIT_REPELLED_BY_HOLINESS
+	)
 	male_clothes = /obj/item/clothing/under/vampire/baali
 	female_clothes = /obj/item/clothing/under/vampire/baali/female
 	enlightenment = TRUE

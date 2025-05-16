@@ -498,6 +498,8 @@
 /// Called when a living mob has its resting updated: (resting_state)
 #define COMSIG_LIVING_RESTING_UPDATED "resting_updated"
 
+/// From /obj/item/proc/pickup(): (/obj/item/picked_up_item)
+#define COMSIG_LIVING_PICKED_UP_ITEM "living_picked_up_item"
 
 ///From /datum/component/creamed/Initialize()
 #define COMSIG_MOB_CREAMED "mob_creamed"

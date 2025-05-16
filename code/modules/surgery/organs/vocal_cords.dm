@@ -150,12 +150,9 @@
 				continue
 			if(ishuman(L))
 				var/mob/living/carbon/human/H = L
-				if(H.clane)
-					if(H.clane.name == "Gargoyle")
-						dominate_me = TRUE
 				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 					continue
-			if(user.generation > L.generation && !dominate_me) //Dominate can't be used on lower Generations
+			if(user.generation > L.generation && !HAS_TRAIT(L, TRAIT_CANNOT_RESIST_MIND_CONTROL)) //Dominate can't be used on lower Generations
 				continue
 			if((user.get_total_social() <= L.get_total_mentality()) && !dominate_me) //Dominate must defeat resistance
 				continue

@@ -499,12 +499,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	werewolf_name = reject_bad_name(werewolf_name)
 	gender = sanitize_gender(gender)
 	body_type = sanitize_gender(body_type, FALSE, FALSE, gender)
-	body_model = sanitize_integer(body_model, 1, 3, initial(body_model))
+	body_model = sanitize_integer(body_model, SLIM_BODY_MODEL_NUMBER, FAT_BODY_MODEL_NUMBER, initial(body_model))
 	if(!real_name)
 		real_name = random_unique_name(gender)
-//	if(!clane)
-//		var/newtype = GLOB.clanes_list["Brujah"]
-//		clane = new newtype()
 
 	//Prevent Wighting upon joining a round
 	if(humanity <= 0)

@@ -7,6 +7,10 @@
 		/datum/discipline/dominate,
 		/datum/discipline/obtenebration
 	)
+	clan_traits = list(
+		TRAIT_REJECTED_BY_TECHNOLOGY,
+		TRAIT_NO_REFLECTION
+	)
 	male_clothes = /obj/item/clothing/under/vampire/emo
 	female_clothes = /obj/item/clothing/under/vampire/business
 	enlightenment = TRUE

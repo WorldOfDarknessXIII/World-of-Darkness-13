@@ -8,7 +8,6 @@
 		/datum/discipline/potence,
 		/datum/discipline/obfuscate
 	)
-
 	violating_appearance = TRUE
 	male_clothes = /obj/item/clothing/under/vampire/nosferatu
 	female_clothes = /obj/item/clothing/under/vampire/nosferatu/female

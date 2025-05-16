@@ -7,7 +7,9 @@
 		/datum/discipline/celerity,
 		/datum/discipline/presence
 	)
-	humanitymod = 2
+	clan_traits = list(
+		TRAIT_SENSITIVE_HUMANITY
+	)
 	male_clothes = /obj/item/clothing/under/vampire/toreador
 	female_clothes = /obj/item/clothing/under/vampire/toreador/female
 	clan_keys = /obj/item/vamp/keys/toreador

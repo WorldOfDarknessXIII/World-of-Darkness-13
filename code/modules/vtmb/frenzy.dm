@@ -12,10 +12,6 @@
 
 /mob/living/carbon/proc/rollfrenzy()
 	if(client)
-		var/mob/living/carbon/human/H
-		if(ishuman(src))
-			H = src
-
 		if(isgarou(src) || iswerewolf(src))
 			to_chat(src, "I'm full of <span class='danger'><b>ANGER</b></span>, and I'm about to flare up in <span class='danger'><b>RAGE</b></span>. Rolling...")
 		else if(iskindred(src))
@@ -25,30 +21,29 @@
 		else
 			to_chat(src, "I'm too <span class='danger'><b>AFRAID</b></span> to continue doing this. Rolling...")
 		SEND_SOUND(src, sound('code/modules/wod13/sounds/bloodneed.ogg', 0, 0, 50))
+
 		var/check
 		if(iscathayan(src))
 			check = vampireroll(max(1, mind.dharma.Hun), min(10, (mind.dharma.level*2)-max_demon_chi), src)
 		else
 			check = vampireroll(max(1, round(humanity/2)), min(frenzy_chance_boost, frenzy_hardness), src)
+
+		// Modifier for frenzy duration
+		var/length_modifier = HAS_TRAIT(src, TRAIT_LONGER_FRENZY) ? 2 : 1
+
 		switch(check)
-			if(DICE_FAILURE)
+			if (DICE_CRIT_FAILURE)
 				enter_frenzymod()
-				if(iskindred(src))
-					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 100*H.clane.frenzymod)
-				else
-					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 100)
+				addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 20 SECONDS * length_modifier)
 				frenzy_hardness = 1
-			if(DICE_CRIT_FAILURE)
+			if (DICE_FAILURE)
 				enter_frenzymod()
-				if(iskindred(src))
-					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 200*H.clane.frenzymod)
-				else
-					addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 200)
+				addtimer(CALLBACK(src, PROC_REF(exit_frenzymod)), 10 SECONDS * length_modifier)
 				frenzy_hardness = 1
-			if(DICE_CRIT_WIN)
-				frenzy_hardness = max(1, frenzy_hardness-1)
+			if (DICE_CRIT_WIN)
+				frenzy_hardness = max(1, frenzy_hardness - 1)
 			else
-				frenzy_hardness = min(10, frenzy_hardness+1)
+				frenzy_hardness = min(10, frenzy_hardness + 1)
 
 /mob/living/carbon/proc/enter_frenzymod()
 	if (in_frenzy)
@@ -188,7 +183,7 @@
 
 /datum/species/kindred/spec_life(mob/living/carbon/human/H)
 	. = ..()
-	if(H.clane?.name == "Baali")
+	if(HAS_TRAIT(H, TRAIT_REPELLED_BY_HOLINESS))
 		if(istype(get_area(H), /area/vtm/church))
 			if(prob(25))
 				to_chat(H, "<span class='warning'>You don't belong here!</span>")
@@ -288,6 +283,7 @@
 		H.bloodpool = max(0, H.bloodpool-1)
 		to_chat(H, "<span class='warning'>Necromancy Vision reduces your blood points too sustain itself.</span>")
 
+	// TODO: [Lucia] this needs to be a component or something
 	if(H.clane?.name == "Tzimisce" || H.clane?.name == "Old Clan Tzimisce")
 		var/datum/vampireclane/tzimisce/TZ = H.clane
 		if(TZ.heirl)
@@ -295,23 +291,6 @@
 				if(prob(5))
 					to_chat(H, "<span class='warning'>You are missing your home soil...</span>")
 					H.bloodpool = max(0, H.bloodpool-1)
-	if(H.clane?.name == "Kiasyd")
-		var/datum/vampireclane/kiasyd/kiasyd = H.clane
-		for(var/obj/item/I in H.contents)
-			if(I?.is_iron)
-				if (COOLDOWN_FINISHED(kiasyd, cold_iron_frenzy))
-					COOLDOWN_START(kiasyd, cold_iron_frenzy, 10 SECONDS)
-					H.rollfrenzy()
-					to_chat(H, "<span class='warning'>[I] is <b>COLD IRON</b>!")
-
-/*
-	if(!H in GLOB.masquerade_breakers_list)
-		if(H.masquerade < 4)
-			GLOB.masquerade_breakers_list += H
-	else if(H in GLOB.masquerade_breakers_list)
-		if(H.masquerade > 3)
-			GLOB.masquerade_breakers_list -= H
-*/
 
 	if(H.key && (H.stat <= HARD_CRIT))
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
@@ -348,8 +327,9 @@
 					H.ghostize(FALSE)
 					P.reason_of_death = "Lost control to the Beast ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 
+	// TODO: [Lucia] this needs to be a component
 	if(H.clane && !H.antifrenzy && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
-		if(H.clane.name == "Banu Haqim")
+		if(HAS_TRAIT(H, TRAIT_VITAE_ADDICTION))
 			if(H.mind)
 				if(H.mind.enslaved_to)
 					if(get_dist(H, H.mind.enslaved_to) > 10)

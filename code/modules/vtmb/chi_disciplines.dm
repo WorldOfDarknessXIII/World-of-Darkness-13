@@ -495,7 +495,7 @@
 			caster.physiology.armor.bullet += 25
 			caster.add_movespeed_modifier(/datum/movespeed_modifier/necroing)
 			var/initial_limbs_id = caster.dna.species.limbs_id
-			caster.dna.species.limbs_id = "rotten1"
+			caster.set_body_sprite("rotten1")
 			caster.update_body()
 			ADD_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
 			spawn(delay+caster.discipline_time_plus)
@@ -511,7 +511,7 @@
 		if(2)
 			var/initial_hair = caster.hairstyle
 			var/initial_facial = caster.facial_hairstyle
-			caster.unique_body_sprite = "nothing"
+			caster.set_body_sprite()
 			caster.hairstyle = "Bald"
 			caster.facial_hairstyle = "Shaved"
 			caster.update_body()
@@ -519,7 +519,7 @@
 				freezing_aura_loop(caster, delay + caster.discipline_time_plus)
 			spawn(delay+caster.discipline_time_plus)
 				if(caster)
-					caster.unique_body_sprite = null
+					caster.set_body_sprite()
 					caster.hairstyle = initial_hair
 					caster.facial_hairstyle = initial_facial
 					caster.update_body()
@@ -544,7 +544,7 @@
 			ADD_TRAIT(caster, TRAIT_NOHARDCRIT, MAGIC_TRAIT)
 			caster.physiology.armor.melee += 25
 			caster.physiology.armor.bullet += 25
-			caster.unique_body_sprite = "rotten1"
+			caster.set_body_sprite("rotten1")
 			caster.update_body()
 			caster.set_light(1.4,5,"#34D352")
 			ADD_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
@@ -554,7 +554,7 @@
 					REMOVE_TRAIT(caster, TRAIT_NOHARDCRIT, MAGIC_TRAIT)
 					caster.physiology.armor.melee -= 25
 					caster.physiology.armor.bullet -= 25
-					caster.unique_body_sprite = null
+					caster.set_body_sprite()
 					caster.update_body()
 					caster.set_light(0)
 					REMOVE_TRAIT(caster, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)

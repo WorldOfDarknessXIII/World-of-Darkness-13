@@ -188,7 +188,7 @@
 	if(M.dna.species.limbs_id != "nosferatu")
 		to_chat(M, "<span class='userdanger'>Your skin falls off easily!</span>")
 		M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
-		M.dna.species.limbs_id = "nosferatu"
+		M.set_body_sprite("nosferatu")
 		M.facial_hairstyle = "Shaved"
 		M.hairstyle = "Bald"
 		M.update_hair()

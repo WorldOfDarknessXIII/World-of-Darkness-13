@@ -39,12 +39,11 @@
 
 
 /obj/item/flashlight/attack_self(mob/user)
-	if(iskindred(user))
-		var/mob/living/carbon/human/H = user
-		if(H.clane)
-			if(H.clane.name == "Lasombra")
-				return
-	..()
+	if (HAS_TRAIT(user, TRAIT_REJECTED_BY_TECHNOLOGY))
+		return
+
+	. = ..()
+
 	on = !on
 	playsound(user, on ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
 	update_brightness(user)

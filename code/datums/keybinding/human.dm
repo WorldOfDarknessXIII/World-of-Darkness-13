@@ -119,13 +119,13 @@
 					return
 				if(BD.clane)
 					var/special_clan = FALSE
-					if(BD.clane.name == "Salubri")
+					if (HAS_TRAIT(BD, TRAIT_CONSENSUAL_FEEDING_ONLY))
 						if(!PB.IsSleeping() && PB.stat != DEAD)
 							to_chat(BD, "<span class='warning'>You can't drink from aware targets!</span>")
 							return
 						special_clan = TRUE
 						PB.emote("moan")
-					if(BD.clane.name == "Giovanni")
+					if(HAS_TRAIT(BD, TRAIT_PAINFUL_VAMPIRE_KISS))
 						PB.emote("scream")
 						special_clan = TRUE
 					if(!special_clan)
