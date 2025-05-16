@@ -27,14 +27,13 @@
 	// Register signals for iron being touched
 	RegisterSignal(parent, COMSIG_MOB_ATTACKED_BY_MELEE, PROC_REF(handle_attacked))
 	RegisterSignal(parent, COMSIG_LIVING_PICKED_UP_ITEM, PROC_REF(handle_pickup))
+	// Register signal for iron items being dropped or put in storage
+	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(handle_item_exited))
 
 /datum/component/kiasyd_iron_weakness/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOB_ATTACKED_BY_MELEE)
 	UnregisterSignal(parent, COMSIG_LIVING_PICKED_UP_ITEM)
-
-	// Unregister signals on tracked items
-	for (var/obj/item as anything in holding_iron)
-		UnregisterSignal(item, COMSIG_ATOM_EXIT)
+	UnregisterSignal(parent, COMSIG_ATOM_EXITED)
 
 /**
  * Applies the iron weakness to all held or
@@ -56,7 +55,7 @@
 		if (!item.is_iron)
 			continue
 
-		register_iron_item(item)
+		LAZYADD(holding_iron, item)
 
 	// If no iron's been found, processing isn't necessary
 	if (!length(holding_iron))
@@ -109,24 +108,12 @@
 		return
 
 	// Trigger weakness
-	to_chat(source, span_warning("[capitalize(item.name)] is <b>IRON!</b>"))
+	to_chat(source, span_warning("\The [item] is <b>IRON!</b>"))
 	source.rollfrenzy()
 
 	// Start processing repeated weakness triggering if iron stays in inventory
-	register_iron_item(item)
-	START_PROCESSING(SSdcs, src)
-
-/**
- * Adds an iron item to the list of held or equipped
- * items and registers a signal to remove it when that
- * item is dropped or put in storage.
- *
- * Arguments:
- * * item - Iron item being tracked
- */
-/datum/component/kiasyd_iron_weakness/proc/register_iron_item(obj/item/item)
 	LAZYADD(holding_iron, item)
-	RegisterSignal(item, COMSIG_ATOM_EXIT, PROC_REF(handle_item_exited))
+	START_PROCESSING(SSdcs, src)
 
 /**
  * Checks if a mob and optionally an item can
@@ -165,7 +152,7 @@
  * Stops tracking an iron item for triggering
  * the weakness when it's dropped or unequipped.
  *
- * Signal handler for COMSIG_ATOM_EXIT that removes
+ * Signal handler for COMSIG_ATOM_EXITED that removes
  * iron items from list of held or equipped items to
  * stop repeatedly triggering the iron weakness on them
  * when they're dropped or put into storage. Unregisters
@@ -173,19 +160,18 @@
  * processing.
  *
  * Arguments:
- * * source - Item exiting the mob's contents
- * * exiting - Mob being exited
+ * * source - Mob whose contents the item is exiting
+ * * item - Item exiting the mob's contents
  * * newloc - Atom being entered by the item
  */
-/datum/component/kiasyd_iron_weakness/proc/handle_item_exited(obj/item/source, mob/living/exiting, atom/newloc)
+/datum/component/kiasyd_iron_weakness/proc/handle_item_exited(mob/living/carbon/human/source, obj/item/item, atom/newloc)
 	SIGNAL_HANDLER
 
-	if (newloc == parent)
+	if (!LAZYFIND(holding_iron, item))
 		return
 
 	// Remove unequipped/dropped/stored item from list of held iron items
-	LAZYREMOVE(holding_iron, source)
-	UnregisterSignal(source, COMSIG_ATOM_EXIT)
+	LAZYREMOVE(holding_iron, item)
 
 	// If no more iron items are held, stop processing for repeated weakness triggering
 	if (holding_iron)
