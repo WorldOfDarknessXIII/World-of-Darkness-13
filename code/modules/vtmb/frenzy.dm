@@ -292,16 +292,6 @@
 					to_chat(H, "<span class='warning'>You are missing your home soil...</span>")
 					H.bloodpool = max(0, H.bloodpool-1)
 
-	// TODO: [Lucia] this needs to be a component
-	if(H.clane?.name == "Kiasyd")
-		var/datum/vampireclane/kiasyd/kiasyd = H.clane
-		for(var/obj/item/I in H.contents)
-			if(I?.is_iron)
-				if (COOLDOWN_FINISHED(kiasyd, cold_iron_frenzy))
-					COOLDOWN_START(kiasyd, cold_iron_frenzy, 10 SECONDS)
-					H.rollfrenzy()
-					to_chat(H, "<span class='warning'>[I] is <b>COLD IRON</b>!")
-
 	if(H.key && (H.stat <= HARD_CRIT))
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
 		if(P)
@@ -337,6 +327,7 @@
 					H.ghostize(FALSE)
 					P.reason_of_death = "Lost control to the Beast ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 
+	// TODO: [Lucia] this needs to be a component
 	if(H.clane && !H.antifrenzy && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
 		if(HAS_TRAIT(H, TRAIT_VITAE_ADDICTION))
 			if(H.mind)

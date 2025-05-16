@@ -34,6 +34,9 @@
 		H.set_body_model(NORMAL_BODY_MODEL)
 	H.update_body()
 
+	// Add curse component
+	H.AddComponent(/datum/component/kiasyd_iron_weakness)
+
 /datum/vampireclane/kiasyd/post_gain(mob/living/carbon/human/H)
 	. = ..()
 
