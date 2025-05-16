@@ -187,6 +187,6 @@
 
 	// Warn the player of the iron item they're holding or have equipped
 	for (var/obj/item/item in holding_iron)
-		to_chat(kiasyd, span_warning("[capitalize(item.name)] is <b>IRON!</b>"))
+		to_chat(kiasyd, span_warning("\The [item] is <b>IRON!</b>"))
 
 	kiasyd.rollfrenzy()
