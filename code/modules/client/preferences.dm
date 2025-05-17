@@ -286,6 +286,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	save_character()
 
 /proc/reset_shit(mob/M)
+	if(!M) return
 	if(M.key)
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(M.key)]
 		if(P)

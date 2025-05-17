@@ -4,9 +4,12 @@
 	icon = 'icons/mob/npc.dmi'
 	icon_state = "npc"
 	density = 1
+	layer = MOB_LAYER
 	mouse_opacity = 1
 	melee_damage_lower = 10
 	melee_damage_upper = 20
+	a_intent = INTENT_HARM
+	animate_movement = NO_STEPS
 
 	var/icon_generator_datum = /datum/icon_generator //This can be set to a subpath for a specifc equipment set.
 	var/datum/combat_ai/ai_datum
