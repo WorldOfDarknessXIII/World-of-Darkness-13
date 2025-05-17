@@ -91,6 +91,7 @@
 	if(!blocking)
 		visible_message("<span class='warning'>[src] prepares to block.</span>", "<span class='warning'>You prepare to block.</span>")
 		blocking = TRUE
+		blocking_timestamp = world.time
 		if(hud_used)
 			hud_used.block_icon.icon_state = "act_block_on"
 		clear_parrying()
