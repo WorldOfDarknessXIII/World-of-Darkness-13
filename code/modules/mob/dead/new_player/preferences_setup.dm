@@ -53,7 +53,11 @@
 		body_type = pick(MALE, FEMALE)
 
 /datum/preferences/proc/random_species()
-	var/random_species_type = GLOB.species_list[pick(GLOB.roundstart_races)]
+	var/random_species_type
+	if(GLOB.roundstart_races.len != 0)
+		random_species_type = GLOB.species_list[pick(GLOB.roundstart_races)]
+	else
+		random_species_type = GLOB.species_list["human"]
 	pref_species = new random_species_type
 	if(randomise[RANDOM_NAME])
 		real_name = pref_species.random_name(gender,1)
