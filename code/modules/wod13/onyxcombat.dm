@@ -324,7 +324,7 @@
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
-				if(BD.clane)
+				if(BD.clan)
 					var/special_clan = FALSE
 					if(HAS_TRAIT(BD, TRAIT_CONSENSUAL_FEEDING_ONLY))
 						if(!PB.IsSleeping())

@@ -13,8 +13,8 @@
 
 	// If no base sprite is supplied, get a default from either the species or the Clan
 	if (!sprite_name)
-		if (clane?.alt_sprite)
-			sprite_name = clane.alt_sprite
+		if (clan?.alt_sprite)
+			sprite_name = clan.alt_sprite
 		else
 			sprite_name = initial(dna.species.limbs_id)
 
@@ -73,8 +73,8 @@
  */
 /mob/living/carbon/human/proc/rot_body(rot_stage)
 	// Won't replace other Clans' alternative sprites unless it's advanced decay
-	if (clane?.alt_sprite)
-		if (!findtext(clane.alt_sprite, "rotten") && (rot_stage <= 2))
+	if (clan?.alt_sprite)
+		if (!findtext(clan.alt_sprite, "rotten") && (rot_stage <= 2))
 			return
 
 	// Apply rotten sprite and rotting effects

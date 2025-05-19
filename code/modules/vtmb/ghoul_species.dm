@@ -59,9 +59,9 @@
 		dat += "</p>"
 		if(G.master)
 			dat += "<p>My Regnant is [G.master.real_name], I should obey their wants.<BR>"
-			if(G.master.clane)
-				if(G.master.clane.name != "Caitiff")
-					dat += "Regnant's clan is [G.master.clane], maybe I can try some of it's disciplines..."
+			if(G.master.clan)
+				if(G.master.clan.name != "Caitiff")
+					dat += "Regnant's clan is [G.master.clan], maybe I can try some of it's disciplines..."
 			dat += "</p>"
 		for(var/datum/vtm_bank_account/account in GLOB.bank_account_list)
 			if(host.bank_id == account.bank_id)

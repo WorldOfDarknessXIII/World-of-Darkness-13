@@ -1,4 +1,4 @@
-/datum/vampireclane
+/datum/vampire_clan
 	/// Name of the Clan
 	var/name
 	/// Description of the Clan
@@ -7,7 +7,7 @@
 	var/curse
 
 	/// List of Disciplines that are innate to this Clan
-	var/list/clane_disciplines
+	var/list/clan_disciplines
 	/// List of Disciplines that are rejected by this Clan
 	var/list/restricted_disciplines
 	/// List of traits that are applied to members of this Clan
@@ -46,7 +46,7 @@
 	/// If this Clan needs a whitelist to select and play
 	var/whitelisted
 
-/datum/vampireclane/proc/on_gain(mob/living/carbon/human/vampire)
+/datum/vampire_clan/proc/on_gain(mob/living/carbon/human/vampire)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if (length(accessories) && current_accessory)
@@ -77,7 +77,7 @@
 	vampire.update_body()
 	vampire.update_icon()
 
-/datum/vampireclane/proc/post_gain(mob/living/carbon/human/vampire)
+/datum/vampire_clan/proc/post_gain(mob/living/carbon/human/vampire)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(violating_appearance && vampire.roundstart_vampire)

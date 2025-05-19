@@ -11,7 +11,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		var/pathof = "Humanity"
-		if(H.clane)
-			if(H.clane.enlightenment)
+		if(H.clan)
+			if(H.clan.enlightenment)
 				pathof = "Enlightenment"
 		to_chat(user, "<b>[pathof]: [H.humanity]</b>")

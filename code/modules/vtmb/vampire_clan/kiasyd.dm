@@ -1,8 +1,8 @@
-/datum/vampireclane/kiasyd
+/datum/vampire_clan/kiasyd
 	name = "Kiasyd"
 	desc = "The Kiasyd are a bloodline of the Lasombra founded after a mysterious \"accident\" involving the Lasombra Marconius of Strasbourg. The \"accident\", involving faeries and the blood of \"Zeernebooch, a god of the Underworld\", resulted in Marconius gaining several feet in height, turning chalky white and developing large, elongated black eyes."
 	curse = "At a glance they look unsettling or perturbing to most, their appearance closely resembles fae from old folklore. Kiasyd are also in some way connected with changelings and they are vulnerable to cold iron."
-	clane_disciplines = list(
+	clan_disciplines = list(
 		/datum/discipline/dominate,
 		/datum/discipline/obtenebration,
 		/datum/discipline/mytherceria
@@ -17,10 +17,10 @@
 	accessories = list("fae_ears", "none")
 	accessories_layers = list("fae_ears" = UPPER_EARS_LAYER, "none" = UPPER_EARS_LAYER)
 
-/datum/vampireclane/kiasyd/on_gain(mob/living/carbon/human/H)
+/datum/vampire_clan/kiasyd/on_gain(mob/living/carbon/human/H)
 	..()
 	//This was messing with the visualiser in the character setup menu somehow
-	if (H.clane?.type != /datum/vampireclane/kiasyd)
+	if (H.clan?.type != /datum/vampire_clan/kiasyd)
 		return
 	if(H.isdwarfy)
 		H.RemoveElement(/datum/element/dwarfism, COMSIG_PARENT_PREQDELETED, src)
@@ -37,7 +37,7 @@
 	// Add curse component
 	H.AddComponent(/datum/component/kiasyd_iron_weakness)
 
-/datum/vampireclane/kiasyd/post_gain(mob/living/carbon/human/H)
+/datum/vampire_clan/kiasyd/post_gain(mob/living/carbon/human/H)
 	. = ..()
 
 	//give them sunglasses to hide their freakish eyes

@@ -45,17 +45,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		if(get_dist(AM, src) > 7)
 			rendered = "<span class='scream_away'>[rendered]</span>" //! Take an attention, this will NOT overlap client font-size, fix it if you can
 		AM.Hear(rendered, src, message_language, message, , spans, message_mods)
-//	if(ishuman(src))
-//		var/mob/living/carbon/human/H = src
-//		if(!client)
-//			return
-//		if(H.clane)
-//			if(H.clane.name == "Malkavian")
-//				for(var/mob/living/carbon/human/hive in GLOB.player_list)
-//					if(hive.clane && hive.client && hive != src)
-//						if(hive.clane.name == "Malkavian")
-//							if(z != hive.z || get_dist(src, hive) > 7)
-//								to_chat(hive, "[rendered]")
 
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), face_name = FALSE)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.

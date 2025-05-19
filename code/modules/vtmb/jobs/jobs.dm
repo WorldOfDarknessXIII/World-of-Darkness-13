@@ -3,8 +3,8 @@
 
 /datum/outfit/job/post_equip(mob/living/carbon/human/H)
 	. = ..()
-	if(H.clane)
-		if(H.clane.name == "Ventrue")
+	if(H.clan)
+		if(H.clan.name == "Ventrue")
 			var/obj/item/stack/dollar/hundred/HUN = new(H.loc)
 			for(var/obj/item/storage/backpack/B in H)
 				if(B)

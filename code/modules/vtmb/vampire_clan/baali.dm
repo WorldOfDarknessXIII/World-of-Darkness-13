@@ -1,8 +1,8 @@
-/datum/vampireclane/baali
+/datum/vampire_clan/baali
 	name = "Baali"
 	desc = "The Baali are a bloodline of vampires associated with demon worship. Because of their affinity with the unholy, the Baali are particularly vulnerable to holy iconography, holy ground and holy water. They are highly vulnerable to True Faith."
 	curse = "Fear of the Religion."
-	clane_disciplines = list(
+	clan_disciplines = list(
 		/datum/discipline/obfuscate,
 		/datum/discipline/presence,
 		/datum/discipline/daimonion
@@ -16,8 +16,9 @@
 	whitelisted = TRUE
 	clan_keys = /obj/item/vamp/keys/baali
 
-/datum/vampireclane/baali/on_gain(mob/living/carbon/human/H)
-	..()
+/datum/vampire_clan/baali/on_gain(mob/living/carbon/human/H)
+	. = ..()
+
 	H.faction |= "Baali"
 
 	H.AddElement(/datum/element/holy_weakness)

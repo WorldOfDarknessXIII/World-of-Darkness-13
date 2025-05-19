@@ -210,8 +210,8 @@
 			H.remove_status_effect(STATUS_EFFECT_FEAR)
 
 	//masquerade violations due to unnatural appearances
-	if(H.is_face_visible() && H.clane?.violating_appearance)
-		switch(H.clane.alt_sprite)
+	if(H.is_face_visible() && H.clan?.violating_appearance)
+		switch(H.clan.alt_sprite)
 			if ("kiasyd")
 				//masquerade breach if eyes are uncovered, short range
 				if (!H.is_eyes_covered())
@@ -303,7 +303,7 @@
 					P.reason_of_death = "Lost control to the Beast ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 
 	// TODO: [Lucia] this needs to be a component
-	if(H.clane && !H.antifrenzy && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
+	if(H.clan && !H.antifrenzy && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
 		if(HAS_TRAIT(H, TRAIT_VITAE_ADDICTION))
 			if(H.mind)
 				if(H.mind.enslaved_to)
@@ -323,7 +323,7 @@
 			if((H.last_frenzy_check + 40 SECONDS) <= world.time)
 				H.last_frenzy_check = world.time
 				H.rollfrenzy()
-				if(H.clane)
-					if(H.clane.enlightenment)
+				if(H.clan)
+					if(H.clan.enlightenment)
 						if(!H.CheckFrenzyMove())
 							H.AdjustHumanity(1, 10)

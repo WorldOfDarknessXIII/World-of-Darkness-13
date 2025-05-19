@@ -1,8 +1,8 @@
-/datum/vampireclane/malkavian
+/datum/vampire_clan/malkavian
 	name = "Malkavian"
 	desc = "Derided as Lunatics by other vampires, the Blood of the Malkavians lets them perceive and foretell truths hidden from others. Like the �wise madmen� of poetry their fractured perspective stems from seeing too much of the world at once, from understanding too deeply, and feeling emotions that are just too strong to bear."
 	curse = "Insanity."
-	clane_disciplines = list(
+	clan_disciplines = list(
 		/datum/discipline/auspex,
 		/datum/discipline/dementation,
 		/datum/discipline/obfuscate
@@ -11,7 +11,7 @@
 	female_clothes = /obj/item/clothing/under/vampire/malkavian/female
 	clan_keys = /obj/item/vamp/keys/malkav
 
-/datum/vampireclane/malkavian/post_gain(mob/living/carbon/human/malky)
+/datum/vampire_clan/malkavian/post_gain(mob/living/carbon/human/malky)
 	. = ..()
 	var/datum/action/cooldown/malk_hivemind/hivemind = new()
 	var/datum/action/cooldown/malk_speech/malk_font = new()
@@ -50,8 +50,6 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	vampiric = TRUE
 	cooldown_time = 5 MINUTES
-	///clane datum
-	var/datum/vampireclane/malkavian/clane_datum
 
 /datum/action/cooldown/malk_speech/Trigger()
 	. = ..()

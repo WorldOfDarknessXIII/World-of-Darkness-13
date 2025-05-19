@@ -30,7 +30,7 @@
 	punchdamagelow = 10
 	punchdamagehigh = 20
 	dust_anim = "dust-h"
-	var/datum/vampireclane/clane
+	var/datum/vampire_clan/clan
 	var/list/datum/discipline/disciplines = list()
 	selectable = TRUE
 	COOLDOWN_DECLARE(torpor_timer)
@@ -60,9 +60,9 @@
 			dat += "[host.real_name],"
 		if(!host.real_name)
 			dat += "Unknown,"
-		if(host.clane)
-			dat += " the [host.clane.name]"
-		if(!host.clane)
+		if(host.clan)
+			dat += " the [host.clan.name]"
+		if(!host.clan)
 			dat += " the caitiff"
 
 		if(host.mind)
@@ -116,8 +116,8 @@
 		dat += "<p>Camarilla thinks I[masquerade_level]</p>"
 		var/humanity = "I'm out of my mind."
 		var/enlight = FALSE
-		if(host.clane)
-			if(host.clane.enlightenment)
+		if(host.clan)
+			if(host.clan.enlightenment)
 				enlight = TRUE
 
 		if(!enlight)
@@ -152,23 +152,23 @@
 
 		dat += "<p>[humanity]</p>"
 
-		if(host.clane.name == "Brujah")
+		if(host.clan.name == "Brujah")
 			if(GLOB.brujahname != "")
 				if(host.real_name != GLOB.brujahname)
 					dat += "<p> My primogen is:  [GLOB.brujahname].</p>"
-		if(host.clane.name == "Malkavian")
+		if(host.clan.name == "Malkavian")
 			if(GLOB.malkavianname != "")
 				if(host.real_name != GLOB.malkavianname)
 					dat += "<p> My primogen is:  [GLOB.malkavianname].</p>"
-		if(host.clane.name == "Nosferatu")
+		if(host.clan.name == "Nosferatu")
 			if(GLOB.nosferatuname != "")
 				if(host.real_name != GLOB.nosferatuname)
 					dat += "<p> My primogen is:  [GLOB.nosferatuname].</p>"
-		if(host.clane.name == "Toreador")
+		if(host.clan.name == "Toreador")
 			if(GLOB.toreadorname != "")
 				if(host.real_name != GLOB.toreadorname)
 					dat += "<p> My primogen is:  [GLOB.toreadorname].</p>"
-		if(host.clane.name == "Ventrue")
+		if(host.clan.name == "Ventrue")
 			if(GLOB.ventruename != "")
 				if(host.real_name != GLOB.ventruename)
 					dat += "<p> My primogen is:  [GLOB.ventruename].</p>"
@@ -424,32 +424,32 @@
 								save_data_v = FALSE
 						BLOODBONDED.roundstart_vampire = FALSE
 						BLOODBONDED.set_species(/datum/species/kindred)
-						BLOODBONDED.clane = null
+						BLOODBONDED.clan = null
 						if(H.generation < 13)
 							BLOODBONDED.generation = 13
 							BLOODBONDED.skin_tone = get_vamp_skin_color(BLOODBONDED.skin_tone)
 							BLOODBONDED.update_body()
-							if (H.clane.whitelisted)
-								if (!SSwhitelists.is_whitelisted(BLOODBONDED.ckey, H.clane.name))
-									if(H.clane.name == "True Brujah")
-										BLOODBONDED.clane = new /datum/vampireclane/brujah()
+							if (H.clan.whitelisted)
+								if (!SSwhitelists.is_whitelisted(BLOODBONDED.ckey, H.clan.name))
+									if(H.clan.name == "True Brujah")
+										BLOODBONDED.clan = new /datum/vampire_clan/brujah()
 										to_chat(BLOODBONDED,"<span class='warning'> You don't got that whitelist! Changing to the non WL Brujah</span>")
-									else if(H.clane.name == "Tzimisce")
-										BLOODBONDED.clane = new /datum/vampireclane/old_clan_tzimisce()
+									else if(H.clan.name == "Tzimisce")
+										BLOODBONDED.clan = new /datum/vampire_clan/old_clan_tzimisce()
 										to_chat(BLOODBONDED,"<span class='warning'> You don't got that whitelist! Changing to the non WL Old Tzmisce</span>")
 									else
 										to_chat(BLOODBONDED,"<span class='warning'> You don't got that whitelist! Changing to a random non WL clan.</span>")
-										var/list/non_whitelisted_clans = list(/datum/vampireclane/brujah,/datum/vampireclane/malkavian,/datum/vampireclane/nosferatu,/datum/vampireclane/gangrel,/datum/vampireclane/giovanni,/datum/vampireclane/ministry,/datum/vampireclane/salubri,/datum/vampireclane/toreador,/datum/vampireclane/tremere,/datum/vampireclane/ventrue)
+										var/list/non_whitelisted_clans = list(/datum/vampire_clan/brujah,/datum/vampire_clan/malkavian,/datum/vampire_clan/nosferatu,/datum/vampire_clan/gangrel,/datum/vampire_clan/giovanni,/datum/vampire_clan/ministry,/datum/vampire_clan/salubri,/datum/vampire_clan/toreador,/datum/vampire_clan/tremere,/datum/vampire_clan/ventrue)
 										var/random_clan = pick(non_whitelisted_clans)
-										BLOODBONDED.clane = new random_clan
+										BLOODBONDED.clan = new random_clan
 								else
-									BLOODBONDED.clane = new H.clane.type()
+									BLOODBONDED.clan = new H.clan.type()
 							else
-								BLOODBONDED.clane = new H.clane.type()
+								BLOODBONDED.clan = new H.clan.type()
 
-							BLOODBONDED.clane.on_gain(BLOODBONDED)
-							BLOODBONDED.clane.post_gain(BLOODBONDED)
-							if(BLOODBONDED.clane.alt_sprite)
+							BLOODBONDED.clan.on_gain(BLOODBONDED)
+							BLOODBONDED.clan.post_gain(BLOODBONDED)
+							if(BLOODBONDED.clan.alt_sprite)
 								BLOODBONDED.skin_tone = "albino"
 								BLOODBONDED.update_body()
 
@@ -461,11 +461,11 @@
 							BLOODBONDED.create_disciplines(FALSE, disciplines_to_give)
 
 							BLOODBONDED.maxbloodpool = 10+((13-min(13, BLOODBONDED.generation))*3)
-							BLOODBONDED.clane.enlightenment = H.clane.enlightenment
+							BLOODBONDED.clan.enlightenment = H.clan.enlightenment
 						else
 							BLOODBONDED.maxbloodpool = 10+((13-min(13, BLOODBONDED.generation))*3)
 							BLOODBONDED.generation = 14
-							BLOODBONDED.clane = new /datum/vampireclane/caitiff()
+							BLOODBONDED.clan = new /datum/vampire_clan/caitiff()
 
 						//Verify if they accepted to save being a vampire
 						if (iskindred(BLOODBONDED) && save_data_v)
@@ -475,10 +475,10 @@
 							BLOODBONDED_prefs_v.pref_species.name = "Vampire"
 							if(H.generation < 13)
 
-								BLOODBONDED_prefs_v.clane = BLOODBONDED.clane
+								BLOODBONDED_prefs_v.clan = BLOODBONDED.clan
 								BLOODBONDED_prefs_v.generation = 13
 								BLOODBONDED_prefs_v.skin_tone = get_vamp_skin_color(BLOODBONDED.skin_tone)
-								BLOODBONDED_prefs_v.clane.enlightenment = H.clane.enlightenment
+								BLOODBONDED_prefs_v.clan.enlightenment = H.clan.enlightenment
 
 
 								//Rarely the new mid round vampires get the 3 brujah skil(it is default)
@@ -494,13 +494,13 @@
 
 								if(BLOODBONDED_prefs_v.discipline_types.len == 0)
 									for (var/i in 1 to 3)
-										BLOODBONDED_prefs_v.discipline_types += BLOODBONDED_prefs_v.clane.clane_disciplines[i]
+										BLOODBONDED_prefs_v.discipline_types += BLOODBONDED_prefs_v.clan.clan_disciplines[i]
 										BLOODBONDED_prefs_v.discipline_levels += 1
 								BLOODBONDED_prefs_v.save_character()
 
 							else
 								BLOODBONDED_prefs_v.generation = 13 // Game always set to 13 anyways, 14 is not possible.
-								BLOODBONDED_prefs_v.clane = new /datum/vampireclane/caitiff()
+								BLOODBONDED_prefs_v.clan = new /datum/vampire_clan/caitiff()
 								BLOODBONDED_prefs_v.save_character()
 
 					else
@@ -556,7 +556,7 @@
 					else if(!iskindred(BLOODBONDED) && !isnpc(BLOODBONDED))
 						var/save_data_g = FALSE
 						BLOODBONDED.set_species(/datum/species/ghoul)
-						BLOODBONDED.clane = null
+						BLOODBONDED.clan = null
 						var/response_g = input(BLOODBONDED, "Do you wish to keep being a ghoul on your save slot?(Yes will be a permanent choice and you can't go back)") in list("Yes", "No")
 //						if(BLOODBONDED.hud_used)
 //							var/datum/hud/human/HU = BLOODBONDED.hud_used
@@ -629,8 +629,8 @@
 		for (var/datum/discipline/discipline in adding_disciplines)
 			give_discipline(discipline)
 
-		if(clane)
-			clane.post_gain(src)
+		if(clan)
+			clan.post_gain(src)
 
 	if((dna.species.id == "kuei-jin")) //only splats that have Disciplines qualify
 		var/list/datum/chi_discipline/adding_disciplines = list()
@@ -780,8 +780,8 @@
 				return
 
 		var/alienation = FALSE
-		if (student.clane.restricted_disciplines.Find(teaching_discipline))
-			if (alert(student, "Learning [giving_discipline] will alienate you from the rest of the [student.clane], making you just like the false Clan. Do you wish to continue?", "Confirmation", "Yes", "No") != "Yes")
+		if (student.clan.restricted_disciplines.Find(teaching_discipline))
+			if (alert(student, "Learning [giving_discipline] will alienate you from the rest of the [student.clan], making you just like the false Clan. Do you wish to continue?", "Confirmation", "Yes", "No") != "Yes")
 				visible_message("<span class='warning'>[student] refuses [teacher]'s mentoring!</span>")
 				qdel(giving_discipline)
 				return
@@ -802,15 +802,15 @@
 			student_prefs.discipline_levels += 0
 
 			if (alienation)
-				var/datum/vampireclane/main_clan
-				switch(student.clane.type)
-					if (/datum/vampireclane/true_brujah)
-						main_clan = new /datum/vampireclane/brujah
-					if (/datum/vampireclane/old_clan_tzimisce)
-						main_clan = new /datum/vampireclane/tzimisce
+				var/datum/vampire_clan/main_clan
+				switch(student.clan.type)
+					if (/datum/vampire_clan/true_brujah)
+						main_clan = new /datum/vampire_clan/brujah
+					if (/datum/vampire_clan/old_clan_tzimisce)
+						main_clan = new /datum/vampire_clan/tzimisce
 
-				student_prefs.clane = main_clan
-				student.clane = main_clan
+				student_prefs.clan = main_clan
+				student.clan = main_clan
 
 			student_prefs.save_character()
 			teacher_prefs.save_character()
@@ -858,12 +858,12 @@
 	qdel(discipline_object_checking)
 
 	//first, check their Clan Disciplines to see if that gives them access
-	if (vampire_checking.clane.clane_disciplines.Find(discipline_checking))
+	if (vampire_checking.clan.clan_disciplines.Find(discipline_checking))
 		return TRUE
 
 	//next, go through all Clans to check if they have access to any with the Discipline
-	for (var/clan_type in subtypesof(/datum/vampireclane))
-		var/datum/vampireclane/clan_checking = new clan_type
+	for (var/clan_type in subtypesof(/datum/vampire_clan))
+		var/datum/vampire_clan/clan_checking = new clan_type
 
 		//skip this if they can't access it due to whitelists
 		if (clan_checking.whitelisted)
@@ -871,7 +871,7 @@
 				qdel(clan_checking)
 				continue
 
-		if (clan_checking.clane_disciplines.Find(discipline_checking))
+		if (clan_checking.clan_disciplines.Find(discipline_checking))
 			qdel(clan_checking)
 			return TRUE
 

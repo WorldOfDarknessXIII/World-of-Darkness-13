@@ -47,9 +47,9 @@
 			log_attack("[key_name(src)] is attempting to Diablerize [key_name(mob)].")
 			if(mob.key)
 				var/vse_taki = FALSE
-				if(clane)
+				if(clan)
 					var/mob/living/carbon/human/H = mob
-					if(!HAS_TRAIT(src, TRAIT_VITAE_ADDICTION) && clane.name != "Caitiff")
+					if(!HAS_TRAIT(src, TRAIT_VITAE_ADDICTION) && clan.name != "Caitiff")
 						if(!HAS_TRAIT(H, TRAIT_IRRESISTIBLE_VITAE))
 							if(!mind.special_role)
 								to_chat(src, "<span class='warning'>You find the idea of drinking your own <b>KIND's</b> blood disgusting!</span>")
@@ -108,7 +108,7 @@
 				if(length(H.reagents.reagent_list))
 					if(prob(50))
 						H.reagents.trans_to(src, min(10, H.reagents.total_volume), transfered_by = mob, methods = VAMPIRE)
-		if(clane)
+		if(clan)
 			if(HAS_TRAIT(src, TRAIT_PAINFUL_VAMPIRE_KISS))
 				mob.adjustBruteLoss(20, TRUE)
 			if(HAS_TRAIT(src, TRAIT_FEEDING_RESTRICTION) && mob.bloodquality < BLOOD_QUALITY_NORMAL)	//Ventrue can suck on normal people, but not homeless people and animals. BLOOD_QUALITY_LOV - 1, BLOOD_QUALITY_NORMAL - 2, BLOOD_QUALITY_HIGH - 3. Blue blood gives +1 to suction
