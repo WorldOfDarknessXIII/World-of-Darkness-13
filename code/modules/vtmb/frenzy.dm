@@ -183,13 +183,7 @@
 
 /datum/species/kindred/spec_life(mob/living/carbon/human/H)
 	. = ..()
-	if(HAS_TRAIT(H, TRAIT_REPELLED_BY_HOLINESS))
-		if(istype(get_area(H), /area/vtm/church))
-			if(prob(25))
-				to_chat(H, "<span class='warning'>You don't belong here!</span>")
-				H.adjustFireLoss(20)
-				H.adjust_fire_stacks(6)
-				H.IgniteMob()
+
 	//FIRE FEAR
 	if(!H.antifrenzy && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
 		var/fearstack = 0
@@ -279,9 +273,6 @@
 											else
 												SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
 												to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
-	if(H.hearing_ghosts)
-		H.bloodpool = max(0, H.bloodpool-1)
-		to_chat(H, "<span class='warning'>Necromancy Vision reduces your blood points too sustain itself.</span>")
 
 	// TODO: [Lucia] this needs to be a component or something
 	if(H.clane?.name == "Tzimisce" || H.clane?.name == "Old Clan Tzimisce")
@@ -303,23 +294,7 @@
 				P.masquerade = H.masquerade
 				P.save_preferences()
 				P.save_character()
-//			if(H.last_experience+600 <= world.time)
-//				var/addd = 5
-//				if(!H.JOB && H.mind)
-//					H.JOB = SSjob.GetJob(H.mind.assigned_role)
-//					if(H.JOB)
-//						addd = H.JOB.experience_addition
-//				P.exper = min(calculate_mob_max_exper(H), P.exper+addd+H.experience_plus)
-//				if(P.exper == calculate_mob_max_exper(H))
-//					to_chat(H, "You've reached a new level! You can add new points in Character Setup (Lobby screen).")
-//				P.save_preferences()
-//				P.save_character()
-//				H.last_experience = world.time
-//			if(H.roundstart_vampire)
-//				if(P.generation != H.generation)
-//					P.generation = H.generation
-//					P.save_preferences()
-//					P.save_character()
+
 			if(!H.antifrenzy)
 				if(P.humanity < 1)
 					H.enter_frenzymod()
@@ -343,10 +318,6 @@
 			if(H.bloodpool > 1 || H.in_frenzy)
 				H.last_frenzy_check = world.time
 
-//	var/list/blood_fr = list()
-//	for(var/obj/effect/decal/cleanable/blood/B in range(7, src))
-//		if(B.bloodiness)
-//			blood_fr += B
 	if(!H.antifrenzy && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
 		if(H.bloodpool <= 1 && !H.in_frenzy)
 			if((H.last_frenzy_check + 40 SECONDS) <= world.time)
@@ -356,7 +327,3 @@
 					if(H.clane.enlightenment)
 						if(!H.CheckFrenzyMove())
 							H.AdjustHumanity(1, 10)
-//	if(length(blood_fr) >= 10 && !H.in_frenzy)
-//		if(H.last_frenzy_check+400 <= world.time)
-//			H.last_frenzy_check = world.time
-//			H.rollfrenzy()
