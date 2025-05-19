@@ -19,6 +19,9 @@
 /datum/vampireclane/baali/on_gain(mob/living/carbon/human/H)
 	..()
 	H.faction |= "Baali"
+
+	H.AddElement(/datum/element/holy_weakness)
+
 	var/datum/brain_trauma/mild/phobia/security/religious_trauma = new()
 	H.gain_trauma(religious_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
 

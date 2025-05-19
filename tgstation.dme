@@ -3499,6 +3499,7 @@
 #include "code\modules\wod13\datums\components\needs_home_soil.dm"
 #include "code\modules\wod13\datums\crafting_recipes\weed\weed_blunt.dm"
 #include "code\modules\wod13\datums\crafting_recipes\weed\weedpack.dm"
+#include "code\modules\wod13\datums\elements\holy_weakness.dm"
 #include "code\modules\wod13\datums\powers\discipline\__discipline.dm"
 #include "code\modules\wod13\datums\powers\discipline\__discipline_power.dm"
 #include "code\modules\wod13\datums\powers\discipline\animalism.dm"
