@@ -196,12 +196,12 @@
 	var/mob/living/owner
 	var/loop_terminator = 0
 
-	var/movement_time = 5 // 2 for "smooth" movement if using walk_towards. Or animate your own movement, see if I care :P
-	var/mob_heartbeat = 5
+	var/movement_time = 5 // This is tied to the movement proc and animation, essentially the time it takes the AI to take a full step.
+	var/mob_heartbeat = 5 // In most cases, this should be sinced to movement_time, however just in case: When the Ai is not moving or otherwise making decisions, it waits this ammount between loops.
 
-	var/armor = 0
-	var/poise = 10
-	var/health = 10
+	var/armor = 0 // Armor reduces incoming damage to a minimum of 1. It can also shatter and otherwise be removed, which is a one way deal.
+	var/poise = 10 // Poise drains with parries and at double the ammount of incoming damage.
+	var/health = 10 // This is the one that kills the mob :P
 
 	var/turf/anchor_turf
 	var/mob/living/target_player
@@ -222,7 +222,7 @@
 	var/attack_delay = 10 //This is a pause AFTER all the attacks in a single cadence, ie extra time between attack decisons. Individual attack loops are decided by cadence
 
 	var/return_override
-	var/return_distance = 14
+	var/return_distance = 14 // Ammount from anchor turf the NPC "protects", meaning they will disengage and return to their anchor when their target is this ammoutn away from it.
 
 /datum/combat_ai/New(mob/owner_mob)
 	. = ..()
@@ -234,83 +234,158 @@
 /datum/combat_ai/proc/combat_stun()
 	loop_terminator = 1
 	sleep(25)
-	if(health > 0) INVOKE_ASYNC(src, PROC_REF(damage_animation),"poise_restore")
+	if(health > 0) INVOKE_ASYNC(src, PROC_REF(damage_animation),owner,"poise_restore")
 	sleep(5)
 	if(health > 0)
 		loop_terminator = 0
 		poise = (floor(initial(poise) / 3))
 		INVOKE_ASYNC(src, PROC_REF(ai_loop))
 
-/datum/combat_ai/proc/attack_animation(type,time,factor)
+/datum/combat_ai/proc/attack_animation(mob/target,type,time,factor)
 	if(!type || !time) return
+	var/color_value = target.color
+	var/blink_value = color_value
+	var/starting_x = target.pixel_x
+	var/starting_y = target.pixel_y
+	var/pull_x = target.pixel_x
+	var/pull_y = target.pixel_y
+	var/push_x = 0
+	var/push_y = 0
+	var/turf/current_turf = get_turf(owner)
+	var/turf/target_turf = get_turf(target_player)
+	var/wind_up = ceil(time / 2)
+	var/attack = floor(time / 2)
+	var/matrix/M = new()
+	var/matrix/N = new()
+	var/matrix/O = new()
+	var/fade_in
+	if(wind_up == 1)
+		fade_in = 1
+	else
+		fade_in = wind_up - 1
+	var/flash
+	if(fade_in == 1)
+		flash = 1
+	else
+		flash = 2
+	var/fade_out
+	if(attack == 1)
+		fade_out = 1
+	else
+		fade_out = attack - 1
+	M.Scale(0.01)
+	N.Scale(1)
+	O.Scale(2.5)
+	var/mutable_appearance/indicator = new()
+	indicator.alpha = 0
+	indicator.layer = ABOVE_MOB_LAYER
+	indicator.pixel_y = 28
 	switch(type)
 		if("n")
-			var/starting_x = owner.pixel_x
-			var/starting_y = owner.pixel_y
-			var/pull_x = owner.pixel_x
-			var/pull_y = owner.pixel_y
-			var/push_x = 0
-			var/push_y = 0
-			var/turf/current_turf = get_turf(owner)
-			var/turf/target_turf = get_turf(target_player)
-			var/wind_up = ceil(time / 2)
-			var/attack = floor(time / 2)
-			switch(get_dir(current_turf,target_turf))
-				if(NORTH)
-					owner.dir = NORTH
-					pull_y -= 16
-					push_y = 16
-				if(NORTHEAST)
-					owner.dir = EAST
-					pull_y -= 8
-					push_y = 8
-					pull_x -= 8
-					push_x = 8
-				if(EAST)
-					owner.dir = EAST
-					pull_x -= 16
-					push_x = 16
-				if(SOUTHEAST)
-					owner.dir = EAST
-					pull_x -= 8
-					push_x = 8
-					pull_y += 8
-					push_y = -8
-				if(SOUTH)
-					owner.dir = SOUTH
-					pull_y += 16
-					push_y = -16
-				if(SOUTHWEST)
-					owner.dir = WEST
-					pull_y += 8
-					push_y = -8
-					pull_x += 8
-					push_x = -8
-				if(WEST)
-					owner.dir = WEST
-					pull_x += 16
-					push_x = -16
-				if(NORTHWEST)
-					owner.dir = WEST
-					pull_x += 8
-					push_x = -8
-					pull_y -= 8
-					push_y = 8
-			animate(owner,time = wind_up, pixel_x = pull_x, pixel_y = pull_y)
-			animate(time = attack, pixel_x = push_x, pixel_y = push_y)
-			animate(time = attack, pixel_x = starting_x, pixel_y = starting_y)
+			blink_value = "#ffd0be"
+		if("a")
+			indicator.overlays += icon(icon = 'icons/effects/combat.dmi',icon_state = "circle")
+			indicator.transform = M
+			blink_value = "#f6ffa8"
+			indicator.color = "#d38817"
+			target.vis_contents += indicator.overlays
+			animate(indicator,time = fade_in,alpha = 255, transform = N, pixel_y = 32)
+			animate(time = flash, color = "#ff8800")
+			animate(time = fade_out, alpha = 0, transform = O)
+		if("c")
+			indicator.overlays += icon(icon = 'icons/effects/combat.dmi',icon_state = "cone")
+			M.Turn(factor)
+			indicator.transform = M
+			blink_value = "#f6ffa8"
+			indicator.color = "#d38817"
+			target.vis_contents += indicator.overlays
+			animate(indicator,time = fade_in,alpha = 255, transform = N, pixel_y = 32)
+			animate(time = flash, color = "#ff8800")
+			animate(time = fade_out, alpha = 0, transform = O)
+		if("p","g")
+			indicator.overlays += icon(icon = 'icons/effects/combat.dmi',icon_state = "cross")
+			indicator.transform = M
+			blink_value = "#990000"
+			indicator.color = "#990000"
+			target.vis_contents += indicator.overlays
+			animate(indicator,time = fade_in,alpha = 255, transform = N, pixel_y = 32)
+			animate(time = flash, color = "#ff1c1c")
+			animate(time = fade_out, alpha = 0, transform = O)
+		if("t")
+			indicator.overlays += icon(icon = 'icons/effects/combat.dmi',icon_state = "arrow")
+			M.Turn(factor)
+			indicator.transform = M
+			blink_value = "#d66727"
+			indicator.color = "#d66727"
+			target.vis_contents += indicator.overlays
+			animate(indicator,time = fade_in,alpha = 255, transform = N, pixel_y = 32)
+			animate(time = flash, color = "#d15106")
+			animate(time = fade_out, alpha = 0, transform = O)
+		if("a")
+			indicator.overlays += icon(icon = 'icons/effects/combat.dmi',icon_state = "triangle")
+			indicator.transform = M
+			blink_value = "#349218"
+			indicator.color = "#258308"
+			target.vis_contents += indicator.overlays
+			animate(indicator,time = fade_in,alpha = 255, transform = N, pixel_y = 32)
+			animate(time = flash, color = "#1e5a0c")
+			animate(time = fade_out, alpha = 0, transform = O)
+	switch(get_dir(current_turf,target_turf))
+		if(NORTH)
+			target.dir = NORTH
+			pull_y -= 16
+			push_y = 16
+		if(NORTHEAST)
+			target.dir = EAST
+			pull_y -= 8
+			push_y = 8
+			pull_x -= 8
+			push_x = 8
+		if(EAST)
+			target.dir = EAST
+			pull_x -= 16
+			push_x = 16
+		if(SOUTHEAST)
+			target.dir = EAST
+			pull_x -= 8
+			push_x = 8
+			pull_y += 8
+			push_y = -8
+		if(SOUTH)
+			target.dir = SOUTH
+			pull_y += 16
+			push_y = -16
+		if(SOUTHWEST)
+			target.dir = WEST
+			pull_y += 8
+			push_y = -8
+			pull_x += 8
+			push_x = -8
+		if(WEST)
+			target.dir = WEST
+			pull_x += 16
+			push_x = -16
+		if(NORTHWEST)
+			target.dir = WEST
+			pull_x += 8
+			push_x = -8
+			pull_y -= 8
+			push_y = 8
+	animate(target,time = wind_up, pixel_x = pull_x, pixel_y = pull_y, color = blink_value)
+	animate(time = attack, pixel_x = push_x, pixel_y = push_y, color = color_value)
+	animate(time = attack, pixel_x = starting_x, pixel_y = starting_y)
 
-			return attack
+	return
 
-/datum/combat_ai/proc/damage_animation(type)
+/datum/combat_ai/proc/damage_animation(mob/target,type)
 	switch(type)
 		if(null)
 			return
 		if("poise_restore")
 			var/obj/icon_obj = new()
 			icon_obj.mouse_opacity = 1
-			icon_obj.appearance = owner.appearance
-			icon_obj.dir = owner.dir
+			icon_obj.appearance = target.appearance
+			icon_obj.dir = target.dir
 			icon_obj.layer = EFFECTS_LAYER
 			icon_obj.alpha = 0
 			var/matrix/M = new
@@ -319,38 +394,38 @@
 			var/matrix/N = new
 			N.Scale(1)
 			animate(icon_obj, time = 5, alpha = 255, transform = N)
-			owner.vis_contents += icon_obj
+			target.vis_contents += icon_obj
 			sleep(6)
-			owner.vis_contents -= icon_obj
+			target.vis_contents -= icon_obj
 		if("poise_break")
 			var/obj/icon_obj = new()
 			icon_obj.mouse_opacity = 1
-			icon_obj.appearance = owner.appearance
+			icon_obj.appearance = target.appearance
 			icon_obj.layer = EFFECTS_LAYER
-			icon_obj.dir = owner.dir
+			icon_obj.dir = target.dir
 			var/matrix/M = new
 			M.Scale(3)
 			animate(icon_obj, time = 5, alpha = 0, transform = M)
-			owner.vis_contents += icon_obj
+			target.vis_contents += icon_obj
 			sleep(6)
-			owner.vis_contents -= icon_obj
+			target.vis_contents -= icon_obj
 		if("poise_hit")
 			var/obj/icon_obj = new()
 			icon_obj.mouse_opacity = 1
-			icon_obj.appearance = owner.appearance
+			icon_obj.appearance = target.appearance
 			icon_obj.layer = EFFECTS_LAYER
 			var/matrix/M = new
 			M.Scale(1.2 + (0.05 * ((initial(poise) + 1) - poise)))
 			animate(icon_obj, time = 3, alpha = 0, transform = M)
-			owner.vis_contents += icon_obj
+			target.vis_contents += icon_obj
 			sleep(4)
-			owner.vis_contents -= icon_obj
+			target.vis_contents -= icon_obj
 		if("dam_hit")
-			var/starting_x = owner.pixel_x
-			var/starting_y = owner.pixel_y
+			var/starting_x = target.pixel_x
+			var/starting_y = target.pixel_y
 			var/displacement_x = starting_x + pick(-3,3)
 			var/displacement_y = starting_y + pick(-3,3)
-			animate(owner, time = 1, pixel_x = displacement_x, pixel_y = displacement_y)
+			animate(target, time = 1, pixel_x = displacement_x, pixel_y = displacement_y)
 			animate(time = 1, pixel_x = starting_x, pixel_y = starting_y)
 
 /datum/combat_ai/proc/die()
@@ -372,11 +447,11 @@
 			poise -= damage_to_deal
 			if(poise <= 0)
 				poise = 0
-				INVOKE_ASYNC(src,PROC_REF(damage_animation),"poise_break")
+				INVOKE_ASYNC(src,PROC_REF(damage_animation),owner,"poise_break")
 				INVOKE_ASYNC(src,PROC_REF(combat_stun))
 				return
 			else
-				INVOKE_ASYNC(src,PROC_REF(damage_animation),"poise_hit")
+				INVOKE_ASYNC(src,PROC_REF(damage_animation),owner,"poise_hit")
 		return
 	if(damage_type == "health")
 		if(health > 0)
@@ -387,7 +462,7 @@
 				return
 			else
 				health -= damage_number
-				INVOKE_ASYNC(src,PROC_REF(damage_animation),"dam_hit")
+				INVOKE_ASYNC(src,PROC_REF(damage_animation),owner,"dam_hit")
 				return
 	if(damage_type == BURN)
 		INVOKE_ASYNC(src, PROC_REF(process_damage),(damage_number),"health")
@@ -418,25 +493,27 @@
 		var/attack_type = copytext(current_line,number_bits+1,number_bits+2)
 		var/attack_factor
 		if(length(current_line) > number_bits + 1) attack_factor = copytext(current_line,number_bits+2,0)
-		INVOKE_ASYNC(src, PROC_REF(attack_animation),attack_type,attack_time,attack_factor)
+		INVOKE_ASYNC(src, PROC_REF(attack_animation),owner,attack_type,attack_time,attack_factor)
 		sleep(attack_time + (floor(attack_time / 2)))
 		if(loop_terminator)
 			attack_list = list()
 			break
 
-		// Parrying
+		// Attack types and parrying
 
-		for(var/mob/living/attacked_mob in turf_target)
-			if(istype(attacked_mob,/mob/living/carbon/))
-				var/mob/living/carbon/attacked_carbon_mob = attacked_mob
-				if(world.time > attacked_carbon_mob.blocking_timestamp + 5)
-					attacked_carbon_mob.apply_damage(rand(owner.melee_damage_lower,owner.melee_damage_upper))
-				else
-					process_damage(2,"poise")
-				if(istype(attacked_mob,/mob/living/carbon/human))
-					var/mob/living/carbon/human/attacked_human_mob = attacked_mob
-					if(attacked_human_mob.blocking == TRUE) attacked_human_mob.SwitchBlocking()
-				if(attacked_carbon_mob.blocking == TRUE) attacked_carbon_mob.blocking = FALSE // This is a failsafe in case the above is not trigerred on player mobs.
+		switch(attack_type)
+			if("n")
+				for(var/mob/living/attacked_mob in turf_target)
+					if(istype(attacked_mob,/mob/living/carbon/))
+						var/mob/living/carbon/attacked_carbon_mob = attacked_mob
+						if(world.time > attacked_carbon_mob.blocking_timestamp + 5)
+							attacked_carbon_mob.apply_damage(rand(owner.melee_damage_lower,owner.melee_damage_upper))
+						else
+							process_damage(2,"poise")
+						if(istype(attacked_mob,/mob/living/carbon/human))
+							var/mob/living/carbon/human/attacked_human_mob = attacked_mob
+							if(attacked_human_mob.blocking == TRUE) attacked_human_mob.SwitchBlocking()
+						if(attacked_carbon_mob.blocking == TRUE) attacked_carbon_mob.blocking = FALSE // This is a failsafe in case the above is not trigerred on player mobs.
 
 		current_position += 1
 	attacking_flag = 0
