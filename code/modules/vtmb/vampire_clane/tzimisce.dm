@@ -2,9 +2,6 @@
 	name = "Tzimisce"
 	desc = "If someone were to call a Tzimisce inhuman and sadistic, the Tzimisce would probably commend them for their perspicacity, and then demonstrate that their mortal definition of sadism was laughably inadequate. The Tzimisce have left the human condition behind gladly, and now focus on transcending the limitations of the vampiric state. At a casual glance or a brief conversation, a Tzimisce appears to be one of the more pleasant vampires. Polite, intelligent, and inquisitive, they seem a stark contrast to the howling Sabbat mobs or even the apparently more humane Brujah or Nosferatu. However, upon closer inspection, it becomes clear that this is merely a mask hiding something alien and monstrous."
 	curse = "Grounded to material domain."
-//	alt_sprite = "tzi"
-//	no_hair = TRUE
-//	no_facial = TRUE	//FUCK WRONG RULEBOOK
 	clane_disciplines = list(
 		/datum/discipline/auspex,
 		/datum/discipline/animalism,
@@ -14,7 +11,6 @@
 	male_clothes = /obj/item/clothing/under/vampire/sport
 	female_clothes = /obj/item/clothing/under/vampire/red
 	enlightenment = TRUE
-	var/obj/item/heirl
 	current_accessory = "none"
 	accessories = list("spines", "spines_slim", "animal_skull", "none")
 	accessories_layers = list("spines" = UNICORN_LAYER, "spines_slim" = UNICORN_LAYER, "animal_skull" = UNICORN_LAYER, "none" = UNICORN_LAYER)
@@ -39,7 +35,8 @@
 	shapeshift_type = /mob/living/simple_animal/hostile/bloodcrawler
 
 /datum/vampireclane/tzimisce/post_gain(mob/living/carbon/human/H)
-	..()
+	. = ..()
+
 	var/obj/item/ground_heir/heirloom = new(get_turf(H))
 	var/list/slots = list(
 		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
@@ -48,7 +45,7 @@
 		LOCATION_HANDS = ITEM_SLOT_HANDS
 	)
 	H.equip_in_one_of_slots(heirloom, slots, FALSE)
-	heirl = heirloom
+	H.AddComponent(/datum/component/needs_home_soil, heirloom)
 
 /datum/crafting_recipe/stake
 	name = "Stake"

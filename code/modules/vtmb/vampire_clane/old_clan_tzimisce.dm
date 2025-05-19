@@ -11,7 +11,6 @@
 	male_clothes = /obj/item/clothing/under/vampire/sport
 	female_clothes = /obj/item/clothing/under/vampire/red
 	enlightenment = TRUE
-	var/obj/item/heirl
 	restricted_disciplines = list(/datum/discipline/vicissitude)
 	whitelisted = FALSE
 
@@ -25,4 +24,4 @@
 		LOCATION_HANDS = ITEM_SLOT_HANDS
 	)
 	H.equip_in_one_of_slots(heirloom, slots, FALSE)
-	heirl = heirloom
+	H.AddComponent(/datum/component/needs_home_soil, heirloom)

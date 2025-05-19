@@ -3496,6 +3496,7 @@
 #include "code\modules\wod13\datums\bouncer_roles\bouncer_giovanni_role.dm"
 #include "code\modules\wod13\datums\bouncer_roles\bouncer_mob_role.dm"
 #include "code\modules\wod13\datums\components\kiasyd_iron_weakness.dm"
+#include "code\modules\wod13\datums\components\needs_home_soil.dm"
 #include "code\modules\wod13\datums\crafting_recipes\weed\weed_blunt.dm"
 #include "code\modules\wod13\datums\crafting_recipes\weed\weedpack.dm"
 #include "code\modules\wod13\datums\powers\discipline\__discipline.dm"
