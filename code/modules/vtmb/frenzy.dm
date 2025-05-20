@@ -209,29 +209,22 @@
 		else
 			H.remove_status_effect(STATUS_EFFECT_FEAR)
 
-	//masquerade violations due to unnatural appearances
-	if(H.is_face_visible() && H.clan?.violating_appearance)
-		switch(H.clan.alt_sprite)
-			if ("kiasyd")
-				//masquerade breach if eyes are uncovered, short range
-				if (!H.is_eyes_covered())
-					if (H.CheckEyewitness(H, H, 3, FALSE))
-						H.AdjustMasquerade(-1)
-			if ("rotten3")
-				//slightly less range than if fully decomposed
-				if (H.CheckEyewitness(H, H, 5, FALSE))
-					H.AdjustMasquerade(-1)
-			else
-				//gargoyles, nosferatu, skeletons, that kind of thing
-				if (H.CheckEyewitness(H, H, 7, FALSE))
+	// Masquerade violations due to unnatural appearances
+	if (H.is_face_visible())
+		// Gargoyles, nosferatu, skeletons, that kind of thing
+		if (HAS_TRAIT(H, TRAIT_MASQUERADE_VIOLATING_FACE))
+			if (H.CheckEyewitness(H, H, 7, FALSE))
+				H.AdjustMasquerade(-1)
+		// Masquerade breach if eyes are uncovered, short range
+		else if (HAS_TRAIT(H, TRAIT_MASQUERADE_VIOLATING_EYES))
+			if (!H.is_eyes_covered())
+				if (H.CheckEyewitness(H, H, 3, FALSE))
 					H.AdjustMasquerade(-1)
 
-	if(HAS_TRAIT(H, TRAIT_UNMASQUERADE))
+	if (HAS_TRAIT(H, TRAIT_UNMASQUERADE) || HAS_TRAIT(H, TRAIT_NONMASQUERADE))
 		if(H.CheckEyewitness(H, H, 7, FALSE))
 			H.AdjustMasquerade(-1)
-	if(HAS_TRAIT(H, TRAIT_NONMASQUERADE))
-		if(H.CheckEyewitness(H, H, 7, FALSE))
-			H.AdjustMasquerade(-1)
+
 	if(istype(get_area(H), /area/vtm))
 		var/area/vtm/V = get_area(H)
 		if(V.zone_type == "masquerade" && V.upper)

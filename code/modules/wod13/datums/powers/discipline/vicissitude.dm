@@ -36,9 +36,7 @@
 	var/original_haircolor
 	var/original_facialhaircolor
 	var/original_eyecolor
-	var/original_body_mod
-	var/original_alt_sprite
-	var/original_alt_sprite_greyscale
+	var/original_limbs_id
 
 	var/datum/dna/impersonating_dna
 	var/impersonating_name
@@ -48,9 +46,7 @@
 	var/impersonating_haircolor
 	var/impersonating_facialhaircolor
 	var/impersonating_eyecolor
-	var/impersonating_body_mod
-	var/impersonating_alt_sprite
-	var/impersonating_alt_sprite_greyscale
+	var/impersonating_limbs_id
 
 	var/is_shapeshifted = FALSE
 
@@ -92,15 +88,12 @@
 	impersonating_haircolor = victim.hair_color
 	impersonating_facialhaircolor = victim.facial_hair_color
 	impersonating_eyecolor = victim.eye_color
-	impersonating_body_mod = victim.base_body_mod
-	if (victim.clan)
-		impersonating_alt_sprite = victim.clan.alt_sprite
-		impersonating_alt_sprite_greyscale = victim.clan.alt_sprite_greyscale
+	impersonating_limbs_id = victim.dna?.species?.limbs_id
 
 /datum/discipline_power/vicissitude/malleable_visage/proc/initialize_original()
 	if (is_shapeshifted)
 		return
-	if (original_dna && original_body_mod)
+	if (original_dna)
 		return
 
 	original_dna = new
@@ -112,19 +105,15 @@
 	original_haircolor = owner.hair_color
 	original_facialhaircolor = owner.facial_hair_color
 	original_eyecolor = owner.eye_color
-	original_body_mod = owner.base_body_mod
-	original_alt_sprite = owner.clan?.alt_sprite
-	original_alt_sprite_greyscale = owner.clan?.alt_sprite_greyscale
+	original_limbs_id = owner.dna?.species?.limbs_id
 
 /datum/discipline_power/vicissitude/malleable_visage/proc/shapeshift(to_original = FALSE, instant = FALSE)
 	if (!impersonating_dna)
 		return
 	if (!instant)
 		var/time_delay = 10 SECONDS
-		if (original_body_mod != impersonating_body_mod)
+		if (original_limbs_id[1] != impersonating_limbs_id[1])
 			time_delay += 5 SECONDS
-		if (original_alt_sprite != impersonating_alt_sprite)
-			time_delay += 10 SECONDS
 		to_chat(owner, span_notice("You begin molding your appearance... This will take [DisplayTimeText(time_delay)]."))
 		if (!do_after(owner, time_delay))
 			return
@@ -142,15 +131,13 @@
 		owner.hair_color = original_haircolor
 		owner.facial_hair_color = original_facialhaircolor
 		owner.eye_color = original_eyecolor
-		owner.set_body_model(original_body_mod)
-		owner.clan?.alt_sprite = original_alt_sprite
-		owner.clan?.alt_sprite_greyscale = original_alt_sprite_greyscale
+		owner.dna?.species?.limbs_id = original_limbs_id
 		is_shapeshifted = FALSE
 		QDEL_NULL(impersonating_dna)
 	else
 		//Nosferatu, Cappadocians, Gargoyles, Kiasyd, etc. will revert instead of being indefinitely without their curse
-		if (original_alt_sprite)
-			addtimer(CALLBACK(src, PROC_REF(revert_to_cursed_form)), 5 MINUTES)
+		if (!findtext(original_limbs_id, "human"))
+			addtimer(CALLBACK(src, PROC_REF(revert_to_cursed_form)), 1 SCENES)
 		impersonating_dna.transfer_identity(destination = owner, superficial = TRUE)
 		owner.real_name = impersonating_name
 		owner.skin_tone = impersonating_skintone
@@ -159,24 +146,16 @@
 		owner.hair_color = impersonating_haircolor
 		owner.facial_hair_color = impersonating_facialhaircolor
 		owner.eye_color = impersonating_eyecolor
-		owner.set_body_model(impersonating_body_mod)
-		owner.clan?.alt_sprite = impersonating_alt_sprite
-		owner.clan?.alt_sprite_greyscale = impersonating_alt_sprite_greyscale
+		owner.dna?.species?.limbs_id = impersonating_limbs_id
 		is_shapeshifted = TRUE
 
 	owner.update_body()
 
 /datum/discipline_power/vicissitude/malleable_visage/proc/revert_to_cursed_form()
-	if (!original_alt_sprite)
-		return
 	if (!is_shapeshifted)
 		return
-	if (!owner.clan)
-		return
 
-	owner.set_body_model(original_body_mod)
-	owner.clan.alt_sprite = original_alt_sprite
-	owner.clan.alt_sprite_greyscale = original_alt_sprite_greyscale
+	owner.dna?.species?.limbs_id = original_limbs_id
 
 	to_chat(owner, span_warning("Your cursed appearance reasserts itself!"))
 

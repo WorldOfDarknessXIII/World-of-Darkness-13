@@ -13,8 +13,6 @@
 	/// List of traits that are applied to members of this Clan
 	var/list/clan_traits
 
-	/// If members of this Clan look obviously supernatural and are walking Masquerade breaches
-	var/violating_appearance
 	/// The Clan's unique body sprite
 	var/alt_sprite
 	/// If the Clan's unique body sprites need to account for skintone
@@ -80,11 +78,11 @@
 /datum/vampire_clan/proc/post_gain(mob/living/carbon/human/vampire)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(violating_appearance && vampire.roundstart_vampire)
-		if(length(GLOB.masquerade_latejoin))
+	if (HAS_TRAIT(vampire, TRAIT_MASQUERADE_VIOLATING_FACE) && vampire.roundstart_vampire)
+		if (length(GLOB.masquerade_latejoin))
 			var/obj/effect/landmark/latejoin_masquerade/LM = pick(GLOB.masquerade_latejoin)
-			if(LM)
+			if (LM)
 				vampire.forceMove(LM.loc)
 
-	if(clan_keys)
+	if (clan_keys)
 		vampire.put_in_r_hand(new clan_keys(vampire))

@@ -72,10 +72,12 @@
  * * rot_stage - how much to rot the vampire, on a scale from 1 to 4.
  */
 /mob/living/carbon/human/proc/rot_body(rot_stage)
-	// Won't replace other Clans' alternative sprites unless it's advanced decay
-	if (clan?.alt_sprite)
-		if (!findtext(clan.alt_sprite, "rotten") && (rot_stage <= 2))
-			return
+	// Won't work unless this person has limbs_id on species
+	CHECK_DNA_AND_SPECIES(src)
+
+	// Won't replace other alternative sprites unless it's advanced decay
+	if (!NORMAL_BODY_SPRITE(src) && (rot_stage <= 2))
+		return
 
 	// Apply rotten sprite and rotting effects
 	switch (rot_stage)
@@ -88,11 +90,13 @@
 			skin_tone = "albino"
 			hairstyle = "Bald"
 			facial_hairstyle = "Shaved"
+			ADD_TRAIT(src, TRAIT_MASQUERADE_VIOLATING_FACE, MAGIC_TRAIT)
 		if (4)
 			set_body_sprite("rotten4")
 			skin_tone = "albino"
 			hairstyle = "Bald"
 			facial_hairstyle = "Shaved"
+			ADD_TRAIT(src, TRAIT_MASQUERADE_VIOLATING_FACE, MAGIC_TRAIT)
 
 			// Rotten body will lose weight if it can
 			if (base_body_mod == FAT_BODY_MODEL)

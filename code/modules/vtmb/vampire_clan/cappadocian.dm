@@ -7,13 +7,14 @@
 		/datum/discipline/fortitude,
 		/datum/discipline/necromancy
 	)
-	violating_appearance = FALSE
 	alt_sprite = "rotten1"
 	alt_sprite_greyscale = TRUE
 
 	whitelisted = TRUE
 
 /datum/vampire_clan/cappadocian/on_gain(mob/living/carbon/human/H)
+	. = ..()
+
 	var/years_undead = H.chronological_age - H.age
 	switch(years_undead)
 		if (-INFINITY to 100)
@@ -25,12 +26,11 @@
 		if (500 to INFINITY)
 			H.rot_body(4)
 
-	..()
-
 /datum/vampire_clan/cappadocian/post_gain(mob/living/carbon/human/H)
 	. = ..()
 
-	if ((alt_sprite == "rotten1") || (alt_sprite == "rotten2"))
+	var/alternative_appearance = GET_BODY_SPRITE(H)
+	if ((alternative_appearance == "rotten1") || (alternative_appearance == "rotten2"))
 		return
 
 	var/obj/item/clothing/suit/hooded/robes/darkred/new_robe = new(H.loc)

@@ -393,7 +393,7 @@
 
 		//examine text for unusual appearances
 		if (iskindred(src) && is_face_visible())
-			switch(clan.alt_sprite)
+			switch (GET_BODY_SPRITE(src))
 				if ("nosferatu")
 					msg += "<span class='danger'><b>[p_they(TRUE)] look[p_s()] utterly deformed and inhuman!</b></span><br>"
 				if ("gargoyle")

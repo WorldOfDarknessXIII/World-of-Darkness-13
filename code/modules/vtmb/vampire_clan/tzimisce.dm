@@ -7,7 +7,6 @@
 		/datum/discipline/animalism,
 		/datum/discipline/vicissitude
 	)
-	violating_appearance = FALSE
 	male_clothes = /obj/item/clothing/under/vampire/sport
 	female_clothes = /obj/item/clothing/under/vampire/red
 	enlightenment = TRUE

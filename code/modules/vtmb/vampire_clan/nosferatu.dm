@@ -8,7 +8,9 @@
 		/datum/discipline/potence,
 		/datum/discipline/obfuscate
 	)
-	violating_appearance = TRUE
+	clan_traits = list(
+		TRAIT_MASQUERADE_VIOLATING_FACE
+	)
 	male_clothes = /obj/item/clothing/under/vampire/nosferatu
 	female_clothes = /obj/item/clothing/under/vampire/nosferatu/female
 	accessories = list("nosferatu_ears", "none")
@@ -17,7 +19,8 @@
 	clan_keys = /obj/item/vamp/keys/nosferatu
 
 /datum/vampire_clan/nosferatu/on_gain(mob/living/carbon/human/H)
-	..()
+	. = ..()
+
 	var/obj/item/organ/eyes/night_vision/NV = new()
 	NV.Insert(H, TRUE, FALSE)
 	H.ventcrawler = VENTCRAWLER_ALWAYS

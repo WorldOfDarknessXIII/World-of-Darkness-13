@@ -741,15 +741,14 @@ SUBSYSTEM_DEF(job)
 
 	if(latejoin_trackers.len)
 		destination = pick(latejoin_trackers)
-		var/mob/living/carbon/human/H = M
-		if(H.clan)
-			if(H.clan.violating_appearance)
-				destination = pick(GLOB.masquerade_latejoin)
-		if(isgarou(H))
+		// Sent to a special location if being seen would be a Masquerade breach
+		if (HAS_TRAIT(M, TRAIT_MASQUERADE_VIOLATING_FACE))
+			destination = pick(GLOB.masquerade_latejoin)
+		// Garou are sent to their Tribe totems
+		if (isgarou(H))
 			for(var/obj/structure/werewolf_totem/W in GLOB.totems)
-				if(W)
-					if(W.tribe == H.auspice.tribe)
-						destination = W
+				if(W.tribe == H.auspice.tribe)
+					destination = W
 		destination.JoinPlayerHere(M, buckle)
 		return TRUE
 

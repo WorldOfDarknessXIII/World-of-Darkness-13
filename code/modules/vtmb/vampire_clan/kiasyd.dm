@@ -7,12 +7,14 @@
 		/datum/discipline/obtenebration,
 		/datum/discipline/mytherceria
 	)
+	clan_traits = list(
+		TRAIT_MASQUERADE_VIOLATING_EYES
+	)
 	alt_sprite = "kiasyd"
 	no_facial = TRUE
 	male_clothes = /obj/item/clothing/under/vampire/archivist
 	female_clothes = /obj/item/clothing/under/vampire/archivist
 	whitelisted = TRUE
-	violating_appearance = TRUE
 	current_accessory = "none"
 	accessories = list("fae_ears", "none")
 	accessories_layers = list("fae_ears" = UPPER_EARS_LAYER, "none" = UPPER_EARS_LAYER)
