@@ -10,8 +10,5 @@
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		var/pathof = "Humanity"
-		if(H.clan)
-			if(H.clan.enlightenment)
-				pathof = "Enlightenment"
+		var/pathof = target.client?.prefs?.enlightenment ? "Enlightenment" : "Humanity"
 		to_chat(user, "<b>[pathof]: [H.humanity]</b>")

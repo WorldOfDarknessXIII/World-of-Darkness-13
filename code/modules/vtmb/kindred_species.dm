@@ -116,9 +116,8 @@
 		dat += "<p>Camarilla thinks I[masquerade_level]</p>"
 		var/humanity = "I'm out of my mind."
 		var/enlight = FALSE
-		if(host.clan)
-			if(host.clan.enlightenment)
-				enlight = TRUE
+		if(host.client?.prefs?.enlightenment)
+			enlight = TRUE
 
 		if(!enlight)
 			switch(host.humanity)
@@ -461,7 +460,6 @@
 							BLOODBONDED.create_disciplines(FALSE, disciplines_to_give)
 
 							BLOODBONDED.maxbloodpool = 10+((13-min(13, BLOODBONDED.generation))*3)
-							BLOODBONDED.clan.enlightenment = H.clan.enlightenment
 						else
 							BLOODBONDED.maxbloodpool = 10+((13-min(13, BLOODBONDED.generation))*3)
 							BLOODBONDED.generation = 14
@@ -478,7 +476,7 @@
 								BLOODBONDED_prefs_v.clan = BLOODBONDED.clan
 								BLOODBONDED_prefs_v.generation = 13
 								BLOODBONDED_prefs_v.skin_tone = get_vamp_skin_color(BLOODBONDED.skin_tone)
-								BLOODBONDED_prefs_v.clan.enlightenment = H.clan.enlightenment
+								BLOODBONDED_prefs_v.enlightenment = H.clan.enlightenment
 
 
 								//Rarely the new mid round vampires get the 3 brujah skil(it is default)

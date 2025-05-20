@@ -2155,7 +2155,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					discipline_levels = list()
 					if(result == "Caitiff")
 						generation = 13
-						for (var/i = clan.clan_disciplines.len; i < 3; i++)
+						for (var/i = length(clan.clan_disciplines); i < 3; i++)
 							if (slotlocked)
 								break
 							var/list/possible_new_disciplines = subtypesof(/datum/discipline) - clan.clan_disciplines - /datum/discipline/bloodheal
@@ -3078,7 +3078,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.generation = generation
 		character.max_yin_chi = character.maxbloodpool
 		character.yin_chi = character.max_yin_chi
-		character.clan.enlightenment = enlightenment
 
 		// Apply Clan accessory
 		if (character.clan?.accessories?.Find(clan_accessory))

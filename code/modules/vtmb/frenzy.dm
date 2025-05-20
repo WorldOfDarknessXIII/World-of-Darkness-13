@@ -316,7 +316,6 @@
 			if((H.last_frenzy_check + 40 SECONDS) <= world.time)
 				H.last_frenzy_check = world.time
 				H.rollfrenzy()
-				if(H.clan)
-					if(H.clan.enlightenment)
-						if(!H.CheckFrenzyMove())
-							H.AdjustHumanity(1, 10)
+				if (H.client?.prefs?.enlightenment)
+					if(!H.CheckFrenzyMove())
+						H.AdjustHumanity(1, 10)
