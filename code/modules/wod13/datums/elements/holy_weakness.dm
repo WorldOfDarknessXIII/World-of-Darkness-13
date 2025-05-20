@@ -24,6 +24,8 @@
 	UnregisterSignal(source, COMSIG_ENTER_AREA)
 	UnregisterSignal(source, COMSIG_EXIT_AREA)
 
+	LAZYREMOVE(exposed_to_holiness, source)
+
 	return ..()
 
 /datum/element/holy_weakness/proc/handle_enter_area(mob/living/source, area/entered_area)
@@ -57,7 +59,7 @@
 
 /datum/element/holy_weakness/process(delta_time)
 	// Ignite all exposed mobs on a probability of ~25% per 4 seconds
-	for (var/mob/living/cursed_mob in exposed_to_holiness)
+	for (var/mob/living/cursed_mob as anything in exposed_to_holiness)
 		if (!DT_PROB(6.25, delta_time))
 			continue
 
