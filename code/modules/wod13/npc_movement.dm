@@ -142,15 +142,16 @@
 		if(!length(possible_list))
 			var/atom/shitshit
 			for(var/obj/effect/landmark/npcactivity/N in GLOB.npc_activities)
-				if(N)
-					if(!shitshit)
-						shitshit = N
-					if(get_dist(src, N) > 1 && get_dist(src, N) < get_dist(src, shitshit))
-						shitshit = N
+				if(!shitshit)
+					shitshit = N
+				if(get_dist(src, N) > 1 && get_dist(src, N) < get_dist(src, shitshit))
+					shitshit = N
 			if(shitshit)
 				return shitshit
-			else
+			else if (length(GLOB.npc_activities))
 				return pick(GLOB.npc_activities)
+			else
+				return
 
 		return pick(possible_list)
 	else
