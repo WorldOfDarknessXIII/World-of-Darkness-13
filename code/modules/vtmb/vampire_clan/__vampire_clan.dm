@@ -30,11 +30,11 @@
 	var/clan_keys
 
 	/// List of unnatural features that members of this Clan can choose
-	var/accessories
+	var/list/accessories
 	/// Associative list of layers for unnatural features that members of this Clan can choose
-	var/accessories_layers
-	/// Currently applied accessory
-	var/current_accessory
+	var/list/accessories_layers
+	/// Clan accessory that's selected by default
+	var/default_accessory
 
 	/// Morality level that characters of this Clan start with
 	var/start_humanity = 7
@@ -46,12 +46,6 @@
 
 /datum/vampire_clan/proc/on_gain(mob/living/carbon/human/vampire)
 	SHOULD_CALL_PARENT(TRUE)
-
-	if (length(accessories) && current_accessory)
-		vampire.remove_overlay(accessories_layers[current_accessory])
-		var/mutable_appearance/acc_overlay = mutable_appearance('code/modules/wod13/icons.dmi', current_accessory, -accessories_layers[current_accessory])
-		vampire.overlays_standing[accessories_layers[current_accessory]] = acc_overlay
-		vampire.apply_overlay(accessories_layers[current_accessory])
 
 	// Apply alternative sprites
 	if (alt_sprite)

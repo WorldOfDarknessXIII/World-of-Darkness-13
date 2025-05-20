@@ -607,15 +607,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Clan/Bloodline:</b> <a href='byond://?_src_=prefs;preference=clan;task=input'>[clan.name]</a><BR>"
 				dat += "<b>Description:</b> [clan.desc]<BR>"
 				dat += "<b>Curse:</b> [clan.curse]<BR>"
-				if(length(clan.accessories))
-					if(clan_accessory in clan.accessories)
-						dat += "<b>Marks:</b> <a href='byond://?_src_=prefs;preference=clan_acc;task=input'>[clan_accessory]</a><BR>"
-					else
-						if("none" in clan_accessory)
-							clan_accessory = "none"
+				if (length(clan.accessories))
+					// No clan accessory, or unsupported one
+					if (!clan.accessories.Find(clan_accessory))
+						// Set to Clan's default accessory
+						if (clan.default_accessory)
+							clan_accessory = clan.default_accessory
+						// Can be null, so null it
+						else if (clan.accessories.Find("none"))
+							clan_accessory = null
+						// Must have an accessory, set to a random one
 						else
 							clan_accessory = pick(clan.accessories)
-						dat += "<b>Marks:</b> <a href='byond://?_src_=prefs;preference=clan_acc;task=input'>[clan_accessory]</a><BR>"
+
+					// Display clan accessory and allow selection
+					dat += "<b>Marks:</b> <a href='byond://?_src_=prefs;preference=clan_acc;task=input'>[clan_accessory ? clan_accessory : "none"]</a><BR>"
 				else
 					clan_accessory = null
 				dat += "<h2>[make_font_cool("DISCIPLINES")]</h2>"
@@ -2140,39 +2146,42 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							available_clans[V.name] += GLOB.vampire_clans[i]
 						qdel(V)
 					var/result = tgui_input_list(user, "Select a clan", "Clan Selection", sortList(available_clans))
-					if(result)
-						var/newtype = GLOB.vampire_clans[result]
-						clan = new newtype()
-						discipline_types = list()
-						discipline_levels = list()
-						if(result == "Caitiff")
-							generation = 13
-							for (var/i = clan.clan_disciplines.len; i < 3; i++)
-								if (slotlocked)
-									break
-								var/list/possible_new_disciplines = subtypesof(/datum/discipline) - clan.clan_disciplines - /datum/discipline/bloodheal
-								for (var/discipline_type in possible_new_disciplines)
-									var/datum/discipline/discipline = new discipline_type
-									if (discipline.clan_restricted)
-										possible_new_disciplines -= discipline_type
-									qdel(discipline)
-								var/new_discipline = tgui_input_list(user, "Select a Discipline", "Discipline Selection", sortList(possible_new_disciplines))
-								if (new_discipline)
-									clan.clan_disciplines += new_discipline
-						for (var/i in 1 to clan.clan_disciplines.len)
-							discipline_types += clan.clan_disciplines[i]
-							discipline_levels += 1
-						humanity = clan.start_humanity
-						enlightenment = clan.enlightenment
-						if(clan.no_hair)
-							hairstyle = "Bald"
-						if(clan.no_facial)
-							facial_hairstyle = "Shaved"
-						if(length(clan.accessories))
-							if("none" in clan.accessories)
-								clan_accessory = "none"
-							else
-								clan_accessory = pick(clan.accessories)
+					if (!result)
+						return
+
+					var/newtype = GLOB.vampire_clans[result]
+					clan = new newtype()
+					discipline_types = list()
+					discipline_levels = list()
+					if(result == "Caitiff")
+						generation = 13
+						for (var/i = clan.clan_disciplines.len; i < 3; i++)
+							if (slotlocked)
+								break
+							var/list/possible_new_disciplines = subtypesof(/datum/discipline) - clan.clan_disciplines - /datum/discipline/bloodheal
+							for (var/discipline_type in possible_new_disciplines)
+								var/datum/discipline/discipline = new discipline_type
+								if (discipline.clan_restricted)
+									possible_new_disciplines -= discipline_type
+								qdel(discipline)
+							var/new_discipline = tgui_input_list(user, "Select a Discipline", "Discipline Selection", sortList(possible_new_disciplines))
+							if (new_discipline)
+								clan.clan_disciplines += new_discipline
+					for (var/i in 1 to clan.clan_disciplines.len)
+						discipline_types += clan.clan_disciplines[i]
+						discipline_levels += 1
+					humanity = clan.start_humanity
+					enlightenment = clan.enlightenment
+					if(clan.no_hair)
+						hairstyle = "Bald"
+					if(clan.no_facial)
+						facial_hairstyle = "Shaved"
+					if(length(clan.accessories))
+						if("none" in clan.accessories)
+							clan_accessory = null
+						else
+							clan_accessory = pick(clan.accessories)
+
 				if("auspice_level")
 					var/cost = max(10, auspice_level * 10)
 					if ((true_experience < cost) || (auspice_level >= 3))
@@ -3064,13 +3073,20 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(pref_species.name == "Vampire")
 		var/datum/vampire_clan/CLN = new clan.type()
 		character.clan = CLN
-		character.clan.current_accessory = clan_accessory
 		character.maxbloodpool = 10 + ((13 - generation) * 3)
 		character.bloodpool = rand(2, character.maxbloodpool)
 		character.generation = generation
 		character.max_yin_chi = character.maxbloodpool
 		character.yin_chi = character.max_yin_chi
 		character.clan.enlightenment = enlightenment
+
+		// Apply Clan accessory
+		if (character.clan?.accessories?.Find(clan_accessory))
+			var/accessory_layer = character.clan.accessories_layers[clan_accessory]
+			character.remove_overlay(accessory_layer)
+			var/mutable_appearance/acc_overlay = mutable_appearance('code/modules/wod13/icons.dmi', clan_accessory, -accessory_layer)
+			character.overlays_standing[accessory_layer] = acc_overlay
+			character.apply_overlay(accessory_layer)
 	else
 		character.clan = null
 		character.generation = 13
