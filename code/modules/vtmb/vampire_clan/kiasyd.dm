@@ -33,10 +33,18 @@
 	var/obj/item/organ/eyes/night_vision/kiasyd/NV = new()
 	NV.Insert(H, TRUE, FALSE)
 
-	H.update_body()
-
 	// Add curse component
 	H.AddComponent(/datum/component/kiasyd_iron_weakness)
+
+/datum/vampire_clan/kiasyd/on_lose(mob/living/carbon/human/vampire)
+	. = ..()
+
+	if (vampire.has_quirk(/datum/quirk/tower))
+		vampire.remove_quirk(/datum/quirk/tower)
+	else
+		vampire.add_quirk(/datum/quirk/dwarf)
+
+	vampire.update_body()
 
 /datum/vampire_clan/kiasyd/on_join_round(mob/living/carbon/human/H)
 	. = ..()
