@@ -19,20 +19,20 @@
 	accessories_layers = list("fae_ears" = UPPER_EARS_LAYER, "none" = UPPER_EARS_LAYER)
 
 /datum/vampire_clan/kiasyd/on_gain(mob/living/carbon/human/H)
-	..()
-	//This was messing with the visualiser in the character setup menu somehow
-	if (H.clan?.type != /datum/vampire_clan/kiasyd)
-		return
-	if(H.isdwarfy)
-		H.RemoveElement(/datum/element/dwarfism, COMSIG_PARENT_PREQDELETED, src)
-		H.isdwarfy = FALSE
-	if(!H.istower)
-		H.AddElement(/datum/element/giantism, COMSIG_PARENT_PREQDELETED, src)
-		H.istower = TRUE
+	. = ..()
+
+	// Kiasyd are made taller and thinner
+	if (H.has_quirk(/datum/quirk/dwarf))
+		H.remove_quirk(/datum/quirk/dwarf)
+	else if (!H.has_quirk(/datum/quirk/tower))
+		H.add_quirk(/datum/quirk/tower)
+
+	if (H.base_body_mod == FAT_BODY_MODEL)
+		H.set_body_model(NORMAL_BODY_MODEL)
+
 	var/obj/item/organ/eyes/night_vision/kiasyd/NV = new()
 	NV.Insert(H, TRUE, FALSE)
-	if(H.base_body_mod == FAT_BODY_MODEL)
-		H.set_body_model(NORMAL_BODY_MODEL)
+
 	H.update_body()
 
 	// Add curse component
@@ -59,4 +59,4 @@
 		if(L.max_yin_chi > L.max_yang_chi + 2)
 			to_chat(L, "<span class='danger'><b>WOOD!</b></span>")
 			L.adjustBruteLoss(15, TRUE)
-	..()
+	. = ..()

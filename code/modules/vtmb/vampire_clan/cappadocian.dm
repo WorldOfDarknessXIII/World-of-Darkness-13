@@ -29,6 +29,7 @@
 /datum/vampire_clan/cappadocian/on_join_round(mob/living/carbon/human/H)
 	. = ..()
 
+	// Only old, skeletonised Cappadocians need the robes and mask
 	var/alternative_appearance = GET_BODY_SPRITE(H)
 	if ((alternative_appearance == "rotten1") || (alternative_appearance == "rotten2"))
 		return

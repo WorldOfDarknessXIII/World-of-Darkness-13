@@ -13,32 +13,3 @@
 	male_clothes = /obj/item/clothing/under/vampire/ventrue
 	female_clothes = /obj/item/clothing/under/vampire/ventrue/female
 	clan_keys = /obj/item/vamp/keys/ventrue
-
-/datum/action/dominate
-	name = "Dominate"
-	desc = "Dominate over other living or un-living beings."
-	button_icon_state = "dominate"
-	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	vampiric = TRUE
-	var/cool_down = 0
-
-/datum/action/dominate/Trigger()
-	. = ..()
-	if((cool_down + 5 SECONDS) >= world.time)
-		return
-	var/mob/living/carbon/human/A = owner
-	if(HAS_TRAIT(A, TRAIT_MUTE))
-		to_chat(A, "<span class='warning'>You find yourself unable to speak!</span>")
-		return
-	var/new_say = input(owner, "Choose the phrase to dominate:") as text|null
-	if(new_say)
-		for(var/mob/living/carbon/human/H in ohearers(7, src))
-			if(H)
-				if(H.can_hear())
-					var/mypower = 13-A.generation+A.social
-					var/theirpower = 13-H.generation+H.mentality
-					if(theirpower <= mypower)
-						H.cure_trauma_type(/datum/brain_trauma/severe/hypnotic_trigger, TRAUMA_RESILIENCE_BASIC)
-						H.gain_trauma(new /datum/brain_trauma/severe/hypnotic_trigger(new_say), TRAUMA_RESILIENCE_BASIC)
-						H.do_jitter_animation(30)
-		owner.say("[new_say]")

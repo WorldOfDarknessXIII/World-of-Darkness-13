@@ -21,6 +21,7 @@
 
 /datum/vampire_clan/gargoyle/on_gain(mob/living/carbon/human/H)
 	. = ..()
+
 	H.dna.species.wings_icon = "Gargoyle"
 	H.dna.species.GiveSpeciesFlight(H)
 	H.physiology.brute_mod = 0.8
