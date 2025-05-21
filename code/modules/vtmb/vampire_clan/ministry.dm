@@ -13,8 +13,5 @@
 /datum/vampire_clan/ministry/on_gain(mob/living/carbon/human/H)
 	. = ..()
 	H.add_quirk(/datum/quirk/lightophobia)
-
-/datum/vampire_clan/ministry/post_gain(mob/living/carbon/human/H)
-	. = ..()
 	var/obj/item/organ/eyes/night_vision/NV = new()
 	NV.Insert(H, TRUE, FALSE)

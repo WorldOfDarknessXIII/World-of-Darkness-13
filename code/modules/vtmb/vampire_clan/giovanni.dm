@@ -14,6 +14,7 @@
 	female_clothes = /obj/item/clothing/under/vampire/suit/female
 	whitelisted = FALSE
 
-/datum/vampire_clan/giovanni/post_gain(mob/living/carbon/human/H)
+/datum/vampire_clan/giovanni/on_join_round(mob/living/carbon/human/H)
 	. = ..()
+
 	H.grant_language(/datum/language/italian)

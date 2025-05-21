@@ -38,7 +38,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///Whether emotes will be displayed on runechat. Requires chat_on_map to have effect. Boolean.
 	var/see_rc_emotes = TRUE
 	//Клан вампиров
-	var/datum/vampire_clan/clan = new /datum/vampire_clan/brujah()
+	var/datum/vampire_clan/clan
 	// Custom Keybindings
 	var/list/key_bindings = list()
 
@@ -269,8 +269,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	blood = A.start_blood
 	lockpicking = A.start_lockpicking
 	athletics = A.start_athletics
-	qdel(clan)
-	clan = new /datum/vampire_clan/brujah()
+	clan = GLOB.vampire_clans[/datum/vampire_clan/brujah]
 	discipline_types = list()
 	discipline_levels = list()
 	for (var/i in 1 to clan.clan_disciplines.len)
@@ -2136,29 +2135,26 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						return
 
 					var/list/available_clans = list()
-					for(var/i in GLOB.vampire_clans)
-						var/a = GLOB.vampire_clans[i]
-						var/datum/vampire_clan/V = new a
-						if (V.whitelisted)
-							if (SSwhitelists.is_whitelisted(user.ckey, V.name))
-								available_clans[V.name] += GLOB.vampire_clans
-						else
-							available_clans[V.name] += GLOB.vampire_clans[i]
-						qdel(V)
-					var/result = tgui_input_list(user, "Select a clan", "Clan Selection", sortList(available_clans))
+					for (var/adding_clan in GLOB.vampire_clans)
+						if (GLOB.vampire_clans[adding_clan].whitelisted && !SSwhitelists.is_whitelisted(user.ckey, adding_clan))
+							continue
+						available_clans += GLOB.vampire_clans[adding_clan]
+
+					var/result = tgui_input_list(user, "Select a Clan", "Clan Selection", sortList(available_clans))
 					if (!result)
 						return
+					clan = result
 
-					var/newtype = GLOB.vampire_clans[result]
-					clan = new newtype()
 					discipline_types = list()
 					discipline_levels = list()
+
 					if(result == "Caitiff")
 						generation = 13
 						for (var/i = length(clan.clan_disciplines); i < 3; i++)
 							if (slotlocked)
 								break
-							var/list/possible_new_disciplines = subtypesof(/datum/discipline) - clan.clan_disciplines - /datum/discipline/bloodheal
+
+							var/list/possible_new_disciplines = subtypesof(/datum/discipline) - discipline_types - /datum/discipline/bloodheal
 							for (var/discipline_type in possible_new_disciplines)
 								var/datum/discipline/discipline = new discipline_type
 								if (discipline.clan_restricted)
@@ -2166,12 +2162,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 								qdel(discipline)
 							var/new_discipline = tgui_input_list(user, "Select a Discipline", "Discipline Selection", sortList(possible_new_disciplines))
 							if (new_discipline)
-								clan.clan_disciplines += new_discipline
-					for (var/i in 1 to clan.clan_disciplines.len)
+								discipline_types += new_discipline
+								discipline_levels += 1
+
+					for (var/i in 1 to length(clan.clan_disciplines))
 						discipline_types += clan.clan_disciplines[i]
 						discipline_levels += 1
+
 					humanity = clan.start_humanity
 					enlightenment = clan.enlightenment
+
 					if(clan.no_hair)
 						hairstyle = "Bald"
 					if(clan.no_facial)
@@ -2457,11 +2457,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 								discipline_types.Cut()
 								discipline_levels.Cut()
 							if("kindred")
-								qdel(clan)
-								clan = new /datum/vampire_clan/brujah()
+								clan = GLOB.vampire_clans[/datum/vampire_clan/brujah]
 								discipline_types.Cut()
 								discipline_levels.Cut()
-								for (var/i in 1 to clan.clan_disciplines.len)
+								for (var/i in 1 to length(clan.clan_disciplines))
 									discipline_types += clan.clan_disciplines[i]
 									discipline_levels += 1
 						//Now that we changed our species, we must verify that the mutant colour is still allowed.
@@ -3071,8 +3070,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	A.special_skill(character)
 
 	if(pref_species.name == "Vampire")
-		var/datum/vampire_clan/CLN = new clan.type()
-		character.clan = CLN
+		character.set_clan(clan, TRUE)
 		character.maxbloodpool = 10 + ((13 - generation) * 3)
 		character.bloodpool = rand(2, character.maxbloodpool)
 		character.generation = generation
@@ -3087,7 +3085,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			character.overlays_standing[accessory_layer] = acc_overlay
 			character.apply_overlay(accessory_layer)
 	else
-		character.clan = null
+		character.set_clan(null)
 		character.generation = 13
 		character.bloodpool = character.maxbloodpool
 		if(pref_species.name == "Kuei-Jin")
@@ -3259,7 +3257,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_hair()
 		character.update_body_parts()
 	if(!character_setup)
-		character.roundstart_vampire = TRUE
 		if(character.age < 16)
 			if(!character.ischildren)
 				character.ischildren = TRUE

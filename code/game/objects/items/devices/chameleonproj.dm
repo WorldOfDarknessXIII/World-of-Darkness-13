@@ -1,6 +1,7 @@
 /mob/living/carbon/human/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	. = ..()
 	if(message)
+		// TODO: [Lucia] this needs to be components
 		if(say_mod(message) == verb_yell)
 			for(var/mob/living/carbon/human/hum in hearers(5, src))
 				if(hum != src)

@@ -24,12 +24,12 @@
 	if(randomise[RANDOM_JUMPSUIT_STYLE])
 		jumpsuit_style = pick(GLOB.jumpsuitlist)
 	if(randomise[RANDOM_HAIRSTYLE])
-		if(clan.no_hair)
+		if(clan?.no_hair)
 			hairstyle = "Bald"
 		else
 			hairstyle = random_hairstyle(gender)
 	if(randomise[RANDOM_FACIAL_HAIRSTYLE])
-		if(clan.no_facial)
+		if(clan?.no_facial)
 			facial_hairstyle = "Shaved"
 		else
 			facial_hairstyle = random_facial_hairstyle(gender)
@@ -63,8 +63,7 @@
 		discipline_types = list()
 		discipline_levels = list()
 	if(pref_species.id == "kindred")
-		qdel(clan)
-		clan = new /datum/vampire_clan/brujah()
+		clan = GLOB.vampire_clans[/datum/vampire_clan/brujah]
 		discipline_types = list()
 		discipline_levels = list()
 		for (var/i in 1 to clan.clan_disciplines.len)

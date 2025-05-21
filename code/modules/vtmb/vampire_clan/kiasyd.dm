@@ -38,7 +38,7 @@
 	// Add curse component
 	H.AddComponent(/datum/component/kiasyd_iron_weakness)
 
-/datum/vampire_clan/kiasyd/post_gain(mob/living/carbon/human/H)
+/datum/vampire_clan/kiasyd/on_join_round(mob/living/carbon/human/H)
 	. = ..()
 
 	//give them sunglasses to hide their freakish eyes

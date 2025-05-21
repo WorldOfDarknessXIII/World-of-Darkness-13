@@ -26,7 +26,7 @@
 		if (500 to INFINITY)
 			H.rot_body(4)
 
-/datum/vampire_clan/cappadocian/post_gain(mob/living/carbon/human/H)
+/datum/vampire_clan/cappadocian/on_join_round(mob/living/carbon/human/H)
 	. = ..()
 
 	var/alternative_appearance = GET_BODY_SPRITE(H)

@@ -356,13 +356,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(newtype)
 			pref_species = new newtype
 
+	var/clan_type
+	READ_FILE(S["clane"], clan_type)
+	if (clan_type)
+		// Update old Clan names to typepaths
+		if (!ispath(clan_type))
+			for (var/found_clan in GLOB.vampire_clans)
+				if (GLOB.vampire_clans[found_clan].name != clan_type)
+					continue
+				clan_type = found_clan
 
-	var/clan_id
-	READ_FILE(S["clane"], clan_id)
-	if(clan_id)
-		var/newtype = GLOB.vampire_clans[clan_id]
-		if(newtype)
-			clan = new newtype
+		clan = GLOB.vampire_clans[clan_type]
 
 	var/auspice_id
 	READ_FILE(S["auspice"], auspice_id)
@@ -725,7 +729,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["enemy_text"]			, enemy_text)
 	WRITE_FILE(S["lover_text"]			, lover_text)
 	WRITE_FILE(S["reason_of_death"]			, reason_of_death)
-	WRITE_FILE(S["clane"]			, clan.name)
+	WRITE_FILE(S["clane"]			, clan.type)
 	WRITE_FILE(S["generation"]			, generation)
 	WRITE_FILE(S["generation_bonus"]			, generation_bonus)
 	WRITE_FILE(S["masquerade"]			, masquerade)

@@ -421,9 +421,8 @@
 								save_data_v = TRUE
 							else
 								save_data_v = FALSE
-						BLOODBONDED.roundstart_vampire = FALSE
 						BLOODBONDED.set_species(/datum/species/kindred)
-						BLOODBONDED.clan = null
+						BLOODBONDED.set_clan(null)
 						if(H.generation < 13)
 							BLOODBONDED.generation = 13
 							BLOODBONDED.skin_tone = get_vamp_skin_color(BLOODBONDED.skin_tone)
@@ -431,23 +430,21 @@
 							if (H.clan.whitelisted)
 								if (!SSwhitelists.is_whitelisted(BLOODBONDED.ckey, H.clan.name))
 									if(H.clan.name == "True Brujah")
-										BLOODBONDED.clan = new /datum/vampire_clan/brujah()
+										BLOODBONDED.set_clan(/datum/vampire_clan/brujah)
 										to_chat(BLOODBONDED,"<span class='warning'> You don't got that whitelist! Changing to the non WL Brujah</span>")
 									else if(H.clan.name == "Tzimisce")
-										BLOODBONDED.clan = new /datum/vampire_clan/old_clan_tzimisce()
+										BLOODBONDED.set_clan(/datum/vampire_clan/old_clan_tzimisce)
 										to_chat(BLOODBONDED,"<span class='warning'> You don't got that whitelist! Changing to the non WL Old Tzmisce</span>")
 									else
 										to_chat(BLOODBONDED,"<span class='warning'> You don't got that whitelist! Changing to a random non WL clan.</span>")
-										var/list/non_whitelisted_clans = list(/datum/vampire_clan/brujah,/datum/vampire_clan/malkavian,/datum/vampire_clan/nosferatu,/datum/vampire_clan/gangrel,/datum/vampire_clan/giovanni,/datum/vampire_clan/ministry,/datum/vampire_clan/salubri,/datum/vampire_clan/toreador,/datum/vampire_clan/tremere,/datum/vampire_clan/ventrue)
+										var/list/non_whitelisted_clans = list(/datum/vampire_clan/brujah, /datum/vampire_clan/malkavian, /datum/vampire_clan/nosferatu, /datum/vampire_clan/gangrel, /datum/vampire_clan/giovanni, /datum/vampire_clan/ministry, /datum/vampire_clan/salubri, /datum/vampire_clan/toreador, /datum/vampire_clan/tremere, /datum/vampire_clan/ventrue)
 										var/random_clan = pick(non_whitelisted_clans)
-										BLOODBONDED.clan = new random_clan
+										BLOODBONDED.set_clan(random_clan)
 								else
-									BLOODBONDED.clan = new H.clan.type()
+									BLOODBONDED.set_clan(H.clan)
 							else
-								BLOODBONDED.clan = new H.clan.type()
+								BLOODBONDED.set_clan(H.clan)
 
-							BLOODBONDED.clan.on_gain(BLOODBONDED)
-							BLOODBONDED.clan.post_gain(BLOODBONDED)
 							if(BLOODBONDED.clan.alt_sprite)
 								BLOODBONDED.skin_tone = "albino"
 								BLOODBONDED.update_body()
@@ -463,7 +460,7 @@
 						else
 							BLOODBONDED.maxbloodpool = 10+((13-min(13, BLOODBONDED.generation))*3)
 							BLOODBONDED.generation = 14
-							BLOODBONDED.clan = new /datum/vampire_clan/caitiff()
+							BLOODBONDED.set_clan(/datum/vampire_clan/caitiff)
 
 						//Verify if they accepted to save being a vampire
 						if (iskindred(BLOODBONDED) && save_data_v)
@@ -498,7 +495,7 @@
 
 							else
 								BLOODBONDED_prefs_v.generation = 13 // Game always set to 13 anyways, 14 is not possible.
-								BLOODBONDED_prefs_v.clan = new /datum/vampire_clan/caitiff()
+								BLOODBONDED_prefs_v.clan = GLOB.vampire_clans[/datum/vampire_clan/caitiff]
 								BLOODBONDED_prefs_v.save_character()
 
 					else
@@ -536,10 +533,6 @@
 						var/mob/living/carbon/human/npc/NPC = H.pulling
 						if(NPC.ghoulificate(owner))
 							new_master = TRUE
-//							if(NPC.hud_used)
-//								var/datum/hud/human/HU = NPC.hud_used
-//								HU.create_ghoulic()
-							NPC.roundstart_vampire = FALSE
 					if(BLOODBONDED.mind)
 						if(BLOODBONDED.mind.enslaved_to != owner)
 							BLOODBONDED.mind.enslave_mind_to_creator(owner)
@@ -554,12 +547,8 @@
 					else if(!iskindred(BLOODBONDED) && !isnpc(BLOODBONDED))
 						var/save_data_g = FALSE
 						BLOODBONDED.set_species(/datum/species/ghoul)
-						BLOODBONDED.clan = null
+						BLOODBONDED.set_clan(null)
 						var/response_g = input(BLOODBONDED, "Do you wish to keep being a ghoul on your save slot?(Yes will be a permanent choice and you can't go back)") in list("Yes", "No")
-//						if(BLOODBONDED.hud_used)
-//							var/datum/hud/human/HU = BLOODBONDED.hud_used
-//							HU.create_ghoulic()
-						BLOODBONDED.roundstart_vampire = FALSE
 						var/datum/species/ghoul/G = BLOODBONDED.dna.species
 						G.master = owner
 						G.last_vitae = world.time
@@ -590,7 +579,7 @@
  * If discipline_pref is true, it grabs all of the source's Disciplines from their preferences
  * and applies those using the give_discipline() proc. If false, it instead grabs a given list
  * of Discipline typepaths and initialises those for the character. Only works for ghouls and
- * vampires, and it also applies the Clan's post_gain() effects
+ * vampires.
  *
  * Arguments:
  * * discipline_pref - Whether Disciplines will be taken from preferences. True by default.
@@ -626,9 +615,6 @@
 
 		for (var/datum/discipline/discipline in adding_disciplines)
 			give_discipline(discipline)
-
-		if(clan)
-			clan.post_gain(src)
 
 	if((dna.species.id == "kuei-jin")) //only splats that have Disciplines qualify
 		var/list/datum/chi_discipline/adding_disciplines = list()
@@ -803,12 +789,12 @@
 				var/datum/vampire_clan/main_clan
 				switch(student.clan.type)
 					if (/datum/vampire_clan/true_brujah)
-						main_clan = new /datum/vampire_clan/brujah
+						main_clan = GLOB.vampire_clans[/datum/vampire_clan/brujah]
 					if (/datum/vampire_clan/old_clan_tzimisce)
-						main_clan = new /datum/vampire_clan/tzimisce
+						main_clan = GLOB.vampire_clans[/datum/vampire_clan/tzimisce]
 
 				student_prefs.clan = main_clan
-				student.clan = main_clan
+				student.set_clan(main_clan)
 
 			student_prefs.save_character()
 			teacher_prefs.save_character()

@@ -32,7 +32,7 @@
 	die_with_shapeshifted_form = FALSE
 	shapeshift_type = /mob/living/simple_animal/hostile/bloodcrawler
 
-/datum/vampire_clan/tzimisce/post_gain(mob/living/carbon/human/H)
+/datum/vampire_clan/tzimisce/on_join_round(mob/living/carbon/human/H)
 	. = ..()
 
 	var/obj/item/ground_heir/heirloom = new(get_turf(H))

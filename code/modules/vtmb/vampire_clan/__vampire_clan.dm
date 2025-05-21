@@ -44,7 +44,7 @@
 	/// If this Clan needs a whitelist to select and play
 	var/whitelisted
 
-/datum/vampire_clan/proc/on_gain(mob/living/carbon/human/vampire)
+/datum/vampire_clan/proc/on_gain(mob/living/carbon/human/vampire, joining_round)
 	SHOULD_CALL_PARENT(TRUE)
 
 	// Apply alternative sprites
@@ -65,14 +65,27 @@
 	for (var/trait in clan_traits)
 		ADD_TRAIT(vampire, trait, CLAN_TRAIT)
 
+	// Applies on_join_round effects when a client logs into this mob
+	if (joining_round)
+		RegisterSignal(vampire, COMSIG_MOB_LOGIN, PROC_REF(on_join_round), override = TRUE)
+
 	vampire.update_body_parts()
 	vampire.update_body()
 	vampire.update_icon()
 
-/datum/vampire_clan/proc/post_gain(mob/living/carbon/human/vampire)
+/datum/vampire_clan/proc/on_lose(mob/living/carbon/human/vampire)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if (HAS_TRAIT(vampire, TRAIT_MASQUERADE_VIOLATING_FACE) && vampire.roundstart_vampire)
+	// Remove unique Clan feature traits
+	for (var/trait in clan_traits)
+		REMOVE_TRAIT(vampire, trait, CLAN_TRAIT)
+
+/datum/vampire_clan/proc/on_join_round(mob/living/carbon/human/vampire)
+	SIGNAL_HANDLER
+
+	SHOULD_CALL_PARENT(TRUE)
+
+	if (HAS_TRAIT(vampire, TRAIT_MASQUERADE_VIOLATING_FACE))
 		if (length(GLOB.masquerade_latejoin))
 			var/obj/effect/landmark/latejoin_masquerade/LM = pick(GLOB.masquerade_latejoin)
 			if (LM)
@@ -80,3 +93,24 @@
 
 	if (clan_keys)
 		vampire.put_in_r_hand(new clan_keys(vampire))
+
+	UnregisterSignal(vampire, COMSIG_MOB_LOGIN)
+
+/mob/living/carbon/human/proc/set_clan(setting_clan, joining_round)
+	var/datum/vampire_clan/previous_clan = clan
+
+	// Convert typepaths to Clan singletons, or just directly assign if already singleton
+	var/datum/vampire_clan/new_clan = ispath(setting_clan) ? GLOB.vampire_clans[setting_clan] : setting_clan
+
+	// Handle losing Clan
+	if (previous_clan && (previous_clan != new_clan))
+		previous_clan.on_lose(src)
+
+	clan = new_clan
+
+	// Clan's been cleared, don't apply effects
+	if (!new_clan)
+		return
+
+	// Gaining Clan effects
+	clan.on_gain(src, joining_round)

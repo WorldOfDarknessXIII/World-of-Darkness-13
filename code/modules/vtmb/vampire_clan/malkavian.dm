@@ -11,7 +11,7 @@
 	female_clothes = /obj/item/clothing/under/vampire/malkavian/female
 	clan_keys = /obj/item/vamp/keys/malkav
 
-/datum/vampire_clan/malkavian/post_gain(mob/living/carbon/human/malky)
+/datum/vampire_clan/malkavian/on_gain(mob/living/carbon/human/malky)
 	. = ..()
 	var/datum/action/cooldown/malk_hivemind/hivemind = new()
 	var/datum/action/cooldown/malk_speech/malk_font = new()
