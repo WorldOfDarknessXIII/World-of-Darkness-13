@@ -3070,7 +3070,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	A.special_skill(character)
 
 	if(pref_species.name == "Vampire")
-		character.set_clan(clan, TRUE)
+		character.set_clan(clan, !character_setup)
 		character.maxbloodpool = 10 + ((13 - generation) * 3)
 		character.bloodpool = rand(2, character.maxbloodpool)
 		character.generation = generation
@@ -3186,9 +3186,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			character.set_body_model(NORMAL_BODY_MODEL)
 		if (FAT_BODY_MODEL_NUMBER)
 			character.set_body_model(FAT_BODY_MODEL)
-
-	if(character.clan)
-		character.clan.on_gain(character)
 
 	if(pref_species.name == "Werewolf")
 		var/datum/auspice/CLN = new auspice.type()

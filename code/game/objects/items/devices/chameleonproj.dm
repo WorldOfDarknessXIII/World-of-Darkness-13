@@ -8,10 +8,6 @@
 					if(iscathayan(hum))
 						if(hum.mind?.dharma?.Po == "Legalist")
 							hum.mind.dharma.roll_po(src, hum)
-		if(prob(25))
-			if (clan?.name == "Malkavian")
-				for (var/mob/living/carbon/human/H in GLOB.malkavian_list)
-					to_chat(H, "<span class='ghostalert'>[sanitize_text(message)]</span>")
 
 /obj/item/chameleon
 	name = "Appearance Projector"

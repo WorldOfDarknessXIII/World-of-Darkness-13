@@ -66,7 +66,6 @@ GLOBAL_LIST_EMPTY(respawn_timers)
 
 GLOBAL_LIST_EMPTY(police_radios)
 GLOBAL_LIST_EMPTY(cleanable_list)
-GLOBAL_LIST_EMPTY(malkavian_list)
 GLOBAL_LIST_EMPTY(stock_licenses)
 GLOBAL_LIST_EMPTY(npc_activities)
 GLOBAL_LIST_EMPTY(sabbatites)

@@ -103,8 +103,13 @@
 	var/datum/vampire_clan/new_clan = ispath(setting_clan) ? GLOB.vampire_clans[setting_clan] : setting_clan
 
 	// Handle losing Clan
-	if (previous_clan && (previous_clan != new_clan))
-		previous_clan.on_lose(src)
+	if (previous_clan)
+		// Cancel if not actually changing Clan
+		if (previous_clan == new_clan)
+			return
+		// Apply on_lose effects
+		else
+			previous_clan.on_lose(src)
 
 	clan = new_clan
 
