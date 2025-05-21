@@ -399,15 +399,13 @@ Dancer
 	gain_text = "<span class='notice'>You feel short.</span>"
 	lose_text = "<span class='notice'>You don't feel short anymore.</span>"
 
-/datum/quirk/dwarf/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
-	if(H.age < 16)
-		to_chat(H, "<span class='userdanger'>You can't be a dwarf kid, looser!</span>")
-		return
+/datum/quirk/dwarf/add()
 	if(iswerewolf(quirk_holder))
 		return
-	H.AddElement(/datum/element/dwarfism, COMSIG_PARENT_PREQDELETED, src)
-	H.isdwarfy = TRUE
+	quirk_holder.AddElement(/datum/element/dwarfism, COMSIG_PARENT_PREQDELETED, src)
+
+/datum/quirk/dwarf/remove()
+	quirk_holder.RemoveElement(/datum/element/dwarfism)
 
 #define SHORT 4/5
 #define TALL 5/4
@@ -697,15 +695,13 @@ Dancer
 	gain_text = "<span class='notice'>You feel tall.</span>"
 	lose_text = "<span class='notice'>You don't feel tall anymore.</span>"
 
-/datum/quirk/tower/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
-	if(H.age < 16)
-		to_chat(H, "<span class='userdanger'>You can't be a tall kid, looser!</span>")
-		return
+/datum/quirk/tower/add()
 	if(iswerewolf(quirk_holder))
 		return
-	H.AddElement(/datum/element/giantism, COMSIG_PARENT_PREQDELETED, src)
-	H.istower = TRUE
+	quirk_holder.AddElement(/datum/element/giantism, COMSIG_PARENT_PREQDELETED, src)
+
+/datum/quirk/tower/remove()
+	quirk_holder.RemoveElement(/datum/element/giantism)
 
 #define TALL 1.16
 #define SHORT 0.86206896551

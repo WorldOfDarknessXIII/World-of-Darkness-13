@@ -538,11 +538,6 @@
 			var/mob/living/carbon/human/H = new_character
 			if(H.client)
 				H.true_real_name = H.client.prefs.real_name
-				if(H.age < 16)
-					H.add_quirk(/datum/quirk/freerunning)
-					H.add_quirk(/datum/quirk/light_step)
-					H.add_quirk(/datum/quirk/skittish)
-					H.add_quirk(/datum/quirk/pushover)
 				H.create_disciplines()
 				if(isgarou(H))
 					for(var/obj/structure/werewolf_totem/S in GLOB.totems)
@@ -555,7 +550,6 @@
 						H.mind.dharma.Po = H.client.prefs.po_type
 						H.mind.dharma.Hun = H.client.prefs.hun
 						H.mind.dharma.on_gain(H)
-//						H.mind.dharma.initial_skin_color = H.skin_tone
 				GLOB.fucking_joined |= H.client.prefs.real_name
 				var/datum/relationship/R = new ()
 				H.Myself = R

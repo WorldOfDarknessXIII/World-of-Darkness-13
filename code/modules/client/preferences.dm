@@ -3162,11 +3162,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.skin_tone = skin_tone
 
 	character.hairstyle = hairstyle
-	if(character.age < 16)
-		facial_hairstyle = "Shaved"
-		character.facial_hairstyle = facial_hairstyle
-	else
-		character.facial_hairstyle = facial_hairstyle
+	character.facial_hairstyle = facial_hairstyle
 	character.underwear = underwear
 	character.underwear_color = underwear_color
 	character.undershirt = undershirt
@@ -3257,11 +3253,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_hair()
 		character.update_body_parts()
 	if(!character_setup)
-		if(character.age < 16)
-			if(!character.ischildren)
-				character.ischildren = TRUE
-				character.AddElement(/datum/element/children, COMSIG_PARENT_PREQDELETED, src)
-
 		parent << browse(null, "window=preferences_window")
 		parent << browse(null, "window=preferences_browser")
 

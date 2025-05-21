@@ -264,10 +264,6 @@
 
 	var/obj/overlay/gnosis
 
-	var/isdwarfy = FALSE
-	var/ischildren = FALSE
-	var/istower = FALSE
-
 	var/total_contracted = 0
 
 	///Whether the mob currently has the JUMP button selected

@@ -1402,8 +1402,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
 				user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
 		var/damage = (rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)/3)*(user.get_total_physique())
-		if(user.age < 16)
-			damage = round(damage/2)
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 
@@ -1525,8 +1523,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		if(USR.dna)
 			if(USR.dna.species)
 				modifikator = USR.dna.species.meleemod
-		if(USR.age < 16)
-			modifikator = modifikator/2
 		if(ishuman(user))
 			modifikator = (modifikator/3)*(user.get_total_physique())
 	if(user != H)
