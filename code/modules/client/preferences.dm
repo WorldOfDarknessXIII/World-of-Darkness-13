@@ -3070,7 +3070,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	A.special_skill(character)
 
 	if(pref_species.name == "Vampire")
-		character.set_clan(clan, !character_setup)
+		character.set_clan(clan, character_setup)
 		character.maxbloodpool = 10 + ((13 - generation) * 3)
 		character.bloodpool = rand(2, character.maxbloodpool)
 		character.generation = generation

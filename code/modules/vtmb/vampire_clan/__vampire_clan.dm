@@ -44,6 +44,20 @@
 	/// If this Clan needs a whitelist to select and play
 	var/whitelisted
 
+/**
+ * Applies Clan-specific effects to the mob
+ * gaining this Clan. Will alter the mob's
+ * sprite according to the alternate sprite
+ * and appearance variables, and apply the
+ * Clan's traits to the mob. If the Clan is
+ * being given as the mob joins the round,
+ * it'll cause on_join_round to trigger when the
+ * client logs into the mob.
+ *
+ * Arguments:
+ * * vampire - Human being given the Clan
+ * * joining_round - If this Clan is being applied as the mob joins the round
+ */
 /datum/vampire_clan/proc/on_gain(mob/living/carbon/human/vampire, joining_round)
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -73,6 +87,15 @@
 	vampire.update_body()
 	vampire.update_icon()
 
+/**
+ * Undoes the effects of on_gain to more or less
+ * remove the effects of gaining the Clan. By default,
+ * this proc only removes unique traits and resets
+ * the mob's alternative sprite.
+ *
+ * Arguments:
+ * * vampire - Human losing the Clan.
+ */
 /datum/vampire_clan/proc/on_lose(mob/living/carbon/human/vampire)
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -80,6 +103,19 @@
 	for (var/trait in clan_traits)
 		REMOVE_TRAIT(vampire, trait, CLAN_TRAIT)
 
+/**
+ * Applies Clan-specific effects when the
+ * mob that has the Clan logs into their mob
+ * at roundstart. Anything that's not innate
+ * to the Clan and more part of its social
+ * structure or whatnot should go in here.
+ * Will teleport Masquerade-breaching Clans to
+ * safe areas and give them their Clan keys by
+ * default.
+ *
+ * Arguments:
+ * * vampire - Human with this Clan joining the round.
+ */
 /datum/vampire_clan/proc/on_join_round(mob/living/carbon/human/vampire)
 	SIGNAL_HANDLER
 
@@ -96,6 +132,18 @@
 
 	UnregisterSignal(vampire, COMSIG_MOB_LOGIN)
 
+/**
+ * Gives the human a vampiric Clan, applying
+ * on_gain effects and post_gain effects if the
+ * parameter is true. Can also remove Clans
+ * with or without a replacement, and apply
+ * on_lose effects. Will have no effect the human
+ * is being given the Clan it already has.
+ *
+ * Arguments:
+ * * setting_clan - Typepath or Clan singleton to give to the human
+ * * joining_round - If this Clan is being given at roundstart and should call on_join_round
+ */
 /mob/living/carbon/human/proc/set_clan(setting_clan, joining_round)
 	var/datum/vampire_clan/previous_clan = clan
 

@@ -117,19 +117,18 @@
 					SEND_SOUND(BD, sound('code/modules/wod13/sounds/need_blood.ogg', 0, 0, 75))
 					to_chat(BD, "<span class='warning'>There is no <b>BLOOD</b> in this creature.</span>")
 					return
-				if(BD.clan)
-					var/special_clan = FALSE
-					if (HAS_TRAIT(BD, TRAIT_CONSENSUAL_FEEDING_ONLY))
-						if(!PB.IsSleeping() && PB.stat != DEAD)
-							to_chat(BD, "<span class='warning'>You can't drink from aware targets!</span>")
-							return
-						special_clan = TRUE
-						PB.emote("moan")
-					if(HAS_TRAIT(BD, TRAIT_PAINFUL_VAMPIRE_KISS))
-						PB.emote("scream")
-						special_clan = TRUE
-					if(!special_clan)
-						PB.emote("groan")
+				var/special_clan = FALSE
+				if (HAS_TRAIT(BD, TRAIT_CONSENSUAL_FEEDING_ONLY))
+					if(!PB.IsSleeping() && PB.stat != DEAD)
+						to_chat(BD, "<span class='warning'>You can't drink from aware targets!</span>")
+						return
+					special_clan = TRUE
+					PB.emote("moan")
+				if(HAS_TRAIT(BD, TRAIT_PAINFUL_VAMPIRE_KISS))
+					PB.emote("scream")
+					special_clan = TRUE
+				if(!special_clan)
+					PB.emote("groan")
 				PB.add_bite_animation()
 			if(isliving(BD.pulling))
 				if(!iskindred(BD) && !iscathayan(BD))
