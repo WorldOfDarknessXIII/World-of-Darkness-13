@@ -138,6 +138,7 @@
 
 	var/list/beastmaster = list()
 
+	var/datum/relationship/Myself
 	var/datum/relationship/MyRelationships
 
 	var/inspired = FALSE

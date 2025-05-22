@@ -3,8 +3,8 @@
 
 /datum/outfit/job/post_equip(mob/living/carbon/human/H)
 	. = ..()
-	if(H.clane)
-		if(H.clane.name == "Ventrue")
+	if(H.clan)
+		if(H.clan.name == "Ventrue")
 			var/obj/item/stack/dollar/hundred/HUN = new(H.loc)
 			for(var/obj/item/storage/backpack/B in H)
 				if(B)
@@ -90,11 +90,9 @@
 				if(H.mind)
 					if(H.mind.holy_role == HOLY_ROLE_PRIEST)
 						return
-		if(iskindred(H))
-			if(H.clane)
-				if(H.clane.name == "Baali")
-					H.emote("scream")
-					H.pointed(user)
+		if (HAS_TRAIT(H, TRAIT_REPELLED_BY_HOLINESS))
+			H.emote("scream")
+			H.pointed(user)
 	M.show_message("<span class='warning'><b>GOD SEES YOU!</b></span>", MSG_AUDIBLE)
 	var/distance = max(0,get_dist(get_turf(src),T))
 
@@ -109,14 +107,13 @@
 		return
 	if(iskindred(target))
 		var/mob/living/carbon/human/H = target
-		if(H.clane)
-			if(H.clane.name == "Baali")
-				last_detonated = world.time
-				var/turf/lightning_source = get_step(get_step(H, NORTH), NORTH)
-				lightning_source.Beam(H, icon_state="lightning[rand(1,12)]", time = 5)
-				H.adjustFireLoss(100)
-				H.electrocution_animation(50)
-				to_chat(H, "<span class='userdanger'>The God has punished you for your sins!</span>", confidential = TRUE)
+		if (HAS_TRAIT(H, TRAIT_REPELLED_BY_HOLINESS))
+			last_detonated = world.time
+			var/turf/lightning_source = get_step(get_step(H, NORTH), NORTH)
+			lightning_source.Beam(H, icon_state="lightning[rand(1,12)]", time = 5)
+			H.adjustFireLoss(100)
+			H.electrocution_animation(50)
+			to_chat(H, "<span class='userdanger'>The God has punished you for your sins!</span>", confidential = TRUE)
 
 /obj/item/card/id/prince
 	name = "leader badge"

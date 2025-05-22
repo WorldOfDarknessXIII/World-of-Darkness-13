@@ -185,10 +185,10 @@
 
 /datum/reagent/drug/krokodil/addiction_act_stage4(mob/living/carbon/human/M)
 	CHECK_DNA_AND_SPECIES(M)
-	if(M.dna.species.limbs_id != "nosferatu")
+	if (GET_BODY_SPRITE(M) != "nosferatu")
 		to_chat(M, "<span class='userdanger'>Your skin falls off easily!</span>")
 		M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
-		M.dna.species.limbs_id = "nosferatu"
+		M.set_body_sprite("nosferatu")
 		M.facial_hairstyle = "Shaved"
 		M.hairstyle = "Bald"
 		M.update_hair()

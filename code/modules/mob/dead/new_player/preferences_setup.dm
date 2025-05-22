@@ -24,14 +24,12 @@
 	if(randomise[RANDOM_JUMPSUIT_STYLE])
 		jumpsuit_style = pick(GLOB.jumpsuitlist)
 	if(randomise[RANDOM_HAIRSTYLE])
-		if(clane.no_hair)
+		if(clan?.no_hair)
 			hairstyle = "Bald"
-		else if(clane.haircuts)
-			hairstyle = pick(clane.haircuts)
 		else
 			hairstyle = random_hairstyle(gender)
 	if(randomise[RANDOM_FACIAL_HAIRSTYLE])
-		if(clane.no_facial)
+		if(clan?.no_facial)
 			facial_hairstyle = "Shaved"
 		else
 			facial_hairstyle = random_facial_hairstyle(gender)
@@ -65,12 +63,11 @@
 		discipline_types = list()
 		discipline_levels = list()
 	if(pref_species.id == "kindred")
-		qdel(clane)
-		clane = new /datum/vampireclane/brujah()
+		clan = GLOB.vampire_clans[/datum/vampire_clan/brujah]
 		discipline_types = list()
 		discipline_levels = list()
-		for (var/i in 1 to clane.clane_disciplines.len)
-			discipline_types += clane.clane_disciplines[i]
+		for (var/i in 1 to clan.clan_disciplines.len)
+			discipline_types += clan.clan_disciplines[i]
 			discipline_levels += 1
 
 ///Setup a hardcore random character and calculate their hardcore random score
@@ -156,14 +153,6 @@
 	MAMA.pixel_x = -16
 	mannequin.add_overlay(MAMA)
 	copy_to(mannequin, 1, TRUE, TRUE)
-	if(clane.alt_sprite)
-		mannequin.dna.species.limbs_id = clane.alt_sprite
-//	else
-//		mannequin.dna.species.limbs_id = initial(pref_species.limbs_id)
-	if(clane.no_hair)
-		mannequin.facial_hairstyle = "Shaved"
-		mannequin.hairstyle = "Bald"
-		mannequin.update_hair()
 	mannequin.update_body()
 	mannequin.update_body_parts()
 	mannequin.update_icon()

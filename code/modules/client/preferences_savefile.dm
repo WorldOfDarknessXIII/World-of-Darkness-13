@@ -1,11 +1,11 @@
 //This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
-#define SAVEFILE_VERSION_MIN	32
+#define SAVEFILE_VERSION_MIN	38
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	38
+#define SAVEFILE_VERSION_MAX	39
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -42,53 +42,23 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 //if your savefile is 3 months out of date, then 'tough shit'.
 
 /datum/preferences/proc/update_preferences(current_version, savefile/S)
-	if(current_version < 33)
-		toggles |= SOUND_ENDOFROUND
-
-	if(current_version < 34)
-		auto_fit_viewport = TRUE
-
-	if(current_version < 35) //makes old keybinds compatible with #52040, sets the new default
-		var/newkey = FALSE
-		for(var/list/key in key_bindings)
-			for(var/bind in key)
-				if(bind == "quick_equipbelt")
-					key -= "quick_equipbelt"
-					key |= "quick_equip_belt"
-
-				if(bind == "bag_equip")
-					key -= "bag_equip"
-					key |= "quick_equip_bag"
-
-				if(bind == "quick_equip_suit_storage")
-					newkey = TRUE
-		if(!newkey && !key_bindings["ShiftQ"])
-			key_bindings["ShiftQ"] = list("quick_equip_suit_storage")
-
-	if(current_version < 36)
-		if(key_bindings["ShiftQ"] == "quick_equip_suit_storage")
-			key_bindings["ShiftQ"] = list("quick_equip_suit_storage")
-
-	if(current_version < 37)
-		if(clientfps == 0)
-			clientfps = -1
-
-	if (current_version < 38)
-		var/found_block_movement = FALSE
-
-		for (var/list/key in key_bindings)
-			for (var/bind in key)
-				if (bind == "block_movement")
-					found_block_movement = TRUE
-					break
-			if (found_block_movement)
-				break
-
-		if (!found_block_movement)
-			LAZYADD(key_bindings["Ctrl"], "block_movement")
+	return
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
-	return
+	if (current_version < 39)
+		// Translate from misspelled clane name save to new clan typepath save
+		var/clan_name
+		READ_FILE(S["clane"], clan_name)
+		if (clan_name)
+			for (var/found_clan in GLOB.vampire_clans)
+				if (GLOB.vampire_clans[found_clan].name != clan_name)
+					continue
+				clan_name = found_clan
+
+			clan = GLOB.vampire_clans[clan_name]
+
+		// Translate from misspelled clane_accessory to new clan_accessory
+		READ_FILE(S["clane_accessory"], clan_accessory)
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
@@ -356,13 +326,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(newtype)
 			pref_species = new newtype
 
-
-	var/clane_id
-	READ_FILE(S["clane"], clane_id)
-	if(clane_id)
-		var/newtype = GLOB.clanes_list[clane_id]
-		if(newtype)
-			clane = new newtype
+	var/clan_type
+	READ_FILE(S["clan"], clan_type)
+	if (clan_type)
+		clan = GLOB.vampire_clans[clan_type]
 
 	var/auspice_id
 	READ_FILE(S["auspice"], auspice_id)
@@ -440,7 +407,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["backpack"], backpack)
 	READ_FILE(S["jumpsuit_style"], jumpsuit_style)
 	READ_FILE(S["uplink_loc"], uplink_spawn_loc)
-	READ_FILE(S["clane_accessory"], clane_accessory)
+	READ_FILE(S["clan_accessory"], clan_accessory)
 	READ_FILE(S["playtime_reward_cloak"], playtime_reward_cloak)
 	READ_FILE(S["phobia"], phobia)
 	READ_FILE(S["randomise"],  randomise)
@@ -499,12 +466,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	werewolf_name = reject_bad_name(werewolf_name)
 	gender = sanitize_gender(gender)
 	body_type = sanitize_gender(body_type, FALSE, FALSE, gender)
-	body_model = sanitize_integer(body_model, 1, 3, initial(body_model))
+	body_model = sanitize_integer(body_model, SLIM_BODY_MODEL_NUMBER, FAT_BODY_MODEL_NUMBER, initial(body_model))
 	if(!real_name)
 		real_name = random_unique_name(gender)
-//	if(!clane)
-//		var/newtype = GLOB.clanes_list["Brujah"]
-//		clane = new newtype()
 
 	//Prevent Wighting upon joining a round
 	if(humanity <= 0)
@@ -612,7 +576,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	backpack			= sanitize_inlist(backpack, GLOB.backpacklist, initial(backpack))
 	jumpsuit_style	= sanitize_inlist(jumpsuit_style, GLOB.jumpsuitlist, initial(jumpsuit_style))
 	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
-	clane_accessory = sanitize_inlist(clane_accessory, clane.accessories, null)
+	clan_accessory = sanitize_inlist(clan_accessory, clan.accessories, null)
 	playtime_reward_cloak = sanitize_integer(playtime_reward_cloak)
 	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, 0)
 	features["ethcolor"]	= copytext_char(features["ethcolor"], 1, 7)
@@ -728,7 +692,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["enemy_text"]			, enemy_text)
 	WRITE_FILE(S["lover_text"]			, lover_text)
 	WRITE_FILE(S["reason_of_death"]			, reason_of_death)
-	WRITE_FILE(S["clane"]			, clane.name)
+	WRITE_FILE(S["clan"]			, clan.type)
 	WRITE_FILE(S["generation"]			, generation)
 	WRITE_FILE(S["generation_bonus"]			, generation_bonus)
 	WRITE_FILE(S["masquerade"]			, masquerade)
@@ -753,7 +717,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["backpack"]			, backpack)
 	WRITE_FILE(S["jumpsuit_style"]			, jumpsuit_style)
 	WRITE_FILE(S["uplink_loc"]			, uplink_spawn_loc)
-	WRITE_FILE(S["clane_accessory"]			, clane_accessory)
+	WRITE_FILE(S["clan_accessory"]			, clan_accessory)
 	WRITE_FILE(S["playtime_reward_cloak"]			, playtime_reward_cloak)
 	WRITE_FILE(S["randomise"]		, randomise)
 	WRITE_FILE(S["species"]			, pref_species.id)

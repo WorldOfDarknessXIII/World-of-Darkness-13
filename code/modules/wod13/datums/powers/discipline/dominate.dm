@@ -53,10 +53,8 @@
 	var/mypower = owner.get_total_social()
 	var/theirpower = target.get_total_mentality()
 
-	if(ishuman(target))
-		var/mob/living/carbon/human/human_target = target
-		if(human_target.clane?.name == "Gargoyle")
-			return TRUE
+	if (HAS_TRAIT(target, TRAIT_CANNOT_RESIST_MIND_CONTROL))
+		return TRUE
 
 	if((theirpower >= mypower) || (owner.generation > target.generation))
 		to_chat(owner, span_warning("[target]'s mind is too powerful to dominate!"))
@@ -92,10 +90,8 @@
 	var/mypower = owner.get_total_social()
 	var/theirpower = target.get_total_mentality()
 
-	if(ishuman(target))
-		var/mob/living/carbon/human/human_target = target
-		if(human_target.clane?.name == "Gargoyle")
-			return TRUE
+	if (HAS_TRAIT(target, TRAIT_CANNOT_RESIST_MIND_CONTROL))
+		return TRUE
 
 	if((theirpower >= mypower) || (owner.generation > target.generation))
 		to_chat(owner, span_warning("[target]'s mind is too powerful to dominate!"))
@@ -133,10 +129,8 @@
 	var/mypower = owner.get_total_social()
 	var/theirpower = target.get_total_mentality()
 
-	if(ishuman(target))
-		var/mob/living/carbon/human/human_target = target
-		if(human_target.clane?.name == "Gargoyle")
-			return TRUE
+	if (HAS_TRAIT(target, TRAIT_CANNOT_RESIST_MIND_CONTROL))
+		return TRUE
 
 	if((theirpower >= mypower) || (owner.generation > target.generation))
 		to_chat(owner, span_warning("[target]'s mind is too powerful to dominate!"))
@@ -173,10 +167,8 @@
 	var/mypower = owner.get_total_social()
 	var/theirpower = target.get_total_mentality()
 
-	if(ishuman(target))
-		var/mob/living/carbon/human/human_target = target
-		if(human_target.clane?.name == "Gargoyle")
-			return TRUE
+	if (HAS_TRAIT(target, TRAIT_CANNOT_RESIST_MIND_CONTROL))
+		return TRUE
 
 	if((theirpower >= mypower) || (owner.generation > target.generation))
 		to_chat(owner, span_warning("[target]'s mind is too powerful to dominate!"))
@@ -212,10 +204,8 @@
 	var/mypower = owner.get_total_social()
 	var/theirpower = target.get_total_mentality()
 
-	if(ishuman(target))
-		var/mob/living/carbon/human/human_target = target
-		if(human_target.clane?.name == "Gargoyle")
-			return TRUE
+	if (HAS_TRAIT(target, TRAIT_CANNOT_RESIST_MIND_CONTROL))
+		return TRUE
 
 	if((theirpower >= mypower) || (owner.generation > target.generation))
 		to_chat(owner, span_warning("[target]'s mind is too powerful to dominate!"))

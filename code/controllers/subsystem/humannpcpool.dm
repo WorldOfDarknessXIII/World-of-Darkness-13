@@ -43,6 +43,9 @@ SUBSYSTEM_DEF(humannpcpool)
 		NPC.handle_automated_movement()
 
 /datum/controller/subsystem/humannpcpool/proc/npclost()
+	if (!length(GLOB.npc_spawn_points))
+		return
+
 	while(length(GLOB.alive_npc_list) < npc_max)
 		var/atom/kal = pick(GLOB.npc_spawn_points)
 		var/NEPIS = pick(/mob/living/carbon/human/npc/police, /mob/living/carbon/human/npc/bandit, /mob/living/carbon/human/npc/hobo, /mob/living/carbon/human/npc/walkby, /mob/living/carbon/human/npc/business)

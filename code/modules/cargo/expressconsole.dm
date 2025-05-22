@@ -114,11 +114,8 @@
 		))
 
 /obj/machinery/computer/cargo/express/ui_interact(mob/living/user, datum/tgui/ui)
-	if(iskindred(user))
-		var/mob/living/carbon/human/H = user
-		if(H.clane)
-			if(H.clane.name == "Lasombra")
-				return
+	if (HAS_TRAIT(user, TRAIT_REJECTED_BY_TECHNOLOGY))
+		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "CargoExpress", name)

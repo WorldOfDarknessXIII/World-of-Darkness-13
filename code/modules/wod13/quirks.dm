@@ -45,17 +45,6 @@ Dancer
 	gain_text = "<span class='notice'>You feel more experienced about cars.</span>"
 	lose_text = "<span class='warning'>You feel more clueless about cars.</span>"
 
-//[Lucia] - commented out due to being made defunct by the lockpicking update
-/*
-/datum/quirk/bone_key
-	name = "Bone Key"
-	desc = "You know much more about door locks, and always have a tool for them."
-	mob_trait = TRAIT_BONE_KEY
-	value = 3
-	gain_text = "<span class='notice'>You feel more experienced in lockery.</span>"
-	lose_text = "<span class='warning'>You feel more clueless in lockery.</span>"
-*/
-
 /datum/quirk/annonymus
 	name = "Anonymous"
 	desc = "You always bring a mask."
@@ -171,163 +160,6 @@ Dancer
 	lose_text = "<span class='notice'>You don't feel extra <b>HUNGRY</b> anymore.</span>"
 	allowed_species = list("Vampire", "Ghoul")
 
-//Removed after changes to death consequences.
-/*
-/datum/quirk/phoenix
-	name = "Phoenix"
-	desc = "You don't loose gained experience after the Final Death."
-	mob_trait = TRAIT_PHOENIX
-	value = 5
-	gain_text = "<span class='notice'>You feel like you can burn without permanent consequences.</span>"
-	lose_text = "<span class='warning'>You don't feel like you can burn without consequences anymore.</span>"
-	allowed_species = list("Vampire")
-*/
-
-/*
-/datum/quirk/acrobatic
-	name = "Acrobatic"
-	desc = "You know a couple of acrobatic moves."
-	value = 3
-	mob_trait = TRAIT_ACROBATIC
-	gain_text = "<span class='notice'>You feel like you can jump higher.</span>"
-	lose_text = "<span class='warning'>Now you aren't as agile as you were.</span>"
-
-/datum/quirk/acrobatic/on_spawn()
-	var/mob/living/carbon/H = quirk_holder
-	var/datum/action/acrobate/DA = new()
-	DA.Grant(H)
-
-/datum/action/acrobate
-	name = "Dodge"
-	desc = "Jump over something and dodge a projectile."
-	button_icon_state = "acrobate"
-	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	var/last_acrobate = 0
-
-/datum/action/acrobate/Trigger()
-	var/mob/living/carbon/H = owner
-	if(last_acrobate+15 > world.time)
-		return
-	last_acrobate = world.time
-
-	if(H.stat >= SOFT_CRIT || H.IsSleeping() || H.IsUnconscious() || H.IsParalyzed() || H.IsKnockdown() || H.IsStun() || HAS_TRAIT(H, TRAIT_RESTRAINED) || !isturf(H.loc))
-		return
-
-	if(!isturf(owner.loc))
-		return
-
-	if(owner.pulledby)
-		return
-
-	if(istype(get_step(owner, owner.dir), /turf/open/floor/plating/umbra))
-		return
-
-	if(istype(get_step(get_step(owner, owner.dir), owner.dir), /turf/open/floor/plating/umbra))
-		return
-
-	if(isclosedturf(get_step(owner, owner.dir)))
-		return
-
-	if(isclosedturf(get_step(get_step(owner, owner.dir), owner.dir)))
-		return
-
-	if(isclosedturf(get_step(get_step(get_step(owner, owner.dir), owner.dir), owner.dir)))
-		for(var/atom/movable/A in get_step(owner, owner.dir))
-			if(istype(A, /obj/structure/vampdoor))
-				return
-			if(istype(A, /obj/matrix))
-				return
-			if(istype(A, /obj/structure/window))
-				return
-			if(istype(A, /turf/open/floor/plating/vampocean))
-				return
-			if(istype(A, /obj/elevator_door))
-				return
-			if(istype(A, /obj/machinery/door/poddoor/shutters))
-				return
-
-		for(var/atom/movable/A in get_step(get_step(owner, owner.dir), owner.dir))
-			if(istype(A, /obj/structure/vampdoor))
-				return
-			if(istype(A, /obj/matrix))
-				return
-			if(istype(A, /obj/structure/window))
-				return
-			if(istype(A, /turf/open/floor/plating/vampocean))
-				return
-			if(istype(A, /obj/elevator_door))
-				return
-			if(istype(A, /obj/machinery/door/poddoor/shutters))
-				return
-
-		var/turf/open/LO = get_step(get_step(owner, owner.dir), owner.dir)
-		if(H.dancing)
-			return
-		H.Immobilize(2, TRUE)
-		animate(H, pixel_z = 32, time = 2)
-		spawn(2)
-			H.forceMove(LO)
-			animate(H, pixel_z = 0, time = 2)
-			spawn(2)
-				if(H.potential > 0)
-					H.epic_fall()
-	else if(isopenturf(get_step(get_step(get_step(owner, owner.dir), owner.dir), owner.dir)))
-		for(var/atom/movable/A in get_step(owner, owner.dir))
-			if(istype(A, /obj/structure/vampdoor))
-				return
-			if(istype(A, /obj/matrix))
-				return
-			if(istype(A, /obj/structure/window))
-				return
-			if(istype(A, /turf/open/floor/plating/vampocean))
-				return
-			if(istype(A, /obj/elevator_door))
-				return
-			if(istype(A, /obj/machinery/door/poddoor/shutters))
-				return
-
-		for(var/atom/movable/A in get_step(get_step(owner, owner.dir), owner.dir))
-			if(istype(A, /obj/structure/vampdoor))
-				return
-			if(istype(A, /obj/matrix))
-				return
-			if(istype(A, /obj/structure/window))
-				return
-			if(istype(A, /turf/open/floor/plating/vampocean))
-				return
-			if(istype(A, /obj/elevator_door))
-				return
-			if(istype(A, /obj/machinery/door/poddoor/shutters))
-				return
-
-		for(var/atom/movable/A in get_step(get_step(get_step(owner, owner.dir), owner.dir), owner.dir))
-			if(istype(A, /obj/structure/vampdoor))
-				return
-			if(istype(A, /obj/matrix))
-				return
-			if(istype(A, /obj/structure/window))
-				return
-			if(istype(A, /turf/open/floor/plating/vampocean))
-				return
-			if(istype(A, /obj/elevator_door))
-				return
-			if(istype(A, /obj/machinery/door/poddoor/shutters))
-				return
-
-		var/turf/open/LO = get_step(get_step(get_step(owner, owner.dir), owner.dir), owner.dir)
-		if(H.dancing)
-			return
-		H.Immobilize(2, TRUE)
-		animate(H, pixel_z = 32, time = 2)
-		spawn(2)
-			H.forceMove(LO)
-			animate(H, pixel_z = 0, time = 2)
-			spawn(2)
-				if(H.potential > 0)
-					H.epic_fall()
-				else if(iscrinos(H))
-					H.epic_fall()
-*/
 /datum/action/fly_upper
 	name = "Fly Up"
 	desc = "Fly to the upper level."
@@ -337,23 +169,11 @@ Dancer
 
 /datum/action/fly_upper/Trigger()
 	owner.up()
-/*	if(last_acrobate+15 > world.time)
-		return
-	var/turf/target_turf = get_step_multiz(owner, UP)
-	if(get_step_multiz(owner, UP))
-		if(istype(get_step_multiz(owner, UP), /turf/open/openspace))
-			var/mob/living/carbon/H = owner
-			H.Immobilize(20)
-			animate(owner, pixel_y = 32, time = 20)
-			spawn(20)
-				owner.forceMove(target_turf)
-				animate(owner, pixel_y = 0, time = 0)
-*/
+
 /datum/quirk/dancer
 	name = "Dancer"
 	desc = "You know a couple of dance moves."
 	value = 2
-	mob_trait = TRAIT_DANCER
 	gain_text = "<span class='notice'>You want to dance.</span>"
 	lose_text = "<span class='warning'>You don't want to dance anymore.</span>"
 
@@ -399,15 +219,15 @@ Dancer
 	gain_text = "<span class='notice'>You feel short.</span>"
 	lose_text = "<span class='notice'>You don't feel short anymore.</span>"
 
-/datum/quirk/dwarf/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
-	if(H.age < 16)
-		to_chat(H, "<span class='userdanger'>You can't be a dwarf kid, looser!</span>")
-		return
+/datum/quirk/dwarf/add()
 	if(iswerewolf(quirk_holder))
 		return
-	H.AddElement(/datum/element/dwarfism, COMSIG_PARENT_PREQDELETED, src)
-	H.isdwarfy = TRUE
+	quirk_holder.AddElement(/datum/element/dwarfism, COMSIG_PARENT_PREQDELETED, src)
+
+/datum/quirk/dwarf/remove()
+	if (!quirk_holder)
+		return
+	quirk_holder.RemoveElement(/datum/element/dwarfism)
 
 #define SHORT 4/5
 #define TALL 5/4
@@ -455,37 +275,6 @@ Dancer
 
 #undef SHORT
 #undef TALL
-
-
-/datum/element/children
-	element_flags = ELEMENT_DETACH|ELEMENT_BESPOKE
-	id_arg_index = 2
-	var/comsig
-	var/list/attached_targets = list()
-
-/datum/element/children/Attach(datum/target, comsig, comsig_target)
-	. = ..()
-	if(!ishuman(target))
-		return ELEMENT_INCOMPATIBLE
-
-	src.comsig = comsig
-
-	var/mob/living/carbon/human/L = target
-	L.transform = L.transform.Scale(81/100, 81/100)
-	attached_targets[target] = comsig_target
-	RegisterSignal(target, comsig, PROC_REF(check_loss)) //Second arg of the signal will be checked against the comsig_target.
-
-/datum/element/children/proc/check_loss(mob/living/L, comsig_target)
-	if(attached_targets[L] == comsig_target)
-		Detach(L)
-
-/datum/element/children/Detach(mob/living/L)
-	. = ..()
-	if(QDELETED(L))
-		return
-	L.transform = L.transform.Scale(100/81, 100/81)
-	UnregisterSignal(L, comsig)
-	attached_targets -= L
 
 /datum/quirk/homosexual
 	name = "Homosexual"
@@ -697,15 +486,15 @@ Dancer
 	gain_text = "<span class='notice'>You feel tall.</span>"
 	lose_text = "<span class='notice'>You don't feel tall anymore.</span>"
 
-/datum/quirk/tower/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
-	if(H.age < 16)
-		to_chat(H, "<span class='userdanger'>You can't be a tall kid, looser!</span>")
-		return
+/datum/quirk/tower/add()
 	if(iswerewolf(quirk_holder))
 		return
-	H.AddElement(/datum/element/giantism, COMSIG_PARENT_PREQDELETED, src)
-	H.istower = TRUE
+	quirk_holder.AddElement(/datum/element/giantism, COMSIG_PARENT_PREQDELETED, src)
+
+/datum/quirk/tower/remove()
+	if (!quirk_holder)
+		return
+	quirk_holder.RemoveElement(/datum/element/giantism)
 
 #define TALL 1.16
 #define SHORT 0.86206896551

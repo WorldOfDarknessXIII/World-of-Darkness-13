@@ -37,8 +37,7 @@
 	var/original_facialhaircolor
 	var/original_eyecolor
 	var/original_body_mod
-	var/original_alt_sprite
-	var/original_alt_sprite_greyscale
+	var/original_body_sprite
 
 	var/datum/dna/impersonating_dna
 	var/impersonating_name
@@ -49,8 +48,7 @@
 	var/impersonating_facialhaircolor
 	var/impersonating_eyecolor
 	var/impersonating_body_mod
-	var/impersonating_alt_sprite
-	var/impersonating_alt_sprite_greyscale
+	var/impersonating_body_sprite
 
 	var/is_shapeshifted = FALSE
 
@@ -93,14 +91,12 @@
 	impersonating_facialhaircolor = victim.facial_hair_color
 	impersonating_eyecolor = victim.eye_color
 	impersonating_body_mod = victim.base_body_mod
-	if (victim.clane)
-		impersonating_alt_sprite = victim.clane.alt_sprite
-		impersonating_alt_sprite_greyscale = victim.clane.alt_sprite_greyscale
+	impersonating_body_sprite = GET_BODY_SPRITE(victim)
 
 /datum/discipline_power/vicissitude/malleable_visage/proc/initialize_original()
 	if (is_shapeshifted)
 		return
-	if (original_dna && original_body_mod)
+	if (original_dna)
 		return
 
 	original_dna = new
@@ -113,8 +109,7 @@
 	original_facialhaircolor = owner.facial_hair_color
 	original_eyecolor = owner.eye_color
 	original_body_mod = owner.base_body_mod
-	original_alt_sprite = owner.clane?.alt_sprite
-	original_alt_sprite_greyscale = owner.clane?.alt_sprite_greyscale
+	original_body_sprite = GET_BODY_SPRITE(owner)
 
 /datum/discipline_power/vicissitude/malleable_visage/proc/shapeshift(to_original = FALSE, instant = FALSE)
 	if (!impersonating_dna)
@@ -123,7 +118,7 @@
 		var/time_delay = 10 SECONDS
 		if (original_body_mod != impersonating_body_mod)
 			time_delay += 5 SECONDS
-		if (original_alt_sprite != impersonating_alt_sprite)
+		if (original_body_sprite != impersonating_body_sprite)
 			time_delay += 10 SECONDS
 		to_chat(owner, span_notice("You begin molding your appearance... This will take [DisplayTimeText(time_delay)]."))
 		if (!do_after(owner, time_delay))
@@ -142,15 +137,14 @@
 		owner.hair_color = original_haircolor
 		owner.facial_hair_color = original_facialhaircolor
 		owner.eye_color = original_eyecolor
-		owner.base_body_mod = original_body_mod
-		owner.clane?.alt_sprite = original_alt_sprite
-		owner.clane?.alt_sprite_greyscale = original_alt_sprite_greyscale
+		owner.set_body_model(original_body_mod)
+		owner.set_body_sprite(original_body_sprite)
 		is_shapeshifted = FALSE
 		QDEL_NULL(impersonating_dna)
 	else
 		//Nosferatu, Cappadocians, Gargoyles, Kiasyd, etc. will revert instead of being indefinitely without their curse
-		if (original_alt_sprite)
-			addtimer(CALLBACK(src, PROC_REF(revert_to_cursed_form)), 5 MINUTES)
+		if (!NORMAL_BODY_SPRITE(owner))
+			addtimer(CALLBACK(src, PROC_REF(revert_to_cursed_form)), 1 SCENES)
 		impersonating_dna.transfer_identity(destination = owner, superficial = TRUE)
 		owner.real_name = impersonating_name
 		owner.skin_tone = impersonating_skintone
@@ -159,24 +153,17 @@
 		owner.hair_color = impersonating_haircolor
 		owner.facial_hair_color = impersonating_facialhaircolor
 		owner.eye_color = impersonating_eyecolor
-		owner.base_body_mod = impersonating_body_mod
-		owner.clane?.alt_sprite = impersonating_alt_sprite
-		owner.clane?.alt_sprite_greyscale = impersonating_alt_sprite_greyscale
+		owner.set_body_model(impersonating_body_mod)
+		owner.set_body_sprite(impersonating_body_sprite)
 		is_shapeshifted = TRUE
 
 	owner.update_body()
 
 /datum/discipline_power/vicissitude/malleable_visage/proc/revert_to_cursed_form()
-	if (!original_alt_sprite)
-		return
 	if (!is_shapeshifted)
 		return
-	if (!owner.clane)
-		return
 
-	owner.base_body_mod = original_body_mod
-	owner.clane.alt_sprite = original_alt_sprite
-	owner.clane.alt_sprite_greyscale = original_alt_sprite_greyscale
+	owner.set_body_sprite(original_body_sprite)
 
 	to_chat(owner, span_warning("Your cursed appearance reasserts itself!"))
 
@@ -310,16 +297,16 @@
 	if(selected_upgrade)
 		return
 	selected_upgrade = upgrade
-	ADD_TRAIT(user, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
+	ADD_TRAIT(user, TRAIT_UNMASQUERADE, TRAUMA_TRAIT)
 	switch (upgrade)
 		if ("Skin armor")
-			user.unique_body_sprite = "tziarmor"
+			user.set_body_sprite("tziarmor")
 			original_skin_tone = user.skin_tone
 			user.skin_tone = "albino"
 			original_hairstyle = user.hairstyle
 			user.hairstyle = "Bald"
 			original_body_mod = user.base_body_mod
-			user.base_body_mod = ""
+			user.set_body_model(NORMAL_BODY_MODEL)
 			user.physiology.armor.melee += 20
 			user.physiology.armor.bullet += 20
 		if ("Centipede legs")
@@ -351,13 +338,13 @@
 	to_chat(user, span_notice("You begin surgically removing your enhancements..."))
 	if (!do_after(user, 10 SECONDS))
 		return
-	REMOVE_TRAIT(user, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_UNMASQUERADE, TRAUMA_TRAIT)
 	switch (selected_upgrade)
 		if ("Skin armor")
-			user.unique_body_sprite = null
+			user.set_body_sprite()
 			user.skin_tone = original_skin_tone
 			user.hairstyle = original_hairstyle
-			user.base_body_mod = original_body_mod
+			user.set_body_model(original_body_mod)
 			user.physiology.armor.melee -= 20
 			user.physiology.armor.bullet -= 20
 		if ("Centipede legs")

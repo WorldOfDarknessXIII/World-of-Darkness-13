@@ -334,11 +334,10 @@
 	if ((job.species_slots[client.prefs.pref_species.name] == 0) && !bypass)
 		return JOB_UNAVAILABLE_SPECIES_LIMITED
 	if((client.prefs.pref_species.name == "Vampire") && !bypass)
-		if(client.prefs.clane)
-			for(var/i in job.allowed_bloodlines)
-				if(i == client.prefs.clane.name)
-					return JOB_AVAILABLE
-			return JOB_UNAVAILABLE_CLAN
+		for(var/i in job.allowed_bloodlines)
+			if(i == client.prefs.clan.name)
+				return JOB_AVAILABLE
+		return JOB_UNAVAILABLE_CLAN
 	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
@@ -538,11 +537,6 @@
 			var/mob/living/carbon/human/H = new_character
 			if(H.client)
 				H.true_real_name = H.client.prefs.real_name
-				if(H.age < 16)
-					H.add_quirk(/datum/quirk/freerunning)
-					H.add_quirk(/datum/quirk/light_step)
-					H.add_quirk(/datum/quirk/skittish)
-					H.add_quirk(/datum/quirk/pushover)
 				H.create_disciplines()
 				if(isgarou(H))
 					for(var/obj/structure/werewolf_totem/S in GLOB.totems)
@@ -555,7 +549,6 @@
 						H.mind.dharma.Po = H.client.prefs.po_type
 						H.mind.dharma.Hun = H.client.prefs.hun
 						H.mind.dharma.on_gain(H)
-//						H.mind.dharma.initial_skin_color = H.skin_tone
 				GLOB.fucking_joined |= H.client.prefs.real_name
 				var/datum/relationship/R = new ()
 				H.Myself = R

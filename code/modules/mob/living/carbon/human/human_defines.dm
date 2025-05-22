@@ -86,11 +86,9 @@
 	var/heat_exposure_stacks = 0
 
 	//Shitty VtM vars I'm moving here so they're not strewn around the codebase
-	var/datum/vampireclane/clane
+	var/datum/vampire_clan/clan
 
 	var/last_repainted_mark
-
-	//var/given_penis = FALSE
 
 	///Performs CPR on the target after a delay. //[Lucia] what does this mean?
 	var/last_cpr_exp = 0
@@ -101,7 +99,6 @@
 	var/mob/living/caster
 
 	var/datum/job/JOB
-	var/roundstart_vampire = FALSE
 	var/last_loot_check = 0
 
 	var/phonevoicetag = 10
@@ -112,8 +109,6 @@
 	var/additional_centipede = FALSE
 	var/additional_armor = FALSE
 
-	var/unique_body_sprite
-
 	var/image/suckbar
 	var/atom/suckbar_loc
 
@@ -121,7 +116,9 @@
 	var/last_raid = 0
 	var/killed_count = 0
 
-	var/base_body_mod = ""
+	/// Body model based on weight. Can be slim, normal, or fat.
+	var/base_body_mod = NORMAL_BODY_MODEL
+	/// Clothing sprites to use based on body model
 	var/icon/body_sprite
 
 	bloodquality = 2

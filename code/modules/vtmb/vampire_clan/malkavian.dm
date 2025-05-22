@@ -1,8 +1,8 @@
-/datum/vampireclane/malkavian
+/datum/vampire_clan/malkavian
 	name = "Malkavian"
 	desc = "Derided as Lunatics by other vampires, the Blood of the Malkavians lets them perceive and foretell truths hidden from others. Like the �wise madmen� of poetry their fractured perspective stems from seeing too much of the world at once, from understanding too deeply, and feeling emotions that are just too strong to bear."
 	curse = "Insanity."
-	clane_disciplines = list(
+	clan_disciplines = list(
 		/datum/discipline/auspex,
 		/datum/discipline/dementation,
 		/datum/discipline/obfuscate
@@ -11,13 +11,54 @@
 	female_clothes = /obj/item/clothing/under/vampire/malkavian/female
 	clan_keys = /obj/item/vamp/keys/malkav
 
-/datum/vampireclane/malkavian/post_gain(mob/living/carbon/human/malky)
+	var/list/mob/living/madness_network
+
+/datum/vampire_clan/malkavian/on_gain(mob/living/carbon/human/vampire)
 	. = ..()
+
 	var/datum/action/cooldown/malk_hivemind/hivemind = new()
 	var/datum/action/cooldown/malk_speech/malk_font = new()
-	hivemind.Grant(malky)
-	malk_font.Grant(malky)
-	GLOB.malkavian_list += malky
+	hivemind.Grant(vampire)
+	malk_font.Grant(vampire)
+
+	// Madness Network handling
+	LAZYADD(madness_network, vampire)
+	RegisterSignal(vampire, COMSIG_MOB_SAY, PROC_REF(handle_say), override = TRUE)
+	RegisterSignal(vampire, COMSIG_MOVABLE_HEAR, PROC_REF(handle_hear), override = TRUE)
+
+/datum/vampire_clan/malkavian/on_lose(mob/living/carbon/human/vampire)
+	. = ..()
+
+	for (var/datum/action/cooldown/malkavian_action in vampire.actions)
+		if (!istype(malkavian_action, /datum/action/cooldown/malk_hivemind) && !istype(malkavian_action, /datum/action/cooldown/malk_speech))
+			continue
+
+		malkavian_action.Remove()
+
+	// Remove Madness Network
+	LAZYREMOVE(madness_network, vampire)
+	UnregisterSignal(vampire, COMSIG_MOB_SAY)
+	UnregisterSignal(vampire, COMSIG_MOVABLE_HEAR)
+
+/datum/vampire_clan/malkavian/proc/handle_say(mob/living/source, list/speech_args)
+	SIGNAL_HANDLER
+
+	if (!prob(20))
+		return
+
+	say_in_madness_network(speech_args[SPEECH_MESSAGE])
+
+/datum/vampire_clan/malkavian/proc/handle_hear(mob/living/source, list/hearing_args)
+	SIGNAL_HANDLER
+
+	if (!prob(3))
+		return
+
+	say_in_madness_network(hearing_args[HEARING_RAW_MESSAGE])
+
+/datum/vampire_clan/malkavian/proc/say_in_madness_network(message)
+	for (var/mob/living/malkavian in madness_network)
+		to_chat(malkavian, span_ghostalert(message))
 
 /datum/action/cooldown/malk_hivemind
 	name = "Hivemind"
@@ -32,16 +73,19 @@
 	if(!IsAvailable())
 		return
 
-	var/new_thought = input(owner, "Have any thoughts about this, buddy?") as null|text
-	if(new_thought)
-		StartCooldown()
-		new_thought = trim(copytext_char(sanitize(new_thought), 1, MAX_MESSAGE_LEN))
-		for(var/mob/living/carbon/human/H in GLOB.malkavian_list)
-			if (iskindred(H) && (H.stat != DEAD))
-				to_chat(H, "<span class='ghostalert'>[new_thought]</span>")
+	var/datum/vampire_clan/malkavian/clan_malkavian = GLOB.vampire_clans[/datum/vampire_clan/malkavian]
+	if (!(owner in clan_malkavian.madness_network))
+		return
 
-		message_admins("[ADMIN_LOOKUPFLW(usr)] said \"[new_thought]\" through the Madness Network.")
-		log_game("[key_name(usr)] said \"[new_thought]\" through the Madness Network.")
+	var/new_thought = stripped_input(owner, "Have any thoughts about this, buddy?")
+	if (!new_thought)
+		return
+
+	StartCooldown()
+	clan_malkavian.say_in_madness_network(new_thought)
+
+	message_admins("[ADMIN_LOOKUPFLW(usr)] said \"[new_thought]\" through the Madness Network.")
+	log_game("[key_name(usr)] said \"[new_thought]\" through the Madness Network.")
 
 /datum/action/cooldown/malk_speech
 	name = "Madness Speech"
@@ -50,8 +94,6 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	vampiric = TRUE
 	cooldown_time = 5 MINUTES
-	///clane datum
-	var/datum/vampireclane/malkavian/clane_datum
 
 /datum/action/cooldown/malk_speech/Trigger()
 	. = ..()

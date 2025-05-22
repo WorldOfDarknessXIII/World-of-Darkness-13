@@ -540,7 +540,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			if(fextensions[fhair_state+dynamic_fhair_suffix])
 				fhair_state += dynamic_fhair_suffix
 				fhair_file = 'icons/mob/facialhair_extensions.dmi'
-			if(H.base_body_mod == "s")
+			if(H.base_body_mod == SLIM_BODY_MODEL)
 				fhair_file = 'icons/mob/human_face_f.dmi'
 
 			var/mutable_appearance/facial_overlay = mutable_appearance(fhair_file, fhair_state, -HAIR_LAYER)
@@ -605,7 +605,7 @@ GLOBAL_LIST_EMPTY(selectable_races)
 				if(extensions[hair_state+dynamic_hair_suffix])
 					hair_state += dynamic_hair_suffix
 					hair_file = 'icons/mob/hair_extensions.dmi'
-				if(H.base_body_mod == "s")
+				if(H.base_body_mod == SLIM_BODY_MODEL)
 					hair_file = 'icons/mob/human_face_f.dmi'
 
 				hair_overlay.icon = hair_file
@@ -677,11 +677,11 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			var/mutable_appearance/eye_overlay
 			if(!E)
 				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
-				if(H.base_body_mod == "s")
+				if(H.base_body_mod == SLIM_BODY_MODEL)
 					eye_overlay = mutable_appearance('icons/mob/human_face_f.dmi', "eyes_missing", -BODY_LAYER)
 			else
 				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', E.eye_icon_state, -BODY_LAYER)
-				if(H.base_body_mod == "s")
+				if(H.base_body_mod == SLIM_BODY_MODEL)
 					eye_overlay = mutable_appearance('icons/mob/human_face_f.dmi', E.eye_icon_state, -BODY_LAYER)
 			if((EYECOLOR in species_traits) && E)
 				eye_overlay.color = "#" + H.eye_color
@@ -731,12 +731,12 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			var/mutable_appearance/underwear_overlay
 			if(underwear)
 				underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
-				if(H.base_body_mod == "s")
+				if(H.base_body_mod == SLIM_BODY_MODEL)
 					if(H.gender == FEMALE)
 						underwear_overlay = mutable_appearance('icons/mob/clothing/underwear_s_female.dmi', underwear.icon_state, -BODY_LAYER)
 					else
 						underwear_overlay = mutable_appearance('icons/mob/clothing/underwear_s_male.dmi', underwear.icon_state, -BODY_LAYER)
-				if(H.base_body_mod == "f")
+				if(H.base_body_mod == FAT_BODY_MODEL)
 					underwear_overlay = mutable_appearance('icons/mob/clothing/underwear_f.dmi', underwear.icon_state, -BODY_LAYER)
 				if(!underwear.use_static)
 					underwear_overlay.color = "#" + H.underwear_color
@@ -747,12 +747,12 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			var/mutable_appearance/undershirt_overlay
 			if(undershirt)
 				undershirt_overlay = mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
-				if(H.base_body_mod == "s")
+				if(H.base_body_mod == SLIM_BODY_MODEL)
 					if(H.gender == FEMALE)
 						undershirt_overlay = mutable_appearance('icons/mob/clothing/underwear_s_female.dmi', undershirt.icon_state, -BODY_LAYER)
 					else
 						undershirt_overlay = mutable_appearance('icons/mob/clothing/underwear_s_male.dmi', undershirt.icon_state, -BODY_LAYER)
-				if(H.base_body_mod == "f")
+				if(H.base_body_mod == FAT_BODY_MODEL)
 					undershirt_overlay = mutable_appearance('icons/mob/clothing/underwear_f.dmi', undershirt.icon_state, -BODY_LAYER)
 				standing += undershirt_overlay
 
@@ -761,12 +761,12 @@ GLOBAL_LIST_EMPTY(selectable_races)
 			var/mutable_appearance/socks_overlay
 			if(socks)
 				socks_overlay = mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
-				if(H.base_body_mod == "s")
+				if(H.base_body_mod == SLIM_BODY_MODEL)
 					if(H.gender == FEMALE)
 						socks_overlay = mutable_appearance('icons/mob/clothing/underwear_s_female.dmi', socks.icon_state, -BODY_LAYER)
 					else
 						socks_overlay = mutable_appearance('icons/mob/clothing/underwear_s_male.dmi', socks.icon_state, -BODY_LAYER)
-				if(H.base_body_mod == "f")
+				if(H.base_body_mod == FAT_BODY_MODEL)
 					socks_overlay = mutable_appearance('icons/mob/clothing/underwear_f.dmi', socks.icon_state, -BODY_LAYER)
 				standing += socks_overlay
 
@@ -1402,8 +1402,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
 				user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
 		var/damage = (rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)/3)*(user.get_total_physique())
-		if(user.age < 16)
-			damage = round(damage/2)
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 
@@ -1525,8 +1523,6 @@ GLOBAL_LIST_EMPTY(selectable_races)
 		if(USR.dna)
 			if(USR.dna.species)
 				modifikator = USR.dna.species.meleemod
-		if(USR.age < 16)
-			modifikator = modifikator/2
 		if(ishuman(user))
 			modifikator = (modifikator/3)*(user.get_total_physique())
 	if(user != H)

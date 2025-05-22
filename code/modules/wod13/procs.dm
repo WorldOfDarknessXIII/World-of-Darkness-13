@@ -11,11 +11,8 @@
 		return
 	if(!is_special_character(src) || forced)
 		if(!in_frenzy || forced)
-			var/mod = 1
-			var/enlight = FALSE
-			if(clane)
-				mod = clane.humanitymod
-				enlight = clane.enlightenment
+			var/mod = HAS_TRAIT(src, TRAIT_SENSITIVE_HUMANITY) ? 2 : 1
+			var/enlight = client?.prefs?.enlightenment
 			if(enlight)
 				if(value < 0)
 					if(humanity < 10)
@@ -79,7 +76,7 @@
 					to_chat(src, "<span class='userdanger'><b>MASQUERADE VIOLATION!</b></span>")
 				SSbad_guys_party.next_fire = max(world.time, SSbad_guys_party.next_fire - 2 MINUTES)
 			if(value > 0)
-				if(clane?.enlightenment && !forced)
+				if(client?.prefs?.enlightenment && !forced)
 					AdjustHumanity(1, 10)
 				for(var/mob/living/carbon/human/H in GLOB.player_list)
 					H.voted_for -= dna.real_name
