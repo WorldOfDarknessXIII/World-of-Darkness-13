@@ -2147,9 +2147,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					discipline_types = list()
 					discipline_levels = list()
 
-					if(result == "Caitiff")
+					if (result == GLOB.vampire_clans[/datum/vampire_clan/caitiff])
 						generation = 13
-						for (var/i = length(clan.clan_disciplines); i < 3; i++)
+						for (var/i in 1 to 3)
 							if (slotlocked)
 								break
 
