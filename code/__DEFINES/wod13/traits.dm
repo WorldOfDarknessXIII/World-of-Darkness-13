@@ -1,6 +1,5 @@
 //trait from /mob/living/carbon/human/npc
 #define NPC_ITEM_TRAIT "npc_item"
-#define TRAIT_DANCER			"dancer"
 #define TRAIT_EXP_DRIVER		"experienced_driver"
 #define TRAIT_BONE_KEY			"bone_key"
 #define TRAIT_BLOODY_LOVER		"bloody_lover"

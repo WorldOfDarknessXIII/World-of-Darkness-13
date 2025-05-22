@@ -174,7 +174,6 @@ Dancer
 	name = "Dancer"
 	desc = "You know a couple of dance moves."
 	value = 2
-	mob_trait = TRAIT_DANCER
 	gain_text = "<span class='notice'>You want to dance.</span>"
 	lose_text = "<span class='warning'>You don't want to dance anymore.</span>"
 
