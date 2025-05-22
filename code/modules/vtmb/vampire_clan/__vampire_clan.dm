@@ -103,6 +103,17 @@
 	for (var/trait in clan_traits)
 		REMOVE_TRAIT(vampire, trait, CLAN_TRAIT)
 
+	// Sets the vampire back to their default body sprite
+	if (alt_sprite && (GET_BODY_SPRITE(vampire) == alt_sprite))
+		vampire.set_body_sprite(initial(vampire.dna.species.limbs_id))
+
+	// Remove Clan accessories
+	if (vampire.client?.prefs?.clan_accessory)
+		var/equipped_accessory = accessories_layers[vampire.client.prefs.clan_accessory]
+		vampire.remove_overlay(equipped_accessory)
+
+	vampire.update_body()
+
 /**
  * Applies Clan-specific effects when the
  * mob that has the Clan logs into their mob
@@ -151,13 +162,7 @@
 	var/datum/vampire_clan/new_clan = ispath(setting_clan) ? GLOB.vampire_clans[setting_clan] : setting_clan
 
 	// Handle losing Clan
-	if (previous_clan)
-		// Cancel if not actually changing Clan
-		if (previous_clan == new_clan)
-			return
-		// Apply on_lose effects
-		else
-			previous_clan.on_lose(src)
+	previous_clan?.on_lose(src)
 
 	clan = new_clan
 

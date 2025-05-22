@@ -3022,7 +3022,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	hardcore_survival_score = 0 //Set to 0 to prevent you getting points from last another time.
 
 	if((randomise[RANDOM_SPECIES] || randomise[RANDOM_HARDCORE]) && !character_setup)
-
 		random_species()
 
 	if((randomise[RANDOM_BODY] || (randomise[RANDOM_BODY_ANTAG] && antagonist) || randomise[RANDOM_HARDCORE]) && !character_setup)
@@ -3049,7 +3048,47 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.real_name = real_name
 	character.true_real_name = real_name
 	character.name = character.real_name
+
+	character.flavor_text = sanitize_text(flavor_text)
+	character.ooc_notes = sanitize_text(ooc_notes)
+
+	character.age = age
+	character.chronological_age = total_age
+
+	character.gender = gender
+	if(gender == MALE || gender == FEMALE)
+		character.body_type = gender
+	else
+		character.body_type = body_type
+
+	character.eye_color = eye_color
+	var/obj/item/organ/eyes/organ_eyes = character.getorgan(/obj/item/organ/eyes)
+	if(organ_eyes)
+		if(!initial(organ_eyes.eye_color))
+			organ_eyes.eye_color = eye_color
+		organ_eyes.old_eye_color = eye_color
+
+	character.hair_color = hair_color
+	character.facial_hair_color = facial_hair_color
+	character.hairstyle = hairstyle
+	character.facial_hairstyle = facial_hairstyle
+	character.underwear = underwear
+	character.underwear_color = underwear_color
+	character.undershirt = undershirt
+	character.socks = socks
+	character.backpack = backpack
+	character.jumpsuit_style = jumpsuit_style
+	character.skin_tone = skin_tone
+
+	var/datum/species/chosen_species
+	chosen_species = pref_species.type
+	character.dna.features = features.Copy()
+	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
+	character.dna.real_name = character.real_name
+
 	character.diablerist = diablerist
+	character.info_known = info_known
+
 	character.physique = physique
 	character.dexterity = dexterity
 	character.social = social
@@ -3057,7 +3096,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.blood = blood
 	character.lockpicking = lockpicking
 	character.athletics = athletics
-	character.info_known = info_known
 
 	var/datum/archetype/A = new archetype()
 	character.additional_physique = A.archetype_additional_physique
@@ -3069,11 +3107,46 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.additional_athletics = A.archetype_additional_athletics
 	A.special_skill(character)
 
+	character.masquerade = masquerade
+	if(!character_setup)
+		if(character in GLOB.masquerade_breakers_list)
+			if(character.masquerade > 2)
+				GLOB.masquerade_breakers_list -= character
+		else if(character.masquerade < 3)
+			GLOB.masquerade_breakers_list += character
+
+	switch (body_model)
+		if (SLIM_BODY_MODEL_NUMBER)
+			character.set_body_model(SLIM_BODY_MODEL)
+		if (NORMAL_BODY_MODEL_NUMBER)
+			character.set_body_model(NORMAL_BODY_MODEL)
+		if (FAT_BODY_MODEL_NUMBER)
+			character.set_body_model(FAT_BODY_MODEL)
+
+	character.maxHealth = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*(character.physique + character.additional_physique)))
+	character.health = character.maxHealth
+
+	if (pref_species.name == "Kuei-Jin")
+		character.yang_chi = yang
+		character.max_yang_chi = yang
+		character.yin_chi = yin
+		character.max_yin_chi = yin
+		character.max_demon_chi = po
+	else
+		character.yang_chi = 3
+		character.max_yang_chi = 3
+		character.yin_chi = 2
+		character.max_yin_chi = 2
+
 	if(pref_species.name == "Vampire")
+		character.skin_tone = get_vamp_skin_color(skin_tone)
+
 		character.set_clan(clan, character_setup)
+
+		character.generation = generation
 		character.maxbloodpool = 10 + ((13 - generation) * 3)
 		character.bloodpool = rand(2, character.maxbloodpool)
-		character.generation = generation
+
 		character.max_yin_chi = character.maxbloodpool
 		character.yin_chi = character.max_yin_chi
 
@@ -3084,25 +3157,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/mutable_appearance/acc_overlay = mutable_appearance('code/modules/wod13/icons.dmi', clan_accessory, -accessory_layer)
 			character.overlays_standing[accessory_layer] = acc_overlay
 			character.apply_overlay(accessory_layer)
+
+		character.humanity = humanity
 	else
 		character.set_clan(null)
 		character.generation = 13
 		character.bloodpool = character.maxbloodpool
-		if(pref_species.name == "Kuei-Jin")
-			character.yang_chi = yang
-			character.max_yang_chi = yang
-			character.yin_chi = yin
-			character.max_yin_chi = yin
-			character.max_demon_chi = po
-		else
-			character.yang_chi = 3
-			character.max_yang_chi = 3
-			character.yin_chi = 2
-			character.max_yin_chi = 2
 
 	if(pref_species.name == "Werewolf")
-		character.maxHealth = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*(character.physique + character.additional_physique)))
-		character.health = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*(character.physique + character.additional_physique )))
 		switch(tribe)
 			if("Wendigo")
 				character.yin_chi = 1
@@ -3119,75 +3181,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				character.max_yin_chi = 1 + auspice_level * 2
 				character.yang_chi = 5
 				character.max_yang_chi = 5
-	if(pref_species.name == "Kuei-Jin")
-		character.maxHealth = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*(character.physique + character.additional_physique)))
-		character.health = character.maxHealth
-	if(pref_species.name == "Vampire")
-		character.maxHealth = round((initial(character.maxHealth)+(initial(character.maxHealth)/4)*(character.physique + character.additional_physique)))
-		character.health = character.maxHealth
-		character.humanity = humanity
-	character.masquerade = masquerade
-	if(!character_setup)
-		if(character in GLOB.masquerade_breakers_list)
-			if(character.masquerade > 2)
-				GLOB.masquerade_breakers_list -= character
-		else if(character.masquerade < 3)
-			GLOB.masquerade_breakers_list += character
 
-	character.flavor_text = sanitize_text(flavor_text)
-	character.ooc_notes = sanitize_text(ooc_notes)
-	character.gender = gender
-	character.age = age
-	character.chronological_age = total_age
-	if(gender == MALE || gender == FEMALE)
-		character.body_type = gender
-	else
-		character.body_type = body_type
-
-	character.eye_color = eye_color
-	var/obj/item/organ/eyes/organ_eyes = character.getorgan(/obj/item/organ/eyes)
-	if(organ_eyes)
-		if(!initial(organ_eyes.eye_color))
-			organ_eyes.eye_color = eye_color
-		organ_eyes.old_eye_color = eye_color
-	character.hair_color = hair_color
-	character.facial_hair_color = facial_hair_color
-
-	if(pref_species.name == "Vampire")
-		if(clan.alt_sprite && !clan.alt_sprite_greyscale)
-			character.skin_tone = "albino"
-		else
-			character.skin_tone = get_vamp_skin_color(skin_tone)
-	else
-		character.skin_tone = skin_tone
-
-	character.hairstyle = hairstyle
-	character.facial_hairstyle = facial_hairstyle
-	character.underwear = underwear
-	character.underwear_color = underwear_color
-	character.undershirt = undershirt
-	character.socks = socks
-
-	character.backpack = backpack
-
-	character.jumpsuit_style = jumpsuit_style
-
-	var/datum/species/chosen_species
-	chosen_species = pref_species.type
-
-	character.dna.features = features.Copy()
-	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
-	character.dna.real_name = character.real_name
-
-	switch (body_model)
-		if (SLIM_BODY_MODEL_NUMBER)
-			character.set_body_model(SLIM_BODY_MODEL)
-		if (NORMAL_BODY_MODEL_NUMBER)
-			character.set_body_model(NORMAL_BODY_MODEL)
-		if (FAT_BODY_MODEL_NUMBER)
-			character.set_body_model(FAT_BODY_MODEL)
-
-	if(pref_species.name == "Werewolf")
 		var/datum/auspice/CLN = new auspice.type()
 		character.auspice = CLN
 		character.auspice.level = auspice_level

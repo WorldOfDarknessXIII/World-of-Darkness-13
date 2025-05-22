@@ -76,7 +76,7 @@
 	CHECK_DNA_AND_SPECIES(src)
 
 	// Won't replace other alternative sprites unless it's advanced decay
-	if (!NORMAL_BODY_SPRITE(src) && (rot_stage <= 2))
+	if (!NORMAL_BODY_SPRITE(src) && !findtext(GET_BODY_SPRITE(src), "rotten") && (rot_stage <= 2))
 		return
 
 	// Apply rotten sprite and rotting effects

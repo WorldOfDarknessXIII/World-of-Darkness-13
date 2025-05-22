@@ -20,10 +20,8 @@
 	if(!ishuman(owner.current))
 		return
 	H.equipOutfit(national_guard_outfit)
-	if(H.clan)
-		H.remove_overlay(H.clan.accessories_layers[H.client.prefs.clan_accessory])
-		qdel(H.clan)
 	H.set_species(/datum/species/human)
+	H.set_clan(null)
 	H.generation = 13
 	H.ignores_warrant = TRUE
 	H.maxHealth = round((initial(H.maxHealth)-initial(H.maxHealth)/4)+(initial(H.maxHealth)/4)*(H.physique+13-H.generation))
@@ -33,7 +31,6 @@
 		if(A.vampiric)
 			A.Remove(H)
 	H.thaumaturgy_knowledge = FALSE
-	QDEL_NULL(H.clan)
 	var/obj/item/organ/eyes/NV = new()
 	NV.Insert(H, TRUE, FALSE)
 
