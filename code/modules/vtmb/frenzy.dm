@@ -221,7 +221,7 @@
 				if (H.CheckEyewitness(H, H, 3, FALSE))
 					H.AdjustMasquerade(-1)
 
-	if (HAS_TRAIT(H, TRAIT_UNMASQUERADE) || HAS_TRAIT(H, TRAIT_NONMASQUERADE))
+	if (HAS_TRAIT(H, TRAIT_UNMASQUERADE))
 		if(H.CheckEyewitness(H, H, 7, FALSE))
 			H.AdjustMasquerade(-1)
 
@@ -255,18 +255,18 @@
 				if (istype(id_card, /obj/item/card/id/clinic))
 					continue
 
-				if (!H.CheckEyewitness(H, H, 7, FALSE))
+				if (H.warrant || H.ignores_warrant)
 					continue
 
 				if (H.last_loot_check + 5 SECONDS > world.time)
 					continue
 
+				if (!H.CheckEyewitness(H, H, 7, FALSE))
+					continue
+
 				H.last_loot_check = world.time
 				H.last_nonraid = world.time
 				H.killed_count++
-
-				if (H.warrant || H.ignores_warrant)
-					continue
 
 				if (H.killed_count >= 5)
 					H.warrant = TRUE

@@ -297,7 +297,7 @@
 	if(selected_upgrade)
 		return
 	selected_upgrade = upgrade
-	ADD_TRAIT(user, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
+	ADD_TRAIT(user, TRAIT_UNMASQUERADE, TRAUMA_TRAIT)
 	switch (upgrade)
 		if ("Skin armor")
 			user.set_body_sprite("tziarmor")
@@ -338,7 +338,7 @@
 	to_chat(user, span_notice("You begin surgically removing your enhancements..."))
 	if (!do_after(user, 10 SECONDS))
 		return
-	REMOVE_TRAIT(user, TRAIT_NONMASQUERADE, TRAUMA_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_UNMASQUERADE, TRAUMA_TRAIT)
 	switch (selected_upgrade)
 		if ("Skin armor")
 			user.set_body_sprite()

@@ -1342,13 +1342,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(!job.allowed_species.Find(pref_species.name) && !bypass)
 		return "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[pref_species.name] RESTRICTED\]</font></td></tr>"
 	if(pref_species.name == "Vampire")
-		if(clan)
-			var/alloww = FALSE
-			for(var/i in job.allowed_bloodlines)
-				if(i == clan.name)
-					alloww = TRUE
-			if(!alloww && !bypass)
-				return "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[clan.name] RESTRICTED\]</font></td></tr>"
+		var/alloww = FALSE
+		for(var/i in job.allowed_bloodlines)
+			if(i == clan.name)
+				alloww = TRUE
+		if(!alloww && !bypass)
+			return "<font color=#290204>[rank]</font></td><td><font color=#290204> \[[clan.name] RESTRICTED\]</font></td></tr>"
 	if((job_preferences[SSjob.overflow_role] == JP_LOW) && (rank != SSjob.overflow_role) && !is_banned_from(user.ckey, SSjob.overflow_role))
 		return "<font color=orange>[rank]</font></td>"
 
@@ -3141,7 +3140,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(pref_species.name == "Vampire")
 		character.skin_tone = get_vamp_skin_color(skin_tone)
 
-		character.set_clan(clan, character_setup)
+		character.set_clan(clan, TRUE)
 
 		character.generation = generation
 		character.maxbloodpool = 10 + ((13 - generation) * 3)

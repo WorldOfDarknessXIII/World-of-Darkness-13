@@ -334,11 +334,10 @@
 	if ((job.species_slots[client.prefs.pref_species.name] == 0) && !bypass)
 		return JOB_UNAVAILABLE_SPECIES_LIMITED
 	if((client.prefs.pref_species.name == "Vampire") && !bypass)
-		if(client.prefs.clan)
-			for(var/i in job.allowed_bloodlines)
-				if(i == client.prefs.clan.name)
-					return JOB_AVAILABLE
-			return JOB_UNAVAILABLE_CLAN
+		for(var/i in job.allowed_bloodlines)
+			if(i == client.prefs.clan.name)
+				return JOB_AVAILABLE
+		return JOB_UNAVAILABLE_CLAN
 	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)

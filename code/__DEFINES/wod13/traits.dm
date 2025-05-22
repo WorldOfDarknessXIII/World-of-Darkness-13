@@ -18,9 +18,10 @@
 #define TRAIT_DIABLERIE			"diablerie"
 #define TRAIT_GULLET			"gullet"
 #define TRAIT_CHARMER			"charmer"
-#define TRAIT_UNMASQUERADE		"unmasquerade"	//For tzi clothing
-#define TRAIT_NONMASQUERADE		"nonmasquerade"	//For tzi mods
-#define TRAIT_GUNFIGHTER        "gunfighter"    //Halves firing delay and cooldown between burst fire shots
+/// The mob will automatically breach the Masquerade when seen by others, with no exceptions
+#define TRAIT_UNMASQUERADE		"unmasquerade"
+/// Halves firing delay and cooldown between burst fire shots
+#define TRAIT_GUNFIGHTER "gunfighter"
 /// Makes gambling incredibly effective, and causes random beneficial events to happen for the mob.
 #define TRAIT_SUPERNATURAL_LUCK	"supernatural_luck"
 /// Lets the mob block projectiles like bullets using only their hands.

@@ -152,14 +152,13 @@ SUBSYSTEM_DEF(job)
 			JobDebug("FOC player species limit overrun, Player: [player]")
 			continue
 		if(player.client.prefs.pref_species.name == "Vampire")
-			if(player.client.prefs.clan)
-				var/alloww = FALSE
-				for(var/i in job.allowed_bloodlines)
-					if(i == player.client.prefs.clan.name)
-						alloww = TRUE
-				if(!alloww && !bypass)
-					JobDebug("FOC player clan not allowed, Player: [player]")
-					continue
+			var/alloww = FALSE
+			for(var/i in job.allowed_bloodlines)
+				if(i == player.client.prefs.clan.name)
+					alloww = TRUE
+			if(!alloww && !bypass)
+				JobDebug("FOC player clan not allowed, Player: [player]")
+				continue
 		if(flag && (!(flag in player.client.prefs.be_special)))
 			JobDebug("FOC flag failed, Player: [player], Flag: [flag], ")
 			continue
@@ -216,14 +215,13 @@ SUBSYSTEM_DEF(job)
 			continue
 
 		if(player.client.prefs.pref_species.name == "Vampire")
-			if(player.client.prefs.clan)
-				var/alloww = FALSE
-				for(var/i in job.allowed_bloodlines)
-					if(i == player.client.prefs.clan.name)
-						alloww = TRUE
-				if(!alloww)
-					JobDebug("GRJ player clan not allowed, Player: [player]")
-					continue
+			var/alloww = FALSE
+			for(var/i in job.allowed_bloodlines)
+				if(i == player.client.prefs.clan.name)
+					alloww = TRUE
+			if(!alloww)
+				JobDebug("GRJ player clan not allowed, Player: [player]")
+				continue
 
 		if(player.mind && (job.title in player.mind.restricted_roles))
 			JobDebug("GRJ incompatible with antagonist role, Player: [player], Job: [job.title]")
@@ -426,14 +424,13 @@ SUBSYSTEM_DEF(job)
 					continue
 
 				if(player.client.prefs.pref_species.name == "Vampire")
-					if(player.client.prefs.clan)
-						var/alloww = FALSE
-						for(var/i in job.allowed_bloodlines)
-							if(i == player.client.prefs.clan.name)
-								alloww = TRUE
-						if(!alloww && !bypass)
-							JobDebug("DO player clan not allowed, Player: [player]")
-							continue
+					var/alloww = FALSE
+					for(var/i in job.allowed_bloodlines)
+						if(i == player.client.prefs.clan.name)
+							alloww = TRUE
+					if(!alloww && !bypass)
+						JobDebug("DO player clan not allowed, Player: [player]")
+						continue
 
 				if(player.mind && (job.title in player.mind.restricted_roles))
 					JobDebug("DO incompatible with antagonist role, Player: [player], Job:[job.title]")
