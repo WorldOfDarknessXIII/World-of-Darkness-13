@@ -44,10 +44,6 @@
 			exit_frenzymod()
 		SEND_SOUND(src, sound('code/modules/wod13/sounds/final_death.ogg', 0, 0, 50))
 
-		//annoying code that depends on clan doesn't work for Kuei-jin
-		if (iscathayan(src))
-			return
-
 		var/years_undead = chronological_age - age
 		switch (years_undead)
 			if (-INFINITY to 10) //normal corpse
