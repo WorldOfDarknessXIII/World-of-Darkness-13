@@ -125,7 +125,6 @@
 	var/celerity_visual = FALSE
 	var/potential = 0
 
-	var/in_frenzy = FALSE
 	var/frenzy_hardness = 1
 	var/last_frenzy_check = 0
 	var/atom/frenzy_target = null
@@ -147,8 +146,5 @@
 	var/agg_damage_plus = 0
 
 	var/lock_on_by_mannequin = FALSE
-
-	var/diablerist = FALSE
-	var/antifrenzy = FALSE
 
 	COOLDOWN_DECLARE(bleeding_message_cd)

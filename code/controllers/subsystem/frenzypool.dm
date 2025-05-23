@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(frenzypool)
 			log_world("Found a null in frenzy list!")
 			continue
 
-		if(H.in_frenzy)
+		if (HAS_TRAIT(H.mind, TRAIT_IN_FRENZY))
 			H.handle_automated_frenzy()
 		else
 			GLOB.frenzy_list -= H

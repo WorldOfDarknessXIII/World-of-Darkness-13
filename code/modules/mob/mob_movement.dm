@@ -91,7 +91,7 @@
 		return FALSE
 	if(ishuman(mob))
 		var/mob/living/carbon/human/H = mob
-		if(H.in_frenzy)
+		if (HAS_TRAIT(H.mind, TRAIT_IN_FRENZY))
 			return FALSE
 	if(mob.force_moving)
 		return FALSE

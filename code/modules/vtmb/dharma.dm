@@ -156,8 +156,6 @@
 		var/datum/action/area_chi/areac = new()
 		areac.Grant(kueijin)
 
-	kueijin.maxHealth = initial(kueijin.maxHealth) + (initial(kueijin.maxHealth) / 4) * dharma.level
-
 /datum/dharma/proc/get_done_tenets()
 	var/total = 0
 	for(var/i in tenets)
@@ -180,7 +178,7 @@
 				cathayan.mind.dharma?.roll_po(source, cathayan)
 
 /datum/dharma/proc/roll_po(atom/Source, mob/living/carbon/human/owner)
-	if(owner.in_frenzy)
+	if (HAS_TRAIT(owner.mind, TRAIT_IN_FRENZY))
 		return
 	if(!COOLDOWN_FINISHED(src, po_call))
 		return

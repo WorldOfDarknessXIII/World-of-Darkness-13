@@ -58,9 +58,8 @@
 	UnregisterSignal(source, COMSIG_EXIT_AREA)
 
 /datum/element/holy_weakness/process(delta_time)
-	// Ignite all exposed mobs on a probability of ~25% per 4 seconds
 	for (var/mob/living/cursed_mob as anything in exposed_to_holiness)
-		if (!DT_PROB(6.25, delta_time))
+		if (!DT_PROB(10, delta_time))
 			continue
 
 		to_chat(cursed_mob, span_warning("You don't belong in this holy place!"))

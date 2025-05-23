@@ -257,7 +257,7 @@
 			last_rage_from_attack = world.time
 			adjust_rage(1, src, TRUE)
 	if(iscathayan(src))
-		if(in_frenzy)
+		if (HAS_TRAIT(mind, TRAIT_IN_FRENZY))
 			if(!mind?.dharma?.Po_combat)
 				mind?.dharma?.Po_combat = TRUE
 				call_dharma("letpo", src)

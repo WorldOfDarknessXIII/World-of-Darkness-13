@@ -1,3 +1,4 @@
+// How long it takes for one call of drinksomeblood() to finish
 #define DRINKBLOOD_CYCLE_LENGTH 3 SECONDS
 
 /mob/living/carbon/proc/add_bite_animation()
@@ -244,13 +245,13 @@
 				if (bloodpool <= 4) // Accidental violation by starvation
 					to_chat(src, span_warning("This act of starvation withers a piece of your soul."))
 					AdjustHumanity(-1, 5)
-				if (HAS_TRAIT(src, TRAIT_IN_FRENZY)) // Impassioned violation by frenzy
+				if (HAS_TRAIT(mind, TRAIT_IN_FRENZY)) // Impassioned violation by frenzy
 					to_chat(src, span_warning("This accidental act of violation rots a piece of your soul."))
 					AdjustHumanity(-1, 3)
 				else if (!overfed) // Planned violation by regular feeding
 					to_chat(src, span_warning("This sad sacrifice for your own survival rots something deep in your soul."))
 					AdjustHumanity(-1, 2)
-				else if (!trusted_by_victim)// Casual violation by overfeeding
+				else if (!trusted_by_victim) // Casual violation by overfeeding
 					to_chat(src, span_danger("This sad sacrifice of a life for your own pleasure feeds the [span_bold("Beast.")]"))
 					AdjustHumanity(-1, 1)
 				else // Heinous violation of someone who trusted/loved the drinker

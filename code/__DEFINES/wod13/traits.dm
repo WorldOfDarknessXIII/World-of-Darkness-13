@@ -59,8 +59,10 @@
 #define TRAIT_MASQUERADE_VIOLATING_EYES "masquerade_violating_eyes"
 /// If face is uncovered, they will be obviously supernatural to everyone nearby
 #define TRAIT_MASQUERADE_VIOLATING_FACE "masquerade_violating_face"
-// Mob has lost control to their rage, their Beast, whatever and is frenzying
+/// Mob has lost control to their rage, their Beast, whatever and is frenzying
 #define TRAIT_IN_FRENZY "in_frenzy"
+/// Incapable of losing control and entering frenzy
+#define TRAIT_IMMUNE_TO_FRENZY "immune_to_frenzy"
 
 /// Trait given as a result of vampiric activities
 #define VAMPIRE_TRAIT "vampire"

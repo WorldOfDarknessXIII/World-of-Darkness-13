@@ -10,7 +10,7 @@
 	if(!GLOB.canon_event)
 		return
 	if(!is_special_character(src) || forced)
-		if(!in_frenzy || forced)
+		if(!HAS_TRAIT(mind, TRAIT_IN_FRENZY) || forced)
 			var/mod = HAS_TRAIT(src, TRAIT_SENSITIVE_HUMANITY) ? 2 : 1
 			var/enlight = client?.prefs?.enlightenment
 			if(enlight)

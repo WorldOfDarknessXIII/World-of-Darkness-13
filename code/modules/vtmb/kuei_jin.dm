@@ -335,40 +335,10 @@
 												SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
 												to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
 
-	if(H.key && (H.stat <= HARD_CRIT) && H.mind.dharma)
-		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
-		if(P)
-			if(H.mind.dharma.level < 1)
-				H.enter_frenzymod()
-				to_chat(H, "<span class='userdanger'>You have lost control of the P'o within you, and it has taken your body. Stay closer to your Dharma next time.</span>")
-				H.ghostize(FALSE)
-				P.reason_of_death = "Lost control to the P'o ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
-				return
-			if(P.hun != H.mind.dharma.Hun)
-				P.hun = H.mind.dharma.Hun
-				P.save_preferences()
-				P.save_character()
-			if(P.po != H.max_demon_chi)
-				P.po = H.max_demon_chi
-				P.save_preferences()
-				P.save_character()
-			if(P.yin != H.max_yin_chi)
-				P.yin = H.max_yin_chi
-				P.save_preferences()
-				P.save_character()
-			if(P.yang != H.max_yang_chi)
-				P.yang = H.max_yang_chi
-				P.save_preferences()
-				P.save_character()
-			if(P.masquerade != H.masquerade)
-				P.masquerade = H.masquerade
-				P.save_preferences()
-				P.save_character()
-
 		H.update_chi_hud()
-		if(!H.in_frenzy)
+		if(!HAS_TRAIT(H.mind, TRAIT_IN_FRENZY))
 			H.mind.dharma.Po_combat = FALSE
-		if(H.demon_chi == H.max_demon_chi && H.max_demon_chi != 0 && !H.in_frenzy)
+		if(H.demon_chi == H.max_demon_chi && H.max_demon_chi != 0 && !HAS_TRAIT(H.mind, TRAIT_IN_FRENZY))
 			H.rollfrenzy()
 
 		if(H.mind.dharma.Po == "Monkey")
