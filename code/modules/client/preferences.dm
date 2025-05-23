@@ -2133,11 +2133,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if (tgui_alert(user, "Are you sure you want to change your Clan? This will reset your Disciplines.", "Confirmation", list("Yes", "No")) != "Yes")
 						return
 
+					// Create a list of Clans that can be played by anyone or this user has a whitelist for
 					var/list/available_clans = list()
 					for (var/adding_clan in GLOB.vampire_clans)
-						if (GLOB.vampire_clans[adding_clan].whitelisted && !SSwhitelists.is_whitelisted(user.ckey, adding_clan))
+						var/datum/vampire_clan/checking_clan = GLOB.vampire_clans[adding_clan]
+						if (checking_clan.whitelisted && !SSwhitelists.is_whitelisted(user.ckey, checking_clan.name))
 							continue
-						available_clans += GLOB.vampire_clans[adding_clan]
+						available_clans += checking_clan
 
 					var/result = tgui_input_list(user, "Select a Clan", "Clan Selection", sortList(available_clans))
 					if (!result)
