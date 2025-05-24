@@ -6,7 +6,7 @@
 	if(isatom(object))
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
-			if(H.in_frenzy)
+			if (HAS_TRAIT(H.mind, TRAIT_IN_FRENZY))
 				return
 	..()
 
@@ -46,20 +46,20 @@
 				frenzy_hardness = min(10, frenzy_hardness + 1)
 
 /mob/living/carbon/proc/enter_frenzymod()
-	if (in_frenzy)
+	if (HAS_TRAIT(mind, TRAIT_IN_FRENZY))
 		return
 
 	SEND_SOUND(src, sound('code/modules/wod13/sounds/frenzy.ogg', 0, 0, 50))
-	in_frenzy = TRUE
+	ADD_TRAIT(mind, TRAIT_IN_FRENZY, MAGIC_TRAIT)
 	add_client_colour(/datum/client_colour/glass_colour/red)
 	demon_chi = 0
 	GLOB.frenzy_list += src
 
 /mob/living/carbon/proc/exit_frenzymod()
-	if (!in_frenzy)
+	if (!HAS_TRAIT(mind, TRAIT_IN_FRENZY))
 		return
 
-	in_frenzy = FALSE
+	REMOVE_TRAIT(mind, TRAIT_IN_FRENZY, MAGIC_TRAIT)
 	mind?.dharma?.Po_combat = FALSE
 	remove_client_colour(/datum/client_colour/glass_colour/red)
 	GLOB.frenzy_list -= src
@@ -185,7 +185,7 @@
 	. = ..()
 
 	//FIRE FEAR
-	if(!H.antifrenzy && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
+	if(!HAS_TRAIT(H, TRAIT_IMMUNE_TO_FRENZY) && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
 		var/fearstack = 0
 		for(var/obj/effect/fire/F in GLOB.fires_list)
 			if(F)
@@ -202,7 +202,7 @@
 				H.do_jitter_animation(10)
 				if(fearstack > 20)
 					if(prob(fearstack))
-						if(!H.in_frenzy)
+						if (!HAS_TRAIT(H.mind, TRAIT_IN_FRENZY))
 							H.rollfrenzy()
 			if(!H.has_status_effect(STATUS_EFFECT_FEAR))
 				H.apply_status_effect(STATUS_EFFECT_FEAR)
@@ -288,7 +288,7 @@
 				P.save_preferences()
 				P.save_character()
 
-			if(!H.antifrenzy)
+			if(!HAS_TRAIT(H, TRAIT_IMMUNE_TO_FRENZY))
 				if(P.humanity < 1)
 					H.enter_frenzymod()
 					to_chat(H, "<span class='userdanger'>You have lost control of the Beast within you, and it has taken your body. Be more [H.client.prefs.enlightenment ? "Enlightened" : "humane"] next time.</span>")
@@ -296,26 +296,25 @@
 					P.reason_of_death = "Lost control to the Beast ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 
 	// TODO: [Lucia] this needs to be a component
-	if(H.clan && !H.antifrenzy && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
-		if(HAS_TRAIT(H, TRAIT_VITAE_ADDICTION))
-			if(H.mind)
-				if(H.mind.enslaved_to)
-					if(get_dist(H, H.mind.enslaved_to) > 10)
-						if((H.last_frenzy_check + 40 SECONDS) <= world.time)
-							to_chat(H, "<span class='warning'><b>As you are far from [H.mind.enslaved_to], you feel the desire to drink more vitae!<b></span>")
-							H.last_frenzy_check = world.time
-							H.rollfrenzy()
-					else if(H.bloodpool > 1 || H.in_frenzy)
+	if(H.clan && !HAS_TRAIT(H, TRAIT_IMMUNE_TO_FRENZY) && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
+		if (HAS_TRAIT(H, TRAIT_VITAE_ADDICTION))
+			if(H.mind?.enslaved_to)
+				if(get_dist(H, H.mind.enslaved_to) > 10)
+					if((H.last_frenzy_check + 40 SECONDS) <= world.time)
+						to_chat(H, "<span class='warning'><b>As you are far from [H.mind.enslaved_to], you feel the desire to drink more vitae!<b></span>")
 						H.last_frenzy_check = world.time
+						H.rollfrenzy()
+				else if(H.bloodpool > 1 || HAS_TRAIT(H.mind, TRAIT_IN_FRENZY))
+					H.last_frenzy_check = world.time
 		else
-			if(H.bloodpool > 1 || H.in_frenzy)
+			if(H.bloodpool > 1 || HAS_TRAIT(H.mind, TRAIT_IN_FRENZY))
 				H.last_frenzy_check = world.time
 
-	if(!H.antifrenzy && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
-		if(H.bloodpool <= 1 && !H.in_frenzy)
+	if(!HAS_TRAIT(H, TRAIT_IMMUNE_TO_FRENZY) && !HAS_TRAIT(H, TRAIT_KNOCKEDOUT))
+		if(H.bloodpool <= 1 && !HAS_TRAIT(H.mind, TRAIT_IN_FRENZY))
 			if((H.last_frenzy_check + 40 SECONDS) <= world.time)
 				H.last_frenzy_check = world.time
 				H.rollfrenzy()
 				if (H.client?.prefs?.enlightenment)
 					if(!H.CheckFrenzyMove())
-						H.AdjustHumanity(1, 10)
+						H.AdjustHumanity(1, 1)

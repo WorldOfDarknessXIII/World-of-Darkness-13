@@ -40,7 +40,7 @@
 		if (brain)
 			brain.organ_flags |= ORGAN_FAILING
 
-		if(in_frenzy)
+		if (HAS_TRAIT(mind, TRAIT_IN_FRENZY))
 			exit_frenzymod()
 		SEND_SOUND(src, sound('code/modules/wod13/sounds/final_death.ogg', 0, 0, 50))
 

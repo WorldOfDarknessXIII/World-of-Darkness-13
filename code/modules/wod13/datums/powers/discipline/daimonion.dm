@@ -184,7 +184,7 @@
 		to_chat(owner, span_warning("You've already signed this contract!"))
 		return
 	used = TRUE
-	user.antifrenzy = TRUE
+	ADD_TRAIT(user, TRAIT_IMMUNE_TO_FRENZY, VAMPIRE_TRAIT)
 	SEND_SOUND(owner, sound('sound/magic/curse.ogg', 0, 0, 50))
 	to_chat(owner, span_warning("You feel control over your Beast, but at what cost..."))
 	qdel(src)

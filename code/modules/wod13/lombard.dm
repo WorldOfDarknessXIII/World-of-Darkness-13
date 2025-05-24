@@ -136,7 +136,7 @@
 	//Items that have been returned were successfully sold
 	if(!length(sold_items))
 		return
-	seller.AdjustHumanity(sold_sc.humanity_loss * length(sold_items), humanity_penalty_limit)
+	seller.AdjustHumanity(sold_sc.humanity_loss, humanity_penalty_limit)
 	//Leave this deletion at the very end just in case any earlier qdel would decide to hard-del the item and remove the item from the list before actually adjusting humanity and such
 	for(var/item_to_delete in sold_items)
 		qdel(item_to_delete)

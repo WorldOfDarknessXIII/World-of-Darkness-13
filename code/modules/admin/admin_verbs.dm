@@ -520,7 +520,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	admin_ticket_log(M, msg)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Adjust Masquerade")
 
-/client/proc/cmd_admin_adjust_humanity(mob/living/carbon/human/M in GLOB.player_list)
+/client/proc/cmd_admin_adjust_humanity(mob/living/M in GLOB.player_list)
 	set name = "Adjust Humanity"
 	set category = "Admin"
 	if (!check_rights(R_ADMIN))
@@ -531,20 +531,16 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/is_enlightenment = FALSE
-	if (M.client?.prefs?.enlightenment)
-		is_enlightenment = TRUE
+	var/is_enlightenment = M.client?.prefs?.enlightenment
 
 	var/value = input(usr, "Enter the [is_enlightenment ? "Enlightenment" : "Humanity"] adjustment value for [M.key]:", "Humanity Adjustment", 0) as num|null
 	if(value == null)
 		return
-	if (is_enlightenment)
-		value = -value
 
-	M.AdjustHumanity(value, 0, forced = TRUE)
+	M.AdjustHumanity(value, value > 0 ? 10 : 0, forced = TRUE)
 
-	var/msg = "<span class='adminnotice'><b>Humanity Adjustment: [key_name_admin(usr)] adjusted [key_name(M)]'s [is_enlightenment ? "Enlightenment" : "Humanity"] by [is_enlightenment ? -value : value] to [M.humanity]</b></span>"
-	log_admin("HumanityAdjust: [key_name_admin(usr)] has adjusted [key_name(M)]'s [is_enlightenment ? "Enlightenment" : "Humanity"] by [is_enlightenment ? -value : value] to [M.humanity]")
+	var/msg = "<span class='adminnotice'><b>Humanity Adjustment: [key_name_admin(usr)] adjusted [key_name(M)]'s [is_enlightenment ? "Enlightenment" : "Humanity"] by [value] to [M.humanity]</b></span>"
+	log_admin("HumanityAdjust: [key_name_admin(usr)] has adjusted [key_name(M)]'s [is_enlightenment ? "Enlightenment" : "Humanity"] by [value] to [M.humanity]")
 	message_admins(msg)
 	admin_ticket_log(M, msg)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Adjust Humanity")

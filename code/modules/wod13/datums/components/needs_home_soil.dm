@@ -36,7 +36,7 @@
 		START_PROCESSING(SSdcs, src)
 
 /datum/component/needs_home_soil/process(delta_time)
-	if (!DT_PROB(3, delta_time))
+	if (!DT_PROB(5, delta_time))
 		return
 
 	var/mob/living/lacking_soil = parent

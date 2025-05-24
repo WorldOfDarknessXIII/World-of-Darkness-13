@@ -45,12 +45,11 @@
 			if(istype(last_attacker, /mob/living/simple_animal/hostile))
 				var/mob/living/simple_animal/hostile/HS = last_attacker
 				if(HS.my_creator)
-					HS.my_creator.AdjustHumanity(-1, 0)
+					HS.my_creator.AdjustHumanity(-1, 2)
 					HS.my_creator.last_nonraid = world.time
-					HS.my_creator.killed_count = HS.my_creator.killed_count+1
+					HS.my_creator.killed_count += 1
 					if(!HS.my_creator.warrant && !HS.my_creator.ignores_warrant)
 						if(HS.my_creator.killed_count >= 5)
-//							GLOB.fuckers |= HS.my_creator
 							HS.my_creator.warrant = TRUE
 							SEND_SOUND(HS.my_creator, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
 							to_chat(HS.my_creator, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
@@ -60,12 +59,11 @@
 			else
 				if(ishuman(last_attacker))
 					var/mob/living/carbon/human/HM = last_attacker
-					HM.AdjustHumanity(-1, 0)
+					HM.AdjustHumanity(-1, 3)
 					HM.last_nonraid = world.time
-					HM.killed_count = HM.killed_count+1
+					HM.killed_count += 1
 					if(!HM.warrant && !HM.ignores_warrant)
 						if(HM.killed_count >= 5)
-//							GLOB.fuckers |= HM
 							HM.warrant = TRUE
 							SEND_SOUND(HM, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
 							to_chat(HM, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")

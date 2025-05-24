@@ -197,20 +197,18 @@ Dancer
 	if(HAS_TRAIT(owner, TRAIT_FLOORED))
 		to_chat(owner, "<span class='warning'>You got to get up before you get down!</span>")
 		return
-//	var/mob/living/carbon/H = owner
 	if(prob(50))
 		dancefirst(owner)
 	else
 		dancesecond(owner)
 
-	if(last_added_humanity+6000 < world.time)
-		for(var/obj/machinery/jukebox/J in range(7, owner))
-			if(J)
-				if(J.active)
-					if(ishuman(owner))
-						var/mob/living/carbon/human/human = owner
-						human.AdjustHumanity(1, 8)
-						last_added_humanity = world.time
+	if (last_added_humanity + 10 MINUTES < world.time)
+		for (var/obj/machinery/jukebox/J in range(7, owner))
+			if (J.active)
+				if (isliving(owner))
+					var/mob/living/dancer = owner
+					dancer.AdjustHumanity(1, 7)
+					last_added_humanity = world.time
 
 /datum/quirk/dwarf
 	name = "Dwarf"

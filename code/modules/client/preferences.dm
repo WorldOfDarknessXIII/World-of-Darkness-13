@@ -204,7 +204,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/enemy_text
 	var/lover_text
 
-	var/diablerist = 0
+	var/diablerist = FALSE
 
 	var/reason_of_death = "None"
 
@@ -239,8 +239,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	true_experience = clamp(true_experience + amount, 0, 1000)
 
 /datum/preferences/proc/reset_character()
-	slotlocked = 0
-	diablerist = 0
+	slotlocked = FALSE
+	diablerist = FALSE
 	torpor_count = 0
 	generation_bonus = 0
 	physique = 1
@@ -3087,7 +3087,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
 	character.dna.real_name = character.real_name
 
-	character.diablerist = diablerist
+	if (diablerist)
+		ADD_TRAIT(character, TRAIT_DIABLERIST, VAMPIRE_TRAIT)
 	character.info_known = info_known
 
 	character.physique = physique

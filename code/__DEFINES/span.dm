@@ -148,6 +148,7 @@
 #define span_tinynicegreen(str)	("<span class='tinynicegreen'>" + str + "</span>")
 #define span_unconscious(str) ("<span class='unconscious'>" + str + "</span>")
 #define span_userdanger(str) ("<span class='userdanger'>" + str + "</span>")
+#define span_userhelp(str) ("<span class='userhelp'>" + str + "</span>")
 #define span_userlove(str) ("<span class='userlove'>" + str + "</span>")
 #define span_warning(str) ("<span class='warning'>" + str + "</span>")
 #define span_yell(str) ("<span class='yell'>" + str + "</span>")

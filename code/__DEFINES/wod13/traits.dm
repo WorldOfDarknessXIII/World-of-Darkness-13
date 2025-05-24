@@ -14,9 +14,10 @@
 #define TRAIT_HOMOSEXUAL		"homosexual"
 #define TRAIT_HUNTED			"hunted"
 #define TRAIT_VIOLATOR			"violator"
-#define TRAIT_DIABLERIE			"diablerie"
 #define TRAIT_GULLET			"gullet"
 #define TRAIT_CHARMER			"charmer"
+/// Vampire has committed Diablerie on another vampire and ate their soul
+#define TRAIT_DIABLERIST "diablerist"
 /// The mob will automatically breach the Masquerade when seen by others, with no exceptions
 #define TRAIT_UNMASQUERADE		"unmasquerade"
 /// Halves firing delay and cooldown between burst fire shots
@@ -58,6 +59,12 @@
 #define TRAIT_MASQUERADE_VIOLATING_EYES "masquerade_violating_eyes"
 /// If face is uncovered, they will be obviously supernatural to everyone nearby
 #define TRAIT_MASQUERADE_VIOLATING_FACE "masquerade_violating_face"
+/// Mob has lost control to their rage, their Beast, whatever and is frenzying
+#define TRAIT_IN_FRENZY "in_frenzy"
+/// Incapable of losing control and entering frenzy
+#define TRAIT_IMMUNE_TO_FRENZY "immune_to_frenzy"
 
+/// Trait given as a result of vampiric activities
+#define VAMPIRE_TRAIT "vampire"
 /// Trait given by a vampire's Clan
 #define CLAN_TRAIT "clan"

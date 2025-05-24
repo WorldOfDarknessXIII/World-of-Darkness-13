@@ -95,11 +95,11 @@
 	if (iskindred(src))
 		//pale aura for vampires
 		holder.color = "#ffffff"
-		//only Baali can get antifrenzy through selling their soul, so this gives them the unholy halo (MAKE THIS BETTER)
-		if (antifrenzy)
+		//only Baali can get this through selling their soul, so this gives them the unholy halo (MAKE THIS BETTER)
+		if (HAS_TRAIT(H, TRAIT_IMMUNE_TO_FRENZY))
 			holder.icon = 'icons/effects/32x64.dmi'
 		//black aura for diablerists
-		if (diablerist)
+		if (HAS_TRAIT(src, TRAIT_DIABLERIST))
 			holder.icon_state = "diablerie_aura"
 
 	if(iscathayan(src))

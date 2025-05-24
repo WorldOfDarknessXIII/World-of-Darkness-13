@@ -520,7 +520,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ooc_notes = sanitize_text(ooc_notes)
 	socks			= sanitize_inlist(socks, GLOB.socks_list)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
-	diablerist				= sanitize_integer(diablerist, 0, 1, initial(diablerist))
+	diablerist				= sanitize_integer(diablerist, FALSE, TRUE, initial(diablerist))
 	friend_text		= sanitize_text(friend_text)
 	enemy_text		= sanitize_text(enemy_text)
 	lover_text		= sanitize_text(lover_text)
