@@ -317,4 +317,4 @@
 				H.rollfrenzy()
 				if (H.client?.prefs?.enlightenment)
 					if(!H.CheckFrenzyMove())
-						H.AdjustHumanity(1, 10)
+						H.AdjustHumanity(1, 1)

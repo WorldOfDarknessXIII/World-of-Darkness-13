@@ -205,9 +205,6 @@
 		var/obj/effect/fire/F = locate() in get_turf(W)
 		if(F)
 			qdel(F)
-			if(W.Extinguisher)
-				call_dharma("extinguish", W.Extinguisher)
-				call_dharma("cleangrow", W.Extinguisher)
 		if(!W.reagents)
 			continue
 		W.reagents.expose(get_turf(W))

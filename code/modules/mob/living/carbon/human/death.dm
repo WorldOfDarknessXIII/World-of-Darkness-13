@@ -43,17 +43,6 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 		SSblackbox.ReportDeath(src)
 		log_message("has died (BRUTE: [src.getBruteLoss()], BURN: [src.getFireLoss()], TOX: [src.getToxLoss()], OXY: [src.getOxyLoss()], CLONE: [src.getCloneLoss()])", LOG_ATTACK)
 
-	for(var/mob/living/carbon/human/U in viewers(7, src))
-		if(iscathayan(U) && U != src)
-			if(U.real_name == lastattacker && !iscathayan(src) && !iskindred(src) && !isgarou(src))
-				call_dharma("kill", U)
-			if(mind?.dharma?.name == U.mind?.dharma?.name)
-				call_dharma("letdie", U)
-
-			if(real_name in U.mind?.dharma?.judgement)
-				call_dharma("judgement", U)
-			if(!(real_name in U.mind?.dharma?.deserving) && U.real_name == lastattacker)
-				call_dharma("killfirst", U)
 	to_chat(src, "<span class='warning'>You have died. Barring complete bodyloss, you can in most cases be revived by other players. If you do not wish to be brought back, use the \"Do Not Resuscitate\" verb in the ghost tab.</span>")
 
 /mob/living/carbon/human/proc/makeSkeleton()

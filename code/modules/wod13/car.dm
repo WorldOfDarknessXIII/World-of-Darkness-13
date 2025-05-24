@@ -221,10 +221,7 @@ SUBSYSTEM_DEF(carpool)
 						repairing = FALSE
 						return //Don't penalize vampire humanity if they failed.
 					if(initial(access) == "none") //Stealing a car with no keys assigned to it is basically robbing a random person and not an organization
-						if(ishuman(user))
-							var/mob/living/carbon/human/H = user
-							H.AdjustHumanity(-1, 6)
-							call_dharma("steal", H)
+						user.AdjustHumanity(-1, 6)
 						return
 				else
 					to_chat(user, "<span class='warning'>You've failed to open [src]'s lock.</span>")

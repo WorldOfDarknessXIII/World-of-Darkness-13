@@ -164,10 +164,6 @@
 				total += 1
 	return total
 
-/proc/call_dharma(action, mob/living/carbon/human/cathayan)
-	//disabled due to terrible implementation
-	return
-
 /proc/emit_po_call(atom/source, po_type)
 	if(!po_type)
 		return

@@ -260,7 +260,6 @@
 		if (HAS_TRAIT(mind, TRAIT_IN_FRENZY))
 			if(!mind?.dharma?.Po_combat)
 				mind?.dharma?.Po_combat = TRUE
-				call_dharma("letpo", src)
 		if(mind?.dharma?.Po == "Rebel")
 			emit_po_call(src, "Rebel")
 		if(target)
@@ -461,13 +460,6 @@
 	if(M == src && check_self_for_injuries())
 		return
 
-	if(ishuman(M))
-		var/mob/living/carbon/human/human = M
-		if(human.Myself?.Lover?.owner == src)
-			call_dharma("meet", M)
-		if(human.Myself?.Friend?.owner == src)
-			call_dharma("meet", M)
-
 	if(body_position == LYING_DOWN)
 		if(buckled)
 			to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!</span>")
@@ -476,9 +468,6 @@
 						null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
 		to_chat(M, "<span class='notice'>You shake [src] trying to pick [p_them()] up!</span>")
 		to_chat(src, "<span class='notice'>[M] shakes you to get you up!</span>")
-		if(mind?.dharma?.name == M.mind?.dharma?.name)
-			if(IsStun() || IsKnockdown() || stat > CONSCIOUS)
-				call_dharma("protect", M)
 
 	else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD) //Headpats!
 		SEND_SIGNAL(src, COMSIG_CARBON_HEADPAT, M)
