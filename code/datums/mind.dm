@@ -142,6 +142,11 @@
 		new_character.client.init_verbs() // re-initialize character specific verbs
 	current.update_atom_languages()
 
+	SEND_SIGNAL(src, COMSIG_MIND_TRANSFERRED, old_current)
+	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO, old_current)
+	if(!isnull(old_current))
+		SEND_SIGNAL(old_current, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, current)
+
 /datum/mind/proc/init_known_skills()
 	for (var/type in GLOB.skill_types)
 		known_skills[type] = list(SKILL_LEVEL_NONE, 0)
