@@ -20,7 +20,7 @@ jobs:
         echo "SECRETS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
     - name: Checkout
       if: steps.secrets_set.outputs.SECRETS_ENABLED
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
     - name: Restore BYOND cache
       if: steps.secrets_set.outputs.SECRETS_ENABLED
       uses: actions/cache@v4
