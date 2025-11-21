@@ -34,7 +34,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Restore SpacemanDMM cache
         uses: actions/cache@v4
         with:
@@ -149,7 +149,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Restore Yarn cache
         uses: actions/cache@v4
         with:
@@ -199,7 +199,7 @@ jobs:
       max_required_byond_client: ${{ steps.max_required_byond_client.outputs.max_required_byond_client }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Find Maps
         id: map_finder
         run: |
@@ -255,7 +255,7 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Setup directory
         run: mkdir -p artifacts
       # If we ever add more artifacts, this is going to break, but it'll be obvious.
@@ -293,7 +293,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Restore Yarn cache
         uses: actions/cache@v4
         with:
