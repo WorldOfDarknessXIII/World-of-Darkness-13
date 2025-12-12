@@ -36,42 +36,42 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Restore SpacemanDMM cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/SpacemanDMM
           key: ${{ runner.os }}-spacemandmm-${{ hashFiles('dependencies.sh') }}
           restore-keys: |
             ${{ runner.os }}-spacemandmm-
       - name: Restore Yarn cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: tgui/.yarn/cache
           key: ${{ runner.os }}-yarn-${{ hashFiles('tgui/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Restore Node cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.nvm
           key: ${{ runner.os }}-node-${{ hashFiles('dependencies.sh') }}
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Restore Bootstrap cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: tools/bootstrap/.cache
           key: ${{ runner.os }}-bootstrap-${{ hashFiles('tools/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-bootstrap-
       - name: Restore Rust cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.cargo
           key: ${{ runner.os }}-rust-${{ hashFiles('tools/ci/ci_dependencies.sh')}}
           restore-keys: |
             ${{ runner.os }}-rust-
       - name: Restore Cutter cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: tools/icon_cutter/cache
           key: ${{ runner.os }}-cutter-${{ hashFiles('dependencies.sh') }}
@@ -151,21 +151,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Restore Yarn cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: tgui/.yarn/cache
           key: ${{ runner.os }}-yarn-${{ hashFiles('tgui/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Restore Node cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.nvm
           key: ${{ runner.os }}-node-${{ hashFiles('dependencies.sh') }}
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Restore Bootstrap cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: tools/bootstrap/.cache
           key: ${{ runner.os }}-bootstrap-${{ hashFiles('tools/requirements.txt') }}
@@ -173,7 +173,7 @@ jobs:
             ${{ runner.os }}-bootstrap-
 
       - name: Restore BYOND cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ hashFiles('dependencies.sh') }}
@@ -295,14 +295,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Restore Yarn cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: tgui/.yarn/cache
           key: ${{ runner.os }}-yarn-${{ hashFiles('tgui/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Restore tgui cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: tgui/public
           key: ${{ runner.os }}-tgui-${{ hashFiles('tgui/public') }}
